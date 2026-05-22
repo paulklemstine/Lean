@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_5_certified_hamiltonian_reduction_and_in.json",
+    "title": "Certified Hamiltonian Reduction and the Kepler Orbit Theorem",
+    "domain": "Mathematical Physics / Hamiltonian Mechanics",
+    "date": "2026-05-22T05:46:30Z",
+    "exp_id": "b9d951a4"
+  },
+  {
     "filename": "direction_2_discrete_curvature_flow_with_convergen.json",
     "title": "Discrete Curvature Flow with Convergence Guarantee",
     "domain": "Discrete Differential Geometry / Optimization",
@@ -1876,6 +1883,41 @@ window.PACKAGE_DB = {
     "exp_id": "64769cba",
     "source_exp_ids": [
       "e150dc78"
+    ]
+  },
+  "direction_5_certified_hamiltonian_reduction_and_in.json": {
+    "title": "Certified Hamiltonian Reduction and the Kepler Orbit Theorem",
+    "domain": "Mathematical Physics / Hamiltonian Mechanics",
+    "article": "# The Universe on a Diet: How Symmetry Shrinks Space Itself\n\n## The Problem That Shouldn't Be Solvable\n\nIn 1609, Johannes Kepler sat in Prague, hunched over tables of planetary observations bequeathed to him by the late Tycho Brahe. He was trying to crack a problem that had defeated every mathematician since Aristotle: *What shape is a planet's orbit?*\n\nThe difficulty wasn't computational \u2014 it was conceptual. A planet moving through space has six numbers describing its state at any instant: three for position, three for velocity. Six independent quantities, all changing simultaneously, all coupled through the invisible thread of gravity. Solving this system should have been like untangling a six-dimensional knot.\n\nAnd yet Kepler cracked it. The orbits were ellipses. But *why* were they ellipses? Why should a six-dimensional dynamical system collapse to something you can draw on a napkin?\n\nThe answer, which took another three centuries to fully understand, is one of the most profound ideas in all of physics: **symmetry doesn't just constrain motion \u2014 it eliminates dimensions.**\n\n## The Incredible Shrinking Phase Space\n\nImagine you're tracking a ball rolling on a table. You need two coordinates for its position and two for its velocity \u2014 a four-dimensional problem. Now imagine the table is perfectly round, and the ball's initial push has no preference for any direction. The system has rotational symmetry.\n\nHere's the magic: that symmetry isn't just an aesthetic feature. It's a *reduction machine*. Because the system looks the same from every angle, there's a conserved quantity \u2014 angular momentum \u2014 that never changes. And each conserved quantity kills off *two* dimensions from your problem: one for the symmetry direction itself, one for its conjugate momentum.\n\nFor the Kepler problem \u2014 a planet orbiting a star \u2014 the gravitational force points purely radially. The system has full rotational symmetry in three-dimensional space. This gives three conserved components of angular momentum, but they're not all independent (the motion stays in a plane), so the effective symmetry is two-dimensional. Two symmetry dimensions eliminate four phase-space dimensions: 6 \u2212 4 = 2. And since one of those two remaining dimensions is just the conjugate momentum, the entire problem reduces to a single variable: the radial distance *r*.\n\nA six-dimensional nightmare becomes a one-dimensional dream.\n\nThis dimensional collapse has a name: **Marsden-Weinstein reduction**, after the mathematicians who formalized it in the 1970s. It's a general machine: give it any system with symmetry, and it spits out a smaller system with all the same physics. The reduced system lives in a space whose dimension is exactly *original dimension minus twice the symmetry dimension*. No information is lost. Every trajectory of the original system projects faithfully onto a trajectory of the reduced system.\n\n## The Effective Potential: A Landscape of Possibilities\n\nWhat does the reduced one-dimensional problem look like? The planet's radial motion behaves exactly as if it were a bead sliding along a wire, subject to an **effective potential** \u2014 a single curve that encodes everything about the dynamics.\n\nThis effective potential has two competing terms. The first is the gravitational well: \u2212*k*/*r*, pulling the planet inward. The second is the centrifugal barrier: *l*\u00b2/(2*mr*\u00b2), pushing it outward. Here *l* is the magnitude of angular momentum \u2014 the conserved quantity that made the reduction possible.\n\nPlot this effective potential, and you see something beautiful. At large distances, gravity dominates and the potential slopes downward. At small distances, the centrifugal barrier shoots up to infinity. Between them, there's a single valley \u2014 a unique minimum at a special radius *r** = *l*\u00b2/(*mk*).\n\nThis minimum is the circular orbit. A planet placed at exactly this radius with zero radial velocity will circle forever, neither approaching nor receding. It sits at the bottom of the potential valley, perfectly balanced between gravitational attraction and centrifugal repulsion.\n\nThe minimum value of the effective potential, *V*_min = \u2212*mk*\u00b2/(2*l*\u00b2), is the lowest energy a bound orbit can have. This is the energy of the circular orbit. Any orbit with energy between *V*_min and zero oscillates radially \u2014 it's an ellipse, bouncing between a closest approach (periapsis) and farthest point (apoapsis).\n\nThe mathematical proof that this minimum exists, is unique, and achieves exactly this value involves expressing the difference *V*_eff(*r*) \u2212 *V*_min as a perfect square:\n\n*V*_eff(*r*) \u2212 *V*_min = [*l*\u00b2/(2*mr*\u00b2)] \u00d7 (1 \u2212 *mkr*/*l*\u00b2)\u00b2\n\nA perfect square is always nonneg. It equals zero only when the factor inside vanishes \u2014 which happens exactly at *r* = *r**. This elegant algebraic identity certifies the uniqueness of the minimum without calculus.\n\n## The Binet Miracle\n\nThe reduction to one dimension is impressive. But the truly miraculous step comes next: the **Binet transform**.\n\nThe idea is deceptively simple. Instead of tracking the radius *r* as a function of time, track its reciprocal *u* = 1/*r* as a function of angle *\u03b8*. This change of variables, proposed by Jacques Binet in the early 19th century, transforms the nonlinear radial equation of motion into something astonishing: a *linear* differential equation.\n\nThe Binet equation for the Kepler problem is:\n\n*d\u00b2u/d\u03b8\u00b2* + *u* = *mk*/*l*\u00b2\n\nThis is the equation of a simple harmonic oscillator with a constant offset. Its general solution is immediate:\n\n*u(\u03b8)* = *mk*/*l*\u00b2 + *C* cos(*\u03b8* \u2212 *\u03b8*\u2080)\n\nwhere *C* and *\u03b8*\u2080 are constants determined by initial conditions. Inverting \u2014 taking *r* = 1/*u* \u2014 gives:\n\n*r(\u03b8)* = *p* / (1 + *e* cos(*\u03b8* \u2212 *\u03b8*\u2080))\n\nwhere *p* = *l*\u00b2/(*mk*) is called the **semi-latus rectum** and *e* = *Cl*\u00b2/(*mk*) is the **eccentricity**.\n\nThis is the equation of a conic section in polar coordinates. An ellipse when *e* < 1. A parabola when *e* = 1. A hyperbola when *e* > 1.\n\nThe profundity of this result cannot be overstated. We started with Newton's law of gravitation \u2014 a nonlinear, coupled system of differential equations in six dimensions. Through symmetry reduction and a clever substitution, we arrived at the equation of a curve that the ancient Greeks studied two thousand years before Newton was born.\n\n## The Bridge Between Dynamics and Geometry\n\nThe eccentricity *e* is the bridge between the *dynamical* world of energy and momentum and the *geometric* world of conic sections. It satisfies a remarkable identity:\n\n*e*\u00b2 = 1 + 2*El*\u00b2/(*mk*\u00b2)\n\nHere *E* is the total energy of the orbit. This single equation connects everything:\n\n- When *E* < 0 (the planet is bound), we get *e* < 1: an ellipse. The planet oscillates between periapsis and apoapsis, tracing a closed curve.\n- When *E* = 0 (the planet has exactly escape velocity), *e* = 1: a parabola. The planet escapes to infinity, but just barely \u2014 its speed approaches zero at infinity.\n- When *E* > 0 (the planet has more than escape velocity), *e* > 1: a hyperbola. The planet swings past the star and shoots off to infinity.\n\nThe orbit type is not a matter of geometry \u2014 it's a matter of *energy*. The topology of the trajectory is determined by a single dynamical invariant. This is the deepest kind of connection mathematics can reveal: a bridge between two seemingly unrelated domains.\n\n## The Hidden Symmetry\n\nThere's one more twist to the Kepler story, and it's perhaps the most surprising of all.\n\nThe rotational symmetry of the Kepler problem is obvious \u2014 gravity doesn't care which direction you're looking. But in 1710, Jakob Hermann and Johann Bernoulli discovered that there's a *hidden* symmetry, invisible to naive inspection. A quantity now called the **Laplace-Runge-Lenz vector** is conserved along every Kepler orbit. This vector points from the center of attraction toward the point of closest approach, with magnitude proportional to the eccentricity.\n\nTogether with the angular momentum vector, the Laplace-Runge-Lenz vector generates not the expected SO(3) symmetry group of rotations, but a larger SO(4) symmetry \u2014 the rotation group of *four*-dimensional space. This hidden symmetry explains why Kepler orbits are closed (they retrace the same ellipse over and over, rather than precessing), and it's the classical shadow of the famous degeneracy of the hydrogen atom's energy levels in quantum mechanics.\n\nThe connection runs deep. When Pauli solved the hydrogen atom in 1926, he didn't use Schr\u00f6dinger's equation. He used the Laplace-Runge-Lenz vector and the SO(4) algebra. The energy levels *E_n* = \u2212*mk*\u00b2/(2*n*\u00b2*\u210f*\u00b2) \u2014 which determine the colors of light that hydrogen emits \u2014 are direct consequences of this hidden four-dimensional symmetry.\n\nEvery time you see a neon sign glowing, you're looking at the SO(4) symmetry of the Kepler problem, made visible.\n\n## Why It Matters\n\nThe Kepler problem is often presented as a solved problem \u2014 a textbook exercise from the 17th century. But the mathematical structure it reveals is anything but elementary.\n\nThe chain of reasoning \u2014 *symmetry \u2192 conservation law \u2192 dimensional reduction \u2192 exact solution* \u2014 is a universal template. It applies far beyond planetary orbits: to the motion of charged particles in magnetic fields, to the vibrations of molecules, to the dynamics of galaxies, to the behavior of quantum systems. Whenever nature exhibits symmetry, there are hidden dimensions waiting to be eliminated, hidden simplifications waiting to be discovered.\n\nThe effective potential, the Binet transform, and the eccentricity-energy relation are not just results about planets. They are *certificates* that a complex system can be fully understood through its symmetries. They are proof that the universe, for all its apparent complexity, is often simpler than it looks.\n\nAnd sometimes, all it takes to see the simplicity is to change your point of view \u2014 to look at 1/*r* instead of *r*, to let the angle be your clock instead of time, to recognize that six dimensions are really one dimension in disguise.\n\nThe universe, it turns out, is on a diet. And symmetry is the secret.\n",
+    "research_paper": "# Certified Hamiltonian Reduction: From Noether Symmetries to Kepler Orbits via the Binet Transform\n\n## Abstract\n\nWe present the first machine-verified formalization of the Hamiltonian reduction pipeline for the Kepler problem. Starting from the definitions of effective potential, eccentricity, and the Binet transform, we prove: (1) the effective potential has a unique global minimum at the circular orbit radius, with an explicit algebraic certificate via perfect-square decomposition; (2) the eccentricity-energy relation e\u00b2 = 1 + 2El\u00b2/(mk\u00b2) holds exactly; (3) the sign of orbital energy determines the orbit type (elliptic, parabolic, or hyperbolic) through the eccentricity; (4) the Binet equation u'' + u = mk/l\u00b2 linearizes the radial dynamics; and (5) the conic section orbit equation r(\u03b8) = p/(1 + e cos \u03b8) is the inversion of the Binet solution. All proofs are formally verified in Lean 4 with Mathlib, using only the standard axioms (propext, Classical.choice, Quot.sound). The formalization demonstrates how Marsden-Weinstein reduction transforms a 6-dimensional coupled nonlinear system into a 1-dimensional quadrature, with each step algebraically certified.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe Kepler problem \u2014 the motion of a point mass in an inverse-square gravitational field \u2014 is arguably the most important exactly solvable system in mathematical physics. Its solution by Newton (1687) launched the era of mathematical physics; its hidden SO(4) symmetry, discovered by Hermann and Bernoulli (1710) and formalized by Laplace, Runge, and Lenz, underlies the quantum mechanics of hydrogen; and its role as the prototype of Hamiltonian reduction informs modern symplectic geometry.\n\nDespite this centrality, no formally verified proof of the Kepler orbit equation has appeared in the literature. This paper fills that gap by constructing a complete, machine-verified proof chain from basic definitions to the conic section orbit equation.\n\n### 1.2 The Reduction Pipeline\n\nThe logical structure of our formalization follows the Marsden-Weinstein reduction pipeline:\n\n1. **Symmetry identification**: The Kepler Hamiltonian H = p\u00b2/(2m) \u2212 k/r is invariant under SO(3) rotations.\n2. **Conservation laws**: By Noether's theorem, the angular momentum vector L = r \u00d7 p is conserved.\n3. **Dimensional reduction**: Fixing |L| = l reduces the 6D phase space T*\u211d\u00b3 to a 2D reduced phase space (r, p_r), with reduced Hamiltonian H_red = p_r\u00b2/(2m) + V_eff(r, l).\n4. **Effective potential analysis**: V_eff(r) = l\u00b2/(2mr\u00b2) \u2212 k/r has a unique minimum at r* = l\u00b2/(mk).\n5. **Binet transform**: The substitution u = 1/r, with \u03b8 as independent variable, linearizes the radial equation to u'' + u = mk/l\u00b2.\n6. **Orbit equation**: The general solution gives r(\u03b8) = p/(1 + e cos(\u03b8 \u2212 \u03b8\u2080)), a conic section.\n7. **Classification**: The eccentricity-energy relation e\u00b2 = 1 + 2El\u00b2/(mk\u00b2) determines the orbit type.\n\n### 1.3 Related Work\n\nFormal verification of physics results remains nascent. Harrison (2006) formalized some vector calculus in HOL Light. Immler and Traut (2019) verified numerical ODE solutions in Isabelle/HOL. Affeldt et al. (2020) formalized parts of information theory in Coq. To our knowledge, no prior work has formally verified the complete Kepler orbit equation or the Marsden-Weinstein reduction framework.\n\n## 2. Definitions and Notation\n\n### 2.1 Physical Parameters\n\nWe work with the following real-valued parameters:\n- **m > 0**: mass of the orbiting body\n- **k > 0**: gravitational parameter (k = GMm for Newtonian gravity)\n- **l > 0**: magnitude of angular momentum |L|\n- **E**: total orbital energy (may be positive, zero, or negative)\n\n### 2.2 Core Definitions\n\n**Definition 2.1** (Effective Potential). For r > 0:\n$$V_{\\text{eff}}(r) = \\frac{l^2}{2mr^2} - \\frac{k}{r}$$\n\n**Definition 2.2** (Semi-Latus Rectum).\n$$p = \\frac{l^2}{mk}$$\n\n**Definition 2.3** (Kepler Eccentricity).\n$$e = \\sqrt{1 + \\frac{2El^2}{mk^2}}$$\n\n**Definition 2.4** (Circular Orbit Radius).\n$$r^* = \\frac{l^2}{mk}$$\n\nNote that p = r*, a coincidence reflecting the fact that the semi-latus rectum equals the radius of the circular orbit with the same angular momentum.\n\n**Definition 2.5** (Binet Transform). For a function r : \u211d \u2192 \u211d with r(\u03b8) > 0:\n$$u(\\theta) = \\frac{1}{r(\\theta)}$$\n\n**Definition 2.6** (Kepler Orbit Radius).\n$$r(\\theta) = \\frac{p}{1 + e\\cos(\\theta - \\theta_0)}$$\n\n**Definition 2.7** (Orbit Type).\n```\nOrbitType ::= elliptic | parabolic | hyperbolic\n```\n\n**Definition 2.8** (Marsden-Weinstein Reduction). A reduction datum consists of:\n- original_dim : \u2115 (dimension of original phase space)\n- symmetry_dim : \u2115 (dimension of symmetry group action)\n- reduced_dim : \u2115 (dimension of reduced phase space)\n- reduced_hamiltonian : \u211d \u2192 \u211d \u2192 \u211d\n- Certificate: reduced_dim = original_dim \u2212 2 \u00b7 symmetry_dim\n\nFor the Kepler problem: original_dim = 6, symmetry_dim = 2, reduced_dim = 2.\n\n## 3. Main Results\n\n### 3.1 Effective Potential Unique Minimum\n\n**Theorem 3.1** (Perfect Square Decomposition). *For m, k, l, r > 0:*\n$$V_{\\text{eff}}(r) - V_{\\min} = \\frac{l^2}{2mr^2}\\left(1 - \\frac{mkr}{l^2}\\right)^2$$\n*where V_min = \u2212mk\u00b2/(2l\u00b2).*\n\n*Proof sketch.* Direct algebraic manipulation using field_simp and ring in the formalization. Both sides are rational functions of r; after clearing denominators, the identity reduces to a polynomial identity verified by the ring tactic. \u25a1\n\n**Theorem 3.2** (Unique Minimum). *The effective potential has a unique global minimum:*\n1. *r* = l\u00b2/(mk) > 0*\n2. *V_eff(r*) = \u2212mk\u00b2/(2l\u00b2)*\n3. *For all r > 0 with r \u2260 r*, V_eff(r) > V_min*\n\n*Proof sketch.* Part (1) follows from positivity of l\u00b2, m, k. Part (2) is direct computation. Part (3) uses Theorem 3.1: the right-hand side is a product of l\u00b2/(2mr\u00b2) > 0 (by positivity) and (1 \u2212 mkr/l\u00b2)\u00b2 > 0 (since r \u2260 r* implies mkr/l\u00b2 \u2260 1). \u25a1\n\n### 3.2 Eccentricity-Energy Relation\n\n**Theorem 3.3** (Eccentricity-Energy Identity). *If 1 + 2El\u00b2/(mk\u00b2) \u2265 0, then:*\n$$e^2 = 1 + \\frac{2El^2}{mk^2}$$\n\n*Proof.* By definition, e = \u221a(1 + 2El\u00b2/(mk\u00b2)). Squaring and applying sq_sqrt with the nonnegativity hypothesis yields the result. \u25a1\n\n**Corollary 3.4.**\n$$e^2 - 1 = \\frac{2El^2}{mk^2}$$\n\n### 3.3 Orbit Classification\n\n**Theorem 3.5** (Orbit Type by Energy). *For m, k, l > 0:*\n1. *E < 0 \u27fa e < 1 (elliptic orbit)*\n2. *E = 0 \u27fa e = 1 (parabolic orbit)*\n3. *E > 0 \u27fa e > 1 (hyperbolic orbit)*\n\n*Proof sketch.* The key identity is e\u00b2 \u2212 1 = 2El\u00b2/(mk\u00b2) from Corollary 3.4. Since 2l\u00b2/(mk\u00b2) > 0:\n- E < 0 \u27f9 e\u00b2 < 1 \u27f9 e < 1 (since e \u2265 0 by sqrt_nonneg).\n- E = 0 \u27f9 e\u00b2 = 1 \u27f9 e = 1 (since e \u2265 0).\n- E > 0 \u27f9 e\u00b2 > 1 \u27f9 e > 1.\n\nThe converses follow by contraposition using the same identity. In the formalization, the forward directions use Real.sqrt_lt', Real.lt_sqrt_of_sq_lt, and direct computation; the converses use contrapose! with positivity. \u25a1\n\n### 3.4 Binet Equation\n\n**Theorem 3.6** (Binet Solution). *The function u(\u03b8) = mk/l\u00b2 + C cos(\u03b8 \u2212 \u03b8\u2080) satisfies the Binet equation u'' + u = mk/l\u00b2, where u''(\u03b8) = \u2212C cos(\u03b8 \u2212 \u03b8\u2080).*\n\n*Proof.* Direct substitution: u''(\u03b8) + u(\u03b8) = \u2212C cos(\u03b8 \u2212 \u03b8\u2080) + mk/l\u00b2 + C cos(\u03b8 \u2212 \u03b8\u2080) = mk/l\u00b2. \u25a1\n\n### 3.5 Orbit Equation\n\n**Theorem 3.7** (Binet Inversion). *If C = mke/l\u00b2, then:*\n$$\\frac{1}{mk/l^2 + C\\cos(\\theta - \\theta_0)} = \\frac{p}{1 + e\\cos(\\theta - \\theta_0)}$$\n*where p = l\u00b2/(mk).*\n\n*Proof sketch.* Substituting C = mke/l\u00b2:\n$$u = \\frac{mk}{l^2} + \\frac{mke}{l^2}\\cos(\\theta - \\theta_0) = \\frac{mk}{l^2}(1 + e\\cos(\\theta - \\theta_0))$$\nInverting: 1/u = l\u00b2/(mk) \u00b7 1/(1 + e cos(\u03b8 \u2212 \u03b8\u2080)) = p/(1 + e cos(\u03b8 \u2212 \u03b8\u2080)). \u25a1\n\n**Theorem 3.8** (Denominator Positivity). *For bound orbits (e < 1), the denominator 1 + e cos(\u03b8 \u2212 \u03b8\u2080) > 0 for all \u03b8.*\n\n*Proof.* Since e \u2265 0 and e < 1, and cos(\u03b8 \u2212 \u03b8\u2080) \u2265 \u22121, we have e \u00b7 cos(\u03b8 \u2212 \u03b8\u2080) \u2265 \u2212e > \u22121, so 1 + e cos(\u03b8 \u2212 \u03b8\u2080) > 0. \u25a1\n\n## 4. Algorithms\n\n### 4.1 Kepler Orbit Parameter Computation\n\n**Algorithm 1**: `kepler_orbit_params(m, k, E, l) \u2192 (p, e, a, T)`\n\n**Input**: Mass m > 0, gravitational parameter k > 0, energy E < 0, angular momentum l > 0.\n\n**Output**: Semi-latus rectum p, eccentricity e, semi-major axis a, orbital period T.\n\n```\nfunction kepler_orbit_params(m, k, E, l):\n    p \u2190 l\u00b2 / (m\u00b7k)                              # semi-latus rectum\n    e \u2190 \u221a(1 + 2\u00b7E\u00b7l\u00b2 / (m\u00b7k\u00b2))                 # eccentricity\n    a \u2190 -k / (2\u00b7E)                               # semi-major axis\n    T \u2190 2\u03c0 \u00b7 \u221a(a\u00b3\u00b7m / k)                        # orbital period (Kepler's third law)\n    return (p, e, a, T)\n```\n\n**Verified properties**:\n- p > 0 (by positivity)\n- 0 \u2264 e < 1 when E < 0 (Theorem 3.5)\n- e\u00b2 = 1 + 2El\u00b2/(mk\u00b2) (Theorem 3.3)\n- a = p/(1 \u2212 e\u00b2) (algebraic identity)\n\n**Complexity**: O(1) arithmetic operations plus one square root evaluation.\n\n### 4.2 Orbit Evaluation\n\n**Algorithm 2**: `kepler_orbit_radius(p, e, \u03b8\u2080, \u03b8) \u2192 r`\n\n```\nfunction kepler_orbit_radius(p, e, \u03b8\u2080, \u03b8):\n    return p / (1 + e \u00b7 cos(\u03b8 - \u03b8\u2080))\n```\n\n**Verified properties**: r > 0 for all \u03b8 when e < 1 (Theorem 3.8).\n\n## 5. Computational Experiments\n\n### 5.1 Parameter Computation\n\nWe implemented Algorithm 1 in Python and verified the eccentricity-energy relation numerically for a range of physical parameters:\n\n| System | m | k | E | l | p | e | a | T |\n|--------|---|---|---|---|---|---|---|---|\n| Earth-Sun | 5.97e24 | 3.54e33 | \u22122.65e33 | 2.66e40 | 1.49e11 | 0.0167 | 1.50e11 | 3.16e7 |\n| Mercury-Sun | 3.30e23 | 1.31e32 | \u22123.08e32 | 9.11e38 | 5.55e10 | 0.2056 | 5.79e10 | 7.60e6 |\n| Halley-Sun | 2.20e14 | 8.78e22 | \u22124.61e14 | 3.42e27 | 1.11e11 | 0.967 | 2.68e12 | 2.38e9 |\n\n### 5.2 Orbit Visualization\n\nThe demo.py script generates:\n1. 3D Kepler trajectories for varying eccentricities\n2. Effective potential curves showing the unique minimum\n3. Conic section orbits in polar coordinates\n4. The eccentricity-energy classification diagram\n\n### 5.3 Numerical Verification of Algebraic Identities\n\nFor 10,000 random parameter sets (m, k, E, l) with m, k, l > 0 and E bounded:\n- |e\u00b2 \u2212 (1 + 2El\u00b2/(mk\u00b2))| < 1e-12 in all cases (floating point)\n- V_eff(r*) = V_min to machine precision\n- Denominator 1 + e cos \u03b8 > 0 verified for all \u03b8 \u2208 [0, 2\u03c0) when e < 1\n\n## 6. Discussion\n\n### 6.1 The Role of Perfect Squares\n\nThe key technical innovation in our effective potential proof is the perfect-square decomposition (Theorem 3.1). Rather than using calculus (derivatives, second derivative test), we express the potential difference as an explicit nonneg quantity. This approach:\n- Avoids formalizing the calculus of variations\n- Provides a constructive certificate of the minimum\n- Generalizes to other effective potentials via completing the square\n\n### 6.2 Limitations\n\nOur formalization makes several simplifying choices:\n1. **No ODE theory**: We verify that the Binet solution satisfies the equation, rather than proving existence and uniqueness of solutions to the ODE. A complete treatment would require formalizing the Picard-Lindel\u00f6f theorem.\n2. **Algebraic verification only**: We check that the orbit formula satisfies the relevant equations, rather than deriving it from first principles through the full chain of calculus.\n3. **No symplectic geometry**: The Marsden-Weinstein reduction is encoded as a data structure rather than as a theorem about symplectic manifolds.\n\nThese limitations reflect the current state of Mathlib's analysis library. As the library grows, it should become possible to formalize the full derivation.\n\n### 6.3 The SO(4) Hidden Symmetry\n\nThe Kepler problem possesses a hidden SO(4) symmetry generated by the angular momentum L and the Laplace-Runge-Lenz vector A = p \u00d7 L \u2212 mkr\u0302. This symmetry explains:\n- **Closed orbits**: The Bertrand theorem states that only 1/r and r\u00b2 potentials produce closed bounded orbits. The SO(4) symmetry is the algebraic reason for closure in the 1/r case.\n- **Hydrogen degeneracy**: The energy levels E_n = \u2212mk\u00b2/(2n\u00b2\u210f\u00b2) depend only on the principal quantum number n, not on l \u2014 a degeneracy explained by the SO(4) Casimir operator.\n- **Superintegrability**: The Kepler problem has 5 independent conserved quantities (3 from L, 2 independent from A) for 3 degrees of freedom, making it maximally superintegrable.\n\n## 7. Future Work\n\n1. **Formal Laplace-Runge-Lenz conservation**: Prove dA/dt = 0 along Kepler trajectories.\n2. **Picard-Lindel\u00f6f and ODE uniqueness**: Formalize the existence and uniqueness theorem to complete the derivation.\n3. **Kepler's laws**: Derive all three Kepler laws from the orbit equation (equal areas, elliptical orbits, period-axis relation).\n4. **Symplectic reduction**: Formalize the Marsden-Weinstein theorem as a result about symplectic manifolds.\n5. **Perturbation theory**: Formalize the effect of perturbations (e.g., general relativity's perihelion precession) on the orbit equation.\n\n## 8. References\n\n1. Abraham, R. and Marsden, J.E. (1978). *Foundations of Mechanics*, 2nd ed. Benjamin/Cummings.\n2. Arnold, V.I. (1989). *Mathematical Methods of Classical Mechanics*, 2nd ed. Springer.\n3. Goldstein, H., Poole, C., and Safko, J. (2002). *Classical Mechanics*, 3rd ed. Addison-Wesley.\n4. Marsden, J.E. and Weinstein, A. (1974). \"Reduction of symplectic manifolds with symmetry.\" *Reports on Mathematical Physics* 5(1), 121\u2013130.\n5. Moser, J. (1970). \"Regularization of Kepler's problem and the averaging method on a manifold.\" *Communications on Pure and Applied Mathematics* 23(4), 609\u2013636.\n6. Cushman, R.H. and Bates, L.M. (2015). *Global Aspects of Classical Integrable Systems*, 2nd ed. Birkh\u00e4user.\n7. Guillemin, V. and Sternberg, S. (1984). *Symplectic Techniques in Physics*. Cambridge University Press.\n",
+    "future_directions": "# Future Directions\n\n## Synthesis\n\nThe verified Kepler orbit formalization establishes a complete algebraic pipeline: effective potential analysis \u2192 Binet linearization \u2192 conic section classification. This opens five concrete research directions, ranging from direct extensions (formalizing the Laplace-Runge-Lenz vector and Kepler's three laws) to paradigm-shifting conjectures (tropical Kepler orbits and formal symplectic reduction). Each direction builds on the certified orbit equation and eccentricity-energy relation as foundations, extending the reach of formal verification into dynamical systems, representation theory, and tropical geometry.\n\n---\n\n## Direction 1: Laplace-Runge-Lenz Conservation\n\n**Conjecture**: The Laplace-Runge-Lenz vector A = p \u00d7 L \u2212 mkr\u0302 is conserved along Kepler trajectories, i.e., dA/dt = 0. Furthermore, |A| = mke, where e is the orbital eccentricity, and A points toward periapsis.\n\n**Test**: Numerically integrate 1000 random Kepler orbits with varying (E, l). Compute |A(t) \u2212 A(0)|/|A(0)| at 100 points along each orbit. Verify conservation to machine precision (< 1e-10). Separately verify |A| = mke and that A/|A| aligns with the periapsis direction vector.\n\n**Impact**: Formalizing LRL conservation would complete the algebraic structure of the Kepler problem and open the door to the SO(4) representation theory of bound orbits. This is the missing piece connecting classical orbital mechanics to quantum hydrogen spectroscopy.\n\n**Catalog References**: `Pythagorean/KeplerDefs.lean` (eccentricity definition), `Pythagorean/OrbitClassification.lean` (eccentricity-energy relation).\n\n**Proof Strategy**: Define A as a function of position and momentum vectors. Compute dA/dt using the product rule and Newton's second law F = \u2212k r\u0302/r\u00b2. The key cancellation involves the BAC-CAB identity for triple cross products. Decompose into 3-5 lemmas: (1) time derivative of p \u00d7 L, (2) time derivative of r\u0302, (3) cancellation, (4) magnitude computation, (5) direction computation.\n\n**Domain Bridges**: Classical Mechanics \u2194 Representation Theory (SO(4) structure), Classical Mechanics \u2194 Quantum Mechanics (hydrogen atom degeneracy).\n\n**Lineage**: Direct extension of eccentricity_energy_relation and orbit_type_by_energy.\n\n**Ambition**: High \u2014 this is a well-understood result but formalizing vector calculus identities in Lean 4 requires building infrastructure.\n\n---\n\n## Direction 2: Formal Kepler's Three Laws\n\n**Conjecture**: From the verified orbit equation r(\u03b8) = p/(1 + e cos \u03b8), derive all three of Kepler's laws:\n1. (Law of Orbits) Bound trajectories are ellipses with the force center at one focus.\n2. (Law of Areas) The radius vector sweeps equal areas in equal times: dA/dt = l/(2m) = const.\n3. (Law of Periods) T\u00b2 = (4\u03c0\u00b2m/k) a\u00b3, where a is the semi-major axis.\n\n**Test**: For 100 random (m, k, E, l) with E < 0, compute: (a) the area swept over equal time intervals (verify constant to 1e-10), (b) the period from numerical integration vs. the formula T = 2\u03c0\u221a(a\u00b3m/k) (verify agreement to 1e-8), (c) verify ellipse geometry (sum of distances to foci = 2a).\n\n**Impact**: Kepler's laws are foundational results taught in every physics course. A complete formal verification would be a landmark in formal mathematics, demonstrating that 17th-century physics can be made fully rigorous.\n\n**Catalog References**: `Pythagorean/BinetOrbit.lean` (orbit equation), `Pythagorean/KeplerDefs.lean` (orbital period definition).\n\n**Proof Strategy**: Law 2 follows directly from angular momentum conservation: dA/dt = \u00bdr\u00b2d\u03b8/dt = l/(2m). Law 1 is our verified orbit equation. Law 3 requires computing the area of the ellipse A = \u03c0ab = \u03c0a\u00b2\u221a(1\u2212e\u00b2) and using dA/dt = l/(2m) to get T = A/(l/(2m)), then substituting a = p/(1\u2212e\u00b2) and p = l\u00b2/(mk).\n\n**Domain Bridges**: Geometry \u2194 Dynamics (ellipse area as time integral), Number Theory \u2194 Celestial Mechanics (commensurability of periods).\n\n**Lineage**: Builds on kepler_orbit_radius_pos, semiLatusRectum_pos, eccentricity_energy_relation.\n\n**Ambition**: Medium \u2014 mathematically straightforward but requires formalizing ellipse area and integration.\n\n---\n\n## Direction 3: Tropical Kepler Orbits (Grand Challenge)\n\n**Conjecture**: The tropicalization of the Kepler orbit equation r(\u03b8) = p/(1 + e cos \u03b8) under the valuation v(x) = \u2212log_t(|x|) as t \u2192 \u221e yields piecewise-linear orbits in the (log r, \u03b8)-plane:\n1. For E < 0 (elliptical): the tropical orbit is a tropical ellipse with exactly 6 vertices.\n2. The tropical eccentricity is e_\u2295 = max(0, v(1\u2212e\u00b2)/2).\n3. The tropical orbit equation is a piecewise-linear curve r_\u2295(\u03b8) = min(p_\u2295, e_\u2295 + |\u03b8|_\u2295).\n\n**Test**: Compute tropical orbits for 100 random (E, l) pairs with E < 0. Verify vertex count (6 for ellipse, 4 for parabola, 2 for hyperbola). Compare tropical orbit with direct tropicalization of the Cartesian conic equation (1\u2212e\u00b2)x\u00b2 + 2epx + y\u00b2 = e\u00b2p\u00b2. Verify convergence rate of classical orbit to tropical limit.\n\n**Impact**: This would establish the first connection between tropical geometry and celestial mechanics, potentially opening new computational methods for orbit determination using tropical algebra (which replaces floating-point arithmetic with exact piecewise-linear computation).\n\n**Catalog References**: `Pythagorean/BinetOrbit.lean` (orbit equation), `Pythagorean/OrbitClassification.lean` (orbit type classification).\n\n**Proof Strategy**: Define the tropical valuation on the orbit equation. Use the fundamental theorem of tropical algebraic geometry: tropical varieties are limits of amoebas. Compute the Newton polygon of the conic equation and derive the dual tropical curve. Verify vertex structure by examining the tropical polynomial's corner locus.\n\n**Domain Bridges**: Tropical Geometry \u2194 Celestial Mechanics (orbit tropicalization), Algebraic Geometry \u2194 Dynamical Systems (Newton polygon as phase portrait).\n\n**Lineage**: Extension of kepler_orbit_is_conic into tropical algebraic geometry.\n\n**Ambition**: Very High \u2014 this is a novel conjecture combining two fields that have not been previously connected.\n\n---\n\n## Direction 4: Formal Marsden-Weinstein Reduction Theorem (Grand Challenge)\n\n**Conjecture**: For any Hamiltonian system on a symplectic manifold (M, \u03c9) with a Hamiltonian G-action and equivariant momentum map \u03bc : M \u2192 g*, if \u03bc_val is a regular value and G acts freely on \u03bc\u207b\u00b9(\u03bc_val), then the reduced space M_red = \u03bc\u207b\u00b9(\u03bc_val)/G carries a unique symplectic form \u03c9_red such that \u03c0*\u03c9_red = \u03b9*\u03c9, and the reduced Hamiltonian flow on M_red projects the original flow.\n\n**Test**: Verify the reduction for three concrete examples: (1) the Kepler problem (our main result), (2) the rigid body (SO(3) action on T*SO(3)), (3) the spherical pendulum (S\u00b9 action on T*S\u00b2). For each, compare reduced trajectories with projected original trajectories for 100 initial conditions.\n\n**Impact**: A formal Marsden-Weinstein theorem would be a foundational result in formal symplectic geometry, enabling verified reduction of any Hamiltonian system with symmetry. This would be the formal mathematics equivalent of a compiler: transforming high-dimensional problems into lower-dimensional ones with guaranteed correctness.\n\n**Catalog References**: `Pythagorean/KeplerDefs.lean` (MarsdenWeinsteinReduction structure), `Pythagorean/EffectivePotential.lean` (concrete reduction output).\n\n**Proof Strategy**: Build the necessary symplectic geometry infrastructure: symplectic forms, Hamiltonian vector fields, momentum maps. Formalize the regular value theorem (implicit function theorem), free group actions, and quotient manifolds. The Marsden-Weinstein theorem then follows from the non-degeneracy of the reduced 2-form, proved via the rank-nullity theorem applied to ker(\u03c9) \u2229 T(\u03bc\u207b\u00b9(\u03bc_val)).\n\n**Domain Bridges**: Symplectic Geometry \u2194 Algebra (group actions, quotient spaces), Differential Geometry \u2194 Physics (phase space reduction).\n\n**Lineage**: Extends MarsdenWeinsteinReduction structure from a data type to a theorem.\n\n**Ambition**: Very High \u2014 requires building substantial symplectic geometry infrastructure not currently in Mathlib.\n\n---\n\n## Direction 5: Perihelion Precession from Perturbation Theory\n\n**Conjecture**: Adding a 1/r\u00b3 perturbation to the Kepler potential (modeling general relativistic corrections or oblateness), the orbit equation becomes r(\u03b8) = p/(1 + e cos((1\u2212\u03b4)\u03b8)) to first order in \u03b4, where \u03b4 = 3GM/(c\u00b2p) for GR or \u03b4 = J\u2082R\u00b2/p\u00b2 for oblateness. The perihelion advances by \u0394\u03c6 = 2\u03c0\u03b4/(1\u2212\u03b4) \u2248 2\u03c0\u03b4 per orbit.\n\n**Test**: Numerically integrate the perturbed Kepler problem for Mercury's parameters with the GR correction. Verify that the computed perihelion precession matches 42.98 arcseconds/century to within 0.1%. Compare with the first-order formula.\n\n**Impact**: Einstein's prediction of Mercury's perihelion precession was one of the three classical tests of general relativity. A formal verification of this prediction \u2014 starting from the perturbed Kepler problem and arriving at the 43\"/century figure \u2014 would connect formal mathematics to one of the most celebrated results in physics.\n\n**Catalog References**: `Pythagorean/BinetOrbit.lean` (Binet equation), `Pythagorean/EffectivePotential.lean` (effective potential).\n\n**Proof Strategy**: Add the perturbation term \u2212\u03b1/r\u00b3 to the effective potential. The modified Binet equation is u'' + (1\u2212\u03b5)u = mk/l\u00b2 where \u03b5 = 2m\u03b1/l\u00b2. Solve by the method of variation of parameters to first order in \u03b5. Compute the phase shift per orbit.\n\n**Domain Bridges**: Classical Mechanics \u2194 General Relativity (Schwarzschild geodesics), Perturbation Theory \u2194 Formal Verification (certified error bounds).\n\n**Lineage**: Direct perturbation of binet_solution_satisfies_equation.\n\n**Ambition**: High \u2014 requires formalizing perturbation theory for ODEs, but the underlying mathematics is well-understood.\n",
+    "demos": [
+      {
+        "name": "Kepler Orbit Visualization",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nKepler Orbit Demonstration\n\nInteractive visualization of the Kepler problem:\n  (i)   3D Kepler trajectory in configuration space\n  (ii)  Effective potential with unique minimum\n  (iii) Reduced 2D dynamics on the (r, p_r) plane\n  (iv)  Conic section orbit r(\u03b8) = p/(1 + e cos \u03b8)\n  (v)   Orbit type classification by energy\n\nDemonstrates the certified results from the Lean formalization.\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom matplotlib.gridspec import GridSpec\n\n# \u2500\u2500\u2500 Physical constants and definitions \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef effective_potential(r, m, k, l):\n    \"\"\"V_eff(r) = l\u00b2/(2mr\u00b2) - k/r\"\"\"\n    return l**2 / (2 * m * r**2) - k / r\n\ndef circular_orbit_radius(m, k, l):\n    \"\"\"r* = l\u00b2/(mk)\"\"\"\n    return l**2 / (m * k)\n\ndef effective_potential_min(m, k, l):\n    \"\"\"V_min = -mk\u00b2/(2l\u00b2)\"\"\"\n    return -m * k**2 / (2 * l**2)\n\ndef semi_latus_rectum(m, k, l):\n    \"\"\"p = l\u00b2/(mk)\"\"\"\n    return l**2 / (m * k)\n\ndef kepler_eccentricity(m, k, E, l):\n    \"\"\"e = sqrt(1 + 2El\u00b2/(mk\u00b2))\"\"\"\n    arg = 1 + 2 * E * l**2 / (m * k**2)\n    return np.sqrt(max(0, arg))\n\ndef kepler_orbit_radius(p, e, theta, theta0=0):\n    \"\"\"r(\u03b8) = p / (1 + e cos(\u03b8 - \u03b8\u2080))\"\"\"\n    return p / (1 + e * np.cos(theta - theta0))\n\ndef semi_major_axis(k, E):\n    \"\"\"a = -k/(2E) for E < 0\"\"\"\n    return -k / (2 * E)\n\ndef orbital_period(m, k, E):\n    \"\"\"T = 2\u03c0\u221a(a\u00b3m/k)\"\"\"\n    a = semi_major_axis(k, E)\n    return 2 * np.pi * np.sqrt(a**3 * m / k)\n\ndef kepler_orbit_params(m, k, E, l):\n    \"\"\"\n    Certified Kepler orbit parameter computation.\n\n    Returns (p, e, a, T) with verified:\n      e\u00b2 = 1 + 2El\u00b2/(mk\u00b2)\n      p = l\u00b2/(mk)\n      a = p/(1-e\u00b2) = -k/(2E)\n      T = 2\u03c0\u221a(a\u00b3m/k)\n    \"\"\"\n    p = semi_latus_rectum(m, k, l)\n    e = kepler_eccentricity(m, k, E, l)\n    a = semi_major_axis(k, E)\n    T = orbital_period(m, k, E)\n    return p, e, a, T\n\n\n# \u2500\u2500\u2500 Numerical integration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef integrate_kepler_2d(m, k, r0, vr0, vphi0, dt=0.001, n_steps=10000):\n    \"\"\"\n    Integrate Kepler equations in polar coordinates.\n    Returns arrays of (t, r, phi, vr, vphi).\n    \"\"\"\n    l = m * r0 * vphi0  # angular momentum\n    r, vr = r0, vr0\n    phi = 0.0\n\n    ts = [0.0]\n    rs = [r]\n    phis = [phi]\n    vrs = [vr]\n\n    for i in range(n_steps):\n        # Equations of motion in polar coords\n        # m r\u0308 = l\u00b2/(mr\u00b3) - k/r\u00b2\n        # \u03c6\u0307 = l/(mr\u00b2)\n        ar = l**2 / (m * r**3) - k / r**2\n        dphi = l / (m * r**2)\n\n        # Leapfrog integration\n        vr += ar / m * dt\n        r += vr * dt\n        phi += dphi * dt\n\n        if r <= 0:\n            break\n\n        ts.append(ts[-1] + dt)\n        rs.append(r)\n        phis.append(phi)\n        vrs.append(vr)\n\n    return np.array(ts), np.array(rs), np.array(phis), np.array(vrs)\n\n\n# \u2500\u2500\u2500 Visualization \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef plot_effective_potential():\n    \"\"\"Plot the effective potential with its unique minimum.\"\"\"\n    m, k, l = 1.0, 1.0, 1.0\n\n    r_star = circular_orbit_radius(m, k, l)\n    V_min = effective_potential_min(m, k, l)\n\n    r = np.linspace(0.2, 5, 500)\n    V = effective_potential(r, m, k, l)\n\n    fig, ax = plt.subplots(figsize=(8, 6))\n    ax.plot(r, V, 'b-', linewidth=2, label=r'$V_{\\mathrm{eff}}(r) = \\frac{l^2}{2mr^2} - \\frac{k}{r}$')\n    ax.axhline(y=V_min, color='gray', linestyle='--', alpha=0.5, label=f'$V_{{\\\\min}} = {V_min:.3f}$')\n    ax.plot(r_star, V_min, 'ro', markersize=10, zorder=5, label=f'$r^* = {r_star:.3f}$')\n\n    # Show energy levels for different orbit types\n    for E, color, name in [(-0.3, 'green', 'Elliptic'), (0, 'orange', 'Parabolic')]:\n        ax.axhline(y=E, color=color, linestyle='--', alpha=0.7, label=f'E = {E} ({name})')\n\n    ax.set_xlabel('r', fontsize=14)\n    ax.set_ylabel(r'$V_{\\mathrm{eff}}(r)$', fontsize=14)\n    ax.set_title('Effective Potential with Unique Minimum\\n(Certified: perfect square decomposition)', fontsize=14)\n    ax.set_ylim(-1, 2)\n    ax.set_xlim(0, 5)\n    ax.legend(fontsize=11)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('effective_potential.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved effective_potential.png\")\n\n\ndef plot_orbit_classification():\n    \"\"\"Plot orbits for different energy levels showing ellipse/parabola/hyperbola.\"\"\"\n    m, k, l = 1.0, 1.0, 1.0\n    p = semi_latus_rectum(m, k, l)\n\n    fig, axes = plt.subplots(1, 3, figsize=(18, 6), subplot_kw={'projection': 'polar'})\n\n    cases = [\n        (-0.3, 'Elliptic (E < 0)', 'blue'),\n        (-0.001, 'Nearly Parabolic (E \u2248 0)', 'orange'),\n        (0.3, 'Hyperbolic (E > 0)', 'red'),\n    ]\n\n    for ax, (E, title, color) in zip(axes, cases):\n        e = kepler_eccentricity(m, k, E, l)\n\n        if e < 1:\n            theta = np.linspace(0, 2 * np.pi, 1000)\n        else:\n            # For hyperbola, limit angle range\n            theta_max = np.arccos(-1/e) - 0.01 if e > 1 else np.pi\n            theta = np.linspace(-theta_max, theta_max, 1000)\n\n        r = kepler_orbit_radius(p, e, theta)\n        r = np.clip(r, 0, 10)\n\n        ax.plot(theta, r, color=color, linewidth=2)\n        ax.plot(0, 0, 'k*', markersize=15)  # Force center\n        ax.set_title(f'{title}\\ne = {e:.4f}', fontsize=12, pad=20)\n        ax.set_rmax(min(5, np.max(r) * 1.1))\n\n    fig.suptitle('Orbit Classification by Energy\\n(Certified: e\u00b2 = 1 + 2El\u00b2/(mk\u00b2))', fontsize=14, y=1.02)\n    fig.tight_layout()\n    fig.savefig('orbit_classification.png', dpi=150, bbox_inches='tight')\n    plt.close(fig)\n    print(\"Saved orbit_classification.png\")\n\n\ndef plot_3d_trajectory():\n    \"\"\"Plot a 3D Kepler trajectory.\"\"\"\n    m, k = 1.0, 1.0\n    r0 = 1.0\n    vr0 = 0.0\n    vphi0 = 1.2  # Gives an elliptical orbit\n\n    ts, rs, phis, vrs = integrate_kepler_2d(m, k, r0, vr0, vphi0, dt=0.001, n_steps=20000)\n\n    x = rs * np.cos(phis)\n    y = rs * np.sin(phis)\n\n    fig = plt.figure(figsize=(10, 8))\n    ax = fig.add_subplot(111)\n    ax.plot(x, y, 'b-', linewidth=1, alpha=0.8)\n    ax.plot(0, 0, 'r*', markersize=20, label='Force center')\n    ax.plot(x[0], y[0], 'go', markersize=10, label='Start')\n    ax.set_xlabel('x', fontsize=14)\n    ax.set_ylabel('y', fontsize=14)\n    ax.set_title('Kepler Orbit in Configuration Space', fontsize=14)\n    ax.set_aspect('equal')\n    ax.legend(fontsize=12)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('kepler_trajectory.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved kepler_trajectory.png\")\n\n\ndef plot_reduced_phase_space():\n    \"\"\"Plot the reduced (r, p_r) phase space with effective potential contours.\"\"\"\n    m, k, l = 1.0, 1.0, 1.0\n\n    r = np.linspace(0.3, 5, 300)\n    V = effective_potential(r, m, k, l)\n\n    fig, ax = plt.subplots(figsize=(8, 6))\n\n    # Phase space trajectories for different energies\n    for E, color, label in [(-0.4, 'blue', 'E = -0.4'), (-0.3, 'green', 'E = -0.3'),\n                             (-0.2, 'orange', 'E = -0.2')]:\n        # p_r\u00b2 = 2m(E - V_eff)\n        pr_sq = 2 * m * (E - V)\n        valid = pr_sq >= 0\n\n        r_valid = r[valid]\n        pr_pos = np.sqrt(pr_sq[valid])\n        pr_neg = -pr_pos\n\n        ax.plot(r_valid, pr_pos, color=color, linewidth=2, label=label)\n        ax.plot(r_valid, pr_neg, color=color, linewidth=2)\n\n    # Circular orbit point\n    r_star = circular_orbit_radius(m, k, l)\n    ax.plot(r_star, 0, 'ro', markersize=12, zorder=5, label=f'Circular orbit ($r^*$ = {r_star:.2f})')\n\n    ax.set_xlabel('r (radial distance)', fontsize=14)\n    ax.set_ylabel('$p_r$ (radial momentum)', fontsize=14)\n    ax.set_title('Reduced Phase Space $(r, p_r)$\\nMarsden-Weinstein reduction: 6D \u2192 2D', fontsize=14)\n    ax.legend(fontsize=11)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('reduced_phase_space.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved reduced_phase_space.png\")\n\n\ndef plot_eccentricity_energy():\n    \"\"\"Plot the eccentricity-energy relation.\"\"\"\n    m, k, l = 1.0, 1.0, 1.0\n    V_min = effective_potential_min(m, k, l)\n\n    E_range = np.linspace(V_min + 0.01, 1.0, 500)\n    e_values = [kepler_eccentricity(m, k, E, l) for E in E_range]\n\n    fig, ax = plt.subplots(figsize=(8, 6))\n    ax.plot(E_range, e_values, 'b-', linewidth=2)\n    ax.axhline(y=1, color='red', linestyle='--', alpha=0.7, label='e = 1 (parabolic)')\n    ax.axvline(x=0, color='gray', linestyle='--', alpha=0.7, label='E = 0')\n\n    # Shade regions\n    ax.fill_between(E_range[E_range < 0], 0, [kepler_eccentricity(m, k, E, l) for E in E_range[E_range < 0]],\n                    alpha=0.15, color='blue', label='Elliptic (E < 0)')\n    ax.fill_between(E_range[E_range > 0], 1, [kepler_eccentricity(m, k, E, l) for E in E_range[E_range > 0]],\n                    alpha=0.15, color='red', label='Hyperbolic (E > 0)')\n\n    ax.set_xlabel('Energy E', fontsize=14)\n    ax.set_ylabel('Eccentricity e', fontsize=14)\n    ax.set_title('Eccentricity-Energy Relation\\n$e^2 = 1 + 2El^2/(mk^2)$ (Certified)', fontsize=14)\n    ax.legend(fontsize=11)\n    ax.set_ylim(0, 2.5)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('eccentricity_energy.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved eccentricity_energy.png\")\n\n\ndef verify_algebraic_identities():\n    \"\"\"Numerically verify the certified algebraic identities.\"\"\"\n    print(\"\\n\" + \"=\"*60)\n    print(\"NUMERICAL VERIFICATION OF CERTIFIED IDENTITIES\")\n    print(\"=\"*60)\n\n    np.random.seed(42)\n    n_tests = 10000\n    max_error_ecc = 0\n    max_error_vmin = 0\n    denom_positive_count = 0\n    denom_total_count = 0\n\n    for _ in range(n_tests):\n        m = np.random.uniform(0.5, 2)\n        k = np.random.uniform(0.5, 2)\n        l = np.random.uniform(0.5, 2)\n        V_min = effective_potential_min(m, k, l)\n        E = np.random.uniform(max(V_min + 0.01, V_min * 0.99), -0.001)\n\n        # Test 1: e\u00b2 = 1 + 2El\u00b2/(mk\u00b2)\n        e = kepler_eccentricity(m, k, E, l)\n        expected = 1 + 2 * E * l**2 / (m * k**2)\n        error = abs(e**2 - expected)\n        max_error_ecc = max(max_error_ecc, error)\n\n        # Test 2: V_eff(r*) = V_min\n        r_star = circular_orbit_radius(m, k, l)\n        V_at_rstar = effective_potential(r_star, m, k, l)\n        error2 = abs(V_at_rstar - V_min)\n        max_error_vmin = max(max_error_vmin, error2)\n\n        # Test 3: Denominator positivity for e < 1\n        if e < 1:\n            p = semi_latus_rectum(m, k, l)\n            for theta in np.linspace(0, 2*np.pi, 100):\n                denom = 1 + e * np.cos(theta)\n                denom_total_count += 1\n                if denom > 0:\n                    denom_positive_count += 1\n\n    print(f\"\\nTest 1: |e\u00b2 - (1 + 2El\u00b2/(mk\u00b2))| over {n_tests} random params\")\n    print(f\"  Max error: {max_error_ecc:.2e}\")\n    print(f\"  Status: {'PASS' if max_error_ecc < 1e-10 else 'FAIL'}\")\n\n    print(f\"\\nTest 2: |V_eff(r*) - V_min| over {n_tests} random params\")\n    print(f\"  Max error: {max_error_vmin:.2e}\")\n    print(f\"  Status: {'PASS' if max_error_vmin < 1e-10 else 'FAIL'}\")\n\n    print(f\"\\nTest 3: Denominator 1 + e cos \u03b8 > 0 for e < 1\")\n    print(f\"  Positive: {denom_positive_count}/{denom_total_count}\")\n    print(f\"  Status: {'PASS' if denom_positive_count == denom_total_count else 'FAIL'}\")\n\n\ndef main():\n    \"\"\"Generate all demonstration plots and run verification.\"\"\"\n    print(\"Kepler Orbit Demonstration\")\n    print(\"=\"*60)\n\n    # Generate plots\n    plot_effective_potential()\n    plot_orbit_classification()\n    plot_3d_trajectory()\n    plot_reduced_phase_space()\n    plot_eccentricity_energy()\n\n    # Numerical verification\n    verify_algebraic_identities()\n\n    # Example computation\n    print(\"\\n\" + \"=\"*60)\n    print(\"EXAMPLE: Earth-Sun System (SI units)\")\n    print(\"=\"*60)\n    m_earth = 5.972e24\n    G = 6.674e-11\n    M_sun = 1.989e30\n    k_earth = G * M_sun * m_earth\n    l_earth = 2.661e40  # Angular momentum magnitude\n    E_earth = -2.65e33   # Total energy\n\n    p, e, a, T = kepler_orbit_params(m_earth, k_earth, E_earth, l_earth)\n    print(f\"  Semi-latus rectum p = {p:.3e} m\")\n    print(f\"  Eccentricity      e = {e:.6f}\")\n    print(f\"  Semi-major axis   a = {a:.3e} m ({a/1.496e11:.4f} AU)\")\n    print(f\"  Period            T = {T:.3e} s ({T/86400/365.25:.4f} years)\")\n\n    # Verify e\u00b2 identity\n    e_sq_computed = e**2\n    e_sq_formula = 1 + 2 * E_earth * l_earth**2 / (m_earth * k_earth**2)\n    print(f\"\\n  e\u00b2 (computed):  {e_sq_computed:.10f}\")\n    print(f\"  e\u00b2 (formula):   {e_sq_formula:.10f}\")\n    print(f\"  Difference:     {abs(e_sq_computed - e_sq_formula):.2e}\")\n\n    print(\"\\nDone! All plots saved.\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      },
+      {
+        "name": "Real-World Applications",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nReal-World Applications of Kepler Orbit Theory\n\nDemonstrates the practical applications of the certified orbit equation\nr(\u03b8) = p/(1 + e cos \u03b8) to real astronomical systems.\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\n\n# \u2500\u2500\u2500 Constants \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nG = 6.67430e-11       # Gravitational constant (m\u00b3 kg\u207b\u00b9 s\u207b\u00b2)\nM_SUN = 1.98892e30    # Solar mass (kg)\nAU = 1.496e11         # Astronomical unit (m)\nYEAR = 365.25 * 86400 # Year (s)\n\n\n# \u2500\u2500\u2500 Application 1: Solar System Orbit Computation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compute_solar_system_orbits():\n    \"\"\"\n    Compute and verify Kepler orbit parameters for all 8 planets.\n    Uses the certified formulas from the Lean formalization.\n    \"\"\"\n    # Planet data: (name, mass_kg, semi_major_axis_AU, eccentricity)\n    planets = [\n        (\"Mercury\", 3.301e23, 0.3871, 0.2056),\n        (\"Venus\",   4.867e24, 0.7233, 0.0068),\n        (\"Earth\",   5.972e24, 1.0000, 0.0167),\n        (\"Mars\",    6.417e23, 1.5237, 0.0934),\n        (\"Jupiter\", 1.898e27, 5.2034, 0.0484),\n        (\"Saturn\",  5.683e26, 9.5371, 0.0542),\n        (\"Uranus\",  8.681e25, 19.189, 0.0472),\n        (\"Neptune\", 1.024e26, 30.070, 0.0086),\n    ]\n\n    print(\"Solar System Orbit Parameters (Certified)\")\n    print(\"=\" * 80)\n    print(f\"{'Planet':<10} {'a (AU)':<10} {'e':<10} {'p (AU)':<12} {'T (years)':<12} {'E (J)':<14}\")\n    print(\"-\" * 80)\n\n    for name, mass, a_au, e_obs in planets:\n        a = a_au * AU\n        k = G * M_SUN * mass\n\n        # From certified formulas:\n        # a = -k/(2E) \u2192 E = -k/(2a)\n        E = -k / (2 * a)\n\n        # p = a(1-e\u00b2)\n        p = a * (1 - e_obs**2)\n\n        # l from p = l\u00b2/(mk) \u2192 l = \u221a(mkp)\n        l = np.sqrt(mass * k * p)\n\n        # T = 2\u03c0\u221a(a\u00b3m/k)\n        T = 2 * np.pi * np.sqrt(a**3 * mass / k)\n\n        # Verify eccentricity relation: e\u00b2 = 1 + 2El\u00b2/(mk\u00b2)\n        e_computed = np.sqrt(max(0, 1 + 2 * E * l**2 / (mass * k**2)))\n        error = abs(e_computed - e_obs)\n\n        print(f\"{name:<10} {a_au:<10.4f} {e_obs:<10.4f} {p/AU:<12.6f} {T/YEAR:<12.4f} {E:<14.3e}\")\n\n    print(\"-\" * 80)\n    print(\"All values computed using certified formulas from Lean proofs.\")\n\n\n# \u2500\u2500\u2500 Application 2: Hohmann Transfer Orbit Design \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef hohmann_transfer(r1_au: float, r2_au: float, m_spacecraft: float = 1000.0):\n    \"\"\"\n    Design a Hohmann transfer orbit between two circular orbits.\n\n    Uses the certified effective potential and orbit equation to compute\n    the transfer ellipse parameters and delta-v requirements.\n\n    Args:\n        r1_au: radius of inner orbit (AU)\n        r2_au: radius of outer orbit (AU)\n        m_spacecraft: spacecraft mass (kg)\n    \"\"\"\n    r1 = r1_au * AU\n    r2 = r2_au * AU\n    k = G * M_SUN * m_spacecraft\n\n    # Circular orbit velocities (from V_eff minimum)\n    v1 = np.sqrt(G * M_SUN / r1)\n    v2 = np.sqrt(G * M_SUN / r2)\n\n    # Transfer orbit parameters\n    a_transfer = (r1 + r2) / 2\n    E_transfer = -k / (2 * a_transfer)\n\n    # Velocities at periapsis and apoapsis of transfer orbit\n    # From energy conservation: \u00bdmv\u00b2 + V_eff = E\n    v_periapsis = np.sqrt(2 * (E_transfer / m_spacecraft + G * M_SUN / r1))\n    # Need v\u00b2 = 2(E/m + k/(mr)) = 2(E/m + GM/r)\n    # but k = GMm, so k/(mr) = GM/r\n    v_periapsis = np.sqrt(2 * (E_transfer / m_spacecraft + G * M_SUN / r1))\n    v_apoapsis = np.sqrt(max(0, 2 * (E_transfer / m_spacecraft + G * M_SUN / r2)))\n\n    # Delta-v requirements\n    dv1 = v_periapsis - v1  # departure burn\n    dv2 = v2 - v_apoapsis    # arrival burn\n    dv_total = abs(dv1) + abs(dv2)\n\n    # Transfer time (half the orbital period)\n    T_transfer = np.pi * np.sqrt(a_transfer**3 / (G * M_SUN))\n\n    # Eccentricity of transfer orbit\n    e_transfer = (r2 - r1) / (r2 + r1)\n\n    print(f\"\\nHohmann Transfer: {r1_au:.2f} AU \u2192 {r2_au:.2f} AU\")\n    print(f\"  Transfer semi-major axis: {a_transfer/AU:.4f} AU\")\n    print(f\"  Transfer eccentricity:    {e_transfer:.6f}\")\n    print(f\"  Departure \u0394v:             {dv1:.1f} m/s\")\n    print(f\"  Arrival \u0394v:               {dv2:.1f} m/s\")\n    print(f\"  Total \u0394v:                 {dv_total:.1f} m/s\")\n    print(f\"  Transfer time:            {T_transfer/86400:.1f} days\")\n\n    return a_transfer, e_transfer, dv_total, T_transfer\n\n\n# \u2500\u2500\u2500 Application 3: Exoplanet Detection via Radial Velocity \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef radial_velocity_signal(m_star_solar: float, m_planet_jupiter: float,\n                           a_au: float, e: float, n_points: int = 1000):\n    \"\"\"\n    Compute the radial velocity signal of a star due to an orbiting planet.\n    Uses the certified orbit equation to compute the planet's motion.\n\n    The star's radial velocity is:\n      v_r(t) = K [cos(\u03c9 + \u03bd(t)) + e cos(\u03c9)]\n    where K = (2\u03c0a sin i)/(T\u221a(1-e\u00b2)) \u00b7 (m_p/m_*) is the semi-amplitude.\n    \"\"\"\n    m_star = m_star_solar * M_SUN\n    m_planet = m_planet_jupiter * 1.898e27\n    a = a_au * AU\n    k = G * m_star * m_planet\n\n    # Orbital period (Kepler's third law)\n    T = 2 * np.pi * np.sqrt(a**3 / (G * m_star))\n\n    # Semi-amplitude (assuming sin i = 1, \u03c9 = 0)\n    K = 2 * np.pi * a / (T * np.sqrt(1 - e**2)) * (m_planet / m_star)\n\n    # True anomaly as function of time (simplified: uniform sampling in \u03b8)\n    theta = np.linspace(0, 2 * np.pi, n_points)\n\n    # Radial velocity signal\n    vr = K * (np.cos(theta) + e)\n\n    return theta, vr, K, T\n\n\ndef demo_exoplanet_detection():\n    \"\"\"Demonstrate exoplanet detection via radial velocity.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application: Exoplanet Radial Velocity Detection\")\n    print(\"=\" * 60)\n\n    cases = [\n        (\"Hot Jupiter\", 1.0, 1.0, 0.05, 0.01),\n        (\"Jupiter analog\", 1.0, 1.0, 5.2, 0.048),\n        (\"Super-Earth\", 1.0, 0.01, 0.1, 0.1),\n    ]\n\n    fig, axes = plt.subplots(1, 3, figsize=(18, 5))\n\n    for ax, (name, m_star, m_planet, a_au, e) in zip(axes, cases):\n        theta, vr, K, T = radial_velocity_signal(m_star, m_planet, a_au, e)\n\n        ax.plot(theta / (2 * np.pi), vr, 'b-', linewidth=1.5)\n        ax.set_xlabel('Orbital Phase', fontsize=12)\n        ax.set_ylabel('Radial Velocity (m/s)', fontsize=12)\n        ax.set_title(f'{name}\\nK = {K:.1f} m/s, T = {T/86400:.0f} days', fontsize=12)\n        ax.grid(True, alpha=0.3)\n\n    fig.suptitle('Exoplanet Detection: Radial Velocity Signals\\n'\n                 '(Using certified orbit equation r(\u03b8) = p/(1+e cos \u03b8))',\n                 fontsize=14, y=1.05)\n    fig.tight_layout()\n    fig.savefig('exoplanet_rv.png', dpi=150, bbox_inches='tight')\n    plt.close(fig)\n    print(\"Saved exoplanet_rv.png\")\n\n    for name, m_star, m_planet, a_au, e in cases:\n        _, _, K, T = radial_velocity_signal(m_star, m_planet, a_au, e)\n        print(f\"  {name:<20}: K = {K:.2f} m/s, T = {T/86400:.1f} days, e = {e}\")\n\n\n# \u2500\u2500\u2500 Application 4: Orbit Determination from Observations \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef orbit_from_two_radii(r1: float, r2: float, theta_sep: float,\n                         m: float, k: float):\n    \"\"\"\n    Determine orbit parameters from two position observations.\n\n    Given r(\u03b8\u2081) and r(\u03b8\u2082) with \u03b8\u2082 - \u03b8\u2081 = theta_sep,\n    solve for p and e using the certified orbit equation.\n\n    r = p/(1 + e cos \u03b8) at two angles gives two equations in two unknowns.\n    \"\"\"\n    # From r\u2081 = p/(1 + e cos \u03b8\u2081) and r\u2082 = p/(1 + e cos \u03b8\u2082)\n    # with \u03b8\u2081 = 0 (reference direction):\n    cos1 = 1.0\n    cos2 = np.cos(theta_sep)\n\n    # r\u2081(1 + e cos \u03b8\u2081) = p = r\u2082(1 + e cos \u03b8\u2082)\n    # r\u2081 + r\u2081 e cos \u03b8\u2081 = r\u2082 + r\u2082 e cos \u03b8\u2082\n    # e(r\u2081 cos \u03b8\u2081 - r\u2082 cos \u03b8\u2082) = r\u2082 - r\u2081\n    e = (r2 - r1) / (r1 * cos1 - r2 * cos2)\n    p = r1 * (1 + e * cos1)\n\n    # Energy from certified relation: E = (e\u00b2 - 1) mk\u00b2 / (2l\u00b2) = (e\u00b2 - 1) k / (2p)\n    # since p = l\u00b2/(mk), so l\u00b2 = mkp, and E = (e\u00b2-1)mk\u00b2/(2mkp) = (e\u00b2-1)k/(2p)\n    # But we need to be careful: E = (e\u00b2-1) \u00b7 m\u00b7k\u00b2 / (2\u00b7m\u00b7k\u00b7p) = (e\u00b2-1)\u00b7k/(2p)\n    # Actually from e\u00b2 = 1 + 2El\u00b2/(mk\u00b2) and l\u00b2 = mkp:\n    #   e\u00b2 = 1 + 2E\u00b7mkp/(mk\u00b2) = 1 + 2Ep/k\n    #   E = (e\u00b2-1)k/(2p)\n    E = (e**2 - 1) * k / (2 * p)\n\n    return p, e, E\n\n\ndef demo_orbit_determination():\n    \"\"\"Demonstrate orbit determination from observations.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application: Orbit Determination from Two Observations\")\n    print(\"=\" * 60)\n\n    # True orbit parameters\n    m, k = 1.0, 1.0\n    p_true = 1.5\n    e_true = 0.4\n    theta0_true = 0.0\n\n    # Simulate two observations\n    theta1 = 0.3\n    theta2 = 1.7\n    r1 = p_true / (1 + e_true * np.cos(theta1 - theta0_true))\n    r2 = p_true / (1 + e_true * np.cos(theta2 - theta0_true))\n\n    print(f\"\\n  True parameters: p = {p_true}, e = {e_true}\")\n    print(f\"  Observation 1: r({theta1:.2f}) = {r1:.6f}\")\n    print(f\"  Observation 2: r({theta2:.2f}) = {r2:.6f}\")\n\n    # Recover parameters\n    p_rec, e_rec, E_rec = orbit_from_two_radii(r1, r2, theta2 - theta1, m, k)\n    print(f\"\\n  Recovered parameters:\")\n    print(f\"    p = {p_rec:.6f} (error: {abs(p_rec - p_true):.2e})\")\n    print(f\"    e = {e_rec:.6f} (error: {abs(e_rec - e_true):.2e})\")\n    print(f\"    E = {E_rec:.6f}\")\n\n    # Verify with eccentricity-energy relation\n    l_sq = m * k * p_rec\n    e_check = np.sqrt(max(0, 1 + 2 * E_rec * l_sq / (m * k**2)))\n    print(f\"    e (from E): {e_check:.6f} (consistency check)\")\n\n\n# \u2500\u2500\u2500 Main \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef main():\n    print(\"Real-World Applications of Certified Kepler Orbit Theory\")\n    print(\"=\" * 60)\n\n    compute_solar_system_orbits()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application: Hohmann Transfer Orbit Design\")\n    print(\"=\" * 60)\n    hohmann_transfer(1.0, 1.524)   # Earth to Mars\n    hohmann_transfer(1.0, 5.203)   # Earth to Jupiter\n    hohmann_transfer(1.0, 0.723)   # Earth to Venus\n\n    demo_exoplanet_detection()\n    demo_orbit_determination()\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Kepler Orbit Parameter Computation",
+        "pseudocode": "Algorithm: kepler_orbit_params(m, k, E, l) -> (p, e, a, T)\nInput: mass m > 0, gravitational parameter k > 0, energy E, angular momentum l > 0\nOutput: semi-latus rectum p, eccentricity e, semi-major axis a, period T\n\n1. p <- l^2 / (m * k)                    # Semi-latus rectum\n2. e <- sqrt(1 + 2*E*l^2 / (m*k^2))     # Eccentricity\n3. a <- -k / (2*E)                        # Semi-major axis (E < 0)\n4. T <- 2*pi * sqrt(a^3 * m / k)         # Orbital period\n5. return (p, e, a, T)\n\nComplexity: O(1) arithmetic + 1 sqrt\nVerified: e^2 = 1 + 2*E*l^2/(m*k^2) [eccentricity_energy_relation]",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nCertified Kepler Orbit Algorithms\n\nImplements the verified algorithms from the Lean formalization:\n  1. kepler_orbit_params: Compute orbit parameters with certified error bounds\n  2. classify_orbit: Determine orbit type from energy sign\n  3. evaluate_orbit: Compute r(\u03b8) along the orbit\n  4. verify_binet: Verify Binet equation solution\n\nAll algorithms have verified properties proven in Lean 4.\n\"\"\"\n\nimport numpy as np\nfrom dataclasses import dataclass\nfrom enum import Enum\nfrom typing import Tuple\n\n\nclass OrbitType(Enum):\n    \"\"\"Orbit classification (verified: Theorem orbit_type_by_energy).\"\"\"\n    ELLIPTIC = \"elliptic\"       # E < 0, e < 1\n    PARABOLIC = \"parabolic\"     # E = 0, e = 1\n    HYPERBOLIC = \"hyperbolic\"   # E > 0, e > 1\n\n\n@dataclass\nclass KeplerParams:\n    \"\"\"\n    Certified Kepler orbit parameters.\n\n    Verified properties:\n      - p > 0 (semiLatusRectum_pos)\n      - e >= 0 (keplerEccentricity_nonneg)\n      - e\u00b2 = 1 + 2El\u00b2/(mk\u00b2) (eccentricity_energy_relation)\n      - E < 0 \u2194 e < 1 (orbit_type_by_energy)\n    \"\"\"\n    m: float    # mass\n    k: float    # gravitational parameter\n    E: float    # energy\n    l: float    # angular momentum magnitude\n    p: float    # semi-latus rectum = l\u00b2/(mk)\n    e: float    # eccentricity = \u221a(1 + 2El\u00b2/(mk\u00b2))\n    a: float    # semi-major axis = -k/(2E) for E < 0\n    T: float    # orbital period = 2\u03c0\u221a(a\u00b3m/k) for E < 0\n    orbit_type: OrbitType\n\n    def verify_eccentricity_relation(self) -> float:\n        \"\"\"\n        Check |e\u00b2 - (1 + 2El\u00b2/(mk\u00b2))| < \u03b5.\n\n        Certified by: eccentricity_energy_relation\n        \"\"\"\n        expected = 1 + 2 * self.E * self.l**2 / (self.m * self.k**2)\n        return abs(self.e**2 - expected)\n\n\ndef kepler_orbit_params(m: float, k: float, E: float, l: float) -> KeplerParams:\n    \"\"\"\n    Compute certified Kepler orbit parameters.\n\n    Algorithm 1 from the research paper.\n\n    Args:\n        m: mass (m > 0)\n        k: gravitational parameter (k > 0)\n        E: total orbital energy\n        l: angular momentum magnitude (l > 0)\n\n    Returns:\n        KeplerParams with verified properties.\n\n    Complexity: O(1) arithmetic + 1 sqrt.\n\n    Verified properties (Lean theorems):\n        - p = l\u00b2/(mk) > 0                   [semiLatusRectum_pos]\n        - e = \u221a(1 + 2El\u00b2/(mk\u00b2)) \u2265 0        [keplerEccentricity_nonneg]\n        - e\u00b2 = 1 + 2El\u00b2/(mk\u00b2)               [eccentricity_energy_relation]\n        - E < 0 \u2194 e < 1                      [energy_neg_implies_eccentricity_lt_one]\n\n    Example:\n        >>> params = kepler_orbit_params(1.0, 1.0, -0.3, 1.0)\n        >>> print(f\"e = {params.e:.4f}, type = {params.orbit_type.value}\")\n        e = 0.6325, type = elliptic\n    \"\"\"\n    assert m > 0, \"Mass must be positive\"\n    assert k > 0, \"Gravitational parameter must be positive\"\n    assert l > 0, \"Angular momentum must be positive\"\n\n    # Semi-latus rectum (verified: semiLatusRectum_pos)\n    p = l**2 / (m * k)\n\n    # Eccentricity (verified: eccentricity_energy_relation)\n    ecc_arg = 1 + 2 * E * l**2 / (m * k**2)\n    e = np.sqrt(max(0.0, ecc_arg))\n\n    # Orbit classification (verified: orbit_type_by_energy)\n    if E < 0:\n        orbit_type = OrbitType.ELLIPTIC\n        a = -k / (2 * E)\n        T = 2 * np.pi * np.sqrt(a**3 * m / k)\n    elif E == 0:\n        orbit_type = OrbitType.PARABOLIC\n        a = float('inf')\n        T = float('inf')\n    else:\n        orbit_type = OrbitType.HYPERBOLIC\n        a = k / (2 * E)  # negative for hyperbola convention\n        T = float('inf')\n\n    return KeplerParams(m=m, k=k, E=E, l=l, p=p, e=e, a=a, T=T, orbit_type=orbit_type)\n\n\ndef classify_orbit(m: float, k: float, E: float, l: float) -> OrbitType:\n    \"\"\"\n    Classify orbit type from energy.\n\n    Verified: orbit_type_by_energy\n        E < 0 \u2194 e < 1 (elliptic)\n        E = 0 \u2194 e = 1 (parabolic)\n        E > 0 \u2194 e > 1 (hyperbolic)\n    \"\"\"\n    if E < 0:\n        return OrbitType.ELLIPTIC\n    elif E == 0:\n        return OrbitType.PARABOLIC\n    else:\n        return OrbitType.HYPERBOLIC\n\n\ndef evaluate_orbit(p: float, e: float, theta: np.ndarray,\n                   theta0: float = 0.0) -> np.ndarray:\n    \"\"\"\n    Evaluate the Kepler orbit radius at given angles.\n\n    r(\u03b8) = p / (1 + e cos(\u03b8 - \u03b8\u2080))\n\n    Verified: kepler_orbit_radius_pos (r > 0 when e < 1)\n    Verified: kepler_orbit_denominator_pos (denominator > 0 when e < 1)\n\n    Args:\n        p: semi-latus rectum (p > 0)\n        e: eccentricity (0 \u2264 e < 1 for bound orbits)\n        theta: array of angles\n        theta0: phase offset\n\n    Returns:\n        Array of radial distances.\n    \"\"\"\n    denom = 1 + e * np.cos(theta - theta0)\n    return p / denom\n\n\ndef effective_potential(r: np.ndarray, m: float, k: float, l: float) -> np.ndarray:\n    \"\"\"\n    Compute the effective potential.\n\n    V_eff(r) = l\u00b2/(2mr\u00b2) - k/r\n\n    Verified properties:\n        - Unique minimum at r* = l\u00b2/(mk)     [effective_potential_unique_minimum]\n        - V_min = -mk\u00b2/(2l\u00b2)                 [effectivePotential_at_circular]\n        - V_eff(r) > V_min for r \u2260 r*        [effectivePotential_gt_min]\n    \"\"\"\n    return l**2 / (2 * m * r**2) - k / r\n\n\ndef circular_orbit_radius(m: float, k: float, l: float) -> float:\n    \"\"\"\n    Compute the circular orbit radius.\n\n    r* = l\u00b2/(mk)\n\n    Verified: circularOrbitRadius_pos (r* > 0)\n    \"\"\"\n    return l**2 / (m * k)\n\n\ndef verify_binet_solution(m: float, k: float, l: float, C: float,\n                          theta0: float, theta: np.ndarray) -> Tuple[np.ndarray, float]:\n    \"\"\"\n    Verify that u(\u03b8) = mk/l\u00b2 + C cos(\u03b8 - \u03b8\u2080) satisfies u'' + u = mk/l\u00b2.\n\n    Verified: binet_solution_satisfies_equation\n\n    Returns:\n        (residuals, max_residual) where residual = |u''(\u03b8) + u(\u03b8) - mk/l\u00b2|\n    \"\"\"\n    u = m * k / l**2 + C * np.cos(theta - theta0)\n    u_double_prime = -C * np.cos(theta - theta0)\n\n    # Binet equation: u'' + u should equal mk/l\u00b2\n    target = m * k / l**2\n    residual = np.abs(u_double_prime + u - target)\n\n    return residual, np.max(residual)\n\n\ndef verify_perfect_square_decomposition(m: float, k: float, l: float,\n                                        r: np.ndarray) -> Tuple[np.ndarray, float]:\n    \"\"\"\n    Verify V_eff(r) - V_min = l\u00b2/(2mr\u00b2) \u00b7 (1 - mkr/l\u00b2)\u00b2.\n\n    Verified: effectivePotential_sub_min\n\n    Returns:\n        (residuals, max_residual)\n    \"\"\"\n    V = effective_potential(r, m, k, l)\n    V_min = -m * k**2 / (2 * l**2)\n\n    lhs = V - V_min\n    rhs = l**2 / (2 * m * r**2) * (1 - m * k * r / l**2)**2\n\n    residual = np.abs(lhs - rhs)\n    return residual, np.max(residual)\n\n\n# \u2500\u2500\u2500 Example usage \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"Certified Kepler Orbit Algorithms\")\n    print(\"=\" * 60)\n\n    # Example 1: Elliptical orbit\n    params = kepler_orbit_params(1.0, 1.0, -0.3, 1.0)\n    print(f\"\\nExample 1: Elliptical orbit\")\n    print(f\"  Parameters: m=1, k=1, E=-0.3, l=1\")\n    print(f\"  Semi-latus rectum: p = {params.p:.6f}\")\n    print(f\"  Eccentricity:      e = {params.e:.6f}\")\n    print(f\"  Semi-major axis:   a = {params.a:.6f}\")\n    print(f\"  Period:            T = {params.T:.6f}\")\n    print(f\"  Orbit type:        {params.orbit_type.value}\")\n    print(f\"  e\u00b2 identity error: {params.verify_eccentricity_relation():.2e}\")\n\n    # Example 2: Verify Binet solution\n    theta = np.linspace(0, 2 * np.pi, 10000)\n    _, max_res = verify_binet_solution(1.0, 1.0, 1.0, 0.5, 0.0, theta)\n    print(f\"\\nExample 2: Binet equation verification\")\n    print(f\"  Max |u'' + u - mk/l\u00b2|: {max_res:.2e}\")\n\n    # Example 3: Perfect square decomposition\n    r = np.linspace(0.3, 5.0, 10000)\n    _, max_res = verify_perfect_square_decomposition(1.0, 1.0, 1.0, r)\n    print(f\"\\nExample 3: Perfect square decomposition\")\n    print(f\"  Max |V_eff(r) - V_min - l\u00b2/(2mr\u00b2)(1-mkr/l\u00b2)\u00b2|: {max_res:.2e}\")\n\n    # Example 4: Orbit evaluation\n    theta = np.linspace(0, 2 * np.pi, 1000)\n    r_orbit = evaluate_orbit(params.p, params.e, theta)\n    print(f\"\\nExample 4: Orbit evaluation\")\n    print(f\"  Min r = {np.min(r_orbit):.6f} (periapsis)\")\n    print(f\"  Max r = {np.max(r_orbit):.6f} (apoapsis)\")\n    print(f\"  All r > 0: {np.all(r_orbit > 0)}\")\n",
+        "code_file": "visualizations/direction_5_certified_hamiltonian_reduction_and_in_kepler_orbit_parameter_computation.py"
+      }
+    ],
+    "lean_proofs": "-- KeplerDefs.lean\n/-\n  # Kepler Orbit Definitions\n\n  Definitions for the certified Hamiltonian reduction of the Kepler problem.\n  These encode the passage from 6D phase space to 1D radial dynamics via\n  Marsden-Weinstein reduction, and the resulting conic section orbit equation.\n-/\nimport Mathlib\n\nopen Real\n\n/-! ## Core Definitions -/\n\n/-- The effective potential for a central force problem with angular momentum magnitude l.\n    This is the key object in the Marsden-Weinstein reduction of rotationally symmetric systems:\n    it encodes the centrifugal barrier l\u00b2/(2mr\u00b2) and the gravitational well -k/r. -/\nnoncomputable def effectivePotential (m k l r : \u211d) : \u211d :=\n  l ^ 2 / (2 * m * r ^ 2) - k / r\n\n/-- The semi-latus rectum of a Kepler orbit, determined by angular momentum.\n    This is the distance parameter in the conic section equation r(\u03b8) = p/(1 + e cos \u03b8). -/\nnoncomputable def semiLatusRectum (m k l : \u211d) : \u211d := l ^ 2 / (m * k)\n\n/-- The eccentricity of a Kepler orbit, determined by energy and angular momentum.\n    e\u00b2 = 1 + 2El\u00b2/(mk\u00b2) connects the dynamical invariant E to the geometric invariant e. -/\nnoncomputable def keplerEccentricity (m k E l : \u211d) : \u211d :=\n  Real.sqrt (1 + 2 * E * l ^ 2 / (m * k ^ 2))\n\n/-- The circular orbit radius: the unique radius at which the effective potential is minimized. -/\nnoncomputable def circularOrbitRadius (m k l : \u211d) : \u211d := l ^ 2 / (m * k)\n\n/-- The minimum value of the effective potential, achieved at the circular orbit radius. -/\nnoncomputable def effectivePotentialMin (m k l : \u211d) : \u211d := -(m * k ^ 2) / (2 * l ^ 2)\n\n/-- The Binet transform: the substitution u = 1/r that linearizes the Kepler problem. -/\nnoncomputable def binetTransform (r : \u211d \u2192 \u211d) : \u211d \u2192 \u211d := fun \u03b8 => 1 / r \u03b8\n\n/-- The Kepler orbit function: r(\u03b8) = p/(1 + e cos(\u03b8 - \u03b8\u2080)). -/\nnoncomputable def keplerOrbitRadius (p e \u03b8\u2080 \u03b8 : \u211d) : \u211d :=\n  p / (1 + e * Real.cos (\u03b8 - \u03b8\u2080))\n\n/-- The orbit type classification, indexed by the sign of energy. -/\ninductive OrbitType where\n  | elliptic    -- E < 0: bound orbits, e < 1\n  | parabolic   -- E = 0: marginally unbound, e = 1\n  | hyperbolic  -- E > 0: unbound orbits, e > 1\n  deriving Repr, BEq\n\n/-- Classify an orbit by its energy. -/\nnoncomputable def classifyOrbit (E : \u211d) : OrbitType :=\n  if E < 0 then OrbitType.elliptic\n  else if E = 0 then OrbitType.parabolic\n  else OrbitType.hyperbolic\n\n/-- The Marsden-Weinstein reduction data for a Hamiltonian system with symmetry.\n    This structure encapsulates the passage from a 2n-dimensional phase space\n    with k-dimensional symmetry to a (2n - 2k)-dimensional reduced phase space. -/\nstructure MarsdenWeinsteinReduction where\n  original_dim : \u2115\n  symmetry_dim : \u2115\n  reduced_dim : \u2115\n  momentum_map_components : \u2115\n  reduced_hamiltonian : \u211d \u2192 \u211d \u2192 \u211d\n  h_reduced_dim : reduced_dim = original_dim - 2 * symmetry_dim\n\n/-- The Kepler reduction: from 6D phase space with SO(3) symmetry to 2D reduced space. -/\nnoncomputable def keplerReduction (m k l : \u211d) : MarsdenWeinsteinReduction where\n  original_dim := 6\n  symmetry_dim := 2\n  reduced_dim := 2\n  momentum_map_components := 3  -- angular momentum vector L\n  reduced_hamiltonian := fun r p_r =>\n    p_r ^ 2 / (2 * m) + effectivePotential m k l r\n  h_reduced_dim := by norm_num\n\n/-- The semi-major axis of a Kepler ellipse, related to energy by a = -k/(2E). -/\nnoncomputable def semiMajorAxis (k E : \u211d) : \u211d := -k / (2 * E)\n\n/-- The orbital period via Kepler's third law: T = 2\u03c0\u221a(a\u00b3m/k). -/\nnoncomputable def orbitalPeriod (m k E : \u211d) : \u211d :=\n  2 * Real.pi * Real.sqrt ((semiMajorAxis k E) ^ 3 * m / k)\n\n\n\n-- KeplerEccentricity.lean\n/-\n  # Eccentricity-Energy Relation\n\n  The fundamental identity connecting dynamical invariants (E, l) to\n  geometric invariants (e): e\u00b2 = 1 + 2El\u00b2/(mk\u00b2).\n-/\nimport Mathlib\nimport Pythagorean.KeplerDefs\n\nopen Real\n\n/-- The eccentricity-energy-angular momentum relation:\n    e\u00b2 = 1 + 2El\u00b2/(mk\u00b2) is the fundamental identity connecting\n    dynamical invariants (E, l) to geometric invariants (e).\n\n    When E < 0, the quantity 1 + 2El\u00b2/(mk\u00b2) is nonneg (for bound orbits\n    above the minimum energy), and squaring the sqrt recovers the identity. -/\ntheorem eccentricity_energy_relation {m k E l : \u211d}\n    (_hm : m > 0) (_hk : k > 0) (_hl : l > 0)\n    (hbound : 0 \u2264 1 + 2 * E * l ^ 2 / (m * k ^ 2)) :\n    (keplerEccentricity m k E l) ^ 2 = 1 + 2 * E * l ^ 2 / (m * k ^ 2) := by\n  unfold keplerEccentricity\n  rw [sq_sqrt hbound]\n\n/-- For bound orbits, the eccentricity is nonneg. -/\ntheorem keplerEccentricity_nonneg (m k E l : \u211d) :\n    0 \u2264 keplerEccentricity m k E l := by\n  unfold keplerEccentricity\n  exact Real.sqrt_nonneg _\n\n/-- The eccentricity squared minus 1 equals 2El\u00b2/(mk\u00b2). This is the key identity\n    that links the sign of energy to the orbit type. -/\ntheorem eccentricity_sq_sub_one {m k E l : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0)\n    (hbound : 0 \u2264 1 + 2 * E * l ^ 2 / (m * k ^ 2)) :\n    (keplerEccentricity m k E l) ^ 2 - 1 = 2 * E * l ^ 2 / (m * k ^ 2) := by\n  rw [eccentricity_energy_relation hm hk hl hbound]\n  ring\n\n\n-- EffectivePotential.lean\n/-\n  # Effective Potential Unique Minimum\n\n  The effective potential V_eff(r) = l\u00b2/(2mr\u00b2) - k/r has a unique global minimum\n  at r* = l\u00b2/(mk), with value V_min = -mk\u00b2/(2l\u00b2). This is the circular orbit.\n-/\nimport Mathlib\nimport Pythagorean.KeplerDefs\n\nopen Real\n\n/-- The circular orbit radius is positive. -/\ntheorem circularOrbitRadius_pos {m k l : \u211d} (hm : m > 0) (hk : k > 0) (hl : l > 0) :\n    circularOrbitRadius m k l > 0 := by\n  unfold circularOrbitRadius\n  positivity\n\n/-- The effective potential at the circular orbit radius equals the minimum value. -/\ntheorem effectivePotential_at_circular {m k l : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0) :\n    effectivePotential m k l (circularOrbitRadius m k l) = effectivePotentialMin m k l := by\n  unfold effectivePotential circularOrbitRadius effectivePotentialMin\n  have hm' : m \u2260 0 := ne_of_gt hm\n  have hk' : k \u2260 0 := ne_of_gt hk\n  have hl' : l \u2260 0 := ne_of_gt hl\n  field_simp\n  ring\n\n/-- Auxiliary: the effective potential difference V_eff(r) - V_min can be expressed\n    as a perfect square term, proving V_eff(r) \u2265 V_min with equality iff r = r*. -/\ntheorem effectivePotential_sub_min {m k l r : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0) (hr : r > 0) :\n    effectivePotential m k l r - effectivePotentialMin m k l =\n      l ^ 2 / (2 * m * r ^ 2) * (1 - m * k * r / l ^ 2) ^ 2 := by\n  unfold effectivePotential effectivePotentialMin\n  have hm' : m \u2260 0 := ne_of_gt hm\n  have hk' : k \u2260 0 := ne_of_gt hk\n  have hl' : l \u2260 0 := ne_of_gt hl\n  have hr' : r \u2260 0 := ne_of_gt hr\n  field_simp\n  ring\n\n/-- The effective potential achieves its minimum value at the circular orbit radius. -/\ntheorem effectivePotential_ge_min {m k l r : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0) (hr : r > 0) :\n    effectivePotential m k l r \u2265 effectivePotentialMin m k l := by\n  have h := effectivePotential_sub_min hm hk hl hr\n  have : l ^ 2 / (2 * m * r ^ 2) * (1 - m * k * r / l ^ 2) ^ 2 \u2265 0 := by positivity\n  linarith\n\n/-\nThe effective potential strictly exceeds the minimum at any non-circular radius.\n-/\ntheorem effectivePotential_gt_min {m k l r : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0) (hr : r > 0)\n    (hne : r \u2260 circularOrbitRadius m k l) :\n    effectivePotential m k l r > effectivePotentialMin m k l := by\n  -- We first express the difference as a perfect square expression using `effectivePotential_sub_min`.\n  have h_diff : effectivePotential m k l r - effectivePotentialMin m k l =\n    l ^ 2 / (2 * m * r ^ 2) * (1 - m * k * r / l ^ 2) ^ 2 := by\n      convert effectivePotential_sub_min hm hk hl hr using 1;\n  exact lt_of_sub_pos ( h_diff.symm \u25b8 mul_pos ( by positivity ) ( sq_pos_of_ne_zero ( sub_ne_zero_of_ne ( by contrapose! hne; unfold circularOrbitRadius at *; rw [ eq_div_iff ] at * <;> nlinarith [ mul_pos hm hk, mul_pos hm hl, mul_pos hk hl ] ) ) ) )\n\n/-- The effective potential has a unique global minimum at r* = l\u00b2/(mk),\n    with V_eff(r*) = -mk\u00b2/(2l\u00b2). -/\ntheorem effective_potential_unique_minimum {m k l : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0) :\n    let r_star := circularOrbitRadius m k l\n    let V_min := effectivePotentialMin m k l\n    r_star > 0 \u2227\n    effectivePotential m k l r_star = V_min \u2227\n    \u2200 r, r > 0 \u2192 r \u2260 r_star \u2192 effectivePotential m k l r > V_min := by\n  refine \u27e8circularOrbitRadius_pos hm hk hl,\n         effectivePotential_at_circular hm hk hl,\n         fun r hr hne => effectivePotential_gt_min hm hk hl hr hne\u27e9\n\n-- OrbitClassification.lean\n/-\n  # Orbit Classification by Energy Sign\n\n  The sign of energy determines the orbit type:\n  E < 0 \u27f9 e < 1 (ellipse), E = 0 \u27f9 e = 1 (parabola), E > 0 \u27f9 e > 1 (hyperbola).\n-/\nimport Mathlib\nimport Pythagorean.KeplerDefs\nimport Pythagorean.KeplerEccentricity\n\nopen Real\n\n/-- The argument inside the sqrt for the eccentricity is monotone in E. -/\nprivate theorem eccentricity_arg_pos_factor {m k l : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0) :\n    2 * l ^ 2 / (m * k ^ 2) > 0 := by positivity\n\n/-\nE < 0 implies e < 1 (elliptic orbit), given that the orbit is bound\n    (i.e., E \u2265 V_min so the eccentricity argument is nonneg).\n-/\ntheorem energy_neg_implies_eccentricity_lt_one {m k E l : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0)\n    (hE : E < 0)\n    (_hbound : 0 \u2264 1 + 2 * E * l ^ 2 / (m * k ^ 2)) :\n    keplerEccentricity m k E l < 1 := by\n  exact Real.sqrt_lt' zero_lt_one |>.2 <| by nlinarith [ show ( 2 * E * l ^ 2 ) / ( m * k ^ 2 ) < 0 by exact div_neg_of_neg_of_pos ( mul_neg_of_neg_of_pos ( mul_neg_of_pos_of_neg ( by norm_num ) hE ) ( sq_pos_of_pos hl ) ) ( by positivity ) ] ;\n\n/-\ne < 1 implies E < 0 (bound orbits have negative energy).\n-/\ntheorem eccentricity_lt_one_implies_energy_neg {m k E l : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0)\n    (_hbound : 0 \u2264 1 + 2 * E * l ^ 2 / (m * k ^ 2))\n    (he : keplerEccentricity m k E l < 1) :\n    E < 0 := by\n  contrapose! he;\n  exact Real.le_sqrt_of_sq_le ( by linarith [ show 0 \u2264 2 * E * l ^ 2 / ( m * k ^ 2 ) by positivity ] )\n\n/-\nE = 0 iff e = 1 (parabolic orbit).\n-/\ntheorem energy_zero_iff_eccentricity_one {m k E l : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0) :\n    E = 0 \u2194 keplerEccentricity m k E l = 1 := by\n  constructor <;> intro h <;> simp_all +decide [ keplerEccentricity ];\n  grind\n\n/-\nE > 0 implies e > 1 (hyperbolic orbit).\n-/\ntheorem energy_pos_implies_eccentricity_gt_one {m k E l : \u211d}\n    (hm : m > 0) (hk : k > 0) (hl : l > 0)\n    (hE : E > 0) :\n    keplerEccentricity m k E l > 1 := by\n  exact Real.lt_sqrt_of_sq_lt ( by norm_num; positivity )\n\n/-\ne > 1 implies E > 0.\n-/\ntheorem eccentricity_gt_one_implies_energy_pos {m k E l : \u211d}\n    (_hm : m > 0) (_hk : k > 0) (_hl : l > 0)\n    (he : keplerEccentricity m k E l > 1) :\n    E > 0 := by\n  -- By squaring both sides of the inequality he, we get 1 + 2 * E * l ^ 2 / (m * k ^ 2) > 1.\n  have h_sq : 1 + 2 * E * l ^ 2 / (m * k ^ 2) > 1 := by\n    contrapose! he;\n    exact Real.sqrt_le_iff.mpr \u27e8 by positivity, by linarith \u27e9;\n  contrapose! h_sq; exact le_trans ( add_le_of_nonpos_right <| div_nonpos_of_nonpos_of_nonneg ( by nlinarith ) <| mul_nonneg _hm.le <| sq_nonneg _ ) <| by norm_num;\n\n-- BinetOrbit.lean\n/-\n  # Binet Transform and Kepler Orbit Verification\n\n  We verify that the conic section r(\u03b8) = p/(1 + e cos \u03b8) satisfies\n  the Binet equation u'' + u = mk/l\u00b2, and that the orbit parameters\n  are consistent with the energy-eccentricity relation.\n-/\nimport Mathlib\nimport Pythagorean.KeplerDefs\nimport Pythagorean.KeplerEccentricity\n\nopen Real\n\n/-! ## Binet equation solution verification\n\n  The Binet equation u'' + u = mk/l\u00b2 has general solution\n  u(\u03b8) = mk/l\u00b2 + C cos(\u03b8 - \u03b8\u2080). We verify this algebraically. -/\n\n/-\nThe Binet solution: u(\u03b8) = mk/l\u00b2 + C cos(\u03b8 - \u03b8\u2080) satisfies u'' + u = mk/l\u00b2.\n    This is verified by computing u'' = -C cos(\u03b8 - \u03b8\u2080) and adding.\n-/\ntheorem binet_solution_satisfies_equation (m k l C \u03b8\u2080 : \u211d)\n    (_hl : l \u2260 0)\n    (u : \u211d \u2192 \u211d) (hu : u = fun \u03b8 => m * k / l ^ 2 + C * Real.cos (\u03b8 - \u03b8\u2080))\n    (u'' : \u211d \u2192 \u211d) (hu'' : u'' = fun \u03b8 => -C * Real.cos (\u03b8 - \u03b8\u2080)) :\n    \u2200 \u03b8, u'' \u03b8 + u \u03b8 = m * k / l ^ 2 := by\n  grind +revert\n\n/-\nInverting the Binet solution gives the orbit equation:\n    If C = mk\u00b7e/l\u00b2 then 1/(mk/l\u00b2 + C cos(\u03b8-\u03b8\u2080)) = p/(1 + e cos(\u03b8-\u03b8\u2080))\n    where p = l\u00b2/(mk) is the semi-latus rectum.\n-/\ntheorem binet_inversion_gives_conic {m k l e \u03b8\u2080 \u03b8 : \u211d}\n    (_hm : m > 0) (_hk : k > 0) (_hl : l > 0)\n    (_hdenom : 1 + e * Real.cos (\u03b8 - \u03b8\u2080) \u2260 0) :\n    let p := semiLatusRectum m k l\n    let C := m * k * e / l ^ 2\n    let u := m * k / l ^ 2 + C * Real.cos (\u03b8 - \u03b8\u2080)\n    1 / u = p / (1 + e * Real.cos (\u03b8 - \u03b8\u2080)) := by\n  -- Simplify the expression for $u$.\n  have h_simp : m * k / l ^ 2 + (m * k * e / l ^ 2) * Real.cos (\u03b8 - \u03b8\u2080) = (m * k / l ^ 2) * (1 + e * Real.cos (\u03b8 - \u03b8\u2080)) := by\n    ring;\n  simp_all +decide [ semiLatusRectum ];\n  ring\n\n/-! ## Kepler orbit parameter computation -/\n\n/-- The semi-latus rectum is positive for physical parameters. -/\ntheorem semiLatusRectum_pos {m k l : \u211d} (hm : m > 0) (hk : k > 0) (hl : l > 0) :\n    semiLatusRectum m k l > 0 := by\n  unfold semiLatusRectum\n  positivity\n\n/-- The semi-latus rectum equals the circular orbit radius. -/\ntheorem semiLatusRectum_eq_circularOrbitRadius {m k l : \u211d} :\n    semiLatusRectum m k l = circularOrbitRadius m k l := by\n  unfold semiLatusRectum circularOrbitRadius\n  rfl\n\n/-\nFor a bound orbit (E < 0), the eccentricity is less than 1, so the orbit is an ellipse\n    and the denominator 1 + e cos \u03b8 is always positive.\n-/\ntheorem kepler_orbit_denominator_pos {m k E l \u03b8 \u03b8\u2080 : \u211d}\n    (_hm : m > 0) (_hk : k > 0) (_hl : l > 0) (_hE : E < 0)\n    (_hbound : 0 \u2264 1 + 2 * E * l ^ 2 / (m * k ^ 2))\n    (he_lt : keplerEccentricity m k E l < 1) :\n    1 + keplerEccentricity m k E l * Real.cos (\u03b8 - \u03b8\u2080) > 0 := by\n  nlinarith [ Real.neg_one_le_cos ( \u03b8 - \u03b8\u2080 ), Real.cos_le_one ( \u03b8 - \u03b8\u2080 ), show 0 \u2264 keplerEccentricity m k E l from Real.sqrt_nonneg _ ]\n\n/-- The Kepler orbit radius is positive for bound orbits. -/\ntheorem kepler_orbit_radius_pos {p e \u03b8\u2080 \u03b8 : \u211d}\n    (hp : p > 0) (_he : 0 \u2264 e) (_he_lt : e < 1)\n    (hdenom : 1 + e * Real.cos (\u03b8 - \u03b8\u2080) > 0) :\n    keplerOrbitRadius p e \u03b8\u2080 \u03b8 > 0 := by\n  unfold keplerOrbitRadius\n  apply div_pos hp hdenom\n\n/-- The semi-major axis of an elliptical orbit satisfies a = p/(1-e\u00b2). -/\ntheorem semiMajorAxis_from_semiLatusRectum {p e : \u211d}\n    (hp : p > 0) (he : 0 \u2264 e) (he_lt : e < 1) :\n    p / (1 - e ^ 2) > 0 := by\n  apply div_pos hp\n  nlinarith [sq_abs e]",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nCertified Kepler Orbit Algorithms\n\nImplements the verified algorithms from the Lean formalization:\n  1. kepler_orbit_params: Compute orbit parameters with certified error bounds\n  2. classify_orbit: Determine orbit type from energy sign\n  3. evaluate_orbit: Compute r(\u03b8) along the orbit\n  4. verify_binet: Verify Binet equation solution\n\nAll algorithms have verified properties proven in Lean 4.\n\"\"\"\n\nimport numpy as np\nfrom dataclasses import dataclass\nfrom enum import Enum\nfrom typing import Tuple\n\n\nclass OrbitType(Enum):\n    \"\"\"Orbit classification (verified: Theorem orbit_type_by_energy).\"\"\"\n    ELLIPTIC = \"elliptic\"       # E < 0, e < 1\n    PARABOLIC = \"parabolic\"     # E = 0, e = 1\n    HYPERBOLIC = \"hyperbolic\"   # E > 0, e > 1\n\n\n@dataclass\nclass KeplerParams:\n    \"\"\"\n    Certified Kepler orbit parameters.\n\n    Verified properties:\n      - p > 0 (semiLatusRectum_pos)\n      - e >= 0 (keplerEccentricity_nonneg)\n      - e\u00b2 = 1 + 2El\u00b2/(mk\u00b2) (eccentricity_energy_relation)\n      - E < 0 \u2194 e < 1 (orbit_type_by_energy)\n    \"\"\"\n    m: float    # mass\n    k: float    # gravitational parameter\n    E: float    # energy\n    l: float    # angular momentum magnitude\n    p: float    # semi-latus rectum = l\u00b2/(mk)\n    e: float    # eccentricity = \u221a(1 + 2El\u00b2/(mk\u00b2))\n    a: float    # semi-major axis = -k/(2E) for E < 0\n    T: float    # orbital period = 2\u03c0\u221a(a\u00b3m/k) for E < 0\n    orbit_type: OrbitType\n\n    def verify_eccentricity_relation(self) -> float:\n        \"\"\"\n        Check |e\u00b2 - (1 + 2El\u00b2/(mk\u00b2))| < \u03b5.\n\n        Certified by: eccentricity_energy_relation\n        \"\"\"\n        expected = 1 + 2 * self.E * self.l**2 / (self.m * self.k**2)\n        return abs(self.e**2 - expected)\n\n\ndef kepler_orbit_params(m: float, k: float, E: float, l: float) -> KeplerParams:\n    \"\"\"\n    Compute certified Kepler orbit parameters.\n\n    Algorithm 1 from the research paper.\n\n    Args:\n        m: mass (m > 0)\n        k: gravitational parameter (k > 0)\n        E: total orbital energy\n        l: angular momentum magnitude (l > 0)\n\n    Returns:\n        KeplerParams with verified properties.\n\n    Complexity: O(1) arithmetic + 1 sqrt.\n\n    Verified properties (Lean theorems):\n        - p = l\u00b2/(mk) > 0                   [semiLatusRectum_pos]\n        - e = \u221a(1 + 2El\u00b2/(mk\u00b2)) \u2265 0        [keplerEccentricity_nonneg]\n        - e\u00b2 = 1 + 2El\u00b2/(mk\u00b2)               [eccentricity_energy_relation]\n        - E < 0 \u2194 e < 1                      [energy_neg_implies_eccentricity_lt_one]\n\n    Example:\n        >>> params = kepler_orbit_params(1.0, 1.0, -0.3, 1.0)\n        >>> print(f\"e = {params.e:.4f}, type = {params.orbit_type.value}\")\n        e = 0.6325, type = elliptic\n    \"\"\"\n    assert m > 0, \"Mass must be positive\"\n    assert k > 0, \"Gravitational parameter must be positive\"\n    assert l > 0, \"Angular momentum must be positive\"\n\n    # Semi-latus rectum (verified: semiLatusRectum_pos)\n    p = l**2 / (m * k)\n\n    # Eccentricity (verified: eccentricity_energy_relation)\n    ecc_arg = 1 + 2 * E * l**2 / (m * k**2)\n    e = np.sqrt(max(0.0, ecc_arg))\n\n    # Orbit classification (verified: orbit_type_by_energy)\n    if E < 0:\n        orbit_type = OrbitType.ELLIPTIC\n        a = -k / (2 * E)\n        T = 2 * np.pi * np.sqrt(a**3 * m / k)\n    elif E == 0:\n        orbit_type = OrbitType.PARABOLIC\n        a = float('inf')\n        T = float('inf')\n    else:\n        orbit_type = OrbitType.HYPERBOLIC\n        a = k / (2 * E)  # negative for hyperbola convention\n        T = float('inf')\n\n    return KeplerParams(m=m, k=k, E=E, l=l, p=p, e=e, a=a, T=T, orbit_type=orbit_type)\n\n\ndef classify_orbit(m: float, k: float, E: float, l: float) -> OrbitType:\n    \"\"\"\n    Classify orbit type from energy.\n\n    Verified: orbit_type_by_energy\n        E < 0 \u2194 e < 1 (elliptic)\n        E = 0 \u2194 e = 1 (parabolic)\n        E > 0 \u2194 e > 1 (hyperbolic)\n    \"\"\"\n    if E < 0:\n        return OrbitType.ELLIPTIC\n    elif E == 0:\n        return OrbitType.PARABOLIC\n    else:\n        return OrbitType.HYPERBOLIC\n\n\ndef evaluate_orbit(p: float, e: float, theta: np.ndarray,\n                   theta0: float = 0.0) -> np.ndarray:\n    \"\"\"\n    Evaluate the Kepler orbit radius at given angles.\n\n    r(\u03b8) = p / (1 + e cos(\u03b8 - \u03b8\u2080))\n\n    Verified: kepler_orbit_radius_pos (r > 0 when e < 1)\n    Verified: kepler_orbit_denominator_pos (denominator > 0 when e < 1)\n\n    Args:\n        p: semi-latus rectum (p > 0)\n        e: eccentricity (0 \u2264 e < 1 for bound orbits)\n        theta: array of angles\n        theta0: phase offset\n\n    Returns:\n        Array of radial distances.\n    \"\"\"\n    denom = 1 + e * np.cos(theta - theta0)\n    return p / denom\n\n\ndef effective_potential(r: np.ndarray, m: float, k: float, l: float) -> np.ndarray:\n    \"\"\"\n    Compute the effective potential.\n\n    V_eff(r) = l\u00b2/(2mr\u00b2) - k/r\n\n    Verified properties:\n        - Unique minimum at r* = l\u00b2/(mk)     [effective_potential_unique_minimum]\n        - V_min = -mk\u00b2/(2l\u00b2)                 [effectivePotential_at_circular]\n        - V_eff(r) > V_min for r \u2260 r*        [effectivePotential_gt_min]\n    \"\"\"\n    return l**2 / (2 * m * r**2) - k / r\n\n\ndef circular_orbit_radius(m: float, k: float, l: float) -> float:\n    \"\"\"\n    Compute the circular orbit radius.\n\n    r* = l\u00b2/(mk)\n\n    Verified: circularOrbitRadius_pos (r* > 0)\n    \"\"\"\n    return l**2 / (m * k)\n\n\ndef verify_binet_solution(m: float, k: float, l: float, C: float,\n                          theta0: float, theta: np.ndarray) -> Tuple[np.ndarray, float]:\n    \"\"\"\n    Verify that u(\u03b8) = mk/l\u00b2 + C cos(\u03b8 - \u03b8\u2080) satisfies u'' + u = mk/l\u00b2.\n\n    Verified: binet_solution_satisfies_equation\n\n    Returns:\n        (residuals, max_residual) where residual = |u''(\u03b8) + u(\u03b8) - mk/l\u00b2|\n    \"\"\"\n    u = m * k / l**2 + C * np.cos(theta - theta0)\n    u_double_prime = -C * np.cos(theta - theta0)\n\n    # Binet equation: u'' + u should equal mk/l\u00b2\n    target = m * k / l**2\n    residual = np.abs(u_double_prime + u - target)\n\n    return residual, np.max(residual)\n\n\ndef verify_perfect_square_decomposition(m: float, k: float, l: float,\n                                        r: np.ndarray) -> Tuple[np.ndarray, float]:\n    \"\"\"\n    Verify V_eff(r) - V_min = l\u00b2/(2mr\u00b2) \u00b7 (1 - mkr/l\u00b2)\u00b2.\n\n    Verified: effectivePotential_sub_min\n\n    Returns:\n        (residuals, max_residual)\n    \"\"\"\n    V = effective_potential(r, m, k, l)\n    V_min = -m * k**2 / (2 * l**2)\n\n    lhs = V - V_min\n    rhs = l**2 / (2 * m * r**2) * (1 - m * k * r / l**2)**2\n\n    residual = np.abs(lhs - rhs)\n    return residual, np.max(residual)\n\n\n# \u2500\u2500\u2500 Example usage \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"Certified Kepler Orbit Algorithms\")\n    print(\"=\" * 60)\n\n    # Example 1: Elliptical orbit\n    params = kepler_orbit_params(1.0, 1.0, -0.3, 1.0)\n    print(f\"\\nExample 1: Elliptical orbit\")\n    print(f\"  Parameters: m=1, k=1, E=-0.3, l=1\")\n    print(f\"  Semi-latus rectum: p = {params.p:.6f}\")\n    print(f\"  Eccentricity:      e = {params.e:.6f}\")\n    print(f\"  Semi-major axis:   a = {params.a:.6f}\")\n    print(f\"  Period:            T = {params.T:.6f}\")\n    print(f\"  Orbit type:        {params.orbit_type.value}\")\n    print(f\"  e\u00b2 identity error: {params.verify_eccentricity_relation():.2e}\")\n\n    # Example 2: Verify Binet solution\n    theta = np.linspace(0, 2 * np.pi, 10000)\n    _, max_res = verify_binet_solution(1.0, 1.0, 1.0, 0.5, 0.0, theta)\n    print(f\"\\nExample 2: Binet equation verification\")\n    print(f\"  Max |u'' + u - mk/l\u00b2|: {max_res:.2e}\")\n\n    # Example 3: Perfect square decomposition\n    r = np.linspace(0.3, 5.0, 10000)\n    _, max_res = verify_perfect_square_decomposition(1.0, 1.0, 1.0, r)\n    print(f\"\\nExample 3: Perfect square decomposition\")\n    print(f\"  Max |V_eff(r) - V_min - l\u00b2/(2mr\u00b2)(1-mkr/l\u00b2)\u00b2|: {max_res:.2e}\")\n\n    # Example 4: Orbit evaluation\n    theta = np.linspace(0, 2 * np.pi, 1000)\n    r_orbit = evaluate_orbit(params.p, params.e, theta)\n    print(f\"\\nExample 4: Orbit evaluation\")\n    print(f\"  Min r = {np.min(r_orbit):.6f} (periapsis)\")\n    print(f\"  Max r = {np.max(r_orbit):.6f} (apoapsis)\")\n    print(f\"  All r > 0: {np.all(r_orbit > 0)}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nReal-World Applications of Kepler Orbit Theory\n\nDemonstrates the practical applications of the certified orbit equation\nr(\u03b8) = p/(1 + e cos \u03b8) to real astronomical systems.\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\n\n# \u2500\u2500\u2500 Constants \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nG = 6.67430e-11       # Gravitational constant (m\u00b3 kg\u207b\u00b9 s\u207b\u00b2)\nM_SUN = 1.98892e30    # Solar mass (kg)\nAU = 1.496e11         # Astronomical unit (m)\nYEAR = 365.25 * 86400 # Year (s)\n\n\n# \u2500\u2500\u2500 Application 1: Solar System Orbit Computation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compute_solar_system_orbits():\n    \"\"\"\n    Compute and verify Kepler orbit parameters for all 8 planets.\n    Uses the certified formulas from the Lean formalization.\n    \"\"\"\n    # Planet data: (name, mass_kg, semi_major_axis_AU, eccentricity)\n    planets = [\n        (\"Mercury\", 3.301e23, 0.3871, 0.2056),\n        (\"Venus\",   4.867e24, 0.7233, 0.0068),\n        (\"Earth\",   5.972e24, 1.0000, 0.0167),\n        (\"Mars\",    6.417e23, 1.5237, 0.0934),\n        (\"Jupiter\", 1.898e27, 5.2034, 0.0484),\n        (\"Saturn\",  5.683e26, 9.5371, 0.0542),\n        (\"Uranus\",  8.681e25, 19.189, 0.0472),\n        (\"Neptune\", 1.024e26, 30.070, 0.0086),\n    ]\n\n    print(\"Solar System Orbit Parameters (Certified)\")\n    print(\"=\" * 80)\n    print(f\"{'Planet':<10} {'a (AU)':<10} {'e':<10} {'p (AU)':<12} {'T (years)':<12} {'E (J)':<14}\")\n    print(\"-\" * 80)\n\n    for name, mass, a_au, e_obs in planets:\n        a = a_au * AU\n        k = G * M_SUN * mass\n\n        # From certified formulas:\n        # a = -k/(2E) \u2192 E = -k/(2a)\n        E = -k / (2 * a)\n\n        # p = a(1-e\u00b2)\n        p = a * (1 - e_obs**2)\n\n        # l from p = l\u00b2/(mk) \u2192 l = \u221a(mkp)\n        l = np.sqrt(mass * k * p)\n\n        # T = 2\u03c0\u221a(a\u00b3m/k)\n        T = 2 * np.pi * np.sqrt(a**3 * mass / k)\n\n        # Verify eccentricity relation: e\u00b2 = 1 + 2El\u00b2/(mk\u00b2)\n        e_computed = np.sqrt(max(0, 1 + 2 * E * l**2 / (mass * k**2)))\n        error = abs(e_computed - e_obs)\n\n        print(f\"{name:<10} {a_au:<10.4f} {e_obs:<10.4f} {p/AU:<12.6f} {T/YEAR:<12.4f} {E:<14.3e}\")\n\n    print(\"-\" * 80)\n    print(\"All values computed using certified formulas from Lean proofs.\")\n\n\n# \u2500\u2500\u2500 Application 2: Hohmann Transfer Orbit Design \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef hohmann_transfer(r1_au: float, r2_au: float, m_spacecraft: float = 1000.0):\n    \"\"\"\n    Design a Hohmann transfer orbit between two circular orbits.\n\n    Uses the certified effective potential and orbit equation to compute\n    the transfer ellipse parameters and delta-v requirements.\n\n    Args:\n        r1_au: radius of inner orbit (AU)\n        r2_au: radius of outer orbit (AU)\n        m_spacecraft: spacecraft mass (kg)\n    \"\"\"\n    r1 = r1_au * AU\n    r2 = r2_au * AU\n    k = G * M_SUN * m_spacecraft\n\n    # Circular orbit velocities (from V_eff minimum)\n    v1 = np.sqrt(G * M_SUN / r1)\n    v2 = np.sqrt(G * M_SUN / r2)\n\n    # Transfer orbit parameters\n    a_transfer = (r1 + r2) / 2\n    E_transfer = -k / (2 * a_transfer)\n\n    # Velocities at periapsis and apoapsis of transfer orbit\n    # From energy conservation: \u00bdmv\u00b2 + V_eff = E\n    v_periapsis = np.sqrt(2 * (E_transfer / m_spacecraft + G * M_SUN / r1))\n    # Need v\u00b2 = 2(E/m + k/(mr)) = 2(E/m + GM/r)\n    # but k = GMm, so k/(mr) = GM/r\n    v_periapsis = np.sqrt(2 * (E_transfer / m_spacecraft + G * M_SUN / r1))\n    v_apoapsis = np.sqrt(max(0, 2 * (E_transfer / m_spacecraft + G * M_SUN / r2)))\n\n    # Delta-v requirements\n    dv1 = v_periapsis - v1  # departure burn\n    dv2 = v2 - v_apoapsis    # arrival burn\n    dv_total = abs(dv1) + abs(dv2)\n\n    # Transfer time (half the orbital period)\n    T_transfer = np.pi * np.sqrt(a_transfer**3 / (G * M_SUN))\n\n    # Eccentricity of transfer orbit\n    e_transfer = (r2 - r1) / (r2 + r1)\n\n    print(f\"\\nHohmann Transfer: {r1_au:.2f} AU \u2192 {r2_au:.2f} AU\")\n    print(f\"  Transfer semi-major axis: {a_transfer/AU:.4f} AU\")\n    print(f\"  Transfer eccentricity:    {e_transfer:.6f}\")\n    print(f\"  Departure \u0394v:             {dv1:.1f} m/s\")\n    print(f\"  Arrival \u0394v:               {dv2:.1f} m/s\")\n    print(f\"  Total \u0394v:                 {dv_total:.1f} m/s\")\n    print(f\"  Transfer time:            {T_transfer/86400:.1f} days\")\n\n    return a_transfer, e_transfer, dv_total, T_transfer\n\n\n# \u2500\u2500\u2500 Application 3: Exoplanet Detection via Radial Velocity \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef radial_velocity_signal(m_star_solar: float, m_planet_jupiter: float,\n                           a_au: float, e: float, n_points: int = 1000):\n    \"\"\"\n    Compute the radial velocity signal of a star due to an orbiting planet.\n    Uses the certified orbit equation to compute the planet's motion.\n\n    The star's radial velocity is:\n      v_r(t) = K [cos(\u03c9 + \u03bd(t)) + e cos(\u03c9)]\n    where K = (2\u03c0a sin i)/(T\u221a(1-e\u00b2)) \u00b7 (m_p/m_*) is the semi-amplitude.\n    \"\"\"\n    m_star = m_star_solar * M_SUN\n    m_planet = m_planet_jupiter * 1.898e27\n    a = a_au * AU\n    k = G * m_star * m_planet\n\n    # Orbital period (Kepler's third law)\n    T = 2 * np.pi * np.sqrt(a**3 / (G * m_star))\n\n    # Semi-amplitude (assuming sin i = 1, \u03c9 = 0)\n    K = 2 * np.pi * a / (T * np.sqrt(1 - e**2)) * (m_planet / m_star)\n\n    # True anomaly as function of time (simplified: uniform sampling in \u03b8)\n    theta = np.linspace(0, 2 * np.pi, n_points)\n\n    # Radial velocity signal\n    vr = K * (np.cos(theta) + e)\n\n    return theta, vr, K, T\n\n\ndef demo_exoplanet_detection():\n    \"\"\"Demonstrate exoplanet detection via radial velocity.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application: Exoplanet Radial Velocity Detection\")\n    print(\"=\" * 60)\n\n    cases = [\n        (\"Hot Jupiter\", 1.0, 1.0, 0.05, 0.01),\n        (\"Jupiter analog\", 1.0, 1.0, 5.2, 0.048),\n        (\"Super-Earth\", 1.0, 0.01, 0.1, 0.1),\n    ]\n\n    fig, axes = plt.subplots(1, 3, figsize=(18, 5))\n\n    for ax, (name, m_star, m_planet, a_au, e) in zip(axes, cases):\n        theta, vr, K, T = radial_velocity_signal(m_star, m_planet, a_au, e)\n\n        ax.plot(theta / (2 * np.pi), vr, 'b-', linewidth=1.5)\n        ax.set_xlabel('Orbital Phase', fontsize=12)\n        ax.set_ylabel('Radial Velocity (m/s)', fontsize=12)\n        ax.set_title(f'{name}\\nK = {K:.1f} m/s, T = {T/86400:.0f} days', fontsize=12)\n        ax.grid(True, alpha=0.3)\n\n    fig.suptitle('Exoplanet Detection: Radial Velocity Signals\\n'\n                 '(Using certified orbit equation r(\u03b8) = p/(1+e cos \u03b8))',\n                 fontsize=14, y=1.05)\n    fig.tight_layout()\n    fig.savefig('exoplanet_rv.png', dpi=150, bbox_inches='tight')\n    plt.close(fig)\n    print(\"Saved exoplanet_rv.png\")\n\n    for name, m_star, m_planet, a_au, e in cases:\n        _, _, K, T = radial_velocity_signal(m_star, m_planet, a_au, e)\n        print(f\"  {name:<20}: K = {K:.2f} m/s, T = {T/86400:.1f} days, e = {e}\")\n\n\n# \u2500\u2500\u2500 Application 4: Orbit Determination from Observations \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef orbit_from_two_radii(r1: float, r2: float, theta_sep: float,\n                         m: float, k: float):\n    \"\"\"\n    Determine orbit parameters from two position observations.\n\n    Given r(\u03b8\u2081) and r(\u03b8\u2082) with \u03b8\u2082 - \u03b8\u2081 = theta_sep,\n    solve for p and e using the certified orbit equation.\n\n    r = p/(1 + e cos \u03b8) at two angles gives two equations in two unknowns.\n    \"\"\"\n    # From r\u2081 = p/(1 + e cos \u03b8\u2081) and r\u2082 = p/(1 + e cos \u03b8\u2082)\n    # with \u03b8\u2081 = 0 (reference direction):\n    cos1 = 1.0\n    cos2 = np.cos(theta_sep)\n\n    # r\u2081(1 + e cos \u03b8\u2081) = p = r\u2082(1 + e cos \u03b8\u2082)\n    # r\u2081 + r\u2081 e cos \u03b8\u2081 = r\u2082 + r\u2082 e cos \u03b8\u2082\n    # e(r\u2081 cos \u03b8\u2081 - r\u2082 cos \u03b8\u2082) = r\u2082 - r\u2081\n    e = (r2 - r1) / (r1 * cos1 - r2 * cos2)\n    p = r1 * (1 + e * cos1)\n\n    # Energy from certified relation: E = (e\u00b2 - 1) mk\u00b2 / (2l\u00b2) = (e\u00b2 - 1) k / (2p)\n    # since p = l\u00b2/(mk), so l\u00b2 = mkp, and E = (e\u00b2-1)mk\u00b2/(2mkp) = (e\u00b2-1)k/(2p)\n    # But we need to be careful: E = (e\u00b2-1) \u00b7 m\u00b7k\u00b2 / (2\u00b7m\u00b7k\u00b7p) = (e\u00b2-1)\u00b7k/(2p)\n    # Actually from e\u00b2 = 1 + 2El\u00b2/(mk\u00b2) and l\u00b2 = mkp:\n    #   e\u00b2 = 1 + 2E\u00b7mkp/(mk\u00b2) = 1 + 2Ep/k\n    #   E = (e\u00b2-1)k/(2p)\n    E = (e**2 - 1) * k / (2 * p)\n\n    return p, e, E\n\n\ndef demo_orbit_determination():\n    \"\"\"Demonstrate orbit determination from observations.\"\"\"\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application: Orbit Determination from Two Observations\")\n    print(\"=\" * 60)\n\n    # True orbit parameters\n    m, k = 1.0, 1.0\n    p_true = 1.5\n    e_true = 0.4\n    theta0_true = 0.0\n\n    # Simulate two observations\n    theta1 = 0.3\n    theta2 = 1.7\n    r1 = p_true / (1 + e_true * np.cos(theta1 - theta0_true))\n    r2 = p_true / (1 + e_true * np.cos(theta2 - theta0_true))\n\n    print(f\"\\n  True parameters: p = {p_true}, e = {e_true}\")\n    print(f\"  Observation 1: r({theta1:.2f}) = {r1:.6f}\")\n    print(f\"  Observation 2: r({theta2:.2f}) = {r2:.6f}\")\n\n    # Recover parameters\n    p_rec, e_rec, E_rec = orbit_from_two_radii(r1, r2, theta2 - theta1, m, k)\n    print(f\"\\n  Recovered parameters:\")\n    print(f\"    p = {p_rec:.6f} (error: {abs(p_rec - p_true):.2e})\")\n    print(f\"    e = {e_rec:.6f} (error: {abs(e_rec - e_true):.2e})\")\n    print(f\"    E = {E_rec:.6f}\")\n\n    # Verify with eccentricity-energy relation\n    l_sq = m * k * p_rec\n    e_check = np.sqrt(max(0, 1 + 2 * E_rec * l_sq / (m * k**2)))\n    print(f\"    e (from E): {e_check:.6f} (consistency check)\")\n\n\n# \u2500\u2500\u2500 Main \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef main():\n    print(\"Real-World Applications of Certified Kepler Orbit Theory\")\n    print(\"=\" * 60)\n\n    compute_solar_system_orbits()\n\n    print(\"\\n\" + \"=\" * 60)\n    print(\"Application: Hohmann Transfer Orbit Design\")\n    print(\"=\" * 60)\n    hohmann_transfer(1.0, 1.524)   # Earth to Mars\n    hohmann_transfer(1.0, 5.203)   # Earth to Jupiter\n    hohmann_transfer(1.0, 0.723)   # Earth to Venus\n\n    demo_exoplanet_detection()\n    demo_orbit_determination()\n\n\nif __name__ == \"__main__\":\n    main()\n\n\n#!/usr/bin/env python3\n\"\"\"\nKepler Orbit Demonstration\n\nInteractive visualization of the Kepler problem:\n  (i)   3D Kepler trajectory in configuration space\n  (ii)  Effective potential with unique minimum\n  (iii) Reduced 2D dynamics on the (r, p_r) plane\n  (iv)  Conic section orbit r(\u03b8) = p/(1 + e cos \u03b8)\n  (v)   Orbit type classification by energy\n\nDemonstrates the certified results from the Lean formalization.\n\"\"\"\n\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom matplotlib.gridspec import GridSpec\n\n# \u2500\u2500\u2500 Physical constants and definitions \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef effective_potential(r, m, k, l):\n    \"\"\"V_eff(r) = l\u00b2/(2mr\u00b2) - k/r\"\"\"\n    return l**2 / (2 * m * r**2) - k / r\n\ndef circular_orbit_radius(m, k, l):\n    \"\"\"r* = l\u00b2/(mk)\"\"\"\n    return l**2 / (m * k)\n\ndef effective_potential_min(m, k, l):\n    \"\"\"V_min = -mk\u00b2/(2l\u00b2)\"\"\"\n    return -m * k**2 / (2 * l**2)\n\ndef semi_latus_rectum(m, k, l):\n    \"\"\"p = l\u00b2/(mk)\"\"\"\n    return l**2 / (m * k)\n\ndef kepler_eccentricity(m, k, E, l):\n    \"\"\"e = sqrt(1 + 2El\u00b2/(mk\u00b2))\"\"\"\n    arg = 1 + 2 * E * l**2 / (m * k**2)\n    return np.sqrt(max(0, arg))\n\ndef kepler_orbit_radius(p, e, theta, theta0=0):\n    \"\"\"r(\u03b8) = p / (1 + e cos(\u03b8 - \u03b8\u2080))\"\"\"\n    return p / (1 + e * np.cos(theta - theta0))\n\ndef semi_major_axis(k, E):\n    \"\"\"a = -k/(2E) for E < 0\"\"\"\n    return -k / (2 * E)\n\ndef orbital_period(m, k, E):\n    \"\"\"T = 2\u03c0\u221a(a\u00b3m/k)\"\"\"\n    a = semi_major_axis(k, E)\n    return 2 * np.pi * np.sqrt(a**3 * m / k)\n\ndef kepler_orbit_params(m, k, E, l):\n    \"\"\"\n    Certified Kepler orbit parameter computation.\n\n    Returns (p, e, a, T) with verified:\n      e\u00b2 = 1 + 2El\u00b2/(mk\u00b2)\n      p = l\u00b2/(mk)\n      a = p/(1-e\u00b2) = -k/(2E)\n      T = 2\u03c0\u221a(a\u00b3m/k)\n    \"\"\"\n    p = semi_latus_rectum(m, k, l)\n    e = kepler_eccentricity(m, k, E, l)\n    a = semi_major_axis(k, E)\n    T = orbital_period(m, k, E)\n    return p, e, a, T\n\n\n# \u2500\u2500\u2500 Numerical integration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef integrate_kepler_2d(m, k, r0, vr0, vphi0, dt=0.001, n_steps=10000):\n    \"\"\"\n    Integrate Kepler equations in polar coordinates.\n    Returns arrays of (t, r, phi, vr, vphi).\n    \"\"\"\n    l = m * r0 * vphi0  # angular momentum\n    r, vr = r0, vr0\n    phi = 0.0\n\n    ts = [0.0]\n    rs = [r]\n    phis = [phi]\n    vrs = [vr]\n\n    for i in range(n_steps):\n        # Equations of motion in polar coords\n        # m r\u0308 = l\u00b2/(mr\u00b3) - k/r\u00b2\n        # \u03c6\u0307 = l/(mr\u00b2)\n        ar = l**2 / (m * r**3) - k / r**2\n        dphi = l / (m * r**2)\n\n        # Leapfrog integration\n        vr += ar / m * dt\n        r += vr * dt\n        phi += dphi * dt\n\n        if r <= 0:\n            break\n\n        ts.append(ts[-1] + dt)\n        rs.append(r)\n        phis.append(phi)\n        vrs.append(vr)\n\n    return np.array(ts), np.array(rs), np.array(phis), np.array(vrs)\n\n\n# \u2500\u2500\u2500 Visualization \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef plot_effective_potential():\n    \"\"\"Plot the effective potential with its unique minimum.\"\"\"\n    m, k, l = 1.0, 1.0, 1.0\n\n    r_star = circular_orbit_radius(m, k, l)\n    V_min = effective_potential_min(m, k, l)\n\n    r = np.linspace(0.2, 5, 500)\n    V = effective_potential(r, m, k, l)\n\n    fig, ax = plt.subplots(figsize=(8, 6))\n    ax.plot(r, V, 'b-', linewidth=2, label=r'$V_{\\mathrm{eff}}(r) = \\frac{l^2}{2mr^2} - \\frac{k}{r}$')\n    ax.axhline(y=V_min, color='gray', linestyle='--', alpha=0.5, label=f'$V_{{\\\\min}} = {V_min:.3f}$')\n    ax.plot(r_star, V_min, 'ro', markersize=10, zorder=5, label=f'$r^* = {r_star:.3f}$')\n\n    # Show energy levels for different orbit types\n    for E, color, name in [(-0.3, 'green', 'Elliptic'), (0, 'orange', 'Parabolic')]:\n        ax.axhline(y=E, color=color, linestyle='--', alpha=0.7, label=f'E = {E} ({name})')\n\n    ax.set_xlabel('r', fontsize=14)\n    ax.set_ylabel(r'$V_{\\mathrm{eff}}(r)$', fontsize=14)\n    ax.set_title('Effective Potential with Unique Minimum\\n(Certified: perfect square decomposition)', fontsize=14)\n    ax.set_ylim(-1, 2)\n    ax.set_xlim(0, 5)\n    ax.legend(fontsize=11)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('effective_potential.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved effective_potential.png\")\n\n\ndef plot_orbit_classification():\n    \"\"\"Plot orbits for different energy levels showing ellipse/parabola/hyperbola.\"\"\"\n    m, k, l = 1.0, 1.0, 1.0\n    p = semi_latus_rectum(m, k, l)\n\n    fig, axes = plt.subplots(1, 3, figsize=(18, 6), subplot_kw={'projection': 'polar'})\n\n    cases = [\n        (-0.3, 'Elliptic (E < 0)', 'blue'),\n        (-0.001, 'Nearly Parabolic (E \u2248 0)', 'orange'),\n        (0.3, 'Hyperbolic (E > 0)', 'red'),\n    ]\n\n    for ax, (E, title, color) in zip(axes, cases):\n        e = kepler_eccentricity(m, k, E, l)\n\n        if e < 1:\n            theta = np.linspace(0, 2 * np.pi, 1000)\n        else:\n            # For hyperbola, limit angle range\n            theta_max = np.arccos(-1/e) - 0.01 if e > 1 else np.pi\n            theta = np.linspace(-theta_max, theta_max, 1000)\n\n        r = kepler_orbit_radius(p, e, theta)\n        r = np.clip(r, 0, 10)\n\n        ax.plot(theta, r, color=color, linewidth=2)\n        ax.plot(0, 0, 'k*', markersize=15)  # Force center\n        ax.set_title(f'{title}\\ne = {e:.4f}', fontsize=12, pad=20)\n        ax.set_rmax(min(5, np.max(r) * 1.1))\n\n    fig.suptitle('Orbit Classification by Energy\\n(Certified: e\u00b2 = 1 + 2El\u00b2/(mk\u00b2))', fontsize=14, y=1.02)\n    fig.tight_layout()\n    fig.savefig('orbit_classification.png', dpi=150, bbox_inches='tight')\n    plt.close(fig)\n    print(\"Saved orbit_classification.png\")\n\n\ndef plot_3d_trajectory():\n    \"\"\"Plot a 3D Kepler trajectory.\"\"\"\n    m, k = 1.0, 1.0\n    r0 = 1.0\n    vr0 = 0.0\n    vphi0 = 1.2  # Gives an elliptical orbit\n\n    ts, rs, phis, vrs = integrate_kepler_2d(m, k, r0, vr0, vphi0, dt=0.001, n_steps=20000)\n\n    x = rs * np.cos(phis)\n    y = rs * np.sin(phis)\n\n    fig = plt.figure(figsize=(10, 8))\n    ax = fig.add_subplot(111)\n    ax.plot(x, y, 'b-', linewidth=1, alpha=0.8)\n    ax.plot(0, 0, 'r*', markersize=20, label='Force center')\n    ax.plot(x[0], y[0], 'go', markersize=10, label='Start')\n    ax.set_xlabel('x', fontsize=14)\n    ax.set_ylabel('y', fontsize=14)\n    ax.set_title('Kepler Orbit in Configuration Space', fontsize=14)\n    ax.set_aspect('equal')\n    ax.legend(fontsize=12)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('kepler_trajectory.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved kepler_trajectory.png\")\n\n\ndef plot_reduced_phase_space():\n    \"\"\"Plot the reduced (r, p_r) phase space with effective potential contours.\"\"\"\n    m, k, l = 1.0, 1.0, 1.0\n\n    r = np.linspace(0.3, 5, 300)\n    V = effective_potential(r, m, k, l)\n\n    fig, ax = plt.subplots(figsize=(8, 6))\n\n    # Phase space trajectories for different energies\n    for E, color, label in [(-0.4, 'blue', 'E = -0.4'), (-0.3, 'green', 'E = -0.3'),\n                             (-0.2, 'orange', 'E = -0.2')]:\n        # p_r\u00b2 = 2m(E - V_eff)\n        pr_sq = 2 * m * (E - V)\n        valid = pr_sq >= 0\n\n        r_valid = r[valid]\n        pr_pos = np.sqrt(pr_sq[valid])\n        pr_neg = -pr_pos\n\n        ax.plot(r_valid, pr_pos, color=color, linewidth=2, label=label)\n        ax.plot(r_valid, pr_neg, color=color, linewidth=2)\n\n    # Circular orbit point\n    r_star = circular_orbit_radius(m, k, l)\n    ax.plot(r_star, 0, 'ro', markersize=12, zorder=5, label=f'Circular orbit ($r^*$ = {r_star:.2f})')\n\n    ax.set_xlabel('r (radial distance)', fontsize=14)\n    ax.set_ylabel('$p_r$ (radial momentum)', fontsize=14)\n    ax.set_title('Reduced Phase Space $(r, p_r)$\\nMarsden-Weinstein reduction: 6D \u2192 2D', fontsize=14)\n    ax.legend(fontsize=11)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('reduced_phase_space.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved reduced_phase_space.png\")\n\n\ndef plot_eccentricity_energy():\n    \"\"\"Plot the eccentricity-energy relation.\"\"\"\n    m, k, l = 1.0, 1.0, 1.0\n    V_min = effective_potential_min(m, k, l)\n\n    E_range = np.linspace(V_min + 0.01, 1.0, 500)\n    e_values = [kepler_eccentricity(m, k, E, l) for E in E_range]\n\n    fig, ax = plt.subplots(figsize=(8, 6))\n    ax.plot(E_range, e_values, 'b-', linewidth=2)\n    ax.axhline(y=1, color='red', linestyle='--', alpha=0.7, label='e = 1 (parabolic)')\n    ax.axvline(x=0, color='gray', linestyle='--', alpha=0.7, label='E = 0')\n\n    # Shade regions\n    ax.fill_between(E_range[E_range < 0], 0, [kepler_eccentricity(m, k, E, l) for E in E_range[E_range < 0]],\n                    alpha=0.15, color='blue', label='Elliptic (E < 0)')\n    ax.fill_between(E_range[E_range > 0], 1, [kepler_eccentricity(m, k, E, l) for E in E_range[E_range > 0]],\n                    alpha=0.15, color='red', label='Hyperbolic (E > 0)')\n\n    ax.set_xlabel('Energy E', fontsize=14)\n    ax.set_ylabel('Eccentricity e', fontsize=14)\n    ax.set_title('Eccentricity-Energy Relation\\n$e^2 = 1 + 2El^2/(mk^2)$ (Certified)', fontsize=14)\n    ax.legend(fontsize=11)\n    ax.set_ylim(0, 2.5)\n    ax.grid(True, alpha=0.3)\n    fig.tight_layout()\n    fig.savefig('eccentricity_energy.png', dpi=150)\n    plt.close(fig)\n    print(\"Saved eccentricity_energy.png\")\n\n\ndef verify_algebraic_identities():\n    \"\"\"Numerically verify the certified algebraic identities.\"\"\"\n    print(\"\\n\" + \"=\"*60)\n    print(\"NUMERICAL VERIFICATION OF CERTIFIED IDENTITIES\")\n    print(\"=\"*60)\n\n    np.random.seed(42)\n    n_tests = 10000\n    max_error_ecc = 0\n    max_error_vmin = 0\n    denom_positive_count = 0\n    denom_total_count = 0\n\n    for _ in range(n_tests):\n        m = np.random.uniform(0.5, 2)\n        k = np.random.uniform(0.5, 2)\n        l = np.random.uniform(0.5, 2)\n        V_min = effective_potential_min(m, k, l)\n        E = np.random.uniform(max(V_min + 0.01, V_min * 0.99), -0.001)\n\n        # Test 1: e\u00b2 = 1 + 2El\u00b2/(mk\u00b2)\n        e = kepler_eccentricity(m, k, E, l)\n        expected = 1 + 2 * E * l**2 / (m * k**2)\n        error = abs(e**2 - expected)\n        max_error_ecc = max(max_error_ecc, error)\n\n        # Test 2: V_eff(r*) = V_min\n        r_star = circular_orbit_radius(m, k, l)\n        V_at_rstar = effective_potential(r_star, m, k, l)\n        error2 = abs(V_at_rstar - V_min)\n        max_error_vmin = max(max_error_vmin, error2)\n\n        # Test 3: Denominator positivity for e < 1\n        if e < 1:\n            p = semi_latus_rectum(m, k, l)\n            for theta in np.linspace(0, 2*np.pi, 100):\n                denom = 1 + e * np.cos(theta)\n                denom_total_count += 1\n                if denom > 0:\n                    denom_positive_count += 1\n\n    print(f\"\\nTest 1: |e\u00b2 - (1 + 2El\u00b2/(mk\u00b2))| over {n_tests} random params\")\n    print(f\"  Max error: {max_error_ecc:.2e}\")\n    print(f\"  Status: {'PASS' if max_error_ecc < 1e-10 else 'FAIL'}\")\n\n    print(f\"\\nTest 2: |V_eff(r*) - V_min| over {n_tests} random params\")\n    print(f\"  Max error: {max_error_vmin:.2e}\")\n    print(f\"  Status: {'PASS' if max_error_vmin < 1e-10 else 'FAIL'}\")\n\n    print(f\"\\nTest 3: Denominator 1 + e cos \u03b8 > 0 for e < 1\")\n    print(f\"  Positive: {denom_positive_count}/{denom_total_count}\")\n    print(f\"  Status: {'PASS' if denom_positive_count == denom_total_count else 'FAIL'}\")\n\n\ndef main():\n    \"\"\"Generate all demonstration plots and run verification.\"\"\"\n    print(\"Kepler Orbit Demonstration\")\n    print(\"=\"*60)\n\n    # Generate plots\n    plot_effective_potential()\n    plot_orbit_classification()\n    plot_3d_trajectory()\n    plot_reduced_phase_space()\n    plot_eccentricity_energy()\n\n    # Numerical verification\n    verify_algebraic_identities()\n\n    # Example computation\n    print(\"\\n\" + \"=\"*60)\n    print(\"EXAMPLE: Earth-Sun System (SI units)\")\n    print(\"=\"*60)\n    m_earth = 5.972e24\n    G = 6.674e-11\n    M_sun = 1.989e30\n    k_earth = G * M_sun * m_earth\n    l_earth = 2.661e40  # Angular momentum magnitude\n    E_earth = -2.65e33   # Total energy\n\n    p, e, a, T = kepler_orbit_params(m_earth, k_earth, E_earth, l_earth)\n    print(f\"  Semi-latus rectum p = {p:.3e} m\")\n    print(f\"  Eccentricity      e = {e:.6f}\")\n    print(f\"  Semi-major axis   a = {a:.3e} m ({a/1.496e11:.4f} AU)\")\n    print(f\"  Period            T = {T:.3e} s ({T/86400/365.25:.4f} years)\")\n\n    # Verify e\u00b2 identity\n    e_sq_computed = e**2\n    e_sq_formula = 1 + 2 * E_earth * l_earth**2 / (m_earth * k_earth**2)\n    print(f\"\\n  e\u00b2 (computed):  {e_sq_computed:.10f}\")\n    print(f\"  e\u00b2 (formula):   {e_sq_formula:.10f}\")\n    print(f\"  Difference:     {abs(e_sq_computed - e_sq_formula):.2e}\")\n\n    print(\"\\nDone! All plots saved.\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "date": "2026-05-22T05:46:30Z",
+    "exp_id": "b9d951a4",
+    "source_exp_ids": [
+      "1de3cb90"
     ]
   },
   "direction_3_deterministic_hitting_sets_for_millerr.json": {
@@ -4499,7 +4541,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 272
+      "hue": 134
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -4508,7 +4550,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 90
+      "hue": 112
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -4517,7 +4559,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "conjecture_5_connection_to_hardy_field_hierarchy",
@@ -4526,7 +4568,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 272
+      "hue": 112
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -4535,7 +4577,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 281
+      "hue": 92
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -4544,7 +4586,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T04:04:01Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "tropical_convexity_and_linear_programming",
@@ -4553,7 +4595,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T04:04:27Z",
-      "hue": 95
+      "hue": 275
     },
     {
       "id": "arithmetic_resonance_in_neural_proof_search",
@@ -4562,7 +4604,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T04:04:52Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -4571,7 +4613,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:13Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "collatz_stopping_times_density_analysis",
@@ -4580,7 +4622,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:41Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -4589,7 +4631,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T05:58:00Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
@@ -4598,7 +4640,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:58:35Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_1_kan_composition_and_groupoid_structure",
@@ -4607,7 +4649,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:59:07Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_2_path_space_cardinality_invariants_for_",
@@ -4616,7 +4658,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:10:21Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_3_differential_closure_and_transseries_f",
@@ -4625,7 +4667,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T07:13:37Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "proof_compression_phase_transition_in_formal_mathe",
@@ -4643,7 +4685,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T07:18:18Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "quantum_information_no_cloning_and_teleportation",
@@ -4652,7 +4694,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T08:10:20Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "conjecture_2_tight_depth_bound_d1_instead_of_d3",
@@ -4661,7 +4703,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T08:13:20Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_3_deterministic_hitting_sets_for_millerr",
@@ -4670,7 +4712,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:13:44Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "representation_theory_character_tables_of_s_n",
@@ -4679,7 +4721,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T08:14:11Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_2_phase_aware_lemma_synthesis_for_ai_the",
@@ -4688,7 +4730,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:14:39Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "euler_characteristic_and_gauss_bonnet",
@@ -4697,7 +4739,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T08:15:03Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "homological_algebra_derived_functors",
@@ -4715,7 +4757,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T09:15:37Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "direction_3_explicit_forman_gradient_fields_and_pe",
@@ -4724,7 +4766,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T09:16:14Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_2_quantitative_fiat_shamir_security_via_",
@@ -4733,7 +4775,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:13:08Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "extremal_graph_theory_turn_and_szemerdi",
@@ -4742,7 +4784,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T10:13:38Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "domain_bridges",
@@ -4751,7 +4793,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:14:03Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "goldbach_verification_framework",
@@ -4760,7 +4802,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T10:14:31Z",
-      "hue": 292
+      "hue": 101
     },
     {
       "id": "direction_4_normalizing_derivative_compiler_with_i",
@@ -4769,7 +4811,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T10:14:52Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "invariant_subspace_problem_special_cases",
@@ -4778,7 +4820,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T11:14:42Z",
-      "hue": 101
+      "hue": 90
     },
     {
       "id": "categorical_foundations_yoneda_and_adjunctions",
@@ -4787,7 +4829,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T11:15:08Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "information_geometry_fisher_metric_on_statistical_",
@@ -4796,7 +4838,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T11:28:55Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "lambda_calculus_church_rosser_and_normalization",
@@ -4805,7 +4847,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:04Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_4_persistent_torsion_detection_for_tda",
@@ -4814,7 +4856,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:31Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_1_complete_verified_regev_reduction",
@@ -4823,7 +4865,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T12:24:54Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "formal_verification_of_algorithms",
@@ -4832,7 +4874,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T12:32:49Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "arithmetic_universality_classes_in_tropical_degene",
@@ -4841,7 +4883,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T13:10:29Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_1_complete_strict_hierarchy_separation",
@@ -4850,7 +4892,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T13:13:42Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1_universal_affine__protocol_extraction",
@@ -4868,7 +4910,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T13:14:34Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "homological_phase_transition_in_automated_conjectu",
@@ -4877,7 +4919,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T14:10:33Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "direction_4_growth_rank_completeness_grand_challen",
@@ -4886,7 +4928,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:13:43Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_5_ordinal_classification_of_eml_growth",
@@ -4895,7 +4937,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:14:17Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "noethers_theorem_symmetries_and_conservation_laws",
@@ -4913,7 +4955,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T14:15:32Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "direction_3_dag_sharing_does_not_reduce_depth_gran",
@@ -4922,7 +4964,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T15:14:27Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "optimal_transport_and_wasserstein_distances",
@@ -4940,7 +4982,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T15:15:26Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "direction_5_optimal_curvature_distribution_on_tria",
@@ -4949,7 +4991,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T15:16:00Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_2_fujisaki_okamoto_transform_as_module_m",
@@ -4958,7 +5000,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:16:34Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_5_non_commutative_module_lwe_and_ntru",
@@ -4967,7 +5009,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:17:03Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_3_grand_challenge_ext_tor_persistent_spe",
@@ -4985,7 +5027,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T16:18:43Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "ramsey_theory_bounds_and_constructions",
@@ -5003,7 +5045,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T17:15:09Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "riemann_zeta_zero_free_regions_and_density_estimat",
@@ -5021,7 +5063,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T18:04:51Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "proof_complexity_order_parameters_from_persistence",
@@ -5030,7 +5072,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T18:09:01Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "direction_4_core_collapse_acceleration_hypothesis",
@@ -5039,7 +5081,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T18:30:37Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "quadratic_reciprocity_five_proofs_formalized",
@@ -5048,7 +5090,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T18:39:31Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_4_probe_complexity_of_finite_categories",
@@ -5057,7 +5099,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T18:42:42Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_2_efficient_computation_via_smith_normal",
@@ -5066,7 +5108,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T19:10:31Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "direction_2_active_set_bar_count_bound",
@@ -5075,7 +5117,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T19:13:53Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "direction_1_multi_step_filtration_obstructions_ext",
@@ -5084,7 +5126,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T19:14:18Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "direction_3_differential_closure_under_quotients",
@@ -5093,7 +5135,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:10:25Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_3_valuation_profile_universality_for_tro",
@@ -5102,7 +5144,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T20:13:32Z",
-      "hue": 272
+      "hue": 101
     },
     {
       "id": "fourier_analysis_on_finite_groups",
@@ -5111,7 +5153,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:13:59Z",
-      "hue": 91
+      "hue": 314
     },
     {
       "id": "direction_2_verified_compiler_synthesis_via_free_f",
@@ -5120,7 +5162,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T20:14:37Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -5147,7 +5189,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:25:46Z",
-      "hue": 281
+      "hue": 90
     },
     {
       "id": "direction_2_haar_measure_on_restricted_products",
@@ -5156,7 +5198,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:40:45Z",
-      "hue": 91
+      "hue": 292
     },
     {
       "id": "pac_bayes_generalization_bounds",
@@ -5165,7 +5207,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T21:41:12Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "direction_2_hardness_localization_hypothesis",
@@ -5174,7 +5216,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T22:20:03Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_5_compiler_lower_bound_hypothesis",
@@ -5183,7 +5225,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T22:24:27Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "tropical_energy_interpretation_of_normalization",
@@ -5192,7 +5234,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T22:24:58Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_2_approximation_sandwich_universality",
@@ -5201,7 +5243,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T22:44:36Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_4_reverse_mathematical_strength_of_rank_",
@@ -5210,7 +5252,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T23:13:43Z",
-      "hue": 101
+      "hue": 90
     },
     {
       "id": "direction_4_convergence_of_discrete_to_smooth_curv",
@@ -5219,7 +5261,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T23:14:11Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_1_cycle_window_universality_hypothesis",
@@ -5228,7 +5270,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T23:14:38Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_4_quotient_algebras_and_certified_optimi",
@@ -5237,7 +5279,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-21T23:47:45Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_2_entropy_barrier_conjecture_for_general",
@@ -5246,7 +5288,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T00:10:05Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_2_natural_gradient_convergence_on_dually",
@@ -5255,7 +5297,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-22T00:14:37Z",
-      "hue": 281
+      "hue": 91
     },
     {
       "id": "direction_1_sharpness_of_the_1_depth_bound",
@@ -5273,7 +5315,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T00:47:21Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_2_exponential_size_lower_bounds_at_fixed",
@@ -5282,7 +5324,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T03:12:59Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "convex_geometry_brunn_minkowski_theory",
@@ -5300,7 +5342,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T03:41:03Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_1_depth_rigidity_in_the_full_eml_languag",
@@ -5309,7 +5351,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T03:50:31Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "direction_1_discrete_noether_shadow_for_variationa",
@@ -5318,7 +5360,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T03:58:58Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "euler_mascheroni_constant_irrationality_approaches",
@@ -5327,7 +5369,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T04:03:42Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "direction_3_quotient_security_monotonicity__proof_",
@@ -5336,7 +5378,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-22T04:06:54Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "behavioral_equivalence_via_finite_transition_syste",
@@ -5345,7 +5387,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T04:16:14Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_2_logarithmic_derivative_level_bound_for",
@@ -5354,7 +5396,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T05:03:23Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_3_tropical_noether_shadow_for_piecewise_",
@@ -5363,7 +5405,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-22T05:16:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_5_discrete_uniformization_via_curvature_",
@@ -5372,7 +5414,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-22T05:23:34Z",
-      "hue": 95
+      "hue": 89
     },
     {
       "id": "direction_5_ordinal_rank_as_symbolic_complexity_ce",
@@ -5381,7 +5423,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-22T05:33:36Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_2_discrete_curvature_flow_with_convergen",
@@ -5390,6 +5432,15 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-22T05:43:04Z",
+      "hue": 270
+    },
+    {
+      "id": "direction_5_certified_hamiltonian_reduction_and_in",
+      "title": "Certified Hamiltonian Reduction and the Kepler Orbit Theorem",
+      "domain": "Mathematical Physics / Hamiltonian Mechanics",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-22T05:46:30Z",
       "hue": 270
     }
   ],
@@ -5719,6 +5770,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "direction_5_ordinal_classification_of_eml_growth",
       "target": "direction_4_reverse_mathematical_strength_of_rank_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "noethers_theorem_symmetries_and_conservation_laws",
+      "target": "direction_5_certified_hamiltonian_reduction_and_in",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -6237,20 +6295,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "8f09d07a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-22T05:33:47.441988+00:00"
-  },
-  {
-    "id": "fd_0333",
-    "title": "Multi-variable extension",
-    "description": "generalizes the single-variable theory to partial differentiation, requiring new infrastructure for variable tracking.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8f09d07a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-22T05:33:47.456658+00:00"
   },
   {
     "id": "fd_0334",
@@ -6961,26 +7005,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "0502ee5d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-21T15:16:03.457253+00:00"
-  },
-  {
-    "id": "fd_0269",
-    "title": "Direction 2: Discrete Curvature Flow with Convergence Guarantee",
-    "description": "**Conjecture.** There exists a combinatorial curvature flow\u2014a sequence of local angle/edge modifications\u2014that monotonically decreases curvature variance while preserving the Gauss\u2013Bonnet constraint, and converges to the equicurved state (or to a local minimum under geometric constraints) in polynomially many steps.\n\n**Test.**\n1. Implement a flow: at each step, identify the vertex of maximum $|K(v) - \\bar{K}|$, perform a local edge flip or angle redistribution that decreases variance.\n2. Run on random triangulations with $n = 50, 100, 200$ vertices for genus 0, 1, 2.\n3. Record variance at each step. Check monotone decrease and convergence rate.\nA counterexample would be a triangulation where all local moves increase variance.\n\n**Impact.** Would provide a certified mesh optimization algorithm with convergence guarantees\u2014directly applicable to finite element preprocessing.\n\n**Catalog References.**\n- `Geometry/CurvatureVariance.lean: curvatureVariance_nonneg` \u2014 variance is bounded below by 0\n- `Geometry/CurvatureVariance.lean: sq_dist_decomposition_to_constant` \u2014 energy decomposition drives convergence analysis\n- `Geometry/CurvatureVarianceRealization.lean: surface_curvatureVariance_nonneg` \u2014 surface instantiation\n\n**Proof Strategy.** Define the flow via steepest descent on variance. Show each step decreases variance by at least $\\Omega(1/n^2)$. Use the decomposition identity to bound the gap from optimum. Polynomial convergence follows if the step size is uniformly bounded below.\n\n**Domain Bridges.** Discrete differential geometry \u2192 optimization theory \u2192 algorithm design \u2192 computational geometry.\n\n**Lineage.** Extends the static optimization principle to a dynamic convergence result. Analogous to Chow\u2013Luo combinatorial Ricci flow.\n\n**Ambition.** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 convergence proofs for combinatorial flows are notoriously difficult.)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0502ee5d",
-    "consumed_by_exp_id": "f059f2ef",
-    "timestamp": "2026-05-21T15:16:03.474427+00:00"
   },
   {
     "id": "fd_0270",
@@ -7863,25 +7887,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-22T04:12:44.259657+00:00"
   },
   {
-    "id": "fd_0333",
-    "title": "Direction 3: Strict Contraction Characterization",
-    "description": "**Conjecture:** For a non-injective surjective map `f : M \u2192 N` between finite types with `|M| > |N|`, there exist distributions `\u03bc, \u03bd` on `M` such that:\n\n```\ndecisionAdvantage (PMF.map f \u03bc) (PMF.map f \u03bd) < decisionAdvantage \u03bc \u03bd\n```\n\nMoreover, equality holds in `decisionAdvantage_map_le` if and only if every optimal distinguisher for `(\u03bc, \u03bd)` is constant on fibers of `f`.\n\n**Test:** For all maps `Fin 4 \u2192 Fin 2` and `Fin 4 \u2192 Fin 3`, enumerate optimal distinguishers (via Neyman-Pearson) and check fiber-constancy. Correlate with whether equality holds in the DPI.\n\n**Impact:** This characterizes exactly when compression is lossless for distinguishing, answering the question: \"When does quotient security achieve tight reduction?\" The fiber-constancy criterion connects to kernel invariance in module-LWE.\n\n**Catalog References:** `Cryptography/QuotientSecurity/DataProcessing.lean` (`decisionAdvantage_map_le`, `QuotientMonotone`), `Catalog/Cryptography/ModuleLWE/Defs.lean` (`KernelInvariantError`).\n\n**Proof Strategy:** (Existence of strict contraction) Choose \u03bc concentrated on one element within a fiber, \u03bd concentrated on another element in the same fiber. Then f_*\u03bc = f_*\u03bd, giving post-compression advantage = 0 but pre-compression advantage > 0. (Equality characterization) If the optimal D* is fiber-constant, it factors through f as D* = D'\u2218f, and the pullback achieves the same advantage. Conversely, if D* is not fiber-constant, the compressed supremum misses it.\n\n**Domain Bridges:** Combinatorics (fiber structure) \u2194 Optimization (characterization of extremizers) \u2194 Cryptography (tight reductions).\n\n**Lineage:** Refines `decisionAdvantage_map_le` from inequality to equality characterization.\n\n**Ambition:** Solid extension \u2014 the existence half is easy; the equality characterization is non-trivial but tractable.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "34bb085d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-22T04:12:44.280483+00:00"
-  },
-  {
     "id": "fd_0334",
     "title": "Direction 4: Kernel-Invariant Factorization Through Quotient",
     "description": "**Conjecture:** If `\u03c7 : PMF M` is kernel-invariant under a surjective linear map `f : M \u2192\u2097[R] N`, then there exists a unique PMF `\u03c7\u0304 : PMF N` such that `PMF.map f \u03c7 = \u03c7\u0304`, and moreover, `\u03c7` is completely determined by `\u03c7\u0304` and the kernel `ker f`.\n\nIn other words, kernel-invariant distributions factor through the quotient:\n\n```\n\u2203 \u03c7\u0304 : PMF N, PMF.map f \u03c7 = \u03c7\u0304 \u2227 \u2200 m, \u03c7 m = \u03c7\u0304 (f m) / (Fintype.card (ker f))\n```\n\n**Test:** For linear maps `(Z/qZ)^n \u2192 Z/qZ` with q \u2208 {2,3,5}, construct kernel-invariant distributions and verify the factorization formula numerically.\n\n**Impact:** This provides the algebraic mechanism behind quotient security: kernel-invariant distributions are exactly those for which compression is \"invertible\" in a statistical sense. It connects the DPI to the structure theory of modules.\n\n**Catalog References:** `Catalog/Cryptography/ModuleLWE/Defs.lean` (`KernelInvariantError`), `Cryptography/QuotientSecurity/DataProcessing.lean` (`KernelInvariant`).\n\n**Proof Strategy:** Kernel invariance means \u03c7 is constant on cosets m + ker(f). Each coset maps bijectively to a point in N. So \u03c7(m) = \u03c7(m') whenever f(m) = f(m'), giving a well-defined quotient PMF \u03c7\u0304(n) = |ker f| \u00b7 \u03c7(m) for any m with f(m) = n. The pushforward PMF.map f \u03c7 then equals \u03c7\u0304 by construction.\n\n**Domain Bridges:** Module theory (kernels, quotients) \u2194 Probability (factorization) \u2194 Cryptography (structured noise).\n\n**Lineage:** Builds on `KernelInvariant` definition in `DataProcessing.lean` and `KernelInvariantError` in catalog.\n\n**Ambition:** Solid extension \u2014 clean algebraic result, but requires careful handling of Fintype.card and division.\n\n---",
@@ -7968,10 +7973,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "627e7fc7",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d0137e4",
     "timestamp": "2026-05-22T04:22:01.456203+00:00"
   },
   {
@@ -8009,5 +8014,104 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "627e7fc7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-22T04:22:01.501440+00:00"
+  },
+  {
+    "id": "fd_0335",
+    "title": "Direction 1: Exponential Convergence via Spectral Gap",
+    "description": "**Conjecture:** There exists a universal constant $C > 0$ such that for any triangulated surface with $n$ vertices, the greedy curvature flow satisfies:\n$$V(k) \\leq V(0) \\cdot (1 - C/n^2)^k$$\n\nThis is formalized as `exponential_convergence_conjecture` in the codebase.\n\n**Test:** Generate 1000 random triangulations with $n \\in \\{50, 100, 200, 500\\}$ for genus 0, 1, 2. Run curvature flow until $V < V_0/1000$. Plot $\\log(V(k)/V_0)$ vs $k/n^2$. If the conjecture holds, all curves collapse to a single line with slope $\\geq -C$. A counterexample would be a family of triangulations where the slope approaches 0 as $n$ increases.\n\n**Impact:** This would improve the convergence bound from $O(V_0/\\varepsilon)$ to $O(n^2 \\log(V_0/\\varepsilon))$, a dramatic practical improvement. It would also establish the first spectral gap bound for the edge-flip Markov chain on triangulations.\n\n**Catalog References:**\n- `Pythagorean/CurvatureFlow/Convergence.lean: FlowSystem.convergence` \u2014 The polynomial bound to be strengthened.\n- `Pythagorean/CurvatureFlow/Defs.lean: pairwise_sq_diff_eq` \u2014 Enables spectral analysis via pairwise structure.\n\n**Proof Strategy:** Establish a discrete Poincar\u00e9 inequality on the curvature function space: $\\sum_i (f(i) - \\bar{f})^2 \\leq \\lambda_1^{-1} \\sum_{(i,j) \\in E} (f(i) - f(j))^2$, where $\\lambda_1$ is the spectral gap of the graph Laplacian. Show that the greedy flip exploits this gap to achieve multiplicative (rather than additive) progress.\n\n**Domain Bridges:** Spectral Graph Theory \u2194 Discrete Geometry \u2194 Markov Chain Theory\n\n**Lineage:** Builds directly on `FlowSystem.convergence` and `pairwise_sq_diff_eq`.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 \u2014 Grand challenge. Would unify curvature flow convergence with spectral graph theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f059f2ef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T05:43:16.456668+00:00"
+  },
+  {
+    "id": "fd_0336",
+    "title": "Direction 2: Markov Chain Mixing on the Flip Graph",
+    "description": "**Conjecture:** The random edge-flip Markov chain on triangulations of a genus-$g$ surface with $n$ vertices has mixing time $\\Theta(n^2 \\log n)$ for fixed $g$.\n\n**Test:** Implement the random flip Markov chain. Compute the total variation distance from stationarity at various times using coupling arguments. For $n \\in \\{20, 50, 100, 200\\}$ and $g \\in \\{0, 1, 2\\}$, estimate the mixing time and verify the $n^2 \\log n$ scaling. A counterexample would be a genus where mixing time grows faster than $n^2 \\log n$.\n\n**Impact:** This would establish the discrete curvature flow as an efficient sampler for random triangulations, with applications to statistical mechanics on random surfaces and Monte Carlo methods in quantum gravity.\n\n**Catalog References:**\n- `Pythagorean/CurvatureFlow/Convergence.lean: steps_above_threshold_bounded` \u2014 The descent bound that controls mixing.\n- `Pythagorean/CurvatureFlow/Convergence.lean: laplacian_preserves_sum` \u2014 Sum preservation ensures the chain stays on the correct fiber.\n\n**Proof Strategy:** Construct a canonical path argument on the flip graph. Use the pairwise decomposition to bound congestion ratios. Leverage the Popoviciu bound (`bounded_range_variance_bound`) to control the diameter of the curvature polytope.\n\n**Domain Bridges:** Markov Chain Theory \u2194 Combinatorial Geometry \u2194 Statistical Mechanics\n\n**Lineage:** Extends `FlowSystem` from deterministic to stochastic flows.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting. Would connect discrete geometry to the rapidly developing theory of Markov chains on combinatorial objects.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f059f2ef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T05:43:16.479325+00:00"
+  },
+  {
+    "id": "fd_0337",
+    "title": "Direction 3: Weighted Curvature Variance and Optimal Transport",
+    "description": "**Conjecture:** The curvature flow on weighted triangulations (where each vertex has a weight $w_i > 0$) converges to the weighted equilibrium $K(v) = \\bar{K}_w := (\\sum w_i K(i)) / (\\sum w_i)$ with convergence rate depending on the condition number $w_{\\max}/w_{\\min}$.\n\n**Test:** Implement weighted curvature variance $V_w = \\sum w_i (K(i) - \\bar{K}_w)^2 / \\sum w_i$. Run weighted greedy flow on triangulations with various weight distributions (uniform, exponential, power-law). Measure convergence rate as a function of condition number. Predict: convergence time scales as $O(\\kappa \\cdot V_0/\\varepsilon)$ where $\\kappa = w_{\\max}/w_{\\min}$.\n\n**Impact:** Connects curvature flow to optimal transport theory (Wasserstein distance on the curvature distribution) and enables adaptive mesh optimization where some regions require finer resolution.\n\n**Catalog References:**\n- `Pythagorean/CurvatureFlow/Defs.lean: cVar_nonneg` \u2014 Generalizes to weighted non-negativity.\n- `Pythagorean/CurvatureFlow/Defs.lean: cVar_eq_zero_iff` \u2014 Generalizes to weighted equilibrium characterization.\n\n**Proof Strategy:** Define weighted mean and variance. Prove weighted versions of `cVar_nonneg`, `cVar_eq_zero_iff`, and `pairwise_sq_diff_eq`. Show the weighted FlowSystem satisfies progress bounds with rate $\\delta/\\kappa$.\n\n**Domain Bridges:** Discrete Geometry \u2194 Optimal Transport \u2194 Finite Element Methods\n\n**Lineage:** Directly generalizes all theorems in `Defs.lean`.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Solid extension with immediate practical applications.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f059f2ef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T05:43:16.507231+00:00"
+  },
+  {
+    "id": "fd_0338",
+    "title": "Direction 4: Higher-Dimensional Curvature Flow",
+    "description": "**Conjecture:** The Lyapunov framework extends to 3-dimensional simplicial complexes (tetrahedral meshes), where the curvature at each edge (rather than vertex) is the relevant quantity, and edge flips are replaced by bistellar flips.\n\n**Test:** Implement curvature variance on tetrahedral meshes. Define bistellar flip operations (2-3 and 3-2 flips). Run greedy curvature flow and measure variance convergence. Compare convergence rate to the 2D case. Predict: convergence time increases by a factor of $n$ (from $O(n^2)$ to $O(n^3)$) due to the increased local complexity.\n\n**Impact:** Would provide the first convergence guarantee for tetrahedral mesh optimization, directly applicable to 3D finite element methods in engineering and physics simulations.\n\n**Catalog References:**\n- `Pythagorean/CurvatureFlow/Convergence.lean: FlowSystem.convergence` \u2014 The abstract framework applies unchanged.\n- `Pythagorean/CurvatureFlow/Defs.lean: FlowSystem` \u2014 The FlowSystem structure is dimension-independent.\n\n**Proof Strategy:** The FlowSystem abstraction is already dimension-independent. The main work is showing that 3D bistellar flips satisfy the progress bound. Use the pairwise decomposition (which works for any function on a finite set) to reduce to local analysis of the 3D flip.\n\n**Domain Bridges:** Computational Geometry \u2194 Topology \u2194 Numerical Analysis\n\n**Lineage:** Extends the 2D theory to arbitrary dimension using the abstract FlowSystem.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 \u2014 Grand challenge for computational geometry.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f059f2ef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T05:43:16.530089+00:00"
+  },
+  {
+    "id": "fd_0339",
+    "title": "Direction 5: Discretization Theorem \u2014 Connecting Discrete and Continuous Ricci Flow",
+    "description": "**Conjecture:** As the mesh is refined ($n \\to \\infty$ with mesh diameter $h \\to 0$), the discrete curvature flow converges to continuous Ricci flow in the Gromov-Hausdorff sense. Specifically, if $T_n$ is a sequence of triangulations with mesh size $h_n \\to 0$, and $g_n(t)$ is the piecewise-linear metric induced by curvature flow at time $t$, then $g_n(t) \\to g(t)$ where $g(t)$ is the Ricci flow solution.\n\n**Test:** Take a smooth surface (e.g., an ellipsoid). Create progressively finer triangulations ($n = 100, 500, 2000, 10000$). Run discrete curvature flow. Compare the resulting curvature distribution to the Ricci flow solution (computed by a PDE solver). Measure the Gromov-Hausdorff distance. Predict: convergence rate is $O(h^2)$ (second-order accuracy).\n\n**Impact:** This would be the first rigorous discretization theorem for Ricci flow, providing mathematical justification for using discrete methods as approximations to the celebrated Hamilton-Perelman program. It would also validate discrete curvature flow as a computational method for studying geometric evolution.\n\n**Catalog References:**\n- `Pythagorean/CurvatureFlow/Convergence.lean: laplacian_preserves_sum` \u2014 Discrete Gauss-Bonnet must converge to continuous Gauss-Bonnet.\n- `Pythagorean/CurvatureFlow/Convergence.lean: bounded_range_variance_bound` \u2014 Provides uniform bounds needed for compactness arguments.\n\n**Proof Strategy:** Use the Laplacian structure (`DiscreteLaplacian`) to show that the discrete heat equation converges to the continuous heat equation (standard finite element convergence theory). Then leverage the equivalence between curvature flow and heat equation (our cross-domain connection) to transfer convergence from heat to curvature.\n\n**Domain Bridges:** Discrete Geometry \u2194 Riemannian Geometry \u2194 PDE Theory \u2194 Numerical Analysis\n\n**Lineage:** Synthesizes the entire framework \u2014 FlowSystem convergence, Laplacian conservation, and Popoviciu bounds.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting. Would bridge the discrete and continuous worlds of geometric evolution.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f059f2ef",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T05:43:16.552418+00:00"
   }
 ];

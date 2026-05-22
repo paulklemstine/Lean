@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1562 of the highest-quality
+A curated collection of 1571 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1562
+Total files: 1571
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1012,6 +1012,7 @@ import FINAL.MachineLearning.Defs
 import FINAL.MachineLearning.DependencyHypergraph
 import FINAL.MachineLearning.DepthBound
 import FINAL.MachineLearning.ECOCRobustness
+import FINAL.MachineLearning.EMLSyntax
 import FINAL.MachineLearning.EffectiveComplexity
 import FINAL.MachineLearning.Evaluation
 import FINAL.MachineLearning.Expressions
@@ -1021,6 +1022,7 @@ import FINAL.MachineLearning.FiberCount
 import FINAL.MachineLearning.FiniteStateTranscendence
 import FINAL.MachineLearning.Foundations
 import FINAL.MachineLearning.FredholmAlternative
+import FINAL.MachineLearning.FullFamily
 import FINAL.MachineLearning.GCDPeriodicity
 import FINAL.MachineLearning.Gaussian
 import FINAL.MachineLearning.GaussianKL
@@ -1036,7 +1038,9 @@ import FINAL.MachineLearning.IdempotentAggregation
 import FINAL.MachineLearning.InferenceArithmetic
 import FINAL.MachineLearning.IrrationalityCriteria
 import FINAL.MachineLearning.IterExp
+import FINAL.MachineLearning.KardashevBound
 import FINAL.MachineLearning.LLMSingleMatMul
+import FINAL.MachineLearning.LSEBound
 import FINAL.MachineLearning.LSEConvergence
 import FINAL.MachineLearning.LegendreGapReduction
 import FINAL.MachineLearning.LocalGlobalGeometry
@@ -1073,6 +1077,7 @@ import FINAL.MachineLearning.QuantizedResidualMDL
 import FINAL.MachineLearning.QuantumObservables
 import FINAL.MachineLearning.ReflectiveConvergence
 import FINAL.MachineLearning.ReflectiveConvergenceArchitecture
+import FINAL.MachineLearning.ResNetLipschitz
 import FINAL.MachineLearning.Robustness
 import FINAL.MachineLearning.Scaling
 import FINAL.MachineLearning.SecondExtremal
@@ -1128,6 +1133,7 @@ import FINAL.MachineLearning.UltrametricKLDivergence
 import FINAL.MachineLearning.UniqueOddExponent
 import FINAL.MachineLearning.UniversalArchitecture
 import FINAL.MachineLearning.Valuation
+import FINAL.MachineLearning.Verified
 import FINAL.MachineLearning.WeakChen
 import FINAL.Physics.Advanced
 import FINAL.Physics.AlgebraicElectricity
@@ -1243,6 +1249,7 @@ import FINAL.Pythagorean.DerivativeNormalizer
 import FINAL.Pythagorean.DescentTheory
 import FINAL.Pythagorean.DiffClosure
 import FINAL.Pythagorean.Duality
+import FINAL.Pythagorean.EffectivePotential
 import FINAL.Pythagorean.EmergentComputation
 import FINAL.Pythagorean.Equivalences
 import FINAL.Pythagorean.EulerBricks
@@ -1261,6 +1268,7 @@ import FINAL.Pythagorean.HigherDimGhost
 import FINAL.Pythagorean.HigherDimQuadruples
 import FINAL.Pythagorean.Invariance
 import FINAL.Pythagorean.InvertedTreeCore
+import FINAL.Pythagorean.KeplerEccentricity
 import FINAL.Pythagorean.LagrangeFourSquare
 import FINAL.Pythagorean.Lehmer
 import FINAL.Pythagorean.LocalEulerExt
@@ -1273,6 +1281,7 @@ import FINAL.Pythagorean.NewResearchTheorems
 import FINAL.Pythagorean.NewTheorems
 import FINAL.Pythagorean.O31_Generators
 import FINAL.Pythagorean.OpenQuestions
+import FINAL.Pythagorean.OrbitClassification
 import FINAL.Pythagorean.ParityCensus
 import FINAL.Pythagorean.Percolation
 import FINAL.Pythagorean.PhaseAwareLemmaSynthesis
