@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1714 of the highest-quality
+A curated collection of 1718 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1714
+Total files: 1718
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -408,6 +408,7 @@ import FINAL.Bridges.IrreducibleTransfer
 import FINAL.Bridges.KTheoryNeuralAdvanced
 import FINAL.Bridges.KTheoryNeuralCore
 import FINAL.Bridges.KantorovichLawvereDuality
+import FINAL.Bridges.KnuthBendixCompletion
 import FINAL.Bridges.LargeDeviationPrinciple
 import FINAL.Bridges.LatticePrimeSeparation
 import FINAL.Bridges.LawvereCodingTheorem
@@ -677,6 +678,7 @@ import FINAL.Bridges.VoiceLeadingRateDistortion
 import FINAL.Bridges.VoiceLeadingSorted
 import FINAL.Bridges.VoiceLeadingTransport
 import FINAL.Bridges.WeightAlgebra
+import FINAL.Bridges.WeightedVariance
 import FINAL.Bridges.algebra_physics_bridge_theorem
 import FINAL.Computation.AffineDistortionComplexity
 import FINAL.Computation.Algebra
@@ -1424,6 +1426,7 @@ import FINAL.Pythagorean.PythagoreanFactoring
 import FINAL.Pythagorean.PythagoreanPairing
 import FINAL.Pythagorean.QuarticFiber
 import FINAL.Pythagorean.QuotientClosure
+import FINAL.Pythagorean.QuotientSections
 import FINAL.Pythagorean.Radical
 import FINAL.Pythagorean.RankBoundedEML
 import FINAL.Pythagorean.RankOne
@@ -1443,6 +1446,7 @@ import FINAL.Pythagorean.SpectralBounds
 import FINAL.Pythagorean.SpectralDiracTheory
 import FINAL.Pythagorean.SpectralPseudorandomness
 import FINAL.Pythagorean.Theorems
+import FINAL.Pythagorean.TropicalArithmeticUniversality
 import FINAL.Pythagorean.TropicalBerggrenZeta
 import FINAL.Pythagorean.TropicalKeplerOrbits
 import FINAL.Pythagorean.TropicalPAdicBerggren

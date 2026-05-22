@@ -346,5 +346,12 @@
   "b18b48d6": "direction_3_tropical_kepler_orbits_grand_challenge.json",
   "c217f217": "direction_1_convergent_rewrite_systems_as_quotient.json",
   "d530d833": "galois_theory_solvability_of_polynomials.json",
-  "fe78ac2b": "direction_1_convergent_rewrite_systems_as_quotient.json"
+  "fe78ac2b": "direction_1_convergent_rewrite_systems_as_quotient.json",
+  "1bbcaa5d": "direction_1_strong_bisimulation_via_church_rosser_.json",
+  "596c0218": "direction_1_arithmetic_universality_for_deep_compo.json",
+  "c09fa7ee": "direction_4_complexity_optimal_quotient_sections.json",
+  "53a43130": "direction_4_shadow_energy_universality.json",
+  "56b427dc": "direction_3_certified_knuth_bendix_completion.json",
+  "17b7f8a9": "direction_2_e_graph_extraction_as_approximate_quot.json",
+  "67fa9470": "direction_3_weighted_curvature_variance_and_optima.json"
 }
