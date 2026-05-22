@@ -5409,7 +5409,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "06544d06",
       "timestamp": "2026-05-21T13:14:36.687513+00:00",
       "catalog_references": [],
@@ -5773,8 +5773,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "1dba459e",
       "timestamp": "2026-05-21T14:14:56.438869+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
@@ -7696,6 +7696,48 @@
       "ambition_level": "extension",
       "lineage_refs": [],
       "domain_bridges": []
+    },
+    {
+      "id": "fd_0310",
+      "title": "Calibration",
+      "description": ": Determine the growth bound Δ for resolution and the entropy profile for canonical formula families",
+      "source_exp_id": "06544d06",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/06544d06",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-22T00:10:08.716650+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0311",
+      "title": "Extension",
+      "description": ": Migrate the framework to other proof systems and develop empirical diagnostics",
+      "source_exp_id": "06544d06",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/06544d06",
+      "domains": [
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-22T00:10:08.732682+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     }
   ],
   "pruned": [
@@ -8453,6 +8495,27 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-21T23:14:41.458981+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0309",
+      "title": "Instantiation",
+      "description": ": Connect the abstract `AbstractResolutionSystem` to concrete resolution semantics",
+      "source_exp_id": "06544d06",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/06544d06",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-22T00:10:08.700631+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
