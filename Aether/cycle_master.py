@@ -1514,6 +1514,33 @@ async def main():
 
     args = parser.parse_args()
 
+    # Mirror all console output to a timestamped log file
+    _log_dir = Path(__file__).parent / ".aether_workspace" / "logs"
+    _log_dir.mkdir(parents=True, exist_ok=True)
+    _timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    _log_path = _log_dir / f"cycle_master_{_timestamp}.log"
+    _log_file = open(_log_path, "a", encoding="utf-8")
+
+    class _Tee:
+        def __init__(self, terminal, log):
+            self.terminal = terminal
+            self.log = log
+        def write(self, msg):
+            self.terminal.write(msg)
+            self.log.write(msg)
+            self.log.flush()
+        def flush(self):
+            self.terminal.flush()
+            self.log.flush()
+        def fileno(self):
+            return self.terminal.fileno()
+        def isatty(self):
+            return self.terminal.isatty()
+
+    sys.stdout = _Tee(sys.__stdout__, _log_file)
+    sys.stderr = _Tee(sys.__stderr__, _log_file)
+    print(f"[CycleMaster] Logging to {_log_path}")
+
     config_path = Path(args.config)
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) if config_path.exists() else {}
 

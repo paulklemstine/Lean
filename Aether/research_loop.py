@@ -25,12 +25,36 @@ Usage:
 import argparse
 import asyncio
 import sys
+import datetime
 from pathlib import Path
 
 # Add Aether to path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from knowledge_extractor import KnowledgeExtractor
+
+
+class TeeWriter:
+    """Duplicates stdout to both the terminal and a log file."""
+
+    def __init__(self, terminal, log_file):
+        self.terminal = terminal
+        self.log_file = log_file
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log_file.write(message)
+        self.log_file.flush()
+
+    def flush(self):
+        self.terminal.flush()
+        self.log_file.flush()
+
+    def fileno(self):
+        return self.terminal.fileno()
+
+    def isatty(self):
+        return self.terminal.isatty()
 
 
 def main():
@@ -58,6 +82,16 @@ def main():
     parser.add_argument("--ollama-cloud", action="store_true",
                         help="Enable Ollama Cloud as fallback when Pollinations is depleted")
     args = parser.parse_args()
+
+    # Mirror all console output to a timestamped log file
+    log_dir = Path(__file__).parent / ".aether_workspace" / "logs"
+    log_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_path = log_dir / f"aether_{timestamp}.log"
+    log_file = open(log_path, "a", encoding="utf-8")
+    sys.stdout = TeeWriter(sys.__stdout__, log_file)
+    sys.stderr = TeeWriter(sys.__stderr__, log_file)
+    print(f"[Aether] Logging to {log_path}")
 
     # Enable Ollama Cloud fallback in config BEFORE constructing KnowledgeExtractor
     if args.ollama_cloud:
