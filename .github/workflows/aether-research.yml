@@ -50,11 +50,6 @@ jobs:
       - name: Write Pollinations key file
         run: echo "${{ secrets.POLLINATIONS_API_KEY }}" > Aether/.aether_workspace/pollinations_api_key
 
-      - name: Test Aristotle API connectivity
-        env:
-          ARISTOTLE_API_KEY: ${{ secrets.ARISTOTLE_API_KEY }}
-        run: cd Aether && python3 test_aristotle_ci.py
-
       - name: Run Aether tick
         env:
           ARISTOTLE_API_KEY: ${{ secrets.ARISTOTLE_API_KEY }}
