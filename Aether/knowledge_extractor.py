@@ -2296,6 +2296,79 @@ Research mode: {concept.research_mode}
     # Full pipeline: single cycle
     # ==================================================================
 
+    def _extract_future_directions(self, job: ResearchJob) -> None:
+        """Extract future directions from Aristotle's output and mark the consumed direction completed."""
+        if job.status != "integrated" or not job.job_id:
+            return
+        try:
+            from research_memory import FutureDirectionsManager, FutureDirection
+            fd_manager = FutureDirectionsManager(self.workspace)
+            fd_added = 0
+            # Extract future directions text from results
+            fd_text = None
+            # Try result_future_directions first
+            if job.result_future_directions and len(job.result_future_directions) > 50:
+                fd_text = job.result_future_directions
+            # Fallback: try JSON package's future_directions field
+            if not fd_text and job.result_json_package:
+                try:
+                    pkg = json.loads(job.result_json_package)
+                    fd_text = pkg.get("future_directions", "")
+                    if len(fd_text) < 50:
+                        fd_text = None
+                except Exception:
+                    pass
+            # Also scan project dir for FUTURE_DIRECTIONS.md files
+            if not fd_text and job.project_dir and job.project_dir.exists():
+                for fd_file in job.project_dir.rglob("FUTURE_DIRECTIONS*.md"):
+                    try:
+                        fd_content = fd_file.read_text(encoding="utf-8", errors="replace")
+                        if len(fd_content) > 50:
+                            fd_text = fd_content
+                            break
+                    except Exception:
+                        pass
+            if fd_text:
+                # Parse into individual structured directions (not one monolithic blob)
+                fd_added, _synth = fd_manager.add_directions_from_text(
+                    text=fd_text,
+                    source_exp_id=job.job_id,
+                    source_path=str(job.project_dir) if job.project_dir else "unknown",
+                )
+                if fd_added == 0:
+                    # Fallback: if structured parsing finds nothing, add as single entry
+                    title_line = ""
+                    for line in fd_text.split("\n"):
+                        line = line.strip()
+                        if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
+                            title_line = line[:80]
+                            break
+                    if not title_line:
+                        title_line = f"Future directions from cycle {job.job_id[:8]}"
+                    fd = FutureDirection(
+                        id=f"fd_{len(fd_manager._directions):04d}",
+                        title=title_line,
+                        description=fd_text,
+                        source_exp_id=job.job_id,
+                        source_path="future_directions_md",
+                        domains=fd_manager._infer_domains(fd_text),
+                        depth_estimate=3,
+                        priority_score=0.75,
+                    )
+                    fd_manager.add_direction(fd)
+                    fd_added = 1
+                print(f"[Cycle] Added {fd_added} future direction(s) from cycle {job.job_id}")
+            else:
+                print(f"[Cycle] No future directions found for cycle {job.job_id}")
+            # Mark the consumed direction as completed
+            for d in fd_manager._directions:
+                if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
+                    fd_manager.mark_direction_completed(d.id)
+                    print(f"[Cycle] Marked direction {d.id} as completed")
+                    break
+        except Exception as e:
+            print(f"[Cycle] Warning: Failed to extract future directions: {e}")
+
     def run_single_cycle(self, forced_domain: Optional[str] = None, dry_run: bool = False) -> ResearchJob:
         """Run one complete research cycle: discover → dispatch → await → extract → evaluate → integrate → commit."""
         # 1. DISCOVER
@@ -2339,75 +2412,7 @@ Research mode: {concept.research_mode}
         job = self.integrate(job)
 
         # 6b. EXTRACT FUTURE DIRECTIONS from Aristotle's output
-        if job.status == "integrated" and job.job_id:
-            try:
-                from research_memory import FutureDirectionsManager, FutureDirection
-                fd_manager = FutureDirectionsManager(self.workspace)
-                fd_added = 0
-                # Extract future directions text from results
-                fd_text = None
-                # Try result_future_directions first
-                if job.result_future_directions and len(job.result_future_directions) > 50:
-                    fd_text = job.result_future_directions
-                # Fallback: try JSON package's future_directions field
-                if not fd_text and job.result_json_package:
-                    try:
-                        pkg = json.loads(job.result_json_package)
-                        fd_text = pkg.get("future_directions", "")
-                        if len(fd_text) < 50:
-                            fd_text = None
-                    except Exception:
-                        pass
-                # Also scan project dir for FUTURE_DIRECTIONS.md files
-                if not fd_text and job.project_dir and job.project_dir.exists():
-                    for fd_file in job.project_dir.rglob("FUTURE_DIRECTIONS*.md"):
-                        try:
-                            fd_content = fd_file.read_text(encoding="utf-8", errors="replace")
-                            if len(fd_content) > 50:
-                                fd_text = fd_content
-                                break
-                        except Exception:
-                            pass
-                if fd_text:
-                    # Parse into individual structured directions (not one monolithic blob)
-                    fd_added, _synth = fd_manager.add_directions_from_text(
-                        text=fd_text,
-                        source_exp_id=job.job_id,
-                        source_path=str(job.project_dir) if job.project_dir else "unknown",
-                    )
-                    if fd_added == 0:
-                        # Fallback: if structured parsing finds nothing, add as single entry
-                        title_line = ""
-                        for line in fd_text.split("\n"):
-                            line = line.strip()
-                            if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
-                                title_line = line[:80]
-                                break
-                        if not title_line:
-                            title_line = f"Future directions from cycle {job.job_id[:8]}"
-                        fd = FutureDirection(
-                            id=f"fd_{len(fd_manager._directions):04d}",
-                            title=title_line,
-                            description=fd_text,
-                            source_exp_id=job.job_id,
-                            source_path="future_directions_md",
-                            domains=fd_manager._infer_domains(fd_text),
-                            depth_estimate=3,
-                            priority_score=0.75,
-                        )
-                        fd_manager.add_direction(fd)
-                        fd_added = 1
-                    print(f"[Cycle] Added {fd_added} future direction(s) from cycle {job.job_id}")
-                else:
-                    print(f"[Cycle] No future directions found for cycle {job.job_id}")
-                # Mark the consumed direction as completed
-                for d in fd_manager._directions:
-                    if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
-                        fd_manager.mark_direction_completed(d.id)
-                        print(f"[Cycle] Marked direction {d.id} as completed")
-                        break
-            except Exception as e:
-                print(f"[Cycle] Warning: Failed to extract future directions: {e}")
+        self._extract_future_directions(job)
 
         # 7. CLEANUP — dedup, workspace removal, sync verification
         job = self.cleanup_catalog(job)

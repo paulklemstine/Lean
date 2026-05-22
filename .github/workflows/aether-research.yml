@@ -2,30 +2,25 @@ name: Aether Research Loop
 
 on:
   schedule:
-    - cron: '17 4,16 * * *'   # Twice daily at 04:17 and 16:17 UTC
+    - cron: '17 * * * *'    # Every hour at :17
   workflow_dispatch:
     inputs:
-      max_cycles:
-        description: 'Max research cycles'
+      max_inflight:
+        description: 'Max inflight Aristotle jobs'
         required: false
-        default: '3'
-      run_minutes:
-        description: 'Max run duration (minutes)'
-        required: false
-        default: '30'
+        default: '9'
 
 permissions:
   contents: write
   actions: write
 
 env:
-  AETHER_MAX_CYCLES: ${{ github.event.inputs.max_cycles || '3' }}
-  AETHER_RUN_MINUTES: ${{ github.event.inputs.run_minutes || '30' }}
+  AETHER_MAX_INFLIGHT: ${{ github.event.inputs.max_inflight || '9' }}
 
 jobs:
   research:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -48,7 +43,7 @@ jobs:
       - name: Write Pollinations key file
         run: echo "${{ secrets.POLLINATIONS_API_KEY }}" > Aether/.aether_workspace/pollinations_api_key
 
-      - name: Run Aether research loop
+      - name: Run Aether tick
         env:
           ARISTOTLE_API_KEY: ${{ secrets.ARISTOTLE_API_KEY }}
           POLLINATIONS_API_KEY: ${{ secrets.POLLINATIONS_API_KEY }}
@@ -60,19 +55,5 @@ jobs:
           git config user.name "Aether Bot"
           git config user.email "aether-bot[bot]@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "Aether CI: research cycle $(date -u +%Y-%m-%dT%H:%MZ)"
+          git diff --cached --quiet || git commit -m "Aether CI: tick $(date -u +%Y-%m-%dT%H:%MZ)"
           git push
-
-      - name: Self-trigger bonus run
-        if: success()
-        run: |
-          if [ -f Aether/.aether_workspace/.ci_completed_early ]; then
-            echo "Cycles completed early — triggering bonus run"
-            gh workflow run aether-research.yml \
-              --field max_cycles=2 \
-              --field run_minutes=20
-          else
-            echo "No bonus run (cycles did not complete early)"
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
