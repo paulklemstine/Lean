@@ -39,6 +39,7 @@ from pi_agent_client import PiAgentClient, ResearchConcept
 from prompt_engine import PromptEngine, ArtifactRequests, ResearchPrompt
 from prompt_dna import PromptDNA
 from quality_evaluator import QualityEvaluator, QualityScore
+from catalog_scorer import CatalogScorer
 from aristotle_sdk_client import AristotleSDKClient
 from lean_catalog_builder import LeanCatalogBuilder
 from smart_integrator import SmartIntegrator
@@ -305,6 +306,14 @@ class CycleMaster:
             pi_agent=self.pi_agent,
             catalog_root=self.catalog_root,
         )
+
+        # v3: Catalog scoring for FINAL/ promotion
+        self.catalog_scorer = CatalogScorer(
+            catalog_root=self.catalog_root,
+            workspace=self.workspace,
+            pi_agent=self.pi_agent,
+        )
+        self.catalog_scorer.load_scores()
 
         # Free exploration rate (10%)
         self.free_exploration_rate = config.get("free_exploration_rate", 0.10)
@@ -1195,6 +1204,21 @@ class CycleMaster:
             # Checkpoint DNA to git
             self.prompt_dna.checkpoint(self.workspace)
             print(f"[Phase 10] DNA checkpointed.")
+
+        # Phase 10.5: Catalog scoring — scan and score a batch for FINAL/ promotion
+        try:
+            batch_results = self.catalog_scorer.scan_and_score_batch(batch_size=50)
+            promoted = [s for s in batch_results if s.in_final]
+            if promoted:
+                print(f"[Catalog] Promoted {len(promoted)} files to FINAL/: "
+                      f"{', '.join(s.relative_path for s in promoted[:3])}")
+            stats = self.catalog_scorer.get_stats()
+            print(f"[Catalog] Scored: {stats['total_scored']} total, "
+                  f"{stats['in_final']} in FINAL, "
+                  f"avg structural={stats['avg_structural']:.1f}, "
+                  f"avg final={stats['avg_final']:.1f}")
+        except Exception as e:
+            print(f"[Catalog] Scoring error (non-fatal): {e}")
 
         # Save state
         self._save_state()

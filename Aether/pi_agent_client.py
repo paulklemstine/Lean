@@ -2235,6 +2235,73 @@ class PiAgentClient:
         print(f"[Breakthrough] Structural fallback: incremental ({sorry_count} sorries, {theorem_count} theorems)")
         return "incremental"
 
+    def score_catalog_file(
+        self,
+        relative_path: str,
+        domain: str,
+        size_lines: int,
+        declarations: list,
+        sorry_count: int,
+        deep_count: int,
+        shallow_count: int,
+        theorem_sigs: list,
+        content_preview: str,
+        structural_score: float,
+        timeout: int = 120,
+    ) -> Optional[Dict[str, float]]:
+        """LLM scores a Catalog file across 5 dimensions for FINAL/ promotion.
+
+        Returns dict with novelty, depth, impact, fun, solid (each 1-10),
+        or None if the LLM call fails.
+        """
+        system_prompt = (
+            "You are evaluating a Lean 4 mathematical proof file for world-class quality. "
+            "Score this file 1-10 on each dimension:\n\n"
+            "1. **Novelty**: Is this a new/unique result, or a re-proof of Mathlib?\n"
+            "2. **Depth**: How mathematically deep are the proofs? "
+            "(induction, rcases, by_contra = deep; native_decide = shallow)\n"
+            "3. **Impact**: Would a mathematician care about this result? Does it advance the field?\n"
+            "4. **Fun**: Is this exciting, surprising, or beautiful mathematics?\n"
+            "5. **Solid**: Is the proof complete and rigorous? (no sorries, no gaps)\n\n"
+            "Output ONLY valid JSON: "
+            '{"novelty": N, "depth": N, "impact": N, "fun": N, "solid": N}\n'
+            "where N is an integer 1-10."
+        )
+
+        sorry_free = "yes" if sorry_count == 0 else f"no ({sorry_count} sorries)"
+        decl_str = ", ".join(declarations[:10]) if declarations else "(none)"
+        sig_str = "\n".join(f"  {sig}" for sig in theorem_sigs[:5]) if theorem_sigs else ""
+
+        user_prompt = (
+            f"File: {relative_path} ({domain} domain, {size_lines} lines, "
+            f"{len(declarations)} declarations)\n"
+            f"Declarations: {decl_str}\n"
+            f"Deep tactics: {deep_count} deep, {shallow_count} shallow\n"
+            f"Sorry-free: {sorry_free}\n"
+            f"Structural score: {structural_score:.1f}/10\n"
+        )
+        if sig_str:
+            user_prompt += f"Key theorems:\n{sig_str}\n"
+        user_prompt += f"\nSource preview:\n```\n{content_preview}\n```"
+
+        try:
+            raw = self._call_ollama(system_prompt, user_prompt, timeout=timeout)
+            json_match = re.search(r'\{[^{}]*\}', raw, re.DOTALL)
+            if not json_match:
+                return None
+            data = json.loads(json_match.group())
+
+            return {
+                "novelty": max(1, min(10, int(data.get("novelty", 5)))),
+                "depth": max(1, min(10, int(data.get("depth", 5)))),
+                "impact": max(1, min(10, int(data.get("impact", 5)))),
+                "fun": max(1, min(10, int(data.get("fun", 5)))),
+                "solid": max(1, min(10, int(data.get("solid", 5)))),
+            }
+        except Exception as e:
+            print(f"[CatalogScore] LLM call failed for {relative_path}: {e}")
+            return None
+
     def evaluate_result_quality(
         self,
         result_lean: str,

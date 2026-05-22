@@ -681,6 +681,17 @@ class CatalogAnalyzer:
                 return domain_dir
         return "Unknown"
 
+    @staticmethod
+    def get_domain_from_path(relative_path: str) -> str:
+        """Extract domain from a relative path like 'Algebra/Berggren.lean' or 'FINAL/Algebra/Berggren.lean'."""
+        parts = Path(relative_path).parts
+        start = 1 if parts and parts[0] == FINAL_DIR else 0
+        if len(parts) > start + 1:
+            domain_dir = parts[start]
+            if domain_dir in DOMAIN_DIRS:
+                return domain_dir
+        return "Unknown"
+
     def detect_cross_domain_bridges(self) -> List[Dict]:
         """Detect cross-domain bridges by analyzing import patterns.
 
@@ -928,13 +939,10 @@ class CatalogAnalyzer:
             if total_listed >= max_total:
                 break
             files = self._domain_index[domain]
-            # Sort: FINAL files first, then by declaration count descending
+            # Sort by declaration count descending (FINAL is rebuilt from scores)
             sorted_files = sorted(
                 files,
-                key=lambda f: (
-                    0 if "FINAL" in f.relative_path else 1,
-                    -len(f.declarations),
-                ),
+                key=lambda f: -len(f.declarations),
             )
             domain_lines = []
             for f in sorted_files[:max_per_domain]:
