@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1455 of the highest-quality
+A curated collection of 1464 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1455
+Total files: 1464
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1140,6 +1140,7 @@ import FINAL.Pythagorean.DeepOpenProblems
 import FINAL.Pythagorean.Defs
 import FINAL.Pythagorean.Density
 import FINAL.Pythagorean.DepthSharpness
+import FINAL.Pythagorean.Deriv
 import FINAL.Pythagorean.Derivative
 import FINAL.Pythagorean.DerivativeNormalizer
 import FINAL.Pythagorean.DescentTheory
@@ -1176,7 +1177,10 @@ import FINAL.Pythagorean.NewTheorems
 import FINAL.Pythagorean.O31_Generators
 import FINAL.Pythagorean.OpenQuestions
 import FINAL.Pythagorean.ParityCensus
+import FINAL.Pythagorean.Percolation
 import FINAL.Pythagorean.PhaseAwareLemmaSynthesis
+import FINAL.Pythagorean.PolynomialTransforms
+import FINAL.Pythagorean.Positivity
 import FINAL.Pythagorean.PrimeCounting
 import FINAL.Pythagorean.PrimeDivisorCongruence
 import FINAL.Pythagorean.ProdBounds
@@ -1187,9 +1191,14 @@ import FINAL.Pythagorean.QuotientClosure
 import FINAL.Pythagorean.Radical
 import FINAL.Pythagorean.RankBoundedEML
 import FINAL.Pythagorean.RankOne
+import FINAL.Pythagorean.Recurrence
 import FINAL.Pythagorean.Reduction
+import FINAL.Pythagorean.RegulatorPosDef
+import FINAL.Pythagorean.ResidueDescent
+import FINAL.Pythagorean.ReversibleComputing
 import FINAL.Pythagorean.SandwichGraph
 import FINAL.Pythagorean.SandwichTheorems
+import FINAL.Pythagorean.SchemeInvariance
 import FINAL.Pythagorean.Separation
 import FINAL.Pythagorean.SpacetimeLattice
 import FINAL.Pythagorean.SpectralBounds
