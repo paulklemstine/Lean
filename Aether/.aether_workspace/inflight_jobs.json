@@ -35,6 +35,7 @@
     "quality_detail": null,
     "sorry_count": 0,
     "theorem_count": 0,
+    "files_integrated": 0,
     "error_message": null,
     "source_exp_ids": [
       "1b8440b4"
@@ -76,6 +77,7 @@
     "quality_detail": null,
     "sorry_count": 0,
     "theorem_count": 0,
+    "files_integrated": 0,
     "error_message": null,
     "source_exp_ids": [
       "seed"
@@ -117,6 +119,7 @@
     "quality_detail": null,
     "sorry_count": 0,
     "theorem_count": 0,
+    "files_integrated": 0,
     "error_message": null,
     "source_exp_ids": [
       "e150dc78"
@@ -158,6 +161,7 @@
     "quality_detail": null,
     "sorry_count": 0,
     "theorem_count": 0,
+    "files_integrated": 0,
     "error_message": null,
     "source_exp_ids": [
       "5b867260"
@@ -199,6 +203,7 @@
     "quality_detail": null,
     "sorry_count": 0,
     "theorem_count": 0,
+    "files_integrated": 0,
     "error_message": null,
     "source_exp_ids": [
       "6d4e454c"
@@ -240,6 +245,7 @@
     "quality_detail": null,
     "sorry_count": 0,
     "theorem_count": 0,
+    "files_integrated": 0,
     "error_message": null,
     "source_exp_ids": [
       "1de3cb90"
@@ -281,6 +287,7 @@
     "quality_detail": null,
     "sorry_count": 0,
     "theorem_count": 0,
+    "files_integrated": 0,
     "error_message": null,
     "source_exp_ids": [
       "seed"
@@ -322,6 +329,7 @@
     "quality_detail": null,
     "sorry_count": 0,
     "theorem_count": 0,
+    "files_integrated": 0,
     "error_message": null,
     "source_exp_ids": [
       "1630a590"
@@ -363,6 +371,7 @@
     "quality_detail": null,
     "sorry_count": 0,
     "theorem_count": 0,
+    "files_integrated": 0,
     "error_message": null,
     "source_exp_ids": [
       "9e659d12"

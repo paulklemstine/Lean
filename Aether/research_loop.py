@@ -55,9 +55,19 @@ def main():
                         help="Seconds between polls (continuous mode)")
     parser.add_argument("--config", type=str, default=None,
                         help="Path to config.yaml")
+    parser.add_argument("--ollama-cloud", action="store_true",
+                        help="Enable Ollama Cloud as fallback when Pollinations is depleted")
     args = parser.parse_args()
 
-    extractor = KnowledgeExtractor(config_path=args.config)
+    # Enable Ollama Cloud fallback in config BEFORE constructing KnowledgeExtractor
+    if args.ollama_cloud:
+        import yaml
+        config_path = Path(args.config) if args.config else Path(__file__).parent / "config.yaml"
+        config = yaml.safe_load(config_path.read_text(encoding="utf-8")) if config_path.exists() else {}
+        config.setdefault("pi_agent", {}).setdefault("ollama_cloud", {})["enabled"] = True
+        extractor = KnowledgeExtractor(config=config)
+    else:
+        extractor = KnowledgeExtractor(config_path=args.config)
 
     print("=" * 60)
     print("AETHER: Autonomous Mathematical Knowledge Discovery Engine")

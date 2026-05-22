@@ -90,8 +90,12 @@ class KnowledgeExtractor:
     Pi integrates the results. Aether commits and loops.
     """
 
-    def __init__(self, config_path: Optional[str] = None):
-        self.config = self._load_config(config_path)
+    def __init__(self, config_path: Optional[str] = None, config: Optional[Dict[str, Any]] = None):
+        if config is not None:
+            self.config = config
+            self._substitute_env_vars(self.config)
+        else:
+            self.config = self._load_config(config_path)
         self.catalog_root = Path(self.config.get("catalog", {}).get("root_dir", "../Catalog")).resolve()
         if not self.catalog_root.exists():
             self.catalog_root = (Path(__file__).parent.parent / "Catalog").resolve()
