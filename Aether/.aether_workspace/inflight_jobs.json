@@ -94,7 +94,7 @@
     "sorry_count": 0,
     "theorem_count": 226,
     "files_integrated": 0,
-    "error_message": null,
+    "error_message": "Result download failed",
     "source_exp_ids": [
       "26a617a3"
     ]
