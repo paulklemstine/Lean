@@ -2,7 +2,7 @@
 # Pi-Agent Centered Autonomous Math Research Engine
 
 pi_agent:
-  model: "openai-large"
+  model: "glm"
   ollama_base_url: "http://127.0.0.1:11434"
   # ollama_model: "kimi-k2.6:cloud"  # Local Ollama model (auto-detected if not set)
   timeout: 600
