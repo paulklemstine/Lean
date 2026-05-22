@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1621 of the highest-quality
+A curated collection of 1663 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1621
+Total files: 1663
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -244,6 +244,7 @@ import FINAL.Bridges.BerggrenChronometricEntropy
 import FINAL.Bridges.BerggrenEntropyExtractor
 import FINAL.Bridges.BerggrenExpanderHash
 import FINAL.Bridges.BerggrenFactoring
+import FINAL.Bridges.BerggrenFourierDuality
 import FINAL.Bridges.BerggrenHeckeSpectral
 import FINAL.Bridges.BerggrenLanglandsBridge
 import FINAL.Bridges.BerggrenLatticeReduction
@@ -254,6 +255,7 @@ import FINAL.Bridges.BerggrenTransferDuality
 import FINAL.Bridges.BerggrenTropicalLensing
 import FINAL.Bridges.BerggrenVoronoiDuality
 import FINAL.Bridges.BisimulationMetric
+import FINAL.Bridges.BooleanThermodynamicEliminationDuality
 import FINAL.Bridges.BordaRobustness
 import FINAL.Bridges.BreakthroughDirections
 import FINAL.Bridges.Bridge
@@ -263,11 +265,18 @@ import FINAL.Bridges.CategoricalBridges
 import FINAL.Bridges.CategoricalTropicalUltrametric
 import FINAL.Bridges.CategorifiedShannonTheory
 import FINAL.Bridges.CausalClosure
+import FINAL.Bridges.CausalHolography
+import FINAL.Bridges.CausalZariskiReconstruction
+import FINAL.Bridges.CertificateTransfer
 import FINAL.Bridges.CertifiedRadiusResiduated
+import FINAL.Bridges.Characters
 import FINAL.Bridges.ChronometricCore
 import FINAL.Bridges.ChronometricTrace
+import FINAL.Bridges.ClosureCapacityAttentionDuality
 import FINAL.Bridges.ClosureCapacitySecretSharingDuality
+import FINAL.Bridges.ClosureCechRealizationDuality
 import FINAL.Bridges.ClosureCircuitDuality
+import FINAL.Bridges.ClosureCore
 import FINAL.Bridges.ClosureCosmologyDuality
 import FINAL.Bridges.ClosureDependency
 import FINAL.Bridges.ClosureEntropicGravityDuality
@@ -287,18 +296,23 @@ import FINAL.Bridges.ClosureNucleusDuality
 import FINAL.Bridges.ClosureOperadDuality
 import FINAL.Bridges.ClosureOperatorBridge
 import FINAL.Bridges.ClosurePressure
+import FINAL.Bridges.ClosureProofNetDuality
 import FINAL.Bridges.ClosureProofSemiring
 import FINAL.Bridges.ClosureRateDistortionDuality
 import FINAL.Bridges.ClosureRenormalizationDuality
 import FINAL.Bridges.ClosureScaleDuality
 import FINAL.Bridges.ClosureSecretSharingDuality
+import FINAL.Bridges.ClosureSemimodule
 import FINAL.Bridges.ClosureSheafCodeDuality
+import FINAL.Bridges.ClosureSheafGeneralization
 import FINAL.Bridges.ClosureSheafLearningDuality
 import FINAL.Bridges.ClosureStoneRealizationDuality
 import FINAL.Bridges.ClosureStoneSpectrumDuality
 import FINAL.Bridges.ClosureSyndromeDecodingDuality
+import FINAL.Bridges.ClosureTemporalRealization
 import FINAL.Bridges.ClosureThermodynamicComputationDuality
 import FINAL.Bridges.ClosureVCDuality
+import FINAL.Bridges.ClosureVoronoiDuality
 import FINAL.Bridges.CoalgebraicNeuralMyhillNerode
 import FINAL.Bridges.CodingTheoryBridge
 import FINAL.Bridges.Completeness
@@ -307,6 +321,7 @@ import FINAL.Bridges.CompositionalMusicSpec
 import FINAL.Bridges.CondensationSemantics
 import FINAL.Bridges.ContractionTropicalCryptoBridge
 import FINAL.Bridges.Core
+import FINAL.Bridges.Correspondence
 import FINAL.Bridges.CupProductCryptography
 import FINAL.Bridges.CycleSystolicBound
 import FINAL.Bridges.Decoder
@@ -318,6 +333,7 @@ import FINAL.Bridges.ECOCDefs
 import FINAL.Bridges.ECOCRobust
 import FINAL.Bridges.ECOCRobustSoft
 import FINAL.Bridges.EMLClosureCore
+import FINAL.Bridges.EMLClosureSpectrumDuality
 import FINAL.Bridges.EMLDensityBridge
 import FINAL.Bridges.EMLSpectralSemantics
 import FINAL.Bridges.EMLZetaSemantics
@@ -329,12 +345,14 @@ import FINAL.Bridges.Examples
 import FINAL.Bridges.Extremal
 import FINAL.Bridges.ExtremalPoly
 import FINAL.Bridges.FiberRestriction
+import FINAL.Bridges.FilteredClosureReconstruction
 import FINAL.Bridges.FiniteDescriptionComplexity
 import FINAL.Bridges.FiniteRiesz
 import FINAL.Bridges.FiniteTransferCore
 import FINAL.Bridges.FiveFrontiers
 import FINAL.Bridges.FootprintHelpers
 import FINAL.Bridges.Foundations
+import FINAL.Bridges.FullEMLDiffClosure
 import FINAL.Bridges.FunctorialDecoding
 import FINAL.Bridges.GL3KemenyRobustness
 import FINAL.Bridges.GL3SatakeAbstainRobustness
@@ -344,6 +362,7 @@ import FINAL.Bridges.GL3TropicalSatakeCertification
 import FINAL.Bridges.GL3TropicalSatakeScoreStability
 import FINAL.Bridges.GaloisCohomologicalConsensus
 import FINAL.Bridges.GaloisDeepLearning
+import FINAL.Bridges.GaloisNeuralCorrespondence
 import FINAL.Bridges.GardenOfEden
 import FINAL.Bridges.GibbsPosterior
 import FINAL.Bridges.HTreeRobust
@@ -357,6 +376,7 @@ import FINAL.Bridges.HopfCausalCore
 import FINAL.Bridges.HopfCircuitRenormalization
 import FINAL.Bridges.HypothesisTopos
 import FINAL.Bridges.IRVStability
+import FINAL.Bridges.IdempotentBlackwellThermodynamicDuality
 import FINAL.Bridges.IdempotentGaugeCurvatureDuality
 import FINAL.Bridges.IdempotentHolographicClosureDuality
 import FINAL.Bridges.IdempotentHolographicRealization
@@ -373,8 +393,11 @@ import FINAL.Bridges.KTheoryNeuralAdvanced
 import FINAL.Bridges.KTheoryNeuralCore
 import FINAL.Bridges.KantorovichLawvereDuality
 import FINAL.Bridges.LargeDeviationPrinciple
+import FINAL.Bridges.LatticePrimeSeparation
 import FINAL.Bridges.LawvereCodingTheorem
 import FINAL.Bridges.LawvereEMLMetricSemantics
+import FINAL.Bridges.LawvereRateDistortionDuality
+import FINAL.Bridges.LawvereStoneAttentionDuality
 import FINAL.Bridges.LawvereThermodynamicGalois
 import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LipschitzMarginCell
@@ -418,10 +441,13 @@ import FINAL.Bridges.PadicQuantumInformation
 import FINAL.Bridges.Pareto
 import FINAL.Bridges.PersistentProofHomology
 import FINAL.Bridges.PolynomialInterpolationEquiv
+import FINAL.Bridges.PredicateTransport
+import FINAL.Bridges.PrimeClosureLocale
 import FINAL.Bridges.PrimeCongruenceGeneralizationDuality
 import FINAL.Bridges.PrimeCongruencePACBayes
 import FINAL.Bridges.PrimeSpectralRateDistortion
 import FINAL.Bridges.PrimeSpectralSchrodingerBridge
+import FINAL.Bridges.PrimeSpectrum
 import FINAL.Bridges.PrimeSpectrumCodingTheorem
 import FINAL.Bridges.ProofAlgGeomBridge
 import FINAL.Bridges.ProofAutomatonDuality
@@ -446,12 +472,16 @@ import FINAL.Bridges.QuantumTropicalCore
 import FINAL.Bridges.QuantumTropicalUnification
 import FINAL.Bridges.RGArchitectureDynamics
 import FINAL.Bridges.RateDistortion
+import FINAL.Bridges.Reconstruction
 import FINAL.Bridges.RenormalizationUniversality
 import FINAL.Bridges.Representation
+import FINAL.Bridges.Representer
 import FINAL.Bridges.ResNetTropicalCertified
+import FINAL.Bridges.ResearchTheoryBicategory
 import FINAL.Bridges.ResidualRobustness
 import FINAL.Bridges.ReversibleFixedPointDuality
 import FINAL.Bridges.RigidFoldability
+import FINAL.Bridges.Rigidity
 import FINAL.Bridges.RingTheoreticLearning
 import FINAL.Bridges.RuelleTransferSemantics
 import FINAL.Bridges.SatakeEMLBridge
@@ -479,11 +509,14 @@ import FINAL.Bridges.TannakaClosureReconstruction
 import FINAL.Bridges.TannakianNeuralArchitecture
 import FINAL.Bridges.TemporalFixedPointSemantics
 import FINAL.Bridges.TemporalStoneBirkhoffDuality
+import FINAL.Bridges.TemporalStoneSemiringDuality
 import FINAL.Bridges.Theorems
+import FINAL.Bridges.TheoryAdjunctions
 import FINAL.Bridges.TheoryMorphisms
 import FINAL.Bridges.TheorySpecExtraction
 import FINAL.Bridges.ThermoDioCryptoDefs
 import FINAL.Bridges.ThermoDioCryptoSecurity
+import FINAL.Bridges.ThermodynamicArithmeticOrbits
 import FINAL.Bridges.ThermodynamicClosureAdvanced
 import FINAL.Bridges.ThermodynamicClosureDuality
 import FINAL.Bridges.ThermodynamicJacobsonCountermodelCompression
@@ -509,6 +542,7 @@ import FINAL.Bridges.TropicalCausality
 import FINAL.Bridges.TropicalChoquetClosureDuality
 import FINAL.Bridges.TropicalChoquetRadonTrapdoorDuality
 import FINAL.Bridges.TropicalChoquetVoronoiDuality
+import FINAL.Bridges.TropicalCongruenceNullstellensatz
 import FINAL.Bridges.TropicalCryptoMLBridge
 import FINAL.Bridges.TropicalCryptographyBreakthrough
 import FINAL.Bridges.TropicalCryptographyBridge
@@ -518,6 +552,7 @@ import FINAL.Bridges.TropicalDuality
 import FINAL.Bridges.TropicalEcosystemDynamics
 import FINAL.Bridges.TropicalFactorCoupling
 import FINAL.Bridges.TropicalFeedback
+import FINAL.Bridges.TropicalFiniteOptimization
 import FINAL.Bridges.TropicalGaloisCore
 import FINAL.Bridges.TropicalGaloisSolvability
 import FINAL.Bridges.TropicalGeometricLanglandsMV
@@ -528,15 +563,18 @@ import FINAL.Bridges.TropicalHankelRealizationDuality
 import FINAL.Bridges.TropicalHeckeCrystalDuality
 import FINAL.Bridges.TropicalHeckeRealizationDuality
 import FINAL.Bridges.TropicalHeightRigidity
+import FINAL.Bridges.TropicalInformationBottleneckDuality
 import FINAL.Bridges.TropicalInformationGeometry
 import FINAL.Bridges.TropicalIsogenyRigidity
 import FINAL.Bridges.TropicalKernelMeanDuality
+import FINAL.Bridges.TropicalLanglandsVarieties
 import FINAL.Bridges.TropicalLensBerggrenDuality
 import FINAL.Bridges.TropicalLensRigidityDuality
 import FINAL.Bridges.TropicalNerode
 import FINAL.Bridges.TropicalNeuralBridge
 import FINAL.Bridges.TropicalNeuralSheafSampling
 import FINAL.Bridges.TropicalNormalization
+import FINAL.Bridges.TropicalNullstellensatz
 import FINAL.Bridges.TropicalObserverCodingDuality
 import FINAL.Bridges.TropicalOneWayKernelDuality
 import FINAL.Bridges.TropicalOneWayMinors
@@ -563,6 +601,7 @@ import FINAL.Bridges.TropicalSatakeOneVsRestRobustness
 import FINAL.Bridges.TropicalSatakePolytopeDuality
 import FINAL.Bridges.TropicalSatakeRecognitionDuality
 import FINAL.Bridges.TropicalSatakeRobustness
+import FINAL.Bridges.TropicalSatakeSurjectivity
 import FINAL.Bridges.TropicalSatakeTop2Margin
 import FINAL.Bridges.TropicalScatteringOneWayDuality
 import FINAL.Bridges.TropicalScatteringRecognitionDuality
@@ -570,11 +609,13 @@ import FINAL.Bridges.TropicalSeparationClassifier
 import FINAL.Bridges.TropicalShannonCode
 import FINAL.Bridges.TropicalSpectralDuality
 import FINAL.Bridges.TropicalSpectralHardness
+import FINAL.Bridges.TropicalSpectrumDuality
 import FINAL.Bridges.TropicalStoneDuality
 import FINAL.Bridges.TropicalStoneRecognitionDuality
 import FINAL.Bridges.TropicalStoneWeierstrass
 import FINAL.Bridges.TropicalStoneWeierstrassMinPlus
 import FINAL.Bridges.TropicalSymplecticGeometry
+import FINAL.Bridges.TropicalTannakaReconstruction
 import FINAL.Bridges.TropicalTensorProductUniversality
 import FINAL.Bridges.TropicalTopKRobustnessGL3
 import FINAL.Bridges.TropicalUltrametricDuality
@@ -778,6 +819,7 @@ import FINAL.Cryptography.TropicalQuadraticSieveExact
 import FINAL.Cryptography.TropicalRSA
 import FINAL.Cryptography.TropicalSmoothnessScore
 import FINAL.Cryptography.TropicalZKCommitments
+import FINAL.Cryptography.TropicalZeroKnowledge
 import FINAL.EML.ANRApproximation
 import FINAL.EML.AdvancedTheorems
 import FINAL.EML.AdvancedTheory
