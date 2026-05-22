@@ -353,5 +353,12 @@
   "53a43130": "direction_4_shadow_energy_universality.json",
   "56b427dc": "direction_3_certified_knuth_bendix_completion.json",
   "17b7f8a9": "direction_2_e_graph_extraction_as_approximate_quot.json",
-  "67fa9470": "direction_3_weighted_curvature_variance_and_optima.json"
+  "67fa9470": "direction_3_weighted_curvature_variance_and_optima.json",
+  "699310ee": "direction_2_sizedepth_tradeoffs_with_inversions.json",
+  "9c29773e": "direction_4_compression_stability_under_probe_enla.json",
+  "acbb9e82": "direction_4_formal_bridge_to_boolean_circuit_compl.json",
+  "68ed02d3": "direction_2_equality_saturation_extraction_correct.json",
+  "06b9ca54": "direction_5_differential_closure_and_growth_classi.json",
+  "91fdc977": "direction_2_approximate_depth_rigidity.json",
+  "ccca011b": "direction_2_spectral_sparsity_conjecture_for_stron.json"
 }
