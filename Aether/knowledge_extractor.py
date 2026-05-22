@@ -755,6 +755,11 @@ Research mode: {concept.research_mode}
                 tar_path = asyncio.get_event_loop().run_until_complete(
                     self.aristotle.download_result(job.project_id, Path(tmpdir))
                 )
+                # Check for auth error marker from download_result
+                if tar_path and tar_path.name == "__AUTH_ERROR__":
+                    job.error_message = "Result download failed: authentication error (403/401)"
+                    job.status = "failed"
+                    return job
                 if not tar_path or not tar_path.exists():
                     job.error_message = "Result download failed"
                     return job
@@ -781,6 +786,11 @@ Research mode: {concept.research_mode}
         try:
             with tempfile.TemporaryDirectory() as tmpdir:
                 tar_path = await self.aristotle.download_result(job.project_id, Path(tmpdir))
+                # Check for auth error marker from download_result
+                if tar_path and tar_path.name == "__AUTH_ERROR__":
+                    job.error_message = "Result download failed: authentication error (403/401)"
+                    job.status = "failed"
+                    return job
                 if not tar_path or not tar_path.exists():
                     job.error_message = "Result download failed"
                     return job
@@ -2295,6 +2305,21 @@ Research mode: {concept.research_mode}
     # ==================================================================
     # Full pipeline: single cycle
     # ==================================================================
+
+    def _release_direction(self, job: ResearchJob) -> None:
+        """Release the future direction consumed by a failed job back to available."""
+        if not job.job_id:
+            return
+        try:
+            from research_memory import FutureDirectionsManager
+            fd_manager = FutureDirectionsManager(self.workspace)
+            for d in fd_manager._directions:
+                if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
+                    fd_manager.mark_direction_available(d.id)
+                    print(f"[Tick] Released direction {d.id}: {d.title[:50]}")
+                    break
+        except Exception as e:
+            print(f"[Tick] Warning: could not release direction: {e}")
 
     def _extract_future_directions(self, job: ResearchJob) -> None:
         """Extract future directions from Aristotle's output and mark the consumed direction completed."""

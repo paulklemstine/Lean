@@ -134,6 +134,9 @@ class AristotleSDKClient:
                     await asyncio.sleep(SSL_RETRY_DELAY)
                     continue
                 print(f"[Aristotle] Download error for {project_id}: {e}")
+                # Return a special marker for auth errors so callers can distinguish
+                if "403" in error_str or "Forbidden" in error_str or "401" in error_str or "Unauthorized" in error_str:
+                    return Path("__AUTH_ERROR__")
                 return None
 
     async def submit_lean_project(
