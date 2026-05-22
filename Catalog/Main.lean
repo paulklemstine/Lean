@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1595 of the highest-quality
+A curated collection of 1604 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1595
+Total files: 1604
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -623,23 +623,31 @@ import FINAL.Computation.Bifurcation
 import FINAL.Computation.BinarySearch
 import FINAL.Computation.BranchingPrograms
 import FINAL.Computation.Circuits
+import FINAL.Computation.CliqueLowerBound
 import FINAL.Computation.ClosureCompressionOptimality
 import FINAL.Computation.CollatzTropical
 import FINAL.Computation.CollatzTropicalContraction
 import FINAL.Computation.Compression
 import FINAL.Computation.ConfigurationSpace
+import FINAL.Computation.Criticality
 import FINAL.Computation.Defs
 import FINAL.Computation.Dijkstra
+import FINAL.Computation.DivergenceTheory
+import FINAL.Computation.Diversity
 import FINAL.Computation.Entropy
 import FINAL.Computation.EntropyBarrier
 import FINAL.Computation.EntropyBridge
+import FINAL.Computation.Evasion
 import FINAL.Computation.ExpIrrational
 import FINAL.Computation.FiveDreams
 import FINAL.Computation.FutureResearchTheorems
+import FINAL.Computation.Glider
+import FINAL.Computation.GoodhartsRepulsor
 import FINAL.Computation.GravityOracle
 import FINAL.Computation.InfoEfficientAlgorithms
 import FINAL.Computation.InformationEntropy
 import FINAL.Computation.KarchmerWigderson
+import FINAL.Computation.KolmogorovComplexity
 import FINAL.Computation.KraftShannon
 import FINAL.Computation.MetaOracle
 import FINAL.Computation.MetaOracleFiveQuestions
@@ -725,6 +733,7 @@ import FINAL.Cryptography.GeometricCryptanalysis
 import FINAL.Cryptography.GroupLaw
 import FINAL.Cryptography.HTLCLightning
 import FINAL.Cryptography.HybridTelescope
+import FINAL.Cryptography.KyberCompress
 import FINAL.Cryptography.LeftoverHash
 import FINAL.Cryptography.MLLFormula
 import FINAL.Cryptography.MasterFormula
