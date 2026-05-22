@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1466 of the highest-quality
+A curated collection of 1485 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1466
+Total files: 1485
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -710,14 +710,18 @@ import FINAL.EML.AutoMLTheory
 import FINAL.EML.Basic
 import FINAL.EML.CWApprox
 import FINAL.EML.CategoryTheorems
+import FINAL.EML.CausalInferenceTheory
 import FINAL.EML.ClosureOperator
 import FINAL.EML.CompactRetractApprox
+import FINAL.EML.Compile
 import FINAL.EML.Complexity
+import FINAL.EML.ConvergenceGuarantees
 import FINAL.EML.ConvexRetraction
 import FINAL.EML.Core
 import FINAL.EML.DeepApprox
 import FINAL.EML.DeepComposition
 import FINAL.EML.DiagonalPhaseTransition
+import FINAL.EML.DistillationTheory
 import FINAL.EML.Dvir
 import FINAL.EML.EMLAdvancedML
 import FINAL.EML.EMLCryptographicML
@@ -725,6 +729,7 @@ import FINAL.EML.EMLFactoringBridge
 import FINAL.EML.EMLFunctionalCalculus
 import FINAL.EML.EMLNeuralNetworks
 import FINAL.EML.EMLQuantumHybrid
+import FINAL.EML.EMLStoneWeierstrassHausdorff
 import FINAL.EML.EMLTropicalSemiring
 import FINAL.EML.EMLv17Advanced
 import FINAL.EML.EMLv17Core
@@ -758,11 +763,13 @@ import FINAL.EML.PythagoreanBridge
 import FINAL.EML.PythagoreanBridgeResearch
 import FINAL.EML.QDF_FiveDirections
 import FINAL.EML.QuantumDensityEstimation
+import FINAL.EML.QuantumSignal
 import FINAL.EML.RamanujanFrontiers2
 import FINAL.EML.RepulsorTheory
 import FINAL.EML.RepulsorTheoryExtended
 import FINAL.EML.SPBResearchExploration
 import FINAL.EML.ScalingLaws
+import FINAL.EML.SingleOperatorClosure
 import FINAL.EML.SingleOperatorCompilation
 import FINAL.EML.SingleOperatorRepresentability
 import FINAL.EML.StochasticSelfImprovement
@@ -775,6 +782,7 @@ import FINAL.EML.TrainingDynamics
 import FINAL.EML.TransferLearningBounds
 import FINAL.EML.UltrametricCertifiedRobustness
 import FINAL.EML.UnifiedCompression
+import FINAL.EML.UnivariateVanishing
 import FINAL.EML.V14Research
 import FINAL.EML.V15Research
 import FINAL.EML.V16Research
@@ -788,6 +796,7 @@ import FINAL.Geometry.Convergence
 import FINAL.Geometry.CupsCaps
 import FINAL.Geometry.DiscreteGaussBonnet
 import FINAL.Geometry.DiscreteMorseInequalities
+import FINAL.Geometry.Distortion
 import FINAL.Geometry.Endomorphisms
 import FINAL.Geometry.EulerTopology
 import FINAL.Geometry.GapMatterResearch
@@ -799,12 +808,18 @@ import FINAL.Geometry.InverseStereoResearch
 import FINAL.Geometry.InverseStereoSecp256k1
 import FINAL.Geometry.InverseStereoUniverse
 import FINAL.Geometry.MonotoneSubseq
+import FINAL.Geometry.MultiHeadStereographic
 import FINAL.Geometry.NonAbelianGauge
+import FINAL.Geometry.Orient
 import FINAL.Geometry.OvalArrangement
+import FINAL.Geometry.PackingBound
 import FINAL.Geometry.PadicMobius
 import FINAL.Geometry.PhotonEventGraph
+import FINAL.Geometry.QuantumGravityErrorCorrection
+import FINAL.Geometry.QuotientSpaces
 import FINAL.Geometry.RamanujanFrontiers
 import FINAL.Geometry.StereographicRG
+import FINAL.Geometry.TensorHom
 import FINAL.Geometry.Theorems
 import FINAL.Geometry.TropicalTransversality
 import FINAL.Geometry.UnifiedLightTheory
@@ -1040,6 +1055,7 @@ import FINAL.MachineLearning.UniqueOddExponent
 import FINAL.MachineLearning.UniversalArchitecture
 import FINAL.MachineLearning.Valuation
 import FINAL.Physics.Advanced
+import FINAL.Physics.AlgebraicElectricity
 import FINAL.Physics.Angular
 import FINAL.Physics.AngularMomentum
 import FINAL.Physics.Basic
@@ -1059,6 +1075,7 @@ import FINAL.Physics.Entanglement
 import FINAL.Physics.Foundations
 import FINAL.Physics.HolevoCapacity
 import FINAL.Physics.IdempotentQuantum
+import FINAL.Physics.Kardashev
 import FINAL.Physics.Landauer
 import FINAL.Physics.LorentzBerggrenThermodynamic
 import FINAL.Physics.MoonshotQuantum
@@ -1142,6 +1159,7 @@ import FINAL.Pythagorean.DeepOpenProblems
 import FINAL.Pythagorean.Defs
 import FINAL.Pythagorean.Density
 import FINAL.Pythagorean.DepthSharpness
+import FINAL.Pythagorean.DepthStability
 import FINAL.Pythagorean.Deriv
 import FINAL.Pythagorean.Derivative
 import FINAL.Pythagorean.DerivativeNormalizer
@@ -1218,6 +1236,7 @@ import FINAL.Shared.CryptographicEntropy
 import FINAL.Shared.EntropyAlgebra
 import FINAL.Shared.EntropyAlgebraCrypto
 import FINAL.Shared.EntropyLatticeCrypto
+import FINAL.Shared.Fib_gcd_identity
 import FINAL.Shared.FibonacciLTE
 import FINAL.Shared.Foundations
 import FINAL.Shared.MutualInformation
