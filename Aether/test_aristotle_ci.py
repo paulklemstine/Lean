@@ -97,7 +97,28 @@ async def test_aristotle(api_key: str, timeout: int = 600) -> bool:
                     print(f"[Test] FAIL: Project failed: status={status}")
                     return False
                 elif status == "error":
-                    print(f"[Test] FAIL: Aristotle returned error status. Project may be misconfigured.")
+                    err = poll_result.get("error", "")
+                    print(f"[Test] FAIL: Aristotle returned error status. Details: {err}")
+                    # Try fetching more info via the SDK
+                    try:
+                        from aristotlelib import Project
+                        proj = await Project.from_id(project_id)
+                        await proj.refresh()
+                        print(f"[Test] Project details: id={proj.project_id}, status={proj.status}, "
+                              f"percent={proj.percent_complete}")
+                        if hasattr(proj, 'error_message') and proj.error_message:
+                            print(f"[Test] Error message: {proj.error_message}")
+                        # Print all non-private attributes for debugging
+                        for attr in dir(proj):
+                            if not attr.startswith('_') and attr not in ('from_id', 'create_from_directory', 'create', 'refresh', 'wait_for_completion', 'get_solution'):
+                                try:
+                                    val = getattr(proj, attr)
+                                    if not callable(val):
+                                        print(f"[Test]   {attr} = {val}")
+                                except Exception:
+                                    pass
+                    except Exception as e2:
+                        print(f"[Test] Could not fetch project details: {e2}")
                     return False
                 else:
                     print(f"[Test] Polling: status={status}, pct={pct}%, elapsed={elapsed}s")
