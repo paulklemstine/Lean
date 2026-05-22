@@ -40,6 +40,8 @@ from prompt_engine import PromptEngine, ArtifactRequests, ResearchPrompt
 from prompt_dna import PromptDNA
 from quality_evaluator import QualityEvaluator, QualityScore
 from catalog_scorer import CatalogScorer
+from catalog_analyzer import CatalogAnalyzer
+from arxiv_miner import ArxivMiner
 from aristotle_sdk_client import AristotleSDKClient
 from lean_catalog_builder import LeanCatalogBuilder
 from smart_integrator import SmartIntegrator
@@ -314,6 +316,14 @@ class CycleMaster:
             pi_agent=self.pi_agent,
         )
         self.catalog_scorer.load_scores()
+
+        # v3: ArXiv mining for fresh mathematical ideas
+        self.arxiv_miner = ArxivMiner(
+            pi_agent=self.pi_agent,
+            catalog_analyzer=CatalogAnalyzer(self.catalog_root),
+            research_memory=self.memory,
+            config=config.get("arxiv", {}),
+        )
 
         # Free exploration rate (10%)
         self.free_exploration_rate = config.get("free_exploration_rate", 0.10)
@@ -1219,6 +1229,21 @@ class CycleMaster:
                   f"avg final={stats['avg_final']:.1f}")
         except Exception as e:
             print(f"[Catalog] Scoring error (non-fatal): {e}")
+
+        # Phase 10.7: ArXiv mining — inject fresh ideas from recent papers
+        if self.arxiv_miner and self.arxiv_miner.enabled:
+            try:
+                use_domain_query = (self.state.cycle_count % 2 == 1)
+                direction = self.arxiv_miner.mine_future_direction(
+                    domain=domain["id"] if domain else "",
+                    use_domain_query=use_domain_query,
+                )
+                if direction:
+                    print(f"[ArXiv] Mined direction: {direction.title}")
+                else:
+                    print(f"[ArXiv] No direction mined this cycle")
+            except Exception as e:
+                print(f"[ArXiv] Mining error (non-fatal): {e}")
 
         # Save state
         self._save_state()
