@@ -339,5 +339,12 @@
   "17da72e5": "direction_2_optimal_certificate_search_via_satlp_r.json",
   "38f584f8": "direction_1_depth_preservation_for_full_eml_with_n.json",
   "11db42eb": "direction_2_probe_complexity_as_representable_dime.json",
-  "466922dd": "direction_1_non_abelian_arithmetic_phase_classific.json"
+  "466922dd": "direction_1_non_abelian_arithmetic_phase_classific.json",
+  "89e7218e": "direction_1_optimal_generator_bounds.json",
+  "3275285b": "direction_1_full_infinite_cylinder_formula.json",
+  "d8fe4984": "direction_3_tropical_action_spectrum.json",
+  "b18b48d6": "direction_3_tropical_kepler_orbits_grand_challenge.json",
+  "c217f217": "direction_1_convergent_rewrite_systems_as_quotient.json",
+  "d530d833": "galois_theory_solvability_of_polynomials.json",
+  "fe78ac2b": "direction_1_convergent_rewrite_systems_as_quotient.json"
 }
