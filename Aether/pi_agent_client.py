@@ -2190,6 +2190,8 @@ class PiAgentClient:
             catalog_section = "\nNo specific files referenced. Use Mathlib and general knowledge.\n"
 
         direct_prompt = textwrap.dedent(f"""\
+            Soli Deo Gloria
+
             ## Assignment: {concept.title}
 
             {mode_line}
