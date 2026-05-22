@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1352 of the highest-quality
+A curated collection of 1364 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1352
+Total files: 1364
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1142,6 +1142,7 @@ import FINAL.Tropical.Advanced
 import FINAL.Tropical.AdvancedTheory
 import FINAL.Tropical.Algebra
 import FINAL.Tropical.AlgebraicMirror
+import FINAL.Tropical.Algorithmic
 import FINAL.Tropical.AmplitudeAmplification
 import FINAL.Tropical.Applications
 import FINAL.Tropical.ApproximateRobustness
@@ -1190,6 +1191,7 @@ import FINAL.Tropical.Expr
 import FINAL.Tropical.FactorRank
 import FINAL.Tropical.FactorRankSeparation
 import FINAL.Tropical.Fano
+import FINAL.Tropical.FanoIncidence
 import FINAL.Tropical.FermatHypersurface
 import FINAL.Tropical.FiberEntropy
 import FINAL.Tropical.FiniteTempTropical
@@ -1233,27 +1235,34 @@ import FINAL.Tropical.MinPlus
 import FINAL.Tropical.MinPlusAlgebra
 import FINAL.Tropical.MinPlusExpr
 import FINAL.Tropical.MinPlusRankOne
+import FINAL.Tropical.MirrorFixedPoints
 import FINAL.Tropical.MixingTheory
 import FINAL.Tropical.Monotonicity
 import FINAL.Tropical.MutualInformation
 import FINAL.Tropical.MyhillNerode
 import FINAL.Tropical.NNCompilationExtended
+import FINAL.Tropical.NegligibleClosure
 import FINAL.Tropical.NerodeDecidability
 import FINAL.Tropical.NewResearch
 import FINAL.Tropical.NormalForm
+import FINAL.Tropical.Numerology
 import FINAL.Tropical.OmegaMetaOracle
 import FINAL.Tropical.OracleApplicationsFrontier
 import FINAL.Tropical.OrbitComplexity
 import FINAL.Tropical.OrbitPRG
 import FINAL.Tropical.OrbitPrefixFiber
+import FINAL.Tropical.PAdicTropical
 import FINAL.Tropical.PRGSecurity
+import FINAL.Tropical.PeriodicOrbits
 import FINAL.Tropical.PeriodsMotives
 import FINAL.Tropical.PerronFrobenius
+import FINAL.Tropical.PersistentTropicalBridge
 import FINAL.Tropical.PhaseIIFormal
 import FINAL.Tropical.PolynomialBridge
 import FINAL.Tropical.PolynomialMinimization
 import FINAL.Tropical.PrimePowerAmplification
 import FINAL.Tropical.Product
+import FINAL.Tropical.ProductAutomaton
 import FINAL.Tropical.QaryDataProcessing
 import FINAL.Tropical.QarySourceCoding
 import FINAL.Tropical.QuantumLLMCompilation
@@ -1295,6 +1304,7 @@ import FINAL.Tropical.TropProtocol
 import FINAL.Tropical.TropicalACNormalization
 import FINAL.Tropical.TropicalAdditiveCombinatorics
 import FINAL.Tropical.TropicalAdvancedTheory
+import FINAL.Tropical.TropicalAgentEpsilon
 import FINAL.Tropical.TropicalBarrier
 import FINAL.Tropical.TropicalCells
 import FINAL.Tropical.TropicalCompressionMonad
@@ -1304,8 +1314,10 @@ import FINAL.Tropical.TropicalDeepLearningFoundations
 import FINAL.Tropical.TropicalDeepResearch
 import FINAL.Tropical.TropicalDegreeRobustness
 import FINAL.Tropical.TropicalEntropyCompact
+import FINAL.Tropical.TropicalFFN
 import FINAL.Tropical.TropicalFactoring
 import FINAL.Tropical.TropicalFrontierResearch
+import FINAL.Tropical.TropicalFrontiers
 import FINAL.Tropical.TropicalFutureDirections
 import FINAL.Tropical.TropicalGameEquilibria
 import FINAL.Tropical.TropicalGeneralNetworks
