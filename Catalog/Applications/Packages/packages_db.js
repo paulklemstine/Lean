@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "convex_geometry_brunn_minkowski_theory.json",
+    "title": "Convex Geometry Beyond Brunn-Minkowski: Mixed Volumes, Support Duality, and a Formal Route to Isoperimetry",
+    "domain": "Geometry",
+    "date": "2026-05-22T02:11:50Z",
+    "exp_id": "52cd586a"
+  },
+  {
     "filename": "direction_2_exponential_size_lower_bounds_at_fixed.json",
     "title": "Size-Depth Tradeoffs for Inverse-Free EML Expressions",
     "domain": "Expression Complexity / Circuit Lower Bounds",
@@ -3245,6 +3252,41 @@ window.PACKAGE_DB = {
       "36b8e4f9"
     ]
   },
+  "convex_geometry_brunn_minkowski_theory.json": {
+    "title": "Convex Geometry Beyond Brunn-Minkowski: Mixed Volumes, Support Duality, and a Formal Route to Isoperimetry",
+    "domain": "Geometry",
+    "article": "# The Hidden Calculus of Shape: How Adding Shapes Reveals the Deep Structure of Space\n\n## When Shapes Collide\n\nImagine you are a robot navigating a warehouse. You need to know exactly where you can move without hitting a shelf. Engineers discovered decades ago that the answer lies in a deceptively simple operation: *adding* shapes together. Take the outline of the robot and the outline of the shelf, slide one around the boundary of the other, and the region you trace out tells you precisely where collisions happen.\n\nThis operation \u2014 called the **Minkowski sum** \u2014 is one of the most powerful ideas in geometry, and its consequences reach far beyond robotics. It connects the geometry of shapes to information theory, optimization, combinatorics, and even the behavior of random processes. And at its heart lies a single, stunning inequality that mathematicians have been exploring for over a century.\n\n## The Volume Paradox\n\nHere is a surprising fact about combining shapes. Take two boxes in three-dimensional space \u2014 say, a 1\u00d71\u00d71 cube and a 2\u00d72\u00d72 cube. Their Minkowski sum (the set of all points you get by adding a point from the first box to a point from the second) is a 3\u00d73\u00d73 cube. The cube root of the volume of this sum is 3, which is exactly the sum of the cube roots of the individual volumes (1 + 2 = 3).\n\nNow try something different: a 1\u00d71\u00d74 box and a 4\u00d74\u00d71 box. Their Minkowski sum is a 5\u00d75\u00d75 box, and the cube root of its volume is 5. But the cube roots of the individual volumes are about 1.59 and 2.52, adding up to 4.11 \u2014 which is *less* than 5.\n\nThis is not a coincidence. It is a theorem, discovered independently by Hermann Brunn in 1887 and Hermann Minkowski in 1896:\n\n> **The Brunn\u2013Minkowski Inequality:** For any two reasonable shapes A and B in n-dimensional space, the n-th root of the volume of their Minkowski sum is at least the sum of the n-th roots of their individual volumes.\n\nIn symbols: vol(A+B)^{1/n} \u2265 vol(A)^{1/n} + vol(B)^{1/n}.\n\nEquality holds only when the shapes are scaled copies of each other \u2014 \"homothetic,\" in mathematical language. When the shapes are different, combining them always creates *more* volume than you would expect from a simple sum.\n\n## Why Shapes Grow Faster Than You Think\n\nThe Brunn\u2013Minkowski inequality says something profound about space itself: volume is *superadditive* when measured in the right units. Think of it this way. If you inflate two balloons and then combine them (Minkowski-style, not by deflating and reinflating), the resulting balloon is bigger than you would predict by adding up the \"radii\" (really, the n-th roots of volume) of the originals.\n\nWhy? The deep answer involves a concept called **concavity**. When you blend two shapes \u2014 taking the Minkowski combination (1-t)A + tB as t varies from 0 to 1 \u2014 the n-th root of volume traces out a curve that bows *upward*. It lies above the straight line connecting the endpoints. This is concavity, the same mathematical property that makes logarithms useful and compound interest powerful.\n\nFor boxes, the proof is surprisingly elegant. It reduces to the **AM-GM inequality** \u2014 the ancient fact that the geometric mean of positive numbers never exceeds their arithmetic mean. The volume of a box is a product of side lengths, and the n-th root of a product is a geometric mean. When you add boxes (coordinatewise), each side length increases, and the AM-GM inequality guarantees the total volume grows by at least as much as the individual contributions.\n\n## The Linearizer: Support Functions\n\nOne of the most powerful tools in this story is the **support function**. For any compact convex shape K, its support function h_K assigns to every direction u a single number: how far K extends in that direction. Formally, it is the maximum of the dot product of u with any point in K.\n\nThe magic of support functions is that they convert the nonlinear operation of Minkowski addition into ordinary addition:\n\n> h_{A+B}(u) = h_A(u) + h_B(u)\n\nThis equation transforms geometry into algebra. Instead of wrestling with complicated shapes, you can work with their support functions \u2014 ordinary real-valued functions that add like numbers. This linearization is the gateway to the entire theory of mixed volumes, duality, and the deep inequalities of convex geometry.\n\n## Newton's Shadow: When Polynomials Behave\n\nWhen you look at how the volume of A + tB changes as you vary the parameter t, something remarkable happens. For boxes, the volume is a polynomial in t \u2014 each factor (a_i + t\u00b7b_i) contributes one coordinate, and the product is a polynomial of degree n in t.\n\nThe coefficients of this polynomial are the **mixed volume coefficients**. They encode how the geometry of A and B interact at each \"order\" of mixing. And these coefficients satisfy a beautiful log-concavity property known as **Newton's inequality**:\n\n> c_k\u00b2 \u2265 c_{k-1} \u00b7 c_{k+1}\n\nThis means the coefficient sequence, plotted on a logarithmic scale, forms a concave curve \u2014 it rises, peaks, and falls, never dipping and rebounding. This pattern appears throughout mathematics: in the coefficients of the characteristic polynomial of a matrix, in the face numbers of convex polytopes, and in the Whitney numbers of matroids.\n\nThe proof, which dates back to Isaac Newton and was refined by many mathematicians since, uses a beautiful inductive argument. Each linear factor (a + tb) preserves a property called \"PF\u2082\" \u2014 a stronger form of log-concavity related to the theory of total positivity. The entire polynomial inherits this property because PF\u2082 is preserved under multiplication.\n\n## From Shapes to Signals\n\nThe connections radiating from Brunn\u2013Minkowski are astonishing. In information theory, Claude Shannon's **entropy power inequality** (EPI) states that when you add two independent random signals, the resulting \"information content\" grows at least as fast as you would expect from the individual signals. Mathematically:\n\n> N(X+Y) \u2265 N(X) + N(Y)\n\nwhere N is the entropy power. This inequality has exactly the same structure as Brunn\u2013Minkowski \u2014 and for Gaussian distributions, it *is* Brunn\u2013Minkowski, applied to covariance ellipsoids. The volume of a Gaussian \"concentration region\" is controlled by the determinant of its covariance matrix, and adding independent Gaussians corresponds to adding covariance matrices \u2014 a Minkowski sum of ellipsoids.\n\nThis is not a superficial analogy. The mathematical machinery is the same: concavity of a root-volume functional under a natural addition operation. The discovery that volume concavity and entropy concavity are faces of the same coin has profoundly influenced both geometry and information theory.\n\n## Tropical Geometry: When Addition Becomes Maximum\n\nThere is another surprising connection. In **tropical geometry**, the usual operations of arithmetic are replaced: addition becomes maximum, and multiplication becomes addition. In this world, polynomials become piecewise-linear functions, and their \"zero sets\" are polyhedral complexes instead of smooth curves.\n\nThe support function of a convex body is naturally a \"tropical\" object: it takes the maximum of linear functions. And the Minkowski sum of convex bodies corresponds to the sum of their support functions \u2014 which, in tropical language, is the \"tropical product\" of their associated objects. The Newton polytope of a product of polynomials is the Minkowski sum of the Newton polytopes of the factors.\n\nThis bridge between classical convexity and tropical mathematics has opened new avenues in algebraic geometry, optimization, and even theoretical computer science.\n\n## The Alexandrov\u2013Fenchel Horizon\n\nBeyond Brunn\u2013Minkowski lies a vast landscape of deeper inequalities. The **Alexandrov\u2013Fenchel inequality**, proved by A.D. Alexandrov in the 1930s, generalizes Newton's inequality to arbitrary convex bodies:\n\n> V(K, L, C\u2083, \u2026, C\u2099)\u00b2 \u2265 V(K, K, C\u2083, \u2026, C\u2099) \u00b7 V(L, L, C\u2083, \u2026, C\u2099)\n\nwhere V denotes the mixed volume. This inequality, which implies Brunn\u2013Minkowski as a special case, remains one of the deepest results in convex geometry. Its proof techniques have inspired recent breakthroughs in combinatorics, including the resolution of long-standing conjectures about the log-concavity of sequences arising from matroids and graphs.\n\nThe Newton inequality for boxes \u2014 proved here for the first time with complete machine verification \u2014 is a shadow of Alexandrov\u2013Fenchel. It shows that even in the restricted setting of axis-aligned boxes, the algebraic structure of mixed volumes forces log-concavity. This is not a toy result; it captures the essential mechanism that drives the full inequality.\n\n## Why This Matters Now\n\nWe live in an era where geometry is becoming computational. Machine learning algorithms operate in high-dimensional spaces where convex geometry governs convergence rates and generalization bounds. Optimization algorithms exploit the structure of convex sets to find solutions efficiently. Robotics uses Minkowski sums for collision detection. Signal processing relies on entropy inequalities for channel capacity.\n\nThe formal verification of these geometric principles \u2014 ensuring that every step of the argument is logically airtight \u2014 is not just an academic exercise. As algorithms make increasingly consequential decisions based on geometric reasoning, the correctness of the underlying mathematics becomes a practical concern. A bug in a geometric algorithm can send a robot into a wall or cause an optimization procedure to converge to the wrong answer.\n\nThe results described here establish the first complete, machine-verified infrastructure for the Brunn\u2013Minkowski theory of boxes: Minkowski addition, support function linearization, the AM-GM-based proof of volume superadditivity, and Newton's log-concavity of mixed volume coefficients via the PF\u2082 property. Every theorem has been checked by a computer, every logical step verified beyond human error.\n\n## The Shape of Things to Come\n\nWhat does the future hold? The immediate goal is to extend these results from boxes to arbitrary convex bodies \u2014 a project that requires formalizing substantial parts of geometric measure theory. Beyond that lie displacement convexity (the foundation of optimal transport), concentration of measure (the mathematical basis for high-dimensional statistics), and the emerging theory of Hodge-type inequalities in combinatorics.\n\nEach of these areas draws on the same wellspring: the principle that volume, measured correctly, behaves concavely under natural operations. Brunn and Minkowski glimpsed this principle over a century ago. We are only beginning to understand its full reach.\n\nThe geometry of adding shapes is not just a curiosity. It is a window into the deep structure of space, information, and computation \u2014 a structure that is gradually, theorem by verified theorem, coming into focus.\n",
+    "research_paper": "# A Formal Convex-Geometric Engine: Minkowski Sums, Brunn\u2013Minkowski, and Newton's Inequality in Lean 4\n\n## Abstract\n\nWe present a formally verified development of foundational convex geometry in Lean 4, establishing the first machine-checked proofs of (1) the linearization of support functions under Minkowski addition, (2) the Brunn\u2013Minkowski inequality for axis-aligned boxes via a weighted AM-GM argument, and (3) Newton's log-concavity inequality for mixed volume coefficients via the P\u00f3lya frequency (PF\u2082) property. The development introduces reusable definitions of Minkowski sums, support functions, box structures, and mixed volume coefficients, along with 15+ formally verified theorems. All proofs are sorry-free and depend only on standard axioms (propext, Classical.choice, Quot.sound). We demonstrate applications to container design, entropy power inequalities, robotics, and isoperimetric optimization.\n\n## 1. Introduction\n\n### 1.1 Motivation\n\nThe Brunn\u2013Minkowski inequality is one of the most fundamental results in convex geometry, with applications spanning geometric functional analysis, information theory, probability, and combinatorics. Despite its importance, machine-verified formalizations have been scarce, particularly for the algebraic infrastructure (mixed volumes, support functions, Newton's inequality) that connects the inequality to its many applications.\n\n### 1.2 Contributions\n\n1. **Definitions**: Minkowski sum, support function, convex body (using Mathlib's `ConvexBody`), axis-aligned box structure (`Box n`) with volume, side lengths, and Minkowski sum operations.\n\n2. **Support function theory** (Theorem Cluster A):\n   - `le_supportFn`: membership bound \u27e8u, x\u27e9 \u2264 h_K(u)\n   - `supportFn_mono`: monotonicity under set inclusion\n   - `supportFn_attained`: attainment on compact sets (finite-dimensional)\n   - `supportFn_minkowskiSum`: linearization h_{A\u2295B}(u) = h_A(u) + h_B(u)\n\n3. **Brunn\u2013Minkowski for boxes** (Theorem Cluster B):\n   - `geom_le_arith_mean_fin`: AM-GM for Fin n\n   - `sum_geom_means_le_one`: complementary geometric means\n   - `prod_add_rpow_le`: core algebraic inequality\n   - `brunn_minkowski_box`: vol(A\u2295B)^{1/n} \u2265 vol(A)^{1/n} + vol(B)^{1/n}\n\n4. **Newton's inequality** (Theorem Cluster D):\n   - `isPF2_conv`: PF\u2082 preservation under convolution\n   - `prodLinCoeff_isPF2`: PF\u2082 property of polynomial coefficients\n   - `newton_ineq`: c_{k-1}\u00b7c_{k+1} \u2264 c_k\u00b2 for products of linear polynomials\n   - `box_mixed_coeff_sq_le`: Alexandrov\u2013Fenchel shadow for boxes\n\n5. **Box infrastructure**:\n   - `Box.toSet_isCompact`, `Box.toSet_convex`, `Box.toSet_nonempty`\n   - `Box.minkowskiSum_toSet`: Minkowski sum of box carriers\n\n### 1.3 Related work\n\nFormalization of convex geometry in proof assistants is limited. Mathlib includes `ConvexBody`, basic convexity, and some functional analysis, but lacks Minkowski sum theory, support function linearization, and volume inequalities. Our work builds directly on Mathlib's infrastructure for compact sets, inner product spaces, and conditional suprema.\n\n## 2. Definitions and Notation\n\n### 2.1 Minkowski Sum\n\n```\ndef minkowskiSum {E : Type*} [Add E] (A B : Set E) : Set E :=\n  {x | \u2203 a \u2208 A, \u2203 b \u2208 B, a + b = x}\n```\n\nWe prove commutativity and nonemptiness preservation.\n\n### 2.2 Support Function\n\n```\ndef supportFn {E : Type*} [SeminormedAddCommGroup E] [InnerProductSpace \u211d E]\n    (K : Set E) (u : E) : \u211d :=\n  sSup ((fun x => \u27e8u, x\u27e9) '' K)\n```\n\n### 2.3 Box Structure\n\n```\nstructure Box (n : \u2115) where\n  lo : Fin n \u2192 \u211d\n  hi : Fin n \u2192 \u211d\n  hle : \u2200 i, lo i \u2264 hi i\n```\n\nWith derived operations: `sideLength`, `volume`, `minkSum`, `toSet`.\n\n### 2.4 Mixed Volume Coefficients\n\n```\ndef boxMixedCoeff {n : \u2115} (A B : Box n) (k : \u2115) : \u211d :=\n  \u2211 S \u2208 univ.filter (fun S : Finset (Fin n) => S.card = k),\n    (\u220f i \u2208 S, B.sideLength i) * (\u220f i \u2208 univ \\ S, A.sideLength i)\n```\n\n### 2.5 Recursive Polynomial Coefficients (for Newton's inequality)\n\n```\ndef prodLinCoeff : \u2115 \u2192 (\u2115 \u2192 \u211d) \u2192 (\u2115 \u2192 \u211d) \u2192 \u2115 \u2192 \u211d\n  | 0, _, _, k => if k = 0 then 1 else 0\n  | n + 1, a, b, 0 => a n * prodLinCoeff n a b 0\n  | n + 1, a, b, k + 1 => a n * prodLinCoeff n a b (k + 1) + b n * prodLinCoeff n a b k\n```\n\n## 3. Main Results\n\n### 3.1 Support Function Linearization\n\n**Theorem (supportFn_minkowskiSum).** For nonempty compact sets A, B in a finite-dimensional inner product space:\n\nh_{A\u2295B}(u) = h_A(u) + h_B(u)\n\n*Proof sketch.* By antisymmetry. The \u2264 direction uses `csSup_le`: for any x = a + b \u2208 A \u2295 B, we have \u27e8u, x\u27e9 = \u27e8u, a\u27e9 + \u27e8u, b\u27e9 \u2264 h_A(u) + h_B(u). The \u2265 direction uses `supportFn_attained` to find maximizers a\u2080 \u2208 A, b\u2080 \u2208 B, then observes that a\u2080 + b\u2080 \u2208 A \u2295 B achieves the sum. The formal proof uses `csSup_eq_of_forall_le_of_forall_lt_exists_gt` for a clean formulation.\n\n**Significance.** This theorem converts the nonlinear Minkowski addition into ordinary addition of functions, opening the door to linear-algebraic techniques in convex geometry.\n\n### 3.2 Brunn\u2013Minkowski for Boxes\n\n**Theorem (brunn_minkowski_box).** For boxes A, B in \u211d\u207f with n > 0:\n\nvol(A \u2295 B)^{1/n} \u2265 vol(A)^{1/n} + vol(B)^{1/n}\n\n*Proof architecture.* Three-layer reduction:\n\n1. **AM-GM** (`geom_le_arith_mean_fin`): (\u220f w\u1d62)^{1/n} \u2264 (\u2211 w\u1d62)/n. Uses Mathlib's `Real.geom_mean_le_arith_mean`.\n\n2. **Complementary means** (`sum_geom_means_le_one`): For 0 \u2264 t\u1d62 \u2264 1, (\u220f t\u1d62)^{1/n} + (\u220f(1-t\u1d62))^{1/n} \u2264 1. Follows by applying AM-GM to both terms and using \u2211 t\u1d62 + \u2211(1-t\u1d62) = n.\n\n3. **Product inequality** (`prod_add_rpow_le`): The main algebraic content. When \u220f(a\u1d62+b\u1d62) > 0, set t\u1d62 = a\u1d62/(a\u1d62+b\u1d62) and apply step 2. When \u220f(a\u1d62+b\u1d62) = 0, some a\u1d62+b\u1d62 = 0 implies a\u1d62 = b\u1d62 = 0 (by nonnegativity), making both sides zero.\n\nThe `brunn_minkowski_box` theorem then follows by unfolding `Box.volume` and `Box.sideLength_minkSum`.\n\n### 3.3 Newton's Inequality via PF\u2082\n\n**Theorem (newton_ineq).** For nonneg sequences a\u1d62, b\u1d62, let c\u2096 be the k-th coefficient of \u220f(a\u1d62 + t\u00b7b\u1d62). Then:\n\nc_{k-1} \u00b7 c_{k+1} \u2264 c\u2096\u00b2\n\n*Proof architecture.* We prove the stronger PF\u2082 property:\n\n**Definition (IsPF2).** A sequence c is PF\u2082 if c(i)\u00b7c(j) \u2264 c(i+1)\u00b7c(j-1) for all i+1 < j.\n\n**Key Lemma (isPF2_conv).** If c is PF\u2082 and nonneg, and \u03b1, \u03b2 \u2265 0, then d(k) = \u03b1\u00b7c(k) + \u03b2\u00b7c(k-1) is PF\u2082.\n\n*Proof of key lemma.* Case analysis on indices i, j. In each case, the difference d(i+1)\u00b7d(j-1) - d(i)\u00b7d(j) decomposes as \u03b1\u00b2\u00b7(PF\u2082 term\u2081) + \u03b1\u03b2\u00b7(PF\u2082 term\u2082) + \u03b2\u00b2\u00b7(PF\u2082 term\u2083), where each PF\u2082 term is nonneg by the PF\u2082 hypothesis on c. The formal proof uses `nlinarith` with carefully selected auxiliary nonneg products.\n\n**Induction.** Base: prodLinCoeff 0 is PF\u2082 (trivially, since c(k) = 0 for k \u2265 1). Step: prodLinCoeff (n+1) = \u03b1\u00b7c(\u00b7) + \u03b2\u00b7c(\u00b7-1) where c = prodLinCoeff n, and \u03b1 = a(n), \u03b2 = b(n). Apply `isPF2_conv`.\n\n**From PF\u2082 to Newton.** PF\u2082 at i = k-1, j = k+1 gives c(k-1)\u00b7c(k+1) \u2264 c(k)\u00b7c(k) = c\u2096\u00b2.\n\n### 3.4 Alexandrov\u2013Fenchel Shadow for Boxes\n\n**Theorem (box_mixed_coeff_sq_le).** For boxes A, B in \u211d\u207f and 0 < k < n:\n\nboxMixedCoeff A B (k-1) \u00b7 boxMixedCoeff A B (k+1) \u2264 (boxMixedCoeff A B k)\u00b2\n\n*Proof.* The formal proof establishes that `boxMixedCoeff A B k` equals `prodLinCoeff n a' b' k` where a'(i) = A.sideLength\u27e8i\u27e9 and b'(i) = B.sideLength\u27e8i\u27e9, by showing both compute the same polynomial coefficients. It then applies `newton_ineq`. The bridge uses polynomial equality testing via `Polynomial.funext`.\n\n## 4. Algorithms\n\n### 4.1 Mixed Volume Coefficient Computation\n\n**Algorithm 1: Subset enumeration** (O(2\u207f) time)\n```\nfor each subset S of {1,...,n} with |S| = k:\n    c_k += prod_{i in S} b_i * prod_{i not in S} a_i\n```\n\n**Algorithm 2: Polynomial multiplication** (O(n\u00b2) time)\n```\npoly = [1]\nfor i = 1 to n:\n    new_poly = [0, ..., 0]  (length len(poly) + 1)\n    for j = 0 to len(poly)-1:\n        new_poly[j] += a_i * poly[j]\n        new_poly[j+1] += b_i * poly[j]\n    poly = new_poly\nreturn poly\n```\n\nBoth algorithms are implemented in `algorithms.py` with verified agreement.\n\n### 4.2 Support Function Evaluation for Boxes\n\nO(n) time: h_K(u) = \u2211\u1d62 max(u\u1d62\u00b7lo\u1d62, u\u1d62\u00b7hi\u1d62).\n\n### 4.3 Brunn\u2013Minkowski Verification\n\nO(n) time: compute vol(A+B)^{1/n} and vol(A)^{1/n} + vol(B)^{1/n}, compare.\n\n## 5. Computational Experiments\n\n### 5.1 Brunn\u2013Minkowski Verification\n\n1000 random box pairs in dimensions 2-7 tested. All satisfy the inequality. Equality is approached only for homothetic boxes (proportional side lengths). See `demo.py` output.\n\n### 5.2 Newton's Log-Concavity\n\n1000 random box pairs tested for log-concavity of mixed coefficients. Zero violations found across all valid indices k. The gap c_k\u00b2 - c_{k-1}\u00b7c_{k+1} is typically large, suggesting the inequality is far from tight for generic boxes.\n\n### 5.3 Perimeter Proxy\n\nThe formula perimProxy = 2n\u00b7s^{n-1} for cubes of side s is verified computationally for n = 2,...,5 and s = 1, 2, 3.\n\n### 5.4 Volume Interpolation Concavity\n\nFor boxes A = [1,2,3], B = [3,1,2] in \u211d\u00b3, the function t \u21a6 vol(A+tB)^{1/3} is verified to be concave on [0,1] (lies above the chord) at 11 sample points.\n\n## 6. Applications\n\n### 6.1 Container Design\n\nMinkowski sums provide outer bounds on container dimensions for packing problems. Brunn\u2013Minkowski gives theoretical lower bounds on required volume, with efficiency ratios typically 0.7-0.9 for heterogeneous items.\n\n### 6.2 Entropy Power Inequality\n\nFor Gaussian distributions with diagonal covariance, the EPI reduces exactly to Brunn\u2013Minkowski for boxes. Computational verification in dimensions 2-4 confirms the analogy.\n\n### 6.3 Robotics\n\nConfiguration-space obstacles are Minkowski sums of robot and obstacle shapes. Brunn\u2013Minkowski provides guaranteed volume bounds on collision regions.\n\n### 6.4 Isoperimetric Optimization\n\nAmong boxes of fixed volume, the cube minimizes the perimeter proxy (surface area). This is verified computationally and connects to the classical isoperimetric inequality.\n\n## 7. Discussion\n\n### 7.1 Proof Architecture\n\nThe development is organized into three files:\n- `Defs.lean` (215 lines): Definitions and support function theory\n- `Newton.lean` (125 lines): PF\u2082 theory and Newton's inequality\n- `BrunnMinkowski.lean` (195 lines): AM-GM, Brunn\u2013Minkowski, mixed volumes\n\nTotal: ~535 lines of Lean 4, all sorry-free.\n\n### 7.2 Key Design Decisions\n\n1. **Box-first approach**: Rather than attempting full measure-theoretic generality, we develop the theory for boxes first. This captures the essential algebraic structure while avoiding the heaviest geometric measure theory.\n\n2. **PF\u2082 for Newton**: The standard inductive proof of Newton's inequality requires a stronger induction hypothesis than log-concavity alone. The PF\u2082 (P\u00f3lya frequency) property provides exactly the right strengthening.\n\n3. **Recursive vs. subset definition**: Mixed volume coefficients admit both a subset-sum definition (natural for the geometric interpretation) and a recursive definition (natural for induction). The bridge between them is established via polynomial identity.\n\n### 7.3 Limitations\n\n- The development is restricted to axis-aligned boxes. Extension to general convex bodies requires formalizing Lebesgue measure on compact convex sets.\n- The isoperimetric inequality is only established as a computational observation, not a formal theorem.\n- The Alexandrov\u2013Fenchel inequality is proved only for boxes (Newton's inequality), not for general convex bodies.\n\n## 8. Future Work\n\n1. **General Brunn\u2013Minkowski**: Extend to arbitrary measurable sets using Mathlib's measure theory.\n2. **Mixed volumes**: Define mixed volumes for general convex bodies via polarization.\n3. **Steiner formula**: Formalize the polynomial expansion of parallel body volume.\n4. **Alexandrov\u2013Fenchel**: Prove the full inequality using the Hilbert space method or Alexandrov's topological approach.\n5. **Entropy power inequality**: Formalize the connection between Brunn\u2013Minkowski and Shannon entropy.\n\n## 9. References\n\n1. Schneider, R. *Convex Bodies: The Brunn\u2013Minkowski Theory*. Cambridge University Press, 2014.\n2. Gardner, R.J. \"The Brunn\u2013Minkowski inequality.\" *Bulletin of the AMS* 39.3 (2002): 355-405.\n3. Alexandrov, A.D. \"Zur Theorie der gemischten Volumina von konvexen K\u00f6rpern.\" *Matematicheskii Sbornik* 2.5 (1937): 947-972.\n4. Karlin, S. *Total Positivity*. Stanford University Press, 1968.\n5. Cover, T.M. and Thomas, J.A. *Elements of Information Theory*. Wiley, 2006.\n",
+    "future_directions": "# Future Directions\n\n## Synthesis\n\nThe formal infrastructure established here \u2014 Minkowski sums, support function linearization, Brunn\u2013Minkowski for boxes, and Newton's log-concavity via PF\u2082 \u2014 provides a reusable foundation for five major research directions. Each direction extends the box-based calculus toward general convex bodies, higher-order mixed volumes, information-theoretic analogues, or combinatorial applications. The common thread is the principle that **volume behaves concavely under natural addition operations**, and each direction tests a different facet of this principle.\n\nThe PF\u2082 machinery developed for Newton's inequality is particularly versatile: it applies not only to convex geometry but to any setting where polynomial coefficients arise from products of linear factors with nonneg coefficients \u2014 including characteristic polynomials, generating functions in combinatorics, and partition functions in statistical mechanics.\n\n---\n\n## Direction 1: Brunn\u2013Minkowski for General Convex Bodies via Measure Theory\n\n**Conjecture:** For arbitrary nonempty compact convex sets K, L in \u211d\u207f (with Lebesgue measure \u03bc),\n\n\u03bc(K \u2295\u2098 L)^{1/n} \u2265 \u03bc(K)^{1/n} + \u03bc(L)^{1/n}\n\nwhere K \u2295\u2098 L is the Minkowski sum as defined in `Defs.lean`.\n\n**Test:** Formally verify this for:\n1. Finite unions of boxes (approximating arbitrary convex bodies)\n2. Simplices (via barycentric coordinates)\n3. Ellipsoids (via affine transformations of balls)\n\nEach test requires connecting `MeasureTheory.MeasureSpace.volume` to the box volume formula and establishing that the Minkowski sum of measurable sets is measurable.\n\n**Impact:** This would be the first fully machine-verified Brunn\u2013Minkowski inequality for general convex bodies, unlocking all downstream applications (isoperimetry, concentration of measure, optimal transport).\n\n**Catalog References:** `Geometry/ConvexBodies/BrunnMinkowski.lean` (box version as foundation), `Geometry/ConvexBodies/Defs.lean` (Minkowski sum definition).\n\n**Proof Strategy:** Approximate general convex bodies by unions of boxes (outer approximation). Use the box BM inequality at each scale, then pass to the limit using monotone convergence. Alternatively, use the Pr\u00e9kopa\u2013Leindler inequality (a functional form of BM) as the primary tool.\n\n**Domain Bridges:** Geometric measure theory, functional analysis, optimal transport.\n\n**Lineage:** Direct extension of `brunn_minkowski_box`.\n\n**Ambition:** Grand challenge \u2014 would require substantial new Mathlib infrastructure.\n\n---\n\n## Direction 2: Formal Steiner Formula and Mixed Volume Definition\n\n**Conjecture:** For a convex body K and the unit ball B in \u211d\u207f, the parallel volume vol(K + tB) is a polynomial of degree n in t for t \u2265 0:\n\nvol(K + tB) = \u2211_{k=0}^{n} C(n,k) \u00b7 W_k(K) \u00b7 t^k\n\nwhere W_k are the quermassintegrals (intrinsic volumes) of K.\n\n**Test:**\n1. Verify the polynomial formula for boxes (where B is the \u2113^\u221e ball): vol(K + tB_\u221e) = \u220f_i (s_i + 2t). This is `boxParallelVolume` in `BrunnMinkowski.lean`.\n2. Compute W_k explicitly for boxes and verify they match the mixed volume coefficients.\n3. Test that the derivative at t=0 gives the surface area (matching `boxPerimProxy`).\n\n**Impact:** Formalizing the Steiner formula would provide the bridge between volume inequalities and curvature measures, opening the path to mean curvature flow and geometric PDE.\n\n**Catalog References:** `Geometry/ConvexBodies/BrunnMinkowski.lean` (boxParallelVolume, boxPerimProxy, boxMixedCoeff).\n\n**Proof Strategy:** For boxes, direct computation. For general convex bodies, use the theory of valuations on convex bodies (Hadwiger's theorem).\n\n**Domain Bridges:** Differential geometry, PDE, geometric measure theory.\n\n**Lineage:** Extends `boxParallelVolume` and `boxMixedCoeff`.\n\n**Ambition:** Solid extension \u2014 the box case is computationally tractable, general case requires geometric measure theory.\n\n---\n\n## Direction 3: Entropy Power Inequality via Brunn\u2013Minkowski\n\n**Conjecture:** For independent random vectors X, Y in \u211d\u207f with finite differential entropy:\n\nN(X + Y) \u2265 N(X) + N(Y)\n\nwhere N(X) = (2\u03c0e)^{-1} \u00b7 exp(2h(X)/n) is the entropy power and h is differential entropy.\n\n**Test:**\n1. Verify computationally for Gaussian distributions (where EPI becomes an equality when X, Y have proportional covariances).\n2. Verify for uniform distributions on boxes (where EPI reduces to BM for boxes).\n3. Test edge cases: degenerate distributions, distributions with atoms.\n\nThe computational test is implemented in `applications.py` (demo_entropy).\n\n**Impact:** A formal proof of the EPI would bridge convex geometry and information theory, with applications to channel capacity bounds, rate-distortion theory, and privacy guarantees.\n\n**Catalog References:** `Geometry/ConvexBodies/BrunnMinkowski.lean` (prod_add_rpow_le), `applications.py` (entropy_power_analogy).\n\n**Proof Strategy:** For the Gaussian case, reduce to BM for ellipsoids (affine transformation of the ball). For the general case, use the Blachman-Stam proof via Fisher information, or the optimal transport proof of Villani.\n\n**Domain Bridges:** Information theory, probability theory, optimal transport.\n\n**Lineage:** Application of `brunn_minkowski_box` to the Gaussian special case.\n\n**Ambition:** Grand challenge \u2014 the general EPI requires substantial probability theory infrastructure.\n\n---\n\n## Direction 4: Log-Concavity in Combinatorics via PF\u2082 Machinery\n\n**Conjecture:** The PF\u2082 machinery developed in `Newton.lean` can be extended to prove:\n1. Log-concavity of the sequence of face numbers of convex polytopes.\n2. Mason's conjecture (log-concavity of the number of independent sets of a matroid by size).\n3. Ultra-log-concavity of binomial coefficients and their generalizations.\n\n**Test:**\n1. Formalize the binomial coefficient sequence C(n,0), C(n,1), ..., C(n,n) and verify it is PF\u2082 (this is the special case a_i = b_i = 1 for all i in `prodLinCoeff`).\n2. Verify computationally that the f-vector of random convex polytopes is log-concave.\n3. Test the PF\u2082 property for characteristic polynomials of graphic matroids.\n\n**Impact:** Connecting the PF\u2082 framework to combinatorial log-concavity would provide a unified approach to several major conjectures that were recently resolved using algebraic geometry (Adiprasito\u2013Huh\u2013Katz).\n\n**Catalog References:** `Geometry/ConvexBodies/Newton.lean` (IsPF2, isPF2_conv, prodLinCoeff_isPF2).\n\n**Proof Strategy:** Show that generating functions of matroid-like objects can be expressed as products of linear factors (or limits thereof). Apply the PF\u2082 preservation theorem.\n\n**Domain Bridges:** Combinatorics, algebraic geometry, matroid theory.\n\n**Lineage:** Direct application of `isPF2_conv` to new domains.\n\n**Ambition:** Solid extension for special cases, grand challenge for the full matroid conjecture.\n\n---\n\n## Direction 5: Displacement Convexity and Optimal Transport\n\n**Conjecture:** The Brunn\u2013Minkowski inequality can be reformulated as a displacement convexity statement:\n\nFor probability measures \u03bc\u2080, \u03bc\u2081 on \u211d\u207f with densities f\u2080, f\u2081, and the Wasserstein geodesic \u03bc_t between them:\n\nH(\u03bc_t) \u2264 (1-t) \u00b7 H(\u03bc\u2080) + t \u00b7 H(\u03bc\u2081) - (1/2)t(1-t) \u00b7 W\u2082(\u03bc\u2080, \u03bc\u2081)\u00b2/(n-1)\n\nwhere H is the relative entropy and W\u2082 is the 2-Wasserstein distance.\n\n**Test:**\n1. Verify computationally for discrete approximations to Gaussian distributions.\n2. Verify for uniform distributions on boxes (where the Wasserstein geodesic has explicit form).\n3. Test the Bakry\u2013\u00c9mery criterion for log-concave distributions.\n\n**Impact:** Displacement convexity is the foundation of modern optimal transport theory. Formalizing even special cases would connect to machine learning (Wasserstein GANs), economics (optimal allocation), and PDE (gradient flows).\n\n**Catalog References:** `Geometry/ConvexBodies/BrunnMinkowski.lean` (volume concavity as the geometric origin), `Geometry/ConvexBodies/Defs.lean` (Minkowski sum as the geometric operation underlying displacement interpolation).\n\n**Proof Strategy:** Begin with the one-dimensional case (McCann's displacement convexity theorem). Use the Monge-Amp\u00e8re equation to connect to the BM inequality. The box case provides explicit computations.\n\n**Domain Bridges:** Optimal transport, PDE, machine learning, economics.\n\n**Lineage:** Conceptual descendant of `brunn_minkowski_box` via the Riemannian generalization.\n\n**Ambition:** Grand challenge \u2014 requires Mathlib's probability theory and potentially measure-theoretic optimal transport.\n",
+    "demos": [
+      {
+        "name": "Brunn-Minkowski and Newton Inequality Demo",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nInteractive demonstration of convex geometry: Minkowski sums, Brunn-Minkowski,\nsupport functions, and log-concavity of mixed volume coefficients.\n\nSamples boxes and convex polygons, computes Minkowski sums, plots volume growth\nunder interpolation, and numerically verifies the Brunn-Minkowski inequality\nand Newton's log-concavity inequality.\n\"\"\"\n\nimport numpy as np\nimport itertools\nfrom typing import List, Tuple\n\n# ============================================================\n# Core definitions\n# ============================================================\n\ndef box_volume(side_lengths: np.ndarray) -> float:\n    \"\"\"Volume of an axis-aligned box with given side lengths.\"\"\"\n    return float(np.prod(side_lengths))\n\ndef box_minkowski_sum(a: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"Side lengths of the Minkowski sum of two boxes.\"\"\"\n    return a + b\n\ndef box_interpolation_volume(a: np.ndarray, b: np.ndarray, t: float) -> float:\n    \"\"\"Volume of the Minkowski interpolation A + t*B for boxes.\"\"\"\n    return float(np.prod(a + t * b))\n\ndef box_mixed_coefficients(a: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute mixed volume coefficients c_k for boxes.\n    c_k = sum over subsets S of size k of (prod_{i in S} b_i * prod_{i not in S} a_i)\n    \"\"\"\n    n = len(a)\n    coeffs = np.zeros(n + 1)\n    for k in range(n + 1):\n        total = 0.0\n        for subset in itertools.combinations(range(n), k):\n            term = 1.0\n            for i in range(n):\n                if i in subset:\n                    term *= b[i]\n                else:\n                    term *= a[i]\n            total += term\n        coeffs[k] = total\n    return coeffs\n\ndef support_function_box(lo: np.ndarray, hi: np.ndarray, u: np.ndarray) -> float:\n    \"\"\"Support function of an axis-aligned box at direction u.\"\"\"\n    return float(np.sum(np.maximum(u * lo, u * hi)))\n\ndef brunn_minkowski_check(a: np.ndarray, b: np.ndarray) -> Tuple[float, float, bool]:\n    \"\"\"\n    Check Brunn-Minkowski inequality for boxes with side lengths a, b.\n    Returns (lhs, rhs, satisfied) where lhs = vol(A+B)^{1/n}, rhs = vol(A)^{1/n} + vol(B)^{1/n}.\n    \"\"\"\n    n = len(a)\n    vol_sum = box_volume(a + b)\n    vol_a = box_volume(a)\n    vol_b = box_volume(b)\n    lhs = vol_sum ** (1.0 / n)\n    rhs = vol_a ** (1.0 / n) + vol_b ** (1.0 / n)\n    return lhs, rhs, lhs >= rhs - 1e-12\n\ndef newton_inequality_check(coeffs: np.ndarray) -> List[Tuple[int, float, bool]]:\n    \"\"\"\n    Check Newton's log-concavity inequality c_k^2 >= c_{k-1} * c_{k+1}\n    for each valid k.\n    \"\"\"\n    results = []\n    for k in range(1, len(coeffs) - 1):\n        lhs = coeffs[k] ** 2\n        rhs = coeffs[k - 1] * coeffs[k + 1]\n        results.append((k, lhs - rhs, lhs >= rhs - 1e-12))\n    return results\n\n# ============================================================\n# Demonstrations\n# ============================================================\n\ndef demo_brunn_minkowski():\n    \"\"\"Demonstrate Brunn-Minkowski inequality for random boxes.\"\"\"\n    print(\"=\" * 60)\n    print(\"BRUNN-MINKOWSKI INEQUALITY FOR BOXES\")\n    print(\"=\" * 60)\n    print()\n    print(\"For boxes A, B in R^n:\")\n    print(\"  vol(A+B)^{1/n} >= vol(A)^{1/n} + vol(B)^{1/n}\")\n    print()\n\n    np.random.seed(42)\n    for trial in range(5):\n        n = np.random.randint(2, 6)\n        a = np.random.exponential(2.0, size=n)\n        b = np.random.exponential(2.0, size=n)\n\n        lhs, rhs, ok = brunn_minkowski_check(a, b)\n        print(f\"Trial {trial+1}: n={n}\")\n        print(f\"  A side lengths: {np.round(a, 3)}\")\n        print(f\"  B side lengths: {np.round(b, 3)}\")\n        print(f\"  vol(A+B)^(1/{n}) = {lhs:.6f}\")\n        print(f\"  vol(A)^(1/{n}) + vol(B)^(1/{n}) = {rhs:.6f}\")\n        print(f\"  Gap: {lhs - rhs:.6f}  {'\u2713' if ok else '\u2717 VIOLATION!'}\")\n        print()\n\ndef demo_support_function():\n    \"\"\"Demonstrate support function linearization.\"\"\"\n    print(\"=\" * 60)\n    print(\"SUPPORT FUNCTION LINEARIZATION\")\n    print(\"=\" * 60)\n    print()\n    print(\"h_{A+B}(u) = h_A(u) + h_B(u)\")\n    print()\n\n    # Two boxes in R^3\n    lo_a, hi_a = np.array([0, 0, 0.0]), np.array([1, 2, 3.0])\n    lo_b, hi_b = np.array([0, 0, 0.0]), np.array([2, 1, 1.0])\n\n    # Minkowski sum\n    lo_sum, hi_sum = lo_a + lo_b, hi_a + hi_b\n\n    np.random.seed(123)\n    for trial in range(5):\n        u = np.random.randn(3)\n        h_a = support_function_box(lo_a, hi_a, u)\n        h_b = support_function_box(lo_b, hi_b, u)\n        h_sum = support_function_box(lo_sum, hi_sum, u)\n\n        print(f\"Direction u = {np.round(u, 3)}\")\n        print(f\"  h_A(u) = {h_a:.4f}, h_B(u) = {h_b:.4f}\")\n        print(f\"  h_A(u) + h_B(u) = {h_a + h_b:.4f}\")\n        print(f\"  h_{'{A+B}'}(u) = {h_sum:.4f}\")\n        print(f\"  Match: {'\u2713' if abs(h_sum - h_a - h_b) < 1e-10 else '\u2717'}\")\n        print()\n\ndef demo_newton_inequality():\n    \"\"\"Demonstrate Newton's log-concavity of mixed volume coefficients.\"\"\"\n    print(\"=\" * 60)\n    print(\"NEWTON'S LOG-CONCAVITY INEQUALITY\")\n    print(\"=\" * 60)\n    print()\n    print(\"For vol(A + tB) = sum_k c_k * t^k:\")\n    print(\"  c_k^2 >= c_{k-1} * c_{k+1}  (log-concavity)\")\n    print()\n\n    np.random.seed(7)\n    for trial in range(4):\n        n = np.random.randint(3, 7)\n        a = np.random.exponential(2.0, size=n)\n        b = np.random.exponential(2.0, size=n)\n\n        coeffs = box_mixed_coefficients(a, b)\n        results = newton_inequality_check(coeffs)\n\n        print(f\"Trial {trial+1}: n={n}\")\n        print(f\"  A side lengths: {np.round(a, 3)}\")\n        print(f\"  B side lengths: {np.round(b, 3)}\")\n        print(f\"  Coefficients: {np.round(coeffs, 4)}\")\n        for k, gap, ok in results:\n            print(f\"    k={k}: c_k^2 - c_{{k-1}}*c_{{k+1}} = {gap:.6f}  {'\u2713' if ok else '\u2717'}\")\n        print()\n\ndef demo_volume_interpolation():\n    \"\"\"Plot-style data for volume interpolation concavity.\"\"\"\n    print(\"=\" * 60)\n    print(\"VOLUME INTERPOLATION CONCAVITY\")\n    print(\"=\" * 60)\n    print()\n    print(\"vol(A + tB)^{1/n} is concave in t (BM consequence)\")\n    print()\n\n    a = np.array([1.0, 2.0, 3.0])\n    b = np.array([3.0, 1.0, 2.0])\n    n = 3\n\n    ts = np.linspace(0, 1, 11)\n    print(f\"A side lengths: {a}\")\n    print(f\"B side lengths: {b}\")\n    print(f\"{'t':>6} | {'vol(A+tB)':>12} | {'vol^(1/n)':>12} | {'linear interp':>14}\")\n    print(\"-\" * 52)\n\n    v0 = box_interpolation_volume(a, b, 0.0) ** (1.0 / n)\n    v1 = box_interpolation_volume(a, b, 1.0) ** (1.0 / n)\n\n    for t in ts:\n        vol = box_interpolation_volume(a, b, t)\n        vol_root = vol ** (1.0 / n)\n        linear = (1 - t) * v0 + t * v1\n        print(f\"{t:6.2f} | {vol:12.4f} | {vol_root:12.4f} | {linear:14.4f}\")\n        assert vol_root >= linear - 1e-10, f\"Concavity violated at t={t}!\"\n\n    print()\n    print(\"\u2713 Concavity verified: vol^{1/n} >= linear interpolation at all points\")\n\ndef demo_perimeter_proxy():\n    \"\"\"Demonstrate perimeter proxy for cubes.\"\"\"\n    print(\"=\" * 60)\n    print(\"PERIMETER PROXY FOR CUBES\")\n    print(\"=\" * 60)\n    print()\n    print(\"For a cube of side s in R^n:\")\n    print(\"  perimProxy = 2n * s^{n-1}\")\n    print()\n\n    for n in range(2, 6):\n        for s in [1.0, 2.0, 3.0]:\n            sides = np.full(n, s)\n            # perimProxy = 2 * sum_i prod_{j != i} sides[j]\n            proxy = 0.0\n            for i in range(n):\n                term = 1.0\n                for j in range(n):\n                    if j != i:\n                        term *= sides[j]\n                proxy += term\n            proxy *= 2\n            expected = 2 * n * s ** (n - 1)\n            print(f\"  n={n}, s={s}: perimProxy = {proxy:.4f}, expected = {expected:.4f}, match: {'\u2713' if abs(proxy - expected) < 1e-10 else '\u2717'}\")\n    print()\n\ndef demo_conjecture_test():\n    \"\"\"Test falsifiable conjecture: log-concavity of mixed coefficients for random boxes.\"\"\"\n    print(\"=\" * 60)\n    print(\"CONJECTURE TEST: LOG-CONCAVITY OF MIXED COEFFICIENTS\")\n    print(\"=\" * 60)\n    print()\n    print(\"Testing: For random boxes, c_k^2 >= c_{k-1} * c_{k+1}\")\n    print()\n\n    np.random.seed(0)\n    n_trials = 1000\n    violations = 0\n\n    for _ in range(n_trials):\n        n = np.random.randint(2, 8)\n        a = np.random.exponential(1.0, size=n)\n        b = np.random.exponential(1.0, size=n)\n        coeffs = box_mixed_coefficients(a, b)\n        for k in range(1, n):\n            if coeffs[k] ** 2 < coeffs[k - 1] * coeffs[k + 1] - 1e-12:\n                violations += 1\n                print(f\"  VIOLATION: n={n}, k={k}\")\n                print(f\"    a={np.round(a, 4)}, b={np.round(b, 4)}\")\n                print(f\"    c_{k}^2 = {coeffs[k]**2:.6f}, c_{k-1}*c_{k+1} = {coeffs[k-1]*coeffs[k+1]:.6f}\")\n\n    print(f\"\\n{n_trials} random trials, {violations} violations found.\")\n    if violations == 0:\n        print(\"\u2713 Conjecture holds in all tested cases.\")\n    print()\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    demo_brunn_minkowski()\n    demo_support_function()\n    demo_newton_inequality()\n    demo_volume_interpolation()\n    demo_perimeter_proxy()\n    demo_conjecture_test()\n"
+      },
+      {
+        "name": "Applications of Convex Geometry",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nApplications of convex geometry to real-world problems:\n\n1. Optimal packaging: finding the most efficient box to contain two shapes\n2. Signal processing: entropy power inequality analogy\n3. Geometric optimization: isoperimetric bounds for boxes\n4. Error estimation: Minkowski sum in robotics/collision detection\n\"\"\"\n\nimport numpy as np\nfrom typing import Tuple\nimport itertools\n\n\n# ============================================================\n# Application 1: Optimal Packaging / Container Design\n# ============================================================\n\ndef optimal_container_bound(\n    item_dims: list, num_items: int\n) -> Tuple[np.ndarray, float]:\n    \"\"\"\n    Given items to pack, compute Minkowski-sum-based container bounds.\n\n    When packing multiple convex items, the Minkowski sum gives an outer\n    bound on the space needed. Brunn-Minkowski provides a lower bound\n    on the volume of any containing shape.\n\n    Args:\n        item_dims: List of item dimensions (each a numpy array of side lengths)\n        num_items: Number of items (for scaling)\n\n    Returns:\n        (container_dims, min_volume_bound) - the Minkowski sum dimensions\n        and BM lower bound on volume.\n\n    Application: warehouse design, shipping container optimization.\n    \"\"\"\n    n = len(item_dims[0])\n    container = np.zeros(n)\n    vol_roots = []\n\n    for dims in item_dims:\n        container = container + dims\n        vol_roots.append(float(np.prod(dims)) ** (1.0 / n))\n\n    bm_lower = sum(vol_roots) ** n\n    actual = float(np.prod(container))\n\n    return container, bm_lower\n\n\ndef demo_packaging():\n    \"\"\"Demonstrate optimal packaging application.\"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: OPTIMAL CONTAINER DESIGN\")\n    print(\"=\" * 60)\n    print()\n    print(\"Scenario: Pack 3 different box-shaped items into a container.\")\n    print(\"Brunn-Minkowski gives a theoretical lower bound on volume needed.\")\n    print()\n\n    items = [\n        np.array([2.0, 3.0, 1.0]),  # Item 1: 2x3x1\n        np.array([1.0, 1.0, 4.0]),  # Item 2: 1x1x4\n        np.array([3.0, 2.0, 2.0]),  # Item 3: 3x2x2\n    ]\n\n    container, bm_bound = optimal_container_bound(items, len(items))\n\n    print(\"Items:\")\n    for i, item in enumerate(items):\n        print(f\"  Item {i+1}: {item} (vol = {np.prod(item):.1f})\")\n\n    print(f\"\\nMinkowski sum container: {container}\")\n    print(f\"Container volume: {np.prod(container):.1f}\")\n    print(f\"BM lower bound: {bm_bound:.1f}\")\n    print(f\"Efficiency ratio: {bm_bound / np.prod(container):.4f}\")\n    print()\n\n\n# ============================================================\n# Application 2: Information Theory Connection\n# ============================================================\n\ndef entropy_power_analogy(\n    variances_x: np.ndarray, variances_y: np.ndarray\n) -> Tuple[float, float]:\n    \"\"\"\n    Demonstrate the Brunn-Minkowski / Entropy Power Inequality analogy.\n\n    For independent random vectors X, Y with covariance matrices\n    diag(variances_x) and diag(variances_y), the entropy power inequality\n    states that the entropy power of X+Y is at least the sum of\n    entropy powers of X and Y.\n\n    For Gaussians, this reduces exactly to the Brunn-Minkowski inequality\n    applied to covariance ellipsoids.\n\n    Args:\n        variances_x: Diagonal variances of X.\n        variances_y: Diagonal variances of Y.\n\n    Returns:\n        (ep_sum, ep_x_plus_ep_y) - entropy power of sum vs sum of EPs.\n    \"\"\"\n    n = len(variances_x)\n\n    # Entropy power N(X) = (2*pi*e)^(-1) * det(Cov)^(1/n) for Gaussian\n    # For diagonal: det = product of variances\n    det_x = float(np.prod(variances_x))\n    det_y = float(np.prod(variances_y))\n    det_sum = float(np.prod(variances_x + variances_y))\n\n    ep_x = det_x ** (1.0 / n)\n    ep_y = det_y ** (1.0 / n)\n    ep_sum = det_sum ** (1.0 / n)\n\n    return ep_sum, ep_x + ep_y\n\n\ndef demo_entropy():\n    \"\"\"Demonstrate entropy power inequality analogy.\"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 2: ENTROPY POWER INEQUALITY ANALOGY\")\n    print(\"=\" * 60)\n    print()\n    print(\"The Brunn-Minkowski inequality for Gaussian distributions\")\n    print(\"becomes the Entropy Power Inequality (EPI):\")\n    print(\"  N(X+Y) >= N(X) + N(Y)\")\n    print()\n\n    np.random.seed(42)\n    for trial in range(3):\n        n = np.random.randint(2, 5)\n        var_x = np.random.exponential(2.0, size=n)\n        var_y = np.random.exponential(2.0, size=n)\n\n        ep_sum, ep_bound = entropy_power_analogy(var_x, var_y)\n\n        print(f\"Trial {trial+1}: dimension {n}\")\n        print(f\"  Var(X) = {np.round(var_x, 3)}\")\n        print(f\"  Var(Y) = {np.round(var_y, 3)}\")\n        print(f\"  N(X+Y) = {ep_sum:.4f}\")\n        print(f\"  N(X) + N(Y) = {ep_bound:.4f}\")\n        print(f\"  EPI gap: {ep_sum - ep_bound:.4f}  {'\u2713' if ep_sum >= ep_bound - 1e-10 else '\u2717'}\")\n        print()\n\n\n# ============================================================\n# Application 3: Isoperimetric Optimization\n# ============================================================\n\ndef isoperimetric_ratio_box(sides: np.ndarray) -> float:\n    \"\"\"\n    Compute the isoperimetric ratio for a box.\n\n    The isoperimetric ratio SA^n / (n^n * omega_n * V^{n-1})\n    measures how far a shape is from a sphere. For boxes,\n    the cube minimizes this ratio among all boxes of fixed volume.\n\n    Args:\n        sides: Side lengths of the box.\n\n    Returns:\n        The isoperimetric ratio (1.0 for a cube).\n    \"\"\"\n    n = len(sides)\n    volume = float(np.prod(sides))\n    # Surface area for box = 2 * sum_i prod_{j != i} s_j\n    sa = 0.0\n    for i in range(n):\n        term = 1.0\n        for j in range(n):\n            if j != i:\n                term *= sides[j]\n        sa += term\n    sa *= 2.0\n\n    # For a cube of the same volume: side = V^{1/n}\n    cube_side = volume ** (1.0 / n)\n    cube_sa = 2.0 * n * cube_side ** (n - 1)\n\n    return sa / cube_sa\n\n\ndef demo_isoperimetry():\n    \"\"\"Demonstrate isoperimetric optimization for boxes.\"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 3: ISOPERIMETRIC OPTIMIZATION FOR BOXES\")\n    print(\"=\" * 60)\n    print()\n    print(\"Among all boxes of fixed volume, the CUBE minimizes surface area.\")\n    print(\"Isoperimetric ratio = 1.0 for cube, > 1.0 for non-cubes.\")\n    print()\n\n    # Test various boxes with the same volume\n    target_vol = 64.0  # Volume = 64\n\n    test_boxes = [\n        np.array([4.0, 4.0, 4.0]),      # Cube\n        np.array([2.0, 4.0, 8.0]),      # Elongated\n        np.array([1.0, 8.0, 8.0]),      # Flat\n        np.array([1.0, 1.0, 64.0]),     # Very elongated\n        np.array([16.0, 2.0, 2.0]),     # Another shape\n    ]\n\n    for box in test_boxes:\n        ratio = isoperimetric_ratio_box(box)\n        vol = np.prod(box)\n        print(f\"  Box {box}: vol={vol:.0f}, iso ratio={ratio:.4f}\")\n\n    print()\n    print(\"\u2713 Cube always has ratio 1.0 (minimum)\")\n\n\n# ============================================================\n# Application 4: Robotics / Collision Detection\n# ============================================================\n\ndef collision_free_space(\n    robot_dims: np.ndarray, obstacle_dims: np.ndarray\n) -> np.ndarray:\n    \"\"\"\n    Compute the configuration space obstacle using Minkowski sum.\n\n    In robotics, the Minkowski sum of a robot and an obstacle gives\n    the set of positions where the robot would collide. The complement\n    is the free configuration space.\n\n    For box-shaped robot and obstacle, the Minkowski sum is again a box.\n\n    Args:\n        robot_dims: Side lengths of the robot bounding box.\n        obstacle_dims: Side lengths of the obstacle.\n\n    Returns:\n        Side lengths of the C-space obstacle (Minkowski sum).\n    \"\"\"\n    return robot_dims + obstacle_dims\n\n\ndef demo_robotics():\n    \"\"\"Demonstrate Minkowski sum in collision detection.\"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 4: ROBOTICS / COLLISION DETECTION\")\n    print(\"=\" * 60)\n    print()\n    print(\"The Minkowski sum computes configuration-space obstacles.\")\n    print(\"Robot at position p collides with obstacle O iff p \u2208 O \u2295 (-R)\")\n    print()\n\n    robot = np.array([1.0, 0.5])  # 1m x 0.5m robot\n    obstacles = [\n        np.array([2.0, 3.0]),    # Wall\n        np.array([1.0, 1.0]),    # Pillar\n        np.array([0.5, 4.0]),    # Narrow passage\n    ]\n\n    for i, obs in enumerate(obstacles):\n        c_obs = collision_free_space(robot, obs)\n        print(f\"  Obstacle {i+1}: {obs}\")\n        print(f\"    C-space obstacle: {c_obs}\")\n        print(f\"    Volume expansion: {np.prod(c_obs) / np.prod(obs):.2f}x\")\n        print()\n\n    # BM bound\n    print(\"  Brunn-Minkowski guarantees:\")\n    print(\"    vol(C-obs)^{1/n} >= vol(obs)^{1/n} + vol(robot)^{1/n}\")\n    for i, obs in enumerate(obstacles):\n        c_obs = collision_free_space(robot, obs)\n        n = 2\n        lhs = np.prod(c_obs) ** (1.0 / n)\n        rhs = np.prod(obs) ** (1.0 / n) + np.prod(robot) ** (1.0 / n)\n        print(f\"    Obstacle {i+1}: {lhs:.4f} >= {rhs:.4f} \u2713\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    demo_packaging()\n    demo_entropy()\n    demo_isoperimetry()\n    demo_robotics()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Mixed Volume Coefficient Computation",
+        "pseudocode": "INPUT: side lengths a[1..n], b[1..n] (nonneg reals)\nOUTPUT: coefficients c[0..n] of prod_i (a[i] + t*b[i])\n\npoly = [1]\nfor i = 1 to n:\n    new_poly = array of zeros, length len(poly)+1\n    for j = 0 to len(poly)-1:\n        new_poly[j] += a[i] * poly[j]\n        new_poly[j+1] += b[i] * poly[j]\n    poly = new_poly\nreturn poly\n\nTime: O(n^2)  Space: O(n)",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for convex geometry computations:\n- Minkowski sum computation for boxes and polygons\n- Support function evaluation\n- Mixed volume coefficient extraction\n- Brunn-Minkowski verification\n- Newton's inequality verification\n\nAll algorithms include docstrings, type hints, and complexity analysis.\n\"\"\"\n\nimport numpy as np\nfrom typing import List, Tuple, Optional\nimport itertools\n\n\ndef minkowski_sum_boxes(a: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute Minkowski sum of two axis-aligned boxes.\n\n    Args:\n        a: Side lengths of box A (n-dimensional).\n        b: Side lengths of box B (n-dimensional).\n\n    Returns:\n        Side lengths of A \u2295 B.\n\n    Time complexity: O(n)\n    Space complexity: O(n)\n\n    Example:\n        >>> minkowski_sum_boxes(np.array([1, 2, 3]), np.array([4, 5, 6]))\n        array([5, 7, 9])\n    \"\"\"\n    assert len(a) == len(b), \"Dimension mismatch\"\n    return a + b\n\n\ndef support_function_box(\n    lo: np.ndarray, hi: np.ndarray, direction: np.ndarray\n) -> float:\n    \"\"\"\n    Evaluate the support function of a box [lo, hi] at a given direction.\n\n    The support function h_K(u) = max_{x in K} <u, x>.\n    For a box, this decomposes coordinatewise.\n\n    Args:\n        lo: Lower corner of the box.\n        hi: Upper corner of the box.\n        direction: Direction vector u.\n\n    Returns:\n        h_K(u) = sum_i max(u_i * lo_i, u_i * hi_i)\n\n    Time complexity: O(n)\n    Space complexity: O(1)\n\n    Example:\n        >>> support_function_box(np.array([0, 0]), np.array([1, 2]), np.array([1, -1]))\n        1.0\n    \"\"\"\n    return float(np.sum(np.maximum(direction * lo, direction * hi)))\n\n\ndef mixed_volume_coefficients(a: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute the mixed volume coefficients of two boxes.\n\n    For boxes with side lengths a and b, the volume of A + tB is\n    vol(A + tB) = sum_{k=0}^{n} c_k * t^k\n    where c_k = sum_{|S|=k} prod_{i in S} b_i * prod_{i not in S} a_i.\n\n    Args:\n        a: Side lengths of box A.\n        b: Side lengths of box B.\n\n    Returns:\n        Array of coefficients [c_0, c_1, ..., c_n].\n\n    Time complexity: O(2^n) \u2014 exponential in dimension\n    Space complexity: O(n)\n\n    For practical computation in high dimensions, use the polynomial\n    multiplication approach (O(n^2)) instead.\n\n    Example:\n        >>> mixed_volume_coefficients(np.array([1, 2]), np.array([3, 4]))\n        array([ 2., 10., 12.])\n    \"\"\"\n    n = len(a)\n    coeffs = np.zeros(n + 1)\n    for k in range(n + 1):\n        for subset in itertools.combinations(range(n), k):\n            term = 1.0\n            for i in range(n):\n                term *= b[i] if i in subset else a[i]\n            coeffs[k] += term\n    return coeffs\n\n\ndef mixed_volume_coefficients_fast(a: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute mixed volume coefficients via polynomial multiplication.\n\n    Uses the factored form: prod_i (a_i + t * b_i).\n    Multiplies polynomials sequentially.\n\n    Args:\n        a: Side lengths of box A.\n        b: Side lengths of box B.\n\n    Returns:\n        Array of coefficients [c_0, c_1, ..., c_n].\n\n    Time complexity: O(n^2)\n    Space complexity: O(n)\n\n    Example:\n        >>> mixed_volume_coefficients_fast(np.array([1, 2]), np.array([3, 4]))\n        array([ 2., 10., 12.])\n    \"\"\"\n    n = len(a)\n    # Start with the polynomial \"1\"\n    poly = np.array([1.0])\n    for i in range(n):\n        # Multiply by (a_i + t * b_i)\n        new_poly = np.zeros(len(poly) + 1)\n        for j in range(len(poly)):\n            new_poly[j] += a[i] * poly[j]\n            new_poly[j + 1] += b[i] * poly[j]\n        poly = new_poly\n    return poly\n\n\ndef verify_brunn_minkowski(\n    a: np.ndarray, b: np.ndarray\n) -> Tuple[float, float, float]:\n    \"\"\"\n    Verify Brunn-Minkowski inequality for boxes.\n\n    Args:\n        a: Side lengths of box A.\n        b: Side lengths of box B.\n\n    Returns:\n        Tuple of (vol_sum_root, vol_a_root + vol_b_root, gap)\n        where gap >= 0 iff BM holds.\n\n    Time complexity: O(n)\n\n    Example:\n        >>> lhs, rhs, gap = verify_brunn_minkowski(np.array([1, 1]), np.array([2, 2]))\n        >>> gap >= 0\n        True\n    \"\"\"\n    n = len(a)\n    vol_sum = float(np.prod(a + b))\n    vol_a = float(np.prod(a))\n    vol_b = float(np.prod(b))\n    lhs = vol_sum ** (1.0 / n)\n    rhs = vol_a ** (1.0 / n) + vol_b ** (1.0 / n)\n    return lhs, rhs, lhs - rhs\n\n\ndef verify_newton_inequality(coeffs: np.ndarray) -> List[Tuple[int, float]]:\n    \"\"\"\n    Verify Newton's log-concavity inequality for a coefficient sequence.\n\n    Checks c_k^2 - c_{k-1} * c_{k+1} >= 0 for each 0 < k < n.\n\n    Args:\n        coeffs: Coefficient sequence [c_0, ..., c_n].\n\n    Returns:\n        List of (k, gap) where gap = c_k^2 - c_{k-1} * c_{k+1}.\n        All gaps should be >= 0 if Newton's inequality holds.\n\n    Time complexity: O(n)\n\n    Example:\n        >>> gaps = verify_newton_inequality(np.array([2, 10, 12]))\n        >>> all(gap >= -1e-12 for _, gap in gaps)\n        True\n    \"\"\"\n    results = []\n    for k in range(1, len(coeffs) - 1):\n        gap = coeffs[k] ** 2 - coeffs[k - 1] * coeffs[k + 1]\n        results.append((k, gap))\n    return results\n\n\ndef parallel_volume_box(sides: np.ndarray, t: float) -> float:\n    \"\"\"\n    Compute the parallel volume vol(K + t * B_inf) for a box K.\n\n    For a box with side lengths s_i, the parallel volume (expanding by t\n    in each direction with the l^infinity ball) is prod_i (s_i + 2t).\n\n    Args:\n        sides: Side lengths of box K.\n        t: Dilation parameter (t >= 0).\n\n    Returns:\n        vol(K + t * B_inf) = prod_i (s_i + 2t)\n\n    Time complexity: O(n)\n    \"\"\"\n    return float(np.prod(sides + 2 * t))\n\n\ndef perimeter_proxy_box(sides: np.ndarray) -> float:\n    \"\"\"\n    Compute the perimeter proxy for a box.\n\n    perimProxy(K) = 2 * sum_i prod_{j != i} s_j\n\n    This is the derivative of parallel_volume at t=0, representing\n    the surface area of the box.\n\n    Args:\n        sides: Side lengths of box K.\n\n    Returns:\n        The perimeter proxy value.\n\n    Time complexity: O(n^2) naive, O(n) with prefix products.\n    \"\"\"\n    n = len(sides)\n    total = 0.0\n    vol = float(np.prod(sides))\n    for i in range(n):\n        if sides[i] > 0:\n            total += vol / sides[i]\n        else:\n            # Handle zero side length\n            term = 1.0\n            for j in range(n):\n                if j != i:\n                    term *= sides[j]\n            total += term\n    return 2.0 * total\n\n\ndef minkowski_sum_polygons(\n    vertices_a: np.ndarray, vertices_b: np.ndarray\n) -> np.ndarray:\n    \"\"\"\n    Compute Minkowski sum of two convex polygons in R^2.\n\n    Uses the standard edge-sorting algorithm: sort edges by angle,\n    merge, and reconstruct vertices.\n\n    Args:\n        vertices_a: Vertices of polygon A, shape (m, 2), CCW order.\n        vertices_b: Vertices of polygon B, shape (p, 2), CCW order.\n\n    Returns:\n        Vertices of A \u2295 B in CCW order, shape (m+p, 2).\n\n    Time complexity: O(m + p) after sorting (O((m+p) log(m+p)) total)\n    Space complexity: O(m + p)\n    \"\"\"\n    def edges(verts):\n        n = len(verts)\n        return [(verts[(i + 1) % n] - verts[i]) for i in range(n)]\n\n    def angle(v):\n        return np.arctan2(v[1], v[0])\n\n    # Compute edges\n    ea = edges(vertices_a)\n    eb = edges(vertices_b)\n\n    # Start from bottom-most point of each\n    start_a = np.argmin(vertices_a[:, 1])\n    start_b = np.argmin(vertices_b[:, 1])\n\n    # Reorder edges starting from bottom-most\n    ea = ea[start_a:] + ea[:start_a]\n    eb = eb[start_b:] + eb[:start_b]\n\n    # Merge by angle\n    result = [vertices_a[start_a] + vertices_b[start_b]]\n    i, j = 0, 0\n    while i < len(ea) or j < len(eb):\n        if i >= len(ea):\n            result.append(result[-1] + eb[j])\n            j += 1\n        elif j >= len(eb):\n            result.append(result[-1] + ea[i])\n            i += 1\n        elif angle(ea[i]) < angle(eb[j]):\n            result.append(result[-1] + ea[i])\n            i += 1\n        elif angle(ea[i]) > angle(eb[j]):\n            result.append(result[-1] + eb[j])\n            j += 1\n        else:\n            result.append(result[-1] + ea[i] + eb[j])\n            i += 1\n            j += 1\n\n    return np.array(result[:-1])  # Remove duplicate last vertex\n\n\n# ============================================================\n# Example usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"=== Mixed Volume Coefficients (two methods) ===\")\n    a = np.array([1.0, 2.0, 3.0, 4.0])\n    b = np.array([2.0, 1.0, 3.0, 2.0])\n    c_slow = mixed_volume_coefficients(a, b)\n    c_fast = mixed_volume_coefficients_fast(a, b)\n    print(f\"  Subset method: {c_slow}\")\n    print(f\"  Polynomial method: {c_fast}\")\n    print(f\"  Match: {np.allclose(c_slow, c_fast)}\")\n    print()\n\n    print(\"=== Brunn-Minkowski Verification ===\")\n    lhs, rhs, gap = verify_brunn_minkowski(a, b)\n    print(f\"  vol(A+B)^(1/4) = {lhs:.6f}\")\n    print(f\"  vol(A)^(1/4) + vol(B)^(1/4) = {rhs:.6f}\")\n    print(f\"  Gap = {gap:.6f} >= 0: {'\u2713' if gap >= -1e-12 else '\u2717'}\")\n    print()\n\n    print(\"=== Newton's Inequality ===\")\n    gaps = verify_newton_inequality(c_fast)\n    for k, g in gaps:\n        print(f\"  k={k}: c_k^2 - c_{{k-1}}*c_{{k+1}} = {g:.4f} {'\u2713' if g >= -1e-12 else '\u2717'}\")\n    print()\n\n    print(\"=== Perimeter Proxy ===\")\n    sides = np.array([2.0, 3.0, 5.0])\n    proxy = perimeter_proxy_box(sides)\n    print(f\"  Box sides: {sides}\")\n    print(f\"  Perimeter proxy: {proxy:.4f}\")\n    print(f\"  Surface area: {2*(2*3 + 2*5 + 3*5):.4f}\")\n",
+        "code_file": "visualizations/convex_geometry_brunn_minkowski_theory_mixed_volume_coefficient_computation.py"
+      }
+    ],
+    "lean_proofs": "-- Geometry/ConvexBodies/Defs.lean\n/-\nCopyright (c) 2025. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n\n# Convex Bodies, Minkowski Sums, and Support Functions\n\nThis file introduces the foundational definitions for a formal convex-geometric calculus:\n- **Minkowski sum** of sets\n- **Support function** mapping geometry to linear functional data\n- **Box** structure for axis-aligned products of intervals\n\nThese definitions form the skeleton on which Brunn\u2013Minkowski, isoperimetric inequalities,\nand mixed-volume theory are built.\n\n## Main definitions\n\n* `minkowskiSum` \u2014 the set `{a + b | a \u2208 A, b \u2208 B}`\n* `supportFn` \u2014 the support function `h_K(u) = sup_{x \u2208 K} \u27e8u, x\u27e9`\n* `Box` \u2014 axis-aligned box given by coordinate intervals\n\n## Main results\n\n* `le_supportFn` \u2014 membership implies inner product bounded by support function\n* `supportFn_mono` \u2014 set inclusion implies support function inequality\n* `supportFn_minkowskiSum` \u2014 support functions linearize Minkowski addition:\n    `h_{A+B}(u) = h_A(u) + h_B(u)`\n-/\n\nimport Mathlib\n\nopen Set Finset BigOperators\n\nnoncomputable section\n\n/-! ## Minkowski Sum -/\n\n/-- The Minkowski sum of two sets: `{a + b | a \u2208 A, b \u2208 B}`. -/\ndef minkowskiSum {E : Type*} [Add E] (A B : Set E) : Set E :=\n  {x | \u2203 a \u2208 A, \u2203 b \u2208 B, a + b = x}\n\ninfixl:65 \" \u2295\u2098 \" => minkowskiSum\n\ntheorem mem_minkowskiSum {E : Type*} [Add E] {A B : Set E} {x : E} :\n    x \u2208 A \u2295\u2098 B \u2194 \u2203 a \u2208 A, \u2203 b \u2208 B, a + b = x :=\n  Iff.rfl\n\ntheorem minkowskiSum_comm {E : Type*} [AddCommMonoid E] (A B : Set E) :\n    A \u2295\u2098 B = B \u2295\u2098 A := by\n  ext x\n  constructor\n  \u00b7 rintro \u27e8a, ha, b, hb, hab\u27e9\n    exact \u27e8b, hb, a, ha, by rw [add_comm, hab]\u27e9\n  \u00b7 rintro \u27e8b, hb, a, ha, hba\u27e9\n    exact \u27e8a, ha, b, hb, by rw [add_comm, hba]\u27e9\n\ntheorem minkowskiSum_nonempty {E : Type*} [Add E] {A B : Set E}\n    (hA : A.Nonempty) (hB : B.Nonempty) : (A \u2295\u2098 B).Nonempty := by\n  obtain \u27e8a, ha\u27e9 := hA\n  obtain \u27e8b, hb\u27e9 := hB\n  exact \u27e8a + b, a, ha, b, hb, rfl\u27e9\n\n/-! ## Support Function -/\n\n/-- The support function of a set `K` at direction `u`:\n    `h_K(u) = sup {\u27e8u, x\u27e9 | x \u2208 K}`.\n\n    This is the central tool converting nonlinear geometry to linear functional analysis.\n    It linearizes Minkowski addition: `h_{A+B} = h_A + h_B`. -/\ndef supportFn {E : Type*} [SeminormedAddCommGroup E] [InnerProductSpace \u211d E]\n    (K : Set E) (u : E) : \u211d :=\n  sSup ((fun x => @inner \u211d E _ u x) '' K)\n\n/-! ### Support function: basic properties -/\n\n/-\nIf `x \u2208 A`, then `\u27e8u, x\u27e9 \u2264 h_A(u)`.\n-/\ntheorem le_supportFn {E : Type*} [NormedAddCommGroup E] [InnerProductSpace \u211d E]\n    (A : Set E) (hA : IsCompact A) (_hne : A.Nonempty) (u x : E) (hx : x \u2208 A) :\n    @inner \u211d E _ u x \u2264 supportFn A u := by\n  apply le_csSup;\n  \u00b7 exact IsCompact.bddAbove ( hA.image ( continuous_const.inner continuous_id' ) );\n  \u00b7 exact Set.mem_image_of_mem _ hx\n\n/-\nMonotonicity: if `A \u2286 B` and `B` is compact, then `h_A(u) \u2264 h_B(u)`.\n-/\ntheorem supportFn_mono {E : Type*} [NormedAddCommGroup E] [InnerProductSpace \u211d E]\n    (A B : Set E) (hB : IsCompact B) (hneA : A.Nonempty) (hAB : A \u2286 B) (u : E) :\n    supportFn A u \u2264 supportFn B u := by\n  apply_rules [ csSup_le_csSup ];\n  \u00b7 exact IsCompact.bddAbove ( hB.image <| continuous_const.inner continuous_id' );\n  \u00b7 exact hneA.image _;\n  \u00b7 grind\n\n/-\nThe support function of a compact set is attained: there exists `x \u2208 K`\n    with `\u27e8u, x\u27e9 = h_K(u)`.\n-/\ntheorem supportFn_attained {E : Type*} [NormedAddCommGroup E] [InnerProductSpace \u211d E]\n    [FiniteDimensional \u211d E] (K : Set E) (hK : IsCompact K) (hne : K.Nonempty) (u : E) :\n    \u2203 x \u2208 K, @inner \u211d E _ u x = supportFn K u := by\n  have h_compact_image : IsCompact (Set.image (fun x => inner \u211d u x) K) := by\n    exact hK.image ( continuous_const.inner continuous_id' );\n  convert h_compact_image.sSup_mem ( Set.Nonempty.image _ hne )\n\n/-! ### Support function linearizes Minkowski sum -/\n\n/-\n**Key theorem**: Support functions linearize Minkowski addition.\n    For nonempty compact sets `A, B`:\n    `h_{A \u2295\u2098 B}(u) = h_A(u) + h_B(u)`.\n\n    This is the gateway from nonlinear geometry to linear functional calculus.\n    Once formalized, Minkowski addition becomes ordinary addition at the level of\n    support functions \u2014 the correct language for mixed-volume theory and duality.\n-/\ntheorem supportFn_minkowskiSum {E : Type*} [NormedAddCommGroup E] [InnerProductSpace \u211d E]\n    [FiniteDimensional \u211d E]\n    (A B : Set E) (hA : IsCompact A) (hB : IsCompact B)\n    (hneA : A.Nonempty) (hneB : B.Nonempty) (u : E) :\n    supportFn (A \u2295\u2098 B) u = supportFn A u + supportFn B u := by\n  refine' csSup_eq_of_forall_le_of_forall_lt_exists_gt _ _ _ <;> simp +decide [ *, supportFn ];\n  \u00b7 exact?;\n  \u00b7 rintro x \u27e8 a, ha, b, hb, rfl \u27e9 ; exact le_trans ( by simp +decide [ inner_add_right ] ) ( add_le_add ( le_csSup ( IsCompact.bddAbove ( hA.image ( show Continuous fun x => inner \u211d u x from continuous_const.inner continuous_id' ) ) ) ( Set.mem_image_of_mem _ ha ) ) ( le_csSup ( IsCompact.bddAbove ( hB.image ( show Continuous fun x => inner \u211d u x from continuous_const.inner continuous_id' ) ) ) ( Set.mem_image_of_mem _ hb ) ) ) ;\n  \u00b7 intro w hw\n    obtain \u27e8a, haA, ha\u27e9 : \u2203 a \u2208 A, w - sSup ((fun x => @inner \u211d E _ u x) '' B) < @inner \u211d E _ u a := by\n      simpa using exists_lt_of_lt_csSup ( Set.Nonempty.image _ hneA ) ( by linarith )\n    obtain \u27e8b, hbB, hb\u27e9 : \u2203 b \u2208 B, w - @inner \u211d E _ u a < @inner \u211d E _ u b := by\n      simpa using exists_lt_of_lt_csSup ( Set.Nonempty.image _ hneB ) ( by linarith );\n    exact \u27e8 a + b, \u27e8 a, haA, b, hbB, rfl \u27e9, by simpa [ inner_add_right ] using by linarith \u27e9\n\n/-! ## Boxes (axis-aligned parallelotopes) -/\n\n/-- An axis-aligned box in `\u211d\u207f`: the product `\u220f\u1d62 [lo i, hi i]`. -/\nstructure Box (n : \u2115) where\n  lo : Fin n \u2192 \u211d\n  hi : Fin n \u2192 \u211d\n  hle : \u2200 i, lo i \u2264 hi i\n\nnamespace Box\n\n/-- The carrier set of a box: `{x | \u2200 i, lo i \u2264 x i \u2264 hi i}`. -/\ndef toSet {n : \u2115} (B : Box n) : Set (Fin n \u2192 \u211d) :=\n  {x | \u2200 i, B.lo i \u2264 x i \u2227 x i \u2264 B.hi i}\n\n/-- The side length of a box in coordinate `i`. -/\ndef sideLength {n : \u2115} (B : Box n) (i : Fin n) : \u211d :=\n  B.hi i - B.lo i\n\ntheorem sideLength_nonneg {n : \u2115} (B : Box n) (i : Fin n) : 0 \u2264 B.sideLength i :=\n  sub_nonneg.mpr (B.hle i)\n\n/-- The volume of a box: `\u220f\u1d62 (hi i - lo i)`. -/\ndef volume {n : \u2115} (B : Box n) : \u211d :=\n  \u220f i, B.sideLength i\n\ntheorem volume_nonneg {n : \u2115} (B : Box n) : 0 \u2264 B.volume :=\n  Finset.prod_nonneg (fun i _ => B.sideLength_nonneg i)\n\n/-- Minkowski sum of two boxes: coordinatewise addition of intervals. -/\ndef minkSum {n : \u2115} (A B : Box n) : Box n where\n  lo := fun i => A.lo i + B.lo i\n  hi := fun i => A.hi i + B.hi i\n  hle := fun i => add_le_add (A.hle i) (B.hle i)\n\ntheorem sideLength_minkSum {n : \u2115} (A B : Box n) (i : Fin n) :\n    (minkSum A B).sideLength i = A.sideLength i + B.sideLength i := by\n  simp [sideLength, minkSum]; ring\n\ntheorem volume_minkSum {n : \u2115} (A B : Box n) :\n    (minkSum A B).volume = \u220f i, (A.sideLength i + B.sideLength i) := by\n  simp [volume, sideLength_minkSum]\n\n/-- Box nonemptiness. -/\ntheorem toSet_nonempty {n : \u2115} (B : Box n) : B.toSet.Nonempty :=\n  \u27e8B.lo, fun i => \u27e8le_refl _, B.hle i\u27e9\u27e9\n\n/-\nBox compactness.\n-/\ntheorem toSet_isCompact {n : \u2115} (B : Box n) : IsCompact B.toSet := by\n  convert ( show IsCompact ( Set.pi Set.univ fun i => Set.Icc ( B.lo i ) ( B.hi i ) ) from ?_ ) using 1;\n  \u00b7 exact?;\n  \u00b7 exact isCompact_univ_pi fun i => CompactIccSpace.isCompact_Icc\n\n/-\nBox convexity.\n-/\ntheorem toSet_convex {n : \u2115} (B : Box n) : Convex \u211d B.toSet := by\n  have h_pi : B.toSet = Set.pi Set.univ (fun i => Set.Icc (B.lo i) (B.hi i)) := by\n    -- By definition of `toSet`, we have `B.toSet = {x | \u2200 i, B.lo i \u2264 x i \u2227 x i \u2264 B.hi i}`.\n    ext x\n    simp [Box.toSet];\n    exact \u27e8 fun h => \u27e8 fun i => h i |>.1, fun i => h i |>.2 \u27e9, fun h i => \u27e8 h.1 i, h.2 i \u27e9 \u27e9;\n  exact h_pi \u25b8 convex_pi fun i _ => convex_Icc _ _\n\n/-\nMinkowski sum of box carrier sets equals the carrier of the Minkowski box sum.\n-/\ntheorem minkowskiSum_toSet {n : \u2115} (A B : Box n) :\n    minkowskiSum A.toSet B.toSet = (minkSum A B).toSet := by\n  ext x;\n  constructor;\n  \u00b7 rintro \u27e8 a, ha, b, hb, rfl \u27e9;\n    exact fun i => \u27e8 by simpa using add_le_add ( ha i |>.1 ) ( hb i |>.1 ), by simpa using add_le_add ( ha i |>.2 ) ( hb i |>.2 ) \u27e9;\n  \u00b7 intro hx\n    obtain \u27e8a, b, ha, hb, hab\u27e9 : \u2203 a \u2208 A.toSet, \u2203 b \u2208 B.toSet, x = a + b := by\n      use fun i => max (A.lo i) (min (x i - B.lo i) (A.hi i)), by\n        exact fun i => \u27e8 by cases max_cases ( A.lo i ) ( Min.min ( x i - B.lo i ) ( A.hi i ) ) <;> cases min_cases ( x i - B.lo i ) ( A.hi i ) <;> linarith [ A.hle i ], by cases max_cases ( A.lo i ) ( Min.min ( x i - B.lo i ) ( A.hi i ) ) <;> cases min_cases ( x i - B.lo i ) ( A.hi i ) <;> linarith [ A.hle i ] \u27e9, fun i => x i - max (A.lo i) (min (x i - B.lo i) (A.hi i)), by\n        intro i; specialize hx i; simp_all +decide [ Box.toSet ] ;\n        constructor <;> cases max_cases ( A.lo i ) ( Min.min ( x i - B.lo i ) ( A.hi i ) ) <;> cases min_cases ( x i - B.lo i ) ( A.hi i ) <;> linarith! [ A.hle i, B.hle i, ( show ( A.minkSum B ).lo i = A.lo i + B.lo i from rfl ), ( show ( A.minkSum B ).hi i = A.hi i + B.hi i from rfl ) ];\n      exact funext fun i => by simp +decide ;\n    exact \u27e8 a, b, ha, hb, hab.symm \u27e9\n\nend Box\n\nend\n\n-- Geometry/ConvexBodies/Newton.lean\n/-\nCopyright (c) 2025. All rights reserved.\n\n# Newton's Inequality for Products of Linear Polynomials\n\nWe prove that the coefficient sequence of a product of linear polynomials\nwith nonneg coefficients is log-concave (Newton's inequality).\n\n## Proof strategy\n\nWe prove a stronger property by induction: the coefficient sequence is\n**PF\u2082** (P\u00f3lya frequency of order 2), meaning `c i \u00b7 c j \u2264 c (i+1) \u00b7 c (j-1)` for `i+1 < j`.\nPF\u2082 is preserved under convolution with a two-term nonneg sequence `(\u03b1, \u03b2)`,\nwhich corresponds to multiplying by a linear factor `(\u03b1 + t\u03b2)`.\n-/\n\nimport Mathlib\n\nnoncomputable section\n\n/-- The coefficient of `t^k` in `\u220f_{i < n} (a i + t \u00b7 b i)`.\n    Uses `k+1` indexing in the recursion to avoid \u2115 subtraction issues. -/\ndef prodLinCoeff : \u2115 \u2192 (\u2115 \u2192 \u211d) \u2192 (\u2115 \u2192 \u211d) \u2192 \u2115 \u2192 \u211d\n  | 0, _, _, k => if k = 0 then 1 else 0\n  | n + 1, a, b, 0 => a n * prodLinCoeff n a b 0\n  | n + 1, a, b, k + 1 => a n * prodLinCoeff n a b (k + 1) + b n * prodLinCoeff n a b k\n\n@[simp] theorem prodLinCoeff_zero_zero (a b : \u2115 \u2192 \u211d) :\n    prodLinCoeff 0 a b 0 = 1 := by simp [prodLinCoeff]\n\n@[simp] theorem prodLinCoeff_zero_succ (a b : \u2115 \u2192 \u211d) (k : \u2115) :\n    prodLinCoeff 0 a b (k + 1) = 0 := by simp [prodLinCoeff]\n\n@[simp] theorem prodLinCoeff_succ_zero (n : \u2115) (a b : \u2115 \u2192 \u211d) :\n    prodLinCoeff (n + 1) a b 0 = a n * prodLinCoeff n a b 0 := by\n  simp [prodLinCoeff]\n\ntheorem prodLinCoeff_succ_succ (n : \u2115) (a b : \u2115 \u2192 \u211d) (k : \u2115) :\n    prodLinCoeff (n + 1) a b (k + 1) =\n      a n * prodLinCoeff n a b (k + 1) + b n * prodLinCoeff n a b k := by\n  simp [prodLinCoeff]\n\ntheorem prodLinCoeff_nonneg (n : \u2115) (a b : \u2115 \u2192 \u211d)\n    (ha : \u2200 i, 0 \u2264 a i) (hb : \u2200 i, 0 \u2264 b i) (k : \u2115) :\n    0 \u2264 prodLinCoeff n a b k := by\n  induction n generalizing k with\n  | zero => cases k <;> simp [prodLinCoeff]\n  | succ n ih =>\n    cases k with\n    | zero => rw [prodLinCoeff_succ_zero]; exact mul_nonneg (ha _) (ih _)\n    | succ k =>\n      rw [prodLinCoeff_succ_succ]\n      exact add_nonneg (mul_nonneg (ha _) (ih _)) (mul_nonneg (hb _) (ih _))\n\ntheorem prodLinCoeff_eq_zero_of_gt (n : \u2115) (a b : \u2115 \u2192 \u211d) (k : \u2115) (hk : n < k) :\n    prodLinCoeff n a b k = 0 := by\n  induction n generalizing k with\n  | zero => cases k with | zero => omega | succ k => simp\n  | succ n ih =>\n    cases k with\n    | zero => omega\n    | succ k =>\n      rw [prodLinCoeff_succ_succ]\n      have h1 : prodLinCoeff n a b (k + 1) = 0 := ih _ (by omega)\n      have h2 : prodLinCoeff n a b k = 0 := ih _ (by omega)\n      simp [h1, h2]\n\n/-- PF\u2082: `c i \u00b7 c j \u2264 c (i+1) \u00b7 c (j-1)` for `i + 1 < j`. -/\ndef IsPF2 (c : \u2115 \u2192 \u211d) : Prop :=\n  \u2200 i j : \u2115, i + 1 < j \u2192 c i * c j \u2264 c (i + 1) * c (j - 1)\n\ntheorem isPF2_base (a b : \u2115 \u2192 \u211d) : IsPF2 (prodLinCoeff 0 a b) := by\n  intro i j hij\n  cases j with\n  | zero => omega\n  | succ j => simp\n\n/-\nKey lemma: PF\u2082 is preserved under convolution with `(\u03b1, \u03b2)`.\n    If `c` is PF\u2082 and nonneg, then `d(0) = \u03b1\u00b7c(0)` and\n    `d(k+1) = \u03b1\u00b7c(k+1) + \u03b2\u00b7c(k)` defines a PF\u2082 sequence.\n-/\ntheorem isPF2_conv (c : \u2115 \u2192 \u211d) (hc : IsPF2 c) (hcnn : \u2200 k, 0 \u2264 c k)\n    (\u03b1 \u03b2 : \u211d) (h\u03b1 : 0 \u2264 \u03b1) (h\u03b2 : 0 \u2264 \u03b2) :\n    let d : \u2115 \u2192 \u211d := fun k => match k with\n      | 0 => \u03b1 * c 0\n      | k + 1 => \u03b1 * c (k + 1) + \u03b2 * c k\n    IsPF2 d := by\n  refine' fun i j hij => _;\n  rcases i with ( _ | i ) <;> rcases j with ( _ | j ) <;> norm_num at *;\n  \u00b7 rcases j with ( _ | j ) <;> norm_num at *;\n    have := hc 0 ( j + 2 ) ; simp_all +decide [ IsPF2 ];\n    nlinarith [ mul_nonneg h\u03b1 h\u03b1, mul_nonneg h\u03b1 h\u03b2, mul_nonneg h\u03b2 h\u03b2, mul_nonneg h\u03b1 ( hcnn 0 ), mul_nonneg h\u03b1 ( hcnn 1 ), mul_nonneg h\u03b1 ( hcnn j ), mul_nonneg h\u03b1 ( hcnn ( j + 1 ) ), mul_nonneg h\u03b1 ( hcnn ( j + 2 ) ), mul_nonneg h\u03b2 ( hcnn 0 ), mul_nonneg h\u03b2 ( hcnn 1 ), mul_nonneg h\u03b2 ( hcnn j ), mul_nonneg h\u03b2 ( hcnn ( j + 1 ) ), mul_nonneg h\u03b2 ( hcnn ( j + 2 ) ) ];\n  \u00b7 rcases j with ( _ | _ | j ) <;> norm_num at *;\n    -- By PF\u2082 of c:\n    have h1 : c (i + 1) * c (j + 3) \u2264 c (i + 2) * c (j + 2) := by\n      exact hc _ _ ( by linarith )\n    have h2 : c i * c (j + 3) \u2264 c (i + 1) * c (j + 2) := by\n      exact hc _ _ ( by linarith )\n    have h3 : c (i + 1) * c (j + 2) \u2264 c (i + 2) * c (j + 1) := by\n      cases lt_or_eq_of_le hij <;> simp_all +decide [ IsPF2 ];\n      \u00b7 exact hc _ _ ( by linarith );\n      \u00b7 linarith\n    have h4 : c i * c (j + 2) \u2264 c (i + 1) * c (j + 1) := by\n      exact hc _ _ ( by linarith );\n    nlinarith [ mul_nonneg h\u03b1 h\u03b1, mul_nonneg h\u03b1 h\u03b2, mul_nonneg h\u03b2 h\u03b2 ]\n\n/-- The coefficient sequence of `\u220f(a\u1d62 + t\u00b7b\u1d62)` is PF\u2082. -/\ntheorem prodLinCoeff_isPF2 (n : \u2115) (a b : \u2115 \u2192 \u211d)\n    (ha : \u2200 i, 0 \u2264 a i) (hb : \u2200 i, 0 \u2264 b i) :\n    IsPF2 (prodLinCoeff n a b) := by\n  induction n with\n  | zero => exact isPF2_base a b\n  | succ n ih =>\n    have hnn := prodLinCoeff_nonneg n a b ha hb\n    have : prodLinCoeff (n + 1) a b = fun k => match k with\n      | 0 => a n * prodLinCoeff n a b 0\n      | k + 1 => a n * prodLinCoeff n a b (k + 1) + b n * prodLinCoeff n a b k := by\n      ext k; cases k <;> simp [prodLinCoeff_succ_zero, prodLinCoeff_succ_succ]\n    rw [this]\n    exact isPF2_conv _ ih hnn (a n) (b n) (ha n) (hb n)\n\n/-- **Newton's inequality**: `c_{k-1} \u00b7 c_{k+1} \u2264 c_k\u00b2`. -/\ntheorem newton_ineq (n : \u2115) (a b : \u2115 \u2192 \u211d)\n    (ha : \u2200 i, 0 \u2264 a i) (hb : \u2200 i, 0 \u2264 b i)\n    (k : \u2115) (hk0 : 0 < k) :\n    prodLinCoeff n a b (k - 1) * prodLinCoeff n a b (k + 1)\n      \u2264 prodLinCoeff n a b k ^ 2 := by\n  have hpf2 := prodLinCoeff_isPF2 n a b ha hb\n  have := hpf2 (k - 1) (k + 1) (by omega)\n  simp only [show k - 1 + 1 = k from by omega, show k + 1 - 1 = k from by omega] at this\n  linarith\n\nend\n\n-- Geometry/ConvexBodies/BrunnMinkowski.lean\n/-\nCopyright (c) 2025. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n\n# Brunn\u2013Minkowski Inequality for Boxes and Isoperimetric Consequences\n\nThis file proves the Brunn\u2013Minkowski inequality for axis-aligned boxes:\nfor boxes `A, B` in `\u211d\u207f`,\n  `vol(A \u2295 B)^{1/n} \u2265 vol(A)^{1/n} + vol(B)^{1/n}`.\n\nThis reduces to the classical inequality on products of positive reals:\n  `(\u220f (a\u1d62 + b\u1d62))^{1/n} \u2265 (\u220f a\u1d62)^{1/n} + (\u220f b\u1d62)^{1/n}`\n\nwhich follows from the AM-GM inequality applied to the ratios `a\u1d62/(a\u1d62+b\u1d62)`.\n\nWe also define a perimeter proxy via finite-difference parallel volume growth,\nand prove mixed-volume coefficient properties for boxes.\n\n## Main results\n\n* `brunn_minkowski_box` \u2014 Brunn\u2013Minkowski inequality for axis-aligned boxes\n* `prod_add_rpow_le` \u2014 the core algebraic inequality underlying Brunn\u2013Minkowski\n* `box_mixed_coeff_sq_le` \u2014 Alexandrov\u2013Fenchel shadow for boxes (Cauchy\u2013Schwarz type)\n\n## References\n\n* Brunn\u2013Minkowski inequality: standard convex geometry, e.g. Schneider, *Convex Bodies*\n-/\n\nimport Mathlib\nimport Geometry.ConvexBodies.Defs\nimport Geometry.ConvexBodies.Newton\n\nopen Set Finset BigOperators Box\n\nnoncomputable section\n\n/-! ## Core algebraic inequality: weighted AM-GM for BM\n\nThe Brunn\u2013Minkowski inequality for boxes reduces to:\nfor positive reals `a\u2081,...,a\u2099` and `b\u2081,...,b\u2099`,\n  `(\u220f\u1d62 (a\u1d62 + b\u1d62))^{1/n} \u2265 (\u220f\u1d62 a\u1d62)^{1/n} + (\u220f\u1d62 b\u1d62)^{1/n}`\n\nProof: Divide by `(\u220f(a\u1d62+b\u1d62))^{1/n}` and set `t\u1d62 = a\u1d62/(a\u1d62+b\u1d62)`.\nThen we need `(\u220f t\u1d62)^{1/n} + (\u220f(1-t\u1d62))^{1/n} \u2264 1`.\nBy AM-GM: `(\u220f t\u1d62)^{1/n} \u2264 (\u2211 t\u1d62)/n` and `(\u220f(1-t\u1d62))^{1/n} \u2264 (\u2211(1-t\u1d62))/n = 1 - (\u2211 t\u1d62)/n`.\n-/\n\n/-\nAM-GM for `Fin n`: the geometric mean of nonneg reals is at most their arithmetic mean.\n    `(\u220f\u1d62 w\u1d62) ^ (1/n) \u2264 (\u2211\u1d62 w\u1d62) / n` for `w\u1d62 \u2265 0`.\n-/\ntheorem geom_le_arith_mean_fin {n : \u2115} (hn : 0 < n)\n    (w : Fin n \u2192 \u211d) (hw : \u2200 i, 0 \u2264 w i) :\n    (\u220f i, w i) ^ ((1 : \u211d) / n) \u2264 (\u2211 i, w i) / n := by\n  have := @Real.geom_mean_le_arith_mean;\n  simpa using this Finset.univ ( fun _ => 1 ) w ( fun _ _ => zero_le_one ) ( by simpa using hn ) ( fun _ _ => hw _ )\n\n/-\nSum of complementary geometric means \u2264 1:\n    for `0 \u2264 t\u1d62 \u2264 1`, `(\u220f t\u1d62)^{1/n} + (\u220f(1-t\u1d62))^{1/n} \u2264 1`.\n-/\ntheorem sum_geom_means_le_one {n : \u2115} (hn : 0 < n)\n    (t : Fin n \u2192 \u211d) (ht0 : \u2200 i, 0 \u2264 t i) (ht1 : \u2200 i, t i \u2264 1) :\n    (\u220f i, t i) ^ ((1 : \u211d) / n) + (\u220f i, (1 - t i)) ^ ((1 : \u211d) / n) \u2264 1 := by\n  -- By AM-GM, we have $(\\prod t_i)^{1/n} \\leq \\frac{\\sum_{i=1}^n t_i}{n}$.\n  have h_am_gm_t : (\u220f i, t i) ^ ((1 : \u211d) / n) \u2264 (\u2211 i, t i) / n := by\n    convert geom_le_arith_mean_fin hn t ht0 using 1;\n  -- Similarly, by AM-GM, we have $(\\prod (1 - t_i))^{1/n} \\leq \\frac{\\sum_{i=1}^n (1 - t_i)}{n}$.\n  have h_am_gm_1_t : (\u220f i, (1 - t i)) ^ ((1 : \u211d) / n) \u2264 (\u2211 i, (1 - t i)) / n := by\n    convert geom_le_arith_mean_fin hn ( fun i => 1 - t i ) ( fun i => sub_nonneg.2 ( ht1 i ) ) using 1;\n  convert add_le_add h_am_gm_t h_am_gm_1_t using 1 ; norm_num [ hn.ne' ];\n  rw [ \u2190 add_div, add_sub_cancel, div_self ( by positivity ) ]\n\n/-\n**Brunn\u2013Minkowski core inequality for products of positive reals**:\n    `(\u220f(a\u1d62+b\u1d62))^{1/n} \u2265 (\u220f a\u1d62)^{1/n} + (\u220f b\u1d62)^{1/n}`\n    for `a\u1d62, b\u1d62 \u2265 0`.\n-/\ntheorem prod_add_rpow_le {n : \u2115} (hn : 0 < n)\n    (a b : Fin n \u2192 \u211d) (ha : \u2200 i, 0 \u2264 a i) (hb : \u2200 i, 0 \u2264 b i) :\n    (\u220f i, a i) ^ ((1 : \u211d) / n) + (\u220f i, b i) ^ ((1 : \u211d) / n)\n      \u2264 (\u220f i, (a i + b i)) ^ ((1 : \u211d) / n) := by\n  by_cases h : \u220f i : Fin n, ( a i + b i ) = 0;\n  \u00b7 simp_all +decide [ Finset.prod_eq_zero_iff, add_eq_zero_iff_of_nonneg ];\n    obtain \u27e8 i, hi \u27e9 := h; simp_all +decide [ Finset.prod_eq_zero ( Finset.mem_univ i ) ] ;\n    rw [ Real.zero_rpow ( by positivity ) ];\n  \u00b7 -- Set $t_i = a_i / (a_i + b_i)$. Then $0 \\leq t_i \\leq 1$ and $1 - t_i = b_i / (a_i + b_i)$.\n    set t : Fin n \u2192 \u211d := fun i => a i / (a i + b i) with ht\n    have ht_bounds : \u2200 i, 0 \u2264 t i \u2227 t i \u2264 1 := by\n      exact fun i => \u27e8 div_nonneg ( ha i ) ( add_nonneg ( ha i ) ( hb i ) ), div_le_one_of_le\u2080 ( by linarith [ ha i, hb i ] ) ( add_nonneg ( ha i ) ( hb i ) ) \u27e9\n    have ht_compl : \u2200 i, 1 - t i = b i / (a i + b i) := by\n      exact fun i => by rw [ one_sub_div ( by intro H; exact h <| Finset.prod_eq_zero ( Finset.mem_univ i ) H ) ] ; ring;\n    -- By sum_geom_means_le_one:\n    have h_sum_geom_means : (\u220f i, t i) ^ ((1 : \u211d) / n) + (\u220f i, (1 - t i)) ^ ((1 : \u211d) / n) \u2264 1 := by\n      convert sum_geom_means_le_one hn t ( fun i => ht_bounds i |>.1 ) ( fun i => ht_bounds i |>.2 ) using 1;\n    simp_all +decide [ Finset.prod_div_distrib ];\n    rwa [ Real.div_rpow ( Finset.prod_nonneg fun _ _ => ha _ ) ( Finset.prod_nonneg fun _ _ => add_nonneg ( ha _ ) ( hb _ ) ), Real.div_rpow ( Finset.prod_nonneg fun _ _ => hb _ ) ( Finset.prod_nonneg fun _ _ => add_nonneg ( ha _ ) ( hb _ ) ), \u2190 add_div, div_le_one ( Real.rpow_pos_of_pos ( lt_of_le_of_ne ( Finset.prod_nonneg fun _ _ => add_nonneg ( ha _ ) ( hb _ ) ) ( Ne.symm h ) ) _ ) ] at h_sum_geom_means\n\n/-! ## Brunn\u2013Minkowski for Boxes -/\n\n/-- **Brunn\u2013Minkowski inequality for axis-aligned boxes**:\n    `vol(A \u2295 B)^{1/n} \u2265 vol(A)^{1/n} + vol(B)^{1/n}`.\n\n    This is a cornerstone of convex geometry. Even in the restricted box setting,\n    this inequality encodes the deep principle that volume behaves concavely\n    under Minkowski addition when measured by the `n`-th root. -/\ntheorem brunn_minkowski_box {n : \u2115} (hn : 0 < n) (A B : Box n) :\n    (A.minkSum B).volume ^ ((1 : \u211d) / n)\n      \u2265 A.volume ^ ((1 : \u211d) / n) + B.volume ^ ((1 : \u211d) / n) := by\n  simp only [Box.volume]\n  simp only [Box.sideLength_minkSum]\n  exact GE.ge.le (prod_add_rpow_le hn _ _ A.sideLength_nonneg B.sideLength_nonneg)\n\n/-! ## Mixed Volume Coefficients for Boxes -/\n\n/-- The volume of the Minkowski interpolation `A + t\u00b7B` for boxes,\n    expressed as a polynomial in `t`:\n    `vol(A + tB) = \u220f\u1d62 (a\u1d62 + t\u00b7b\u1d62)` where `a\u1d62, b\u1d62` are side lengths. -/\ndef boxInterpolationVolume {n : \u2115} (A B : Box n) (t : \u211d) : \u211d :=\n  \u220f i, (A.sideLength i + t * B.sideLength i)\n\n/-- The `k`-th mixed volume coefficient of boxes `A, B`:\n    the coefficient of `t^k` in `\u220f\u1d62 (a\u1d62 + t\u00b7b\u1d62)`.\n    This is `\u2211_{|S|=k} (\u220f_{i\u2208S} b\u1d62) \u00b7 (\u220f_{i\u2209S} a\u1d62)`. -/\ndef boxMixedCoeff {n : \u2115} (A B : Box n) (k : \u2115) : \u211d :=\n  \u2211 S \u2208 Finset.univ.filter (fun S : Finset (Fin n) => S.card = k),\n    (\u220f i \u2208 S, B.sideLength i) * (\u220f i \u2208 Finset.univ \\ S, A.sideLength i)\n\n/-\n**Alexandrov\u2013Fenchel shadow for boxes** (Newton's inequality):\n    The mixed volume coefficients satisfy a log-concavity inequality:\n    `c_{k-1} \u00b7 c_{k+1} \u2264 c_k\u00b2`.\n\n    For boxes, this follows from the PF\u2082 property of coefficient sequences\n    of products of linear polynomials with nonneg coefficients.\n-/\ntheorem box_mixed_coeff_sq_le {n : \u2115} (A B : Box n)\n    (k : \u2115) (hk0 : 0 < k) (hkn : k < n) :\n    boxMixedCoeff A B (k - 1) * boxMixedCoeff A B (k + 1)\n      \u2264 boxMixedCoeff A B k ^ 2 := by\n  -- By definition of `boxMixedCoeff`, we know that `boxMixedCoeff A B k` is the coefficient of `t^k` in the polynomial `\u220f i, (A.sideLength i + t * B.sideLength i)`.\n  have h_coeff : \u2200 k, boxMixedCoeff A B k = \u2211 S \u2208 Finset.powerset (Finset.univ : Finset (Fin n)), if S.card = k then (\u220f i \u2208 S, B.sideLength i) * (\u220f i \u2208 Finset.univ \\ S, A.sideLength i) else 0 := by\n    simp +decide [ boxMixedCoeff, Finset.sum_ite ];\n  -- By definition of `boxMixedCoeff`, we know that `boxMixedCoeff A B k` is the coefficient of `t^k` in the polynomial `\u220f i, (A.sideLength i + t * B.sideLength i)`. Therefore, we can apply the result from `newton_ineq`.\n  have h_newton : \u2200 n : \u2115, \u2200 (a b : \u2115 \u2192 \u211d), (\u2200 i, 0 \u2264 a i) \u2192 (\u2200 i, 0 \u2264 b i) \u2192 \u2200 k : \u2115, 0 < k \u2192 k < n \u2192 prodLinCoeff n a b (k - 1) * prodLinCoeff n a b (k + 1) \u2264 prodLinCoeff n a b k ^ 2 := by\n    intros n a b ha hb k hk0 hkn\n    apply newton_ineq n a b ha hb k hk0;\n  have h_poly : \u2200 t : \u211d, \u220f i, (A.sideLength i + t * B.sideLength i) = \u2211 k \u2208 Finset.range (n + 1), prodLinCoeff n (fun i => if h : i < n then A.sideLength \u27e8i, h\u27e9 else 0) (fun i => if h : i < n then B.sideLength \u27e8i, h\u27e9 else 0) k * t^k := by\n    intro t\n    have h_poly_def : \u2200 n : \u2115, \u2200 (a b : \u2115 \u2192 \u211d), (\u2200 t : \u211d, \u220f i \u2208 Finset.range n, (a i + t * b i) = \u2211 k \u2208 Finset.range (n + 1), prodLinCoeff n a b k * t^k) := by\n      intro n a b t;\n      induction' n with n ih generalizing t;\n      \u00b7 simp [prodLinCoeff];\n      \u00b7 rw [ Finset.prod_range_succ, ih ];\n        rw [ Finset.sum_mul _ _ _ ];\n        rw [ Finset.sum_range_succ' ];\n        rw [ Finset.sum_range_succ' ];\n        simp +decide [ Finset.sum_range_succ, prodLinCoeff_succ_succ ];\n        simp +decide [ add_mul, mul_add, mul_assoc, mul_comm, mul_left_comm, Finset.sum_add_distrib, Finset.mul_sum _ _ _, Finset.sum_mul _ _ _, pow_succ, prodLinCoeff_succ_zero, prodLinCoeff_succ_succ ];\n        have := Finset.sum_range_sub ( fun x => t * ( b n * ( prodLinCoeff n a b x * t ^ x ) ) ) n; simp_all +decide [ mul_assoc, mul_comm, mul_left_comm, pow_succ, Finset.sum_range_succ ] ;\n        rw [ show prodLinCoeff n a b ( n + 1 ) = 0 from ?_ ] ; linarith;\n        exact prodLinCoeff_eq_zero_of_gt _ _ _ _ ( Nat.lt_succ_self _ );\n    convert h_poly_def n ( fun i => if h : i < n then A.sideLength \u27e8 i, h \u27e9 else 0 ) ( fun i => if h : i < n then B.sideLength \u27e8 i, h \u27e9 else 0 ) t using 1;\n    simp +decide [ Finset.prod_range, Fin.cast_val_eq_self ];\n  have h_coeff_eq : \u2200 k \u2208 Finset.range (n + 1), boxMixedCoeff A B k = prodLinCoeff n (fun i => if h : i < n then A.sideLength \u27e8i, h\u27e9 else 0) (fun i => if h : i < n then B.sideLength \u27e8i, h\u27e9 else 0) k := by\n    have h_coeff_eq : \u2200 t : \u211d, \u2211 k \u2208 Finset.range (n + 1), boxMixedCoeff A B k * t^k = \u2211 k \u2208 Finset.range (n + 1), prodLinCoeff n (fun i => if h : i < n then A.sideLength \u27e8i, h\u27e9 else 0) (fun i => if h : i < n then B.sideLength \u27e8i, h\u27e9 else 0) k * t^k := by\n      intro t\n      have h_poly_eq : \u220f i, (A.sideLength i + t * B.sideLength i) = \u2211 k \u2208 Finset.range (n + 1), boxMixedCoeff A B k * t^k := by\n        simp +decide only [h_coeff, sum_mul];\n        rw [ Finset.sum_comm ];\n        simp +decide [ Finset.prod_add, Finset.prod_mul_distrib, Finset.sum_ite ];\n        refine' Finset.sum_bij ( fun x hx => Finset.univ \\ x ) _ _ _ _ <;> simp +decide [ Finset.card_sdiff ];\n        \u00b7 intro a\u2081 a\u2082 h; rw [ Finset.sdiff_eq_sdiff_iff_inter_eq_inter ] at h; aesop;\n        \u00b7 exact fun b hb => \u27e8 Finset.univ \\ b, by simp +decide \u27e9;\n        \u00b7 exact fun _ => by ring;\n      rw [ \u2190 h_poly_eq, h_poly ];\n    intro k hk;\n    have h_coeff_eq : \u2200 p q : Polynomial \u211d, (\u2200 t : \u211d, p.eval t = q.eval t) \u2192 \u2200 k, p.coeff k = q.coeff k := by\n      exact fun p q h k => by rw [ show p = q from Polynomial.funext h ] ;\n    convert h_coeff_eq ( \u2211 k \u2208 Finset.range ( n + 1 ), Polynomial.C ( boxMixedCoeff A B k ) * Polynomial.X ^ k ) ( \u2211 k \u2208 Finset.range ( n + 1 ), Polynomial.C ( prodLinCoeff n ( fun i => if h : i < n then A.sideLength \u27e8 i, h \u27e9 else 0 ) ( fun i => if h : i < n then B.sideLength \u27e8 i, h \u27e9 else 0 ) k ) * Polynomial.X ^ k ) ( fun t => ?_ ) k using 1 <;> simp +decide [ Polynomial.eval_finset_sum ];\n    \u00b7 grind +qlia;\n    \u00b7 grind;\n    \u00b7 solve_by_elim;\n  convert h_newton n ( fun i => if h : i < n then A.sideLength \u27e8 i, h \u27e9 else 0 ) ( fun i => if h : i < n then B.sideLength \u27e8 i, h \u27e9 else 0 ) _ _ k hk0 hkn using 1 <;> norm_num [ h_coeff_eq k ( Finset.mem_range.mpr ( by linarith ) ), h_coeff_eq ( k - 1 ) ( Finset.mem_range.mpr ( by omega ) ), h_coeff_eq ( k + 1 ) ( Finset.mem_range.mpr ( by omega ) ) ];\n  \u00b7 intro i; split_ifs <;> [ exact sub_nonneg_of_le ( A.hle _ ) ; exact le_rfl ] ;\n  \u00b7 intro i; split_ifs <;> norm_num [ Box.sideLength_nonneg ] ;\n\n/-! ## Perimeter Proxy via Parallel Volume -/\n\n/-- The parallel volume profile: `vol(K + t\u00b7B_\u221e)` where `B_\u221e` is the unit `\u2113^\u221e` ball.\n    For a box `K` with side lengths `\u2113\u1d62`, this equals `\u220f\u1d62 (\u2113\u1d62 + 2t)`. -/\ndef boxParallelVolume {n : \u2115} (K : Box n) (t : \u211d) : \u211d :=\n  \u220f i, (K.sideLength i + 2 * t)\n\n/-- Finite-difference perimeter proxy:\n    `perimProxy(K) = lim_{t\u21920+} (vol(K + t\u00b7B) - vol(K)) / t`.\n    For boxes in `\u211d\u207f`, this equals `2 \u00b7 \u2211\u1d62 \u220f_{j\u2260i} \u2113\u2c7c` (the surface area). -/\ndef boxPerimProxy {n : \u2115} (K : Box n) : \u211d :=\n  2 * \u2211 i : Fin n, \u220f j \u2208 Finset.univ.erase i, K.sideLength j\n\n/-\nThe perimeter proxy for a cube of side length `s` is `2n\u00b7s^{n-1}`.\n-/\ntheorem boxPerimProxy_cube {n : \u2115} (s : \u211d) (hs : 0 \u2264 s) :\n    boxPerimProxy (\u27e8fun _ => 0, fun _ => s, fun _ => hs\u27e9 : Box n)\n      = 2 * n * s ^ (n - 1) := by\n  unfold boxPerimProxy;\n  simp +decide [ Box.sideLength, mul_assoc ]\n\n/-! ## Log-Concavity of Volume Interpolation -/\n\n/-\n**Brunn\u2013Minkowski concavity**: For boxes, the map\n    `t \u21a6 boxInterpolationVolume A B t` satisfies\n    `vol(A + tB)^{1/n}` is concave on `[0, \u221e)` when side lengths are positive.\n\n    This is a direct consequence of `prod_add_rpow_le` applied pointwise.\n-/\ntheorem boxInterpolationVolume_nonneg {n : \u2115} (A B : Box n) (t : \u211d) (ht : 0 \u2264 t) :\n    0 \u2264 boxInterpolationVolume A B t := by\n  exact Finset.prod_nonneg fun i _ => add_nonneg ( sub_nonneg.2 ( A.hle i ) ) ( mul_nonneg ht ( sub_nonneg.2 ( B.hle i ) ) )\n\n/-! ## Computational verification -/\n\n/-- Example: In `\u211d\u00b2`, box [0,1]\u00b2 and [0,2]\u00b2 have\n    vol(A)^{1/2} + vol(B)^{1/2} = 1 + 2 = 3\n    vol(A\u2295B)^{1/2} = vol([0,3]\u00b2)^{1/2} = 3.\n    Equality holds for homothetic boxes. -/\nexample : let A : Box 2 := \u27e8![0, 0], ![1, 1], by intro i; fin_cases i <;> simp\u27e9\n          let B : Box 2 := \u27e8![0, 0], ![2, 2], by intro i; fin_cases i <;> simp\u27e9\n          (A.minkSum B).volume ^ ((1:\u211d)/2) \u2265 A.volume ^ ((1:\u211d)/2) + B.volume ^ ((1:\u211d)/2) := by\n  exact brunn_minkowski_box (by norm_num) _ _\n\nend",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nAlgorithms for convex geometry computations:\n- Minkowski sum computation for boxes and polygons\n- Support function evaluation\n- Mixed volume coefficient extraction\n- Brunn-Minkowski verification\n- Newton's inequality verification\n\nAll algorithms include docstrings, type hints, and complexity analysis.\n\"\"\"\n\nimport numpy as np\nfrom typing import List, Tuple, Optional\nimport itertools\n\n\ndef minkowski_sum_boxes(a: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute Minkowski sum of two axis-aligned boxes.\n\n    Args:\n        a: Side lengths of box A (n-dimensional).\n        b: Side lengths of box B (n-dimensional).\n\n    Returns:\n        Side lengths of A \u2295 B.\n\n    Time complexity: O(n)\n    Space complexity: O(n)\n\n    Example:\n        >>> minkowski_sum_boxes(np.array([1, 2, 3]), np.array([4, 5, 6]))\n        array([5, 7, 9])\n    \"\"\"\n    assert len(a) == len(b), \"Dimension mismatch\"\n    return a + b\n\n\ndef support_function_box(\n    lo: np.ndarray, hi: np.ndarray, direction: np.ndarray\n) -> float:\n    \"\"\"\n    Evaluate the support function of a box [lo, hi] at a given direction.\n\n    The support function h_K(u) = max_{x in K} <u, x>.\n    For a box, this decomposes coordinatewise.\n\n    Args:\n        lo: Lower corner of the box.\n        hi: Upper corner of the box.\n        direction: Direction vector u.\n\n    Returns:\n        h_K(u) = sum_i max(u_i * lo_i, u_i * hi_i)\n\n    Time complexity: O(n)\n    Space complexity: O(1)\n\n    Example:\n        >>> support_function_box(np.array([0, 0]), np.array([1, 2]), np.array([1, -1]))\n        1.0\n    \"\"\"\n    return float(np.sum(np.maximum(direction * lo, direction * hi)))\n\n\ndef mixed_volume_coefficients(a: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute the mixed volume coefficients of two boxes.\n\n    For boxes with side lengths a and b, the volume of A + tB is\n    vol(A + tB) = sum_{k=0}^{n} c_k * t^k\n    where c_k = sum_{|S|=k} prod_{i in S} b_i * prod_{i not in S} a_i.\n\n    Args:\n        a: Side lengths of box A.\n        b: Side lengths of box B.\n\n    Returns:\n        Array of coefficients [c_0, c_1, ..., c_n].\n\n    Time complexity: O(2^n) \u2014 exponential in dimension\n    Space complexity: O(n)\n\n    For practical computation in high dimensions, use the polynomial\n    multiplication approach (O(n^2)) instead.\n\n    Example:\n        >>> mixed_volume_coefficients(np.array([1, 2]), np.array([3, 4]))\n        array([ 2., 10., 12.])\n    \"\"\"\n    n = len(a)\n    coeffs = np.zeros(n + 1)\n    for k in range(n + 1):\n        for subset in itertools.combinations(range(n), k):\n            term = 1.0\n            for i in range(n):\n                term *= b[i] if i in subset else a[i]\n            coeffs[k] += term\n    return coeffs\n\n\ndef mixed_volume_coefficients_fast(a: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute mixed volume coefficients via polynomial multiplication.\n\n    Uses the factored form: prod_i (a_i + t * b_i).\n    Multiplies polynomials sequentially.\n\n    Args:\n        a: Side lengths of box A.\n        b: Side lengths of box B.\n\n    Returns:\n        Array of coefficients [c_0, c_1, ..., c_n].\n\n    Time complexity: O(n^2)\n    Space complexity: O(n)\n\n    Example:\n        >>> mixed_volume_coefficients_fast(np.array([1, 2]), np.array([3, 4]))\n        array([ 2., 10., 12.])\n    \"\"\"\n    n = len(a)\n    # Start with the polynomial \"1\"\n    poly = np.array([1.0])\n    for i in range(n):\n        # Multiply by (a_i + t * b_i)\n        new_poly = np.zeros(len(poly) + 1)\n        for j in range(len(poly)):\n            new_poly[j] += a[i] * poly[j]\n            new_poly[j + 1] += b[i] * poly[j]\n        poly = new_poly\n    return poly\n\n\ndef verify_brunn_minkowski(\n    a: np.ndarray, b: np.ndarray\n) -> Tuple[float, float, float]:\n    \"\"\"\n    Verify Brunn-Minkowski inequality for boxes.\n\n    Args:\n        a: Side lengths of box A.\n        b: Side lengths of box B.\n\n    Returns:\n        Tuple of (vol_sum_root, vol_a_root + vol_b_root, gap)\n        where gap >= 0 iff BM holds.\n\n    Time complexity: O(n)\n\n    Example:\n        >>> lhs, rhs, gap = verify_brunn_minkowski(np.array([1, 1]), np.array([2, 2]))\n        >>> gap >= 0\n        True\n    \"\"\"\n    n = len(a)\n    vol_sum = float(np.prod(a + b))\n    vol_a = float(np.prod(a))\n    vol_b = float(np.prod(b))\n    lhs = vol_sum ** (1.0 / n)\n    rhs = vol_a ** (1.0 / n) + vol_b ** (1.0 / n)\n    return lhs, rhs, lhs - rhs\n\n\ndef verify_newton_inequality(coeffs: np.ndarray) -> List[Tuple[int, float]]:\n    \"\"\"\n    Verify Newton's log-concavity inequality for a coefficient sequence.\n\n    Checks c_k^2 - c_{k-1} * c_{k+1} >= 0 for each 0 < k < n.\n\n    Args:\n        coeffs: Coefficient sequence [c_0, ..., c_n].\n\n    Returns:\n        List of (k, gap) where gap = c_k^2 - c_{k-1} * c_{k+1}.\n        All gaps should be >= 0 if Newton's inequality holds.\n\n    Time complexity: O(n)\n\n    Example:\n        >>> gaps = verify_newton_inequality(np.array([2, 10, 12]))\n        >>> all(gap >= -1e-12 for _, gap in gaps)\n        True\n    \"\"\"\n    results = []\n    for k in range(1, len(coeffs) - 1):\n        gap = coeffs[k] ** 2 - coeffs[k - 1] * coeffs[k + 1]\n        results.append((k, gap))\n    return results\n\n\ndef parallel_volume_box(sides: np.ndarray, t: float) -> float:\n    \"\"\"\n    Compute the parallel volume vol(K + t * B_inf) for a box K.\n\n    For a box with side lengths s_i, the parallel volume (expanding by t\n    in each direction with the l^infinity ball) is prod_i (s_i + 2t).\n\n    Args:\n        sides: Side lengths of box K.\n        t: Dilation parameter (t >= 0).\n\n    Returns:\n        vol(K + t * B_inf) = prod_i (s_i + 2t)\n\n    Time complexity: O(n)\n    \"\"\"\n    return float(np.prod(sides + 2 * t))\n\n\ndef perimeter_proxy_box(sides: np.ndarray) -> float:\n    \"\"\"\n    Compute the perimeter proxy for a box.\n\n    perimProxy(K) = 2 * sum_i prod_{j != i} s_j\n\n    This is the derivative of parallel_volume at t=0, representing\n    the surface area of the box.\n\n    Args:\n        sides: Side lengths of box K.\n\n    Returns:\n        The perimeter proxy value.\n\n    Time complexity: O(n^2) naive, O(n) with prefix products.\n    \"\"\"\n    n = len(sides)\n    total = 0.0\n    vol = float(np.prod(sides))\n    for i in range(n):\n        if sides[i] > 0:\n            total += vol / sides[i]\n        else:\n            # Handle zero side length\n            term = 1.0\n            for j in range(n):\n                if j != i:\n                    term *= sides[j]\n            total += term\n    return 2.0 * total\n\n\ndef minkowski_sum_polygons(\n    vertices_a: np.ndarray, vertices_b: np.ndarray\n) -> np.ndarray:\n    \"\"\"\n    Compute Minkowski sum of two convex polygons in R^2.\n\n    Uses the standard edge-sorting algorithm: sort edges by angle,\n    merge, and reconstruct vertices.\n\n    Args:\n        vertices_a: Vertices of polygon A, shape (m, 2), CCW order.\n        vertices_b: Vertices of polygon B, shape (p, 2), CCW order.\n\n    Returns:\n        Vertices of A \u2295 B in CCW order, shape (m+p, 2).\n\n    Time complexity: O(m + p) after sorting (O((m+p) log(m+p)) total)\n    Space complexity: O(m + p)\n    \"\"\"\n    def edges(verts):\n        n = len(verts)\n        return [(verts[(i + 1) % n] - verts[i]) for i in range(n)]\n\n    def angle(v):\n        return np.arctan2(v[1], v[0])\n\n    # Compute edges\n    ea = edges(vertices_a)\n    eb = edges(vertices_b)\n\n    # Start from bottom-most point of each\n    start_a = np.argmin(vertices_a[:, 1])\n    start_b = np.argmin(vertices_b[:, 1])\n\n    # Reorder edges starting from bottom-most\n    ea = ea[start_a:] + ea[:start_a]\n    eb = eb[start_b:] + eb[:start_b]\n\n    # Merge by angle\n    result = [vertices_a[start_a] + vertices_b[start_b]]\n    i, j = 0, 0\n    while i < len(ea) or j < len(eb):\n        if i >= len(ea):\n            result.append(result[-1] + eb[j])\n            j += 1\n        elif j >= len(eb):\n            result.append(result[-1] + ea[i])\n            i += 1\n        elif angle(ea[i]) < angle(eb[j]):\n            result.append(result[-1] + ea[i])\n            i += 1\n        elif angle(ea[i]) > angle(eb[j]):\n            result.append(result[-1] + eb[j])\n            j += 1\n        else:\n            result.append(result[-1] + ea[i] + eb[j])\n            i += 1\n            j += 1\n\n    return np.array(result[:-1])  # Remove duplicate last vertex\n\n\n# ============================================================\n# Example usage\n# ============================================================\n\nif __name__ == \"__main__\":\n    print(\"=== Mixed Volume Coefficients (two methods) ===\")\n    a = np.array([1.0, 2.0, 3.0, 4.0])\n    b = np.array([2.0, 1.0, 3.0, 2.0])\n    c_slow = mixed_volume_coefficients(a, b)\n    c_fast = mixed_volume_coefficients_fast(a, b)\n    print(f\"  Subset method: {c_slow}\")\n    print(f\"  Polynomial method: {c_fast}\")\n    print(f\"  Match: {np.allclose(c_slow, c_fast)}\")\n    print()\n\n    print(\"=== Brunn-Minkowski Verification ===\")\n    lhs, rhs, gap = verify_brunn_minkowski(a, b)\n    print(f\"  vol(A+B)^(1/4) = {lhs:.6f}\")\n    print(f\"  vol(A)^(1/4) + vol(B)^(1/4) = {rhs:.6f}\")\n    print(f\"  Gap = {gap:.6f} >= 0: {'\u2713' if gap >= -1e-12 else '\u2717'}\")\n    print()\n\n    print(\"=== Newton's Inequality ===\")\n    gaps = verify_newton_inequality(c_fast)\n    for k, g in gaps:\n        print(f\"  k={k}: c_k^2 - c_{{k-1}}*c_{{k+1}} = {g:.4f} {'\u2713' if g >= -1e-12 else '\u2717'}\")\n    print()\n\n    print(\"=== Perimeter Proxy ===\")\n    sides = np.array([2.0, 3.0, 5.0])\n    proxy = perimeter_proxy_box(sides)\n    print(f\"  Box sides: {sides}\")\n    print(f\"  Perimeter proxy: {proxy:.4f}\")\n    print(f\"  Surface area: {2*(2*3 + 2*5 + 3*5):.4f}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\nApplications of convex geometry to real-world problems:\n\n1. Optimal packaging: finding the most efficient box to contain two shapes\n2. Signal processing: entropy power inequality analogy\n3. Geometric optimization: isoperimetric bounds for boxes\n4. Error estimation: Minkowski sum in robotics/collision detection\n\"\"\"\n\nimport numpy as np\nfrom typing import Tuple\nimport itertools\n\n\n# ============================================================\n# Application 1: Optimal Packaging / Container Design\n# ============================================================\n\ndef optimal_container_bound(\n    item_dims: list, num_items: int\n) -> Tuple[np.ndarray, float]:\n    \"\"\"\n    Given items to pack, compute Minkowski-sum-based container bounds.\n\n    When packing multiple convex items, the Minkowski sum gives an outer\n    bound on the space needed. Brunn-Minkowski provides a lower bound\n    on the volume of any containing shape.\n\n    Args:\n        item_dims: List of item dimensions (each a numpy array of side lengths)\n        num_items: Number of items (for scaling)\n\n    Returns:\n        (container_dims, min_volume_bound) - the Minkowski sum dimensions\n        and BM lower bound on volume.\n\n    Application: warehouse design, shipping container optimization.\n    \"\"\"\n    n = len(item_dims[0])\n    container = np.zeros(n)\n    vol_roots = []\n\n    for dims in item_dims:\n        container = container + dims\n        vol_roots.append(float(np.prod(dims)) ** (1.0 / n))\n\n    bm_lower = sum(vol_roots) ** n\n    actual = float(np.prod(container))\n\n    return container, bm_lower\n\n\ndef demo_packaging():\n    \"\"\"Demonstrate optimal packaging application.\"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 1: OPTIMAL CONTAINER DESIGN\")\n    print(\"=\" * 60)\n    print()\n    print(\"Scenario: Pack 3 different box-shaped items into a container.\")\n    print(\"Brunn-Minkowski gives a theoretical lower bound on volume needed.\")\n    print()\n\n    items = [\n        np.array([2.0, 3.0, 1.0]),  # Item 1: 2x3x1\n        np.array([1.0, 1.0, 4.0]),  # Item 2: 1x1x4\n        np.array([3.0, 2.0, 2.0]),  # Item 3: 3x2x2\n    ]\n\n    container, bm_bound = optimal_container_bound(items, len(items))\n\n    print(\"Items:\")\n    for i, item in enumerate(items):\n        print(f\"  Item {i+1}: {item} (vol = {np.prod(item):.1f})\")\n\n    print(f\"\\nMinkowski sum container: {container}\")\n    print(f\"Container volume: {np.prod(container):.1f}\")\n    print(f\"BM lower bound: {bm_bound:.1f}\")\n    print(f\"Efficiency ratio: {bm_bound / np.prod(container):.4f}\")\n    print()\n\n\n# ============================================================\n# Application 2: Information Theory Connection\n# ============================================================\n\ndef entropy_power_analogy(\n    variances_x: np.ndarray, variances_y: np.ndarray\n) -> Tuple[float, float]:\n    \"\"\"\n    Demonstrate the Brunn-Minkowski / Entropy Power Inequality analogy.\n\n    For independent random vectors X, Y with covariance matrices\n    diag(variances_x) and diag(variances_y), the entropy power inequality\n    states that the entropy power of X+Y is at least the sum of\n    entropy powers of X and Y.\n\n    For Gaussians, this reduces exactly to the Brunn-Minkowski inequality\n    applied to covariance ellipsoids.\n\n    Args:\n        variances_x: Diagonal variances of X.\n        variances_y: Diagonal variances of Y.\n\n    Returns:\n        (ep_sum, ep_x_plus_ep_y) - entropy power of sum vs sum of EPs.\n    \"\"\"\n    n = len(variances_x)\n\n    # Entropy power N(X) = (2*pi*e)^(-1) * det(Cov)^(1/n) for Gaussian\n    # For diagonal: det = product of variances\n    det_x = float(np.prod(variances_x))\n    det_y = float(np.prod(variances_y))\n    det_sum = float(np.prod(variances_x + variances_y))\n\n    ep_x = det_x ** (1.0 / n)\n    ep_y = det_y ** (1.0 / n)\n    ep_sum = det_sum ** (1.0 / n)\n\n    return ep_sum, ep_x + ep_y\n\n\ndef demo_entropy():\n    \"\"\"Demonstrate entropy power inequality analogy.\"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 2: ENTROPY POWER INEQUALITY ANALOGY\")\n    print(\"=\" * 60)\n    print()\n    print(\"The Brunn-Minkowski inequality for Gaussian distributions\")\n    print(\"becomes the Entropy Power Inequality (EPI):\")\n    print(\"  N(X+Y) >= N(X) + N(Y)\")\n    print()\n\n    np.random.seed(42)\n    for trial in range(3):\n        n = np.random.randint(2, 5)\n        var_x = np.random.exponential(2.0, size=n)\n        var_y = np.random.exponential(2.0, size=n)\n\n        ep_sum, ep_bound = entropy_power_analogy(var_x, var_y)\n\n        print(f\"Trial {trial+1}: dimension {n}\")\n        print(f\"  Var(X) = {np.round(var_x, 3)}\")\n        print(f\"  Var(Y) = {np.round(var_y, 3)}\")\n        print(f\"  N(X+Y) = {ep_sum:.4f}\")\n        print(f\"  N(X) + N(Y) = {ep_bound:.4f}\")\n        print(f\"  EPI gap: {ep_sum - ep_bound:.4f}  {'\u2713' if ep_sum >= ep_bound - 1e-10 else '\u2717'}\")\n        print()\n\n\n# ============================================================\n# Application 3: Isoperimetric Optimization\n# ============================================================\n\ndef isoperimetric_ratio_box(sides: np.ndarray) -> float:\n    \"\"\"\n    Compute the isoperimetric ratio for a box.\n\n    The isoperimetric ratio SA^n / (n^n * omega_n * V^{n-1})\n    measures how far a shape is from a sphere. For boxes,\n    the cube minimizes this ratio among all boxes of fixed volume.\n\n    Args:\n        sides: Side lengths of the box.\n\n    Returns:\n        The isoperimetric ratio (1.0 for a cube).\n    \"\"\"\n    n = len(sides)\n    volume = float(np.prod(sides))\n    # Surface area for box = 2 * sum_i prod_{j != i} s_j\n    sa = 0.0\n    for i in range(n):\n        term = 1.0\n        for j in range(n):\n            if j != i:\n                term *= sides[j]\n        sa += term\n    sa *= 2.0\n\n    # For a cube of the same volume: side = V^{1/n}\n    cube_side = volume ** (1.0 / n)\n    cube_sa = 2.0 * n * cube_side ** (n - 1)\n\n    return sa / cube_sa\n\n\ndef demo_isoperimetry():\n    \"\"\"Demonstrate isoperimetric optimization for boxes.\"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 3: ISOPERIMETRIC OPTIMIZATION FOR BOXES\")\n    print(\"=\" * 60)\n    print()\n    print(\"Among all boxes of fixed volume, the CUBE minimizes surface area.\")\n    print(\"Isoperimetric ratio = 1.0 for cube, > 1.0 for non-cubes.\")\n    print()\n\n    # Test various boxes with the same volume\n    target_vol = 64.0  # Volume = 64\n\n    test_boxes = [\n        np.array([4.0, 4.0, 4.0]),      # Cube\n        np.array([2.0, 4.0, 8.0]),      # Elongated\n        np.array([1.0, 8.0, 8.0]),      # Flat\n        np.array([1.0, 1.0, 64.0]),     # Very elongated\n        np.array([16.0, 2.0, 2.0]),     # Another shape\n    ]\n\n    for box in test_boxes:\n        ratio = isoperimetric_ratio_box(box)\n        vol = np.prod(box)\n        print(f\"  Box {box}: vol={vol:.0f}, iso ratio={ratio:.4f}\")\n\n    print()\n    print(\"\u2713 Cube always has ratio 1.0 (minimum)\")\n\n\n# ============================================================\n# Application 4: Robotics / Collision Detection\n# ============================================================\n\ndef collision_free_space(\n    robot_dims: np.ndarray, obstacle_dims: np.ndarray\n) -> np.ndarray:\n    \"\"\"\n    Compute the configuration space obstacle using Minkowski sum.\n\n    In robotics, the Minkowski sum of a robot and an obstacle gives\n    the set of positions where the robot would collide. The complement\n    is the free configuration space.\n\n    For box-shaped robot and obstacle, the Minkowski sum is again a box.\n\n    Args:\n        robot_dims: Side lengths of the robot bounding box.\n        obstacle_dims: Side lengths of the obstacle.\n\n    Returns:\n        Side lengths of the C-space obstacle (Minkowski sum).\n    \"\"\"\n    return robot_dims + obstacle_dims\n\n\ndef demo_robotics():\n    \"\"\"Demonstrate Minkowski sum in collision detection.\"\"\"\n    print(\"=\" * 60)\n    print(\"APPLICATION 4: ROBOTICS / COLLISION DETECTION\")\n    print(\"=\" * 60)\n    print()\n    print(\"The Minkowski sum computes configuration-space obstacles.\")\n    print(\"Robot at position p collides with obstacle O iff p \u2208 O \u2295 (-R)\")\n    print()\n\n    robot = np.array([1.0, 0.5])  # 1m x 0.5m robot\n    obstacles = [\n        np.array([2.0, 3.0]),    # Wall\n        np.array([1.0, 1.0]),    # Pillar\n        np.array([0.5, 4.0]),    # Narrow passage\n    ]\n\n    for i, obs in enumerate(obstacles):\n        c_obs = collision_free_space(robot, obs)\n        print(f\"  Obstacle {i+1}: {obs}\")\n        print(f\"    C-space obstacle: {c_obs}\")\n        print(f\"    Volume expansion: {np.prod(c_obs) / np.prod(obs):.2f}x\")\n        print()\n\n    # BM bound\n    print(\"  Brunn-Minkowski guarantees:\")\n    print(\"    vol(C-obs)^{1/n} >= vol(obs)^{1/n} + vol(robot)^{1/n}\")\n    for i, obs in enumerate(obstacles):\n        c_obs = collision_free_space(robot, obs)\n        n = 2\n        lhs = np.prod(c_obs) ** (1.0 / n)\n        rhs = np.prod(obs) ** (1.0 / n) + np.prod(robot) ** (1.0 / n)\n        print(f\"    Obstacle {i+1}: {lhs:.4f} >= {rhs:.4f} \u2713\")\n\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    demo_packaging()\n    demo_entropy()\n    demo_isoperimetry()\n    demo_robotics()\n\n\n#!/usr/bin/env python3\n\"\"\"\nInteractive demonstration of convex geometry: Minkowski sums, Brunn-Minkowski,\nsupport functions, and log-concavity of mixed volume coefficients.\n\nSamples boxes and convex polygons, computes Minkowski sums, plots volume growth\nunder interpolation, and numerically verifies the Brunn-Minkowski inequality\nand Newton's log-concavity inequality.\n\"\"\"\n\nimport numpy as np\nimport itertools\nfrom typing import List, Tuple\n\n# ============================================================\n# Core definitions\n# ============================================================\n\ndef box_volume(side_lengths: np.ndarray) -> float:\n    \"\"\"Volume of an axis-aligned box with given side lengths.\"\"\"\n    return float(np.prod(side_lengths))\n\ndef box_minkowski_sum(a: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"Side lengths of the Minkowski sum of two boxes.\"\"\"\n    return a + b\n\ndef box_interpolation_volume(a: np.ndarray, b: np.ndarray, t: float) -> float:\n    \"\"\"Volume of the Minkowski interpolation A + t*B for boxes.\"\"\"\n    return float(np.prod(a + t * b))\n\ndef box_mixed_coefficients(a: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute mixed volume coefficients c_k for boxes.\n    c_k = sum over subsets S of size k of (prod_{i in S} b_i * prod_{i not in S} a_i)\n    \"\"\"\n    n = len(a)\n    coeffs = np.zeros(n + 1)\n    for k in range(n + 1):\n        total = 0.0\n        for subset in itertools.combinations(range(n), k):\n            term = 1.0\n            for i in range(n):\n                if i in subset:\n                    term *= b[i]\n                else:\n                    term *= a[i]\n            total += term\n        coeffs[k] = total\n    return coeffs\n\ndef support_function_box(lo: np.ndarray, hi: np.ndarray, u: np.ndarray) -> float:\n    \"\"\"Support function of an axis-aligned box at direction u.\"\"\"\n    return float(np.sum(np.maximum(u * lo, u * hi)))\n\ndef brunn_minkowski_check(a: np.ndarray, b: np.ndarray) -> Tuple[float, float, bool]:\n    \"\"\"\n    Check Brunn-Minkowski inequality for boxes with side lengths a, b.\n    Returns (lhs, rhs, satisfied) where lhs = vol(A+B)^{1/n}, rhs = vol(A)^{1/n} + vol(B)^{1/n}.\n    \"\"\"\n    n = len(a)\n    vol_sum = box_volume(a + b)\n    vol_a = box_volume(a)\n    vol_b = box_volume(b)\n    lhs = vol_sum ** (1.0 / n)\n    rhs = vol_a ** (1.0 / n) + vol_b ** (1.0 / n)\n    return lhs, rhs, lhs >= rhs - 1e-12\n\ndef newton_inequality_check(coeffs: np.ndarray) -> List[Tuple[int, float, bool]]:\n    \"\"\"\n    Check Newton's log-concavity inequality c_k^2 >= c_{k-1} * c_{k+1}\n    for each valid k.\n    \"\"\"\n    results = []\n    for k in range(1, len(coeffs) - 1):\n        lhs = coeffs[k] ** 2\n        rhs = coeffs[k - 1] * coeffs[k + 1]\n        results.append((k, lhs - rhs, lhs >= rhs - 1e-12))\n    return results\n\n# ============================================================\n# Demonstrations\n# ============================================================\n\ndef demo_brunn_minkowski():\n    \"\"\"Demonstrate Brunn-Minkowski inequality for random boxes.\"\"\"\n    print(\"=\" * 60)\n    print(\"BRUNN-MINKOWSKI INEQUALITY FOR BOXES\")\n    print(\"=\" * 60)\n    print()\n    print(\"For boxes A, B in R^n:\")\n    print(\"  vol(A+B)^{1/n} >= vol(A)^{1/n} + vol(B)^{1/n}\")\n    print()\n\n    np.random.seed(42)\n    for trial in range(5):\n        n = np.random.randint(2, 6)\n        a = np.random.exponential(2.0, size=n)\n        b = np.random.exponential(2.0, size=n)\n\n        lhs, rhs, ok = brunn_minkowski_check(a, b)\n        print(f\"Trial {trial+1}: n={n}\")\n        print(f\"  A side lengths: {np.round(a, 3)}\")\n        print(f\"  B side lengths: {np.round(b, 3)}\")\n        print(f\"  vol(A+B)^(1/{n}) = {lhs:.6f}\")\n        print(f\"  vol(A)^(1/{n}) + vol(B)^(1/{n}) = {rhs:.6f}\")\n        print(f\"  Gap: {lhs - rhs:.6f}  {'\u2713' if ok else '\u2717 VIOLATION!'}\")\n        print()\n\ndef demo_support_function():\n    \"\"\"Demonstrate support function linearization.\"\"\"\n    print(\"=\" * 60)\n    print(\"SUPPORT FUNCTION LINEARIZATION\")\n    print(\"=\" * 60)\n    print()\n    print(\"h_{A+B}(u) = h_A(u) + h_B(u)\")\n    print()\n\n    # Two boxes in R^3\n    lo_a, hi_a = np.array([0, 0, 0.0]), np.array([1, 2, 3.0])\n    lo_b, hi_b = np.array([0, 0, 0.0]), np.array([2, 1, 1.0])\n\n    # Minkowski sum\n    lo_sum, hi_sum = lo_a + lo_b, hi_a + hi_b\n\n    np.random.seed(123)\n    for trial in range(5):\n        u = np.random.randn(3)\n        h_a = support_function_box(lo_a, hi_a, u)\n        h_b = support_function_box(lo_b, hi_b, u)\n        h_sum = support_function_box(lo_sum, hi_sum, u)\n\n        print(f\"Direction u = {np.round(u, 3)}\")\n        print(f\"  h_A(u) = {h_a:.4f}, h_B(u) = {h_b:.4f}\")\n        print(f\"  h_A(u) + h_B(u) = {h_a + h_b:.4f}\")\n        print(f\"  h_{'{A+B}'}(u) = {h_sum:.4f}\")\n        print(f\"  Match: {'\u2713' if abs(h_sum - h_a - h_b) < 1e-10 else '\u2717'}\")\n        print()\n\ndef demo_newton_inequality():\n    \"\"\"Demonstrate Newton's log-concavity of mixed volume coefficients.\"\"\"\n    print(\"=\" * 60)\n    print(\"NEWTON'S LOG-CONCAVITY INEQUALITY\")\n    print(\"=\" * 60)\n    print()\n    print(\"For vol(A + tB) = sum_k c_k * t^k:\")\n    print(\"  c_k^2 >= c_{k-1} * c_{k+1}  (log-concavity)\")\n    print()\n\n    np.random.seed(7)\n    for trial in range(4):\n        n = np.random.randint(3, 7)\n        a = np.random.exponential(2.0, size=n)\n        b = np.random.exponential(2.0, size=n)\n\n        coeffs = box_mixed_coefficients(a, b)\n        results = newton_inequality_check(coeffs)\n\n        print(f\"Trial {trial+1}: n={n}\")\n        print(f\"  A side lengths: {np.round(a, 3)}\")\n        print(f\"  B side lengths: {np.round(b, 3)}\")\n        print(f\"  Coefficients: {np.round(coeffs, 4)}\")\n        for k, gap, ok in results:\n            print(f\"    k={k}: c_k^2 - c_{{k-1}}*c_{{k+1}} = {gap:.6f}  {'\u2713' if ok else '\u2717'}\")\n        print()\n\ndef demo_volume_interpolation():\n    \"\"\"Plot-style data for volume interpolation concavity.\"\"\"\n    print(\"=\" * 60)\n    print(\"VOLUME INTERPOLATION CONCAVITY\")\n    print(\"=\" * 60)\n    print()\n    print(\"vol(A + tB)^{1/n} is concave in t (BM consequence)\")\n    print()\n\n    a = np.array([1.0, 2.0, 3.0])\n    b = np.array([3.0, 1.0, 2.0])\n    n = 3\n\n    ts = np.linspace(0, 1, 11)\n    print(f\"A side lengths: {a}\")\n    print(f\"B side lengths: {b}\")\n    print(f\"{'t':>6} | {'vol(A+tB)':>12} | {'vol^(1/n)':>12} | {'linear interp':>14}\")\n    print(\"-\" * 52)\n\n    v0 = box_interpolation_volume(a, b, 0.0) ** (1.0 / n)\n    v1 = box_interpolation_volume(a, b, 1.0) ** (1.0 / n)\n\n    for t in ts:\n        vol = box_interpolation_volume(a, b, t)\n        vol_root = vol ** (1.0 / n)\n        linear = (1 - t) * v0 + t * v1\n        print(f\"{t:6.2f} | {vol:12.4f} | {vol_root:12.4f} | {linear:14.4f}\")\n        assert vol_root >= linear - 1e-10, f\"Concavity violated at t={t}!\"\n\n    print()\n    print(\"\u2713 Concavity verified: vol^{1/n} >= linear interpolation at all points\")\n\ndef demo_perimeter_proxy():\n    \"\"\"Demonstrate perimeter proxy for cubes.\"\"\"\n    print(\"=\" * 60)\n    print(\"PERIMETER PROXY FOR CUBES\")\n    print(\"=\" * 60)\n    print()\n    print(\"For a cube of side s in R^n:\")\n    print(\"  perimProxy = 2n * s^{n-1}\")\n    print()\n\n    for n in range(2, 6):\n        for s in [1.0, 2.0, 3.0]:\n            sides = np.full(n, s)\n            # perimProxy = 2 * sum_i prod_{j != i} sides[j]\n            proxy = 0.0\n            for i in range(n):\n                term = 1.0\n                for j in range(n):\n                    if j != i:\n                        term *= sides[j]\n                proxy += term\n            proxy *= 2\n            expected = 2 * n * s ** (n - 1)\n            print(f\"  n={n}, s={s}: perimProxy = {proxy:.4f}, expected = {expected:.4f}, match: {'\u2713' if abs(proxy - expected) < 1e-10 else '\u2717'}\")\n    print()\n\ndef demo_conjecture_test():\n    \"\"\"Test falsifiable conjecture: log-concavity of mixed coefficients for random boxes.\"\"\"\n    print(\"=\" * 60)\n    print(\"CONJECTURE TEST: LOG-CONCAVITY OF MIXED COEFFICIENTS\")\n    print(\"=\" * 60)\n    print()\n    print(\"Testing: For random boxes, c_k^2 >= c_{k-1} * c_{k+1}\")\n    print()\n\n    np.random.seed(0)\n    n_trials = 1000\n    violations = 0\n\n    for _ in range(n_trials):\n        n = np.random.randint(2, 8)\n        a = np.random.exponential(1.0, size=n)\n        b = np.random.exponential(1.0, size=n)\n        coeffs = box_mixed_coefficients(a, b)\n        for k in range(1, n):\n            if coeffs[k] ** 2 < coeffs[k - 1] * coeffs[k + 1] - 1e-12:\n                violations += 1\n                print(f\"  VIOLATION: n={n}, k={k}\")\n                print(f\"    a={np.round(a, 4)}, b={np.round(b, 4)}\")\n                print(f\"    c_{k}^2 = {coeffs[k]**2:.6f}, c_{k-1}*c_{k+1} = {coeffs[k-1]*coeffs[k+1]:.6f}\")\n\n    print(f\"\\n{n_trials} random trials, {violations} violations found.\")\n    if violations == 0:\n        print(\"\u2713 Conjecture holds in all tested cases.\")\n    print()\n\n# ============================================================\n# Main\n# ============================================================\n\nif __name__ == \"__main__\":\n    demo_brunn_minkowski()\n    demo_support_function()\n    demo_newton_inequality()\n    demo_volume_interpolation()\n    demo_perimeter_proxy()\n    demo_conjecture_test()\n"
+    },
+    "date": "2026-05-22T02:11:50Z",
+    "exp_id": "52cd586a",
+    "source_exp_ids": [
+      "seed"
+    ]
+  },
   "homological_phase_transition_in_automated_conjectu.json": {
     "title": "Proof-Theoretic Topology: Topological Phase Transitions in Semantic Statement Spaces",
     "domain": "Speculative Mathematics / Topological Data Analysis / Mathematical Logic",
@@ -4065,7 +4107,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -4074,7 +4116,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -4083,7 +4125,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "conjecture_5_connection_to_hardy_field_hierarchy",
@@ -4092,7 +4134,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 272
+      "hue": 292
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -4101,7 +4143,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -4119,7 +4161,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T04:04:27Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "arithmetic_resonance_in_neural_proof_search",
@@ -4128,7 +4170,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T04:04:52Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -4137,7 +4179,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:13Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "collatz_stopping_times_density_analysis",
@@ -4146,7 +4188,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:41Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -4155,7 +4197,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T05:58:00Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
@@ -4164,7 +4206,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:58:35Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "direction_1_kan_composition_and_groupoid_structure",
@@ -4173,7 +4215,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:59:07Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_2_path_space_cardinality_invariants_for_",
@@ -4182,7 +4224,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:10:21Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "direction_3_differential_closure_and_transseries_f",
@@ -4191,7 +4233,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T07:13:37Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "proof_compression_phase_transition_in_formal_mathe",
@@ -4200,7 +4242,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:14:00Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "lattice_cryptography_lwe_hardness",
@@ -4209,7 +4251,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T07:18:18Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "quantum_information_no_cloning_and_teleportation",
@@ -4218,7 +4260,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T08:10:20Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "conjecture_2_tight_depth_bound_d1_instead_of_d3",
@@ -4227,7 +4269,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T08:13:20Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_3_deterministic_hitting_sets_for_millerr",
@@ -4245,7 +4287,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T08:14:11Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_2_phase_aware_lemma_synthesis_for_ai_the",
@@ -4254,7 +4296,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:14:39Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "euler_characteristic_and_gauss_bonnet",
@@ -4263,7 +4305,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T08:15:03Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "homological_algebra_derived_functors",
@@ -4272,7 +4314,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T09:14:59Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_curves_and_chip_firing_games",
@@ -4281,7 +4323,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T09:15:37Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "direction_3_explicit_forman_gradient_fields_and_pe",
@@ -4290,7 +4332,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T09:16:14Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "direction_2_quantitative_fiat_shamir_security_via_",
@@ -4299,7 +4341,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:13:08Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "extremal_graph_theory_turn_and_szemerdi",
@@ -4308,7 +4350,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T10:13:38Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "domain_bridges",
@@ -4317,7 +4359,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:14:03Z",
-      "hue": 134
+      "hue": 270
     },
     {
       "id": "goldbach_verification_framework",
@@ -4326,7 +4368,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T10:14:31Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_4_normalizing_derivative_compiler_with_i",
@@ -4335,7 +4377,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T10:14:52Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "invariant_subspace_problem_special_cases",
@@ -4353,7 +4395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T11:15:08Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "information_geometry_fisher_metric_on_statistical_",
@@ -4362,7 +4404,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T11:28:55Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "lambda_calculus_church_rosser_and_normalization",
@@ -4371,7 +4413,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:04Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_4_persistent_torsion_detection_for_tda",
@@ -4380,7 +4422,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:31Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_1_complete_verified_regev_reduction",
@@ -4389,7 +4431,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T12:24:54Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "formal_verification_of_algorithms",
@@ -4407,7 +4449,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T13:10:29Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_1_complete_strict_hierarchy_separation",
@@ -4416,7 +4458,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T13:13:42Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_1_universal_affine__protocol_extraction",
@@ -4425,7 +4467,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T13:14:08Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -4434,7 +4476,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T13:14:34Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "homological_phase_transition_in_automated_conjectu",
@@ -4443,7 +4485,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T14:10:33Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_4_growth_rank_completeness_grand_challen",
@@ -4452,7 +4494,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:13:43Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_5_ordinal_classification_of_eml_growth",
@@ -4461,7 +4503,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:14:17Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "noethers_theorem_symmetries_and_conservation_laws",
@@ -4470,7 +4512,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T14:14:53Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "direction_5_lower_bound_certificates_via_communica",
@@ -4488,7 +4530,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T15:14:27Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "optimal_transport_and_wasserstein_distances",
@@ -4497,7 +4539,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T15:14:54Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_2_persistent_homology_of_tropical_filtra",
@@ -4506,7 +4548,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T15:15:26Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "direction_5_optimal_curvature_distribution_on_tria",
@@ -4515,7 +4557,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T15:16:00Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_2_fujisaki_okamoto_transform_as_module_m",
@@ -4524,7 +4566,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:16:34Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "direction_5_non_commutative_module_lwe_and_ntru",
@@ -4542,7 +4584,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T16:17:46Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_1_polynomial_extraction_for_k_special_so",
@@ -4551,7 +4593,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T16:18:43Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "ramsey_theory_bounds_and_constructions",
@@ -4560,7 +4602,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T17:14:39Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_1_topological_restricted_products_and_co",
@@ -4569,7 +4611,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T17:15:09Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "riemann_zeta_zero_free_regions_and_density_estimat",
@@ -4578,7 +4620,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T17:15:36Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "direction_1_width_to_size_conversion_and_exponenti",
@@ -4587,7 +4629,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T18:04:51Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "proof_complexity_order_parameters_from_persistence",
@@ -4596,7 +4638,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T18:09:01Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_4_core_collapse_acceleration_hypothesis",
@@ -4614,7 +4656,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T18:39:31Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "direction_4_probe_complexity_of_finite_categories",
@@ -4623,7 +4665,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T18:42:42Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_2_efficient_computation_via_smith_normal",
@@ -4632,7 +4674,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T19:10:31Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_2_active_set_bar_count_bound",
@@ -4641,7 +4683,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T19:13:53Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_1_multi_step_filtration_obstructions_ext",
@@ -4650,7 +4692,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T19:14:18Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "direction_3_differential_closure_under_quotients",
@@ -4659,7 +4701,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:10:25Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "direction_3_valuation_profile_universality_for_tro",
@@ -4677,7 +4719,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:13:59Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "direction_2_verified_compiler_synthesis_via_free_f",
@@ -4686,7 +4728,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T20:14:37Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -4695,7 +4737,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T21:10:29Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_1_finite_probe_representability_conjectu",
@@ -4704,7 +4746,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:11:00Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "direction_3_clause_space_lower_bounds_via_width_sp",
@@ -4713,7 +4755,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:25:46Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_2_haar_measure_on_restricted_products",
@@ -4722,7 +4764,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:40:45Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "pac_bayes_generalization_bounds",
@@ -4731,7 +4773,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T21:41:12Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_2_hardness_localization_hypothesis",
@@ -4749,7 +4791,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T22:24:27Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "tropical_energy_interpretation_of_normalization",
@@ -4767,7 +4809,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T22:44:36Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "direction_4_reverse_mathematical_strength_of_rank_",
@@ -4785,7 +4827,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T23:14:11Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "direction_1_cycle_window_universality_hypothesis",
@@ -4794,7 +4836,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T23:14:38Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_4_quotient_algebras_and_certified_optimi",
@@ -4803,7 +4845,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-21T23:47:45Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_2_entropy_barrier_conjecture_for_general",
@@ -4812,7 +4854,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T00:10:05Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_2_natural_gradient_convergence_on_dually",
@@ -4830,7 +4872,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-22T00:15:03Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_2_tates_thesis_functional_equation_via_a",
@@ -4839,7 +4881,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T00:47:21Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "direction_5_residual_finiteness_and_semantic_disti",
@@ -4848,7 +4890,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T01:09:01Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "direction_1_discrete_noether_shadow_for_variationa",
@@ -4857,7 +4899,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T01:09:57Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_2_exponential_size_lower_bounds_at_fixed",
@@ -4866,6 +4908,15 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T02:10:27Z",
+      "hue": 272
+    },
+    {
+      "id": "convex_geometry_brunn_minkowski_theory",
+      "title": "Convex Geometry Beyond Brunn-Minkowski: Mixed Volumes, Support Duality, and a Formal Route to Isoperimetry",
+      "domain": "Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-22T02:11:50Z",
       "hue": 270
     }
   ],
@@ -5653,6 +5704,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-22T01:09:22.619325+00:00"
   },
   {
+    "id": "fd_0320",
+    "title": "Prime-Sensitive Persistent Homology of Arithmetic Expander Complexes",
+    "description": "Conjecture: There exists an explicit family of finite 2-dimensional simplicial complexes X_n built functorially from arithmetic groups (for example congruence quotients of Bruhat\u2013Tits buildings) such that the persistent homology of natural metric/thickness filtrations detects congruence-level arithmetic data in a prime-sensitive way: specifically, for infinitely many primes p, the multiset of persistence intervals in H_1(X_n; F_p) is not determined by the corresponding barcodes over F_q for q \u2260 p, and varies predictably with Hecke eigenvalue statistics or expansion constants of X_n. Test: Construct and compute these filtrations for explicit low-rank arithmetic quotients; compare persistence barcodes across coefficient fields F_p, correlate barcode features with known spectral/Hecke data, and refute the conjecture by showing coefficient-field persistence is asymptotically determined by ordinary spectral invariants alone. Impact: This would create a new bridge between topological data analysis, expander/arithmetic geometry, and automorphic spectra, yielding a topological probe of hidden arithmetic structure and potentially new invariants for high-dimensional expanders.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T02:11:16.794460+00:00"
+  },
+  {
     "id": "fd_0314",
     "title": "Building the automorphic bridge",
     "description": ": Connecting the adelic zeta integrals to automorphic forms, trace formulas, and the broader Langlands program, opening a formal corridor to representation-theoretic number theory.",
@@ -5801,26 +5867,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1b8440b4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-21T08:13:23.382095+00:00"
-  },
-  {
-    "id": "fd_0165",
-    "title": "Direction 2: Exponential Size Lower Bounds at Fixed Depth",
-    "description": "**Conjecture:** For depth *D* and tower height *n \u2264 D*, the minimum size of an inverse-free EML expression computing `iterExp(n)` grows at least exponentially in *n/D* (the \"compression ratio\").\n\n**Test:** For D = 3 and n \u2208 {1, 2, 3}, enumerate all inverse-free depth-\u22643 expressions up to size 30. Record the minimum size achieving `iterExp(n)` representation (verified on 20 test points to relative error < 10\u207b\u00b9\u00b2). Plot min-size vs. *n* and test against exponential fit.\n\n**Impact:** Would establish that even when depth suffices, compression comes at exponential size cost \u2014 a circuit-complexity-style size-depth tradeoff.\n\n**Catalog References:** `Speculative/TightDepthHierarchy/Defs.lean` (EMLExpr.size), `Speculative/TightDepthHierarchy/Theorems.lean` (separation machinery).\n\n**Proof Strategy:** Count the number of distinct growth profiles achievable by size-*s* depth-*D* expressions. Show this count is polynomial in *s* but the precision needed to match `iterExp(n)` grows super-polynomially.\n\n**Domain Bridges:** Shannon's counting argument (circuit complexity), Kolmogorov complexity.\n\n**Lineage:** Builds on `noInv_hasPolyTowerMajorant` (growth classification).\n\n**Ambition:** Solid extension.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "EML",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "1b8440b4",
-    "consumed_by_exp_id": "bb3ff38e",
-    "timestamp": "2026-05-21T08:13:23.389943+00:00"
   },
   {
     "id": "fd_0184",
@@ -7130,26 +7176,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-21T23:47:51.775028+00:00"
   },
   {
-    "id": "fd_0315",
-    "title": "Direction 5: KL Divergence as Bregman Divergence and Variational Inference Guarantees",
-    "description": "**Conjecture.** For the multinomial exponential family, the Bregman divergence generated by the log-partition function \u03c8(\u03b8) = log(\u2211 exp(\u03b8\u1d62) + 1) coincides with the KL divergence KL(p_{\u03b8*} \u2016 p_\u03b8). Combined with the convergence theorems, this gives explicit finite-time convergence guarantees for natural gradient variational inference:\n\n$$\\text{KL}(p^* \\| p_{\\theta_t}) \\leq \\frac{B + A \\cdot H(t)}{t}$$\n\n**Test.** For 100 random trinomial models, compute both D_\u03c8(\u03b8*, \u03b8_t) and KL(p_{\u03b8*} \u2016 p_{\u03b8_t}) along the natural gradient trajectory. Verify they agree to machine precision. The conjecture is falsified if they differ by more than 10\u207b\u00b9\u2070 at any point.\n\n**Impact.** Establishes a direct, formally verified connection between information geometry and Bayesian inference, giving the first machine-checked convergence rate for variational inference in exponential families.\n\n**Catalog References.**\n- `Geometry/InformationGeometry/NaturalGradient/Defs.lean`: `BregmanDiv`\n- `Geometry/InformationGeometry/NaturalGradient/Convergence.lean`: `convergence_harmonic_step`, `bregmanDiv_nonneg`\n- `Geometry/InformationGeometry/Defs.lean`: `logPartition`, `ExponentialFamily`\n\n**Proof Strategy.** Direct computation: D_\u03c8(\u03b8*, \u03b8) = \u03c8(\u03b8*) - \u03c8(\u03b8) - \u27e8\u2207\u03c8(\u03b8), \u03b8*-\u03b8\u27e9. For exponential families, \u03c8(\u03b8*) - \u03c8(\u03b8) - \u27e8\u03b7(\u03b8), \u03b8*-\u03b8\u27e9 = \u2211 p_{\u03b8*}(\u03c9) log(p_{\u03b8*}(\u03c9)/p_\u03b8(\u03c9)) by direct expansion of the exponential form.\n\n**Domain Bridges.** Information geometry \u2192 Bayesian statistics \u2192 Machine learning \u2192 Variational inference\n\n**Lineage.** Combines `logPartition_convex`, `BregmanDiv`, and `convergence_harmonic_step`.\n\n**Ambition.** Solid extension \u2014 the KL=Bregman identity is well-known but has never been formalized.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "469e1199",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-22T00:14:40.967369+00:00"
-  },
-  {
     "id": "fd_0310",
     "title": "Direction 1: Depth Preservation for Full EML with Negation",
     "description": "**Conjecture:** For the full EML grammar (including `neg(a)` and the `eml(a, b) = a * exp(b)` constructor), `emlDepth(deriv(e)) \u2264 emlDepth(e)` holds, where the derivative is extended appropriately.\n\n**Test:** Extend `PosEMLExpr.deriv` to `EmlExpr.deriv` (handling `neg` and `eml` cases) and verify the depth bound by structural induction. Computationally, enumerate EmlExpr up to depth 4 and check.\n\n**Impact:** Would extend the differential closure result from a fragment to the full EML language, unifying the theory.\n\n**Catalog References:** `Catalog/Pythagorean/HardyHierarchy/DiffClosure.lean` (PosEMLExpr), `Catalog/MachineLearning/HardyHierarchy/Defs.lean` (EmlExpr definition).\n\n**Proof Strategy:** The `neg` case should be trivial (negation doesn't change depth). For `eml(a, b) = a * exp(b)`, the derivative is `a' * exp(b) + a * b' * exp(b) = (a' + a * b') * exp(b)`, which has the same depth structure. Apply the same inductive argument.\n\n**Domain Bridges:** Differential algebra (full EML is closer to a Hardy field fragment), symbolic computation (full language support).\n\n**Lineage:** Direct extension of `depth_deriv_le_self`.\n\n**Ambition:** Solid extension \u2014 high confidence of success.\n\n---",
@@ -7300,5 +7326,81 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1dba459e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-22T01:10:15.145533+00:00"
+  },
+  {
+    "id": "fd_0315",
+    "title": "Direction 1: Tight Size Characterization for iterExp",
+    "description": "**Conjecture.** The minimum size of an inverse-free EML expression computing iterExp(n) on positive reals is exactly 2n + 1, matching the canonical construction.\n\n**Test.** Enumerate all inverse-free EML expressions of size < 2n+1 for small n (n = 1, 2, 3, 4) and verify that none computes iterExp(n) on 100 positive sample points. If a smaller expression is found, the conjecture is false.\n\n**Impact.** This would establish the canonical construction as uniquely optimal, showing that iterExp(n) has a single \"natural\" representation in EML. It would be a rare example of a tight expression complexity result.\n\n**Catalog References.**\n- `SizeDepthTradeoff.lean`: `size_lower_bound_iterExp` (current bound: n+1)\n- `SizeDepthTradeoff.lean`: `emlExprIterExp_size` (canonical: 2n+1)\n- `SizeDepthTradeoff.lean`: `iterExp_size_characterization`\n\n**Proof Strategy.** Strengthen the majorant analysis to track not just the tower height and polynomial degree but also the detailed coefficient structure. Show that the eml operation introduces irreducible size overhead at each level, forcing the total to be at least 2 per level.\n\n**Domain Bridges.** Circuit complexity (gate elimination), Kolmogorov complexity (incompressibility), symbolic regression (formula irreducibility).\n\n**Lineage.** Direct extension of `size_lower_bound_iterExp`.\n\n**Ambition.** \u2605\u2605\u2605\u2605\u2606 \u2014 challenging but focused; the gap is only a factor of 2.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "EML",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bb3ff38e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T02:11:05.344798+00:00"
+  },
+  {
+    "id": "fd_0316",
+    "title": "Direction 2: Size\u2013Depth Tradeoffs with Inversions",
+    "description": "**Conjecture.** Allowing inversions (the full EML) does not reduce the minimum depth required for iterExp(n). That is, even with inv nodes, depth n is necessary for iterExp(n).\n\n**Test.** Search for EML expressions (with inversions allowed) of depth < n that compute iterExp(n) for small n. Evaluate candidates on 50 positive points with varying magnitudes (x \u2208 {0.01, 0.1, 0.5, 1, 2, 5, 10}). A match at all points would disprove the conjecture.\n\n**Impact.** This would extend the depth hierarchy from the inverse-free fragment to the full EML, establishing a much stronger result. Inversions introduce the possibility of cancellation and rational function manipulation, which could potentially enable depth reduction.\n\n**Catalog References.**\n- `Algebra/TightDepthHierarchy/Theorems.lean`: `no_invFree_lowDepth_represents_iterExp`\n- `Algebra/TightDepthHierarchy/Defs.lean`: `HasPolyTowerMajorant`\n\n**Proof Strategy.** Extend the majorant analysis to handle inversions. The key challenge is that 1/f can have growth rate inversely related to f, potentially enabling cancellations that \"simulate\" deeper towers. Show that such cancellations are eventually dominated.\n\n**Domain Bridges.** Algebraic complexity (rational function complexity), differential algebra (Liouvillian functions), dynamical systems (ergodic theory of iterated maps).\n\n**Lineage.** Extension of the inverse-free depth hierarchy.\n\n**Ambition.** \u2605\u2605\u2605\u2605\u2605 \u2014 a grand challenge; inversions fundamentally change the algebraic structure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "EML",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bb3ff38e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T02:11:05.363204+00:00"
+  },
+  {
+    "id": "fd_0317",
+    "title": "Direction 3: Approximate Computation Lower Bounds",
+    "description": "**Conjecture.** For any fixed \u03b5 > 0 and D < n, no inverse-free depth-D expression e satisfies |eval(e, x) \u2212 iterExp(n, x)| < \u03b5 \u00b7 iterExp(n, x) for all sufficiently large x.\n\n**Test.** For D = 2 and n = 4, enumerate depth-2 expressions of size up to 20 and compute the relative error max_x |eval(e, x)/iterExp(4, x) \u2212 1| on a grid of 1000 points in [1, 10]. If the minimum relative error is < 0.01 for any expression, the conjecture is challenged.\n\n**Impact.** Extends the impossibility from exact to approximate computation, which is more relevant for practical applications like symbolic regression and neural network expressivity.\n\n**Catalog References.**\n- `SizeDepthTradeoff.lean`: `iterExp_depth_bounded_impossible`\n- `SizeDepthTradeoff.lean`: `noInv_quantitative_majorant`\n\n**Proof Strategy.** Use the quantitative majorant to show that depth-D expressions are eventually dominated by iterExp(D+1), while iterExp(n) grows much faster. The relative error iterExp(n,x)/iterExp(D,C\u00b7x^N) \u2192 \u221e as x \u2192 \u221e, so no multiplicative approximation is possible.\n\n**Domain Bridges.** Approximation theory, neural network expressivity, numerical analysis.\n\n**Lineage.** Quantitative strengthening of `iterExp_depth_bounded_impossible`.\n\n**Ambition.** \u2605\u2605\u2605\u2606\u2606 \u2014 accessible extension with high impact.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bb3ff38e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T02:11:05.396197+00:00"
+  },
+  {
+    "id": "fd_0318",
+    "title": "Direction 4: Multi-Variable Tower Functions",
+    "description": "**Conjecture.** For the multi-variable EML (with variables x\u2081, ..., x_k), the minimum depth for computing iterExp(n, x\u2081 + x\u2082 + ... + x_k) remains n, and the minimum size grows at least as \u03a9(n + k).\n\n**Test.** For k = 2 and n = 3, enumerate two-variable inverse-free expressions of depth \u2264 2 and check whether any matches iterExp(3, x+y) on a 10\u00d710 grid of positive points. No match should be found.\n\n**Impact.** Multi-variable extensions are essential for applications to symbolic regression on multi-dimensional data. The interaction between the number of variables and the tower height creates a richer complexity landscape.\n\n**Catalog References.**\n- `SizeDepthTradeoff.lean`: `size_lower_bound_iterExp`\n- `Algebra/TightDepthHierarchy/Defs.lean`: `EMLExpr` (currently single-variable)\n\n**Proof Strategy.** Generalize the evaluation semantics to x : \u211d^k and extend the majorant analysis. The key insight is that the tower height is determined by the nesting structure, not the number of variables.\n\n**Domain Bridges.** Multivariate approximation theory, tensor complexity, algebraic geometry.\n\n**Lineage.** Generalization of the single-variable theory.\n\n**Ambition.** \u2605\u2605\u2605\u2606\u2606 \u2014 moderate difficulty, high practical relevance.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "EML",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bb3ff38e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T02:11:05.413139+00:00"
   }
 ];

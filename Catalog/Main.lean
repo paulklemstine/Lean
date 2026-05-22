@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1364 of the highest-quality
+A curated collection of 1380 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1364
+Total files: 1380
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -203,6 +203,7 @@ import FINAL.Bridges.BreakthroughDirections
 import FINAL.Bridges.Bridge
 import FINAL.Bridges.ByzantineCertificate
 import FINAL.Bridges.CartesianFootprintBound
+import FINAL.Bridges.CategoricalBridges
 import FINAL.Bridges.CategoricalTropicalUltrametric
 import FINAL.Bridges.CategorifiedShannonTheory
 import FINAL.Bridges.CausalClosure
@@ -312,6 +313,7 @@ import FINAL.Bridges.LawvereThermodynamicGalois
 import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LipschitzMarginCell
 import FINAL.Bridges.LogSumExpVariational
+import FINAL.Bridges.Logic
 import FINAL.Bridges.LongestCommonValuedPrefix
 import FINAL.Bridges.LowDegreeTesting
 import FINAL.Bridges.LowerEnvelope
@@ -1152,6 +1154,7 @@ import FINAL.Tropical.AutomorphicBuildings
 import FINAL.Tropical.BPCircuitSimulation
 import FINAL.Tropical.BalancedConsciousness
 import FINAL.Tropical.Basic
+import FINAL.Tropical.BellmanFord
 import FINAL.Tropical.BerggrenSatakeCorrespondence
 import FINAL.Tropical.BerggrenShellMesh
 import FINAL.Tropical.BerggrenTropicalBridge
@@ -1164,6 +1167,7 @@ import FINAL.Tropical.Bridges
 import FINAL.Tropical.CPASecurity
 import FINAL.Tropical.CertifiedCanonicalization
 import FINAL.Tropical.CertifiedNormalForm
+import FINAL.Tropical.ChoraleRigidity
 import FINAL.Tropical.ChronologicalOrder
 import FINAL.Tropical.Closure
 import FINAL.Tropical.CollatzWielandt
@@ -1220,9 +1224,11 @@ import FINAL.Tropical.Hyperbolicity
 import FINAL.Tropical.HyperplaneDistance
 import FINAL.Tropical.InformationTheory
 import FINAL.Tropical.KineticCertification
+import FINAL.Tropical.LSEConvexity
 import FINAL.Tropical.LegendreDuality
 import FINAL.Tropical.Lipschitz
 import FINAL.Tropical.LipschitzChain
+import FINAL.Tropical.LocalToGlobal
 import FINAL.Tropical.LorentzForce
 import FINAL.Tropical.LowRankAttack
 import FINAL.Tropical.MarkovTropicalBridge
@@ -1235,6 +1241,7 @@ import FINAL.Tropical.MinPlus
 import FINAL.Tropical.MinPlusAlgebra
 import FINAL.Tropical.MinPlusExpr
 import FINAL.Tropical.MinPlusRankOne
+import FINAL.Tropical.MinPlusSpectral
 import FINAL.Tropical.MirrorFixedPoints
 import FINAL.Tropical.MixingTheory
 import FINAL.Tropical.Monotonicity
@@ -1266,9 +1273,13 @@ import FINAL.Tropical.ProductAutomaton
 import FINAL.Tropical.QaryDataProcessing
 import FINAL.Tropical.QarySourceCoding
 import FINAL.Tropical.QuantumLLMCompilation
+import FINAL.Tropical.QuantumTropical
 import FINAL.Tropical.QuantumTropicalComputation
 import FINAL.Tropical.QuantumTropicalComputing
+import FINAL.Tropical.QuantumTropicalFunctor
 import FINAL.Tropical.RankGrowth
+import FINAL.Tropical.RankOneFactorization
+import FINAL.Tropical.Reflection
 import FINAL.Tropical.ReflectionTactic
 import FINAL.Tropical.Representation
 import FINAL.Tropical.SATBTropicalDP
@@ -1280,6 +1291,7 @@ import FINAL.Tropical.SatakeIsomorphism
 import FINAL.Tropical.SelfLearningOracle
 import FINAL.Tropical.SemiclassicalLimit
 import FINAL.Tropical.SeriesParallel
+import FINAL.Tropical.ShimuraVarieties
 import FINAL.Tropical.SieveEnergetics
 import FINAL.Tropical.SoftMaxConvergence
 import FINAL.Tropical.Softmin
@@ -1316,6 +1328,8 @@ import FINAL.Tropical.TropicalDegreeRobustness
 import FINAL.Tropical.TropicalEntropyCompact
 import FINAL.Tropical.TropicalFFN
 import FINAL.Tropical.TropicalFactoring
+import FINAL.Tropical.TropicalFano
+import FINAL.Tropical.TropicalFormula
 import FINAL.Tropical.TropicalFrontierResearch
 import FINAL.Tropical.TropicalFrontiers
 import FINAL.Tropical.TropicalFutureDirections
@@ -1332,6 +1346,7 @@ import FINAL.Tropical.TropicalMorseTheory
 import FINAL.Tropical.TropicalNBPLowerBound
 import FINAL.Tropical.TropicalNNFrontier
 import FINAL.Tropical.TropicalNetworkTheory
+import FINAL.Tropical.TropicalOracle
 import FINAL.Tropical.TropicalOracleResearch
 import FINAL.Tropical.TropicalOrbitPRG
 import FINAL.Tropical.TropicalPathAlgebra
@@ -1342,6 +1357,7 @@ import FINAL.Tropical.TropicalSatakeGL3
 import FINAL.Tropical.TropicalSatakeGL3Algebra
 import FINAL.Tropical.TropicalSchurGL3
 import FINAL.Tropical.TropicalSelfReasoning
+import FINAL.Tropical.TropicalSemiring
 import FINAL.Tropical.TropicalSieveTheory
 import FINAL.Tropical.TropicalStructure
 import FINAL.Tropical.TropicalTrapdoor
