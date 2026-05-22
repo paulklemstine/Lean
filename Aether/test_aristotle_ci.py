@@ -7,6 +7,7 @@ Exits 0 on success, 1 on failure.
 """
 
 import asyncio
+import shutil
 import sys
 import tempfile
 import time
@@ -17,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from aristotle_sdk_client import AristotleSDKClient
 
 
-LEAN_PROJECT = """import Mathlib.Data.Nat.Prime.Basic
+LEAN_PROJECT = """import Mathlib.Tactic.Basic
 
 theorem test_one_eq_one : 1 = 1 := rfl
 """
@@ -33,21 +34,35 @@ async def test_aristotle(api_key: str, timeout: int = 600) -> bool:
     }
 
     client = AristotleSDKClient(config=config)
+    catalog_root = Path(__file__).parent.parent / "Catalog"
 
-    # 1. Create a temp project dir
+    # 1. Create a temp project dir with proper Lean setup
     with tempfile.TemporaryDirectory() as tmpdir:
         project_dir = Path(tmpdir) / "test_project"
         project_dir.mkdir()
 
-        # Write a minimal Lean file
-        lean_file = project_dir / "Test.lean"
-        lean_file.write_text(LEAN_PROJECT)
+        # Write the test Lean file
+        (project_dir / "Test.lean").write_text(LEAN_PROJECT)
 
-        # Write a lakefile
-        lakefile = project_dir / "lakefile.lean"
-        lakefile.write_text(
-            'import Mathlib\n\nopen scoped Lean.Elab.Tactic\n'
-        )
+        # Copy lean-toolchain from Catalog if available
+        toolchain_src = catalog_root / "lean-toolchain"
+        if toolchain_src.exists():
+            shutil.copy2(toolchain_src, project_dir / "lean-toolchain")
+        else:
+            (project_dir / "lean-toolchain").write_text("leanprover/lean4:v4.28.0\n")
+
+        # Copy lakefile.toml from Catalog if available
+        lakefile_src = catalog_root / "lakefile.toml"
+        if lakefile_src.exists():
+            shutil.copy2(lakefile_src, project_dir / "lakefile.toml")
+        else:
+            (project_dir / "lakefile.toml").write_text(
+                'name = "Test"\n'
+                'defaultTargets = ["Test"]\n\n'
+                '[[require]]\n'
+                'name = "mathlib"\n'
+                'scope = "leanprover"\n\n'
+            )
 
         print("[Test] Submitting minimal Lean project to Aristotle...")
         try:
@@ -65,9 +80,9 @@ async def test_aristotle(api_key: str, timeout: int = 600) -> bool:
 
         print(f"[Test] Project submitted: {project_id}")
 
-        # 2. Poll until complete
+        # 2. Poll until complete (with short timeout for CI)
         start = time.time()
-        max_wait = timeout
+        max_wait = 300  # 5 minutes for CI
         while time.time() - start < max_wait:
             try:
                 poll_result = await client.poll_project(project_id)
@@ -80,6 +95,9 @@ async def test_aristotle(api_key: str, timeout: int = 600) -> bool:
                     break
                 elif status in ("FAILED", "OUT_OF_BUDGET", "CANCELED"):
                     print(f"[Test] FAIL: Project failed: status={status}")
+                    return False
+                elif status == "error":
+                    print(f"[Test] FAIL: Aristotle returned error status. Project may be misconfigured.")
                     return False
                 else:
                     print(f"[Test] Polling: status={status}, pct={pct}%, elapsed={elapsed}s")
@@ -98,7 +116,6 @@ async def test_aristotle(api_key: str, timeout: int = 600) -> bool:
                 tar_path = await client.download_result(project_id, Path(dl_dir))
                 if tar_path and tar_path.exists() and tar_path.name != "__AUTH_ERROR__":
                     print(f"[Test] SUCCESS: Downloaded result to {tar_path}")
-                    # Quick check: can we extract it?
                     import tarfile
                     with tarfile.open(tar_path, 'r:gz') as tar:
                         names = tar.getnames()
