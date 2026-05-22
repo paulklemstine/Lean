@@ -3,6 +3,7 @@ name: Aether Research Loop
 on:
   schedule:
     - cron: '17 * * * *'    # Every hour at :17
+    - cron: '47 * * * *'    # Every hour at :47
   workflow_dispatch:
     inputs:
       max_inflight:
