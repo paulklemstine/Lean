@@ -135,11 +135,16 @@ class QualityEvaluator:
         concept_description: str = "",
         existing_titles: Optional[set] = None,
         catalog_references: Optional[list] = None,
+        result_fields: Optional[Dict[str, str]] = None,
     ) -> QualityScore:
         """Evaluate Aristotle's output across all 9 dimensions.
 
         The first 6 dimensions are computed locally (no API cost).
         The last 3 use a single Pi-Agent call if available.
+
+        result_fields: dict mapping artifact names to their content strings,
+            e.g. {"result_paper": "...", "result_demo": "...", ...}.
+            Used for artifact richness when result_dir doesn't contain the files.
         """
         score = QualityScore()
 
@@ -147,8 +152,8 @@ class QualityEvaluator:
         score.proof_depth = self._eval_proof_depth(lean_source)
         score.novelty = self._eval_novelty(lean_source, concept_title, existing_titles)
         score.cross_domain = self._eval_cross_domain(lean_source)
-        score.artifact_richness = self._eval_artifacts(result_dir)
-        score.actionability = self._eval_actionability(result_dir)
+        score.artifact_richness = self._eval_artifacts(result_dir, result_fields)
+        score.actionability = self._eval_actionability(result_dir, result_fields)
         score.catalog_anchoring = self._eval_catalog_anchoring(
             concept_title, catalog_references or [], existing_titles
         )
@@ -343,41 +348,67 @@ class QualityEvaluator:
         else:
             return min(1.0, 0.85 + (n - 4) * 0.05)
 
-    def _eval_artifacts(self, result_dir: Optional[Path]) -> float:
-        """Score artifact richness."""
-        if not result_dir or not result_dir.exists():
-            return 0.1
+    def _eval_artifacts(self, result_dir: Optional[Path],
+                        result_fields: Optional[Dict[str, str]] = None) -> float:
+        """Score artifact richness.
 
-        expected_artifacts = {
-            "RESEARCH_REPORT.md": 0.30,
-            "demo.py": 0.25,
-            "DISCUSSION.md": 0.20,
-            "FUTURE_DIRECTIONS.md": 0.25,
+        Checks both filesystem (result_dir) and in-memory result fields,
+        since Aristotle's artifacts may only exist in the job's result_*
+        fields rather than as files on disk.
+        """
+        expected = {
+            "RESEARCH_REPORT.md": (0.30, ["result_paper", "result_research_paper"]),
+            "demo.py": (0.25, ["result_demo", "result_algorithms"]),
+            "DISCUSSION.md": (0.20, ["result_discussion"]),
+            "FUTURE_DIRECTIONS.md": (0.25, ["result_future_directions"]),
         }
 
         score = 0.0
-        for filename, weight in expected_artifacts.items():
-            matches = list(result_dir.rglob(filename))
-            if matches:
-                # Check it's not empty
-                content = matches[0].read_text(encoding="utf-8", errors="replace")
-                if len(content) > 100:
-                    score += weight
-                elif len(content) > 20:
-                    score += weight * 0.5
+        for filename, (weight, field_names) in expected.items():
+            found = False
 
-        return min(1.0, score)
+            # Try filesystem first
+            if result_dir and result_dir.exists():
+                matches = list(result_dir.rglob(filename))
+                if matches:
+                    content = matches[0].read_text(encoding="utf-8", errors="replace")
+                    if len(content) > 100:
+                        score += weight
+                        found = True
+                    elif len(content) > 20:
+                        score += weight * 0.5
+                        found = True
 
-    def _eval_actionability(self, result_dir: Optional[Path]) -> float:
+            # Fall back to in-memory result fields
+            if not found and result_fields:
+                for field_name in field_names:
+                    content = result_fields.get(field_name, "")
+                    if content and len(content) > 100:
+                        score += weight
+                        found = True
+                        break
+                    elif content and len(content) > 20:
+                        score += weight * 0.5
+                        found = True
+                        break
+
+        return max(0.1, min(1.0, score))
+
+    def _eval_actionability(self, result_dir: Optional[Path],
+                            result_fields: Optional[Dict[str, str]] = None) -> float:
         """Score actionability of future directions."""
-        if not result_dir or not result_dir.exists():
-            return 0.1
+        content = ""
 
-        fd_files = list(result_dir.rglob("FUTURE_DIRECTIONS.md"))
-        if not fd_files:
-            return 0.1
+        # Try filesystem first
+        if result_dir and result_dir.exists():
+            fd_files = list(result_dir.rglob("FUTURE_DIRECTIONS*.md"))
+            if fd_files:
+                content = fd_files[0].read_text(encoding="utf-8", errors="replace")
 
-        content = fd_files[0].read_text(encoding="utf-8", errors="replace")
+        # Fall back to in-memory field
+        if not content and result_fields:
+            content = result_fields.get("result_future_directions", "")
+
         if len(content) < 100:
             return 0.1
 
@@ -405,46 +436,64 @@ class QualityEvaluator:
         concept_title: str,
         concept_description: str,
         result_dir: Optional[Path],
+        result_fields: Optional[Dict[str, str]] = None,
     ) -> Dict[str, float]:
         """Use Pi-Agent for importance, usefulness, and applications scoring."""
         # Get research report if available
         report_text = ""
         if result_dir and result_dir.exists():
-            report_files = list(result_dir.rglob("RESEARCH_REPORT.md"))
+            report_files = list(result_dir.rglob("RESEARCH_REPORT*.md"))
             if report_files:
                 report_text = report_files[0].read_text(encoding="utf-8", errors="replace")[:1500]
+        # Fall back to in-memory field
+        if not report_text and result_fields:
+            report_text = (result_fields.get("result_paper", "") or
+                           result_fields.get("result_research_paper", ""))[:1500]
 
         system_prompt = (
-            "You are a mathematical research evaluator. Score the following "
-            "research output on three dimensions. Respond with ONLY JSON: "
-            '{"importance": 0.0-1.0, "usefulness": 0.0-1.0, "applications": 0.0-1.0, "reasoning": "..."}\n\n'
-            "IMPORTANCE: Would this result appear in a top mathematics journal (JAMS, Annals)? "
-            "Does it change how mathematicians think about a field?\n"
-            "USEFULNESS: Does this solve a practical problem? Does it produce an algorithm?\n"
-            "APPLICATIONS: What real-world domains benefit? (crypto, ML, physics, engineering)"
+            "You are a mathematical research evaluator scoring output on three axes. "
+            "Respond with ONLY JSON, no other text: "
+            '{"importance": 0.0-1.0, "usefulness": 0.0-1.0, "applications": 0.0-1.0}\n\n'
+            "Scoring guide:\n"
+            "IMPORTANCE: 0.0=trivial, 0.2=minor lemma, 0.4=noteworthy, 0.6=significant, 0.8=field-advancing, 1.0=breakthrough\n"
+            "  Would this appear in a top math journal? Does it change how mathematicians think?\n"
+            "USEFULNESS: 0.0=none, 0.2=theoretical only, 0.4=some applicability, 0.6=practical, 0.8=broadly useful, 1.0=essential\n"
+            "  Does this solve a practical problem or produce an algorithm others can use?\n"
+            "APPLICATIONS: 0.0=none, 0.2=narrow, 0.4=moderate, 0.6=diverse, 0.8=widespread, 1.0=transformative\n"
+            "  How many real-world domains benefit? (crypto, ML, physics, engineering, etc.)"
         )
 
         user_prompt = (
             f"TITLE: {concept_title}\n"
             f"DESCRIPTION: {concept_description[:500]}\n\n"
             f"LEAN SOURCE (first 1000 chars):\n{lean_source[:1000]}\n\n"
-            f"RESEARCH REPORT (first 1000 chars):\n{report_text[:1000]}"
         )
+        if report_text:
+            user_prompt += f"RESEARCH REPORT (first 1000 chars):\n{report_text[:1000]}"
 
         try:
             raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=60)
-            # Parse JSON
-            json_match = re.search(r'\{[^{}]*\}', raw, re.DOTALL)
+            # Parse JSON — try nested braces first for complete objects
+            json_match = re.search(r'\{.*\}', raw, re.DOTALL)
+            if not json_match:
+                json_match = re.search(r'\{[^{}]*\}', raw, re.DOTALL)
             if json_match:
                 data = json.loads(json_match.group())
+                imp = float(data.get("importance", 0.5))
+                use = float(data.get("usefulness", 0.5))
+                app = float(data.get("applications", 0.5))
+                # Reject degenerate responses (all identical or all near-floor)
+                if imp < 0.05 and use < 0.05 and app < 0.05:
+                    raise ValueError("Degenerate LLM scores (all near-zero)")
                 return {
-                    "importance": max(0.0, min(1.0, float(data.get("importance", 0.5)))),
-                    "usefulness": max(0.0, min(1.0, float(data.get("usefulness", 0.5)))),
-                    "applications": max(0.0, min(1.0, float(data.get("applications", 0.5)))),
+                    "importance": max(0.0, min(1.0, imp)),
+                    "usefulness": max(0.0, min(1.0, use)),
+                    "applications": max(0.0, min(1.0, app)),
                 }
         except Exception:
             pass
 
+        # Heuristic fallback based on structural scores
         return {"importance": 0.5, "usefulness": 0.5, "applications": 0.5}
 
     # ── Convenience ──

@@ -78,6 +78,7 @@ class ResearchJob:
     quality_detail: Optional[Any] = None  # 8-axis QualityScore from quality_evaluator
     sorry_count: int = 0
     theorem_count: int = 0
+    files_integrated: int = 0  # Actual count of files written to Catalog during integrate
     error_message: Optional[str] = None
     source_exp_ids: list = None  # exp_ids of parent experiments whose future directions inspired this one
 
@@ -344,7 +345,7 @@ class KnowledgeExtractor:
                 concept_description=best_dir.description,
                 mathematical_framing=best_dir.description,
                 lean_guess="",
-                catalog_references=[],
+                catalog_references=best_dir.catalog_references or [],
                 research_mode=best_dir.research_mode or "prove",
                 novelty_estimate=0.85,
                 breakthrough_potential=best_dir.priority_score,
@@ -1024,6 +1025,11 @@ Research mode: {concept.research_mode}
               f"Discussion: {len(discussion_files)} files, "
               f"Sorries: {job.sorry_count}, Theorems: {job.theorem_count}")
 
+        # Persist extraction results to inflight_jobs
+        if job.project_id and job.project_id in self.inflight:
+            self.inflight[job.project_id] = job
+            self._save_inflight()
+
         return job
 
     # ==================================================================
@@ -1082,6 +1088,14 @@ Research mode: {concept.research_mode}
                 concept_description=job.concept.concept_description,
                 existing_titles=existing_titles,
                 catalog_references=job.concept.catalog_references or [],
+                result_fields={
+                    "result_paper": job.result_paper or "",
+                    "result_research_paper": job.result_research_paper or "",
+                    "result_demo": job.result_demo or "",
+                    "result_algorithms": job.result_algorithms or "",
+                    "result_discussion": job.result_discussion or "",
+                    "result_future_directions": job.result_future_directions or "",
+                },
             )
             job.quality_detail = qscore
             # Blend heuristic and structural scores (40/60 — more weight to structural)
@@ -1093,6 +1107,11 @@ Research mode: {concept.research_mode}
         print(f"[Evaluate] quality={qa.get('quality','?')}, score={job.quality_score:.3f}, "
               f"sorries={job.sorry_count}, theorems={job.theorem_count}"
               + (f", depth={job.quality_detail.proof_depth:.2f}" if hasattr(job, 'quality_detail') and job.quality_detail else ""))
+
+        # Persist evaluation results to inflight_jobs
+        if job.project_id and job.project_id in self.inflight:
+            self.inflight[job.project_id] = job
+            self._save_inflight()
 
         return job
 
@@ -1235,6 +1254,7 @@ Research mode: {concept.research_mode}
 
         # 3. Apply the changes — with deduplication and REJECT filtering
         written_paths = set()  # Track what we've already written to avoid duplicates
+        files_written = 0  # Count files actually written to Catalog
         
         for i, p in enumerate(parts):
             raw_target = plan.get(str(i), p["path"])
@@ -1275,6 +1295,7 @@ Research mode: {concept.research_mode}
             if p["type"] == "new":
                 abs_target.write_text(p["content"], encoding="utf-8")
                 print(f"[Integrate] Created {target_path}")
+                files_written += 1
                 # Update exp_id mapping for provenance tracking
                 if target_path.endswith('.json') and 'Packages' in str(target_path):
                     self._update_exp_id_map(job, os.path.basename(str(target_path)))
@@ -1290,6 +1311,7 @@ Research mode: {concept.research_mode}
                     result = subprocess.run(["patch", str(abs_target), patch_file], capture_output=True, text=True)
                     if result.returncode == 0:
                         print(f"[Integrate] Merged diff into {target_path}")
+                        files_written += 1
                     else:
                         print(f"[Integrate] Patch failed for {target_path}: {result.stderr}")
                 except Exception as e:
@@ -1297,7 +1319,8 @@ Research mode: {concept.research_mode}
                 finally:
                     os.unlink(patch_file)
 
-        print(f"[Integrate] Pi successfully integrated all files.")
+        print(f"[Integrate] Pi successfully integrated {files_written} files.")
+        job.files_integrated = files_written
         job.status = "integrated"
         self.completed_count += 1
 
@@ -2186,7 +2209,7 @@ Research mode: {concept.research_mode}
             quality_score=job.quality_score,
             catalog_references=job.concept.catalog_references or [],
             prompt_length=len(job.prompt) if job.prompt else 0,
-            files_placed=job.theorem_count,
+            files_placed=job.files_integrated,
         )
 
         print(f"[Commit] Cycle #{job.cycle_n} complete: score={job.quality_score:.3f}")
