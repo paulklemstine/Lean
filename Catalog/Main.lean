@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1445 of the highest-quality
+A curated collection of 1455 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1445
+Total files: 1455
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -138,6 +138,7 @@ import FINAL.Algebra.Robustness
 import FINAL.Algebra.RotaBaxter
 import FINAL.Algebra.SchwartzZippel
 import FINAL.Algebra.SchwartzZippelBridge
+import FINAL.Algebra.Series
 import FINAL.Algebra.SieveAndLattice
 import FINAL.Algebra.SingleTree
 import FINAL.Algebra.SmallGround
@@ -1115,10 +1116,14 @@ import FINAL.Pythagorean.BerggrenTeleportation
 import FINAL.Pythagorean.BerggrenTree
 import FINAL.Pythagorean.BerggrenUniformExpansion
 import FINAL.Pythagorean.BerggrenWordCubeSpectral
+import FINAL.Pythagorean.Bootstrap
 import FINAL.Pythagorean.BoundedDivisorSearch
 import FINAL.Pythagorean.BoundedSearch
+import FINAL.Pythagorean.CRT
 import FINAL.Pythagorean.Catoni
 import FINAL.Pythagorean.CayleyTransform
+import FINAL.Pythagorean.Companion
+import FINAL.Pythagorean.Conditional
 import FINAL.Pythagorean.Configurations
 import FINAL.Pythagorean.Congruence
 import FINAL.Pythagorean.Core
@@ -1142,6 +1147,7 @@ import FINAL.Pythagorean.DiffClosure
 import FINAL.Pythagorean.Duality
 import FINAL.Pythagorean.EmergentComputation
 import FINAL.Pythagorean.Equivalences
+import FINAL.Pythagorean.EulerBricks
 import FINAL.Pythagorean.ExplicitMorseTheory
 import FINAL.Pythagorean.ExponentBounds
 import FINAL.Pythagorean.FactoringEnergyLandscape
@@ -1158,9 +1164,11 @@ import FINAL.Pythagorean.HigherDimQuadruples
 import FINAL.Pythagorean.Invariance
 import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.LagrangeFourSquare
+import FINAL.Pythagorean.Lehmer
 import FINAL.Pythagorean.LocalEulerExt
 import FINAL.Pythagorean.LocalGlobal
 import FINAL.Pythagorean.LogSumExp
+import FINAL.Pythagorean.LowRankObstruction
 import FINAL.Pythagorean.MobiusTransport
 import FINAL.Pythagorean.ModularFormsAdvanced
 import FINAL.Pythagorean.NewResearchTheorems
@@ -1174,9 +1182,11 @@ import FINAL.Pythagorean.PrimeDivisorCongruence
 import FINAL.Pythagorean.ProdBounds
 import FINAL.Pythagorean.PythagoreanFactoring
 import FINAL.Pythagorean.PythagoreanPairing
+import FINAL.Pythagorean.QuarticFiber
 import FINAL.Pythagorean.QuotientClosure
 import FINAL.Pythagorean.Radical
 import FINAL.Pythagorean.RankBoundedEML
+import FINAL.Pythagorean.RankOne
 import FINAL.Pythagorean.Reduction
 import FINAL.Pythagorean.SandwichGraph
 import FINAL.Pythagorean.SandwichTheorems
