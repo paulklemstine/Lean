@@ -54,10 +54,10 @@ SKIP_DIRS = {
 SKIP_PREFIXES = ("lakefile", "lean-toolchain", "CATALOG", "DECLARATION", "FUTURE")
 
 # Max files to @-reference in a single prompt
-MAX_REFERENCES = 12
+MAX_REFERENCES = 5
 
 # Max lines per file when extracting content for @ references
-MAX_LINES_PER_FILE = 150
+MAX_LINES_PER_FILE = 60
 
 
 class CatalogAnalyzer:

@@ -22,8 +22,8 @@ pi_agent:
     chat_input_chars_per_pollen: 250000
     pi_execution_input_chars_per_pollen: 50000
     output_chars_per_pollen: 125000
-  max_catalog_references: 12
-  max_lines_per_reference: 150
+  max_catalog_references: 5
+  max_lines_per_reference: 60
   temperature: 0.85
   top_p: 0.92
   num_predict: 4096

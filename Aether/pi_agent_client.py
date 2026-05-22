@@ -479,7 +479,7 @@ class PiAgentClient:
         input_chars = len(system) + len(user)
 
         # Truncate oversized prompts to avoid 400 Bad Request from Pollinations
-        MAX_PROMPT_CHARS = 120000
+        MAX_PROMPT_CHARS = 50000
         if input_chars > MAX_PROMPT_CHARS:
             print(f"[Pi-Agent] Prompt too large ({input_chars} chars), truncating to {MAX_PROMPT_CHARS}")
             user = user[:MAX_PROMPT_CHARS - len(system)] + "\n\n[... truncated for API limit ...]"
@@ -2127,6 +2127,36 @@ class PiAgentClient:
             Soli Deo Gloria.
         """)
 
+        # Prompt size budget enforcement: cap at 40K chars
+        PROMPT_BUDGET = 40000
+        if len(direct_prompt) > PROMPT_BUDGET:
+            original_len = len(direct_prompt)
+            # Progressively truncate lower-priority sections
+            # Priority: assignment > mode > depth > focused_context > refs > breakthrough > theorems
+            sections = [
+                ("### Catalog Breakthrough Analysis\n", 2000),
+                ("### Key Theorems Available", 2000),
+                ("### Existing Verified Theorems\n", 2000),
+                ("### Catalog Reference Files", 8000),
+            ]
+            for marker, max_len in sections:
+                if len(direct_prompt) <= PROMPT_BUDGET:
+                    break
+                idx = direct_prompt.find(marker)
+                if idx >= 0:
+                    # Find the end of this section (next ### or ---)
+                    next_section = direct_prompt.find("\n###", idx + len(marker))
+                    next_dash = direct_prompt.find("\n---", idx + len(marker))
+                    end = min(
+                        next_section if next_section > 0 else len(direct_prompt),
+                        next_dash if next_dash > 0 else len(direct_prompt),
+                    )
+                    if end > idx + max_len:
+                        section = direct_prompt[idx:end]
+                        truncated = section[:max_len] + "\n[... truncated for size budget ...]\n"
+                        direct_prompt = direct_prompt[:idx] + truncated + direct_prompt[end:]
+            print(f"[Pi-Agent] Prompt budget enforced: {original_len} → {len(direct_prompt)} chars")
+
         # LLM enrichment: add mathematical depth and precision
         prompt_summary = direct_prompt[:3000]
         enrichment_request = textwrap.dedent(f"""\
@@ -2167,7 +2197,7 @@ class PiAgentClient:
                     catalog_section_text = ""
                     if "### Catalog Reference Files" in direct_prompt:
                         idx = direct_prompt.find("### Catalog Reference Files")
-                        catalog_section_text = "\n\n" + direct_prompt[idx:]
+                        catalog_section_text = "\n\n" + direct_prompt[idx:idx+5000]
 
                     enriched_prompt = cleaned + catalog_section_text
                     return enriched_prompt
