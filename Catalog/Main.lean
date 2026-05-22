@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1571 of the highest-quality
+A curated collection of 1575 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1571
+Total files: 1575
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -966,6 +966,7 @@ import FINAL.MachineLearning.Admissible
 import FINAL.MachineLearning.Advanced
 import FINAL.MachineLearning.AlgebraicCausalInference
 import FINAL.MachineLearning.AlgebraicNeuralArchitecture
+import FINAL.MachineLearning.Algorithm
 import FINAL.MachineLearning.Applications
 import FINAL.MachineLearning.ArithmeticMonodromy
 import FINAL.MachineLearning.ArithmeticPhaseLocking
@@ -1000,6 +1001,7 @@ import FINAL.MachineLearning.Coboundary
 import FINAL.MachineLearning.CoeffRestriction
 import FINAL.MachineLearning.CompilationCompression
 import FINAL.MachineLearning.Compositionality
+import FINAL.MachineLearning.CompressionPipeline
 import FINAL.MachineLearning.ConceptualDependencyCriticalPath
 import FINAL.MachineLearning.Consequences
 import FINAL.MachineLearning.Convergence
@@ -1046,6 +1048,7 @@ import FINAL.MachineLearning.LegendreGapReduction
 import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LoopFoundations
+import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MinCutPrinciple
 import FINAL.MachineLearning.MinMax
 import FINAL.MachineLearning.ModelShrinkage
@@ -1088,6 +1091,7 @@ import FINAL.MachineLearning.SmallCases
 import FINAL.MachineLearning.SpectralApprox
 import FINAL.MachineLearning.SpectralBounds
 import FINAL.MachineLearning.Stability
+import FINAL.MachineLearning.StructuralCases
 import FINAL.MachineLearning.SupportComplexity
 import FINAL.MachineLearning.SurvivorSieve
 import FINAL.MachineLearning.SymmEulerTransfer
