@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1527 of the highest-quality
+A curated collection of 1547 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1527
+Total files: 1547
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -14,7 +14,9 @@ import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.ArithmeticDarkMatter
 import FINAL.Algebra.AttackComposition
 import FINAL.Algebra.AverageCriterion
+import FINAL.Algebra.Barrier
 import FINAL.Algebra.Basic
+import FINAL.Algebra.BayesOptimal
 import FINAL.Algebra.Berggren
 import FINAL.Algebra.BerggrenHopfCore
 import FINAL.Algebra.BerggrenPythagoreanCore
@@ -23,6 +25,7 @@ import FINAL.Algebra.BootstrapDynamics
 import FINAL.Algebra.Bridge10_Research
 import FINAL.Algebra.Bridges
 import FINAL.Algebra.CanonicalTree
+import FINAL.Algebra.CategoryTheory
 import FINAL.Algebra.CausalCertification
 import FINAL.Algebra.CayleyDicksonHierarchy
 import FINAL.Algebra.ChainFactoring
@@ -40,14 +43,17 @@ import FINAL.Algebra.Counting
 import FINAL.Algebra.Covering
 import FINAL.Algebra.CrystallizerFrontier
 import FINAL.Algebra.CyclicGroupSubgroups
+import FINAL.Algebra.DeepConnections
 import FINAL.Algebra.DeepOpenProblems
 import FINAL.Algebra.Defs
 import FINAL.Algebra.DegreeTheory
 import FINAL.Algebra.Depth
 import FINAL.Algebra.Derivability
+import FINAL.Algebra.DescartesInvariance
 import FINAL.Algebra.DescentAlgebra
 import FINAL.Algebra.DifferenceSetSymmetry
 import FINAL.Algebra.Dim2
+import FINAL.Algebra.Distance
 import FINAL.Algebra.ECDLP
 import FINAL.Algebra.EMLCongruenceHilbert
 import FINAL.Algebra.EigenvalueRepulsion
@@ -57,16 +63,19 @@ import FINAL.Algebra.Exact
 import FINAL.Algebra.ExceptionalGroups
 import FINAL.Algebra.ExtTorBasic
 import FINAL.Algebra.Extensions
+import FINAL.Algebra.FHEOracles
 import FINAL.Algebra.FactoringViaBerggren
 import FINAL.Algebra.FermatFactor
 import FINAL.Algebra.FluidGravity
 import FINAL.Algebra.Foundation
 import FINAL.Algebra.Foundations
+import FINAL.Algebra.Foundations_2
 import FINAL.Algebra.Freivalds
 import FINAL.Algebra.FreivaldsBridge
 import FINAL.Algebra.FreivaldsSchwartzZippel
 import FINAL.Algebra.FreivaldsVerification
 import FINAL.Algebra.FrobeniusAlgebra
+import FINAL.Algebra.FrontierResearch
 import FINAL.Algebra.FutureExploration
 import FINAL.Algebra.GaloisObstruction
 import FINAL.Algebra.GenesisOracle
@@ -84,6 +93,7 @@ import FINAL.Algebra.HilbertClassFieldBasic
 import FINAL.Algebra.HomingMissile
 import FINAL.Algebra.HurwitzQuaternions
 import FINAL.Algebra.Hyperbolic
+import FINAL.Algebra.IOFExplorations
 import FINAL.Algebra.IdealClassGroupBridge
 import FINAL.Algebra.IdempotentCongruenceBasis
 import FINAL.Algebra.IdempotentHilbertBasis
@@ -96,7 +106,9 @@ import FINAL.Algebra.InversePythagoreanTree
 import FINAL.Algebra.InvertedTreeV3Research
 import FINAL.Algebra.KaroubiIdempotent
 import FINAL.Algebra.KernelCardinality
+import FINAL.Algebra.Kronecker
 import FINAL.Algebra.Langlands
+import FINAL.Algebra.Lattice
 import FINAL.Algebra.LatticeTreeDuality
 import FINAL.Algebra.LightConeTheory
 import FINAL.Algebra.LightDarkPrimes
@@ -117,10 +129,12 @@ import FINAL.Algebra.NewExplorations
 import FINAL.Algebra.NewResults
 import FINAL.Algebra.NewtonIdempotent
 import FINAL.Algebra.NilpotenceTheory
+import FINAL.Algebra.Nilpotent
 import FINAL.Algebra.Normalization
 import FINAL.Algebra.NuclearAlgebra
 import FINAL.Algebra.NullstellensatzPIT
 import FINAL.Algebra.NumberLineOracle
+import FINAL.Algebra.Observable
 import FINAL.Algebra.OpenDirections
 import FINAL.Algebra.OpenQuestions
 import FINAL.Algebra.OpenQuestions_2
@@ -131,6 +145,7 @@ import FINAL.Algebra.ParallelPaths
 import FINAL.Algebra.ParityCylinders
 import FINAL.Algebra.Periodic
 import FINAL.Algebra.Photon
+import FINAL.Algebra.PhysicalPhenomena
 import FINAL.Algebra.PolyMethod
 import FINAL.Algebra.PredictionGeometry
 import FINAL.Algebra.Probabilistic
@@ -142,6 +157,7 @@ import FINAL.Algebra.QDF_HE_Frontiers
 import FINAL.Algebra.QDF_NewDirections
 import FINAL.Algebra.QuadrupleGhostStructure
 import FINAL.Algebra.Quantum
+import FINAL.Algebra.QuantumCollapse
 import FINAL.Algebra.QuantumPhaseLatticeExtended
 import FINAL.Algebra.QuaternaryPythagoreanTree
 import FINAL.Algebra.QuaternionAlgebras
@@ -173,8 +189,11 @@ import FINAL.Algebra.StableReduction
 import FINAL.Algebra.StandardRep
 import FINAL.Algebra.StereographicBridge
 import FINAL.Algebra.StrangeLight
+import FINAL.Algebra.StrangeLoops
 import FINAL.Algebra.StreamingVerification
 import FINAL.Algebra.StrictUpperTriangular
+import FINAL.Algebra.Surface
+import FINAL.Algebra.SymmCube
 import FINAL.Algebra.Synthesis
 import FINAL.Algebra.Theorems
 import FINAL.Algebra.ThreeDreams
@@ -1203,6 +1222,7 @@ import FINAL.Pythagorean.Density
 import FINAL.Pythagorean.DepthSharpness
 import FINAL.Pythagorean.DepthStability
 import FINAL.Pythagorean.Deriv
+import FINAL.Pythagorean.DerivComplexity
 import FINAL.Pythagorean.Derivative
 import FINAL.Pythagorean.DerivativeNormalizer
 import FINAL.Pythagorean.DescentTheory
