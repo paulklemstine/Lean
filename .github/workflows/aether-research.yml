@@ -20,6 +20,7 @@ concurrency:
 
 env:
   AETHER_MAX_INFLIGHT: ${{ github.event.inputs.max_inflight || '9' }}
+  PYTHONUNBUFFERED: '1'
 
 jobs:
   research:
