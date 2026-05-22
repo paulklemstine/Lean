@@ -123,6 +123,7 @@ class KnowledgeExtractor:
             use_ollama=pi_cfg.get("use_ollama", False),
             ollama_base_url=pi_cfg.get("ollama_base_url"),
             ollama_model=pi_cfg.get("ollama_model"),
+            ollama_cloud=pi_cfg.get("ollama_cloud", {}),
         )
 
         self.output_organizer = OutputOrganizer(
@@ -1040,6 +1041,24 @@ Research mode: {concept.research_mode}
     # Phase 5: EVALUATE — Pi judges the quality
     # ==================================================================
 
+    @staticmethod
+    def _compact_result_lean(result_lean: str, max_chars: int = 100_000) -> str:
+        """Compact oversized result_lean for evaluation.
+
+        Keeps the first 50K chars (opening definitions/imports) and last 10K
+        chars (final theorems), with a marker showing what was omitted.
+        """
+        if len(result_lean) <= max_chars:
+            return result_lean
+        head = 50_000
+        tail = 10_000
+        omitted = len(result_lean) - head - tail
+        return (
+            result_lean[:head]
+            + f"\n\n[... {omitted:,} chars omitted for evaluation budget ...]\n\n"
+            + result_lean[-tail:]
+        )
+
     def evaluate(self, job: ResearchJob) -> ResearchJob:
         """Pi-Agent evaluates the quality of Aristotle's result."""
         if not job.result_lean:
@@ -1047,9 +1066,12 @@ Research mode: {concept.research_mode}
             job.quality_assessment = {"quality": "trivial", "analysis": "No Lean output"}
             return job
 
+        # Compact oversized result_lean before passing to evaluation
+        compact_lean = self._compact_result_lean(job.result_lean)
+
         # Pi-Agent: THE BRAINS — evaluates quality
         qa = self.pi_agent.evaluate_result_quality(
-            result_lean=job.result_lean,
+            result_lean=compact_lean,
             concept=job.concept,
             prompt=job.prompt,
         )
@@ -1059,7 +1081,7 @@ Research mode: {concept.research_mode}
         # First, get LLM-graded breakthrough assessment
         breakthrough_grade = "incremental"
         if self.pi_agent and hasattr(self.pi_agent, 'evaluate_breakthrough'):
-            breakthrough_grade = self.pi_agent.evaluate_breakthrough(job.result_lean, job.concept)
+            breakthrough_grade = self.pi_agent.evaluate_breakthrough(compact_lean, job.concept)
 
         heuristic_score = self.autoresearch.evaluate_concept_quality(
             concept_title=job.concept.title,
@@ -1086,7 +1108,7 @@ Research mode: {concept.research_mode}
                     existing_titles.update(s.declarations)
 
             qscore = qeval.evaluate(
-                lean_source=job.result_lean,
+                lean_source=compact_lean,
                 result_dir=job.project_dir if hasattr(job, 'project_dir') and job.project_dir else None,
                 concept_title=job.concept.title,
                 concept_description=job.concept.concept_description,
@@ -1219,50 +1241,47 @@ Research mode: {concept.research_mode}
         if job.result_discussion:
             parts.append({"type": "new", "path": f"Applications/Articles/discussion_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_discussion})
 
-        # 2. Ask Pi to review and authorize the placements
-        plan_prompt = (
-            f"Aristotle has generated the following files and diffs for the Catalog:\n"
-        )
-        for i, p in enumerate(parts):
-            plan_prompt += f"[{i}] {p['type'].upper()} -> {p['path']}\n"
-            
-        plan_prompt += (
-            f"\nReview these paths and assign each to the correct Catalog location.\n"
-            f"PLACEMENT RULES:\n"
-            f"- Lean proofs WITH sorries → Speculative/AutoResearch/\n"
-            f"- Lean proofs WITHOUT sorries → their real Catalog domain directory\n"
-            f"- Python demos/algorithms → Applications/Demos/\n"
-            f"- Research papers → Applications/Papers/\n"
-            f"- Popular-science articles → Applications/Articles/\n"
-            f"- Discussion articles → Applications/Articles/\n"
-            f"- JSON packages → Applications/Packages/\n"
-            f"- If a file should NOT be integrated (placeholder, empty, invalid), respond with \"REJECT\".\n"
-            f"Respond ONLY with a JSON dictionary mapping the index (as string) to the authorized target path relative to the Catalog root, or \"REJECT\".\n"
-            f"Example: {{\"0\": \"Tropical/MyFile.lean\", \"1\": \"Applications/Articles/my_article.md\", \"2\": \"REJECT\"}}"
-        )
-        
-        raw_plan = await asyncio.to_thread(
-            self.pi_agent._call_ollama, 
-            "You are Pi-Agent, an expert integration manager. Output ONLY valid JSON.", 
-            plan_prompt, 
-            timeout=120
-        )
-        
-        import json
-        try:
-            # Simple JSON extraction
-            match = re.search(r'\{.*\}', raw_plan, re.DOTALL)
-            plan = json.loads(match.group(0)) if match else {}
-        except Exception:
-            plan = {}
+        # 2. Separate auto-accept files from review-needed files
+        # Speculative/AutoResearch/ files are speculative by definition — auto-accept them.
+        # Applications/ files (Demos, Papers, Articles, Packages) are also auto-accepted.
+        # Only domain-directory Lean files and FINAL/ placements need Pi-Agent review.
+        SPECULATIVE_PREFIXES = ("Speculative/AutoResearch/", "Applications/Demos/",
+                                "Applications/Papers/", "Applications/Articles/",
+                                "Applications/Packages/")
+        auto_accept_parts = []
+        review_parts = []
+        for p in parts:
+            is_speculative = any(p["path"].startswith(prefix) or p["path"].startswith(f"Catalog/{prefix}") for prefix in SPECULATIVE_PREFIXES)
+            if is_speculative:
+                auto_accept_parts.append(p)
+            else:
+                review_parts.append(p)
 
-        # 3. Apply the changes — with deduplication and REJECT filtering
+        print(f"[Integrate] {len(auto_accept_parts)} auto-accepted, {len(review_parts)} need review")
+
+        # Build the integration plan: auto-accept speculative, review the rest in batches
+        plan = {}
+
+        # Auto-accept speculative/Application files
+        for p in auto_accept_parts:
+            plan[p["path"]] = p["path"]  # Keep their original path
+
+        # 3. Ask Pi to review domain-directory and FINAL/ placements (in batches of 25)
+        BATCH_SIZE = 25
+        if review_parts:
+            # If few enough, review in one batch
+            batches = [review_parts[i:i + BATCH_SIZE] for i in range(0, len(review_parts), BATCH_SIZE)]
+            for batch_idx, batch in enumerate(batches):
+                batch_plan = await self._review_file_batch(batch, batch_idx, len(batches))
+                plan.update(batch_plan)
+
+        # 4. Apply the changes — with deduplication and REJECT filtering
         written_paths = set()  # Track what we've already written to avoid duplicates
         files_written = 0  # Count files actually written to Catalog
-        
-        for i, p in enumerate(parts):
-            raw_target = plan.get(str(i), p["path"])
-            
+
+        for p in parts:
+            raw_target = plan.get(p["path"], p["path"])
+
             # Filter out REJECT entries (Pi said don't integrate this)
             if not raw_target or raw_target.upper().startswith("REJECT"):
                 print(f"[Integrate] Skipped (rejected by Pi): {p['path']}")
@@ -1398,6 +1417,61 @@ Research mode: {concept.research_mode}
                 print(f"[Integrate] Warning: Failed to update packages_db.js: {e}")
 
         return job
+
+    async def _review_file_batch(self, batch: List[Dict[str, Any]], batch_idx: int, total_batches: int) -> Dict[str, str]:
+        """Send a batch of files to Pi-Agent for accept/reject review.
+
+        Returns a dict mapping each file's original path to its authorized
+        target path (or "REJECT" if Pi says not to integrate).
+        """
+        # Build a compact listing of the batch
+        listing_parts = []
+        for i, p in enumerate(batch):
+            content_preview = (p.get("content", "") or "")[:300]
+            listing_parts.append(
+                f"[{i}] type={p['type']} path={p['path']}\n"
+                f"    preview: {content_preview}"
+            )
+        listing = "\n".join(listing_parts)
+
+        system = (
+            "You are a mathematical research integration assistant. "
+            "Review each file and decide where it should be placed in the Catalog, "
+            "or whether it should be REJECTED (duplicate, empty, or junk). "
+            "Output ONLY valid JSON: a dict mapping each index to either "
+            "the target path string or 'REJECT'."
+        )
+        user = (
+            f"Review these {len(batch)} files (batch {batch_idx+1}/{total_batches}).\n"
+            f"For each file, decide:\n"
+            f"- If it's a valid contribution, output its Catalog path (keep the suggested path unless it's wrong)\n"
+            f"- If it's empty, duplicate, or junk, output 'REJECT'\n\n"
+            f"{listing}\n\n"
+            f"Output JSON like: {{\"0\": \"Algebra/SomeFile.lean\", \"1\": \"REJECT\", ...}}"
+        )
+
+        try:
+            raw = self.pi_agent._call_ollama(system, user, timeout=120)
+        except Exception as e:
+            print(f"[Integrate] Pi-Agent batch review failed: {e}")
+            # On failure, auto-accept all files in the batch
+            return {p["path"]: p["path"] for p in batch}
+
+        result = self.pi_agent._parse_json_response(raw)
+        if not result:
+            print(f"[Integrate] Could not parse Pi-Agent batch review response, auto-accepting batch")
+            return {p["path"]: p["path"] for p in batch}
+
+        # Map Pi's index-based response back to file paths
+        plan = {}
+        for i, p in enumerate(batch):
+            pi_decision = result.get(str(i), p["path"])
+            if isinstance(pi_decision, str):
+                plan[p["path"]] = pi_decision
+            else:
+                plan[p["path"]] = p["path"]  # Fallback: keep original path
+
+        return plan
 
     def _authorize_integration_path(self, job: ResearchJob, part: Dict[str, Any], requested_path: str) -> str:
         """Normalize Pi/Aristotle placement decisions into safe Catalog paths.
@@ -1689,7 +1763,7 @@ Research mode: {concept.research_mode}
         user = f"Here are {len(available)} available future research directions:\n\n{directions_text}"
 
         try:
-            raw = self.pi_agent._call_pollinations(system, user, timeout=60)
+            raw = self.pi_agent._call_ollama(system, user, timeout=60)
         except Exception as e:
             print(f"[Cleanup] Pi-Agent call failed: {e}")
             return
@@ -1844,7 +1918,7 @@ Research mode: {concept.research_mode}
         user = f"Lean files to review ({len(batch)} gray-area files):\n\n{listing}"
 
         try:
-            raw = self.pi_agent._call_pollinations(system, user, timeout=60)
+            raw = self.pi_agent._call_ollama(system, user, timeout=60)
         except Exception as e:
             print(f"[Prune] Pi-Agent call failed: {e}")
             self._rebuild_final_main(final_dir)

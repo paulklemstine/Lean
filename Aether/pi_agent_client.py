@@ -521,7 +521,8 @@ class PiAgentClient:
         input_chars = len(system) + len(user)
 
         # Truncate oversized prompts to avoid 400 Bad Request from Pollinations
-        MAX_PROMPT_CHARS = 50000
+        # This is a last-resort safety net — upstream budgeting should keep prompts well under this
+        MAX_PROMPT_CHARS = 40000
         if input_chars > MAX_PROMPT_CHARS:
             print(f"[Pi-Agent] Prompt too large ({input_chars} chars), truncating to {MAX_PROMPT_CHARS}")
             user = user[:MAX_PROMPT_CHARS - len(system)] + "\n\n[... truncated for API limit ...]"
@@ -2007,12 +2008,16 @@ class PiAgentClient:
         """
         refs = catalog_references or concept.catalog_references or []
 
+        # Truncate large text fields to keep prompt within budget
+        _concept_desc = (concept.concept_description or "")[:2000]
+        _math_framing = (concept.mathematical_framing or "")[:1000]
+
         # Build focused catalog context (specific theorem signatures)
         focused_context = ""
         if self.catalog_analyzer:
             focused_context = self.catalog_analyzer.build_focused_context(
                 domain=concept.domain,
-                concept_description=concept.concept_description,
+                concept_description=_concept_desc,
                 max_theorems=15,
             )
 
@@ -2054,9 +2059,9 @@ class PiAgentClient:
         fd_theorem_listing = ""
         if self.catalog_analyzer:
             if hasattr(self.catalog_analyzer, 'analyze_catalog_breakthrough_potential'):
-                fd_breakthrough = self.catalog_analyzer.analyze_catalog_breakthrough_potential()
+                fd_breakthrough = self.catalog_analyzer.analyze_catalog_breakthrough_potential()[:1500]
             if hasattr(self.catalog_analyzer, 'get_key_theorem_listing'):
-                fd_theorem_listing = self.catalog_analyzer.get_key_theorem_listing(max_per_domain=5, max_total=30)
+                fd_theorem_listing = self.catalog_analyzer.get_key_theorem_listing(max_per_domain=3, max_total=15)[:1500]
 
         # Concise mode instructions
         mode_brief = {
@@ -2099,7 +2104,7 @@ class PiAgentClient:
         # Build the streamlined prompt
         lean_section = ""
         if concept.lean_guess:
-            lean_section = f"\n### Lean 4 Sketch\n{concept.lean_guess}\n"
+            lean_section = f"\n### Lean 4 Sketch\n{concept.lean_guess[:500]}\n"
 
         # Previously proved theorems (if any)
         theorem_section = ""
@@ -2124,10 +2129,10 @@ class PiAgentClient:
             {depth_requirements}
 
             ### Research Direction
-            {concept.concept_description}
+            {_concept_desc}
 
             ### Mathematical Framing
-            {concept.mathematical_framing}
+            {_math_framing}
             {lean_section}
 
             ### Existing Verified Theorems
@@ -2228,8 +2233,8 @@ class PiAgentClient:
             Soli Deo Gloria.
         """)
 
-        # Prompt size budget enforcement: cap at 40K chars
-        PROMPT_BUDGET = 40000
+        # Prompt size budget enforcement: cap at 30K chars
+        PROMPT_BUDGET = 30000
         if len(direct_prompt) > PROMPT_BUDGET:
             original_len = len(direct_prompt)
             # Progressively truncate lower-priority sections
@@ -2257,6 +2262,10 @@ class PiAgentClient:
                         truncated = section[:max_len] + "\n[... truncated for size budget ...]\n"
                         direct_prompt = direct_prompt[:idx] + truncated + direct_prompt[end:]
             print(f"[Pi-Agent] Prompt budget enforced: {original_len} → {len(direct_prompt)} chars")
+
+        # Final safety: if still over budget after section truncation, hard-truncate
+        if len(direct_prompt) > PROMPT_BUDGET:
+            direct_prompt = direct_prompt[:PROMPT_BUDGET] + "\n\n[... truncated for size budget ...]"
 
         # LLM enrichment: add mathematical depth and precision
         prompt_summary = direct_prompt[:3000]
@@ -2301,6 +2310,9 @@ class PiAgentClient:
                         catalog_section_text = "\n\n" + direct_prompt[idx:idx+5000]
 
                     enriched_prompt = cleaned + catalog_section_text
+                    # Enriched prompt must also respect the budget
+                    if len(enriched_prompt) > PROMPT_BUDGET:
+                        enriched_prompt = enriched_prompt[:PROMPT_BUDGET] + "\n\n[... truncated for size budget ...]"
                     return enriched_prompt
                 else:
                     print("[Pi-Agent] Enrichment lacked mathematical content, using direct prompt")
