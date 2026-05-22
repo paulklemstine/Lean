@@ -8191,6 +8191,28 @@
       "ambition_level": "extension",
       "lineage_refs": [],
       "domain_bridges": []
+    },
+    {
+      "id": "fd_0328",
+      "title": "Renormalization Fixed Points for Proof Search on Self-Similar CNF Families",
+      "description": "Conjecture: There exists an explicit recursively defined family of unsatisfiable CNFs {F_n} and a coarse-graining operator R on clause-learning search states such that the distribution of reduced solver states under CDCL dynamics converges, after rescaling, to a nontrivial fixed point of R as n -> infinity; equivalently, macroscopic proof-search observables (learned-clause width profile, restart-interval statistics, and backdoor-fragment entropy) become asymptotically scale-invariant. Test: Construct a self-similar CNF family, define measurable coarse observables on solver traces, and check whether repeated coarse-graining yields convergence to a stable law independent of low-level implementation details; refute by showing no implementation-robust fixed-point behavior or by proving observables remain scale-dependent. Impact: Would introduce a statistical-physics universality theory for SAT/proof complexity, enabling prediction of solver hardness classes from renormalization data and suggesting new solver designs that target relevant macroscopic invariants rather than local heuristics.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Proof Complexity",
+        "Statistical Physics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-22T03:14:20.273448+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     }
   ],
   "pruned": [

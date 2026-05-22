@@ -5,6 +5,13 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_5_residual_finiteness_and_semantic_disti.json",
+    "title": "Residual Finiteness and Semantic Distinguishability for Free Groups",
+    "domain": "Algebraic Program Equivalence / Combinatorial Group Theory",
+    "date": "2026-05-22T03:41:03Z",
+    "exp_id": "64769cba"
+  },
+  {
     "filename": "convex_geometry_brunn_minkowski_theory.json",
     "title": "Convex Geometry Beyond Brunn-Minkowski: Mixed Volumes, Support Duality, and a Formal Route to Isoperimetry",
     "domain": "Geometry",
@@ -24,13 +31,6 @@ window.PACKAGE_INDEX = [
     "domain": "Geometric Numerical Integration / Mathematical Physics",
     "date": "2026-05-22T01:09:57Z",
     "exp_id": "1dba459e"
-  },
-  {
-    "filename": "direction_5_residual_finiteness_and_semantic_disti.json",
-    "title": "Residual Finiteness and Semantic Distinguishability for Free Groups",
-    "domain": "Algebraic Program Equivalence / Combinatorial Group Theory",
-    "date": "2026-05-22T01:09:01Z",
-    "exp_id": "64769cba"
   },
   {
     "filename": "direction_2_tates_thesis_functional_equation_via_a.json",
@@ -1616,7 +1616,7 @@ window.PACKAGE_DB = {
       "algorithms": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Core algorithms for free group semantic separation.\n\nImplements the mathematical algorithms described in the research paper:\n1. Free group word reduction (Dehn's algorithm)\n2. Stallings automaton construction for permutation representations\n3. Bounded test suite generation\n4. Separation profile computation\n\nAll algorithms are backed by the formally verified theorems in the Lean development.\n\"\"\"\n\nimport itertools\nfrom typing import Optional\nfrom dataclasses import dataclass\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Data Structures\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n@dataclass(frozen=True)\nclass Letter:\n    \"\"\"A letter in the free group: generator with sign.\"\"\"\n    gen: str\n    positive: bool\n\n    def inverse(self) -> 'Letter':\n        return Letter(self.gen, not self.positive)\n\n    def __repr__(self):\n        return self.gen if self.positive else f\"{self.gen}\u207b\u00b9\"\n\n\n@dataclass\nclass FreeGroupWord:\n    \"\"\"A reduced word in the free group.\"\"\"\n    letters: list[Letter]\n\n    @staticmethod\n    def identity() -> 'FreeGroupWord':\n        return FreeGroupWord([])\n\n    @staticmethod\n    def generator(g: str) -> 'FreeGroupWord':\n        return FreeGroupWord([Letter(g, True)])\n\n    @staticmethod\n    def from_string(s: str) -> 'FreeGroupWord':\n        \"\"\"Parse 'aba^-1b^-1' into a FreeGroupWord.\"\"\"\n        letters = []\n        i = 0\n        while i < len(s):\n            if s[i].isalpha():\n                gen = s[i]\n                if i + 3 < len(s) and s[i+1:i+4] == '^-1':\n                    letters.append(Letter(gen, False))\n                    i += 4\n                elif i + 2 < len(s) and s[i+1:i+3] == '-1':\n                    letters.append(Letter(gen, False))\n                    i += 3\n                else:\n                    letters.append(Letter(gen, True))\n                    i += 1\n            else:\n                i += 1\n        return FreeGroupWord(letters).reduce()\n\n    def reduce(self) -> 'FreeGroupWord':\n        \"\"\"Reduce the word by canceling adjacent inverse pairs.\n\n        Time complexity: O(n) where n = len(self.letters)\n        Space complexity: O(n)\n\n        This implements Dehn's algorithm for free group word reduction.\n        The result is the unique reduced representative of the equivalence class.\n        \"\"\"\n        stack: list[Letter] = []\n        for letter in self.letters:\n            if stack and stack[-1].gen == letter.gen and stack[-1].positive != letter.positive:\n                stack.pop()\n            else:\n                stack.append(letter)\n        return FreeGroupWord(stack)\n\n    def multiply(self, other: 'FreeGroupWord') -> 'FreeGroupWord':\n        \"\"\"Multiply two words and reduce. O(n + m) time.\"\"\"\n        return FreeGroupWord(self.letters + other.letters).reduce()\n\n    def invert(self) -> 'FreeGroupWord':\n        \"\"\"Invert the word. O(n) time.\"\"\"\n        return FreeGroupWord([l.inverse() for l in reversed(self.letters)])\n\n    @property\n    def length(self) -> int:\n        return len(self.letters)\n\n    @property\n    def is_identity(self) -> bool:\n        return len(self.letters) == 0\n\n    @property\n    def generators_used(self) -> set[str]:\n        return {l.gen for l in self.letters}\n\n    def __eq__(self, other):\n        if not isinstance(other, FreeGroupWord):\n            return False\n        return self.letters == other.letters\n\n    def __hash__(self):\n        return hash(tuple(self.letters))\n\n    def __repr__(self):\n        if not self.letters:\n            return \"1\"\n        return \"\".join(str(l) for l in self.letters)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 1: Stallings Automaton Construction\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n@dataclass\nclass StallingsAutomaton:\n    \"\"\"The Stallings automaton for a free group word.\n\n    For a reduced word w of length L, the automaton has L+1 states (vertices)\n    and L edges, one for each letter of w. The edges trace a path from\n    state 0 to state L.\n\n    The automaton produces a permutation representation:\n        \u03c6 : generators \u2192 Perm(Fin(L+1))\n    such that the composition of permutations according to w maps state 0\n    to state L, proving w \u2260 1 in the image.\n    \"\"\"\n    word: FreeGroupWord\n    n_states: int\n    # For each generator: partial permutation data\n    forward_edges: dict[str, dict[int, int]]  # gen -> {source -> target}\n    backward_edges: dict[str, dict[int, int]]  # gen -> {target -> source}\n\n    @staticmethod\n    def build(word: FreeGroupWord) -> 'StallingsAutomaton':\n        \"\"\"Build the Stallings automaton for a reduced word.\n\n        Time complexity: O(L) where L = word.length\n        Space complexity: O(L)\n\n        The construction creates L+1 vertices and L directed edges.\n        For each letter (gen, positive) at position i (0-indexed) in the\n        REVERSED word:\n        - If positive: generator gen maps vertex i \u2192 i+1\n        - If negative: generator gen maps vertex i+1 \u2192 i\n\n        The forward_edges dict stores the partial permutation for each\n        generator (source \u2192 target for the generator, NOT its inverse).\n        \"\"\"\n        L = word.length\n        n_states = L + 1\n        forward_edges: dict[str, dict[int, int]] = {}\n        backward_edges: dict[str, dict[int, int]] = {}\n\n        # Process reversed word to get correct vertex numbering\n        reversed_letters = list(reversed(word.letters))\n        for i, letter in enumerate(reversed_letters):\n            gen = letter.gen\n            if gen not in forward_edges:\n                forward_edges[gen] = {}\n                backward_edges[gen] = {}\n            if letter.positive:\n                # gen maps i \u2192 i+1\n                forward_edges[gen][i] = i + 1\n            else:\n                # gen\u207b\u00b9 maps i \u2192 i+1, so gen maps i+1 \u2192 i\n                forward_edges[gen][i + 1] = i\n\n        return StallingsAutomaton(\n            word=word,\n            n_states=n_states,\n            forward_edges=forward_edges,\n            backward_edges=backward_edges,\n        )\n\n    def extend_to_permutation(self, gen: str) -> list[int]:\n        \"\"\"Extend the partial permutation for generator `gen` to a full permutation.\n\n        Time complexity: O(n_states)\n\n        Uses a greedy matching: vertices not in the partial function's domain\n        are matched to vertices not in its range, preserving injectivity.\n        \"\"\"\n        n = self.n_states\n        perm = list(range(n))  # Start with identity\n\n        # The forward_edges dict gives the partial permutation for gen\n        # (source \u2192 target for the generator itself)\n        partial = self.forward_edges.get(gen, {})\n\n        # Apply the partial function\n        used_sources = set(partial.keys())\n        used_targets = set(partial.values())\n\n        # Remaining vertices (not in domain or range)\n        free_sources = [i for i in range(n) if i not in used_sources]\n        free_targets = [i for i in range(n) if i not in used_targets]\n\n        # For reduced words, the partial function is injective,\n        # so domain and range have equal size\n        assert len(free_sources) == len(free_targets), \\\n            f\"Mismatch for gen={gen}: free_sources={free_sources}, free_targets={free_targets}, partial={partial}\"\n        extension = dict(zip(free_sources, free_targets))\n\n        # Build full permutation\n        for src, tgt in partial.items():\n            perm[src] = tgt\n        for src, tgt in extension.items():\n            perm[src] = tgt\n\n        return perm\n\n    def to_representation(self, generators: list[str]) -> dict[str, list[int]]:\n        \"\"\"Convert the automaton to a permutation representation.\n\n        Returns \u03c6 : generators \u2192 Perm(Fin(n_states))\n\n        Time complexity: O(|generators| * n_states)\n        \"\"\"\n        phi = {}\n        for gen in generators:\n            phi[gen] = self.extend_to_permutation(gen)\n        return phi\n\n\ndef stallings_separator(word: FreeGroupWord,\n                        generators: list[str]) -> Optional[dict[str, list[int]]]:\n    \"\"\"Construct a Stallings permutation representation separating word from identity.\n\n    Time complexity: O(L * |generators|) where L = word.length\n    Space complexity: O(L * |generators|)\n\n    Returns None if word is identity, otherwise returns \u03c6 : generators \u2192 S_{L+1}\n    such that \u03c6(word) \u2260 identity.\n    \"\"\"\n    if word.is_identity:\n        return None\n    automaton = StallingsAutomaton.build(word)\n    return automaton.to_representation(generators)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 2: Brute-Force Separation Search\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef brute_force_separator(w1: FreeGroupWord,\n                          w2: FreeGroupWord,\n                          generators: list[str],\n                          max_k: int = 8) -> Optional[tuple[int, dict[str, list[int]]]]:\n    \"\"\"Find the smallest k and assignment \u03c6 : generators \u2192 S_k separating w1 from w2.\n\n    Time complexity: O(\u03a3_{k=2}^{max_k} (k!)^|generators| * k * max(|w1|, |w2|))\n    Space complexity: O(k * |generators|)\n\n    This is exponential but exhaustive: it is guaranteed to find the minimum k\n    if one exists within the search range.\n    \"\"\"\n    for k in range(2, max_k + 1):\n        perms = list(itertools.permutations(range(k)))\n        for assignment in itertools.product(perms, repeat=len(generators)):\n            phi = {g: list(p) for g, p in zip(generators, assignment)}\n            v1 = _eval_word_perm(w1, phi, k)\n            v2 = _eval_word_perm(w2, phi, k)\n            if v1 != v2:\n                return k, phi\n    return None\n\n\ndef _eval_word_perm(word: FreeGroupWord,\n                    phi: dict[str, list[int]],\n                    k: int) -> list[int]:\n    \"\"\"Evaluate a word as a permutation under assignment phi.\"\"\"\n    result = list(range(k))\n    for letter in word.letters:\n        p = phi.get(letter.gen, list(range(k)))\n        if not letter.positive:\n            p = _invert_perm(p)\n        result = _compose_perm(p, result)\n    return result\n\n\ndef _compose_perm(p: list[int], q: list[int]) -> list[int]:\n    return [p[q[i]] for i in range(len(p))]\n\n\ndef _invert_perm(p: list[int]) -> list[int]:\n    inv = [0] * len(p)\n    for i, v in enumerate(p):\n        inv[v] = i\n    return inv\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 3: Bounded Test Suite Generation\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n@dataclass\nclass TestSuite:\n    \"\"\"A finite test suite for semantic separation up to a given word length.\"\"\"\n    tests: list[tuple[int, dict[str, list[int]]]]  # (degree, assignment) pairs\n    generators: list[str]\n    max_length: int\n\n    def separates(self, w1: FreeGroupWord, w2: FreeGroupWord) -> bool:\n        \"\"\"Check if the test suite separates w1 from w2.\"\"\"\n        for k, phi in self.tests:\n            v1 = _eval_word_perm(w1, phi, k)\n            v2 = _eval_word_perm(w2, phi, k)\n            if v1 != v2:\n                return True\n        return False\n\n    @property\n    def size(self) -> int:\n        return len(self.tests)\n\n    @property\n    def max_degree(self) -> int:\n        return max((k for k, _ in self.tests), default=0)\n\n\ndef generate_test_suite(generators: list[str],\n                        max_length: int,\n                        method: str = 'stallings') -> TestSuite:\n    \"\"\"Generate a test suite that separates all distinct pairs up to max_length.\n\n    Args:\n        generators: List of generator names\n        max_length: Maximum word length\n        method: 'stallings' for Stallings construction, 'brute_force' for exhaustive search\n\n    Time complexity (Stallings): O(N^2 * L * |generators|) where N = number of words\n    Time complexity (brute force): much higher\n\n    Returns a TestSuite that is guaranteed to separate all distinct pairs\n    of reduced words of length \u2264 max_length.\n    \"\"\"\n    words = _enumerate_reduced_words(generators, max_length)\n    tests_set: set[tuple] = set()\n    tests: list[tuple[int, dict[str, list[int]]]] = []\n\n    for i in range(len(words)):\n        for j in range(i + 1, len(words)):\n            w1, w2 = words[i], words[j]\n            # Check if already separated\n            already_separated = False\n            for k, phi in tests:\n                v1 = _eval_word_perm(w1, phi, k)\n                v2 = _eval_word_perm(w2, phi, k)\n                if v1 != v2:\n                    already_separated = True\n                    break\n\n            if not already_separated:\n                # Find a separator\n                diff = w1.multiply(w2.invert())\n                if method == 'stallings':\n                    phi = stallings_separator(diff, generators)\n                    if phi is not None:\n                        k = diff.length + 1\n                        key = (k, tuple(sorted(\n                            (g, tuple(p)) for g, p in phi.items()\n                        )))\n                        if key not in tests_set:\n                            tests_set.add(key)\n                            tests.append((k, phi))\n                else:\n                    result = brute_force_separator(w1, w2, generators)\n                    if result:\n                        k, phi = result\n                        key = (k, tuple(sorted(\n                            (g, tuple(p)) for g, p in phi.items()\n                        )))\n                        if key not in tests_set:\n                            tests_set.add(key)\n                            tests.append((k, phi))\n\n    return TestSuite(tests=tests, generators=generators, max_length=max_length)\n\n\ndef _enumerate_reduced_words(generators: list[str],\n                             max_length: int) -> list[FreeGroupWord]:\n    \"\"\"Enumerate all reduced words of length \u2264 max_length.\"\"\"\n    words = [FreeGroupWord.identity()]\n    letters = [Letter(g, b) for g in generators for b in [True, False]]\n    for length in range(1, max_length + 1):\n        for combo in itertools.product(letters, repeat=length):\n            word = FreeGroupWord(list(combo)).reduce()\n            if word.length == length:\n                words.append(word)\n    return words\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 4: Separation Profile Analysis\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef compute_separation_profile(generators: list[str],\n                               max_L: int,\n                               max_k: int = 8,\n                               verbose: bool = True) -> dict[int, dict]:\n    \"\"\"Compute detailed separation profile data.\n\n    For each L \u2264 max_L, computes:\n    - Maximum k needed to separate all pairs\n    - Distribution of separation degrees\n    - Whether S_{L+1} suffices (conjecture test)\n\n    Returns dict mapping L to analysis data.\n    \"\"\"\n    results = {}\n\n    for L in range(1, max_L + 1):\n        words = _enumerate_reduced_words(generators, L)\n        n_words = len(words)\n        n_pairs = n_words * (n_words - 1) // 2\n\n        degree_counts = {}  # k -> count of pairs needing exactly k\n        max_k_needed = 2\n        unseparated = 0\n\n        for i in range(len(words)):\n            for j in range(i + 1, len(words)):\n                result = brute_force_separator(words[i], words[j],\n                                               generators, max_k)\n                if result:\n                    k, _ = result\n                    degree_counts[k] = degree_counts.get(k, 0) + 1\n                    max_k_needed = max(max_k_needed, k)\n                else:\n                    unseparated += 1\n\n        results[L] = {\n            'n_words': n_words,\n            'n_pairs': n_pairs,\n            'max_k': max_k_needed,\n            'degree_distribution': degree_counts,\n            'unseparated': unseparated,\n            'conjecture_holds': max_k_needed <= L + 1,\n        }\n\n        if verbose:\n            print(f\"L={L}: {n_words} words, {n_pairs} pairs, \"\n                  f\"max k={max_k_needed}, \"\n                  f\"S_{{{L+1}}} conjecture: \"\n                  f\"{'\u2713' if max_k_needed <= L + 1 else '\u2717'}\")\n\n    return results\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Algorithm 5: Cayley Embedding\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef cayley_embedding(group_table: list[list[int]]) -> list[list[int]]:\n    \"\"\"Compute the Cayley embedding of a finite group into its symmetric group.\n\n    Args:\n        group_table: n\u00d7n multiplication table where group_table[i][j] = i * j\n\n    Returns:\n        List of permutations, one for each group element.\n\n    Time complexity: O(n^2)\n\n    This implements the left regular representation: for each group element g,\n    the permutation \u03c3_g maps h to g*h.\n    \"\"\"\n    n = len(group_table)\n    perms = []\n    for g in range(n):\n        perm = [group_table[g][h] for h in range(n)]\n        perms.append(perm)\n    return perms\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Example Usage\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == '__main__':\n    print(\"\u2550\u2550\u2550 Algorithm Demonstrations \u2550\u2550\u2550\\n\")\n\n    # Example 1: Stallings separator\n    print(\"\u2500\u2500\u2500 Stallings Automaton \u2500\u2500\u2500\")\n    w = FreeGroupWord.from_string(\"aba^-1b^-1\")\n    print(f\"Word: {w} (commutator [a,b])\")\n    phi = stallings_separator(w, ['a', 'b'])\n    if phi:\n        print(f\"Stallings representation (degree {w.length + 1}):\")\n        for gen, perm in phi.items():\n            print(f\"  \u03c6({gen}) = {perm}\")\n        result = _eval_word_perm(w, phi, w.length + 1)\n        print(f\"  \u03c6(w) = {result}\")\n        print(f\"  \u03c6(w)(0) = {result[0]} \u2260 0: {'\u2713' if result[0] != 0 else '\u2717'}\")\n\n    # Example 2: Test suite generation\n    print(\"\\n\u2500\u2500\u2500 Test Suite Generation \u2500\u2500\u2500\")\n    suite = generate_test_suite(['a', 'b'], 2, method='stallings')\n    print(f\"Test suite for L=2: {suite.size} tests, max degree {suite.max_degree}\")\n\n    # Verify completeness\n    words = _enumerate_reduced_words(['a', 'b'], 2)\n    all_separated = True\n    for i in range(len(words)):\n        for j in range(i + 1, len(words)):\n            if not suite.separates(words[i], words[j]):\n                print(f\"  FAIL: cannot separate {words[i]} and {words[j]}\")\n                all_separated = False\n    if all_separated:\n        print(f\"  \u2713 Suite correctly separates all {len(words)} words pairwise\")\n\n    # Example 3: Separation profile\n    print(\"\\n\u2500\u2500\u2500 Separation Profile (rank 2, L \u2264 3) \u2500\u2500\u2500\")\n    profile = compute_separation_profile(['a', 'b'], 3, max_k=6)\n",
       "demo": "#!/usr/bin/env python3\n\"\"\"\napplications.py \u2014 Real-world applications of free group semantic separation.\n\nDemonstrates how the mathematical theory of residual finiteness and semantic\ndistinguishability applies to:\n1. Compiler optimization verification\n2. Reversible circuit equivalence checking\n3. Algebraic program testing\n\"\"\"\n\nfrom algorithms import (\n    FreeGroupWord, Letter, stallings_separator,\n    brute_force_separator, _eval_word_perm, _invert_perm, _compose_perm,\n    generate_test_suite, _enumerate_reduced_words\n)\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 1: Compiler Optimization Verification\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef compiler_verification_demo():\n    \"\"\"Demonstrate verification of compiler optimizations using finite group testing.\n\n    In a reversible computation model, operations are represented as generators\n    of a free group:\n    - Generator 'a' = operation A (e.g., NOT gate)\n    - Generator 'b' = operation B (e.g., swap gate)\n    - 'a^-1' = inverse of A\n\n    A compiler optimization rewrites program P\u2081 to P\u2082. The optimization is\n    CORRECT iff P\u2081 = P\u2082 in the free group (same reduced word).\n\n    Our theorem says: if P\u2081 \u2260 P\u2082, then there exists a finite permutation\n    test that detects the difference.\n    \"\"\"\n    print(\"\u2550\u2550\u2550 Application 1: Compiler Optimization Verification \u2550\u2550\u2550\\n\")\n\n    # Example: A compiler claims aba = bab (braid relation)\n    # In a free group, this is FALSE (no braid relation)\n    p1 = FreeGroupWord.from_string(\"aba\")\n    p2 = FreeGroupWord.from_string(\"bab\")\n\n    print(f\"Program P\u2081: {p1}\")\n    print(f\"Program P\u2082: {p2}\")\n    print(f\"Compiler claims P\u2081 \u2261 P\u2082\")\n    print()\n\n    if p1 == p2:\n        print(\"\u2713 Programs are identical (same reduced word)\")\n    else:\n        print(\"\u2717 Programs differ! Searching for a distinguishing test...\")\n        diff = p1.multiply(p2.invert())\n        print(f\"  Difference word P\u2081P\u2082\u207b\u00b9 = {diff}\")\n\n        result = brute_force_separator(p1, p2, ['a', 'b'])\n        if result:\n            k, phi = result\n            v1 = _eval_word_perm(p1, phi, k)\n            v2 = _eval_word_perm(p2, phi, k)\n            print(f\"  Found distinguishing test in S_{k}:\")\n            for gen, perm in phi.items():\n                print(f\"    \u03c6({gen}) = {perm}\")\n            print(f\"  \u03c6(P\u2081) = {v1}\")\n            print(f\"  \u03c6(P\u2082) = {v2}\")\n            print(f\"  These are different \u27f9 optimization is INCORRECT\")\n\n    print()\n\n    # Example 2: A correct optimization\n    # a * a^-1 * b = b (cancellation)\n    p3 = FreeGroupWord.from_string(\"aa^-1b\")\n    p4 = FreeGroupWord.from_string(\"b\")\n    print(f\"Program P\u2083: aa\u207b\u00b9b (before reduction)\")\n    print(f\"Program P\u2084: b\")\n    print(f\"After reduction: P\u2083 = {p3}, P\u2084 = {p4}\")\n    if p3 == p4:\n        print(\"\u2713 Optimization is CORRECT (same reduced word)\")\n    else:\n        print(\"\u2717 Optimization is INCORRECT\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 2: Reversible Circuit Equivalence\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef reversible_circuit_demo():\n    \"\"\"Demonstrate equivalence checking for reversible circuits.\n\n    Reversible logic gates (Toffoli, Fredkin, CNOT, etc.) form a group.\n    Two circuits are equivalent iff they represent the same group element.\n\n    We model a simplified scenario with two gates:\n    - X gate (NOT): generator 'x'\n    - CNOT-like gate: generator 'c'\n    \"\"\"\n    print(\"\u2550\u2550\u2550 Application 2: Reversible Circuit Equivalence \u2550\u2550\u2550\\n\")\n\n    generators = ['x', 'c']\n\n    # Two candidate circuits\n    circuit_a = FreeGroupWord.from_string(\"xcxc^-1x^-1\")\n    circuit_b = FreeGroupWord.from_string(\"cx^-1c^-1\")\n\n    print(f\"Circuit A: {circuit_a}\")\n    print(f\"Circuit B: {circuit_b}\")\n\n    if circuit_a == circuit_b:\n        print(\"\u2713 Circuits are equivalent\")\n    else:\n        diff = circuit_a.multiply(circuit_b.invert())\n        print(f\"Difference: A\u00b7B\u207b\u00b9 = {diff}\")\n\n        # Use Stallings separator\n        phi = stallings_separator(diff, generators)\n        if phi:\n            n = diff.length + 1\n            va = _eval_word_perm(circuit_a, phi, n)\n            vb = _eval_word_perm(circuit_b, phi, n)\n            print(f\"Stallings test (S_{n}):\")\n            for gen, perm in phi.items():\n                print(f\"  \u03c6({gen}) = {perm}\")\n            print(f\"  \u03c6(A) = {va}\")\n            print(f\"  \u03c6(B) = {vb}\")\n            if va != vb:\n                print(\"  \u2717 Circuits are NOT equivalent\")\n            else:\n                print(\"  \u2713 Test inconclusive (need larger group)\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 3: Algebraic Test Suite for Program Equivalence\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef test_suite_demo():\n    \"\"\"Demonstrate generation and use of finite test suites.\n\n    For programs up to a given size, generate a FINITE set of tests\n    that is guaranteed to detect any inequivalence.\n    \"\"\"\n    print(\"\u2550\u2550\u2550 Application 3: Finite Test Suite for Program Equivalence \u2550\u2550\u2550\\n\")\n\n    generators = ['a', 'b']\n    max_length = 2\n\n    print(f\"Generators: {generators}\")\n    print(f\"Maximum program length: {max_length}\")\n    print()\n\n    # Generate the test suite\n    suite = generate_test_suite(generators, max_length, method='stallings')\n    print(f\"Generated test suite:\")\n    print(f\"  Number of tests: {suite.size}\")\n    print(f\"  Maximum permutation degree: {suite.max_degree}\")\n    print()\n\n    # List all tests\n    for i, (k, phi) in enumerate(suite.tests):\n        print(f\"  Test {i+1} (S_{k}):\")\n        for gen, perm in phi.items():\n            print(f\"    \u03c6({gen}) = {perm}\")\n    print()\n\n    # Verify completeness\n    words = _enumerate_reduced_words(generators, max_length)\n    print(f\"Total programs of length \u2264 {max_length}: {len(words)}\")\n    total_pairs = len(words) * (len(words) - 1) // 2\n    separated = 0\n    failed = 0\n\n    for i in range(len(words)):\n        for j in range(i + 1, len(words)):\n            if suite.separates(words[i], words[j]):\n                separated += 1\n            else:\n                failed += 1\n                print(f\"  FAIL: {words[i]} vs {words[j]}\")\n\n    print(f\"Pairs separated: {separated}/{total_pairs}\")\n    if failed == 0:\n        print(\"\u2713 Test suite is COMPLETE \u2014 detects all inequivalences!\")\n    else:\n        print(f\"\u2717 {failed} pairs not separated\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Application 4: Property-Based Testing Analogue\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\ndef property_testing_demo():\n    \"\"\"Show how residual finiteness provides a mathematical foundation\n    for property-based testing of algebraic programs.\n\n    Key insight: Instead of testing against arbitrary models (as in QuickCheck),\n    test against a bounded family of finite permutation groups.\n    This is COMPLETE for bounded-length programs.\n    \"\"\"\n    print(\"\u2550\u2550\u2550 Application 4: Certified Property-Based Testing \u2550\u2550\u2550\\n\")\n\n    generators = ['f', 'g']\n\n    # Simulate a \"QuickCheck-like\" test\n    # Claim: f\u00b7g\u00b7f\u207b\u00b9 = g (i.e., f and g commute)\n    lhs = FreeGroupWord.from_string(\"fgf^-1\")\n    rhs = FreeGroupWord.from_string(\"g\")\n\n    print(f\"Testing claim: {lhs} = {rhs}\")\n    print(f\"(i.e., f and g commute in the free group)\")\n    print()\n\n    if lhs == rhs:\n        print(\"\u2713 Claim is TRUE in the free group\")\n    else:\n        print(\"Claim is FALSE in the free group.\")\n        print(\"Finding minimal counterexample...\")\n\n        result = brute_force_separator(lhs, rhs, generators)\n        if result:\n            k, phi = result\n            print(f\"\\nCounterexample found in S_{k}:\")\n            for gen, perm in phi.items():\n                print(f\"  {gen} \u21a6 {perm}\")\n            v_lhs = _eval_word_perm(lhs, phi, k)\n            v_rhs = _eval_word_perm(rhs, phi, k)\n            print(f\"  {lhs} \u21a6 {v_lhs}\")\n            print(f\"  {rhs} \u21a6 {v_rhs}\")\n            print(f\"\\n  These differ \u27f9 the programs are NOT equivalent\")\n            print(f\"  This counterexample is guaranteed to exist by our theorem\")\n\n\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n# Main\n# \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nif __name__ == '__main__':\n    compiler_verification_demo()\n    print(\"\\n\" + \"\u2500\" * 60 + \"\\n\")\n    reversible_circuit_demo()\n    print(\"\\n\" + \"\u2500\" * 60 + \"\\n\")\n    test_suite_demo()\n    print(\"\\n\" + \"\u2500\" * 60 + \"\\n\")\n    property_testing_demo()\n\n\n#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Interactive demonstration of free group semantic separation.\n\nThis script demonstrates the core mathematical result: distinct elements of a free\ngroup can be separated by evaluation into finite symmetric groups. Given two words\nin free group generators, it searches for the smallest symmetric group S_k and a\ngenerator assignment \u03c6 that distinguishes them.\n\nUsage:\n    python demo.py                    # Interactive mode\n    python demo.py --batch L          # Batch test all pairs up to length L\n    python demo.py --word \"aba^-1b^-1\" # Test a specific word against identity\n\"\"\"\n\nimport itertools\nimport sys\nfrom typing import Optional\n\n\n# \u2500\u2500\u2500 Free Group Word Representation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef parse_word(s: str, generators: list[str] = None) -> list[tuple[str, bool]]:\n    \"\"\"Parse a string like 'aba^-1b^-1' into a list of (generator, is_positive) pairs.\"\"\"\n    if generators is None:\n        generators = sorted(set(c for c in s if c.isalpha()))\n    result = []\n    i = 0\n    while i < len(s):\n        if s[i].isalpha():\n            gen = s[i]\n            if i + 3 < len(s) and s[i+1:i+4] == '^-1':\n                result.append((gen, False))\n                i += 4\n            elif i + 2 < len(s) and s[i+1:i+3] == '-1':\n                result.append((gen, False))\n                i += 3\n            else:\n                result.append((gen, True))\n                i += 1\n        else:\n            i += 1\n    return result\n\n\ndef reduce_word(word: list[tuple[str, bool]]) -> list[tuple[str, bool]]:\n    \"\"\"Reduce a free group word by canceling adjacent inverse pairs.\"\"\"\n    stack = []\n    for letter in word:\n        if stack and stack[-1][0] == letter[0] and stack[-1][1] != letter[1]:\n            stack.pop()\n        else:\n            stack.append(letter)\n    return stack\n\n\ndef word_to_string(word: list[tuple[str, bool]]) -> str:\n    \"\"\"Convert a reduced word back to string representation.\"\"\"\n    if not word:\n        return \"1\"\n    parts = []\n    for gen, positive in word:\n        if positive:\n            parts.append(gen)\n        else:\n            parts.append(f\"{gen}\u207b\u00b9\")\n    return \"\".join(parts)\n\n\ndef multiply_words(w1: list[tuple[str, bool]],\n                   w2: list[tuple[str, bool]]) -> list[tuple[str, bool]]:\n    \"\"\"Multiply two free group words and reduce.\"\"\"\n    return reduce_word(w1 + w2)\n\n\ndef invert_word(word: list[tuple[str, bool]]) -> list[tuple[str, bool]]:\n    \"\"\"Invert a free group word.\"\"\"\n    return [(g, not b) for g, b in reversed(word)]\n\n\n# \u2500\u2500\u2500 Permutation Arithmetic \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef identity_perm(n: int) -> list[int]:\n    \"\"\"Identity permutation on {0, ..., n-1}.\"\"\"\n    return list(range(n))\n\n\ndef compose_perm(p: list[int], q: list[int]) -> list[int]:\n    \"\"\"Compose permutations: (p \u2218 q)(i) = p(q(i)).\"\"\"\n    return [p[q[i]] for i in range(len(p))]\n\n\ndef invert_perm(p: list[int]) -> list[int]:\n    \"\"\"Invert a permutation.\"\"\"\n    inv = [0] * len(p)\n    for i, v in enumerate(p):\n        inv[v] = i\n    return inv\n\n\ndef is_identity(p: list[int]) -> bool:\n    \"\"\"Check if a permutation is the identity.\"\"\"\n    return all(p[i] == i for i in range(len(p)))\n\n\ndef all_perms(n: int):\n    \"\"\"Generate all permutations of {0, ..., n-1}.\"\"\"\n    return [list(p) for p in itertools.permutations(range(n))]\n\n\n# \u2500\u2500\u2500 Free Group Evaluation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef eval_word(word: list[tuple[str, bool]],\n              phi: dict[str, list[int]],\n              n: int) -> list[int]:\n    \"\"\"Evaluate a free group word under assignment \u03c6 : generators \u2192 S_n.\n\n    Returns the permutation in S_n corresponding to the word.\n    \"\"\"\n    result = identity_perm(n)\n    for gen, positive in word:\n        p = phi.get(gen, identity_perm(n))\n        if not positive:\n            p = invert_perm(p)\n        result = compose_perm(p, result)\n    return result\n\n\n# \u2500\u2500\u2500 Separation Search \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef find_separator(w1: list[tuple[str, bool]],\n                   w2: list[tuple[str, bool]],\n                   generators: list[str],\n                   max_k: int = 8) -> Optional[tuple[int, dict[str, list[int]]]]:\n    \"\"\"Find the smallest k such that some \u03c6 : generators \u2192 S_k separates w1 and w2.\n\n    Returns (k, phi) if found, None otherwise.\n    \"\"\"\n    for k in range(2, max_k + 1):\n        perms = all_perms(k)\n        # Search over all assignments \u03c6\n        for assignment in itertools.product(perms, repeat=len(generators)):\n            phi = dict(zip(generators, [list(p) for p in assignment]))\n            v1 = eval_word(w1, phi, k)\n            v2 = eval_word(w2, phi, k)\n            if v1 != v2:\n                return k, phi\n    return None\n\n\ndef find_separator_from_identity(word: list[tuple[str, bool]],\n                                 generators: list[str],\n                                 max_k: int = 8) -> Optional[tuple[int, dict[str, list[int]]]]:\n    \"\"\"Find smallest k such that some \u03c6 : generators \u2192 S_k maps word to non-identity.\"\"\"\n    return find_separator(word, [], generators, max_k)\n\n\n# \u2500\u2500\u2500 Word Enumeration \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef enumerate_reduced_words(generators: list[str],\n                            max_length: int) -> list[list[tuple[str, bool]]]:\n    \"\"\"Enumerate all reduced words of length \u2264 max_length over given generators.\"\"\"\n    words = [[]]  # identity\n    for length in range(1, max_length + 1):\n        letters = [(g, b) for g in generators for b in [True, False]]\n        for word_tuple in itertools.product(letters, repeat=length):\n            word = list(word_tuple)\n            reduced = reduce_word(word)\n            if len(reduced) == length:\n                words.append(word)\n    return words\n\n\n# \u2500\u2500\u2500 Separation Profile Computation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compute_separation_profile(generators: list[str],\n                               max_L: int,\n                               max_k: int = 8) -> dict[int, int]:\n    \"\"\"Compute the permutation separation profile.\n\n    For each L \u2264 max_L, find the maximum k needed to separate all distinct\n    pairs of reduced words of length \u2264 L.\n    \"\"\"\n    profile = {}\n    for L in range(1, max_L + 1):\n        words = enumerate_reduced_words(generators, L)\n        max_needed = 2\n        total_pairs = 0\n        separated = 0\n        for i in range(len(words)):\n            for j in range(i + 1, len(words)):\n                total_pairs += 1\n                result = find_separator(words[i], words[j], generators, max_k)\n                if result:\n                    k, _ = result\n                    max_needed = max(max_needed, k)\n                    separated += 1\n                else:\n                    print(f\"  Warning: could not separate \"\n                          f\"{word_to_string(words[i])} and \"\n                          f\"{word_to_string(words[j])} up to S_{max_k}\")\n        profile[L] = max_needed\n        print(f\"  L={L}: max k needed = {max_needed}, \"\n              f\"separated {separated}/{total_pairs} pairs\")\n    return profile\n\n\n# \u2500\u2500\u2500 Demo Functions \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef demo_single_word(word_str: str, generators: list[str] = None):\n    \"\"\"Demonstrate separation of a single word from the identity.\"\"\"\n    word = parse_word(word_str)\n    word = reduce_word(word)\n    if generators is None:\n        generators = sorted(set(g for g, _ in word))\n    if not word:\n        print(f\"Word '{word_str}' reduces to the identity.\")\n        return\n\n    print(f\"\\nWord: {word_to_string(word)} (length {len(word)})\")\n    print(f\"Generators: {generators}\")\n    print(f\"Searching for separating permutation assignment...\")\n\n    result = find_separator_from_identity(word, generators)\n    if result:\n        k, phi = result\n        perm = eval_word(word, phi, k)\n        print(f\"\\n\u2713 Separated in S_{k}!\")\n        print(f\"  Assignment:\")\n        for gen in generators:\n            print(f\"    \u03c6({gen}) = {phi[gen]}\")\n        print(f\"  Result: \u03c6(w) = {perm} \u2260 identity\")\n    else:\n        print(f\"\\n\u2717 Could not separate up to S_8\")\n\n\ndef demo_pair(w1_str: str, w2_str: str, generators: list[str] = None):\n    \"\"\"Demonstrate separation of two words.\"\"\"\n    w1 = reduce_word(parse_word(w1_str))\n    w2 = reduce_word(parse_word(w2_str))\n    if generators is None:\n        generators = sorted(set(g for g, _ in w1 + w2) or ['a'])\n    if w1 == w2:\n        print(f\"Words are equal (both reduce to {word_to_string(w1)})\")\n        return\n\n    print(f\"\\nWord 1: {word_to_string(w1)} (length {len(w1)})\")\n    print(f\"Word 2: {word_to_string(w2)} (length {len(w2)})\")\n    print(f\"Generators: {generators}\")\n    print(f\"Searching for separating assignment...\")\n\n    result = find_separator(w1, w2, generators)\n    if result:\n        k, phi = result\n        v1 = eval_word(w1, phi, k)\n        v2 = eval_word(w2, phi, k)\n        print(f\"\\n\u2713 Separated in S_{k}!\")\n        print(f\"  Assignment:\")\n        for gen in generators:\n            print(f\"    \u03c6({gen}) = {phi[gen]}\")\n        print(f\"  \u03c6(w\u2081) = {v1}\")\n        print(f\"  \u03c6(w\u2082) = {v2}\")\n    else:\n        print(f\"\\n\u2717 Could not separate up to S_8\")\n\n\ndef demo_batch(max_L: int, generators: list[str] = ['a', 'b']):\n    \"\"\"Batch test: compute separation profile for all pairs up to length L.\"\"\"\n    print(f\"\\n\u2550\u2550\u2550 Separation Profile for F({','.join(generators)}) \u2550\u2550\u2550\")\n    print(f\"Testing all pairs of reduced words up to length {max_L}\")\n    print()\n    profile = compute_separation_profile(generators, max_L)\n    print(f\"\\n\u2550\u2550\u2550 Summary \u2550\u2550\u2550\")\n    print(f\"{'L':>3} \u2502 {'max k needed':>12} \u2502 {'L+1':>4} \u2502 {'S_(L+1) suffices?':>18}\")\n    print(f\"{'\u2500'*3}\u2500\u253c\u2500{'\u2500'*12}\u2500\u253c\u2500{'\u2500'*4}\u2500\u253c\u2500{'\u2500'*18}\")\n    for L, k in sorted(profile.items()):\n        suffices = \"\u2713\" if k <= L + 1 else \"\u2717\"\n        print(f\"{L:>3} \u2502 {k:>12} \u2502 {L+1:>4} \u2502 {suffices:>18}\")\n\n\ndef demo_commutator():\n    \"\"\"Demonstrate separation of the commutator [a,b] = aba\u207b\u00b9b\u207b\u00b9.\"\"\"\n    print(\"\\n\u2550\u2550\u2550 Commutator [a,b] = aba\u207b\u00b9b\u207b\u00b9 \u2550\u2550\u2550\")\n    demo_single_word(\"aba^-1b^-1\", ['a', 'b'])\n\n    print(\"\\n\\n\u2550\u2550\u2550 Double commutator [[a,b],a] \u2550\u2550\u2550\")\n    commutator = parse_word(\"aba^-1b^-1\")\n    double = multiply_words(\n        multiply_words(commutator, parse_word(\"a\")),\n        multiply_words(invert_word(commutator), parse_word(\"a^-1\"))\n    )\n    demo_single_word(word_to_string(double), ['a', 'b'])\n\n\ndef interactive_mode():\n    \"\"\"Interactive demonstration mode.\"\"\"\n    print(\"\u2550\u2550\u2550 Free Group Semantic Separator \u2550\u2550\u2550\")\n    print(\"Demonstrates that distinct free group elements can be\")\n    print(\"separated by evaluation into finite symmetric groups.\\n\")\n\n    while True:\n        print(\"\\nOptions:\")\n        print(\"  1. Test a word against the identity\")\n        print(\"  2. Test two words against each other\")\n        print(\"  3. Commutator examples\")\n        print(\"  4. Batch separation profile (slow for L > 3)\")\n        print(\"  5. Quit\")\n\n        choice = input(\"\\nChoice: \").strip()\n\n        if choice == '1':\n            word = input(\"Enter word (e.g., aba^-1b^-1): \").strip()\n            gens = input(\"Generators (comma-separated, or Enter for auto): \").strip()\n            gens = [g.strip() for g in gens.split(',')] if gens else None\n            demo_single_word(word, gens)\n        elif choice == '2':\n            w1 = input(\"Enter word 1: \").strip()\n            w2 = input(\"Enter word 2: \").strip()\n            gens = input(\"Generators (comma-separated, or Enter for auto): \").strip()\n            gens = [g.strip() for g in gens.split(',')] if gens else None\n            demo_pair(w1, w2, gens)\n        elif choice == '3':\n            demo_commutator()\n        elif choice == '4':\n            L = int(input(\"Max word length L (recommend \u2264 3): \").strip())\n            n = int(input(\"Number of generators (recommend 2): \").strip())\n            gens = [chr(ord('a') + i) for i in range(n)]\n            demo_batch(L, gens)\n        elif choice == '5':\n            break\n        else:\n            print(\"Invalid choice.\")\n\n\n# \u2500\u2500\u2500 Main \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == '__main__':\n    if len(sys.argv) > 1:\n        if sys.argv[1] == '--batch':\n            L = int(sys.argv[2]) if len(sys.argv) > 2 else 3\n            demo_batch(L)\n        elif sys.argv[1] == '--word':\n            word = sys.argv[2] if len(sys.argv) > 2 else \"aba^-1b^-1\"\n            demo_single_word(word)\n        elif sys.argv[1] == '--commutator':\n            demo_commutator()\n        else:\n            print(f\"Unknown option: {sys.argv[1]}\")\n            print(\"Usage: python demo.py [--batch L] [--word WORD] [--commutator]\")\n    else:\n        # Run default demos\n        print(\"\u2550\u2550\u2550 Free Group Semantic Separation Demo \u2550\u2550\u2550\\n\")\n\n        print(\"\u2500\u2500\u2500 Example 1: Generator \u2500\u2500\u2500\")\n        demo_single_word(\"a\", ['a', 'b'])\n\n        print(\"\\n\\n\u2500\u2500\u2500 Example 2: Product of generators \u2500\u2500\u2500\")\n        demo_single_word(\"ab\", ['a', 'b'])\n\n        print(\"\\n\\n\u2500\u2500\u2500 Example 3: Commutator [a,b] \u2500\u2500\u2500\")\n        demo_single_word(\"aba^-1b^-1\", ['a', 'b'])\n\n        print(\"\\n\\n\u2500\u2500\u2500 Example 4: Separating two distinct words \u2500\u2500\u2500\")\n        demo_pair(\"ab\", \"ba\", ['a', 'b'])\n\n        print(\"\\n\\n\u2500\u2500\u2500 Example 5: Separation profile (L \u2264 3) \u2500\u2500\u2500\")\n        demo_batch(3, ['a', 'b'])\n"
     },
-    "date": "2026-05-22T01:09:01Z",
+    "date": "2026-05-22T03:41:03Z",
     "exp_id": "64769cba",
     "source_exp_ids": [
       "e150dc78"
@@ -4107,7 +4107,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T01:07:16Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "fixed_point_theorems_brouwer_banach_schauder",
@@ -4116,7 +4116,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "quaternion_algebras_and_rotations",
@@ -4125,7 +4125,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "conjecture_5_connection_to_hardy_field_hierarchy",
@@ -4134,7 +4134,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "frankls_union_closed_conjecture_partial_results",
@@ -4143,7 +4143,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -4152,7 +4152,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T04:04:01Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "tropical_convexity_and_linear_programming",
@@ -4161,7 +4161,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T04:04:27Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "arithmetic_resonance_in_neural_proof_search",
@@ -4179,7 +4179,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:13Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "collatz_stopping_times_density_analysis",
@@ -4197,7 +4197,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T05:58:00Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
@@ -4206,7 +4206,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:58:35Z",
-      "hue": 101
+      "hue": 292
     },
     {
       "id": "direction_1_kan_composition_and_groupoid_structure",
@@ -4215,7 +4215,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:59:07Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "direction_2_path_space_cardinality_invariants_for_",
@@ -4224,7 +4224,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:10:21Z",
-      "hue": 100
+      "hue": 272
     },
     {
       "id": "direction_3_differential_closure_and_transseries_f",
@@ -4233,7 +4233,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T07:13:37Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "proof_compression_phase_transition_in_formal_mathe",
@@ -4242,7 +4242,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:14:00Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "lattice_cryptography_lwe_hardness",
@@ -4260,7 +4260,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T08:10:20Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "conjecture_2_tight_depth_bound_d1_instead_of_d3",
@@ -4269,7 +4269,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T08:13:20Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_3_deterministic_hitting_sets_for_millerr",
@@ -4278,7 +4278,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:13:44Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "representation_theory_character_tables_of_s_n",
@@ -4287,7 +4287,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T08:14:11Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_2_phase_aware_lemma_synthesis_for_ai_the",
@@ -4296,7 +4296,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:14:39Z",
-      "hue": 90
+      "hue": 134
     },
     {
       "id": "euler_characteristic_and_gauss_bonnet",
@@ -4314,7 +4314,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T09:14:59Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "tropical_curves_and_chip_firing_games",
@@ -4323,7 +4323,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T09:15:37Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_explicit_forman_gradient_fields_and_pe",
@@ -4332,7 +4332,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T09:16:14Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "direction_2_quantitative_fiat_shamir_security_via_",
@@ -4341,7 +4341,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:13:08Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "extremal_graph_theory_turn_and_szemerdi",
@@ -4359,7 +4359,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:14:03Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "goldbach_verification_framework",
@@ -4368,7 +4368,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T10:14:31Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_4_normalizing_derivative_compiler_with_i",
@@ -4377,7 +4377,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T10:14:52Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "invariant_subspace_problem_special_cases",
@@ -4386,7 +4386,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T11:14:42Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "categorical_foundations_yoneda_and_adjunctions",
@@ -4395,7 +4395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T11:15:08Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "information_geometry_fisher_metric_on_statistical_",
@@ -4413,7 +4413,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:04Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "direction_4_persistent_torsion_detection_for_tda",
@@ -4422,7 +4422,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:31Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_1_complete_verified_regev_reduction",
@@ -4431,7 +4431,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T12:24:54Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "formal_verification_of_algorithms",
@@ -4440,7 +4440,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T12:32:49Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "arithmetic_universality_classes_in_tropical_degene",
@@ -4458,7 +4458,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T13:13:42Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_1_universal_affine__protocol_extraction",
@@ -4467,7 +4467,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T13:14:08Z",
-      "hue": 292
+      "hue": 275
     },
     {
       "id": "proof_complexity_resolution_and_cutting_planes",
@@ -4476,7 +4476,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T13:14:34Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "homological_phase_transition_in_automated_conjectu",
@@ -4485,7 +4485,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T14:10:33Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_4_growth_rank_completeness_grand_challen",
@@ -4494,7 +4494,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:13:43Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_5_ordinal_classification_of_eml_growth",
@@ -4512,7 +4512,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T14:14:53Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "direction_5_lower_bound_certificates_via_communica",
@@ -4521,7 +4521,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T14:15:32Z",
-      "hue": 95
+      "hue": 280
     },
     {
       "id": "direction_3_dag_sharing_does_not_reduce_depth_gran",
@@ -4530,7 +4530,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T15:14:27Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "optimal_transport_and_wasserstein_distances",
@@ -4539,7 +4539,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T15:14:54Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "direction_2_persistent_homology_of_tropical_filtra",
@@ -4548,7 +4548,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T15:15:26Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_5_optimal_curvature_distribution_on_tria",
@@ -4557,7 +4557,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T15:16:00Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_2_fujisaki_okamoto_transform_as_module_m",
@@ -4566,7 +4566,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:16:34Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "direction_5_non_commutative_module_lwe_and_ntru",
@@ -4575,7 +4575,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:17:03Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "direction_3_grand_challenge_ext_tor_persistent_spe",
@@ -4593,7 +4593,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T16:18:43Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "ramsey_theory_bounds_and_constructions",
@@ -4620,7 +4620,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T17:15:36Z",
-      "hue": 280
+      "hue": 271
     },
     {
       "id": "direction_1_width_to_size_conversion_and_exponenti",
@@ -4629,7 +4629,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T18:04:51Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "proof_complexity_order_parameters_from_persistence",
@@ -4638,7 +4638,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T18:09:01Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "direction_4_core_collapse_acceleration_hypothesis",
@@ -4647,7 +4647,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T18:30:37Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "quadratic_reciprocity_five_proofs_formalized",
@@ -4656,7 +4656,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T18:39:31Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_4_probe_complexity_of_finite_categories",
@@ -4665,7 +4665,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T18:42:42Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_2_efficient_computation_via_smith_normal",
@@ -4674,7 +4674,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T19:10:31Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "direction_2_active_set_bar_count_bound",
@@ -4692,7 +4692,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T19:14:18Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_3_differential_closure_under_quotients",
@@ -4701,7 +4701,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:10:25Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "direction_3_valuation_profile_universality_for_tro",
@@ -4710,7 +4710,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T20:13:32Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "fourier_analysis_on_finite_groups",
@@ -4719,7 +4719,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:13:59Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "direction_2_verified_compiler_synthesis_via_free_f",
@@ -4728,7 +4728,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T20:14:37Z",
-      "hue": 95
+      "hue": 272
     },
     {
       "id": "circuit_complexity_monotone_lower_bounds",
@@ -4737,7 +4737,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T21:10:29Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_1_finite_probe_representability_conjectu",
@@ -4746,7 +4746,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:11:00Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "direction_3_clause_space_lower_bounds_via_width_sp",
@@ -4755,7 +4755,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:25:46Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_2_haar_measure_on_restricted_products",
@@ -4764,7 +4764,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:40:45Z",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "pac_bayes_generalization_bounds",
@@ -4773,7 +4773,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T21:41:12Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_2_hardness_localization_hypothesis",
@@ -4782,7 +4782,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T22:20:03Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_5_compiler_lower_bound_hypothesis",
@@ -4791,7 +4791,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T22:24:27Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_energy_interpretation_of_normalization",
@@ -4800,7 +4800,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T22:24:58Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "direction_2_approximation_sandwich_universality",
@@ -4818,7 +4818,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T23:13:43Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_4_convergence_of_discrete_to_smooth_curv",
@@ -4827,7 +4827,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T23:14:11Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_1_cycle_window_universality_hypothesis",
@@ -4836,7 +4836,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T23:14:38Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_4_quotient_algebras_and_certified_optimi",
@@ -4845,7 +4845,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-21T23:47:45Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_2_entropy_barrier_conjecture_for_general",
@@ -4854,7 +4854,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T00:10:05Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_2_natural_gradient_convergence_on_dually",
@@ -4863,7 +4863,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-22T00:14:37Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "direction_1_sharpness_of_the_1_depth_bound",
@@ -4872,7 +4872,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-22T00:15:03Z",
-      "hue": 91
+      "hue": 101
     },
     {
       "id": "direction_2_tates_thesis_functional_equation_via_a",
@@ -4881,16 +4881,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T00:47:21Z",
-      "hue": 90
-    },
-    {
-      "id": "direction_5_residual_finiteness_and_semantic_disti",
-      "title": "Residual Finiteness and Semantic Distinguishability for Free Groups",
-      "domain": "Algebraic Program Equivalence / Combinatorial Group Theory",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-22T01:09:01Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "direction_1_discrete_noether_shadow_for_variationa",
@@ -4899,7 +4890,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T01:09:57Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "direction_2_exponential_size_lower_bounds_at_fixed",
@@ -4908,7 +4899,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T03:12:59Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "convex_geometry_brunn_minkowski_theory",
@@ -4917,7 +4908,16 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-22T03:13:54Z",
-      "hue": 90
+      "hue": 91
+    },
+    {
+      "id": "direction_5_residual_finiteness_and_semantic_disti",
+      "title": "Residual Finiteness and Semantic Distinguishability for Free Groups",
+      "domain": "Algebraic Program Equivalence / Combinatorial Group Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-22T03:41:03Z",
+      "hue": 275
     }
   ],
   "edges": [
@@ -5733,6 +5733,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-22T03:13:24.816369+00:00"
+  },
+  {
+    "id": "fd_0328",
+    "title": "Renormalization Fixed Points for Proof Search on Self-Similar CNF Families",
+    "description": "Conjecture: There exists an explicit recursively defined family of unsatisfiable CNFs {F_n} and a coarse-graining operator R on clause-learning search states such that the distribution of reduced solver states under CDCL dynamics converges, after rescaling, to a nontrivial fixed point of R as n -> infinity; equivalently, macroscopic proof-search observables (learned-clause width profile, restart-interval statistics, and backdoor-fragment entropy) become asymptotically scale-invariant. Test: Construct a self-similar CNF family, define measurable coarse observables on solver traces, and check whether repeated coarse-graining yields convergence to a stable law independent of low-level implementation details; refute by showing no implementation-robust fixed-point behavior or by proving observables remain scale-dependent. Impact: Would introduce a statistical-physics universality theory for SAT/proof complexity, enabling prediction of solver hardness classes from renormalization data and suggesting new solver designs that target relevant macroscopic invariants rather than local heuristics.",
+    "domains": [
+      "Proof Complexity",
+      "Statistical Physics"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-22T03:14:20.273448+00:00"
   },
   {
     "id": "fd_0314",

@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1400 of the highest-quality
+A curated collection of 1413 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1400
+Total files: 1413
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -246,6 +246,7 @@ import FINAL.Bridges.ClosureSyndromeDecodingDuality
 import FINAL.Bridges.ClosureThermodynamicComputationDuality
 import FINAL.Bridges.ClosureVCDuality
 import FINAL.Bridges.CoalgebraicNeuralMyhillNerode
+import FINAL.Bridges.CodingTheoryBridge
 import FINAL.Bridges.Completeness
 import FINAL.Bridges.ComposableTransfer
 import FINAL.Bridges.CompositionalMusicSpec
@@ -393,6 +394,7 @@ import FINAL.Bridges.RGArchitectureDynamics
 import FINAL.Bridges.RateDistortion
 import FINAL.Bridges.RenormalizationUniversality
 import FINAL.Bridges.Representation
+import FINAL.Bridges.ResNetTropicalCertified
 import FINAL.Bridges.ResidualRobustness
 import FINAL.Bridges.ReversibleFixedPointDuality
 import FINAL.Bridges.RigidFoldability
@@ -650,24 +652,32 @@ import FINAL.Cryptography.CryptographicClosureHulls
 import FINAL.Cryptography.CutCryptography
 import FINAL.Cryptography.DiophantineCryptoCore
 import FINAL.Cryptography.Divisibility
+import FINAL.Cryptography.Extraction
 import FINAL.Cryptography.FOTransform
+import FINAL.Cryptography.FactorQuadruples
 import FINAL.Cryptography.FiniteStoneClosure
 import FINAL.Cryptography.Foundation
 import FINAL.Cryptography.Freeness
 import FINAL.Cryptography.GeometricCryptanalysis
+import FINAL.Cryptography.GroupLaw
 import FINAL.Cryptography.HTLCLightning
 import FINAL.Cryptography.HybridTelescope
 import FINAL.Cryptography.LeftoverHash
 import FINAL.Cryptography.MLLFormula
+import FINAL.Cryptography.MasterFormula
 import FINAL.Cryptography.MinDistance
 import FINAL.Cryptography.MinimumDistance
 import FINAL.Cryptography.NoetherianCertification
 import FINAL.Cryptography.OneWay
+import FINAL.Cryptography.PadicCryptoHardness
 import FINAL.Cryptography.PostIdempotentCrypto
 import FINAL.Cryptography.PythagoreanLatticeReduction
 import FINAL.Cryptography.SPBQuantumCrypto
+import FINAL.Cryptography.ScalarMul
 import FINAL.Cryptography.SchnorrProtocol
+import FINAL.Cryptography.SearchDecision
 import FINAL.Cryptography.Security
+import FINAL.Cryptography.SemiconjTransfer
 import FINAL.Cryptography.TVDContraction
 import FINAL.Cryptography.Theorems
 import FINAL.Cryptography.TropicalCryptoBridge
@@ -1046,6 +1056,7 @@ import FINAL.Physics.Entanglement
 import FINAL.Physics.Foundations
 import FINAL.Physics.HolevoCapacity
 import FINAL.Physics.IdempotentQuantum
+import FINAL.Physics.Landauer
 import FINAL.Physics.LorentzBerggrenThermodynamic
 import FINAL.Physics.MoonshotQuantum
 import FINAL.Physics.PauliClosureFoundations
@@ -1062,6 +1073,7 @@ import FINAL.Physics.ToricCode
 import FINAL.Physics.TropicalBarrier
 import FINAL.Physics.TropicalDiffusion
 import FINAL.Physics.TropicalDiffusionRegularity
+import FINAL.Physics.TropicalLanglands
 import FINAL.Physics.TropicalMirrorSymmetry
 import FINAL.Physics.TropicalTDuality
 import FINAL.Physics.TropicalVacuumEnergy
@@ -1113,6 +1125,7 @@ import FINAL.Pythagorean.DiffClosure
 import FINAL.Pythagorean.Duality
 import FINAL.Pythagorean.EmergentComputation
 import FINAL.Pythagorean.ExplicitMorseTheory
+import FINAL.Pythagorean.FactoringEnergyLandscape
 import FINAL.Pythagorean.FiltrationObstruction
 import FINAL.Pythagorean.FiveDirections
 import FINAL.Pythagorean.Foundations
