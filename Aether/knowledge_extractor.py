@@ -717,21 +717,22 @@ Research mode: {concept.research_mode}
             try:
                 result = await self.aristotle.poll_project(pid)
                 status = result.get("status", "unknown")
-                pct = result.get("percent_complete", 0)
+                has_files = result.get("has_files", False)
+                is_complete = result.get("complete", False)
 
-                if status in ("COMPLETE", "COMPLETE_WITH_ERRORS"):
-                    print(f"[Poll] {pid[:8]} COMPLETED ({status}, {pct}%)")
+                if is_complete or (status == "IDLE" and has_files):
+                    print(f"[Poll] {pid[:8]} COMPLETED (status={status}, has_files={has_files})")
                     job.status = "completed"
                     job.complete_time = time.time()
                     completed.append(job)
-                elif status in ("FAILED", "OUT_OF_BUDGET", "CANCELED"):
-                    print(f"[Poll] {pid[:8]} FAILED ({status})")
+                elif status == "IDLE" and not has_files:
+                    print(f"[Poll] {pid[:8]} FAILED (IDLE, no files)")
                     job.status = "failed"
-                    job.error_message = f"Aristotle status: {status}"
+                    job.error_message = "Aristotle status: IDLE with no result files"
                     self.failed_count += 1
                     completed.append(job)
-                elif pct > 1:
-                    print(f"[Poll] {pid[:8]} in progress ({pct}%)")
+                elif status == "RUNNING":
+                    print(f"[Poll] {pid[:8]} in progress (RUNNING)")
             except Exception as e:
                 print(f"[Poll] {pid[:8]} error: {e}")
 
@@ -2457,22 +2458,23 @@ Research mode: {concept.research_mode}
             try:
                 result = asyncio.run(self.aristotle.poll_project(job.project_id))
                 status = result.get("status", "unknown")
-                pct = result.get("percent_complete", 0)
+                has_files = result.get("has_files", False)
+                is_complete = result.get("complete", False)
 
-                if status in ("COMPLETE", "COMPLETE_WITH_ERRORS"):
+                if is_complete or (status == "IDLE" and has_files):
                     job.status = "completed"
                     job.complete_time = time.time()
-                    print(f"[Await] {job.project_id[:8]} COMPLETE ({pct}%)")
+                    print(f"[Await] {job.project_id[:8]} COMPLETE (status={status})")
                     return job
-                elif status in ("FAILED", "OUT_OF_BUDGET", "CANCELED"):
+                elif status == "IDLE" and not has_files:
                     job.status = "failed"
-                    job.error_message = f"Aristotle: {status}"
+                    job.error_message = "Aristotle: IDLE with no result files"
                     self.failed_count += 1
-                    print(f"[Await] {job.project_id[:8]} FAILED ({status})")
+                    print(f"[Await] {job.project_id[:8]} FAILED (IDLE, no files)")
                     return job
-                elif pct > 1 and int(time.time() - start) % 120 < poll_interval:
+                elif status == "RUNNING" and int(time.time() - start) % 120 < poll_interval:
                     elapsed = int(time.time() - start)
-                    print(f"[Await] {job.project_id[:8]} {pct}% ({elapsed}s elapsed)")
+                    print(f"[Await] {job.project_id[:8]} RUNNING ({elapsed}s elapsed)")
             except Exception as e:
                 print(f"[Await] Poll error: {e}")
 

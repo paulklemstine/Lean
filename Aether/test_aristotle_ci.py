@@ -81,47 +81,29 @@ async def test_aristotle(api_key: str, timeout: int = 600) -> bool:
         print(f"[Test] Project submitted: {project_id}")
 
         # 2. Poll until complete (with short timeout for CI)
+        # v2: IDLE + has_files = complete; IDLE + no files = failed; RUNNING = in progress
         start = time.time()
         max_wait = 300  # 5 minutes for CI
         while time.time() - start < max_wait:
             try:
                 poll_result = await client.poll_project(project_id)
                 status = poll_result.get("status", "unknown")
-                pct = poll_result.get("percent_complete", 0)
+                has_files = poll_result.get("has_files", False)
+                is_complete = poll_result.get("complete", False)
                 elapsed = int(time.time() - start)
 
-                if status in ("COMPLETE", "COMPLETE_WITH_ERRORS"):
-                    print(f"[Test] Project completed: status={status}, pct={pct}%, elapsed={elapsed}s")
+                if is_complete or (status == "IDLE" and has_files):
+                    print(f"[Test] Project completed: status={status}, has_files={has_files}, elapsed={elapsed}s")
                     break
-                elif status in ("FAILED", "OUT_OF_BUDGET", "CANCELED"):
-                    print(f"[Test] FAIL: Project failed: status={status}")
+                elif status == "IDLE" and not has_files:
+                    print(f"[Test] FAIL: Project IDLE with no result files (likely failed)")
                     return False
                 elif status == "error":
                     err = poll_result.get("error", "")
-                    print(f"[Test] FAIL: Aristotle returned error status. Details: {err}")
-                    # Try fetching more info via the SDK
-                    try:
-                        from aristotlelib import Project
-                        proj = await Project.from_id(project_id)
-                        await proj.refresh()
-                        print(f"[Test] Project details: id={proj.project_id}, status={proj.status}, "
-                              f"percent={proj.percent_complete}")
-                        if hasattr(proj, 'error_message') and proj.error_message:
-                            print(f"[Test] Error message: {proj.error_message}")
-                        # Print all non-private attributes for debugging
-                        for attr in dir(proj):
-                            if not attr.startswith('_') and attr not in ('from_id', 'create_from_directory', 'create', 'refresh', 'wait_for_completion', 'get_solution'):
-                                try:
-                                    val = getattr(proj, attr)
-                                    if not callable(val):
-                                        print(f"[Test]   {attr} = {val}")
-                                except Exception:
-                                    pass
-                    except Exception as e2:
-                        print(f"[Test] Could not fetch project details: {e2}")
+                    print(f"[Test] FAIL: Poll returned error. Details: {err}")
                     return False
                 else:
-                    print(f"[Test] Polling: status={status}, pct={pct}%, elapsed={elapsed}s")
+                    print(f"[Test] Polling: status={status}, has_files={has_files}, elapsed={elapsed}s")
             except Exception as e:
                 print(f"[Test] Poll error (will retry): {e}")
 

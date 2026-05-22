@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """AristotleSDKClient: Native integration with Harmonic's aristotlelib SDK.
 
-Uses the official Python SDK for directory-based project submission.
+Uses the official Python SDK (v2+) for directory-based project submission.
+Handles v2 API where ProjectStatus has IDLE/RUNNING/UNKNOWN and completion
+is indicated by has_files=True.
 """
 
 import asyncio
@@ -66,16 +68,24 @@ class AristotleSDKClient:
         """Poll a project by ID. Returns dict with status, percent_complete.
 
         Retries on transient SSL errors before giving up.
+        In v2: IDLE means not running. has_files=True means results available.
         """
         for attempt in range(MAX_SSL_RETRIES):
             try:
                 project = await Project.from_id(project_id)
-                await project.refresh()
+                status_str = project.status.name if hasattr(project.status, 'name') else str(project.status)
+                pct = getattr(project, 'percent_complete', 0) or 0
+                # In v2, IDLE + has_files = complete; IDLE + no files = failed/not started
+                is_complete = (
+                    project.status == ProjectStatus.IDLE and project.has_files
+                )
                 return {
                     "project_id": project.project_id,
-                    "status": project.status.value if hasattr(project.status, "value") else str(project.status),
-                    "percent_complete": project.percent_complete or 0,
-                    "complete": project.status in (ProjectStatus.COMPLETE, ProjectStatus.COMPLETE_WITH_ERRORS),
+                    "status": status_str,
+                    "percent_complete": pct,
+                    "complete": is_complete,
+                    "has_files": project.has_files,
+                    "has_input": project.has_input,
                     "error": None,
                 }
             except ssl.SSLError as e:
@@ -90,6 +100,8 @@ class AristotleSDKClient:
                     "status": "error",
                     "percent_complete": 0,
                     "complete": False,
+                    "has_files": False,
+                    "has_input": False,
                     "error": f"SSL error after {MAX_SSL_RETRIES} retries: {e}",
                 }
             except Exception as e:
@@ -105,6 +117,8 @@ class AristotleSDKClient:
                     "status": "error",
                     "percent_complete": 0,
                     "complete": False,
+                    "has_files": False,
+                    "has_input": False,
                     "error": error_str,
                 }
 
@@ -115,16 +129,16 @@ class AristotleSDKClient:
     ) -> Optional[Path]:
         """Download result tarball for a completed project.
 
+        Uses get_files() in v2 (replaces get_solution).
         Retries on transient SSL errors before giving up.
         """
         for attempt in range(MAX_SSL_RETRIES):
             try:
                 project = await Project.from_id(project_id)
-                await project.refresh()
-                if project.status not in (ProjectStatus.COMPLETE, ProjectStatus.COMPLETE_WITH_ERRORS):
+                if not project.has_files:
                     return None
                 dest = project_dir / "result.tar.gz"
-                await project.get_solution(destination=str(dest))
+                await project.get_files(destination=str(dest))
                 return dest if dest.exists() else None
             except (ssl.SSLError, Exception) as e:
                 error_str = str(e)
@@ -154,23 +168,24 @@ class AristotleSDKClient:
             )
             print(f"[Aristotle] Project created: {project.project_id} ({project.status})")
 
-            # Wait for completion with timeout
+            # Poll for completion with timeout (v2 has no wait_for_completion)
             try:
-                result_path = await asyncio.wait_for(
-                    project.wait_for_completion(
-                        destination=str(project_dir / "result.tar.gz"),
-                        polling_interval_seconds=self.polling_interval,
-                    ),
-                    timeout=self.timeout,
-                )
+                while True:
+                    await asyncio.sleep(self.polling_interval)
+                    project = await Project.from_id(project.project_id)
+                    status_str = project.status.name if hasattr(project.status, 'name') else str(project.status)
+
+                    if project.status == ProjectStatus.IDLE:
+                        # Terminal state — check if we got results
+                        break
+
+                    elapsed = asyncio.get_event_loop().time() - start
+                    if elapsed > self.timeout:
+                        raise asyncio.TimeoutError()
+
             except asyncio.TimeoutError:
                 elapsed = asyncio.get_event_loop().time() - start
                 print(f"[Aristotle] Timeout after {elapsed:.1f}s — project still {project.status}")
-                try:
-                    await project.cancel()
-                    print(f"[Aristotle] Cancelled project {project.project_id}")
-                except Exception:
-                    pass
                 return AristotleResult(
                     project_id=project.project_id,
                     status="timeout",
@@ -179,27 +194,35 @@ class AristotleSDKClient:
                 )
 
             elapsed = asyncio.get_event_loop().time() - start
+            status_str = project.status.name if hasattr(project.status, 'name') else str(project.status)
+            print(f"[Aristotle] Project done: {project.project_id} status={status_str} has_files={project.has_files}")
 
-            # Refresh to get final status
-            await project.refresh()
-            print(f"[Aristotle] Project complete: {project.project_id} ({project.status})")
+            if project.has_files:
+                # Download result
+                result_path = None
+                try:
+                    dest = project_dir / "result.tar.gz"
+                    await project.get_files(destination=str(dest))
+                    result_path = dest if dest.exists() else None
+                except Exception as e:
+                    print(f"[Aristotle] Download failed: {e}")
 
-            if project.status in (ProjectStatus.COMPLETE, ProjectStatus.COMPLETE_WITH_ERRORS):
                 lean_source = None
                 if result_path:
-                    lean_source = self._extract_lean_from_result(Path(result_path), project_dir)
+                    lean_source = self._extract_lean_from_result(result_path, project_dir)
+
                 return AristotleResult(
                     project_id=project.project_id,
-                    status=project.status.value,
+                    status=status_str,
                     lean_source=lean_source,
                     latency_seconds=elapsed,
-                    result_path=Path(result_path) if result_path else None,
+                    result_path=result_path,
                 )
             else:
                 return AristotleResult(
                     project_id=project.project_id,
-                    status=project.status.value,
-                    error_message=f"Project ended with status: {project.status.value}",
+                    status=status_str,
+                    error_message="Project completed but has no result files",
                     latency_seconds=elapsed,
                 )
 
@@ -373,17 +396,17 @@ class AristotleSDKClient:
         # Ensure lakefile.toml exists
         lakefile = project_dir / "lakefile.toml"
         if not lakefile.exists():
-            lakefile.write_text("""name = \"aether-job\"
-version = \"0.1\"
-defaultTargets = [\"Main\"]
+            lakefile.write_text("""name = "aether-job"
+version = "0.1"
+defaultTargets = ["Main"]
 
 [[lean_lib]]
-name = \"Main\"
+name = "Main"
 
 [[require]]
-name = \"mathlib\"
-scope = \"leanprover-community\"
-version = \"v4.28.0\"
+name = "mathlib"
+scope = "leanprover-community"
+version = "v4.28.0"
 """, encoding="utf-8")
 
         # Ensure lean-toolchain exists
