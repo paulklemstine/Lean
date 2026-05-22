@@ -227,7 +227,9 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
            reading ONLY this paper (no access to the code) must understand what was
            discovered, why it matters, and what to investigate next.
        (c) An ARTICLE.md written in Scientific American style — engaging, accessible,
-           explaining the discovery to a broad audience.
+           explaining the discovery to a broad audience. TABOO: Do NOT focus on
+           formal verification or machine verification — write about the ideas and
+           their significance, not the verification machinery.
        (d) A verified algorithm or computational method (not just a theorem statement).
        (e) A demo.py that demonstrates the result interactively.
        This is how the system does real science: hypothesize → experiment → analyze → repeat.
@@ -2240,6 +2242,16 @@ class PiAgentClient:
             Required: Lean 4 proofs, FUTURE_DIRECTIONS.md, RESEARCH_PAPER.md,
                       ARTICLE.md (Scientific American style), algorithm, demo.py
             Optional: (none — all key deliverables are mandatory)
+
+            ## Taboo Topics for ARTICLE.md
+
+            The Scientific American-style article MUST NOT focus on formal verification
+            or machine verification. Do not write about proof assistants, type theory
+            as verification, or mechanized checking — those topics are technical niche
+            and alienate a broad audience. Instead, write about the IDEAS: what was
+            discovered, why it matters, and what it means for mathematics and science.
+            The article should read like a Scientific American feature, not a software
+            demo or verification report.
 
             ## Catalog Context for Future Directions
             Below is information about the current state of the Catalog. Reference
