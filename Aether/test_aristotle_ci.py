@@ -51,7 +51,7 @@ async def test_aristotle(api_key: str, timeout: int = 600) -> bool:
 
         print("[Test] Submitting minimal Lean project to Aristotle...")
         try:
-            result = await client.submit_lean_project_only(
+            project_id = await client.submit_lean_project_only(
                 prompt="Prove the theorem test_one_eq_one : 1 = 1",
                 project_dir=project_dir,
             )
@@ -59,13 +59,11 @@ async def test_aristotle(api_key: str, timeout: int = 600) -> bool:
             print(f"[Test] FAIL: Submit failed: {e}")
             return False
 
-        project_id = result.project_id
         if not project_id:
-            print(f"[Test] FAIL: No project_id returned. Result: {result}")
+            print("[Test] FAIL: No project_id returned")
             return False
 
         print(f"[Test] Project submitted: {project_id}")
-        print(f"[Test] Status: {result.status}")
 
         # 2. Poll until complete
         start = time.time()
