@@ -56,4 +56,5 @@ jobs:
           git config user.email "aether-bot[bot]@users.noreply.github.com"
           git add -A
           git diff --cached --quiet || git commit -m "Aether CI: tick $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase origin master || true
           git push
