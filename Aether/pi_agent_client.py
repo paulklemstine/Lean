@@ -477,6 +477,17 @@ class PiAgentClient:
             "top_p": 0.92
         }
         input_chars = len(system) + len(user)
+
+        # Truncate oversized prompts to avoid 400 Bad Request from Pollinations
+        MAX_PROMPT_CHARS = 120000
+        if input_chars > MAX_PROMPT_CHARS:
+            print(f"[Pi-Agent] Prompt too large ({input_chars} chars), truncating to {MAX_PROMPT_CHARS}")
+            user = user[:MAX_PROMPT_CHARS - len(system)] + "\n\n[... truncated for API limit ...]"
+            payload["messages"] = [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user}
+            ]
+            input_chars = MAX_PROMPT_CHARS
         max_retries = 3
 
         for attempt in range(max_retries):
@@ -566,6 +577,29 @@ class PiAgentClient:
                         except Exception:
                             pass
                     continue
+                if e.response.status_code == 400:
+                    # 400 Bad Request — log response body and retry with truncated prompt
+                    resp_body = ""
+                    try:
+                        resp_body = e.response.text[:500]
+                    except Exception:
+                        pass
+                    print(f"[Pi-Agent] ← 400 Bad Request: {resp_body}")
+                    # If prompt is very large, truncate and retry
+                    input_size = len(system) + len(user)
+                    if input_size > 80000 and attempt < max_retries - 1:
+                        truncation = max(40000, 80000 - attempt * 20000)
+                        print(f"[Pi-Agent] Prompt too large ({input_size} chars), truncating to {truncation} and retrying")
+                        user = user[:truncation] + "\n\n[... truncated for API limit ...]"
+                        payload["messages"] = [
+                            {"role": "system", "content": system},
+                            {"role": "user", "content": user}
+                        ]
+                        time.sleep(2 * (attempt + 1))
+                        continue
+                    err_msg = f"400 Bad Request: {resp_body}"
+                    print(f"[Pi-Agent] ← API exception: {err_msg}")
+                    return f"[API_ERROR: {err_msg}]"
                 if e.response.status_code >= 500 and attempt < max_retries - 1:
                     print(f"[Pi-Agent] ← Server error {e.response.status_code}, retrying ({attempt+1}/{max_retries})")
                     time.sleep(5 * (attempt + 1))
