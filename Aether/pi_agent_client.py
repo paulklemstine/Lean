@@ -428,12 +428,35 @@ class PiAgentClient:
         self.compact = compact
         self.use_ollama = use_ollama
         self.ollama_base_url = ollama_base_url or self.OLLAMA_BASE_URL
-        self.ollama_model = ollama_model or model
+        self.ollama_model = ollama_model  # None means auto-detect from local Ollama
 
         # Ollama Cloud fallback configuration
         _ocr = ollama_cloud or {}
         self.ollama_cloud_enabled: bool = bool(_ocr.get("enabled", False))
-        self.ollama_cloud_api_key: str = os.getenv(_ocr.get("api_key_env", "OLLAMA_API_KEY"), "")
+        # Load API key: env var > api_key_file > .env file
+        _api_key_env = _ocr.get("api_key_env", "OLLAMA_API_KEY")
+        self.ollama_cloud_api_key: str = os.getenv(_api_key_env, "")
+        if not self.ollama_cloud_api_key:
+            # Try reading from api_key_file
+            _api_key_file = _ocr.get("api_key_file", "")
+            if _api_key_file:
+                try:
+                    self.ollama_cloud_api_key = Path(_api_key_file).read_text().strip()
+                    print(f"[Pi-Agent] Loaded Ollama Cloud API key from {_api_key_file}")
+                except Exception:
+                    pass
+        if not self.ollama_cloud_api_key:
+            # Try .env file in Aether directory
+            _dotenv = Path(__file__).parent / ".env"
+            if _dotenv.exists():
+                try:
+                    for line in _dotenv.read_text().splitlines():
+                        line = line.strip()
+                        if line.startswith(f"{_api_key_env}=") and not line.startswith("#"):
+                            self.ollama_cloud_api_key = line.split("=", 1)[1].strip().strip("\"'")
+                            break
+                except Exception:
+                    pass
         self.ollama_cloud_model: str = _ocr.get("model", "gpt-oss:120b-cloud")
         self.ollama_cloud_base_url: str = _ocr.get("base_url", "https://ollama.com").rstrip("/")
         self.ollama_cloud_timeout: int = int(_ocr.get("timeout", 300))
@@ -486,6 +509,8 @@ class PiAgentClient:
             if not cloud_result.startswith(("[OLLAMA_CLOUD_ERROR", "[OLLAMA_CLOUD_TIMEOUT")):
                 return cloud_result
             print(f"[Pi-Agent] Ollama Cloud also failed ({cloud_result[:80]})")
+        elif self.ollama_cloud_enabled and not self.ollama_cloud_api_key:
+            print("[Pi-Agent] Ollama Cloud enabled but no API key set — skipping to local Ollama")
         elif not self.ollama_cloud_enabled:
             # No fallback configured — return the Pollinations error as-is
             return result
@@ -669,50 +694,93 @@ class PiAgentClient:
     def _call_ollama_local(self, system: str, user: str, timeout: Optional[int] = None) -> str:
         """Call a local Ollama instance via its OpenAI-compatible API.
 
-        Args:
-            system: System prompt
-            user: User prompt
-            timeout: Override timeout in seconds (uses self.timeout if None)
+        If ollama_model is not explicitly set, auto-detects available models.
+        Tries models in order: configured model -> cloud model -> first available.
         """
         request_timeout = timeout or self.timeout
-        model = self.ollama_model or self.model
+
+        # Determine which model to use: explicit config > auto-detect
+        if self.ollama_model:
+            models_to_try = [self.ollama_model]
+        else:
+            # Auto-detect: try cloud model first, then discover local models
+            models_to_try = []
+            if self.model:
+                models_to_try.append(self.model)
+            # Try to discover available local models
+            try:
+                tags_resp = self.client.get(
+                    f"{self.ollama_base_url}/api/tags",
+                    timeout=10,
+                )
+                if tags_resp.status_code == 200:
+                    tags_data = tags_resp.json()
+                    local_models = [m["name"] for m in tags_data.get("models", [])]
+                    for m in local_models:
+                        if m not in models_to_try:
+                            models_to_try.append(m)
+            except Exception:
+                pass
+            if not models_to_try:
+                models_to_try = [self.model or "llama3"]
+
         url = f"{self.ollama_base_url}/v1/chat/completions"
-        print(f"[Pi-Agent] → calling Ollama (model={model}, url={url}, timeout={request_timeout}s)")
 
-        payload = {
-            "model": model,
-            "messages": [
-                {"role": "system", "content": system},
-                {"role": "user", "content": user}
-            ],
-            "temperature": 0.85,
-            "top_p": 0.92,
-        }
+        for model in models_to_try:
+            print(f"[Pi-Agent] → calling Ollama (model={model}, url={url}, timeout={request_timeout}s)")
+            payload = {
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": user}
+                ],
+                "temperature": 0.85,
+                "top_p": 0.92,
+            }
 
-        try:
-            response = self.client.post(
-                url,
-                json=payload,
-                timeout=request_timeout,
-            )
-            response.raise_for_status()
-            data = response.json()
-            content = data["choices"][0]["message"]["content"]
+            try:
+                response = self.client.post(
+                    url,
+                    json=payload,
+                    timeout=request_timeout,
+                )
+                # If model not found (404), try next model
+                if response.status_code == 404:
+                    print(f"[Pi-Agent] ← model '{model}' not found locally, trying next")
+                    continue
+                response.raise_for_status()
+                data = response.json()
+                content = data["choices"][0]["message"]["content"]
 
-            response_preview = content[:500].replace('\n', ' ')
-            print(f"[Pi-Agent] ← response ({len(content)} chars)")
-            print(f"[Pi-Agent]   {response_preview}...")
+                # Remember which model worked for future calls
+                self.ollama_model = model
 
-            return content
-        except httpx.TimeoutException:
-            print(f"[Pi-Agent] ← Ollama TIMEOUT after {request_timeout}s")
-            return f"[OLLAMA_TIMEOUT: Request timed out after {request_timeout}s]"
-        except Exception as e:
-            err_msg = str(e)
-            if hasattr(e, 'response') and e.response:
-                err_msg += f" - {e.response.text}"
-            print(f"[Pi-Agent] ← Ollama exception: {type(e).__name__}: {err_msg}")
-            return f"[OLLAMA_ERROR: {err_msg}]"
+                response_preview = content[:500].replace('\n', ' ')
+                print(f"[Pi-Agent] ← Ollama response ({len(content)} chars, model={model})")
+                print(f"[Pi-Agent]   {response_preview}...")
+
+                return content
+            except httpx.TimeoutException:
+                print(f"[Pi-Agent] ← Ollama TIMEOUT with model={model} after {request_timeout}s")
+                # Don't try other models on timeout — it's a connectivity issue
+                return f"[OLLAMA_TIMEOUT: Request timed out after {request_timeout}s]"
+            except httpx.HTTPStatusError as e:
+                if e.response.status_code == 404:
+                    print(f"[Pi-Agent] ← model '{model}' not found locally, trying next")
+                    continue
+                err_msg = str(e)
+                if e.response:
+                    err_msg += f" - {e.response.text[:200]}"
+                print(f"[Pi-Agent] ← Ollama error: {err_msg}")
+                return f"[OLLAMA_ERROR: {err_msg}]"
+            except Exception as e:
+                err_msg = str(e)
+                if hasattr(e, 'response') and e.response:
+                    err_msg += f" - {e.response.text}"
+                print(f"[Pi-Agent] ← Ollama exception: {type(e).__name__}: {err_msg}")
+                return f"[OLLAMA_ERROR: {err_msg}]"
+
+        return f"[OLLAMA_ERROR: No available model found. Tried: {', '.join(models_to_try)}]"
 
     def _call_ollama_cloud(self, system: str, user: str, timeout: Optional[int] = None) -> str:
         """Call Ollama Cloud API as a fallback when Pollinations is depleted.
