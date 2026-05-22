@@ -12,5 +12,6 @@
 /Catalog/Aether/manual_jobs
 *.tar.gz
 *.output
-/Aether/.aether_workspace
+/Aether/.aether_workspace/projects/
+/Aether/.aether_workspace/pollinations_api_key
 !/Catalog/Applications/Packages/future_directions.json

@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1485 of the highest-quality
+A curated collection of 1504 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1485
+Total files: 1504
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -43,6 +43,7 @@ import FINAL.Algebra.Defs
 import FINAL.Algebra.DegreeTheory
 import FINAL.Algebra.Depth
 import FINAL.Algebra.Derivability
+import FINAL.Algebra.DescentAlgebra
 import FINAL.Algebra.DifferenceSetSymmetry
 import FINAL.Algebra.Dim2
 import FINAL.Algebra.ECDLP
@@ -63,6 +64,7 @@ import FINAL.Algebra.FreivaldsBridge
 import FINAL.Algebra.FreivaldsSchwartzZippel
 import FINAL.Algebra.FreivaldsVerification
 import FINAL.Algebra.FutureExploration
+import FINAL.Algebra.GaloisObstruction
 import FINAL.Algebra.GenesisOracle
 import FINAL.Algebra.GeometricNavigation
 import FINAL.Algebra.Ghost
@@ -70,11 +72,14 @@ import FINAL.Algebra.GravitomagneticFrontiers
 import FINAL.Algebra.GravitomagneticStereo
 import FINAL.Algebra.GravityAITeam
 import FINAL.Algebra.GroebnerDerandomization
+import FINAL.Algebra.GroupSolvability
 import FINAL.Algebra.GroverAttacks
+import FINAL.Algebra.HalesJewett
 import FINAL.Algebra.HilbertClassFieldBasic
 import FINAL.Algebra.HomingMissile
 import FINAL.Algebra.HurwitzQuaternions
 import FINAL.Algebra.Hyperbolic
+import FINAL.Algebra.IdealClassGroupBridge
 import FINAL.Algebra.IdempotentCongruenceBasis
 import FINAL.Algebra.IdempotentHilbertBasis
 import FINAL.Algebra.IdempotentLensing
@@ -90,12 +95,14 @@ import FINAL.Algebra.LatticeTreeDuality
 import FINAL.Algebra.LightConeTheory
 import FINAL.Algebra.LightDarkPrimes
 import FINAL.Algebra.Lorentz
+import FINAL.Algebra.MartingalePrediction
 import FINAL.Algebra.MassEnergyDuality
 import FINAL.Algebra.MatrixEncoding
 import FINAL.Algebra.MetaOracleCore
 import FINAL.Algebra.MetaOracleNextSteps
 import FINAL.Algebra.MetaOraclePythagoreanDeep
 import FINAL.Algebra.MirrorQuantum
+import FINAL.Algebra.Modular
 import FINAL.Algebra.MontgomeryPairCorrelation
 import FINAL.Algebra.MoonshotExplorations
 import FINAL.Algebra.MultiocularGodOracle
@@ -152,6 +159,7 @@ import FINAL.Algebra.StableReduction
 import FINAL.Algebra.StandardRep
 import FINAL.Algebra.StereographicBridge
 import FINAL.Algebra.StrangeLight
+import FINAL.Algebra.StrictUpperTriangular
 import FINAL.Algebra.Synthesis
 import FINAL.Algebra.Theorems
 import FINAL.Algebra.ThreeDreams
@@ -706,11 +714,13 @@ import FINAL.EML.AdvancedTheory
 import FINAL.EML.AdversarialRobustness
 import FINAL.EML.AlgebraicMaxClosure
 import FINAL.EML.AlignmentSafetyTheory
+import FINAL.EML.ApproximationBounds
 import FINAL.EML.AutoMLTheory
 import FINAL.EML.Basic
 import FINAL.EML.CWApprox
 import FINAL.EML.CategoryTheorems
 import FINAL.EML.CausalInferenceTheory
+import FINAL.EML.CausalRepresentationTheory
 import FINAL.EML.ClosureOperator
 import FINAL.EML.CompactRetractApprox
 import FINAL.EML.Compile
@@ -720,6 +730,7 @@ import FINAL.EML.ConvexRetraction
 import FINAL.EML.Core
 import FINAL.EML.DeepApprox
 import FINAL.EML.DeepComposition
+import FINAL.EML.DepthEfficiency
 import FINAL.EML.DiagonalPhaseTransition
 import FINAL.EML.DistillationTheory
 import FINAL.EML.Dvir
@@ -740,6 +751,7 @@ import FINAL.EML.EMLv19Core
 import FINAL.EML.EMLv8Advanced
 import FINAL.EML.EMLv8Core
 import FINAL.EML.ExtendedTheory
+import FINAL.EML.FederatedLearningTheory
 import FINAL.EML.FreivaldsAmplification
 import FINAL.EML.FutureResearch
 import FINAL.EML.FutureTheorems
@@ -749,10 +761,16 @@ import FINAL.EML.GraphNeuralNetworkTheory
 import FINAL.EML.InverseLimitApprox
 import FINAL.EML.L2SheafRobustness
 import FINAL.EML.LatticeTreeCorrespondence
+import FINAL.EML.LogAffineNormal
 import FINAL.EML.MagicSquare
 import FINAL.EML.MaxPlusStoneWeierstrass
+import FINAL.EML.MetaPrediction
 import FINAL.EML.ModularForms
+import FINAL.EML.MultiModalTheory
+import FINAL.EML.MultivariateVanishing
+import FINAL.EML.NeuralArchitectureTheory
 import FINAL.EML.NewTheorems
+import FINAL.EML.Normalize
 import FINAL.EML.OISCC
 import FINAL.EML.OpenQuestions
 import FINAL.EML.PhotonResearchRound3
@@ -780,6 +798,7 @@ import FINAL.EML.ThermodynamicChaitinBarrier
 import FINAL.EML.TimeSeriesTheory
 import FINAL.EML.TrainingDynamics
 import FINAL.EML.TransferLearningBounds
+import FINAL.EML.TwoPhase
 import FINAL.EML.UltrametricCertifiedRobustness
 import FINAL.EML.UnifiedCompression
 import FINAL.EML.UnivariateVanishing

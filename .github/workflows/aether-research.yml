@@ -1,0 +1,79 @@
+name: Aether Research Loop
+
+on:
+  schedule:
+    - cron: '17 4,16 * * *'   # Twice daily at 04:17 and 16:17 UTC
+  workflow_dispatch:
+    inputs:
+      max_cycles:
+        description: 'Max research cycles'
+        required: false
+        default: '3'
+      run_minutes:
+        description: 'Max run duration (minutes)'
+        required: false
+        default: '30'
+
+permissions:
+  contents: write
+  actions: write
+
+env:
+  AETHER_MAX_CYCLES: ${{ github.event.inputs.max_cycles || '3' }}
+  AETHER_RUN_MINUTES: ${{ github.event.inputs.run_minutes || '30' }}
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r Aether/requirements.txt
+
+      - name: Create workspace directories
+        run: mkdir -p Aether/.aether_workspace/projects Aether/.aether_workspace/logs
+
+      - name: Write Pollinations key file
+        run: echo "${{ secrets.POLLINATIONS_API_KEY }}" > Aether/.aether_workspace/pollinations_api_key
+
+      - name: Run Aether research loop
+        env:
+          ARISTOTLE_API_KEY: ${{ secrets.ARISTOTLE_API_KEY }}
+          POLLINATIONS_API_KEY: ${{ secrets.POLLINATIONS_API_KEY }}
+          OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
+        run: cd Aether && bash ci_run.sh
+
+      - name: Commit and push all changes
+        run: |
+          git config user.name "Aether Bot"
+          git config user.email "aether-bot[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Aether CI: research cycle $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push
+
+      - name: Self-trigger bonus run
+        if: success()
+        run: |
+          if [ -f Aether/.aether_workspace/.ci_completed_early ]; then
+            echo "Cycles completed early — triggering bonus run"
+            gh workflow run aether-research.yml \
+              --field max_cycles=2 \
+              --field run_minutes=20
+          else
+            echo "No bonus run (cycles did not complete early)"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
