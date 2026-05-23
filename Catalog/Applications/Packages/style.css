@@ -1923,3 +1923,97 @@ body.light-theme #aether-toast .toast-body {
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--border-color);
 }
+
+/* Lineage links in Future Directions tab */
+.directions-lineage {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.lineage-chain {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: baseline;
+}
+
+.lineage-section {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+}
+
+.lineage-label {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.lineage-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.lineage-link:hover {
+    text-decoration: underline;
+}
+
+.lineage-sep {
+    color: var(--text-muted);
+    margin: 0 0.15rem;
+}
+
+/* Sidebar sort and pagination controls */
+.sidebar-controls {
+    padding: 8px 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-controls select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+
+.sidebar-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    border-top: 1px solid var(--border-color);
+}
+
+.page-btn {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.page-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: var(--accent);
+    color: #fff;
+}
+
+#page-indicator {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    min-width: 60px;
+    text-align: center;
+}

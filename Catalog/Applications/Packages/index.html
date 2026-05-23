@@ -73,6 +73,14 @@
 
             <div class="package-list-container">
                 <h3 class="nav-section-title">Research Packages</h3>
+                <div class="sidebar-controls">
+                    <select id="sort-mode">
+                        <option value="date-desc">Date (newest)</option>
+                        <option value="date-asc">Date (oldest)</option>
+                        <option value="domain">Domain A-Z</option>
+                        <option value="lineage">Lineage</option>
+                    </select>
+                </div>
                 <a href="#" class="nav-directions-link" id="nav-directions-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     Future Directions
@@ -80,6 +88,11 @@
                 <ul id="package-list" class="nav-list">
                     <!-- Package links populated by JS -->
                 </ul>
+                <div class="sidebar-pagination" id="sidebar-pagination">
+                    <button id="page-prev" class="page-btn" disabled>&larr; Prev</button>
+                    <span id="page-indicator">1 / 1</span>
+                    <button id="page-next" class="page-btn">Next &rarr;</button>
+                </div>
             </div>
         </nav>
 
@@ -149,6 +162,7 @@
 
                     <!-- Future Directions Tab -->
                     <div class="tab-pane" id="tab-directions">
+                        <div class="directions-lineage" id="content-lineage"></div>
                         <div class="directions-narrative markdown-body" id="content-directions-narrative"></div>
                         <h3 class="directions-section-title" id="directions-section-title" style="display:none">Related Research Directions</h3>
                         <div class="directions-package-cards" id="content-directions-cards"></div>

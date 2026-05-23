@@ -6,6 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
     const mobileToggle = document.getElementById('mobile-toggle');
+    const sortMode = document.getElementById('sort-mode');
+    const pagePrev = document.getElementById('page-prev');
+    const pageNext = document.getElementById('page-next');
+    const pageIndicator = document.getElementById('page-indicator');
+
+    const PAGE_SIZE = 10;
+    let currentPage = 1;
+    let currentSort = 'date-desc';
+    let filteredPackages = [];
 
     function openSidebar() {
         sidebar.classList.add('open');
@@ -44,24 +53,111 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    function sortPackages(pkgs, mode) {
+        const sorted = [...pkgs];
+        switch (mode) {
+            case 'date-desc':
+                sorted.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+                break;
+            case 'date-asc':
+                sorted.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+                break;
+            case 'domain':
+                sorted.sort((a, b) => (a.domain || '').localeCompare(b.domain || ''));
+                break;
+            case 'lineage':
+                sorted.sort((a, b) => {
+                    const aD = countDescendants(a.exp_id);
+                    const bD = countDescendants(b.exp_id);
+                    if (bD !== aD) return bD - aD;
+                    return (b.date || '').localeCompare(a.date || '');
+                });
+                break;
+        }
+        return sorted;
+    }
+
+    function countDescendants(expId) {
+        if (!expId || !window.PACKAGE_INDEX || !window.PACKAGE_DB) return 0;
+        let count = 0;
+        window.PACKAGE_INDEX.forEach(p => {
+            const data = window.PACKAGE_DB[p.filename];
+            if (data && data.source_exp_ids && data.source_exp_ids.includes(expId)) {
+                count += 1 + countDescendants(p.exp_id);
+            }
+        });
+        return count;
+    }
+
+    function updatePagination() {
+        const totalPages = Math.max(1, Math.ceil(filteredPackages.length / PAGE_SIZE));
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        pageIndicator.textContent = `${currentPage} / ${totalPages}`;
+        pagePrev.disabled = currentPage <= 1;
+        pageNext.disabled = currentPage >= totalPages;
+    }
+
     // Search filter
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
-        const filtered = window.Aether.packages.filter(p =>
-            p.title?.toLowerCase().includes(term) ||
-            p.domain?.toLowerCase().includes(term)
-        );
+        const base = window.Aether.packages || [];
+        const filtered = term
+            ? base.filter(p =>
+                p.title?.toLowerCase().includes(term) ||
+                p.domain?.toLowerCase().includes(term)
+              )
+            : base;
+        currentPage = 1;
         window.renderSidebar(filtered);
     });
 
+    // Sort mode change
+    if (sortMode) {
+        sortMode.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            currentPage = 1;
+            window.renderSidebar(filteredPackages);
+        });
+    }
+
+    // Pagination
+    if (pagePrev) {
+        pagePrev.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                window.renderSidebar(filteredPackages);
+            }
+        });
+    }
+    if (pageNext) {
+        pageNext.addEventListener('click', () => {
+            const totalPages = Math.ceil(filteredPackages.length / PAGE_SIZE);
+            if (currentPage < totalPages) {
+                currentPage++;
+                window.renderSidebar(filteredPackages);
+            }
+        });
+    }
+
     window.renderSidebar = function(pkgArray) {
+        filteredPackages = pkgArray;
         packageList.innerHTML = '';
+
         if (pkgArray.length === 0) {
             packageList.innerHTML = '<li class="nav-item"><div class="nav-item-title" style="color:var(--text-muted)">No packages found.</div></li>';
+            updatePagination();
             return;
         }
 
-        pkgArray.forEach(pkg => {
+        const sorted = sortPackages(pkgArray, currentSort);
+        const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
+        if (currentPage > totalPages) currentPage = totalPages;
+        const start = (currentPage - 1) * PAGE_SIZE;
+        const pageItems = sorted.slice(start, start + PAGE_SIZE);
+
+        pageItems.forEach(pkg => {
             const li = document.createElement('li');
             li.className = 'nav-item';
             li.dataset.slug = pkg.filename.replace('.json', '');
@@ -100,5 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             packageList.appendChild(li);
         });
+
+        updatePagination();
     };
 });
