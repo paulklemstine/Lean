@@ -2,421 +2,455 @@
 """
 Tropical KAM Stability — Algorithms
 
-Implements the core algorithms for tropical KAM stability analysis:
+Implements the core algorithms from the tropical KAM stability theory:
+1. Tropical Diophantine checker (exact and approximate)
+2. Optimal Diophantine constant computation
+3. Resonance finder and classifier
+4. KAM persistence radius computation
+5. Resonance profile comparison
+6. Tropical rotation vector computation
 
-1. TropicalDiophantineChecker: Verify the Diophantine condition for frequency vectors
-2. ResonanceProfileComputer: Compute and compare resonance profiles
-3. SubdivisionDetector: Detect whether a perturbation preserves regular subdivisions
-4. RotationVectorEstimator: Estimate tropical rotation vectors from orbit data
+All algorithms include docstrings, type hints, complexity analysis, and examples.
 """
 
 import numpy as np
-from typing import List, Tuple, Optional, Set, Dict, FrozenSet
+import itertools
+from typing import List, Tuple, Optional, Set, Dict
+from dataclasses import dataclass
 from fractions import Fraction
-from itertools import product as iproduct
-from collections import defaultdict
 
 
 # ============================================================
-# Algorithm 1: Tropical Diophantine Checker
+# Data Structures
 # ============================================================
 
-class TropicalDiophantineChecker:
+@dataclass
+class DiophantineResult:
+    """Result of a Tropical Diophantine check."""
+    is_diophantine: bool
+    optimal_constant: float
+    worst_vector: Optional[np.ndarray]
+    worst_gap: float
+    scale: int
+    vectors_checked: int
+
+
+@dataclass
+class ResonanceInfo:
+    """Information about a resonance."""
+    vector: np.ndarray
+    l1_norm: int
+    inner_product: float
+    is_exact: bool  # within tolerance
+
+
+@dataclass
+class PersistenceResult:
+    """Result of a KAM persistence analysis."""
+    diophantine_constant: float
+    persistence_radius: float
+    scale: int
+    perturbed_constant: float  # C/2 for the perturbed system
+    resonance_profile_preserved: bool
+
+
+# ============================================================
+# Algorithm 1: Lattice Vector Enumeration
+# ============================================================
+
+def enumerate_l1_ball(n: int, K: int) -> List[np.ndarray]:
     """
-    Verifies the Tropical Diophantine condition for a frequency vector.
+    Enumerate all integer vectors in Z^n with L1 norm <= K.
     
-    A frequency vector ω ∈ ℝⁿ is TropicalDiophantine(K, C) if:
-        ∀ k ∈ ℤⁿ, 0 < ||k||₁ ≤ K  ⟹  C ≤ |⟨k, ω⟩|
+    Algorithm: Recursive generation with early pruning.
+    Time complexity: O(K^n) (unavoidable for complete enumeration)
+    Space complexity: O(K^n) for the result list
     
-    Time complexity: O(K^n) where n is the dimension
-    Space complexity: O(n) per vector
+    Args:
+        n: Dimension
+        K: Maximum L1 norm
     
-    Example usage:
-        >>> checker = TropicalDiophantineChecker(dimension=2)
+    Returns:
+        List of all k in Z^n with ||k||_1 <= K
+    
+    Example:
+        >>> vecs = enumerate_l1_ball(2, 1)
+        >>> len(vecs)  # (0,0), (±1,0), (0,±1)
+        5
+    """
+    if n == 0:
+        return [np.array([], dtype=int)]
+    
+    results = []
+    _enumerate_recursive(n, K, [], 0, results)
+    return results
+
+
+def _enumerate_recursive(n: int, remaining: int, prefix: list, 
+                         depth: int, results: list):
+    """Recursive helper for lattice vector enumeration with pruning."""
+    if depth == n:
+        results.append(np.array(prefix, dtype=int))
+        return
+    
+    for val in range(-remaining, remaining + 1):
+        new_remaining = remaining - abs(val)
+        if new_remaining >= 0:
+            prefix.append(val)
+            _enumerate_recursive(n, new_remaining, prefix, depth + 1, results)
+            prefix.pop()
+
+
+# ============================================================
+# Algorithm 2: Tropical Diophantine Checker
+# ============================================================
+
+def check_tropical_diophantine(K: int, C: float, omega: np.ndarray,
+                                verbose: bool = False) -> DiophantineResult:
+    """
+    Check whether omega satisfies TropicalDiophantine(K, C).
+    
+    Algorithm:
+        1. Enumerate all k in Z^n with 0 < ||k||_1 <= K
+        2. For each k, compute |<k, omega>|
+        3. Check C <= |<k, omega>|
+        4. Track the minimizing vector
+    
+    Time complexity: O((2K+1)^n) for enumeration, O(n) per inner product
+    Space complexity: O(n) working space (vectors generated lazily)
+    
+    Args:
+        K: Scale parameter (maximum L1 norm)
+        C: Gap constant (lower bound on |<k, omega>|)
+        omega: Frequency vector in R^n
+        verbose: Print details of failing vectors
+    
+    Returns:
+        DiophantineResult with full analysis
+    
+    Example:
         >>> omega = np.array([1.0, (1 + np.sqrt(5)) / 2])
-        >>> result = checker.check(omega, K=10, C=0.05)
-        >>> print(result)
+        >>> result = check_tropical_diophantine(5, 0.01, omega)
+        >>> result.is_diophantine
+        True
     """
+    n = len(omega)
+    min_gap = float('inf')
+    worst_k = None
+    vectors_checked = 0
+    is_diophantine = True
     
-    def __init__(self, dimension: int):
-        self.n = dimension
-        self._vector_cache: Dict[int, List[np.ndarray]] = {}
+    for k in _generate_nonzero_l1_ball(n, K):
+        vectors_checked += 1
+        gap = abs(float(np.dot(k.astype(float), omega)))
+        
+        if gap < min_gap:
+            min_gap = gap
+            worst_k = k.copy()
+        
+        if gap < C:
+            is_diophantine = False
+            if verbose:
+                print(f"  FAIL: k={k}, |<k,ω>|={gap:.2e} < C={C}")
     
-    def _get_vectors(self, norm: int) -> List[np.ndarray]:
-        """Get all integer vectors with L1 norm exactly `norm`."""
-        if norm in self._vector_cache:
-            return self._vector_cache[norm]
-        
-        vectors = []
-        self._enumerate_vectors(norm, self.n, [], vectors)
-        self._vector_cache[norm] = vectors
-        return vectors
+    return DiophantineResult(
+        is_diophantine=is_diophantine,
+        optimal_constant=min_gap,
+        worst_vector=worst_k,
+        worst_gap=min_gap,
+        scale=K,
+        vectors_checked=vectors_checked
+    )
+
+
+def _generate_nonzero_l1_ball(n: int, K: int):
+    """Generate nonzero vectors in Z^n with L1 norm <= K."""
+    ranges = [range(-K, K + 1) for _ in range(n)]
+    for combo in itertools.product(*ranges):
+        k = np.array(combo, dtype=int)
+        norm = int(np.sum(np.abs(k)))
+        if 0 < norm <= K:
+            yield k
+
+
+# ============================================================
+# Algorithm 3: Optimal Diophantine Constant
+# ============================================================
+
+def optimal_diophantine_constant(K: int, omega: np.ndarray) -> Tuple[float, np.ndarray]:
+    """
+    Compute the largest C for which omega is (K, C)-Diophantine.
     
-    def _enumerate_vectors(self, remaining: int, dims_left: int,
-                           current: list, result: list):
-        """Recursively enumerate integer vectors of given L1 norm."""
-        if dims_left == 0:
-            if remaining == 0:
-                result.append(np.array(current, dtype=int))
-            return
-        
-        for abs_val in range(remaining + 1):
-            if abs_val == 0:
-                self._enumerate_vectors(remaining, dims_left - 1,
-                                       current + [0], result)
-            else:
-                for sign in [1, -1]:
-                    self._enumerate_vectors(remaining - abs_val, dims_left - 1,
-                                           current + [sign * abs_val], result)
+    C*(K, omega) = min { |<k, omega>| : k in Z^n, 0 < ||k||_1 <= K }
     
-    def check(self, omega: np.ndarray, K: int, C: float) -> dict:
-        """
-        Check if omega is TropicalDiophantine(K, C).
-        
-        Returns:
-            dict with keys:
-                'is_diophantine': bool
-                'min_gap': float (minimum |<k, omega>| over nonzero k with ||k||_1 <= K)
-                'violating_vector': Optional[np.ndarray]
-                'gap_by_norm': dict mapping norm -> minimum gap at that norm
-        """
-        min_gap = float('inf')
-        worst_k = None
-        gap_by_norm = {}
-        violating_vector = None
-        
-        for norm in range(1, K + 1):
-            norm_min_gap = float('inf')
-            for k in self._get_vectors(norm):
-                val = abs(float(np.dot(k.astype(float), omega)))
-                if val < norm_min_gap:
-                    norm_min_gap = val
-                if val < min_gap:
-                    min_gap = val
-                    worst_k = k.copy()
-                if val < C and violating_vector is None:
-                    violating_vector = k.copy()
-            gap_by_norm[norm] = norm_min_gap
-        
-        return {
-            'is_diophantine': min_gap >= C,
-            'min_gap': min_gap,
-            'violating_vector': violating_vector,
-            'worst_vector': worst_k,
-            'gap_by_norm': gap_by_norm,
-            'rigidity_bound': min_gap / (2 * K) if K > 0 else float('inf'),
+    Time complexity: O((2K+1)^n · n)
+    Space complexity: O(n)
+    
+    Args:
+        K: Scale parameter
+        omega: Frequency vector
+    
+    Returns:
+        (C_star, k_star) where C_star is the optimal constant and
+        k_star is the minimizing lattice vector
+    
+    Example:
+        >>> omega = np.array([1.0, np.sqrt(2)])
+        >>> C, k = optimal_diophantine_constant(5, omega)
+        >>> C > 0  # irrational frequencies have positive gap
+        True
+    """
+    result = check_tropical_diophantine(K, 0.0, omega)
+    return result.optimal_constant, result.worst_vector
+
+
+# ============================================================
+# Algorithm 4: Resonance Finder
+# ============================================================
+
+def find_all_resonances(K: int, omega: np.ndarray, 
+                        tol: float = 1e-10) -> List[ResonanceInfo]:
+    """
+    Find all resonance vectors of omega up to scale K.
+    
+    A resonance is k in Z^n with ||k||_1 <= K and |<k, omega>| < tol.
+    
+    Time complexity: O((2K+1)^n · n)
+    Space complexity: O(R · n) where R is the number of resonances
+    
+    Args:
+        K: Maximum L1 norm to search
+        omega: Frequency vector
+        tol: Numerical tolerance for identifying resonances
+    
+    Returns:
+        List of ResonanceInfo objects
+    
+    Example:
+        >>> omega = np.array([1.0, 0.5])  # rational, admits resonances
+        >>> res = find_all_resonances(5, omega)
+        >>> len(res) > 0
+        True
+    """
+    resonances = []
+    for k in _generate_nonzero_l1_ball(len(omega), K):
+        inner = float(np.dot(k.astype(float), omega))
+        norm = int(np.sum(np.abs(k)))
+        if abs(inner) < tol:
+            resonances.append(ResonanceInfo(
+                vector=k.copy(),
+                l1_norm=norm,
+                inner_product=inner,
+                is_exact=(abs(inner) < 1e-15)
+            ))
+    return resonances
+
+
+# ============================================================
+# Algorithm 5: KAM Persistence Radius
+# ============================================================
+
+def kam_persistence_radius(K: int, omega: np.ndarray) -> PersistenceResult:
+    """
+    Compute the KAM persistence radius for frequency omega at scale K.
+    
+    The persistence radius is C/(2K) where C = C*(K, omega) is the
+    optimal Diophantine constant. Any perturbation smaller than this
+    radius (in sup-norm) preserves the resonance profile.
+    
+    Time complexity: O((2K+1)^n · n) for Diophantine constant computation
+    Space complexity: O(n)
+    
+    Args:
+        K: Scale parameter
+        omega: Frequency vector
+    
+    Returns:
+        PersistenceResult with radius and related data
+    
+    Example:
+        >>> omega = np.array([1.0, (1 + np.sqrt(5)) / 2])
+        >>> result = kam_persistence_radius(5, omega)
+        >>> result.persistence_radius > 0
+        True
+    """
+    C, _ = optimal_diophantine_constant(K, omega)
+    radius = C / (2 * K) if K > 0 else float('inf')
+    
+    return PersistenceResult(
+        diophantine_constant=C,
+        persistence_radius=radius,
+        scale=K,
+        perturbed_constant=C / 2,
+        resonance_profile_preserved=True  # guaranteed within radius
+    )
+
+
+# ============================================================
+# Algorithm 6: Resonance Profile Comparison
+# ============================================================
+
+def compare_resonance_profiles(K: int, omega1: np.ndarray, omega2: np.ndarray,
+                                tol: float = 1e-10) -> Dict:
+    """
+    Compare resonance profiles of two frequency vectors up to scale K.
+    
+    Checks whether the set of resonant lattice vectors is identical,
+    which is the combinatorial invariant preserved by tropical KAM.
+    
+    Time complexity: O((2K+1)^n · n)
+    Space complexity: O(R · n) for storing resonances
+    
+    Args:
+        K: Scale parameter
+        omega1, omega2: Frequency vectors to compare
+        tol: Numerical tolerance
+    
+    Returns:
+        Dictionary with comparison results
+    """
+    res1 = find_all_resonances(K, omega1, tol)
+    res2 = find_all_resonances(K, omega2, tol)
+    
+    res1_set = {tuple(r.vector) for r in res1}
+    res2_set = {tuple(r.vector) for r in res2}
+    
+    return {
+        "same_profile": res1_set == res2_set,
+        "resonances_omega1": len(res1),
+        "resonances_omega2": len(res2),
+        "shared": len(res1_set & res2_set),
+        "only_in_omega1": len(res1_set - res2_set),
+        "only_in_omega2": len(res2_set - res1_set),
+    }
+
+
+# ============================================================
+# Algorithm 7: Tropical Rotation Vector
+# ============================================================
+
+def compute_tropical_rotation_vector(orbit: List[np.ndarray], 
+                                      period: int = 1) -> np.ndarray:
+    """
+    Compute the tropical rotation vector from a discrete orbit.
+    
+    The rotation vector is the average displacement per period:
+        ρ = (1/T) Σ (x_{t+1} - x_t)
+    
+    In the tropical setting, this measures the average slope of the
+    piecewise-linear trajectory, which is the combinatorial analog
+    of the classical rotation number.
+    
+    Time complexity: O(T · n) where T is the orbit length
+    Space complexity: O(n)
+    
+    Args:
+        orbit: List of points in R^n forming the orbit
+        period: Averaging period
+    
+    Returns:
+        Rotation vector in R^n
+    
+    Example:
+        >>> # Linear orbit with slope (1, golden ratio)
+        >>> orbit = [np.array([t, t * 1.618]) for t in range(100)]
+        >>> rho = compute_tropical_rotation_vector(orbit)
+        >>> np.allclose(rho, [1.0, 1.618], atol=0.01)
+        True
+    """
+    if len(orbit) < 2:
+        return np.zeros(len(orbit[0]) if orbit else 0)
+    
+    T = len(orbit) - 1
+    total_displacement = orbit[-1] - orbit[0]
+    return total_displacement / T
+
+
+# ============================================================
+# Algorithm 8: Diophantine Constant Scaling
+# ============================================================
+
+def verify_scaling_invariance(K: int, omega: np.ndarray, 
+                               scales: List[float]) -> Dict:
+    """
+    Verify the scaling invariance theorem:
+    C*(K, λω) = |λ| · C*(K, ω)
+    
+    Args:
+        K: Scale parameter
+        omega: Base frequency vector
+        scales: List of scaling factors to test
+    
+    Returns:
+        Dictionary with verification results
+    """
+    C_base, _ = optimal_diophantine_constant(K, omega)
+    
+    results = {}
+    for lam in scales:
+        omega_scaled = lam * omega
+        C_scaled, _ = optimal_diophantine_constant(K, omega_scaled)
+        C_predicted = abs(lam) * C_base
+        error = abs(C_scaled - C_predicted) / max(C_predicted, 1e-15)
+        results[lam] = {
+            "C_actual": C_scaled,
+            "C_predicted": C_predicted,
+            "relative_error": error,
+            "verified": error < 1e-10
         }
     
-    def find_optimal_C(self, omega: np.ndarray, K: int) -> float:
-        """Find the largest C such that omega is TropicalDiophantine(K, C)."""
-        result = self.check(omega, K, 0.0)
-        return result['min_gap']
+    return results
 
 
 # ============================================================
-# Algorithm 2: Resonance Profile Computer
-# ============================================================
-
-class ResonanceProfileComputer:
-    """
-    Computes and compares resonance profiles of frequency vectors.
-    
-    The resonance profile of ω at scale K is the set of lattice vectors
-    k with ||k||_1 ≤ K such that ⟨k, ω⟩ = 0 (within tolerance).
-    
-    Time complexity: O(K^n) for profile computation
-    Space complexity: O(K^n) for storing the profile
-    
-    Example usage:
-        >>> computer = ResonanceProfileComputer(dimension=2, tolerance=1e-10)
-        >>> omega = np.array([1.0, 0.5])
-        >>> profile = computer.compute_profile(omega, K=5)
-    """
-    
-    def __init__(self, dimension: int, tolerance: float = 1e-10):
-        self.n = dimension
-        self.tol = tolerance
-        self._checker = TropicalDiophantineChecker(dimension)
-    
-    def compute_profile(self, omega: np.ndarray, K: int) -> Set[Tuple[int, ...]]:
-        """
-        Compute the resonance profile: set of k with <k,omega> ≈ 0 and ||k||_1 ≤ K.
-        """
-        resonances = set()
-        for norm in range(1, K + 1):
-            for k in self._checker._get_vectors(norm):
-                val = abs(float(np.dot(k.astype(float), omega)))
-                if val < self.tol:
-                    resonances.add(tuple(k))
-        return resonances
-    
-    def same_profile(self, omega1: np.ndarray, omega2: np.ndarray,
-                     K: int) -> Tuple[bool, Optional[np.ndarray]]:
-        """
-        Check if two frequency vectors have the same resonance profile.
-        
-        Returns (True, None) if profiles match, (False, distinguishing_k) otherwise.
-        """
-        prof1 = self.compute_profile(omega1, K)
-        prof2 = self.compute_profile(omega2, K)
-        
-        diff = prof1.symmetric_difference(prof2)
-        if not diff:
-            return True, None
-        
-        k = np.array(list(diff)[0], dtype=int)
-        return False, k
-    
-    def verify_rigidity_theorem(self, omega: np.ndarray, K: int, C: float,
-                                num_trials: int = 100) -> dict:
-        """
-        Empirically verify the resonance rigidity theorem.
-        
-        For random perturbations within the rigidity bound C/(2K),
-        checks that the resonance profile is preserved.
-        """
-        bound = C / (2 * K)
-        successes = 0
-        failures = 0
-        
-        for _ in range(num_trials):
-            delta = np.random.uniform(-bound * 0.99, bound * 0.99, size=self.n)
-            omega_pert = omega + delta
-            same, _ = self.same_profile(omega, omega_pert, K)
-            if same:
-                successes += 1
-            else:
-                failures += 1
-        
-        return {
-            'bound': bound,
-            'trials': num_trials,
-            'successes': successes,
-            'failures': failures,
-            'theorem_holds': failures == 0,
-        }
-
-
-# ============================================================
-# Algorithm 3: Subdivision Detector
-# ============================================================
-
-class SubdivisionDetector:
-    """
-    Detects whether a perturbation of tropical polynomial coefficients
-    preserves the induced regular subdivision of the Newton polytope.
-    
-    A tropical polynomial f(x) = max_{α ∈ A} (c_α + α·x) induces a
-    regular subdivision of the Newton polytope conv(A) via the upper
-    convex hull of the lifted points (α, c_α).
-    
-    Time complexity: O(|A|² · G) where G is grid resolution
-    Space complexity: O(|A| · G)
-    
-    Example usage:
-        >>> detector = SubdivisionDetector()
-        >>> support = [(0,0), (1,0), (0,1), (1,1)]
-        >>> coeffs1 = [0.0, 1.0, 1.0, 0.5]
-        >>> coeffs2 = [0.1, 1.1, 1.1, 0.6]
-        >>> detector.preserves_subdivision(support, coeffs1, coeffs2)
-    """
-    
-    def __init__(self, grid_resolution: int = 100):
-        self.grid_res = grid_resolution
-    
-    def compute_subdivision(self, support: List[Tuple[int, ...]],
-                           coefficients: List[float],
-                           sample_range: Tuple[float, float] = (-5, 5)
-                           ) -> Dict[FrozenSet[int], int]:
-        """
-        Compute the regular subdivision induced by a tropical polynomial.
-        
-        Returns a dictionary mapping cells (as frozensets of achieving indices)
-        to their approximate area (number of grid points).
-        """
-        n_support = len(support)
-        lo, hi = sample_range
-        cells: Dict[FrozenSet[int], int] = defaultdict(int)
-        
-        xs = np.linspace(lo, hi, self.grid_res)
-        ys = np.linspace(lo, hi, self.grid_res)
-        
-        for x in xs:
-            for y in ys:
-                vals = [coefficients[i] + support[i][0] * x + support[i][1] * y
-                        for i in range(n_support)]
-                max_val = max(vals)
-                achievers = frozenset(i for i in range(n_support)
-                                     if abs(vals[i] - max_val) < 1e-10)
-                cells[achievers] += 1
-        
-        return dict(cells)
-    
-    def preserves_subdivision(self, support: List[Tuple[int, ...]],
-                             coeffs1: List[float],
-                             coeffs2: List[float]) -> Tuple[bool, dict]:
-        """
-        Check if two sets of coefficients induce the same regular subdivision.
-        
-        Returns (True, info) if subdivisions match, (False, info) otherwise.
-        """
-        sub1 = self.compute_subdivision(support, coeffs1)
-        sub2 = self.compute_subdivision(support, coeffs2)
-        
-        cells1 = set(sub1.keys())
-        cells2 = set(sub2.keys())
-        
-        same = cells1 == cells2
-        
-        return same, {
-            'cells_original': len(cells1),
-            'cells_perturbed': len(cells2),
-            'cells_in_common': len(cells1 & cells2),
-            'cells_only_original': cells1 - cells2,
-            'cells_only_perturbed': cells2 - cells1,
-        }
-
-
-# ============================================================
-# Algorithm 4: Rotation Vector Estimator
-# ============================================================
-
-class RotationVectorEstimator:
-    """
-    Estimates the tropical rotation vector from orbit data on a tropical torus.
-    
-    Given a sequence of points on a tropical torus (represented as ℝⁿ/ℤⁿ),
-    estimates the rotation vector by averaging displacements.
-    
-    Time complexity: O(T · n) where T is orbit length
-    Space complexity: O(T · n)
-    
-    Example usage:
-        >>> estimator = RotationVectorEstimator(dimension=2)
-        >>> orbit = [np.array([0.0, 0.0]), np.array([0.618, 0.414]), ...]
-        >>> omega = estimator.estimate(orbit)
-    """
-    
-    def __init__(self, dimension: int):
-        self.n = dimension
-    
-    def estimate(self, orbit: List[np.ndarray],
-                 method: str = 'average') -> np.ndarray:
-        """
-        Estimate the rotation vector from an orbit sequence.
-        
-        Methods:
-            'average': Average of consecutive displacements
-            'regression': Linear regression on cumulative displacement
-        """
-        if len(orbit) < 2:
-            return np.zeros(self.n)
-        
-        if method == 'average':
-            displacements = []
-            for i in range(1, len(orbit)):
-                disp = orbit[i] - orbit[i-1]
-                # Reduce modulo 1 to handle torus wrapping
-                disp = disp - np.round(disp)
-                displacements.append(disp)
-            return np.mean(displacements, axis=0)
-        
-        elif method == 'regression':
-            T = len(orbit)
-            times = np.arange(T)
-            omega = np.zeros(self.n)
-            
-            for j in range(self.n):
-                # Unwrap the j-th coordinate
-                coords = np.array([orbit[t][j] for t in range(T)])
-                unwrapped = np.unwrap(coords * 2 * np.pi) / (2 * np.pi)
-                
-                # Linear regression
-                A = np.vstack([times, np.ones(T)]).T
-                result = np.linalg.lstsq(A, unwrapped, rcond=None)
-                omega[j] = result[0][0]
-            
-            return omega
-        
-        raise ValueError(f"Unknown method: {method}")
-    
-    def generate_orbit(self, omega: np.ndarray, T: int,
-                       x0: Optional[np.ndarray] = None) -> List[np.ndarray]:
-        """Generate an orbit of a tropical rotation with frequency omega."""
-        if x0 is None:
-            x0 = np.zeros(self.n)
-        
-        orbit = [x0.copy()]
-        x = x0.copy()
-        for _ in range(T):
-            x = (x + omega) % 1.0
-            orbit.append(x.copy())
-        
-        return orbit
-
-
-# ============================================================
-# Example Usage and Testing
+# Example Usage
 # ============================================================
 
 if __name__ == "__main__":
-    print("=" * 70)
-    print("TROPICAL KAM STABILITY — Algorithm Demonstrations")
-    print("=" * 70)
+    print("Tropical KAM Stability — Algorithm Examples\n")
     
-    # Algorithm 1: Diophantine Checker
-    print("\n--- Algorithm 1: Tropical Diophantine Checker ---")
-    checker = TropicalDiophantineChecker(dimension=2)
-    
+    # Example 1: Diophantine check
     phi = (1 + np.sqrt(5)) / 2
     omega = np.array([1.0, phi])
-    result = checker.check(omega, K=10, C=0.05)
-    print(f"ω = [1, φ]: Diophantine(10, 0.05) = {result['is_diophantine']}")
-    print(f"  Minimum gap: {result['min_gap']:.6f}")
-    print(f"  Rigidity bound: {result['rigidity_bound']:.6f}")
-    print(f"  Gap by norm: { {k: f'{v:.4f}' for k, v in list(result['gap_by_norm'].items())[:5]} }")
     
-    C_opt = checker.find_optimal_C(omega, K=10)
-    print(f"  Optimal C for K=10: {C_opt:.6f}")
+    print("1. Diophantine Check:")
+    result = check_tropical_diophantine(5, 0.01, omega, verbose=True)
+    print(f"   ω = [1, φ]: Diophantine(5, 0.01) = {result.is_diophantine}")
+    print(f"   Optimal constant C* = {result.optimal_constant:.6f}")
+    print(f"   Worst vector k = {result.worst_vector}")
+    print(f"   Vectors checked: {result.vectors_checked}")
+    print()
     
-    # Algorithm 2: Resonance Profile
-    print("\n--- Algorithm 2: Resonance Profile Computer ---")
-    computer = ResonanceProfileComputer(dimension=2)
+    # Example 2: KAM persistence
+    print("2. KAM Persistence Radius:")
+    persistence = kam_persistence_radius(5, omega)
+    print(f"   C = {persistence.diophantine_constant:.6f}")
+    print(f"   Persistence radius = {persistence.persistence_radius:.6f}")
+    print(f"   Perturbed constant = {persistence.perturbed_constant:.6f}")
+    print()
     
-    omega_rat = np.array([1.0, 0.5])
-    profile = computer.compute_profile(omega_rat, K=5)
-    print(f"ω = [1, 0.5]: Resonances at K=5: {profile}")
+    # Example 3: Resonance finding
+    print("3. Resonances of rational frequency [1, 3/7]:")
+    omega_rat = np.array([1.0, 3.0/7.0])
+    resonances = find_all_resonances(10, omega_rat)
+    for r in resonances[:5]:
+        print(f"   k = {r.vector}, ||k||₁ = {r.l1_norm}, <k,ω> = {r.inner_product:.2e}")
+    print(f"   Total resonances up to K=10: {len(resonances)}")
+    print()
     
-    rigidity = computer.verify_rigidity_theorem(omega, K=8, C=0.05, num_trials=200)
-    print(f"ω = [1, φ]: Rigidity verification (K=8, C=0.05)")
-    print(f"  Trials: {rigidity['trials']}, Successes: {rigidity['successes']}, "
-          f"Failures: {rigidity['failures']}")
-    print(f"  Theorem holds: {rigidity['theorem_holds']}")
+    # Example 4: Scaling invariance
+    print("4. Scaling Invariance Verification:")
+    scaling = verify_scaling_invariance(5, omega, [0.5, 1.0, 2.0, 5.0])
+    for lam, data in scaling.items():
+        print(f"   λ={lam}: C(λω)={data['C_actual']:.6f}, "
+              f"|λ|C(ω)={data['C_predicted']:.6f}, "
+              f"verified={data['verified']}")
+    print()
     
-    # Algorithm 3: Subdivision Detector
-    print("\n--- Algorithm 3: Subdivision Detector ---")
-    detector = SubdivisionDetector(grid_resolution=50)
-    
-    support = [(0, 0), (2, 0), (0, 2), (1, 1)]
-    coeffs1 = [0.0, -1.0, -1.0, -0.5]
-    coeffs2 = [0.1, -0.9, -0.9, -0.4]  # uniform shift
-    coeffs3 = [0.0, -1.0, -1.0, 1.5]   # changes subdivision
-    
-    same12, info12 = detector.preserves_subdivision(support, coeffs1, coeffs2)
-    same13, info13 = detector.preserves_subdivision(support, coeffs1, coeffs3)
-    
-    print(f"Uniform shift preserves subdivision: {same12} (cells: {info12['cells_original']})")
-    print(f"Large perturbation preserves subdivision: {same13} "
-          f"(orig cells: {info13['cells_original']}, pert cells: {info13['cells_perturbed']})")
-    
-    # Algorithm 4: Rotation Vector Estimator
-    print("\n--- Algorithm 4: Rotation Vector Estimator ---")
-    estimator = RotationVectorEstimator(dimension=2)
-    
-    omega_true = np.array([phi - 1, np.sqrt(2) - 1])
-    orbit = estimator.generate_orbit(omega_true, T=1000)
-    omega_est = estimator.estimate(orbit, method='average')
-    
-    print(f"True ω: {omega_true}")
-    print(f"Estimated ω (T=1000): {omega_est}")
-    print(f"Error: {np.max(np.abs(omega_true - omega_est)):.2e}")
+    # Example 5: Profile comparison
+    print("5. Resonance Profile Comparison:")
+    eps = 0.001
+    omega_perturbed = omega + np.array([eps, -eps])
+    comparison = compare_resonance_profiles(5, omega, omega_perturbed)
+    print(f"   Same profile: {comparison['same_profile']}")
+    print(f"   Shared resonances: {comparison['shared']}")

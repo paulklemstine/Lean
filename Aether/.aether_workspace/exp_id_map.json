@@ -407,5 +407,8 @@
   "abda161f": "direction_4_non_convergent_extraction_soundness.json",
   "45a90c43": "direction_1_non_abelian_arithmetic_phase_classific.json",
   "0f4d7033": "sunflower_pruning_effectiveness_for_pythagorean_hy.json",
-  "21968594": "direction_3_coordinate_independence_as_a_probabili.json"
+  "21968594": "direction_3_coordinate_independence_as_a_probabili.json",
+  "7d4778d1": "direction_4_ultra_log_concavity_and_effective_boun.json",
+  "43aa1bfc": "direction_3_formal_knuth_bendix_completion.json",
+  "8b647382": "direction_5_tropical_kam_stability_grand_challenge.json"
 }

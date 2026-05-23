@@ -2,754 +2,721 @@
 """
 Tropical KAM Stability — Applications
 
-Real-world applications of tropical KAM stability theory:
-
-1. Stability certification for discrete dynamical systems
-2. Resonance detection in coupled oscillators
-3. Frequency locking analysis
-4. Tropical optimization landscape stability
+Demonstrates real-world applications of tropical KAM stability theory:
+1. Orbital stability certification for celestial mechanics
+2. Signal processing: quasi-periodic signal detection
+3. Cryptographic lattice analysis
+4. Optimization: stability of min-plus dynamical programs
 """
 
 import numpy as np
 from typing import List, Tuple, Dict
-from collections import defaultdict
+import itertools
 
 
 # ============================================================
-# Application 1: Stability Certification
+# Core utility functions (self-contained)
 # ============================================================
 
-def stability_certificate(omega: np.ndarray, K: int, 
-                          perturbation_bound: float) -> Dict:
-    """
-    Generate a stability certificate for a quasi-periodic system.
-    
-    Given a frequency vector omega, certifies that all perturbations
-    within the given bound preserve the resonance profile up to scale K.
-    
-    This is the computational implementation of the Tropical KAM
-    Persistence Theorem: if C/(2K) > perturbation_bound, the system
-    is certified stable.
-    
-    Args:
-        omega: Frequency vector
-        K: Lattice scale for stability
-        perturbation_bound: Maximum componentwise perturbation
-    
-    Returns:
-        Certificate dictionary with stability analysis
-    
-    Example:
-        >>> omega = np.array([1.0, (1 + np.sqrt(5)) / 2])
-        >>> cert = stability_certificate(omega, K=10, perturbation_bound=0.001)
-        >>> print(cert['is_stable'])
-    """
+def l1_norm(k: np.ndarray) -> int:
+    return int(np.sum(np.abs(k)))
+
+def lattice_inner(k: np.ndarray, omega: np.ndarray) -> float:
+    return float(np.dot(k.astype(float), omega))
+
+def optimal_diophantine_constant(K: int, omega: np.ndarray) -> float:
     n = len(omega)
-    
-    # Compute the Diophantine gap
     min_gap = float('inf')
-    worst_k = None
-    
-    for total_norm in range(1, K + 1):
-        for k in _enum_lattice(n, total_norm):
-            val = abs(float(np.dot(k.astype(float), omega)))
-            if val < min_gap:
-                min_gap = val
-                worst_k = k.copy()
-    
-    C = min_gap  # optimal Diophantine constant
-    rigidity_bound = C / (2 * K)
-    is_stable = perturbation_bound < rigidity_bound
-    
-    return {
-        'frequency': omega.tolist(),
-        'scale_K': K,
-        'diophantine_constant_C': C,
-        'rigidity_bound': rigidity_bound,
-        'perturbation_bound': perturbation_bound,
-        'is_stable': is_stable,
-        'stability_margin': rigidity_bound - perturbation_bound,
-        'worst_resonance_vector': worst_k.tolist() if worst_k is not None else None,
-        'certificate_valid': True,
-    }
+    for combo in itertools.product(*[range(-K, K+1) for _ in range(n)]):
+        k = np.array(combo, dtype=int)
+        norm = l1_norm(k)
+        if 0 < norm <= K:
+            gap = abs(lattice_inner(k, omega))
+            min_gap = min(min_gap, gap)
+    return min_gap
 
-
-# ============================================================
-# Application 2: Coupled Oscillator Resonance Detection
-# ============================================================
-
-def detect_resonances(frequencies: np.ndarray, K: int,
-                      tolerance: float = 1e-8) -> List[Dict]:
-    """
-    Detect near-resonances in a system of coupled oscillators.
-    
-    Finds all integer vectors k with ||k||_1 ≤ K such that
-    |⟨k, ω⟩| < tolerance, indicating potential resonance.
-    
-    Applications:
-    - Celestial mechanics: detecting orbital resonances
-    - Electrical engineering: identifying harmonic interference
-    - Structural engineering: resonance-induced vibration analysis
-    
-    Args:
-        frequencies: Array of oscillator frequencies
-        K: Maximum resonance complexity
-        tolerance: Threshold for near-resonance detection
-    
-    Returns:
-        List of detected resonances with metadata
-    
-    Example:
-        >>> freqs = np.array([1.0, 2.01, 3.005])  # near 1:2:3 resonance
-        >>> resonances = detect_resonances(freqs, K=5)
-    """
-    n = len(frequencies)
-    resonances = []
-    
-    for total_norm in range(1, K + 1):
-        for k in _enum_lattice(n, total_norm):
-            val = float(np.dot(k.astype(float), frequencies))
-            if abs(val) < tolerance:
-                # Classify the resonance
-                order = total_norm
-                resonances.append({
-                    'vector': k.tolist(),
-                    'order': order,
-                    'inner_product': val,
-                    'residual': abs(val),
-                    'type': _classify_resonance(k),
-                })
-    
-    return sorted(resonances, key=lambda r: r['residual'])
-
-
-def _classify_resonance(k: np.ndarray) -> str:
-    """Classify the type of resonance from the integer vector."""
-    nonzero = np.count_nonzero(k)
-    if nonzero == 1:
-        return "fundamental"
-    elif nonzero == 2:
-        return "pairwise"
-    else:
-        return "multi-body"
-
-
-# ============================================================
-# Application 3: Frequency Locking Analysis
-# ============================================================
-
-def frequency_locking_diagram(omega_base: np.ndarray, 
-                              param_range: Tuple[float, float],
-                              n_points: int = 200,
-                              K: int = 10) -> Dict:
-    """
-    Compute a frequency locking diagram.
-    
-    As a parameter varies, tracks which frequency ratios become
-    resonant and which maintain Diophantine stability.
-    
-    This visualizes the tropical KAM persistence theorem:
-    Diophantine frequencies maintain their resonance profile
-    through a range of parameters, while resonant frequencies
-    cause "locking" (collapse of the invariant torus).
-    
-    Args:
-        omega_base: Base frequency vector (dim 2)
-        param_range: Range of the perturbation parameter
-        n_points: Number of parameter values to sample
-        K: Resonance detection scale
-    
-    Returns:
-        Diagram data with parameter values, gaps, and locking regions
-    
-    Example:
-        >>> omega = np.array([1.0, (1 + np.sqrt(5)) / 2])
-        >>> diagram = frequency_locking_diagram(omega, (-0.5, 0.5))
-    """
-    params = np.linspace(param_range[0], param_range[1], n_points)
+def find_resonances(K: int, omega: np.ndarray, tol: float = 1e-10) -> list:
+    n = len(omega)
     results = []
-    
-    for p in params:
-        omega = omega_base.copy()
-        omega[1] += p
-        
-        # Compute Diophantine gap
-        min_gap = float('inf')
-        for total_norm in range(1, K + 1):
-            for k in _enum_lattice(len(omega), total_norm):
-                val = abs(float(np.dot(k.astype(float), omega)))
-                if val > 1e-15:
-                    min_gap = min(min_gap, val)
-        
-        # Check for exact rational ratio
-        ratio = omega[1] / omega[0] if omega[0] != 0 else float('inf')
-        
-        results.append({
-            'parameter': float(p),
-            'omega': omega.tolist(),
-            'diophantine_gap': min_gap,
-            'ratio': ratio,
-            'is_locked': min_gap < 1e-8,
-        })
-    
-    # Identify locking intervals
-    locking_regions = []
-    in_lock = False
-    lock_start = None
-    
-    for r in results:
-        if r['is_locked'] and not in_lock:
-            lock_start = r['parameter']
-            in_lock = True
-        elif not r['is_locked'] and in_lock:
-            locking_regions.append((lock_start, r['parameter']))
-            in_lock = False
-    
-    return {
-        'data': results,
-        'locking_regions': locking_regions,
-        'n_locked': sum(1 for r in results if r['is_locked']),
-        'n_free': sum(1 for r in results if not r['is_locked']),
-    }
-
-
-# ============================================================
-# Application 4: Tropical Optimization Landscape
-# ============================================================
-
-def tropical_landscape_stability(coefficients: Dict[Tuple[int, ...], float],
-                                 perturbation_scale: float,
-                                 n_samples: int = 50) -> Dict:
-    """
-    Analyze stability of a tropical optimization landscape.
-    
-    A tropical polynomial f(x) = max_α (c_α + α·x) defines a
-    piecewise-linear optimization landscape. We check whether
-    small perturbations of coefficients preserve the landscape structure.
-    
-    Applications:
-    - Min-plus optimization: stability of optimal solutions
-    - Tropical linear programming: sensitivity analysis
-    - Network optimization: robustness of shortest paths
-    
-    Args:
-        coefficients: Dict mapping exponent tuples to coefficients
-        perturbation_scale: Scale of random perturbations
-        n_samples: Number of random perturbations to test
-    
-    Returns:
-        Stability analysis results
-    
-    Example:
-        >>> coeffs = {(0,0): 0, (1,0): 1, (0,1): 1, (1,1): 0.5}
-        >>> result = tropical_landscape_stability(coeffs, perturbation_scale=0.1)
-    """
-    support = list(coefficients.keys())
-    base_coeffs = [coefficients[s] for s in support]
-    
-    preserved_count = 0
-    changed_count = 0
-    
-    for _ in range(n_samples):
-        # Random perturbation
-        pert_coeffs = [c + np.random.uniform(-perturbation_scale, perturbation_scale)
-                       for c in base_coeffs]
-        
-        # Check if subdivision is preserved
-        base_cells = _compute_cells(support, base_coeffs)
-        pert_cells = _compute_cells(support, pert_coeffs)
-        
-        if base_cells == pert_cells:
-            preserved_count += 1
-        else:
-            changed_count += 1
-    
-    return {
-        'support_size': len(support),
-        'perturbation_scale': perturbation_scale,
-        'n_samples': n_samples,
-        'preserved': preserved_count,
-        'changed': changed_count,
-        'preservation_rate': preserved_count / n_samples,
-        'is_robust': preserved_count == n_samples,
-    }
-
-
-def _compute_cells(support, coeffs, grid_res=30):
-    """Compute the cell structure of a tropical polynomial."""
-    cells = set()
-    for x in np.linspace(-3, 3, grid_res):
-        for y in np.linspace(-3, 3, grid_res):
-            vals = [coeffs[i] + support[i][0] * x + support[i][1] * y
-                    for i in range(len(support))]
-            max_val = max(vals)
-            achiever = frozenset(i for i in range(len(vals))
-                                if abs(vals[i] - max_val) < 1e-10)
-            cells.add(achiever)
-    return cells
-
-
-# ============================================================
-# Helper: Lattice vector enumeration
-# ============================================================
-
-def _enum_lattice(n: int, target_norm: int) -> List[np.ndarray]:
-    """Generate integer vectors in Z^n with L1 norm exactly target_norm."""
-    results = []
-    _enum_helper(n, target_norm, [], results)
+    for combo in itertools.product(*[range(-K, K+1) for _ in range(n)]):
+        k = np.array(combo, dtype=int)
+        norm = l1_norm(k)
+        if 0 < norm <= K and abs(lattice_inner(k, omega)) < tol:
+            results.append(k.copy())
     return results
 
-def _enum_helper(dims_left: int, remaining: int, current: list, results: list):
-    if dims_left == 0:
-        if remaining == 0:
-            results.append(np.array(current, dtype=int))
-        return
-    for abs_val in range(remaining + 1):
-        if abs_val == 0:
-            _enum_helper(dims_left - 1, remaining, current + [0], results)
+
+# ============================================================
+# Application 1: Celestial Mechanics — Orbital Stability
+# ============================================================
+
+def orbital_stability_certification():
+    """
+    Certify the long-term stability of a planetary system using
+    tropical Diophantine analysis of orbital frequency ratios.
+    
+    In celestial mechanics, orbital resonances (like Jupiter-Saturn 5:2)
+    can either stabilize or destabilize orbits. The tropical Diophantine
+    condition provides a rigorous certificate: if the frequency ratios
+    satisfy the condition up to a given scale, then the orbital torus
+    persists under perturbations smaller than the computed threshold.
+    """
+    print("=" * 70)
+    print("APPLICATION 1: Orbital Stability Certification")
+    print("=" * 70)
+    print()
+    
+    # Normalized orbital frequencies (periods relative to innermost planet)
+    # Inspired by the inner solar system
+    systems = {
+        "Inner Solar System (Mercury-Venus-Earth)": 
+            np.array([1.0, 1/2.55, 1/4.15]),
+        "Trappist-1 (b-c-d)": 
+            np.array([1.0, 1/1.603, 1/2.422]),
+        "Near 3:2:1 resonance chain":
+            np.array([1.0, 2/3 + 0.01, 1/3 + 0.005]),
+        "Exact 3:2:1 resonance (unstable)":
+            np.array([1.0, 2/3, 1/3]),
+    }
+    
+    for name, omega in systems.items():
+        print(f"  System: {name}")
+        print(f"  Frequencies: {omega}")
+        
+        K = 6
+        C = optimal_diophantine_constant(K, omega)
+        radius = C / (2 * K) if K > 0 else 0
+        resonances = find_resonances(K, omega)
+        
+        print(f"  Diophantine constant C*(K={K}): {C:.6f}")
+        print(f"  Persistence radius: {radius:.6f}")
+        print(f"  Resonances up to K={K}: {len(resonances)}")
+        
+        if len(resonances) > 0:
+            print(f"  WARNING: System has exact resonances — NOT Diophantine")
+            print(f"  Stability certificate: FAILED (resonance detected)")
+        elif C > 0.01:
+            print(f"  Stability certificate: PASSED (strong gap)")
         else:
-            for sign in [1, -1]:
-                _enum_helper(dims_left - 1, remaining - abs_val,
-                            current + [sign * abs_val], results)
+            print(f"  Stability certificate: MARGINAL (small gap)")
+        print()
 
 
 # ============================================================
-# Main: Demonstrate Applications
+# Application 2: Signal Processing — Quasi-Periodic Detection
 # ============================================================
+
+def quasi_periodic_signal_analysis():
+    """
+    Use tropical Diophantine analysis to detect and classify
+    quasi-periodic signals.
+    
+    A signal with frequencies ω₁, ω₂, ... is quasi-periodic if the
+    frequency ratios are badly approximable by rationals. The
+    Diophantine constant measures "how quasi-periodic" the signal is.
+    """
+    print("=" * 70)
+    print("APPLICATION 2: Quasi-Periodic Signal Detection")
+    print("=" * 70)
+    print()
+    
+    # Generate synthetic signals
+    t = np.linspace(0, 100, 10000)
+    
+    phi = (1 + np.sqrt(5)) / 2
+    
+    signals = {
+        "Quasi-periodic (golden)": (
+            np.array([1.0, phi]),
+            np.sin(2 * np.pi * t) + np.sin(2 * np.pi * phi * t)
+        ),
+        "Periodic (rational)": (
+            np.array([1.0, 1.5]),
+            np.sin(2 * np.pi * t) + np.sin(2 * np.pi * 1.5 * t)
+        ),
+        "Nearly periodic": (
+            np.array([1.0, 1.5001]),
+            np.sin(2 * np.pi * t) + np.sin(2 * np.pi * 1.5001 * t)
+        ),
+        "Strongly irrational": (
+            np.array([1.0, np.sqrt(2)]),
+            np.sin(2 * np.pi * t) + np.sin(2 * np.pi * np.sqrt(2) * t)
+        ),
+    }
+    
+    for name, (omega, signal) in signals.items():
+        K = 8
+        C = optimal_diophantine_constant(K, omega)
+        resonances = find_resonances(K, omega)
+        
+        if len(resonances) > 0:
+            classification = "PERIODIC (has resonances)"
+        elif C > 0.01:
+            classification = "QUASI-PERIODIC (strong gap)"
+        else:
+            classification = "NEARLY PERIODIC (weak gap)"
+        
+        print(f"  Signal: {name}")
+        print(f"  Frequencies: {omega}")
+        print(f"  C*(K={K}) = {C:.8f}")
+        print(f"  Classification: {classification}")
+        print()
+
+
+# ============================================================
+# Application 3: Lattice Cryptography — Gap Analysis
+# ============================================================
+
+def lattice_gap_analysis():
+    """
+    Analyze lattice gaps relevant to lattice-based cryptography.
+    
+    The Diophantine constant measures how well a vector avoids
+    lattice hyperplanes, which is related to the hardness of
+    lattice problems (SVP, CVP) that underlie post-quantum
+    cryptographic schemes.
+    """
+    print("=" * 70)
+    print("APPLICATION 3: Lattice Gap Analysis")
+    print("=" * 70)
+    print()
+    
+    # Test how Diophantine constant scales with dimension and K
+    dims = [2, 3]
+    Ks = [3, 5, 8]
+    
+    np.random.seed(42)
+    n_samples = 20
+    
+    print(f"  Average Diophantine constant over {n_samples} random frequencies:\n")
+    print(f"  {'n':>4s}  {'K':>4s}  {'mean C*':>12s}  {'std C*':>12s}  {'min C*':>12s}")
+    print(f"  {'-'*4}  {'-'*4}  {'-'*12}  {'-'*12}  {'-'*12}")
+    
+    for n in dims:
+        for K in Ks:
+            constants = []
+            for _ in range(n_samples):
+                omega = np.random.uniform(0.1, 2.0, size=n)
+                C = optimal_diophantine_constant(K, omega)
+                constants.append(C)
+            
+            mean_C = np.mean(constants)
+            std_C = np.std(constants)
+            min_C = np.min(constants)
+            
+            print(f"  {n:4d}  {K:4d}  {mean_C:12.6f}  {std_C:12.6f}  {min_C:12.6f}")
+    
+    print()
+    print("  Observation: As K increases, the average gap decreases (harder to")
+    print("  avoid resonances at larger scales). Higher dimension also reduces")
+    print("  the gap, as there are more lattice hyperplanes to avoid.\n")
+
+
+# ============================================================
+# Application 4: Min-Plus Dynamics — Optimization Stability
+# ============================================================
+
+def minplus_dynamics_stability():
+    """
+    Demonstrate stability of min-plus (tropical) dynamical programs.
+    
+    In operations research, min-plus algebra describes shortest path
+    problems, scheduling, and network optimization. The tropical KAM
+    framework shows that quasi-periodic optimal solutions are stable
+    under small perturbations of the cost structure.
+    """
+    print("=" * 70)
+    print("APPLICATION 4: Min-Plus Dynamical Stability")
+    print("=" * 70)
+    print()
+    
+    # Simulate a min-plus dynamical system
+    # x_{t+1} = min_j (A_ij + x_t(j)) — tropical matrix multiplication
+    
+    n = 3  # state dimension
+    
+    # Transition matrix (tropical = min-plus)
+    A = np.array([
+        [0.0, 1.2, 2.5],
+        [1.8, 0.0, 0.7],
+        [3.1, 1.5, 0.0]
+    ])
+    
+    # Compute tropical eigenvalue (cycle mean)
+    def tropical_iterate(A, x, steps=100):
+        trajectory = [x.copy()]
+        for _ in range(steps):
+            x_new = np.min(A + x[np.newaxis, :], axis=1)
+            trajectory.append(x_new.copy())
+            x = x_new
+        return trajectory
+    
+    x0 = np.array([0.0, 0.0, 0.0])
+    traj = tropical_iterate(A, x0, 50)
+    
+    # Extract rotation vector (average displacement)
+    displacements = [traj[t+1] - traj[t] for t in range(len(traj)-1)]
+    avg_displacement = np.mean(displacements[-20:], axis=0)
+    
+    print(f"  Tropical transition matrix A:")
+    for row in A:
+        print(f"    {row}")
+    print(f"  Average displacement (rotation vector): {avg_displacement}")
+    
+    # Check Diophantine property of the rotation vector
+    omega = avg_displacement[:2]  # project to 2D for analysis
+    if np.any(np.isnan(omega)) or np.any(np.isinf(omega)):
+        print("  Rotation vector is degenerate; skipping analysis.")
+    else:
+        K = 5
+        C = optimal_diophantine_constant(K, omega)
+        print(f"  Diophantine constant C*(K={K}): {C:.6f}")
+        print(f"  Persistence radius: {C/(2*K):.6f}")
+    
+    # Perturbation experiment
+    print("\n  Perturbation stability test:")
+    epsilons = [0.001, 0.01, 0.05, 0.1]
+    np.random.seed(123)
+    
+    for eps in epsilons:
+        A_pert = A + np.random.uniform(-eps, eps, size=A.shape)
+        traj_pert = tropical_iterate(A_pert, x0, 50)
+        displacements_pert = [traj_pert[t+1] - traj_pert[t] 
+                              for t in range(len(traj_pert)-1)]
+        avg_pert = np.mean(displacements_pert[-20:], axis=0)
+        diff = np.max(np.abs(avg_displacement - avg_pert))
+        print(f"    ε={eps:.3f}: max rotation change = {diff:.6f}")
+    
+    print()
+
+
+# ============================================================
+# Main
+# ============================================================
+
+def main():
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║       TROPICAL KAM STABILITY — Applications                        ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+    
+    orbital_stability_certification()
+    quasi_periodic_signal_analysis()
+    lattice_gap_analysis()
+    minplus_dynamics_stability()
+    
+    print("=" * 70)
+    print("All applications complete.")
+    print("=" * 70)
+
 
 if __name__ == "__main__":
-    print("=" * 70)
-    print("TROPICAL KAM STABILITY — Applications")
-    print("=" * 70)
-    
-    # Application 1: Stability Certificate
-    print("\n--- Application 1: Stability Certification ---")
-    phi = (1 + np.sqrt(5)) / 2
-    omega = np.array([1.0, phi])
-    
-    cert = stability_certificate(omega, K=10, perturbation_bound=0.001)
-    print(f"System: ω = [1, φ]")
-    print(f"  Diophantine constant: C = {cert['diophantine_constant_C']:.6f}")
-    print(f"  Rigidity bound: {cert['rigidity_bound']:.6f}")
-    print(f"  Perturbation bound: {cert['perturbation_bound']}")
-    print(f"  STABLE: {cert['is_stable']}")
-    print(f"  Safety margin: {cert['stability_margin']:.6f}")
-    
-    # Application 2: Resonance Detection
-    print("\n--- Application 2: Coupled Oscillator Resonance Detection ---")
-    # Near 1:2:3 resonance
-    freqs = np.array([1.0, 2.01, 3.005])
-    resonances = detect_resonances(freqs, K=5, tolerance=0.05)
-    print(f"Frequencies: {freqs}")
-    print(f"Near-resonances found: {len(resonances)}")
-    for r in resonances[:5]:
-        print(f"  k={r['vector']}, order={r['order']}, "
-              f"residual={r['residual']:.6f}, type={r['type']}")
-    
-    # Application 3: Frequency Locking
-    print("\n--- Application 3: Frequency Locking Diagram ---")
-    omega_base = np.array([1.0, phi])
-    diagram = frequency_locking_diagram(omega_base, (-0.3, 0.3), n_points=100, K=8)
-    print(f"Parameter range: [-0.3, 0.3]")
-    print(f"Locked points: {diagram['n_locked']} / {diagram['n_locked'] + diagram['n_free']}")
-    print(f"Locking regions: {len(diagram['locking_regions'])}")
-    
-    # Application 4: Landscape Stability
-    print("\n--- Application 4: Tropical Optimization Landscape ---")
-    coeffs = {(0, 0): 0, (2, 0): -1, (0, 2): -1, (1, 1): -0.5}
-    
-    for scale in [0.01, 0.1, 0.5, 1.0]:
-        result = tropical_landscape_stability(coeffs, scale, n_samples=100)
-        print(f"  Perturbation scale {scale:.2f}: "
-              f"preserved {result['preservation_rate']*100:.0f}%")
-    
-    print("\n" + "=" * 70)
-    print("All applications demonstrated successfully.")
+    main()
 
 
 #!/usr/bin/env python3
 """
 Tropical KAM Stability — Interactive Demonstration
 
-Demonstrates the core theorems of tropical KAM stability theory:
-1. Tropical Diophantine condition checking
-2. Resonance rigidity under perturbation
-3. Rational vs irrational frequency behavior
-4. Level-set visualization for tropical polynomials
+This script demonstrates the core concepts of tropical KAM stability theory:
+1. Tropical Diophantine conditions and their checking
+2. Resonance profiles and their rigidity under perturbation
+3. Rational vs. irrational frequency behavior
+4. Visualization of resonance landscapes and persistence regions
+
+Run: python3 demo.py
 """
 
 import numpy as np
 import itertools
 from fractions import Fraction
 from typing import List, Tuple, Optional
+import json
+import sys
+
 
 # ============================================================
 # Core Definitions
 # ============================================================
 
 def l1_norm(k: np.ndarray) -> int:
-    """L1 norm of an integer lattice vector."""
+    """L1 norm of an integer vector."""
     return int(np.sum(np.abs(k)))
 
 def lattice_inner(k: np.ndarray, omega: np.ndarray) -> float:
-    """Inner product <k, omega> = sum_i k_i * omega_i."""
-    return float(np.dot(k.astype(float), omega.astype(float)))
+    """Inner product of integer vector k with real frequency vector omega."""
+    return float(np.dot(k.astype(float), omega))
 
-def is_tropical_diophantine(omega: np.ndarray, K: int, C: float) -> Tuple[bool, Optional[np.ndarray]]:
+def is_tropical_diophantine(K: int, C: float, omega: np.ndarray) -> bool:
     """
-    Check if omega satisfies the Tropical Diophantine condition with parameters (K, C).
+    Check if omega satisfies the Tropical Diophantine condition at scale K with gap C.
     
-    Returns (True, None) if the condition holds, or (False, k) where k is a
-    violating lattice vector.
+    For all integer vectors k with 0 < ||k||_1 <= K, we need C <= |<k, omega>|.
     """
     n = len(omega)
-    # Enumerate all integer vectors k with 0 < ||k||_1 <= K
-    for norm in range(1, K + 1):
-        for k in _lattice_vectors_of_norm(n, norm):
-            val = abs(lattice_inner(k, omega))
-            if val < C:
-                return False, k
-    return True, None
+    for k in _enumerate_lattice_vectors(n, K):
+        norm = l1_norm(k)
+        if 0 < norm <= K:
+            inner = abs(lattice_inner(k, omega))
+            if inner < C:
+                return False
+    return True
 
-def _lattice_vectors_of_norm(n: int, target_norm: int) -> List[np.ndarray]:
-    """Generate all integer vectors in Z^n with L1 norm exactly target_norm."""
-    if n == 0:
-        return [np.array([], dtype=int)] if target_norm == 0 else []
-    
-    vectors = []
-    # Distribute target_norm among n components with signs
-    for composition in _compositions(target_norm, n):
-        for signs in itertools.product([1, -1], repeat=n):
-            k = np.array([s * c for s, c in zip(signs, composition)], dtype=int)
-            if l1_norm(k) == target_norm:  # filter duplicates from zeros
-                vectors.append(k)
-    
-    # Remove duplicates
-    seen = set()
-    unique = []
-    for v in vectors:
-        key = tuple(v)
-        if key not in seen:
-            seen.add(key)
-            unique.append(v)
-    return unique
-
-def _compositions(n: int, k: int) -> List[List[int]]:
-    """Generate all weak compositions of n into k parts (nonneg integers summing to n)."""
-    if k == 1:
-        return [[n]]
-    result = []
-    for i in range(n + 1):
-        for rest in _compositions(n - i, k - 1):
-            result.append([i] + rest)
-    return result
-
-def same_resonance_profile(omega1: np.ndarray, omega2: np.ndarray, K: int,
-                           tol: float = 1e-12) -> Tuple[bool, Optional[np.ndarray]]:
+def same_resonance_profile(K: int, omega1: np.ndarray, omega2: np.ndarray) -> bool:
     """
     Check if omega1 and omega2 have the same resonance profile up to scale K.
     
-    Returns (True, None) if profiles match, or (False, k) with a distinguishing vector.
+    For all k with ||k||_1 <= K: (<k, omega1> = 0) iff (<k, omega2> = 0).
     """
     n = len(omega1)
-    for norm in range(0, K + 1):
-        for k in _lattice_vectors_of_norm(n, norm):
-            v1 = lattice_inner(k, omega1)
-            v2 = lattice_inner(k, omega2)
-            res1 = abs(v1) < tol
-            res2 = abs(v2) < tol
-            if res1 != res2:
-                return False, k
-    return True, None
+    eps = 1e-12  # numerical tolerance
+    for k in _enumerate_lattice_vectors(n, K):
+        inner1 = lattice_inner(k, omega1)
+        inner2 = lattice_inner(k, omega2)
+        res1 = abs(inner1) < eps
+        res2 = abs(inner2) < eps
+        if res1 != res2:
+            return False
+    return True
 
-def find_rational_resonance(omega: List[Fraction], n: int) -> Optional[np.ndarray]:
+def find_diophantine_constant(K: int, omega: np.ndarray) -> float:
     """
-    For rational omega in dimension >= 2, find a nontrivial integer resonance.
+    Compute the optimal Diophantine constant C for omega at scale K.
     
-    Uses the construction: k = (num(omega_1)*den(omega_0), -num(omega_0)*den(omega_1), 0, ...)
+    C* = min { |<k, omega>| : 0 < ||k||_1 <= K }
     """
-    if n < 2:
-        return None
-    
-    a, b = omega[0].numerator, omega[0].denominator
-    c, d = omega[1].numerator, omega[1].denominator
-    
-    # If omega_0 = 0, use e_0
-    if a == 0:
-        k = np.zeros(n, dtype=int)
-        k[0] = 1
-        return k
-    
-    # If omega_1 = 0, use e_1
-    if c == 0:
-        k = np.zeros(n, dtype=int)
-        k[1] = 1
-        return k
-    
-    # General case: k = (c*b, -a*d, 0, ..., 0)
-    k = np.zeros(n, dtype=int)
-    k[0] = c * b
-    k[1] = -a * d
-    return k
+    n = len(omega)
+    min_gap = float('inf')
+    for k in _enumerate_lattice_vectors(n, K):
+        norm = l1_norm(k)
+        if 0 < norm <= K:
+            gap = abs(lattice_inner(k, omega))
+            min_gap = min(min_gap, gap)
+    return min_gap
+
+def find_resonances(K: int, omega: np.ndarray, tol: float = 1e-10) -> list:
+    """Find all resonance vectors k with ||k||_1 <= K and |<k, omega>| < tol."""
+    n = len(omega)
+    resonances = []
+    for k in _enumerate_lattice_vectors(n, K):
+        norm = l1_norm(k)
+        if 0 < norm <= K:
+            if abs(lattice_inner(k, omega)) < tol:
+                resonances.append(k.copy())
+    return resonances
+
+
+def _enumerate_lattice_vectors(n: int, K: int):
+    """Enumerate all integer vectors in Z^n with L1 norm <= K."""
+    if n == 0:
+        yield np.array([], dtype=int)
+        return
+    ranges = [range(-K, K+1) for _ in range(n)]
+    for combo in itertools.product(*ranges):
+        k = np.array(combo, dtype=int)
+        if l1_norm(k) <= K:
+            yield k
+
 
 # ============================================================
-# Demonstration 1: Tropical Diophantine Condition
+# Demo 1: Tropical Diophantine Condition
 # ============================================================
 
-def demo_diophantine_check():
-    """Demonstrate the Tropical Diophantine condition on various frequencies."""
+def demo_diophantine():
+    """Demonstrate the Tropical Diophantine condition for various frequencies."""
     print("=" * 70)
-    print("DEMO 1: Tropical Diophantine Condition Checking")
+    print("DEMO 1: Tropical Diophantine Condition")
     print("=" * 70)
+    print()
+    print("The Tropical Diophantine condition says: for all integer vectors k")
+    print("with 0 < ||k||_1 <= K, we have C <= |<k, omega>|.")
+    print("This is a finite, checkable non-resonance condition.\n")
     
-    # Golden ratio frequency (strongly Diophantine)
+    # Golden ratio frequency — maximally irrational
     phi = (1 + np.sqrt(5)) / 2
     omega_golden = np.array([1.0, phi])
     
-    # Rational frequency (not Diophantine at large scale)
+    # Rational frequency
     omega_rational = np.array([1.0, 3/7])
     
-    # Nearly rational (weakly Diophantine)
-    omega_near_rat = np.array([1.0, 3/7 + 1e-4])
+    # Nearly rational frequency 
+    omega_near_rational = np.array([1.0, 3/7 + 0.001])
     
-    test_cases = [
-        ("Golden ratio [1, φ]", omega_golden),
-        ("Rational [1, 3/7]", omega_rational),
-        ("Near-rational [1, 3/7 + 10⁻⁴]", omega_near_rat),
-    ]
+    print("Frequency vectors tested:")
+    print(f"  ω_golden  = [1, φ] ≈ [1, {phi:.6f}]")
+    print(f"  ω_rational = [1, 3/7] ≈ [1, {3/7:.6f}]")
+    print(f"  ω_near_rat = [1, 3/7 + 0.001] ≈ [1, {3/7+0.001:.6f}]")
+    print()
     
-    for name, omega in test_cases:
-        print(f"\nFrequency: {name}")
-        print(f"  ω = {omega}")
-        for K in [3, 5, 10, 20]:
-            C = 0.1
-            result, violator = is_tropical_diophantine(omega, K, C)
-            if result:
-                print(f"  K={K:3d}, C={C}: ✓ Diophantine")
-            else:
-                inner_val = lattice_inner(violator, omega)
-                print(f"  K={K:3d}, C={C}: ✗ Violated by k={violator}, "
-                      f"|⟨k,ω⟩|={abs(inner_val):.6f}")
+    for K in [3, 5, 8, 12]:
+        C_golden = find_diophantine_constant(K, omega_golden)
+        C_rational = find_diophantine_constant(K, omega_rational)
+        C_near = find_diophantine_constant(K, omega_near_rational)
+        
+        print(f"  K = {K:2d}: C*(golden) = {C_golden:.6f}, "
+              f"C*(rational) = {C_rational:.8f}, "
+              f"C*(near_rat) = {C_near:.6f}")
+    
+    print()
+    print("Observation: The golden ratio maintains a positive gap at all scales,")
+    print("while the rational frequency's gap collapses to zero (exact resonance).")
+    print("The near-rational frequency has small but positive gaps.\n")
+
 
 # ============================================================
-# Demonstration 2: Resonance Rigidity
+# Demo 2: Resonance Rigidity Under Perturbation
 # ============================================================
 
 def demo_resonance_rigidity():
-    """Demonstrate the Resonance Rigidity Theorem."""
-    print("\n" + "=" * 70)
-    print("DEMO 2: Resonance Rigidity Under Perturbation")
+    """Demonstrate that Diophantine frequencies have rigid resonance profiles."""
     print("=" * 70)
+    print("DEMO 2: Resonance Rigidity (Main KAM Theorem)")
+    print("=" * 70)
+    print()
+    print("THEOREM: If ω is Diophantine(K,C) and |ω_i - ω'_i| < C/(2K),")
+    print("then ω and ω' have the same resonance profile up to scale K.\n")
     
     phi = (1 + np.sqrt(5)) / 2
     omega = np.array([1.0, phi])
+    K = 6
     
-    K = 10
+    C = find_diophantine_constant(K, omega)
+    threshold = C / (2 * K)
     
-    # Find the actual Diophantine constant
-    min_gap = float('inf')
-    for norm in range(1, K + 1):
-        for k in _lattice_vectors_of_norm(2, norm):
-            val = abs(lattice_inner(k, omega))
-            if val > 0:
-                min_gap = min(min_gap, val)
+    print(f"Base frequency: ω = [1, φ] ≈ [1, {phi:.8f}]")
+    print(f"Scale K = {K}, Diophantine constant C = {C:.8f}")
+    print(f"Perturbation threshold C/(2K) = {threshold:.8f}")
+    print()
     
-    C = min_gap
-    bound = C / (2 * K)
+    # Test perturbations of increasing size
+    perturbation_sizes = [0.0001, 0.001, 0.005, 0.01, 0.02, 0.05, threshold * 0.5,
+                          threshold * 0.99, threshold * 1.01, threshold * 2]
     
-    print(f"\nFrequency: ω = [1, φ] = {omega}")
-    print(f"Scale K = {K}")
-    print(f"Diophantine constant C = {C:.6f}")
-    print(f"Rigidity bound C/(2K) = {bound:.6f}")
-    
-    # Test perturbations of varying sizes
-    np.random.seed(42)
-    perturbation_sizes = [bound * 0.1, bound * 0.5, bound * 0.9, bound * 1.1, bound * 2.0]
-    
-    print(f"\n{'Pert. size':>12s} | {'< C/(2K)?':>9s} | {'Same profile?':>13s} | {'Theory predicts':>15s}")
-    print("-" * 60)
+    print(f"  {'Perturbation':>14s}  {'< threshold?':>14s}  {'Same profile?':>14s}  {'Prediction':>14s}")
+    print(f"  {'-'*14}  {'-'*14}  {'-'*14}  {'-'*14}")
     
     for eps in perturbation_sizes:
-        delta = np.random.randn(2) 
-        delta = delta / np.max(np.abs(delta)) * eps
-        omega_perturbed = omega + delta
+        omega_perturbed = omega + np.array([eps * 0.7, -eps * 0.3])  # asymmetric perturbation
+        max_comp_diff = max(abs(omega[i] - omega_perturbed[i]) for i in range(len(omega)))
+        within = max_comp_diff < threshold
+        same = same_resonance_profile(K, omega, omega_perturbed)
+        prediction = "preserved" if within else "unknown"
+        status = "✓ same" if same else "✗ different"
         
-        within_bound = np.all(np.abs(delta) < bound)
-        same_profile, _ = same_resonance_profile(omega, omega_perturbed, K)
-        theory = "✓ preserved" if within_bound else "? no guarantee"
-        
-        print(f"  {eps:.6f}  |  {'Yes':>7s}  |  {'Yes ✓' if same_profile else 'No ✗':>11s}  |  {theory}")
+        print(f"  {eps:14.8f}  {'yes' if within else 'NO ':>14s}  {status:>14s}  {prediction:>14s}")
+    
+    print()
+    print("The theorem guarantees preservation when perturbation < threshold.")
+    print("In practice, preservation often extends beyond the guaranteed region.\n")
+
 
 # ============================================================
-# Demonstration 3: Rational Frequency Resonance
+# Demo 3: Rational Frequencies and Resonance Collapse
 # ============================================================
 
-def demo_rational_resonance():
-    """Demonstrate that rational frequencies always admit resonances."""
-    print("\n" + "=" * 70)
-    print("DEMO 3: Rational Frequencies Admit Resonances (Cross-Domain)")
+def demo_rational_collapse():
+    """Show that rational frequencies always have resonances."""
     print("=" * 70)
+    print("DEMO 3: Rational Frequency Resonance Collapse")
+    print("=" * 70)
+    print()
+    print("THEOREM: In dimension >= 2, any pair of nonzero rational frequencies")
+    print("admits an integer relation (resonance), so rational frequencies")
+    print("fail the Diophantine condition at sufficiently large scale.\n")
     
     test_cases = [
-        ([Fraction(1, 1), Fraction(3, 7)], "ω = [1, 3/7]"),
-        ([Fraction(2, 3), Fraction(5, 11)], "ω = [2/3, 5/11]"),
-        ([Fraction(0, 1), Fraction(4, 5)], "ω = [0, 4/5]"),
-        ([Fraction(1, 2), Fraction(1, 3), Fraction(1, 5)], "ω = [1/2, 1/3, 1/5]"),
+        ("1/2, 3/5", np.array([0.5, 0.6])),
+        ("2/3, 5/7", np.array([2/3, 5/7])),
+        ("1/1, 1/1", np.array([1.0, 1.0])),
+        ("3/4, 7/11", np.array([3/4, 7/11])),
     ]
     
-    for omega_q, name in test_cases:
-        n = len(omega_q)
-        omega_r = np.array([float(q) for q in omega_q])
-        k = find_rational_resonance(omega_q, n)
+    for name, omega in test_cases:
+        print(f"  ω = [{name}] = {omega}")
+        resonances = find_resonances(20, omega)
+        if resonances:
+            k = resonances[0]
+            print(f"    Resonance found: k = {k}, <k,ω> = {lattice_inner(k, omega):.2e}, ||k||₁ = {l1_norm(k)}")
+        else:
+            print(f"    No resonance found up to K=20 (numerical tolerance issue)")
         
-        if k is not None:
-            inner = lattice_inner(k, omega_r)
-            print(f"\n{name}")
-            print(f"  Resonance vector: k = {k}")
-            print(f"  L1 norm: ||k||₁ = {l1_norm(k)}")
-            print(f"  Inner product: ⟨k,ω⟩ = {inner:.2e}")
-            print(f"  → This shows ω cannot be Diophantine at scale K ≥ {l1_norm(k)}")
+        # Show Diophantine constant decay
+        gaps = []
+        for K in [2, 5, 10, 15, 20]:
+            C = find_diophantine_constant(K, omega)
+            gaps.append((K, C))
+        gap_str = ", ".join(f"C*({K})={C:.2e}" for K, C in gaps)
+        print(f"    Gap decay: {gap_str}")
+        print()
     
-    # Show the contrast with irrational frequencies
-    print(f"\nContrast: Irrational frequencies")
+    # Contrast with irrational
     phi = (1 + np.sqrt(5)) / 2
     omega_irr = np.array([1.0, phi])
-    print(f"  ω = [1, φ] = {omega_irr}")
-    
-    min_gaps = []
-    for K in [5, 10, 20, 50]:
-        min_gap = float('inf')
-        for norm in range(1, K + 1):
-            for k in _lattice_vectors_of_norm(2, norm):
-                val = abs(lattice_inner(k, omega_irr))
-                if val > 0:
-                    min_gap = min(min_gap, val)
-        min_gaps.append((K, min_gap))
-        print(f"  K={K:3d}: min |⟨k,ω⟩| = {min_gap:.6f}  (Diophantine gap)")
+    print(f"  ω_golden = [1, φ] (irrational):")
+    resonances = find_resonances(20, omega_irr)
+    print(f"    Resonances up to K=20: {len(resonances)}")
+    gaps = []
+    for K in [2, 5, 10, 15, 20]:
+        C = find_diophantine_constant(K, omega_irr)
+        gaps.append((K, C))
+    gap_str = ", ".join(f"C*({K})={C:.4f}" for K, C in gaps)
+    print(f"    Gap values: {gap_str}")
+    print()
+
 
 # ============================================================
-# Demonstration 4: Level-Set Visualization (Text-Based)
+# Demo 4: Persistence Regions
 # ============================================================
 
-def demo_level_sets():
-    """Visualize tropical level sets and subdivision preservation."""
-    print("\n" + "=" * 70)
-    print("DEMO 4: Tropical Level Sets and Subdivision Preservation")
+def demo_persistence_regions():
+    """Visualize the KAM persistence region in frequency space."""
     print("=" * 70)
-    
-    def tropical_poly(coeffs, x, y):
-        """Evaluate tropical polynomial max(a_ij + i*x + j*y)."""
-        return max(a + i * x + j * y for (i, j), a in coeffs.items())
-    
-    def level_set_cells(coeffs, c, grid_size=40, x_range=(-3, 3), y_range=(-3, 3)):
-        """Compute the corner locus (tropical level set) on a grid."""
-        xs = np.linspace(*x_range, grid_size)
-        ys = np.linspace(*y_range, grid_size)
-        corners = []
-        
-        for x in xs:
-            for y in ys:
-                # Check if (x,y) is near a corner (where max is achieved by 2+ terms)
-                vals = [(a + i * x + j * y, (i, j)) for (i, j), a in coeffs.items()]
-                vals.sort(reverse=True, key=lambda t: t[0])
-                if len(vals) >= 2 and abs(vals[0][0] - vals[1][0]) < 0.15:
-                    corners.append((x, y))
-        
-        return corners
-    
-    # Original tropical polynomial
-    H = {(0, 0): 0.0, (2, 0): -1.0, (0, 2): -1.0, (1, 1): -0.5}
-    
-    # Subdivision-preserving perturbation (shifts coefficients uniformly)
-    H_pert = {k: v + 0.3 for k, v in H.items()}
-    
-    # Non-subdivision-preserving perturbation (changes relative structure)
-    H_bad = {(0, 0): 0.0, (2, 0): -1.0, (0, 2): -1.0, (1, 1): 1.5}
-    
-    corners_orig = level_set_cells(H, 0)
-    corners_pert = level_set_cells(H_pert, 0)
-    corners_bad = level_set_cells(H_bad, 0)
-    
-    print(f"\nOriginal H: {H}")
-    print(f"  Corner locus points: {len(corners_orig)}")
-    
-    print(f"\nSubdiv.-preserving perturbation H': {H_pert}")
-    print(f"  Corner locus points: {len(corners_pert)}")
-    print(f"  → Same combinatorial type (subdivision preserved)")
-    
-    print(f"\nNon-preserving perturbation H'': {H_bad}")
-    print(f"  Corner locus points: {len(corners_bad)}")
-    print(f"  → Different combinatorial type (subdivision changed)")
-    
-    # Text-based visualization
-    print("\n  Tropical curve structure (text plot):")
-    grid = [['.' for _ in range(50)] for _ in range(30)]
-    for x, y in corners_orig:
-        gx = int((x + 3) / 6 * 49)
-        gy = int((y + 3) / 6 * 29)
-        if 0 <= gx < 50 and 0 <= gy < 30:
-            grid[29 - gy][gx] = '#'
-    
-    for row in grid:
-        print("  " + "".join(row))
-
-# ============================================================
-# Demonstration 5: Diophantine Gap Decay
-# ============================================================
-
-def demo_gap_decay():
-    """Show how the Diophantine gap decays with K for different frequency types."""
-    print("\n" + "=" * 70)
-    print("DEMO 5: Diophantine Gap Decay Analysis")
+    print("DEMO 4: KAM Persistence Regions")
     print("=" * 70)
+    print()
+    print("For each base frequency ω, the KAM theorem guarantees persistence")
+    print("in a ball of radius C/(2K) around ω. Diophantine frequencies have")
+    print("large persistence regions; near-resonant ones have small regions.\n")
     
-    frequencies = {
-        "Golden [1, φ]": np.array([1.0, (1 + np.sqrt(5)) / 2]),
-        "√2 [1, √2]": np.array([1.0, np.sqrt(2)]),
-        "Cubic [1, 2^(1/3)]": np.array([1.0, 2 ** (1/3)]),
-        "Liouville-like": np.array([1.0, sum(10**(-k) for k in range(1, 8))]),
-    }
+    K = 5
+    base_frequencies = [
+        ("golden", np.array([1.0, (1 + np.sqrt(5)) / 2])),
+        ("sqrt(2)", np.array([1.0, np.sqrt(2)])),
+        ("sqrt(3)", np.array([1.0, np.sqrt(3)])),
+        ("e/π", np.array([1.0, np.e / np.pi])),
+        ("near 1/2", np.array([1.0, 0.50001])),
+        ("near 1/3", np.array([1.0, 0.33334])),
+    ]
     
-    K_values = [2, 5, 10, 15, 20]
+    print(f"  {'Frequency':>12s}  {'C*(K={K})':>12s}  {'Radius C/(2K)':>14s}  {'Persistence':>12s}")
+    print(f"  {'-'*12}  {'-'*12}  {'-'*14}  {'-'*12}")
     
-    print(f"\n{'Frequency':>20s} | " + " | ".join(f"K={K:2d}" for K in K_values))
-    print("-" * (25 + 10 * len(K_values)))
+    for name, omega in base_frequencies:
+        C = find_diophantine_constant(K, omega)
+        radius = C / (2 * K)
+        if C > 0.01:
+            persistence = "STRONG"
+        elif C > 0.001:
+            persistence = "moderate"
+        else:
+            persistence = "fragile"
+        print(f"  {name:>12s}  {C:12.6f}  {radius:14.8f}  {persistence:>12s}")
     
-    for name, omega in frequencies.items():
-        gaps = []
-        for K in K_values:
-            min_gap = float('inf')
-            for norm in range(1, K + 1):
-                for k in _lattice_vectors_of_norm(2, norm):
-                    val = abs(lattice_inner(k, omega))
-                    if val > 1e-15:
-                        min_gap = min(min_gap, val)
-            gaps.append(min_gap)
+    print()
+    print("Irrational frequencies with good Diophantine properties (golden ratio,")
+    print("sqrt(2)) have large persistence regions. Near-rational frequencies")
+    print("have tiny persistence regions and are easily destroyed by perturbation.\n")
+
+
+# ============================================================
+# Demo 5: Scaling Invariance
+# ============================================================
+
+def demo_scaling():
+    """Demonstrate scaling invariance of the Diophantine condition."""
+    print("=" * 70)
+    print("DEMO 5: Scaling Invariance")
+    print("=" * 70)
+    print()
+    print("THEOREM: If ω is (K,C)-Diophantine, then λω is (K, |λ|C)-Diophantine.")
+    print("The Diophantine gap scales linearly with the frequency magnitude.\n")
+    
+    phi = (1 + np.sqrt(5)) / 2
+    omega = np.array([1.0, phi])
+    K = 5
+    
+    scales = [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
+    
+    print(f"  Base ω = [1, φ], K = {K}")
+    print(f"  {'Scale λ':>10s}  {'C*(λω)':>12s}  {'|λ|·C*(ω)':>12s}  {'Ratio':>8s}")
+    print(f"  {'-'*10}  {'-'*12}  {'-'*12}  {'-'*8}")
+    
+    C_base = find_diophantine_constant(K, omega)
+    
+    for lam in scales:
+        omega_scaled = lam * omega
+        C_scaled = find_diophantine_constant(K, omega_scaled)
+        C_predicted = abs(lam) * C_base
+        ratio = C_scaled / C_predicted if C_predicted > 0 else float('nan')
+        print(f"  {lam:10.2f}  {C_scaled:12.6f}  {C_predicted:12.6f}  {ratio:8.4f}")
+    
+    print()
+    print("The ratio is exactly 1.0, confirming scaling invariance.\n")
+
+
+# ============================================================
+# Demo 6: KAM Persistence Experiment
+# ============================================================
+
+def demo_kam_experiment():
+    """Run a Monte Carlo experiment on KAM persistence."""
+    print("=" * 70)
+    print("DEMO 6: Monte Carlo KAM Persistence Experiment")
+    print("=" * 70)
+    print()
+    print("We sample random perturbations and check whether the resonance")
+    print("profile is preserved, comparing with the theoretical guarantee.\n")
+    
+    phi = (1 + np.sqrt(5)) / 2
+    omega = np.array([1.0, phi])
+    K = 5
+    C = find_diophantine_constant(K, omega)
+    threshold = C / (2 * K)
+    
+    np.random.seed(42)
+    n_trials = 200
+    
+    # Test at various perturbation scales
+    perturbation_fractions = [0.1, 0.3, 0.5, 0.8, 1.0, 1.5, 2.0, 3.0, 5.0]
+    
+    print(f"  Base ω = [1, φ], K={K}, C={C:.6f}, threshold={threshold:.6f}")
+    print(f"  {n_trials} random trials per perturbation level\n")
+    print(f"  {'ε/threshold':>12s}  {'ε':>10s}  {'Preserved':>10s}  {'Guarantee':>10s}")
+    print(f"  {'-'*12}  {'-'*10}  {'-'*10}  {'-'*10}")
+    
+    for frac in perturbation_fractions:
+        eps = frac * threshold
+        preserved = 0
+        for _ in range(n_trials):
+            perturbation = np.random.uniform(-eps, eps, size=2)
+            omega_perturbed = omega + perturbation
+            if same_resonance_profile(K, omega, omega_perturbed):
+                preserved += 1
         
-        gap_strs = [f"{g:.4f}" if g < 100 else "  ∞   " for g in gaps]
-        print(f"  {name:>18s} | " + " | ".join(gap_strs))
+        pct = 100 * preserved / n_trials
+        guarantee = "100%" if frac < 1.0 else "none"
+        print(f"  {frac:12.2f}  {eps:10.6f}  {pct:9.1f}%  {guarantee:>10s}")
     
-    print("\n  → Golden ratio has the slowest gap decay (best Diophantine properties)")
-    print("  → This is the tropical analog of the classical result that φ is")
-    print("    the 'most irrational' number in terms of continued fraction theory.")
+    print()
+    print("Below the threshold (ε/threshold < 1), preservation is guaranteed.")
+    print("Above the threshold, preservation often persists but is not guaranteed.\n")
+
 
 # ============================================================
 # Main
 # ============================================================
 
-if __name__ == "__main__":
+def main():
+    print()
     print("╔══════════════════════════════════════════════════════════════════════╗")
     print("║       TROPICAL KAM STABILITY — Interactive Demonstration           ║")
     print("║                                                                    ║")
-    print("║   Combinatorial Persistence of Quasi-Periodic Tropical Dynamics    ║")
+    print("║  Combinatorial persistence of quasi-periodic tropical dynamics     ║")
     print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
     
-    demo_diophantine_check()
+    demo_diophantine()
     demo_resonance_rigidity()
-    demo_rational_resonance()
-    demo_level_sets()
-    demo_gap_decay()
+    demo_rational_collapse()
+    demo_persistence_regions()
+    demo_scaling()
+    demo_kam_experiment()
     
-    print("\n" + "=" * 70)
+    print("=" * 70)
     print("All demonstrations complete.")
     print("=" * 70)
+
+
+if __name__ == "__main__":
+    main()
