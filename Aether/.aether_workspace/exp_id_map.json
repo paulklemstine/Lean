@@ -419,5 +419,6 @@
   "924ea2bc": "direction_3_local_to_global_finite_generation_prob.json",
   "faaeb97d": "direction_5_multi_scale_persistence_and_renormaliz.json",
   "9b28b14f": "forbidden_minor_characterization_of_hard_formulas.json",
-  "a6af3422": "direction_2_symmetry_rigidity_converse_noether.json"
+  "a6af3422": "direction_2_symmetry_rigidity_converse_noether.json",
+  "28682e14": "direction_1_convergent_rewrite_systems_as_quotient.json"
 }
