@@ -2,8 +2,12 @@ name: Aether Research Loop
 
 on:
   schedule:
-    - cron: '23 * * * *'    # Every hour at :23
-    - cron: '53 * * * *'    # Every hour at :53
+    - cron: '03 * * * *'   
+    - cron: '13 * * * *'  
+    - cron: '23 * * * *'   
+    - cron: '33 * * * *'   
+    - cron: '43 * * * *'   
+    - cron: '53 * * * *'   
   workflow_dispatch:
     inputs:
       max_inflight:
