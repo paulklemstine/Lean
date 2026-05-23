@@ -367,5 +367,11 @@
   "915bd4db": "direction_3_local_to_global_finite_generation_prob.json",
   "6602f022": "direction_4_dynamical_systems_perspective_on_repea.json",
   "b9aacf2e": "direction_3_local_to_global_finite_generation_prob.json",
-  "1c498e6e": "direction_5_scalable_arithmetic_tda_pipeline.json"
+  "1c498e6e": "direction_5_scalable_arithmetic_tda_pipeline.json",
+  "69250d97": "direction_2_formalized_karchmerwigderson_pipeline.json",
+  "1c1ae8b2": "jacobian_conjecture_degree_2_and_3_cases.json",
+  "9afcf878": "direction_1_spectral_gap_detection_of_compositenes.json",
+  "6707aed3": "homotopy_groups_of_spheres_low_dimensional.json",
+  "5e5676d5": "direction_3_p_adic_orbital_period_valuation.json",
+  "192c6226": "direction_1_cost_minimality_of_convergent_normal_f.json"
 }

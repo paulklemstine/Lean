@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1730 of the highest-quality
+A curated collection of 1733 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1730
+Total files: 1733
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -57,6 +57,7 @@ import FINAL.Algebra.DescentAlgebra
 import FINAL.Algebra.DifferenceSetSymmetry
 import FINAL.Algebra.Dim2
 import FINAL.Algebra.Distance
+import FINAL.Algebra.DruzkowskiTheory
 import FINAL.Algebra.ECDLP
 import FINAL.Algebra.EMLCongruenceHilbert
 import FINAL.Algebra.EigenvalueRepulsion
@@ -1421,6 +1422,7 @@ import FINAL.Pythagorean.NewTheorems
 import FINAL.Pythagorean.O31_Generators
 import FINAL.Pythagorean.OpenQuestions
 import FINAL.Pythagorean.OrbitClassification
+import FINAL.Pythagorean.PadicOrbitalValuation
 import FINAL.Pythagorean.ParityCensus
 import FINAL.Pythagorean.Percolation
 import FINAL.Pythagorean.PhaseAwareLemmaSynthesis
@@ -1459,6 +1461,7 @@ import FINAL.Pythagorean.Theorems
 import FINAL.Pythagorean.TorsionProfileTheorems
 import FINAL.Pythagorean.TropicalArithmeticUniversality
 import FINAL.Pythagorean.TropicalBerggrenZeta
+import FINAL.Pythagorean.TropicalCostMinimality
 import FINAL.Pythagorean.TropicalKeplerOrbits
 import FINAL.Pythagorean.TropicalPAdicBerggren
 import FINAL.Pythagorean.UniversalParent
