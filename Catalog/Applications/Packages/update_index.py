@@ -95,6 +95,51 @@ def get_creation_date(filename, catalog_root):
     # Fallback to file modification time
     return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(os.path.getmtime(filename)))
 
+def load_quality_scores():
+    """Load quality scores from autoresearch.jsonl, keyed by exp_id.
+    Returns dict: exp_id -> {quality_score: float, quality: str}
+    Keeps the highest quality_score per experiment (re-runs may differ).
+    """
+    scores = {}
+    # Try Aether workspace (local dev) then relative path
+    candidates = [
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "Aether", ".aether_workspace", "autoresearch", "autoresearch.jsonl")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "autoresearch.jsonl")),
+    ]
+    path = None
+    for c in candidates:
+        if os.path.exists(c):
+            path = c
+            break
+    if not path:
+        print("No autoresearch.jsonl found, quality scores will be null")
+        return scores
+
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    d = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                eid = d.get("experiment_id", "")
+                qs = d.get("quality_score", 0)
+                if not eid:
+                    continue
+                if eid not in scores or qs > scores[eid]["quality_score"]:
+                    scores[eid] = {
+                        "quality_score": qs,
+                        "quality": d.get("quality", "unrated"),
+                    }
+        print(f"Loaded quality scores for {len(scores)} experiments")
+    except Exception as e:
+        print(f"Warning: failed to load autoresearch.jsonl: {e}")
+    return scores
+
+
 def update_index():
     original_dir = os.getcwd()
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -111,6 +156,9 @@ def update_index():
     package_index = []
     package_db = {}
     total_viz_extracted = 0
+
+    # Load quality scores from autoresearch data
+    quality_scores = load_quality_scores()
 
     for f in json_files:
         try:
@@ -130,6 +178,12 @@ def update_index():
         date_str = data.get("date") or get_creation_date(f, catalog_root)
 
         pkg_slug = f.replace('.json', '')
+
+        # Look up quality score by exp_id
+        exp_id = data.get("exp_id", "")
+        qs_entry = quality_scores.get(exp_id, None) if exp_id else None
+        quality_score = qs_entry["quality_score"] if qs_entry else None
+        quality_label = qs_entry["quality"] if qs_entry else "unrated"
 
         # Extract visualizations into real files, replace data with file paths
         if data.get("visualizations"):
@@ -166,6 +220,8 @@ def update_index():
             "domain": data.get("domain", "General"),
             "date": date_str,
             "exp_id": data.get("exp_id", ""),
+            "quality_score": quality_score,
+            "quality": quality_label,
         })
 
         package_db[f] = data
@@ -197,7 +253,7 @@ window.PACKAGE_DB = {json.dumps(package_db, indent=2)};
     print(f"Extracted {total_viz_extracted} visualizations into visualizations/ ({viz_size/1024:.0f} KB)")
 
     # Generate knowledge graph data
-    generate_graph_data(script_dir)
+    generate_graph_data(script_dir, package_index)
 
     # Append future research directions
     append_future_directions(script_dir, os.path.join(script_dir, "packages_db.js"))
@@ -211,7 +267,7 @@ window.PACKAGE_DB = {json.dumps(package_db, indent=2)};
     os.chdir(original_dir)
 
 
-def generate_graph_data(script_dir):
+def generate_graph_data(script_dir, package_index):
     """Read lineage.json and append window.PACKAGE_GRAPH to packages_db.js."""
     lineage_path = os.path.join(script_dir, "lineage.json")
     db_path = os.path.join(script_dir, "packages_db.js")
@@ -288,6 +344,16 @@ def generate_graph_data(script_dir):
         except Exception as e:
             print(f"Warning: failed to load lineage.json: {e}")
 
+    # Build exp_id -> quality lookup for graph node enrichment
+    exp_quality = {}
+    for pkg in package_index:
+        eid = pkg.get("exp_id", "")
+        if eid:
+            exp_quality[eid] = {
+                "priority_score": pkg.get("quality_score"),
+                "quality": pkg.get("quality", "unrated"),
+            }
+
     # If no lineage data, build nodes from package_index (already computed above)
     if graph_data is None:
         # Compute domain frequency for variety
@@ -303,6 +369,7 @@ def generate_graph_data(script_dir):
             slug = pkg["filename"].replace('.json', '')
             domain_str = pkg.get("domain", "Bridges")
             pd = primary_domain(domain_str)
+            qs = exp_quality.get(pkg.get("exp_id", ""), {})
             nodes.append({
                 "id": slug,
                 "title": pkg.get("title", slug),
@@ -311,16 +378,30 @@ def generate_graph_data(script_dir):
                 "shape": DOMAIN_SHAPES.get(pd, "icosahedron"),
                 "date": pkg.get("date", ""),
                 "hue": slug_to_hue(slug),
+                "priority_score": qs.get("priority_score"),
+                "quality": qs.get("quality", "unrated"),
             })
         graph_data = {"nodes": nodes, "edges": [], "domain_bridges": []}
     else:
-        # Enrich nodes with shape and hue if missing
+        # Enrich nodes with shape, hue, and quality if missing
         for node in graph_data.get("nodes", []):
             if "shape" not in node:
                 pd = node.get("primary_domain", primary_domain(node.get("domain", "")))
                 node["shape"] = DOMAIN_SHAPES.get(pd, "icosahedron")
             if "hue" not in node:
                 node["hue"] = slug_to_hue(node.get("id", ""))
+            # Add quality from exp_id lookup
+            if "priority_score" not in node:
+                # Find matching package by node id (slug) -> exp_id
+                node_id = node.get("id", "")
+                matching_pkg = next((p for p in package_index if p["filename"].replace(".json", "") == node_id), None)
+                if matching_pkg and matching_pkg.get("exp_id"):
+                    qs = exp_quality.get(matching_pkg["exp_id"], {})
+                    node["priority_score"] = qs.get("priority_score")
+                    node["quality"] = qs.get("quality", "unrated")
+                else:
+                    node["priority_score"] = None
+                    node["quality"] = "unrated"
 
     # Append to packages_db.js
     graph_js = f"""

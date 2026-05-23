@@ -65,6 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'alpha':
                 sorted.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
                 break;
+            case 'score-desc':
+                sorted.sort((a, b) => (b.quality_score ?? -1) - (a.quality_score ?? -1));
+                break;
+            case 'score-asc':
+                sorted.sort((a, b) => (a.quality_score ?? 999) - (b.quality_score ?? 999));
+                break;
         }
         return sorted;
     }
@@ -146,8 +152,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const dateStr = !isNaN(d) ? d.toLocaleDateString() : 'Recent';
             const timeStr = !isNaN(d) ? d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '';
 
+            const qs = pkg.quality_score;
+            const quality = pkg.quality || 'unrated';
+            const scorePct = qs != null ? Math.round(qs * 100) : null;
+            const standout = qs != null && qs >= 0.75;
+            if (standout) li.classList.add('standout');
+
+            // Score color based on tier
+            let scoreColor = '#6b7280'; // unrated gray
+            if (qs != null) {
+                if (qs >= 0.75) scoreColor = '#fbbf24';      // gold - standout
+                else if (qs >= 0.65) scoreColor = '#8b5cf6';  // violet - strong
+                else if (qs >= 0.55) scoreColor = '#06b6d4';  // cyan - good
+                else if (qs >= 0.45) scoreColor = '#f59e0b';  // amber - moderate
+                else scoreColor = '#ef4444';                   // red - low
+            }
+
             li.innerHTML = `
                 <div class="nav-item-title">${pkg.title || 'Untitled Research'}</div>
+                ${qs != null ? `<div class="nav-item-score" data-quality="${quality}">
+                    <div class="score-bar"><div class="score-bar-fill" style="width:${scorePct}%;background:${scoreColor}"></div></div>
+                    <span class="score-label" style="color:${scoreColor}">${scorePct}%</span>
+                </div>` : ''}
                 <div class="nav-item-meta">
                     <span>${pkg.domain || 'General'}</span>
                     <span class="nav-item-datetime">${dateStr}${timeStr ? `<br><span class="nav-item-time">${timeStr}</span>` : ''}</span>
@@ -166,12 +192,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
                 const node = (window._graphNodes || []).find(n => n.id === li.dataset.slug);
                 if (window._setHoveredNode) window._setHoveredNode(node || null);
+                if (window._zoomToNodeCircle) window._zoomToNodeCircle(li.dataset.slug);
+                if (window._fadeWelcome) window._fadeWelcome();
             });
             li.addEventListener('mouseleave', () => {
                 const current = window._getHoveredNode ? window._getHoveredNode() : null;
                 if (current && current.id === li.dataset.slug && window._setHoveredNode) {
                     window._setHoveredNode(null);
                 }
+                if (window._stopTrackingCircle) window._stopTrackingCircle();
             });
 
             packageList.appendChild(li);

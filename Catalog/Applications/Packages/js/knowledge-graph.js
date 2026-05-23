@@ -14,8 +14,8 @@
             ...n,
             x: 0, y: 0, vx: 0, vy: 0,
             targetX: 0, targetY: 0,
-            mass: 1.0 + (n.priority_score || 0.5) * 2.0,  // heavier = more priority
-            radius: 18 + (n.priority_score || 0.5) * 12,    // bigger = more priority
+            mass: 1.0 + (n.priority_score ?? 0.5) * 2.0,  // heavier = more priority
+            radius: 16 + ((n.priority_score ?? 0.5) ** 0.7) * 20,    // bigger = more priority
             phase: Math.random() * Math.PI * 2,
             rotSpeed: 0.3 + Math.random() * 0.5,
             rotAngle: Math.random() * Math.PI * 2,
@@ -70,6 +70,22 @@
         window._graphNodes = graphNodes;
         window._setHoveredNode = function(node) { hoveredNode = node; };
         window._getHoveredNode = function() { return hoveredNode; };
+        window._fadeWelcome = fadeWelcome;
+        window._zoomToNodeCircle = function(nodeId) {
+            hoverTrackId = nodeId;
+            const comps = computeVisibleComponents();
+            for (const circle of comps) {
+                if (circle.nodeSet.has(nodeId)) {
+                    const minDim = Math.min(W || 800, H || 600);
+                    const targetZoom = minDim * 0.6 / (circle.r * 2);
+                    cameraTarget = { x: circle.cx, y: circle.cy, zoom: Math.min(targetZoom, 5) };
+                    return;
+                }
+            }
+        };
+        window._stopTrackingCircle = function() {
+            hoverTrackId = null;
+        };
 
         // ─── Colors by domain ───
         const DOMAIN_COLORS = {
@@ -89,13 +105,21 @@
         function nodeColor(node) {
             const d = node.primary_domain || 'Bridges';
             const c = DOMAIN_COLORS[d] || DOMAIN_COLORS['Bridges'];
-            return c;
+            const score = node.priority_score ?? 0.5;
+            const scoreBoost = (score - 0.5) * 30;
+            return {
+                h: c.h,
+                s: Math.min(100, Math.max(30, c.s + scoreBoost * 0.3)),
+                l: Math.min(85, Math.max(35, c.l + scoreBoost))
+            };
         }
 
         // ─── Canvas state ───
         let W, H;
         let animating = false;
         let camera = { x: 0, y: 0, zoom: 0.024 };
+        let cameraTarget = null; // { x, y, zoom } — smooth zoom-to target
+        let hoverTrackId = null;  // node ID being tracked by hover zoom
         let dragNode = null;
         let dragCluster = null;   // domain string when dragging a cluster label
         let prevDragWorld = null; // previous frame world position for cluster drag delta
@@ -1112,6 +1136,26 @@
             if (!animating) return;
             time += 0.016 * timeScale;
 
+            // Smooth camera animation toward target
+            if (cameraTarget) {
+                // If tracking a hovered node, update target to current circle position
+                if (hoverTrackId) {
+                    const comps = computeVisibleComponents();
+                    for (const circle of comps) {
+                        if (circle.nodeSet.has(hoverTrackId)) {
+                            const minDim = Math.min(W || 800, H || 600);
+                            const targetZoom = minDim * 0.6 / (circle.r * 2);
+                            cameraTarget = { x: circle.cx, y: circle.cy, zoom: Math.min(targetZoom, 5) };
+                            break;
+                        }
+                    }
+                }
+                const lerp = 0.08;
+                camera.x += (cameraTarget.x - camera.x) * lerp;
+                camera.y += (cameraTarget.y - camera.y) * lerp;
+                camera.zoom += (cameraTarget.zoom - camera.zoom) * lerp;
+            }
+
             simulate();
 
             ctx.clearRect(0, 0, W, H);
@@ -1303,13 +1347,12 @@
                 }
             });
 
-            // ─── Edge particles (energy flow dots) ───
-            // Draw particles on both sides of the Klein bottle
+            // ─── Edge particles (directional laser streaks: source → target) ───
+            // Particles flow from source to target showing provenance direction
             edgeParticles.forEach(p => {
                 const a = nodeMap[p.edge.source], b = nodeMap[p.edge.target];
                 if (!a || !b) return;
                 const miAB = minImageDelta(a.x, a.y, b.x, b.y);
-                const miBA = minImageDelta(b.x, b.y, a.x, a.y);
                 const dist = Math.sqrt(miAB.d2);
                 if (dist > EDGE_DRAW_DISTANCE) return;
 
@@ -1325,24 +1368,56 @@
                 const alpha = Math.min(1.0, baseAlpha + activeBoost);
                 const pSize = isActiveClusterEdge ? p.size * 2.0 : p.size * 1.4;
 
-                // Side 1: A→B path
-                const wx1 = a.x + miAB.dx * p.t;
-                const wy1 = a.y + miAB.dy * p.t;
-                const sp1 = worldToScreen(wx1, wy1);
-                if (isInView(wx1, wy1, 50)) {
+                // Directional laser streak: elongated along source→target
+                const tailLen = 0.06; // how far back the tail extends
+                const tHead = p.t;
+                const tTail = Math.max(0, p.t - tailLen);
+
+                // Side 1: source→target path
+                const hx1 = a.x + miAB.dx * tHead;
+                const hy1 = a.y + miAB.dy * tHead;
+                const tx1 = a.x + miAB.dx * tTail;
+                const ty1 = a.y + miAB.dy * tTail;
+                const sh1 = worldToScreen(hx1, hy1);
+                const st1 = worldToScreen(tx1, ty1);
+                if (isInView(hx1, hy1, 50) || isInView(tx1, ty1, 50)) {
+                    // Laser streak line
+                    const grad = ctx.createLinearGradient(st1.x, st1.y, sh1.x, sh1.y);
+                    grad.addColorStop(0, `hsla(${blendH}, 80%, 80%, 0)`);
+                    grad.addColorStop(1, `hsla(${blendH}, 100%, 90%, ${alpha})`);
                     ctx.beginPath();
-                    ctx.arc(sp1.x, sp1.y, pSize * camera.zoom, 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha})`;
+                    ctx.moveTo(st1.x, st1.y);
+                    ctx.lineTo(sh1.x, sh1.y);
+                    ctx.strokeStyle = grad;
+                    ctx.lineWidth = pSize * camera.zoom * 1.5;
+                    ctx.stroke();
+                    // Bright head dot
+                    ctx.beginPath();
+                    ctx.arc(sh1.x, sh1.y, pSize * camera.zoom, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${blendH}, 100%, 95%, ${alpha})`;
                     ctx.fill();
                 }
-                // Side 2: B→A path (fainter)
-                const wx2 = b.x + miBA.dx * p.t;
-                const wy2 = b.y + miBA.dy * p.t;
-                const sp2 = worldToScreen(wx2, wy2);
-                if (isInView(wx2, wy2, 50)) {
+                // Side 2: ghost mirror (source→target on other side)
+                const miBA = minImageDelta(b.x, b.y, a.x, a.y);
+                const hx2 = b.x + miBA.dx * (1 - tHead);
+                const hy2 = b.y + miBA.dy * (1 - tHead);
+                const tx2 = b.x + miBA.dx * (1 - tTail);
+                const ty2 = b.y + miBA.dy * (1 - tTail);
+                const sh2 = worldToScreen(hx2, hy2);
+                const st2 = worldToScreen(tx2, ty2);
+                if (isInView(hx2, hy2, 50) || isInView(tx2, ty2, 50)) {
+                    const grad2 = ctx.createLinearGradient(st2.x, st2.y, sh2.x, sh2.y);
+                    grad2.addColorStop(0, `hsla(${blendH}, 80%, 80%, 0)`);
+                    grad2.addColorStop(1, `hsla(${blendH}, 100%, 90%, ${alpha * 0.5})`);
                     ctx.beginPath();
-                    ctx.arc(sp2.x, sp2.y, pSize * 0.7 * camera.zoom, 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha * 0.5})`;
+                    ctx.moveTo(st2.x, st2.y);
+                    ctx.lineTo(sh2.x, sh2.y);
+                    ctx.strokeStyle = grad2;
+                    ctx.lineWidth = pSize * camera.zoom;
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(sh2.x, sh2.y, pSize * camera.zoom * 0.7, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${blendH}, 100%, 95%, ${alpha * 0.5})`;
                     ctx.fill();
                 }
             });
@@ -1515,7 +1590,8 @@
                 const sp = worldToScreen(node.x, node.y);
                 const col = nodeColor(node);
                 const isHovered = node === hoveredNode;
-                const pulse = 1 + 0.04 * Math.sin(time * 1.5 + node.phase);
+                const hoverPulse = isHovered ? 1.8 + 0.4 * Math.sin(time * 6) : 1;
+                const pulse = (1 + 0.04 * Math.sin(time * 1.5 + node.phase)) * hoverPulse;
                 const massScale = 0.7 + (node.mass || 1) * 0.3;  // bigger mass = bigger visual
                 const r = (node.radius || 22) * pulse * massScale * camera.zoom;
 
@@ -1540,13 +1616,53 @@
 
                 drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, isHovered);
 
+                // Standout gold corona for high-quality packages
+                if ((node.priority_score ?? 0) >= 0.65) {
+                    const standoutPulse = 1 + 0.2 * Math.sin(time * 3 + node.phase);
+                    const glowR = r * 2.2 * standoutPulse;
+                    const standoutGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, glowR);
+                    standoutGlow.addColorStop(0, `hsla(45, 100%, 75%, 0.2)`);
+                    standoutGlow.addColorStop(0.5, `hsla(45, 100%, 65%, 0.06)`);
+                    standoutGlow.addColorStop(1, `hsla(45, 100%, 55%, 0)`);
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, glowR, 0, Math.PI * 2);
+                    ctx.fillStyle = standoutGlow;
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, r + 4 * camera.zoom, 0, Math.PI * 2);
+                    ctx.strokeStyle = `hsla(45, 100%, 65%, ${0.4 + 0.3 * Math.sin(time * 3 + node.phase)})`;
+                    ctx.lineWidth = 2 * camera.zoom;
+                    ctx.stroke();
+                }
+
                 // Highlight ring for hovered node (from sidebar hover or graph hover)
                 if (isHovered) {
+                    // Pulsing bright ring
                     ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, r + 6 * camera.zoom, 0, Math.PI * 2);
-                    ctx.strokeStyle = `hsla(${col.h}, 100%, 75%, ${0.5 + 0.3 * Math.sin(time * 4)})`;
-                    ctx.lineWidth = 2.5 * camera.zoom;
+                    ctx.arc(sp.x, sp.y, r + 8 * camera.zoom, 0, Math.PI * 2);
+                    ctx.strokeStyle = `hsla(${col.h}, 100%, 85%, ${0.6 + 0.4 * Math.sin(time * 6)})`;
+                    ctx.lineWidth = 3 * camera.zoom;
                     ctx.stroke();
+                    // Expanding radar rings
+                    for (let ring = 0; ring < 3; ring++) {
+                        const ringR = r + (time * 80 + ring * 40) % 120 * camera.zoom;
+                        const ringAlpha = Math.max(0, 0.4 - (ringR - r) / (120 * camera.zoom) * 0.4);
+                        ctx.beginPath();
+                        ctx.arc(sp.x, sp.y, ringR, 0, Math.PI * 2);
+                        ctx.strokeStyle = `hsla(${col.h}, 100%, 80%, ${ringAlpha})`;
+                        ctx.lineWidth = 1.5 * camera.zoom;
+                        ctx.stroke();
+                    }
+                    // Bright glow burst
+                    const burstR = r * 3 + r * Math.sin(time * 4) * 0.5;
+                    const burstGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, burstR);
+                    burstGlow.addColorStop(0, `hsla(${col.h}, 100%, 90%, 0.3)`);
+                    burstGlow.addColorStop(0.5, `hsla(${col.h}, 100%, 70%, 0.1)`);
+                    burstGlow.addColorStop(1, `hsla(${col.h}, 100%, 50%, 0)`);
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, burstR, 0, Math.PI * 2);
+                    ctx.fillStyle = burstGlow;
+                    ctx.fill();
                 }
             });
 
@@ -1737,6 +1853,18 @@
                         tooltip.classList.remove('tooltip-hidden');
                         tooltip.querySelector('.tooltip-title').textContent = node.title || node.id;
                         tooltip.querySelector('.tooltip-domain').textContent = node.primary_domain || node.domain || '';
+                        const scoreEl = tooltip.querySelector('.tooltip-score');
+                        if (scoreEl) {
+                            const ps = node.priority_score;
+                            if (ps != null) {
+                                const pct = Math.round(ps * 100);
+                                const ql = node.quality || (ps >= 0.75 ? 'substantial' : ps >= 0.5 ? 'partial' : 'trivial');
+                                scoreEl.textContent = `${pct}% ${ql}`;
+                                scoreEl.style.display = '';
+                            } else {
+                                scoreEl.style.display = 'none';
+                            }
+                        }
                         tooltip.querySelector('.tooltip-date').textContent = node.date ? new Date(node.date).toLocaleDateString() : '';
                         tooltip.style.left = (e.offsetX + 15) + 'px';
                         tooltip.style.top = (e.offsetY - 10) + 'px';
@@ -1778,6 +1906,7 @@
         });
 
         canvas.addEventListener('wheel', e => {
+            cameraTarget = null; // Cancel any animated zoom on manual scroll
             e.preventDefault();
             fadeWelcome();
             const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
@@ -1916,7 +2045,7 @@
             if (graphNodes.some(n => n.id === nodeData.id)) return;
             const domain = nodeData.primary_domain || nodeData.domain || 'Bridges';
             const centroid = clusterData.centroids[domain] || clusterData.centroids[Object.keys(clusterData.centroids)[0]];
-            const px = nodeData.priority_score || 0.5;
+            const px = nodeData.priority_score ?? 0.5;
             const node = {
                 ...nodeData,
                 x: centroid ? centroid.x + (Math.random() - 0.5) * 60 : (Math.random() - 0.5) * 200,
