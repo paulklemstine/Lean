@@ -416,5 +416,6 @@
   "2c3aa2d5": "direction_2_equality_saturation_extraction_correct.json",
   "7b5eca5b": "bridge_to_physics.json",
   "28f50d65": "direction_5_categorical_semantics_of_extraction.json",
-  "924ea2bc": "direction_3_local_to_global_finite_generation_prob.json"
+  "924ea2bc": "direction_3_local_to_global_finite_generation_prob.json",
+  "faaeb97d": "direction_5_multi_scale_persistence_and_renormaliz.json"
 }
