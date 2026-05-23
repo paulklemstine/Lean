@@ -5,7 +5,7 @@ on:
     - cron: '17 0,6,12,18 * * *'
   workflow_dispatch:
     inputs:
-      max_inflight:
+      maxinflight:
         description: 'Max inflight Aristotle jobs'
         required: false
         default: '9'
@@ -13,8 +13,6 @@ on:
 permissions:
   contents: write
   actions: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: aether-research
@@ -63,20 +61,8 @@ jobs:
           git config user.email "aether-bot[bot]@users.noreply.github.com"
           git add -A
           git diff --cached --quiet || git commit -m "Aether CI: tick $(date -u +%Y-%m-%dT%H:%MZ)"
-          # Pull remote changes, auto-resolving conflicts by keeping ours
           git pull --rebase -X ours origin master || git rebase --abort
           git push
 
       - name: Update website index
         run: cd Catalog/Applications/Packages && python3 update_index.py
-
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload Packages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './Catalog/Applications/Packages'
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
