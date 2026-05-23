@@ -1,448 +1,472 @@
 """
 algorithms.py — Core algorithms for configuration graph pathwidth analysis.
 
-Implements the mathematical machinery for connecting resolution proof memory
-(clause space) to graph-theoretic pathwidth of configuration graphs.
+Implements:
+1. CNF formula representation and operations
+2. Resolution trace construction
+3. Configuration graph construction
+4. Pathwidth computation (exact, brute-force for small graphs)
+5. Clause space computation
 """
 
-from __future__ import annotations
 from itertools import combinations, product
-from typing import Optional
+from typing import FrozenSet, Set, List, Tuple, Optional, Dict
+from collections import defaultdict
 
 
-class PathDecomposition:
-    """A path decomposition of a graph: a sequence of bags (sets of vertices).
+# ============================================================
+# Types
+# ============================================================
 
-    Width = max(|bag| for bag in bags) - 1.
+Literal = int  # Positive = variable, Negative = negation
+Clause = FrozenSet[int]
+Configuration = FrozenSet[Clause]
+CNF = FrozenSet[Clause]
+
+
+def neg(lit: Literal) -> Literal:
+    """Negate a literal."""
+    return -lit
+
+
+def variables_of(cnf: CNF) -> Set[int]:
+    """Extract the set of variables from a CNF formula."""
+    return {abs(lit) for clause in cnf for lit in clause}
+
+
+# ============================================================
+# Resolution
+# ============================================================
+
+def resolve(c1: Clause, c2: Clause) -> Optional[Clause]:
     """
-
-    def __init__(self, bags: list[frozenset]):
-        if not bags:
-            raise ValueError("Path decomposition must have at least one bag")
-        self.bags = bags
-
-    @property
-    def width(self) -> int:
-        return max(len(b) for b in self.bags) - 1
-
-    @property
-    def max_bag_card(self) -> int:
-        return max(len(b) for b in self.bags)
-
-    def has_interval_property(self) -> bool:
-        """Check if the decomposition satisfies the interval property."""
-        all_vertices = set()
-        for b in self.bags:
-            all_vertices |= b
-        for v in all_vertices:
-            indices = [i for i, b in enumerate(self.bags) if v in b]
-            if not indices:
-                continue
-            lo, hi = min(indices), max(indices)
-            for j in range(lo, hi + 1):
-                if v not in self.bags[j]:
-                    return False
-        return True
-
-    def covers_vertex(self, v) -> bool:
-        return any(v in b for b in self.bags)
-
-    def covers_edge(self, u, v) -> bool:
-        return any(u in b and v in b for b in self.bags)
-
-    def is_valid_for(self, vertices: set, edges: set[tuple]) -> bool:
-        """Check if this is a valid path decomposition for the given graph."""
-        for v in vertices:
-            if not self.covers_vertex(v):
-                return False
-        for u, v in edges:
-            if not self.covers_edge(u, v):
-                return False
-        return self.has_interval_property()
-
-
-class ConfigTrace:
-    """A configuration trace: a sequence of configurations (sets of clauses).
-
-    Models a sequence of memory states during resolution proof search.
+    Resolve two clauses if they have exactly one complementary literal.
+    Returns the resolvent or None if resolution is not possible.
     """
-
-    def __init__(self, configs: list[frozenset]):
-        if not configs:
-            raise ValueError("Trace must have at least one configuration")
-        self.configs = configs
-
-    @property
-    def clause_space(self) -> int:
-        """Maximum configuration size (number of clauses held simultaneously)."""
-        return max(len(c) for c in self.configs)
-
-    @property
-    def is_regular(self) -> bool:
-        """Check if the trace is regular (monotone): once a clause leaves, it never returns."""
-        all_clauses = set()
-        for c in self.configs:
-            all_clauses |= c
-        for clause in all_clauses:
-            appearances = [i for i, c in enumerate(self.configs) if clause in c]
-            if not appearances:
-                continue
-            lo, hi = min(appearances), max(appearances)
-            for j in range(lo, hi + 1):
-                if clause not in self.configs[j]:
-                    return False
-        return True
-
-    def to_path_decomposition(self) -> PathDecomposition:
-        """Convert trace to path decomposition (bags = configs)."""
-        return PathDecomposition(self.configs)
-
-    def starts_empty(self) -> bool:
-        return len(self.configs[0]) == 0
-
-    def achieves(self, goal) -> bool:
-        return goal in self.configs[-1]
+    complements = []
+    for lit in c1:
+        if neg(lit) in c2:
+            complements.append(lit)
+    if len(complements) != 1:
+        return None
+    lit = complements[0]
+    resolvent = (c1 - {lit}) | (c2 - {neg(lit)})
+    # Check for tautology
+    for l in resolvent:
+        if neg(l) in resolvent:
+            return None
+    return frozenset(resolvent)
 
 
-class CNFFormula:
-    """A CNF formula over a set of variables.
+def all_resolvents(config: Configuration) -> Set[Clause]:
+    """Compute all possible resolvents from clauses in a configuration."""
+    results = set()
+    clauses = list(config)
+    for i in range(len(clauses)):
+        for j in range(i + 1, len(clauses)):
+            r = resolve(clauses[i], clauses[j])
+            if r is not None:
+                results.add(r)
+    return results
 
-    Each clause is a frozenset of literals (variable, polarity) pairs.
+
+# ============================================================
+# Resolution Trace Construction
+# ============================================================
+
+def find_refutation_trace(cnf: CNF, max_space: int = 10) -> Optional[List[Configuration]]:
     """
-
-    def __init__(self, clauses: list[frozenset], n_vars: int):
-        self.clauses = [frozenset(c) for c in clauses]
-        self.n_vars = n_vars
-
-    def is_satisfied_by(self, assignment: dict[int, bool]) -> bool:
-        """Check if the assignment satisfies all clauses."""
-        for clause in self.clauses:
-            satisfied = False
-            for var, pol in clause:
-                if assignment.get(var) == pol:
-                    satisfied = True
-                    break
-            if not satisfied:
-                return False
-        return True
-
-    def is_unsatisfiable(self) -> bool:
-        """Check unsatisfiability by brute force (for small instances)."""
-        for bits in product([False, True], repeat=self.n_vars):
-            assignment = {i: bits[i] for i in range(self.n_vars)}
-            if self.is_satisfied_by(assignment):
-                return False
-        return True
-
-
-def build_conf_graph_bounded(formula: CNFFormula, s: int) -> tuple[set, set]:
-    """Build the bounded configuration graph for a CNF formula.
-
-    Vertices: all configurations (subsets of clauses) with |config| <= s.
-    Edges: pairs of configurations differing by exactly one clause.
+    Find a resolution refutation trace using BFS over configuration space.
+    Returns a list of configurations from empty to a configuration containing
+    the empty clause, or None if no refutation exists within the space bound.
 
     Args:
-        formula: The CNF formula
-        s: Space bound
+        cnf: The CNF formula to refute.
+        max_space: Maximum number of clauses in any configuration.
 
     Returns:
-        (vertices, edges) where vertices is a set of frozensets
-        and edges is a set of pairs of frozensets.
+        A list of configurations representing the refutation trace, or None.
     """
-    all_clauses = list(set(formula.clauses))
-    vertices = set()
-    # Generate all subsets of clauses with size <= s
+    empty_clause = frozenset()
+    start = frozenset()  # Empty configuration
+
+    # BFS
+    queue = [(start,)]
+    visited = {start}
+
+    while queue:
+        path = queue.pop(0)
+        current = path[-1]
+
+        # Check if we've derived the empty clause
+        if empty_clause in current:
+            return list(path)
+
+        # Generate successors
+        successors = []
+
+        # 1. Add an axiom clause
+        for clause in cnf:
+            if clause not in current and len(current) + 1 <= max_space:
+                new_config = frozenset(current | {clause})
+                successors.append(new_config)
+
+        # 2. Add a resolvent
+        for r in all_resolvents(current):
+            if r not in current and len(current) + 1 <= max_space:
+                new_config = frozenset(current | {r})
+                successors.append(new_config)
+
+        # 3. Forget a clause
+        for clause in current:
+            new_config = frozenset(current - {clause})
+            successors.append(new_config)
+
+        for succ in successors:
+            if succ not in visited:
+                visited.add(succ)
+                queue.append(path + (succ,))
+
+    return None
+
+
+def clause_space_of_trace(trace: List[Configuration]) -> int:
+    """Compute the clause space (max configuration size) of a trace."""
+    return max(len(config) for config in trace) if trace else 0
+
+
+# ============================================================
+# Configuration Graph
+# ============================================================
+
+def build_bounded_config_graph(
+    cnf: CNF, s: int
+) -> Tuple[List[Configuration], Dict[Configuration, Set[Configuration]]]:
+    """
+    Build the s-bounded configuration graph for a CNF formula.
+
+    Vertices: all configurations (subsets of derivable clauses) with size ≤ s.
+    Edges: configurations differing by exactly one clause (add or remove).
+
+    Args:
+        cnf: The CNF formula.
+        s: The space bound.
+
+    Returns:
+        (vertices, adjacency_dict)
+    """
+    # First, compute all derivable clauses (up to a reasonable depth)
+    all_clauses = set(cnf)
+    changed = True
+    while changed:
+        changed = False
+        new_clauses = set()
+        for c1 in all_clauses:
+            for c2 in all_clauses:
+                r = resolve(c1, c2)
+                if r is not None and r not in all_clauses:
+                    new_clauses.add(r)
+                    changed = True
+        all_clauses |= new_clauses
+        if len(all_clauses) > 100:  # Safety bound
+            break
+
+    clauses_list = sorted(all_clauses, key=lambda c: (len(c), sorted(c)))
+
+    # Enumerate configurations of size ≤ s
+    vertices = []
     for size in range(s + 1):
-        for subset in combinations(all_clauses, size):
-            vertices.add(frozenset(subset))
+        for combo in combinations(clauses_list, size):
+            vertices.append(frozenset(combo))
 
-    edges = set()
-    for v in vertices:
-        for clause in all_clauses:
-            if clause not in v:
-                neighbor = frozenset(v | {clause})
-                if len(neighbor) <= s and neighbor in vertices:
-                    edge = (min(v, neighbor), max(v, neighbor))
-                    edges.add(edge)
-            else:
-                neighbor = frozenset(v - {clause})
-                if neighbor in vertices:
-                    edge = (min(v, neighbor), max(v, neighbor))
-                    edges.add(edge)
-    return vertices, edges
+    vertex_set = set(vertices)
+
+    # Build adjacency
+    adj: Dict[Configuration, Set[Configuration]] = defaultdict(set)
+    for config in vertices:
+        # Add a clause
+        for clause in clauses_list:
+            if clause not in config and len(config) + 1 <= s:
+                neighbor = frozenset(config | {clause})
+                if neighbor in vertex_set:
+                    adj[config].add(neighbor)
+                    adj[neighbor].add(config)
+        # Remove a clause
+        for clause in config:
+            neighbor = frozenset(config - {clause})
+            if neighbor in vertex_set:
+                adj[config].add(neighbor)
+                adj[neighbor].add(config)
+
+    return vertices, dict(adj)
 
 
-def compute_pathwidth_brute_force(vertices: set, edges: set, max_width: int = 10) -> int:
-    """Compute exact pathwidth by brute force for small graphs.
+def build_visited_graph(
+    trace: List[Configuration],
+) -> Tuple[List[Configuration], Dict[Configuration, Set[Configuration]]]:
+    """
+    Build the visited configuration graph from a trace.
 
-    Tries all orderings of vertices and computes the minimum width
-    path decomposition. Only feasible for very small graphs (|V| <= 8).
+    Vertices: distinct configurations in the trace.
+    Edges: between consecutively visited configurations.
+    """
+    vertices = list(dict.fromkeys(trace))  # Unique, preserving order
+    vertex_set = set(vertices)
+
+    adj: Dict[Configuration, Set[Configuration]] = defaultdict(set)
+    for i in range(len(trace) - 1):
+        c1, c2 = trace[i], trace[i + 1]
+        if c1 != c2:
+            adj[c1].add(c2)
+            adj[c2].add(c1)
+
+    return vertices, dict(adj)
+
+
+# ============================================================
+# Path Decomposition and Pathwidth
+# ============================================================
+
+def verify_path_decomposition(
+    bags: List[Set[int]],
+    vertices: List[int],
+    edges: List[Tuple[int, int]],
+) -> Tuple[bool, str]:
+    """
+    Verify that a list of bags forms a valid path decomposition.
 
     Args:
-        vertices: Set of vertices
-        edges: Set of edges (pairs)
-        max_width: Upper bound to stop searching
+        bags: List of sets of vertex indices.
+        vertices: List of vertex indices.
+        edges: List of (u, v) edges.
 
     Returns:
-        Exact pathwidth, or max_width if not found below bound.
+        (is_valid, reason)
+    """
+    if not bags:
+        return False, "Empty bag list"
+
+    # 1. Vertex coverage
+    covered = set()
+    for bag in bags:
+        covered |= bag
+    for v in vertices:
+        if v not in covered:
+            return False, f"Vertex {v} not covered"
+
+    # 2. Edge coverage
+    for u, v in edges:
+        found = False
+        for bag in bags:
+            if u in bag and v in bag:
+                found = True
+                break
+        if not found:
+            return False, f"Edge ({u}, {v}) not covered"
+
+    # 3. Interval property
+    for v in vertices:
+        indices = [i for i, bag in enumerate(bags) if v in bag]
+        if indices:
+            if indices != list(range(indices[0], indices[-1] + 1)):
+                return False, f"Vertex {v} violates interval property"
+
+    return True, "Valid"
+
+
+def pathwidth_of_bags(bags: List[Set]) -> int:
+    """Compute the width of a path decomposition (max bag size - 1)."""
+    if not bags:
+        return 0
+    return max(len(bag) for bag in bags) - 1
+
+
+def exact_pathwidth_bruteforce(
+    n_vertices: int,
+    edges: List[Tuple[int, int]],
+    max_width: int = None,
+) -> int:
+    """
+    Compute exact pathwidth by trying all possible path decompositions.
+    Only feasible for very small graphs (n ≤ 8).
+
+    Uses the vertex ordering approach: try all permutations of vertices,
+    build the canonical path decomposition, and find the minimum width.
+
+    Args:
+        n_vertices: Number of vertices (labeled 0..n-1).
+        edges: List of edges.
+        max_width: Upper bound on width to search.
+
+    Returns:
+        Exact pathwidth.
     """
     from itertools import permutations
 
-    vlist = list(vertices)
-    n = len(vlist)
-
-    if n == 0:
+    if n_vertices == 0:
         return 0
-    if n > 8:
-        # Too large for brute force
-        return _pathwidth_greedy_upper_bound(vertices, edges)
+    if n_vertices == 1:
+        return 0
 
-    best_width = n - 1  # Trivial upper bound
+    if max_width is None:
+        max_width = n_vertices - 1
 
-    for perm in permutations(range(n)):
-        # For this ordering, compute optimal bags
-        # Each vertex must appear in a contiguous range of bags
-        # We use a greedy approach: for each position, the bag contains
-        # all vertices whose interval includes this position
+    # Build adjacency list
+    adj = defaultdict(set)
+    for u, v in edges:
+        adj[u].add(v)
+        adj[v].add(u)
 
-        # For this permutation, define interval for each vertex
-        # based on edges: vertex v must be in bag at position p(v),
-        # and if (u,v) is an edge, their intervals must overlap
-        order = {vlist[perm[i]]: i for i in range(n)}
+    vertices = list(range(n_vertices))
 
-        # For each vertex, compute the range it must be active
-        intervals = {}
-        for v in vlist:
-            intervals[v] = [order[v], order[v]]
+    if n_vertices > 10:
+        # Too many permutations; use heuristic
+        return _pathwidth_heuristic(n_vertices, edges)
 
-        # Extend intervals to cover edges
-        for u, v in edges:
-            if u in order and v in order:
-                lo = min(order[u], order[v])
-                hi = max(order[u], order[v])
-                intervals[u] = [min(intervals[u][0], lo), max(intervals[u][1], hi)]
-                intervals[v] = [min(intervals[v][0], lo), max(intervals[v][1], hi)]
+    best_width = n_vertices - 1
 
-        # Compute bag sizes
-        max_bag = 0
-        for pos in range(n):
-            bag_size = sum(1 for v in vlist if intervals[v][0] <= pos <= intervals[v][1])
-            max_bag = max(max_bag, bag_size)
-
-        width = max_bag - 1
+    for perm in permutations(vertices):
+        # Build path decomposition from elimination ordering
+        # At step i, the bag contains vertex perm[i] and all its neighbors
+        # that appear later in the ordering
+        width = 0
+        pos = {v: i for i, v in enumerate(perm)}
+        for i, v in enumerate(perm):
+            # Bag contains v and all later neighbors
+            bag_size = 1 + sum(1 for u in adj[v] if pos[u] > i)
+            width = max(width, bag_size)
+        width -= 1  # pathwidth convention
         best_width = min(best_width, width)
-
-        if best_width <= 1:
-            break
 
     return best_width
 
 
-def _pathwidth_greedy_upper_bound(vertices: set, edges: set) -> int:
-    """Greedy upper bound on pathwidth using BFS ordering."""
-    if not vertices:
-        return 0
-
-    # Build adjacency list
-    adj = {v: set() for v in vertices}
+def _pathwidth_heuristic(n_vertices: int, edges: List[Tuple[int, int]]) -> int:
+    """Heuristic upper bound on pathwidth using greedy elimination."""
+    adj = defaultdict(set)
     for u, v in edges:
-        if u in adj and v in adj:
-            adj[u].add(v)
-            adj[v].add(u)
+        adj[u].add(v)
+        adj[v].add(u)
 
-    # BFS ordering
-    start = next(iter(vertices))
-    visited = []
-    queue = [start]
-    seen = {start}
-    while queue:
-        v = queue.pop(0)
-        visited.append(v)
-        for u in adj.get(v, []):
-            if u not in seen:
-                seen.add(u)
-                queue.append(u)
-    # Add unvisited vertices
-    for v in vertices:
-        if v not in seen:
-            visited.append(v)
+    remaining = set(range(n_vertices))
+    width = 0
 
-    # Compute bags from this ordering
-    n = len(visited)
-    order = {v: i for i, v in enumerate(visited)}
-    intervals = {v: [order[v], order[v]] for v in visited}
-    for u, v in edges:
-        if u in order and v in order:
-            lo, hi = min(order[u], order[v]), max(order[u], order[v])
-            intervals[u] = [min(intervals[u][0], lo), max(intervals[u][1], hi)]
-            intervals[v] = [min(intervals[v][0], lo), max(intervals[v][1], hi)]
+    while remaining:
+        # Pick vertex with minimum degree among remaining
+        v = min(remaining, key=lambda x: len(adj[x] & remaining))
+        bag_size = 1 + len(adj[v] & remaining)
+        width = max(width, bag_size - 1)
+        remaining.remove(v)
 
-    max_bag = 0
-    for pos in range(n):
-        bag_size = sum(1 for v in visited if intervals[v][0] <= pos <= intervals[v][1])
-        max_bag = max(max_bag, bag_size)
-
-    return max_bag - 1
+    return width
 
 
-def estimate_clause_space(formula: CNFFormula) -> int:
-    """Estimate minimum clause space for a CNF formula.
+# ============================================================
+# Minimum Clause Space
+# ============================================================
 
-    Uses a greedy resolution strategy to find an upper bound.
+def min_clause_space(cnf: CNF, max_search_space: int = 8) -> int:
+    """
+    Compute or estimate the minimum clause space of a CNF formula.
+    Tries space bounds from 1 upward until a refutation is found.
 
     Args:
-        formula: An unsatisfiable CNF formula
+        cnf: The unsatisfiable CNF formula.
+        max_search_space: Maximum space to try.
 
     Returns:
-        Upper bound on minimum clause space.
+        Minimum clause space, or -1 if no refutation found.
     """
-    if not formula.is_unsatisfiable():
-        return float('inf')
-
-    # Simple strategy: try resolving all pairs, tracking minimum peak memory
-    clauses = set(formula.clauses)
-    best_space = len(clauses) + 1
-
-    # Try each resolution ordering
-    clause_list = list(clauses)
-
-    # Greedy: resolve pairs with maximum overlap first
-    config = set()
-    trace = [frozenset()]
-    max_space = 0
-
-    # Download all axioms and try resolutions
-    for c in clause_list:
-        config.add(c)
-        trace.append(frozenset(config))
-        max_space = max(max_space, len(config))
-
-        # Try to derive the empty clause
-        new_clauses = set()
-        for c1 in config:
-            for c2 in config:
-                if c1 >= c2:
-                    continue
-                # Try resolution on each variable
-                for var, pol in c1:
-                    if (var, not pol) in c2:
-                        resolvent = frozenset(
-                            (c1 - {(var, pol)}) | (c2 - {(var, not pol)})
-                        )
-                        new_clauses.add(resolvent)
-
-        for nc in new_clauses:
-            config.add(nc)
-            trace.append(frozenset(config))
-            max_space = max(max_space, len(config))
-            if len(nc) == 0:
-                best_space = min(best_space, max_space)
-
-    return best_space
+    for s in range(1, max_search_space + 1):
+        trace = find_refutation_trace(cnf, max_space=s)
+        if trace is not None:
+            return s
+    return -1
 
 
-def enumerate_cnfs(n_vars: int, max_clause_len: Optional[int] = None) -> list[CNFFormula]:
-    """Enumerate all CNF formulas over n_vars variables.
+# ============================================================
+# Formula Generators
+# ============================================================
+
+def all_clauses_over(variables: List[int], max_width: int = None) -> List[Clause]:
+    """Generate all possible clauses over the given variables."""
+    if max_width is None:
+        max_width = len(variables)
+
+    literals = []
+    for v in variables:
+        literals.extend([v, -v])
+
+    clauses = []
+    for width in range(1, max_width + 1):
+        for combo in combinations(literals, width):
+            # Check for tautology
+            clause = frozenset(combo)
+            is_taut = any(-lit in clause for lit in clause)
+            if not is_taut:
+                clauses.append(clause)
+    return clauses
+
+
+def is_satisfiable(cnf: CNF) -> bool:
+    """Check satisfiability by brute-force truth table."""
+    vars_list = sorted(variables_of(cnf))
+    if not vars_list:
+        return frozenset() not in cnf
+
+    for assignment in product([True, False], repeat=len(vars_list)):
+        val = {v: a for v, a in zip(vars_list, assignment)}
+        satisfied = True
+        for clause in cnf:
+            clause_sat = False
+            for lit in clause:
+                if (lit > 0 and val[abs(lit)]) or (lit < 0 and not val[abs(lit)]):
+                    clause_sat = True
+                    break
+            if not clause_sat:
+                satisfied = False
+                break
+        if satisfied:
+            return True
+    return False
+
+
+def enumerate_unsat_cnfs(n_vars: int, max_clause_width: int = None) -> List[CNF]:
+    """
+    Enumerate all unsatisfiable CNF formulas over n variables.
 
     Args:
-        n_vars: Number of variables
-        max_clause_len: Maximum clause length (default: 2*n_vars)
+        n_vars: Number of variables (1, 2, ..., n_vars).
+        max_clause_width: Maximum clause width.
 
     Returns:
-        List of all CNF formulas (up to clause set inclusion).
+        List of unsatisfiable CNFs (as frozensets of frozensets).
     """
-    if max_clause_len is None:
-        max_clause_len = 2 * n_vars
+    variables = list(range(1, n_vars + 1))
+    all_cls = all_clauses_over(variables, max_clause_width)
 
-    # Generate all possible literals
-    literals = [(v, p) for v in range(n_vars) for p in [True, False]]
+    unsat_cnfs = []
+    # Enumerate all subsets of clauses
+    for size in range(1, len(all_cls) + 1):
+        for combo in combinations(all_cls, size):
+            cnf = frozenset(combo)
+            if not is_satisfiable(cnf):
+                unsat_cnfs.append(cnf)
 
-    # Generate all possible clauses (non-empty subsets of literals,
-    # no variable appears twice)
-    all_clauses = []
-    for size in range(0, max_clause_len + 1):
-        for subset in combinations(literals, size):
-            # Check no variable appears with both polarities
-            vars_seen = {}
-            valid = True
-            for var, pol in subset:
-                if var in vars_seen:
-                    if vars_seen[var] != pol:
-                        valid = False
-                        break
-                vars_seen[var] = pol
-            if valid:
-                all_clauses.append(frozenset(subset))
-
-    # Generate all CNF formulas (subsets of clauses)
-    formulas = []
-    for size in range(1, min(len(all_clauses) + 1, 20)):  # Cap for feasibility
-        for clause_set in combinations(all_clauses, size):
-            f = CNFFormula(list(clause_set), n_vars)
-            formulas.append(f)
-    return formulas
-
-
-def analyze_formula(formula: CNFFormula, verbose: bool = False) -> dict:
-    """Analyze a CNF formula: compute clause space, build config graph,
-    compute pathwidth, and check the conjecture.
-
-    Args:
-        formula: An unsatisfiable CNF formula
-        verbose: Print details
-
-    Returns:
-        Dictionary with analysis results.
-    """
-    if not formula.is_unsatisfiable():
-        return {"unsatisfiable": False}
-
-    space = estimate_clause_space(formula)
-    vertices, edges = build_conf_graph_bounded(formula, space)
-
-    n_vertices = len(vertices)
-    n_edges = len(edges)
-
-    # Compute pathwidth for small graphs
-    if n_vertices <= 8:
-        pw = compute_pathwidth_brute_force(vertices, edges)
-    else:
-        pw = _pathwidth_greedy_upper_bound(vertices, edges)
-
-    ratio = pw / space if space > 0 else 0
-
-    result = {
-        "unsatisfiable": True,
-        "n_clauses": len(formula.clauses),
-        "n_vars": formula.n_vars,
-        "clause_space_upper_bound": space,
-        "config_graph_vertices": n_vertices,
-        "config_graph_edges": n_edges,
-        "pathwidth": pw,
-        "ratio_pw_to_space": ratio,
-        "conjecture_holds": pw <= 4 * space,  # c=4 hypothesis
-    }
-
-    if verbose:
-        print(f"  Clauses: {len(formula.clauses)}, Vars: {formula.n_vars}")
-        print(f"  Clause space (upper bound): {space}")
-        print(f"  Config graph: {n_vertices} vertices, {n_edges} edges")
-        print(f"  Pathwidth: {pw}")
-        print(f"  Ratio pw/space: {ratio:.3f}")
-        print(f"  Conjecture (c=4) holds: {result['conjecture_holds']}")
-
-    return result
+    return unsat_cnfs
 
 
 if __name__ == "__main__":
-    # Example: analyze a small unsatisfiable formula
-    # (x₀ ∨ x₁) ∧ (x₀ ∨ ¬x₁) ∧ (¬x₀ ∨ x₁) ∧ (¬x₀ ∨ ¬x₁)
-    f = CNFFormula([
-        frozenset([(0, True), (1, True)]),
-        frozenset([(0, True), (1, False)]),
-        frozenset([(0, False), (1, True)]),
-        frozenset([(0, False), (1, False)]),
-    ], n_vars=2)
+    # Example: simple unsatisfiable formula {p, ¬p}
+    p, q = 1, 2
+    cnf = frozenset([frozenset([p]), frozenset([-p])])
+    print(f"Formula: {{{format_clause(c) for c in cnf}}}" if False else f"Formula: {cnf}")
+    print(f"Satisfiable: {is_satisfiable(cnf)}")
 
-    print("Example: 4-clause unsatisfiable formula on 2 variables")
-    result = analyze_formula(f, verbose=True)
+    space = min_clause_space(cnf)
+    print(f"Minimum clause space: {space}")
+
+    trace = find_refutation_trace(cnf, max_space=space)
+    if trace:
+        print(f"Trace length: {len(trace)}")
+        print(f"Clause space of trace: {clause_space_of_trace(trace)}")

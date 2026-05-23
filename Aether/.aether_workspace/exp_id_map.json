@@ -410,5 +410,7 @@
   "21968594": "direction_3_coordinate_independence_as_a_probabili.json",
   "7d4778d1": "direction_4_ultra_log_concavity_and_effective_boun.json",
   "43aa1bfc": "direction_3_formal_knuth_bendix_completion.json",
-  "8b647382": "direction_5_tropical_kam_stability_grand_challenge.json"
+  "8b647382": "direction_5_tropical_kam_stability_grand_challenge.json",
+  "6f30f84f": "configuration_graph_pathwidth.json",
+  "5fb0b81c": "direction_4_sheaf_compression_on_finite_sites.json"
 }

@@ -1,18 +1,10 @@
-# Sheaf Compression on Finite Sites: Topology-Aware Probe Representability
+# Sheaf Compression on Finite Sites: Probe Complexity Meets Geometric Descent
 
 ## Abstract
 
-We introduce the notion of *sheaf probe complexity* for presheaves on finite sites, extending the probe complexity theory for finite categories to the setting of Grothendieck topologies. Given a finite category $C$ equipped with a Grothendieck topology $J$, we define the sheaf probe complexity of a presheaf $F$ as the minimum cardinality of a probe family that simultaneously separates $F$ (distinguishes all pairs of sections via restriction maps) and respects the topology (generates covering sieves at each object). Our main results establish:
+We develop a theory of **sheaf compression on finite sites**, establishing the first quantitative connection between probe-based presheaf compression and Grothendieck topologies. We introduce the notions of *topology-compatible probes*, *presheaf compression number*, and *sheaf compression number* for presheaves on small categories equipped with a Grothendieck topology. Our main results are: (1) any presheaf morphism into a sheaf factors canonically through sheafification, providing a bridge from presheaf-level to sheaf-level compression; (2) the sheaf compression number is always at least the presheaf compression number; (3) under a natural generation condition — when every separating probe family is topology-compatible — the two compression numbers coincide exactly. All results are formalized in Lean 4 with complete machine-checked proofs, and validated computationally on finite sites with up to 4 objects.
 
-1. **Sandwich bounds**: $\mathrm{PresheafProbeComplexity}(F) \leq \mathrm{SheafProbeComplexity}_J(F) \leq |\mathrm{Ob}(C)|$.
-2. **Topology-transparent compression**: For the maximal topology, the two complexities coincide.
-3. **Monotonicity**: Sheaf probe complexity is antitone in the topology (more covering sieves → easier to respect).
-4. **Optimal probes theorem**: When the minimal presheaf-separating family respects the topology, the two complexities are equal.
-5. **Entropy-like bounds**: $\log(\mathrm{SheafProbeComplexity}_J(F)) \leq \log(|\mathrm{Ob}(C)|)$.
-
-All results are formalized and verified in Lean 4 with Mathlib, building on the existing probe complexity infrastructure for finite categories.
-
-**Keywords**: probe complexity, Grothendieck topology, sheaves, presheaves, finite sites, category theory, information-theoretic bounds
+**Keywords:** finite sites, Grothendieck topology, sheafification, probe complexity, compression number, representable presheaves, categorical sensing
 
 ---
 
@@ -20,301 +12,278 @@ All results are formalized and verified in Lean 4 with Mathlib, building on the 
 
 ### 1.1 Motivation
 
-The theory of probe complexity, introduced in our earlier work, provides a quantitative framework for measuring the information content of morphism-level and presheaf-level data in finite categories. The *probe complexity* of a category $C$ is the minimum number of objects needed to distinguish all parallel morphisms by precomposition; the *presheaf probe complexity* of a presheaf $F$ is the minimum number of probe objects needed to distinguish all sections of $F$ via restriction maps.
+Probe complexity theory [1] studies the minimum number of "test objects" needed to distinguish morphisms or sections in a finite category. The presheaf compression number — the minimum cardinality of a separating probe family — quantifies the information cost of observing a presheaf through representable probes. This theory connects category theory to information theory, coding theory, and learning theory.
 
-A natural question arises when the category $C$ is equipped with additional structure — specifically, a Grothendieck topology $J$. Grothendieck topologies formalize the notion of "covering" and are fundamental in algebraic geometry (étale, fppf, and fpqc topologies), logic (forcing in topos theory), and geometry (diffeological spaces, condensed mathematics).
+However, presheaf-level compression ignores the geometric structure provided by a Grothendieck topology. In algebraic geometry and topos theory, the passage from presheaves to sheaves imposes local-to-global consistency requirements. A natural question arises: **does the imposition of geometric locality increase the compression cost?**
 
-In the presence of a topology, two new considerations emerge:
-- **Admissibility constraint**: Not all probe families are equally natural. A probe family should *respect* the topology: the morphisms from probe objects should generate covering sieves at each target object. This ensures that probes "see through" the topology, capturing the covering-sieve structure.
-- **Sheaf restriction**: Working with sheaves rather than presheaves means we have more structured objects. The gluing axiom constrains the space of possible presheaves, potentially affecting how many probes are needed.
+### 1.2 Main Contributions
 
-The central question of this paper is: **Does the Grothendieck topology alter the fundamental compression ratio?** Equivalently, does the minimum number of admissible probes differ from the minimum number of unrestricted probes?
+We answer this question by introducing sheaf compression numbers and proving:
 
-### 1.2 Summary of Results
-
-Our main finding is that the topology *constrains* which probes are admissible but does not fundamentally alter how many are needed — a principle we call *topology-transparent compression*. Specifically:
-
-- The sheaf probe complexity is always at least the presheaf probe complexity (Theorem 4.1).
-- For the maximal topology (where every sieve covers), the two complexities are identical (Theorem 4.2).
-- Sheaf probe complexity decreases as the topology becomes finer (more covering sieves make it easier for probe families to be admissible) (Theorem 4.3).
-- When the optimal presheaf-separating family happens to respect the topology, the gap vanishes (Theorem 5.1).
-- Logarithmic entropy bounds hold for both complexities (Theorem 6.1).
+1. **Descent theorem (Theorem 1):** Any presheaf morphism to a sheaf factors uniquely through sheafification.
+2. **Monotonicity (Theorem 3):** presheafCompressionNumber ≤ sheafCompressionNumber.
+3. **Compression equality (Theorem 5):** Under universal topology compatibility, the two numbers are equal.
+4. **Trivial topology theorem (Theorem 4):** For the bottom (trivial) topology, topology-compatible probes exist whenever morphisms connect probes to all objects.
+5. **Upper bound (Theorem 6):** Both compression numbers are bounded by |Ob(C)|.
+6. **Yoneda bridge (Theorem 7):** Morphism-separating probes induce section-separation on Yoneda presheaves.
 
 ### 1.3 Related Work
 
-**Probe complexity theory**: The foundational results on probe complexity for finite categories — including the Yoneda-style separation theorem, the information-theoretic capacity bound, and the thin-category characterization — were established in our prior work (ProbeComplexity/Defs.lean and ProbeComplexity/Theorems.lean). The representable dimension theory (ProbeComplexity/RepresentableDimension.lean) extends probes to the presheaf level with measurement signatures and information-theoretic bounds.
+**Probe complexity:** The foundations are laid in [1], defining probe families, separation, and the probe complexity invariant for finite categories. The representable dimension theory [2] extends this to presheaf-level measurement spaces.
 
-**Grothendieck topologies and sheaves**: The theory of Grothendieck topologies originates with Grothendieck's SGA4. Modern treatments appear in Mac Lane and Moerdijk's *Sheaves in Geometry and Logic* and Johnstone's *Sketches of an Elephant*. The formalization of Grothendieck topologies, sieves, and sheaves in Mathlib (Lean 4) provides the computational infrastructure for our verified proofs.
+**Sheaf theory on finite sites:** Finite sites have been studied in the context of finite topological spaces [3], Alexandrov topologies, and finite model theory. The sheaf condition on finite categories reduces to a concrete gluing condition over finite covering data.
 
-**Information-theoretic category theory**: The connection between category theory and information theory has been explored through the lens of operads (Baez and Fritz), Markov categories (Fritz), and entropy functors (Leinster). Our probe complexity approach provides a different entry point, focusing on *compression* (minimum number of probes) rather than *entropy* (average information content).
+**Compression and coding:** The connection between probe separation and coding theory was established in [1], where the profile capacity bound gives an information-theoretic lower bound on probe complexity. Our sheaf compression number extends this to the geometric setting.
 
 ---
 
 ## 2. Definitions and Notation
 
-### 2.1 Sieves and Grothendieck Topologies
+### 2.1 Finite Categories and Presheaves
 
-Let $C$ be a small category. A **presieve** on an object $c \in C$ is a collection of morphisms with target $c$, i.e., a subclass of $\coprod_{Y \in \mathrm{Ob}(C)} \mathrm{Hom}(Y, c)$.
+A **finite category** C is a category with finitely many objects and finitely many morphisms. A **presheaf** on C is a functor F : C^op → Type. For an object X, F(X) is the set of **sections** at X. For a morphism f : Y → X, F(f) : F(X) → F(Y) is the **restriction map**.
 
-A **sieve** on $c$ is a presieve closed under precomposition: if $f : Y \to c$ is in the sieve and $g : Z \to Y$ is any morphism, then $f \circ g$ is also in the sieve. Sieves form a complete lattice under inclusion. The maximal sieve $\top_c$ consists of all morphisms targeting $c$.
+### 2.2 Grothendieck Topologies
 
-A **Grothendieck topology** $J$ on $C$ assigns to each object $c$ a collection $J(c)$ of sieves on $c$ (called *covering sieves*) satisfying:
-1. $\top_c \in J(c)$ for all $c$.
-2. If $S \in J(c)$ and $f : Y \to c$, then $f^*S \in J(Y)$ (stability under pullback).
-3. If $S \in J(c)$ and $R$ is a sieve on $c$ such that $f^*R \in J(Y)$ for all $f \in S$, then $R \in J(c)$ (transitivity).
+A **Grothendieck topology** J on C assigns to each object X a collection J(X) of **covering sieves** — subfunctors of the representable presheaf at X satisfying:
 
-### 2.2 Probe Families and Presieve Generation
+1. The maximal sieve covers every object.
+2. Covering sieves are stable under pullback.
+3. The transitivity/local character axiom holds.
 
-**Definition 2.1** (Probe family presieve). Given a finite set $P \subseteq \mathrm{Ob}(C)$ (the *probe family*) and an object $c \in C$, the **probe family presieve** at $c$ is:
-$$\mathrm{ProbeFamilyPresieve}(P, c) = \{f : Y \to c \mid Y \in P\}$$
+A **sheaf** for J is a presheaf F such that for every covering sieve S on X, the natural map F(X) → lim_{(Y,f) ∈ S} F(Y) is a bijection.
 
-**Definition 2.2** (Probe family sieve). The **probe family sieve** at $c$ is the sieve generated by the probe family presieve:
-$$\mathrm{ProbeFamilySieve}(P, c) = \mathrm{generate}(\mathrm{ProbeFamilyPresieve}(P, c))$$
+### 2.3 Presheaf Probe Separation
 
-This is the smallest sieve containing all morphisms from probe objects to $c$.
+**Definition (Presheaf Separation).** A finset P of objects of C **separates** a presheaf F if for all X ∈ Ob(C) and all s, t ∈ F(X):
 
-**Definition 2.3** (Respects topology). A probe family $P$ **respects** a Grothendieck topology $J$ if:
-$$\forall c \in \mathrm{Ob}(C), \quad \mathrm{ProbeFamilySieve}(P, c) \in J(c)$$
+    (∀ Z ∈ P, ∀ f : Z → X, F(f)(s) = F(f)(t)) → s = t
 
-This ensures that probes generate covering sieves everywhere, so they are "compatible" with the topological structure.
+This says probes detect all differences in sections.
 
-### 2.3 Presheaf Separation and Probe Complexity
+### 2.4 Topology-Compatible Probes
 
-**Definition 2.4** (Separates presheaf). A probe family $P$ **separates** a presheaf $F : C^{\mathrm{op}} \to \mathrm{Type}$ if: for every object $c$ and sections $x, y \in F(c)$, if all probe restrictions agree — i.e., $F(f)(x) = F(f)(y)$ for all $Z \in P$ and $f : Z \to c$ — then $x = y$.
+**Definition (Topology Compatibility).** A finset P is **topology-compatible** with J if for every X ∈ Ob(C) and every covering sieve S ∈ J(X), there exists Z ∈ P and f : Z → X with f ∈ S.
 
-**Definition 2.5** (Presheaf probe complexity). The presheaf probe complexity of $F$ is:
-$$\mathrm{PresheafProbeComplexity}(F) = \min\{|P| : P \text{ separates } F\}$$
+This ensures probes are "dense" relative to the covering structure: no covering relation is invisible to the probes.
 
-**Definition 2.6** (Sheaf probe complexity). The sheaf probe complexity of $F$ relative to topology $J$ is:
-$$\mathrm{SheafProbeComplexity}_J(F) = \min\{|P| : P \text{ separates } F \text{ and respects } J\}$$
+### 2.5 Compression Numbers
 
----
+**Definition.** The **presheaf compression number** κ_pre(F) is:
 
-## 3. Structural Properties of Topology-Respecting Probes
+    κ_pre(F) = min { |P| : P separates F }
 
-### 3.1 The Total Probe Family
+**Definition.** The **sheaf compression number** κ_sh(J, F) is:
 
-**Theorem 3.1** (Total family generates maximal sieve). For any finite category $C$ and object $c$, the probe family consisting of all objects generates the maximal sieve at $c$:
-$$\mathrm{ProbeFamilySieve}(\mathrm{Ob}(C), c) = \top_c$$
+    κ_sh(J, F) = min { |P| : P separates F and P is J-compatible }
 
-*Proof sketch*: For any morphism $f : Y \to c$, we have $Y \in \mathrm{Ob}(C)$, so $f$ is in the presieve. Since $f = \mathrm{id}_Y \circ f$ where $f$ is in the presieve, $f$ is in the generated sieve. As $f$ was arbitrary, the generated sieve is $\top_c$. □
-
-**Corollary 3.2** (Total family respects any topology). The total probe family respects every Grothendieck topology $J$, since the maximal sieve is always covering.
-
-### 3.2 Monotonicity Properties
-
-**Theorem 3.3** (Superset preservation). If $P \subseteq Q$ and $P$ respects $J$, then $Q$ respects $J$.
-
-*Proof*: $P \subseteq Q$ implies $\mathrm{ProbeFamilyPresieve}(P, c) \leq \mathrm{ProbeFamilyPresieve}(Q, c)$, hence $\mathrm{ProbeFamilySieve}(P, c) \leq \mathrm{ProbeFamilySieve}(Q, c)$. By the superset covering axiom, if the smaller sieve covers, so does the larger. □
-
-**Theorem 3.4** (Topology antitonicity). If $J_1 \leq J_2$ (every $J_1$-covering is $J_2$-covering), then respecting $J_1$ implies respecting $J_2$.
-
-*Proof*: If $\mathrm{ProbeFamilySieve}(P, c) \in J_1(c)$, then by $J_1 \leq J_2$, it is also in $J_2(c)$. □
-
-**Theorem 3.5** (Maximal topology is trivially respected). Every probe family respects the maximal topology $\top$ (where every sieve covers).
+Both are well-defined when separating families exist (in particular, for finite C, the full object set Ob(C) always separates under the identity-morphism argument).
 
 ---
 
-## 4. Main Theorems: Complexity Comparison
+## 3. Main Results
 
-### 4.1 The Sandwich Bound
+### 3.1 Theorem 1: Descent Through Sheafification
 
-**Theorem 4.1** (Presheaf ≤ Sheaf complexity). For any topology $J$ and presheaf $F$:
-$$\mathrm{PresheafProbeComplexity}(F) \leq \mathrm{SheafProbeComplexity}_J(F)$$
+**Theorem (Descent).** Let J be a Grothendieck topology on C, let P and F be presheaves on C with F a sheaf for J. Then for any presheaf morphism η : P → F, there exists a unique morphism η̃ : J.sheafify(P) → F such that:
 
-*Proof*: Every topology-respecting separating family is in particular a separating family. Thus the set of cardinalities of topology-respecting separating families is a subset of the set of cardinalities of separating families. Since $\inf$ is antitone under subset inclusion (for ℕ-valued sets), the inequality follows. □
+    toSheafify(P) ≫ η̃ = η
 
-**Theorem 4.2** (Upper bound). For any topology $J$ and presheaf $F$ on a finite category with $n$ objects:
-$$\mathrm{SheafProbeComplexity}_J(F) \leq n$$
+**Proof.** This is the universal property of sheafification. The morphism η̃ = sheafifyLift(η, hF) is constructed by the sheafification adjunction, and uniqueness follows from sheafifyLift_unique. □
 
-*Proof*: The total probe family (all $n$ objects) separates every presheaf (using identity morphisms as probes) and respects every topology (generates the maximal sieve). □
+**Significance.** This says every presheaf-level probe cover descends to a sheaf-level cover. The factorization is canonical and unique.
 
-**Corollary 4.2.1** (Sandwich). For any $J$ and $F$:
-$$\mathrm{PresheafProbeComplexity}(F) \leq \mathrm{SheafProbeComplexity}_J(F) \leq |\mathrm{Ob}(C)|$$
+### 3.2 Theorem 3: Monotonicity of Compression
 
-### 4.2 Topology-Transparent Compression
+**Theorem (Monotonicity).** For any Grothendieck topology J and presheaf F:
 
-**Theorem 4.3** (Maximal topology equality). For the maximal topology $\top$:
-$$\mathrm{SheafProbeComplexity}_\top(F) = \mathrm{PresheafProbeComplexity}(F)$$
+    κ_pre(F) ≤ κ_sh(J, F)
 
-*Proof*: The inequality $\geq$ follows from Theorem 4.1. For $\leq$: every separating family respects $\top$ (Theorem 3.5), so the sheaf constraint is vacuous, and the infimum over the larger set cannot exceed the infimum over the subset. □
+**Proof.** Every topology-compatible separating family is in particular separating. So sheafCompressionCards(J, F) ⊆ presheafCompressionCards(F), and taking infima preserves the inequality. Formally, if n ∈ sheafCompressionCards(J, F), then n ∈ presheafCompressionCards(F), so sInf of the superset ≤ sInf of the subset. □
 
-### 4.3 Topology Monotonicity
+### 3.3 Theorem 5: Compression Equality
 
-**Theorem 4.4** (Complexity antitonicity in topology). If $J_1 \leq J_2$, then:
-$$\mathrm{SheafProbeComplexity}_{J_2}(F) \leq \mathrm{SheafProbeComplexity}_{J_1}(F)$$
+**Theorem (Compression Equality).** If every separating probe family for F is automatically topology-compatible for J, then:
 
-*Proof*: If $P$ respects $J_1$ (and separates $F$), then by Theorem 3.4, $P$ also respects $J_2$. So every candidate for $J_1$ is also a candidate for $J_2$, and the infimum over the larger set is smaller. □
+    κ_sh(J, F) = κ_pre(F)
 
-*Interpretation*: A finer topology (more covering sieves) makes the respecting constraint easier to satisfy, so more probe families become admissible, potentially reducing the minimum.
+**Proof.** Under the hypothesis, the two sets sheafCompressionCards(J, F) and presheafCompressionCards(F) are equal (the forward inclusion is Theorem 3; the reverse inclusion follows from the hypothesis). Equal sets have equal infima. □
 
----
+**Significance.** This is the decisive result: under the generation condition, geometry imposes no extra compression cost. The topology is "transparent" to the compression invariant.
 
-## 5. Topology-Transparent Compression Criteria
+### 3.4 Theorem 4: Trivial Topology Compatibility
 
-### 5.1 The Optimal Probes Theorem
+**Theorem.** For the trivial (⊥) Grothendieck topology — where only the maximal sieve covers — a probe family P is topology-compatible whenever for each X there exists Z ∈ P with a morphism Z → X.
 
-**Theorem 5.1** (Complexity equality from optimal probes). If there exists a presheaf-optimal separating family $P$ (with $|P| = \mathrm{PresheafProbeComplexity}(F)$) that respects $J$, then:
-$$\mathrm{SheafProbeComplexity}_J(F) = \mathrm{PresheafProbeComplexity}(F)$$
+**Proof.** In the ⊥ topology, the only covering sieve on X is ⊤, which contains all morphisms to X. Given Z ∈ P and f : Z → X, f ∈ ⊤ automatically. □
 
-*Proof*: $P$ achieves the presheaf minimum and is admissible for the sheaf problem, so $\mathrm{SheafProbeComplexity}_J(F) \leq |P| = \mathrm{PresheafProbeComplexity}(F)$. Combined with Theorem 4.1, equality follows. □
+### 3.5 Theorem 6: Universal Upper Bound
 
-### 5.2 The Universal Transparency Criterion
+**Theorem.** For any finite category C with Fintype C:
 
-**Theorem 5.2** (Universal transparency). If *every* minimal-size separating family respects $J$, then:
-$$\mathrm{SheafProbeComplexity}_J(F) = \mathrm{PresheafProbeComplexity}(F)$$
+    κ_pre(F) ≤ |Ob(C)|
 
-*Proof*: By the well-ordering of ℕ, some family achieves the presheaf infimum. By hypothesis, this family respects $J$. Apply Theorem 5.1. □
+and if Ob(C) is topology-compatible:
 
-### 5.3 Single-Object Categories
+    κ_sh(J, F) ≤ |Ob(C)|
 
-**Theorem 5.3** (Unique object). For a category with a single object:
-- $\mathrm{PresheafProbeComplexity}(F) \leq 1$ for every presheaf $F$.
-- $\mathrm{SheafProbeComplexity}_J(F) \leq 1$ for every topology $J$ and presheaf $F$.
+**Proof.** The full set Ob(C) = Finset.univ has cardinality Fintype.card C and is separating (and topology-compatible by hypothesis). Apply Nat.sInf_le. □
 
-*Proof*: The singleton family $\{\ast\}$ separates every presheaf (using the identity morphism) and respects every topology (since the probe sieve at the unique object is the maximal sieve, as all morphisms originate from $\ast$). □
+### 3.6 Theorem 7: Yoneda Bridge
+
+**Theorem.** If P separates morphisms (in the sense of ProbeFamily.IsSeparating), then P separates sections of the Yoneda presheaf yoneda(Y) for any object Y.
+
+**Proof.** Sections of yoneda(Y) at X are morphisms X → Y. The restriction along f : Z → X sends g : X → Y to f ≫ g. So the probe separation hypothesis for presheaf sections reduces to: ∀ Z ∈ P, ∀ f : Z → X, f ≫ s = f ≫ t implies s = t, which is exactly morphism separation. □
+
+**Significance.** This bridges the morphism-level probe complexity theory (from Defs.lean/Theorems.lean) to the presheaf-level sheaf compression theory.
 
 ---
 
-## 6. Entropy-Like Bounds
+## 4. Algorithms
 
-### 6.1 Logarithmic Bound
+### 4.1 Presheaf Compression Number Computation
 
-**Theorem 6.1** (Log-entropy bound). For any topology $J$ and presheaf $F$:
-$$\log(\mathrm{SheafProbeComplexity}_J(F)) \leq \log(|\mathrm{Ob}(C)|)$$
+**Input:** Finite site (C, J), presheaf F.
+**Output:** κ_pre(F) and an optimal probe family.
 
-*Proof*: Follows from the upper bound $\mathrm{SheafProbeComplexity}_J(F) \leq |\mathrm{Ob}(C)|$ and monotonicity of $\log$. □
-
-### 6.2 Gap Bound
-
-**Theorem 6.2** (Complexity gap bound). The gap between sheaf and presheaf complexity is bounded:
-$$\mathrm{SheafProbeComplexity}_J(F) - \mathrm{PresheafProbeComplexity}(F) \leq |\mathrm{Ob}(C)|$$
-
-*Proof*: The left side is at most $\mathrm{SheafProbeComplexity}_J(F) \leq |\mathrm{Ob}(C)|$. □
-
-### 6.3 Information-Theoretic Interpretation
-
-The probe complexity can be viewed as a *rate* in the sense of information theory. Each probe object $Z$ contributes a "channel" of capacity $\log|\mathrm{Hom}(Z, c)|$ bits per target object $c$. The probe complexity is the minimum number of channels needed to uniquely encode all sections.
-
-The Grothendieck topology acts as a *side constraint* on the codebook: not all collections of channels are admissible, but the minimum number of channels is unchanged. This is the categorical analogue of structured coding, where the algebraic structure of a code constrains its form without affecting its capacity.
-
----
-
-## 7. Algorithms and Computation
-
-### 7.1 Computing Presheaf Probe Complexity
-
-For a finite category $C$ with $n$ objects and a presheaf $F$ given by explicit finite types $F(c)$ and restriction maps, the presheaf probe complexity can be computed by the following algorithm:
-
-**Algorithm 1**: PresheafProbeComplexity
 ```
-Input: Category C (n objects), presheaf F (types and restriction maps)
-Output: Minimum k such that a k-element probe family separates F
-
-for k = 0, 1, ..., n:
-    for each subset P ⊆ Ob(C) with |P| = k:
-        if P separates F:
-            return k
-return n
+Algorithm ComputePresheafCompression(C, F):
+  for k = 0 to |Ob(C)|:
+    for each P ⊆ Ob(C) with |P| = k:
+      if TestSeparation(C, F, P):
+        return (k, P)
+  return (|Ob(C)| + 1, None)
 ```
 
-**Complexity**: $O(2^n \cdot n \cdot S^2)$ where $S = \max_c |F(c)|$ is the maximum section count. The separation check requires comparing all pairs of sections at each object.
+**Complexity:** O(2^n · n · |F|² · max_hom) where n = |Ob(C)|.
 
-### 7.2 Computing Sheaf Probe Complexity
+### 4.2 Sheaf Compression Number Computation
 
-**Algorithm 2**: SheafProbeComplexity
+**Input:** Finite site (C, J), presheaf F.
+**Output:** κ_sh(J, F) and an optimal probe family.
+
 ```
-Input: Category C, topology J (covering sieves), presheaf F
-Output: Minimum k such that a k-element probe family separates F and respects J
-
-for k = 0, 1, ..., n:
-    for each subset P ⊆ Ob(C) with |P| = k:
-        if P separates F AND ProbeFamilySieve(P, c) ∈ J(c) for all c:
-            return k
-return n
+Algorithm ComputeSheafCompression(C, J, F):
+  for k = 0 to |Ob(C)|:
+    for each P ⊆ Ob(C) with |P| = k:
+      if TestSeparation(C, F, P) and TestTopologyCompatible(C, J, P):
+        return (k, P)
+  return (|Ob(C)| + 1, None)
 ```
 
-**Complexity**: Same as Algorithm 1 plus the cost of checking topology respect, which is $O(n \cdot |\mathrm{Mor}(C)|)$ per candidate family.
+### 4.3 Gap Search
 
-### 7.3 Verified Correctness
-
-Both algorithms are verified correct by our Lean 4 formalization:
-- The existence of an achieving family is proved by `presheafProbeComplexity_achieved` and `sheafProbeComplexity_achieved`.
-- The upper bound $\leq n$ ensures termination.
-- The monotonicity of separation under supersets ensures we find the true minimum.
-
----
-
-## 8. Bridge to Morphism-Level Probe Complexity
-
-**Theorem 8.1** (Yoneda bridge). If a probe family $P$ separates the representable presheaf $\mathrm{y}(c)$, then for every object $X$ and morphisms $f, g : X \to c$, if all probe compositions agree ($h \circ f = h \circ g$ for all $Z \in P, h : Z \to X$), then $f = g$.
-
-*Proof*: The representable presheaf $\mathrm{y}(c)(X) = \mathrm{Hom}(X, c)$, and the restriction maps are precomposition. Separation of $\mathrm{y}(c)$ at $X$ means: if $F(h^{\mathrm{op}})(f) = F(h^{\mathrm{op}})(g)$ for all $Z \in P, h : Z \to X$, then $f = g$. But $F(h^{\mathrm{op}})(f) = h \circ f$, so this is exactly the conclusion. □
-
-This bridges our presheaf-level sheaf probe complexity theory to the morphism-level probe complexity theory of the original framework.
+```
+Algorithm SearchForGaps(C, J, presheaves):
+  gaps = []
+  for each F in presheaves:
+    pc = ComputePresheafCompression(C, F)
+    sc = ComputeSheafCompression(C, J, F)
+    if sc > pc:
+      gaps.append((F, pc, sc, sc - pc))
+  return gaps
+```
 
 ---
 
-## 9. Computational Experiments
+## 5. Computational Experiments
 
-We implemented the algorithms described in Section 7 in Python and tested them on several families of finite sites. See `demo.py`, `algorithms.py`, and `applications.py` for the complete implementations.
+### 5.1 Experimental Setup
 
-### 9.1 Discrete Categories
+We tested the compression invariants on finite sites with 2–4 objects, including:
+- Discrete categories (only identity morphisms)
+- Arrow categories (A → B)
+- Triangle categories (A → B → C)
+- Parallel pair categories (A ⇒ B)
+- Diamond posets
 
-For discrete categories (no non-identity morphisms), every presheaf is a sheaf for any topology, and the probe complexity is exactly the number of objects with non-trivial fibers. The sheaf and presheaf complexities always agree, confirming Theorem 4.3.
+Topologies tested:
+- Trivial (⊥): only maximal sieves cover
+- Nontrivial: specific covering families
 
-### 9.2 Small Poset Categories
+### 5.2 Results
 
-For poset categories with 2-4 objects, we enumerated all Grothendieck topologies and computed both complexities for all presheaves. In every case:
-$$\mathrm{SheafProbeComplexity}_J(F) = \mathrm{PresheafProbeComplexity}(F)$$
+| Category | Topology | κ_pre | κ_sh | Gap |
+|----------|----------|-------|------|-----|
+| Discrete-3 | Trivial | 3 | 3 | 0 |
+| Arrow (A→B) | Trivial | 1 | 1 | 0 |
+| Triangle (A→B→C) | Trivial | 1 | 1 | 0 |
+| Parallel pair (A⇒B) | Trivial | 1 | 2 | 1 |
+| Arrow (A→B) | Nontrivial | 1 | 1 | 0 |
 
-This provides strong computational evidence for the *Sheafification Invariance Conjecture*.
+### 5.3 Analysis
 
-### 9.3 Arrow Category
+The gap appears only in the parallel pair with trivial topology. In this case:
+- Presheaf compression: {B} suffices to separate (the identity at B distinguishes sections of F(B), and F(A) has only one section).
+- Sheaf compression: {B} alone is not topology-compatible because the maximal sieve on A requires an arrow from the probes, and B has no morphism to A. So both A and B are needed.
 
-The arrow category $\{0 \to 1\}$ has a non-trivial topology structure. With the trivial topology (only $\top$ covers), the sheaf and presheaf complexities agree. With the maximal topology, they agree by Theorem 4.3. For intermediate topologies, they also agree in all tested cases.
-
----
-
-## 10. Discussion and Open Questions
-
-### 10.1 The Sheafification Invariance Conjecture
-
-Our computational experiments strongly suggest:
-
-**Conjecture 10.1** (Sheafification Invariance). For any finite site $(C, J)$ and any presheaf $F$ that is a $J$-sheaf:
-$$\mathrm{SheafProbeComplexity}_J(F) = \mathrm{PresheafProbeComplexity}(F)$$
-
-This would follow if we could show that for every minimal presheaf-separating family $P$, the sieve $\mathrm{ProbeFamilySieve}(P, c)$ is a $J$-covering sieve at every $c$. Equivalently, any minimal separating family automatically respects any topology under which $F$ is a sheaf.
-
-### 10.2 Infinite Categories
-
-Our results are stated for finite categories ($|Ob(C)| < \infty$). Extension to infinite categories requires care:
-- The infimum over $\mathbb{N}$ may not be achieved.
-- The total probe family may be infinite (or a proper class).
-- The entropy bounds need reformulation.
-
-### 10.3 Higher-Categorical Generalization
-
-In higher topos theory (∞-topoi), sheaves are replaced by ∞-sheaves (hypersheaves or stacks), and Grothendieck topologies are replaced by ∞-topologies. The probe complexity framework could potentially be extended to this setting, with probe complexity measuring the "∞-categorical dimension" of the data.
+This confirms that the generation condition is necessary: when {B} does not generate covering sieves for all objects, the topology can force additional probes.
 
 ---
 
-## 11. Future Work
+## 6. Discussion
 
-1. **Prove the Sheafification Invariance Conjecture** in full generality, or find a counterexample.
-2. **Extend to ∞-categories** using the ∞-topos framework of Lurie.
-3. **Develop the rate-distortion theory** for sheaf compression, connecting to Shannon's rate-distortion function.
-4. **Apply to étale cohomology**: compute probe complexity for sheaves on the étale site of number fields.
-5. **Explore quantum measurement complexity**: formalize the connection between topology-respecting probes and non-disturbing quantum measurements.
+### 6.1 Geometric Transparency of Compression
+
+The compression equality theorem (Theorem 5) says that, under the generation condition, the geometric structure of a Grothendieck topology is "transparent" to the compression invariant. This is surprising because the topology imposes genuine constraints — sheaves satisfy a gluing axiom that presheaves do not — yet the minimum probe count is unaffected.
+
+The intuition is: if probes already generate covering sieves, then the topology's locality constraints are automatically respected by any separating family. The topology does not add new requirements; it merely selects a subset of covering relations, all of which are already "seen" by the probes.
+
+### 6.2 When Gaps Appear
+
+Gaps between κ_pre and κ_sh arise when:
+1. A minimal separating family does not intersect some covering sieve.
+2. The topology has covering requirements that force probes in specific locations.
+3. The category lacks morphisms from some probe objects to certain targets.
+
+The parallel pair example illustrates case 3: the probe {B} separates sections but has no morphism to A, so it cannot participate in covering sieves for A.
+
+### 6.3 Limitations
+
+- The current theory is restricted to finite sites. Extension to infinite sites requires more delicate analysis of limits and colimits.
+- The generation condition is sufficient but not necessary for compression equality. Finding the exact necessary and sufficient condition is an open problem.
+- Computational complexity of the algorithms is exponential in the number of objects, limiting practical computation to small categories.
+
+---
+
+## 7. Future Work
+
+1. **Extension to infinite sites:** Develop an analogue of the compression equality theorem for sites with infinitely many objects, using filters or directed limits.
+
+2. **Cohomological obstructions:** Characterize the gap κ_sh - κ_pre in terms of sheaf cohomology on the finite site.
+
+3. **Subadditivity:** Investigate whether κ_sh(F ⊕ G) ≤ κ_sh(F) + κ_sh(G) for finite coproducts of sheaves.
+
+4. **Connection to VC dimension:** Formalize the relationship between probe compression numbers and VC dimension of the induced hypothesis class.
+
+5. **Algorithmic improvements:** Develop polynomial-time algorithms or approximation schemes for computing compression numbers on structured categories (e.g., posets).
+
+---
+
+## 8. Formalization
+
+All definitions and theorems in this paper are formalized in Lean 4 using the Mathlib library. The main file is `Pythagorean/ProbeComplexity/SheafCompressionFiniteSite.lean`. Key formalized results:
+
+- `presheaf_cover_factors_through_sheafification`: Theorem 1
+- `sheafified_cover_unique`: Theorem 2
+- `presheafCompression_le_sheafCompression`: Theorem 3
+- `topologyCompatible_of_bot`: Theorem 4 (auxiliary)
+- `sheafCompression_eq_of_allProbes_compatible`: Theorem 5
+- `presheafCompression_le_card`, `sheafCompression_le_card`: Theorem 6
+- `yoneda_separated_of_morphism_separated`: Theorem 7
+
+All proofs compile without `sorry` and use only standard axioms (propext, Classical.choice, Quot.sound).
 
 ---
 
 ## References
 
-1. Grothendieck, A. et al. *Théorie des Topos et Cohomologie Étale des Schémas* (SGA4). Lecture Notes in Mathematics, Springer, 1972.
-2. Mac Lane, S. and Moerdijk, I. *Sheaves in Geometry and Logic*. Springer, 1994.
-3. Johnstone, P.T. *Sketches of an Elephant: A Topos Theory Compendium*. Oxford University Press, 2002.
-4. Fritz, T. "A synthetic approach to Markov kernels, conditional independence and theorems on sufficient statistics." *Advances in Mathematics*, 2020.
-5. Leinster, T. *Entropy and Diversity: The Axiomatic Approach*. Cambridge University Press, 2021.
-6. The Mathlib Community. *Mathlib: The Lean Mathematical Library*. https://leanprover-community.github.io/mathlib4_docs/
+[1] Probe Complexity of Finite Categories. `Pythagorean/ProbeComplexity/Defs.lean`, `Pythagorean/ProbeComplexity/Theorems.lean`.
+
+[2] Representable Dimension via Probe Complexity. `Pythagorean/ProbeComplexity/RepresentableDimension.lean`.
+
+[3] M. Artin, A. Grothendieck, J.L. Verdier. *Théorie des Topos et Cohomologie Étale des Schémas (SGA 4)*. Lecture Notes in Mathematics, 1972.
+
+[4] S. Mac Lane, I. Moerdijk. *Sheaves in Geometry and Logic: A First Introduction to Topos Theory*. Springer, 1994.
+
+[5] P. Johnstone. *Sketches of an Elephant: A Topos Theory Compendium*. Oxford University Press, 2002.
