@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1752 of the highest-quality
+A curated collection of 1756 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1752
+Total files: 1756
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -339,6 +339,7 @@ import FINAL.Bridges.CupProductCryptography
 import FINAL.Bridges.CycleSystolicBound
 import FINAL.Bridges.Decoder
 import FINAL.Bridges.Defs
+import FINAL.Bridges.DetCompressionGap
 import FINAL.Bridges.DiffSpectrumTheory
 import FINAL.Bridges.DifferentialAlgebraicLearning
 import FINAL.Bridges.Duality
@@ -1399,6 +1400,7 @@ import FINAL.Pythagorean.Duality
 import FINAL.Pythagorean.DynamicalSquaring
 import FINAL.Pythagorean.EffectivePotential
 import FINAL.Pythagorean.EmergentComputation
+import FINAL.Pythagorean.EqualitySaturationExtraction
 import FINAL.Pythagorean.Equivalences
 import FINAL.Pythagorean.EulerBricks
 import FINAL.Pythagorean.EulerFactor
@@ -1429,6 +1431,7 @@ import FINAL.Pythagorean.LowRankObstruction
 import FINAL.Pythagorean.MobiusTransport
 import FINAL.Pythagorean.ModularFormsAdvanced
 import FINAL.Pythagorean.MonotoneCircuitComplexity
+import FINAL.Pythagorean.NeuralProofGuidance
 import FINAL.Pythagorean.NewResearchTheorems
 import FINAL.Pythagorean.NewTheorems
 import FINAL.Pythagorean.O31_Generators
@@ -1482,6 +1485,7 @@ import FINAL.Pythagorean.TropicalBerggrenZeta
 import FINAL.Pythagorean.TropicalCostMinimality
 import FINAL.Pythagorean.TropicalKAMTheorems
 import FINAL.Pythagorean.TropicalKeplerOrbits
+import FINAL.Pythagorean.TropicalMarkov
 import FINAL.Pythagorean.TropicalPAdicBerggren
 import FINAL.Pythagorean.UniversalParent
 import FINAL.Pythagorean.VerifiedCompilerSynthesis

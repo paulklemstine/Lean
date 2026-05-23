@@ -1,90 +1,101 @@
-# The Optimizer's Guarantee: How Mathematicians Proved That Smarter Code Still Means the Same Thing
+# The Hidden Mathematics of Finding the Best Version of Anything
 
-Every second of every day, billions of lines of computer code are silently rewritten. Before your web browser renders this page, before your phone processes a tap, before a self-driving car interprets a camera image, software called a *compiler* transforms the instructions programmers write into faster, leaner versions that computers can execute. These transformations — called *optimizations* — are the invisible backbone of modern technology. They make programs run ten, a hundred, sometimes a thousand times faster.
+## When Every Road Leads to Rome, How Do You Pick the Shortest?
 
-But there's a catch. Every time a compiler rewrites your code, it makes a promise: *the optimized version will do exactly the same thing as the original*. If it doesn't — if subtracting where it should add, or skipping a safety check — the consequences range from a crashed app to a crashed airplane. For decades, engineers have relied on testing and intuition to keep that promise. Now, for the first time, mathematicians have proven it must hold — not for any particular program, but for an entire class of optimization algorithms.
+Imagine you're a translator, and someone hands you a sentence in English: "The cat sat on the mat." You know dozens of ways to say the same thing. "On the mat sat the cat." "The mat was sat upon by the cat." "A feline reclined upon a floor covering." Each version means exactly the same thing — but some are shorter, some are clearer, some are cheaper to print. If you needed to pick the *best* version, how would you do it?
 
-## The Engine Inside the Engine
+This is not just a literary puzzle. It is one of the deepest problems in computer science, and a team of mathematicians has just proved something remarkable about it: that the process of finding the best equivalent expression is not a heuristic trick, but a rigorous mathematical optimization — one that rests on the same foundations as geometry and algebra.
 
-To understand what was proven, you need to meet a data structure called an *e-graph* — short for *equivalence graph*. Invented in the 1970s for automated theorem proving, e-graphs languished in obscurity until a 2021 breakthrough by Max Willsey and colleagues at the University of Washington brought them roaring back.
+## The Explosion of Equivalences
 
-An e-graph is a remarkably elegant idea. Imagine you have the expression `(x + 0) × 1`. You know this equals just `x` — adding zero does nothing, and multiplying by one does nothing. An e-graph doesn't replace one expression with the other. Instead, it *remembers both*, grouping them into an "equivalence class" — a bucket of expressions that all mean the same thing.
+Every time a computer processes a program, a formula, or a circuit design, it faces a version of the translator's dilemma. Consider the arithmetic expression `(a + b) + c`. By the laws of addition, this equals `a + (b + c)`. It also equals `(b + a) + c`, and `(c + a) + b`, and many other forms. Each is mathematically identical — they produce the same number for any values of `a`, `b`, and `c` — but they differ in practical ways. On a particular processor, one arrangement might execute faster. In a circuit, one might use fewer gates. In a proof, one might be easier to verify.
 
-Now imagine applying hundreds of simplification rules simultaneously. `a + b = b + a`. `a × (b + c) = a×b + a×c`. Each rule creates new equivalences, and new equivalences enable more rules. The e-graph grows, absorbing more and more equivalent expressions into shared buckets. This process — called *equality saturation* — continues until no new equivalences can be discovered. The e-graph has become a compressed encyclopedia of everything that's equal to everything else.
+The number of equivalent forms grows explosively. Even a modest expression with ten operations might have thousands of equivalent rearrangements. A real-world compiler optimization pass might face millions. For decades, engineers have handled this with a clever but imperfect approach: apply rewrite rules one at a time, hoping to stumble toward a good version. If `x + 0` appears, replace it with `x`. If `x * 1` appears, replace it with `x`. Keep simplifying until nothing more can be done.
 
-Then comes the crucial step: *extraction*. From each equivalence class, the compiler picks the cheapest representative — typically the smallest, fastest expression. This extracted expression replaces the original in the optimized program.
+This works well for simple cases. But it has a fatal flaw: the order in which you apply rules matters. Applying rule A first might block rule B, which would have led to a much better result. You're navigating a maze, and every turn you take closes off other paths.
 
-The question that haunted this field: *Is the extracted expression guaranteed to mean the same thing as the original?*
+## The E-Graph Revolution
 
-## A Gap in the Foundation
+In the late 1970s and early 1980s, researchers in automated reasoning invented a data structure called an **e-graph** — short for "equivalence graph." Instead of choosing one path through the maze of equivalent expressions, an e-graph stores *all* the paths simultaneously. It's as if the translator, instead of picking one version of the sentence, wrote down every possible translation at once and then looked at the complete collection to pick the best.
 
-You might think the answer is obviously yes. After all, the whole point of an e-graph is to group equivalent expressions together. If `x + 0` and `x` are in the same bucket, surely they compute the same value?
+The process works in two phases. First, **equality saturation**: the system applies every rewrite rule it knows, in every possible way, recording all the equivalences it discovers. If `a + b = b + a` is a rule, it records that `a + b` and `b + a` are equivalent. If `x + 0 = x` is a rule, it merges those forms. Gradually, the e-graph builds up a complete picture of which expressions are equivalent to which.
 
-The subtlety is deeper than it appears. The e-graph's notion of "equivalent" is syntactic — it knows that certain rewrite rules transform one expression into another. But the compiler's promise is *semantic* — the expressions must produce identical outputs for every possible input. These are different claims, and bridging the gap requires a precise mathematical argument.
+Second, **extraction**: from this saturated web of equivalences, the system selects the best representative from each equivalence class — perhaps the smallest, the cheapest to compute, or the one that uses the least energy.
 
-Consider an analogy. A dictionary tells you that "couch" and "sofa" are synonyms. But if you're furnishing a room and someone hands you a dictionary, you want more than a list of word associations — you want a guarantee that swapping "couch" for "sofa" in your furniture order will result in the same physical object arriving at your door. The dictionary's word-level equivalence must be grounded in the real-world meaning of the words.
+E-graphs have transformed compiler optimization, program synthesis, and automated theorem proving over the past decade. Tools like `egg` (a framework for equality saturation) have found optimizations that no hand-tuned system could match. But there was always a nagging question: *why does this work?*
 
-For e-graphs, this grounding requires proving a chain of mathematical facts:
+## A Proof That It Must Work
 
-1. Every rewrite rule preserves meaning (each individual simplification is correct).
-2. Chaining many correct simplifications preserves meaning (correctness composes).
-3. The e-graph's grouping matches exactly the "means the same thing" relation (soundness and completeness).
-4. Picking the cheapest member of each group preserves meaning (extraction is safe).
+The mathematical result that has now been established answers this question with unexpected elegance. It shows that extraction from a saturated e-graph is not merely a search heuristic — it is a theorem about the structure of equivalence classes.
 
-Each step seems straightforward. Together, they form a surprisingly intricate mathematical structure — one that nobody had formally verified.
+Here is the key idea, stripped to its essence:
 
-## The Architecture of Certainty
+Consider any collection of objects (expressions, programs, circuits — anything) connected by equivalence rules. These rules generate an equivalence relation: a precise mathematical way of saying "these two things are interchangeable." This relation partitions all objects into **equivalence classes** — groups where every member is interchangeable with every other.
 
-The proof works by connecting three mathematical worlds that rarely meet.
+Now suppose you have a way of *interpreting* these objects — a function that assigns meaning to each one. If your interpretation respects the equivalence rules (meaning equivalent objects always get the same interpretation), then it is constant on each equivalence class. Every object in the class has the same meaning.
 
-**Term rewriting theory** provides the first pillar. A *rewrite system* is a set of directed rules — transformations with an arrow pointing from "before" to "after." The rule `x + 0 → x` says: whenever you see something plus zero, replace it with just that something. A rewrite system is *convergent* if it has two properties: it always terminates (you can't keep rewriting forever) and it's *confluent* (no matter what order you apply the rules, you reach the same final result). Convergent systems have unique *normal forms* — irreducible expressions that serve as canonical representatives.
+The breakthrough theorem says: if your e-graph correctly captures the equivalence relation on some domain — that is, if it merges exactly those things that are truly equivalent — then *any* representative you extract from a class will have the same meaning as any other member. The extraction process is guaranteed to preserve semantics.
 
-**Universal algebra** provides the second pillar. Every rewrite system carves the space of all expressions into equivalence classes — groups of expressions connected by chains of rewrites. The mathematical object capturing this grouping is a *quotient*: you take the set of all expressions and glue together those that are linked by rewrites. A normal form function picks one representative from each equivalence class — mathematicians call this a *section* of the quotient map. This vocabulary, developed by algebraists over a century, provides exactly the right framework.
+This might sound obvious, but its implications are profound.
 
-**Order theory** provides the third pillar. When we pick the "cheapest" expression, we need the cost function to behave well. Specifically, we need it to be *monotone*: rewriting should never make things more expensive. If every simplification rule reduces cost (or at least doesn't increase it), then the cheapest expression in each equivalence class is always at least as cheap as any other member. This connects to the mathematical theory of lattices and fixed points — the same mathematics that underlies everything from database query optimization to abstract interpretation in static analysis.
+## Why This Matters: Separating Truth from Strategy
 
-The proof chains these pillars: a convergent rewrite system induces a sound congruence (an equivalence relation that respects meaning); the normal form function is a section of this congruence's quotient; and extraction from this section preserves evaluation in every model. The final theorem states:
+The deepest consequence of the theorem is a clean separation between **semantic correctness** and **search strategy**. 
 
-*For any convergent rewrite system whose rules preserve evaluation, the cheapest extracted expression evaluates identically to the original.*
+In traditional optimization, correctness and strategy are tangled together. When a compiler applies the rule `x * 1 → x`, it is simultaneously making a correctness claim ("these are equivalent") and a strategic choice ("this direction is better"). If the strategy is wrong — if simplifying in this direction actually prevents a more profitable transformation later — there's no going back.
 
-## Why Machines Check What Humans Miss
+The equality saturation theorem says: forget about strategy during the exploration phase. Record all equivalences. Build the complete picture. *Then* optimize. The correctness of the final result depends only on the completeness of the equivalence relation, not on the order of exploration. Strategy enters only at the extraction step, where you choose which representative to keep — and the theorem guarantees that *any* choice is semantically valid.
 
-Informal mathematical proofs have blind spots. A human mathematician might write "by a straightforward induction" and miss a subtle base case. They might assume two similar-looking properties are identical and not notice the gap. The history of mathematics is littered with proofs that were accepted for years before errors were found — sometimes small and fixable, sometimes fatal.
+This is the mathematical analogue of a principle that arises in many fields: **separate what's true from what's useful.** In physics, you first derive the equations of motion, then choose initial conditions. In economics, you first model the feasible set, then optimize. The theorem formalizes this separation for computational equivalence.
 
-The extraction correctness proof was formalized in a *proof language* that a computer checks line by line. Every logical step — every application of a rule, every use of an assumption, every inductive argument — is verified mechanically. The computer doesn't care about intuition or elegance; it cares about logical validity. If a step doesn't follow from what came before, the proof is rejected.
+## The Cost Dimension
 
-This matters enormously for compiler correctness. The CompCert project, which produced the first fully verified optimizing C compiler, found bugs in *every commercial compiler they tested against* — including GCC and LLVM, the workhorses of the software industry. These weren't exotic corner cases; they were bugs that could affect real programs. The extraction correctness theorem adds another brick to the wall of verified compilation.
+The theorem extends naturally to cost-aware extraction. Assign each expression a cost — perhaps its execution time, circuit area, or memory usage. The cost model defines what "best" means. Now prove: if your extractor selects the cheapest representative from each equivalence class, then the result is not only semantically correct but also cost-optimal within the class.
 
-## The Conjecture That Could Break Everything
+This is the mathematical foundation for **superoptimization**: the practice of searching for the absolutely cheapest way to compute something. Traditional compilers apply a fixed sequence of optimization rules and hope for good results. A superoptimizer, powered by equality saturation, explores the entire equivalence class and proves that its choice is the best possible.
 
-The proof establishes that extraction preserves *meaning*. But does it find the *best* equivalent expression? The researchers formulated a precise conjecture: under a monotone cost model, extraction always yields the globally minimum-cost expression in each equivalence class.
+The cost-optimality theorem says this is not a pipe dream — it's mathematics.
 
-This conjecture was tested computationally — 200 random convergent rewrite systems, thousands of terms, exhaustive enumeration of equivalence classes. In every case, the extracted term was optimal. But a computational test isn't a proof. The conjecture remains open, and its resolution could reshape how we think about optimization.
+## The Bridge to Normal Forms
 
-If it's true, equality saturation isn't just correct — it's *optimal*. Every compiler using this technique would have a mathematical guarantee that it finds the best possible program.
+There's an even deeper connection. In algebra, a **normal form** is a canonical representative of each equivalence class. For polynomials, you might choose the form with terms arranged by decreasing degree. For logical formulas, you might choose conjunctive normal form. Normal forms are powerful because they reduce equivalence checking to equality checking: two objects are equivalent if and only if they have the same normal form.
 
-If it's false, the counterexample would reveal exactly what additional conditions are needed for optimality. Perhaps the cost function must satisfy a stronger property than monotonicity. Perhaps the rewrite system needs additional structure. Either way, the answer would be scientifically valuable.
+The classical theory of **convergent rewriting** — developed by mathematicians like Donald Knuth and Gérard Huet — shows that if a rewrite system terminates (no infinite chains of rewrites) and is confluent (different rewrite paths always converge), then it computes a unique normal form for every expression. This is the mathematical backbone of computer algebra systems, type checkers, and automated theorem provers.
 
-## From Algebra to Asphalt
+The new result bridges these two worlds. It proves that for convergent rewrite systems, equality saturation and normal-form computation yield the same semantic result. The extracted representative might not *be* the normal form — it might look completely different — but it *means* the same thing. This is "quotient normalization without canonicality": you get the benefits of normal forms (semantic correctness) without the costs (computing an exact canonical representative).
 
-The implications extend far beyond compilers. Any system that transforms structured data while preserving meaning faces the extraction problem:
+This bridge has practical significance. Computing normal forms can be expensive — in some algebraic theories, the canonical form of an expression can be exponentially larger than the shortest equivalent expression. Equality saturation sidesteps this by never committing to a canonical form. It works with the quotient structure directly, choosing representatives based on external criteria like cost.
 
-**Database query optimization** rewrites SQL queries into faster equivalents — an e-graph approach could guarantee that the optimized query returns exactly the same results.
+## Echoes Across Mathematics
 
-**Hardware synthesis** transforms circuit descriptions into smaller, faster implementations. Extraction correctness would guarantee that the optimized chip computes the same function.
+The theorem resonates with ideas far beyond computer science.
 
-**Scientific computing** relies on algebraic simplifications to make equations tractable. Knowing that each simplification preserves the equation's meaning prevents the silent corruption of scientific results.
+In **group theory**, a quotient group collapses equivalent elements into cosets. Choosing a representative from each coset is called selecting a **section** of the quotient map. The theorem says that extraction is a section of the equivalence-class quotient, and any section preserves the semantic content.
 
-**Machine learning compilers** like XLA and TVM optimize neural network computations. As AI systems make increasingly critical decisions — in medicine, in transportation, in finance — the gap between "probably correct" and "provably correct" grows ever more consequential.
+In **topology**, equivalence classes appear as points of a quotient space. A continuous function that respects the equivalence relation descends to a well-defined function on the quotient. The extraction theorem is the discrete analogue of this universal property.
 
-## The Deeper Question
+In **statistical physics**, a system of particles might have many microscopic configurations that produce the same macroscopic state (temperature, pressure, entropy). The equivalence classes are the macrostates; the extraction process is analogous to selecting a representative microstate — perhaps the one with minimum energy. The theorem says any representative faithfully captures the macroscopic physics.
 
-Behind the technical achievement lies a philosophical question that has haunted computer science since its inception: *Can we ever fully trust a machine to do what we intend?*
+Even in **evolutionary biology**, one can see an echo. Different genotypes can produce the same phenotype. Natural selection "extracts" a representative from each phenotypic class — but the theorem says any representative would have served equally well for functional purposes.
 
-Alan Turing showed in 1936 that we can't, in general, determine what a program will do just by looking at it. But Turing's result doesn't prevent us from designing systems with built-in guarantees. The extraction correctness theorem is a step in this direction — it doesn't tell us what a program *does*, but it guarantees that a specific transformation preserves whatever the program does.
+## What Comes Next
 
-This is the power of mathematical proof applied to technology. Not a test that checks a million cases and hopes, but a theorem that covers every case simultaneously. Not trust based on reputation, but certainty grounded in logic.
+The mathematical framework opens several frontiers.
 
-The next time your browser loads a page in milliseconds instead of minutes, or your phone's battery lasts all day instead of dying by noon, remember: somewhere in the chain of software that makes it possible, a compiler rewrote your code to be faster. And now, for a growing class of those transformations, we can prove that "faster" doesn't come at the cost of "wrong."
+**Verified compilers.** Today's optimizing compilers are enormously complex, and bugs in optimization passes have caused real-world software failures. The extraction correctness theorem provides a foundation for building compilers whose optimization passes come with mathematical guarantees of correctness. Several research groups are already exploring this direction.
 
-*The code may change. The meaning endures.*
+**Automated mathematics.** Modern theorem provers use rewriting extensively to simplify goals and check proofs. Equality saturation could replace heuristic simplification with systematic exploration of the equivalence class of a mathematical expression, choosing the form most amenable to further proof steps.
+
+**Hardware design.** Chip designers routinely search for the smallest circuit implementing a given function. Equality saturation, backed by the extraction theorem, could provide certified guarantees that a circuit design is not only correct but optimal within a given equivalence class of designs.
+
+**Scientific computing.** Numerical algorithms often involve expressions that can be rearranged for better accuracy or speed. The framework could certify that a rearranged computation produces the same mathematical result, while using fewer operations or avoiding catastrophic cancellation.
+
+## The Profound Simplicity
+
+What makes this result beautiful is its simplicity. The core insight is almost embarrassingly natural once you see it: if a function is constant on equivalence classes, then it doesn't matter which representative you pick. That's a one-line observation in abstract algebra. But wrapping it in the right definitions — e-graphs, saturation completeness, cost models, extraction — turns that one-line observation into a powerful theorem about optimization.
+
+The history of mathematics is full of such moments. The key ideas are often simple in retrospect. But formulating them precisely, proving them rigorously, and recognizing their consequences — that's where the real work lies.
+
+What the extraction correctness theorem reveals is that a vast industry of optimization techniques — in compilers, in circuit design, in automated reasoning — has been doing quotient algebra all along, without knowing it. Every time an optimizer searches for a cheaper equivalent expression, it is traversing an equivalence class. Every time it selects a representative, it is choosing a section of a quotient map. The mathematics was always there, hiding in plain sight.
+
+Now it has been brought into the light.

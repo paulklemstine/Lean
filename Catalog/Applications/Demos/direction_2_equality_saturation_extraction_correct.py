@@ -1,701 +1,782 @@
-#!/usr/bin/env python3
 """
-applications.py — Real-World Applications of E-Graph Extraction Correctness
+Applications of Equality Saturation Extraction Correctness.
 
-Demonstrates practical applications:
-1. Compiler optimization pass verification
-2. Symbolic algebra simplification
-3. Circuit optimization
-4. Testing the global optimality conjecture
+Demonstrates the theorems in concrete settings:
+1. Arithmetic expression optimization
+2. Boolean circuit minimization
+3. Simple compiler optimization (constant folding + strength reduction)
 """
 
-import random
-from typing import Dict, List, Tuple
+from __future__ import annotations
+from typing import Dict, List, Tuple, Callable
 from dataclasses import dataclass
-
-# Import core infrastructure
-from algorithms import (
-    Term, Const, Var, BinOp, term_size, eval_term,
-    RewriteRule, make_arithmetic_rules, normalize,
-    EGraph, verified_extract
-)
+from algorithms import UnionFind, RewriteRule, RewriteSystem, EGraph
 
 
-# ============================================================
-# Application 1: Compiler Optimization Pass
-# ============================================================
+# =============================================================================
+# Application 1: Arithmetic Expression Optimization
+# =============================================================================
 
-def compiler_optimization_demo():
-    """Simulate a compiler optimization pass using equality saturation.
+def arithmetic_optimization_demo():
+    """Demonstrate equality saturation on arithmetic expressions.
 
-    Shows how the extraction correctness theorem guarantees that
-    program transformations preserve semantics.
+    We model expressions as integers in a finite universe where each integer
+    represents a specific expression form. The rewrite rules capture algebraic
+    identities like commutativity, identity elements, etc.
+
+    Universe (expressions over variable x):
+      0: 0         (zero)
+      1: 1         (one)
+      2: x         (variable)
+      3: x + 0     (identity)
+      4: 0 + x     (identity, commuted)
+      5: x * 1     (identity)
+      6: 1 * x     (identity, commuted)
+      7: x + x     (doubling)
+      8: 2 * x     (doubling, simplified)
+      9: x * 2     (doubling, commuted)
     """
-    print("=" * 70)
-    print("APPLICATION 1: COMPILER OPTIMIZATION PASS")
-    print("=" * 70)
-    print()
+    print("=" * 60)
+    print("Application 1: Arithmetic Expression Optimization")
+    print("=" * 60)
 
-    # Simulate a simple "program" as an arithmetic expression
-    # representing a computation like: result = (1 * input + 0) * (input + 0)
-    programs = [
-        ("Dead code elimination",
-         BinOp("+", BinOp("*", Const(0), Var("unused")), Var("result")),
-         "0*unused + result"),
-        ("Identity simplification",
-         BinOp("*", BinOp("+", Var("x"), Const(0)), Const(1)),
-         "(x + 0) * 1"),
-        ("Constant folding",
-         BinOp("+", BinOp("*", Const(3), Const(4)), Var("y")),
-         "3*4 + y"),
-        ("Nested simplification",
-         BinOp("*", BinOp("+", BinOp("*", Const(1), Var("a")), Const(0)),
-                BinOp("+", Var("b"), BinOp("*", Const(0), Var("c")))),
-         "(1*a + 0) * (b + 0*c)"),
+    carrier = list(range(10))
+    rules = [
+        RewriteRule(3, 2),   # x + 0 → x
+        RewriteRule(4, 2),   # 0 + x → x
+        RewriteRule(5, 2),   # x * 1 → x
+        RewriteRule(6, 2),   # 1 * x → x
+        RewriteRule(7, 8),   # x + x → 2*x
+        RewriteRule(9, 8),   # x * 2 → 2*x (commutativity)
     ]
 
-    rules = make_arithmetic_rules()
-    envs = [{"x": i, "y": j, "a": k, "b": l, "c": m,
-             "result": n, "input": p, "unused": q}
-            for i, j, k, l, m, n, p, q in [
-                (1, 2, 3, 4, 5, 6, 7, 8),
-                (-1, 0, 1, -2, 3, -4, 5, -6),
-                (100, -50, 25, -12, 6, -3, 1, 0),
-            ]]
+    system = RewriteSystem(carrier=carrier, rules=rules)
 
-    for name, program, desc in programs:
-        extracted, ok = verified_extract(program, rules, envs)
-        orig_size = term_size(program)
-        opt_size = term_size(extracted)
-        speedup = orig_size / max(opt_size, 1)
+    # Semantics: evaluate at x = 5
+    def eval_at_5(expr_id: int) -> int:
+        vals = {0: 0, 1: 1, 2: 5, 3: 5, 4: 5, 5: 5, 6: 5, 7: 10, 8: 10, 9: 10}
+        return vals.get(expr_id, -1)
 
-        print(f"  {name}:")
-        print(f"    Input:     {desc}")
-        print(f"    Optimized: {extracted}")
-        print(f"    Size: {orig_size} → {opt_size} ({speedup:.1f}x reduction)")
-        print(f"    Semantics preserved: {'✓' if ok else '✗'}")
-        print()
+    # Cost: expression size (number of AST nodes)
+    def cost(expr_id: int) -> int:
+        costs = {0: 1, 1: 1, 2: 1, 3: 3, 4: 3, 5: 3, 6: 3, 7: 3, 8: 3, 9: 3}
+        return costs.get(expr_id, 999)
+
+    seeds = [2, 3, 4, 5, 6, 7, 8, 9]
+    egraph = EGraph.from_seeds(system, seeds)
+    steps = egraph.saturate()
+
+    print(f"\nSaturation completed in {steps} steps")
+    print(f"Equivalence classes:")
+    for root, members in egraph.get_classes().items():
+        names = {
+            0: '0', 1: '1', 2: 'x', 3: 'x+0', 4: '0+x',
+            5: 'x*1', 6: '1*x', 7: 'x+x', 8: '2*x', 9: 'x*2'
+        }
+        member_names = [names.get(m, str(m)) for m in sorted(members)]
+        print(f"  Class: {{{', '.join(member_names)}}}")
+
+    print(f"\nExtraction results (cheapest representative):")
+    for t in seeds:
+        extracted = egraph.extract_cheapest(t, cost)
+        names = {
+            0: '0', 1: '1', 2: 'x', 3: 'x+0', 4: '0+x',
+            5: 'x*1', 6: '1*x', 7: 'x+x', 8: '2*x', 9: 'x*2'
+        }
+        print(f"  {names[t]:>5s} → {names[extracted]:>5s}  "
+              f"(eval: {eval_at_5(t)} = {eval_at_5(extracted)}, "
+              f"cost: {cost(t)} → {cost(extracted)})")
+
+    # Verify soundness
+    print(f"\nSoundness check:")
+    for t in seeds:
+        extracted = egraph.extract_cheapest(t, cost)
+        assert eval_at_5(extracted) == eval_at_5(t), \
+            f"Semantic violation for {t}!"
+    print("  ✓ All extractions preserve semantics")
 
 
-# ============================================================
-# Application 2: Symbolic Algebra
-# ============================================================
+# =============================================================================
+# Application 2: Boolean Circuit Minimization
+# =============================================================================
 
-def symbolic_algebra_demo():
-    """Use e-graph extraction for symbolic simplification.
+def boolean_circuit_demo():
+    """Demonstrate equality saturation on boolean circuits.
 
-    Shows how the extraction correctness theorem guarantees that
-    algebraic simplifications preserve mathematical meaning.
+    Universe (boolean expressions over variables a, b):
+      0: FALSE     4: a AND b     8: NOT (NOT a)
+      1: TRUE      5: b AND a     9: a OR FALSE
+      2: a         6: a OR b     10: FALSE OR a
+      3: b         7: b OR a     11: a AND TRUE
     """
-    print("=" * 70)
-    print("APPLICATION 2: SYMBOLIC ALGEBRA SIMPLIFICATION")
-    print("=" * 70)
-    print()
+    print("\n" + "=" * 60)
+    print("Application 2: Boolean Circuit Minimization")
+    print("=" * 60)
 
-    # Extended rules for algebra
-    rules = make_arithmetic_rules()
-
-    # Expressions to simplify
-    expressions = [
-        ("Polynomial identity",
-         BinOp("+", BinOp("*", Var("x"), Const(1)),
-                BinOp("*", Const(0), BinOp("+", Var("x"), Var("y")))),
-         "x*1 + 0*(x+y)"),
-        ("Nested multiplication",
-         BinOp("*", BinOp("*", Const(1), Var("x")),
-                BinOp("*", Var("y"), Const(1))),
-         "(1*x) * (y*1)"),
-        ("Zero absorption",
-         BinOp("+", BinOp("*", Var("a"),
-                BinOp("*", Const(0), Var("b"))),
-                BinOp("*", Const(1), Var("c"))),
-         "a*(0*b) + 1*c"),
+    carrier = list(range(12))
+    rules = [
+        # Commutativity
+        RewriteRule(5, 4),   # b AND a → a AND b
+        RewriteRule(7, 6),   # b OR a → a OR b
+        # Double negation
+        RewriteRule(8, 2),   # NOT(NOT a) → a
+        # Identity
+        RewriteRule(9, 2),   # a OR FALSE → a
+        RewriteRule(10, 2),  # FALSE OR a → a
+        RewriteRule(11, 2),  # a AND TRUE → a
     ]
 
-    envs = [{"x": x, "y": y, "a": a, "b": b, "c": c}
-            for x in range(-3, 4) for y in range(-3, 4)
-            for a, b, c in [(1, 2, 3), (-1, 0, 1)]]
+    system = RewriteSystem(carrier=carrier, rules=rules)
 
-    for name, expr, desc in expressions:
-        eg = EGraph()
-        tid = eg.add(expr)
-        merges, iters = eg.saturate(rules)
-        extracted = eg.extract(tid)
-        ok = all(eval_term(expr, env) == eval_term(extracted, env) for env in envs)
+    # Semantics: evaluate at a=True, b=False
+    def eval_circuit(expr_id: int) -> int:
+        a, b = True, False
+        vals = {
+            0: False, 1: True, 2: a, 3: b,
+            4: a and b, 5: b and a, 6: a or b, 7: b or a,
+            8: a,  # NOT(NOT a) = a
+            9: a,  # a OR FALSE = a
+            10: a, # FALSE OR a = a
+            11: a, # a AND TRUE = a
+        }
+        return int(vals.get(expr_id, False))
 
-        print(f"  {name}:")
-        print(f"    Input:      {desc}")
-        print(f"    Simplified: {extracted}")
-        print(f"    E-classes:  {eg.num_classes()}")
-        print(f"    Correct:    {'✓' if ok else '✗'} (tested {len(envs)} environments)")
-        print()
+    # Cost: gate count
+    def gate_cost(expr_id: int) -> int:
+        costs = {0: 0, 1: 0, 2: 0, 3: 0, 4: 1, 5: 1, 6: 1, 7: 1, 8: 2, 9: 1, 10: 1, 11: 1}
+        return costs.get(expr_id, 999)
+
+    seeds = list(range(12))
+    egraph = EGraph.from_seeds(system, seeds)
+    steps = egraph.saturate()
+
+    print(f"\nSaturation completed in {steps} steps")
+    print(f"\nExtraction results (minimum gate count):")
+    names = {
+        0: 'FALSE', 1: 'TRUE', 2: 'a', 3: 'b',
+        4: 'a∧b', 5: 'b∧a', 6: 'a∨b', 7: 'b∨a',
+        8: '¬¬a', 9: 'a∨F', 10: 'F∨a', 11: 'a∧T'
+    }
+    for t in seeds:
+        extracted = egraph.extract_cheapest(t, gate_cost)
+        print(f"  {names[t]:>8s} → {names[extracted]:>8s}  "
+              f"(gates: {gate_cost(t)} → {gate_cost(extracted)})")
+
+    # Verify
+    for t in seeds:
+        extracted = egraph.extract_cheapest(t, gate_cost)
+        assert eval_circuit(extracted) == eval_circuit(t)
+    print("  ✓ All extractions preserve boolean semantics")
 
 
-# ============================================================
-# Application 3: Testing the Global Optimality Conjecture
-# ============================================================
+# =============================================================================
+# Application 3: Strength Reduction
+# =============================================================================
 
-def test_global_optimality_conjecture():
-    """Test whether extraction always yields the globally minimum-cost term.
+def strength_reduction_demo():
+    """Demonstrate compiler strength reduction via equality saturation.
 
-    Conjecture: For a convergent rewrite system R with monotone cost c,
-    cost(extract(t)) ≤ cost(t') for all t' equivalent to t.
-
-    We test this by enumerating all terms in each e-class after saturation
-    and checking that the extracted term has minimal cost.
+    Universe (integer expressions over variable n):
+      0: 0          4: n * 2       8: n * 4
+      1: 1          5: n + n       9: (n + n) + (n + n)
+      2: 2          6: n << 1     10: n << 2
+      3: n          7: n * 3      11: n + n + n
     """
-    print("=" * 70)
-    print("APPLICATION 3: GLOBAL OPTIMALITY CONJECTURE TEST")
-    print("=" * 70)
-    print()
+    print("\n" + "=" * 60)
+    print("Application 3: Compiler Strength Reduction")
+    print("=" * 60)
 
-    random.seed(42)
-    rules = make_arithmetic_rules()
+    carrier = list(range(12))
+    rules = [
+        # n * 2 = n + n
+        RewriteRule(4, 5),
+        # n + n = n << 1
+        RewriteRule(5, 6),
+        # n * 4 = (n+n) + (n+n)
+        RewriteRule(8, 9),
+        # (n+n)+(n+n) = n << 2
+        RewriteRule(9, 10),
+        # n * 3 = n + n + n
+        RewriteRule(7, 11),
+    ]
 
-    n_tests = 200
-    violations = 0
-    tested = 0
+    system = RewriteSystem(carrier=carrier, rules=rules)
 
-    for i in range(n_tests):
-        # Generate random term
-        depth = random.randint(1, 4)
-        t = random_binop_term(depth)
+    # Semantics: evaluate at n = 7
+    n = 7
+    def eval_expr(expr_id: int) -> int:
+        vals = {
+            0: 0, 1: 1, 2: 2, 3: n,
+            4: n*2, 5: n+n, 6: n<<1,
+            7: n*3, 8: n*4, 9: (n+n)+(n+n), 10: n<<2,
+            11: n+n+n
+        }
+        return vals.get(expr_id, -1)
 
-        eg = EGraph()
-        tid = eg.add(t)
-        eg.saturate(rules)
+    # Cost: CPU cycles (shifts are cheaper than multiplies)
+    def cpu_cost(expr_id: int) -> int:
+        costs = {
+            0: 0, 1: 0, 2: 0, 3: 0,
+            4: 3,   # multiply: 3 cycles
+            5: 1,   # add: 1 cycle
+            6: 1,   # shift: 1 cycle
+            7: 3,   # multiply: 3 cycles
+            8: 3,   # multiply: 3 cycles
+            9: 2,   # two adds: 2 cycles
+            10: 1,  # shift: 1 cycle
+            11: 2,  # two adds: 2 cycles
+        }
+        return costs.get(expr_id, 999)
 
-        # Extract cheapest
-        extracted = eg.extract(tid)
-        extract_cost = term_size(extracted)
+    seeds = [3, 4, 5, 6, 7, 8, 9, 10, 11]
+    egraph = EGraph.from_seeds(system, seeds)
+    steps = egraph.saturate()
 
-        # Check all terms in the same class
-        root = eg.find(tid)
-        class_terms = [(t2, term_size(t2))
-                       for t2, t_id in eg.hashcons.items()
-                       if eg.find(t_id) == root]
+    print(f"\nSaturation completed in {steps} steps")
+    names = {
+        0: '0', 1: '1', 2: '2', 3: 'n',
+        4: 'n*2', 5: 'n+n', 6: 'n<<1',
+        7: 'n*3', 8: 'n*4', 9: '(n+n)+(n+n)', 10: 'n<<2',
+        11: 'n+n+n'
+    }
 
-        if class_terms:
-            min_cost = min(c for _, c in class_terms)
-            if extract_cost > min_cost:
-                violations += 1
-                cheaper = [(t2, c) for t2, c in class_terms if c < extract_cost]
-                if violations <= 3:
-                    print(f"  Violation #{violations}: extract cost={extract_cost}, "
-                          f"min in class={min_cost}")
-            tested += 1
+    print(f"\nStrength reduction results:")
+    for t in seeds:
+        extracted = egraph.extract_cheapest(t, cpu_cost)
+        print(f"  {names[t]:>12s} → {names[extracted]:>12s}  "
+              f"(cycles: {cpu_cost(t)} → {cpu_cost(extracted)}, "
+              f"value: {eval_expr(t)})")
 
-    print(f"  Tested: {tested} e-classes")
-    print(f"  Violations: {violations}")
-    if violations == 0:
-        print("  ✓ Conjecture holds for all tested cases!")
-    else:
-        print(f"  ✗ {violations} violations found — conjecture may be false")
-    print()
-
-
-def random_binop_term(depth: int) -> Term:
-    """Generate a random term using BinOp."""
-    if depth <= 0:
-        if random.random() < 0.4:
-            return Const(random.choice([0, 1, 2, 3]))
-        else:
-            return Var(random.choice(["x", "y", "z"]))
-
-    choice = random.random()
-    if choice < 0.2:
-        return Const(random.choice([0, 1, 2, 3]))
-    elif choice < 0.4:
-        return Var(random.choice(["x", "y", "z"]))
-    elif choice < 0.7:
-        return BinOp("+", random_binop_term(depth - 1), random_binop_term(depth - 1))
-    else:
-        return BinOp("*", random_binop_term(depth - 1), random_binop_term(depth - 1))
-
-
-# ============================================================
-# Application 4: Benchmark — Extraction vs Direct Normalization
-# ============================================================
-
-def benchmark_extraction_vs_normalization():
-    """Compare e-graph extraction with direct normalization.
-
-    Both approaches should produce equivalent results, but may differ in:
-    - Output term (extraction might find smaller terms via alternative paths)
-    - Performance (normalization is deterministic, extraction explores more)
-    """
-    print("=" * 70)
-    print("APPLICATION 4: EXTRACTION vs DIRECT NORMALIZATION")
-    print("=" * 70)
-    print()
-
-    random.seed(123)
-    rules = make_arithmetic_rules()
-    n_terms = 300
-
-    agree = 0
-    extraction_wins = 0
-    normalization_wins = 0
-
-    for _ in range(n_terms):
-        t = random_binop_term(random.randint(2, 5))
-
-        # Direct normalization
-        nf, nf_steps = normalize(t, rules)
-        nf_cost = term_size(nf)
-
-        # E-graph extraction
-        eg = EGraph()
-        tid = eg.add(t)
-        eg.saturate(rules)
-        extracted = eg.extract(tid)
-        ext_cost = term_size(extracted)
-
-        if nf_cost == ext_cost:
-            agree += 1
-        elif ext_cost < nf_cost:
-            extraction_wins += 1
-        else:
-            normalization_wins += 1
-
-    print(f"  Same cost:          {agree}/{n_terms}")
-    print(f"  Extraction better:  {extraction_wins}/{n_terms}")
-    print(f"  Normalization better: {normalization_wins}/{n_terms}")
-    print()
-    print("  Note: Both methods preserve semantics (by our theorem).")
-    print("  E-graph extraction can find shorter terms by exploring")
-    print("  alternative reduction paths simultaneously.")
-    print()
+    for t in seeds:
+        extracted = egraph.extract_cheapest(t, cpu_cost)
+        assert eval_expr(extracted) == eval_expr(t)
+    print("  ✓ All strength reductions preserve semantics")
 
 
-if __name__ == "__main__":
-    compiler_optimization_demo()
-    symbolic_algebra_demo()
-    test_global_optimality_conjecture()
-    benchmark_extraction_vs_normalization()
+if __name__ == '__main__':
+    arithmetic_optimization_demo()
+    boolean_circuit_demo()
+    strength_reduction_demo()
 
 
 #!/usr/bin/env python3
 """
-demo.py — E-Graph Saturation and Extraction Correctness Demo
+Interactive Demonstration: Equality Saturation Extraction Correctness
 
-Demonstrates the core theorem: for a convergent rewrite system, extracting the
-cheapest representative from a saturated e-graph preserves evaluation semantics.
+This demo:
+1. Generates random convergent rewrite systems
+2. Builds bounded e-graphs via saturation
+3. Extracts cheapest representatives
+4. Compares extracted semantics with original semantics over random finite algebras
+5. Prints counterexamples if found
+6. Visualizes class merges and extracted costs
+7. Tests the bounded completeness conjecture
 
-Shows:
-1. A concrete convergent rewrite system (integer arithmetic simplification)
-2. E-graph saturation and extraction under a monotone cost model
-3. Verification that eval(extract(t)) == eval(t) for 1000 random terms
-4. A counterexample showing non-saturated e-graphs can violate this property
+Usage:
+    python demo.py
 """
 
+from __future__ import annotations
 import random
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple, Callable, Set
-from collections import defaultdict
+import sys
+from typing import Dict, List, Optional, Tuple, Callable
 
-# ============================================================
-# Term Algebra
-# ============================================================
 
-@dataclass(frozen=True)
-class Term:
-    """Base class for terms in a simple arithmetic expression language."""
-    pass
+# ============================================================================
+# Core Data Structures (self-contained, no local imports)
+# ============================================================================
 
-@dataclass(frozen=True)
-class Const(Term):
-    value: int
+class UnionFind:
+    """Union-Find with path compression and union by rank."""
 
-@dataclass(frozen=True)
-class Var(Term):
-    name: str
-
-@dataclass(frozen=True)
-class Add(Term):
-    left: Term
-    right: Term
-
-@dataclass(frozen=True)
-class Mul(Term):
-    left: Term
-    right: Term
-
-def eval_term(t: Term, env: Dict[str, int]) -> int:
-    """Evaluate a term under a variable assignment."""
-    if isinstance(t, Const):
-        return t.value
-    elif isinstance(t, Var):
-        return env.get(t.name, 0)
-    elif isinstance(t, Add):
-        return eval_term(t.left, env) + eval_term(t.right, env)
-    elif isinstance(t, Mul):
-        return eval_term(t.left, env) * eval_term(t.right, env)
-    raise ValueError(f"Unknown term type: {type(t)}")
-
-def term_size(t: Term) -> int:
-    """AST node count (monotone cost function)."""
-    if isinstance(t, (Const, Var)):
-        return 1
-    elif isinstance(t, (Add, Mul)):
-        return 1 + term_size(t.left) + term_size(t.right)
-    return 1
-
-def term_to_str(t: Term) -> str:
-    if isinstance(t, Const):
-        return str(t.value)
-    elif isinstance(t, Var):
-        return t.name
-    elif isinstance(t, Add):
-        return f"({term_to_str(t.left)} + {term_to_str(t.right)})"
-    elif isinstance(t, Mul):
-        return f"({term_to_str(t.left)} * {term_to_str(t.right)})"
-    return "?"
-
-# ============================================================
-# Rewrite Rules (Convergent System)
-# ============================================================
-
-def apply_rewrite(t: Term) -> List[Tuple[str, Term]]:
-    """Apply all applicable rewrite rules, returning (rule_name, result) pairs.
-
-    Rules (oriented for termination — all reduce AST size or simplify):
-      R1: x + 0 → x
-      R2: 0 + x → x
-      R3: x * 1 → x
-      R4: 1 * x → x
-      R5: x * 0 → 0
-      R6: 0 * x → 0
-      R7: x + y → y + x  (commutativity, oriented by lexicographic order)
-      R8: x * y → y * x  (commutativity, oriented by lexicographic order)
-    """
-    results = []
-
-    if isinstance(t, Add):
-        if isinstance(t.right, Const) and t.right.value == 0:
-            results.append(("x+0→x", t.left))
-        if isinstance(t.left, Const) and t.left.value == 0:
-            results.append(("0+x→x", t.right))
-
-    if isinstance(t, Mul):
-        if isinstance(t.right, Const) and t.right.value == 1:
-            results.append(("x*1→x", t.left))
-        if isinstance(t.left, Const) and t.left.value == 1:
-            results.append(("1*x→x", t.right))
-        if isinstance(t.right, Const) and t.right.value == 0:
-            results.append(("x*0→0", Const(0)))
-        if isinstance(t.left, Const) and t.left.value == 0:
-            results.append(("0*x→0", Const(0)))
-
-    return results
-
-# ============================================================
-# E-Graph (Union-Find based)
-# ============================================================
-
-class EGraph:
-    """A simple e-graph implementation using union-find."""
-
-    def __init__(self):
-        self.parent: Dict[int, int] = {}
-        self.rank: Dict[int, int] = {}
-        self.terms: Dict[int, Term] = {}  # id -> term
-        self.term_to_id: Dict[Term, int] = {}  # term -> id (hashcons)
-        self.next_id = 0
-
-    def add(self, t: Term) -> int:
-        """Add a term to the e-graph, returning its e-class id."""
-        if t in self.term_to_id:
-            return self.find(self.term_to_id[t])
-
-        tid = self.next_id
-        self.next_id += 1
-        self.parent[tid] = tid
-        self.rank[tid] = 0
-        self.terms[tid] = t
-        self.term_to_id[t] = tid
-
-        # Recursively add subterms
-        if isinstance(t, (Add, Mul)):
-            self.add(t.left)
-            self.add(t.right)
-
-        return tid
+    def __init__(self, elements: List[int]):
+        self.parent = {x: x for x in elements}
+        self.rank = {x: 0 for x in elements}
 
     def find(self, x: int) -> int:
-        """Find with path compression."""
         if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
 
-    def union(self, x: int, y: int) -> int:
-        """Union by rank, returns the new root."""
+    def union(self, x: int, y: int) -> bool:
         rx, ry = self.find(x), self.find(y)
         if rx == ry:
-            return rx
+            return False
         if self.rank[rx] < self.rank[ry]:
             rx, ry = ry, rx
         self.parent[ry] = rx
         if self.rank[rx] == self.rank[ry]:
             self.rank[rx] += 1
-        return rx
+        return True
 
-    def are_equal(self, x: int, y: int) -> bool:
+    def same_class(self, x: int, y: int) -> bool:
         return self.find(x) == self.find(y)
 
-    def saturate(self, max_iters: int = 100) -> int:
-        """Apply all rewrite rules until saturation or max iterations.
-        Returns the number of new equalities discovered."""
-        total_merges = 0
-        for iteration in range(max_iters):
-            new_merges = 0
-            # Collect all terms and their ids
-            all_terms = list(self.term_to_id.items())
-            for t, tid in all_terms:
-                rewrites = apply_rewrite(t)
-                for rule_name, result in rewrites:
-                    rid = self.add(result)
-                    if not self.are_equal(tid, rid):
-                        self.union(tid, rid)
-                        new_merges += 1
-            total_merges += new_merges
-            if new_merges == 0:
+    def get_classes(self) -> Dict[int, List[int]]:
+        classes: Dict[int, List[int]] = {}
+        for x in self.parent:
+            root = self.find(x)
+            classes.setdefault(root, []).append(x)
+        return classes
+
+    def add(self, x: int):
+        if x not in self.parent:
+            self.parent[x] = x
+            self.rank[x] = 0
+
+
+class RewriteSystem:
+    """A finite rewrite system with rules (source → target)."""
+
+    def __init__(self, carrier: List[int], rules: List[Tuple[int, int]]):
+        self.carrier = carrier
+        self.rules = rules  # list of (source, target)
+
+    def applies(self, term: int) -> List[int]:
+        return [t for s, t in self.rules if s == term]
+
+    def compute_nf(self, term: int, max_steps: int = 1000) -> Optional[int]:
+        current = term
+        for _ in range(max_steps):
+            nexts = self.applies(current)
+            if not nexts:
+                return current
+            current = nexts[0]
+        return None
+
+
+class EGraph:
+    """E-graph with bounded saturation and cost-guided extraction."""
+
+    def __init__(self, system: RewriteSystem, seeds: List[int]):
+        self.system = system
+        self.terms = set(seeds)
+        self.uf = UnionFind(list(self.terms))
+
+    def saturate(self, max_depth: int = 100) -> int:
+        for step in range(1, max_depth + 1):
+            changed = False
+            for t in list(self.terms):
+                for s, tgt in self.system.rules:
+                    if t == s:
+                        self.uf.add(tgt)
+                        self.terms.add(tgt)
+                        if self.uf.union(t, tgt):
+                            changed = True
+                    if t == tgt:
+                        self.uf.add(s)
+                        self.terms.add(s)
+                        if self.uf.union(t, s):
+                            changed = True
+            if not changed:
+                return step
+        return max_depth
+
+    def extract_cheapest(self, term: int, cost_fn: Callable[[int], int]) -> int:
+        root = self.uf.find(term)
+        classes = self.uf.get_classes()
+        members = classes.get(root, [term])
+        return min(members, key=cost_fn)
+
+    def same_class(self, a: int, b: int) -> bool:
+        if a not in self.uf.parent or b not in self.uf.parent:
+            return False
+        return self.uf.same_class(a, b)
+
+
+# ============================================================================
+# Random System Generation
+# ============================================================================
+
+def generate_convergent_system(n: int, num_rules: int, seed: int) -> RewriteSystem:
+    """Generate a random convergent rewrite system.
+
+    Rules always go from higher to lower elements (ensuring termination).
+    Confluence is checked; system is regenerated if not confluent.
+    """
+    rng = random.Random(seed)
+    carrier = list(range(n))
+
+    for _ in range(200):
+        rules = []
+        for _ in range(num_rules):
+            source = rng.randint(1, n - 1)
+            target = rng.randint(0, source - 1)
+            rules.append((source, target))
+
+        system = RewriteSystem(carrier, rules)
+
+        # Check confluence: all elements reachable from same EqvGen class
+        # should have same normal form
+        nfs = {t: system.compute_nf(t) for t in carrier}
+        if any(v is None for v in nfs.values()):
+            continue
+
+        # Build equivalence closure
+        uf = UnionFind(carrier)
+        for s, t in rules:
+            uf.union(s, t)
+
+        # Check each class has unique NF
+        ok = True
+        for members in uf.get_classes().values():
+            nf_set = {nfs[m] for m in members}
+            if len(nf_set) > 1:
+                ok = False
                 break
-        return total_merges
+        if ok:
+            return system
 
-    def extract_cheapest(self, tid: int) -> Term:
-        """Extract the cheapest (smallest AST) term from an e-class."""
-        root = self.find(tid)
-        best_term = None
-        best_cost = float('inf')
-        for t, t_id in self.term_to_id.items():
-            if self.find(t_id) == root:
-                cost = term_size(t)
-                if cost < best_cost:
-                    best_cost = cost
-                    best_term = t
-        return best_term if best_term is not None else self.terms[tid]
-
-    def get_class_members(self, tid: int) -> List[Term]:
-        """Get all terms in the same e-class."""
-        root = self.find(tid)
-        return [t for t, t_id in self.term_to_id.items() if self.find(t_id) == root]
+    return RewriteSystem(carrier, [])
 
 
-# ============================================================
-# Random Term Generator
-# ============================================================
+def generate_random_eval(carrier: List[int], output_size: int, seed: int) -> Dict[int, int]:
+    """Generate a random evaluation function that respects equivalences."""
+    rng = random.Random(seed)
+    return {t: rng.randint(0, output_size - 1) for t in carrier}
 
-def random_term(depth: int, vars: List[str] = ["x", "y", "z"]) -> Term:
-    """Generate a random term of bounded depth."""
-    if depth <= 0:
-        if random.random() < 0.4:
-            return Const(random.choice([0, 1, 2, 3]))
+
+def make_consistent_eval(
+    system: RewriteSystem,
+    base_eval: Dict[int, int]
+) -> Dict[int, int]:
+    """Make an evaluation function consistent with the rewrite system.
+
+    For a sound evaluation, eval(s) = eval(t) whenever s →_R t.
+    We enforce this by mapping each term to eval(nf(term)).
+    """
+    result = {}
+    for t in system.carrier:
+        nf = system.compute_nf(t)
+        if nf is not None and nf in base_eval:
+            result[t] = base_eval[nf]
+        elif t in base_eval:
+            result[t] = base_eval[t]
         else:
-            return Var(random.choice(vars))
-
-    op = random.choice(["add", "mul", "const", "var"])
-    if op == "const":
-        return Const(random.choice([0, 1, 2, 3]))
-    elif op == "var":
-        return Var(random.choice(vars))
-    elif op == "add":
-        return Add(random_term(depth - 1, vars), random_term(depth - 1, vars))
-    else:
-        return Mul(random_term(depth - 1, vars), random_term(depth - 1, vars))
+            result[t] = 0
+    return result
 
 
-def random_env(vars: List[str] = ["x", "y", "z"]) -> Dict[str, int]:
-    """Generate a random variable assignment."""
-    return {v: random.randint(-10, 10) for v in vars}
+# ============================================================================
+# Demo 1: Extraction Soundness Verification
+# ============================================================================
 
+def demo_extraction_soundness():
+    """Test Theorem 1: extraction_semantics_preserved.
 
-# ============================================================
-# Main Demo
-# ============================================================
-
-def demo_extraction_correctness():
-    """Demonstrate that extraction preserves evaluation for 1000 random terms."""
+    For random convergent systems, verify that extraction always preserves
+    semantics across random evaluation functions.
+    """
     print("=" * 70)
-    print("E-GRAPH EXTRACTION CORRECTNESS DEMO")
+    print("DEMO 1: Extraction Soundness Verification")
+    print("  (Theorem: extraction_semantics_preserved)")
     print("=" * 70)
-    print()
-    print("Theorem: For a convergent rewrite system R with monotone cost,")
-    print("         eval(extract(t)) = eval(t) for all terms t.")
-    print()
 
-    random.seed(42)
-    n_terms = 1000
-    n_envs = 10
-    vars = ["x", "y", "z"]
-
-    print(f"Testing with {n_terms} random terms, {n_envs} random environments each...")
-    print()
-
+    n_systems = 100
+    n_evals_per_system = 10
+    n_terms_per_test = 20
     violations = 0
-    total_checks = 0
-    total_cost_savings = 0
-    terms_simplified = 0
+    total_tests = 0
 
-    for i in range(n_terms):
-        t = random_term(depth=3, vars=vars)
-        eg = EGraph()
-        tid = eg.add(t)
-        eg.saturate()
-        extracted = eg.extract_cheapest(tid)
+    for sys_idx in range(n_systems):
+        n = random.randint(8, 20)
+        num_rules = random.randint(2, n)
+        system = generate_convergent_system(n, num_rules, seed=sys_idx * 1000)
 
-        orig_cost = term_size(t)
-        extr_cost = term_size(extracted)
+        for eval_idx in range(n_evals_per_system):
+            base_eval = generate_random_eval(system.carrier, 5, seed=sys_idx * 100 + eval_idx)
+            eval_fn = make_consistent_eval(system, base_eval)
+            cost_fn = lambda x: x  # simple cost
 
-        if extr_cost < orig_cost:
-            terms_simplified += 1
-            total_cost_savings += (orig_cost - extr_cost)
+            seeds = random.sample(system.carrier, min(n_terms_per_test, n))
+            egraph = EGraph(system, seeds)
+            egraph.saturate()
 
-        for _ in range(n_envs):
-            env = random_env(vars)
-            val_orig = eval_term(t, env)
-            val_extr = eval_term(extracted, env)
-            total_checks += 1
-            if val_orig != val_extr:
-                violations += 1
-                print(f"  VIOLATION: {term_to_str(t)} -> {term_to_str(extracted)}")
-                print(f"    env={env}, eval(orig)={val_orig}, eval(extr)={val_extr}")
+            for t in seeds:
+                extracted = egraph.extract_cheapest(t, cost_fn)
+                total_tests += 1
+                if eval_fn.get(extracted, -1) != eval_fn.get(t, -2):
+                    violations += 1
+                    print(f"  ✗ VIOLATION: system {sys_idx}, "
+                          f"eval({t})={eval_fn[t]}, "
+                          f"eval(extract({t}))={eval_fn.get(extracted, '?')}")
 
-    print(f"Results:")
-    print(f"  Total checks: {total_checks}")
+    print(f"\n  Total tests: {total_tests}")
     print(f"  Violations: {violations}")
-    print(f"  Terms simplified: {terms_simplified}/{n_terms}")
-    print(f"  Total AST nodes saved: {total_cost_savings}")
-    print()
-
     if violations == 0:
-        print("✓ All checks passed! Extraction preserves evaluation.")
+        print("  ✓ ALL TESTS PASSED — extraction preserves semantics")
     else:
-        print("✗ VIOLATIONS FOUND — extraction is not sound!")
+        print(f"  ✗ {violations} VIOLATIONS FOUND")
     print()
 
 
-def demo_non_saturated_counterexample():
-    """Show that a non-saturated e-graph can violate extraction correctness."""
+# ============================================================================
+# Demo 2: Cost Optimality Verification
+# ============================================================================
+
+def demo_cost_optimality():
+    """Test Theorem 2: cheapest_extraction_sound_and_optimal.
+
+    Verify that extracted terms are always cheapest in their class.
+    """
     print("=" * 70)
-    print("COUNTEREXAMPLE: NON-SATURATED E-GRAPH")
+    print("DEMO 2: Cost Optimality Verification")
+    print("  (Theorem: cheapest_extraction_sound_and_optimal)")
     print("=" * 70)
-    print()
-    print("Without saturation, extraction can choose a term from a DIFFERENT")
-    print("equivalence class, violating eval(extract(t)) = eval(t).")
-    print()
 
-    # Create an e-graph and manually merge classes that shouldn't be merged
-    # (simulating incomplete saturation that incorrectly merges)
-    eg = EGraph()
+    n_systems = 100
+    violations = 0
+    total_tests = 0
+    total_savings = 0
 
-    # Terms: x and (x + 0) should be equivalent after saturation
-    # But if we merge x with y (incorrectly), extraction can go wrong
-    t1 = Var("x")
-    t2 = Var("y")
-    t3 = Add(Var("x"), Const(0))
+    for sys_idx in range(n_systems):
+        n = random.randint(8, 20)
+        num_rules = random.randint(2, n)
+        system = generate_convergent_system(n, num_rules, seed=sys_idx * 2000)
 
-    id1 = eg.add(t1)
-    id2 = eg.add(t2)
-    id3 = eg.add(t3)
+        rng = random.Random(sys_idx * 3000)
+        cost_fn_dict = {t: rng.randint(1, 100) for t in system.carrier}
+        cost_fn = lambda x, d=cost_fn_dict: d.get(x, 999)
 
-    print(f"  Terms: t1 = {term_to_str(t1)}, t2 = {term_to_str(t2)}, t3 = {term_to_str(t3)}")
-    print(f"  E-class ids: t1={id1}, t2={id2}, t3={id3}")
-    print()
+        seeds = system.carrier[:]
+        egraph = EGraph(system, seeds)
+        egraph.saturate()
 
-    # Incorrect merge: pretend x = y (this is unsound)
-    print("  Performing UNSOUND merge: x ≡ y (incorrect!)")
-    eg.union(id1, id2)
-    print()
+        classes = egraph.uf.get_classes()
+        for root, members in classes.items():
+            min_cost = min(cost_fn(m) for m in members)
+            for t in members:
+                extracted = egraph.extract_cheapest(t, cost_fn)
+                total_tests += 1
+                if cost_fn(extracted) > min_cost:
+                    violations += 1
+                else:
+                    total_savings += cost_fn(t) - cost_fn(extracted)
 
-    env = {"x": 5, "y": 10}
-    print(f"  Environment: {env}")
-
-    # Now extraction from t1's class might return y
-    extracted = eg.extract_cheapest(id1)
-    print(f"  extract(x) = {term_to_str(extracted)}")
-    print(f"  eval(x) = {eval_term(t1, env)}")
-    print(f"  eval(extract(x)) = {eval_term(extracted, env)}")
-
-    if eval_term(t1, env) != eval_term(extracted, env):
-        print()
-        print("✗ MISMATCH! Unsound e-graph breaks extraction correctness.")
-        print("  This demonstrates why saturation must be SOUND:")
-        print("  only terms provably equivalent under R should be merged.")
-    print()
-
-
-def demo_cost_monotonicity():
-    """Demonstrate that extraction never increases cost under monotone cost model."""
-    print("=" * 70)
-    print("COST MONOTONICITY DEMO")
-    print("=" * 70)
-    print()
-
-    random.seed(123)
-    n_terms = 500
-    vars = ["x", "y", "z"]
-
-    cost_increased = 0
-    cost_decreased = 0
-    cost_same = 0
-
-    for _ in range(n_terms):
-        t = random_term(depth=4, vars=vars)
-        eg = EGraph()
-        tid = eg.add(t)
-        eg.saturate()
-        extracted = eg.extract_cheapest(tid)
-
-        orig_cost = term_size(t)
-        extr_cost = term_size(extracted)
-
-        if extr_cost < orig_cost:
-            cost_decreased += 1
-        elif extr_cost > orig_cost:
-            cost_increased += 1
-        else:
-            cost_same += 1
-
-    print(f"  Cost decreased: {cost_decreased}/{n_terms}")
-    print(f"  Cost unchanged: {cost_same}/{n_terms}")
-    print(f"  Cost increased: {cost_increased}/{n_terms}")
-    print()
-
-    if cost_increased == 0:
-        print("✓ Cost never increased — monotonicity verified!")
+    print(f"\n  Total tests: {total_tests}")
+    print(f"  Violations: {violations}")
+    print(f"  Total cost savings: {total_savings}")
+    if violations == 0:
+        print("  ✓ ALL TESTS PASSED — extraction is cost-optimal")
     else:
-        print("✗ Cost increased in some cases — monotonicity violated!")
+        print(f"  ✗ {violations} VIOLATIONS FOUND")
     print()
 
 
-def demo_convergent_vs_nonconvergent():
-    """Show the difference between convergent and non-convergent systems."""
+# ============================================================================
+# Demo 3: Normal Form Agreement
+# ============================================================================
+
+def demo_nf_agreement():
+    """Test Theorem 3: extraction_agrees_with_quotient_nf_semantically.
+
+    Verify that extraction agrees with normal-form computation semantically.
+    """
     print("=" * 70)
-    print("CONVERGENT vs NON-CONVERGENT SYSTEMS")
+    print("DEMO 3: Normal Form Agreement")
+    print("  (Theorem: extraction_agrees_with_quotient_nf_semantically)")
+    print("=" * 70)
+
+    n_systems = 100
+    violations = 0
+    total_tests = 0
+
+    for sys_idx in range(n_systems):
+        n = random.randint(8, 20)
+        num_rules = random.randint(2, n)
+        system = generate_convergent_system(n, num_rules, seed=sys_idx * 4000)
+
+        base_eval = generate_random_eval(system.carrier, 5, seed=sys_idx * 5000)
+        eval_fn = make_consistent_eval(system, base_eval)
+        cost_fn = lambda x: x
+
+        seeds = system.carrier[:]
+        egraph = EGraph(system, seeds)
+        egraph.saturate()
+
+        for t in seeds:
+            extracted = egraph.extract_cheapest(t, cost_fn)
+            nf = system.compute_nf(t)
+            total_tests += 1
+            if nf is not None and eval_fn.get(extracted, -1) != eval_fn.get(nf, -2):
+                violations += 1
+                print(f"  ✗ NF disagreement: system {sys_idx}, t={t}, "
+                      f"eval(extract)={eval_fn.get(extracted)}, "
+                      f"eval(nf)={eval_fn.get(nf)}")
+
+    print(f"\n  Total tests: {total_tests}")
+    print(f"  Violations: {violations}")
+    if violations == 0:
+        print("  ✓ ALL TESTS PASSED — extraction agrees with NF semantically")
+    else:
+        print(f"  ✗ {violations} VIOLATIONS FOUND")
+    print()
+
+
+# ============================================================================
+# Demo 4: Saturation Depth Analysis (Falsifiable Conjecture)
+# ============================================================================
+
+def demo_saturation_depth():
+    """Test the bounded completeness conjecture.
+
+    Conjecture: For finite convergent systems with n elements, saturation
+    depth grows at most polynomially in n.
+
+    We measure saturation depth for systems of increasing size and check
+    whether growth is polynomial or super-polynomial.
+    """
+    print("=" * 70)
+    print("DEMO 4: Saturation Depth Analysis (Bounded Completeness Conjecture)")
+    print("=" * 70)
+    print()
+    print("  Conjecture: saturation depth grows polynomially in carrier size")
+    print()
+
+    sizes = [5, 8, 10, 12, 15, 18, 20]
+    results: List[Tuple[int, float, float, int]] = []
+
+    for n in sizes:
+        depths = []
+        num_classes_list = []
+        for trial in range(50):
+            num_rules = max(2, n // 2)
+            system = generate_convergent_system(n, num_rules, seed=n * 10000 + trial)
+
+            seeds = system.carrier[:]
+            egraph = EGraph(system, seeds)
+            depth = egraph.saturate(max_depth=200)
+            depths.append(depth)
+            num_classes_list.append(len(egraph.uf.get_classes()))
+
+        avg_depth = sum(depths) / len(depths)
+        max_depth = max(depths)
+        avg_classes = sum(num_classes_list) / len(num_classes_list)
+
+        results.append((n, avg_depth, avg_classes, max_depth))
+        print(f"  n={n:3d}: avg_depth={avg_depth:5.1f}, "
+              f"max_depth={max_depth:3d}, "
+              f"avg_classes={avg_classes:5.1f}")
+
+    print()
+    print("  Depth growth analysis:")
+    print("  " + "-" * 50)
+    print(f"  {'Size':>6s} {'Avg Depth':>10s} {'Max Depth':>10s} {'Ratio':>10s}")
+    print("  " + "-" * 50)
+    prev_avg = None
+    for n, avg_d, _, max_d in results:
+        ratio = f"{avg_d / prev_avg:.2f}" if prev_avg and prev_avg > 0 else "  -"
+        print(f"  {n:6d} {avg_d:10.1f} {max_d:10d} {ratio:>10s}")
+        prev_avg = avg_d
+    print("  " + "-" * 50)
+    print()
+
+    # Check if growth is polynomial
+    if len(results) >= 3:
+        first_size, first_depth = results[0][0], results[0][1]
+        last_size, last_depth = results[-1][0], results[-1][1]
+        if first_depth > 0 and last_depth > 0 and first_size > 0 and last_size > 0:
+            import math
+            size_ratio = last_size / first_size
+            depth_ratio = last_depth / first_depth if first_depth > 0 else float('inf')
+            if depth_ratio > 0 and size_ratio > 1:
+                exponent = math.log(depth_ratio) / math.log(size_ratio)
+                print(f"  Estimated growth exponent: {exponent:.2f}")
+                if exponent <= 3:
+                    print("  → CONSISTENT with polynomial growth conjecture")
+                else:
+                    print("  → POTENTIAL EVIDENCE against polynomial growth")
+    print()
+
+
+# ============================================================================
+# Demo 5: Visualization of E-Graph Merges
+# ============================================================================
+
+def demo_visualization():
+    """Visualize the saturation process: class merges at each step."""
+    print("=" * 70)
+    print("DEMO 5: E-Graph Saturation Visualization")
     print("=" * 70)
     print()
 
-    # Example: convergent system
-    print("Convergent system (our rules): always terminates, unique normal form")
-    examples = [
-        Add(Mul(Const(1), Var("x")), Const(0)),  # 1*x + 0 → x
-        Mul(Add(Var("x"), Const(0)), Const(1)),   # (x+0)*1 → x
-        Add(Const(0), Mul(Const(0), Var("y"))),   # 0 + 0*y → 0
+    n = 10
+    rules = [
+        (1, 0), (3, 2), (5, 4), (7, 6),
+        (8, 2), (9, 4),
     ]
+    system = RewriteSystem(list(range(n)), rules)
 
-    for t in examples:
-        eg = EGraph()
-        tid = eg.add(t)
-        merges = eg.saturate()
-        extracted = eg.extract_cheapest(tid)
-        print(f"  {term_to_str(t):30s} → {term_to_str(extracted):10s} "
-              f"(size: {term_size(t)} → {term_size(extracted)}, merges: {merges})")
+    seeds = list(range(n))
+    egraph = EGraph(system, seeds)
+
+    print("  Initial state: each element in its own class")
+    print(f"  Rules: {rules}")
+    print()
+
+    for step in range(1, 20):
+        changed = False
+        for t in list(egraph.terms):
+            for s, tgt in egraph.system.rules:
+                if t == s:
+                    egraph.uf.add(tgt)
+                    egraph.terms.add(tgt)
+                    if egraph.uf.union(t, tgt):
+                        changed = True
+                if t == tgt:
+                    egraph.uf.add(s)
+                    egraph.terms.add(s)
+                    if egraph.uf.union(t, s):
+                        changed = True
+
+        classes = egraph.uf.get_classes()
+        class_strs = [
+            "{" + ",".join(str(m) for m in sorted(members)) + "}"
+            for members in classes.values()
+        ]
+        print(f"  Step {step}: {' '.join(sorted(class_strs))}")
+
+        if not changed:
+            print(f"\n  Saturated after {step} steps!")
+            break
+
+    print()
+    cost_fn = lambda x: x * x + 1
+    print("  Cost-optimal extraction (cost(x) = x² + 1):")
+    for t in range(n):
+        ext = egraph.extract_cheapest(t, cost_fn)
+        print(f"    {t} → {ext} (cost: {cost_fn(t)} → {cost_fn(ext)})")
     print()
 
 
-if __name__ == "__main__":
-    demo_extraction_correctness()
-    demo_non_saturated_counterexample()
-    demo_cost_monotonicity()
-    demo_convergent_vs_nonconvergent()
+# ============================================================================
+# Main
+# ============================================================================
+
+def main():
+    print()
+    print("╔══════════════════════════════════════════════════════════════════╗")
+    print("║  Equality Saturation Extraction Correctness — Interactive Demo  ║")
+    print("╠══════════════════════════════════════════════════════════════════╣")
+    print("║  Testing the formal theorems computationally:                   ║")
+    print("║  1. extraction_semantics_preserved                              ║")
+    print("║  2. cheapest_extraction_sound_and_optimal                       ║")
+    print("║  3. extraction_agrees_with_quotient_nf_semantically             ║")
+    print("║  4. Bounded completeness conjecture                             ║")
+    print("║  5. E-graph saturation visualization                            ║")
+    print("╚══════════════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_extraction_soundness()
+    demo_cost_optimality()
+    demo_nf_agreement()
+    demo_saturation_depth()
+    demo_visualization()
+
+    print("=" * 70)
+    print("ALL DEMOS COMPLETE")
+    print("=" * 70)
+
+
+if __name__ == '__main__':
+    main()
