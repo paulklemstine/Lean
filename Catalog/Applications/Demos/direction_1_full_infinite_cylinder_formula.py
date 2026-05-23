@@ -1,15 +1,394 @@
 #!/usr/bin/env python3
 """
-Applications of the Cylinder Formula to Number Theory and Probability
-=====================================================================
+Applications of the Cylinder Measure Formula
+=============================================
 
-Demonstrates real-world applications of the Haar measure cylinder formula
-for restricted products, connecting to:
+Real-world applications demonstrating how the measure-theoretic Euler
+product principle connects number theory, probability, and physics.
+"""
 
-1. Adelic density of divisibility conditions
-2. Probabilistic independence of prime conditions
-3. Euler product computations
-4. Approximation of arithmetic densities
+from fractions import Fraction
+from typing import List, Dict, Tuple
+import math
+
+
+def is_prime(n: int) -> bool:
+    """Check if n is prime."""
+    if n < 2:
+        return False
+    for d in range(2, int(n**0.5) + 1):
+        if n % d == 0:
+            return False
+    return True
+
+
+def primes_up_to(n: int) -> List[int]:
+    """Return all primes ≤ n."""
+    return [p for p in range(2, n + 1) if is_prime(p)]
+
+
+# ============================================================
+# Application 1: Adelic Density of Divisibility Conditions
+# ============================================================
+
+def adelic_density_divisible_by(m: int) -> Fraction:
+    """
+    Compute the adelic density of integers divisible by m.
+
+    The "probability" that a random adelic integer satisfies
+    v_p(x) ≥ v_p(m) for all primes p dividing m is exactly:
+
+        ∏_{p | m} p^{-v_p(m)} = 1/m
+
+    This gives the adelic interpretation of natural density.
+
+    Parameters
+    ----------
+    m : int
+        Positive integer
+
+    Returns
+    -------
+    Fraction
+        The adelic density = 1/m
+    """
+    if m <= 0:
+        raise ValueError("m must be positive")
+
+    result = Fraction(1, 1)
+    temp = m
+    p = 2
+    while p * p <= temp:
+        if temp % p == 0:
+            k = 0
+            while temp % p == 0:
+                k += 1
+                temp //= p
+            result *= Fraction(1, p ** k)
+        p += 1
+    if temp > 1:
+        result *= Fraction(1, temp)
+
+    return result
+
+
+def demonstrate_natural_density():
+    """Show that adelic density matches classical natural density."""
+    print("Application 1: Adelic Density = Natural Density")
+    print("=" * 60)
+    print()
+    print("The cylinder measure formula gives the adelic density of")
+    print("'integers divisible by m' as ∏_{p|m} 1/p^{v_p(m)} = 1/m.")
+    print()
+    print(f"  {'m':>6s}  {'Factorization':>20s}  {'Adelic Density':>15s}  {'= 1/m?':>8s}")
+    print("  " + "-" * 55)
+
+    test_values = [2, 3, 6, 12, 30, 60, 100, 360, 1000]
+    for m in test_values:
+        density = adelic_density_divisible_by(m)
+        expected = Fraction(1, m)
+        # Simple factorization display
+        factors = []
+        temp = m
+        p = 2
+        while p * p <= temp:
+            if temp % p == 0:
+                k = 0
+                while temp % p == 0:
+                    k += 1
+                    temp //= p
+                factors.append(f"{p}^{k}" if k > 1 else str(p))
+            p += 1
+        if temp > 1:
+            factors.append(str(temp))
+        fact_str = " × ".join(factors) if factors else str(m)
+
+        print(f"  {m:6d}  {fact_str:>20s}  {str(density):>15s}  "
+              f"{'✓' if density == expected else '✗':>8s}")
+    print()
+
+
+# ============================================================
+# Application 2: Probability of Coprimality
+# ============================================================
+
+def prob_coprime_to_set(primes: List[int]) -> Fraction:
+    """
+    Compute the probability that x is coprime to all primes in a set.
+
+    Under normalized Haar measure, P(v_p(x) = 0 for all p ∈ S) =
+    ∏_{p ∈ S} (1 - 1/p).
+
+    As S → {all primes}, this approaches 1/ζ(1) → 0, but for finite S
+    it gives the fraction of integers not divisible by any p ∈ S.
+
+    Parameters
+    ----------
+    primes : list of int
+        Set of primes
+
+    Returns
+    -------
+    Fraction
+        Probability of coprimality to all given primes
+    """
+    result = Fraction(1, 1)
+    for p in primes:
+        result *= Fraction(p - 1, p)
+    return result
+
+
+def euler_product_zeta(max_prime: int) -> float:
+    """
+    Compute partial Euler product for ζ(s)^{-1} at s=1.
+
+    ∏_{p ≤ N} (1 - 1/p) → 0 as N → ∞ (divergence of harmonic series),
+    but for ζ(2):  ∏_p (1 - 1/p^2) = 6/π^2 ≈ 0.6079...
+
+    Returns the partial product ∏_{p ≤ max_prime} (1 - 1/p^2).
+    """
+    result = 1.0
+    for p in primes_up_to(max_prime):
+        result *= (1 - 1 / p**2)
+    return result
+
+
+def demonstrate_coprimality():
+    """Show coprimality probabilities via cylinder measures."""
+    print("Application 2: Coprimality via Cylinder Measures")
+    print("=" * 60)
+    print()
+    print("P(gcd(x, ∏S) = 1) = ∏_{p ∈ S} (1 - 1/p)")
+    print("This is the complement of the cylinder: x_p ∉ pℤ_p for all p ∈ S.")
+    print()
+
+    for k in range(1, 8):
+        S = primes_up_to(2 + 3 * k)
+        prob = prob_coprime_to_set(S)
+        print(f"  S = primes ≤ {2+3*k:2d}: "
+              f"P(coprime) = {str(prob):>20s} = {float(prob):.6f}")
+
+    print()
+    print("Approach to 6/π² via Euler product for ζ(2):")
+    target = 6 / math.pi**2
+    print(f"  6/π² = {target:.8f}")
+    for N in [10, 50, 100, 500, 1000]:
+        val = euler_product_zeta(N)
+        print(f"  ∏_{{p≤{N:4d}}} (1-1/p²) = {val:.8f}  "
+              f"(error: {abs(val - target):.2e})")
+    print()
+
+
+# ============================================================
+# Application 3: Tamagawa-style Volume Computation
+# ============================================================
+
+def tamagawa_volume_orthogonal(n: int, max_prime: int = 100) -> float:
+    """
+    Approximate Tamagawa volume for SO(n) using local densities.
+
+    The Tamagawa number of SO(n) involves products of local densities
+    at each prime. This computes a partial product approximation.
+
+    For SO(n) with n ≥ 3, the local density at p is approximately:
+        c_p(SO(n)) ≈ ∏_{k=1}^{⌊n/2⌋} (1 - p^{-2k})
+
+    The Tamagawa number (global volume) is:
+        τ(SO(n)) = ∏_p c_p(SO(n)) × (archimedean factor)
+
+    Parameters
+    ----------
+    n : int
+        Dimension of the orthogonal group
+    max_prime : int
+        Compute product over primes up to this bound
+
+    Returns
+    -------
+    float
+        Partial Tamagawa volume estimate
+    """
+    result = 1.0
+    for p in primes_up_to(max_prime):
+        local_factor = 1.0
+        for k in range(1, n // 2 + 1):
+            local_factor *= (1 - p ** (-2 * k))
+        result *= local_factor
+    return result
+
+
+def demonstrate_tamagawa():
+    """Show Tamagawa-style volume computations."""
+    print("Application 3: Tamagawa Volume Approximation")
+    print("=" * 60)
+    print()
+    print("Local density product for SO(n):")
+    print("  τ_fin(SO(n)) ≈ ∏_{p prime} ∏_{k=1}^{⌊n/2⌋} (1 - p^{-2k})")
+    print()
+
+    for n in [3, 4, 5, 6, 8]:
+        for N in [50, 200, 1000]:
+            vol = tamagawa_volume_orthogonal(n, N)
+            print(f"  SO({n}), primes ≤ {N:4d}: τ_fin ≈ {vol:.8f}")
+        print()
+
+
+# ============================================================
+# Application 4: Information-Theoretic Entropy
+# ============================================================
+
+def adelic_entropy(primes: List[int], valuation_min: int = 1) -> float:
+    """
+    Compute the adelic entropy of a cylinder constraint.
+
+    H(S) = -∑_{p ∈ S} log(localMass_p(A_p)) · localMass_p(A_p)
+         = ∑_{p ∈ S} k·log(p)/p^k     (for A_p = p^k ℤ_p)
+
+    This measures the "information content" of knowing that
+    x_p ∈ p^k ℤ_p for each p ∈ S.
+
+    Parameters
+    ----------
+    primes : list of int
+        Support set S
+    valuation_min : int
+        Common minimum valuation k
+
+    Returns
+    -------
+    float
+        Shannon entropy of the cylinder partition
+    """
+    H = 0.0
+    for p in primes:
+        prob = 1.0 / p ** valuation_min
+        if prob > 0:
+            H -= prob * math.log(prob)
+    return H
+
+
+def demonstrate_entropy():
+    """Show information-theoretic interpretation."""
+    print("Application 4: Adelic Entropy")
+    print("=" * 60)
+    print()
+    print("Shannon entropy of cylinder constraints:")
+    print("  H(S) = -∑_{p ∈ S} (1/p) · log(1/p) = ∑_{p ∈ S} log(p)/p")
+    print()
+
+    for k in range(1, 8):
+        S = primes_up_to(2 + 4 * k)
+        H = adelic_entropy(S)
+        print(f"  S = primes ≤ {2+4*k:2d} ({len(S):2d} primes): "
+              f"H = {H:.6f} nats")
+
+    print()
+    print("Per-prime entropy contributions:")
+    for p in primes_up_to(30):
+        contrib = math.log(p) / p
+        print(f"  p = {p:2d}: log(p)/p = {contrib:.6f}")
+    print()
+
+
+# ============================================================
+# Application 5: Arithmetic Statistics
+# ============================================================
+
+def splitting_density(
+    primes: List[int],
+    split_type: Dict[int, str]
+) -> Fraction:
+    """
+    Compute the density of primes with given splitting behavior.
+
+    In a number field K/Q, each prime p has a splitting type
+    (split, inert, ramified). The density of primes with a given
+    pattern at finitely many places is a cylinder measure.
+
+    For a quadratic field Q(√d):
+      - p splits: local density (p-1)/(2p) if (d/p) = 1
+      - p is inert: local density (p+1)/(2p) if (d/p) = -1
+      - p ramifies: local density 1/p if p | d
+
+    Parameters
+    ----------
+    primes : list of int
+        Primes to constrain
+    split_type : dict
+        Maps prime -> 'split', 'inert', or 'ramified'
+
+    Returns
+    -------
+    Fraction
+        Product of local densities
+    """
+    result = Fraction(1, 1)
+    for p in primes:
+        st = split_type.get(p, 'split')
+        if st == 'split':
+            result *= Fraction(p - 1, 2 * p)
+        elif st == 'inert':
+            result *= Fraction(p + 1, 2 * p)
+        elif st == 'ramified':
+            result *= Fraction(1, p)
+    return result
+
+
+def demonstrate_arithmetic_statistics():
+    """Show arithmetic statistics application."""
+    print("Application 5: Arithmetic Statistics")
+    print("=" * 60)
+    print()
+    print("Splitting densities in Q(√-1):")
+    print("  p splits iff p ≡ 1 (mod 4), local density = (p-1)/(2p)")
+    print("  p is inert iff p ≡ 3 (mod 4), local density = (p+1)/(2p)")
+    print("  p = 2 ramifies, local density = 1/2")
+    print()
+
+    # For Q(√-1), 2 ramifies, p≡1(4) split, p≡3(4) inert
+    primes = [2, 3, 5, 7, 11, 13]
+    split = {}
+    for p in primes:
+        if p == 2:
+            split[p] = 'ramified'
+        elif p % 4 == 1:
+            split[p] = 'split'
+        else:
+            split[p] = 'inert'
+
+    for k in range(1, len(primes) + 1):
+        S = primes[:k]
+        st = {p: split[p] for p in S}
+        density = splitting_density(S, st)
+        desc = ", ".join(f"{p}:{split[p][:3]}" for p in S)
+        print(f"  S = {{{desc}}}")
+        print(f"    density = {density} = {float(density):.8f}")
+    print()
+
+
+if __name__ == "__main__":
+    demonstrate_natural_density()
+    demonstrate_coprimality()
+    demonstrate_tamagawa()
+    demonstrate_entropy()
+    demonstrate_arithmetic_statistics()
+    print("=" * 60)
+    print("All applications demonstrated successfully.")
+
+
+#!/usr/bin/env python3
+"""
+Cylinder Measure Formula: Interactive Demo
+==========================================
+Demonstrates the measure-theoretic Euler product principle for restricted products.
+
+For a finite set of primes S, computes:
+  μ(cylinder) = ∏_{p ∈ S} localMass_p(A_p)
+
+In the p-adic case with A_p = pℤ_p ⊆ ℤ_p:
+  localMass_p(pℤ_p) = μ_p(pℤ_p) / μ_p(ℤ_p) = 1/p
+
+So the cylinder measure equals ∏_{p ∈ S} 1/p.
 """
 
 from fractions import Fraction
@@ -17,596 +396,208 @@ from typing import List, Dict
 import math
 
 
-# ================================================================
-# Application 1: Adelic Density of Divisibility
-# ================================================================
-
-def divisibility_density(primes: List[int], powers: List[int]) -> Fraction:
+def local_mass_padic(p: int, valuation_min: int = 1) -> Fraction:
     """
-    Compute the adelic density of integers divisible by p^k for each prime p.
+    Compute the local normalized mass of {x ∈ ℚ_p : v_p(x) ≥ valuation_min}
+    relative to ℤ_p = {x ∈ ℚ_p : v_p(x) ≥ 0}.
 
-    In the adeles 𝔸_ℚ, the set of elements x with x_p ∈ p^k ℤ_p has
-    local mass μ_p(p^k ℤ_p) / μ_p(ℤ_p) = 1/p^k.
+    The set p^k ℤ_p has measure p^{-k} relative to ℤ_p.
 
-    The cylinder formula gives:
-        density = ∏_p 1/p^k_p
+    Parameters
+    ----------
+    p : int
+        A prime number
+    valuation_min : int
+        Minimum p-adic valuation (default 1, giving pℤ_p)
+
+    Returns
+    -------
+    Fraction
+        The local mass μ_p(p^k ℤ_p) / μ_p(ℤ_p) = 1/p^k
+    """
+    if valuation_min < 0:
+        raise ValueError("For subsets of ℤ_p, valuation_min must be ≥ 0")
+    return Fraction(1, p ** valuation_min)
+
+
+def cylinder_measure(primes: List[int], valuations: Dict[int, int] = None) -> Fraction:
+    """
+    Compute the cylinder measure for a finite set of primes.
 
     Parameters
     ----------
     primes : list of int
-        Prime numbers.
-    powers : list of int
-        Powers k_p for each prime.
+        Finite set S of prime numbers
+    valuations : dict, optional
+        Map p -> minimum valuation (default: all 1, giving pℤ_p constraints)
 
     Returns
     -------
     Fraction
-        The adelic density.
+        The product ∏_{p ∈ S} localMass_p(A_p)
     """
-    result = Fraction(1)
-    for p, k in zip(primes, powers):
-        result *= Fraction(1, p ** k)
+    if valuations is None:
+        valuations = {p: 1 for p in primes}
+
+    result = Fraction(1, 1)
+    for p in primes:
+        k = valuations.get(p, 0)
+        result *= local_mass_padic(p, k)
     return result
 
 
-def demo_divisibility():
-    """Demonstrate adelic divisibility density."""
-    print("=" * 60)
-    print("  APPLICATION 1: Adelic Density of Divisibility")
-    print("=" * 60)
-    print()
-
-    # Density of integers divisible by 6 (= 2 × 3)
-    d = divisibility_density([2, 3], [1, 1])
-    print(f"Density of integers divisible by 6 = 2×3:")
-    print(f"  ∏ 1/p = 1/2 × 1/3 = {d} ≈ {float(d):.4f}")
-    print(f"  Classical: 1/6 of integers are divisible by 6 ✓")
-    print()
-
-    # Density of integers divisible by 30 (= 2 × 3 × 5)
-    d = divisibility_density([2, 3, 5], [1, 1, 1])
-    print(f"Density of integers divisible by 30 = 2×3×5:")
-    print(f"  ∏ 1/p = {d} ≈ {float(d):.6f}")
-    print()
-
-    # Density of integers divisible by 4 (= 2²)
-    d = divisibility_density([2], [2])
-    print(f"Density of integers divisible by 4 = 2²:")
-    print(f"  1/2² = {d} ≈ {float(d):.4f}")
-    print()
-
-    # Density of integers divisible by 12 (= 2² × 3)
-    d = divisibility_density([2, 3], [2, 1])
-    print(f"Density of integers divisible by 12 = 2²×3:")
-    print(f"  1/4 × 1/3 = {d} ≈ {float(d):.6f}")
-    print()
-
-    # Large example: first 10 primes
-    primes_10 = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-    product = math.prod(primes_10)
-    d = divisibility_density(primes_10, [1] * 10)
-    print(f"Density of integers divisible by primorial(29) = {product}:")
-    print(f"  ∏ 1/p = {d}")
-    print(f"  ≈ {float(d):.15f}")
-    print(f"  ≈ 1/{product}")
-
-
-# ================================================================
-# Application 2: Probabilistic Independence
-# ================================================================
-
-def demo_independence():
-    """Demonstrate probabilistic independence of prime conditions."""
-    print()
-    print("=" * 60)
-    print("  APPLICATION 2: Probabilistic Independence")
-    print("=" * 60)
-    print()
-
-    print("Under normalized Haar measure, conditions at different")
-    print("primes are INDEPENDENT events.")
-    print()
-
-    # Event A: divisible by 2
-    # Event B: divisible by 3
-    p_a = Fraction(1, 2)
-    p_b = Fraction(1, 3)
-    p_ab = Fraction(1, 6)
-
-    print(f"P(divisible by 2) = {p_a}")
-    print(f"P(divisible by 3) = {p_b}")
-    print(f"P(divisible by 2 AND 3) = {p_ab}")
-    print(f"P(A) × P(B) = {p_a * p_b}")
-    print(f"Independence check: P(A∩B) = P(A)×P(B)? {p_ab == p_a * p_b} ✓")
-    print()
-
-    # Conditional probability
-    p_b_given_a = p_ab / p_a
-    print(f"P(div by 3 | div by 2) = {p_b_given_a} = P(div by 3)")
-    print(f"Knowing divisibility by 2 tells you NOTHING about")
-    print(f"divisibility by 3. This is the local-global principle")
-    print(f"expressed as probabilistic independence.")
-    print()
-
-    # Multiple primes
-    primes = [2, 3, 5, 7, 11]
-    print(f"For primes {primes}:")
-    for i, p in enumerate(primes):
-        for q in primes[i+1:]:
-            p_p = Fraction(1, p)
-            p_q = Fraction(1, q)
-            p_pq = Fraction(1, p * q)
-            independent = p_pq == p_p * p_q
-            print(f"  P({p}∩{q}) = {p_pq} = {p_p}×{p_q}? {independent}")
-
-
-# ================================================================
-# Application 3: Euler Product Computations
-# ================================================================
-
-def partial_euler_product(s: float, n_primes: int) -> float:
+def residue_class_approximation(p: int, n: int, valuation_min: int = 1) -> Fraction:
     """
-    Compute partial Euler product ∏_{p ≤ p_n} (1 - 1/p^s)^{-1}.
+    Approximate the local p-adic mass using residue class counting.
 
-    The cylinder formula gives a measure-theoretic interpretation:
-    ∏ (1 - 1/p^s)^{-1} = ∑_{n: gcd(n, ∏p) = 1 or ...}
+    μ_p(p^k ℤ_p) / μ_p(ℤ_p) ≈ |p^k ℤ_p / p^n ℤ_p| / |ℤ_p / p^n ℤ_p|
+                                = p^{n-k} / p^n = 1/p^k
 
     Parameters
     ----------
-    s : float
-        The exponent.
-    n_primes : int
-        Number of primes to include.
-
-    Returns
-    -------
-    float
-        The partial product.
-    """
-    def sieve_primes(n):
-        """Generate first n primes."""
-        primes = []
-        candidate = 2
-        while len(primes) < n:
-            if all(candidate % p != 0 for p in primes):
-                primes.append(candidate)
-            candidate += 1
-        return primes
-
-    primes = sieve_primes(n_primes)
-    product = 1.0
-    for p in primes:
-        product *= 1.0 / (1.0 - p ** (-s))
-    return product
-
-
-def demo_euler_products():
-    """Demonstrate Euler product computations."""
-    print()
-    print("=" * 60)
-    print("  APPLICATION 3: Euler Product Computations")
-    print("=" * 60)
-    print()
-
-    print("The cylinder formula gives the measure-theoretic")
-    print("foundation for Euler products:")
-    print("  ζ(s) = ∑ 1/n^s = ∏_p (1 - 1/p^s)^{-1}")
-    print()
-
-    for s in [2, 3, 4]:
-        print(f"ζ({s}) partial Euler products:")
-        for n in [5, 10, 20, 50, 100]:
-            val = partial_euler_product(s, n)
-            print(f"  {n:3d} primes: {val:.10f}")
-
-        if s == 2:
-            exact = math.pi ** 2 / 6
-            print(f"  Exact:      {exact:.10f} = π²/6")
-        elif s == 4:
-            exact = math.pi ** 4 / 90
-            print(f"  Exact:      {exact:.10f} = π⁴/90")
-        print()
-
-
-# ================================================================
-# Application 4: Arithmetic Density Approximation
-# ================================================================
-
-def squarefree_density(n_primes: int) -> Fraction:
-    """
-    Compute the density of squarefree integers using the cylinder formula.
-
-    An integer is squarefree iff it is not divisible by p² for any prime p.
-    The density is:
-        ∏_p (1 - 1/p²) = 1/ζ(2) = 6/π²
-
-    Parameters
-    ----------
-    n_primes : int
-        Number of primes to include in the approximation.
+    p : int
+        Prime
+    n : int
+        Precision level (number of residue classes)
+    valuation_min : int
+        Minimum valuation
 
     Returns
     -------
     Fraction
-        The partial product ∏_{p ≤ p_n} (1 - 1/p²).
+        Approximation via residue class counting
     """
-    def sieve_primes(n):
-        primes = []
-        candidate = 2
-        while len(primes) < n:
-            if all(candidate % p != 0 for p in primes):
-                primes.append(candidate)
-            candidate += 1
-        return primes
-
-    primes = sieve_primes(n_primes)
-    result = Fraction(1)
-    for p in primes:
-        result *= (1 - Fraction(1, p * p))
-    return result
+    if n < valuation_min:
+        return Fraction(0, 1)
+    numerator = p ** (n - valuation_min)
+    denominator = p ** n
+    return Fraction(numerator, denominator)
 
 
-def demo_arithmetic_density():
-    """Demonstrate arithmetic density via cylinder approximation."""
-    print()
-    print("=" * 60)
-    print("  APPLICATION 4: Arithmetic Density via Cylinders")
-    print("=" * 60)
+def demonstrate_euler_product():
+    """Main demonstration of the cylinder measure formula."""
+    print("=" * 70)
+    print("CYLINDER MEASURE FORMULA — EULER PRODUCT DEMONSTRATION")
+    print("=" * 70)
     print()
 
-    print("Density of squarefree integers:")
-    print("  = ∏_p (1 - 1/p²) = 6/π² ≈ 0.60793...")
+    # Example 1: Single prime
+    print("Example 1: Single prime p = 2")
+    print("-" * 40)
+    p = 2
+    mass = local_mass_padic(p)
+    print(f"  localMass_2(2ℤ_2) = μ(2ℤ_2) / μ(ℤ_2) = {mass} = {float(mass):.6f}")
     print()
 
-    exact = 6.0 / (math.pi ** 2)
-    for n in [1, 2, 3, 5, 10, 20, 50]:
-        d = squarefree_density(n)
-        err = abs(float(d) - exact)
-        print(f"  {n:2d} primes: {float(d):.10f}  (error: {err:.2e})")
-
-    print(f"  Exact:    {exact:.10f}")
+    # Example 2: Product over {2, 3, 5}
+    print("Example 2: Primes S = {2, 3, 5}")
+    print("-" * 40)
+    S = [2, 3, 5]
+    mu = cylinder_measure(S)
+    print(f"  μ(cylinder) = ∏_{{p ∈ S}} 1/p = {mu} = {float(mu):.6f}")
+    print(f"  Individual factors: ", end="")
+    for p in S:
+        print(f"1/{p}", end="  ")
     print()
-    print("  Each additional prime refines the cylinder approximation.")
-    print("  The product converges to 6/π² as the number of primes → ∞.")
-    print("  This is the cylinder approximation theorem in action.")
+    print(f"  Product: {' × '.join(f'1/{p}' for p in S)} = {mu}")
+    print()
+
+    # Example 3: Residue class verification
+    print("Example 3: Residue Class Approximation Convergence")
+    print("-" * 40)
+    p = 5
+    exact = local_mass_padic(p)
+    print(f"  Target: localMass_5(5ℤ_5) = {exact}")
+    print(f"  {'n':>4s}  {'|5ℤ_5/5^n ℤ_5|':>16s}  {'|ℤ_5/5^n ℤ_5|':>14s}  {'Ratio':>10s}  {'Exact?':>8s}")
+    for n in range(1, 7):
+        approx = residue_class_approximation(p, n)
+        num = p ** (n - 1)
+        den = p ** n
+        print(f"  {n:4d}  {num:16d}  {den:14d}  {float(approx):10.6f}  {'✓' if approx == exact else '✗':>8s}")
+    print()
+
+    # Example 4: First 10 primes
+    print("Example 4: Product over first k primes")
+    print("-" * 40)
+    all_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+    print(f"  {'k':>3s}  {'S':>30s}  {'∏ 1/p':>20s}  {'Value':>12s}  {'Energy':>10s}")
+    for k in range(1, len(all_primes) + 1):
+        S = all_primes[:k]
+        mu = cylinder_measure(S)
+        energy = -math.log(float(mu)) if float(mu) > 0 else float('inf')
+        S_str = str(S) if k <= 5 else f"[2,...,{S[-1]}]"
+        print(f"  {k:3d}  {S_str:>30s}  {str(mu):>20s}  {float(mu):12.8f}  {energy:10.4f}")
+    print()
+
+    # Example 5: Higher valuation constraints
+    print("Example 5: Higher valuation constraints")
+    print("-" * 40)
+    print("  Constraint: x_p ∈ p^k ℤ_p for various k")
+    p = 3
+    print(f"  p = {p}")
+    for k in range(0, 5):
+        mass = local_mass_padic(p, k)
+        print(f"    k = {k}: localMass(p^{k}ℤ_p) = {mass} = {float(mass):.6f}")
+    print()
+
+    # Example 6: Energy additivity
+    print("Example 6: Energy Additivity (Statistical Mechanics Bridge)")
+    print("-" * 40)
+    S = [2, 3, 5, 7]
+    mu = cylinder_measure(S)
+    total_energy = -math.log(float(mu))
+    print(f"  S = {S}")
+    print(f"  Total energy: -log(μ(cylinder)) = {total_energy:.6f}")
+    local_energies = [-math.log(float(local_mass_padic(p))) for p in S]
+    print(f"  Sum of local energies: ∑ -log(1/p) = {sum(local_energies):.6f}")
+    print(f"  Difference: {abs(total_energy - sum(local_energies)):.2e}")
+    print(f"  Additivity verified: {'✓' if abs(total_energy - sum(local_energies)) < 1e-14 else '✗'}")
+    for p, e in zip(S, local_energies):
+        print(f"    -log(1/{p}) = log({p}) = {e:.6f}")
+    print()
+
+    # Example 7: Mixed constraints
+    print("Example 7: Mixed valuation constraints")
+    print("-" * 40)
+    constraints = {2: 3, 3: 2, 5: 1}
+    S = list(constraints.keys())
+    mu = cylinder_measure(S, constraints)
+    print(f"  Constraints: " + ", ".join(f"v_{p}(x) ≥ {k}" for p, k in constraints.items()))
+    print(f"  μ(cylinder) = " + " × ".join(f"1/{p}^{k}" for p, k in constraints.items())
+          + f" = {mu} = {float(mu):.8f}")
+
+
+def demonstrate_independence():
+    """Demonstrate finite coordinate independence."""
+    print()
+    print("=" * 70)
+    print("FINITE COORDINATE INDEPENDENCE")
+    print("=" * 70)
+    print()
+    print("Under normalized Haar measure on the restricted product:")
+    print("  P(∀ i ∈ S, x_i ∈ A_i) = ∏ i ∈ S, P(x_i ∈ A_i)")
+    print()
+    print("This is exact independence of finite-coordinate events.")
+    print()
+
+    S = [2, 3, 5]
+    joint = cylinder_measure(S)
+    marginals = [local_mass_padic(p) for p in S]
+    product = Fraction(1, 1)
+    for m in marginals:
+        product *= m
+
+    print(f"  S = {S}")
+    print(f"  Joint probability: P(x_2 ∈ 2ℤ_2, x_3 ∈ 3ℤ_3, x_5 ∈ 5ℤ_5) = {joint}")
+    print(f"  Product of marginals: P(x_2 ∈ 2ℤ_2) × P(x_3 ∈ 3ℤ_3) × P(x_5 ∈ 5ℤ_5)")
+    print(f"    = {marginals[0]} × {marginals[1]} × {marginals[2]} = {product}")
+    print(f"  Independence: {'✓ Exact equality' if joint == product else '✗ Not equal'}")
 
 
 if __name__ == "__main__":
-    demo_divisibility()
-    demo_independence()
-    demo_euler_products()
-    demo_arithmetic_density()
-
+    demonstrate_euler_product()
+    demonstrate_independence()
     print()
-    print("=" * 60)
-    print("  All applications verified successfully.")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Cylinder Mass Calculator for Restricted Products
-=================================================
-
-Interactive demonstration of the Haar measure cylinder formula:
-
-    μ(basicCylinder(S, A)) = ∏_{i ∈ S} μ_i(A_i) / μ_i(K_i)
-
-This implements the formally verified theorem `basicCylinder_measure_ratio`
-from the restricted product Haar measure development.
-
-Keywords: adelic integration, restricted product, Haar measure, cylinder sets,
-          Euler product, local-global principle, p-adic analysis
-"""
-
-from fractions import Fraction
-from typing import Dict, List, Tuple
-import math
-
-
-def cylinder_mass(local_masses: Dict[int, Fraction],
-                  reference_masses: Dict[int, Fraction]) -> Fraction:
-    """
-    Compute the Haar measure of a basic cylinder in a restricted product.
-
-    This implements the cylinder formula:
-        μ(cyl(S, A)) = ∏_{i ∈ S} μ_i(A_i) / μ_i(K_i)
-
-    Parameters
-    ----------
-    local_masses : dict
-        Maps each active index i to μ_i(A_i), the local measure of the
-        prescribed set at coordinate i.
-    reference_masses : dict
-        Maps each active index i to μ_i(K_i), the local measure of the
-        reference compact open subgroup at coordinate i.
-
-    Returns
-    -------
-    Fraction
-        The exact Haar measure of the basic cylinder.
-
-    Examples
-    --------
-    >>> # p-adic example: μ(pℤ_p) / μ(ℤ_p) = 1/p
-    >>> cylinder_mass({2: Fraction(1,2), 3: Fraction(1,3)},
-    ...              {2: Fraction(1), 3: Fraction(1)})
-    Fraction(1, 6)
-    """
-    result = Fraction(1)
-    for i in local_masses:
-        result *= local_masses[i] / reference_masses[i]
-    return result
-
-
-def normalized_cylinder_mass(local_ratios: Dict[int, Fraction]) -> Fraction:
-    """
-    Compute cylinder mass when local measures are already normalized (μ_i(K_i) = 1).
-
-    Parameters
-    ----------
-    local_ratios : dict
-        Maps each active index i to μ_i(A_i) (with μ_i(K_i) = 1 assumed).
-
-    Returns
-    -------
-    Fraction
-        The product ∏_{i ∈ S} μ_i(A_i).
-    """
-    result = Fraction(1)
-    for v in local_ratios.values():
-        result *= v
-    return result
-
-
-def padic_cylinder_mass(primes: List[int]) -> Fraction:
-    """
-    Compute the adelic cylinder mass for the canonical p-adic example:
-        μ{x ∈ 𝔸 : x_p ∈ pℤ_p for p ∈ S} = ∏_{p ∈ S} 1/p
-
-    This is the measure-theoretic Euler product in action.
-
-    Parameters
-    ----------
-    primes : list of int
-        The set S of primes defining the cylinder.
-
-    Returns
-    -------
-    Fraction
-        The exact cylinder mass ∏_{p ∈ S} 1/p.
-    """
-    result = Fraction(1)
-    for p in primes:
-        result *= Fraction(1, p)
-    return result
-
-
-def independent_cylinder_mass(mass_a: Fraction, mass_b: Fraction) -> Fraction:
-    """
-    Compute the mass of the combined cylinder for disjoint supports.
-
-    By the independence theorem (basicCylinder_independent_of_disjoint),
-    μ(cyl(S ∪ T, C)) = μ(cyl(S, A)) × μ(cyl(T, B))
-    when S and T are disjoint.
-
-    Parameters
-    ----------
-    mass_a : Fraction
-        μ(basicCylinder(S, A))
-    mass_b : Fraction
-        μ(basicCylinder(T, B))
-
-    Returns
-    -------
-    Fraction
-        μ(basicCylinder(S ∪ T, C)) = mass_a × mass_b
-    """
-    return mass_a * mass_b
-
-
-def print_divider(title: str) -> None:
-    """Print a section divider."""
-    print(f"\n{'='*60}")
-    print(f"  {title}")
-    print(f"{'='*60}\n")
-
-
-def demo_basic_formula():
-    """Demonstrate the basic cylinder formula."""
-    print_divider("BASIC CYLINDER FORMULA")
-
-    print("The cylinder formula states:")
-    print("  μ(basicCylinder(S, A)) = ∏_{i ∈ S} μ_i(A_i) / μ_i(K_i)")
-    print()
-
-    # Example 1: Two primes
-    S = [2, 3]
-    local = {2: Fraction(1, 2), 3: Fraction(1, 3)}
-    ref = {2: Fraction(1), 3: Fraction(1)}
-
-    mass = cylinder_mass(local, ref)
-    print(f"Example 1: S = {S}")
-    print(f"  Local masses: μ_2(A_2) = {local[2]}, μ_3(A_3) = {local[3]}")
-    print(f"  Reference:    μ_2(K_2) = {ref[2]}, μ_3(K_3) = {ref[3]}")
-    print(f"  Cylinder mass = {local[2]}/{ref[2]} × {local[3]}/{ref[3]}")
-    print(f"               = {mass} ≈ {float(mass):.6f}")
-    print()
-
-    # Example 2: Three primes with varying ratios
-    S = [2, 5, 7]
-    local = {2: Fraction(3, 4), 5: Fraction(2, 5), 7: Fraction(1, 7)}
-    ref = {2: Fraction(1), 5: Fraction(1), 7: Fraction(1)}
-
-    mass = cylinder_mass(local, ref)
-    print(f"Example 2: S = {S}")
-    print(f"  Local masses: μ_2(A_2) = {local[2]}, μ_5(A_5) = {local[5]}, μ_7(A_7) = {local[7]}")
-    print(f"  Cylinder mass = {local[2]} × {local[5]} × {local[7]}")
-    print(f"               = {mass} ≈ {float(mass):.6f}")
-
-
-def demo_padic_euler_product():
-    """Demonstrate the p-adic Euler product specialization."""
-    print_divider("P-ADIC EULER PRODUCT")
-
-    print("For the adeles 𝔸_ℚ with G_p = ℚ_p, K_p = ℤ_p:")
-    print("  μ{x ∈ 𝔸 : x_p ∈ pℤ_p for p ∈ S} = ∏_{p ∈ S} 1/p")
-    print()
-    print("This is the measure-theoretic Euler product in action.")
-    print()
-
-    test_cases = [
-        [2, 3],
-        [2, 3, 5],
-        [2, 3, 5, 7],
-        [2, 3, 5, 7, 11],
-        [2, 3, 5, 7, 11, 13],
-        [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
-    ]
-
-    print(f"{'Primes S':<40} {'∏ 1/p':>15} {'≈ Decimal':>15}")
-    print("-" * 70)
-
-    for primes in test_cases:
-        mass = padic_cylinder_mass(primes)
-        label = str(primes) if len(primes) <= 6 else f"first {len(primes)} primes"
-        print(f"{label:<40} {str(mass):>15} {float(mass):>15.10f}")
-
-    print()
-    print("Observation: As S grows, the cylinder mass decreases rapidly.")
-    print("This reflects the increasing rarity of simultaneous divisibility.")
-
-
-def demo_independence():
-    """Demonstrate the independence / multiplicativity theorem."""
-    print_divider("INDEPENDENCE OF LOCAL COORDINATES")
-
-    print("For disjoint S, T:")
-    print("  μ(cyl(S ∪ T, C)) = μ(cyl(S, A)) × μ(cyl(T, B))")
-    print()
-    print("This expresses PROBABILISTIC INDEPENDENCE of local conditions.")
-    print()
-
-    # Cylinder at {2, 3}
-    S = [2, 3]
-    mass_S = padic_cylinder_mass(S)
-    print(f"S = {S}: μ(cyl(S)) = {mass_S}")
-
-    # Cylinder at {5, 7}
-    T = [5, 7]
-    mass_T = padic_cylinder_mass(T)
-    print(f"T = {T}: μ(cyl(T)) = {mass_T}")
-
-    # Combined cylinder at {2, 3, 5, 7}
-    combined = S + T
-    mass_combined = padic_cylinder_mass(combined)
-    mass_product = independent_cylinder_mass(mass_S, mass_T)
-
-    print(f"\nS ∪ T = {combined}:")
-    print(f"  μ(cyl(S ∪ T)) = {mass_combined}")
-    print(f"  μ(cyl(S)) × μ(cyl(T)) = {mass_S} × {mass_T} = {mass_product}")
-    print(f"  Equal? {mass_combined == mass_product} ✓")
-
-    print()
-    print("This confirms: divisibility conditions at different primes are")
-    print("INDEPENDENT events under the normalized Haar measure.")
-
-
-def demo_support_enlargement():
-    """Demonstrate stability under support enlargement."""
-    print_divider("SUPPORT ENLARGEMENT STABILITY")
-
-    print("Enlarging the support while keeping K_i on new coordinates")
-    print("does not change the cylinder measure (when μ_i(K_i) = 1):")
-    print("  μ(basicCylinder(T, A)) = μ(basicCylinder(S, A))")
-    print("  for S ⊆ T with A_i = K_i for i ∉ S")
-    print()
-
-    S = [2, 3]
-    mass_S = padic_cylinder_mass(S)
-    print(f"S = {S}: μ(cyl(S)) = {mass_S}")
-
-    # Enlarge to T = {2, 3, 5} with A_5 = K_5 (so μ_5(A_5)/μ_5(K_5) = 1)
-    T = [2, 3, 5]
-    # With A_5 = K_5, the mass at prime 5 contributes factor 1
-    local_T = {2: Fraction(1, 2), 3: Fraction(1, 3), 5: Fraction(1)}
-    ref_T = {2: Fraction(1), 3: Fraction(1), 5: Fraction(1)}
-    mass_T = cylinder_mass(local_T, ref_T)
-    print(f"T = {T} (with A_5 = K_5): μ(cyl(T)) = {mass_T}")
-    print(f"Equal to μ(cyl(S))? {mass_S == mass_T} ✓")
-
-    # Enlarge to U = {2, 3, 5, 7, 11} with A_i = K_i for i ∈ {5, 7, 11}
-    U = [2, 3, 5, 7, 11]
-    local_U = {2: Fraction(1, 2), 3: Fraction(1, 3),
-               5: Fraction(1), 7: Fraction(1), 11: Fraction(1)}
-    ref_U = {p: Fraction(1) for p in U}
-    mass_U = cylinder_mass(local_U, ref_U)
-    print(f"U = {U} (with A_5=A_7=A_11=K): μ(cyl(U)) = {mass_U}")
-    print(f"Equal to μ(cyl(S))? {mass_S == mass_U} ✓")
-
-
-def demo_normalization():
-    """Demonstrate that the maximal compact has measure 1."""
-    print_divider("MAXIMAL COMPACT NORMALIZATION")
-
-    print("The maximal compact ∏ K_i has measure 1:")
-    print("  μ(maximalCompact) = ∏_{i ∈ ∅} μ_i(K_i) = 1 (empty product)")
-    print()
-
-    # Empty support
-    mass = normalized_cylinder_mass({})
-    print(f"Empty support S = ∅: μ(cyl(∅)) = {mass}")
-    print(f"This equals μ(∏ K_i) = 1 ✓")
-
-
-def demo_cylinder_weight():
-    """Demonstrate the CylinderWeight computation."""
-    print_divider("CYLINDER WEIGHT (EULER PRODUCT MASS)")
-
-    print("CylinderWeight(C, μ_local) = ∏_{i ∈ support} μ_i(A_i) / μ_i(K_i)")
-    print()
-
-    # Example CylinderDatum
-    support = [2, 3, 5]
-    local = {2: Fraction(1, 2), 3: Fraction(2, 3), 5: Fraction(3, 5)}
-    ref = {2: Fraction(1), 3: Fraction(1), 5: Fraction(1)}
-
-    weight = cylinder_mass(local, ref)
-    print(f"CylinderDatum:")
-    print(f"  support = {support}")
-    print(f"  setAt: A_2 with μ(A_2) = {local[2]}")
-    print(f"         A_3 with μ(A_3) = {local[3]}")
-    print(f"         A_5 with μ(A_5) = {local[5]}")
-    print(f"  CylinderWeight = {local[2]} × {local[3]} × {local[5]}")
-    print(f"                 = {weight} ≈ {float(weight):.6f}")
-    print()
-    print("By cylinder_measure_eq_CylinderWeight:")
-    print(f"  μ(basicCylinder(C)) = CylinderWeight(C) = {weight} ✓")
-
-
-if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║   Haar Measure Cylinder Formula — Interactive Demo      ║")
-    print("║   Restricted Product Measure Theory                     ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    demo_basic_formula()
-    demo_padic_euler_product()
-    demo_independence()
-    demo_support_enlargement()
-    demo_normalization()
-    demo_cylinder_weight()
-
-    print_divider("SUMMARY")
-    print("All demonstrations verify the formally proved theorems:")
-    print("  1. measurableSet_basicCylinder — cylinders are measurable")
-    print("  2. basicCylinder_measure_ratio — product formula")
-    print("  3. basicCylinder_independent_of_disjoint — independence")
-    print("  4. prime_cylinder_measure — Euler product specialization")
-    print("  5. basicCylinder_measure_support_enlarge — stability")
-    print("  6. measure_maximalCompact_eq_one — normalization")
-    print("  7. cylinder_measure_eq_CylinderWeight — weight formula")
-    print()
-    print("The cylinder formula is the computational heart of")
-    print("Haar measure on restricted products — the formal foundation")
-    print("for adelic integration and Euler product calculations.")
+    print("=" * 70)
+    print("All demonstrations completed successfully.")
+    print("=" * 70)
