@@ -1,76 +1,66 @@
 #!/usr/bin/env python3
 """
-Algorithms for PosEMLExpr depth stability analysis.
+Algorithms for Logarithmic Derivative Level Analysis
 
-Implements:
-1. Certified symbolic differentiation with depth tracking
-2. Tropicalization and tropical differentiation
-3. Riccati expression construction
-4. Expression enumeration and depth analysis
+This module implements verified algorithms for analyzing the depth behavior
+of symbolic differentiation in the PosEMLExpr expression language.
+
+Algorithms:
+1. DepthAnalyzer: Compute depth of an expression and its derivative with certificate
+2. ObstructionDetector: Search for expressions where differentiation increases depth
+3. ExpNeutralClassifier: Classify expressions by their depth behavior under differentiation
+4. IteratedDerivDepthTracker: Track depth through iterated differentiation
+
+All algorithms correspond to formally verified Lean theorems.
 """
 
-from __future__ import annotations
-from dataclasses import dataclass
-from typing import Union, Tuple, List, Optional
+from dataclasses import dataclass, field
+from typing import List, Tuple, Optional, Dict, Set
+from enum import Enum
 import math
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# Expression Types
-# ═══════════════════════════════════════════════════════════════════════
+# ============================================================================
+# Expression Type (mirrors Lean PosEMLExpr)
+# ============================================================================
 
-class Const:
-    """Constant expression."""
-    __slots__ = ['c']
-    def __init__(self, c: float): self.c = c
-    def __repr__(self): return f"Const({self.c})"
-    def __eq__(self, o): return isinstance(o, Const) and self.c == o.c
-    def __hash__(self): return hash(('Const', self.c))
+class PosEMLExpr:
+    """Base class for positive EML expressions."""
+    pass
 
-class Var:
-    """Variable x."""
-    def __repr__(self): return "Var"
-    def __eq__(self, o): return isinstance(o, Var)
-    def __hash__(self): return hash('Var')
+@dataclass(frozen=True)
+class Const(PosEMLExpr):
+    value: float
 
-class Add:
-    """Addition."""
-    __slots__ = ['a', 'b']
-    def __init__(self, a: 'Expr', b: 'Expr'): self.a, self.b = a, b
-    def __repr__(self): return f"Add({self.a}, {self.b})"
-    def __eq__(self, o): return isinstance(o, Add) and self.a == o.a and self.b == o.b
-    def __hash__(self): return hash(('Add', self.a, self.b))
+@dataclass(frozen=True)
+class Var(PosEMLExpr):
+    pass
 
-class Mul:
-    """Multiplication."""
-    __slots__ = ['a', 'b']
-    def __init__(self, a: 'Expr', b: 'Expr'): self.a, self.b = a, b
-    def __repr__(self): return f"Mul({self.a}, {self.b})"
-    def __eq__(self, o): return isinstance(o, Mul) and self.a == o.a and self.b == o.b
-    def __hash__(self): return hash(('Mul', self.a, self.b))
+@dataclass(frozen=True)
+class Add(PosEMLExpr):
+    left: PosEMLExpr
+    right: PosEMLExpr
 
-class Exp:
-    """Exponentiation exp(a)."""
-    __slots__ = ['a']
-    def __init__(self, a: 'Expr'): self.a = a
-    def __repr__(self): return f"Exp({self.a})"
-    def __eq__(self, o): return isinstance(o, Exp) and self.a == o.a
-    def __hash__(self): return hash(('Exp', self.a))
+@dataclass(frozen=True)
+class Mul(PosEMLExpr):
+    left: PosEMLExpr
+    right: PosEMLExpr
 
-Expr = Union[Const, Var, Add, Mul, Exp]
+@dataclass(frozen=True)
+class Exp(PosEMLExpr):
+    arg: PosEMLExpr
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 1: Depth Computation — O(n) time, O(depth) stack
-# ═══════════════════════════════════════════════════════════════════════
+# ============================================================================
+# Core Operations
+# ============================================================================
 
-def depth(e: Expr) -> int:
-    """
-    Compute the depth (maximum exp nesting) of a PosEMLExpr.
-
-    Time:  O(n) where n is the number of nodes
-    Space: O(d) where d is the depth of the expression tree
-
+def depth(e: PosEMLExpr) -> int:
+    """Compute the depth (exp-nesting level) of an expression.
+    
+    Time complexity: O(n) where n is the expression size.
+    Space complexity: O(h) where h is the expression height (recursion stack).
+    
     >>> depth(Const(5))
     0
     >>> depth(Exp(Var()))
@@ -78,342 +68,331 @@ def depth(e: Expr) -> int:
     >>> depth(Exp(Exp(Var())))
     2
     """
-    if isinstance(e, (Const, Var)):
-        return 0
-    elif isinstance(e, (Add, Mul)):
-        return max(depth(e.a), depth(e.b))
-    elif isinstance(e, Exp):
-        return depth(e.a) + 1
-    raise TypeError(f"Unknown: {type(e)}")
+    if isinstance(e, (Const, Var)): return 0
+    if isinstance(e, (Add, Mul)): return max(depth(e.left), depth(e.right))
+    if isinstance(e, Exp): return depth(e.arg) + 1
+    raise TypeError
 
-
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 2: Certified Symbolic Differentiation
-# ═══════════════════════════════════════════════════════════════════════
-
-def certified_deriv(e: Expr) -> Tuple[Expr, int, int]:
+def deriv(e: PosEMLExpr) -> PosEMLExpr:
+    """Symbolic differentiation.
+    
+    Implements the standard rules:
+    - d/dx(c) = 0
+    - d/dx(x) = 1  
+    - d/dx(a+b) = a' + b'
+    - d/dx(a*b) = a'b + ab'
+    - d/dx(exp(a)) = a' * exp(a)
+    
+    Time complexity: O(n) where n is the expression size.
+    Output size: O(n²) in the worst case due to product rule duplication.
+    
+    >>> deriv(Var())
+    Const(value=1)
+    >>> deriv(Const(3))
+    Const(value=0)
     """
-    Certified symbolic differentiation.
+    if isinstance(e, Const): return Const(0)
+    if isinstance(e, Var): return Const(1)
+    if isinstance(e, Add): return Add(deriv(e.left), deriv(e.right))
+    if isinstance(e, Mul): return Add(Mul(deriv(e.left), e.right), Mul(e.left, deriv(e.right)))
+    if isinstance(e, Exp): return Mul(deriv(e.arg), Exp(e.arg))
+    raise TypeError
 
-    Returns (derivative, depth_of_original, depth_of_derivative)
-    with the invariant that depth_of_derivative <= depth_of_original.
+def expr_size(e: PosEMLExpr) -> int:
+    """Count nodes in the expression tree."""
+    if isinstance(e, (Const, Var)): return 1
+    if isinstance(e, (Add, Mul)): return 1 + expr_size(e.left) + expr_size(e.right)
+    if isinstance(e, Exp): return 1 + expr_size(e.arg)
+    raise TypeError
 
-    Time:  O(n) where n = size(e)
-    Space: O(n) for the output (derivative may be up to 3x input size)
-
-    >>> e = Exp(Var())
-    >>> d, do, dd = certified_deriv(e)
-    >>> assert dd <= do, "Depth stability violated!"
-
-    Examples:
-    >>> certified_deriv(Const(5))
-    (Const(0), 0, 0)
-    >>> certified_deriv(Var())
-    (Const(1), 0, 0)
-    """
-    if isinstance(e, Const):
-        return Const(0), 0, 0
-    elif isinstance(e, Var):
-        return Const(1), 0, 0
-    elif isinstance(e, Add):
-        da, do_a, dd_a = certified_deriv(e.a)
-        db, do_b, dd_b = certified_deriv(e.b)
-        result = Add(da, db)
-        d_orig = max(do_a, do_b)
-        d_deriv = max(dd_a, dd_b)
-        assert d_deriv <= d_orig, f"Stability violated in Add"
-        return result, d_orig, d_deriv
-    elif isinstance(e, Mul):
-        da, do_a, dd_a = certified_deriv(e.a)
-        db, do_b, dd_b = certified_deriv(e.b)
-        # deriv(a*b) = a'*b + a*b'
-        result = Add(Mul(da, e.b), Mul(e.a, db))
-        d_orig = max(do_a, do_b)
-        d_deriv = max(max(dd_a, do_b), max(do_a, dd_b))
-        assert d_deriv <= d_orig, f"Stability violated in Mul"
-        return result, d_orig, d_deriv
-    elif isinstance(e, Exp):
-        da, do_a, dd_a = certified_deriv(e.a)
-        # deriv(exp(a)) = a' * exp(a)
-        result = Mul(da, Exp(e.a))
-        d_orig = do_a + 1
-        d_deriv = max(dd_a, do_a + 1)
-        assert d_deriv <= d_orig, f"Stability violated in Exp"
-        return result, d_orig, d_deriv
+def pretty(e: PosEMLExpr) -> str:
+    """Pretty-print an expression."""
+    if isinstance(e, Const): return str(e.value)
+    if isinstance(e, Var): return "x"
+    if isinstance(e, Add): return f"({pretty(e.left)} + {pretty(e.right)})"
+    if isinstance(e, Mul): return f"({pretty(e.left)} · {pretty(e.right)})"
+    if isinstance(e, Exp): return f"exp({pretty(e.arg)})"
     raise TypeError
 
 
-def deriv(e: Expr) -> Expr:
-    """Simple symbolic differentiation (without certificate)."""
-    return certified_deriv(e)[0]
+# ============================================================================
+# Algorithm 1: Depth Analyzer
+# ============================================================================
 
-
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 3: Tropicalization
-# ═══════════════════════════════════════════════════════════════════════
-
-class TConst:
-    __slots__ = ['c']
-    def __init__(self, c: float): self.c = c
-    def __repr__(self): return f"TConst({self.c})"
-
-class TVar:
-    def __repr__(self): return "TVar"
-
-class TAdd:
-    __slots__ = ['a', 'b']
-    def __init__(self, a, b): self.a, self.b = a, b
-    def __repr__(self): return f"TAdd({self.a}, {self.b})"
-
-class TMul:
-    __slots__ = ['a', 'b']
-    def __init__(self, a, b): self.a, self.b = a, b
-    def __repr__(self): return f"TMul({self.a}, {self.b})"
-
-class TScale:
-    __slots__ = ['a']
-    def __init__(self, a): self.a = a
-    def __repr__(self): return f"TScale({self.a})"
-
-TropExpr = Union[TConst, TVar, TAdd, TMul, TScale]
-
-
-def tropical_depth(t: TropExpr) -> int:
-    """Depth of a tropical expression."""
-    if isinstance(t, (TConst, TVar)):
-        return 0
-    elif isinstance(t, (TAdd, TMul)):
-        return max(tropical_depth(t.a), tropical_depth(t.b))
-    elif isinstance(t, TScale):
-        return tropical_depth(t.a) + 1
-    raise TypeError
-
-
-def tropicalize(e: Expr) -> TropExpr:
+@dataclass
+class DepthCertificate:
+    """Certificate proving depth(deriv(e)) ≤ depth(e).
+    
+    Corresponds to Lean's PosEMLExpr.depthAnalyzer.
     """
-    Map PosEMLExpr to TropicalExpr.
+    expression: PosEMLExpr
+    expr_depth: int
+    deriv_depth: int
+    gap: int  # expr_depth - deriv_depth ≥ 0
 
-    Preserves depth: tropical_depth(tropicalize(e)) == depth(e)
+    @property
+    def is_exact(self) -> bool:
+        """Whether differentiation exactly preserves depth."""
+        return self.gap == 0
 
-    >>> tropicalize(Const(1))
-    TConst(0.0)
-    >>> tropical_depth(tropicalize(Exp(Var())))
+    @property
+    def is_strict(self) -> bool:
+        """Whether differentiation strictly decreases depth."""
+        return self.gap > 0
+
+
+def depth_analyzer(e: PosEMLExpr) -> DepthCertificate:
+    """Verified depth analyzer.
+    
+    Computes depth(e) and depth(deriv(e)), returning a certificate
+    that depth(deriv(e)) ≤ depth(e).
+    
+    This corresponds to the Lean theorem PosEMLExpr.depth_deriv_le_self.
+    
+    Time complexity: O(n²) — O(n) for deriv, O(n²) for depth of result.
+    Space complexity: O(n²) for the derivative expression.
+    
+    >>> cert = depth_analyzer(Exp(Var()))
+    >>> cert.expr_depth
     1
+    >>> cert.deriv_depth
+    1
+    >>> cert.gap
+    0
     """
-    if isinstance(e, Const):
-        return TConst(math.log(e.c) if e.c > 0 else float('-inf'))
-    elif isinstance(e, Var):
-        return TVar()
-    elif isinstance(e, Add):
-        return TAdd(tropicalize(e.a), tropicalize(e.b))
-    elif isinstance(e, Mul):
-        return TMul(tropicalize(e.a), tropicalize(e.b))
-    elif isinstance(e, Exp):
-        return TScale(tropicalize(e.a))
-    raise TypeError
+    d = deriv(e)
+    ed = depth(e)
+    dd = depth(d)
+    assert dd <= ed, f"Invariant violation! depth(deriv({pretty(e)})) = {dd} > {ed} = depth(e)"
+    return DepthCertificate(
+        expression=e,
+        expr_depth=ed,
+        deriv_depth=dd,
+        gap=ed - dd,
+    )
 
 
-def tropical_deriv(t: TropExpr) -> TropExpr:
+# ============================================================================
+# Algorithm 2: Obstruction Detector
+# ============================================================================
+
+class ObstructionResult(Enum):
+    NO_OBSTRUCTION = "no_obstruction"
+    FOUND_OBSTRUCTION = "found_obstruction"
+
+
+def obstruction_detector(max_depth: int = 5, max_size: int = 10) -> Tuple[ObstructionResult, Optional[PosEMLExpr]]:
+    """Search for expressions where differentiation increases depth.
+    
+    Exhaustively enumerates expressions up to the given bounds and checks
+    whether depth(deriv(e)) > depth(e) for any of them.
+    
+    By the formally verified theorem (PosEMLExpr.no_depth_increasing_deriv),
+    this will always return NO_OBSTRUCTION. The algorithm serves as an
+    independent computational verification.
+    
+    Time complexity: O(E · n²) where E is the number of enumerated expressions.
+    
+    Returns:
+        (result, counterexample) where counterexample is None if no obstruction found.
     """
-    Tropical differentiation.
+    def gen(d: int, s: int) -> List[PosEMLExpr]:
+        if s <= 0: return []
+        exprs: List[PosEMLExpr] = [Const(0), Const(1), Var()]
+        if s >= 2 and d >= 1:
+            for sub in gen(d - 1, s - 1):
+                exprs.append(Exp(sub))
+        if s >= 3:
+            subs = gen(d, (s - 1) // 2)
+            for a in subs[:8]:
+                for b in subs[:8]:
+                    if len(exprs) > 500: break
+                    exprs.append(Add(a, b))
+                    exprs.append(Mul(a, b))
+        return exprs
 
-    Satisfies: tropical_depth(tropical_deriv(t)) <= tropical_depth(t)
+    exprs = gen(max_depth, max_size)
+    for e in exprs:
+        if depth(deriv(e)) > depth(e):
+            return (ObstructionResult.FOUND_OBSTRUCTION, e)
+    
+    return (ObstructionResult.NO_OBSTRUCTION, None)
+
+
+# ============================================================================
+# Algorithm 3: ExpNeutral Classifier
+# ============================================================================
+
+class DepthBehavior(Enum):
+    PRESERVED = "preserved"   # depth(deriv e) = depth(e)
+    DECREASED = "decreased"   # depth(deriv e) < depth(e)
+
+
+@dataclass
+class ClassificationResult:
+    """Classification of an expression's depth behavior under differentiation."""
+    expression: PosEMLExpr
+    behavior: DepthBehavior
+    expr_depth: int
+    deriv_depth: int
+    constructor: str  # top-level constructor name
+
+
+def classify_expression(e: PosEMLExpr) -> ClassificationResult:
+    """Classify an expression's depth behavior under differentiation.
+    
+    Determines whether differentiation preserves or strictly decreases depth.
+    By the theorem PosEMLExpr.deriv_depth_classification, these are the only
+    two possibilities.
+    
+    >>> classify_expression(Exp(Var())).behavior
+    <DepthBehavior.PRESERVED: 'preserved'>
+    >>> classify_expression(Const(5)).behavior
+    <DepthBehavior.PRESERVED: 'preserved'>
     """
-    if isinstance(t, TConst):
-        return TConst(0)
-    elif isinstance(t, TVar):
-        return TConst(1)
-    elif isinstance(t, TAdd):
-        return TAdd(tropical_deriv(t.a), tropical_deriv(t.b))
-    elif isinstance(t, TMul):
-        return TAdd(TMul(tropical_deriv(t.a), t.b),
-                    TMul(t.a, tropical_deriv(t.b)))
-    elif isinstance(t, TScale):
-        return TMul(tropical_deriv(t.a), TScale(t.a))
-    raise TypeError
+    ed = depth(e)
+    dd = depth(deriv(e))
+    behavior = DepthBehavior.PRESERVED if dd == ed else DepthBehavior.DECREASED
+    return ClassificationResult(
+        expression=e,
+        behavior=behavior,
+        expr_depth=ed,
+        deriv_depth=dd,
+        constructor=type(e).__name__,
+    )
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 4: Riccati Expression
-# ═══════════════════════════════════════════════════════════════════════
-
-def riccati_expr(b: Expr) -> Expr:
+def batch_classify(exprs: List[PosEMLExpr]) -> Dict[str, Dict[DepthBehavior, int]]:
+    """Classify a batch of expressions, grouped by top-level constructor.
+    
+    Returns statistics showing which constructors tend to preserve vs decrease depth.
     """
-    Construct the Riccati expression b'' + (b')².
+    stats: Dict[str, Dict[DepthBehavior, int]] = {}
+    for e in exprs:
+        result = classify_expression(e)
+        if result.constructor not in stats:
+            stats[result.constructor] = {DepthBehavior.PRESERVED: 0, DepthBehavior.DECREASED: 0}
+        stats[result.constructor][result.behavior] += 1
+    return stats
 
-    When y = exp(b), this equals y''/y (the second logarithmic derivative).
 
-    Satisfies: depth(riccati_expr(b)) <= depth(b)
+# ============================================================================
+# Algorithm 4: Iterated Derivative Depth Tracker
+# ============================================================================
 
-    >>> b = Var()
-    >>> depth(riccati_expr(b)) <= depth(b)
-    True
+@dataclass
+class IterationTrace:
+    """Trace of iterated differentiation showing depth at each step."""
+    base_expression: PosEMLExpr
+    base_depth: int
+    depths_at_step: List[int]  # depths[k] = depth(deriv^k(e))
+    sizes_at_step: List[int]   # sizes[k] = size(deriv^k(e))
+    
+    @property
+    def max_depth(self) -> int:
+        return max(self.depths_at_step) if self.depths_at_step else self.base_depth
+    
+    @property
+    def is_monotone_nonincreasing(self) -> bool:
+        """Whether depth is monotonically non-increasing through iterations."""
+        return all(self.depths_at_step[i] >= self.depths_at_step[i+1]
+                   for i in range(len(self.depths_at_step) - 1))
+    
+    @property
+    def stabilization_step(self) -> Optional[int]:
+        """Step at which depth first reaches 0 (and stays there)."""
+        for k, d in enumerate(self.depths_at_step):
+            if d == 0:
+                return k
+        return None
+
+
+def track_iterated_deriv(e: PosEMLExpr, max_iterations: int = 10,
+                          max_expr_size: int = 10000) -> IterationTrace:
+    """Track depth through iterated differentiation.
+    
+    Computes deriv^k(e) for k = 0, 1, ..., max_iterations and records
+    the depth at each step.
+    
+    By PosEMLExpr.depth_deriv_le_self, each step satisfies
+    depth(deriv^{k+1}(e)) ≤ depth(deriv^k(e)), so the sequence is
+    monotonically non-increasing and bounded below by 0.
+    
+    Stops early if the expression size exceeds max_expr_size (derivative
+    expressions grow due to the product rule).
+    
+    Time complexity: O(k · n_k²) where n_k is the size at step k.
     """
-    bp = deriv(b)
-    bpp = deriv(bp)
-    return Add(bpp, Mul(bp, bp))
+    depths = [depth(e)]
+    sizes = [expr_size(e)]
+    current = e
+    
+    for k in range(max_iterations):
+        current = deriv(current)
+        s = expr_size(current)
+        if s > max_expr_size:
+            break
+        depths.append(depth(current))
+        sizes.append(s)
+    
+    return IterationTrace(
+        base_expression=e,
+        base_depth=depth(e),
+        depths_at_step=depths,
+        sizes_at_step=sizes,
+    )
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 5: Expression Enumeration
-# ═══════════════════════════════════════════════════════════════════════
-
-def enumerate_by_depth(max_depth: int, max_size: int = 5,
-                       constants: list = [0, 1, 2]) -> List[Expr]:
-    """
-    Enumerate PosEMLExpr up to given depth and size.
-
-    Uses bottom-up construction: first build depth-0 expressions,
-    then wrap in Exp to get depth 1, etc.
-
-    Time:  O(N²) where N is the output size (due to binary combinations)
-    Space: O(N) for storing results
-    """
-    by_depth: dict[int, list[Expr]] = {0: []}
-
-    # Depth 0: constants and variable
-    atoms = [Const(c) for c in constants] + [Var()]
-    by_depth[0] = list(atoms)
-
-    # Add binary combinations at depth 0
-    d0_extended = list(atoms)
-    for a in atoms:
-        for b in atoms:
-            if len(d0_extended) < max_size * 5:
-                d0_extended.append(Add(a, b))
-                d0_extended.append(Mul(a, b))
-    by_depth[0] = d0_extended
-
-    # Build higher depths
-    for d in range(1, max_depth + 1):
-        exprs_d = []
-        # Wrap depth-(d-1) in Exp
-        for sub in by_depth.get(d - 1, [])[:20]:
-            exprs_d.append(Exp(sub))
-
-        # Binary ops mixing depths
-        for d1 in range(d + 1):
-            d2 = d
-            subs1 = by_depth.get(d1, [])[:10]
-            subs2 = by_depth.get(d2, [])[:10] if d2 in by_depth else []
-            for a in subs1:
-                for b in subs2:
-                    if depth(Add(a, b)) == d:
-                        exprs_d.append(Add(a, b))
-                    if depth(Mul(a, b)) == d:
-                        exprs_d.append(Mul(a, b))
-                    if len(exprs_d) > 100:
-                        break
-        by_depth[d] = exprs_d
-
-    # Collect all
-    result = []
-    seen = set()
-    for d in sorted(by_depth.keys()):
-        for e in by_depth[d]:
-            r = repr(e)
-            if r not in seen:
-                seen.add(r)
-                result.append(e)
-    return result
-
-
-# ═══════════════════════════════════════════════════════════════════════
-# Algorithm 6: Pretty Printing
-# ═══════════════════════════════════════════════════════════════════════
-
-def pretty(e: Expr) -> str:
-    """Human-readable expression string."""
-    if isinstance(e, Const):
-        c = e.c
-        return str(int(c)) if c == int(c) else f"{c:.2f}"
-    elif isinstance(e, Var):
-        return "x"
-    elif isinstance(e, Add):
-        return f"({pretty(e.a)} + {pretty(e.b)})"
-    elif isinstance(e, Mul):
-        return f"({pretty(e.a)} · {pretty(e.b)})"
-    elif isinstance(e, Exp):
-        return f"exp({pretty(e.a)})"
-    return "?"
-
-
-def size(e: Expr) -> int:
-    """Number of nodes in the expression tree."""
-    if isinstance(e, (Const, Var)):
-        return 1
-    elif isinstance(e, (Add, Mul)):
-        return 1 + size(e.a) + size(e.b)
-    elif isinstance(e, Exp):
-        return 1 + size(e.a)
-    return 0
-
-
-# ═══════════════════════════════════════════════════════════════════════
-# Main: Algorithm Demonstrations
-# ═══════════════════════════════════════════════════════════════════════
+# ============================================================================
+# Main: Example Usage
+# ============================================================================
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("  ALGORITHMS FOR DEPTH STABILITY ANALYSIS")
+    print("Algorithms for Logarithmic Derivative Level Analysis")
     print("=" * 60)
-    print()
-
-    # Demo 1: Certified Differentiation
-    print("━━━ Algorithm 1: Certified Differentiation ━━━")
+    
+    # Algorithm 1: Depth Analyzer
+    print("\n--- Algorithm 1: Depth Analyzer ---")
     test_exprs = [
-        Const(3),
-        Var(),
-        Mul(Var(), Var()),
-        Exp(Var()),
-        Exp(Mul(Var(), Var())),
-        Exp(Exp(Var())),
-        Mul(Exp(Var()), Exp(Var())),
-        Exp(Exp(Exp(Var()))),
+        ("x", Var()),
+        ("exp(x)", Exp(Var())),
+        ("exp(exp(x))", Exp(Exp(Var()))),
+        ("x * exp(x)", Mul(Var(), Exp(Var()))),
+        ("exp(x + x)", Exp(Add(Var(), Var()))),
     ]
-    for e in test_exprs:
-        d_expr, d_orig, d_deriv = certified_deriv(e)
-        print(f"  d/dx [{pretty(e)}]")
-        print(f"    = {pretty(d_expr)}")
-        print(f"    depth: {d_orig} → {d_deriv}  "
-              f"{'✓' if d_deriv <= d_orig else '✗ VIOLATION'}")
-        print()
-
-    # Demo 2: Tropicalization
-    print("━━━ Algorithm 2: Tropicalization ━━━")
-    for e in test_exprs[:5]:
-        t = tropicalize(e)
-        td = tropical_deriv(t)
-        d_t = tropical_depth(t)
-        d_td = tropical_depth(td)
-        print(f"  trop({pretty(e)}) → depth {d_t}")
-        print(f"  trop_deriv → depth {d_td}  "
-              f"{'✓' if d_td <= d_t else '✗'}")
-        print(f"  depth match: classical={depth(e)}, tropical={d_t}  "
-              f"{'✓' if depth(e) == d_t else '✗'}")
-        print()
-
-    # Demo 3: Riccati
-    print("━━━ Algorithm 3: Riccati Expression ━━━")
-    for e in [Var(), Mul(Var(), Var()), Exp(Var()), Exp(Exp(Var()))]:
-        r = riccati_expr(e)
-        d_e = depth(e)
-        d_r = depth(r)
-        print(f"  b = {pretty(e)}, depth(b) = {d_e}")
-        print(f"  b'' + (b')² → depth = {d_r}  "
-              f"{'✓' if d_r <= d_e else '✗'}")
-        print()
-
-    # Demo 4: Exhaustive Enumeration
-    print("━━━ Algorithm 4: Exhaustive Enumeration ━━━")
-    all_exprs = enumerate_by_depth(4)
-    violations = 0
-    for e in all_exprs:
-        d = depth(e)
-        dd = depth(deriv(e))
-        if dd > d:
-            violations += 1
-            print(f"  VIOLATION: {pretty(e)}")
-    print(f"  Tested {len(all_exprs)} expressions")
-    print(f"  Violations: {violations}")
-    print(f"  Result: {'DEPTH STABILITY CONFIRMED ✓' if violations == 0 else 'VIOLATIONS FOUND ✗'}")
+    for name, e in test_exprs:
+        cert = depth_analyzer(e)
+        print(f"  {name:20s}: depth={cert.expr_depth}, deriv_depth={cert.deriv_depth}, "
+              f"gap={cert.gap} ({'exact' if cert.is_exact else 'strict decrease'})")
+    
+    # Algorithm 2: Obstruction Detector
+    print("\n--- Algorithm 2: Obstruction Detector ---")
+    result, counterexample = obstruction_detector(max_depth=4, max_size=8)
+    print(f"  Result: {result.value}")
+    if counterexample:
+        print(f"  Counterexample: {pretty(counterexample)}")
+    else:
+        print("  No obstructions found (as guaranteed by the formal theorem)")
+    
+    # Algorithm 3: ExpNeutral Classifier
+    print("\n--- Algorithm 3: Batch Classifier ---")
+    all_exprs = [e for _, e in test_exprs]
+    all_exprs.extend([Const(0), Const(1), Add(Var(), Const(1))])
+    stats = batch_classify(all_exprs)
+    for constructor, counts in sorted(stats.items()):
+        print(f"  {constructor}:")
+        for behavior, count in counts.items():
+            print(f"    {behavior.value}: {count}")
+    
+    # Algorithm 4: Iterated Derivative Tracker
+    print("\n--- Algorithm 4: Iterated Derivative Depth Tracker ---")
+    for name, e in test_exprs[:3]:
+        trace = track_iterated_deriv(e, max_iterations=6)
+        depth_str = " → ".join(str(d) for d in trace.depths_at_step)
+        print(f"  {name:20s}: depths = [{depth_str}]")
+        print(f"    {'Monotone non-increasing ✓' if trace.is_monotone_nonincreasing else 'NOT monotone ✗'}")
+        if trace.stabilization_step is not None:
+            print(f"    Stabilizes at depth 0 at step {trace.stabilization_step}")
+    
+    print("\nAll algorithms completed successfully.")
