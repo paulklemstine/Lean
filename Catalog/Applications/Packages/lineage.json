@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "conjecture_5_connection_to_hardy_field_hierarchy",
@@ -43,7 +43,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:03:30Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "type_theory_cubical_type_theory_foundations",
@@ -304,7 +304,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T11:28:55Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "lambda_calculus_church_rosser_and_normalization",
@@ -466,7 +466,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:16:34Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_5_non_commutative_module_lwe_and_ntru",
@@ -547,7 +547,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T18:30:37Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "quadratic_reciprocity_five_proofs_formalized",
@@ -781,7 +781,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T00:47:21Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_2_exponential_size_lower_bounds_at_fixed",
@@ -925,7 +925,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T06:18:17Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_5_instantiation_for_crystals_kyber_compr",
@@ -1096,7 +1096,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-22T22:36:11Z",
-      "hue": 270
+      "hue": 314
     },
     {
       "id": "direction_2_equality_saturation_extraction_correct",
@@ -1168,7 +1168,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T00:24:01Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_3_local_to_global_finite_generation_prob",
@@ -1204,7 +1204,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-23T01:30:34Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_1_spectral_gap_detection_of_compositenes",
@@ -1249,7 +1249,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-23T03:00:46Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_1_non_abelian_arithmetic_phase_classific",
@@ -1303,7 +1303,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-23T05:12:14Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_1_dynamical_ramanujan_conjecture_for_pri",
@@ -1496,6 +1496,13 @@
     {
       "source": "direction_4_dynamical_systems_perspective_on_repea",
       "target": "direction_1_dynamical_ramanujan_conjecture_for_pri",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_verified_compiler_synthesis_via_free_f",
+      "target": "direction_1_empirical_hardness_localization_correl",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
