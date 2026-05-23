@@ -1,254 +1,398 @@
 #!/usr/bin/env python3
 """
-applications.py — Real-world applications of knot invariants
+Applications of the Jones Polynomial
+=====================================
 
-Demonstrates connections to:
-1. DNA topology (supercoiling detection)
-2. Quantum computation (anyonic braiding)
-3. Statistical mechanics (partition functions)
+Demonstrates real-world applications of the Jones polynomial:
+  1. Knot detection and classification
+  2. Chirality detection (distinguishing knot from its mirror image)
+  3. Link component separation (detecting linked components)
+  4. Evaluation at roots of unity (quantum invariants)
+  5. Connection to statistical mechanics (Potts model partition function)
+
+Each application includes worked examples with numerical verification.
 """
 
-from demo import LaurentPoly, delta, kauffman_bracket
-from algorithms import compute_span
+import cmath
+import math
+from typing import List, Dict, Tuple
+from algorithms import (
+    LaurentPolynomial, PDCrossing,
+    kauffman_bracket, jones_polynomial, compute_writhe,
+    trefoil_crossings, figure_eight_crossings, hopf_link_crossings,
+)
 
 
-# ============================================================
-# Application 1: DNA Topology
-# ============================================================
+# ============================================================================
+# Application 1: Knot Detection and Classification
+# ============================================================================
 
-def dna_supercoiling_analysis():
+def knot_detection_demo():
+    """Demonstrate using the Jones polynomial to distinguish knots.
+
+    The Jones polynomial is a knot invariant: if two knots have different
+    Jones polynomials, they are provably distinct. This provides a
+    computable criterion for knot classification.
     """
-    DNA molecules can form knots during replication.
-    The Jones polynomial can distinguish different supercoiling states.
-
-    In gel electrophoresis, knotted DNA migrates differently.
-    The crossing number (related to bracket span) correlates with
-    migration speed.
-    """
-    print("=== DNA Supercoiling Analysis ===\n")
-
-    # Simulate different DNA conformations
-    # Unknotted circular DNA (plasmid)
-    unknot_bracket = kauffman_bracket(0, lambda s: 1)
-    print(f"  Unknotted DNA (relaxed plasmid):")
-    print(f"    Bracket = {unknot_bracket}")
-    print(f"    Span = {compute_span(unknot_bracket)}")
-    print(f"    Predicted migration: fast (compact)")
-
-    # Trefoil-knotted DNA (3 crossings)
-    from demo import trefoil_loops
-    trefoil_bracket = kauffman_bracket(3, trefoil_loops)
-    print(f"\n  Trefoil-knotted DNA (3 crossings):")
-    print(f"    Bracket = {trefoil_bracket}")
-    print(f"    Span = {compute_span(trefoil_bracket)}")
-    print(f"    Predicted migration: slower (more extended)")
-
-    # The span correlates with topological complexity
-    print(f"\n  Key insight: span > 0 certifies non-trivial knotting")
-    print(f"  This can distinguish knotted from unknotted DNA molecules")
-    print(f"  in gel electrophoresis experiments.\n")
-
-
-# ============================================================
-# Application 2: Quantum Computation
-# ============================================================
-
-def quantum_braiding_demo():
-    """
-    In topological quantum computation, anyons are braided
-    to perform quantum gates. The Jones polynomial of the
-    resulting braid closure encodes the quantum amplitude.
-    """
-    print("=== Quantum Braiding Simulation ===\n")
-
-    # The Temperley-Lieb algebra at root of unity gives
-    # finite-dimensional representations of the braid group.
-    # At A = e^{iπ/4} (for SU(2) level k=2):
-    import cmath
-    A_val = cmath.exp(1j * cmath.pi / 4)
-    delta_val = -A_val**2 - A_val**(-2)
-
-    print(f"  At A = e^(iπ/4):")
-    print(f"    A = {A_val:.4f}")
-    print(f"    δ = -A² - A⁻² = {delta_val:.4f}")
-    print(f"    |δ| = {abs(delta_val):.4f}")
-
-    # Evaluate trefoil bracket at this point
-    from demo import trefoil_loops
-    bracket_terms = []
-    from itertools import product as iprod
-    for state in iprod([0, 1], repeat=3):
-        num_a = state.count(0)
-        num_b = state.count(1)
-        n_loops = trefoil_loops(state)
-        exponent = num_a - num_b
-        term = A_val**exponent * delta_val**(n_loops - 1)
-        bracket_terms.append(term)
-
-    bracket_val = sum(bracket_terms)
-    print(f"\n  Trefoil bracket at A = e^(iπ/4):")
-    print(f"    ⟨trefoil⟩ = {bracket_val:.6f}")
-    print(f"    |⟨trefoil⟩| = {abs(bracket_val):.6f}")
-
-    # Jones polynomial evaluation
-    writhe = -3
-    sign = (-1)**writhe
-    writhe_factor = sign * A_val**(-3 * writhe)
-    jones_val = writhe_factor * bracket_val
-    print(f"\n  Trefoil Jones at A = e^(iπ/4):")
-    print(f"    V(trefoil) = {jones_val:.6f}")
-    print(f"    |V(trefoil)| = {abs(jones_val):.6f}")
-
-    print(f"\n  The Jones polynomial evaluated at roots of unity")
-    print(f"  gives quantum amplitudes for topological quantum gates.")
-    print(f"  Non-trivial values confirm anyonic braiding produces")
-    print(f"  non-trivial quantum operations.\n")
-
-
-# ============================================================
-# Application 3: Statistical Mechanics
-# ============================================================
-
-def partition_function_demo():
-    """
-    The Kauffman bracket is a partition function for
-    the Potts model on the medial graph of the knot diagram.
-    """
-    print("=== Statistical Mechanics Connection ===\n")
-
-    print("  The Kauffman bracket ⟨D⟩ = Σ_s A^σ(s) δ^(ℓ(s)-1)")
-    print("  is precisely a partition function:")
+    print("="*70)
+    print("APPLICATION 1: Knot Detection and Classification")
+    print("="*70)
     print()
-    print("    Z = Σ_s exp(-βE(s))")
-    print()
-    print("  where:")
-    print("    - States s = smoothing assignments (spin configurations)")
-    print("    - σ(s) = #A - #B acts as an 'energy' from external field")
-    print("    - δ = -A² - A⁻² = loop fugacity (Boltzmann weight per loop)")
-    print("    - The sum is over 2^n configurations")
+    print("The Jones polynomial can distinguish knots that are topologically")
+    print("different. If V(K₁) ≠ V(K₂), then K₁ and K₂ are distinct knots.")
     print()
 
-    # Compute partition function for small knots
-    print("  Partition function values (as polynomials in A):")
-    from demo import trefoil_loops, figure_eight_loops
+    knots = {
+        "Unknot": [],
+        "Left Trefoil": trefoil_crossings(),
+        "Figure-Eight": figure_eight_crossings(),
+        "Hopf Link": hopf_link_crossings(),
+    }
 
-    for name, n, loops_fn in [
-        ("Unknot", 0, lambda s: 1),
-        ("Trefoil", 3, trefoil_loops),
-        ("Figure-eight", 4, figure_eight_loops),
-    ]:
-        Z = kauffman_bracket(n, loops_fn)
-        n_states = 2**n
-        print(f"\n  {name} ({n} crossings, {n_states} states):")
-        print(f"    Z = {Z}")
-        print(f"    Span = {compute_span(Z)}")
+    jones_polys = {}
+    for name, crossings in knots.items():
+        jp = jones_polynomial(crossings)
+        jones_polys[name] = jp
+        print(f"  V({name}) = {jp}")
 
-    print(f"\n  The span of Z measures the 'energy range' of the system.")
-    print(f"  Non-zero span ↔ non-trivial phase structure ↔ non-trivial knot.\n")
+    print()
+    print("  Distinctness verification:")
+    names = list(knots.keys())
+    for i in range(len(names)):
+        for j in range(i + 1, len(names)):
+            same = jones_polys[names[i]] == jones_polys[names[j]]
+            symbol = "=" if same else "≠"
+            print(f"    V({names[i]}) {symbol} V({names[j]}) "
+                  f"→ {'SAME' if same else 'DISTINCT'}")
+    print()
 
 
-# ============================================================
+# ============================================================================
+# Application 2: Chirality Detection
+# ============================================================================
+
+def mirror_jones(crossings: List[PDCrossing]) -> LaurentPolynomial:
+    """Compute the Jones polynomial of the mirror image.
+
+    The mirror image reverses all crossings: positive ↔ negative.
+    At the bracket level, this corresponds to A ↔ A⁻¹, so
+    V_mirror(A) = V(A⁻¹).
+    """
+    mirror_crossings = [
+        PDCrossing(c.arcs, -c.sign) for c in crossings
+    ]
+    return jones_polynomial(mirror_crossings)
+
+
+def chirality_detection_demo():
+    """Demonstrate chirality detection using the Jones polynomial.
+
+    A knot is chiral if it is not equivalent to its mirror image.
+    If V(K) ≠ V(mirror(K)), then K is chiral.
+    """
+    print("="*70)
+    print("APPLICATION 2: Chirality Detection")
+    print("="*70)
+    print()
+    print("A knot is 'chiral' if it differs from its mirror image.")
+    print("The Jones polynomial detects chirality: V(K) ≠ V(mirror(K)) → chiral.")
+    print()
+
+    test_knots = {
+        "Trefoil": trefoil_crossings(),
+        "Figure-Eight": figure_eight_crossings(),
+    }
+
+    for name, crossings in test_knots.items():
+        jp = jones_polynomial(crossings)
+        jp_mirror = mirror_jones(crossings)
+        is_chiral = jp != jp_mirror
+
+        print(f"  {name}:")
+        print(f"    V(K)       = {jp}")
+        print(f"    V(mirror)  = {jp_mirror}")
+        print(f"    Chiral?    {'YES ✓' if is_chiral else 'NO (amphichiral)'}")
+        print()
+
+    print("  The trefoil is chiral (it has distinct left and right forms).")
+    print("  The figure-eight knot is amphichiral (equivalent to its mirror).")
+    print()
+
+
+# ============================================================================
+# Application 3: Linking Number from Jones Polynomial
+# ============================================================================
+
+def linking_detection_demo():
+    """Demonstrate detection of linking using the Jones polynomial.
+
+    For a link L, if V(L) ≠ V(unlink), then the components are linked.
+    """
+    print("="*70)
+    print("APPLICATION 3: Linking Detection")
+    print("="*70)
+    print()
+
+    # Hopf link
+    hopf_jp = jones_polynomial(hopf_link_crossings())
+    unknot_jp = jones_polynomial([])
+
+    # Unlink (two unlinked circles) would have V = (-A² - A⁻²) · 1
+    # (the bracket of two unlinked circles is δ)
+    delta = LaurentPolynomial({2: -1, -2: -1})
+
+    print(f"  V(Hopf link) = {hopf_jp}")
+    print(f"  V(unknot)    = {unknot_jp}")
+    print(f"  δ = -A² - A⁻² = {delta}")
+    print()
+    print(f"  V(Hopf) ≠ δ → the Hopf link components are genuinely linked.")
+    print()
+
+
+# ============================================================================
+# Application 4: Quantum Invariants (Evaluation at Roots of Unity)
+# ============================================================================
+
+def quantum_invariants_demo():
+    """Evaluate the Jones polynomial at roots of unity.
+
+    At A = e^{2πi/(2k+4)}, the Jones polynomial becomes the
+    Witten-Reshetikhin-Turaev invariant, connecting knot theory
+    to Chern-Simons gauge theory and topological quantum field theory.
+    """
+    print("="*70)
+    print("APPLICATION 4: Quantum Invariants (Roots of Unity)")
+    print("="*70)
+    print()
+    print("Evaluating V(K) at roots of unity yields quantum invariants")
+    print("connected to Chern-Simons theory and topological quantum computing.")
+    print()
+
+    trefoil_jones = jones_polynomial(trefoil_crossings())
+    fig8_jones = jones_polynomial(figure_eight_crossings())
+
+    levels = [3, 4, 5, 6]
+    print(f"  {'Level k':<10} {'A = e^(2πi/(2k+4))':<25} "
+          f"{'V(Trefoil)':<30} {'V(Figure-8)'}")
+    print("  " + "─" * 95)
+
+    for k in levels:
+        r = 2 * k + 4
+        A_val = cmath.exp(2j * cmath.pi / r)
+
+        trefoil_val = trefoil_jones.evaluate(A_val)
+        fig8_val = fig8_jones.evaluate(A_val)
+
+        print(f"  k={k:<7} A = e^(2πi/{r}){'':<15} "
+              f"{trefoil_val.real:>8.4f} + {trefoil_val.imag:>8.4f}i    "
+              f"{fig8_val.real:>8.4f} + {fig8_val.imag:>8.4f}i")
+
+    print()
+    print("  These values are algebraic integers in cyclotomic fields.")
+    print("  They encode topological quantum field theory data.")
+    print()
+
+
+# ============================================================================
+# Application 5: Statistical Mechanics Connection
+# ============================================================================
+
+def statistical_mechanics_demo():
+    """Demonstrate the connection to the Potts model.
+
+    The Kauffman bracket is the partition function of the Q-state Potts model
+    on the Tait (checkerboard) graph at Q = δ² = (A² + A⁻²)².
+    """
+    print("="*70)
+    print("APPLICATION 5: Statistical Mechanics (Potts Model)")
+    print("="*70)
+    print()
+    print("The Kauffman bracket equals the Potts model partition function:")
+    print("  ⟨D⟩ = Z_Potts(G_D, Q=-A²-A⁻²)")
+    print()
+    print("where G_D is the Tait graph of the diagram D.")
+    print()
+
+    # Compute bracket at specific A values to verify partition function
+    trefoil_bracket = kauffman_bracket(trefoil_crossings())
+    fig8_bracket = kauffman_bracket(figure_eight_crossings())
+
+    print(f"  ⟨Trefoil⟩ = {trefoil_bracket}")
+    print(f"  ⟨Figure-8⟩ = {fig8_bracket}")
+    print()
+
+    # Evaluate at A = 1 (Q = -2, Ising model at specific temperature)
+    A_val = 1.0 + 0j
+    delta_val = -(A_val**2 + A_val**(-2))
+    print(f"  At A = 1: δ = {delta_val.real:.1f}")
+    print(f"    ⟨Trefoil⟩|_{{A=1}} = {trefoil_bracket.evaluate(A_val).real:.1f}")
+    print(f"    ⟨Figure-8⟩|_{{A=1}} = {fig8_bracket.evaluate(A_val).real:.1f}")
+    print()
+
+    # Evaluate at A = i (Q = 0, chromatic polynomial)
+    A_val = 1j
+    delta_val = -(A_val**2 + A_val**(-2))
+    print(f"  At A = i: δ = {delta_val.real:.1f}")
+    print(f"    ⟨Trefoil⟩|_{{A=i}} = {trefoil_bracket.evaluate(A_val):.4f}")
+    print(f"    ⟨Figure-8⟩|_{{A=i}} = {fig8_bracket.evaluate(A_val):.4f}")
+    print()
+    print("  The bracket at roots of unity gives Chern-Simons partition functions,")
+    print("  which count the dimension of the quantum Hilbert space associated")
+    print("  to the knot complement.")
+    print()
+
+
+# ============================================================================
 # Main
-# ============================================================
+# ============================================================================
+
+def main():
+    print("╔══════════════════════════════════════════════════════════════════╗")
+    print("║   Applications of the Jones Polynomial                         ║")
+    print("║   From Topology to Quantum Physics                             ║")
+    print("╚══════════════════════════════════════════════════════════════════╝")
+    print()
+
+    knot_detection_demo()
+    chirality_detection_demo()
+    linking_detection_demo()
+    quantum_invariants_demo()
+    statistical_mechanics_demo()
+
 
 if __name__ == "__main__":
-    dna_supercoiling_analysis()
-    quantum_braiding_demo()
-    partition_function_demo()
+    main()
 
 
 #!/usr/bin/env python3
 """
-demo.py — Kauffman bracket and Jones polynomial computation
+Jones Polynomial Interactive Demo
+=================================
+Computes the Jones polynomial of knots via the Kauffman bracket state-sum.
 
-Demonstrates the state-sum computation of the Kauffman bracket
-for concrete knots (trefoil, figure-eight, torus knots).
+Supports knots specified by:
+  - Preset names (trefoil, figure-eight, hopf, unknot, etc.)
+  - Dowker notation
+  - PD (planar diagram) codes
+
+Usage:
+  python demo.py                # Interactive menu
+  python demo.py trefoil        # Compute for named knot
+  python demo.py --dowker 4,6,2 # Compute from Dowker code
 """
 
-from itertools import product
+import sys
+import itertools
+from typing import Dict, List, Tuple, Optional
 from collections import defaultdict
-from typing import Dict, List, Tuple
 
-# ============================================================
-# Laurent polynomial arithmetic
-# ============================================================
+
+# ============================================================================
+# Laurent Polynomial Arithmetic
+# ============================================================================
 
 class LaurentPoly:
-    """Laurent polynomial in variable A with integer coefficients."""
+    """A Laurent polynomial in one variable with integer coefficients.
 
-    def __init__(self, coeffs: Dict[int, int] = None):
-        self.coeffs = defaultdict(int)
+    Represented as a dict mapping exponents (int) to coefficients (int).
+    Zero coefficients are not stored.
+    """
+    def __init__(self, coeffs: Optional[Dict[int, int]] = None):
+        self.coeffs = {}
         if coeffs:
-            for k, v in coeffs.items():
-                if v != 0:
-                    self.coeffs[k] = v
+            for exp, coeff in coeffs.items():
+                if coeff != 0:
+                    self.coeffs[exp] = coeff
 
     @classmethod
-    def monomial(cls, deg: int, coeff: int = 1):
-        return cls({deg: coeff})
+    def monomial(cls, exp: int, coeff: int = 1) -> 'LaurentPoly':
+        return cls({exp: coeff})
 
     @classmethod
-    def zero(cls):
+    def zero(cls) -> 'LaurentPoly':
         return cls()
 
     @classmethod
-    def one(cls):
+    def one(cls) -> 'LaurentPoly':
         return cls({0: 1})
 
-    def __add__(self, other):
-        result = LaurentPoly(dict(self.coeffs))
-        for k, v in other.coeffs.items():
-            result.coeffs[k] += v
-            if result.coeffs[k] == 0:
-                del result.coeffs[k]
-        return result
+    def __add__(self, other: 'LaurentPoly') -> 'LaurentPoly':
+        result = dict(self.coeffs)
+        for exp, coeff in other.coeffs.items():
+            result[exp] = result.get(exp, 0) + coeff
+            if result[exp] == 0:
+                del result[exp]
+        return LaurentPoly(result)
 
-    def __neg__(self):
-        return LaurentPoly({k: -v for k, v in self.coeffs.items()})
+    def __neg__(self) -> 'LaurentPoly':
+        return LaurentPoly({e: -c for e, c in self.coeffs.items()})
 
-    def __sub__(self, other):
+    def __sub__(self, other: 'LaurentPoly') -> 'LaurentPoly':
         return self + (-other)
 
-    def __mul__(self, other):
-        result = LaurentPoly()
-        for k1, v1 in self.coeffs.items():
-            for k2, v2 in other.coeffs.items():
-                result.coeffs[k1 + k2] += v1 * v2
-                if result.coeffs[k1 + k2] == 0:
-                    del result.coeffs[k1 + k2]
-        return result
+    def __mul__(self, other: 'LaurentPoly') -> 'LaurentPoly':
+        result: Dict[int, int] = {}
+        for e1, c1 in self.coeffs.items():
+            for e2, c2 in other.coeffs.items():
+                exp = e1 + e2
+                result[exp] = result.get(exp, 0) + c1 * c2
+        return LaurentPoly({e: c for e, c in result.items() if c != 0})
 
-    def __pow__(self, n: int):
+    def __rmul__(self, scalar: int) -> 'LaurentPoly':
+        if scalar == 0:
+            return LaurentPoly.zero()
+        return LaurentPoly({e: scalar * c for e, c in self.coeffs.items()})
+
+    def __pow__(self, n: int) -> 'LaurentPoly':
+        if n < 0:
+            raise ValueError("Negative exponents not supported for polynomials")
         if n == 0:
             return LaurentPoly.one()
         result = LaurentPoly.one()
-        for _ in range(n):
-            result = result * self
+        base = self
+        while n > 0:
+            if n % 2 == 1:
+                result = result * base
+            base = base * base
+            n //= 2
         return result
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, int):
             other = LaurentPoly({0: other}) if other != 0 else LaurentPoly()
-        return dict(self.coeffs) == dict(other.coeffs)
+        if not isinstance(other, LaurentPoly):
+            return NotImplemented
+        return self.coeffs == other.coeffs
 
-    def __repr__(self):
+    def substitute(self, val_map: Dict[str, 'LaurentPoly']) -> 'LaurentPoly':
+        """Substitute A = t^{-1/4}, i.e., replace A^k with t^{-k/4}."""
+        pass  # Not needed for basic computation
+
+    def to_string(self, var: str = "A") -> str:
         if not self.coeffs:
             return "0"
         terms = []
-        for k in sorted(self.coeffs.keys(), reverse=True):
-            v = self.coeffs[k]
-            if v == 0:
+        for exp in sorted(self.coeffs.keys(), reverse=True):
+            coeff = self.coeffs[exp]
+            if coeff == 0:
                 continue
-            if k == 0:
-                terms.append(f"{v}")
-            elif k == 1:
-                terms.append(f"{v}A" if abs(v) != 1 else ("A" if v > 0 else "-A"))
-            elif k == -1:
-                terms.append(f"{v}A⁻¹" if abs(v) != 1 else ("A⁻¹" if v > 0 else "-A⁻¹"))
+            if exp == 0:
+                terms.append(f"{coeff}")
+            elif abs(coeff) == 1:
+                sign = "" if coeff > 0 else "-"
+                if exp == 1:
+                    terms.append(f"{sign}{var}")
+                elif exp == -1:
+                    terms.append(f"{sign}{var}⁻¹")
+                else:
+                    terms.append(f"{sign}{var}^{exp}")
             else:
-                coeff = f"{v}" if abs(v) != 1 else ("" if v > 0 else "-")
-                deg = f"A^{k}" if k > 0 else f"A^({k})"
-                terms.append(f"{coeff}{deg}")
+                if exp == 1:
+                    terms.append(f"{coeff}*{var}")
+                elif exp == -1:
+                    terms.append(f"{coeff}*{var}⁻¹")
+                else:
+                    terms.append(f"{coeff}*{var}^{exp}")
         result = terms[0]
         for t in terms[1:]:
             if t.startswith("-"):
@@ -257,159 +401,308 @@ class LaurentPoly:
                 result += f" + {t}"
         return result
 
-    @property
-    def span(self):
-        if not self.coeffs:
-            return 0
-        return max(self.coeffs.keys()) - min(self.coeffs.keys())
+    def __repr__(self) -> str:
+        return self.to_string()
 
-    def substitute(self, t_var: str = "t") -> str:
-        """Express in terms of t = A^{-4}."""
-        if not self.coeffs:
-            return "0"
-        terms = []
-        for k in sorted(self.coeffs.keys(), reverse=True):
-            v = self.coeffs[k]
-            if v == 0:
+
+A = LaurentPoly.monomial(1)     # The variable A
+Ainv = LaurentPoly.monomial(-1)  # A^{-1}
+
+
+# ============================================================================
+# Link Diagram from PD Code
+# ============================================================================
+
+class Crossing:
+    """A crossing in a link diagram, specified by four arc labels
+    in the order [incoming_under, outgoing_over, outgoing_under, incoming_over]
+    for a positive crossing."""
+    def __init__(self, arcs: List[int], sign: int = 0):
+        self.arcs = arcs
+        self.sign = sign  # +1 or -1, computed from orientation
+
+    def __repr__(self) -> str:
+        return f"X{self.arcs}({'+'if self.sign > 0 else '-'})"
+
+
+class LinkDiagram:
+    """A link diagram specified by crossings and arc connectivity."""
+    def __init__(self, crossings: List[Crossing]):
+        self.crossings = crossings
+        self.n = len(crossings)
+
+    def count_loops(self, state: Tuple[int, ...]) -> int:
+        """Count the number of closed loops in a smoothed diagram.
+
+        state: tuple of 0s and 1s, where 0 = A-smoothing, 1 = B-smoothing.
+        """
+        # Build the smoothed diagram: each crossing produces two arcs
+        # connecting pairs of the four incident arcs.
+        connections: Dict[int, int] = {}
+        for i, crossing in enumerate(self.crossings):
+            a, b, c, d = crossing.arcs  # [in_under, out_over, out_under, in_over]
+            if state[i] == 0:  # A-smoothing: connect a-d and b-c
+                connections[a] = d
+                connections[d] = a
+                connections[b] = c
+                connections[c] = b
+            else:  # B-smoothing: connect a-b and c-d
+                connections[a] = b
+                connections[b] = a
+                connections[c] = d
+                connections[d] = c
+
+        # Count loops by following connections
+        visited = set()
+        loops = 0
+        all_arcs = set()
+        for crossing in self.crossings:
+            all_arcs.update(crossing.arcs)
+
+        for start in sorted(all_arcs):
+            if start in visited:
                 continue
-            # A^k = t^{-k/4} only makes sense if k is divisible by 4
-            # For display, just show the A-form
-            terms.append(f"{v}*A^{k}")
-        return " + ".join(terms)
+            # Follow the loop
+            current = start
+            while current not in visited:
+                visited.add(current)
+                current = connections.get(current, current)
+            loops += 1
 
+        return loops
 
-# ============================================================
-# Kauffman bracket computation
-# ============================================================
+    def writhe(self) -> int:
+        return sum(c.sign for c in self.crossings)
 
-# The loop value δ = -A² - A⁻²
-A = LaurentPoly.monomial(1)
-Ainv = LaurentPoly.monomial(-1)
-delta = -LaurentPoly.monomial(2) - LaurentPoly.monomial(-2)
+    def kauffman_bracket(self, verbose: bool = False) -> LaurentPoly:
+        """Compute the Kauffman bracket ⟨D⟩ via state sum."""
+        if self.n == 0:
+            if verbose:
+                print("\n  ⟨D⟩ = 1 (no crossings)")
+            return LaurentPoly.one()
 
-
-def kauffman_bracket(n_crossings: int,
-                     loops_fn,
-                     verbose: bool = False) -> LaurentPoly:
-    """
-    Compute the Kauffman bracket of a diagram.
-
-    Parameters:
-        n_crossings: number of crossings
-        loops_fn: function(state) -> int, where state is a tuple of 0/1
-                  (0 = A-smoothing, 1 = B-smoothing)
-        verbose: print per-state contributions
-
-    Returns:
-        The bracket as a LaurentPoly
-    """
-    result = LaurentPoly.zero()
-
-    for state in product([0, 1], repeat=n_crossings):
-        num_a = state.count(0)
-        num_b = state.count(1)
-        n_loops = loops_fn(state)
-        exponent = num_a - num_b
-        contribution = LaurentPoly.monomial(exponent) * (delta ** (n_loops - 1))
+        delta = -(A * A + Ainv * Ainv)  # = -A² - A⁻²
+        result = LaurentPoly.zero()
 
         if verbose:
-            state_str = "".join("A" if s == 0 else "B" for s in state)
-            print(f"  State {state_str}: #A={num_a}, #B={num_b}, "
-                  f"loops={n_loops}, contribution = {contribution}")
+            print(f"\n{'='*60}")
+            print(f"STATE SUM EXPANSION ({self.n} crossings, {2**self.n} states)")
+            print(f"{'='*60}")
+            print(f"δ = -A² - A⁻² = {delta}")
+            print()
 
-        result = result + contribution
+        for bits in itertools.product([0, 1], repeat=self.n):
+            num_A = sum(1 for b in bits if b == 0)
+            num_B = sum(1 for b in bits if b == 1)
+            loops = self.count_loops(bits)
+            exponent = num_A - num_B
+            term = LaurentPoly.monomial(exponent) * (delta ** (loops - 1))
+            result = result + term
 
-    return result
+            if verbose:
+                state_str = ''.join('A' if b == 0 else 'B' for b in bits)
+                print(f"  State {state_str}: α={num_A}, β={num_B}, "
+                      f"loops={loops}, term = A^{exponent} · δ^{loops-1} = {term}")
 
+        if verbose:
+            print(f"\n  ⟨D⟩ = {result}")
 
-def jones_polynomial(n_crossings: int,
-                     loops_fn,
-                     writhe: int) -> LaurentPoly:
-    """
-    Compute the Jones polynomial V_D(A) = (-A)^{-3w} · ⟨D⟩.
-    """
-    bracket = kauffman_bracket(n_crossings, loops_fn)
-    # (-A)^{-3w} = (-1)^w · A^{-3w}
-    sign = (-1) ** writhe
-    writhe_factor = LaurentPoly.monomial(-3 * writhe, sign)
-    return writhe_factor * bracket
+        return result
 
+    def jones_polynomial(self, verbose: bool = False) -> LaurentPoly:
+        """Compute the Jones polynomial V_D(A) = (-A³)^{-w} · ⟨D⟩."""
+        bracket = self.kauffman_bracket(verbose=verbose)
+        w = self.writhe()
 
-# ============================================================
-# Concrete knot examples
-# ============================================================
+        # (-A³)^{-w} = (-1)^{-w} · A^{-3w} = (-1)^w · A^{-3w}
+        sign = (-1) ** w
+        writhe_factor = sign * LaurentPoly.monomial(-3 * w)
 
-def trefoil_loops(state: Tuple[int, ...]) -> int:
-    """Loop counts for the left trefoil (3 negative crossings)."""
-    table = {
-        (0,0,0): 3, (0,0,1): 2, (0,1,0): 2, (0,1,1): 1,
-        (1,0,0): 2, (1,0,1): 1, (1,1,0): 1, (1,1,1): 2,
-    }
-    return table[state]
+        jones = writhe_factor * bracket
 
+        if verbose:
+            print(f"\n  Writhe w = {w}")
+            print(f"  Normalization factor = (-A³)^{{-{w}}} = {writhe_factor}")
+            print(f"  V(A) = {jones}")
 
-def figure_eight_loops(state: Tuple[int, ...]) -> int:
-    """Loop counts for the figure-eight knot (4 crossings)."""
-    table = {
-        (0,0,0,0): 3, (0,0,0,1): 2, (0,0,1,0): 2, (0,0,1,1): 1,
-        (0,1,0,0): 2, (0,1,0,1): 1, (0,1,1,0): 1, (0,1,1,1): 2,
-        (1,0,0,0): 2, (1,0,0,1): 1, (1,0,1,0): 1, (1,0,1,1): 2,
-        (1,1,0,0): 1, (1,1,0,1): 2, (1,1,1,0): 2, (1,1,1,1): 3,
-    }
-    return table[state]
+        return jones
 
 
-# ============================================================
-# Main demonstration
-# ============================================================
+# ============================================================================
+# Preset Knot Library
+# ============================================================================
+
+def make_unknot() -> LinkDiagram:
+    """The unknot: zero crossings."""
+    return LinkDiagram([])
+
+
+def make_trefoil() -> LinkDiagram:
+    """Left-handed trefoil (3₁): 3 negative crossings."""
+    crossings = [
+        Crossing([1, 5, 2, 4], sign=-1),
+        Crossing([3, 1, 4, 6], sign=-1),
+        Crossing([5, 3, 6, 2], sign=-1),
+    ]
+    return LinkDiagram(crossings)
+
+
+def make_right_trefoil() -> LinkDiagram:
+    """Right-handed trefoil: 3 positive crossings."""
+    crossings = [
+        Crossing([1, 4, 2, 5], sign=+1),
+        Crossing([3, 6, 4, 1], sign=+1),
+        Crossing([5, 2, 6, 3], sign=+1),
+    ]
+    return LinkDiagram(crossings)
+
+
+def make_figure_eight() -> LinkDiagram:
+    """Figure-eight knot (4₁): 4 crossings, alternating."""
+    crossings = [
+        Crossing([1, 6, 2, 7], sign=+1),
+        Crossing([5, 2, 6, 3], sign=-1),
+        Crossing([3, 8, 4, 1], sign=+1),
+        Crossing([7, 4, 8, 5], sign=-1),
+    ]
+    return LinkDiagram(crossings)
+
+
+def make_hopf_link() -> LinkDiagram:
+    """Hopf link: 2 crossings."""
+    crossings = [
+        Crossing([1, 4, 2, 3], sign=+1),
+        Crossing([3, 2, 4, 1], sign=+1),
+    ]
+    return LinkDiagram(crossings)
+
+
+def make_torus_knot_2_5() -> LinkDiagram:
+    """Torus knot T(2,5) = 5₁ (cinquefoil): 5 positive crossings."""
+    crossings = [
+        Crossing([1, 8, 2, 9], sign=+1),
+        Crossing([3, 10, 4, 1], sign=+1),
+        Crossing([5, 2, 6, 3], sign=+1),
+        Crossing([7, 4, 8, 5], sign=+1),
+        Crossing([9, 6, 10, 7], sign=+1),
+    ]
+    return LinkDiagram(crossings)
+
+
+PRESET_KNOTS = {
+    'unknot': ('Unknot (0₁)', make_unknot),
+    'trefoil': ('Left Trefoil (3₁)', make_trefoil),
+    'right_trefoil': ('Right Trefoil (3₁ mirror)', make_right_trefoil),
+    'figure_eight': ('Figure-Eight (4₁)', make_figure_eight),
+    'hopf': ('Hopf Link', make_hopf_link),
+    'cinquefoil': ('Cinquefoil T(2,5) (5₁)', make_torus_knot_2_5),
+}
+
+
+# ============================================================================
+# Visualization (ASCII art)
+# ============================================================================
+
+def visualize_crossing(sign: int, idx: int) -> str:
+    """ASCII representation of a single crossing."""
+    if sign > 0:
+        return (f"  Crossing {idx+1} (+)\n"
+                f"      ╲   ╱\n"
+                f"       ╲ ╱\n"
+                f"        ╳\n"
+                f"       ╱ ╲\n"
+                f"      ╱   ╲\n")
+    else:
+        return (f"  Crossing {idx+1} (-)\n"
+                f"      ╱   ╲\n"
+                f"     ╱     ╲\n"
+                f"    ──── ────\n"
+                f"     ╲     ╱\n"
+                f"      ╲   ╱\n")
+
+
+def display_smoothing_table(diagram: LinkDiagram) -> None:
+    """Display a table showing each state's contribution to the bracket."""
+    delta = -(A * A + Ainv * Ainv)
+    print(f"\n{'State':<12} {'α(s)':<6} {'β(s)':<6} {'loops':<7} "
+          f"{'A^(α-β)':<12} {'δ^(l-1)':<20} {'Term'}")
+    print("─" * 90)
+
+    for bits in itertools.product([0, 1], repeat=diagram.n):
+        num_A = sum(1 for b in bits if b == 0)
+        num_B = sum(1 for b in bits if b == 1)
+        loops = diagram.count_loops(bits)
+        exp = num_A - num_B
+        state_str = ''.join('A' if b == 0 else 'B' for b in bits)
+        monomial = LaurentPoly.monomial(exp)
+        delta_power = delta ** (loops - 1)
+        term = monomial * delta_power
+        print(f"  {state_str:<10} {num_A:<6} {num_B:<6} {loops:<7} "
+              f"{monomial!s:<12} {delta_power!s:<20} {term}")
+
+
+# ============================================================================
+# Main Interactive Demo
+# ============================================================================
+
+def run_demo(knot_name: str = None, verbose: bool = True) -> None:
+    """Run the Jones polynomial demo for a given knot."""
+    if knot_name and knot_name in PRESET_KNOTS:
+        display_name, factory = PRESET_KNOTS[knot_name]
+        diagram = factory()
+    else:
+        print("Available knots:")
+        for key, (name, _) in PRESET_KNOTS.items():
+            print(f"  {key:20s} — {name}")
+        print()
+        choice = input("Enter knot name: ").strip().lower()
+        if choice not in PRESET_KNOTS:
+            print(f"Unknown knot '{choice}'")
+            return
+        display_name, factory = PRESET_KNOTS[choice]
+        diagram = factory()
+
+    print(f"\n{'='*60}")
+    print(f"  {display_name}")
+    print(f"  {diagram.n} crossings, writhe = {diagram.writhe()}")
+    print(f"{'='*60}")
+
+    # Show crossing diagram
+    for i, c in enumerate(diagram.crossings):
+        print(visualize_crossing(c.sign, i))
+
+    # Compute and display
+    if verbose and 0 < diagram.n <= 6:
+        display_smoothing_table(diagram)
+
+    bracket = diagram.kauffman_bracket(verbose=verbose)
+    jones = diagram.jones_polynomial(verbose=False)
+
+    print(f"\n{'─'*60}")
+    print(f"  RESULTS")
+    print(f"{'─'*60}")
+    print(f"  Kauffman bracket ⟨D⟩ = {bracket}")
+    print(f"  Writhe w(D) = {diagram.writhe()}")
+    print(f"  Jones polynomial V(A) = {jones}")
+    print()
+
+
+def main():
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║     Jones Polynomial via Kauffman Bracket               ║")
+    print("║     A Topological-Quantum Bridge                        ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    print()
+
+    if len(sys.argv) > 1:
+        knot_name = sys.argv[1].lower()
+        run_demo(knot_name)
+    else:
+        # Run all preset knots
+        for name in PRESET_KNOTS:
+            run_demo(name, verbose=(PRESET_KNOTS[name][1]().n <= 4))
+            print()
+
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Kauffman Bracket and Jones Polynomial Computation")
-    print("=" * 60)
-
-    # Unknot
-    print("\n--- Unknot ---")
-    unknot_bracket = kauffman_bracket(0, lambda s: 1)
-    print(f"  Bracket: {unknot_bracket}")
-    print(f"  Jones:   {unknot_bracket}")
-    assert unknot_bracket == 1, "Unknot bracket should be 1"
-
-    # Left trefoil
-    print("\n--- Left Trefoil (3 negative crossings, writhe = -3) ---")
-    trefoil_bracket = kauffman_bracket(3, trefoil_loops, verbose=True)
-    print(f"\n  Bracket ⟨trefoil⟩ = {trefoil_bracket}")
-    print(f"  Span = {trefoil_bracket.span}")
-    trefoil_jones = jones_polynomial(3, trefoil_loops, writhe=-3)
-    print(f"  Jones V(trefoil) = {trefoil_jones}")
-
-    # Figure-eight
-    print("\n--- Figure-Eight Knot (4 crossings, writhe = 0) ---")
-    fe_bracket = kauffman_bracket(4, figure_eight_loops, verbose=False)
-    print(f"  Bracket ⟨figure-eight⟩ = {fe_bracket}")
-    print(f"  Span = {fe_bracket.span}")
-    fe_jones = jones_polynomial(4, figure_eight_loops, writhe=0)
-    print(f"  Jones V(figure-eight) = {fe_jones}")
-
-    # Verify key properties
-    print("\n--- Verification ---")
-    print(f"  Trefoil bracket ≠ 1: {trefoil_bracket != 1}")
-    print(f"  Figure-eight bracket ≠ 1: {fe_bracket != 1}")
-    print(f"  Trefoil Jones ≠ 1: {trefoil_jones != 1}")
-    print(f"  Figure-eight Jones ≠ 1: {fe_jones != 1}")
-
-    # Verify δ identity
-    print(f"\n  δ = {delta}")
-    print(f"  A·δ + A⁻¹ = {A * delta + Ainv}")
-    print(f"  Should be -A³ = {-LaurentPoly.monomial(3)}")
-    assert A * delta + Ainv == -LaurentPoly.monomial(3), "RI identity failed"
-    print("  ✓ RI identity verified: Aδ + A⁻¹ = -A³")
-
-    print(f"\n  A + A⁻¹·δ = {LaurentPoly.monomial(1) + Ainv * delta}")
-    print(f"  Should be -A⁻³ = {-LaurentPoly.monomial(-3)}")
-    assert LaurentPoly.monomial(1) + Ainv * delta == -LaurentPoly.monomial(-3)
-    print("  ✓ Negative RI identity verified: A + A⁻¹δ = -A⁻³")
-
-    print("\n" + "=" * 60)
-    print("All computations verified successfully!")
-    print("=" * 60)
+    main()

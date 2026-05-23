@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1740 of the highest-quality
+A curated collection of 1746 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1740
+Total files: 1746
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -980,6 +980,7 @@ import FINAL.Geometry.InverseStereoMobiusNext
 import FINAL.Geometry.InverseStereoResearch
 import FINAL.Geometry.InverseStereoSecp256k1
 import FINAL.Geometry.InverseStereoUniverse
+import FINAL.Geometry.KauffmanBracket
 import FINAL.Geometry.MonotoneSubseq
 import FINAL.Geometry.MultiHeadStereographic
 import FINAL.Geometry.NonAbelianGauge
@@ -1320,6 +1321,7 @@ import FINAL.Physics.V12_VariationalPrinciples
 import FINAL.Physics.VonNeumannEntropy
 import FINAL.Pythagorean.AbelianizationTorsion
 import FINAL.Pythagorean.AdvancedFactoringResearch
+import FINAL.Pythagorean.AsymptoticCompactness
 import FINAL.Pythagorean.Basic
 import FINAL.Pythagorean.BenfordCriterion
 import FINAL.Pythagorean.BerggrenCA
@@ -1363,6 +1365,7 @@ import FINAL.Pythagorean.CayleyTransform
 import FINAL.Pythagorean.Companion
 import FINAL.Pythagorean.Compute
 import FINAL.Pythagorean.Conditional
+import FINAL.Pythagorean.ConfigGraphPathwidth
 import FINAL.Pythagorean.Configurations
 import FINAL.Pythagorean.Congruence
 import FINAL.Pythagorean.ConvergentRewriteOptimizer
@@ -1427,6 +1430,7 @@ import FINAL.Pythagorean.O31_Generators
 import FINAL.Pythagorean.OpenQuestions
 import FINAL.Pythagorean.OrbitClassification
 import FINAL.Pythagorean.OrbitOrderDuality
+import FINAL.Pythagorean.PF2Theorems
 import FINAL.Pythagorean.PadicOrbitalValuation
 import FINAL.Pythagorean.ParityCensus
 import FINAL.Pythagorean.Percolation
@@ -1439,6 +1443,7 @@ import FINAL.Pythagorean.PrimePowerHecke
 import FINAL.Pythagorean.ProdBounds
 import FINAL.Pythagorean.PythagoreanFactoring
 import FINAL.Pythagorean.PythagoreanPairing
+import FINAL.Pythagorean.QuantumRungeLenz
 import FINAL.Pythagorean.QuarticFiber
 import FINAL.Pythagorean.QuotientClosure
 import FINAL.Pythagorean.QuotientSections
@@ -1446,6 +1451,7 @@ import FINAL.Pythagorean.Radical
 import FINAL.Pythagorean.RankBoundedEML
 import FINAL.Pythagorean.RankOne
 import FINAL.Pythagorean.Recurrence
+import FINAL.Pythagorean.RecursiveMajorityDepthRigidity
 import FINAL.Pythagorean.Reduction
 import FINAL.Pythagorean.RegulatorPosDef
 import FINAL.Pythagorean.RepresentableDimension

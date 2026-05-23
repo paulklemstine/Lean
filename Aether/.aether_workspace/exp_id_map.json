@@ -382,5 +382,12 @@
   "c04733ce": "direction_1_depth_hierarchy_with_controlled_invers.json",
   "6f005579": "direction_5_tropical_kam_stability_grand_challenge.json",
   "5e092ba0": "direction_1_dynamical_ramanujan_conjecture_for_pri.json",
-  "d65cb2a1": "direction_1_optimal_generator_bounds.json"
+  "d65cb2a1": "direction_1_optimal_generator_bounds.json",
+  "db299deb": "direction_1_depth_rigidity_of_recursive_majority_g.json",
+  "6e3df7d9": "knot_invariants_jones_polynomial_formalization.json",
+  "8c28b926": "configuration_graph_pathwidth.json",
+  "40d9a95b": "direction_4_log_concavity_in_combinatorics_via_pf_.json",
+  "7a676034": "direction_1_asymptotic_compactness__from_finite_ce.json",
+  "855340ee": "certified_space_certificates_for_sat_solvers.json",
+  "c8e3603c": "direction_1_quantum_runge_lenz_and_hydrogen_degene.json"
 }
