@@ -61,6 +61,25 @@ python research_memory.py reset    # Abandon in-progress, seed with 22 direction
 python research_memory.py stats    # Show counts by status
 ```
 
+## Running the Research Loop
+
+### Local loop (no GitHub Actions minutes)
+
+```bash
+cd Aether && python3 aether_tick.py --loop --ollama-cloud --interval 1800
+```
+
+This runs continuously: each tick polls for completed jobs, integrates them, dispatches new ones, rebuilds the website (`update_index.py`), syncs to `docs/`, commits, and pushes to git. The `--interval 1800` flag sleeps 30 minutes between ticks.
+
+Other flags:
+- `--max-inflight N` — max concurrent Aristotle jobs (default 9)
+- `--interval SECONDS` — sleep between ticks (default 21600 = 6h)
+- Single run (no loop): `python3 aether_tick.py --ollama-cloud`
+
+### GitHub Pages
+
+The website is served from the `docs/` directory on the `master` branch (branch-based deployment, no Actions minutes). After each tick, `docs/` is synced from `Catalog/Applications/Packages/`. Ensure GitHub Pages settings are configured: **Source → Deploy from a branch → master → /docs**.
+
 ## Code Conventions
 
 - Python 3.10+ with type hints
