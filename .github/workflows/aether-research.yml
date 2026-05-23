@@ -2,8 +2,7 @@ name: Aether Research Loop
 
 on:
   schedule:
-    - cron: '13 * * * *'  
-    - cron: '43 * * * *'   
+    - cron: '17 0,6,12,18 * * *'
   workflow_dispatch:
     inputs:
       max_inflight:
@@ -22,13 +21,13 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  AETHER_MAX_INFLIGHT: ${{ github.event.inputs.max_inflight || '9' }}
+  AETHER_MAX_INFLIGHT: ${{ github.event.inputs.maxinflight || '9' }}
   PYTHONUNBUFFERED: '1'
 
 jobs:
   research:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
