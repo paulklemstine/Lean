@@ -7,18 +7,25 @@ then exits. Designed for hourly cron — each run takes 2-5 minutes.
 Usage:
     python3 aether_tick.py
     python3 aether_tick.py --max-inflight 9
+    python3 aether_tick.py --loop --interval 21600   # continuous loop, every 6h
 """
 
 import argparse
 import asyncio
 import json
+import os
+import subprocess
 import sys
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
 from knowledge_extractor import KnowledgeExtractor
+
+REPO_ROOT = Path(__file__).parent.parent
+PACKAGES_DIR = REPO_ROOT / "Catalog" / "Applications" / "Packages"
 
 TICK_COUNTER_PATH = Path(__file__).parent / ".aether_workspace" / "tick_counter.json"
 MAX_TICKS_PER_HOUR = 2
@@ -148,11 +155,74 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int) -> None:
     print(f"[Tick] Done — {len(completed_jobs)} integrated, {remaining} still inflight")
 
 
+def rebuild_commit_push() -> bool:
+    """Rebuild website index, commit all changes, and push to git.
+    Returns True if anything was pushed."""
+    print("[Tick] Rebuilding website index...")
+    try:
+        result = subprocess.run(
+            [sys.executable, "update_index.py"],
+            cwd=str(PACKAGES_DIR),
+            capture_output=True, text=True, timeout=60
+        )
+        if result.returncode != 0:
+            print(f"[Tick] update_index.py failed: {result.stderr}")
+        else:
+            print(f"[Tick] {result.stdout.strip()}")
+    except Exception as e:
+        print(f"[Tick] update_index.py error: {e}")
+
+    # Git add, commit, push
+    try:
+        subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+
+        diff = subprocess.run(
+            ["git", "diff", "--cached", "--quiet"],
+            cwd=str(REPO_ROOT), capture_output=True, timeout=30
+        )
+        if diff.returncode == 0:
+            print("[Tick] No changes to commit")
+            return False
+
+        timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
+        subprocess.run(
+            ["git", "commit", "-m", f"Aether local tick {timestamp}"],
+            cwd=str(REPO_ROOT), capture_output=True, timeout=30
+        )
+
+        # Pull with rebase to handle remote changes
+        pull = subprocess.run(
+            ["git", "pull", "--rebase", "-X", "ours", "origin", "master"],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60
+        )
+        if pull.returncode != 0:
+            subprocess.run(["git", "rebase", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
+            print(f"[Tick] git pull --rebase failed: {pull.stderr}")
+            return False
+
+        push = subprocess.run(
+            ["git", "push"], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60
+        )
+        if push.returncode != 0:
+            print(f"[Tick] git push failed: {push.stderr}")
+            return False
+
+        print("[Tick] Changes committed and pushed")
+        return True
+    except Exception as e:
+        print(f"[Tick] git error: {e}")
+        return False
+
+
 def main():
     parser = argparse.ArgumentParser(description="Aether Tick: one-shot CI pipeline step")
     parser.add_argument("--max-inflight", type=int, default=9)
     parser.add_argument("--config", type=str, default=None)
     parser.add_argument("--ollama-cloud", action="store_true")
+    parser.add_argument("--loop", action="store_true",
+                        help="Run continuously, sleeping between ticks")
+    parser.add_argument("--interval", type=int, default=21600,
+                        help="Seconds between ticks in loop mode (default: 21600 = 6h)")
     args = parser.parse_args()
 
     # Build config
@@ -165,8 +235,22 @@ def main():
     else:
         extractor = KnowledgeExtractor(config_path=args.config)
 
-    print(f"[Tick] Aether tick starting — max_inflight={args.max_inflight}")
-    asyncio.run(tick(extractor, args.max_inflight))
+    if args.loop:
+        print(f"[Tick] Loop mode — interval={args.interval}s, max_inflight={args.max_inflight}")
+        while True:
+            print(f"\n{'='*60}")
+            print(f"[Tick] Aether tick starting at {datetime.now(timezone.utc).isoformat()}")
+            try:
+                asyncio.run(tick(extractor, args.max_inflight))
+            except Exception as e:
+                print(f"[Tick] Tick error: {e}")
+            rebuild_commit_push()
+            print(f"[Tick] Sleeping {args.interval}s until next tick...")
+            time.sleep(args.interval)
+    else:
+        print(f"[Tick] Aether tick starting — max_inflight={args.max_inflight}")
+        asyncio.run(tick(extractor, args.max_inflight))
+        rebuild_commit_push()
 
 
 if __name__ == "__main__":
