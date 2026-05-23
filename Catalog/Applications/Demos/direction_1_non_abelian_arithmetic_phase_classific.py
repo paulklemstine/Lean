@@ -1,628 +1,697 @@
 #!/usr/bin/env python3
 """
-Applications of the Derived Torsion Profile
+Applications of Non-Abelian Arithmetic Phase Classification
 
-Demonstrates real-world applications of the abelianization torsion
-classification theorem and its failure:
-
-1. Lattice Gauge Theory: Phase classification via abelianization
-2. Projective Representation Theory: Schur multiplier as obstruction
-3. Cryptographic Group Selection: Torsion profiles as distinguishers
-
-Each application shows how the derived torsion profile provides
-computable invariants for group-theoretic problems.
+Demonstrates real-world applications of the classification theorem:
+1. Gauge theory phase detection — which primes are "visible" to linear probes
+2. Group fingerprinting — using phase profiles as fast invariants
+3. Compositional analysis — predicting profiles of composite systems
 """
 
-from demo import (
-    symmetric_group_3, alternating_group_4, quaternion_group_8,
-    dihedral_group_4, klein_four, abelianization_orders,
-    p_torsion_count, p_torsion_nontrivial, commutator_subgroup,
-    generate_group, compose_perm as compose, inverse_perm as invert,
-    identity_perm as identity, perm_order
-)
 from algorithms import (
-    compute_derived_torsion_profile, compare_torsion_profiles,
-    sieve_primes, prime_factors
+    FiniteGroup, arithmetic_phase_profile, phase_profile_comparison,
+    product_phase_profile, compute_abelianization_order,
+    make_symmetric_group, make_quaternion_group, make_cyclic_group,
+    prime_factorization
 )
+from itertools import permutations
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Application 1: Lattice Gauge Theory Phase Classification
-# ──────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
+# Application 1: Gauge Theory Phase Detection
+# ──────────────────────────────────────────────────────────────────────────────
 
-def lattice_gauge_phase_classification():
+def gauge_phase_analysis():
+    """Analyze which arithmetic phases are detectable in gauge theories
+    with various finite gauge groups.
+
+    In lattice gauge theory, the gauge group G determines the
+    structure of vacuum phases. Arithmetic phases at prime p correspond
+    to topological sectors labeled by p-torsion in the first homology
+    of the gauge configuration space.
+
+    The classification theorem says these phases are entirely determined
+    by the abelianization G^ab, meaning non-abelian gauge structure is
+    invisible to first-order arithmetic probes.
     """
-    In lattice gauge theory, the gauge group G determines the possible
-    phases of the theory. The abelianization G^ab classifies the
-    "abelian confinement phases" (degree-1), while the Schur multiplier
-    M(G) classifies additional "topological order" phases (degree-2).
-    
-    Two gauge theories with the same abelianization have identical
-    abelian confinement behavior, but may differ in their topological
-    order — precisely when their Schur multipliers differ.
-    
-    This application computes the phase classification for several
-    gauge groups commonly used in lattice gauge theory.
-    """
-    print("=" * 72)
-    print("APPLICATION 1: Lattice Gauge Theory Phase Classification")
-    print("=" * 72)
-    print()
-    
-    groups_data = [
-        (*quaternion_group_8(), "trivial"),
-        (*dihedral_group_4(), "ℤ/2ℤ"),
-        (*klein_four(), "ℤ/2ℤ"),
-        (*symmetric_group_3(), "ℤ/2ℤ"),
-    ]
-    
-    print("For each gauge group G, the phase structure is:")
-    print("  - Abelian confinement phases ↔ torsion in G^ab (degree 1)")
-    print("  - Topological order phases ↔ torsion in M(G) (degree 2)")
-    print()
-    
-    profiles = []
-    for elems, name, expected_order, schur in groups_data:
-        info = compute_derived_torsion_profile(elems, name, schur)
-        profiles.append(info)
-        
-        ab_orders = abelianization_orders(elems)
-        
-        print(f"  Gauge group: {name}")
-        print(f"    |G| = {info.order}, G^ab ≅ {'×'.join(f'ℤ/{o}ℤ' for o in ab_orders if o > 1) or 'trivial'}")
-        print(f"    Abelian phases: {len([o for o in ab_orders if o > 1])} nontrivial generators")
-        print(f"    Topological order: M(G) = {schur}")
-        
-        if schur == "trivial":
-            print(f"    → Abelianization COMPLETE for {name}-gauge theory")
-        else:
-            print(f"    → Abelianization INCOMPLETE: hidden topological order from M(G)")
-        print()
-    
-    # Key comparison
-    q8_info = profiles[0]
-    d4_info = profiles[1]
-    v4_info = profiles[2]
-    
-    print("  KEY INSIGHT:")
-    print("  Q₈-gauge theory and D₄-gauge theory have the SAME abelian")
-    print("  confinement behavior (both have G^ab ≅ (ℤ/2ℤ)²), but")
-    print("  DIFFERENT topological order:")
-    print(f"    M(Q₈) = {q8_info.schur_multiplier} → no extra topological phases")
-    print(f"    M(D₄) = {d4_info.schur_multiplier} → one extra topological phase")
-    print()
+    print("=" * 65)
+    print("  APPLICATION 1: Gauge Theory Phase Detection")
+    print("=" * 65)
 
-
-# ──────────────────────────────────────────────────────────────────────
-# Application 2: Projective Representation Theory
-# ──────────────────────────────────────────────────────────────────────
-
-def projective_representation_classification():
-    """
-    The Schur multiplier M(G) = H₂(G, ℤ) classifies the projective
-    representations of G up to equivalence. A projective representation
-    is a homomorphism ρ: G → PGL(n, ℂ) that may not lift to GL(n, ℂ).
-    
-    The obstruction to lifting is an element of M(G). When M(G) = 0,
-    all projective representations lift to genuine representations.
-    When M(G) ≠ 0, there exist "essentially projective" representations.
-    
-    This application classifies the representation-theoretic complexity
-    of several groups using their derived torsion profiles.
-    """
-    print("=" * 72)
-    print("APPLICATION 2: Projective Representation Classification")
-    print("=" * 72)
-    print()
-    
     groups = {
-        "Q₈": ("trivial", "All projective reps lift to genuine reps"),
-        "V₄": ("ℤ/2ℤ", "Has essentially projective reps (2-cocycle obstruction)"),
-        "D₄": ("ℤ/2ℤ", "Has essentially projective reps (2-cocycle obstruction)"),
-        "S₃": ("ℤ/2ℤ", "Has essentially projective reps (2-cocycle obstruction)"),
-        "A₄": ("ℤ/2ℤ", "Has essentially projective reps (2-cocycle obstruction)"),
+        "U(1) lattice (Z/12Z)": make_cyclic_group(12),
+        "S₃ gauge": make_symmetric_group(3),
+        "S₄ gauge": make_symmetric_group(4),
+        "Q₈ gauge": make_quaternion_group(),
     }
-    
-    print("Projective representation classification:")
-    print()
-    print(f"{'Group':>6} | {'M(G)':>10} | {'Projective Reps':>50}")
-    print("-" * 75)
-    for name, (schur, desc) in groups.items():
-        print(f"{name:>6} | {schur:>10} | {desc}")
-    
-    print()
-    print("THEOREM (Schur): The number of inequivalent multiplier classes")
-    print("for projective representations of G equals |M(G)|.")
-    print()
-    print("CONSEQUENCE:")
-    print("  Q₈ has |M(Q₈)| = 1 multiplier class → all reps are genuine")
-    print("  V₄ has |M(V₄)| = 2 multiplier classes → one genuine, one projective")
-    print()
-    print("  Despite Q₈^ab ≅ V₄^ab, their representation theories DIFFER")
-    print("  at the projective level. The Schur multiplier captures this.")
-    print()
+
+    print("\n  Gauge Group          |G|   |G^ab|  Visible Primes")
+    print("  " + "-" * 55)
+    for name, G in groups.items():
+        ab_order = compute_abelianization_order(G)
+        profile = arithmetic_phase_profile(G)
+        print(f"  {name:<22} {G.n:>4}   {ab_order:>5}  {sorted(profile)}")
+
+    print("\n  Key insight: S₃ (order 6) and S₄ (order 24) have very")
+    print("  different orders but identical phase profiles {2}, because")
+    print("  both have G^ab ≅ Z/2Z. The prime 3 divides |S₃| = 6 and")
+    print("  |S₄| = 24, but is NOT phase-visible because it's absorbed")
+    print("  by the commutator subgroup.")
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Application 3: Group Distinguishing via Torsion
-# ──────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
+# Application 2: Group Fingerprinting
+# ──────────────────────────────────────────────────────────────────────────────
 
-def group_distinguishing():
+def group_fingerprinting():
+    """Use arithmetic phase profiles as fast group fingerprints.
+
+    While the phase profile is not a complete invariant (Q₈ and D₄ have
+    the same profile), it provides a fast necessary condition for
+    isomorphism of abelianizations.
+
+    This can be used as a preprocessing step in group identification:
+    if two groups have different phase profiles, their abelianizations
+    are definitely non-isomorphic.
     """
-    Given two finite groups presented as permutation groups,
-    determine whether they can be distinguished by their derived
-    torsion profiles. This is a polynomial-time computable invariant
-    that is strictly finer than abelianization alone.
+    print("\n" + "=" * 65)
+    print("  APPLICATION 2: Group Fingerprinting")
+    print("=" * 65)
+
+    # Build a library of groups
+    library = {
+        "Z/2Z": make_cyclic_group(2),
+        "Z/3Z": make_cyclic_group(3),
+        "Z/4Z": make_cyclic_group(4),
+        "Z/6Z": make_cyclic_group(6),
+        "S₃":   make_symmetric_group(3),
+        "Q₈":   make_quaternion_group(),
+        "S₄":   make_symmetric_group(4),
+    }
+
+    print("\n  Group    |G|  Profile   |G^ab|")
+    print("  " + "-" * 35)
+    profiles = {}
+    for name, G in library.items():
+        profile = frozenset(arithmetic_phase_profile(G))
+        ab_order = compute_abelianization_order(G)
+        profiles[name] = profile
+        print(f"  {name:<8} {G.n:>3}  {str(sorted(profile)):<10} {ab_order:>5}")
+
+    # Find groups with matching profiles
+    print("\n  Groups with matching phase profiles (potential iso classes):")
+    from itertools import combinations
+    for (n1, p1), (n2, p2) in combinations(profiles.items(), 2):
+        if p1 == p2:
+            print(f"    {n1} ≈ {n2}  (profile: {sorted(p1)})")
+
+    print("\n  Note: matching profiles is necessary but not sufficient for")
+    print("  isomorphic abelianizations. Q₈ and D₄ (not shown) both have")
+    print("  profile {2} with |G^ab| = 4, but Z/4Z also has profile {2}")
+    print("  with |G^ab| = 4.")
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Application 3: Compositional Phase Analysis
+# ──────────────────────────────────────────────────────────────────────────────
+
+def compositional_analysis():
+    """Demonstrate the product theorem for compositional systems.
+
+    In physics, independent subsystems combine as direct products.
+    The Cross-Domain Bridge theorem says:
+        Profile(G × H) = Profile(G) ∪ Profile(H)
+
+    This means phase detection in composite systems is purely additive
+    at the prime level — no "interference" between independent sectors.
     """
-    print("=" * 72)
-    print("APPLICATION 3: Group Distinguishing via Torsion Profiles")
-    print("=" * 72)
-    print()
-    
-    all_groups = [
-        (*symmetric_group_3(), "ℤ/2ℤ"),
-        (*alternating_group_4(), "ℤ/2ℤ"),
-        (*quaternion_group_8(), "trivial"),
-        (*dihedral_group_4(), "ℤ/2ℤ"),
-        (*klein_four(), "ℤ/2ℤ"),
-    ]
-    
-    profiles = []
-    for elems, name, expected, schur in all_groups:
-        info = compute_derived_torsion_profile(elems, name, schur)
-        profiles.append(info)
-    
-    names = [p.name for p in profiles]
-    
-    print("Pairwise comparison matrix (✓ = distinguished, ✗ = identical profile):")
-    print()
-    print(f"{'':>6}", end="")
-    for n in names:
-        print(f" | {n:>6}", end="")
-    print()
-    print("-" * (8 + 9 * len(names)))
-    
-    for i, g1 in enumerate(profiles):
-        print(f"{g1.name:>6}", end="")
-        for j, g2 in enumerate(profiles):
-            if i == j:
-                print(f" | {'—':>6}", end="")
-            else:
-                cmp = compare_torsion_profiles(g1, g2)
-                if cmp['full_profile_match']:
-                    symbol = "✗"
-                elif not cmp['abelianization_isomorphic']:
-                    symbol = "✓(ab)"
-                elif not cmp['schur_multiplier_match']:
-                    symbol = "✓(M)"
-                else:
-                    symbol = "✓"
-                print(f" | {symbol:>6}", end="")
-        print()
-    
-    print()
-    print("Legend:")
-    print("  ✓(ab) = Distinguished by abelianization alone (degree 1)")
-    print("  ✓(M)  = Same abelianization, distinguished by Schur multiplier (degree 2)")
-    print("  ✗     = Identical derived torsion profile")
-    print()
-    
-    # Count distinguishing power
-    total_pairs = len(profiles) * (len(profiles) - 1) // 2
-    ab_distinguished = 0
-    schur_distinguished = 0
-    
-    for i in range(len(profiles)):
-        for j in range(i + 1, len(profiles)):
-            cmp = compare_torsion_profiles(profiles[i], profiles[j])
-            if not cmp['abelianization_isomorphic']:
-                ab_distinguished += 1
-                schur_distinguished += 1
-            elif not cmp['schur_multiplier_match']:
-                schur_distinguished += 1
-    
-    print(f"Distinguishing power:")
-    print(f"  Abelianization alone: {ab_distinguished}/{total_pairs} pairs")
-    print(f"  With Schur multiplier: {schur_distinguished}/{total_pairs} pairs")
-    print(f"  Improvement: +{schur_distinguished - ab_distinguished} pairs distinguished")
-    print()
+    print("\n" + "=" * 65)
+    print("  APPLICATION 3: Compositional Phase Analysis")
+    print("=" * 65)
+
+    S3 = make_symmetric_group(3)
+    Z5 = make_cyclic_group(5)
+
+    prof_S3 = arithmetic_phase_profile(S3)
+    prof_Z5 = arithmetic_phase_profile(Z5)
+    prof_composite = product_phase_profile(S3, Z5)
+
+    print(f"\n  System 1: S₃ gauge  → profile = {sorted(prof_S3)}")
+    print(f"  System 2: Z/5Z gauge → profile = {sorted(prof_Z5)}")
+    print(f"  Composite S₃ × Z/5Z → profile = {sorted(prof_composite)}")
+    print(f"  Union check: {sorted(prof_S3 | prof_Z5)} = {sorted(prof_composite)}: "
+          f"{'✓' if prof_S3 | prof_Z5 == prof_composite else '✗'}")
+
+    print("\n  Physical interpretation:")
+    print("  - The S₃ sector contributes 2-torsion phases")
+    print("  - The Z/5Z sector contributes 5-torsion phases")
+    print("  - The composite system sees both, with no cancellation")
+    print("  - This is the Künneth decomposition for arithmetic phases")
+
+    # More complex example: triple product
+    Q8 = make_quaternion_group()
+    Z3 = make_cyclic_group(3)
+    Z7 = make_cyclic_group(7)
+
+    p1 = arithmetic_phase_profile(Q8)
+    p2 = arithmetic_phase_profile(Z3)
+    p3 = arithmetic_phase_profile(Z7)
+    p_triple = p1 | p2 | p3
+
+    print(f"\n  Triple product Q₈ × Z/3Z × Z/7Z:")
+    print(f"    Q₈:   {sorted(p1)}")
+    print(f"    Z/3Z: {sorted(p2)}")
+    print(f"    Z/7Z: {sorted(p3)}")
+    print(f"    Product profile: {sorted(p_triple)}")
+    print(f"    This composite system has 3 independent gauge sectors")
+    print(f"    visible at primes 2, 3, and 7.")
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Application 4: Exponent Analysis
-# ──────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
+# Application 4: Anomaly Detection in Phase Spectra
+# ──────────────────────────────────────────────────────────────────────────────
 
-def exponent_analysis():
+def anomaly_detection():
+    """Demonstrate how the classification theorem can detect anomalies.
+
+    If a physical system's observed phase spectrum doesn't match the
+    prediction from its gauge group's abelianization, this indicates
+    either:
+    1. The gauge group identification is wrong
+    2. Higher-order (non-abelianization) effects are present
+    3. The system has additional hidden symmetries
+
+    This makes the theorem a diagnostic tool for theoretical physics.
     """
-    Analyze how the exponent of G relates to the exponent of G^ab.
-    The exponent of G^ab always divides the exponent of G, but the
-    converse fails for non-abelian groups.
-    """
-    print("=" * 72)
-    print("APPLICATION 4: Exponent Analysis (G vs G^ab)")
-    print("=" * 72)
-    print()
-    
-    all_groups = [
-        symmetric_group_3(),
-        alternating_group_4(),
-        quaternion_group_8(),
-        dihedral_group_4(),
-        klein_four(),
-    ]
-    
-    print(f"{'Group':>6} | {'exp(G)':>7} | {'exp(G^ab)':>9} | {'Divides?':>8} | {'Ratio':>6}")
-    print("-" * 50)
-    
-    for elems, name, _ in all_groups:
-        # Compute exponent of G
-        exp_g = max(perm_order(g) for g in elems)
-        
-        # Compute exponent of G^ab
-        ab_orders = abelianization_orders(elems)
-        exp_ab = max(ab_orders)
-        
-        divides = exp_g % exp_ab == 0
-        ratio = exp_g // exp_ab if exp_ab > 0 else "∞"
-        
-        print(f"{name:>6} | {exp_g:>7} | {exp_ab:>9} | {'Yes' if divides else 'No':>8} | {ratio:>6}")
-    
-    print()
-    print("THEOREM: exp(G^ab) always divides exp(G).")
-    print("NOTE: The ratio exp(G)/exp(G^ab) measures 'hidden exponent'")
-    print("      contributed by the commutator subgroup [G,G].")
-    print()
+    print("\n" + "=" * 65)
+    print("  APPLICATION 4: Anomaly Detection")
+    print("=" * 65)
+
+    # Simulate a "measured" phase spectrum
+    S3 = make_symmetric_group(3)
+    predicted = arithmetic_phase_profile(S3)
+
+    # Case 1: consistent measurement
+    measured_1 = {2}
+    print(f"\n  Gauge group: S₃")
+    print(f"  Predicted profile (from G^ab): {sorted(predicted)}")
+    print(f"  Measured spectrum 1: {sorted(measured_1)}")
+    print(f"  Status: {'✓ Consistent' if measured_1 == predicted else '⚠ ANOMALY'}")
+
+    # Case 2: anomalous measurement (sees extra prime)
+    measured_2 = {2, 3}
+    print(f"\n  Measured spectrum 2: {sorted(measured_2)}")
+    print(f"  Status: {'✓ Consistent' if measured_2 == predicted else '⚠ ANOMALY'}")
+    if measured_2 != predicted:
+        extra = measured_2 - predicted
+        print(f"  Extra primes detected: {sorted(extra)}")
+        print(f"  Diagnosis: These primes cannot arise from abelian quotients of S₃.")
+        print(f"  The measurement suggests either:")
+        print(f"    - The gauge group is not S₃ (perhaps S₃ × Z/3Z?)")
+        print(f"    - Higher derived functors beyond H₁ contribute")
+        print(f"    - Experimental error")
+
+    # Case 3: missing prime
+    measured_3 = set()
+    print(f"\n  Measured spectrum 3: {sorted(measured_3)}")
+    print(f"  Status: {'✓ Consistent' if measured_3 == predicted else '⚠ ANOMALY'}")
+    if measured_3 != predicted:
+        missing = predicted - measured_3
+        print(f"  Missing primes: {sorted(missing)}")
+        print(f"  Diagnosis: The probe failed to detect 2-torsion.")
+        print(f"  This could indicate the probe operates in characteristic 2")
+        print(f"  (where 2-torsion becomes invisible — cf. torsion_invisible_wrong_characteristic).")
 
 
-# ──────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 # Main
-# ──────────────────────────────────────────────────────────────────────
-
-def main():
-    lattice_gauge_phase_classification()
-    print()
-    projective_representation_classification()
-    print()
-    group_distinguishing()
-    print()
-    exponent_analysis()
-
+# ──────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    main()
+    gauge_phase_analysis()
+    group_fingerprinting()
+    compositional_analysis()
+    anomaly_detection()
+
+    print("\n" + "=" * 65)
+    print("  All applications demonstrated successfully.")
+    print("=" * 65)
 
 
 #!/usr/bin/env python3
 """
-Derived Torsion Profile Computation Demo
+Non-Abelian Arithmetic Phase Classification — Demo
 
-Demonstrates the abelianization torsion completeness theorem and its failure
-for specific finite groups: S₃, A₄, Q₈, D₄, and V₄.
+Demonstrates the central theorem: the arithmetic phase profile of a finite group
+(the set of primes detectable by homological probes through abelian quotients)
+is entirely controlled by the abelianization G^ab = G/[G,G].
 
-Key insight: Two groups can have isomorphic abelianizations yet differ in
-higher torsion structure (Schur multiplier). The demo computes:
-  - Group order and structure
-  - Abelianization (G/[G,G])
-  - p-torsion profile of the abelianization
-  - Schur multiplier H₂(G, ℤ) (known values from literature)
+For each benchmark group, we:
+  1. Compute the abelianization G^ab
+  2. Compute the predicted phase profile from G^ab
+  3. Compute the phase profile directly from all abelian quotients
+  4. Verify they match (confirming the classification theorem)
 """
 
-from itertools import product as cartesian_product
-from collections import Counter
+from itertools import product as cart_product
 from math import gcd
-from functools import reduce
+from collections import defaultdict
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Finite Group Representations
-# ──────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
+# Finite group representations
+# ──────────────────────────────────────────────────────────────────────────────
 
-def identity_perm(n: int) -> tuple:
-    return tuple(range(n))
+def symmetric_group(n: int) -> tuple[list, dict]:
+    """Return (elements, multiplication_table) for S_n as permutations."""
+    from itertools import permutations
+    perms = list(permutations(range(n)))
+    elem_to_idx = {p: i for i, p in enumerate(perms)}
 
-def compose_perm(a: tuple, b: tuple) -> tuple:
-    """Compose permutations: (a ∘ b)(i) = a(b(i))."""
-    return tuple(a[b[i]] for i in range(len(a)))
+    def compose(p, q):
+        return tuple(p[q[i]] for i in range(n))
 
-def inverse_perm(a: tuple) -> tuple:
-    n = len(a)
-    inv = [0] * n
-    for i in range(n):
-        inv[a[i]] = i
-    return tuple(inv)
-
-def perm_order(a: tuple) -> int:
-    """Order of a permutation."""
-    e = identity_perm(len(a))
-    x = a
-    for k in range(1, len(a) + 100):
-        if x == e:
-            return k
-        x = compose_perm(x, a)
-    return -1
+    mul = {}
+    for p in perms:
+        for q in perms:
+            mul[(elem_to_idx[p], elem_to_idx[q])] = elem_to_idx[compose(p, q)]
+    return list(range(len(perms))), mul
 
 
-def generate_group(generators: list[tuple], n: int) -> list[tuple]:
-    """Generate a group from permutation generators via closure."""
-    e = identity_perm(n)
-    elements = {e}
-    queue = [e] + list(generators)
-    elements.update(generators)
-    idx = 0
-    while idx < len(queue):
-        g = queue[idx]
-        idx += 1
-        for gen in generators:
-            for h in [compose_perm(g, gen), compose_perm(gen, g),
-                       compose_perm(g, inverse_perm(gen)),
-                       compose_perm(inverse_perm(gen), g)]:
-                if h not in elements:
-                    elements.add(h)
-                    queue.append(h)
-    return sorted(elements)
+def dihedral_group(n: int) -> tuple[list, dict]:
+    """D_n = ⟨r, s | r^n = s^2 = 1, srs = r^{-1}⟩, order 2n."""
+    # Elements: (rotation, flip) = (k, f) where k ∈ Z/nZ, f ∈ {0,1}
+    elems = [(k, f) for k in range(n) for f in range(2)]
+    idx = {e: i for i, e in enumerate(elems)}
+
+    def mul_elem(a, b):
+        k1, f1 = a
+        k2, f2 = b
+        if f1 == 0:
+            return ((k1 + k2) % n, f2)
+        else:
+            return ((k1 - k2) % n, (f1 + f2) % 2)
+
+    mul = {}
+    for a in elems:
+        for b in elems:
+            mul[(idx[a], idx[b])] = idx[mul_elem(a, b)]
+    return list(range(len(elems))), mul
 
 
-def commutator(a: tuple, b: tuple) -> tuple:
-    """[a, b] = a b a⁻¹ b⁻¹"""
-    return compose_perm(compose_perm(a, b),
-                        compose_perm(inverse_perm(a), inverse_perm(b)))
+def quaternion_group() -> tuple[list, dict]:
+    """Q_8 = {±1, ±i, ±j, ±k}."""
+    # Represent as (sign, basis): sign ∈ {1,-1}, basis ∈ {1,i,j,k}
+    elems = [(1, '1'), (-1, '1'), (1, 'i'), (-1, 'i'),
+             (1, 'j'), (-1, 'j'), (1, 'k'), (-1, 'k')]
+    idx = {e: i for i, e in enumerate(elems)}
+
+    basis_mul = {
+        ('1', '1'): (1, '1'), ('1', 'i'): (1, 'i'), ('1', 'j'): (1, 'j'), ('1', 'k'): (1, 'k'),
+        ('i', '1'): (1, 'i'), ('j', '1'): (1, 'j'), ('k', '1'): (1, 'k'),
+        ('i', 'i'): (-1, '1'), ('j', 'j'): (-1, '1'), ('k', 'k'): (-1, '1'),
+        ('i', 'j'): (1, 'k'), ('j', 'k'): (1, 'i'), ('k', 'i'): (1, 'j'),
+        ('j', 'i'): (-1, 'k'), ('k', 'j'): (-1, 'i'), ('i', 'k'): (-1, 'j'),
+    }
+
+    def mul_elem(a, b):
+        s1, b1 = a
+        s2, b2 = b
+        s3, b3 = basis_mul[(b1, b2)]
+        return (s1 * s2 * s3, b3)
+
+    mul = {}
+    for a in elems:
+        for b in elems:
+            mul[(idx[a], idx[b])] = idx[mul_elem(a, b)]
+    return list(range(8)), mul
 
 
-def commutator_subgroup(group: list[tuple]) -> set:
-    """Compute [G, G] = subgroup generated by all commutators."""
-    n = len(group[0])
-    comms = set()
-    for a in group:
-        for b in group:
-            comms.add(commutator(a, b))
+def alternating_group_4() -> tuple[list, dict]:
+    """A_4 = even permutations of {0,1,2,3}."""
+    from itertools import permutations
+
+    def parity(p):
+        visited = [False] * len(p)
+        sign = 0
+        for i in range(len(p)):
+            if not visited[i]:
+                j, cycle_len = i, 0
+                while not visited[j]:
+                    visited[j] = True
+                    j = p[j]
+                    cycle_len += 1
+                sign += cycle_len - 1
+        return sign % 2
+
+    all_perms = list(permutations(range(4)))
+    even_perms = [p for p in all_perms if parity(p) == 0]
+    idx = {p: i for i, p in enumerate(even_perms)}
+
+    def compose(p, q):
+        return tuple(p[q[i]] for i in range(4))
+
+    mul = {}
+    for p in even_perms:
+        for q in even_perms:
+            mul[(idx[p], idx[q])] = idx[compose(p, q)]
+    return list(range(len(even_perms))), mul
+
+
+def cyclic_group(n: int) -> tuple[list, dict]:
+    """Z/nZ."""
+    mul = {}
+    for a in range(n):
+        for b in range(n):
+            mul[(a, b)] = (a + b) % n
+    return list(range(n)), mul
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Group-theoretic computations
+# ──────────────────────────────────────────────────────────────────────────────
+
+def identity(elems, mul):
+    """Find the identity element."""
+    for e in elems:
+        if all(mul[(e, x)] == x and mul[(x, e)] == x for x in elems):
+            return e
+    raise ValueError("No identity found")
+
+
+def inverse(elems, mul, e, a):
+    """Find the inverse of a."""
+    for b in elems:
+        if mul[(a, b)] == e and mul[(b, a)] == e:
+            return b
+    raise ValueError("No inverse found")
+
+
+def commutator_subgroup(elems, mul):
+    """Compute [G,G] = subgroup generated by all commutators [a,b] = a*b*a^{-1}*b^{-1}."""
+    e = identity(elems, mul)
+    commutators = set()
+    for a in elems:
+        for b in elems:
+            a_inv = inverse(elems, mul, e, a)
+            b_inv = inverse(elems, mul, e, b)
+            c = mul[(mul[(mul[(a, b)], a_inv)], b_inv)]
+            commutators.add(c)
+
     # Generate the subgroup
-    subgrp = set(comms)
+    subgroup = set(commutators)
     changed = True
     while changed:
         changed = False
         new = set()
-        for a in subgrp:
-            for b in comms:
-                for h in [compose_perm(a, b), compose_perm(b, a),
-                          compose_perm(a, inverse_perm(b))]:
-                    if h not in subgrp:
-                        new.add(h)
-        if new:
-            subgrp.update(new)
-            changed = True
-    return subgrp
+        for a in subgroup:
+            for b in subgroup:
+                p = mul[(a, b)]
+                if p not in subgroup:
+                    new.add(p)
+                    changed = True
+                a_inv = inverse(elems, mul, e, a)
+                if a_inv not in subgroup:
+                    new.add(a_inv)
+                    changed = True
+        subgroup |= new
+    return subgroup
 
 
-def abelianization_orders(group: list[tuple]) -> list[int]:
-    """Compute the abelianization G/[G,G] and return element orders."""
-    comm = commutator_subgroup(group)
-    n = len(group[0])
-    e = identity_perm(n)
-    # Compute cosets
-    cosets = {}
-    for g in group:
-        # Find which coset g belongs to
-        found = False
-        for rep in cosets:
-            diff = compose_perm(inverse_perm(rep), g)
-            if diff in comm:
-                cosets[rep].append(g)
-                found = True
-                break
-        if not found:
-            cosets[g] = [g]
-    
-    # Compute orders of coset representatives in the quotient
-    coset_reps = list(cosets.keys())
+def abelianization_structure(elems, mul):
+    """Compute the abelianization G/[G,G] as a list of cyclic group orders.
+
+    Returns the invariant factor decomposition of G^ab.
+    """
+    n = len(elems)
+    comm = commutator_subgroup(elems, mul)
+    e = identity(elems, mul)
+
+    # Build cosets of [G,G]
+    cosets = []
+    assigned = set()
+    for g in elems:
+        if g not in assigned:
+            coset = set()
+            for c in comm:
+                coset.add(mul[(g, c)])
+            cosets.append(frozenset(coset))
+            assigned |= coset
+
+    ab_order = len(cosets)
+
+    # Map elements to coset indices
+    coset_map = {}
+    for i, coset in enumerate(cosets):
+        for g in coset:
+            coset_map[g] = i
+
+    # Build multiplication table for the abelianization
+    # Pick a representative from each coset
+    reps = [min(coset) for coset in cosets]
+    ab_mul = {}
+    for i in range(ab_order):
+        for j in range(ab_order):
+            ab_mul[(i, j)] = coset_map[mul[(reps[i], reps[j])]]
+
+    # Compute the invariant factors of the abelian group
+    # Find orders of elements
+    ab_e = coset_map[e]
     orders = []
-    for rep in coset_reps:
-        # Find order of rep in G/[G,G]
-        power = rep
-        for k in range(1, len(group) + 1):
-            if power in comm:
+    for i in range(ab_order):
+        x = i
+        order = 1
+        while True:
+            x = ab_mul[(x, i)] if order == 1 else ab_mul[(x, i)]
+            order += 1
+            if x == ab_e:
+                break
+            if order > ab_order + 1:
+                break
+        # Recompute properly
+        x = i
+        for k in range(1, ab_order + 1):
+            x = ab_mul[(x, i)] if k > 1 else i
+            if k == 1:
+                power = i
+            else:
+                power = ab_mul[(power, i)]
+            if power == ab_e:
                 orders.append(k)
                 break
-            power = compose_perm(power, rep)
-    
-    return sorted(orders)
+        else:
+            orders.append(ab_order)
+
+    return ab_order, orders, ab_mul, ab_e
 
 
-def p_torsion_count(orders: list[int], p: int) -> int:
-    """Count elements with order dividing p (i.e., x^p = 1)."""
-    return sum(1 for o in orders if o > 0 and p % o == 0)
+def prime_factors(n: int) -> set:
+    """Return the set of prime factors of n."""
+    if n <= 1:
+        return set()
+    factors = set()
+    d = 2
+    while d * d <= n:
+        while n % d == 0:
+            factors.add(d)
+            n //= d
+        d += 1
+    if n > 1:
+        factors.add(n)
+    return factors
 
 
-def p_torsion_nontrivial(orders: list[int], p: int) -> int:
-    """Count nontrivial p-torsion elements (order dividing p, not identity)."""
-    return sum(1 for o in orders if 1 < o and o <= p and p % o == 0)
+def phase_profile_from_abelianization(elems, mul) -> set:
+    """Compute the arithmetic phase profile from the abelianization.
+
+    By Theorem A, this equals the set of primes p for which G^ab has p-torsion.
+    For a finite abelian group, p-torsion exists iff p divides the group order.
+    """
+    ab_order, _, _, _ = abelianization_structure(elems, mul)
+    return prime_factors(ab_order)
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Specific Groups
-# ──────────────────────────────────────────────────────────────────────
+def phase_profile_direct(elems, mul) -> set:
+    """Compute the phase profile directly: find all primes p such that
+    some abelian quotient of G has p-torsion.
 
-def symmetric_group_3():
-    """S₃ as permutations of {0, 1, 2}."""
-    s = (1, 0, 2)  # transposition (0 1)
-    r = (1, 2, 0)  # 3-cycle (0 1 2)
-    return generate_group([s, r], 3), "S₃", 6
+    We enumerate normal subgroups N with [G,G] ≤ N and check G/N for torsion.
+    """
+    e = identity(elems, mul)
+    comm = commutator_subgroup(elems, mul)
+    n = len(elems)
 
-def alternating_group_4():
-    """A₄ as permutations of {0, 1, 2, 3}."""
-    r = (1, 2, 0, 3)  # (0 1 2)
-    s = (1, 0, 3, 2)  # (0 1)(2 3)
-    return generate_group([r, s], 4), "A₄", 12
+    # Find all subgroups containing [G,G]
+    # A subgroup H contains [G,G] iff comm ⊆ H
+    # And H must be normal
 
-def quaternion_group_8():
-    """Q₈ as permutations of {0, ..., 7}.
-    Embedding: 1→e, i→(0 1 2 3)(4 5 6 7), j→(0 4 2 6)(1 7 3 5), k→(0 5 2 7)(1 4 3 6)"""
-    i = (1, 2, 3, 0, 5, 6, 7, 4)
-    j = (4, 7, 6, 5, 2, 1, 0, 3)
-    return generate_group([i, j], 8), "Q₈", 8
+    def is_subgroup(S):
+        if e not in S:
+            return False
+        for a in S:
+            for b in S:
+                if mul[(a, b)] not in S:
+                    return False
+            if inverse(elems, mul, e, a) not in S:
+                return False
+        return True
 
-def dihedral_group_4():
-    """D₄ (dihedral group of order 8) as permutations of vertices of a square."""
-    r = (1, 2, 3, 0)  # rotation by 90°
-    s = (0, 3, 2, 1)  # reflection
-    return generate_group([r, s], 4), "D₄", 8
+    def is_normal(S):
+        for g in elems:
+            g_inv = inverse(elems, mul, e, g)
+            for s in S:
+                if mul[(mul[(g, s)], g_inv)] not in S:
+                    return False
+        return True
 
-def klein_four():
-    """V₄ = ℤ/2ℤ × ℤ/2ℤ as permutations."""
-    a = (1, 0, 2, 3)  # (0 1)
-    b = (0, 1, 3, 2)  # (2 3)
-    return generate_group([a, b], 4), "V₄", 4
+    # Generate subgroups containing comm
+    # Start from comm and try adding elements
+    from itertools import combinations
+
+    non_comm = [x for x in elems if x not in comm]
+    primes = set()
+
+    # Check all subsets of non-comm elements added to comm
+    for r in range(len(non_comm) + 1):
+        for subset in combinations(non_comm, r):
+            S = set(comm) | set(subset)
+            # Generate the subgroup
+            changed = True
+            while changed:
+                changed = False
+                new = set()
+                for a in S:
+                    for b in S:
+                        p = mul[(a, b)]
+                        if p not in S:
+                            new.add(p)
+                            changed = True
+                        ai = inverse(elems, mul, e, a)
+                        if ai not in S:
+                            new.add(ai)
+                            changed = True
+                S |= new
+
+            if len(S) == n:
+                continue  # trivial quotient
+
+            if is_subgroup(S) and is_normal(S):
+                quotient_order = n // len(S)
+                primes |= prime_factors(quotient_order)
+
+    return primes
 
 
-# Known Schur multipliers from the literature
-SCHUR_MULTIPLIERS = {
-    "S₃": "ℤ/2ℤ",
-    "A₄": "ℤ/2ℤ",
-    "Q₈": "trivial",
-    "D₄": "ℤ/2ℤ",
-    "V₄": "ℤ/2ℤ",
-}
+# ──────────────────────────────────────────────────────────────────────────────
+# Main demo
+# ──────────────────────────────────────────────────────────────────────────────
 
+def demo_group(name: str, elems, mul, expected_profile: set):
+    """Run the full phase classification demo for a single group."""
+    print(f"\n{'='*60}")
+    print(f"  Group: {name}  (order {len(elems)})")
+    print(f"{'='*60}")
 
-# ──────────────────────────────────────────────────────────────────────
-# Main Demo
-# ──────────────────────────────────────────────────────────────────────
+    # Compute abelianization
+    ab_order, orders, _, _ = abelianization_structure(elems, mul)
+    print(f"  |G^ab| = {ab_order}")
+    print(f"  Element orders in G^ab: {sorted(set(orders))}")
+
+    # Phase profile from abelianization (Theorem A prediction)
+    profile_ab = phase_profile_from_abelianization(elems, mul)
+    print(f"\n  Phase profile (via abelianization): {sorted(profile_ab)}")
+
+    # Phase profile by direct computation
+    profile_direct = phase_profile_direct(elems, mul)
+    print(f"  Phase profile (direct computation): {sorted(profile_direct)}")
+
+    # Check match
+    match = profile_ab == profile_direct
+    print(f"\n  Theorem A verification: {'✓ MATCH' if match else '✗ MISMATCH'}")
+    print(f"  Expected profile: {sorted(expected_profile)}")
+    assert profile_ab == expected_profile, f"Expected {expected_profile}, got {profile_ab}"
+
+    return match
+
 
 def main():
-    print("=" * 72)
-    print("DERIVED TORSION PROFILE COMPUTATION")
-    print("Abelianization Completeness and Its Failure")
-    print("=" * 72)
-    print()
+    print("=" * 60)
+    print("  NON-ABELIAN ARITHMETIC PHASE CLASSIFICATION")
+    print("  Theorem A: Phase Profile = Abelianization Torsion Profile")
+    print("=" * 60)
 
-    groups = [
-        symmetric_group_3(),
-        alternating_group_4(),
-        quaternion_group_8(),
-        dihedral_group_4(),
-        klein_four(),
-    ]
+    results = []
 
-    results = {}
-    
-    for group_elems, name, expected_order in groups:
-        print(f"── {name} ({'|G| = ' + str(len(group_elems))}) ──")
-        
-        if len(group_elems) != expected_order:
-            print(f"  WARNING: Expected order {expected_order}, got {len(group_elems)}")
-        
-        comm = commutator_subgroup(group_elems)
-        ab_orders = abelianization_orders(group_elems)
-        ab_size = len(ab_orders)
-        comm_size = len(comm)
-        
-        print(f"  |G|           = {len(group_elems)}")
-        print(f"  |[G,G]|       = {comm_size}")
-        print(f"  |G^ab|        = {ab_size}")
-        print(f"  G^ab orders   = {ab_orders}")
-        
-        # p-torsion profile for primes 2, 3, 5
-        print(f"  p-torsion profile of G^ab:")
-        for p in [2, 3, 5]:
-            count = p_torsion_count(ab_orders, p)
-            nontrivial = p_torsion_nontrivial(ab_orders, p)
-            has_torsion = nontrivial > 0
-            print(f"    p={p}: {count} elements with x^{p}=1 "
-                  f"({nontrivial} nontrivial) → "
-                  f"{'HAS' if has_torsion else 'NO'} {p}-torsion")
-        
-        # Schur multiplier (known values)
-        schur = SCHUR_MULTIPLIERS.get(name, "unknown")
-        print(f"  Schur mult.   = M(G) = {schur}")
-        
-        results[name] = {
-            "order": len(group_elems),
-            "commutator_order": comm_size,
-            "abelianization_order": ab_size,
-            "abelianization_element_orders": ab_orders,
-            "schur_multiplier": schur,
-        }
-        print()
+    # S₃ — expected profile {2}
+    # G^ab ≅ Z/2Z (sign homomorphism)
+    elems, mul = symmetric_group(3)
+    results.append(demo_group("S₃ (Symmetric group on 3 letters)", elems, mul, {2}))
 
-    # ── The Q₈ vs V₄ Counterexample ──
-    print("=" * 72)
-    print("THE Q₈ vs V₄ COUNTEREXAMPLE")
-    print("=" * 72)
-    print()
-    
-    q8 = results["Q₈"]
-    v4 = results["V₄"]
-    
-    print("Q₈ and V₄ comparison:")
-    print(f"  Q₈^ab orders = {q8['abelianization_element_orders']}")
-    print(f"  V₄^ab orders = {v4['abelianization_element_orders']}")
-    
-    q8_ab = sorted(q8['abelianization_element_orders'])
-    v4_ab = sorted(v4['abelianization_element_orders'])
-    
-    ab_match = q8_ab == v4_ab
-    print(f"  Abelianizations isomorphic? {ab_match}")
-    print(f"  (Both are (ℤ/2ℤ)² with elements of orders {q8_ab})")
-    print()
-    print(f"  Schur multiplier of Q₈: {q8['schur_multiplier']}")
-    print(f"  Schur multiplier of V₄: {v4['schur_multiplier']}")
-    print()
-    
-    if q8['schur_multiplier'] != v4['schur_multiplier']:
-        print("  ✓ COUNTEREXAMPLE CONFIRMED:")
-        print("    Q₈ and V₄ have isomorphic abelianizations")
-        print("    but DIFFERENT Schur multipliers.")
-        print("    → Abelianization is INCOMPLETE for degree-2 torsion.")
-    print()
+    # A₄ — expected profile {3}
+    # G^ab ≅ Z/3Z
+    elems, mul = alternating_group_4()
+    results.append(demo_group("A₄ (Alternating group on 4 letters)", elems, mul, {3}))
 
-    # ── The D₄ vs Q₈ Comparison ──
-    print("=" * 72)
-    print("THE D₄ vs Q₈ COMPARISON")
-    print("=" * 72)
-    print()
-    
-    d4 = results["D₄"]
-    print(f"  D₄^ab orders = {d4['abelianization_element_orders']}")
-    print(f"  Q₈^ab orders = {q8['abelianization_element_orders']}")
-    
-    d4_ab = sorted(d4['abelianization_element_orders'])
-    ab_match_dq = d4_ab == q8_ab
-    print(f"  Abelianizations isomorphic? {ab_match_dq}")
-    print(f"  Schur multiplier of D₄: {d4['schur_multiplier']}")
-    print(f"  Schur multiplier of Q₈: {q8['schur_multiplier']}")
-    print()
-    if d4['schur_multiplier'] != q8['schur_multiplier']:
-        print("  ✓ D₄ and Q₈ have isomorphic abelianizations")
-        print("    but DIFFERENT Schur multipliers.")
-        print("    → Another instance of abelianization incompleteness.")
-    print()
+    # Q₈ — expected profile {2}
+    # G^ab ≅ Z/2Z × Z/2Z
+    elems, mul = quaternion_group()
+    results.append(demo_group("Q₈ (Quaternion group)", elems, mul, {2}))
 
-    # ── Summary Table ──
-    print("=" * 72)
-    print("DERIVED TORSION PROFILE SUMMARY TABLE")
-    print("=" * 72)
-    print()
-    print(f"{'Group':>6} | {'|G|':>4} | {'|G^ab|':>6} | {'2-tor':>5} | {'3-tor':>5} | {'M(G)':>10}")
-    print("-" * 55)
-    for name in ["S₃", "A₄", "Q₈", "D₄", "V₄"]:
-        r = results[name]
-        orders = r['abelianization_element_orders']
-        t2 = p_torsion_nontrivial(orders, 2)
-        t3 = p_torsion_nontrivial(orders, 3)
-        print(f"{name:>6} | {r['order']:>4} | {r['abelianization_order']:>6} | "
-              f"{t2:>5} | {t3:>5} | {r['schur_multiplier']:>10}")
-    
-    print()
-    print("Key: '2-tor' = nontrivial 2-torsion elements in G^ab")
-    print("     '3-tor' = nontrivial 3-torsion elements in G^ab")
-    print("     'M(G)' = Schur multiplier H₂(G, ℤ)")
-    print()
-    print("THEOREM (Degree-1 Completeness):")
-    print("  Groups with isomorphic G^ab have identical p-torsion profiles")
-    print("  at degree 1 (first row of each pair agrees).")
-    print()
-    print("THEOREM (Degree-2 Incompleteness):")
-    print("  Q₈^ab ≅ V₄^ab ≅ (ℤ/2ℤ)², but M(Q₈) = 0 ≠ ℤ/2ℤ = M(V₄).")
-    print("  The Schur multiplier captures strictly more information.")
+    # D₄ — expected profile {2}
+    # G^ab ≅ Z/2Z × Z/2Z
+    elems, mul = dihedral_group(4)
+    results.append(demo_group("D₄ (Dihedral group of order 8)", elems, mul, {2}))
+
+    # Z/6Z — expected profile {2, 3}
+    elems, mul = cyclic_group(6)
+    results.append(demo_group("Z/6Z (Cyclic group of order 6)", elems, mul, {2, 3}))
+
+    # S₄ — expected profile {2, 3}
+    # G^ab ≅ Z/2Z
+    elems, mul = symmetric_group(4)
+    results.append(demo_group("S₄ (Symmetric group on 4 letters)", elems, mul, {2}))
+
+    # ── Cross-check: groups with isomorphic abelianizations ──
+    print("\n" + "=" * 60)
+    print("  THEOREM B: Isomorphic Abelianizations ⟹ Same Profile")
+    print("=" * 60)
+
+    # Q₈ and D₄ both have G^ab ≅ (Z/2Z)² but are non-isomorphic
+    q8_elems, q8_mul = quaternion_group()
+    d4_elems, d4_mul = dihedral_group(4)
+    prof_q8 = phase_profile_from_abelianization(q8_elems, q8_mul)
+    prof_d4 = phase_profile_from_abelianization(d4_elems, d4_mul)
+    print(f"\n  Q₈: G^ab ≅ (Z/2Z)², profile = {sorted(prof_q8)}")
+    print(f"  D₄: G^ab ≅ (Z/2Z)², profile = {sorted(prof_d4)}")
+    print(f"  Same profile despite Q₈ ≇ D₄: {'✓' if prof_q8 == prof_d4 else '✗'}")
+
+    # ── Product theorem demo ──
+    print("\n" + "=" * 60)
+    print("  CROSS-DOMAIN BRIDGE: Profile(G × H) = Profile(G) ∪ Profile(H)")
+    print("=" * 60)
+
+    # Z/2Z × Z/3Z ≅ Z/6Z
+    z2, z2_mul = cyclic_group(2)
+    z3, z3_mul = cyclic_group(3)
+    prof_z2 = phase_profile_from_abelianization(z2, z2_mul)
+    prof_z3 = phase_profile_from_abelianization(z3, z3_mul)
+    z6, z6_mul = cyclic_group(6)
+    prof_z6 = phase_profile_from_abelianization(z6, z6_mul)
+    print(f"\n  Profile(Z/2Z) = {sorted(prof_z2)}")
+    print(f"  Profile(Z/3Z) = {sorted(prof_z3)}")
+    print(f"  Profile(Z/6Z) = Profile(Z/2Z × Z/3Z) = {sorted(prof_z6)}")
+    print(f"  Union check: {sorted(prof_z2 | prof_z3)} = {sorted(prof_z6)}: "
+          f"{'✓' if prof_z2 | prof_z3 == prof_z6 else '✗'}")
+
+    # ── Summary ──
+    print("\n" + "=" * 60)
+    print("  SUMMARY")
+    print("=" * 60)
+    print(f"  All {len(results)} groups verified: {'✓ ALL PASS' if all(results) else '✗ SOME FAIL'}")
+    print(f"\n  The arithmetic phase profile of every tested non-abelian group")
+    print(f"  matches the prediction from its abelianization, confirming")
+    print(f"  Theorem A: non-abelian structure is invisible to first-order")
+    print(f"  arithmetic phase detectors.")
 
 
 if __name__ == "__main__":

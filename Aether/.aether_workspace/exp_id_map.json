@@ -404,5 +404,8 @@
   "134fe3c3": "direction_5_monad_algebras_as_verified_normal_form.json",
   "1f042eaa": "direction_2_polynomial_width_growth.json",
   "321c9149": "certified_space_certificates_for_sat_solvers.json",
-  "abda161f": "direction_4_non_convergent_extraction_soundness.json"
+  "abda161f": "direction_4_non_convergent_extraction_soundness.json",
+  "45a90c43": "direction_1_non_abelian_arithmetic_phase_classific.json",
+  "0f4d7033": "sunflower_pruning_effectiveness_for_pythagorean_hy.json",
+  "21968594": "direction_3_coordinate_independence_as_a_probabili.json"
 }
