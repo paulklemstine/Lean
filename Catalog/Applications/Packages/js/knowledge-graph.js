@@ -18,7 +18,9 @@
             radius: 18 + (n.priority_score || 0.5) * 12,    // bigger = more priority
             phase: Math.random() * Math.PI * 2,
             rotSpeed: 0.3 + Math.random() * 0.5,
-            rotAngle: Math.random() * Math.PI * 2
+            rotAngle: Math.random() * Math.PI * 2,
+            thrustTime: 0, thrustAngle: 0, thrustStrength: 0,
+            trail: [], radarPulse: null
         }));
         // Only provenance edges (no heuristic edges)
         let graphEdges = (graphData.edges || []).filter(e => e.type === 'provenance').map(e => ({
@@ -108,16 +110,24 @@
         let hoveredCluster = null;
         let time = 0;
 
-        // ─── Stars (background) ───
+        // ─── Space battle visual effect arrays ───
+        const explosions = [];    // {x, y, time, strength, sparks[], shockRadius}
+        const flameParticles = []; // {x, y, vx, vy, life, color, size}
+        const lasers = [];        // {sx, sy, tx, ty, time, duration, color}
+        const fireworks = [];     // {x, y, phase, particles[], color, startTime}
+        let lastAmbientFirework = 0;
+
+        // ─── Stars (deep space backdrop) ───
         const stars = [];
-        for (let i = 0; i < 250; i++) {
+        for (let i = 0; i < 500; i++) {
             stars.push({
                 x: Math.random() * 8000 - 4000,
                 y: Math.random() * 8000 - 4000,
-                r: 0.3 + Math.random() * 1.2,
-                brightness: 0.3 + Math.random() * 0.7,
+                r: 0.2 + Math.random() * 1.5,
+                brightness: 0.2 + Math.random() * 0.8,
                 twinkleSpeed: 0.5 + Math.random() * 2,
-                twinklePhase: Math.random() * Math.PI * 2
+                twinklePhase: Math.random() * Math.PI * 2,
+                shimmer: Math.random() < 0.05 // 5% of stars shimmer brightly
             });
         }
 
@@ -135,7 +145,7 @@
             }
         });
 
-        // ─── Layout constants (gravitational solar-system feel) ───
+        // ─── Layout constants (space battle / nuclear dynamics) ───
         const CLUSTER_RADIUS = 280;      // Distance of cluster centroids from center
         const NODE_SPACING = 65;          // Spacing between nodes within a cluster
         const K_SPRING = 0;              // No continuous spring — edges are lazy
@@ -144,14 +154,18 @@
         const G_INTER = 0.08;            // Inter-cluster repulsion (different domains push apart)
         const SOFTENING = 120;            // Softening distance (larger = gentler at close range)
         const MIN_REPULSION_DIST = 60;    // Bumper collision radius
-        const DAMPING = 0.992;            // Very low friction — floaty
+        const DAMPING = 0.994;            // Low friction — coast after rocket blasts
         const NODE_RADIUS = 22;
         const GALAXY_ROTATION = 0.00012;  // Slow overall galaxy spin
         const EDGE_PULSE_INTERVAL = 5.0;  // Seconds between edge contraction pulses
         const EDGE_PULSE_STRENGTH = 0.5;  // Max impulse per pulse
         const EDGE_PULSE_DECAY = 2.0;     // Seconds for pulse to fade out
-        const ORBITAL_SPEED = 0.15;       // Initial tangential velocity factor
-        const MAX_VELOCITY = 1.5;         // Cap speed to prevent ejections
+        const ORBITAL_SPEED = 0.8;        // Faster initial orbits
+        const MAX_VELOCITY = 12.0;        // Let nodes fly fast after collisions
+        const BOUNCE = 2.5;              // Superelastic — collisions ADD energy
+        const CHAIN_BOUNCE_MULT = 1.5;    // Chain reaction bonus multiplier
+        const THRUST_DURATION = 0.5;     // Seconds of rocket thrust after collision
+        const THRUST_FORCE = 3.0;        // Initial thrust acceleration
 
         // ─── Domain-clustered layout ───
         const DOMAIN_ORDER = ['Algebra','Tropical','Geometry','Cryptography','Physics',
@@ -261,6 +275,16 @@
                     edgePulseDomain = domainsWithEdges[edgePulseIndex];
                 }
                 lastEdgePulse = time;
+                // Firework celebration when domain pulse completes
+                if (edgePulseDomain) {
+                    const domainNodes = graphNodes.filter(n => (n.clusterDomain || n.primary_domain) === edgePulseDomain);
+                    if (domainNodes.length > 0) {
+                        let cx = 0, cy = 0;
+                        domainNodes.forEach(n => { cx += n.x; cy += n.y; });
+                        cx /= domainNodes.length; cy /= domainNodes.length;
+                        spawnFirework(cx, cy, 35);
+                    }
+                }
                 edgePulseTargets.clear();
                 // Randomize per-edge contraction for edges touching this domain
                 graphEdges.forEach(e => {
@@ -350,20 +374,56 @@
                         b.vx += fx; b.vy += fy;
                     }
 
-                    // Pinball bumper collision: bounce with extra energy
+                    // ── Space battle collision: superelastic bounce + rocket thrust + explosion ──
                     if (d < MIN_REPULSION_DIST) {
                         const nx = dx / d, ny = dy / d;
                         const relVx = a.vx - b.vx, relVy = a.vy - b.vy;
                         const relVn = relVx * nx + relVy * ny;
                         if (relVn > 0) {
-                            const BOUNCE = 1.6;
+                            // Chain reaction: thrust-active nodes hit harder
+                            const isChain = (a.thrustTime > 0 || b.thrustTime > 0);
+                            const bounceCoeff = isChain ? BOUNCE * CHAIN_BOUNCE_MULT : BOUNCE;
                             const totalMass = a.mass + b.mass;
-                            const impulseA = (1 + BOUNCE) * relVn * b.mass / totalMass;
-                            const impulseB = (1 + BOUNCE) * relVn * a.mass / totalMass;
+                            const impulseA = (1 + bounceCoeff) * relVn * b.mass / totalMass;
+                            const impulseB = (1 + bounceCoeff) * relVn * a.mass / totalMass;
                             a.vx -= impulseA * nx;
                             a.vy -= impulseA * ny;
                             b.vx += impulseB * nx;
                             b.vy += impulseB * ny;
+
+                            // Rocket thrust: activate engines on both nodes
+                            a.thrustTime = time;
+                            a.thrustAngle = Math.atan2(-ny, -nx); // opposite to collision normal
+                            a.thrustStrength = Math.min(1, Math.abs(relVn) * 0.5);
+                            b.thrustTime = time;
+                            b.thrustAngle = Math.atan2(ny, nx);
+                            b.thrustStrength = Math.min(1, Math.abs(relVn) * 0.5);
+
+                            // Spawn explosion at contact point
+                            const cx = (a.x + b.x) * 0.5;
+                            const cy = (a.y + b.y) * 0.5;
+                            const sparkCount = 20 + Math.floor(Math.abs(relVn) * 10);
+                            const sparks = [];
+                            for (let s = 0; s < sparkCount; s++) {
+                                const angle = Math.random() * Math.PI * 2;
+                                const speed = 50 + Math.random() * 200 * Math.abs(relVn);
+                                const hue = isChain ? (30 + Math.random() * 30) : (20 + Math.random() * 40);
+                                sparks.push({
+                                    x: cx, y: cy,
+                                    vx: Math.cos(angle) * speed,
+                                    vy: Math.sin(angle) * speed,
+                                    life: 0.5 + Math.random() * 0.8,
+                                    hue: hue,
+                                    size: 1 + Math.random() * 3
+                                });
+                            }
+                            explosions.push({
+                                x: cx, y: cy, time: time,
+                                strength: Math.min(1, Math.abs(relVn) * 0.3),
+                                sparks: sparks,
+                                shockRadius: 0,
+                                isChain: isChain
+                            });
                         }
                         const overlap = MIN_REPULSION_DIST - d;
                         if (overlap > 0) {
@@ -385,10 +445,38 @@
                 n.vy += Math.cos(time * 0.4 + n.phase * 1.3) * 0.005;
             });
 
-            // ─── Damping + velocity cap + integrate ───
+            // ─── Damping + thrust + velocity cap + integrate + trail ───
             graphNodes.forEach(n => {
                 if (n === dragNode) return;
                 if (dragCluster && (n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) return;
+
+                // Rocket thrust: decaying force for THRUST_DURATION seconds after collision
+                if (n.thrustTime > 0) {
+                    const thrustAge = time - n.thrustTime;
+                    if (thrustAge < THRUST_DURATION) {
+                        const decay = 1 - thrustAge / THRUST_DURATION;
+                        const force = THRUST_FORCE * n.thrustStrength * decay;
+                        n.vx += Math.cos(n.thrustAngle) * force;
+                        n.vy += Math.sin(n.thrustAngle) * force;
+                        // Spawn flame particles
+                        if (Math.random() < 0.6) {
+                            const spread = 0.4;
+                            const angle = n.thrustAngle + Math.PI + (Math.random() - 0.5) * spread;
+                            flameParticles.push({
+                                x: n.x - Math.cos(n.thrustAngle) * n.radius * 0.8,
+                                y: n.y - Math.sin(n.thrustAngle) * n.radius * 0.8,
+                                vx: Math.cos(angle) * (30 + Math.random() * 60) + n.vx * 0.3,
+                                vy: Math.sin(angle) * (30 + Math.random() * 60) + n.vy * 0.3,
+                                life: 0.15 + Math.random() * 0.25,
+                                hue: 20 + Math.random() * 30,
+                                size: 1 + Math.random() * 2.5
+                            });
+                        }
+                    } else {
+                        n.thrustTime = 0;
+                    }
+                }
+
                 n.vx *= DAMPING;
                 n.vy *= DAMPING;
                 // Cap velocity to prevent ejections
@@ -399,7 +487,123 @@
                 }
                 n.x += n.vx;
                 n.y += n.vy;
+
+                // Comet trail: ring buffer of last 20 positions
+                const v = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+                if (v > 1.0) {
+                    n.trail.push({ x: n.x, y: n.y });
+                    if (n.trail.length > 20) n.trail.shift();
+                } else if (n.trail.length > 0) {
+                    n.trail.shift(); // fade out when stationary
+                }
+
+                // Radar pulse: emit every ~3 seconds
+                if (!n.radarPulse && Math.random() < 0.006) {
+                    n.radarPulse = { startTime: time, radius: 0 };
+                }
+                if (n.radarPulse) {
+                    n.radarPulse.radius += 1.5;
+                    if (n.radarPulse.radius > n.radius * 4) {
+                        n.radarPulse = null;
+                    }
+                }
             });
+
+            // ─── Update explosions ───
+            for (let i = explosions.length - 1; i >= 0; i--) {
+                const e = explosions[i];
+                e.shockRadius += 200 * 0.016; // expand shockwave
+                let alive = false;
+                for (const s of e.sparks) {
+                    s.x += s.vx * 0.016;
+                    s.y += s.vy * 0.016;
+                    s.vx *= 0.96;
+                    s.vy *= 0.96;
+                    s.life -= 0.016;
+                    if (s.life > 0) alive = true;
+                }
+                if (!alive && e.shockRadius > 150) {
+                    explosions.splice(i, 1);
+                }
+            }
+
+            // ─── Update flame particles ───
+            for (let i = flameParticles.length - 1; i >= 0; i--) {
+                const p = flameParticles[i];
+                p.x += p.vx * 0.016;
+                p.y += p.vy * 0.016;
+                p.vx *= 0.95;
+                p.vy *= 0.95;
+                p.life -= 0.016;
+                if (p.life <= 0) flameParticles.splice(i, 1);
+            }
+
+            // ─── Update lasers ───
+            for (let i = lasers.length - 1; i >= 0; i--) {
+                if (time - lasers[i].time > lasers[i].duration) lasers.splice(i, 1);
+            }
+
+            // ─── Random laser fire ───
+            if (lasers.length < 5 && Math.random() < 0.002 && graphNodes.length > 1) {
+                const src = graphNodes[Math.floor(Math.random() * graphNodes.length)];
+                // Find nearest other node
+                let nearest = null, nearDist = 300;
+                for (const n of graphNodes) {
+                    if (n === src) continue;
+                    const dd = Math.sqrt((n.x - src.x) ** 2 + (n.y - src.y) ** 2);
+                    if (dd < nearDist) { nearDist = dd; nearest = n; }
+                }
+                if (nearest) {
+                    lasers.push({
+                        sx: src.x, sy: src.y,
+                        tx: nearest.x, ty: nearest.y,
+                        time: time, duration: 0.15,
+                        hue: Math.random() * 360
+                    });
+                }
+            }
+
+            // ─── Update fireworks ───
+            for (let i = fireworks.length - 1; i >= 0; i--) {
+                const fw = fireworks[i];
+                let alive = false;
+                for (const p of fw.particles) {
+                    p.x += p.vx * 0.016;
+                    p.y += p.vy * 0.016;
+                    p.vy += 30 * 0.016; // gravity
+                    p.vx *= 0.98;
+                    p.vy *= 0.98;
+                    p.life -= 0.016;
+                    if (p.life > 0) alive = true;
+                }
+                if (!alive) fireworks.splice(i, 1);
+            }
+
+            // ─── Ambient fireworks ───
+            if (time - lastAmbientFirework > 15) {
+                lastAmbientFirework = time;
+                spawnFirework(W * 0.2 + Math.random() * W * 0.6, H * 0.2 + Math.random() * H * 0.4, 25);
+            }
+        }
+
+        // ─── Firework spawner ───
+        function spawnFirework(wx, wy, count) {
+            const hue = Math.random() * 360;
+            const particles = [];
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 80 + Math.random() * 150;
+                particles.push({
+                    x: wx, y: wy,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 40,
+                    life: 0.8 + Math.random() * 0.7,
+                    hue: hue + Math.random() * 40 - 20,
+                    size: 1.5 + Math.random() * 2,
+                    crackle: Math.random() < 0.15
+                });
+            }
+            fireworks.push({ x: wx, y: wy, particles: particles, color: hue, startTime: time });
         }
 
         // ─── Shape renderers ───
@@ -661,16 +865,35 @@
             ctx.fillStyle = neb2;
             ctx.fillRect(0, 0, W, H);
 
-            // Stars
+            // Third nebula cloud
+            const neb3 = ctx.createRadialGradient(W * 0.2, H * 0.8, 0, W * 0.2, H * 0.8, Math.max(W, H) * 0.35);
+            neb3.addColorStop(0, 'rgba(20, 40, 80, 0.1)');
+            neb3.addColorStop(1, 'rgba(10, 10, 26, 0.0)');
+            ctx.fillStyle = neb3;
+            ctx.fillRect(0, 0, W, H);
+
+            // Stars with shimmer
             stars.forEach(s => {
                 const sp = worldToScreen(s.x, s.y);
                 if (sp.x < -5 || sp.x > W + 5 || sp.y < -5 || sp.y > H + 5) return;
-                const twinkle = 0.5 + 0.5 * Math.sin(time * s.twinkleSpeed + s.twinklePhase);
+                let twinkle = 0.5 + 0.5 * Math.sin(time * s.twinkleSpeed + s.twinklePhase);
+                // Shimmer: occasional brightness spike
+                if (s.shimmer) {
+                    const shimmerPhase = Math.sin(time * 0.7 + s.twinklePhase * 3);
+                    if (shimmerPhase > 0.9) twinkle = 1.0;
+                }
                 const alpha = s.brightness * twinkle;
                 ctx.beginPath();
                 ctx.arc(sp.x, sp.y, s.r * camera.zoom, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(200, 200, 255, ${alpha})`;
                 ctx.fill();
+                // Lens flare for bright large stars
+                if (s.r > 1.0 && alpha > 0.6) {
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, s.r * camera.zoom * 3, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(200, 200, 255, ${alpha * 0.1})`;
+                    ctx.fill();
+                }
             });
 
             // ─── Domain cluster boundaries and labels (dynamic centroids) ───
@@ -758,75 +981,244 @@
                 ctx.setLineDash([]);
             });
 
-            // ─── Provenance edges (visible only for currently pulsing cluster) ───
-            const edgePulseAge = time - lastEdgePulse;
-            const edgeFadeAlpha = edgePulseAge < EDGE_PULSE_DECAY
-                ? 1 - edgePulseAge / EDGE_PULSE_DECAY
-                : 0;
-            if (edgeFadeAlpha > 0 && edgePulseDomain) {
-                graphEdges.forEach(e => {
-                    const a = nodeMap[e.source], b = nodeMap[e.target];
-                    if (!a || !b) return;
-                    const aDomain = a.clusterDomain || a.primary_domain || 'Bridges';
-                    const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
-                    if (aDomain !== edgePulseDomain && bDomain !== edgePulseDomain) return;
-                    if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
+            // ─── Provenance edges (energy beam style) ───
+            graphEdges.forEach(e => {
+                const a = nodeMap[e.source], b = nodeMap[e.target];
+                if (!a || !b) return;
+                if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
 
-                    const sa = worldToScreen(a.x, a.y), sb = worldToScreen(b.x, b.y);
-                    const colA = nodeColor(a), colB = nodeColor(b);
-                    const blendH = (colA.h + colB.h) / 2;
-                    const strength = e.strength || 1.0;
-                    const lineW = 1.5 + strength * 2.5;
-                    const glowAlpha = (0.25 + 0.3 * strength) * edgeFadeAlpha;
-                    const coreAlpha = (0.7 + 0.3 * strength) * edgeFadeAlpha;
+                const sa = worldToScreen(a.x, a.y), sb = worldToScreen(b.x, b.y);
+                const colA = nodeColor(a), colB = nodeColor(b);
+                const blendH = (colA.h + colB.h) / 2;
+                const strength = e.strength || 1.0;
+                const dist = Math.sqrt((b.x - a.x) ** 2 + (b.y - a.y) ** 2);
+                const isLocked = edgeLocks.has(e.source + '→' + e.target);
+                const isActiveCluster = (activeComponent !== null) && activeComponent.some(ce => ce.source === e.source && ce.target === e.target);
 
-                    // Glow line
+                // Energy beam: active > locked > inactive
+                let glowAlpha, coreAlpha, lineW;
+                if (isActiveCluster) {
+                    lineW = 2 + strength * 2;
+                    glowAlpha = 0.3 + 0.15 * Math.sin(time * 4); // pulsing
+                    coreAlpha = 0.9;
+                } else if (isLocked) {
+                    lineW = 1.5 + strength;
+                    glowAlpha = 0.12;
+                    coreAlpha = 0.5;
+                } else {
+                    lineW = 1;
+                    glowAlpha = 0.06;
+                    coreAlpha = 0.25;
+                }
+
+                // Wide glow line
+                ctx.beginPath();
+                ctx.moveTo(sa.x, sa.y);
+                ctx.lineTo(sb.x, sb.y);
+                ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${glowAlpha})`;
+                ctx.lineWidth = lineW * 6;
+                ctx.stroke();
+
+                // Core line (gradient)
+                ctx.beginPath();
+                ctx.moveTo(sa.x, sa.y);
+                ctx.lineTo(sb.x, sb.y);
+                const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
+                edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
+                edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
+                ctx.strokeStyle = edgeGrad;
+                ctx.lineWidth = lineW;
+                ctx.stroke();
+            });
+
+            // ─── Edge particles (energy flow dots) ───
+            edgeParticles.forEach(p => {
+                const a = nodeMap[p.edge.source], b = nodeMap[p.edge.target];
+                if (!a || !b) return;
+                if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
+
+                const isActiveClusterEdge = (activeComponent !== null) && activeComponent.some(ce => ce.source === p.edge.source && ce.target === p.edge.target);
+                const speedMultiplier = isActiveClusterEdge ? 3.0 : 1.0;
+                p.t += p.speed * speedMultiplier;
+                if (p.t > 1) p.t -= 1;
+
+                const wx = a.x + (b.x - a.x) * p.t;
+                const wy = a.y + (b.y - a.y) * p.t;
+                const sp = worldToScreen(wx, wy);
+                const colA = nodeColor(a), colB = nodeColor(b);
+                const blendH = (colA.h + colB.h) / 2;
+
+                const baseAlpha = 0.4 + 0.4 * Math.sin(p.t * Math.PI);
+                const activeBoost = isActiveClusterEdge ? 0.3 : 0.0;
+                const alpha = Math.min(1.0, baseAlpha + activeBoost);
+                const pSize = isActiveClusterEdge ? p.size * 2.0 : p.size * 1.4;
+
+                ctx.beginPath();
+                ctx.arc(sp.x, sp.y, pSize * camera.zoom, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha})`;
+                ctx.fill();
+            });
+
+            // ─── Comet trails ───
+            graphNodes.forEach(node => {
+                if (node.trail.length < 2) return;
+                const col = nodeColor(node);
+                for (let i = 1; i < node.trail.length; i++) {
+                    const alpha = (i / node.trail.length) * 0.4;
+                    const width = (i / node.trail.length) * 3 * camera.zoom;
+                    const p0 = worldToScreen(node.trail[i - 1].x, node.trail[i - 1].y);
+                    const p1 = worldToScreen(node.trail[i].x, node.trail[i].y);
                     ctx.beginPath();
-                    ctx.moveTo(sa.x, sa.y);
-                    ctx.lineTo(sb.x, sb.y);
-                    ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${glowAlpha})`;
-                    ctx.lineWidth = lineW * 5;
+                    ctx.moveTo(p0.x, p0.y);
+                    ctx.lineTo(p1.x, p1.y);
+                    ctx.strokeStyle = `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 90)}%, ${alpha})`;
+                    ctx.lineWidth = width;
                     ctx.stroke();
+                }
+            });
 
-                    // Core line
+            // ─── Random laser fire ───
+            lasers.forEach(l => {
+                const age = time - l.time;
+                const alpha = Math.max(0, 1 - age / l.duration) * 0.7;
+                const s = worldToScreen(l.sx, l.sy);
+                const t = worldToScreen(l.tx, l.ty);
+                ctx.beginPath();
+                ctx.moveTo(s.x, s.y);
+                ctx.lineTo(t.x, t.y);
+                ctx.strokeStyle = `hsla(${l.hue}, 100%, 80%, ${alpha})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                // Bright core
+                ctx.strokeStyle = `hsla(${l.hue}, 50%, 95%, ${alpha * 0.5})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+            });
+
+            // ─── Radar pulses ───
+            graphNodes.forEach(node => {
+                if (!node.radarPulse) return;
+                const age = time - node.radarPulse.startTime;
+                const alpha = Math.max(0, 0.15 * (1 - node.radarPulse.radius / (node.radius * 4)));
+                if (alpha <= 0) return;
+                const col = nodeColor(node);
+                const sp = worldToScreen(node.x, node.y);
+                const sr = node.radarPulse.radius * camera.zoom;
+                ctx.beginPath();
+                ctx.arc(sp.x, sp.y, sr, 0, Math.PI * 2);
+                ctx.strokeStyle = `hsla(${col.h}, ${col.s}%, ${col.l}%, ${alpha})`;
+                ctx.lineWidth = 1.5 * camera.zoom;
+                ctx.stroke();
+            });
+
+            // ─── Rocket flame trails + flame particles ───
+            graphNodes.forEach(node => {
+                if (node.thrustTime <= 0) return;
+                const thrustAge = time - node.thrustTime;
+                if (thrustAge >= THRUST_DURATION) return;
+                const decay = 1 - thrustAge / THRUST_DURATION;
+                const col = nodeColor(node);
+                const sp = worldToScreen(node.x, node.y);
+                const r = node.radius * camera.zoom;
+                // Flame cone opposite to thrust direction
+                const flameLen = r * 2.5 * decay * node.thrustStrength;
+                const flameW = r * 0.6 * decay;
+                const flameAngle = node.thrustAngle + Math.PI; // flame points opposite to thrust
+                const tipX = sp.x + Math.cos(flameAngle) * flameLen;
+                const tipY = sp.y + Math.sin(flameAngle) * flameLen;
+                const perpX = Math.cos(flameAngle + Math.PI / 2) * flameW;
+                const perpY = Math.sin(flameAngle + Math.PI / 2) * flameW;
+                // Draw tapered flame
+                ctx.beginPath();
+                ctx.moveTo(sp.x + perpX, sp.y + perpY);
+                ctx.lineTo(tipX, tipY);
+                ctx.lineTo(sp.x - perpX, sp.y - perpY);
+                ctx.closePath();
+                const flameGrad = ctx.createLinearGradient(sp.x, sp.y, tipX, tipY);
+                flameGrad.addColorStop(0, `hsla(40, 100%, 90%, ${0.7 * decay})`);
+                flameGrad.addColorStop(0.3, `hsla(25, 100%, 70%, ${0.5 * decay})`);
+                flameGrad.addColorStop(1, `hsla(0, 100%, 50%, 0)`);
+                ctx.fillStyle = flameGrad;
+                ctx.fill();
+            });
+
+            flameParticles.forEach(p => {
+                const sp = worldToScreen(p.x, p.y);
+                const alpha = Math.max(0, p.life / 0.4);
+                ctx.beginPath();
+                ctx.arc(sp.x, sp.y, p.size * camera.zoom * alpha, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${p.hue}, 100%, ${60 + 30 * alpha}%, ${alpha * 0.8})`;
+                ctx.fill();
+            });
+
+            // ─── Explosion shockwave rings ───
+            explosions.forEach(e => {
+                if (e.shockRadius > 0 && e.shockRadius < 150) {
+                    const alpha = Math.max(0, 0.4 * (1 - e.shockRadius / 150));
+                    const sp = worldToScreen(e.x, e.y);
+                    const sr = e.shockRadius * camera.zoom;
                     ctx.beginPath();
-                    ctx.moveTo(sa.x, sa.y);
-                    ctx.lineTo(sb.x, sb.y);
-                    const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
-                    edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
-                    edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
-                    ctx.strokeStyle = edgeGrad;
-                    ctx.lineWidth = lineW;
+                    ctx.arc(sp.x, sp.y, sr, 0, Math.PI * 2);
+                    const ringColor = e.isChain ? `hsla(40, 100%, 80%, ${alpha})` : `hsla(200, 80%, 80%, ${alpha})`;
+                    ctx.strokeStyle = ringColor;
+                    ctx.lineWidth = 2 * camera.zoom;
                     ctx.stroke();
-                });
-            }
+                }
+            });
 
-            // Edge particles (only for visible edges)
-            if (edgeFadeAlpha > 0 && edgePulseDomain) {
-                edgeParticles.forEach(p => {
-                    p.t += p.speed;
-                    if (p.t > 1) p.t -= 1;
-                    const a = nodeMap[p.edge.source], b = nodeMap[p.edge.target];
-                    if (!a || !b) return;
-                    const aDomain = a.clusterDomain || a.primary_domain || 'Bridges';
-                    const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
-                    if (aDomain !== edgePulseDomain && bDomain !== edgePulseDomain) return;
-                    if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
-
-                    const wx = a.x + (b.x - a.x) * p.t;
-                    const wy = a.y + (b.y - a.y) * p.t;
-                    const sp = worldToScreen(wx, wy);
-                    const colA = nodeColor(a), colB = nodeColor(b);
-                    const blendH = (colA.h + colB.h) / 2;
-                    const alpha = (0.6 + 0.4 * Math.sin(p.t * Math.PI)) * edgeFadeAlpha;
-                    const pSize = p.size * 1.4;
-
+            // ─── Explosion sparks ───
+            explosions.forEach(e => {
+                e.sparks.forEach(s => {
+                    if (s.life <= 0) return;
+                    const alpha = Math.max(0, s.life / 1.0);
+                    const sp = worldToScreen(s.x, s.y);
                     ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, pSize * camera.zoom, 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha})`;
+                    ctx.arc(sp.x, sp.y, s.size * camera.zoom * alpha, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${s.hue}, 100%, ${50 + 40 * alpha}%, ${alpha})`;
                     ctx.fill();
                 });
-            }
+            });
+
+            // ─── Explosion flash overlay ───
+            explosions.forEach(e => {
+                const flashAge = time - e.time;
+                if (flashAge > 0.2) return;
+                const alpha = (1 - flashAge / 0.2) * e.strength * 0.4;
+                const sp = worldToScreen(e.x, e.y);
+                const flashR = 80 * camera.zoom;
+                const flashGrad = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, flashR);
+                flashGrad.addColorStop(0, `rgba(255, 255, 240, ${alpha})`);
+                flashGrad.addColorStop(1, `rgba(255, 200, 100, 0)`);
+                ctx.fillStyle = flashGrad;
+                ctx.beginPath();
+                ctx.arc(sp.x, sp.y, flashR, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // ─── Fireworks ───
+            fireworks.forEach(fw => {
+                fw.particles.forEach(p => {
+                    if (p.life <= 0) return;
+                    const alpha = Math.max(0, p.life / 1.5);
+                    const sp = worldToScreen(p.x, p.y);
+                    const sz = p.size * camera.zoom * alpha;
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, sz, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${p.hue}, 100%, ${50 + 40 * alpha}%, ${alpha * 0.9})`;
+                    ctx.fill();
+                    // Tiny trail
+                    if (p.life > 0.3) {
+                        const trailX = sp.x - p.vx * 0.02 * camera.zoom;
+                        const trailY = sp.y - p.vy * 0.02 * camera.zoom;
+                        ctx.beginPath();
+                        ctx.moveTo(sp.x, sp.y);
+                        ctx.lineTo(trailX, trailY);
+                        ctx.strokeStyle = `hsla(${p.hue}, 100%, 70%, ${alpha * 0.4})`;
+                        ctx.lineWidth = sz * 0.5;
+                        ctx.stroke();
+                    }
+                });
+            });
 
             // Nodes
             graphNodes.forEach(node => {
