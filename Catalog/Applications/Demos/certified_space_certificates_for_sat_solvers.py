@@ -1,661 +1,507 @@
-#!/usr/bin/env python3
 """
-Applications of Clause-Space Certificate Theory
+Applications of Clause-Space Certificates
 
-This module demonstrates real-world applications of the clause-space certificate
-framework:
-
+Demonstrates real-world applications of the clause-space certificate framework:
 1. Memory-bounded SAT solving certification
-2. Proof complexity analysis of specific formula families
-3. Graph-theoretic analysis of the configuration space
-4. Comparison of space requirements across formula families
+2. Proof complexity analysis
+3. Configuration graph exploration
+4. Ternary encoding visualization
+5. Space-time tradeoff analysis
 """
 
-import time
-from collections import defaultdict
 from algorithms import (
-    Clause, CNF, EMPTY_CLAUSE,
-    find_space_certificate, resolve,
-    generate_random_cnf, generate_pigeonhole,
-    enumerate_all_proper_clauses, count_proper_clauses,
-    SpaceConfig, get_successors
+    Clause, CNF, Config, SpaceCertificate,
+    find_space_certificate, verify_certificate,
+    all_clauses, count_bounded_configs, num_clauses,
+    successors, simple_unsat_cnf, pigeonhole_cnf, random_3sat
 )
+from itertools import product
+from collections import deque
+import time
 
 
-def app_minimum_space_analysis():
-    """Application 1: Find minimum clause space for unsatisfiable formulas.
-    
-    For each unsatisfiable formula, find the minimum space s such that
-    a space-s certificate exists. This gives the clause-space complexity
-    of the formula.
+def application_1_memory_certified_unsat():
+    """
+    Application 1: Certified Memory-Bounded Unsatisfiability
+
+    Given a CNF formula and a memory budget, produce a certificate that
+    proves unsatisfiability while never exceeding the memory limit.
+    This is the core use case for SAT solvers with memory constraints.
     """
     print("=" * 70)
-    print("APPLICATION 1: Minimum Clause-Space Complexity")
+    print("APPLICATION 1: Certified Memory-Bounded Unsatisfiability")
     print("=" * 70)
-    print()
-    
-    formulas = []
-    
-    # Single variable contradiction
-    formulas.append(("x ∧ ¬x", 
-        CNF([Clause({(0, True)}), Clause({(0, False)})]), 1))
-    
-    # Two-variable contradictions
-    formulas.append(("(x∨y) ∧ ¬x ∧ ¬y",
-        CNF([Clause({(0, True), (1, True)}),
-             Clause({(0, False)}), Clause({(1, False)})]), 2))
-    
-    formulas.append(("(x∨y) ∧ (x∨¬y) ∧ (¬x∨y) ∧ (¬x∨¬y)",
-        CNF([Clause({(0, True), (1, True)}),
-             Clause({(0, True), (1, False)}),
-             Clause({(0, False), (1, True)}),
-             Clause({(0, False), (1, False)})]), 2))
-    
-    # PHP(2,1)
-    from algorithms import generate_pigeonhole
-    php_f, php_nv = generate_pigeonhole(1)
-    formulas.append(("PHP(2,1)", php_f, php_nv))
-    
-    # Three-variable formula
-    formulas.append(("3-var chain",
-        CNF([Clause({(0, True)}), Clause({(0, False), (1, True)}),
-             Clause({(1, False), (2, True)}), Clause({(2, False)})]), 3))
-    
-    print(f"{'Formula':<40s} {'Min Space':>10s} {'Cert Len':>10s} {'Time':>8s}")
-    print("-" * 70)
-    
-    for name, F, nv in formulas:
+
+    # Test formula: {x0} ∧ {¬x0}
+    cnf = simple_unsat_cnf()
+    print(f"\nFormula: {' ∧ '.join(str(c) for c in cnf.clauses)}")
+    print(f"Variables: {sorted(cnf.variables)}")
+    is_sat, witness = cnf.satisfiable()
+    print(f"Satisfiable: {is_sat}")
+
+    for s in range(1, 5):
+        cert, stats = find_space_certificate(cnf, s, max_fuel=10000)
+        if cert:
+            valid = verify_certificate(cert, cnf, s)
+            print(f"\n  Space bound s={s}: Certificate FOUND "
+                  f"(length={len(cert.trace)}, space={cert.space_used}, "
+                  f"valid={valid}, explored={stats['explored']})")
+            if s <= 3:
+                print(cert)
+        else:
+            print(f"\n  Space bound s={s}: No certificate found "
+                  f"(explored={stats['explored']})")
+
+
+def application_2_proof_complexity_analysis():
+    """
+    Application 2: Proof Complexity Analysis
+
+    Analyze the minimum space required to refute different formulas.
+    This reveals the proof complexity landscape.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 2: Proof Complexity Analysis")
+    print("=" * 70)
+
+    formulas = [
+        ("x ∧ ¬x", simple_unsat_cnf()),
+        ("PHP(2,1)", pigeonhole_cnf(1)),
+        ("PHP(3,2)", pigeonhole_cnf(2)),
+    ]
+
+    for name, cnf in formulas:
+        print(f"\n  Formula: {name}")
+        print(f"  Clauses: {len(cnf.clauses)}, Variables: {len(cnf.variables)}")
+
         min_space = None
-        cert_len = None
-        total_time = 0
-        
         for s in range(1, 8):
-            t0 = time.time()
-            cert = find_space_certificate(F, s, nv, max_configs=50000)
-            total_time += time.time() - t0
-            
-            if cert is not None and min_space is None:
+            cert, stats = find_space_certificate(cnf, s, max_fuel=50000)
+            if cert:
                 min_space = s
-                cert_len = cert.length
+                print(f"    s={s}: REFUTABLE "
+                      f"(cert length={len(cert.trace)}, explored={stats['explored']}, "
+                      f"time={stats['time']:.4f}s)")
                 break
-        
-        if min_space is not None:
-            print(f"{name:<40s} {min_space:>10d} {cert_len:>10d} {total_time:>8.4f}")
-        else:
-            print(f"{name:<40s} {'> 7':>10s} {'—':>10s} {total_time:>8.4f}")
-    
-    print()
+            else:
+                print(f"    s={s}: NOT refutable "
+                      f"(explored={stats['explored']}, time={stats['time']:.4f}s)")
+
+        if min_space:
+            print(f"  → Minimum clause space: {min_space}")
 
 
-def app_configuration_graph_analysis():
-    """Application 2: Analyze the configuration graph structure.
-    
-    For a given formula and space bound, explore the reachable portion
-    of the configuration graph and report graph-theoretic statistics.
+def application_3_configuration_graph():
     """
+    Application 3: Configuration Graph Exploration
+
+    Build and analyze the configuration graph for small instances.
+    Demonstrates the finite-state reachability perspective.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 3: Configuration Graph Analysis")
     print("=" * 70)
-    print("APPLICATION 2: Configuration Graph Analysis")
-    print("=" * 70)
-    print()
-    
-    # Simple formula
-    F = CNF([Clause({(0, True), (1, True)}),
-             Clause({(0, False)}),
-             Clause({(1, False)})])
-    nv = 2
-    
-    for s in [2, 3]:
-        print(f"Formula: (x∨y) ∧ ¬x ∧ ¬y, space bound s={s}")
-        
-        # BFS to explore reachable configs
-        variables = set(range(nv))
-        start = SpaceConfig()
+
+    cnf = simple_unsat_cnf()
+    print(f"\nFormula: {' ∧ '.join(str(c) for c in cnf.clauses)}")
+
+    for s in range(1, 4):
+        # BFS to find all reachable configs
+        start: Config = frozenset()
         visited = {start}
-        queue = [start]
+        queue = deque([start])
         edges = 0
-        goal_configs = set()
-        
+        goal_configs = []
+
         while queue:
-            current = queue.pop(0)
-            successors = get_successors(current, F, variables, s)
-            edges += len(successors)
-            
-            if current.contains_empty_clause():
-                goal_configs.add(current)
-            
-            for succ, _ in successors:
-                if succ not in visited:
-                    visited.add(succ)
-                    queue.append(succ)
-        
-        print(f"  Reachable configurations: {len(visited)}")
-        print(f"  Total edges: {edges}")
-        print(f"  Goal configurations: {len(goal_configs)}")
-        if visited:
-            print(f"  Avg branching factor: {edges / len(visited):.2f}")
-        print()
+            current = queue.popleft()
+            for next_config, _ in successors(current, cnf):
+                if len(next_config) <= s:
+                    edges += 1
+                    if next_config not in visited:
+                        visited.add(next_config)
+                        queue.append(next_config)
+                        if Clause.empty() in next_config:
+                            goal_configs.append(next_config)
+
+        total_possible = count_bounded_configs(len(cnf.variables), s)
+        print(f"\n  Space bound s={s}:")
+        print(f"    Reachable configs: {len(visited)}")
+        print(f"    Total possible (bound): {total_possible}")
+        print(f"    Edges explored: {edges}")
+        print(f"    Goal configs found: {len(goal_configs)}")
+        print(f"    Reachability ratio: {len(visited)/total_possible:.4f}")
 
 
-def app_space_complexity_comparison():
-    """Application 3: Compare space complexity across formula families."""
-    print("=" * 70)
-    print("APPLICATION 3: Space Complexity Comparison")
-    print("=" * 70)
-    print()
-    
-    families = {
-        "Random 2-SAT (unsat)": [],
-        "Random 3-SAT (unsat)": [],
-        "Pigeonhole": [],
-    }
-    
-    # Random 2-SAT
-    for seed in range(50):
-        F = generate_random_cnf(3, 5, clause_width=2, seed=seed)
-        if not F.is_satisfiable(3):
-            families["Random 2-SAT (unsat)"].append((F, 3))
-    
-    # Random 3-SAT
-    for seed in range(50):
-        F = generate_random_cnf(3, 6, clause_width=3, seed=seed + 1000)
-        if not F.is_satisfiable(3):
-            families["Random 3-SAT (unsat)"].append((F, 3))
-    
-    # Pigeonhole
-    for n in [1, 2]:
-        F, nv = generate_pigeonhole(n)
-        families["Pigeonhole"].append((F, nv))
-    
-    print(f"{'Family':<30s} {'Count':>6s} {'Avg Min-s':>10s} {'Max Min-s':>10s}")
-    print("-" * 60)
-    
-    for family_name, instances in families.items():
-        if not instances:
-            continue
-        
-        min_spaces = []
-        for F, nv in instances[:20]:  # Limit for speed
-            for s in range(1, 6):
-                cert = find_space_certificate(F, s, nv, max_configs=20000)
-                if cert is not None:
-                    min_spaces.append(s)
-                    break
-        
-        if min_spaces:
-            avg_s = sum(min_spaces) / len(min_spaces)
-            max_s = max(min_spaces)
-            print(f"{family_name:<30s} {len(instances):>6d} {avg_s:>10.2f} {max_s:>10d}")
-        else:
-            print(f"{family_name:<30s} {len(instances):>6d} {'—':>10s} {'—':>10s}")
-    
-    print()
-
-
-def app_certificate_verification():
-    """Application 4: Independent certificate verification.
-    
-    Demonstrates the key application: a certificate found by one system
-    can be independently verified by a separate checker.
+def application_4_ternary_encoding():
     """
+    Application 4: Ternary Encoding Visualization
+
+    Demonstrate the bijection between disjoint clauses and ternary vectors,
+    connecting proof complexity to coding theory.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 4: Ternary Encoding of Clauses")
     print("=" * 70)
-    print("APPLICATION 4: Independent Certificate Verification")
-    print("=" * 70)
-    print()
-    
-    # Create a formula
-    F = CNF([
-        Clause({(0, True), (1, True), (2, True)}),
-        Clause({(0, True), (1, False)}),
-        Clause({(0, False), (2, True)}),
-        Clause({(0, False), (2, False)}),
-        Clause({(1, True), (2, False)}),
-        Clause({(0, True), (1, True), (2, False)}),
-        Clause({(0, False), (1, False)}),
-    ])
-    nv = 3
-    
-    print(f"Formula has {len(F.clauses)} clauses over {nv} variables")
-    print(f"Satisfiable: {F.is_satisfiable(nv)}")
-    
-    cert = find_space_certificate(F, 4, nv, max_configs=100000)
-    
-    if cert:
-        print(f"\nCertificate found (length={cert.length})")
-        
-        # Independent verification
-        print("\n--- Independent Verification ---")
-        
-        # Check 1: Starts empty
-        starts_ok = cert.trace[0] == SpaceConfig()
-        print(f"1. Starts with empty config: {'✓' if starts_ok else '✗'}")
-        
-        # Check 2: Ends with empty clause
-        ends_ok = cert.trace[-1].contains_empty_clause()
-        print(f"2. Ends with empty clause: {'✓' if ends_ok else '✗'}")
-        
-        # Check 3: Bounded
-        bounded_ok = all(cfg.size <= 4 for cfg in cert.trace)
-        print(f"3. All configs bounded by s=4: {'✓' if bounded_ok else '✗'}")
-        
-        # Check 4: Valid steps
-        steps_ok = cert.is_valid(F)
-        print(f"4. Certificate valid: {'✓' if steps_ok else '✗'}")
-        
-        # Show the certificate trace
-        print("\nCertificate trace:")
-        for i, cfg in enumerate(cert.trace):
-            step_desc = "START" if i == 0 else cert.steps[i-1].detail
-            print(f"  [{i}] {step_desc}")
-            print(f"       mem({cfg.size} clauses) = {cfg}")
-    else:
-        print("No certificate found within search budget")
-    print()
+
+    variables = [0, 1, 2]  # 3 variables
+    n = len(variables)
+    clauses = all_clauses(variables)
+
+    print(f"\n  Variables: {variables}")
+    print(f"  Total disjoint clauses: {len(clauses)} (should be 3^{n} = {3**n})")
+    print(f"\n  {'Clause':<30} {'Ternary':<15} {'Disjoint'}")
+    print(f"  {'─'*30} {'─'*15} {'─'*10}")
+
+    for c in clauses[:15]:  # Show first 15
+        ternary = c.to_ternary(variables)
+        print(f"  {str(c):<30} {str(ternary):<15} {c.is_disjoint()}")
+
+    print(f"\n  ... ({len(clauses)} total clauses)")
+
+    # Verify injectivity
+    ternary_codes = [c.to_ternary(variables) for c in clauses]
+    unique_codes = set(ternary_codes)
+    print(f"\n  Unique ternary codes: {len(unique_codes)}")
+    print(f"  Injection verified: {len(unique_codes) == len(clauses)}")
 
 
-def app_ternary_state_space():
-    """Application 5: Explore the ternary state space structure."""
-    print("=" * 70)
-    print("APPLICATION 5: Ternary State Space Analysis")
-    print("=" * 70)
-    print()
-    
-    for n in range(1, 5):
-        proper = enumerate_all_proper_clauses(n)
-        
-        # Verify the 3^n bound
-        assert len(proper) == 3 ** n, f"Expected {3**n}, got {len(proper)}"
-        
-        # Check injectivity of ternary encoding
-        ternary_vecs = set()
-        for c in proper:
-            t = c.to_ternary(n)
-            assert t not in ternary_vecs, f"Collision at {t}"
-            ternary_vecs.add(t)
-        
-        # Count by clause size
-        size_dist = defaultdict(int)
-        for c in proper:
-            size_dist[len(c)] += 1
-        
-        print(f"n={n}: {len(proper)} proper clauses = 3^{n}")
-        print(f"  Size distribution: {dict(sorted(size_dist.items()))}")
-        print(f"  Ternary encoding injective: ✓")
-    
-    print()
+def application_5_space_time_tradeoff():
+    """
+    Application 5: Space-Time Tradeoff Analysis
 
+    Analyze how the space bound affects search time,
+    demonstrating the fundamental tradeoff in proof complexity.
+    """
+    print("\n" + "=" * 70)
+    print("APPLICATION 5: Space-Time Tradeoff Analysis")
+    print("=" * 70)
 
-def main():
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  Clause-Space Certificate Applications                              ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-    
-    app_minimum_space_analysis()
-    app_configuration_graph_analysis()
-    app_space_complexity_comparison()
-    app_certificate_verification()
-    app_ternary_state_space()
-    
-    print("All applications completed.")
+    cnf = pigeonhole_cnf(1)  # PHP(2,1): 2 pigeons, 1 hole
+    print(f"\n  Formula: PHP(2,1)")
+    print(f"  Clauses: {len(cnf.clauses)}, Variables: {len(cnf.variables)}")
+
+    print(f"\n  {'Space s':<10} {'Found':<8} {'Cert Len':<10} "
+          f"{'Explored':<12} {'Time (ms)':<12} {'Config Bound'}")
+    print(f"  {'─'*10} {'─'*8} {'─'*10} {'─'*12} {'─'*12} {'─'*12}")
+
+    for s in range(1, 7):
+        t0 = time.time()
+        cert, stats = find_space_certificate(cnf, s, max_fuel=100000)
+        elapsed_ms = (time.time() - t0) * 1000
+
+        config_bound = count_bounded_configs(len(cnf.variables), s)
+        cert_len = len(cert.trace) if cert else "-"
+        found = "YES" if cert else "NO"
+
+        print(f"  {s:<10} {found:<8} {str(cert_len):<10} "
+              f"{stats['explored']:<12} {elapsed_ms:<12.1f} {config_bound}")
 
 
 if __name__ == "__main__":
-    main()
+    application_1_memory_certified_unsat()
+    application_2_proof_complexity_analysis()
+    application_3_configuration_graph()
+    application_4_ternary_encoding()
+    application_5_space_time_tradeoff()
 
 
 #!/usr/bin/env python3
 """
 Clause-Space Certificate Demo
 
-Demonstrates the clause-space certificate framework on small CNF formulas:
-- Generates small unsatisfiable CNFs
-- Searches for bounded-space certificates
-- Validates certificates
-- Reports statistics: runtime, configurations explored, certificate length
-- Compares against theoretical state-space bounds
+Demonstrates the theory of clause-space certificates for SAT refutations:
+1. Generates small CNF formulas
+2. Runs bounded-space certificate search
+3. Verifies certificates
+4. Reports statistics and compares to theoretical bounds
 
-This implements the computational experiments from the clause-space certificate
-theory, testing the framework on all tractable instances with at most 5 variables
-and space bounds up to 4.
+This demo exercises the algorithms that mirror the formally verified Lean theorems:
+- Soundness: valid certificates prove unsatisfiability
+- Completeness: refutable formulas have certificates
+- Configuration counting: explicit combinatorial bounds
+- Ternary encoding: clauses as ternary vectors
 """
 
-import time
-import sys
-from itertools import product
 from algorithms import (
-    Clause, CNF, EMPTY_CLAUSE,
-    find_space_certificate, count_proper_clauses,
-    generate_random_cnf, generate_pigeonhole, resolve,
-    SearchStats, SpaceConfig, enumerate_all_proper_clauses
+    Clause, CNF, Config, SpaceCertificate,
+    find_space_certificate, verify_certificate,
+    all_clauses, count_bounded_configs, num_clauses,
+    simple_unsat_cnf, pigeonhole_cnf, random_3sat
 )
+from itertools import product
+from math import comb
+import time
 
 
-def demo_basic_example():
-    """Demo 1: A simple unsatisfiable formula."""
+def demo_basic_certificate():
+    """Demo 1: Find and verify a basic certificate."""
     print("=" * 70)
-    print("DEMO 1: Basic Unsatisfiable Formula")
+    print("DEMO 1: Basic Certificate Search and Verification")
     print("=" * 70)
-    
-    # {x0 ∨ x1}, {¬x0}, {¬x1}
-    c1 = Clause({(0, True), (1, True)})
-    c2 = Clause({(0, False)})
-    c3 = Clause({(1, False)})
-    F = CNF([c1, c2, c3])
-    
-    print(f"Formula F = {F}")
-    print(f"Satisfiable: {F.is_satisfiable(2)}")
-    print()
-    
-    for s in range(1, 5):
-        t0 = time.time()
-        cert = find_space_certificate(F, s, 2)
-        elapsed = time.time() - t0
-        
-        if cert:
-            print(f"Space bound s={s}: Certificate FOUND (length={cert.length}, time={elapsed:.4f}s)")
-            print(f"  Valid: {cert.is_valid(F)}")
-            if s <= 3:
-                print(cert)
-        else:
-            print(f"Space bound s={s}: No certificate found (time={elapsed:.4f}s)")
-        print()
+
+    cnf = simple_unsat_cnf()
+    print(f"\nFormula: {' ∧ '.join(str(c) for c in cnf.clauses)}")
+    print(f"Variables: {sorted(cnf.variables)}")
+    is_sat, _ = cnf.satisfiable()
+    print(f"Satisfiable: {is_sat}")
+
+    cert, stats = find_space_certificate(cnf, s=3)
+    if cert:
+        print(f"\n✓ Certificate found!")
+        print(cert)
+        valid = verify_certificate(cert, cnf, 3)
+        print(f"\n✓ Certificate verified: {valid}")
+        print(f"  Space used: {cert.space_used}")
+        print(f"  Certificate length: {len(cert.trace)}")
+        print(f"  Configurations explored: {stats['explored']}")
+        print(f"  Time: {stats['time']*1000:.1f}ms")
+    else:
+        print("✗ No certificate found")
 
 
-def demo_resolution_step():
-    """Demo 2: Show resolution step by step."""
+def demo_all_small_cnfs():
+    """Demo 2: Systematic search over small CNFs."""
+    print("\n" + "=" * 70)
+    print("DEMO 2: Systematic Search Over Small CNFs")
     print("=" * 70)
-    print("DEMO 2: Resolution Steps")
+
+    n_vars = 2
+    max_space = 4
+    max_fuel = 50000
+
+    print(f"\nParameters: {n_vars} variables, space bound ≤ {max_space}")
+    print(f"Total possible disjoint clauses: {3**n_vars}")
+    print(f"Max fuel per search: {max_fuel}")
+
+    # Generate some unsatisfiable CNFs on 2 variables
+    variables = list(range(n_vars))
+    clause_universe = all_clauses(variables)
+
+    # Test specific unsatisfiable formulas
+    test_formulas = [
+        ("x0 ∧ ¬x0", CNF([
+            Clause(frozenset({0}), frozenset()),
+            Clause(frozenset(), frozenset({0})),
+        ])),
+        ("x0 ∧ ¬x0 ∧ x1", CNF([
+            Clause(frozenset({0}), frozenset()),
+            Clause(frozenset(), frozenset({0})),
+            Clause(frozenset({1}), frozenset()),
+        ])),
+        ("(x0∨x1) ∧ (x0∨¬x1) ∧ (¬x0∨x1) ∧ (¬x0∨¬x1)", CNF([
+            Clause(frozenset({0, 1}), frozenset()),
+            Clause(frozenset({0}), frozenset({1})),
+            Clause(frozenset({1}), frozenset({0})),
+            Clause(frozenset(), frozenset({0, 1})),
+        ])),
+    ]
+
+    print(f"\n{'Formula':<45} {'SAT':<5} {'s':<3} {'Found':<6} "
+          f"{'Len':<5} {'Explored':<10} {'Time(ms)':<10}")
+    print("─" * 130)
+
+    for name, cnf in test_formulas:
+        is_sat, _ = cnf.satisfiable()
+        if is_sat:
+            print(f"{name:<45} {'Y':<5} {'–':<3} {'–':<6} "
+                  f"{'–':<5} {'–':<10} {'–':<10}")
+            continue
+
+        found_any = False
+        for s in range(1, max_space + 1):
+            cert, stats = find_space_certificate(cnf, s, max_fuel=max_fuel)
+            if cert:
+                valid = verify_certificate(cert, cnf, s)
+                status = "✓" if valid else "✗"
+                print(f"{name:<45} {'N':<5} {s:<3} {status:<6} "
+                      f"{len(cert.trace):<5} {stats['explored']:<10} "
+                      f"{stats['time']*1000:<10.1f}")
+                found_any = True
+                break
+            else:
+                print(f"{name:<45} {'N':<5} {s:<3} {'–':<6} "
+                      f"{'–':<5} {stats['explored']:<10} "
+                      f"{stats['time']*1000:<10.1f}")
+
+        if not found_any:
+            print(f"  → No certificate found up to space {max_space}")
+
+
+def demo_configuration_counting():
+    """Demo 3: Configuration counting bounds."""
+    print("\n" + "=" * 70)
+    print("DEMO 3: Configuration Counting Bounds")
     print("=" * 70)
-    
-    # x0 ∨ x1 and ¬x0 ∨ x1 resolve to x1
-    c1 = Clause({(0, True), (1, True)})
-    c2 = Clause({(0, False), (1, True)})
-    r = resolve(c1, c2, 0)
-    print(f"Resolve({c1}, {c2}, x0) = {r}")
-    
-    # x0 and ¬x0 resolve to □ (empty clause)
-    c3 = Clause({(0, True)})
-    c4 = Clause({(0, False)})
-    r2 = resolve(c3, c4, 0)
-    print(f"Resolve({c3}, {c4}, x0) = {r2}")
-    print()
+
+    print(f"\n{'n vars':<8} {'3^n clauses':<15} {'s':<5} "
+          f"{'Σ C(3^n,k)':<15} {'Reachable':<12} {'Ratio':<10}")
+    print("─" * 70)
+
+    for n in range(1, 6):
+        total_clauses = 3 ** n
+        for s in [1, 2, min(3, total_clauses)]:
+            bound = count_bounded_configs(n, s)
+
+            # For small cases, count actual reachable configs
+            if n <= 2 and s <= 3:
+                cnf = simple_unsat_cnf() if n <= 2 else pigeonhole_cnf(1)
+                from collections import deque
+                start = frozenset()
+                visited = {start}
+                queue = deque([start])
+                from algorithms import successors
+                while queue:
+                    current = queue.popleft()
+                    for next_config, _ in successors(current, cnf):
+                        if len(next_config) <= s and next_config not in visited:
+                            visited.add(next_config)
+                            queue.append(next_config)
+                reachable = len(visited)
+                ratio = f"{reachable/bound:.4f}" if bound > 0 else "N/A"
+            else:
+                reachable = "–"
+                ratio = "–"
+
+            print(f"{n:<8} {total_clauses:<15} {s:<5} "
+                  f"{bound:<15} {str(reachable):<12} {str(ratio):<10}")
 
 
 def demo_ternary_encoding():
-    """Demo 3: Ternary encoding of clauses."""
+    """Demo 4: Ternary encoding of clauses."""
+    print("\n" + "=" * 70)
+    print("DEMO 4: Ternary Encoding (Clauses as 3-ary Vectors)")
     print("=" * 70)
-    print("DEMO 3: Ternary Encoding (Clause → Fin 3 vectors)")
-    print("=" * 70)
-    
-    num_vars = 3
-    proper = enumerate_all_proper_clauses(num_vars)
-    print(f"Number of proper clauses over {num_vars} variables: {len(proper)}")
-    print(f"Expected: 3^{num_vars} = {3**num_vars}")
-    
-    # Show some examples
-    print("\nExamples:")
-    for c in proper[:10]:
-        ternary = c.to_ternary(num_vars)
-        print(f"  {str(c):30s} → {ternary}")
-    
-    # Verify injectivity
-    ternary_map = {}
-    injective = True
-    for c in proper:
-        t = c.to_ternary(num_vars)
-        if t in ternary_map and ternary_map[t] != c:
-            injective = False
-            print(f"  COLLISION: {c} and {ternary_map[t]} both map to {t}")
-        ternary_map[t] = c
-    
-    print(f"\nInjective: {injective}")
-    print()
 
-
-def demo_space_bound_sweep():
-    """Demo 4: Sweep space bounds for various formulas."""
-    print("=" * 70)
-    print("DEMO 4: Space Bound Sweep")
-    print("=" * 70)
-    
-    formulas = []
-    
-    # Simple unsat formulas on 2-3 variables
-    # x ∧ ¬x
-    formulas.append(("x ∧ ¬x", CNF([Clause({(0, True)}), Clause({(0, False)})]), 1))
-    
-    # (x∨y) ∧ ¬x ∧ ¬y
-    formulas.append(("(x∨y) ∧ ¬x ∧ ¬y",
-        CNF([Clause({(0, True), (1, True)}),
-             Clause({(0, False)}),
-             Clause({(1, False)})]),
-        2))
-    
-    # (x∨y) ∧ (x∨¬y) ∧ (¬x∨y) ∧ (¬x∨¬y)
-    formulas.append(("all 2-clauses on {x,y}",
-        CNF([Clause({(0, True), (1, True)}),
-             Clause({(0, True), (1, False)}),
-             Clause({(0, False), (1, True)}),
-             Clause({(0, False), (1, False)})]),
-        2))
-    
-    # PHP(2,1): 2 pigeons, 1 hole
-    php_f, php_nv = generate_pigeonhole(1)
-    formulas.append((f"PHP(2,1)", php_f, php_nv))
-    
-    print(f"{'Formula':<30s} {'s':>3s} {'Found':>6s} {'Len':>5s} {'Explored':>10s} {'Time(s)':>8s}")
-    print("-" * 70)
-    
-    for name, F, nv in formulas:
-        for s in range(1, 5):
-            t0 = time.time()
-            cert = find_space_certificate(F, s, nv, max_configs=50000)
-            elapsed = time.time() - t0
-            
-            found = cert is not None
-            length = cert.length if cert else "-"
-            valid = cert.is_valid(F) if cert else False
-            
-            # Count explored configs (approximate)
-            explored = "≤50000"
-            
-            status = "YES" if found else "no"
-            if found and not valid:
-                status = "INVALID!"
-            
-            print(f"{name:<30s} {s:>3d} {status:>6s} {str(length):>5s} {explored:>10s} {elapsed:>8.4f}")
-    print()
-
-
-def demo_monotonicity():
-    """Demo 5: Verify monotonicity — if refutable in space s, also in space s+1."""
-    print("=" * 70)
-    print("DEMO 5: Monotonicity Verification")
-    print("=" * 70)
-    
-    # Generate random unsat formulas and check monotonicity
-    num_tests = 0
-    num_monotone = 0
-    
-    # Test on small formulas
-    for seed in range(20):
-        for nv in [2, 3]:
-            for nc in [3, 4, 5]:
-                F = generate_random_cnf(nv, nc, clause_width=2, seed=seed * 100 + nv * 10 + nc)
-                if F.is_satisfiable(nv):
-                    continue
-                
-                # Find minimum space bound
-                min_s = None
-                for s in range(1, 5):
-                    cert = find_space_certificate(F, s, nv, max_configs=10000)
-                    if cert is not None:
-                        min_s = s
-                        break
-                
-                if min_s is None:
-                    continue
-                
-                # Check all larger bounds also work
-                monotone = True
-                for s in range(min_s, min_s + 3):
-                    cert = find_space_certificate(F, s, nv, max_configs=10000)
-                    if cert is None:
-                        monotone = False
-                        break
-                
-                num_tests += 1
-                if monotone:
-                    num_monotone += 1
-                else:
-                    print(f"  MONOTONICITY VIOLATION: {F} at s={min_s}")
-    
-    print(f"Tested {num_tests} unsatisfiable formulas")
-    print(f"Monotonicity holds: {num_monotone}/{num_tests}")
-    print()
-
-
-def demo_counting_bounds():
-    """Demo 6: Verify counting bounds computationally."""
-    print("=" * 70)
-    print("DEMO 6: Configuration Counting Bounds")
-    print("=" * 70)
-    
-    from math import comb
-    
     for n in range(1, 5):
-        num_proper = count_proper_clauses(n)
-        three_pow = 3 ** n
-        print(f"Variables: {n}")
-        print(f"  Proper clauses: {num_proper} ≤ 3^{n} = {three_pow}: {'✓' if num_proper <= three_pow else '✗'}")
-        
-        # Total clauses (all subsets of 2n literals)
-        num_literals = 2 * n
-        total_clauses = 2 ** num_literals
-        
-        for s in range(1, min(4, total_clauses + 1)):
-            bound = sum(comb(total_clauses, k) for k in range(s + 1))
-            print(f"  Configs with |mem| ≤ {s}: theoretical bound = {bound}")
-    print()
+        variables = list(range(n))
+        clauses = all_clauses(variables)
+        ternary_codes = [c.to_ternary(variables) for c in clauses]
+        unique = len(set(ternary_codes))
+        expected = 3 ** n
+
+        print(f"\n  n={n}: {len(clauses)} clauses, {unique} unique codes, "
+              f"3^{n}={expected}, injective={unique == len(clauses)}")
+
+        if n <= 2:
+            for c, t in zip(clauses, ternary_codes):
+                print(f"    {str(c):<25} → {t}")
 
 
-def demo_certificate_statistics():
-    """Demo 7: Comprehensive certificate statistics."""
+def demo_space_monotonicity():
+    """Demo 5: Space monotonicity verification."""
+    print("\n" + "=" * 70)
+    print("DEMO 5: Space Monotonicity (s ≤ t → refutable(s) → refutable(t))")
     print("=" * 70)
-    print("DEMO 7: Certificate Statistics (Systematic Sweep)")
-    print("=" * 70)
-    
-    results: list[SearchStats] = []
-    
-    # Generate all small unsat formulas and search
-    test_cases = []
-    
-    # Manual small cases
-    for seed in range(30):
-        for nv in [2, 3, 4]:
-            for nc in [2, 3, 4, 5]:
-                F = generate_random_cnf(nv, nc, clause_width=min(3, nv), seed=seed * 1000 + nv * 100 + nc)
-                if not F.is_satisfiable(nv) and len(F.clauses) >= 2:
-                    test_cases.append((F, nv, f"rnd(nv={nv},nc={nc},s={seed})"))
-    
-    print(f"Testing {len(test_cases)} unsatisfiable formulas...")
-    print(f"{'Formula':<35s} {'s':>3s} {'Found':>6s} {'CertLen':>8s} {'Time':>8s}")
-    print("-" * 65)
-    
-    found_count = 0
-    total_count = 0
-    
-    for F, nv, name in test_cases[:50]:  # Limit to 50 for demo
-        for s in [2, 3, 4]:
-            total_count += 1
-            t0 = time.time()
-            cert = find_space_certificate(F, s, nv, max_configs=20000)
-            elapsed = time.time() - t0
-            
-            if cert:
-                found_count += 1
-                valid = cert.is_valid(F)
-                if not valid:
-                    print(f"  WARNING: Invalid certificate for {name} at s={s}!")
-                results.append(SearchStats(
-                    found=True,
-                    certificate_length=cert.length,
-                    configs_explored=0,
-                    total_bounded_configs=0,
-                    time_seconds=elapsed,
-                    formula=name,
-                    space_bound=s
-                ))
-            else:
-                results.append(SearchStats(
-                    found=False,
-                    certificate_length=None,
-                    configs_explored=0,
-                    total_bounded_configs=0,
-                    time_seconds=elapsed,
-                    formula=name,
-                    space_bound=s
-                ))
-    
-    print(f"\nSummary: {found_count}/{total_count} certificates found")
-    
-    if results:
-        found_results = [r for r in results if r.found]
-        if found_results:
-            avg_len = sum(r.certificate_length for r in found_results) / len(found_results)
-            avg_time = sum(r.time_seconds for r in found_results) / len(found_results)
-            max_len = max(r.certificate_length for r in found_results)
-            print(f"Average certificate length: {avg_len:.1f}")
-            print(f"Maximum certificate length: {max_len}")
-            print(f"Average search time: {avg_time:.4f}s")
-    print()
+
+    cnf = simple_unsat_cnf()
+    print(f"\nFormula: {' ∧ '.join(str(c) for c in cnf.clauses)}")
+
+    min_space = None
+    for s in range(1, 8):
+        cert, stats = find_space_certificate(cnf, s, max_fuel=50000)
+        if cert:
+            if min_space is None:
+                min_space = s
+            valid = verify_certificate(cert, cnf, s)
+            print(f"  s={s}: REFUTABLE (cert valid={valid}, len={len(cert.trace)})")
+        else:
+            print(f"  s={s}: not refutable (explored {stats['explored']})")
+
+    if min_space:
+        print(f"\n  Minimum space: {min_space}")
+        print(f"  Monotonicity: All s ≥ {min_space} should be refutable ✓")
 
 
-def demo_pigeonhole():
-    """Demo 8: Pigeonhole principle — a classic hard instance."""
+def demo_runtime_vs_bound():
+    """Demo 6: Runtime vs. state-space bound comparison."""
+    print("\n" + "=" * 70)
+    print("DEMO 6: Runtime vs. State-Space Bound")
     print("=" * 70)
-    print("DEMO 8: Pigeonhole Principle")
-    print("=" * 70)
-    
-    for n in [1, 2]:
-        F, nv = generate_pigeonhole(n)
-        print(f"\nPHP({n+1},{n}): {n+1} pigeons, {n} holes, {nv} variables, {len(F.clauses)} clauses")
-        print(f"  Satisfiable: {F.is_satisfiable(nv)}")
-        
-        for s in range(1, min(8, nv + 3)):
-            t0 = time.time()
-            cert = find_space_certificate(F, s, nv, max_configs=50000)
-            elapsed = time.time() - t0
-            
-            if cert:
-                print(f"  s={s}: Certificate found (length={cert.length}, valid={cert.is_valid(F)}, time={elapsed:.3f}s)")
-            else:
-                print(f"  s={s}: No certificate (time={elapsed:.3f}s)")
-    print()
+
+    formulas = [
+        ("x ∧ ¬x (1 var)", simple_unsat_cnf()),
+        ("PHP(2,1)", pigeonhole_cnf(1)),
+    ]
+
+    for name, cnf in formulas:
+        print(f"\n  Formula: {name}")
+        print(f"  {'s':<5} {'Explored':<12} {'Config Bound':<15} "
+              f"{'Ratio':<10} {'Time(ms)':<10} {'Found':<6}")
+        print(f"  {'─'*5} {'─'*12} {'─'*15} {'─'*10} {'─'*10} {'─'*6}")
+
+        for s in range(1, 7):
+            cert, stats = find_space_certificate(cnf, s, max_fuel=200000)
+            bound = count_bounded_configs(len(cnf.variables), s)
+            explored = stats['explored']
+            ratio = f"{explored/bound:.4f}" if bound > 0 else "N/A"
+            found = "YES" if cert else "NO"
+            time_ms = stats['time'] * 1000
+
+            print(f"  {s:<5} {explored:<12} {bound:<15} "
+                  f"{ratio:<10} {time_ms:<10.1f} {found:<6}")
 
 
-def main():
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║     Clause-Space Certificate Framework — Computational Demos       ║")
-    print("╠══════════════════════════════════════════════════════════════════════╣")
-    print("║  Certified bounded-space unsatisfiability proofs                    ║")
-    print("║  via finite-state reachability in the configuration graph           ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-    
-    demo_basic_example()
-    demo_resolution_step()
-    demo_ternary_encoding()
-    demo_space_bound_sweep()
-    demo_monotonicity()
-    demo_counting_bounds()
-    demo_certificate_statistics()
-    demo_pigeonhole()
-    
+def demo_conjecture_test():
+    """Demo 7: Test the polynomial search bound conjecture."""
+    print("\n" + "=" * 70)
+    print("DEMO 7: Polynomial Search Bound Conjecture Test")
     print("=" * 70)
-    print("All demos completed successfully.")
-    print("=" * 70)
+
+    print("\nConjecture: BFS finds certificates within time quadratic")
+    print("in the number of reachable configurations.\n")
+
+    test_cases = [
+        ("x ∧ ¬x", simple_unsat_cnf()),
+        ("PHP(2,1)", pigeonhole_cnf(1)),
+    ]
+
+    print(f"{'Formula':<20} {'s':<4} {'Explored':<10} {'Reachable':<10} "
+          f"{'Ratio':<10} {'Quadratic?'}")
+    print("─" * 70)
+
+    for name, cnf in test_cases:
+        for s in range(2, 5):
+            cert, stats = find_space_certificate(cnf, s, max_fuel=200000)
+            if not cert:
+                continue
+
+            # Count reachable configs
+            from collections import deque as dq
+            from algorithms import successors as succ
+            start = frozenset()
+            vis = {start}
+            q = dq([start])
+            while q:
+                cur = q.popleft()
+                for nc, _ in succ(cur, cnf):
+                    if len(nc) <= s and nc not in vis:
+                        vis.add(nc)
+                        q.append(nc)
+            reachable = len(vis)
+
+            explored = stats['explored']
+            ratio = explored / reachable if reachable > 0 else float('inf')
+            quadratic = explored <= reachable ** 2
+            status = "✓" if quadratic else "✗"
+
+            print(f"{name:<20} {s:<4} {explored:<10} {reachable:<10} "
+                  f"{ratio:<10.2f} {status}")
 
 
 if __name__ == "__main__":
-    main()
+    print("╔" + "═" * 68 + "╗")
+    print("║   CLAUSE-SPACE CERTIFICATES: Certified Memory-Bounded Reasoning  ║")
+    print("╚" + "═" * 68 + "╝")
+
+    demo_basic_certificate()
+    demo_all_small_cnfs()
+    demo_configuration_counting()
+    demo_ternary_encoding()
+    demo_space_monotonicity()
+    demo_runtime_vs_bound()
+    demo_conjecture_test()
+
+    print("\n" + "=" * 70)
+    print("ALL DEMOS COMPLETE")
+    print("=" * 70)

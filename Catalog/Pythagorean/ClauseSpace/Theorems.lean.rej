@@ -1,0 +1,22 @@
+--- Theorems.lean
++++ Theorems.lean
+@@ -241,4 +259,19 @@
+     Set.Finite {S : Finset (Clause Var) | S.card ≤ s} := by
+   exact Set.toFinite _
+ 
++/-! ## Reachability is transitive -/
++
++/-
++Multi-step reachability is transitive.
++-/
++theorem spaceReachable_trans [Fintype Var]
++    (F : CNF Var) (s : ℕ)
++    (a b c : Finset (Clause Var))
++    (hab : SpaceReachable F s a b) (hbc : SpaceReachable F s b c) :
++    SpaceReachable F s a c := by
++  induction hab;
++  · assumption;
++  · rename_i mem1 mem2 _ h12 hb1 hb2 _ ih
++    exact SpaceReachable.step mem1 mem2 c h12 hb1 hb2 (ih hbc)
++
+ 
