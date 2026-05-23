@@ -156,7 +156,7 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int) -> None:
 
 
 def rebuild_commit_push() -> bool:
-    """Rebuild website index, commit all changes, and push to git.
+    """Rebuild website index, sync to docs/, commit all changes, and push to git.
     Returns True if anything was pushed."""
     print("[Tick] Rebuilding website index...")
     try:
@@ -171,6 +171,18 @@ def rebuild_commit_push() -> bool:
             print(f"[Tick] {result.stdout.strip()}")
     except Exception as e:
         print(f"[Tick] update_index.py error: {e}")
+
+    # Sync website to docs/ for GitHub Pages
+    docs_dir = REPO_ROOT / "docs"
+    print("[Tick] Syncing website to docs/...")
+    try:
+        # Remove old docs content, copy fresh
+        if docs_dir.exists():
+            subprocess.run(["rm", "-rf", str(docs_dir)], timeout=30)
+        subprocess.run(["cp", "-r", str(PACKAGES_DIR), str(docs_dir)], timeout=60)
+        print("[Tick] docs/ synced")
+    except Exception as e:
+        print(f"[Tick] docs sync error: {e}")
 
     # Git add, commit, push
     try:
