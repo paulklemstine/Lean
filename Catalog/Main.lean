@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1764 of the highest-quality
+A curated collection of 1765 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1764
+Total files: 1765
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -388,6 +388,7 @@ import FINAL.Bridges.GibbsPosterior
 import FINAL.Bridges.HTreeRobust
 import FINAL.Bridges.HammingMetric
 import FINAL.Bridges.HellyPrinciple
+import FINAL.Bridges.HellyTheory
 import FINAL.Bridges.HierarchicalRobustness
 import FINAL.Bridges.HilbertPolyaOperator
 import FINAL.Bridges.HilbertVCCorrespondence

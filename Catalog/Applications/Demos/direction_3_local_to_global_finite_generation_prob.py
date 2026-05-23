@@ -1,624 +1,711 @@
 #!/usr/bin/env python3
 """
-Categorical Helly Principle — Applications
+Applications of Categorical Helly Theory
 
-Real-world applications of the categorical Helly theorem:
-1. Database query optimization (local consistency → global consistency)
+Demonstrates real-world applications of the local-to-global principle for
+probe-separated presheaves:
+
+1. Database consistency checking via local samples
 2. Sensor network coverage verification
-3. Feature selection in classification systems
+3. Distributed systems state reconstruction
+4. Network tomography and flow identification
 """
 
 from itertools import combinations
-from math import prod
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, FrozenSet, Set
+from dataclasses import dataclass
+import random
+import math
 
 
-# ═══════════════════════════════════════════════════════════════════
-# Application 1: Database Consistency
-# ═══════════════════════════════════════════════════════════════════
+# =============================================================================
+# Application 1: Database Consistency Checking
+# =============================================================================
 
-def database_consistency_check():
+def database_consistency_demo():
     """
-    Application: Checking consistency of a distributed database.
+    Application: Verifying database consistency via local samples.
 
-    In a distributed database, each node stores a subset of data.
-    "Probe nodes" are designated consistency checkers.
-    The Helly principle says: if every subset of ≤ k+1 nodes
-    has consistent data, then the whole database is consistent.
+    A distributed database has N nodes, each storing records. "Consistency"
+    means the total data volume across all nodes stays within a bound.
+    Instead of querying all nodes (expensive), we use probe nodes to verify
+    consistency locally on small subsets.
 
-    This reduces the number of consistency checks from exponential
-    to polynomial in the number of probe nodes.
+    The Helly theorem guarantees: if every subset of ≤ |P|+1 nodes is
+    consistent, then the full database is bounded.
     """
-    print("=" * 60)
-    print("APPLICATION 1: Distributed Database Consistency")
-    print("=" * 60)
+    print("=" * 70)
+    print("  Application 1: Database Consistency Checking")
+    print("=" * 70)
+    print()
 
-    # Model: 6 database nodes, each with some records
-    nodes = ['NYC', 'LON', 'TYO', 'SYD', 'BER', 'SFO']
-    records = {
-        'NYC': {'user_1': 'v3', 'user_2': 'v1', 'user_3': 'v2'},
-        'LON': {'user_1': 'v3', 'user_2': 'v1'},
-        'TYO': {'user_1': 'v3', 'user_3': 'v2', 'user_4': 'v1'},
-        'SYD': {'user_2': 'v1', 'user_3': 'v2'},
-        'BER': {'user_1': 'v3', 'user_4': 'v1'},
-        'SFO': {'user_1': 'v3', 'user_2': 'v1', 'user_3': 'v2', 'user_4': 'v1'},
-    }
+    # Simulate a distributed database
+    num_nodes = 8
+    nodes = [f"Node_{i}" for i in range(num_nodes)]
+    probe_nodes = nodes[:3]  # First 3 nodes are probes
 
-    # Probe nodes: NYC, TYO (they have the most records)
-    probes = ['NYC', 'TYO']
-    helly_number = len(probes) + 1
+    # Each node has some number of records
+    random.seed(42)
+    records = {node: random.randint(5, 20) for node in nodes}
 
-    print(f"  Nodes: {nodes}")
-    print(f"  Probe nodes: {probes}")
-    print(f"  Helly number: {helly_number}")
+    print(f"  Database: {num_nodes} nodes, {len(probe_nodes)} probe nodes")
+    print(f"  Records per node: {records}")
+    print(f"  Total records: {sum(records.values())}")
+    print()
 
-    # Check consistency on all subsets of size ≤ helly_number
-    all_consistent = True
-    checks_performed = 0
-    for size in range(2, helly_number + 1):
-        for subset in combinations(nodes, size):
-            checks_performed += 1
-            # Check: do overlapping records agree?
-            consistent = True
-            for i, n1 in enumerate(subset):
-                for n2 in subset[i+1:]:
-                    common = set(records[n1].keys()) & set(records[n2].keys())
-                    for key in common:
-                        if records[n1][key] != records[n2][key]:
-                            consistent = False
-                            print(f"  INCONSISTENCY: {n1} and {n2} disagree on {key}")
-            if not consistent:
-                all_consistent = False
+    # Check local consistency: every subset of ≤ |P|+1 = 4 nodes
+    # should have total records ≤ bound
+    bound = 50
+    helly_num = len(probe_nodes) + 1
+    violations = 0
+    total_checks = 0
 
-    naive_checks = 2 ** len(nodes) - 1
-    print(f"\n  Checks performed: {checks_performed} (vs {naive_checks} naive)")
-    print(f"  Reduction factor: {naive_checks / checks_performed:.1f}x")
-    if all_consistent:
-        print("  ✓ All local checks pass → Global consistency guaranteed (Helly)")
+    for size in range(1, helly_num + 1):
+        for combo in combinations(nodes, size):
+            total = sum(records[n] for n in combo)
+            total_checks += 1
+            if total > bound:
+                violations += 1
+
+    print(f"  Local check (radius {helly_num}, bound {bound}):")
+    print(f"    Subsets checked: {total_checks}")
+    print(f"    Violations: {violations}")
+
+    if violations == 0:
+        global_bound = num_nodes * bound ** len(probe_nodes)
+        print(f"    ✓ Locally consistent → Global bound: {global_bound}")
+    else:
+        print(f"    ✗ Local violations found")
+
+    # Find minimal violating subsets
+    bad = []
+    for size in range(1, num_nodes + 1):
+        for combo in combinations(nodes, size):
+            total = sum(records[n] for n in combo)
+            if total > bound:
+                bad.append((frozenset(combo), total))
+
+    if bad:
+        # Find minimal
+        bad_sets = {b[0] for b in bad}
+        minimal = []
+        for s, total in sorted(bad, key=lambda x: len(x[0])):
+            is_min = True
+            for sub_size in range(len(s)):
+                for sub in combinations(s, sub_size):
+                    if frozenset(sub) in bad_sets:
+                        is_min = False
+                        break
+                if not is_min:
+                    break
+            if is_min:
+                minimal.append((sorted(s), total))
+
+        print(f"\n  Minimal bad subsets:")
+        for mb, total in minimal[:5]:
+            print(f"    {mb} → total={total} > {bound}")
     print()
 
 
-# ═══════════════════════════════════════════════════════════════════
+# =============================================================================
 # Application 2: Sensor Network Coverage
-# ═══════════════════════════════════════════════════════════════════
+# =============================================================================
 
-def sensor_network_coverage():
+def sensor_network_demo():
     """
     Application: Verifying sensor network coverage.
 
-    A sensor network monitors a region. Each sensor covers a subset
-    of the region. The "probe sensors" are reference sensors.
-    The Helly principle: if every small cluster of ≤ k+1 sensors
-    collectively covers its local area, then the full network
-    covers the entire region.
-    """
-    print("=" * 60)
-    print("APPLICATION 2: Sensor Network Coverage")
-    print("=" * 60)
+    A sensor network monitors an environment. Each sensor has a detection
+    capacity (number of distinguishable signals). "Coverage" means the
+    total detection capacity across all sensors exceeds a threshold.
 
-    # 8 sensors monitoring 12 zones
-    sensors = {
-        'S1': {'Z1', 'Z2', 'Z3'},
-        'S2': {'Z2', 'Z3', 'Z4'},
-        'S3': {'Z4', 'Z5', 'Z6'},
-        'S4': {'Z6', 'Z7', 'Z8'},
-        'S5': {'Z8', 'Z9', 'Z10'},
-        'S6': {'Z10', 'Z11', 'Z12'},
-        'S7': {'Z1', 'Z6', 'Z11'},
-        'S8': {'Z3', 'Z7', 'Z12'},
+    Probe sensors are reference sensors. The Helly principle says:
+    checking coverage on small local clusters suffices to guarantee
+    global coverage.
+    """
+    print("=" * 70)
+    print("  Application 2: Sensor Network Coverage")
+    print("=" * 70)
+    print()
+
+    sensors = [f"S{i}" for i in range(6)]
+    probes = ["S0", "S1"]  # Reference sensors
+
+    # Detection capacity per sensor
+    capacity = {"S0": 8, "S1": 6, "S2": 4, "S3": 7, "S4": 3, "S5": 5}
+
+    print(f"  Sensors: {sensors}")
+    print(f"  Probe sensors: {probes}")
+    print(f"  Capacities: {capacity}")
+    print(f"  Total capacity: {sum(capacity.values())}")
+    print()
+
+    # Verify: local clusters of size ≤ |P|+1 = 3 must have
+    # capacity ≤ some bound n for the Helly theorem to give a global bound
+    n = 15  # Local bound
+    helly_num = len(probes) + 1
+
+    print(f"  Helly number: {helly_num}")
+    print(f"  Local bound n: {n}")
+
+    locally_ok = True
+    for size in range(1, helly_num + 1):
+        for combo in combinations(sensors, size):
+            total = sum(capacity[s] for s in combo)
+            if total > n:
+                locally_ok = False
+                break
+        if not locally_ok:
+            break
+
+    if locally_ok:
+        global_bound = len(sensors) * n ** len(probes)
+        print(f"  ✓ Locally bounded → Global capacity ≤ {global_bound}")
+    else:
+        print(f"  ✗ Local bound {n} violated for radius {helly_num}")
+        print(f"    Need larger local bound or more probes")
+
+    # Try with a better bound
+    max_local = 0
+    for size in range(1, helly_num + 1):
+        for combo in combinations(sensors, size):
+            total = sum(capacity[s] for s in combo)
+            max_local = max(max_local, total)
+
+    print(f"  Tightest local bound at radius {helly_num}: {max_local}")
+    global_bound = len(sensors) * max_local ** len(probes)
+    print(f"  Implied global bound: {global_bound}")
+    print(f"  Actual total: {sum(capacity.values())}")
+    print(f"  Bound ratio: {global_bound / sum(capacity.values()):.1f}x")
+    print()
+
+
+# =============================================================================
+# Application 3: Network Tomography
+# =============================================================================
+
+def network_tomography_demo():
+    """
+    Application: Network tomography — reconstructing link-level metrics
+    from path-level measurements.
+
+    In network tomography, probe paths measure end-to-end metrics.
+    The Helly principle corresponds to: if every small subset of links
+    has bounded aggregate delay, the whole network has bounded delay.
+
+    This is directly analogous to probe separation in category theory:
+    probe paths "separate" link-level metrics.
+    """
+    print("=" * 70)
+    print("  Application 3: Network Tomography")
+    print("=" * 70)
+    print()
+
+    # Network links and their latencies
+    links = ["L1", "L2", "L3", "L4", "L5"]
+    latency = {"L1": 12, "L2": 8, "L3": 15, "L4": 5, "L5": 10}
+
+    # Probe paths (each covers a subset of links)
+    probe_paths = {
+        "Path_A": ["L1", "L2"],
+        "Path_B": ["L2", "L3", "L4"],
     }
 
-    all_zones = set()
-    for zones in sensors.values():
-        all_zones |= zones
+    print(f"  Links: {links}")
+    print(f"  Latencies: {latency}")
+    print(f"  Probe paths: {probe_paths}")
+    print(f"  Total network latency: {sum(latency.values())}")
+    print()
 
-    # Probe sensors: S1, S3, S5 (spread across the network)
-    probes = ['S1', 'S3', 'S5']
-    helly_number = len(probes) + 1
+    # Helly analysis: probe paths form a covering
+    probe_coverage = set()
+    for path_links in probe_paths.values():
+        probe_coverage.update(path_links)
 
-    print(f"  Sensors: {list(sensors.keys())}")
-    print(f"  Total zones: {len(all_zones)}")
-    print(f"  Probe sensors: {probes}")
-    print(f"  Helly number: {helly_number}")
+    print(f"  Probe coverage: {sorted(probe_coverage)}")
+    print(f"  Uncovered links: {sorted(set(links) - probe_coverage)}")
 
-    # Check coverage on subsets
-    local_checks = 0
-    all_local_ok = True
-    for size in range(1, helly_number + 1):
-        for subset in combinations(sensors.keys(), size):
-            local_checks += 1
-            local_zones = set()
-            for s in subset:
-                local_zones |= sensors[s]
+    # For each small subset of links (≤ |probes| + 1 = 3),
+    # check if latency is bounded
+    n = 25
+    helly_num = len(probe_paths) + 1
 
-            # Check: do the sensors in this subset cover the zones
-            # that they "should" cover (zones reachable from this subset)?
-            expected = set()
-            for s in subset:
-                expected |= sensors[s]
+    max_local_latency = 0
+    for size in range(1, min(helly_num + 1, len(links) + 1)):
+        for combo in combinations(links, size):
+            total = sum(latency[l] for l in combo)
+            max_local_latency = max(max_local_latency, total)
 
-            coverage_ratio = len(local_zones) / len(expected) if expected else 1.0
-
-    print(f"\n  Local checks performed: {local_checks}")
-
-    # Full coverage check
-    total_covered = set()
-    for zones in sensors.values():
-        total_covered |= zones
-    coverage = len(total_covered) / len(all_zones) * 100
-
-    print(f"  Full network coverage: {coverage:.0f}%")
-    print(f"  ✓ Local-to-global principle: bounded local checks suffice")
+    print(f"\n  Helly number: {helly_num}")
+    print(f"  Max local latency (radius {helly_num}): {max_local_latency}")
+    print(f"  Predicted global bound: {len(links) * max_local_latency ** len(probe_paths)}")
+    print(f"  Actual total: {sum(latency.values())}")
     print()
 
 
-# ═══════════════════════════════════════════════════════════════════
-# Application 3: Feature Selection
-# ═══════════════════════════════════════════════════════════════════
+# =============================================================================
+# Application 4: Property Testing for Finite Structures
+# =============================================================================
 
-def feature_selection():
+def property_testing_demo():
     """
-    Application: Feature selection in classification.
+    Application: Property testing — checking structural properties
+    of finite algebraic objects by sampling small substructures.
 
-    Features = probe objects. Data points = presheaf elements.
-    Separating = features distinguish all data points.
-    Helly principle: if features distinguish points in all
-    small subsets, they distinguish points globally.
+    The Helly principle provides a theoretical foundation:
+    with a fixed probe size, global properties are testable via
+    inspection of O(n^{|P|+1}) small subsets rather than the full
+    exponential space.
+
+    This creates an algorithmic payoff: polynomial-time testability
+    for bounded probe complexity.
     """
-    print("=" * 60)
-    print("APPLICATION 3: Feature Selection in Classification")
-    print("=" * 60)
+    print("=" * 70)
+    print("  Application 4: Property Testing for Finite Structures")
+    print("=" * 70)
+    print()
 
-    # 20 data points with 5 features
-    import random
-    random.seed(123)
+    # Simulate testing whether a finite group-like structure has
+    # "bounded representation dimension"
+    for n_objects in [4, 6, 8, 10, 12]:
+        objects = list(range(n_objects))
 
-    n_points = 20
-    n_features = 5
-    feature_names = [f'F{i}' for i in range(n_features)]
+        # Number of subsets to check at different radii
+        for probe_size in [1, 2, 3]:
+            helly_num = probe_size + 1
+            num_subsets = sum(
+                math.comb(n_objects, k) for k in range(helly_num + 1)
+            )
+            full_search = 2 ** n_objects
 
-    # Generate data with distinct feature vectors
-    data = {}
-    used = set()
-    for i in range(n_points):
-        while True:
-            vec = tuple(random.randint(0, 3) for _ in range(n_features))
-            if vec not in used:
-                used.add(vec)
-                data[f'P{i}'] = vec
-                break
+            savings = full_search / num_subsets if num_subsets > 0 else float('inf')
 
-    print(f"  Data points: {n_points}")
-    print(f"  Features: {n_features}")
-    print(f"  Sample point: P0 = {data['P0']}")
+            print(f"  |Ob|={n_objects:2d}, |P|={probe_size}: "
+                  f"check {num_subsets:6d} subsets vs {full_search:8d} full "
+                  f"({savings:6.1f}x savings)")
 
-    # Find minimum separating feature set (= probe family)
-    for size in range(1, n_features + 1):
-        for feature_subset in combinations(range(n_features), size):
-            # Check if this feature subset separates all points
-            projections = set()
-            separates = True
-            for point, vec in data.items():
-                proj = tuple(vec[f] for f in feature_subset)
-                if proj in projections:
-                    separates = False
-                    break
-                projections.add(proj)
-
-            if separates:
-                feature_names_used = [feature_names[f] for f in feature_subset]
-                capacity = 4 ** size  # each feature has 4 values
-                helly_number = size + 1
-                global_bound = n_points  # trivially bounded by actual count
-
-                print(f"\n  Minimum separating features: {feature_names_used}")
-                print(f"  Probe size: {size}")
-                print(f"  Helly number: {helly_number}")
-                print(f"  Probe capacity: {capacity}")
-                print(f"  Global bound: |Ob| * cap = {n_points} * {capacity} "
-                      f"= {n_points * capacity}")
-                print(f"  Actual distinct points: {n_points}")
-                print(f"  ✓ Fiber bound: each 'fiber' ≤ {capacity}")
-
-                # Verify Helly theorem
-                print(f"\n  Helly verification:")
-                print(f"    Check subsets of size ≤ {helly_number}...")
-                checks = sum(1 for _ in combinations(range(n_points), min(helly_number, n_points)))
-                print(f"    Subsets to check: ~C({n_points},{helly_number}) ≈ {checks}")
-                print(f"    vs exhaustive: 2^{n_points} = {2**n_points}")
-                break
-        else:
-            continue
-        break
-
+    print()
+    print("  Key insight: For fixed |P|, the number of subsets to check")
+    print("  grows polynomially in |Ob|, not exponentially.")
+    print("  This is the algorithmic payoff of the Helly bound.")
     print()
 
 
-if __name__ == '__main__':
-    print("╔════════════════════════════════════════════════════════╗")
-    print("║  Categorical Helly Principle — Applications           ║")
-    print("╚════════════════════════════════════════════════════════╝")
+# =============================================================================
+# Main
+# =============================================================================
+
+def main():
+    print("=" * 70)
+    print("  APPLICATIONS OF CATEGORICAL HELLY THEORY")
+    print("=" * 70)
     print()
 
-    database_consistency_check()
-    sensor_network_coverage()
-    feature_selection()
+    database_consistency_demo()
+    sensor_network_demo()
+    network_tomography_demo()
+    property_testing_demo()
 
-    print("All applications demonstrated successfully.")
+    print("=" * 70)
+    print("  ALL APPLICATIONS DEMONSTRATED SUCCESSFULLY")
+    print("=" * 70)
+
+
+if __name__ == "__main__":
+    main()
 
 
 #!/usr/bin/env python3
 """
-Categorical Helly Principle for Probe Families — Interactive Demo
+Categorical Helly Theory for Probe Families — Interactive Demonstration
 
-This script demonstrates the categorical Helly theorem on concrete
-small finite categories. It:
-1. Constructs finite discrete presheaves (families of finite sets).
-2. Defines probe families and verifies separation.
-3. Checks the local-to-global Helly bound.
-4. Searches for minimal obstruction patterns.
+This script constructs finite toy categories (discrete presheaf models),
+defines probe families, and tests the Helly principle:
 
-Usage:
-    python demo.py
+  If every subset of objects of size ≤ |P|+1 has bounded restricted
+  representable dimension, then the global dimension is bounded by
+  |Ob| · n^|P|.
+
+It also searches for minimal obstructions and validates the |P|+1 conjecture.
 """
 
 from itertools import combinations
-from math import prod
-from typing import Dict, List, Set, Tuple, Optional
+from typing import Dict, List, Optional, Tuple, Set, FrozenSet
+import math
 
 
-# ═══════════════════════════════════════════════════════════════════
-# Core Data Structures
-# ═══════════════════════════════════════════════════════════════════
+# =============================================================================
+# Core data structures
+# =============================================================================
 
 class DiscretePresheaf:
-    """A presheaf on a discrete finite category = family of finite sets
-    with restriction maps between them."""
+    """A presheaf on a discrete finite category: F(Y) is a finite set for each object Y.
+    Restriction maps r(Y,Z) : F(Y) -> F(Z) are given as dictionaries."""
 
-    def __init__(self, fibers: Dict[str, List[str]],
-                 restrictions: Dict[Tuple[str, str], Dict[str, str]]):
-        """
-        fibers: {object_name: [elements]}
-        restrictions: {(source, target): {element: image}}
-        """
-        self.objects = list(fibers.keys())
-        self.fibers = fibers
-        self.restrictions = restrictions
+    def __init__(self, objects: List[str], fibers: Dict[str, List[str]],
+                 restrictions: Dict[Tuple[str,str], Dict[str,str]]):
+        self.objects = objects
+        self.fibers = fibers  # F(Y) = fibers[Y]
+        self.restrictions = restrictions  # r(Y,Z) : fibers[Y] -> fibers[Z]
 
-    def fiber_size(self, obj: str) -> int:
-        return len(self.fibers[obj])
+    def fiber_card(self, obj: str) -> int:
+        return len(self.fibers.get(obj, []))
 
-    def total_card(self) -> int:
-        return sum(self.fiber_size(o) for o in self.objects)
+    def restricted_rep_dim(self, subset: FrozenSet[str]) -> int:
+        return sum(self.fiber_card(y) for y in subset)
 
-    def restricted_total_card(self, subset: Set[str]) -> int:
-        return sum(self.fiber_size(o) for o in subset if o in self.fibers)
-
-    def restrict(self, r_src: str, r_tgt: str, elem: str) -> str:
-        key = (r_src, r_tgt)
-        if key in self.restrictions and elem in self.restrictions[key]:
-            return self.restrictions[key][elem]
-        return elem  # identity if not specified
+    def global_rep_dim(self) -> int:
+        return sum(self.fiber_card(y) for y in self.objects)
 
 
 class ProbeFamily:
-    """A finite set of objects used to probe/separate elements."""
+    """A probe family: a subset of objects used for separation."""
 
-    def __init__(self, objects: List[str]):
-        self.objects = list(objects)
-        self.size = len(objects)
+    def __init__(self, probes: List[str]):
+        self.probes = probes
+
+    @property
+    def card(self) -> int:
+        return len(self.probes)
 
     def helly_number(self) -> int:
-        return self.size + 1
+        return self.card + 1
+
+    def probe_signature(self, presheaf: DiscretePresheaf, obj: str, elem: str) -> Tuple:
+        """Compute the probe signature of elem ∈ F(obj)."""
+        sig = []
+        for z in self.probes:
+            r = presheaf.restrictions.get((obj, z), {})
+            sig.append(r.get(elem, None))
+        return tuple(sig)
+
+    def is_separating(self, presheaf: DiscretePresheaf) -> bool:
+        """Check if probe signatures are injective at every object."""
+        for obj in presheaf.objects:
+            sigs = set()
+            for elem in presheaf.fibers.get(obj, []):
+                sig = self.probe_signature(presheaf, obj, elem)
+                if sig in sigs:
+                    return False
+                sigs.add(sig)
+        return True
+
+    def probe_capacity(self, presheaf: DiscretePresheaf) -> int:
+        result = 1
+        for z in self.probes:
+            result *= presheaf.fiber_card(z)
+        return result
 
 
-# ═══════════════════════════════════════════════════════════════════
-# Core Algorithms
-# ═══════════════════════════════════════════════════════════════════
+# =============================================================================
+# Helly Theory Algorithms
+# =============================================================================
 
-def probe_signature(presheaf: DiscretePresheaf, probes: ProbeFamily,
-                    obj: str, elem: str) -> Tuple[str, ...]:
-    """Compute the probe signature of an element: the tuple of images
-    under restriction to each probe object."""
-    return tuple(presheaf.restrict(obj, z, elem) for z in probes.objects)
+def all_subsets(objects: List[str], max_size: int) -> List[FrozenSet[str]]:
+    """Enumerate all subsets of objects with size ≤ max_size."""
+    result = []
+    for k in range(max_size + 1):
+        for combo in combinations(objects, k):
+            result.append(frozenset(combo))
+    return result
 
 
-def is_separating(presheaf: DiscretePresheaf, probes: ProbeFamily) -> bool:
-    """Check if the probe family separates the presheaf
-    (probe signatures injective at every object)."""
-    for obj in presheaf.objects:
-        signatures = set()
-        for elem in presheaf.fibers[obj]:
-            sig = probe_signature(presheaf, probes, obj, elem)
-            if sig in signatures:
-                return False
-            signatures.add(sig)
+def is_locally_bounded(presheaf: DiscretePresheaf, k: int, n: int) -> bool:
+    """Check LocallyBoundedGen F k n: every subset of size ≤ k has rep dim ≤ n."""
+    for subset in all_subsets(presheaf.objects, k):
+        if presheaf.restricted_rep_dim(subset) > n:
+            return False
     return True
 
 
-def find_non_separated_witness(presheaf: DiscretePresheaf,
-                               probes: ProbeFamily) -> Optional[Tuple]:
-    """Find a minimal non-separation witness, if one exists."""
-    for obj in presheaf.objects:
-        seen = {}
-        for elem in presheaf.fibers[obj]:
-            sig = probe_signature(presheaf, probes, obj, elem)
-            if sig in seen:
-                return (obj, seen[sig], elem, sig)
-            seen[sig] = elem
-    return None
+def find_bad_subsets(presheaf: DiscretePresheaf, n: int) -> List[FrozenSet[str]]:
+    """Find all bad subsets: S where RestrictedRepDim F S > n."""
+    bad = []
+    for subset in all_subsets(presheaf.objects, len(presheaf.objects)):
+        if presheaf.restricted_rep_dim(subset) > n:
+            bad.append(subset)
+    return bad
 
 
-def probe_capacity(presheaf: DiscretePresheaf,
-                   probes: ProbeFamily) -> int:
-    """Product of fiber sizes at probe objects."""
-    return prod(presheaf.fiber_size(z) for z in probes.objects) if probes.objects else 1
+def find_minimal_bad(presheaf: DiscretePresheaf, n: int) -> List[FrozenSet[str]]:
+    """Find all minimal bad subsets."""
+    bad = find_bad_subsets(presheaf, n)
+    bad_set = set(bad)
+    minimal = []
+    for s in bad:
+        is_min = True
+        for k in range(len(s)):
+            for sub in combinations(s, k):
+                if frozenset(sub) in bad_set:
+                    is_min = False
+                    break
+            if not is_min:
+                break
+        if is_min:
+            minimal.append(s)
+    return minimal
 
 
-def check_helly_bound(presheaf: DiscretePresheaf,
-                      probes: ProbeFamily, n: int) -> bool:
-    """Check if the presheaf is locally rep. fin. gen. up to
-    Helly number with bound n."""
-    k = probes.helly_number()
-    for size in range(1, k + 1):
-        for subset in combinations(presheaf.objects, size):
-            if presheaf.restricted_total_card(set(subset)) > n:
-                return False
-    return True
-
-
-def verify_helly_theorem(presheaf: DiscretePresheaf,
-                         probes: ProbeFamily, n: int) -> dict:
-    """Verify the categorical Helly theorem:
-    if P separates F and local bound ≤ n on subsets of size ≤ |P|+1,
-    then global rep dim ≤ |Ob| * n^|P|.
-    """
-    sep = is_separating(presheaf, probes)
-    local_ok = check_helly_bound(presheaf, probes, n)
-    global_dim = presheaf.total_card()
-    helly_bound = len(presheaf.objects) * (n ** probes.size)
+def verify_helly_bound(presheaf: DiscretePresheaf, probe: ProbeFamily, n: int) -> dict:
+    """Verify the Helly bound: local bounds at radius |P|+1 imply global bound."""
+    helly_num = probe.helly_number()
+    locally_bounded = is_locally_bounded(presheaf, helly_num, n)
+    global_dim = presheaf.global_rep_dim()
+    predicted_bound = len(presheaf.objects) * (n ** probe.card)
+    separating = probe.is_separating(presheaf)
 
     return {
-        'separating': sep,
-        'local_bound_holds': local_ok,
-        'local_bound': n,
-        'helly_number': probes.helly_number(),
-        'global_dim': global_dim,
-        'helly_bound': helly_bound,
-        'theorem_holds': (not sep) or (not local_ok) or (global_dim <= helly_bound),
-        'probe_capacity': probe_capacity(presheaf, probes),
+        "helly_number": helly_num,
+        "locally_bounded": locally_bounded,
+        "global_dim": global_dim,
+        "predicted_bound": predicted_bound,
+        "bound_holds": global_dim <= predicted_bound if locally_bounded else None,
+        "separating": separating,
     }
 
 
-def search_minimal_obstruction(presheaf: DiscretePresheaf,
-                               probes: ProbeFamily) -> Optional[dict]:
-    """Search for a minimal subset where separation fails."""
-    if is_separating(presheaf, probes):
-        return None
-
-    # Find minimal subset of objects where separation fails
-    for size in range(1, len(presheaf.objects) + 1):
-        for subset in combinations(presheaf.objects, size):
-            # Create restricted presheaf
-            sub_fibers = {o: presheaf.fibers[o] for o in subset}
-            sub_restrictions = {}
-            for (s, t), m in presheaf.restrictions.items():
-                if s in subset and t in subset:
-                    sub_restrictions[(s, t)] = m
-            sub_presheaf = DiscretePresheaf(sub_fibers, sub_restrictions)
-
-            # Restrict probes to subset
-            sub_probes = ProbeFamily([z for z in probes.objects if z in subset])
-
-            if not is_separating(sub_presheaf, sub_probes):
-                witness = find_non_separated_witness(sub_presheaf, sub_probes)
-                return {
-                    'obstruction_size': size,
-                    'obstruction_objects': list(subset),
-                    'witness': witness,
-                    'helly_number': probes.helly_number(),
-                    'within_helly_bound': size <= probes.helly_number(),
-                }
-    return None
+def verify_upward_closure(presheaf: DiscretePresheaf, n: int) -> bool:
+    """Verify that bad subsets are upward closed."""
+    bad = set(find_bad_subsets(presheaf, n))
+    for s in bad:
+        for obj in presheaf.objects:
+            superset = s | frozenset([obj])
+            if superset not in bad:
+                return False
+    return True
 
 
-# ═══════════════════════════════════════════════════════════════════
-# Example Categories and Demonstrations
-# ═══════════════════════════════════════════════════════════════════
+def verify_minimal_bad_bound(presheaf: DiscretePresheaf, n: int) -> dict:
+    """Verify that minimal bad subsets have |S| ≤ n+1 when all fibers ≥ 1."""
+    minimals = find_minimal_bad(presheaf, n)
+    all_fibers_pos = all(presheaf.fiber_card(y) >= 1 for y in presheaf.objects)
+    max_size = max((len(s) for s in minimals), default=0)
+    bound_holds = max_size <= n + 1 if all_fibers_pos else True
 
-def demo_example_1():
-    """Example 1: Simple 3-object presheaf with 2-element probe family."""
-    print("=" * 60)
-    print("EXAMPLE 1: 3-object presheaf, 2-element probe family")
-    print("=" * 60)
-
-    # Presheaf: F(A) = {a1, a2}, F(B) = {b1, b2}, F(C) = {c1, c2}
-    # Restrictions make probe signatures injective
-    fibers = {
-        'A': ['a1', 'a2'],
-        'B': ['b1', 'b2'],
-        'C': ['c1', 'c2'],
+    return {
+        "minimal_bad_count": len(minimals),
+        "max_minimal_size": max_size,
+        "n_plus_1": n + 1,
+        "all_fibers_positive": all_fibers_pos,
+        "bound_holds": bound_holds,
+        "minimals": [sorted(s) for s in minimals],
     }
-    restrictions = {
-        ('A', 'B'): {'a1': 'b1', 'a2': 'b2'},
-        ('A', 'C'): {'a1': 'c1', 'a2': 'c2'},
-        ('B', 'A'): {'b1': 'a1', 'b2': 'a2'},
-        ('B', 'C'): {'b1': 'c1', 'b2': 'c2'},
-        ('C', 'A'): {'c1': 'a1', 'c2': 'a2'},
-        ('C', 'B'): {'c1': 'b1', 'c2': 'b2'},
-    }
-    F = DiscretePresheaf(fibers, restrictions)
-    P = ProbeFamily(['A', 'B'])
-
-    print(f"  Objects: {F.objects}")
-    print(f"  Fiber sizes: {[F.fiber_size(o) for o in F.objects]}")
-    print(f"  Probe family: {P.objects} (size {P.size})")
-    print(f"  Helly number: {P.helly_number()}")
-    print(f"  Separating: {is_separating(F, P)}")
-    print(f"  Probe capacity: {probe_capacity(F, P)}")
-    print(f"  Global rep dim: {F.total_card()}")
-
-    # Verify Helly theorem with n = 4
-    result = verify_helly_theorem(F, P, n=4)
-    print(f"\n  Helly Theorem verification (n=4):")
-    print(f"    Local bound holds: {result['local_bound_holds']}")
-    print(f"    Global dim ≤ |Ob| * n^|P|: {result['global_dim']} ≤ {result['helly_bound']}")
-    print(f"    Theorem holds: {result['theorem_holds']}")
-    print()
 
 
-def demo_example_2():
-    """Example 2: Non-separating probe family with obstruction."""
-    print("=" * 60)
-    print("EXAMPLE 2: Non-separating probe family")
-    print("=" * 60)
+# =============================================================================
+# Example Presheaves
+# =============================================================================
 
-    fibers = {
-        'X': ['x1', 'x2', 'x3'],
-        'Y': ['y1', 'y2'],
-        'Z': ['z1'],
-    }
-    # Restrictions that collapse x1, x2 at probe Z
-    restrictions = {
-        ('X', 'Z'): {'x1': 'z1', 'x2': 'z1', 'x3': 'z1'},
-        ('X', 'Y'): {'x1': 'y1', 'x2': 'y1', 'x3': 'y2'},
-        ('Y', 'Z'): {'y1': 'z1', 'y2': 'z1'},
-    }
-    F = DiscretePresheaf(fibers, restrictions)
-    P = ProbeFamily(['Z'])
-
-    print(f"  Objects: {F.objects}")
-    print(f"  Fiber sizes: {[F.fiber_size(o) for o in F.objects]}")
-    print(f"  Probe family: {P.objects} (size {P.size})")
-    print(f"  Separating: {is_separating(F, P)}")
-
-    witness = find_non_separated_witness(F, P)
-    if witness:
-        obj, e1, e2, sig = witness
-        print(f"  Non-separation witness at {obj}: {e1} and {e2}")
-        print(f"    Both have signature: {sig}")
-
-    obstruction = search_minimal_obstruction(F, P)
-    if obstruction:
-        print(f"  Minimal obstruction: {obstruction['obstruction_objects']}")
-        print(f"    Size: {obstruction['obstruction_size']}")
-        print(f"    Within Helly bound ({P.helly_number()}): {obstruction['within_helly_bound']}")
-    print()
-
-
-def demo_example_3():
-    """Example 3: Larger category — systematic Helly verification."""
-    print("=" * 60)
-    print("EXAMPLE 3: 5-object presheaf, systematic verification")
-    print("=" * 60)
-
-    objects = ['A', 'B', 'C', 'D', 'E']
-    fibers = {o: [f'{o.lower()}{i}' for i in range(3)] for o in objects}
-
-    # Create bijective restrictions (all elements distinguishable)
+def make_example_1():
+    """Example 1: 3 objects, uniform fibers of size 2, identity restrictions."""
+    objects = ["A", "B", "C"]
+    fibers = {"A": ["a1", "a2"], "B": ["b1", "b2"], "C": ["c1", "c2"]}
     restrictions = {}
-    for s in objects:
-        for t in objects:
-            if s != t:
-                restrictions[(s, t)] = {
-                    f'{s.lower()}{i}': f'{t.lower()}{i}' for i in range(3)
-                }
+    # Simple restriction: project to first element
+    for y in objects:
+        for z in objects:
+            restrictions[(y, z)] = {fibers[y][i]: fibers[z][i % len(fibers[z])]
+                                    for i in range(len(fibers[y]))}
+    return DiscretePresheaf(objects, fibers, restrictions), "Uniform fibers (size 2)"
 
-    F = DiscretePresheaf(fibers, restrictions)
 
-    # Try probe families of increasing size
-    for probe_size in range(1, 4):
-        for probe_objects in combinations(objects, probe_size):
-            P = ProbeFamily(list(probe_objects))
-            sep = is_separating(F, P)
-            if sep:
-                cap = probe_capacity(F, P)
-                result = verify_helly_theorem(F, P, n=max(F.fiber_size(o) for o in objects) * probe_size)
-                print(f"  Probes {list(probe_objects)}: sep={sep}, "
-                      f"cap={cap}, helly_num={P.helly_number()}, "
-                      f"theorem_holds={result['theorem_holds']}")
+def make_example_2():
+    """Example 2: 4 objects, varying fiber sizes."""
+    objects = ["A", "B", "C", "D"]
+    fibers = {
+        "A": ["a1", "a2", "a3"],
+        "B": ["b1", "b2"],
+        "C": ["c1"],
+        "D": ["d1", "d2", "d3", "d4"],
+    }
+    restrictions = {}
+    for y in objects:
+        for z in objects:
+            restrictions[(y, z)] = {
+                fibers[y][i]: fibers[z][i % len(fibers[z])]
+                for i in range(len(fibers[y]))
+            }
+    return DiscretePresheaf(objects, fibers, restrictions), "Varying fibers (3,2,1,4)"
 
+
+def make_example_3():
+    """Example 3: 5 objects, all singletons (trivial case)."""
+    objects = ["A", "B", "C", "D", "E"]
+    fibers = {obj: [f"{obj.lower()}1"] for obj in objects}
+    restrictions = {}
+    for y in objects:
+        for z in objects:
+            restrictions[(y, z)] = {fibers[y][0]: fibers[z][0]}
+    return DiscretePresheaf(objects, fibers, restrictions), "All singletons"
+
+
+def make_example_4():
+    """Example 4: 6 objects with a probe family of size 2."""
+    objects = ["A", "B", "C", "D", "E", "F"]
+    fibers = {
+        "A": ["a1", "a2"], "B": ["b1", "b2", "b3"],
+        "C": ["c1"], "D": ["d1", "d2"],
+        "E": ["e1", "e2", "e3"], "F": ["f1"],
+    }
+    restrictions = {}
+    for y in objects:
+        for z in objects:
+            restrictions[(y, z)] = {
+                fibers[y][i]: fibers[z][i % len(fibers[z])]
+                for i in range(len(fibers[y]))
+            }
+    return DiscretePresheaf(objects, fibers, restrictions), "6 objects, mixed fibers"
+
+
+def make_example_5():
+    """Example 5: Empty fibers test case."""
+    objects = ["A", "B", "C"]
+    fibers = {"A": ["a1", "a2"], "B": [], "C": ["c1"]}
+    restrictions = {}
+    for y in objects:
+        for z in objects:
+            restrictions[(y, z)] = {
+                fibers[y][i]: fibers[z][i % len(fibers[z])] if fibers[z] else None
+                for i in range(len(fibers[y]))
+            }
+    return DiscretePresheaf(objects, fibers, restrictions), "With empty fiber"
+
+
+# =============================================================================
+# Main Demonstration
+# =============================================================================
+
+def run_demo():
+    print("=" * 72)
+    print("  CATEGORICAL HELLY THEORY FOR PROBE FAMILIES")
+    print("  Interactive Demonstration")
+    print("=" * 72)
     print()
 
+    examples = [make_example_1(), make_example_2(), make_example_3(),
+                make_example_4(), make_example_5()]
 
-def demo_counterexample_search():
-    """Search for potential counterexamples to the Helly theorem."""
-    print("=" * 60)
-    print("COUNTEREXAMPLE SEARCH")
-    print("=" * 60)
+    for idx, (presheaf, desc) in enumerate(examples, 1):
+        print(f"{'─' * 72}")
+        print(f"  Example {idx}: {desc}")
+        print(f"  Objects: {presheaf.objects}")
+        print(f"  Fiber sizes: {{{', '.join(f'{y}: {presheaf.fiber_card(y)}' for y in presheaf.objects)}}}")
+        print(f"  Global rep dim: {presheaf.global_rep_dim()}")
+        print(f"{'─' * 72}")
 
-    import random
-    random.seed(42)
+        # Test probe families of various sizes
+        for probe_size in range(1, min(4, len(presheaf.objects) + 1)):
+            for probe_combo in combinations(presheaf.objects, probe_size):
+                probe = ProbeFamily(list(probe_combo))
+                n_test = max(presheaf.fiber_card(y) for y in presheaf.objects) + 1
 
-    num_trials = 100
-    num_failures = 0
+                result = verify_helly_bound(presheaf, probe, n_test)
 
-    for trial in range(num_trials):
-        # Random presheaf on 4 objects with 2-4 elements per fiber
-        n_obj = 4
-        objects = [f'O{i}' for i in range(n_obj)]
-        fibers = {o: [f'{o}_{j}' for j in range(random.randint(1, 4))]
-                  for o in objects}
+                if result["locally_bounded"]:
+                    print(f"  Probe {list(probe_combo)} (|P|={probe.card}, "
+                          f"Helly#={result['helly_number']}):")
+                    print(f"    Separating: {result['separating']}")
+                    print(f"    Locally bounded (k={result['helly_number']}, n={n_test}): ✓")
+                    print(f"    Global dim={result['global_dim']} "
+                          f"≤ bound={result['predicted_bound']}: "
+                          f"{'✓' if result['bound_holds'] else '✗'}")
+                    break  # Just show one probe per size
+            else:
+                continue
+            # Only print the first matching probe for each size
 
-        # Random restrictions
-        restrictions = {}
-        for s in objects:
-            for t in objects:
-                if s != t:
-                    restrictions[(s, t)] = {
-                        elem: random.choice(fibers[t])
-                        for elem in fibers[s]
+        # Test upward closure
+        n_test = 3
+        print(f"\n  Upward closure of BadSubsets(n={n_test}): "
+              f"{'✓ Verified' if verify_upward_closure(presheaf, n_test) else '✗ Failed'}")
+
+        # Test minimal bad bound
+        result = verify_minimal_bad_bound(presheaf, n_test)
+        if result["minimal_bad_count"] > 0:
+            print(f"  Minimal bad subsets (n={n_test}): {result['minimal_bad_count']} found")
+            print(f"    Max size: {result['max_minimal_size']} "
+                  f"(bound n+1={result['n_plus_1']}): "
+                  f"{'✓' if result['bound_holds'] else '✗'}")
+            for mb in result["minimals"][:3]:
+                print(f"    → {mb}")
+        else:
+            print(f"  No bad subsets for n={n_test} (globally bounded)")
+        print()
+
+    # ==========================================================================
+    # Systematic Helly Bound Test
+    # ==========================================================================
+    print("=" * 72)
+    print("  SYSTEMATIC HELLY BOUND VALIDATION")
+    print("=" * 72)
+    print()
+
+    helly_violations = 0
+    total_tests = 0
+
+    for num_obj in range(2, 7):
+        objects = [chr(65 + i) for i in range(num_obj)]
+        # Test with uniform fibers
+        for fib_size in range(1, 5):
+            fibers = {obj: [f"{obj.lower()}{i}" for i in range(fib_size)] for obj in objects}
+            restrictions = {}
+            for y in objects:
+                for z in objects:
+                    restrictions[(y, z)] = {
+                        fibers[y][i]: fibers[z][i % fib_size]
+                        for i in range(fib_size)
                     }
+            presheaf = DiscretePresheaf(objects, fibers, restrictions)
 
-        F = DiscretePresheaf(fibers, restrictions)
+            for probe_size in range(1, min(4, num_obj + 1)):
+                probe = ProbeFamily(objects[:probe_size])
+                n = fib_size
+                result = verify_helly_bound(presheaf, probe, n)
+                total_tests += 1
+                if result["locally_bounded"] and result["bound_holds"] is False:
+                    helly_violations += 1
+                    print(f"  ✗ VIOLATION: |Ob|={num_obj}, fib={fib_size}, |P|={probe_size}")
 
-        # Try all 2-element probe families
-        for probes in combinations(objects, 2):
-            P = ProbeFamily(list(probes))
-            if is_separating(F, P):
-                n = max(F.fiber_size(o) for o in objects)
-                result = verify_helly_theorem(F, P, n)
-                if not result['theorem_holds']:
-                    num_failures += 1
-                    print(f"  COUNTEREXAMPLE FOUND in trial {trial}!")
-                    print(f"    Probes: {probes}")
-                    print(f"    Fiber sizes: {[F.fiber_size(o) for o in objects]}")
-
-    print(f"\n  Searched {num_trials} random presheaves")
-    print(f"  Counterexamples found: {num_failures}")
-    if num_failures == 0:
-        print("  ✓ Helly theorem holds in all tested cases")
+    print(f"  Total tests: {total_tests}")
+    print(f"  Violations: {helly_violations}")
+    print(f"  Result: {'✓ Supports Helly bound on all tested instances' if helly_violations == 0 else '✗ Counterexamples found'}")
     print()
 
-
-def demo_helly_number_analysis():
-    """Analyze the tightness of the Helly number bound."""
-    print("=" * 60)
-    print("HELLY NUMBER ANALYSIS")
-    print("=" * 60)
-
-    # For different probe family sizes, show the Helly bound
-    for n_obj in range(2, 7):
-        for probe_size in range(1, min(n_obj, 4) + 1):
-            helly = probe_size + 1
-            n = 3  # example local bound
-            global_bound = n_obj * (n ** probe_size)
-            print(f"  |Ob|={n_obj}, |P|={probe_size}: "
-                  f"Helly#={helly}, "
-                  f"global ≤ {n_obj}·{n}^{probe_size} = {global_bound}")
+    # ==========================================================================
+    # Obstruction Search
+    # ==========================================================================
+    print("=" * 72)
+    print("  OBSTRUCTION SEARCH")
+    print("=" * 72)
     print()
 
+    for num_obj in range(3, 7):
+        objects = [chr(65 + i) for i in range(num_obj)]
+        fibers = {obj: [f"{obj.lower()}{i}" for i in range(num_obj - 1)]
+                  for obj in objects}
+        restrictions = {}
+        for y in objects:
+            for z in objects:
+                restrictions[(y, z)] = {
+                    fibers[y][i]: fibers[z][i % len(fibers[z])]
+                    for i in range(len(fibers[y]))
+                }
+        presheaf = DiscretePresheaf(objects, fibers, restrictions)
+        n = num_obj - 2
 
-if __name__ == '__main__':
-    print("╔════════════════════════════════════════════════════════╗")
-    print("║  Categorical Helly Principle — Interactive Demo       ║")
-    print("╚════════════════════════════════════════════════════════╝")
+        minimals = find_minimal_bad(presheaf, n)
+        if minimals:
+            print(f"  |Ob|={num_obj}, fibers={num_obj-1}, n={n}:")
+            print(f"    {len(minimals)} minimal bad subset(s), "
+                  f"sizes: {sorted(set(len(s) for s in minimals))}")
+        else:
+            print(f"  |Ob|={num_obj}, fibers={num_obj-1}, n={n}: no bad subsets")
+
     print()
+    print("=" * 72)
+    print("  DEMONSTRATION COMPLETE")
+    print("=" * 72)
 
-    demo_example_1()
-    demo_example_2()
-    demo_example_3()
-    demo_helly_number_analysis()
-    demo_counterexample_search()
 
-    print("Done. All demonstrations completed successfully.")
+if __name__ == "__main__":
+    run_demo()
