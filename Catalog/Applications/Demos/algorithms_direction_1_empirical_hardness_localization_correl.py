@@ -1,458 +1,373 @@
+#!/usr/bin/env python3
 """
-Algorithms for Topological Hardness-Localization Duality
+Algorithms for Proof-Theoretic Locality Analysis
 
-Implements the core computational algorithms from the research:
-- Cycle rank computation
-- Local cycle pressure computation
-- Semantic pressure field construction
-- Bridge detection via DFS
+Implements the core algorithms from the research paper:
+1. Cyclomatic number computation
+2. Normalized cyclomatic density
+3. Critical threshold finder
+4. Proof-theoretic locality computation
+5. Transition profile scanner
 
-All algorithms operate on simple undirected graphs represented
-as adjacency lists.
+All algorithms have polynomial time complexity and are designed for
+finite metric spaces arising from theorem dependency structures.
+
+Usage:
+    from algorithms import MetricSpace, ThresholdGraphAnalyzer
+    ms = MetricSpace(points, dist_fn)
+    analyzer = ThresholdGraphAnalyzer(ms)
+    eps_star = analyzer.critical_threshold()
+    localities = analyzer.locality_coefficients(eps_star)
 """
 
 from __future__ import annotations
-from typing import Dict, List, Set, Tuple, Optional
-from collections import defaultdict, deque
-import math
+from collections import defaultdict
+from typing import Callable, Any, Optional
+import itertools
 
 
 class SimpleGraph:
-    """A simple undirected graph with labeled vertices.
-    
-    Attributes:
-        vertices: Set of vertex labels
-        adj: Adjacency list (vertex -> set of neighbors)
     """
-    
-    def __init__(self, vertices: Set[int] = None):
-        self.vertices: Set[int] = vertices or set()
-        self.adj: Dict[int, Set[int]] = defaultdict(set)
-    
-    def add_vertex(self, v: int) -> None:
-        self.vertices.add(v)
-    
+    Simple undirected graph on n vertices {0, 1, ..., n-1}.
+
+    Time complexity:
+        - add_edge: O(1) amortized
+        - has_edge: O(1) average
+        - degree: O(1)
+        - edges: O(n + m)
+        - connected_components: O(n + m) via BFS
+        - induced_subgraph: O(|S|^2)
+    Space complexity: O(n + m)
+    """
+
+    def __init__(self, n: int):
+        self.n = n
+        self._adj: dict[int, set[int]] = defaultdict(set)
+
     def add_edge(self, u: int, v: int) -> None:
-        """Add undirected edge {u, v}."""
-        if u == v:
-            return  # No self-loops
-        self.vertices.add(u)
-        self.vertices.add(v)
-        self.adj[u].add(v)
-        self.adj[v].add(u)
-    
-    def edges(self) -> Set[Tuple[int, int]]:
-        """Return set of edges as (min, max) tuples."""
-        result = set()
-        for u in self.vertices:
-            for v in self.adj[u]:
-                result.add((min(u, v), max(u, v)))
-        return result
-    
+        """Add an undirected edge {u, v}. Self-loops are ignored."""
+        if u != v:
+            self._adj[u].add(v)
+            self._adj[v].add(u)
+
+    def has_edge(self, u: int, v: int) -> bool:
+        return v in self._adj[u]
+
     def degree(self, v: int) -> int:
-        return len(self.adj[v])
-    
-    def num_vertices(self) -> int:
-        return len(self.vertices)
-    
+        return len(self._adj[v])
+
+    def neighbors(self, v: int) -> set[int]:
+        return set(self._adj[v])
+
+    def edges(self) -> set[tuple[int, int]]:
+        seen: set[tuple[int, int]] = set()
+        for u in range(self.n):
+            for v in self._adj[u]:
+                edge = (min(u, v), max(u, v))
+                if edge not in seen:
+                    seen.add(edge)
+        return seen
+
     def num_edges(self) -> int:
         return len(self.edges())
-    
-    def copy(self) -> 'SimpleGraph':
-        g = SimpleGraph(self.vertices.copy())
-        for v in self.vertices:
-            g.adj[v] = self.adj[v].copy()
-        return g
-    
-    def remove_edge(self, u: int, v: int) -> None:
-        self.adj[u].discard(v)
-        self.adj[v].discard(u)
 
+    def closed_neighborhood(self, v: int) -> set[int]:
+        """Return N[v] = {v} ∪ N(v)."""
+        return {v} | self._adj[v]
 
-def connected_components(G: SimpleGraph) -> List[Set[int]]:
-    """Find all connected components using BFS.
-    
-    Time complexity: O(V + E)
-    Space complexity: O(V)
-    
-    Returns:
-        List of sets, each set is a connected component.
-    """
-    visited = set()
-    components = []
-    for start in G.vertices:
-        if start in visited:
-            continue
-        component = set()
-        queue = deque([start])
-        while queue:
-            v = queue.popleft()
-            if v in visited:
-                continue
-            visited.add(v)
-            component.add(v)
-            for w in G.adj[v]:
-                if w not in visited:
-                    queue.append(w)
-        components.append(component)
-    return components
-
-
-def is_connected(G: SimpleGraph) -> bool:
-    """Check if graph is connected. O(V + E)."""
-    if not G.vertices:
-        return True
-    comps = connected_components(G)
-    return len(comps) == 1
-
-
-def graph_cycle_rank(G: SimpleGraph) -> int:
-    """Compute the cycle rank (cyclomatic number) of a graph.
-    
-    Formula: β₁ = |E| - |V| + |C|
-    where |C| is the number of connected components.
-    
-    This is the first Betti number of the graph viewed as a 
-    1-dimensional CW complex.
-    
-    Time complexity: O(V + E) (dominated by component counting)
-    Space complexity: O(V)
-    
-    Returns:
-        The cycle rank (always ≥ 0).
-    
-    Example:
-        >>> G = SimpleGraph()
-        >>> for i in range(4): G.add_vertex(i)
-        >>> G.add_edge(0,1); G.add_edge(1,2); G.add_edge(2,0); G.add_edge(2,3)
-        >>> graph_cycle_rank(G)
-        1
-    """
-    E = G.num_edges()
-    V = G.num_vertices()
-    C = len(connected_components(G))
-    return E - V + C
-
-
-def find_bridges(G: SimpleGraph) -> Set[Tuple[int, int]]:
-    """Find all bridge edges using Tarjan's bridge-finding algorithm.
-    
-    An edge is a bridge if removing it increases the number of 
-    connected components. Equivalently, an edge is a bridge iff
-    it does not lie on any cycle.
-    
-    Time complexity: O(V + E)
-    Space complexity: O(V)
-    
-    Returns:
-        Set of bridge edges as (min, max) tuples.
-    
-    Example:
-        >>> G = SimpleGraph()
-        >>> G.add_edge(0,1); G.add_edge(1,2); G.add_edge(2,0); G.add_edge(2,3)
-        >>> find_bridges(G)
-        {(2, 3)}
-    """
-    bridges = set()
-    visited = set()
-    disc = {}
-    low = {}
-    parent = {}
-    timer = [0]
-    
-    def dfs(u: int):
-        visited.add(u)
-        disc[u] = low[u] = timer[0]
-        timer[0] += 1
-        
-        for v in G.adj[u]:
+    def connected_components(self) -> list[set[int]]:
+        """BFS-based connected components. O(n + m)."""
+        visited: set[int] = set()
+        components: list[set[int]] = []
+        for v in range(self.n):
             if v not in visited:
-                parent[v] = u
-                dfs(v)
-                low[u] = min(low[u], low[v])
-                if low[v] > disc[u]:
-                    bridges.add((min(u, v), max(u, v)))
-            elif v != parent.get(u, -1):
-                low[u] = min(low[u], disc[v])
-    
-    for v in G.vertices:
-        if v not in visited:
-            parent[v] = -1
-            dfs(v)
-    
-    return bridges
+                comp: set[int] = set()
+                queue = [v]
+                while queue:
+                    u = queue.pop(0)
+                    if u not in visited:
+                        visited.add(u)
+                        comp.add(u)
+                        queue.extend(self._adj[u] - visited)
+                components.append(comp)
+        return components
+
+    def num_connected_components(self) -> int:
+        return len(self.connected_components())
+
+    def is_connected(self) -> bool:
+        if self.n == 0:
+            return True
+        visited: set[int] = set()
+        queue = [0]
+        while queue:
+            u = queue.pop(0)
+            if u not in visited:
+                visited.add(u)
+                queue.extend(self._adj[u] - visited)
+        return len(visited) == self.n
+
+    def induced_subgraph(self, vertices: set[int]) -> 'SimpleGraph':
+        """
+        Return the induced subgraph on a subset of vertices.
+        Vertices are re-indexed 0..len(vertices)-1.
+        Returns (subgraph, index_map) where index_map maps new → old indices.
+        """
+        vertex_list = sorted(vertices)
+        n = len(vertex_list)
+        old_to_new = {v: i for i, v in enumerate(vertex_list)}
+        H = SimpleGraph(n)
+        for u in vertex_list:
+            for v in self._adj[u]:
+                if v in old_to_new and u < v:
+                    H.add_edge(old_to_new[u], old_to_new[v])
+        return H
 
 
-def local_cycle_pressure(G: SimpleGraph, v: int) -> int:
-    """Compute the local cycle pressure at vertex v.
-    
-    This is the number of non-bridge edges incident to v.
-    High local cycle pressure indicates that v sits in a 
-    cycle-dense region of the graph.
-    
-    Time complexity: O(V + E) (dominated by bridge-finding)
-    Space complexity: O(V)
-    
+def cyclomatic_number(G: SimpleGraph) -> int:
+    """
+    Compute the cyclomatic number (first Betti number) of graph G.
+
+    r(G) = |E| - |V| + |CC|
+
+    where |CC| is the number of connected components.
+
+    Time complexity: O(n + m)
+    Space complexity: O(n)
+
     Returns:
-        Number of non-bridge edges incident to v.
-    
-    Example:
-        >>> G = SimpleGraph()
-        >>> G.add_edge(0,1); G.add_edge(1,2); G.add_edge(2,0); G.add_edge(2,3)
-        >>> local_cycle_pressure(G, 0)
-        2
-        >>> local_cycle_pressure(G, 3)
-        0
+        The cyclomatic number, always ≥ 0.
     """
-    bridges = find_bridges(G)
-    count = 0
-    for w in G.adj[v]:
-        edge = (min(v, w), max(v, w))
-        if edge not in bridges:
-            count += 1
-    return count
+    return G.num_edges() - G.n + G.num_connected_components()
 
 
-def compute_all_pressures(G: SimpleGraph) -> Dict[int, int]:
-    """Compute local cycle pressure for all vertices.
-    
-    Time complexity: O(V + E)
-    Space complexity: O(V)
-    
+def normalized_cyclomatic_density(G: SimpleGraph) -> float:
+    """
+    Compute the normalized cyclomatic density φ(G) = r(G) / |E(G)|.
+
+    This measures the fraction of edges that participate in creating
+    cyclic structure rather than maintaining connectivity.
+
+    Time complexity: O(n + m)
+
     Returns:
-        Dictionary mapping vertex -> local cycle pressure.
+        φ(G) ∈ [0, 1). Returns 0.0 if |E| = 0.
     """
-    bridges = find_bridges(G)
-    pressures = {}
-    for v in G.vertices:
-        count = 0
-        for w in G.adj[v]:
-            edge = (min(v, w), max(v, w))
-            if edge not in bridges:
-                count += 1
-        pressures[v] = count
-    return pressures
+    m = G.num_edges()
+    if m == 0:
+        return 0.0
+    return cyclomatic_number(G) / m
 
 
-class SemanticPressureField:
-    """A semantic pressure field on a graph.
-    
-    Assigns to each vertex a non-negative pressure value
-    bounded by the cycle rank, providing a local measure
-    of topological complexity.
-    
-    Attributes:
-        graph: The underlying SimpleGraph
-        pressure: Dict mapping vertex -> pressure value
-        cycle_rank: The graph's cycle rank
+def proof_theoretic_locality(G: SimpleGraph, v: int) -> float:
     """
-    
-    def __init__(self, graph: SimpleGraph, pressure: Dict[int, float], 
-                 cycle_rank: int):
-        self.graph = graph
-        self.pressure = pressure
-        self.cycle_rank = cycle_rank
-        # Verify axioms
-        assert all(p >= 0 for p in pressure.values()), \
-            "Pressure must be non-negative"
-        assert sum(pressure.values()) <= cycle_rank + 1e-10, \
-            f"Total pressure {sum(pressure.values())} exceeds cycle rank {cycle_rank}"
-    
-    def top_k_vertices(self, k: int = 5) -> List[Tuple[int, float]]:
-        """Return the k vertices with highest pressure."""
-        sorted_verts = sorted(self.pressure.items(), 
-                             key=lambda x: x[1], reverse=True)
-        return sorted_verts[:k]
-    
-    def concentration(self, v: int) -> float:
-        """Pressure concentration at vertex v."""
-        if self.cycle_rank == 0:
-            return 0.0
-        return self.pressure[v] / self.cycle_rank
+    Compute the proof-theoretic locality L_G(v).
 
+    L_G(v) = r(G[N[v]]) / r(G)
 
-def compute_semantic_pressure_field(G: SimpleGraph) -> SemanticPressureField:
-    """Compute the canonical semantic pressure field for a graph.
-    
-    The pressure at each vertex is the local cycle pressure
-    normalized to sum to at most the cycle rank.
-    
-    Time complexity: O(V + E)
-    Space complexity: O(V)
-    
+    where N[v] is the closed neighborhood and r is the cyclomatic number.
+
+    Time complexity: O(d^2 + n + m) where d = deg(v)
+
     Returns:
-        A SemanticPressureField satisfying all axioms.
-    
-    Example:
-        >>> G = SimpleGraph()
-        >>> G.add_edge(0,1); G.add_edge(1,2); G.add_edge(2,0)
-        >>> field = compute_semantic_pressure_field(G)
-        >>> field.cycle_rank
-        1
+        L_G(v) ≥ 0. Returns 0.0 if r(G) ≤ 0.
     """
-    raw_pressures = compute_all_pressures(G)
-    cr = graph_cycle_rank(G)
-    
-    # Normalize: each non-bridge edge is counted twice (once per endpoint)
-    # so total raw pressure = 2 * (number of non-bridge edges) = 2 * cycle_rank
-    total_raw = sum(raw_pressures.values())
-    
-    if total_raw == 0:
-        pressure = {v: 0.0 for v in G.vertices}
-    else:
-        # Scale so total pressure = cycle_rank
-        scale = cr / total_raw
-        pressure = {v: p * scale for v, p in raw_pressures.items()}
-    
-    return SemanticPressureField(G, pressure, cr)
+    r_global = cyclomatic_number(G)
+    if r_global <= 0:
+        return 0.0
+    nbhd = G.closed_neighborhood(v)
+    H = G.induced_subgraph(nbhd)
+    r_local = cyclomatic_number(H)
+    return max(0, r_local) / r_global
 
 
-def semantic_distance(features_a: Set, features_b: Set) -> int:
-    """Compute semantic distance (symmetric difference cardinality).
-    
-    Time complexity: O(|A| + |B|)
+class MetricSpace:
     """
-    return len(features_a.symmetric_difference(features_b))
+    A finite metric space with elements and a distance function.
 
-
-def build_semantic_graph(feature_sets: Dict[int, Set], 
-                         threshold: int) -> SimpleGraph:
-    """Build a semantic threshold graph.
-    
-    Two vertices are adjacent iff their semantic distance
-    (symmetric difference of feature sets) is ≤ threshold.
-    
-    Time complexity: O(V² · F) where F is max feature set size.
-    Space complexity: O(V²) in the worst case.
-    
     Args:
-        feature_sets: Dict mapping vertex -> set of features
-        threshold: Maximum distance for adjacency
-    
-    Returns:
-        The semantic threshold graph.
+        elements: List of elements of any type.
+        dist_fn: Distance function (element, element) → int.
+                 Must be symmetric with dist(x, x) = 0.
     """
-    G = SimpleGraph()
-    vertices = list(feature_sets.keys())
-    for v in vertices:
-        G.add_vertex(v)
-    
-    for i in range(len(vertices)):
-        for j in range(i + 1, len(vertices)):
-            u, v = vertices[i], vertices[j]
-            dist = semantic_distance(feature_sets[u], feature_sets[v])
-            if dist <= threshold:
-                G.add_edge(u, v)
-    
-    return G
+
+    def __init__(self, elements: list[Any], dist_fn: Callable[[Any, Any], int]):
+        self.elements = list(elements)
+        self.n = len(self.elements)
+        self.dist_fn = dist_fn
+
+        # Precompute distance matrix
+        self._dist_matrix: list[list[int]] = [
+            [0] * self.n for _ in range(self.n)
+        ]
+        self._distinct_distances: set[int] = set()
+        for i in range(self.n):
+            for j in range(i + 1, self.n):
+                d = dist_fn(elements[i], elements[j])
+                self._dist_matrix[i][j] = d
+                self._dist_matrix[j][i] = d
+                if d > 0:
+                    self._distinct_distances.add(d)
+
+    def dist(self, i: int, j: int) -> int:
+        """Distance between elements at indices i and j."""
+        return self._dist_matrix[i][j]
+
+    def distinct_distances(self) -> list[int]:
+        """All distinct nonzero pairwise distances, sorted."""
+        return sorted(self._distinct_distances)
 
 
-def find_connectivity_threshold(feature_sets: Dict[int, Set], 
-                                 max_eps: int = 100) -> Optional[int]:
-    """Find the smallest ε such that the semantic graph is connected.
-    
-    Binary search over threshold values.
-    
-    Time complexity: O(V² · F · log(max_eps))
-    
-    Returns:
-        The connectivity threshold εc, or None if not found.
+class ThresholdGraphAnalyzer:
     """
-    lo, hi = 0, max_eps
-    result = None
-    
-    while lo <= hi:
-        mid = (lo + hi) // 2
-        G = build_semantic_graph(feature_sets, mid)
-        if is_connected(G):
-            result = mid
-            hi = mid - 1
-        else:
-            lo = mid + 1
-    
-    return result
+    Analyzer for semantic threshold graph families.
 
+    Given a finite metric space, builds threshold graphs at various ε
+    and computes topological invariants.
 
-def find_cycle_rank_maximizer(feature_sets: Dict[int, Set],
-                               max_eps: int = 100) -> Tuple[int, int]:
-    """Find the ε that maximizes cycle rank.
-    
-    Scans all threshold values and returns the maximizer.
-    
-    Time complexity: O(V² · F · max_eps)
-    
-    Returns:
-        Tuple of (ε*, max_cycle_rank).
+    Time complexity:
+        - build_graph: O(n^2)
+        - transition_profile: O(D × n^2) where D = |distinct distances|
+        - critical_threshold: O(D × n^2)
+        - locality_coefficients: O(n × d_max^2 + n^2)
+
+    Space complexity: O(n^2)
     """
-    best_eps = 0
-    best_rank = 0
-    
-    for eps in range(max_eps + 1):
-        G = build_semantic_graph(feature_sets, eps)
-        cr = graph_cycle_rank(G)
-        if cr > best_rank:
-            best_rank = cr
-            best_eps = eps
-    
-    return best_eps, best_rank
+
+    def __init__(self, metric_space: MetricSpace):
+        self.ms = metric_space
+
+    def build_graph(self, epsilon: int) -> SimpleGraph:
+        """Build the threshold graph at threshold ε. O(n^2)."""
+        G = SimpleGraph(self.ms.n)
+        for i in range(self.ms.n):
+            for j in range(i + 1, self.ms.n):
+                if self.ms.dist(i, j) <= epsilon:
+                    G.add_edge(i, j)
+        return G
+
+    def transition_profile(
+        self, thresholds: Optional[list[int]] = None
+    ) -> list[dict]:
+        """
+        Compute the full transition profile.
+
+        Args:
+            thresholds: List of thresholds to evaluate.
+                       Default: all distinct distances.
+
+        Returns:
+            List of dicts with keys: epsilon, edges, vertices,
+            components, cyclomatic_number, density.
+        """
+        if thresholds is None:
+            thresholds = self.ms.distinct_distances()
+
+        profile = []
+        for eps in thresholds:
+            G = self.build_graph(eps)
+            r = cyclomatic_number(G)
+            phi = normalized_cyclomatic_density(G)
+            profile.append({
+                'epsilon': eps,
+                'edges': G.num_edges(),
+                'vertices': G.n,
+                'components': G.num_connected_components(),
+                'cyclomatic_number': r,
+                'density': phi,
+                'connected': G.is_connected(),
+            })
+        return profile
+
+    def critical_threshold(self) -> tuple[int, float]:
+        """
+        Find the critical threshold ε* maximizing normalized cyclomatic density.
+
+        Returns:
+            (ε*, φ(ε*))
+        """
+        profile = self.transition_profile()
+        if not profile:
+            return 0, 0.0
+
+        best = max(profile, key=lambda p: p['density'])
+        return best['epsilon'], best['density']
+
+    def locality_coefficients(self, epsilon: int) -> list[float]:
+        """
+        Compute proof-theoretic locality for all vertices at threshold ε.
+
+        Returns:
+            List of L_G(v) for v = 0, ..., n-1.
+        """
+        G = self.build_graph(epsilon)
+        return [proof_theoretic_locality(G, v) for v in range(self.ms.n)]
+
+    def verify_neighborhood_bound(self, epsilon: int) -> list[dict]:
+        """
+        Verify the neighborhood cyclomatic bound r(G[N[v]]) ≤ d*(d-1)/2
+        for all vertices.
+
+        Returns:
+            List of verification results.
+        """
+        G = self.build_graph(epsilon)
+        results = []
+        for v in range(self.ms.n):
+            d = G.degree(v)
+            nbhd = G.closed_neighborhood(v)
+            H = G.induced_subgraph(nbhd)
+            r_local = cyclomatic_number(H)
+            bound = d * (d - 1) // 2
+            results.append({
+                'vertex': v,
+                'degree': d,
+                'local_cyclomatic': r_local,
+                'bound': bound,
+                'satisfied': r_local <= bound,
+            })
+        return results
 
 
-def bfs_distance(G: SimpleGraph, source: int) -> Dict[int, int]:
-    """BFS shortest distances from source.
-    
-    Time complexity: O(V + E)
-    """
-    dist = {source: 0}
-    queue = deque([source])
-    while queue:
-        v = queue.popleft()
-        for w in G.adj[v]:
-            if w not in dist:
-                dist[w] = dist[v] + 1
-                queue.append(w)
-    return dist
-
-
-def hitting_time_lower_bound(G: SimpleGraph, v: int, 
-                              target_set: Set[int]) -> float:
-    """Lower bound on expected hitting time from v to target set.
-    
-    Uses the distance-based bound: hitting time ≥ min distance to target.
-    When v has high cycle pressure, the actual hitting time is much larger
-    due to cycle trapping.
-    
-    Returns:
-        Lower bound on expected hitting time.
-    """
-    distances = bfs_distance(G, v)
-    min_dist = float('inf')
-    for t in target_set:
-        if t in distances:
-            min_dist = min(min_dist, distances[t])
-    return min_dist
-
+# ─── Example Usage ───────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    # Example: Triangle with a pendant edge
-    G = SimpleGraph()
-    G.add_edge(0, 1)
-    G.add_edge(1, 2)
-    G.add_edge(2, 0)
-    G.add_edge(2, 3)
-    
-    print("=== Graph Analysis ===")
-    print(f"Vertices: {G.vertices}")
-    print(f"Edges: {G.edges()}")
-    print(f"Cycle rank: {graph_cycle_rank(G)}")
-    print(f"Bridges: {find_bridges(G)}")
-    
-    pressures = compute_all_pressures(G)
-    print(f"\nLocal cycle pressures: {pressures}")
-    
-    field = compute_semantic_pressure_field(G)
-    print(f"\nSemantic Pressure Field:")
-    for v, p in sorted(field.pressure.items()):
-        print(f"  Vertex {v}: pressure = {p:.3f}, "
-              f"concentration = {field.concentration(v):.3f}")
-    
-    print(f"\nTop vertices by pressure: {field.top_k_vertices(3)}")
+    import numpy as np
+
+    print("Algorithms Module — Example Usage")
+    print("=" * 50)
+
+    # Create a metric space from random points
+    np.random.seed(42)
+    n = 15
+    points = np.random.randn(n, 3) * 5
+
+    def euclidean_dist(p, q):
+        return int(np.round(np.linalg.norm(np.array(p) - np.array(q))))
+
+    ms = MetricSpace([tuple(p) for p in points], euclidean_dist)
+    analyzer = ThresholdGraphAnalyzer(ms)
+
+    # Find critical threshold
+    eps_star, phi_star = analyzer.critical_threshold()
+    print(f"Critical threshold ε*: {eps_star}")
+    print(f"Maximum density φ*: {phi_star:.4f}")
+
+    # Compute localities
+    localities = analyzer.locality_coefficients(eps_star)
+    print(f"\nLocality coefficients at ε* = {eps_star}:")
+    for v, loc in enumerate(localities):
+        print(f"  v{v}: L = {loc:.4f}")
+
+    # Verify bounds
+    results = analyzer.verify_neighborhood_bound(eps_star)
+    violations = sum(1 for r in results if not r['satisfied'])
+    print(f"\nBound verification: {violations} violations out of {n} vertices")
+
+    # Show transition profile
+    profile = analyzer.transition_profile()
+    print(f"\nTransition profile:")
+    print(f"{'ε':>5} | {'|E|':>5} | {'r':>4} | {'φ':>8} | {'conn':>5}")
+    for p in profile[:15]:  # Show first 15
+        print(f"{p['epsilon']:5d} | {p['edges']:5d} | {p['cyclomatic_number']:4d} | "
+              f"{p['density']:8.4f} | {'yes' if p['connected'] else 'no':>5}")

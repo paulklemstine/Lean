@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1746 of the highest-quality
+A curated collection of 1752 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1746
+Total files: 1752
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -425,6 +425,7 @@ import FINAL.Bridges.LawvereStoneAttentionDuality
 import FINAL.Bridges.LawvereThermodynamicGalois
 import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LipschitzMarginCell
+import FINAL.Bridges.LocalityCorrelation
 import FINAL.Bridges.LocalizationGeneralization
 import FINAL.Bridges.LogSumExpVariational
 import FINAL.Bridges.Logic
@@ -1362,12 +1363,14 @@ import FINAL.Pythagorean.BoundedSearch
 import FINAL.Pythagorean.CRT
 import FINAL.Pythagorean.Catoni
 import FINAL.Pythagorean.CayleyTransform
+import FINAL.Pythagorean.CertificatePosetWQO
 import FINAL.Pythagorean.Companion
 import FINAL.Pythagorean.Compute
 import FINAL.Pythagorean.Conditional
 import FINAL.Pythagorean.ConfigGraphPathwidth
 import FINAL.Pythagorean.Configurations
 import FINAL.Pythagorean.Congruence
+import FINAL.Pythagorean.ConvergentRewriteMaster
 import FINAL.Pythagorean.ConvergentRewriteOptimizer
 import FINAL.Pythagorean.ConvergentRewriteSystems
 import FINAL.Pythagorean.Core
@@ -1413,6 +1416,7 @@ import FINAL.Pythagorean.HardnessLocalizationDuality
 import FINAL.Pythagorean.HarmonicMusicTheory
 import FINAL.Pythagorean.HigherDimGhost
 import FINAL.Pythagorean.HigherDimQuadruples
+import FINAL.Pythagorean.HigherHomology
 import FINAL.Pythagorean.Invariance
 import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.KeplerEccentricity
@@ -1459,6 +1463,7 @@ import FINAL.Pythagorean.RepresentableDimension
 import FINAL.Pythagorean.ResidueDescent
 import FINAL.Pythagorean.ReversibleComputing
 import FINAL.Pythagorean.STLCDefs
+import FINAL.Pythagorean.SandwichDefs
 import FINAL.Pythagorean.SandwichGraph
 import FINAL.Pythagorean.SandwichTheorems
 import FINAL.Pythagorean.SchemeInvariance

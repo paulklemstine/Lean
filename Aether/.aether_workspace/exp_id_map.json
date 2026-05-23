@@ -389,5 +389,11 @@
   "40d9a95b": "direction_4_log_concavity_in_combinatorics_via_pf_.json",
   "7a676034": "direction_1_asymptotic_compactness__from_finite_ce.json",
   "855340ee": "certified_space_certificates_for_sat_solvers.json",
-  "c8e3603c": "direction_1_quantum_runge_lenz_and_hydrogen_degene.json"
+  "c8e3603c": "direction_1_quantum_runge_lenz_and_hydrogen_degene.json",
+  "d0df8373": "direction_3_certificate_poset_well_quasi_ordering.json",
+  "45680053": "direction_3_higher_homology_detection_hypothesis.json",
+  "021f01d9": "direction_1_convergent_rewrite_systems_as_quotient.json",
+  "a3465259": "direction_4_cohen_lenstra_heuristics_via_restricte.json",
+  "7347da48": "direction_1_empirical_hardness_localization_correl.json",
+  "63111130": "direction_3_p_adic_orbital_period_valuation.json"
 }
