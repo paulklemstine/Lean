@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:59:07Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_2_path_space_cardinality_invariants_for_",
@@ -457,7 +457,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T15:16:00Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_2_fujisaki_okamoto_transform_as_module_m",
@@ -502,7 +502,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T17:14:39Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_1_topological_restricted_products_and_co",
@@ -619,7 +619,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:13:59Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_2_verified_compiler_synthesis_via_free_f",
@@ -646,7 +646,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:11:00Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_clause_space_lower_bounds_via_width_sp",
@@ -700,7 +700,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T22:24:58Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "direction_2_approximation_sandwich_universality",
@@ -727,7 +727,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T23:14:11Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "direction_1_cycle_window_universality_hypothesis",
@@ -745,7 +745,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-21T23:47:45Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_2_entropy_barrier_conjecture_for_general",
@@ -754,7 +754,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T00:10:05Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_2_natural_gradient_convergence_on_dually",
@@ -808,7 +808,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T03:41:03Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_1_depth_rigidity_in_the_full_eml_languag",
@@ -1024,7 +1024,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T20:21:09Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_4_shadow_energy_universality",
