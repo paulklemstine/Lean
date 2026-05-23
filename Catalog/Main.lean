@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1722 of the highest-quality
+A curated collection of 1730 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1722
+Total files: 1730
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -384,6 +384,7 @@ import FINAL.Bridges.GardenOfEden
 import FINAL.Bridges.GibbsPosterior
 import FINAL.Bridges.HTreeRobust
 import FINAL.Bridges.HammingMetric
+import FINAL.Bridges.HellyPrinciple
 import FINAL.Bridges.HierarchicalRobustness
 import FINAL.Bridges.HilbertPolyaOperator
 import FINAL.Bridges.HilbertVCCorrespondence
@@ -1355,6 +1356,7 @@ import FINAL.Pythagorean.CRT
 import FINAL.Pythagorean.Catoni
 import FINAL.Pythagorean.CayleyTransform
 import FINAL.Pythagorean.Companion
+import FINAL.Pythagorean.Compute
 import FINAL.Pythagorean.Conditional
 import FINAL.Pythagorean.Configurations
 import FINAL.Pythagorean.Congruence
@@ -1383,10 +1385,12 @@ import FINAL.Pythagorean.DerivativeNormalizer
 import FINAL.Pythagorean.DescentTheory
 import FINAL.Pythagorean.DiffClosure
 import FINAL.Pythagorean.Duality
+import FINAL.Pythagorean.DynamicalSquaring
 import FINAL.Pythagorean.EffectivePotential
 import FINAL.Pythagorean.EmergentComputation
 import FINAL.Pythagorean.Equivalences
 import FINAL.Pythagorean.EulerBricks
+import FINAL.Pythagorean.EulerFactor
 import FINAL.Pythagorean.ExplicitMorseTheory
 import FINAL.Pythagorean.ExponentBounds
 import FINAL.Pythagorean.FactoringEnergyLandscape
@@ -1424,6 +1428,7 @@ import FINAL.Pythagorean.PolynomialTransforms
 import FINAL.Pythagorean.Positivity
 import FINAL.Pythagorean.PrimeCounting
 import FINAL.Pythagorean.PrimeDivisorCongruence
+import FINAL.Pythagorean.PrimePowerHecke
 import FINAL.Pythagorean.ProdBounds
 import FINAL.Pythagorean.PythagoreanFactoring
 import FINAL.Pythagorean.PythagoreanPairing
@@ -1439,6 +1444,7 @@ import FINAL.Pythagorean.RegulatorPosDef
 import FINAL.Pythagorean.RepresentableDimension
 import FINAL.Pythagorean.ResidueDescent
 import FINAL.Pythagorean.ReversibleComputing
+import FINAL.Pythagorean.STLCDefs
 import FINAL.Pythagorean.SandwichGraph
 import FINAL.Pythagorean.SandwichTheorems
 import FINAL.Pythagorean.SchemeInvariance
@@ -1450,6 +1456,7 @@ import FINAL.Pythagorean.SpectralDiracTheory
 import FINAL.Pythagorean.SpectralPseudorandomness
 import FINAL.Pythagorean.SpectralSparsity
 import FINAL.Pythagorean.Theorems
+import FINAL.Pythagorean.TorsionProfileTheorems
 import FINAL.Pythagorean.TropicalArithmeticUniversality
 import FINAL.Pythagorean.TropicalBerggrenZeta
 import FINAL.Pythagorean.TropicalKeplerOrbits
@@ -1684,6 +1691,7 @@ import FINAL.Tropical.TropicalLanglandsGL1
 import FINAL.Tropical.TropicalMatrixCertificate
 import FINAL.Tropical.TropicalMatrixIteration
 import FINAL.Tropical.TropicalMoonshots
+import FINAL.Tropical.TropicalMorse
 import FINAL.Tropical.TropicalMorseTheory
 import FINAL.Tropical.TropicalNBPLowerBound
 import FINAL.Tropical.TropicalNNFrontier

@@ -360,5 +360,12 @@
   "68ed02d3": "direction_2_equality_saturation_extraction_correct.json",
   "06b9ca54": "direction_5_differential_closure_and_growth_classi.json",
   "91fdc977": "direction_2_approximate_depth_rigidity.json",
-  "ccca011b": "direction_2_spectral_sparsity_conjecture_for_stron.json"
+  "ccca011b": "direction_2_spectral_sparsity_conjecture_for_stron.json",
+  "aa8a20a2": "direction_3_temporal_logic_model_checking_for_simp.json",
+  "4553ccb5": "direction_5_automorphic_forms_on_textgl_2mathbba_m.json",
+  "642070b0": "direction_3_tropical_morse_theory_via_active_set_t.json",
+  "915bd4db": "direction_3_local_to_global_finite_generation_prob.json",
+  "6602f022": "direction_4_dynamical_systems_perspective_on_repea.json",
+  "b9aacf2e": "direction_3_local_to_global_finite_generation_prob.json",
+  "1c498e6e": "direction_5_scalable_arithmetic_tda_pipeline.json"
 }
