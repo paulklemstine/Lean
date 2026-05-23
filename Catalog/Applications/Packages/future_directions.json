@@ -10164,6 +10164,28 @@
       "ambition_level": "extension",
       "lineage_refs": [],
       "domain_bridges": []
+    },
+    {
+      "id": "fd_0406",
+      "title": "Proof-Complexity Shadow via Persistent Homology of Clause Learning",
+      "description": "Conjecture: For every unsatisfiable CNF family {F_n}, build the clause-learning filtration whose k-th stage is the simplicial complex on learned clauses present after k derivation steps, with simplices given by jointly simultaneously usable clause sets. Then there exists a computable topological invariant T(F_n) extracted from the persistence diagram of this filtration such that any CDCL-style refutation requires runtime at least exp(Ω(T(F_n))) on every restart policy, while formulas with bounded T(F_n) admit polynomial-time refutations under some clause-learning strategy. Test: Define the filtration on benchmark families (pebbling, Tseitin, random k-SAT, pigeonhole), compute persistence numerically/symbolically, and check whether T correlates with and lower-bounds observed and known proof-complexity measures better than width/pathwidth alone; refuted if no invariant from the persistence data separates known easy/hard families or if bounded T coexists with provable superpolynomial CDCL lower bounds. Impact: Would create a new topological obstruction theory for SAT solving, linking proof complexity, dynamics of learned clauses, and TDA, and could yield topology-aware solver heuristics and new lower-bound techniques.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Proof Complexity",
+        "Topological Data Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-23T16:54:51.960587+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     }
   ],
   "pruned": [
