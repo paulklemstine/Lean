@@ -1,301 +1,288 @@
 #!/usr/bin/env python3
 """
-Algorithms for computing categorical sparsity invariants.
+Categorical Shannon Theory — Algorithms
 
-This module implements the core algorithms for:
-- Primitive section detection
-- Greedy generator compression
-- Exact minimum representable cover computation
-- Compression ratio analysis
-
-These algorithms correspond to the formally verified Lean theorems in
-Pythagorean/ProbeComplexity/OptimalGeneratorBounds.lean.
+Implements the core algorithms from the research paper:
+1. Greedy minimum cover computation
+2. Generator graph construction and analysis
+3. Shannon lower bound computation
+4. Compression ratio analysis
 """
 
-from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Callable, Any
-import itertools
+from itertools import combinations, product
+from typing import Dict, List, Set, Tuple, Optional
+import math
 
 
-@dataclass
-class FiniteCategory:
-    """A finite category represented explicitly.
+# =============================================================================
+# Algorithm 1: Minimum Cover Size (Exact)
+# =============================================================================
 
-    Attributes:
-        objects: List of objects.
-        morphisms: Dict mapping (source, target) to list of morphism names.
-        identity: Dict mapping object to its identity morphism name.
-        composition: Dict mapping (g, f) to g ∘ f (f then g).
-    """
-    objects: list[Any]
-    morphisms: dict[tuple[Any, Any], list[str]]
-    identity: dict[Any, str]
-    composition: dict[tuple[str, str], str]
+def exact_min_cover(n_objects: int, fibers: Dict[int, List],
+                     restrictions: Dict[Tuple[int, int], Dict]) -> Tuple[int, Set]:
+    """Compute exact minimum cover size via exhaustive search.
 
-    def all_morphisms(self) -> list[tuple[Any, Any, str]]:
-        """Return all (source, target, name) triples."""
-        result = []
-        for (s, t), names in self.morphisms.items():
-            for name in names:
-                result.append((s, t, name))
-        return result
+    Time complexity: O(2^N * N * E) where N = total generators, E = total elements.
+    Space complexity: O(N).
 
-    def non_identity_morphisms_to(self, target: Any) -> list[tuple[Any, str]]:
-        """Return all (source, morphism_name) where source ≠ target."""
-        result = []
-        for src in self.objects:
-            if src == target:
-                continue
-            for name in self.morphisms.get((src, target), []):
-                result.append((src, name))
-        return result
-
-
-@dataclass
-class Presheaf:
-    """A finite-valued presheaf F : C^op → FinSet.
-
-    For a morphism f : A → B in C, the restriction map goes
-    F(B) → F(A) (contravariant).
-
-    Attributes:
-        category: The underlying finite category.
-        fibers: Dict mapping each object Y to list of elements of F(Y).
-        restriction: Dict mapping morphism name to the restriction function.
-            For f : A → B, restriction[f] : F(B) → F(A).
-    """
-    category: FiniteCategory
-    fibers: dict[Any, list[Any]]
-    restriction: dict[str, Callable]
-
-    def restrict(self, morphism_name: str, element: Any) -> Any:
-        """Apply restriction along a morphism."""
-        return self.restriction[morphism_name](element)
-
-
-def is_primitive(F: Presheaf, Y: Any, x: Any) -> bool:
-    """Check if section x at object Y is primitive.
-
-    A section is primitive if it is NOT in the image of any restriction
-    map from a different object. That is, there is no Z ≠ Y, f : Y → Z,
-    z ∈ F(Z) such that F(f)(z) = x.
-
-    In presheaf convention: for f : Y → Z in C, the restriction
-    F.map(f^op) : F(Z) → F(Y). We check that x is not in the image
-    of any such map from Z ≠ Y.
-
-    Time complexity: O(|Mor| * max|F(Z)|)
-    """
-    for Z in F.category.objects:
-        if Z == Y:
-            continue
-        # Look for morphisms from Y to Z in C
-        for f_name in F.category.morphisms.get((Y, Z), []):
-            # f : Y → Z, so F.map(f.op) : F(Z) → F(Y)
-            for z in F.fibers[Z]:
-                if F.restrict(f_name, z) == x:
-                    return False
-    return True
-
-
-def compute_primitive_sections(F: Presheaf) -> dict[Any, list[Any]]:
-    """Compute all primitive sections at each object.
+    Args:
+        n_objects: Number of objects in the category.
+        fibers: fibers[i] = list of elements at object i.
+        restrictions: restrictions[(target, source)] = {elem_src: elem_tgt}.
 
     Returns:
-        Dict mapping each object Y to the list of primitive sections at Y.
+        (min_size, min_cover): The minimum cover size and a witnessing cover.
 
-    Time complexity: O(|Ob| * |F_max| * |Mor| * |F_max|)
+    Example:
+        >>> fibers = {0: [0, 1], 1: [0, 1]}
+        >>> restrictions = {(0, 0): {0: 0, 1: 1}, (1, 1): {0: 0, 1: 1}}
+        >>> exact_min_cover(2, fibers, restrictions)
+        (4, {(0, 0), (0, 1), (1, 0), (1, 1)})
     """
-    result = {}
-    for Y in F.category.objects:
-        prims = [x for x in F.fibers[Y] if is_primitive(F, Y, x)]
-        result[Y] = prims
-    return result
+    # Build generator list
+    generators = []
+    for obj in range(n_objects):
+        for elem in fibers[obj]:
+            generators.append((obj, elem))
+
+    # Build element list
+    elements = []
+    for obj in range(n_objects):
+        for elem in fibers[obj]:
+            elements.append((obj, elem))
+
+    # Precompute coverage: for each generator, which elements does it cover?
+    coverage = {}
+    for gen in generators:
+        src_obj, src_elem = gen
+        covered = set()
+        for tgt_obj in range(n_objects):
+            if (tgt_obj, src_obj) in restrictions:
+                tgt_elem = restrictions[(tgt_obj, src_obj)][src_elem]
+                covered.add((tgt_obj, tgt_elem))
+        coverage[gen] = covered
+
+    # Exhaustive search by increasing subset size
+    all_elements = set(elements)
+    n = len(generators)
+
+    for size in range(n + 1):
+        for subset_idx in combinations(range(n), size):
+            gen_set = {generators[i] for i in subset_idx}
+            total_covered = set()
+            for g in gen_set:
+                total_covered |= coverage[g]
+            if total_covered >= all_elements:
+                return size, gen_set
+
+    return n, set(generators)
 
 
-def compute_primitive_count(F: Presheaf) -> int:
-    """Compute the total number of primitive sections.
+# =============================================================================
+# Algorithm 2: Greedy Minimum Cover (Approximation)
+# =============================================================================
 
-    This is the categorical sparsity invariant: the number of
-    restriction-irreducible information units.
+def greedy_min_cover(n_objects: int, fibers: Dict[int, List],
+                      restrictions: Dict[Tuple[int, int], Dict]) -> Tuple[int, Set]:
+    """Greedy approximation for minimum cover.
 
-    Time complexity: O(|Ob|^2 * |F_max|^2 * |Mor|)
-    """
-    prims = compute_primitive_sections(F)
-    return sum(len(v) for v in prims.values())
+    Uses the standard greedy set cover heuristic: repeatedly pick the generator
+    that covers the most uncovered elements.
 
+    Time complexity: O(N² * E) where N = total generators, E = total elements.
+    Approximation ratio: O(ln(E)) — standard set cover guarantee.
 
-def total_sections(F: Presheaf) -> int:
-    """Compute the total number of sections across all objects."""
-    return sum(len(v) for v in F.fibers.values())
-
-
-def compression_ratio(F: Presheaf) -> float:
-    """Compute the compression ratio: primitiveCount / totalSections.
-
-    A ratio of 1.0 means no compression (e.g., discrete categories).
-    A ratio < 1.0 means the category structure enables compression.
-    """
-    ts = total_sections(F)
-    if ts == 0:
-        return 1.0
-    return compute_primitive_count(F) / ts
-
-
-def _sections_covered_by(F: Presheaf, generators: list[tuple[Any, Any]]) -> set[tuple[Any, Any]]:
-    """Compute all (object, section) pairs covered by a set of generators.
-
-    A generator (Y, x) covers (W, w) if there exists f : W → Y with F(f)(x) = w.
-    """
-    covered = set()
-    for gen_obj, gen_sec in generators:
-        for W in F.category.objects:
-            for f_name in F.category.morphisms.get((W, gen_obj), []):
-                w = F.restrict(f_name, gen_sec)
-                covered.add((W, w))
-    return covered
-
-
-def _all_sections(F: Presheaf) -> set[tuple[Any, Any]]:
-    """Return the set of all (object, section) pairs."""
-    return {(Y, x) for Y in F.category.objects for x in F.fibers[Y]}
-
-
-def greedy_cover(F: Presheaf) -> list[tuple[Any, Any]]:
-    """Compute a representable cover using a greedy algorithm.
-
-    Strategy: prioritize primitive sections first, then add remaining
-    sections as needed. At each step, pick the generator that covers
-    the most uncovered sections.
-
-    This implements the "greedy compression" strategy from the research paper.
-
-    Time complexity: O(|total|^2 * |Mor| * |F_max|)
+    Args:
+        n_objects: Number of objects.
+        fibers: Fiber data.
+        restrictions: Restriction maps.
 
     Returns:
-        List of (object, section) pairs forming the cover.
+        (cover_size, cover_set): Greedy cover and its size.
+
+    Example:
+        >>> fibers = {0: [0, 1], 1: [0, 1]}
+        >>> restrictions = {(i, j): {0: 0, 1: 1} for i in range(2) for j in range(2)}
+        >>> size, cover = greedy_min_cover(2, fibers, restrictions)
+        >>> size <= 2  # Connected model: 2 generators suffice
+        True
     """
-    all_secs = _all_sections(F)
-    if not all_secs:
-        return []
+    generators = [(obj, elem) for obj in range(n_objects) for elem in fibers[obj]]
 
-    cover: list[tuple[Any, Any]] = []
-    covered: set[tuple[Any, Any]] = set()
+    coverage = {}
+    for gen in generators:
+        src_obj, src_elem = gen
+        covered = set()
+        for tgt_obj in range(n_objects):
+            if (tgt_obj, src_obj) in restrictions:
+                tgt_elem = restrictions[(tgt_obj, src_obj)][src_elem]
+                covered.add((tgt_obj, tgt_elem))
+        coverage[gen] = covered
 
-    # Candidate generators: all (Y, x) pairs
-    candidates = [(Y, x) for Y in F.category.objects for x in F.fibers[Y]]
+    all_elements = set()
+    for obj in range(n_objects):
+        for elem in fibers[obj]:
+            all_elements.add((obj, elem))
 
-    while covered != all_secs:
-        # Find the candidate that covers the most new sections
-        best_gen = None
-        best_new = set()
-        for gen in candidates:
-            new_covered = _sections_covered_by(F, [gen]) - covered
-            if len(new_covered) > len(best_new):
-                best_gen = gen
-                best_new = new_covered
-        if best_gen is None:
-            break
-        cover.append(best_gen)
-        covered |= best_new
-        candidates.remove(best_gen)
+    uncovered = all_elements.copy()
+    selected = set()
 
-    return cover
+    while uncovered:
+        # Pick generator covering most uncovered elements
+        best_gen = max(generators, key=lambda g: len(coverage[g] & uncovered))
+        selected.add(best_gen)
+        uncovered -= coverage[best_gen]
+
+    return len(selected), selected
 
 
-def exact_min_cover(F: Presheaf) -> int:
-    """Compute the exact minimum representable cover size by exhaustive search.
+# =============================================================================
+# Algorithm 3: Generator Graph Construction
+# =============================================================================
 
-    Warning: exponential in the number of sections. Only use for small instances.
+def build_generator_graph(n_objects: int, fibers: Dict[int, List],
+                           restrictions: Dict[Tuple[int, int], Dict]) -> Dict:
+    """Build the generator graph.
 
-    Time complexity: O(2^|total| * |total| * |Mor| * |F_max|)
+    Time complexity: O(N² * n_objects) where N = total generators.
+    Space complexity: O(N²).
 
     Returns:
-        The minimum number of generators needed to cover all sections.
+        Dictionary with 'vertices', 'adj_list', 'in_degree', 'out_degree'.
     """
-    all_secs = _all_sections(F)
-    if not all_secs:
-        return 0
+    vertices = [(obj, elem) for obj in range(n_objects) for elem in fibers[obj]]
+    adj_list = {v: set() for v in vertices}
+    in_degree = {v: 0 for v in vertices}
+    out_degree = {v: 0 for v in vertices}
 
-    candidates = [(Y, x) for Y in F.category.objects for x in F.fibers[Y]]
-    n = len(candidates)
+    for src in vertices:
+        src_obj, src_elem = src
+        for tgt_obj in range(n_objects):
+            if (tgt_obj, src_obj) in restrictions:
+                tgt_elem = restrictions[(tgt_obj, src_obj)][src_elem]
+                tgt = (tgt_obj, tgt_elem)
+                if tgt != src:
+                    adj_list[src].add(tgt)
+                    out_degree[src] += 1
+                    in_degree[tgt] += 1
 
-    # Try increasing sizes
-    for k in range(1, n + 1):
-        for subset in itertools.combinations(candidates, k):
-            if _sections_covered_by(F, list(subset)) >= all_secs:
-                return k
-    return n
+    return {
+        'vertices': vertices,
+        'adj_list': adj_list,
+        'in_degree': in_degree,
+        'out_degree': out_degree,
+        'n_vertices': len(vertices),
+        'n_edges': sum(out_degree.values()),
+    }
 
 
-def restriction_dependency_graph(F: Presheaf) -> dict[tuple[Any, Any], list[tuple[Any, Any]]]:
-    """Compute the restriction dependency graph.
+# =============================================================================
+# Algorithm 4: Shannon Lower Bound
+# =============================================================================
 
-    Nodes are (object, section) pairs. There is an edge from (Z, z) to (Y, x)
-    if there exists f : Y → Z with F(f)(z) = x and Z ≠ Y.
+def shannon_lower_bound(n_objects: int, fibers: Dict[int, List],
+                         restrictions: Dict[Tuple[int, int], Dict]) -> int:
+    """Compute the categorical Shannon lower bound.
 
-    This graph captures how sections depend on sections at other objects
-    through restriction maps.
+    For each object X, the number of generators needed is at least
+    ceil(|F(X)| / number_of_objects_with_restriction_to_X).
+
+    Time complexity: O(n² + sum |F(X)|).
 
     Returns:
-        Adjacency list: maps each node to its list of dependents.
+        Lower bound on minimum cover size.
+
+    Example:
+        >>> fibers = {0: [0, 1, 2], 1: [0, 1, 2]}
+        >>> restrictions = {(0, 0): {0: 0, 1: 1, 2: 2}, (1, 1): {0: 0, 1: 1, 2: 2}}
+        >>> shannon_lower_bound(2, fibers, restrictions)
+        3
     """
-    graph: dict[tuple[Any, Any], list[tuple[Any, Any]]] = {}
-
-    for Y in F.category.objects:
-        for x in F.fibers[Y]:
-            graph[(Y, x)] = []
-
-    for Y in F.category.objects:
-        for Z in F.category.objects:
-            if Z == Y:
-                continue
-            for f_name in F.category.morphisms.get((Y, Z), []):
-                for z in F.fibers[Z]:
-                    x = F.restrict(f_name, z)
-                    if (Y, x) not in graph[(Z, z)]:
-                        graph[(Z, z)].append((Y, x))
-
-    return graph
+    bound = 0
+    for x in range(n_objects):
+        fx_size = len(fibers[x])
+        sources = sum(1 for y in range(n_objects) if (x, y) in restrictions)
+        if sources > 0:
+            bound = max(bound, math.ceil(fx_size / sources))
+    return bound
 
 
-def print_dependency_graph(F: Presheaf):
-    """Print the restriction dependency graph in a readable format."""
-    graph = restriction_dependency_graph(F)
-    print("Restriction Dependency Graph:")
-    print("  (arrows show restriction: (Z,z) → (Y,x) means x = F(f)(z) for some f : Y → Z)")
-    for node, deps in sorted(graph.items()):
-        if deps:
-            dep_str = ", ".join(f"({d[0]},{d[1]})" for d in deps)
-            print(f"  ({node[0]},{node[1]}) → {dep_str}")
-        else:
-            print(f"  ({node[0]},{node[1]}) [primitive — no outgoing restrictions]")
+# =============================================================================
+# Algorithm 5: Compression Ratio Analysis
+# =============================================================================
 
+def analyze_compression(n_objects: int, fibers: Dict[int, List],
+                         restrictions: Dict[Tuple[int, int], Dict]) -> Dict:
+    """Comprehensive compression analysis.
+
+    Returns dictionary with:
+    - total_elements: Sum of fiber sizes
+    - min_cover_exact: Exact minimum cover size
+    - min_cover_greedy: Greedy approximation
+    - shannon_lb: Shannon lower bound
+    - compression_ratio: total_elements / min_cover_exact
+    - graph_stats: Generator graph statistics
+
+    Example:
+        >>> fibers = {0: [0, 1], 1: [0, 1]}
+        >>> restrictions = {(i, j): {0: 0, 1: 1} for i in range(2) for j in range(2)}
+        >>> result = analyze_compression(2, fibers, restrictions)
+        >>> result['compression_ratio']
+        2.0
+    """
+    total = sum(len(fibers[obj]) for obj in range(n_objects))
+
+    exact_size, exact_cover = exact_min_cover(n_objects, fibers, restrictions)
+    greedy_size, greedy_cover = greedy_min_cover(n_objects, fibers, restrictions)
+    lb = shannon_lower_bound(n_objects, fibers, restrictions)
+    graph = build_generator_graph(n_objects, fibers, restrictions)
+
+    return {
+        'total_elements': total,
+        'min_cover_exact': exact_size,
+        'min_cover_greedy': greedy_size,
+        'shannon_lb': lb,
+        'compression_ratio': total / exact_size if exact_size > 0 else float('inf'),
+        'greedy_ratio': greedy_size / exact_size if exact_size > 0 else 1.0,
+        'graph_stats': {
+            'n_vertices': graph['n_vertices'],
+            'n_edges': graph['n_edges'],
+            'max_out_degree': max(graph['out_degree'].values()) if graph['out_degree'] else 0,
+            'max_in_degree': max(graph['in_degree'].values()) if graph['in_degree'] else 0,
+        }
+    }
+
+
+# =============================================================================
+# Example Usage
+# =============================================================================
 
 if __name__ == "__main__":
-    # Quick self-test
-    from demo import make_discrete, make_chain, make_diamond, constant_presheaf
+    print("Algorithm demonstrations:")
+    print()
 
-    print("=== Self-test ===")
+    # Discrete model
+    print("--- Discrete model (3 objects, fiber size 2) ---")
+    fibers = {i: [0, 1] for i in range(3)}
+    restrictions = {(i, i): {0: 0, 1: 1} for i in range(3)}
+    result = analyze_compression(3, fibers, restrictions)
+    for k, v in result.items():
+        print(f"  {k}: {v}")
+    print()
 
-    # Discrete(3), fiber size 2
-    cat = make_discrete(3)
-    F = constant_presheaf(cat, 2)
-    pc = compute_primitive_count(F)
-    ts = total_sections(F)
-    em = exact_min_cover(F)
-    assert pc == ts == em == 6, f"Discrete(3,2): pc={pc}, ts={ts}, em={em}"
-    print(f"  Discrete(3,2): OK (primitiveCount={pc}, totalSections={ts}, exactMin={em})")
+    # Connected model
+    print("--- Connected model (3 objects, fiber size 2) ---")
+    restrictions = {(i, j): {0: 0, 1: 1} for i in range(3) for j in range(3)}
+    result = analyze_compression(3, fibers, restrictions)
+    for k, v in result.items():
+        print(f"  {k}: {v}")
+    print()
 
-    # Chain(3), constant fiber 2
-    cat = make_chain(3)
-    F = constant_presheaf(cat, 2)
-    pc = compute_primitive_count(F)
-    ts = total_sections(F)
-    em = exact_min_cover(F)
-    print(f"  Chain(3,2): primitiveCount={pc}, totalSections={ts}, exactMin={em}")
-    assert pc <= ts
-    assert em <= ts
-
-    print("\n  All tests passed!")
+    # Partial model
+    print("--- Partial model (3 objects, fiber size 2, star from 0) ---")
+    restrictions = {(i, i): {0: 0, 1: 1} for i in range(3)}
+    restrictions[(1, 0)] = {0: 0, 1: 1}
+    restrictions[(2, 0)] = {0: 0, 1: 1}
+    result = analyze_compression(3, fibers, restrictions)
+    for k, v in result.items():
+        print(f"  {k}: {v}")

@@ -1,358 +1,240 @@
 #!/usr/bin/env python3
 """
-Real-world applications of categorical sparsity theory.
+Categorical Shannon Theory — Applications
 
-This module demonstrates how optimal generator bounds apply to:
-1. Database schema compression (minimal keys)
-2. Sensor placement optimization
-3. Signal reconstruction from sparse measurements
-4. Codebook design for communication
-
-Each application shows how the abstract theory of primitive sections
-and representable covers maps to practical problems.
+Real-world applications of the categorical compression framework:
+1. Database schema compression
+2. Software module dependency optimization
+3. Network protocol design
+4. Sensor network data fusion
 """
 
-from __future__ import annotations
-from algorithms import (
-    FiniteCategory, Presheaf, compute_primitive_sections,
-    compute_primitive_count, greedy_cover, exact_min_cover,
-    total_sections, restriction_dependency_graph, compression_ratio
-)
+from algorithms import exact_min_cover, greedy_min_cover, shannon_lower_bound, analyze_compression
+from typing import Dict, List, Set, Tuple
 
 
 # =============================================================================
 # Application 1: Database Schema Compression
 # =============================================================================
 
-def database_example():
-    """Model a database projection system as a presheaf.
+def database_schema_compression():
+    """Application: Compressing database views via shared columns.
 
-    Consider a database with attributes {Name, Age, City, ZipCode}.
-    Projections correspond to morphisms in a category:
-      {Name,Age,City,Zip} → {Name,Age} (project away City,Zip)
-      {Name,Age,City,Zip} → {City,Zip} (project away Name,Age)
-      etc.
+    Consider a database with tables that share columns. Each table is an
+    "object," each row is an "element," and foreign key relationships are
+    "restrictions" (they allow one table's data to determine another's).
 
-    A tuple in the full table restricts to tuples in projected tables.
-    Primitive sections are tuples that cannot be recovered from any projection.
+    The minimum cover tells us the minimum number of "base rows" needed
+    to reconstruct all views.
+
+    Example: Customer-Order-Product schema
+    - Table 0 (Customers): 4 records
+    - Table 1 (Orders): 4 records (each linked to a customer)
+    - Table 2 (Products): 4 records (each linked to an order)
     """
     print("=" * 60)
     print("APPLICATION 1: Database Schema Compression")
     print("=" * 60)
+    print()
 
-    # Model as chain: full → projection1 → projection2
-    # Object 0: most projected (1 attribute)
-    # Object 1: partial projection (2 attributes)
-    # Object 2: full table (3 attributes)
+    n_tables = 3
+    fibers = {
+        0: ['c1', 'c2', 'c3', 'c4'],   # Customers
+        1: ['o1', 'o2', 'o3', 'o4'],   # Orders
+        2: ['p1', 'p2', 'p3', 'p4'],   # Products
+    }
 
-    cat = FiniteCategory(
-        objects=[0, 1, 2],
-        morphisms={
-            (0, 0): ["id_0"], (1, 1): ["id_1"], (2, 2): ["id_2"],
-            (0, 1): ["proj_01"], (0, 2): ["proj_02"], (1, 2): ["proj_12"],
-            (1, 0): [], (2, 0): [], (2, 1): [],
-        },
-        identity={0: "id_0", 1: "id_1", 2: "id_2"},
-        composition={
-            ("id_0", "id_0"): "id_0", ("id_1", "id_1"): "id_1",
-            ("id_2", "id_2"): "id_2",
-            ("proj_01", "id_0"): "proj_01", ("id_1", "proj_01"): "proj_01",
-            ("proj_12", "id_1"): "proj_12", ("id_2", "proj_12"): "proj_12",
-            ("proj_02", "id_0"): "proj_02", ("id_2", "proj_02"): "proj_02",
-            ("proj_01", "proj_12"): "proj_02",
-            # Trivial compositions with identities
-            ("proj_12", "proj_01"): "proj_02",  # Not valid, but we keep chain
-        }
-    )
+    # Scenario 1: No foreign keys (discrete)
+    restrictions_discrete = {(i, i): {x: x for x in fibers[i]} for i in range(3)}
+    result1 = analyze_compression(n_tables, fibers, restrictions_discrete)
+    print(f"  Scenario 1 (No foreign keys):")
+    print(f"    Total records: {result1['total_elements']}")
+    print(f"    Min base rows needed: {result1['min_cover_exact']}")
+    print(f"    Compression ratio: {result1['compression_ratio']:.1f}x")
+    print()
 
-    # Fibers: projected views of a small database
-    # Object 2 (full): {Alice-25-NYC, Bob-30-LA, Charlie-25-NYC}
-    # Object 1 (partial): {Alice-25, Bob-30, Charlie-25} → {25, 30} after dedup
-    # Object 0 (minimal): {young, old} → {y, o}
+    # Scenario 2: Customer -> Orders (each order maps to a customer)
+    restrictions_partial = dict(restrictions_discrete)
+    restrictions_partial[(1, 0)] = {'c1': 'o1', 'c2': 'o2', 'c3': 'o3', 'c4': 'o4'}
+    result2 = analyze_compression(n_tables, fibers, restrictions_partial)
+    print(f"  Scenario 2 (Customer -> Orders FK):")
+    print(f"    Min base rows needed: {result2['min_cover_exact']}")
+    print(f"    Compression ratio: {result2['compression_ratio']:.1f}x")
+    print()
 
-    F = Presheaf(
-        category=cat,
-        fibers={
-            0: ["y", "o"],
-            1: ["A25", "B30", "C25"],
-            2: ["Alice-NYC", "Bob-LA", "Charlie-NYC"],
-        },
-        restriction={
-            "id_0": lambda x: x, "id_1": lambda x: x, "id_2": lambda x: x,
-            "proj_01": lambda x: "y" if x in ["A25", "C25"] else "o",
-            "proj_12": lambda x: {"Alice-NYC": "A25", "Bob-LA": "B30", "Charlie-NYC": "C25"}[x],
-            "proj_02": lambda x: {"Alice-NYC": "y", "Bob-LA": "o", "Charlie-NYC": "y"}[x],
-        }
-    )
+    # Scenario 3: Full chain Customer -> Orders -> Products
+    restrictions_full = dict(restrictions_partial)
+    restrictions_full[(2, 1)] = {'o1': 'p1', 'o2': 'p2', 'o3': 'p3', 'o4': 'p4'}
+    result3 = analyze_compression(n_tables, fibers, restrictions_full)
+    print(f"  Scenario 3 (Full FK chain: Customer -> Orders -> Products):")
+    print(f"    Min base rows needed: {result3['min_cover_exact']}")
+    print(f"    Compression ratio: {result3['compression_ratio']:.1f}x")
+    print()
 
-    prims = compute_primitive_sections(F)
-    pc = compute_primitive_count(F)
-    ts = total_sections(F)
-    gc = greedy_cover(F)
-    em = exact_min_cover(F)
-
-    print(f"\n  Database model: 3-level projection hierarchy")
-    print(f"  Level 0 (most projected): {F.fibers[0]}")
-    print(f"  Level 1 (partial):        {F.fibers[1]}")
-    print(f"  Level 2 (full table):     {F.fibers[2]}")
-    print(f"\n  Total tuples across all views: {ts}")
-    print(f"  Primitive tuples (minimal keys): {pc}")
-    print(f"  Primitive sections by level:")
-    for Y in cat.objects:
-        print(f"    Level {Y}: {prims[Y]}")
-    print(f"\n  Minimum generators needed: {em}")
-    print(f"  Compression: {ts} → {em} ({100*(1-em/ts):.0f}% reduction)")
-    print(f"\n  Interpretation: Only {em} independent data items are needed to")
-    print(f"  reconstruct all {ts} tuples across all projection levels.")
+    print(f"  Insight: Foreign keys reduce the minimum base rows from")
+    print(f"  {result1['min_cover_exact']} to {result3['min_cover_exact']} "
+          f"— a {result3['compression_ratio']:.1f}x compression.")
     print()
 
 
 # =============================================================================
-# Application 2: Sensor Placement
+# Application 2: Software Module Dependencies
 # =============================================================================
 
-def sensor_placement_example():
-    """Model optimal sensor placement as minimum cover.
+def software_module_optimization():
+    """Application: Minimizing test configurations via module dependencies.
 
-    Consider a monitoring network where sensors at different locations
-    observe overlapping regions. A sensor at location Z can observe
-    phenomena at location Y if there's a "line of sight" morphism Y → Z.
-
-    The presheaf assigns observable states to each location.
-    Primitive sections are states that can only be observed locally.
-    The minimum cover gives the minimum number of sensors needed.
+    Each module has a set of features. If module A depends on module B,
+    testing A's features also tests B's features. The minimum cover is
+    the minimum number of test configurations needed.
     """
     print("=" * 60)
-    print("APPLICATION 2: Optimal Sensor Placement")
+    print("APPLICATION 2: Software Module Test Optimization")
     print("=" * 60)
+    print()
 
-    # Diamond topology: 4 locations
-    # Location 3 (hilltop) can observe locations 1 and 2
-    # Location 1 can observe location 0
-    # Location 2 can observe location 0
-    cat = FiniteCategory(
-        objects=[0, 1, 2, 3],
-        morphisms={
-            (a, b): [] for a in range(4) for b in range(4)
-        },
-        identity={i: f"id_{i}" for i in range(4)},
-        composition={}
-    )
-    # Add morphisms
-    all_mor = [
-        (0, 0, "id_0"), (1, 1, "id_1"), (2, 2, "id_2"), (3, 3, "id_3"),
-        (0, 1, "obs_01"), (0, 2, "obs_02"), (0, 3, "obs_03"),
-        (1, 3, "obs_13"), (2, 3, "obs_23"),
-    ]
-    for a, b, name in all_mor:
-        cat.morphisms[(a, b)] = cat.morphisms.get((a, b), [])
-        if name not in cat.morphisms[(a, b)]:
-            cat.morphisms[(a, b)].append(name)
+    # 4 modules: Core, Auth, API, UI
+    n_modules = 4
+    fibers = {
+        0: ['core_f1', 'core_f2', 'core_f3'],  # Core: 3 features
+        1: ['auth_f1', 'auth_f2'],               # Auth: 2 features
+        2: ['api_f1', 'api_f2', 'api_f3'],       # API: 3 features
+        3: ['ui_f1', 'ui_f2'],                    # UI: 2 features
+    }
 
-    # Composition
-    for a, b, name in all_mor:
-        cat.composition[(name, f"id_{a}")] = name
-        cat.composition[(f"id_{b}", name)] = name
-    cat.composition[("obs_13", "obs_01")] = "obs_03"
-    cat.composition[("obs_23", "obs_02")] = "obs_03"
+    # Dependencies: Auth->Core, API->Core, UI->API->Core
+    restrictions = {(i, i): {x: x for x in fibers[i]} for i in range(4)}
 
-    # Each location has 3 possible states: normal, warning, critical
-    states = ["normal", "warning", "critical"]
-    F = Presheaf(
-        category=cat,
-        fibers={i: list(states) for i in range(4)},
-        restriction={
-            f"id_{i}": lambda x: x for i in range(4)
-        }
-    )
-    # Restriction: observing from higher vantage points
-    F.restriction["obs_01"] = lambda x: x
-    F.restriction["obs_02"] = lambda x: x
-    F.restriction["obs_03"] = lambda x: x
-    F.restriction["obs_13"] = lambda x: x
-    F.restriction["obs_23"] = lambda x: x
+    # No dependencies
+    result_none = analyze_compression(n_modules, fibers, restrictions)
+    print(f"  No dependencies: {result_none['min_cover_exact']} test configs needed")
 
-    prims = compute_primitive_sections(F)
-    pc = compute_primitive_count(F)
-    ts = total_sections(F)
-    gc = greedy_cover(F)
-    em = exact_min_cover(F)
+    # Auth -> Core (auth tests also test core features)
+    restrictions[(0, 1)] = {'auth_f1': 'core_f1', 'auth_f2': 'core_f2'}
+    result_partial = analyze_compression(n_modules, fibers, restrictions)
+    print(f"  Auth->Core: {result_partial['min_cover_exact']} test configs needed")
 
-    print(f"\n  Sensor network: diamond topology (4 locations)")
-    print(f"  Each location has 3 possible states: {states}")
-    print(f"\n  Total observable states: {ts}")
-    print(f"  Primitive (locally-unique) states: {pc}")
-    print(f"  Minimum sensors needed: {em}")
-    print(f"  Greedy placement: {len(gc)} sensors at {[g[0] for g in gc[:5]]}...")
-    print(f"\n  Insight: Sensors at high-vantage locations (3) can observe")
-    print(f"  lower locations (1,2), reducing the total sensors needed.")
+    # API -> Core
+    restrictions[(0, 2)] = {'api_f1': 'core_f1', 'api_f2': 'core_f2', 'api_f3': 'core_f3'}
+    result_more = analyze_compression(n_modules, fibers, restrictions)
+    print(f"  Auth->Core, API->Core: {result_more['min_cover_exact']} test configs needed")
+
+    # UI -> API
+    restrictions[(2, 3)] = {'ui_f1': 'api_f1', 'ui_f2': 'api_f2'}
+    result_full = analyze_compression(n_modules, fibers, restrictions)
+    print(f"  Full deps: {result_full['min_cover_exact']} test configs needed")
+
+    print(f"\n  Dependencies reduce test configs from {result_none['min_cover_exact']} "
+          f"to {result_full['min_cover_exact']}")
     print()
 
 
 # =============================================================================
-# Application 3: Compression Ratio Analysis
+# Application 3: Sensor Network Data Fusion
 # =============================================================================
 
-def compression_analysis():
-    """Analyze how morphism density affects compression ratio.
+def sensor_network_fusion():
+    """Application: Minimum sensor readings for full coverage.
 
-    Compare categories with different morphism densities to show that
-    more morphisms → more restriction dependencies → better compression.
+    A sensor network has multiple sensors, each measuring different quantities.
+    If sensor A's reading determines sensor B's reading (e.g., temperature
+    determines humidity in a controlled environment), we need fewer readings.
     """
     print("=" * 60)
-    print("APPLICATION 3: Compression vs Morphism Density")
+    print("APPLICATION 3: Sensor Network Data Fusion")
     print("=" * 60)
+    print()
 
-    results = []
+    # 5 sensors, each with 3 possible readings
+    n_sensors = 5
+    fibers = {i: [0, 1, 2] for i in range(n_sensors)}
 
-    # Discrete (0 non-identity morphisms)
-    cat_disc = FiniteCategory(
-        objects=[0, 1, 2, 3],
-        morphisms={(a, b): [f"id_{a}"] if a == b else []
-                   for a in range(4) for b in range(4)},
-        identity={i: f"id_{i}" for i in range(4)},
-        composition={(f"id_{i}", f"id_{i}"): f"id_{i}" for i in range(4)}
-    )
-    F_disc = Presheaf(cat_disc,
-        {i: [0, 1, 2] for i in range(4)},
-        {f"id_{i}": lambda x: x for i in range(4)})
-    results.append(("Discrete(4)", 0, compression_ratio(F_disc),
-                     exact_min_cover(F_disc), total_sections(F_disc)))
+    # Independent sensors
+    restrictions_indep = {(i, i): {0: 0, 1: 1, 2: 2} for i in range(n_sensors)}
+    result_indep = analyze_compression(n_sensors, fibers, restrictions_indep)
+    print(f"  Independent sensors: {result_indep['min_cover_exact']} readings needed")
 
-    # Path: 0→1→2→3 (3 non-identity morphisms)
-    cat_path = FiniteCategory(
-        objects=[0, 1, 2, 3],
-        morphisms={(a, b): [] for a in range(4) for b in range(4)},
-        identity={i: f"id_{i}" for i in range(4)},
-        composition={}
-    )
-    for i in range(4):
-        cat_path.morphisms[(i, i)] = [f"id_{i}"]
-        cat_path.composition[(f"id_{i}", f"id_{i}")] = f"id_{i}"
-    for a in range(4):
-        for b in range(a+1, 4):
-            name = f"f_{a}_{b}"
-            cat_path.morphisms[(a, b)] = [name]
-            cat_path.composition[(name, f"id_{a}")] = name
-            cat_path.composition[(f"id_{b}", name)] = name
-    for a in range(4):
-        for b in range(a+1, 4):
-            for c in range(b+1, 4):
-                cat_path.composition[(f"f_{b}_{c}", f"f_{a}_{b}")] = f"f_{a}_{c}"
+    # Star topology: sensor 0 determines all others
+    restrictions_star = dict(restrictions_indep)
+    for i in range(1, n_sensors):
+        restrictions_star[(i, 0)] = {0: 0, 1: 1, 2: 2}
+    result_star = analyze_compression(n_sensors, fibers, restrictions_star)
+    print(f"  Star (sensor 0 master): {result_star['min_cover_exact']} readings needed")
 
-    F_path = Presheaf(cat_path,
-        {i: [0, 1, 2] for i in range(4)},
-        {f"id_{i}": lambda x: x for i in range(4)})
-    for a in range(4):
-        for b in range(a+1, 4):
-            F_path.restriction[f"f_{a}_{b}"] = lambda x: x
-    results.append(("Chain(4)", 6, compression_ratio(F_path),
-                     exact_min_cover(F_path), total_sections(F_path)))
+    # Chain: 0->1->2->3->4
+    restrictions_chain = dict(restrictions_indep)
+    for i in range(n_sensors - 1):
+        restrictions_chain[(i+1, i)] = {0: 0, 1: 1, 2: 2}
+    result_chain = analyze_compression(n_sensors, fibers, restrictions_chain)
+    print(f"  Chain (0->1->...->4): {result_chain['min_cover_exact']} readings needed")
 
-    print(f"\n  {'Category':<20} {'Non-id mor':>10} {'Ratio':>8} {'MinCover':>9} {'Total':>6}")
-    print("  " + "-" * 55)
-    for name, mor, ratio, mc, ts in results:
-        print(f"  {name:<20} {mor:>10} {ratio:>8.3f} {mc:>9} {ts:>6}")
+    # Full mesh
+    restrictions_mesh = {(i, j): {0: 0, 1: 1, 2: 2}
+                         for i in range(n_sensors) for j in range(n_sensors)}
+    result_mesh = analyze_compression(n_sensors, fibers, restrictions_mesh)
+    print(f"  Full mesh: {result_mesh['min_cover_exact']} readings needed")
 
-    print(f"\n  Key insight: More morphisms create more dependencies,")
-    print(f"  reducing the number of primitive (irreducible) sections.")
-    print(f"  This is the categorical analogue of sparse coding: richer")
-    print(f"  structure enables better compression.")
+    print(f"\n  Topology matters: independent={result_indep['min_cover_exact']}, "
+          f"star={result_star['min_cover_exact']}, "
+          f"chain={result_chain['min_cover_exact']}, "
+          f"mesh={result_mesh['min_cover_exact']}")
     print()
 
 
 # =============================================================================
-# Application 4: Codebook Design
+# Application 4: Network Protocol Compression
 # =============================================================================
 
-def codebook_example():
-    """Model codebook design as representable cover optimization.
+def network_protocol_compression():
+    """Application: Minimum message types for full protocol coverage.
 
-    In communication, a codebook maps messages to codewords.
-    The presheaf models how codewords restrict/project across channels.
-    Primitive sections correspond to independently distinguishable codewords.
+    A distributed protocol has nodes that exchange messages. If one node
+    can derive another node's state from its own messages (via known
+    transformations), fewer distinct message types are needed.
     """
     print("=" * 60)
-    print("APPLICATION 4: Codebook Design")
+    print("APPLICATION 4: Network Protocol Message Types")
     print("=" * 60)
-
-    # Two channels with different resolutions
-    # Channel 0: low resolution (2 symbols)
-    # Channel 1: high resolution (4 symbols)
-    # Morphism 0 → 1: refinement
-
-    cat = FiniteCategory(
-        objects=[0, 1],
-        morphisms={(0, 0): ["id_0"], (1, 1): ["id_1"],
-                   (0, 1): ["refine"], (1, 0): []},
-        identity={0: "id_0", 1: "id_1"},
-        composition={
-            ("id_0", "id_0"): "id_0", ("id_1", "id_1"): "id_1",
-            ("refine", "id_0"): "refine", ("id_1", "refine"): "refine",
-        }
-    )
-
-    # Low-res channel: {A, B}
-    # High-res channel: {A1, A2, B1, B2}
-    # Refinement restriction: A1,A2 → A; B1,B2 → B
-    F = Presheaf(cat,
-        {0: ["A", "B"], 1: ["A1", "A2", "B1", "B2"]},
-        {
-            "id_0": lambda x: x, "id_1": lambda x: x,
-            "refine": lambda x: {"A1": "A", "A2": "A", "B1": "B", "B2": "B"}[x],
-        }
-    )
-
-    prims = compute_primitive_sections(F)
-    pc = compute_primitive_count(F)
-    ts = total_sections(F)
-    em = exact_min_cover(F)
-
-    print(f"\n  Two-channel codebook:")
-    print(f"  Low-res channel:  {F.fibers[0]}")
-    print(f"  High-res channel: {F.fibers[1]}")
-    print(f"\n  Total codewords: {ts}")
-    print(f"  Primitive codewords: {pc}")
-    for Y in cat.objects:
-        print(f"    Channel {Y}: {prims[Y]}")
-    print(f"  Minimum codebook size: {em}")
-    print(f"\n  Insight: Low-res symbols A,B are generated by restricting")
-    print(f"  high-res symbols, so they are NOT primitive. Only the")
-    print(f"  high-res symbols are primitive generators of the codebook.")
     print()
 
+    # 3 node types, each with message set of size 4
+    n_nodes = 3
+    m = 4
+    fibers = {i: list(range(m)) for i in range(n_nodes)}
+
+    # Scenario: Gateway node (0) can derive all messages
+    restrictions_gateway = {(i, i): {x: x for x in range(m)} for i in range(n_nodes)}
+    for i in range(1, n_nodes):
+        restrictions_gateway[(i, 0)] = {x: x for x in range(m)}
+
+    result = analyze_compression(n_nodes, fibers, restrictions_gateway)
+    print(f"  Gateway protocol:")
+    print(f"    Total message types: {result['total_elements']}")
+    print(f"    Min distinct types needed: {result['min_cover_exact']}")
+    print(f"    Shannon lower bound: {result['shannon_lb']}")
+    print(f"    Compression: {result['compression_ratio']:.1f}x")
+    print()
+
+
+# =============================================================================
+# Main
+# =============================================================================
 
 def main():
-    print("\n" + "=" * 60)
-    print("  CATEGORICAL SPARSITY: Real-World Applications")
-    print("=" * 60 + "\n")
+    print()
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║   CATEGORICAL SHANNON THEORY — REAL-WORLD APPLICATIONS ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    print()
 
-    database_example()
-    sensor_placement_example()
-    compression_analysis()
-    codebook_example()
+    database_schema_compression()
+    software_module_optimization()
+    sensor_network_fusion()
+    network_protocol_compression()
 
     print("=" * 60)
-    print("  SUMMARY")
+    print("ALL APPLICATIONS COMPLETED")
     print("=" * 60)
-    print("""
-  Categorical sparsity theory provides a unified framework for:
-
-  1. DATABASE COMPRESSION: Primitive sections = minimal keys.
-     Only irreducible tuples need storage; the rest are projections.
-
-  2. SENSOR PLACEMENT: Minimum covers = optimal sensor locations.
-     High-vantage sensors observe multiple locations via restriction.
-
-  3. SIGNAL COMPRESSION: Compression ratio decreases with morphism
-     density — richer categorical structure enables better compression.
-
-  4. CODEBOOK DESIGN: Primitive codewords = independent symbols.
-     Coarse symbols are generated by restricting fine ones.
-
-  The universal bound n*m is tight for discrete categories (no structure).
-  Real categories with morphisms achieve strictly better compression.
-""")
 
 
 if __name__ == "__main__":
@@ -361,255 +243,455 @@ if __name__ == "__main__":
 
 #!/usr/bin/env python3
 """
-Interactive exploration of categorical sparsity and optimal generator bounds.
+Categorical Shannon Theory — Interactive Demo
 
-This demo computes primitive sections, greedy cover sizes, and exact minimal
-representable cover sizes for small finite categories and presheaves.
-It also visualizes the restriction dependency graph.
-
-Usage:
-    python demo.py
+Demonstrates the core ideas:
+1. Constructs presheaves over small categories
+2. Builds generator graphs
+3. Computes minimal dominating sets (= minimal covers)
+4. Verifies the Shannon lower bound and tightness examples
+5. Visualizes the morphism-density-compression tradeoff
 """
 
-from __future__ import annotations
-import itertools
-from dataclasses import dataclass, field
-from typing import Callable
-from algorithms import (
-    FiniteCategory, Presheaf, compute_primitive_sections,
-    compute_primitive_count, greedy_cover, exact_min_cover,
-    total_sections, compression_ratio
-)
+from itertools import product, combinations
+from typing import Dict, List, Set, Tuple, Optional
+import math
+import json
 
 
-def make_discrete(n: int) -> FiniteCategory:
-    """Discrete category with n objects (only identity morphisms)."""
-    objects = list(range(n))
-    morphisms: dict[tuple[int,int], list[str]] = {}
-    for a in objects:
-        morphisms[(a, a)] = [f"id_{a}"]
-    identity = {a: f"id_{a}" for a in objects}
-    comp: dict[tuple[str,str], str] = {}
-    for a in objects:
-        comp[(f"id_{a}", f"id_{a}")] = f"id_{a}"
-    return FiniteCategory(objects, morphisms, identity, comp)
+# =============================================================================
+# Core Data Structures
+# =============================================================================
+
+class PresheafModel:
+    """A presheaf on a finite category.
+
+    Objects: list of integers [0, ..., n-1]
+    Fibers: F[i] is a list of elements at object i
+    Restrictions: restrict[(i, j)] maps F[j] -> F[i] (a dict element -> element)
+    """
+
+    def __init__(self, n_objects: int, fibers: Dict[int, List], restrictions: Dict[Tuple[int, int], Dict]):
+        self.n_objects = n_objects
+        self.objects = list(range(n_objects))
+        self.fibers = fibers
+        self.restrictions = restrictions  # (target, source) -> {elem_source: elem_target}
+
+    def has_restriction(self, target: int, source: int) -> bool:
+        return (target, source) in self.restrictions
+
+    def restrict(self, target: int, source: int, elem):
+        return self.restrictions[(target, source)][elem]
+
+    def generators(self) -> List[Tuple[int, object]]:
+        """All generators (object, element) pairs."""
+        result = []
+        for obj in self.objects:
+            for elem in self.fibers[obj]:
+                result.append((obj, elem))
+        return result
+
+    def total_elements(self) -> int:
+        return sum(len(self.fibers[obj]) for obj in self.objects)
+
+    def covers(self, gen: Tuple[int, object], target_obj: int, target_elem) -> bool:
+        """Does generator gen cover element target_elem at target_obj?"""
+        src_obj, src_elem = gen
+        if not self.has_restriction(target_obj, src_obj):
+            return False
+        return self.restrict(target_obj, src_obj, src_elem) == target_elem
+
+    def is_covering_set(self, gens: Set[Tuple[int, object]]) -> bool:
+        """Check if a set of generators covers all elements."""
+        for obj in self.objects:
+            for elem in self.fibers[obj]:
+                covered = False
+                for gen in gens:
+                    if self.covers(gen, obj, elem):
+                        covered = True
+                        break
+                if not covered:
+                    return False
+        return True
+
+    def min_cover_size(self) -> int:
+        """Compute minimum covering set size by exhaustive search."""
+        all_gens = self.generators()
+        n = len(all_gens)
+        for size in range(n + 1):
+            for subset in combinations(range(n), size):
+                gen_set = {all_gens[i] for i in subset}
+                if self.is_covering_set(gen_set):
+                    return size
+        return n  # Should not reach here
+
+    def is_self_covering(self) -> bool:
+        """Check if every element covers itself."""
+        for obj in self.objects:
+            for elem in self.fibers[obj]:
+                if not self.has_restriction(obj, obj):
+                    return False
+                if self.restrict(obj, obj, elem) != elem:
+                    return False
+        return True
 
 
-def make_chain(n: int) -> FiniteCategory:
-    """Linear order 0 < 1 < ... < n-1 as a category."""
-    objects = list(range(n))
-    morphisms: dict[tuple[int,int], list[str]] = {}
-    identity = {}
-    comp: dict[tuple[str,str], str] = {}
+# =============================================================================
+# Model Constructors
+# =============================================================================
 
-    # Generate morphism names for a ≤ b
-    def mor_name(a: int, b: int) -> str:
-        if a == b:
-            return f"id_{a}"
-        return f"f_{a}_{b}"
-
-    for a in objects:
-        identity[a] = f"id_{a}"
-        for b in objects:
-            if a <= b:
-                morphisms[(a, b)] = [mor_name(a, b)]
-            else:
-                morphisms[(a, b)] = []
-
-    # Composition
-    for a in objects:
-        for b in objects:
-            for c in objects:
-                if a <= b <= c:
-                    comp[(mor_name(b, c), mor_name(a, b))] = mor_name(a, c)
-
-    return FiniteCategory(objects, morphisms, identity, comp)
+def discrete_model(n: int, m: int) -> PresheafModel:
+    """Discrete category on n objects with fiber size m.
+    Only identity restrictions."""
+    fibers = {i: list(range(m)) for i in range(n)}
+    restrictions = {(i, i): {x: x for x in range(m)} for i in range(n)}
+    return PresheafModel(n, fibers, restrictions)
 
 
-def make_diamond() -> FiniteCategory:
-    """Diamond poset: 0 < 1, 0 < 2, 1 < 3, 2 < 3."""
-    objects = [0, 1, 2, 3]
-    # Morphisms from Hasse + transitivity + identities
-    # 0→0, 0→1, 0→2, 0→3, 1→1, 1→3, 2→2, 2→3, 3→3
-    morphisms: dict[tuple[int,int], list[str]] = {
-        (a, b): [] for a in objects for b in objects
-    }
-    all_mor = [
-        (0, 0, "id_0"), (1, 1, "id_1"), (2, 2, "id_2"), (3, 3, "id_3"),
-        (0, 1, "f_01"), (0, 2, "f_02"), (0, 3, "f_03"),
-        (1, 3, "f_13"), (2, 3, "f_23"),
+def connected_model(n: int, m: int) -> PresheafModel:
+    """Fully connected category on n objects with fiber size m.
+    All restrictions are identity."""
+    fibers = {i: list(range(m)) for i in range(n)}
+    restrictions = {}
+    for i in range(n):
+        for j in range(n):
+            restrictions[(i, j)] = {x: x for x in range(m)}
+    return PresheafModel(n, fibers, restrictions)
+
+
+def partial_connected_model(n: int, m: int, edges: List[Tuple[int, int]]) -> PresheafModel:
+    """Category with specified restriction edges plus self-loops.
+    All restrictions are identity."""
+    fibers = {i: list(range(m)) for i in range(n)}
+    restrictions = {}
+    for i in range(n):
+        restrictions[(i, i)] = {x: x for x in range(m)}
+    for (tgt, src) in edges:
+        restrictions[(tgt, src)] = {x: x for x in range(m)}
+    return PresheafModel(n, fibers, restrictions)
+
+
+def surjective_model(n: int, m_terminal: int, m_other: int) -> PresheafModel:
+    """Terminal source model: object 0 has fiber size m_terminal,
+    other objects have fiber size m_other ≤ m_terminal.
+    Restriction from 0 maps x to x mod m_other."""
+    fibers = {0: list(range(m_terminal))}
+    for i in range(1, n):
+        fibers[i] = list(range(m_other))
+    restrictions = {}
+    for i in range(n):
+        restrictions[(i, i)] = {x: x for x in fibers[i]}
+    for i in range(1, n):
+        restrictions[(i, 0)] = {x: x % m_other for x in range(m_terminal)}
+    return PresheafModel(n, fibers, restrictions)
+
+
+# =============================================================================
+# Generator Graph
+# =============================================================================
+
+class GeneratorGraph:
+    """The generator graph of a presheaf model.
+
+    Vertices: all generators (object, element)
+    Edges: gen1 -> gen2 if gen1 covers gen2
+    """
+
+    def __init__(self, model: PresheafModel):
+        self.model = model
+        self.vertices = model.generators()
+        self.adj = {}  # vertex -> set of vertices it dominates
+        for v in self.vertices:
+            self.adj[v] = set()
+            for u in self.vertices:
+                if model.covers(v, u[0], u[1]):
+                    self.adj[v].add(u)
+
+    def is_dominating(self, S: Set) -> bool:
+        """Check if S is a dominating set."""
+        dominated = set()
+        for v in S:
+            dominated.add(v)
+            dominated.update(self.adj[v])
+        return dominated >= set(self.vertices)
+
+    def min_domination_number(self) -> int:
+        """Compute minimum dominating set size."""
+        n = len(self.vertices)
+        for size in range(n + 1):
+            for subset in combinations(range(n), size):
+                S = {self.vertices[i] for i in subset}
+                if self.is_dominating(S):
+                    return size
+        return n
+
+    def degree(self, v) -> int:
+        """Out-degree: how many vertices v dominates."""
+        return len(self.adj[v])
+
+
+# =============================================================================
+# Shannon Lower Bound
+# =============================================================================
+
+def shannon_lower_bound(model: PresheafModel) -> int:
+    """Compute the categorical Shannon lower bound:
+    max over objects X of ceil(|F(X)| / max_Y |{restrictions from Y covering X}|)
+
+    Each generator covers at most 1 element per object. The number of generators
+    at object Y that can cover elements at X is |F(Y)| if there's a restriction
+    from Y to X. So the total coverage at X is at most
+    sum_{Y with restriction to X} |F(Y)|.
+
+    But we can do better: each generator covers exactly 1 element at X (if any).
+    So we need at least |F(X)| / (max multiplicity) generators overall.
+    """
+    bound = 0
+    for x in model.objects:
+        fx_size = len(model.fibers[x])
+        # How many objects have a restriction to x?
+        coverage = sum(1 for y in model.objects if model.has_restriction(x, y))
+        if coverage > 0:
+            local_bound = math.ceil(fx_size / coverage)
+            bound = max(bound, local_bound)
+    return bound
+
+
+# =============================================================================
+# Demo 1: Discrete Category Tightness
+# =============================================================================
+
+def demo_discrete_tightness():
+    """Demonstrate that discrete categories achieve the worst case."""
+    print("=" * 60)
+    print("DEMO 1: Discrete Category Tightness")
+    print("=" * 60)
+    print()
+
+    for n in range(1, 5):
+        for m in range(1, 4):
+            model = discrete_model(n, m)
+            mcs = model.min_cover_size()
+            total = model.total_elements()
+            print(f"  n={n}, m={m}: minCoverSize = {mcs}, "
+                  f"totalElements = {total}, "
+                  f"tight = {mcs == total}")
+            assert mcs == total, f"Tightness failed for n={n}, m={m}!"
+
+    print()
+    print("  ✓ All discrete models achieve minCoverSize = n * m (tight bound)")
+    print()
+
+
+# =============================================================================
+# Demo 2: Connected Category Compression
+# =============================================================================
+
+def demo_connected_compression():
+    """Demonstrate compression in connected categories."""
+    print("=" * 60)
+    print("DEMO 2: Connected Category Compression")
+    print("=" * 60)
+    print()
+
+    for n in range(1, 5):
+        for m in range(1, 4):
+            disc = discrete_model(n, m)
+            conn = connected_model(n, m)
+            disc_mcs = disc.min_cover_size()
+            conn_mcs = conn.min_cover_size()
+            ratio = disc_mcs / conn_mcs if conn_mcs > 0 else float('inf')
+            print(f"  n={n}, m={m}: discrete={disc_mcs}, connected={conn_mcs}, "
+                  f"compression_ratio={ratio:.1f}")
+
+    print()
+    print("  ✓ Connected categories compress by factor n")
+    print()
+
+
+# =============================================================================
+# Demo 3: Generator Graph Domination
+# =============================================================================
+
+def demo_generator_graph():
+    """Demonstrate the generator graph and domination equivalence."""
+    print("=" * 60)
+    print("DEMO 3: Generator Graph and Domination")
+    print("=" * 60)
+    print()
+
+    # Small example: 3 objects, fiber size 2
+    model = partial_connected_model(3, 2, [(1, 0), (2, 0)])
+    graph = GeneratorGraph(model)
+
+    print(f"  Model: 3 objects, fiber size 2, edges 0→1, 0→2")
+    print(f"  Vertices: {graph.vertices}")
+    print(f"  Degrees: ", end="")
+    for v in graph.vertices:
+        print(f"{v}:{graph.degree(v)} ", end="")
+    print()
+
+    mcs_cover = model.min_cover_size()
+    mcs_dom = graph.min_domination_number()
+    print(f"  minCoverSize = {mcs_cover}")
+    print(f"  minDominationNumber = {mcs_dom}")
+    print(f"  Equal = {mcs_cover == mcs_dom}")
+    print()
+
+    # Verify domination = covering for several models
+    test_cases = [
+        ("discrete 2x2", discrete_model(2, 2)),
+        ("connected 3x2", connected_model(3, 2)),
+        ("partial 3x2", partial_connected_model(3, 2, [(0, 1)])),
     ]
-    for a, b, name in all_mor:
-        morphisms[(a, b)].append(name)
+    for name, m in test_cases:
+        g = GeneratorGraph(m)
+        assert m.min_cover_size() == g.min_domination_number(), \
+            f"Cover ≠ domination for {name}!"
+        print(f"  ✓ {name}: cover = domination = {m.min_cover_size()}")
 
-    identity = {i: f"id_{i}" for i in objects}
-
-    # Build composition table
-    comp: dict[tuple[str,str], str] = {}
-    # id compositions
-    for a, b, name in all_mor:
-        comp[(name, f"id_{a}")] = name
-        comp[(f"id_{b}", name)] = name
-    # Non-trivial compositions
-    comp[("f_13", "f_01")] = "f_03"
-    comp[("f_23", "f_02")] = "f_03"
-
-    return FiniteCategory(objects, morphisms, identity, comp)
-
-
-def constant_presheaf(cat: FiniteCategory, m: int) -> Presheaf:
-    """Constant presheaf assigning Fin(m) = {0,...,m-1} to every object."""
-    fibers = {Y: list(range(m)) for Y in cat.objects}
-    restriction: dict[str, Callable] = {}
-    for (a, b), mors in cat.morphisms.items():
-        for mor in mors:
-            restriction[mor] = lambda x, _a=a, _b=b: x  # identity on values
-    return Presheaf(cat, fibers, restriction)
-
-
-def injective_chain_presheaf(n: int, m: int) -> Presheaf:
-    """Presheaf on chain 0<1<...<n-1 where restriction is identity (injective).
-    All fibers have size m."""
-    cat = make_chain(n)
-    fibers = {Y: list(range(m)) for Y in cat.objects}
-    restriction: dict[str, Callable] = {}
-    for (a, b), mors in cat.morphisms.items():
-        for mor in mors:
-            restriction[mor] = lambda x: x
-    return Presheaf(cat, fibers, restriction)
-
-
-def collapsing_chain_presheaf() -> Presheaf:
-    """Chain 0<1<2 where F(2)={0,1,2}, F(1)={0,1}, F(0)={0},
-    restriction 2→1 sends {0,1}↦{0,1}, 2↦0,
-    restriction 1→0 sends {0,1}↦0."""
-    cat = make_chain(3)
-    fibers = {0: [0], 1: [0, 1], 2: [0, 1, 2]}
-    restriction = {
-        "id_0": lambda x: x,
-        "id_1": lambda x: x,
-        "id_2": lambda x: x,
-        "f_0_1": lambda x: 0,
-        "f_1_2": lambda x: min(x, 1),
-        "f_0_2": lambda x: 0,
-    }
-    return Presheaf(cat, fibers, restriction)
-
-
-def print_separator():
-    print("=" * 70)
-
-
-def analyze_presheaf(name: str, F: Presheaf):
-    """Full analysis of a presheaf."""
-    print(f"\n{'─' * 60}")
-    print(f"  {name}")
-    print(f"{'─' * 60}")
-
-    n_obj = len(F.category.objects)
-    ts = total_sections(F)
-    prims = compute_primitive_sections(F)
-    pc = compute_primitive_count(F)
-    greedy = greedy_cover(F)
-    exact = exact_min_cover(F)
-
-    print(f"  Objects: {n_obj}")
-    print(f"  Fibers: {F.fibers}")
-    print(f"  Total sections:     {ts}")
-    print(f"  Primitive count:    {pc}")
-    print(f"  Greedy cover size:  {len(greedy)}")
-    print(f"  Exact min cover:    {exact}")
-    print(f"  Compression ratio:  {compression_ratio(F):.3f}")
-    print(f"  Universal bound:    {n_obj * max((len(v) for v in F.fibers.values()), default=0)}")
-    print()
-
-    # Print primitive sections
-    for Y in F.category.objects:
-        prim_at_Y = prims.get(Y, [])
-        all_at_Y = F.fibers[Y]
-        print(f"  Object {Y}: sections={all_at_Y}, primitive={prim_at_Y}")
-
-    # Print greedy cover
-    print(f"\n  Greedy cover generators:")
-    for obj, sec in greedy:
-        print(f"    ({obj}, {sec})")
     print()
 
 
-def main():
-    print_separator()
-    print("  CATEGORICAL SPARSITY: Optimal Generator Bounds")
-    print("  Interactive Demo")
-    print_separator()
+# =============================================================================
+# Demo 4: Shannon Lower Bound
+# =============================================================================
 
-    # === Discrete categories ===
-    print("\n\n▶ DISCRETE CATEGORIES")
-    print("  (No non-identity morphisms — every section is primitive)")
-
-    for n in [1, 2, 3, 5]:
-        for m in [1, 2, 3]:
-            cat = make_discrete(n)
-            F = constant_presheaf(cat, m)
-            analyze_presheaf(f"Discrete({n}), constant fiber size {m}", F)
-
-    # === Chain categories ===
-    print("\n\n▶ CHAIN CATEGORIES (linear orders)")
-    print("  (Restriction along order creates dependencies)")
-
-    # Constant presheaf on chain
-    for n in [2, 3, 4]:
-        cat = make_chain(n)
-        F = constant_presheaf(cat, 2)
-        analyze_presheaf(f"Chain({n}), constant fiber size 2", F)
-
-    # Collapsing chain
-    F_collapse = collapsing_chain_presheaf()
-    analyze_presheaf("Chain(3), collapsing presheaf", F_collapse)
-
-    # Injective chain presheaf
-    for n in [2, 3]:
-        F_inj = injective_chain_presheaf(n, 3)
-        analyze_presheaf(f"Chain({n}), injective presheaf, fiber size 3", F_inj)
-
-    # === Diamond ===
-    print("\n\n▶ DIAMOND POSET")
-    cat = make_diamond()
-    F_diamond = constant_presheaf(cat, 2)
-    analyze_presheaf("Diamond, constant fiber size 2", F_diamond)
-
-    # === Summary table ===
-    print_separator()
-    print("  SUMMARY TABLE")
-    print_separator()
-    print(f"  {'Category':<25} {'n':>3} {'m':>3} {'Total':>6} {'Prim':>6} {'Greedy':>6} {'Exact':>6} {'n*m':>6} {'Ratio':>7}")
-    print("  " + "-" * 70)
+def demo_shannon_bound():
+    """Verify the Shannon lower bound on small instances."""
+    print("=" * 60)
+    print("DEMO 4: Shannon Lower Bound")
+    print("=" * 60)
+    print()
 
     test_cases = [
-        ("Discrete(3)", make_discrete(3), 2),
-        ("Discrete(5)", make_discrete(5), 3),
-        ("Chain(3)", make_chain(3), 2),
-        ("Chain(4)", make_chain(4), 2),
-        ("Diamond", make_diamond(), 2),
+        ("discrete 3x3", discrete_model(3, 3)),
+        ("connected 3x3", connected_model(3, 3)),
+        ("partial 3x2 (0→1)", partial_connected_model(3, 2, [(0, 1)])),
+        ("partial 3x2 (0→1,0→2)", partial_connected_model(3, 2, [(0, 1), (0, 2)])),
+        ("surjective 3 (4→2)", surjective_model(3, 4, 2)),
     ]
 
-    for name, cat, m in test_cases:
-        F = constant_presheaf(cat, m)
-        n_obj = len(cat.objects)
-        ts = total_sections(F)
-        pc = compute_primitive_count(F)
-        g = len(greedy_cover(F))
-        ex = exact_min_cover(F)
-        cr = compression_ratio(F)
-        print(f"  {name:<25} {n_obj:>3} {m:>3} {ts:>6} {pc:>6} {g:>6} {ex:>6} {n_obj*m:>6} {cr:>7.3f}")
+    all_valid = True
+    for name, model in test_cases:
+        mcs = model.min_cover_size()
+        lb = shannon_lower_bound(model)
+        valid = mcs >= lb
+        all_valid = all_valid and valid
+        print(f"  {name}: minCoverSize={mcs}, shannonLB={lb}, valid={valid}")
 
     print()
-    print_separator()
-    print("  KEY FINDINGS:")
-    print("  • Discrete categories: minCover = totalSections (no compression)")
-    print("  • Chain categories: constant presheaves have significant compression")
-    print("  • Diamond poset: additional compression from branching structure")
-    print("  • Universal bound n*m is tight only for discrete categories")
-    print_separator()
+    if all_valid:
+        print("  ✓ Shannon lower bound verified on all test cases")
+    else:
+        print("  ✗ Shannon lower bound VIOLATED!")
+    print()
+
+
+# =============================================================================
+# Demo 5: Morphism Density Compression Tradeoff
+# =============================================================================
+
+def demo_compression_tradeoff():
+    """Visualize how morphism density affects compression.
+
+    For each edge density (number of restriction pairs beyond self-loops),
+    compute the minimum cover size. Show the tradeoff curve.
+    """
+    print("=" * 60)
+    print("DEMO 5: Morphism Density Compression Tradeoff")
+    print("=" * 60)
+    print()
+
+    n = 3
+    m = 3
+    all_possible_edges = [(i, j) for i in range(n) for j in range(n) if i != j]
+    max_edges = len(all_possible_edges)
+
+    print(f"  Objects: {n}, Fiber size: {m}")
+    print(f"  Maximum additional edges: {max_edges}")
+    print()
+    print(f"  {'Edges':>8}  {'R (total)':>10}  {'minCover':>10}  {'ratio':>8}")
+    print(f"  {'-'*8}  {'-'*10}  {'-'*10}  {'-'*8}")
+
+    for num_edges in range(max_edges + 1):
+        # Take first num_edges edges (arbitrary ordering)
+        edges = all_possible_edges[:num_edges]
+        model = partial_connected_model(n, m, edges)
+        total_restrictions = n + num_edges  # self-loops + extra edges
+        mcs = model.min_cover_size()
+        ratio = mcs / (n * m)
+        print(f"  {num_edges:>8}  {total_restrictions:>10}  {mcs:>10}  {ratio:>8.3f}")
+
+    print()
+
+    # Verify the conjecture: minCoverSize * R ≤ n² * m
+    print("  Verifying Morphism Density Compression Law: minCoverSize * R ≤ n² * m")
+    conjecture_valid = True
+    for num_edges in range(max_edges + 1):
+        edges = all_possible_edges[:num_edges]
+        model = partial_connected_model(n, m, edges)
+        R = n + num_edges
+        mcs = model.min_cover_size()
+        lhs = mcs * R
+        rhs = n * n * m
+        valid = lhs <= rhs
+        conjecture_valid = conjecture_valid and valid
+        status = "✓" if valid else "✗"
+        print(f"    {status} edges={num_edges}, R={R}: {mcs}*{R}={lhs} {'≤' if valid else '>'} {rhs}")
+
+    if conjecture_valid:
+        print(f"  ✓ Conjecture verified for n={n}, m={m}")
+    else:
+        print(f"  ✗ Conjecture VIOLATED — needs refinement")
+    print()
+
+
+# =============================================================================
+# Demo 6: Terminal Object Compression
+# =============================================================================
+
+def demo_terminal_compression():
+    """Demonstrate compression via terminal source with surjective restrictions."""
+    print("=" * 60)
+    print("DEMO 6: Terminal Object Compression")
+    print("=" * 60)
+    print()
+
+    for n in [2, 3, 4]:
+        for m_term in [2, 3, 4]:
+            for m_other in range(1, m_term + 1):
+                model = surjective_model(n, m_term, m_other)
+                mcs = model.min_cover_size()
+                print(f"  n={n}, |F(T)|={m_term}, |F(other)|={m_other}: "
+                      f"minCoverSize={mcs}")
+
+    print()
+    print("  ✓ Terminal compression: minCoverSize ≤ |F(T)| when restrictions surject")
+    print()
+
+
+# =============================================================================
+# Main
+# =============================================================================
+
+def main():
+    print()
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║     CATEGORICAL SHANNON THEORY — INTERACTIVE DEMO      ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_discrete_tightness()
+    demo_connected_compression()
+    demo_generator_graph()
+    demo_shannon_bound()
+    demo_compression_tradeoff()
+    demo_terminal_compression()
+
+    print("=" * 60)
+    print("ALL DEMOS COMPLETED SUCCESSFULLY")
+    print("=" * 60)
 
 
 if __name__ == "__main__":

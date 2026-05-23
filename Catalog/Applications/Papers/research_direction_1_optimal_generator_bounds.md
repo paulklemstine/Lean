@@ -1,339 +1,273 @@
-# Categorical Sparsity: Optimal Generator Bounds for Finite Presheaves
+# Categorical Shannon Theory: Optimal Generator Bounds for Representable Covers
 
 ## Abstract
 
-We develop a quantitative theory of **categorical sparsity** for finite-valued presheaves over finite categories. We introduce *primitive sections* — sections not obtainable by restricting along morphisms from different objects — and prove that the minimum cardinality of a representable cover (representable generating family) is controlled by the primitive count. We establish: (1) a universal upper bound `minRepCoverCard(F) ≤ n·m` for presheaves with n objects and fiber size ≤ m; (2) an exact formula `minRepCoverCard(F) = totalSections(F)` for discrete categories; (3) tightness of the universal bound via explicit constructions; and (4) the inequality `primitiveCount(F) ≤ totalSections(F)` with equality characterization. All theorems are formally verified in Lean 4 with the Mathlib library. Computational experiments on small categories (≤ 5 objects, ≤ 4 fiber elements) confirm the theory and suggest several open conjectures about exactness for poset categories and compression-ratio laws.
-
-**Keywords:** categorical sparsity, presheaf, representable cover, primitive section, generator complexity, finite category, formal verification.
-
----
+We develop **Categorical Shannon Theory**, a framework that quantifies how the morphism structure of a finite category determines the minimum number of generators needed to represent a presheaf. We prove three main results: (1) **Discrete Tightness**: the worst-case generator bound n·m is exactly achieved by discrete categories; (2) **Terminal Compression**: categories with a terminal source and surjective restrictions achieve the optimal cover size |F(T)|; (3) **Graph Domination Bridge**: minimum representable covers correspond exactly to minimum dominating sets in a generator graph, connecting presheaf theory to combinatorial optimization. We introduce the **generator graph** of a presheaf—a novel construction whose domination number equals the minimum cover size—and show that compression is determined not by morphism count but by morphism topology. A natural density-based compression conjecture is computationally refuted, revealing that structural properties (connectivity, domination) rather than density govern categorical compression. All main theorems are verified with complete formal proofs in Lean 4.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-The classical theory of presheaves, rooted in the Yoneda lemma, provides qualitative tools for understanding functors via representable objects. However, the *quantitative* question — given a finite presheaf F, how many representable generators suffice to cover F? — has received surprisingly little attention.
+The problem of representing presheaves by generators is fundamental in category theory. Given a finite category C and a presheaf F : C^op → Set with finite fibers, the classical bound states that F admits a representable cover of size at most Σ_Y |F(Y)|, treating each fiber element as an independent generator. This "discrete" bound ignores the morphism structure of C entirely.
 
-This question has direct applications across multiple domains:
-- **Database theory:** Minimum key sets for multi-table schemas (projections as restrictions).
-- **Sensor networks:** Optimal placement of sensors in hierarchical monitoring systems.
-- **Coding theory:** Minimum codebook sizes for multi-resolution communication channels.
-- **Compressed sensing:** Sparse representation of categorical data.
+The central question is: **when and how much can morphisms reduce this bound?**
 
-### 1.2 Contributions
+This question connects to:
+- **Information theory**: morphisms as channels, generators as codewords
+- **Database theory**: foreign keys as restrictions, base records as generators
+- **Graph theory**: covers as dominating sets in the generator graph
+- **Optimization**: minimum set cover and its approximation algorithms
 
-We make the following contributions:
+### 1.2 Prior Work
 
-1. **Definition of primitive sections** (Definition 3.1): A section x ∈ F(op Y) is primitive if it is not in the image of any restriction map from a different object. This captures the notion of irreducible information in a presheaf.
+The probe complexity theory of finite categories [Catalog: ProbeComplexity/Defs.lean, Theorems.lean] established the quantitative framework for measuring how objects distinguish morphisms, including the information-theoretic profile capacity bound. The representable dimension theory [Catalog: ProbeComplexity/RepresentableDimension.lean] developed measurement invariants for presheaf representations on discrete categories.
 
-2. **Universal upper bound** (Theorem 4.3): For any finite presheaf F over a category with n objects and fiber sizes ≤ m, the minimum representable cover has at most n·m elements.
+Our work extends this in a new direction: rather than distinguishing morphisms (the probe problem), we study representing presheaf elements (the cover problem). The key innovation is recognizing that morphisms provide compression channels.
 
-3. **Discrete exactness** (Theorem 5.1): For discrete categories (no non-identity morphisms), the minimum cover equals the total number of sections. Every section must be its own generator.
+### 1.3 Contributions
 
-4. **Tightness** (Theorem 5.2): The n·m bound is achieved by constant presheaves on discrete categories.
+1. **Presheaf Model Framework**: A concrete, computationally tractable formalization of presheaves with restriction maps (Section 2).
 
-5. **Primitive count bound** (Theorem 4.1): The primitive count is at most the total section count, and it bounds the minimum cover from above when every section is restriction-generated from a primitive one.
+2. **Discrete Tightness Theorem**: For discrete categories, minCoverSize = totalElements, proving the classical bound is tight (Section 3).
 
-6. **Formal verification:** All theorems are proved in Lean 4, verified against only the standard axioms (propext, Classical.choice, Quot.sound).
+3. **Terminal Compression Theorem**: For categories with a terminal source, minCoverSize ≤ |F(T)|, achieving n-fold compression (Section 4).
 
-7. **Computational experiments:** We implement algorithms for computing primitive sections, greedy covers, and exact minimum covers, and test them on categories with ≤ 5 objects.
+4. **Generator Graph**: A novel graph-theoretic object whose domination number equals the minimum cover size, bridging presheaf theory and combinatorial optimization (Section 5).
 
-### 1.3 Related Work
+5. **Compression Factor Theorem**: Explicit quantification of the compression ratio between discrete and connected categories (Section 6).
 
-The representable cover problem is related to but distinct from several classical problems:
+6. **Refuted Conjecture**: Computational evidence that morphism density alone does not determine compression—topology matters (Section 7).
 
-- **Sheaf-theoretic reconstruction** (Curry, 2014): Global section recovery from local data, but without quantitative generator bounds.
-- **Set cover problem** (Chvátal, 1979): The minimum representable cover generalizes set cover when the category structure is rich.
-- **Sparse dictionary learning** (Olshausen & Field, 1997): Representable presheaves as dictionary atoms, with primitive sections as minimal dictionary elements.
-- **Yoneda embedding and representability** (Mac Lane, 1998): The qualitative foundation on which our quantitative theory rests.
+## 2. Definitions and Framework
 
----
+### 2.1 Presheaf Model
 
-## 2. Preliminaries
+**Definition 2.1** (Presheaf Model). A *presheaf model* M = (Ob, F, hasRestriction, restrict) consists of:
+- A finite type Ob of objects
+- A family F : Ob → Type of finite fibers
+- A relation hasRestriction : Ob → Ob → Prop indicating which restrictions exist
+- Maps restrict : (X, Y) → F(Y) → F(X) implementing the restrictions
 
-### 2.1 Finite Categories and Presheaves
+This models a presheaf F : C^op → Set where hasRestriction(X, Y) means there exists a morphism X → Y in C, and restrict(X, Y) is the action of F on that morphism.
 
-A **finite category** C consists of a finite set of objects Ob(C) and finite hom-sets Hom(X,Y) with composition and identity morphisms satisfying the usual axioms.
+**Definition 2.2** (Generator). A *generator* is a pair (Y, z) where Y ∈ Ob and z ∈ F(Y).
 
-A **presheaf** on C is a functor F : C^op → Type. For a morphism f : X → Y in C, the induced map F(f^op) : F(Y) → F(X) is called the **restriction** along f.
+**Definition 2.3** (Covering). A generator (Y, z) *covers* an element (X, w) if hasRestriction(X, Y) and restrict(X, Y, z) = w.
 
-A presheaf is **finite-valued** if each F(op Y) is a finite set.
+**Definition 2.4** (Covering Set). A set S of generators is *covering* if for every (X, w) there exists (Y, z) ∈ S covering (X, w).
 
-### 2.2 Representable Covers
+**Definition 2.5** (Minimum Cover Size). minCoverSize(M) = min{|S| : S is a covering set}.
 
-**Definition 2.1.** A **representable cover** of F consists of:
-- An index type ι
-- Functions obj : ι → Ob(C) and section_ : (i : ι) → F(op (obj i))
-- The **cover property:** for every W ∈ Ob(C) and w ∈ F(op W), there exists i ∈ ι and f : W → obj(i) such that F(f^op)(section_(i)) = w.
+**Definition 2.6** (Self-Covering). A model is *self-covering* if for all X and w ∈ F(X), hasRestriction(X, X) and restrict(X, X, w) = w. This corresponds to categories having identity morphisms.
 
-The **minimum representable cover cardinality** is:
+**Definition 2.7** (Discrete Model). A model is *discrete* if hasRestriction(X, Y) implies X = Y. This corresponds to discrete categories.
+
+**Definition 2.8** (Terminal Source). An object T is a *terminal source* if hasRestriction(X, T) for all X.
+
+### 2.2 Generator Graph
+
+**Definition 2.9** (Generator Graph). The *generator graph* GenGraph(M) has:
+- Vertices: all generators (Y, z)
+- Edges: (Y, z) → (X, w) if (Y, z) covers (X, w)
+
+**Definition 2.10** (Dominating Set). A set S ⊆ V is *dominating* if every vertex is either in S or adjacent to a vertex in S.
+
+## 3. Discrete Tightness Theorem
+
+**Theorem 3.1** (Discrete Tightness). *If M is a discrete self-covering model with identity self-restrictions, then minCoverSize(M) = totalElements(M).*
+
+**Proof Sketch.**
+
+*Upper bound*: The full set of all generators covers everything (each element covers itself via identity restriction).
+
+*Lower bound*: We show any covering set must be the entire generator set. The key lemma:
+
+**Lemma 3.2** (Unique Coverage). In a discrete model with identity self-restrictions, if generator (Y, z) covers element (X, w), then Y = X and z = w.
+
+*Proof of Lemma 3.2*: The covering condition gives hasRestriction(X, Y). Discreteness forces X = Y. Then the covering equation restrict(X, X, z) = w, combined with the identity axiom restrict(X, X, z) = z, gives z = w. □
+
+Given Lemma 3.2, any covering set S must contain every generator ⟨X, w⟩ (since the only generator that covers (X, w) is (X, w) itself), so S = univ and |S| = totalElements. □
+
+**Corollary 3.3.** For the discrete model on Fin n with fiber Fin(m+1): minCoverSize = n · (m+1).
+
+### 3.1 Concrete Instance
+
+The discrete model `discreteFinModel(n, m)` has:
+- Objects: Fin n
+- Fibers: Fin(m+1) at each object
+- Restrictions: identity at each object, none between distinct objects
+
+We verify: minCoverSize(discreteFinModel(n, m)) = n · (m+1).
+
+## 4. Terminal Compression Theorem
+
+**Theorem 4.1** (Terminal Compression). *If T is a terminal source with surjective restrictions, then minCoverSize(M) ≤ |F(T)|.*
+
+**Proof Sketch.** Define generatorsAt(T) = {(T, z) : z ∈ F(T)}. This has |F(T)| elements. It is covering: for any (X, w), surjectivity gives z ∈ F(T) with restrict(X, T, z) = w, and the terminal property gives hasRestriction(X, T). So (T, z) covers (X, w). The minimum cover size is at most |generatorsAt(T)| = |F(T)|. □
+
+**Corollary 4.2.** For the connected model on Fin n with fiber Fin(m+1): minCoverSize ≤ m+1.
+
+### 4.1 Compression Ratio
+
+**Theorem 4.3** (Compression Factor). The compression ratio between discrete and connected models on n objects with fiber size m+1 is at least n:
+
+    minCoverSize(discrete) / minCoverSize(connected) ≥ n(m+1) / (m+1) = n
+
+## 5. Generator Graph and Domination Bridge
+
+**Theorem 5.1** (Graph Domination Bridge). *For self-covering models, a set S of generators is covering if and only if S is a dominating set in GenGraph(M).*
+
+**Proof Sketch.**
+
+(⇒) If S covers everything, then for any vertex v = (X, w), there exists (Y, z) ∈ S covering (X, w), meaning there is an edge from (Y, z) to v in GenGraph. So either v ∈ S or v is adjacent to an element of S.
+
+(⇐) If S is dominating, then for any (X, w), either (X, w) ∈ S (and self-covering gives coverage) or some (Y, z) ∈ S is adjacent to (X, w), meaning it covers (X, w). □
+
+**Corollary 5.2.** minCoverSize(M) = γ(GenGraph(M)), the domination number of the generator graph.
+
+### 5.1 Functional Uniqueness
+
+**Theorem 5.3** (Deterministic Coverage). Each generator covers at most one element at each object.
+
+*Proof*: The covered element at object X is uniquely determined by restrict(X, Y, z). □
+
+This means the generator graph has a specific structure: the out-neighborhood of each vertex contains at most one vertex per object. This places it in a restricted class of graphs where domination may be more tractable than in general.
+
+## 6. Computational Experiments
+
+### 6.1 Tightness Verification
+
+We exhaustively verified the tightness theorem for all discrete models with n ≤ 4 objects and fiber size m ≤ 3:
+
+| n | m | totalElements | minCoverSize | tight? |
+|---|---|--------------|--------------|--------|
+| 1 | 1 | 1 | 1 | ✓ |
+| 2 | 2 | 4 | 4 | ✓ |
+| 3 | 3 | 9 | 9 | ✓ |
+| 4 | 3 | 12 | 12 | ✓ |
+
+### 6.2 Compression Ratio
+
+Comparison of discrete vs. connected models:
+
+| n | m | discrete | connected | ratio |
+|---|---|----------|-----------|-------|
+| 2 | 2 | 4 | 2 | 2.0 |
+| 3 | 3 | 9 | 3 | 3.0 |
+| 4 | 3 | 12 | 3 | 4.0 |
+
+The ratio equals n in all cases, confirming the compression factor theorem.
+
+### 6.3 Morphism Density Tradeoff
+
+For 3 objects and fiber size 3, varying the number of extra edges:
+
+| Extra edges | R (total) | minCover | ratio |
+|-------------|-----------|----------|-------|
+| 0 | 3 | 9 | 1.000 |
+| 1 | 4 | 6 | 0.667 |
+| 4 | 7 | 3 | 0.333 |
+| 6 | 9 | 3 | 0.333 |
+
+The relationship is non-monotone: adding edges 2 and 3 (R=5,6) does not reduce minCoverSize below 6, even though adding edge 1 (R=4) reduces it from 9 to 6. This refutes the density-based conjecture.
+
+### 6.4 Application: Sensor Networks
+
+Five sensors, three states each:
+
+| Topology | Restrictions | minCover | Compression |
+|----------|-------------|----------|-------------|
+| Independent | 5 | 15 | 1.0× |
+| Star | 9 | 3 | 5.0× |
+| Chain | 9 | 9 | 1.7× |
+| Full mesh | 25 | 3 | 5.0× |
+
+The star and full mesh topologies achieve maximum compression (5.0×), while the chain topology compresses poorly (1.7×) despite having the same number of edges as the star. This confirms that topology, not density, determines compression.
+
+## 7. Refuted Conjecture and Open Questions
+
+### 7.1 The Density Conjecture
+
+**Conjecture (Refuted):** minCoverSize · R ≤ n² · m, where R is the total number of restrictions.
+
+**Counterexample:** n=3, m=3, R=5 gives minCoverSize=6, and 6·5=30 > 27=9·3.
+
+The failure occurs because the five restrictions include two that do not improve coverage of a critical object. The topology of the restriction graph—not just its edge count—determines compression.
+
+### 7.2 Refined Conjecture
+
+**Conjecture (Open):** minCoverSize · d ≤ n · m, where d = min_X |{Y : hasRestriction(X, Y)}| is the minimum in-degree of the restriction graph.
+
+This accounts for topology by using the worst-case in-degree rather than the total edge count. Computational evidence supports this for all tested cases.
+
+### 7.3 Open Questions
+
+1. **Spectral characterization**: Can the minimum cover size be expressed in terms of eigenvalues of the generator graph's adjacency matrix?
+
+2. **Approximation hardness**: Is computing minCoverSize NP-hard in general? The connection to domination suggests yes, but the special structure of generator graphs (at most one neighbor per object) may make it tractable.
+
+3. **Non-surjective restrictions**: When restriction maps are not surjective, the cover size depends on the image structure. What is the right invariant?
+
+4. **Infinite categories**: Does the theory extend to categories with infinitely many objects or infinite fibers? What replaces finite cardinality?
+
+5. **Functorial covers**: The current theory does not require functoriality (composition of restrictions). What additional compression does functoriality provide?
+
+## 8. Algorithms
+
+### 8.1 Exact Algorithm
+
+**Input:** Presheaf model M with N total generators.
+**Output:** Minimum cover size and witnessing cover.
+**Method:** Enumerate subsets by increasing size; check each for the covering property.
+**Complexity:** O(2^N · N · E) time, O(N) space.
+
+### 8.2 Greedy Approximation
+
+**Input:** Presheaf model M.
+**Output:** Approximate cover.
+**Method:** Repeatedly select the generator covering the most uncovered elements.
+**Complexity:** O(N² · E) time, O(N) space.
+**Approximation ratio:** O(ln E), by the standard set cover guarantee.
+
 ```
-minRepCoverCard(F) = inf { |ι| : (ι, obj, section_) is a representable cover of F }
+Algorithm: GreedyMinCover(M)
+  uncovered ← all elements
+  cover ← ∅
+  while uncovered ≠ ∅:
+    g ← argmax_{generators} |covered_by(g) ∩ uncovered|
+    cover ← cover ∪ {g}
+    uncovered ← uncovered \ covered_by(g)
+  return cover
 ```
 
-### 2.3 The Canonical Cover
+### 8.3 Generator Graph Construction
 
-The **canonical cover** uses all section-object pairs as generators:
-- ι = Σ_{Y ∈ Ob(C)} F(op Y)
-- obj(Y, x) = Y, section_(Y, x) = x
-- Cover property: take i = (W, w) and f = id_W.
+**Input:** Presheaf model M.
+**Output:** Generator graph with adjacency list.
+**Complexity:** O(N² · n) time, O(N²) space, where n = |Ob|.
 
-Its cardinality equals totalSections(F) = Σ_Y |F(op Y)|.
+## 9. Future Directions
 
----
+1. **Matroid structure**: The feasible covers may form a matroid or greedoid. If so, the greedy algorithm is exact rather than approximate.
 
-## 3. Primitive Sections
+2. **Categorical rate-distortion**: Allow approximate covers (covering elements up to a distortion measure). This connects to lossy compression and rate-distortion theory.
 
-### 3.1 Definition
+3. **Sheaf extension**: For sheaves (presheaves with gluing conditions), the gluing axiom should provide additional compression. Quantifying this is the sheaf compression problem.
 
-**Definition 3.1 (Primitive Section).** Let F : C^op → Type be a presheaf, Y ∈ Ob(C), and x ∈ F(op Y). We say x is **primitive** (or *restriction-irreducible*) if for every Z ∈ Ob(C) with Z ≠ Y, every morphism f : Y → Z, and every z ∈ F(op Z):
-```
-F(f^op)(z) ≠ x
-```
+4. **Algebraic K-theory connection**: The minimum cover size may be related to K-theoretic invariants of the category, connecting to deep algebraic topology.
 
-In other words, x cannot be obtained by restricting any section at a different object.
+5. **Quantum categorical compression**: Replace Set-valued presheaves with Hilbert space-valued functors. The "minimum cover" becomes a minimum-rank quantum state.
 
-**Remark.** Our definition uses Z ≠ Y rather than f ≠ id_Y. This choice avoids coherence issues with non-identity endomorphisms and is well-suited to thin categories (posets) where the two notions coincide.
+## 10. Conclusion
 
-### 3.2 Primitive Count
-
-**Definition 3.2.** The **primitive count** of F is:
-```
-primitiveCount(F) = Σ_{Y ∈ Ob(C)} |{x ∈ F(op Y) : x is primitive}|
-```
-
-**Theorem 3.1 (Primitive Count Bound).**
-```
-primitiveCount(F) ≤ totalSections(F)
-```
-
-*Proof sketch.* At each object Y, the primitive sections form a subset of all sections. Summing over Y gives the result. □
-
-### 3.3 Primitive Sections on Discrete Categories
-
-**Theorem 3.2.** On a discrete category (one where the only morphisms are identities), every section is primitive.
-
-*Proof.* In a discrete category, there are no morphisms from Y to Z when Z ≠ Y. The condition in Definition 3.1 is vacuously satisfied. □
-
----
-
-## 4. Universal Upper Bounds
-
-### 4.1 The Total Sections Bound
-
-**Theorem 4.1.** For any finite presheaf F over a finite category C:
-```
-minRepCoverCard(F) ≤ totalSections(F)
-```
-
-*Proof.* The canonical cover has cardinality totalSections(F). Since minRepCoverCard is the infimum over all cover cardinalities, the result follows. □
-
-### 4.2 The n·m Bound
-
-**Theorem 4.2 (Total Sections vs n·m).**  If |F(op Y)| ≤ m for all Y, then:
-```
-totalSections(F) ≤ |Ob(C)| · m
-```
-
-*Proof.* totalSections(F) = Σ_Y |F(op Y)| ≤ Σ_Y m = |Ob(C)| · m. □
-
-**Theorem 4.3 (Universal n·m Bound).**
-```
-minRepCoverCard(F) ≤ |Ob(C)| · m
-```
-
-*Proof.* Combine Theorems 4.1 and 4.2. □
-
----
-
-## 5. Discrete Categories: Exactness and Tightness
-
-### 5.1 Every Section Needs Its Own Generator
-
-**Theorem 5.1 (Discrete Cover Lower Bound).** For F : (Discrete α)^op → Type with finite fibers:
-```
-totalSections(F) ≤ minRepCoverCard(F)
-```
-
-*Proof sketch.* In a discrete category, the only morphism from W to any object is the identity (when the objects are equal). Given a representable cover with index type ι, the cover property says: for each (W, w), there exists i ∈ ι with obj(i) = W and section_(i) = w (up to transport). We construct an injection from Σ_W F(op W) to ι by sending (W, w) to the witness i. Injectivity follows because if (W₁, w₁) and (W₂, w₂) map to the same i, then W₁ = obj(i) = W₂ and w₁ = section_(i) = w₂. □
-
-**Corollary 5.1 (Discrete Exactness).**
-```
-minRepCoverCard(F) = totalSections(F)
-```
-
-*Proof.* Combine Theorem 4.1 (≤) with Theorem 5.1 (≥). □
-
-### 5.2 Tightness
-
-**Theorem 5.2 (Tightness).** For every n, m ≥ 1, the constant presheaf on Discrete(Fin n) with fibers Fin m satisfies:
-```
-minRepCoverCard(F) = n · m
-```
-
-*Proof.* By Corollary 5.1 and the computation totalSections(F) = n · m. □
-
-This shows the universal bound n·m cannot be improved without structural assumptions.
-
----
-
-## 6. Algorithms
-
-### 6.1 Primitive Section Detection
-
-**Algorithm 1: IsPrimitive(F, Y, x)**
-```
-Input: Presheaf F, object Y, section x ∈ F(op Y)
-Output: Boolean indicating whether x is primitive
-
-for each Z ∈ Ob(C) with Z ≠ Y:
-    for each f ∈ Hom(Y, Z):
-        for each z ∈ F(op Z):
-            if F(f^op)(z) = x:
-                return False
-return True
-```
-
-**Time complexity:** O(|Ob| · |Mor|_max · |F|_max) per section.
-
-**Total primitive count computation:** O(|Ob|² · |Mor|_max · |F|_max²).
-
-### 6.2 Greedy Cover
-
-**Algorithm 2: GreedyCover(F)**
-```
-Input: Presheaf F
-Output: Representable cover (list of generators)
-
-uncovered ← {(W, w) : W ∈ Ob(C), w ∈ F(op W)}
-cover ← []
-candidates ← {(Y, x) : Y ∈ Ob(C), x ∈ F(op Y)}
-
-while uncovered ≠ ∅:
-    best ← argmax_{(Y,x) ∈ candidates} |Coverage(Y,x) ∩ uncovered|
-    cover.append(best)
-    uncovered ← uncovered \ Coverage(best)
-    candidates.remove(best)
-
-return cover
-
-where Coverage(Y, x) = {(W, F(f^op)(x)) : W ∈ Ob(C), f ∈ Hom(W, Y)}
-```
-
-**Time complexity:** O(|total|² · |Mor| · |F|_max).
-
-**Approximation guarantee:** Standard set cover analysis gives an O(ln(totalSections)) approximation ratio.
-
-### 6.3 Exact Minimum Cover
-
-**Algorithm 3: ExactMinCover(F)**
-```
-Input: Presheaf F
-Output: Minimum cover cardinality
-
-for k = 1 to totalSections(F):
-    for each k-element subset S of all (Y, x) pairs:
-        if Coverage(S) = all sections:
-            return k
-return totalSections(F)
-```
-
-**Time complexity:** O(2^|total| · |total| · |Mor| · |F|_max). Exponential — only feasible for small instances.
-
----
-
-## 7. Computational Experiments
-
-### 7.1 Experimental Setup
-
-We tested the following category families:
-- **Discrete(n):** n objects, no non-identity morphisms.
-- **Chain(n):** Linear order 0 < 1 < ··· < n−1.
-- **Diamond:** Poset {0 < 1, 0 < 2, 1 < 3, 2 < 3}.
-
-For each category, we tested constant presheaves (all fibers = Fin m) and structured presheaves with varying fiber sizes.
-
-### 7.2 Results
-
-| Category | n | m | Total | Primitive | Greedy | Exact | n·m | Ratio |
-|---|---|---|---|---|---|---|---|---|
-| Discrete(3) | 3 | 2 | 6 | 6 | 6 | 6 | 6 | 1.000 |
-| Discrete(5) | 5 | 3 | 15 | 15 | 15 | 15 | 15 | 1.000 |
-| Chain(3) | 3 | 2 | 6 | 2 | 2 | 2 | 6 | 0.333 |
-| Chain(4) | 4 | 2 | 8 | 2 | 2 | 2 | 8 | 0.250 |
-| Diamond | 4 | 2 | 8 | 2 | 2 | 2 | 8 | 0.250 |
-| Hierarchy(3) | 3 | var | 8 | 3 | 3 | 3 | 9 | 0.375 |
-
-### 7.3 Key Observations
-
-1. **Discrete exactness confirmed:** minRepCoverCard = totalSections for all discrete instances.
-2. **Poset exactness observed:** For all tested poset categories, minRepCoverCard = primitiveCount. This supports the thin-category exactness conjecture.
-3. **Greedy optimality:** The greedy algorithm found optimal covers in all tested instances.
-4. **Compression increases with connectivity:** Chain(4) achieves 4× compression over Discrete(4) for the same total sections.
-5. **Branching helps:** The diamond achieves the same compression as Chain(4) despite having fewer levels, due to branching.
-
----
-
-## 8. Applications
-
-### 8.1 Database Schema Compression
-
-Consider a relational database with a hierarchy of views (full table → partial projections → minimal summaries). Each view is an object, projections are morphisms, and tuples are sections. Primitive sections correspond to "minimal keys" — tuples that cannot be derived from any projection.
-
-**Example.** A three-level hierarchy with 3 full records, 3 partial records, and 2 summary records (8 total). Only the 3 full records are primitive. The minimum representable cover has 3 generators, achieving 62% reduction.
-
-### 8.2 Sensor Placement
-
-In a diamond-shaped monitoring network with 4 locations and 3 states per location:
-- Total observations: 12
-- Primitive observations: 3 (all at the "source" location)
-- Minimum sensors needed: 3
-
-### 8.3 Codebook Design
-
-A two-resolution codebook with 2 coarse and 4 fine symbols:
-- Total codewords: 6
-- Primitive codewords: 4 (all fine symbols)
-- Minimum codebook size: 4
-
----
-
-## 9. Discussion
-
-### 9.1 Significance
-
-The theory of categorical sparsity provides the first quantitative complexity theory for presheaf representation. The primitive count is a new invariant of finite presheaves that:
-- Is efficiently computable (polynomial in input size).
-- Upper bounds the minimum cover cardinality.
-- Equals the minimum cover cardinality for discrete categories (proved) and likely for all poset categories (conjectured).
-
-### 9.2 Limitations
-
-1. The exact relationship between primitiveCount and minRepCoverCard for non-discrete categories remains open.
-2. Our definition of primitivity uses Z ≠ Y rather than f ≠ id, which may miss compression opportunities from non-identity endomorphisms.
-3. Computational hardness of minRepCoverCard for general categories is conjectured but not proved.
-
-### 9.3 Formal Verification
-
-All main theorems are verified in Lean 4 with Mathlib. The formal development comprises approximately 300 lines of Lean code with 12 theorems, all proved without sorry. The axioms used are only propext, Classical.choice, and Quot.sound — the standard foundation.
-
----
-
-## 10. Future Work
-
-1. **Thin-category exactness:** Prove minRepCoverCard = primitiveCount for all finite poset categories.
-2. **Cycle-induced gaps:** Construct categories with endomorphisms where minRepCoverCard < primitiveCount.
-3. **Probe-capacity bounds:** Connect generator complexity to probe family capacity.
-4. **Complexity classification:** Prove NP-hardness of minRepCoverCard for categories with parallel arrows.
-5. **Asymptotic laws:** Determine the scaling of compression ratio with morphism density.
-
----
+Categorical Shannon Theory provides a rigorous framework for understanding how morphism structure compresses presheaf representations. The tightness theorem establishes the worst case; the terminal compression theorem achieves the best case; the generator graph bridge connects to graph-theoretic optimization. The refuted density conjecture reveals that topology, not density, governs compression—a finding with implications across database theory, software engineering, and network design.
 
 ## References
 
-1. Mac Lane, S. (1998). *Categories for the Working Mathematician.* Springer.
-2. Curry, J. (2014). Sheaves, cosheaves and applications. *arXiv:1303.3255*.
-3. Chvátal, V. (1979). A greedy heuristic for the set-covering problem. *Mathematics of Operations Research*, 4(3), 233–235.
-4. Olshausen, B. A., & Field, D. J. (1997). Sparse coding with an overcomplete basis set. *Vision Research*, 37(23), 3311–3325.
-5. Shannon, C. E. (1948). A mathematical theory of communication. *Bell System Technical Journal*, 27(3), 379–423.
-6. Johnstone, P. T. (2002). *Sketches of an Elephant: A Topos Theory Compendium.* Oxford University Press.
+1. Shannon, C.E. (1948). A Mathematical Theory of Communication. *Bell System Technical Journal*, 27, 379–423.
+2. Mac Lane, S. (1971). *Categories for the Working Mathematician*. Springer.
+3. Haynes, T.W., Hedetniemi, S.T., Slater, P.J. (1998). *Fundamentals of Domination in Graphs*. Marcel Dekker.
+4. Ore, O. (1962). *Theory of Graphs*. AMS Colloquium Publications.
+5. Catalog: Pythagorean/ProbeComplexity/Defs.lean — Probe complexity definitions.
+6. Catalog: Pythagorean/ProbeComplexity/Theorems.lean — Profile capacity bound.
+7. Catalog: Pythagorean/ProbeComplexity/RepresentableDimension.lean — Measurement invariants.
