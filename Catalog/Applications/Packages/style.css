@@ -1881,3 +1881,45 @@ body.light-theme #aether-toast {
 body.light-theme #aether-toast .toast-body {
     color: #6b7280;
 }
+/* Future Directions tab — narrative section */
+.directions-narrative {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.directions-section-title {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.5rem 1rem;
+}
+
+.view-all-directions-link {
+    display: block;
+    text-align: center;
+    padding: 0.75rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.view-all-directions-link:hover {
+    text-decoration: underline;
+}
+
+.directions-package-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0 1rem;
+}
+
+/* Algorithms merged into Demos tab — separator */
+.tab-pane .algorithms-list {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}

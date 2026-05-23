@@ -86,11 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Visualizations (tab removed — skip rendering)
 
-        // Algorithms & Demos
+        // Algorithms (pseudocode) rendered above demos in the Interactive tab
         renderCodeBlocks('content-algorithms', data.algorithms, 'pseudocode');
         if (window.renderInteractiveDemos) {
             window.renderInteractiveDemos('content-demos', data.demos);
         }
+
+        // Future Directions tab
+        renderDirectionsTab(data);
 
         // Lean
         const leanDiv = document.getElementById('content-lean');
@@ -126,5 +129,54 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             container.innerHTML = '<p style="color:var(--text-muted)">No data provided for this section.</p>';
         }
+    }
+
+    function renderDirectionsTab(pkgData) {
+        // Narrative section: raw markdown from package's future_directions field
+        const narrativeDiv = document.getElementById('content-directions-narrative');
+        if (pkgData.future_directions) {
+            narrativeDiv.innerHTML = marked.parse(pkgData.future_directions);
+        } else {
+            narrativeDiv.innerHTML = '<p style="color:var(--text-muted)">No future directions narrative for this package.</p>';
+        }
+
+        // Filtered direction cards from window.FUTURE_DIRECTIONS
+        const cardsDiv = document.getElementById('content-directions-cards');
+        const sectionTitle = document.getElementById('directions-section-title');
+        const viewAllLink = document.getElementById('view-all-directions-link');
+
+        if (!window.FUTURE_DIRECTIONS || window.FUTURE_DIRECTIONS.length === 0) {
+            cardsDiv.innerHTML = '';
+            sectionTitle.style.display = 'none';
+            viewAllLink.style.display = 'none';
+            return;
+        }
+
+        const pkgExpId = pkgData.exp_id || '';
+        const pkgDomainStr = (pkgData.domain || '').toLowerCase();
+
+        const matched = window.FUTURE_DIRECTIONS.filter(d => {
+            if (d.source_exp_id && d.source_exp_id === pkgExpId) return true;
+            const dirDomains = (d.domains || []).map(dm => dm.toLowerCase());
+            for (const dm of dirDomains) {
+                if (pkgDomainStr.includes(dm)) return true;
+            }
+            return false;
+        });
+
+        if (matched.length === 0) {
+            cardsDiv.innerHTML = '<p style="color:var(--text-muted)">No directly related directions found.</p>';
+            sectionTitle.style.display = 'none';
+        } else {
+            sectionTitle.style.display = 'block';
+            sectionTitle.textContent = `Related Research Directions (${matched.length})`;
+            window.renderDirectionCards(cardsDiv, matched, 'pkg-details-');
+        }
+
+        viewAllLink.style.display = 'block';
+        viewAllLink.onclick = function(e) {
+            e.preventDefault();
+            if (window.showDirectionsView) window.showDirectionsView();
+        };
     }
 });

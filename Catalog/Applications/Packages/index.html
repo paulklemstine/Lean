@@ -128,7 +128,7 @@
                         <button class="tab-btn active" data-tab="article">Article</button>
                         <button class="tab-btn" data-tab="paper">Research Paper</button>
 
-                        <button class="tab-btn" data-tab="algorithms">Algorithms</button>
+                        <button class="tab-btn" data-tab="directions">Future Directions</button>
                         <button class="tab-btn" data-tab="demos">Interactive</button>
                         <button class="tab-btn" data-tab="lean">Lean 4 Proofs</button>
                     </div>
@@ -147,13 +147,17 @@
 
 
 
-                    <!-- Algorithms Tab -->
-                    <div class="tab-pane" id="tab-algorithms">
-                        <div class="algorithms-list" id="content-algorithms"></div>
+                    <!-- Future Directions Tab -->
+                    <div class="tab-pane" id="tab-directions">
+                        <div class="directions-narrative markdown-body" id="content-directions-narrative"></div>
+                        <h3 class="directions-section-title" id="directions-section-title" style="display:none">Related Research Directions</h3>
+                        <div class="directions-package-cards" id="content-directions-cards"></div>
+                        <a href="#" class="view-all-directions-link" id="view-all-directions-link" style="display:none">View all research directions &rarr;</a>
                     </div>
 
-                    <!-- Demos Tab -->
+                    <!-- Demos Tab (algorithms pseudocode + interactive demos) -->
                     <div class="tab-pane" id="tab-demos">
+                        <div class="algorithms-list" id="content-algorithms"></div>
                         <div class="demos-list" id="content-demos"></div>
                     </div>
 
