@@ -110,7 +110,11 @@
         let hoveredCluster = null;
         let time = 0;
 
-        // ─── Space battle visual effect arrays ───
+        // ─── Space battle visual effect arrays (hard-capped for performance) ───
+        const MAX_EXPLOSIONS = 8;
+        const MAX_FLAME_PARTICLES = 200;
+        const MAX_SPARKS_PER_EXPLOSION = 20;
+        const MAX_FIREWORKS = 4;
         const explosions = [];    // {x, y, time, strength, sparks[], shockRadius}
         const flameParticles = []; // {x, y, vx, vy, life, color, size}
         const lasers = [];        // {sx, sy, tx, ty, time, duration, color}
@@ -119,15 +123,15 @@
 
         // ─── Stars (deep space backdrop) ───
         const stars = [];
-        for (let i = 0; i < 500; i++) {
+        for (let i = 0; i < 250; i++) {
             stars.push({
                 x: Math.random() * 8000 - 4000,
                 y: Math.random() * 8000 - 4000,
-                r: 0.2 + Math.random() * 1.5,
-                brightness: 0.2 + Math.random() * 0.8,
+                r: 0.3 + Math.random() * 1.0,
+                brightness: 0.3 + Math.random() * 0.7,
                 twinkleSpeed: 0.5 + Math.random() * 2,
                 twinklePhase: Math.random() * Math.PI * 2,
-                shimmer: Math.random() < 0.05 // 5% of stars shimmer brightly
+                shimmer: Math.random() < 0.03
             });
         }
 
@@ -282,7 +286,7 @@
                         let cx = 0, cy = 0;
                         domainNodes.forEach(n => { cx += n.x; cy += n.y; });
                         cx /= domainNodes.length; cy /= domainNodes.length;
-                        spawnFirework(cx, cy, 35);
+                        if (fireworks.length < MAX_FIREWORKS) spawnFirework(cx, cy, 20);
                     }
                 }
                 edgePulseTargets.clear();
@@ -399,31 +403,33 @@
                             b.thrustAngle = Math.atan2(ny, nx);
                             b.thrustStrength = Math.min(1, Math.abs(relVn) * 0.5);
 
-                            // Spawn explosion at contact point
-                            const cx = (a.x + b.x) * 0.5;
-                            const cy = (a.y + b.y) * 0.5;
-                            const sparkCount = 20 + Math.floor(Math.abs(relVn) * 10);
-                            const sparks = [];
-                            for (let s = 0; s < sparkCount; s++) {
-                                const angle = Math.random() * Math.PI * 2;
-                                const speed = 50 + Math.random() * 200 * Math.abs(relVn);
-                                const hue = isChain ? (30 + Math.random() * 30) : (20 + Math.random() * 40);
-                                sparks.push({
-                                    x: cx, y: cy,
-                                    vx: Math.cos(angle) * speed,
-                                    vy: Math.sin(angle) * speed,
-                                    life: 0.5 + Math.random() * 0.8,
-                                    hue: hue,
-                                    size: 1 + Math.random() * 3
+                            // Spawn explosion at contact point (capped for performance)
+                            if (explosions.length < MAX_EXPLOSIONS) {
+                                const cx = (a.x + b.x) * 0.5;
+                                const cy = (a.y + b.y) * 0.5;
+                                const sparkCount = Math.min(MAX_SPARKS_PER_EXPLOSION, 8 + Math.floor(Math.abs(relVn) * 5));
+                                const sparks = [];
+                                for (let s = 0; s < sparkCount; s++) {
+                                    const angle = Math.random() * Math.PI * 2;
+                                    const speed = 50 + Math.random() * 200 * Math.abs(relVn);
+                                    const hue = isChain ? (30 + Math.random() * 30) : (20 + Math.random() * 40);
+                                    sparks.push({
+                                        x: cx, y: cy,
+                                        vx: Math.cos(angle) * speed,
+                                        vy: Math.sin(angle) * speed,
+                                        life: 0.5 + Math.random() * 0.8,
+                                        hue: hue,
+                                        size: 1 + Math.random() * 3
+                                    });
+                                }
+                                explosions.push({
+                                    x: cx, y: cy, time: time,
+                                    strength: Math.min(1, Math.abs(relVn) * 0.3),
+                                    sparks: sparks,
+                                    shockRadius: 0,
+                                    isChain: isChain
                                 });
                             }
-                            explosions.push({
-                                x: cx, y: cy, time: time,
-                                strength: Math.min(1, Math.abs(relVn) * 0.3),
-                                sparks: sparks,
-                                shockRadius: 0,
-                                isChain: isChain
-                            });
                         }
                         const overlap = MIN_REPULSION_DIST - d;
                         if (overlap > 0) {
@@ -458,8 +464,8 @@
                         const force = THRUST_FORCE * n.thrustStrength * decay;
                         n.vx += Math.cos(n.thrustAngle) * force;
                         n.vy += Math.sin(n.thrustAngle) * force;
-                        // Spawn flame particles
-                        if (Math.random() < 0.6) {
+                        // Spawn flame particles (capped)
+                        if (flameParticles.length < MAX_FLAME_PARTICLES && Math.random() < 0.3) {
                             const spread = 0.4;
                             const angle = n.thrustAngle + Math.PI + (Math.random() - 0.5) * spread;
                             flameParticles.push({
@@ -498,7 +504,7 @@
                 }
 
                 // Radar pulse: emit every ~3 seconds
-                if (!n.radarPulse && Math.random() < 0.006) {
+                if (!n.radarPulse && Math.random() < 0.002) {
                     n.radarPulse = { startTime: time, radius: 0 };
                 }
                 if (n.radarPulse) {
@@ -544,7 +550,7 @@
             }
 
             // ─── Random laser fire ───
-            if (lasers.length < 5 && Math.random() < 0.002 && graphNodes.length > 1) {
+            if (lasers.length < 3 && Math.random() < 0.0008 && graphNodes.length > 1) {
                 const src = graphNodes[Math.floor(Math.random() * graphNodes.length)];
                 // Find nearest other node
                 let nearest = null, nearDist = 300;
@@ -580,9 +586,9 @@
             }
 
             // ─── Ambient fireworks ───
-            if (time - lastAmbientFirework > 15) {
+            if (fireworks.length < MAX_FIREWORKS && time - lastAmbientFirework > 25) {
                 lastAmbientFirework = time;
-                spawnFirework(W * 0.2 + Math.random() * W * 0.6, H * 0.2 + Math.random() * H * 0.4, 25);
+                spawnFirework(W * 0.2 + Math.random() * W * 0.6, H * 0.2 + Math.random() * H * 0.4, 15);
             }
         }
 
@@ -1575,7 +1581,7 @@
                 e.edgeType = e.type || 'provenance';
                 graphEdges.push(e);
                 // Spawn particles for the new edge
-                const count = 2 + Math.floor(Math.random() * 2);
+                const count = 1 + Math.floor(Math.random() * 2);
                 for (let i = 0; i < count; i++) {
                     edgeParticles.push({
                         edge: e,
