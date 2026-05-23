@@ -1,158 +1,134 @@
 #!/usr/bin/env python3
 """
-Algorithms for Non-Abelian Arithmetic Phase Classification
+Arithmetic Phase Classification — Algorithms
+=============================================
 
-Implements the core algorithms from the research paper:
-1. Commutator subgroup computation
-2. Abelianization via Smith normal form
-3. Arithmetic phase profile computation
-4. Phase profile comparison for isomorphism testing
+Core algorithms for computing arithmetic phase profiles of finite groups.
 
-Complexity Analysis:
-- Commutator subgroup: O(|G|³) time, O(|G|) space
-- Abelianization: O(|G|² log |G|) time, O(|G|²) space
-- Phase profile: O(|G|² + sqrt(|G^ab|)) time
+Algorithm 1: Abelianization Order Computation
+  Input:  Finite group G (Cayley table)
+  Output: |G^ab| = |G/[G,G]|
+  Time:   O(|G|³) for commutator closure
+  Space:  O(|G|²) for the Cayley table
+
+Algorithm 2: Arithmetic Phase Profile
+  Input:  Finite group G
+  Output: Set of primes visible to abelian probes
+  Time:   O(|G|³ + √|G^ab|) for abelianization + factorization
+
+Algorithm 3: Profile Comparison
+  Input:  Two finite groups G₁, G₂
+  Output: Whether their profiles match
+  Correctness: By Theorem B, profiles match iff abelianizations are isomorphic
 """
 
-from typing import Optional
+from typing import List, Set, Tuple, Dict, Callable, Optional
+from dataclasses import dataclass
 from math import gcd, isqrt
-from collections import defaultdict
 
 
+@dataclass
 class FiniteGroup:
-    """Representation of a finite group via its Cayley table.
-
-    Attributes:
-        n: Order of the group
-        mul: Multiplication table as dict (i,j) -> k
-        identity: Index of the identity element
-        inv: Inverse table as dict i -> j
     """
+    A finite group represented by its Cayley table.
+    
+    Elements are integers 0, 1, ..., n-1.
+    Identity is element 0.
+    """
+    name: str
+    order: int
+    cayley_table: List[List[int]]
+    
+    def mult(self, a: int, b: int) -> int:
+        """Multiply two elements."""
+        return self.cayley_table[a][b]
+    
+    def inverse(self, a: int) -> int:
+        """Find the inverse of an element."""
+        for b in range(self.order):
+            if self.cayley_table[a][b] == 0:
+                return b
+        raise ValueError(f"No inverse found for element {a}")
+    
+    def element_order(self, a: int) -> int:
+        """Compute the order of an element."""
+        if a == 0:
+            return 1
+        current = a
+        k = 1
+        while current != 0:
+            current = self.mult(current, a)
+            k += 1
+        return k
 
-    def __init__(self, elements: list[int], mul: dict[tuple[int, int], int]):
-        self.n = len(elements)
-        self.elements = elements
-        self.mul = mul
-        self._find_identity()
-        self._compute_inverses()
 
-    def _find_identity(self) -> None:
-        """Find the identity element. O(|G|²)."""
-        for e in self.elements:
-            if all(self.mul[(e, x)] == x and self.mul[(x, e)] == x
-                   for x in self.elements):
-                self.identity = e
-                return
-        raise ValueError("No identity element found")
-
-    def _compute_inverses(self) -> None:
-        """Compute all inverses. O(|G|²)."""
-        self.inv = {}
-        for a in self.elements:
-            for b in self.elements:
-                if self.mul[(a, b)] == self.identity:
-                    self.inv[a] = b
-                    break
-
-    def commutator(self, a: int, b: int) -> int:
-        """Compute [a,b] = a·b·a⁻¹·b⁻¹. O(1)."""
-        return self.mul[(self.mul[(self.mul[(a, b)], self.inv[a])], self.inv[b])]
-
-    def power(self, g: int, n: int) -> int:
-        """Compute g^n by repeated squaring. O(log n)."""
-        if n == 0:
-            return self.identity
-        if n < 0:
-            g = self.inv[g]
-            n = -n
-        result = self.identity
-        base = g
-        while n > 0:
-            if n % 2 == 1:
-                result = self.mul[(result, base)]
-            base = self.mul[(base, base)]
-            n //= 2
-        return result
-
-    def order_of(self, g: int) -> int:
-        """Compute the order of element g. O(|G|)."""
-        x = g
-        for k in range(1, self.n + 1):
-            if x == self.identity:
-                return k
-            x = self.mul[(x, g)]
-        return self.n  # Should not reach here for valid groups
-
-    def generate_subgroup(self, generators: set[int]) -> set[int]:
-        """Generate the subgroup from a set of generators.
-
-        Algorithm: BFS closure under multiplication and inversion.
-        Time: O(|H|² · |generators|) where H is the generated subgroup.
-        Space: O(|H|).
-        """
-        subgroup = set(generators) | {self.identity}
-        changed = True
-        while changed:
-            changed = False
-            new_elems = set()
-            for a in subgroup:
-                if self.inv[a] not in subgroup:
-                    new_elems.add(self.inv[a])
+def compute_commutator_subgroup(G: FiniteGroup) -> Set[int]:
+    """
+    Algorithm 1a: Compute [G,G] = <ghg⁻¹h⁻¹ | g,h ∈ G>.
+    
+    Generates all commutators and closes under multiplication.
+    
+    Time:  O(|G|³) worst case for closure
+    Space: O(|G|) for the subgroup
+    
+    Returns:
+        Set of elements in the commutator subgroup.
+    """
+    # Step 1: Generate all commutators ghg⁻¹h⁻¹
+    commutators: Set[int] = {0}  # identity always in [G,G]
+    for g in range(G.order):
+        g_inv = G.inverse(g)
+        for h in range(G.order):
+            h_inv = G.inverse(h)
+            # ghg⁻¹h⁻¹
+            c = G.mult(g, G.mult(h, G.mult(g_inv, h_inv)))
+            commutators.add(c)
+    
+    # Step 2: Close under multiplication and inverse
+    subgroup = set(commutators)
+    changed = True
+    while changed:
+        changed = False
+        new_elements: Set[int] = set()
+        elements_list = list(subgroup)
+        for a in elements_list:
+            for b in elements_list:
+                ab = G.mult(a, b)
+                if ab not in subgroup:
+                    new_elements.add(ab)
                     changed = True
-                for b in subgroup:
-                    prod = self.mul[(a, b)]
-                    if prod not in subgroup:
-                        new_elems.add(prod)
-                        changed = True
-            subgroup |= new_elems
-        return subgroup
-
-    def commutator_subgroup(self) -> set[int]:
-        """Compute [G,G] = ⟨{[a,b] : a,b ∈ G}⟩.
-
-        Algorithm:
-        1. Compute all commutators [a,b] for a,b ∈ G.      O(|G|²)
-        2. Generate the subgroup they span.                  O(|G|³) worst case
-
-        Returns: Set of elements in [G,G].
-        """
-        commutators = set()
-        for a in self.elements:
-            for b in self.elements:
-                commutators.add(self.commutator(a, b))
-        return self.generate_subgroup(commutators)
-
-    def is_normal(self, subgroup: set[int]) -> bool:
-        """Check if a subgroup is normal. O(|G| · |H|)."""
-        for g in self.elements:
-            for s in subgroup:
-                conj = self.mul[(self.mul[(g, s)], self.inv[g])]
-                if conj not in subgroup:
-                    return False
-        return True
-
-    def quotient_order(self, normal_subgroup: set[int]) -> int:
-        """Compute |G/N| = |G|/|N|. O(1)."""
-        return self.n // len(normal_subgroup)
+        subgroup.update(new_elements)
+    
+    return subgroup
 
 
 def compute_abelianization_order(G: FiniteGroup) -> int:
-    """Compute |G^ab| = |G/[G,G]|.
-
-    Time: O(|G|³), dominated by commutator subgroup computation.
-    Space: O(|G|).
     """
-    comm = G.commutator_subgroup()
-    return G.quotient_order(comm)
-
-
-def prime_factorization(n: int) -> dict[int, int]:
-    """Compute the prime factorization of n.
-
-    Time: O(√n).
-    Returns: Dict mapping prime p to its multiplicity v_p(n).
+    Algorithm 1b: Compute |G^ab| = |G| / |[G,G]|.
+    
+    Time:  O(|G|³)
+    Space: O(|G|)
+    
+    Returns:
+        Order of the abelianization G/[G,G].
     """
-    factors = {}
+    comm = compute_commutator_subgroup(G)
+    return G.order // len(comm)
+
+
+def prime_factorization(n: int) -> Dict[int, int]:
+    """
+    Compute the prime factorization of n.
+    
+    Time:  O(√n)
+    Space: O(log n)
+    
+    Returns:
+        Dictionary mapping prime factors to their multiplicities.
+    """
+    if n <= 1:
+        return {}
+    factors: Dict[int, int] = {}
     d = 2
     while d * d <= n:
         while n % d == 0:
@@ -164,22 +140,17 @@ def prime_factorization(n: int) -> dict[int, int]:
     return factors
 
 
-def arithmetic_phase_profile(G: FiniteGroup) -> set[int]:
-    """Compute the arithmetic phase profile of G.
-
-    By Theorem A, this equals the set of prime factors of |G^ab|.
-
-    Algorithm:
-    1. Compute [G,G].                    O(|G|³)
-    2. Compute |G^ab| = |G|/|[G,G]|.    O(1)
-    3. Factor |G^ab|.                    O(√|G^ab|)
-
-    Total time: O(|G|³).
-    Total space: O(|G|).
-
-    Args:
-        G: A finite group.
-
+def arithmetic_phase_profile(G: FiniteGroup) -> Set[int]:
+    """
+    Algorithm 2: Compute the arithmetic phase profile of G.
+    
+    By Theorem A (primePhaseVisible_iff_hasPTorsion_abelianization):
+      Profile(G) = {p prime | HasPTorsion(G^ab, p)}
+                 = {p prime | p | |G^ab|}  (by Cauchy's theorem)
+    
+    Time:  O(|G|³ + √|G^ab|)
+    Space: O(|G|)
+    
     Returns:
         Set of primes in the arithmetic phase profile.
     """
@@ -187,142 +158,104 @@ def arithmetic_phase_profile(G: FiniteGroup) -> set[int]:
     return set(prime_factorization(ab_order).keys())
 
 
-def phase_profile_comparison(G1: FiniteGroup, G2: FiniteGroup) -> bool:
-    """Test whether G1 and G2 have the same arithmetic phase profile.
-
-    By Theorem B, this is equivalent to asking whether G1^ab and G2^ab
-    have the same set of prime divisors in their orders.
-
-    Time: O(|G1|³ + |G2|³ + √max(|G1|, |G2|)).
-
-    Args:
-        G1, G2: Finite groups.
-
+def profiles_match(G1: FiniteGroup, G2: FiniteGroup) -> bool:
+    """
+    Algorithm 3: Check if two groups have identical arithmetic phase profiles.
+    
+    By Theorem B (arithmeticPhaseProfile_eq_of_abelianization_equiv):
+      If G₁^ab ≅ G₂^ab, then Profile(G₁) = Profile(G₂).
+    
+    Note: The converse is NOT necessarily true (same profile ≠ isomorphic
+    abelianization). This function checks profile equality, which is
+    necessary but not sufficient for abelianization isomorphism.
+    
+    Time:  O(|G₁|³ + |G₂|³ + √max(|G₁^ab|, |G₂^ab|))
+    
     Returns:
-        True if arithmeticPhaseProfile(G1) = arithmeticPhaseProfile(G2).
+        True if the profiles are identical.
     """
     return arithmetic_phase_profile(G1) == arithmetic_phase_profile(G2)
 
 
-def product_phase_profile(G: FiniteGroup, H: FiniteGroup) -> set[int]:
-    """Compute the phase profile of G × H using the Cross-Domain Bridge theorem.
-
-    By the product theorem:
-        arithmeticPhaseProfile(G × H) = arithmeticPhaseProfile(G) ∪ arithmeticPhaseProfile(H)
-
-    This is much faster than computing the product group directly, which would
-    have size |G|·|H| and require O(|G|³·|H|³) time.
-
-    Time: O(|G|³ + |H|³).
-    Space: O(|G| + |H|).
+def product_profile(G: FiniteGroup, H: FiniteGroup) -> Set[int]:
+    """
+    Compute the arithmetic phase profile of G × H using the Phase-Union Law.
+    
+    By Theorem (primePhaseVisible_prod_iff):
+      Profile(G × H) = Profile(G) ∪ Profile(H)
+    
+    This avoids constructing the product group (which has order |G|·|H|).
+    
+    Time:  O(|G|³ + |H|³)  (much better than O((|G|·|H|)³))
+    
+    Returns:
+        Set of primes in the profile of G × H.
     """
     return arithmetic_phase_profile(G) | arithmetic_phase_profile(H)
 
 
-def has_p_torsion(G: FiniteGroup, p: int) -> bool:
-    """Check if G has p-torsion (an element of order p).
-
-    Time: O(|G| · log p) using fast exponentiation.
+def wrong_characteristic_test(G: FiniteGroup, p: int) -> bool:
     """
-    for g in G.elements:
-        if g != G.identity and G.power(g, p) == G.identity:
-            return True
-    return False
-
-
-def torsion_profile_exhaustive(G: FiniteGroup) -> set[int]:
-    """Compute the torsion profile by checking all primes up to |G|.
-
-    This is the brute-force version that directly checks for p-torsion
-    for each prime p. It serves as a ground truth for testing.
-
-    Time: O(|G|² · π(|G|)) where π is the prime counting function.
+    Test whether prime p is invisible to abelian probes of G.
+    
+    By torsion_invisible_wrong_characteristic:
+      If p ∤ |G^ab|, then G has no p-torsion visible to abelian probes.
+    
+    Returns:
+        True if p is invisible (wrong characteristic).
     """
-    profile = set()
-    for p in range(2, G.n + 1):
-        if all(p % d != 0 for d in range(2, isqrt(p) + 1)):  # p is prime
-            if has_p_torsion(G, p):
-                profile.add(p)
-    return profile
+    ab_order = compute_abelianization_order(G)
+    return ab_order % p != 0
 
 
-# ──────────────────────────────────────────────────────────────────────────────
-# Example usage
-# ──────────────────────────────────────────────────────────────────────────────
-
-def make_symmetric_group(n: int) -> FiniteGroup:
-    """Construct S_n."""
-    from itertools import permutations
-    perms = list(permutations(range(n)))
-    idx = {p: i for i, p in enumerate(perms)}
-
-    def compose(p, q):
-        return tuple(p[q[i]] for i in range(n))
-
-    mul = {(idx[p], idx[q]): idx[compose(p, q)] for p in perms for q in perms}
-    return FiniteGroup(list(range(len(perms))), mul)
-
-
-def make_quaternion_group() -> FiniteGroup:
-    """Construct Q_8."""
-    elems = [(1, '1'), (-1, '1'), (1, 'i'), (-1, 'i'),
-             (1, 'j'), (-1, 'j'), (1, 'k'), (-1, 'k')]
-    idx = {e: i for i, e in enumerate(elems)}
-    basis_mul = {
-        ('1', '1'): (1, '1'), ('1', 'i'): (1, 'i'), ('1', 'j'): (1, 'j'), ('1', 'k'): (1, 'k'),
-        ('i', '1'): (1, 'i'), ('j', '1'): (1, 'j'), ('k', '1'): (1, 'k'),
-        ('i', 'i'): (-1, '1'), ('j', 'j'): (-1, '1'), ('k', 'k'): (-1, '1'),
-        ('i', 'j'): (1, 'k'), ('j', 'k'): (1, 'i'), ('k', 'i'): (1, 'j'),
-        ('j', 'i'): (-1, 'k'), ('k', 'j'): (-1, 'i'), ('i', 'k'): (-1, 'j'),
-    }
-
-    def mul_elem(a, b):
-        s1, b1 = a
-        s2, b2 = b
-        s3, b3 = basis_mul[(b1, b2)]
-        return (s1 * s2 * s3, b3)
-
-    mul = {(idx[a], idx[b]): idx[mul_elem(a, b)] for a in elems for b in elems}
-    return FiniteGroup(list(range(8)), mul)
-
+# ─── Example usage ──────────────────────────────────────────────────────────
 
 def make_cyclic_group(n: int) -> FiniteGroup:
-    """Construct Z/nZ."""
-    mul = {(a, b): (a + b) % n for a in range(n) for b in range(n)}
-    return FiniteGroup(list(range(n)), mul)
+    """Construct the cyclic group ℤ/nℤ."""
+    table = [[(i + j) % n for j in range(n)] for i in range(n)]
+    return FiniteGroup(f"Z/{n}Z", n, table)
 
 
-if __name__ == "__main__":
-    print("Algorithm Demo: Arithmetic Phase Profile Computation")
-    print("=" * 55)
+def make_symmetric_group_3() -> FiniteGroup:
+    """Construct S₃ as a Cayley table group."""
+    # S₃ = {e, (12), (13), (23), (123), (132)}
+    # Using indices 0-5
+    # 0=e, 1=(12), 2=(13), 3=(23), 4=(123), 5=(132)
+    table = [
+        [0, 1, 2, 3, 4, 5],
+        [1, 0, 4, 5, 2, 3],
+        [2, 5, 0, 4, 3, 1],
+        [3, 4, 5, 0, 1, 2],
+        [4, 3, 1, 2, 5, 0],
+        [5, 2, 3, 1, 0, 4],
+    ]
+    return FiniteGroup("S₃", 6, table)
 
-    S3 = make_symmetric_group(3)
-    Q8 = make_quaternion_group()
-    Z6 = make_cyclic_group(6)
 
-    for name, G in [("S₃", S3), ("Q₈", Q8), ("Z/6Z", Z6)]:
+if __name__ == '__main__':
+    print("Arithmetic Phase Classification — Algorithm Demonstrations")
+    print("=" * 60)
+    print()
+    
+    # Cyclic groups
+    for n in [6, 12, 30]:
+        G = make_cyclic_group(n)
         profile = arithmetic_phase_profile(G)
-        profile_check = torsion_profile_exhaustive(G)
-        print(f"\n{name} (order {G.n}):")
-        print(f"  Phase profile (Theorem A): {sorted(profile)}")
-        print(f"  Torsion profile (brute):   {sorted(profile_check)}")
-        print(f"  Match: {'✓' if profile == profile_check else '✗'}")
-
-    print("\n\nProduct Theorem Demo:")
-    Z2 = make_cyclic_group(2)
-    Z3 = make_cyclic_group(3)
-    prod_profile = product_phase_profile(Z2, Z3)
-    direct_profile = arithmetic_phase_profile(Z6)
-    print(f"  Profile(Z/2Z × Z/3Z) via theorem: {sorted(prod_profile)}")
-    print(f"  Profile(Z/6Z) directly:            {sorted(direct_profile)}")
-    print(f"  Match: {'✓' if prod_profile == direct_profile else '✗'}")
-
-    print("\n\nPhase Profile Comparison (Theorem B):")
-    S3 = make_symmetric_group(3)
-    Q8 = make_quaternion_group()
-    print(f"  S₃ profile: {sorted(arithmetic_phase_profile(S3))}")
-    print(f"  Q₈ profile: {sorted(arithmetic_phase_profile(Q8))}")
-    print(f"  Same profile: {phase_profile_comparison(S3, Q8)}")
-    print(f"  (Expected: False, since |S₃^ab|=2 but |Q₈^ab|=4, "
-          f"yet both have prime set {{2}})")
-    print(f"  Actually same prime set: {phase_profile_comparison(S3, Q8)}")
+        print(f"  ℤ/{n}ℤ: Profile = {{{', '.join(map(str, sorted(profile)))}}}")
+    
+    print()
+    
+    # S₃
+    S3 = make_symmetric_group_3()
+    print(f"  S₃: Profile = {{{', '.join(map(str, sorted(arithmetic_phase_profile(S3))))}}}")
+    print(f"  S₃: 5 invisible? {wrong_characteristic_test(S3, 5)} (expected: True)")
+    print(f"  S₃: 2 invisible? {wrong_characteristic_test(S3, 2)} (expected: False)")
+    
+    print()
+    
+    # Product profiles
+    Z6 = make_cyclic_group(6)
+    Z10 = make_cyclic_group(10)
+    print(f"  Profile(ℤ/6 × ℤ/10) via union law = "
+          f"{{{', '.join(map(str, sorted(product_profile(Z6, Z10))))}}}")
+    print(f"  (Expected: {{2, 3, 5}})")
