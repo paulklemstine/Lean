@@ -95,7 +95,7 @@
         // ─── Canvas state ───
         let W, H;
         let animating = false;
-        let camera = { x: 0, y: 0, zoom: 1 };
+        let camera = { x: 0, y: 0, zoom: 0.024 };
         let dragNode = null;
         let dragCluster = null;   // domain string when dragging a cluster label
         let prevDragWorld = null; // previous frame world position for cluster drag delta
@@ -109,6 +109,7 @@
         let hoveredNode = null;
         let hoveredCluster = null;
         let time = 0;
+        let timeScale = 1;
 
         // ─── Space battle visual effect arrays (hard-capped for performance) ───
         const MAX_EXPLOSIONS = 8;
@@ -150,26 +151,25 @@
         });
 
         // ─── Layout constants (space battle / nuclear dynamics) ───
-        const CLUSTER_RADIUS = 280;      // Distance of cluster centroids from center
-        const NODE_SPACING = 65;          // Spacing between nodes within a cluster
+        const CLUSTER_RADIUS = 15000;     // Distance of cluster centroids from center
+        const NODE_SPACING = 3000;         // Spacing between nodes within a cluster
+        const WORLD_SIZE = 180000;         // Universe extent — Möbius-Klein bottle
+        const WORLD_HALF = WORLD_SIZE / 2;
         const K_SPRING = 0;              // No continuous spring — edges are lazy
-        const REST_LENGTH = 180;          // Rest length for provenance springs
-        const G_INTRA = 0.25;            // Intra-cluster attraction (same domain nodes pull together)
-        const G_INTER = 0.08;            // Inter-cluster repulsion (different domains push apart)
-        const SOFTENING = 120;            // Softening distance (larger = gentler at close range)
-        const MIN_REPULSION_DIST = 60;    // Bumper collision radius
-        const DAMPING = 0.994;            // Low friction — coast after rocket blasts
+        const REST_LENGTH = 9000;          // Rest length for provenance springs
+        const EDGE_DRAW_DISTANCE = 18000;  // Max distance to draw/spring edges
+        const G_UNIVERSAL = 25.0;       // Universal gravitational constant (all pairs attract)
+        const G_CLUSTER_MULT = 2.5;     // Same-cluster pairs attract more strongly
+        const G_CORE = 12.0;            // Central galactic attractor pull
+        const CORE_MASS = 80.0;         // Mass of the invisible central attractor
+        // No static repulsion — gravity pulls nodes together, rocket thrust on collision pushes apart
+        const SOFTENING = 9000;            // Softening distance (larger = gentler at close range)
+        const MIN_REPULSION_DIST = 2400;    // Bumper collision radius
+        const DAMPING = 0.9998;            // Slow entropy decrease — system gradually cools and orders
         const NODE_RADIUS = 22;
-        const GALAXY_ROTATION = 0.00012;  // Slow overall galaxy spin
-        const EDGE_PULSE_INTERVAL = 5.0;  // Seconds between edge contraction pulses
-        const EDGE_PULSE_STRENGTH = 0.5;  // Max impulse per pulse
-        const EDGE_PULSE_DECAY = 2.0;     // Seconds for pulse to fade out
-        const ORBITAL_SPEED = 0.8;        // Faster initial orbits
-        const MAX_VELOCITY = 12.0;        // Let nodes fly fast after collisions
-        const BOUNCE = 2.5;              // Superelastic — collisions ADD energy
-        const CHAIN_BOUNCE_MULT = 1.5;    // Chain reaction bonus multiplier
-        const THRUST_DURATION = 0.5;     // Seconds of rocket thrust after collision
-        const THRUST_FORCE = 3.0;        // Initial thrust acceleration
+        const MAX_VELOCITY = 250.0;        // Gentle cap scaled to large universe
+        const BOUNCE = 1.0;              // Elastic — conserves momentum AND kinetic energy
+        const THRUST_DURATION = 0.5;     // Seconds of visual rocket flame after collision
 
         // ─── Domain-clustered layout ───
         const DOMAIN_ORDER = ['Algebra','Tropical','Geometry','Cryptography','Physics',
@@ -220,6 +220,114 @@
             return { centroids: clusterCentroids, domainList };
         }
 
+        // Minimum-image delta for Klein bottle topology — finds shortest path between two points
+        function minImageDelta(ax, ay, bx, by) {
+            let bestDx = bx - ax, bestDy = by - ay;
+            let bestD2 = bestDx * bestDx + bestDy * bestDy;
+            // X-ghost (Y-flipped): Möbius twist on X-axis
+            let gx = bx > ax ? bx - WORLD_SIZE : bx + WORLD_SIZE;
+            let gy = -by;
+            let dx = gx - ax, dy = gy - ay, d2 = dx * dx + dy * dy;
+            if (d2 < bestD2) { bestDx = dx; bestDy = dy; bestD2 = d2; }
+            // Y-ghost (X-flipped): Klein bottle twist on Y-axis
+            gx = -bx; let gy2 = by > ay ? by - WORLD_SIZE : by + WORLD_SIZE;
+            dx = gx - ax; dy = gy2 - ay; d2 = dx * dx + dy * dy;
+            if (d2 < bestD2) { bestDx = dx; bestDy = dy; bestD2 = d2; }
+            return { dx: bestDx, dy: bestDy, d2: bestD2 };
+        }
+
+        // Check if line segment AB crosses segment CD
+        function segmentsCross(ax, ay, bx, by, cx, cy, dx, dy) {
+            const d1 = (bx - ax) * (cy - ay) - (by - ay) * (cx - ax);
+            const d2 = (bx - ax) * (dy - ay) - (by - ay) * (dx - ax);
+            const d3 = (dx - cx) * (ay - cy) - (dy - cy) * (ax - cx);
+            const d4 = (dx - cx) * (by - cy) - (dy - cy) * (bx - cx);
+            return ((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) &&
+                   ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0));
+        }
+
+        // Minimum enclosing circle (Welzl's algorithm, Möbius-aware via local frame)
+        function enclosingCircle(nodes) {
+            if (nodes.length === 0) return { cx: 0, cy: 0, r: 0 };
+            if (nodes.length === 1) return { cx: nodes[0].x, cy: nodes[0].y, r: 0 };
+            // Project all nodes into local frame anchored to first node
+            const anchor = nodes[0];
+            const pts = [{ x: 0, y: 0 }];
+            for (let i = 1; i < nodes.length; i++) {
+                const mi = minImageDelta(anchor.x, anchor.y, nodes[i].x, nodes[i].y);
+                pts.push({ x: mi.dx, y: mi.dy });
+            }
+            function ldist(a, b) { const dx = b.x - a.x, dy = b.y - a.y; return Math.sqrt(dx*dx + dy*dy); }
+            function circle1(p) { return { x: p.x, y: p.y, r: 0 }; }
+            function circle2(a, b) {
+                return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, r: ldist(a, b) / 2 };
+            }
+            function circle3(a, b, c) {
+                const d = 2 * (a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y));
+                if (Math.abs(d) < 1e-10) {
+                    const d1 = ldist(a,b), d2 = ldist(b,c), d3 = ldist(a,c);
+                    if (d1 >= d2 && d1 >= d3) return circle2(a, b);
+                    if (d2 >= d3) return circle2(b, c);
+                    return circle2(a, c);
+                }
+                const ux = ((a.x*a.x+a.y*a.y)*(b.y-c.y)+(b.x*b.x+b.y*b.y)*(c.y-a.y)+(c.x*c.x+c.y*c.y)*(a.y-b.y))/d;
+                const uy = ((a.x*a.x+a.y*a.y)*(c.x-b.x)+(b.x*b.x+b.y*b.y)*(a.x-c.x)+(c.x*c.x+c.y*c.y)*(b.x-a.x))/d;
+                return { x: ux, y: uy, r: Math.sqrt((a.x-ux)*(a.x-ux)+(a.y-uy)*(a.y-uy)) };
+            }
+            // Incremental Welzl
+            let c = circle2(pts[0], pts[1]);
+            for (let i = 2; i < pts.length; i++) {
+                if (ldist(c, pts[i]) > c.r + 1) {
+                    c = circle2(pts[i], pts[0]);
+                    for (let j = 1; j < i; j++) {
+                        if (ldist(c, pts[j]) > c.r + 1) {
+                            c = circle2(pts[i], pts[j]);
+                            for (let k = 0; k < j; k++) {
+                                if (ldist(c, pts[k]) > c.r + 1) {
+                                    c = circle3(pts[i], pts[j], pts[k]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // Convert back to world coordinates
+            let cx = anchor.x + c.x;
+            let cy = anchor.y + c.y;
+            const r = c.r;
+            while (cx > WORLD_HALF) { cx -= WORLD_SIZE; cy = -cy; }
+            while (cx < -WORLD_HALF) { cx += WORLD_SIZE; cy = -cy; }
+            while (cy > WORLD_HALF) { cy -= WORLD_SIZE; cx = -cx; }
+            while (cy < -WORLD_HALF) { cy += WORLD_SIZE; cx = -cx; }
+            return { cx, cy, r };
+        }
+
+        function computeVisibleComponents() {
+            const parent = {};
+            function find(x) { return parent[x] === x ? x : (parent[x] = find(parent[x])); }
+            function union(x, y) { parent[find(x)] = find(y); }
+            graphNodes.forEach(n => { parent[n.id] = n.id; });
+            graphEdges.forEach(e => {
+                const a = nodeMap[e.source], b = nodeMap[e.target];
+                if (!a || !b) return;
+                const mi = minImageDelta(a.x, a.y, b.x, b.y);
+                if (mi.d2 <= EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) union(e.source, e.target);
+            });
+            const components = new Map();
+            graphNodes.forEach(n => {
+                const root = find(n.id);
+                if (!components.has(root)) components.set(root, []);
+                components.get(root).push(n);
+            });
+            const circles = [];
+            components.forEach(nodes => {
+                const ec = enclosingCircle(nodes);
+                const nodeSet = new Set(nodes.map(n => n.id));
+                circles.push({ nodes, cx: ec.cx, cy: ec.cy, r: ec.r, nodeSet });
+            });
+            return circles;
+        }
+
         function buildNodeMap() {
             const map = {};
             graphNodes.forEach(n => { map[n.id] = n; });
@@ -234,173 +342,290 @@
         graphNodes.forEach(n => {
             n.x = n.targetX + (Math.random() - 0.5) * 20;
             n.y = n.targetY + (Math.random() - 0.5) * 20;
-            // Tangential velocity for orbital motion around cluster center
-            const cluster = clusterData.centroids[n.clusterDomain];
-            if (cluster) {
-                const dx = n.x - cluster.x;
-                const dy = n.y - cluster.y;
-                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-                // Orbital speed: faster for closer nodes, all prograde
-                const speed = ORBITAL_SPEED * Math.sqrt(Math.max(dist, 30) / 100);
-                n.vx = -dy / dist * speed + (Math.random() - 0.5) * 0.05;
-                n.vy = dx / dist * speed + (Math.random() - 0.5) * 0.05;
-            } else {
-                n.vx = (Math.random() - 0.5) * 0.1;
-                n.vy = (Math.random() - 0.5) * 0.1;
-            }
+            // Keplerian orbital velocity: v = sqrt(G*M/r) for circular orbit around galactic core
+            const r = Math.sqrt(n.x * n.x + n.y * n.y) || 1;
+            const orbitalV = Math.sqrt(G_CORE * CORE_MASS / Math.max(r, 50));
+            // Tangential (prograde) direction perpendicular to radius
+            n.vx = -n.y / r * orbitalV + (Math.random() - 0.5) * 0.05;
+            n.vy = n.x / r * orbitalV + (Math.random() - 0.5) * 0.05;
         });
 
-        // Track last pulse time for periodic edge contraction
-        let lastEdgePulse = -EDGE_PULSE_INTERVAL;  // fire immediately on first frame
-        let edgePulseDomain = null;  // which domain is currently pulsing
-        let edgePulseIndex = 0;     // cycle index through domains with edges
-        // Pre-compute which domains have edges
-        const domainsWithEdges = (() => {
-            const set = new Set();
-            graphEdges.forEach(e => {
-                const a = nodeMap[e.source], b = nodeMap[e.target];
-                if (a && b) {
-                    set.add(a.clusterDomain || a.primary_domain || 'Bridges');
-                    set.add(b.clusterDomain || b.primary_domain || 'Bridges');
-                }
-            });
-            return [...set];
-        })();
-        // Per-edge randomized contraction targets for current pulse
-        let edgePulseTargets = new Map();  // edge key → { strength, restLength }
+        // Track single-edge contraction: cycle through all edges one at a time
+        let edgeCycleIndex = 0;                // which edge is currently contracting
+        let activePulseEdge = null;            // { source, target, strength, restLength, startTime }
+        const EDGE_PULSE_INTERVAL = 2.0;      // Seconds between each edge pulse
+        const EDGE_PULSE_STRENGTH = 1.2;      // Gentle contraction scaled to large universe
+        const EDGE_PULSE_DECAY = 6.0;         // Slow fade over 6 seconds
 
         function simulate() {
-            // ─── Edge contraction pulse: cycle through clusters one at a time ───
-            const pulseAge = time - lastEdgePulse;
-            if (pulseAge >= EDGE_PULSE_INTERVAL) {
-                // Advance to next domain with edges
-                if (domainsWithEdges.length > 0) {
-                    edgePulseIndex = (edgePulseIndex + 1) % domainsWithEdges.length;
-                    edgePulseDomain = domainsWithEdges[edgePulseIndex];
+            // Logarithmic time zoom: time ∝ 1/zoom
+            timeScale = 0.024 / camera.zoom;
+            if (timeScale <= 0) return;
+
+            // ─── Edge contraction pulse: one edge at a time, cycle through all ───
+            if (!activePulseEdge || (time - activePulseEdge.startTime) >= EDGE_PULSE_INTERVAL + EDGE_PULSE_DECAY) {
+                // Advance to next edge
+                if (graphEdges.length > 0) {
+                    edgeCycleIndex = edgeCycleIndex % graphEdges.length;
+                    const e = graphEdges[edgeCycleIndex];
+                    const a = nodeMap[e.source], b = nodeMap[e.target];
+                    if (a && b) {
+                        activePulseEdge = {
+                            source: e.source, target: e.target,
+                            strength: (0.1 + Math.random() * 0.3) * EDGE_PULSE_STRENGTH,
+                            restLength: REST_LENGTH * (0.85 + Math.random() * 0.1),
+                            startTime: time,
+                        };
+                    }
+                    edgeCycleIndex = (edgeCycleIndex + 1) % graphEdges.length;
                 }
-                lastEdgePulse = time;
-                // Firework celebration when domain pulse completes
-                if (edgePulseDomain) {
-                    const domainNodes = graphNodes.filter(n => (n.clusterDomain || n.primary_domain) === edgePulseDomain);
-                    if (domainNodes.length > 0) {
-                        let cx = 0, cy = 0;
-                        domainNodes.forEach(n => { cx += n.x; cy += n.y; });
-                        cx /= domainNodes.length; cy /= domainNodes.length;
-                        if (fireworks.length < MAX_FIREWORKS) spawnFirework(cx, cy, 20);
+            }
+            // Apply decaying pulse force to the single active edge
+            if (activePulseEdge) {
+                const pulseAge = time - activePulseEdge.startTime;
+                const pulseStrength = pulseAge < EDGE_PULSE_DECAY
+                    ? (1 - pulseAge / EDGE_PULSE_DECAY)
+                    : 0;
+                if (pulseStrength > 0) {
+                    const a = nodeMap[activePulseEdge.source], b = nodeMap[activePulseEdge.target];
+                    if (a && b) {
+                        const mi = minImageDelta(a.x, a.y, b.x, b.y);
+                        const d = Math.sqrt(mi.d2) || 1;
+                        const f = activePulseEdge.strength * (d - activePulseEdge.restLength) / d;
+                        const fx = mi.dx * f * pulseStrength;
+                        const fy = mi.dy * f * pulseStrength;
+                        a.vx += fx; a.vy += fy;
+                        b.vx -= fx; b.vy -= fy;
                     }
                 }
-                edgePulseTargets.clear();
-                // Randomize per-edge contraction for edges touching this domain
-                graphEdges.forEach(e => {
-                    const a = nodeMap[e.source], b = nodeMap[e.target];
-                    if (!a || !b) return;
-                    const aDomain = a.clusterDomain || a.primary_domain || 'Bridges';
-                    const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
-                    if (aDomain !== edgePulseDomain && bDomain !== edgePulseDomain) return;
-                    const key = e.source + '→' + e.target;
-                    edgePulseTargets.set(key, {
-                        strength: (0.2 + Math.random() * 0.8) * EDGE_PULSE_STRENGTH,
-                        restLength: REST_LENGTH * (0.3 + Math.random() * 0.5),
-                    });
-                });
-            }
-            // Apply decaying pulse force to provenance edges in current domain
-            const pulseStrength = pulseAge < EDGE_PULSE_DECAY
-                ? (1 - pulseAge / EDGE_PULSE_DECAY)  // linear fade 1→0
-                : 0;
-            if (pulseStrength > 0) {
-                graphEdges.forEach(e => {
-                    const a = nodeMap[e.source], b = nodeMap[e.target];
-                    if (!a || !b) return;
-                    const key = e.source + '→' + e.target;
-                    const target = edgePulseTargets.get(key);
-                    if (!target) return;
-                    const dx = b.x - a.x, dy = b.y - a.y;
-                    const d = Math.sqrt(dx * dx + dy * dy) || 1;
-                    const f = target.strength * (d - target.restLength) / d;
-                    const fx = dx * f * pulseStrength;
-                    const fy = dy * f * pulseStrength;
-                    a.vx += fx; a.vy += fy;
-                    b.vx -= fx; b.vy -= fy;
-                });
             }
 
-            // ─── Galaxy rotation: slowly rotate entire scene ───
-            const cosG = Math.cos(GALAXY_ROTATION), sinG = Math.sin(GALAXY_ROTATION);
+            // ─── Edge springiness: nearby connected nodes attract each other ───
+            const EDGE_SPRING_K = 0.08;       // Spring constant — gentle attraction
+            const EDGE_SPRING_REST = REST_LENGTH * 0.6;  // Rest length where force is zero
+            graphEdges.forEach(e => {
+                const a = nodeMap[e.source], b = nodeMap[e.target];
+                if (!a || !b) return;
+                if (a === dragNode || b === dragNode) return;
+                const mi = minImageDelta(a.x, a.y, b.x, b.y);
+                if (mi.d2 > EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) return; // only when close enough to light up
+                const d = Math.sqrt(mi.d2) || 1;
+                const f = EDGE_SPRING_K * (d - EDGE_SPRING_REST) / d;
+                const fx = mi.dx * f;
+                const fy = mi.dy * f;
+                a.vx += fx; a.vy += fy;
+                b.vx -= fx; b.vy -= fy;
+            });
+
+            // ─── Edge crossing avoidance: uncross overlapping edges, keep them uncrossed ───
+            const CROSS_UNCROSS_FORCE = 3000;   // Strong push to uncross
+            const CROSS_GUARD_FORCE = 600;      // Weaker guard force to prevent re-crossing
+            const CROSS_GUARD_DIST = MIN_REPULSION_DIST * 3; // Distance within which guard applies
+            for (let i = 0; i < graphEdges.length; i++) {
+                const e1 = graphEdges[i];
+                const a = nodeMap[e1.source], b = nodeMap[e1.target];
+                if (!a || !b) continue;
+                for (let j = i + 1; j < graphEdges.length; j++) {
+                    const e2 = graphEdges[j];
+                    // Skip edges that share a node — they can't meaningfully cross
+                    if (e1.source === e2.source || e1.source === e2.target ||
+                        e1.target === e2.source || e1.target === e2.target) continue;
+                    const c = nodeMap[e2.source], d = nodeMap[e2.target];
+                    if (!c || !d) continue;
+
+                    if (segmentsCross(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y)) {
+                        // Edges cross — push opposite node pairs apart to uncross
+                        // (A,C), (A,D), (B,C), (B,D) each repel — momentum conserved
+                        const pairs = [[a, c], [a, d], [b, c], [b, d]];
+                        for (const [n1, n2] of pairs) {
+                            if (n1 === dragNode || n2 === dragNode) continue;
+                            const pdx = n2.x - n1.x, pdy = n2.y - n1.y;
+                            const pd2 = pdx * pdx + pdy * pdy;
+                            const pd = Math.sqrt(pd2) || 1;
+                            const f = CROSS_UNCROSS_FORCE / (pd2 + 5000);
+                            n1.vx -= (pdx / pd) * f;
+                            n1.vy -= (pdy / pd) * f;
+                            n2.vx += (pdx / pd) * f;
+                            n2.vy += (pdy / pd) * f;
+                        }
+                    } else {
+                        // Edges don't cross — guard force to prevent future crossing
+                        // If the four nodes are close, apply weak repulsion between opposite pairs
+                        const midABx = (a.x + b.x) * 0.5, midABy = (a.y + b.y) * 0.5;
+                        const midCDx = (c.x + d.x) * 0.5, midCDy = (c.y + d.y) * 0.5;
+                        const midDist = Math.sqrt((midABx - midCDx) ** 2 + (midABy - midCDy) ** 2);
+                        if (midDist < CROSS_GUARD_DIST) {
+                            const pairs = [[a, c], [a, d], [b, c], [b, d]];
+                            for (const [n1, n2] of pairs) {
+                                if (n1 === dragNode || n2 === dragNode) continue;
+                                const pdx = n2.x - n1.x, pdy = n2.y - n1.y;
+                                const pd2 = pdx * pdx + pdy * pdy;
+                                const pd = Math.sqrt(pd2) || 1;
+                                const f = CROSS_GUARD_FORCE / (pd2 + 5000);
+                                n1.vx -= (pdx / pd) * f;
+                                n1.vy -= (pdy / pd) * f;
+                                n2.vx += (pdx / pd) * f;
+                                n2.vy += (pdy / pd) * f;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ─── Cluster centroid tracking (dynamic, not kinematic) ───
+            // Update cluster centroids to actual center of mass for label rendering
+            const clusterMass = {};
+            Object.keys(clusterData.centroids).forEach(d => { clusterMass[d] = { mx: 0, my: 0, m: 0 }; });
             graphNodes.forEach(n => {
-                if (n === dragNode) return;
-                if (dragCluster && (n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) return;
-                const nx = n.x * cosG - n.y * sinG;
-                const ny = n.x * sinG + n.y * cosG;
-                n.x = nx; n.y = ny;
-                // Also rotate velocity to maintain orbital direction
-                const nvx = n.vx * cosG - n.vy * sinG;
-                const nvy = n.vx * sinG + n.vy * cosG;
-                n.vx = nvx; n.vy = nvy;
+                const d = n.clusterDomain || n.primary_domain || 'Bridges';
+                if (clusterMass[d]) {
+                    clusterMass[d].mx += n.x * n.mass;
+                    clusterMass[d].my += n.y * n.mass;
+                    clusterMass[d].m += n.mass;
+                }
             });
-            // Rotate cluster centroids along with the galaxy (for labels)
-            Object.values(clusterData.centroids).forEach(c => {
-                const cx = c.x * cosG - c.y * sinG;
-                const cy = c.x * sinG + c.y * cosG;
-                c.x = cx; c.y = cy;
+            Object.keys(clusterMass).forEach(d => {
+                const cm = clusterMass[d];
+                if (cm.m > 0) {
+                    clusterData.centroids[d].x = cm.mx / cm.m;
+                    clusterData.centroids[d].y = cm.my / cm.m;
+                }
             });
 
-            // ─── N-body: intra-cluster attraction, inter-cluster repulsion ───
+            // ─── Component force field repulsion ───
+            const compCircles = computeVisibleComponents();
+            // Build node → own circle lookup for containment
+            const nodeCircleMap = new Map();
+            compCircles.forEach(circle => {
+                circle.nodes.forEach(n => { nodeCircleMap.set(n.id, circle); });
+            });
+            const FIELD_STRENGTH = 4000;    // Repulsive force strength
+            const FIELD_MARGIN = 200;      // How far inside the circle before force kicks in
+            for (let ci = 0; ci < compCircles.length; ci++) {
+                const circle = compCircles[ci];
+                for (let ni = 0; ni < graphNodes.length; ni++) {
+                    const n = graphNodes[ni];
+                    if (n === dragNode) continue;
+                    if (circle.nodeSet.has(n.id)) continue; // own component — skip
+                    const dx = n.x - circle.cx, dy = n.y - circle.cy;
+                    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                    if (dist < circle.r + FIELD_MARGIN) {
+                        // Node is inside or near the force field boundary — push it out
+                        const penetration = circle.r + FIELD_MARGIN - dist;
+                        const force = FIELD_STRENGTH * penetration / (circle.r + FIELD_MARGIN);
+                        n.vx += (dx / dist) * force;
+                        n.vy += (dy / dist) * force;
+                        // Spawn explosion at boundary if deep penetration
+                        if (dist < circle.r && explosions.length < MAX_EXPLOSIONS) {
+                            const hitX = circle.cx + (dx / dist) * circle.r;
+                            const hitY = circle.cy + (dy / dist) * circle.r;
+                            const sparks = [];
+                            const sparkCount = 6 + Math.floor(penetration * 0.01);
+                            for (let s = 0; s < sparkCount; s++) {
+                                const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 1.2;
+                                const speed = 800 + Math.random() * 2000;
+                                sparks.push({
+                                    x: hitX, y: hitY,
+                                    vx: Math.cos(angle) * speed,
+                                    vy: Math.sin(angle) * speed,
+                                    life: 0.3 + Math.random() * 0.4,
+                                    hue: 180 + Math.random() * 60,  // cyan-blue force field color
+                                    size: 1 + Math.random() * 2
+                                });
+                            }
+                            explosions.push({
+                                x: hitX, y: hitY, time: time,
+                                strength: Math.min(1, penetration * 0.002),
+                                sparks, shockRadius: 0, isChain: false
+                            });
+                        }
+                    }
+                }
+            }
+            // Circle-circle repulsion: overlapping component circles push each other apart
+            for (let ci = 0; ci < compCircles.length; ci++) {
+                for (let cj = ci + 1; cj < compCircles.length; cj++) {
+                    const A = compCircles[ci], B = compCircles[cj];
+                    const dx = B.cx - A.cx, dy = B.cy - A.cy;
+                    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                    const overlap = (A.r + B.r) - dist;
+                    if (overlap > 0) {
+                        // Push all nodes in each component away from the other circle's center
+                        const pushDir = { x: dx / dist, y: dy / dist };
+                        const pushForce = 2000 * overlap / (A.r + B.r);
+                        A.nodes.forEach(n => {
+                            if (n === dragNode) return;
+                            n.vx -= pushDir.x * pushForce / A.nodes.length;
+                            n.vy -= pushDir.y * pushForce / A.nodes.length;
+                        });
+                        B.nodes.forEach(n => {
+                            if (n === dragNode) return;
+                            n.vx += pushDir.x * pushForce / B.nodes.length;
+                            n.vy += pushDir.y * pushForce / B.nodes.length;
+                        });
+                    }
+                }
+            }
+
+            // ─── N-body: universal gravitation + central attractor + short-range repulsion ───
             for (let i = 0; i < graphNodes.length; i++) {
                 const a = graphNodes[i];
                 if (a === dragNode) continue;
                 const aDomain = a.clusterDomain || a.primary_domain || 'Bridges';
                 if (dragCluster && aDomain === dragCluster) continue;
+
+                // Central attractor: minimum-image path to galactic core (Möbius-aware)
+                const coreDelta = minImageDelta(a.x, a.y, 0, 0);
+                const coreR2 = coreDelta.d2;
+                const coreR = Math.sqrt(coreR2) || 1;
+                const coreForce = G_CORE * CORE_MASS * a.mass / (coreR2 + SOFTENING * SOFTENING);
+                a.vx += (coreDelta.dx / coreR) * coreForce;
+                a.vy += (coreDelta.dy / coreR) * coreForce;
+
                 for (let j = i + 1; j < graphNodes.length; j++) {
                     const b = graphNodes[j];
                     if (b === dragNode) continue;
                     const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
                     if (dragCluster && bDomain === dragCluster) continue;
 
-                    const dx = b.x - a.x, dy = b.y - a.y;
-                    const d2 = dx * dx + dy * dy;
+                    // Minimum-image delta: shortest path through Klein bottle topology
+                    const mi = minImageDelta(a.x, a.y, b.x, b.y);
+                    const dx = mi.dx, dy = mi.dy;
+                    const d2 = mi.d2;
                     const d = Math.sqrt(d2) || 1;
 
-                    if (aDomain === bDomain) {
-                        // ── Same cluster: gravitational attraction ──
-                        const force = G_INTRA * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
-                        const fx = (dx / d) * force;
-                        const fy = (dy / d) * force;
-                        a.vx += fx; a.vy += fy;
-                        b.vx -= fx; b.vy -= fy;
-                    } else {
-                        // ── Different clusters: repulsion ──
-                        // Soft repulsion that falls off with distance
-                        const force = G_INTER * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
-                        const fx = (dx / d) * force;
-                        const fy = (dy / d) * force;
-                        a.vx -= fx; a.vy -= fy;
-                        b.vx += fx; b.vy += fy;
-                    }
+                    // Universal gravitation — always attractive, cluster affinity boosts strength
+                    const sameCluster = (aDomain === bDomain);
+                    const G = sameCluster ? G_UNIVERSAL * G_CLUSTER_MULT : G_UNIVERSAL;
+                    const force = G * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
+                    const fx = (dx / d) * force;
+                    const fy = (dy / d) * force;
+                    a.vx += fx; a.vy += fy;
+                    b.vx -= fx; b.vy -= fy;
 
-                    // ── Space battle collision: superelastic bounce + rocket thrust + explosion ──
+                    // ── Elastic collision: conserves momentum AND kinetic energy ──
                     if (d < MIN_REPULSION_DIST) {
                         const nx = dx / d, ny = dy / d;
                         const relVx = a.vx - b.vx, relVy = a.vy - b.vy;
                         const relVn = relVx * nx + relVy * ny;
                         if (relVn > 0) {
-                            // Chain reaction: thrust-active nodes hit harder
+                            // Chain reaction detection: visual effects scale with collision cascade
                             const isChain = (a.thrustTime > 0 || b.thrustTime > 0);
-                            const bounceCoeff = isChain ? BOUNCE * CHAIN_BOUNCE_MULT : BOUNCE;
                             const totalMass = a.mass + b.mass;
-                            const impulseA = (1 + bounceCoeff) * relVn * b.mass / totalMass;
-                            const impulseB = (1 + bounceCoeff) * relVn * a.mass / totalMass;
+                            // Elastic impulse: (1+e) = 2 for e=1, conserves both p and KE
+                            const impulseA = (1 + BOUNCE) * relVn * b.mass / totalMass;
+                            const impulseB = (1 + BOUNCE) * relVn * a.mass / totalMass;
                             a.vx -= impulseA * nx;
                             a.vy -= impulseA * ny;
                             b.vx += impulseB * nx;
                             b.vy += impulseB * ny;
 
-                            // Rocket thrust: activate engines on both nodes
+                            // Visual: activate rocket flame trails on both nodes
                             a.thrustTime = time;
-                            a.thrustAngle = Math.atan2(-ny, -nx); // opposite to collision normal
+                            a.thrustAngle = Math.atan2(-ny, -nx) + (Math.random() - 0.5) * Math.PI * 0.6;
                             a.thrustStrength = Math.min(1, Math.abs(relVn) * 0.5);
                             b.thrustTime = time;
-                            b.thrustAngle = Math.atan2(ny, nx);
+                            b.thrustAngle = Math.atan2(ny, nx) + (Math.random() - 0.5) * Math.PI * 0.6;
                             b.thrustStrength = Math.min(1, Math.abs(relVn) * 0.5);
 
                             // Spawn explosion at contact point (capped for performance)
@@ -411,7 +636,7 @@
                                 const sparks = [];
                                 for (let s = 0; s < sparkCount; s++) {
                                     const angle = Math.random() * Math.PI * 2;
-                                    const speed = 50 + Math.random() * 200 * Math.abs(relVn);
+                                    const speed = 1500 + Math.random() * 6000 * Math.abs(relVn);
                                     const hue = isChain ? (30 + Math.random() * 30) : (20 + Math.random() * 40);
                                     sparks.push({
                                         x: cx, y: cy,
@@ -431,48 +656,38 @@
                                 });
                             }
                         }
+                        // Overlap separation: mass-proportional to conserve center of mass
                         const overlap = MIN_REPULSION_DIST - d;
                         if (overlap > 0) {
-                            const pushForce = overlap * 0.5;
-                            a.x -= nx * pushForce;
-                            a.y -= ny * pushForce;
-                            b.x += nx * pushForce;
-                            b.y += ny * pushForce;
+                            const pushA = overlap * b.mass / (a.mass + b.mass);
+                            const pushB = overlap * a.mass / (a.mass + b.mass);
+                            a.x -= nx * pushA;
+                            a.y -= ny * pushA;
+                            b.x += nx * pushB;
+                            b.y += ny * pushB;
                         }
                     }
                 }
             }
 
-            // ─── Gentle organic drift for liveliness ───
-            graphNodes.forEach(n => {
-                if (n === dragNode) return;
-                if (dragCluster && (n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) return;
-                n.vx += Math.sin(time * 0.3 + n.phase) * 0.005;
-                n.vy += Math.cos(time * 0.4 + n.phase * 1.3) * 0.005;
-            });
-
-            // ─── Damping + thrust + velocity cap + integrate + trail ───
+            // ─── Integrate + trail ───
             graphNodes.forEach(n => {
                 if (n === dragNode) return;
                 if (dragCluster && (n.clusterDomain || n.primary_domain || 'Bridges') === dragCluster) return;
 
-                // Rocket thrust: decaying force for THRUST_DURATION seconds after collision
+                // Rocket thrust: visual-only flame trail after collision (no force — momentum conserved)
                 if (n.thrustTime > 0) {
                     const thrustAge = time - n.thrustTime;
                     if (thrustAge < THRUST_DURATION) {
-                        const decay = 1 - thrustAge / THRUST_DURATION;
-                        const force = THRUST_FORCE * n.thrustStrength * decay;
-                        n.vx += Math.cos(n.thrustAngle) * force;
-                        n.vy += Math.sin(n.thrustAngle) * force;
-                        // Spawn flame particles (capped)
+                        // Spawn flame particles (capped) — visual only, no velocity change
                         if (flameParticles.length < MAX_FLAME_PARTICLES && Math.random() < 0.3) {
                             const spread = 0.4;
                             const angle = n.thrustAngle + Math.PI + (Math.random() - 0.5) * spread;
                             flameParticles.push({
                                 x: n.x - Math.cos(n.thrustAngle) * n.radius * 0.8,
                                 y: n.y - Math.sin(n.thrustAngle) * n.radius * 0.8,
-                                vx: Math.cos(angle) * (30 + Math.random() * 60) + n.vx * 0.3,
-                                vy: Math.sin(angle) * (30 + Math.random() * 60) + n.vy * 0.3,
+                                vx: Math.cos(angle) * (900 + Math.random() * 1800) + n.vx * 0.3,
+                                vy: Math.sin(angle) * (900 + Math.random() * 1800) + n.vy * 0.3,
                                 life: 0.15 + Math.random() * 0.25,
                                 hue: 20 + Math.random() * 30,
                                 size: 1 + Math.random() * 2.5
@@ -491,12 +706,20 @@
                     n.vx = (n.vx / speed) * MAX_VELOCITY;
                     n.vy = (n.vy / speed) * MAX_VELOCITY;
                 }
-                n.x += n.vx;
-                n.y += n.vy;
+                n.x += n.vx * timeScale;
+                n.y += n.vy * timeScale;
+
+                // Möbius-Klein bottle wrapping: non-orientable closed universe
+                // X-wrap: re-enter opposite side with Y flipped (Möbius twist)
+                while (n.x > WORLD_HALF) { n.x -= WORLD_SIZE; n.y = -n.y; n.vy = -n.vy; }
+                while (n.x < -WORLD_HALF) { n.x += WORLD_SIZE; n.y = -n.y; n.vy = -n.vy; }
+                // Y-wrap: re-enter opposite side with X flipped (Klein bottle second twist)
+                while (n.y > WORLD_HALF) { n.y -= WORLD_SIZE; n.x = -n.x; n.vx = -n.vx; }
+                while (n.y < -WORLD_HALF) { n.y += WORLD_SIZE; n.x = -n.x; n.vx = -n.vx; }
 
                 // Comet trail: ring buffer of last 20 positions
                 const v = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
-                if (v > 1.0) {
+                if (v > 30.0) {
                     n.trail.push({ x: n.x, y: n.y });
                     if (n.trail.length > 20) n.trail.shift();
                 } else if (n.trail.length > 0) {
@@ -508,17 +731,54 @@
                     n.radarPulse = { startTime: time, radius: 0 };
                 }
                 if (n.radarPulse) {
-                    n.radarPulse.radius += 1.5;
+                    n.radarPulse.radius += 45;
                     if (n.radarPulse.radius > n.radius * 4) {
                         n.radarPulse = null;
                     }
                 }
             });
 
+            // ─── Hard edge crossing constraint: project nodes apart until no edges cross ───
+            for (let uncrossIter = 0; uncrossIter < 3; uncrossIter++) {
+                let anyCross = false;
+                for (let i = 0; i < graphEdges.length; i++) {
+                    const e1 = graphEdges[i];
+                    const a = nodeMap[e1.source], b = nodeMap[e1.target];
+                    if (!a || !b) continue;
+                    for (let j = i + 1; j < graphEdges.length; j++) {
+                        const e2 = graphEdges[j];
+                        if (e1.source === e2.source || e1.source === e2.target ||
+                            e1.target === e2.source || e1.target === e2.target) continue;
+                        const c = nodeMap[e2.source], d = nodeMap[e2.target];
+                        if (!c || !d) continue;
+                        if (segmentsCross(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y)) {
+                            anyCross = true;
+                            // Push opposite node pairs apart — equal and opposite (momentum conserved)
+                            const pairs = [[a, c], [a, d], [b, c], [b, d]];
+                            for (const [n1, n2] of pairs) {
+                                const pdx = n2.x - n1.x, pdy = n2.y - n1.y;
+                                const pd = Math.sqrt(pdx * pdx + pdy * pdy) || 1;
+                                const push = 500 / pd;
+                                n1.x -= (pdx / pd) * push;
+                                n1.y -= (pdy / pd) * push;
+                                n2.x += (pdx / pd) * push;
+                                n2.y += (pdy / pd) * push;
+                                // Reflect velocities outward too
+                                const vOut1 = n1.vx * (pdx / pd) + n1.vy * (pdy / pd);
+                                const vOut2 = n2.vx * (-pdx / pd) + n2.vy * (-pdy / pd);
+                                if (vOut1 > 0) { n1.vx -= vOut1 * (pdx / pd); n1.vy -= vOut1 * (pdy / pd); }
+                                if (vOut2 > 0) { n2.vx += vOut2 * (pdx / pd); n2.vy += vOut2 * (pdy / pd); }
+                            }
+                        }
+                    }
+                }
+                if (!anyCross) break;
+            }
+
             // ─── Update explosions ───
             for (let i = explosions.length - 1; i >= 0; i--) {
                 const e = explosions[i];
-                e.shockRadius += 200 * 0.016; // expand shockwave
+                e.shockRadius += 6000 * 0.016; // expand shockwave
                 let alive = false;
                 for (const s of e.sparks) {
                     s.x += s.vx * 0.016;
@@ -528,7 +788,7 @@
                     s.life -= 0.016;
                     if (s.life > 0) alive = true;
                 }
-                if (!alive && e.shockRadius > 150) {
+                if (!alive && e.shockRadius > 4500) {
                     explosions.splice(i, 1);
                 }
             }
@@ -576,7 +836,7 @@
                 for (const p of fw.particles) {
                     p.x += p.vx * 0.016;
                     p.y += p.vy * 0.016;
-                    p.vy += 30 * 0.016; // gravity
+                    p.vy += 900 * 0.016; // gravity
                     p.vx *= 0.98;
                     p.vy *= 0.98;
                     p.life -= 0.016;
@@ -598,11 +858,11 @@
             const particles = [];
             for (let i = 0; i < count; i++) {
                 const angle = Math.random() * Math.PI * 2;
-                const speed = 80 + Math.random() * 150;
+                const speed = 2400 + Math.random() * 4500;
                 particles.push({
                     x: wx, y: wy,
                     vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed - 40,
+                    vy: Math.sin(angle) * speed - 1200,
                     life: 0.8 + Math.random() * 0.7,
                     hue: hue + Math.random() * 40 - 20,
                     size: 1.5 + Math.random() * 2,
@@ -850,7 +1110,7 @@
 
         function render() {
             if (!animating) return;
-            time += 0.016;
+            time += 0.016 * timeScale;
 
             simulate();
 
@@ -902,114 +1162,122 @@
                 }
             });
 
-            // ─── Domain cluster boundaries and labels (dynamic centroids) ───
+            // ─── Connected component circles (visible edges only) ───
             const centroids = clusterData.centroids;
-            // Recompute cluster centroids from actual node positions
-            const liveClusters = {};
-            graphNodes.forEach(n => {
-                const domain = n.clusterDomain || n.primary_domain || 'Bridges';
-                if (!liveClusters[domain]) liveClusters[domain] = { xs: [], ys: [] };
-                liveClusters[domain].xs.push(n.x);
-                liveClusters[domain].ys.push(n.y);
-            });
-            Object.keys(liveClusters).forEach(domain => {
-                const lc = liveClusters[domain];
-                const c = centroids[domain];
-                if (!c) return;
-                // Update centroid to actual center of mass of member nodes
-                c.x = lc.xs.reduce((a, b) => a + b, 0) / lc.xs.length;
-                c.y = lc.ys.reduce((a, b) => a + b, 0) / lc.ys.length;
-            });
-            Object.values(centroids).forEach(c => {
-                const domain = c.domain;
-                if (!liveClusters[domain]) return;
-                const sp = worldToScreen(c.x, c.y);
-                const col = DOMAIN_COLORS[domain] || DOMAIN_COLORS['Bridges'];
-
-                // Compute cluster radius from member nodes
-                const members = graphNodes.filter(n => (n.clusterDomain || n.primary_domain || 'Bridges') === domain);
-                if (members.length === 0) return;
-                let maxDist = 0;
-                members.forEach(n => {
-                    const dx = n.x - c.x, dy = n.y - c.y;
-                    const d = Math.sqrt(dx * dx + dy * dy);
-                    if (d > maxDist) maxDist = d;
-                });
-                const clusterR = (maxDist + 40) * camera.zoom;
-
-                // Filled circle with domain color
-                const isClusterActive = (domain === hoveredCluster) || (domain === dragCluster);
+            const compCircles = computeVisibleComponents();
+            let compIdx = 0;
+            compCircles.forEach(circle => {
+                const sr = circle.r * camera.zoom;
+                if (sr < 3) { compIdx++; return; }
+                const sp = worldToScreen(circle.cx, circle.cy);
+                const hue = (compIdx * 47 + 15) % 360;
+                const crossesX = Math.abs(circle.cx) + circle.r > WORLD_HALF;
+                const crossesY = Math.abs(circle.cy) + circle.r > WORLD_HALF;
+                const crossesEdge = crossesX || crossesY;
+                // Universe boundary screen coords for clipping
+                const edgeL = worldToScreen(-WORLD_HALF, 0).x;
+                const edgeR = worldToScreen(WORLD_HALF, 0).x;
+                const edgeT = worldToScreen(0, -WORLD_HALF).y;
+                const edgeB = worldToScreen(0, WORLD_HALF).y;
+                // Draw main circle (clipped to universe if it crosses an edge)
+                ctx.save();
+                if (crossesEdge) {
+                    ctx.beginPath();
+                    ctx.rect(edgeL, edgeT, edgeR - edgeL, edgeB - edgeT);
+                    ctx.clip();
+                }
                 ctx.beginPath();
-                ctx.arc(sp.x, sp.y, clusterR, 0, Math.PI * 2);
-                ctx.fillStyle = `hsla(${col.h}, ${col.s}%, ${col.l}%, ${isClusterActive ? 0.08 : 0.04})`;
+                ctx.arc(sp.x, sp.y, sr, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${hue}, 80%, 60%, 0.06)`;
                 ctx.fill();
-                // Border circle
-                ctx.strokeStyle = `hsla(${col.h}, ${col.s}%, ${col.l}%, ${isClusterActive ? 0.35 : 0.12})`;
-                ctx.lineWidth = isClusterActive ? 2 : 1;
+                ctx.strokeStyle = `hsla(${hue}, 90%, 70%, 0.2)`;
+                ctx.lineWidth = 1;
                 ctx.stroke();
-
-                // Domain label
-                ctx.fillStyle = `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 85)}%, ${isClusterActive ? 0.8 : 0.35})`;
-                ctx.font = `${isClusterActive ? 'bold ' : ''}${Math.max(11, (isClusterActive ? 14 : 13) * camera.zoom)}px 'Segoe UI', system-ui, sans-serif`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(domain, sp.x, sp.y - clusterR + 14 * camera.zoom);
-            });
-
-            // ─── Domain bridges (subtle arcs between cluster centroids) ───
-            domainBridges.forEach(bridge => {
-                const cA = centroids[bridge.domain_a];
-                const cB = centroids[bridge.domain_b];
-                if (!cA || !cB) return;
-                const spA = worldToScreen(cA.x, cA.y);
-                const spB = worldToScreen(cB.x, cB.y);
-                const colA = DOMAIN_COLORS[bridge.domain_a] || DOMAIN_COLORS['Bridges'];
-                const colB = DOMAIN_COLORS[bridge.domain_b] || DOMAIN_COLORS['Bridges'];
-                const strength = bridge.strength || 0.3;
-                const alpha = 0.06 + strength * 0.12;
-
-                // Draw curved arc between cluster centroids
-                const mx = (spA.x + spB.x) / 2;
-                const my = (spA.y + spB.y) / 2;
-                // Curve outward from center
-                const dx = spB.x - spA.x, dy = spB.y - spA.y;
-                const curveOffset = -dy * 0.15; // perpendicular offset
-                const cpx = mx + dx * 0 + curveOffset;
-                const cpy = my + dy * 0 + Math.abs(dx) * 0.15;
-
-                ctx.beginPath();
-                ctx.moveTo(spA.x, spA.y);
-                ctx.quadraticCurveTo(cpx, cpy, spB.x, spB.y);
-                ctx.strokeStyle = `hsla(${(colA.h + colB.h) / 2}, 50%, 65%, ${alpha})`;
-                ctx.lineWidth = 1 + strength * 1.5;
-                ctx.setLineDash([4 * camera.zoom, 6 * camera.zoom]);
-                ctx.stroke();
-                ctx.setLineDash([]);
+                ctx.restore();
+                // X-ghost: circle wraps through X boundary, Y flipped (Möbius twist)
+                if (crossesX) {
+                    const gx = circle.cx > 0 ? circle.cx - WORLD_SIZE : circle.cx + WORLD_SIZE;
+                    const gy = -circle.cy;
+                    const gsp = worldToScreen(gx, gy);
+                    if (gsp.x > -sr && gsp.x < W + sr && gsp.y > -sr && gsp.y < H + sr) {
+                        ctx.save();
+                        ctx.globalAlpha = 0.25;
+                        ctx.beginPath();
+                        ctx.rect(edgeL, edgeT, edgeR - edgeL, edgeB - edgeT);
+                        ctx.clip();
+                        ctx.beginPath();
+                        ctx.arc(gsp.x, gsp.y, sr, 0, Math.PI * 2);
+                        ctx.fillStyle = `hsla(${hue}, 80%, 60%, 0.06)`;
+                        ctx.fill();
+                        ctx.strokeStyle = `hsla(${hue}, 90%, 70%, 0.2)`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+                // Y-ghost: circle wraps through Y boundary, X flipped (Klein twist)
+                if (crossesY) {
+                    const gx = -circle.cx;
+                    const gy = circle.cy > 0 ? circle.cy - WORLD_SIZE : circle.cy + WORLD_SIZE;
+                    const gsp = worldToScreen(gx, gy);
+                    if (gsp.x > -sr && gsp.x < W + sr && gsp.y > -sr && gsp.y < H + sr) {
+                        ctx.save();
+                        ctx.globalAlpha = 0.25;
+                        ctx.beginPath();
+                        ctx.rect(edgeL, edgeT, edgeR - edgeL, edgeB - edgeT);
+                        ctx.clip();
+                        ctx.beginPath();
+                        ctx.arc(gsp.x, gsp.y, sr, 0, Math.PI * 2);
+                        ctx.fillStyle = `hsla(${hue}, 80%, 60%, 0.06)`;
+                        ctx.fill();
+                        ctx.strokeStyle = `hsla(${hue}, 90%, 70%, 0.2)`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+                compIdx++;
             });
 
             // ─── Provenance edges (energy beam style) ───
-            // Only draw edges when nodes are close together — skip cluttered long edges
-            const EDGE_DRAW_DISTANCE = 350;
+            // Helper: draw one edge line from (ax,ay) to (bx,by) in screen space
+            function drawEdgeBeam(sa, sb, colA, colB, glowAlpha, coreAlpha, lineW) {
+                const blendH = (colA.h + colB.h) / 2;
+                // Wide glow line
+                ctx.beginPath();
+                ctx.moveTo(sa.x, sa.y);
+                ctx.lineTo(sb.x, sb.y);
+                ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${glowAlpha})`;
+                ctx.lineWidth = lineW * 6;
+                ctx.stroke();
+                // Core line (gradient)
+                ctx.beginPath();
+                ctx.moveTo(sa.x, sa.y);
+                ctx.lineTo(sb.x, sb.y);
+                const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
+                edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
+                edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
+                ctx.strokeStyle = edgeGrad;
+                ctx.lineWidth = lineW;
+                ctx.stroke();
+            }
+            // Draw each edge on both sides of the Klein bottle
             graphEdges.forEach(e => {
                 const a = nodeMap[e.source], b = nodeMap[e.target];
                 if (!a || !b) return;
-                const edgeDist = Math.sqrt((b.x - a.x) ** 2 + (b.y - a.y) ** 2);
-                if (edgeDist > EDGE_DRAW_DISTANCE) return; // skip far-apart edges
-                if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
+                const miAB = minImageDelta(a.x, a.y, b.x, b.y);
+                const miBA = minImageDelta(b.x, b.y, a.x, a.y);
+                if (miAB.d2 > EDGE_DRAW_DISTANCE * EDGE_DRAW_DISTANCE) return;
 
-                const sa = worldToScreen(a.x, a.y), sb = worldToScreen(b.x, b.y);
                 const colA = nodeColor(a), colB = nodeColor(b);
-                const blendH = (colA.h + colB.h) / 2;
                 const strength = e.strength || 1.0;
-                const dist = Math.sqrt((b.x - a.x) ** 2 + (b.y - a.y) ** 2);
                 const isLocked = typeof edgeLocks !== 'undefined' && edgeLocks.has(e.source + '→' + e.target);
                 const isActiveCluster = typeof activeComponent !== 'undefined' && activeComponent !== null && activeComponent.some(ce => ce.source === e.source && ce.target === e.target);
 
-                // Energy beam: active > locked > inactive
                 let glowAlpha, coreAlpha, lineW;
                 if (isActiveCluster) {
                     lineW = 2 + strength * 2;
-                    glowAlpha = 0.3 + 0.15 * Math.sin(time * 4); // pulsing
+                    glowAlpha = 0.3 + 0.15 * Math.sin(time * 4);
                     coreAlpha = 0.9;
                 } else if (isLocked) {
                     lineW = 1.5 + strength;
@@ -1021,54 +1289,62 @@
                     coreAlpha = 0.25;
                 }
 
-                // Wide glow line
-                ctx.beginPath();
-                ctx.moveTo(sa.x, sa.y);
-                ctx.lineTo(sb.x, sb.y);
-                ctx.strokeStyle = `hsla(${blendH}, 70%, 70%, ${glowAlpha})`;
-                ctx.lineWidth = lineW * 6;
-                ctx.stroke();
-
-                // Core line (gradient)
-                ctx.beginPath();
-                ctx.moveTo(sa.x, sa.y);
-                ctx.lineTo(sb.x, sb.y);
-                const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
-                edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
-                edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
-                ctx.strokeStyle = edgeGrad;
-                ctx.lineWidth = lineW;
-                ctx.stroke();
+                // Side 1: A sees B through shortest path
+                const sa1 = worldToScreen(a.x, a.y);
+                const sb1 = worldToScreen(a.x + miAB.dx, a.y + miAB.dy);
+                if (isInView(a.x, a.y, 50) || isInView(a.x + miAB.dx, a.y + miAB.dy, 50)) {
+                    drawEdgeBeam(sa1, sb1, colA, colB, glowAlpha, coreAlpha, lineW);
+                }
+                // Side 2: B sees A through shortest path (the "other side")
+                const sa2 = worldToScreen(b.x, b.y);
+                const sb2 = worldToScreen(b.x + miBA.dx, b.y + miBA.dy);
+                if (isInView(b.x, b.y, 50) || isInView(b.x + miBA.dx, b.y + miBA.dy, 50)) {
+                    drawEdgeBeam(sa2, sb2, colB, colA, glowAlpha * 0.5, coreAlpha * 0.5, lineW * 0.7);
+                }
             });
 
             // ─── Edge particles (energy flow dots) ───
+            // Draw particles on both sides of the Klein bottle
             edgeParticles.forEach(p => {
                 const a = nodeMap[p.edge.source], b = nodeMap[p.edge.target];
                 if (!a || !b) return;
-                const dist = Math.sqrt((b.x - a.x) ** 2 + (b.y - a.y) ** 2);
-                if (pDist > EDGE_DRAW_DISTANCE) return; // skip particles on far edges
-                if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
+                const miAB = minImageDelta(a.x, a.y, b.x, b.y);
+                const miBA = minImageDelta(b.x, b.y, a.x, a.y);
+                const dist = Math.sqrt(miAB.d2);
+                if (dist > EDGE_DRAW_DISTANCE) return;
 
-                const isActiveClusterEdge = typeof activeComponent !== 'undefined' && activeComponent !== null && activeComponent.some(ce => ce.source === p.edge.source && ce.target === p.edge.target);
+                const isActiveClusterEdge = typeof activeComponent !== 'undefined' && activeComponent !== 'undefined' && activeComponent.some(ce => ce.source === p.edge.source && ce.target === p.edge.target);
                 const speedMultiplier = isActiveClusterEdge ? 3.0 : 1.0;
                 p.t += p.speed * speedMultiplier;
                 if (p.t > 1) p.t -= 1;
 
-                const wx = a.x + (b.x - a.x) * p.t;
-                const wy = a.y + (b.y - a.y) * p.t;
-                const sp = worldToScreen(wx, wy);
                 const colA = nodeColor(a), colB = nodeColor(b);
                 const blendH = (colA.h + colB.h) / 2;
-
                 const baseAlpha = 0.4 + 0.4 * Math.sin(p.t * Math.PI);
                 const activeBoost = isActiveClusterEdge ? 0.3 : 0.0;
                 const alpha = Math.min(1.0, baseAlpha + activeBoost);
                 const pSize = isActiveClusterEdge ? p.size * 2.0 : p.size * 1.4;
 
-                ctx.beginPath();
-                ctx.arc(sp.x, sp.y, pSize * camera.zoom, 0, Math.PI * 2);
-                ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha})`;
-                ctx.fill();
+                // Side 1: A→B path
+                const wx1 = a.x + miAB.dx * p.t;
+                const wy1 = a.y + miAB.dy * p.t;
+                const sp1 = worldToScreen(wx1, wy1);
+                if (isInView(wx1, wy1, 50)) {
+                    ctx.beginPath();
+                    ctx.arc(sp1.x, sp1.y, pSize * camera.zoom, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha})`;
+                    ctx.fill();
+                }
+                // Side 2: B→A path (fainter)
+                const wx2 = b.x + miBA.dx * p.t;
+                const wy2 = b.y + miBA.dy * p.t;
+                const sp2 = worldToScreen(wx2, wy2);
+                if (isInView(wx2, wy2, 50)) {
+                    ctx.beginPath();
+                    ctx.arc(sp2.x, sp2.y, pSize * 0.7 * camera.zoom, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${blendH}, 80%, 80%, ${alpha * 0.5})`;
+                    ctx.fill();
+                }
             });
 
             // ─── Comet trails ───
@@ -1165,8 +1441,8 @@
 
             // ─── Explosion shockwave rings ───
             explosions.forEach(e => {
-                if (e.shockRadius > 0 && e.shockRadius < 150) {
-                    const alpha = Math.max(0, 0.4 * (1 - e.shockRadius / 150));
+                if (e.shockRadius > 0 && e.shockRadius < 4500) {
+                    const alpha = Math.max(0, 0.4 * (1 - e.shockRadius / 4500));
                     const sp = worldToScreen(e.x, e.y);
                     const sr = e.shockRadius * camera.zoom;
                     ctx.beginPath();
@@ -1271,6 +1547,42 @@
                     ctx.strokeStyle = `hsla(${col.h}, 100%, 75%, ${0.5 + 0.3 * Math.sin(time * 4)})`;
                     ctx.lineWidth = 2.5 * camera.zoom;
                     ctx.stroke();
+                }
+            });
+
+            // Ghost nodes: render Möbius-Klein mirror copies of nodes near universe edges
+            const GHOST_MARGIN = 2400 / camera.zoom;  // screen pixels in world coords
+            graphNodes.forEach(node => {
+                const col = nodeColor(node);
+                const pulse = 1 + 0.04 * Math.sin(time * 1.5 + node.phase);
+                const massScale = 0.7 + (node.mass || 1) * 0.3;
+                const r = (node.radius || 22) * pulse * massScale * camera.zoom;
+                const massBright = Math.min(1, (node.mass || 1) * 0.4);
+                const adjustedL = Math.min(col.l * 0.8 + 15 + massBright * 10, 95);
+                const adjColor = { h: col.h, s: col.s, l: adjustedL };
+                const ghostAlpha = 0.25;  // ghosts are faint
+
+                // X-ghost: wrap through X boundary, Y flipped (Möbius twist)
+                if (Math.abs(node.x) > WORLD_HALF - GHOST_MARGIN) {
+                    const gx = node.x > 0 ? node.x - WORLD_SIZE : node.x + WORLD_SIZE;
+                    const gy = -node.y;
+                    const sp = worldToScreen(gx, gy);
+                    if (sp.x > -60 && sp.x < W + 60 && sp.y > -60 && sp.y < H + 60) {
+                        ctx.globalAlpha = ghostAlpha;
+                        drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, false);
+                        ctx.globalAlpha = 1;
+                    }
+                }
+                // Y-ghost: wrap through Y boundary, X flipped (Klein twist)
+                if (Math.abs(node.y) > WORLD_HALF - GHOST_MARGIN) {
+                    const gx = -node.x;
+                    const gy = node.y > 0 ? node.y - WORLD_SIZE : node.y + WORLD_SIZE;
+                    const sp = worldToScreen(gx, gy);
+                    if (sp.x > -60 && sp.x < W + 60 && sp.y > -60 && sp.y < H + 60) {
+                        ctx.globalAlpha = ghostAlpha;
+                        drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, false);
+                        ctx.globalAlpha = 1;
+                    }
                 }
             });
 
@@ -1469,7 +1781,7 @@
             e.preventDefault();
             fadeWelcome();
             const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
-            const newZoom = Math.max(0.2, Math.min(5, camera.zoom * zoomFactor));
+            const newZoom = Math.max(0.0001, Math.min(5, camera.zoom * zoomFactor));
 
             // Zoom toward mouse position
             const wBefore = screenToWorld(e.offsetX, e.offsetY);
@@ -1550,7 +1862,7 @@
                 const dy = e.touches[0].clientY - e.touches[1].clientY;
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 if (lastTouchDist > 0) {
-                    camera.zoom = Math.max(0.2, Math.min(5, camera.zoom * (dist / lastTouchDist)));
+                    camera.zoom = Math.max(0.0001, Math.min(5, camera.zoom * (dist / lastTouchDist)));
                 }
                 lastTouchDist = dist;
             }
@@ -1619,15 +1931,11 @@
                 rotSpeed: 0.3 + Math.random() * 0.5,
                 rotAngle: Math.random() * Math.PI * 2
             };
-            // Give orbital velocity around cluster center
-            if (centroid) {
-                const dx = node.x - centroid.x;
-                const dy = node.y - centroid.y;
-                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-                const speed = ORBITAL_SPEED * Math.sqrt(Math.max(dist, 30) / 100);
-                node.vx = -dy / dist * speed + (Math.random() - 0.5) * 0.05;
-                node.vy = dx / dist * speed + (Math.random() - 0.5) * 0.05;
-            }
+            // Keplerian orbital velocity around galactic core
+            const r = Math.sqrt(node.x * node.x + node.y * node.y) || 1;
+            const orbitalV = Math.sqrt(G_CORE * CORE_MASS / Math.max(r, 50));
+            node.vx = -node.y / r * orbitalV + (Math.random() - 0.5) * 0.05;
+            node.vy = node.x / r * orbitalV + (Math.random() - 0.5) * 0.05;
             graphNodes.push(node);
             nodeMap[node.id] = node;
         };

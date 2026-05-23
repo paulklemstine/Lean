@@ -131,7 +131,79 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function renderLineageLinks(container, pkgData) {
+        const pkgExpId = pkgData.exp_id || '';
+        if (!window.PACKAGE_DB || !window.PACKAGE_INDEX) {
+            container.innerHTML = '';
+            return;
+        }
+
+        // Build exp_id -> filename lookup
+        const expIdToFilename = {};
+        window.PACKAGE_INDEX.forEach(p => {
+            if (p.exp_id) expIdToFilename[p.exp_id] = p.filename;
+        });
+
+        // Find parents: packages whose exp_id is in this package's source_exp_ids
+        const skipIds = new Set(['pi_brainstorm', 'seed', '']);
+        const parentIds = (pkgData.source_exp_ids || []).filter(id => !skipIds.has(id));
+        const parents = parentIds.map(id => {
+            const fn = expIdToFilename[id];
+            if (!fn) return null;
+            const data = window.PACKAGE_DB[fn];
+            return { filename: fn, title: data ? data.title : id, exp_id: id };
+        }).filter(Boolean);
+
+        // Find children: packages whose source_exp_ids contains this package's exp_id
+        const children = [];
+        window.PACKAGE_INDEX.forEach(p => {
+            if (p.exp_id === pkgExpId) return;
+            const data = window.PACKAGE_DB[p.filename];
+            if (!data || !data.source_exp_ids) return;
+            if (data.source_exp_ids.includes(pkgExpId)) {
+                children.push({ filename: p.filename, title: data.title || p.title, exp_id: p.exp_id });
+            }
+        });
+
+        if (parents.length === 0 && children.length === 0) {
+            container.innerHTML = '';
+            return;
+        }
+
+        let html = '<div class="lineage-chain">';
+        if (parents.length > 0) {
+            html += '<div class="lineage-section lineage-parents">';
+            html += '<span class="lineage-label">Parent' + (parents.length > 1 ? 's' : '') + ':</span> ';
+            html += parents.map(p =>
+                `<a href="#" class="lineage-link" data-filename="${p.filename}">${p.title}</a>`
+            ).join('<span class="lineage-sep">&rarr;</span> ');
+            html += '</div>';
+        }
+        if (children.length > 0) {
+            html += '<div class="lineage-section lineage-children">';
+            html += '<span class="lineage-label">Child' + (children.length > 1 ? 'ren' : '') + ':</span> ';
+            html += children.map(c =>
+                `<a href="#" class="lineage-link" data-filename="${c.filename}">${c.title}</a>`
+            ).join('<span class="lineage-sep">|</span> ');
+            html += '</div>';
+        }
+        html += '</div>';
+        container.innerHTML = html;
+
+        // Wire up link clicks to loadPackage
+        container.querySelectorAll('.lineage-link').forEach(a => {
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (window.loadPackage) window.loadPackage(a.dataset.filename);
+            });
+        });
+    }
+
     function renderDirectionsTab(pkgData) {
+        // Lineage: parent and child package links
+        const lineageDiv = document.getElementById('content-lineage');
+        renderLineageLinks(lineageDiv, pkgData);
+
         // Narrative section: raw markdown from package's future_directions field
         const narrativeDiv = document.getElementById('content-directions-narrative');
         if (pkgData.future_directions) {

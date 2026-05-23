@@ -62,31 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'date-asc':
                 sorted.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
                 break;
-            case 'domain':
-                sorted.sort((a, b) => (a.domain || '').localeCompare(b.domain || ''));
-                break;
-            case 'lineage':
-                sorted.sort((a, b) => {
-                    const aD = countDescendants(a.exp_id);
-                    const bD = countDescendants(b.exp_id);
-                    if (bD !== aD) return bD - aD;
-                    return (b.date || '').localeCompare(a.date || '');
-                });
+            case 'alpha':
+                sorted.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
                 break;
         }
         return sorted;
-    }
-
-    function countDescendants(expId) {
-        if (!expId || !window.PACKAGE_INDEX || !window.PACKAGE_DB) return 0;
-        let count = 0;
-        window.PACKAGE_INDEX.forEach(p => {
-            const data = window.PACKAGE_DB[p.filename];
-            if (data && data.source_exp_ids && data.source_exp_ids.includes(expId)) {
-                count += 1 + countDescendants(p.exp_id);
-            }
-        });
-        return count;
     }
 
     function updatePagination() {
