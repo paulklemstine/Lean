@@ -988,9 +988,13 @@
             });
 
             // ─── Provenance edges (energy beam style) ───
+            // Only draw edges when nodes are close together — skip cluttered long edges
+            const EDGE_DRAW_DISTANCE = 350;
             graphEdges.forEach(e => {
                 const a = nodeMap[e.source], b = nodeMap[e.target];
                 if (!a || !b) return;
+                const edgeDist = Math.sqrt((b.x - a.x) ** 2 + (b.y - a.y) ** 2);
+                if (edgeDist > EDGE_DRAW_DISTANCE) return; // skip far-apart edges
                 if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
 
                 const sa = worldToScreen(a.x, a.y), sb = worldToScreen(b.x, b.y);
@@ -1041,6 +1045,8 @@
             edgeParticles.forEach(p => {
                 const a = nodeMap[p.edge.source], b = nodeMap[p.edge.target];
                 if (!a || !b) return;
+                const dist = Math.sqrt((b.x - a.x) ** 2 + (b.y - a.y) ** 2);
+                if (pDist > EDGE_DRAW_DISTANCE) return; // skip particles on far edges
                 if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
 
                 const isActiveClusterEdge = typeof activeComponent !== 'undefined' && activeComponent !== null && activeComponent.some(ce => ce.source === p.edge.source && ce.target === p.edge.target);
