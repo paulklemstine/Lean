@@ -992,7 +992,7 @@
                 const blendH = (colA.h + colB.h) / 2;
                 const strength = e.strength || 1.0;
                 const dist = Math.sqrt((b.x - a.x) ** 2 + (b.y - a.y) ** 2);
-                const isLocked = edgeLocks.has(e.source + '→' + e.target);
+                const isLocked = typeof edgeLocks !== 'undefined' && edgeLocks.has(e.source + '→' + e.target);
                 const isActiveCluster = (activeComponent !== null) && activeComponent.some(ce => ce.source === e.source && ce.target === e.target);
 
                 // Energy beam: active > locked > inactive
