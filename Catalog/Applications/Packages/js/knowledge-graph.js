@@ -993,7 +993,7 @@
                 const strength = e.strength || 1.0;
                 const dist = Math.sqrt((b.x - a.x) ** 2 + (b.y - a.y) ** 2);
                 const isLocked = typeof edgeLocks !== 'undefined' && edgeLocks.has(e.source + '→' + e.target);
-                const isActiveCluster = (activeComponent !== null) && activeComponent.some(ce => ce.source === e.source && ce.target === e.target);
+                const isActiveCluster = typeof activeComponent !== 'undefined' && activeComponent !== null && activeComponent.some(ce => ce.source === e.source && ce.target === e.target);
 
                 // Energy beam: active > locked > inactive
                 let glowAlpha, coreAlpha, lineW;
@@ -1037,7 +1037,7 @@
                 if (!a || !b) return;
                 if (!isInView(a.x, a.y, 50) && !isInView(b.x, b.y, 50)) return;
 
-                const isActiveClusterEdge = (activeComponent !== null) && activeComponent.some(ce => ce.source === p.edge.source && ce.target === p.edge.target);
+                const isActiveClusterEdge = typeof activeComponent !== 'undefined' && activeComponent !== null && activeComponent.some(ce => ce.source === p.edge.source && ce.target === p.edge.target);
                 const speedMultiplier = isActiveClusterEdge ? 3.0 : 1.0;
                 p.t += p.speed * speedMultiplier;
                 if (p.t > 1) p.t -= 1;
