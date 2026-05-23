@@ -1784,20 +1784,20 @@ Research mode: {concept.research_mode}
             print(f"[Cleanup] Could not parse Pi-Agent cleanup response")
             return
 
-        # Remove junk
+        # Remove junk (prune ALL directions matching each ID, not just the first)
         removed = 0
         for dir_id in result.get("remove", []):
-            d = fd_manager.get_direction_by_id(dir_id)
-            if d and d.status == "available":
-                d.status = "pruned"
-                removed += 1
+            for d in fd_manager._directions:
+                if d.id == dir_id and d.status == "available":
+                    d.status = "pruned"
+                    removed += 1
 
         # Add brainstormed direction
         new_dir = result.get("new_direction")
         added_new = False
         if new_dir and new_dir.get("title") and new_dir.get("description"):
             fd = FutureDirection(
-                id=f"fd_{len(fd_manager._directions):04d}",
+                id=fd_manager._next_id(),
                 title=new_dir["title"][:80],
                 description=new_dir["description"][:2000],
                 source_exp_id="pi_brainstorm",

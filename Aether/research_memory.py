@@ -293,6 +293,47 @@ class FutureDirectionsManager:
         self._cycle_syntheses: Dict[str, str] = {}  # exp_id -> synthesis text
         self._load()
 
+    def _next_id(self) -> str:
+        """Generate a unique direction ID by finding the max existing fd_NNNN and incrementing."""
+        max_num = -1
+        for d in self._directions:
+            if d.id.startswith("fd_"):
+                try:
+                    num = int(d.id[3:])
+                    if num > max_num:
+                        max_num = num
+                except ValueError:
+                    pass
+        for d in self._pruned:
+            if d.id.startswith("fd_"):
+                try:
+                    num = int(d.id[3:])
+                    if num > max_num:
+                        max_num = num
+                except ValueError:
+                    pass
+        return f"fd_{max_num + 1:04d}"
+
+    def _dedup_ids(self) -> None:
+        """Fix duplicate IDs by re-assigning colliding ones with new unique IDs."""
+        seen = set()
+        dupes = []
+        for d in self._directions:
+            if d.id in seen:
+                dupes.append(d)
+            else:
+                seen.add(d.id)
+        for d in dupes:
+            old_id = d.id
+            d.id = self._next_id()
+            # Update any consumed_by_exp_id references to the old ID
+            for other in self._directions:
+                if other.consumed_by_exp_id == old_id:
+                    other.consumed_by_exp_id = d.id
+            seen.add(d.id)
+        if dupes:
+            print(f"[FutureDirections] Fixed {len(dupes)} duplicate IDs")
+
     def _load(self) -> None:
         if not self._file.exists():
             return
@@ -310,6 +351,7 @@ class FutureDirectionsManager:
             self._directions = []
             self._pruned = []
             self._cycle_syntheses = {}
+        self._dedup_ids()
 
         # Recover stale in_progress directions whose jobs no longer exist
         self._recover_stale_directions()
@@ -485,7 +527,7 @@ class FutureDirectionsManager:
                 ambition_level = "grand_challenge" if "grand" in ambition_raw.lower() else "extension"
 
                 fd = FutureDirection(
-                    id=f"fd_{len(self._directions):04d}",
+                    id=self._next_id(),
                     title=title,
                     description=description,
                     source_exp_id=source_exp_id,
@@ -517,7 +559,7 @@ class FutureDirectionsManager:
                 desc = desc[:3000]
                 if len(desc) > 30:
                     fd = FutureDirection(
-                        id=f"fd_{len(self._directions):04d}",
+                        id=self._next_id(),
                         title=title,
                         description=desc,
                         source_exp_id=source_exp_id,
@@ -543,7 +585,7 @@ class FutureDirectionsManager:
                                 "theorem", "establish", "open", "future", "direction"]
                 ):
                     fd = FutureDirection(
-                        id=f"fd_{len(self._directions):04d}",
+                        id=self._next_id(),
                         title=header[:200],
                         description=body[:3000],
                         source_exp_id=source_exp_id,
@@ -564,7 +606,7 @@ class FutureDirectionsManager:
                     for kw in ["prove", "show", "extend", "formalize", "conjecture", "theorem"]
                 ):
                     fd = FutureDirection(
-                        id=f"fd_{len(self._directions):04d}",
+                        id=self._next_id(),
                         title=item[:200].rstrip() + ("..." if len(item) > 200 else ""),
                         description=item[:3000],
                         source_exp_id=source_exp_id,
