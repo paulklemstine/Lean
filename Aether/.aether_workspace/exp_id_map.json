@@ -431,5 +431,6 @@
   "9ba8abf0": "direction_1_non_abelian_arithmetic_phase_classific.json",
   "34d93d0a": "direction_4_tropical_dimension_equals_clause_space.json",
   "0148538d": "direction_1_completing_newtons_inequality_via_lore.json",
-  "23c35b68": "certified_space_certificates_for_sat_solvers.json"
+  "23c35b68": "certified_space_certificates_for_sat_solvers.json",
+  "cf52c47f": "direction_2_topos_level_compression_invariant.json"
 }
