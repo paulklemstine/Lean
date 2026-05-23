@@ -4136,8 +4136,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 1.0,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "1bf245b7",
       "timestamp": "2026-05-21T09:15:40.371788+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
@@ -6362,7 +6362,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7999999999999999,
-      "status": "pruned",
+      "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-21T21:10:32.929341+00:00",
       "catalog_references": [],
@@ -6398,7 +6398,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0295",
+      "id": "fd_0412",
       "title": "Direction 1: Optimal Generator Bounds",
       "description": "**Conjecture:** For a finite category `C` with `|Ob(C)| = n` and a separating probe family `P` of size `k`, every finite-valued presheaf `F` with `|F(op Y)| ≤ m` for all `Y` admits a representable cover with at most `n · m` generators. Moreover, this bound is tight: there exists a category and presheaf achieving it.\n\n**Test:** Enumerate all presheaves over categories with `|Ob(C)| ≤ 5`, `|Mor(C)| ≤ 20`, fiber sizes `≤ 4`. For each, compute the minimal representable cover size using exhaustive search. If any presheaf requires more than `n · m` generators, the conjecture is refuted. If all satisfy the bound, search for tight examples.\n\n**Impact:** A tight bound would quantify the \"compression ratio\" of categorical sensing — how many representable summands are needed per unit of categorical data. This directly connects to dictionary size in compressed sensing.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` — `repFinGen_of_finite` (current bound is `Σ_Y |F(op Y)|` which is `n · m`)\n- `Catalog/Pythagorean/ProbeComplexity/Theorems.lean` — `card_hom_le_profile_capacity`\n\n**Proof Strategy:** The current proof uses all `(Y, z)` pairs as generators, giving `Σ_Y |F(op Y)|` generators. To improve: identify redundant generators — those where `z` is already in the image of restriction from another generator. Use a greedy covering argument to find minimal generator sets.\n\n**Domain Bridges:** Compressed sensing (dictionary learning), coding theory (minimal codebook size), database theory (minimal key sets).\n\n**Lineage:** Extends `repFinGen_of_finite` by optimizing the generator count.\n\n**Ambition:** ★★★ — Solid extension with clear computational tests.\n\n---",
       "source_exp_id": "e2815e99",
@@ -6424,7 +6424,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0296",
+      "id": "fd_0413",
       "title": "Direction 2: Probe Complexity as Representable Dimension",
       "description": "**Conjecture (Grand Challenge):** Define the *representable dimension* of a presheaf `F` as the minimum number of generators in any representable cover. Then for any finite category `C`, the supremum of representable dimensions over all presheaves separated by a probe family `P` equals a computable invariant of `(C, P)` — specifically, `Σ_{Y ∈ C} |MeasurementSpace(P, Y)|` where the measurement space is the image of the probe restriction map.\n\n**Test:** For categories with `|Ob(C)| ≤ 4`, compute the representable dimension of all finite-valued presheaves separated by various probe families. Plot the supremum against the measurement space invariant. A counterexample where the supremum exceeds the invariant, or is strictly less for all probe families, would refute the conjecture.\n\n**Impact:** This would establish probe complexity as a *categorical dimension theory* — a computable invariant that governs the structural complexity of all presheaves observable by a given measurement scheme. It would be a major bridge between information theory and categorical geometry.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` — `card_presheaf_le_card_restrictions`, `probeRestrictionMap_injective`\n- `Catalog/Pythagorean/ProbeComplexity/Defs.lean` — `probeComplexity`\n\n**Proof Strategy:** Upper bound: use the measurement space cardinality to bound the number of distinct elements, then bound generators. Lower bound: construct presheaves that realize all measurement signatures as distinct generators.\n\n**Domain Bridges:** VC dimension (learning theory), Rademacher complexity, metric dimension (graph theory), information dimension.\n\n**Lineage:** Combines `card_presheaf_le_card_restrictions` with `probeComplexity` from the catalog.\n\n**Ambition:** ★★★★★ — Paradigm-shifting if true; would create a new dimension theory.\n\n---",
       "source_exp_id": "e2815e99",
@@ -6451,7 +6451,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0297",
+      "id": "fd_0414",
       "title": "Direction 3: Local-to-Global Finite Generation (Probe Helly Property)",
       "description": "**Conjecture:** Let `C` be a finite category and `P` a separating probe family. If every restriction of `F` to a full subcategory on at most `|P| + 1` objects is representably finitely generated, then `F` is globally representably finitely generated.\n\n**Test:** For categories with `|Ob(C)| ≤ 6` and probe families of size `≤ 3`, construct presheaves that are locally finitely generated on every subcategory of size `≤ |P| + 1`. Check if global finite generation holds. A counterexample would identify the minimal obstruction.\n\n**Impact:** A Helly-type theorem for representable generation would bridge categorical reconstruction with combinatorial convexity. It would show that local-to-global principles from topology have purely categorical analogues.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` — `repFinGen_of_probe_separation`\n- `Catalog/Pythagorean/ProbeComplexity/Theorems.lean` — `ProbeFamily.IsSeparating.supset`\n\n**Proof Strategy:** For the positive direction: use the probe family to reduce global generation to local generation on probe neighborhoods. Each element's measurement signature is determined by its local restrictions, so local generators suffice globally.\n\n**Domain Bridges:** Helly's theorem (convex geometry), Mayer-Vietoris (algebraic topology), gluing axioms (sheaf theory), locality in quantum mechanics.\n\n**Lineage:** Extends `repFinGen_of_probe_separation` by replacing global probe separation with local generation.\n\n**Ambition:** ★★★★ — Deep structural result connecting multiple mathematical traditions.\n\n---",
       "source_exp_id": "e2815e99",
@@ -6478,7 +6478,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0298",
+      "id": "fd_0415",
       "title": "Direction 4: Sheaf Compression on Finite Sites",
       "description": "**Conjecture:** For a finite site `(C, J)` where `J` is a Grothendieck topology, if `F` is a sheaf (not just a presheaf) separated by probes `P`, then the minimal representable cover respects the topology: the covering natural transformation factors through the sheafification of the coproduct of representables.\n\n**Test:** Implement finite Grothendieck topologies on categories with `|Ob(C)| ≤ 4`. For each sheaf separated by probes, compute (a) the minimal representable presheaf cover and (b) the minimal sheaf cover. If they always coincide, the conjecture holds. If not, measure the gap.\n\n**Impact:** This would extend probe representability from presheaves to sheaves, connecting to algebraic geometry (where sheaves on sites are fundamental). It would show that probe-based compression is compatible with geometric structure.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` — all main theorems\n- Mathlib's `CategoryTheory.Sites.Sheaf`\n\n**Proof Strategy:** Use the universal property of sheafification. The key step is showing that the presheaf cover map descends to the sheaf level when the probe family respects the topology (i.e., probe objects generate covering sieves).\n\n**Domain Bridges:** Algebraic geometry (coherent sheaves), topos theory, data compression with structural constraints, topological data analysis.\n\n**Lineage:** Extends the full pipeline theorem to the sheaf setting.\n\n**Ambition:** ★★★★ — Would connect to major areas of algebraic geometry.\n\n---",
       "source_exp_id": "e2815e99",
@@ -6504,7 +6504,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0297",
+      "id": "fd_0416",
       "title": "Width-Space Inequality at the Configuration Level",
       "description": "**Conjecture:** For every unsatisfiable CNF F and every configuration refutation π,\nconfigurationSpace(π) ≥ minRefutationWidth(F) − maxInitWidth(F) + 1.\n\n**Test:** Enumerate all resolution refutations of small CNFs (≤ 4 variables) and compute both sides. A single refutation with space below the width gap bound would refute the conjecture (or reveal a formalization error in the width definition).\n\n**Impact:** This would formalize the Ben-Sasson-Wigderson (2001) width-space theorem at the configuration level. The current catalog has `clauseSpaceBound` and `allClauses_width_le_maxWidth` from `Catalog/Computation/ProofComplexity/WidthToSize.lean`, but these apply to tree-like resolution. Lifting to dag-like (configuration-based) resolution requires a new argument using random restrictions.\n\n**",
       "source_exp_id": "8e073b20",
@@ -6527,7 +6527,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0298",
+      "id": "fd_0417",
       "title": "Pebbling-to-Resolution Transfer",
       "description": "**Conjecture:** For any DAG G, the black pebbling number of G is at most the minimum clause space of the pebbling CNF Peb(G), up to an additive constant:\nPebblingSpace(G) ≤ minClauseSpace(Peb(G)) ≤ PebblingSpace(G) + O(1).\n\n**Test:** Generate all DAGs on ≤ 6 nodes. Compute exact black pebbling numbers (known algorithms exist). Construct Peb(G) and compute exact clause space via bounded-space search. Look for gaps exceeding any fixed constant.\n\n**Impact:** Would create the first formal bridge between time-space tradeoffs (pebbling) and proof complexity (clause space). This is the central cross-domain connection envisioned by the framework.\n\n**Proof Strategy:** Define `PebblingCNF(G)` following Ben-Sasson (2009). Show that any pebbling strategy of cost s can be simulated by a configuration r",
       "source_exp_id": "8e073b20",
@@ -6551,7 +6551,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0300",
+      "id": "fd_0418",
       "title": "Configuration Graph Pathwidth",
       "description": "**Conjecture:** There exists a universal constant c such that for every unsatisfiable CNF F,\nminClauseSpace(F) ≥ (1/c) · pathwidth(ConfGraph_s(F))\nwhere ConfGraph_s(F) is the configuration graph restricted to configurations of size ≤ s, for s = minClauseSpace(F).\n\n**Test:** For all CNFs over ≤ 3 variables, compute minClauseSpace and the pathwidth of the bounded configuration graph. Search for the best constant c. A counterexample would be a CNF where pathwidth grows much faster than clause space.\n\n**Impact:** Would formalize the intuition that clause space measures a form of \"width\" of the proof space. Pathwidth is well-studied in graph theory, and connecting it to clause space would import decades of graph-theoretic results into proof complexity.\n\n**Proof Strategy:** Use the trace-as-path",
       "source_exp_id": "8e073b20",
@@ -6575,7 +6575,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0301",
+      "id": "fd_0419",
       "title": "Certified Space Certificates for SAT Solvers",
       "description": "**Conjecture:** For any CNF F refutable in clause space s, the bounded-space search algorithm terminates in time polynomial in clauseSpaceBound(|vars(F)|, s) and produces a machine-checkable space certificate.\n\n**Test:** Implement the certified search for CNFs with ≤ 5 variables and space ≤ 4. Measure running time and verify that certificates check against the formal Lean definitions. Failure to produce certificates within the predicted time bound would refute the conjecture.\n\n**Impact:** Would create the first certified clause-space analysis tool, analogous to DRAT checkers for proof length. This has direct SAT-solving applications.\n\n**Proof Strategy:** Implement bounded-space search as a decidable function in Lean. Prove that the search is complete (explores all reachable configurations)",
       "source_exp_id": "8e073b20",
@@ -6599,7 +6599,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0298",
+      "id": "fd_0420",
       "title": "Direction 1: Full Infinite Cylinder Formula",
       "description": "**Conjecture**: For a countable restricted product of second-countable locally compact groups $G_i$ with compact open subgroups $K_i$, the Haar measure $\\mu$ normalized by $\\mu(\\prod K_i) = 1$ satisfies:\n\n$$\\mu(\\text{basicCylinder}(S, A)) = \\prod_{i \\in S} \\frac{\\mu_i(A_i)}{\\mu_i(K_i)}$$\n\nwhere $\\mu_i$ is the Haar measure on $G_i$.\n\n**Test**: For $G_p = \\mathbb{Q}_p$, $K_p = \\mathbb{Z}_p$, compute $\\mu(\\{x \\in \\mathbb{A}_\\mathbb{Q} : x_p \\in p\\mathbb{Z}_p \\text{ for } p \\in S\\})$ and verify it equals $\\prod_{p \\in S} 1/p$. This is testable computationally for any finite $S$ via p-adic arithmetic libraries.\n\n**Impact**: This would be the first fully formal statement of the cylinder measure formula for infinite restricted products, completing the measure-theoretic foundations for adelic integration.\n\n**Catalog References**: `Pythagorean/HaarRestrictedProduct/Defs.lean` (basicCylinder, IsLevelCompatible), `Pythagorean/HaarRestrictedProduct/Theorems.lean` (normalized_haar_value, haar_unique_of_eq_on_compact)\n\n**Proof Strategy**: Strategy A (Haar-first). Use `normalized_haar_value` to obtain the normalized measure. Prove measurability of basicCylinder via the embedding into the Pi-type σ-algebra. Use the projective limit structure: the restricted product is the colimit of principal-filter products, and the cylinder formula holds at each finite level by `finite_product_card`. Conclude by uniqueness (`haar_unique_of_eq_on_compact`).\n\n**Domain Bridges**: Measure theory → Number theory (Euler products), Probability → Analysis (adelic integration)\n\n**Lineage**: Extends `normalized_haar_value` + `finite_product_card`\n\n**Ambition**: Solid extension — requires 2-3 new lemmas about projective limit compatibility\n\n---",
       "source_exp_id": "2166e89f",
@@ -6649,7 +6649,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0300",
+      "id": "fd_0421",
       "title": "Direction 3: Coordinate Independence as a Probabilistic Theorem",
       "description": "**Conjecture**: Let $\\mu$ be the Haar measure on $\\prod' (G_i, K_i)$ normalized so $\\mu(\\prod K_i) = 1$. Then the coordinate projections $\\pi_i : \\prod' G_i \\to G_i$ are independent random variables on the probability space $(\\prod K_i, \\mu|_{\\prod K_i})$.\n\nFormally: for any finite $S$ and measurable $A_i \\subseteq K_i$:\n$$\\mu\\left(\\bigcap_{i \\in S} \\pi_i^{-1}(A_i) \\cap \\prod K_i\\right) = \\prod_{i \\in S} \\frac{\\mu_i(A_i)}{\\mu_i(K_i)}$$\n\n**Test**: Verify computationally for $G_p = (\\mathbb{Z}/p^2\\mathbb{Z})^\\times$ with 10+ primes:\n1. Pick random subsets $A_p \\subseteq G_p$ for $p \\in S$\n2. Compute the joint measure (direct enumeration)\n3. Compute the product of marginals\n4. Assert equality\n\nRun for 1000 random choices of $S$ and $A_p$.\n\n**Impact**: Establishes the formal bridge between adelic measure theory and probability theory. Makes \"random p-adic integer\" a rigorous concept.\n\n**Catalog References**: `Pythagorean/HaarRestrictedProduct/Defs.lean` (basicCylinder, maximalCompact), `Pythagorean/HaarRestrictedProduct/Theorems.lean` (finite_product_card)\n\n**Proof Strategy**: Use the cylinder formula from Direction 1. On the maximal compact, every cylinder condition restricts to $A_i \\subseteq K_i$. The cylinder measure factors by construction. The marginal $\\mu(\\pi_i^{-1}(A_i) \\cap \\prod K_i)$ is a cylinder with singleton support $\\{i\\}$.\n\n**Domain Bridges**: Probability ↔ Number theory ↔ Measure theory\n\n**Lineage**: Extends `finite_product_card` + Direction 1\n\n**Ambition**: Solid extension — direct consequence of cylinder formula\n\n---",
       "source_exp_id": "2166e89f",
@@ -6674,7 +6674,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0301",
+      "id": "fd_0422",
       "title": "Direction 4: Cohen-Lenstra Heuristics via Restricted Product Measures",
       "description": "**Conjecture**: The Cohen-Lenstra distribution on finite abelian p-groups — assigning probability proportional to $1/|\\text{Aut}(G)|$ — arises as the push-forward of Haar measure on the p-adic integers $\\mathbb{Z}_p$ under the map $x \\mapsto \\mathbb{Z}_p / x\\mathbb{Z}_p$, and the product of these local measures over all $p$ gives the conjectured distribution of class groups.\n\n**Test**: For the first 20 primes, compute:\n1. The probability that a \"random\" ideal class group $\\text{Cl}(K)$ (for imaginary quadratic fields $K = \\mathbb{Q}(\\sqrt{-d})$, $d$ prime, $d \\leq 10^6$) has trivial $p$-part\n2. The Cohen-Lenstra prediction: $\\prod_{k \\geq 1} (1 - p^{-k})$\n3. Compare empirically\n\nA significant deviation at any prime would falsify the heuristic or reveal a systematic bias.\n\n**Impact**: Grand challenge. Would connect formal Haar measure theory to arithmetic statistics, one of the most active areas of modern number theory.\n\n**Catalog References**: `Pythagorean/HaarRestrictedProduct/Theorems.lean` (finite_product_card, finite_product_translate_card)\n\n**Proof Strategy**: Define the Cohen-Lenstra measure as a product measure on $\\prod_p \\text{AbGrp}_p$ (finite abelian p-groups). Show this is a cylinder measure in the restricted product sense. Use coordinate independence (Direction 3) to factorize.\n\n**Domain Bridges**: Number theory ↔ Probability ↔ Algebra\n\n**Lineage**: Requires Directions 1 + 3\n\n**Ambition**: Grand challenge — connects to major open conjectures\n\n---",
       "source_exp_id": "2166e89f",
@@ -6699,7 +6699,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0302",
+      "id": "fd_0423",
       "title": "Direction 5: Automorphic Forms on $\\text{GL}_2(\\mathbb{A}_\\mathbb{Q})$",
       "description": "**Conjecture**: The space of automorphic forms on $\\text{GL}_2(\\mathbb{A}_\\mathbb{Q})$ that are right-invariant under $\\prod_p \\text{GL}_2(\\mathbb{Z}_p)$ (the \"spherical\" or \"unramified\" automorphic forms) is in natural bijection with classical modular forms. Under this bijection, the Fourier coefficients of the modular form correspond to Hecke eigenvalues computed via adelic integration.\n\n**Test**: For the modular discriminant $\\Delta(z) = q \\prod_{n \\geq 1} (1-q^n)^{24}$ (Ramanujan's tau function):\n1. Compute the first 100 Hecke eigenvalues $\\tau(p)$ classically\n2. Compute the same eigenvalues via the adelic Hecke operator $T_p$ using the cylinder measure framework\n3. Verify equality\n\nAny discrepancy would indicate an error in the adelic-classical dictionary.\n\n**Impact**: Would formalize the most important special case of the Langlands correspondence (for $\\text{GL}_2$). This is a major milestone toward formal automorphic representation theory.\n\n**Catalog References**: `Pythagorean/HaarRestrictedProduct/Defs.lean` (all), `Pythagorean/HaarRestrictedProduct/Theorems.lean` (all)\n\n**Proof Strategy**: Define the adelic Hecke algebra using cylinder measures. The Hecke operator $T_p$ acts on functions via convolution with a specific cylinder function. The spherical condition (invariance under $\\prod_p K_p$) reduces the representation theory to finite-dimensional eigenvalue problems.\n\n**Domain Bridges**: Number theory ↔ Representation theory ↔ Harmonic analysis\n\n**Lineage**: Requires Directions 1 + 2\n\n**Ambition**: Grand challenge — paradigm-shifting",
       "source_exp_id": "2166e89f",
@@ -6723,7 +6723,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0301",
+      "id": "fd_0424",
       "title": "Direction 1: Empirical Hardness-Localization Correlation",
       "description": "**Conjecture:** Let $G_{S,\\varepsilon^*}$ be the semantic threshold graph on a theorem library $S$ at the threshold $\\varepsilon^*$ maximizing cycle rank. For each statement $x \\in S$, define $L(x) := \\text{lcp}(G_{S,\\varepsilon^*}, x)$. Let $h(x)$ be bounded-resource proof-search time (or timeout indicator). Then for sufficiently large libraries from a coherent mathematical domain:\n$$\\text{SpearmanCorr}(L(x), h(x)) > 0$$\n\n**Test:** \n1. Sample ≥ 500 theorems from a single Mathlib domain (e.g., `Mathlib.GroupTheory` or `Mathlib.Topology`).\n2. Extract syntactic feature vectors: symbol multiset, quantifier depth, binder complexity, universe/typeclass load.\n3. Build semantic threshold graphs across $\\varepsilon \\in \\{1, 2, \\ldots, 20\\}$.\n4. Choose $\\varepsilon^*$ maximizing cycle rank.\n5. Compute $L(x) = \\text{lcp}(G_{S,\\varepsilon^*}, x)$ for each theorem $x$.\n6. Run a bounded prover portfolio (e.g., `aesop` with 10s timeout, `omega`, `simp`).\n7. Measure Spearman correlation between $L(x)$ and search time.\n8. Compare timeout rates: high-$L$ group vs low-$L$ group.\n\n**Refutation criterion:** The conjecture is refuted on a domain if Spearman correlation is ≤ 0 with 95% confidence, or if timeout rates are statistically indistinguishable (Fisher exact test, $p > 0.05$) between high- and low-pressure groups.\n\n**Impact:** If confirmed, this would be the first empirical demonstration that topological invariants of theorem-space networks predict proof-search difficulty, opening the door to topology-guided proof search.\n\n**Catalog References:** \n- `Catalog/Pythagorean/ProofTheoreticTopology/Theorems.lean`: `graphCycleRank_pos_of_connected_many_edges`, `disconnected_of_cluster_separation`\n- `Speculative/ProofTheoreticTopology/HardnessLocalization.lean`: `exists_vertex_pos_localCyclePressure`, `localCyclePressure_eq_zero_of_isAcyclic`\n\n**Proof Strategy:** Purely empirical; requires computational infrastructure but no new formal proofs.\n\n**Domain Bridges:** Network science (community detection), machine learning (feature engineering for proof guidance), software engineering (code complexity metrics).\n\n**Lineage:** Direct extension of the formal dichotomy theorems to empirical validation.\n\n**Ambition:** ★★★☆☆ (High-impact if confirmed; straightforward to execute)\n\n---",
       "source_exp_id": "68d49102",
@@ -6751,7 +6751,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0302",
+      "id": "fd_0425",
       "title": "Direction 2: Quantitative Cycle Participation and Spectral Gap",
       "description": "**Conjecture:** For finite connected graphs $G$ with bounded maximum degree $\\Delta$, let $\\text{qcp}(G, e)$ denote the number of independent simple cycles containing edge $e$ (i.e., the dimension of the cycle space restricted to cycles through $e$). Then:\n$$\\lambda_2(L_G) \\leq \\frac{C(\\Delta)}{1 + \\max_e \\text{qcp}(G, e)}$$\nwhere $\\lambda_2$ is the spectral gap of the normalized Laplacian and $C(\\Delta)$ depends only on the maximum degree.\n\n**Test:**\n1. Enumerate all graph families with $|V| \\leq 12$ and bounded degree $\\Delta \\leq 4$.\n2. For each graph, compute $\\lambda_2$ and $\\max_e \\text{qcp}(G, e)$.\n3. Fit the relationship and test whether the bound holds.\n4. If validated numerically, attempt formal proof via Cheeger's inequality and conductance bounds.\n\n**Refutation criterion:** A family of bounded-degree graphs where $\\lambda_2$ grows while $\\max_e \\text{qcp}$ also grows (positive correlation rather than inverse).\n\n**Impact:** This would provide the first rigorous spectral interpretation of cycle pressure, connecting proof-theoretic topology to spectral graph theory and Markov chain mixing.\n\n**Catalog References:**\n- `Speculative/ProofTheoreticTopology/HardnessLocalization.lean`: `degree_ge_two_of_pos_cyclePressure`, `cycle_creates_long_walk`\n\n**Proof Strategy:** Use Cheeger's inequality ($\\lambda_2 \\leq 2h$ where $h$ is the Cheeger constant) and show that high cycle participation forces small Cheeger constant in bottleneck regions. The key lemma would be: if $U \\subseteq V$ is a cycle-dense subgraph with $|∂U|/\\text{vol}(U)$ small, then the random walk mixes slowly within $U$.\n\n**Domain Bridges:** Spectral graph theory, Markov chain mixing, conductance theory, expander graphs.\n\n**Lineage:** Extends the walk-redundancy theorem (Theorem 3) to quantitative spectral bounds.\n\n**Ambition:** ★★★★☆ (Mathematically deep; would establish a new bridge between topology and spectral theory)\n\n---",
       "source_exp_id": "68d49102",
@@ -6777,7 +6777,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0303",
+      "id": "fd_0426",
       "title": "Direction 3: Metastability and Expected Hitting Time Bounds",
       "description": "**Conjecture (Grand Challenge):** Let $G$ be a finite connected graph with a subgraph $H$ satisfying:\n- $\\text{lcp}(G, v) > 0$ for all $v \\in V(H)$ (cycle-dense)\n- $|\\partial_E(H)| = 1$ (single bridge exit)\n\nThen the expected hitting time from any $v \\in V(H)$ to the complement $V \\setminus V(H)$ satisfies:\n$$\\mathbb{E}_v[\\tau_{V \\setminus V(H)}] \\geq |V(H)| \\cdot \\frac{|E(H)| - |V(H)| + 1}{|V(H)|}$$\n\nThat is, the expected escape time is at least $|V(H)|$ times the average cycle rank density.\n\n**Test:**\n1. Construct lollipop graphs $L(m, n)$ with varying $m$ (cycle size) and fixed $n$.\n2. Compute exact expected hitting times via the fundamental matrix of the absorbing Markov chain.\n3. Verify the bound computationally for $m \\leq 50$.\n4. Attempt formal proof using the optional stopping theorem and the commute-time identity.\n\n**Refutation criterion:** A cycle-dense subgraph with single exit where the expected escape time is sublinear in $|V(H)|$.\n\n**Impact:** This would be the first rigorous lower bound on hitting time derived from cycle-pressure invariants, establishing the hardness-localization hypothesis as a theorem rather than a conjecture.\n\n**Catalog References:**\n- `Speculative/ProofTheoreticTopology/HardnessLocalization.lean`: `cycle_creates_long_walk`, `total_cyclePressure_pos_of_connected_many_edges`\n- `Catalog/Pythagorean/ProofTheoreticTopology/Theorems.lean`: `graphCycleRank_pos_of_connected_many_edges`\n\n**Proof Strategy:** \n1. Model the walk as an absorbing Markov chain with states $V(H)$ and absorbing state $V \\setminus V(H)$.\n2. Use the fundamental matrix $N = (I - Q)^{-1}$ to compute exact expected absorption time.\n3. Bound the spectral radius of $Q$ using the fact that cycle-dense subgraphs with single exits have high return probability.\n4. Apply the bound: $\\mathbb{E}[\\tau] = \\mathbf{1}^T N \\mathbf{1} \\geq$ trace$(N) \\geq \\sum_i 1/(1-\\lambda_i(Q))$.\n\n**Domain Bridges:** Markov chain theory (absorption times), electrical networks (effective resistance), statistical physics (metastability), random matrix theory.\n\n**Lineage:** Deepening of the walk-redundancy and degree-bound theorems to probabilistic quantitative bounds.\n\n**Ambition:** ★★★★★ (Paradigm-shifting if proved; connects three major mathematical domains)\n\n---",
       "source_exp_id": "68d49102",
@@ -6803,7 +6803,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0304",
+      "id": "fd_0427",
       "title": "Direction 4: Effective Resistance and Cycle-Neck Decomposition",
       "description": "**Conjecture:** In a graph formed by connecting two subgraphs $H_1, H_2$ through a single bridge edge $\\{a, b\\}$ (with $a \\in V(H_1)$, $b \\in V(H_2)$), the effective resistance between any $u \\in V(H_1)$ and $v \\in V(H_2)$ satisfies:\n$$R_{\\text{eff}}(u, v) = R_{\\text{eff}}^{H_1}(u, a) + R_{\\text{eff}}(\\{a, b\\}) + R_{\\text{eff}}^{H_2}(b, v)$$\n\nMoreover, if $H_1$ is cycle-dense with cycle rank $k$, then $R_{\\text{eff}}^{H_1}(u, a)$ is bounded above by a function decreasing in $k$ (parallel paths reduce resistance), but the *commute time* $C(u, a) = 2|E| \\cdot R_{\\text{eff}}(u, a)$ may still be large due to the factor $|E|$.\n\n**Test:**\n1. Construct families of graphs with varying cycle density in one component.\n2. Compute effective resistances using the Laplacian pseudoinverse.\n3. Verify the series decomposition across bridge edges.\n4. Formalize the bridge decomposition of effective resistance in Lean.\n\n**Refutation criterion:** A bridge-separated graph where $R_{\\text{eff}}(u, v) \\neq R_{\\text{eff}}^{H_1}(u, a) + 1 + R_{\\text{eff}}^{H_2}(b, v)$.\n\n**Impact:** Establishes a rigorous electrical-network interpretation of hardness localization, enabling quantitative predictions via resistance computation.\n\n**Catalog References:**\n- `Speculative/ProofTheoreticTopology/HardnessLocalization.lean`: all main theorems\n- `Catalog/Pythagorean/ProofTheoreticTopology/Defs.lean`: `graphCycleRank`\n\n**Proof Strategy:** Use the series law for effective resistance across cut edges (well-known in electrical network theory). The key insight is that bridge edges act as series resistors, and the resistance decomposes additively.\n\n**Domain Bridges:** Electrical network theory, commute-time identities, random walk theory, circuit theory.\n\n**Lineage:** Extension of the walk-redundancy theorem to quantitative resistance calculations.\n\n**Ambition:** ★★★☆☆ (Well-motivated, clear proof strategy, moderate formalization effort)\n\n---",
       "source_exp_id": "68d49102",
@@ -6828,7 +6828,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0305",
+      "id": "fd_0428",
       "title": "Direction 5: Neural Proof Guidance via Cycle Pressure Features",
       "description": "**Conjecture (Grand Challenge):** Adding local cycle pressure features to a neural proof-search model (e.g., a graph neural network guiding tactic selection) improves proof success rates on cycle-dense theorems by at least 10% relative to models without topological features, without degrading performance on tree-like theorems.\n\n**Test:**\n1. Train a baseline GNN model for tactic prediction on a Mathlib training set.\n2. Augment the model with cycle-pressure features: for each theorem node, include $\\text{lcp}(G_{\\varepsilon^*}, x)$, $\\deg(x)$, and the cycle rank of the local neighborhood.\n3. Evaluate on a held-out test set stratified by cycle pressure.\n4. Compare success rates and search efficiency.\n\n**Refutation criterion:** The augmented model shows no statistically significant improvement ($p > 0.05$) on high-cycle-pressure theorems.\n\n**Impact:** If successful, this would be the first demonstration that topological features of theorem space improve neural proof search, establishing a practical pipeline from theory to deployment.\n\n**Catalog References:**\n- All files in `Speculative/ProofTheoreticTopology/`\n- `Catalog/Pythagorean/ProofTheoreticTopology/CoreCollapseEntropy.lean`: entropy-driven collapse\n\n**Proof Strategy:** Purely empirical; requires ML infrastructure.\n\n**Domain Bridges:** Machine learning, graph neural networks, reinforcement learning, automated theorem proving.\n\n**Lineage:** Application of the hardness-localization theory to practical proof automation.\n\n**Ambition:** ★★★★★ (Paradigm-shifting for AI-assisted mathematics; requires significant engineering)",
       "source_exp_id": "68d49102",
@@ -6855,7 +6855,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0303",
+      "id": "fd_0429",
       "title": "Direction 1: Asymptotic Compactness — From Finite Certificates to Super-polynomial Lower Bounds",
       "description": "**Conjecture:** For every monotone Boolean function family $\\{f_n\\}$ on graphs with $n$ vertices, if $f_n$ requires monotone circuits of size $> s(n)$ for all $n$, then there exists a *uniform family* of certified sandwich families $\\{S_n\\}$ with $|S_n| \\leq \\text{poly}(n)$ that is complete up to size $s(n)$.\n\n**Test:** Construct complete sandwich families for the triangle (3-clique) property on $n = 5, 6, 7, 8$ vertices with circuit size bounds $s = n^{1.5}$. If certificate sizes grow polynomially, the conjecture survives. If certificate sizes grow exponentially for any instance, the conjecture fails in its current form.\n\n**Impact:** If true, this would provide a *proof-theoretic normal form* for all monotone lower bounds: every super-polynomial lower bound factors through a polynomial-size certificate family. This would be a paradigm shift, reducing lower bound proofs to combinatorial certificate search.\n\n**Catalog References:**\n- `Pythagorean/SandwichDefs.lean` — `CertifiedSandwichFamily`, `SandwichCompleteUpTo`\n- `Pythagorean/SandwichTheorems.lean` — `sandwichCompleteUpTo_iff_no_small_circuit`\n- `Catalog/Computation/CircuitComplexity/Monotone/ApproximationMethod.lean` — `approximation_sandwich_lower_bound`\n\n**Proof Strategy:** Use a diagonal/compactness argument: for each $n$, the Finite Duality Theorem gives a certificate $S_n$. Extract a uniform description via a pumping-style argument on the certificate structure. The key difficulty is showing that certificates have a uniform polynomial description as $n$ grows.\n\n**Domain Bridges:** Proof complexity (bounded proof systems), descriptive complexity (uniformity conditions), finite model theory (compactness failures in finite structures).\n\n**Lineage:** Extends the Finite Duality Theorem (Theorem 3) from individual instances to families.\n\n**Ambition:** Grand challenge — if resolved positively, would transform the field.\n\n---",
       "source_exp_id": "101179e4",
@@ -6881,7 +6881,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0304",
+      "id": "fd_0430",
       "title": "Direction 2: Optimal Certificate Search via SAT/LP Reduction",
       "description": "**Conjecture:** The minimum complete sandwich family for triangle detection on $n$ vertices with circuit size bound $s$ can be computed in time $O(2^{\\text{poly}(n)})$ via reduction to minimum hitting set / SAT.\n\n**Test:** Encode the circuit-refutation hypergraph as a SAT instance or ILP. Solve for $n = 5, 6$ with $s = 10$. Compare solution size to greedy approximation. If the gap between optimal and greedy exceeds $\\ln(n)$ for any instance, the greedy bound is tight; if the gap is always $\\leq 2$, certificates may have special structure.\n\n**Impact:** Would enable industrial-scale certificate discovery, turning lower bound research from manual proof construction to automated computation. Could produce the first computationally discovered circuit lower bounds for $n > 10$.\n\n**Catalog References:**\n- `Pythagorean/SandwichGraph.lean` — `verify_sandwich_complete_of_finite_check`\n- `Pythagorean/SandwichTheorems.lean` — `sandwich_is_transversal`\n\n**Proof Strategy:** Reduce minimum transversal computation to minimum weighted set cover. Use known SAT encodings of set cover (Cygan et al., 2015). The key insight is that the circuit-refutation hypergraph has structure (monotone hyperedges) that may admit faster algorithms.\n\n**Domain Bridges:** Combinatorial optimization (set cover, hitting set), SAT solving, parameterized complexity.\n\n**Lineage:** Builds on the transversal characterization (Theorem 4) and the greedy algorithm (Algorithm 2).\n\n**Ambition:** Solid extension — directly actionable with existing tools.\n\n---",
       "source_exp_id": "101179e4",
@@ -6907,7 +6907,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0305",
+      "id": "fd_0431",
       "title": "Direction 3: Connecting to Razborov's Approximation Pairs",
       "description": "**Conjecture:** Every Razborov-style approximation sandwich $(P^+, P^-)$ for a monotone function $f$ induces a certified sandwich family $S$ such that $S$ is complete up to the same size bound that the Razborov argument achieves.\n\n**Test:** Take the specific approximation pair used in Razborov's clique lower bound for $n = 6, k = 3$. Extract the induced positive and negative witness sets. Check whether these witnesses form a complete sandwich family against all circuits of size $\\leq s$ where $s$ is the Razborov bound.\n\n**Impact:** Would show that the certified sandwich family framework *subsumes* the classical approximation method, establishing it as a strict generalization. Would also provide a recipe for converting existing lower bound proofs into certificates.\n\n**Catalog References:**\n- `Catalog/Computation/CircuitComplexity/Monotone/ApproximationMethod.lean` — `ApproximationSandwich`, `approximation_sandwich_lower_bound`\n- `Catalog/Computation/CircuitComplexity/Monotone/CliqueLowerBound.lean` — `CliqueApproxSandwich`, `clique_monotone_size_lower_bound_of_approximation`\n\n**Proof Strategy:** Define a map `ApproximationSandwich → CertifiedSandwichFamily` that extracts the test instances. Show that the Razborov approximation hypothesis implies completeness. The key lemma: if every small circuit disagrees with $f$ on $P^+ \\cup P^-$, then $(P^+, P^-)$ is a complete sandwich family.\n\n**Domain Bridges:** Classical circuit complexity, sunflower lemma applications, random restriction methods.\n\n**Lineage:** Directly connects the new framework to the existing catalog infrastructure.\n\n**Ambition:** Solid extension — foundational for establishing the framework's relationship to known results.\n\n---",
       "source_exp_id": "101179e4",
@@ -6932,7 +6932,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0304",
+      "id": "fd_0432",
       "title": "Direction 1: Convergent Rewrite Systems as Quotient Optimizers",
       "description": "**Conjecture**: For any finitely presented equational theory `E` over a single-sorted signature `Σ`, if the oriented rewrite system `R` derived from `E` is convergent (terminating and confluent), then the normal-form function `nf_R : T(Σ, X) → T(Σ, X)` induces a semantics-preserving optimizer for every algebra satisfying `E`.\n\nFormally: for every `Σ`-algebra `A` satisfying `E` and every interpretation `ι : X → A`,\n```\neval_A(nf_R(t)) = eval_A(t)\n```\n\n**Test**: Implement 50 random convergent rewrite systems over small signatures (≤ 5 operations, ≤ 10 rules). For each, generate 10,000 random terms, compute normal forms, and evaluate in 100 random finite algebras satisfying the theory. Any mismatch disproves the conjecture.\n\n**Impact**: This would be the master theorem of certified algebraic optimization, subsuming commutative normalization as a special case and covering associativity, distributivity, idempotency, and their combinations.\n\n**Catalog References**: `Pythagorean/QuotientOptimizer.lean` — `commNorm_preserves_eval`, `QuotientOptimizer.preserves_eval`; `Pythagorean/VerifiedCompilerSynthesis.lean` — `endomorphism_preserves_semantics`.\n\n**Proof Strategy**: Generalize `permRel` to the congruence generated by `E`. Show that the normal-form map is well-defined on quotient classes (by confluence) and factors through the quotient. Then apply the abstract `QuotientOptimizer.preserves_eval`.\n\n**Domain Bridges**: Term rewriting → verified compilers → SMT solvers → algebraic geometry (Gröbner bases as convergent rewrite systems for polynomial rings).\n\n**Lineage**: Direct generalization of `commNorm_preserves_eval` from commutativity to arbitrary equations.\n\n**Ambition**: ★★★★★ — This would unify decades of work in term rewriting with formal verification.\n\n---",
       "source_exp_id": "e8c5754b",
@@ -6959,7 +6959,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0305",
+      "id": "fd_0433",
       "title": "Direction 2: E-Graph Extraction as Approximate Quotient Section",
       "description": "**Conjecture**: In equality saturation over a finite equational theory with complete saturation and cost-optimal extraction, the extracted representative for each e-class is a canonical section of the semantic quotient, and extraction correctness reduces to congruence soundness of the e-graph.\n\nMore precisely: if an e-graph correctly tracks the congruence closure of a set of equational axioms, then for any extraction function `extract : EClass → Term`, the property\n```\n∀ eclass c, ∀ t₁ t₂ ∈ c, eval_A(extract(c)) = eval_A(t₁) = eval_A(t₂)\n```\nholds for every algebra `A` satisfying the axioms.\n\n**Test**: Build random e-graphs from commutative + associative identities over 3-variable expressions of depth ≤ 5. Compare extracted terms against direct normalization on 10,000 random inputs in random finite algebras. Any semantic mismatch disproves extraction correctness. A mismatch where congruence is sound but extraction fails would disprove the reduction claim.\n\n**Impact**: Would provide the first formal foundation for equality-saturation correctness at the algebraic level, connecting the practical engineering of e-graph tools to the mathematical theory of quotient algebras.\n\n**Catalog References**: `Pythagorean/QuotientOptimizer.lean` — `commNorm_factors_through_quotient`, `QuotientOptimizer.preserves_eval`.\n\n**Proof Strategy**: Model the e-graph as a quotient of the term algebra. Show that extraction is a section of the quotient map. Apply `QuotientOptimizer.preserves_eval`.\n\n**Domain Bridges**: Equality saturation (egg, egglog) → compiler optimization (MLIR, Cranelift) → SMT solving (congruence closure) → universal algebra.\n\n**Lineage**: Extends `commNorm_factors_through_quotient` from the commutative quotient to general congruence closures.\n\n**Ambition**: ★★★★☆ — High practical impact, connecting to active research in program optimization.\n\n---",
       "source_exp_id": "e8c5754b",
@@ -7087,7 +7087,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0310",
+      "id": "fd_0434",
       "title": "Direction 1: Long-Time Metastability (Exponential Conservation)",
       "description": "**Conjecture.** For analytic autonomous Lagrangians with symmetric second-order discrete Lagrangians, the discrete energy drift over exponentially long times T = exp(c/h) remains O(h²) on compact non-resonant energy shells. That is, the shadow energy is metastable: it oscillates around the true energy with bounded amplitude for times exponentially longer than the naive estimate.\n\n**Test.** Numerical experiment: integrate the Kepler problem with Störmer–Verlet for T ∈ {10², 10³, 10⁴, 10⁵, 10⁶} at h = 0.01. Plot max|ΔE| vs T. The conjecture predicts a plateau (constant drift bound) rather than linear growth. Compare with the Hénon–Heiles system near and away from resonance.\n\n**Impact.** This would be the formal analogue of the KAM theorem for variational integrators. It would certify that symplectic integrators maintain geometric fidelity not just for fixed-time simulations but for the astronomically long timescales relevant to solar system dynamics and molecular conformation sampling.\n\n**Catalog References.**\n- `discrete_energy_drift_uniform_bound` in `Physics/DiscreteNoetherShadow.lean` (current O(h²) bound over T)\n- `discrete_energy_drift_vanishes` in `Physics/DiscreteNoetherShadow.lean` (h → 0 recovery)\n\n**Proof Strategy.** Formalize a Nekhoroshev-type estimate: for analytic Hamiltonians, construct a truncated normal form that is approximately conserved. The key lemma is that the remainder in the normal form transformation is exponentially small in 1/h for analytic systems. This requires formalizing Cauchy estimates for the complexified Hamiltonian—a significant Mathlib extension but within reach given existing complex analysis infrastructure.\n\n**Domain Bridges.** Hamiltonian dynamics ↔ formal verification ↔ celestial mechanics.\n\n**Lineage.** Builds on Benettin–Giorgilli (1994), Hairer–Lubich (1997), extends `discrete_energy_drift_uniform_bound`.\n\n**Ambition.** Grand challenge. Would be the first machine-verified exponential stability result in Hamiltonian numerics.\n\n---",
       "source_exp_id": "1dba459e",
@@ -7113,7 +7113,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0311",
+      "id": "fd_0435",
       "title": "Direction 2: Symmetry Rigidity (Converse Noether)",
       "description": "**Conjecture.** Among local two-point discrete Lagrangians of fixed order, exact discrete momentum conservation *characterizes* discrete group invariance. That is, if p(qk, qk₊₁) = p(q₀, q₁) for all discrete Euler–Lagrange trajectories and all initial conditions, then Ld is invariant under the group action generating p.\n\n**Test.** Computational test: take a rotationally invariant Kepler discrete Lagrangian and add a small anisotropic perturbation εΔLd that breaks rotational symmetry. Measure angular momentum drift as a function of ε. The conjecture predicts drift ∝ ε·h (not ε alone), because the symmetry breaking couples to the discretization scale.\n\n**Impact.** This would turn `discrete_momentum_conserved` from a sufficient condition into a characterization theorem, providing a *diagnostic* for symmetry: if momentum drifts, the discrete Lagrangian has a broken symmetry, and the drift rate quantifies the breaking.\n\n**Catalog References.**\n- `discrete_momentum_conserved` in `Physics/DiscreteNoetherShadow.lean`\n- `discrete_momentum_conserved_range` in `Physics/DiscreteNoetherShadow.lean`\n\n**Proof Strategy.** Use the discrete first-variation formula: the momentum change equals the integrated symmetry-breaking term. For the converse, show that if the integrated term vanishes for all solutions, the Lagrangian must be invariant, using density of discrete Euler–Lagrange solutions in the space of two-point boundary data.\n\n**Domain Bridges.** Lie group theory ↔ numerical analysis ↔ formal verification.\n\n**Lineage.** Extends Marsden–West discrete Noether theory; converse direction is new.\n\n**Ambition.** Solid extension. Requires moderate Mathlib infrastructure for Lie group actions.\n\n---",
       "source_exp_id": "1dba459e",
@@ -7477,7 +7477,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0327",
+      "id": "fd_0436",
       "title": "Direction 1: Strong Bisimulation via Church-Rosser Formalization",
       "description": "**Conjecture:** If the Church-Rosser property is formally verified for the lambda calculus, then β-equivalent terms produce *strongly* bisimilar bounded FTS at sufficient depth.\n\n**Test:** Formalize the Church-Rosser theorem (either via Tait-Martin-Löf parallel reduction or via the Takahashi method) in Lean 4 with the same `Lam`/`BetaStep` definitions. Then prove:\n```\ntheorem beta_equiv_strongly_bisimilar_of_CR\n    (cr : ChurchRosserProp)\n    {t u : Lam} (hβ : BetaEq t u) (d : Nat) :\n    ∃ d' ≥ d, Bisimilar (toFTS d' t) (toFTS d' u)\n```\n\n**Impact:** Strong bisimulation preserves the full modal logic (including one-step diamond), not just the weak fragment. This would give a complete Hennessy-Milner characterization of β-equivalence classes in bounded FTS.\n\n**Proof Strategy:** Define parallel β-reduction, prove the diamond lemma for parallel reduction, derive Church-Rosser. Then for each one-step β-reduction from one side, use CR to find a matching multi-step path on the other side, ensuring all terms remain within the depth budget.\n\n**Domain Bridges:** Lambda calculus → Proof theory (Takahashi method), Concurrency theory (strong bisimulation).\n\n**Lineage:** Extends Theorem 2 (weak bisimulation) to the strong case.\n\n**Ambition:** ★★★★☆ — Church-Rosser formalization is substantial but well-understood; the bisimulation upgrade is the novel contribution.\n\n---",
       "source_exp_id": "627e7fc7",
@@ -7552,7 +7552,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0329",
+      "id": "fd_0437",
       "title": "Hasse Local-Global Principle for Neural Network Loss Landscapes",
       "description": "Conjecture: For any ReLU neural network with rational weights defining a piecewise-polynomial loss function L: ℚⁿ → ℚ, there exists a finite set of primes S such that L has a strict local minimum over ℝ if and only if L has a local minimum over ℚ_p for every prime p ∉ S — a Hasse principle for optimization landscapes. Test: Exhaustively enumerate all local minima of small ReLU networks (≤3 neurons, ≤2 inputs, rational weights) over ℝ and over ℚ_p for p = 2,3,5,7, then check whether the local-global correspondence holds or produces counterexamples. Falsification: a single network whose real local minima fail to correspond to p-adic ones (or vice versa) outside a finite exceptional set. Impact: Would establish a deep bridge between p-adic analysis and deep learning optimization, enabling p-adic methods for detecting/escaping local minima and providing algebraic obstructions to bad critical points.",
       "source_exp_id": "pi_brainstorm",
@@ -7576,7 +7576,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0335",
+      "id": "fd_0438",
       "title": "Direction 1: Exponential Convergence via Spectral Gap",
       "description": "**Conjecture:** There exists a universal constant $C > 0$ such that for any triangulated surface with $n$ vertices, the greedy curvature flow satisfies:\n$$V(k) \\leq V(0) \\cdot (1 - C/n^2)^k$$\n\nThis is formalized as `exponential_convergence_conjecture` in the codebase.\n\n**Test:** Generate 1000 random triangulations with $n \\in \\{50, 100, 200, 500\\}$ for genus 0, 1, 2. Run curvature flow until $V < V_0/1000$. Plot $\\log(V(k)/V_0)$ vs $k/n^2$. If the conjecture holds, all curves collapse to a single line with slope $\\geq -C$. A counterexample would be a family of triangulations where the slope approaches 0 as $n$ increases.\n\n**Impact:** This would improve the convergence bound from $O(V_0/\\varepsilon)$ to $O(n^2 \\log(V_0/\\varepsilon))$, a dramatic practical improvement. It would also establish the first spectral gap bound for the edge-flip Markov chain on triangulations.\n\n**Catalog References:**\n- `Pythagorean/CurvatureFlow/Convergence.lean: FlowSystem.convergence` — The polynomial bound to be strengthened.\n- `Pythagorean/CurvatureFlow/Defs.lean: pairwise_sq_diff_eq` — Enables spectral analysis via pairwise structure.\n\n**Proof Strategy:** Establish a discrete Poincaré inequality on the curvature function space: $\\sum_i (f(i) - \\bar{f})^2 \\leq \\lambda_1^{-1} \\sum_{(i,j) \\in E} (f(i) - f(j))^2$, where $\\lambda_1$ is the spectral gap of the graph Laplacian. Show that the greedy flip exploits this gap to achieve multiplicative (rather than additive) progress.\n\n**Domain Bridges:** Spectral Graph Theory ↔ Discrete Geometry ↔ Markov Chain Theory\n\n**Lineage:** Builds directly on `FlowSystem.convergence` and `pairwise_sq_diff_eq`.\n\n**Ambition:** ★★★★☆ — Grand challenge. Would unify curvature flow convergence with spectral graph theory.\n\n---",
       "source_exp_id": "f059f2ef",
@@ -7683,7 +7683,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0336",
+      "id": "fd_0439",
       "title": "Direction 1: Non-Abelian Arithmetic Phase Classification",
       "description": "**Ambition:** grand_challenge\n\n**Conjecture:** For a non-abelian finite gauge group $G$, the torsion profile of its abelianization $G^{\\text{ab}}$ captures all prime-level phase information detectable by homological probes. Formally: if $G_1^{\\text{ab}} \\cong G_2^{\\text{ab}}$ as abelian groups, then the arithmetic torsion profiles of $G_1$-gauge theories and $G_2$-gauge theories agree at all primes.\n\n**Test:** Compute torsion profiles for $S_3$ (abelianization $\\mathbb{Z}/2\\mathbb{Z}$), $A_4$ (abelianization $\\mathbb{Z}/3\\mathbb{Z}$), and $Q_8$ (abelianization $\\mathbb{Z}/2\\mathbb{Z} \\times \\mathbb{Z}/2\\mathbb{Z}$). If any pair with isomorphic abelianizations has different arithmetic behavior in a derived-functor sense, the conjecture is falsified.\n\n**Impact:** Would extend the arithmetic classifier from abelian to all finite gauge groups, covering physically relevant theories like $S_3$ gauge models in lattice gauge theory.\n\n**Catalog References:**\n- `Pythagorean/ArithmeticPhaseClassification.lean`: `HasPTorsion_ZMod_iff_dvd`, `torsionProfileUpTo_prod`\n- `Catalog/Algebra/Homology/DerivedFunctors/TorsionDetection.lean`: `torsion_invisible_wrong_characteristic`\n\n**Proof Strategy:** Define `HasPTorsion` for group algebras $\\mathbb{Z}[G]$ via the abelianization map $G \\to G^{\\text{ab}}$. Prove that the induced map on $\\text{Tor}_1$ is an isomorphism for torsion detection purposes, using the universal property of abelianization and the fact that $\\text{Tor}_1$ is a derived functor of an additive functor.\n\n**Domain Bridges:** Algebraic topology ↔ representation theory ↔ lattice gauge theory\n\n**Lineage:** Extends `HasPTorsion_prod_iff` from products of cyclic groups to products of arbitrary finite group algebras.\n\n---",
       "source_exp_id": "28ef02a2",
@@ -7709,7 +7709,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0337",
+      "id": "fd_0440",
       "title": "Direction 2: Adelic Persistent Homology",
       "description": "**Ambition:** grand_challenge\n\n**Conjecture:** The torsion barcode of a filtered finite abelian group, viewed as a function $p \\mapsto \\text{torsionSupport}_p(\\text{filtration})$ from primes to subsets of filtration indices, is equivalent to the data of an adelic persistence module — a persistence module over the ring of finite adeles $\\mathbb{A}_f$ restricted to the torsion part.\n\n**Test:** Construct the adelic persistence module explicitly for $\\mathbb{Z}/6\\mathbb{Z}$ with a 3-level filtration. Verify that the 2-adic and 3-adic components reproduce the individual prime barcodes, and that the adelic product reconstructs the full torsion barcode. If the reconstruction fails for any filtration with $\\geq 4$ levels, the conjecture is falsified.\n\n**Impact:** Would establish arithmetic persistent homology as a branch of adelic geometry, connecting topological data analysis to the Langlands program and related number-theoretic structures.\n\n**Catalog References:**\n- `Pythagorean/ArithmeticPhaseClassification.lean`: `persistentPrimeSupportUpTo`, `torsionProfileUpTo_complete_for_bounded_support`\n- `Catalog/Algebra/Homology/DerivedFunctors/TorsionDetection.lean`: `torsionSupport`, `pTorPersistence_vanishes_of_free`\n\n**Proof Strategy:** Use the Chinese Remainder Theorem to decompose the torsion part of each filtration level into $p$-primary components. Show that the persistence structure maps respect this decomposition, producing a persistence module over each $\\mathbb{Z}_p$. The adelic product assembles these into a single object.\n\n**Domain Bridges:** Number theory ↔ persistent homology ↔ algebraic geometry\n\n**Lineage:** Extends `torsionProfileUpTo_complete_for_bounded_support` from finite sets to adelic objects.\n\n---",
       "source_exp_id": "28ef02a2",
@@ -7734,7 +7734,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0340",
+      "id": "fd_0441",
       "title": "Direction 5: Scalable Arithmetic TDA Pipeline",
       "description": "**Ambition:** solid_extension\n\n**Conjecture:** For a simplicial complex $K$ with $N$ simplices, the full torsion profile of $H_k(K; \\mathbb{Z})$ for all $k$ can be computed in time $O(N^\\omega \\log N)$ where $\\omega$ is the matrix multiplication exponent, by combining the Smith normal form computation with sieved prime checks. This is asymptotically no slower than computing ordinary Betti numbers.\n\n**Test:** Implement the algorithm on random Rips complexes of increasing size ($N = 100, 1000, 10000$) and measure wall-clock time against the standard Betti number computation. If the torsion profile computation is more than $O(\\log N)$ times slower than Betti numbers for any test case, the conjecture is falsified (modulo constant factors).\n\n**Impact:** Would demonstrate that arithmetic phase classification is computationally viable for real-world topological data analysis, not just small toy models.\n\n**Catalog References:**\n- `Pythagorean/ArithmeticPhaseClassification.lean`: `computeTorsionProfile`, `computeTorsionProfile_correct`\n- `Catalog/Algebra/Homology/DerivedFunctors/TorsionDetection.lean`: `tor1_vanishes_iff_no_n_torsion`\n\n**Proof Strategy:** The Smith normal form of the boundary matrix gives the torsion subgroup as a product of cyclic groups $\\mathbb{Z}/d_i\\mathbb{Z}$. The torsion profile is then the union of prime factors of the $d_i$, computable in $O(\\sum \\log d_i)$ additional time. The bottleneck is the Smith normal form, which has the same complexity as matrix multiplication.\n\n**Domain Bridges:** Computational topology ↔ algorithmic algebra ↔ data science\n\n**Lineage:** Extends `computeTorsionProfile_correct` from explicit moduli lists to Smith-normal-form outputs.",
       "source_exp_id": "28ef02a2",
@@ -7760,7 +7760,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0340",
+      "id": "fd_0442",
       "title": "Sunflower Pruning Effectiveness for Pythagorean Hypergraphs",
       "description": "**Conjecture:** For the Pythagorean triple hypergraph on $\\{1, \\ldots, n\\}$ with $n \\geq 50$, sunflower-based branching reduces the search space by at least 90% compared to naive enumeration when computing minimum transversals.\n\n**Test:** Implement the sunflower branching algorithm (§5.3 of research paper) and count the number of recursive calls with and without sunflower pruning for $n \\in \\{50, 100, 200, 500\\}$. Measure wall-clock time improvement.\n\n**Impact:** Validates the practical utility of the theoretical FPT framework for a concrete, well-understood hypergraph family. Success would justify scaling the approach to circuit-refutation hypergraphs.\n\n**Catalog References:** `Pythagorean/Hypergraph/Defs.lean` (IsSunflower, sunflower_kernel_or_large_transversal, pythagorean triples)\n\n**P",
       "source_exp_id": "17da72e5",
@@ -7936,7 +7936,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0347",
+      "id": "fd_0443",
       "title": "Direction 1: Level Compatibility from First Principles",
       "description": "**Conjecture:** For any countable restricted product of second-countable locally compact groups with compact open subgroups, the Haar measure is level-compatible with the local Haar measures (each normalized so that $\\mu_i(K_i) = 1$). That is, the abstract Haar measure automatically satisfies the product formula on basic cylinders.\n\n**Test:** Construct a concrete restricted product (e.g., $\\prod'_p (\\mathbb{Q}_p, \\mathbb{Z}_p)$ for a finite set of primes) and verify computationally that the Haar measure of explicit cylinder sets matches the product of local measures. A failure would indicate that level compatibility requires additional hypotheses beyond the standard locally compact group axioms.\n\n**Impact:** This would eliminate the `IsLevelCompatible` hypothesis from all downstream theorems, making the cylinder formula unconditional. It would be the definitive formal proof that the Haar measure on adeles computes as number theorists expect.\n\n**Catalog References:**\n- `Pythagorean/HaarRestrictedProduct/Theorems.lean`: `normalized_haar_value`, `haar_unique_of_eq_on_compact`\n- `Pythagorean/HaarRestrictedProduct/CylinderFormula.lean`: `basicCylinder_measure_eq_finite_product`, `measure_maximalCompact_eq_one`\n\n**Proof Strategy:** Strategy A from the assignment: define a candidate pre-measure on the cylinder π-system by the Euler product, prove left-invariance and normalization, show cylinders generate the Borel σ-algebra, invoke Haar uniqueness (`haar_unique_of_eq_on_compact`). The key step is showing that the cylinder π-system generates the Borel σ-algebra, which requires the topology of the restricted product to be generated by cylinder neighborhoods.\n\n**Domain Bridges:** Number theory (adelic Haar measure), functional analysis (measure uniqueness on generating systems), probability (Kolmogorov extension)\n\n**Lineage:** Builds on `basicCylinder_measure_eq_finite_product` (removes the hypothesis) and `haar_unique_of_eq_on_compact` (provides the uniqueness mechanism).\n\n**Ambition:** Grand challenge — this is the central missing link between abstract Haar theory and computational adelic analysis.\n\n---",
       "source_exp_id": "3275285b",
@@ -7961,7 +7961,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0348",
+      "id": "fd_0444",
       "title": "Direction 2: Cylinder Approximation of Compact Open Sets",
       "description": "**Conjecture:** For every compact open measurable set $U$ in the restricted product and every $\\varepsilon > 0$, there exists a finite union of basic cylinders $C$ such that $\\mu(U \\triangle C) < \\varepsilon$.\n\n**Test:** In the restricted product $\\prod'_p (\\mathbb{Q}_p, \\mathbb{Z}_p)$ for finitely many primes, construct explicit compact open sets (e.g., translates of the maximal compact by non-trivial elements) and attempt to approximate them by finite unions of cylinders. Compute the symmetric difference measure and check convergence. A counterexample would be a compact open set that cannot be cylinder-approximated.\n\n**Impact:** This would establish that the cylinder σ-algebra coincides with the Borel σ-algebra, making the cylinder formula a *complete* description of the Haar measure (not just its values on a generating family).\n\n**Catalog References:**\n- `Pythagorean/HaarRestrictedProduct/CylinderFormula.lean`: `measurableSet_basicCylinder`, `basicCylinder_eq_preimage_pi`\n- `Pythagorean/HaarRestrictedProduct/Defs.lean`: `basicCylinder_inter_same_support`\n\n**Proof Strategy:** Show that basic cylinders form a base for the restricted product topology (they contain all preimages of open sets under coordinate projections). Then use regularity of Haar measure on locally compact groups to approximate compact opens from within by finite unions of cylinders.\n\n**Domain Bridges:** Descriptive set theory (σ-algebra generation), topological dynamics (symbolic coding), probability (cylinder approximation in product spaces)\n\n**Lineage:** Builds on `measurableSet_basicCylinder` and `basicCylinder_inter_same_support` (the π-system property).\n\n**Ambition:** Solid extension — technically demanding but conceptually expected. Failure would reveal unexpected pathology in the restricted product topology.\n\n---",
       "source_exp_id": "3275285b",
@@ -7988,7 +7988,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0349",
+      "id": "fd_0445",
       "title": "Direction 3: Kolmogorov Extension for Restricted Products",
       "description": "**Conjecture:** Any family of normalized finite-level product measures $(\\nu_S)_{S \\in \\text{Fin}(\\iota)}$ that is compatible under coordinate forgetting (i.e., $\\nu_T \\circ \\pi_{S,T}^{-1} = \\nu_S$ for $S \\subseteq T$) extends uniquely to a measure on the restricted product Borel σ-algebra.\n\n**Test:** Construct compatible marginals for $\\prod'_p (\\mathbb{Z}/p\\mathbb{Z}, \\{0\\})$ (a countable product of finite groups) and verify that the induced cylinder pre-measure is countably additive on disjoint cylinder unions. A failure would mean that restricted-product measure theory requires additional compatibility conditions beyond the standard projective limit requirements.\n\n**Impact:** This would provide an alternative, constructive route to the Haar measure on restricted products, bypassing the abstract existence theorem entirely. It would also establish a formal connection between the measure-theoretic and topological approaches to restricted products.\n\n**Catalog References:**\n- `Pythagorean/HaarRestrictedProduct/CylinderFormula.lean`: `basicCylinder_independent_of_disjoint`, `basicCylinder_measure_support_enlarge`\n\n**Proof Strategy:** Verify the hypotheses of the Kolmogorov extension theorem (consistency of marginals, Polish/standard Borel structure on component spaces). The main challenge is showing that the restricted product with the subspace topology is a standard Borel space.\n\n**Domain Bridges:** Probability theory (Kolmogorov consistency), ergodic theory (projective limits), mathematical physics (infinite-volume limits)\n\n**Lineage:** Builds on `basicCylinder_independent_of_disjoint` (compatibility of marginals) and `basicCylinder_measure_support_enlarge` (stability under refinement).\n\n**Ambition:** Grand challenge — this would be a novel formal contribution to the foundations of infinite-dimensional measure theory.\n\n---",
       "source_exp_id": "3275285b",
@@ -8150,7 +8150,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0351",
+      "id": "fd_0446",
       "title": "Direction 1: Tropical Kepler Vertex Formula",
       "description": "**Conjecture**: For the tropicalization of $K(e,p)$ with $0 < e < 1$, $p > 0$, and base $t \\gg 1$, the tropical curve has exactly\n$$N_{\\text{vert}} = 3 + \\delta\\big(v_t(1-e^2) > \\min(v_t(2ep), v_t(e^2p^2))\\big)$$\nvertices, where $\\delta(\\cdot)$ is the indicator function.\n\n**Test**: For $10^4$ random $(e, p)$ pairs with $0 < e < 1$, $0.1 < p < 10$:\n1. Compute the lower convex hull of the lifted points $\\{(2,0,v_t(1-e^2)), (1,0,v_t(2ep)), (0,2,0), (0,0,v_t(e^2p^2))\\}$ in $\\mathbb{R}^3$\n2. Count the 2-dimensional faces → vertex count of the tropical curve\n3. Compare with the formula\n4. Any counterexample falsifies the conjecture\n\n**Impact**: Would give a complete closed-form classification of tropical Kepler orbit combinatorics, reducing all tropical orbit computation to a single inequality check.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalKeplerOrbits.lean` — `keplerSupportSize_elliptic`, `keplerSupportSize_parabolic`, `keplerSupportSize_drop_at_parabola`\n\n**Proof Strategy**: Strategy A (Newton Polygon Duality). Compute the regular subdivision of the Newton polygon induced by the valuation vector $(v(1-e^2), v(2ep), 0, v(e^2p^2))$. The vertex count equals the number of 2-cells in the subdivision, which depends on whether the lifted point $(2,0,v(1-e^2))$ lies above or below the lower convex hull of the other three lifted points.\n\n**Domain Bridges**: Tropical Geometry ↔ Celestial Mechanics, Combinatorics ↔ Dynamics\n\n**Lineage**: Extends Theorem 3.3 (support collapse) from counting monomials to counting tropical curve vertices.\n\n**Ambition**: ★★★ (Solid extension — directly builds on proven infrastructure)\n\n---",
       "source_exp_id": "b18b48d6",
@@ -8203,7 +8203,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0353",
+      "id": "fd_0447",
       "title": "Direction 3: P-adic Orbital Period Valuation",
       "description": "**Conjecture**: For prime $p$ and rational orbital parameters $(a, \\mu) \\in \\mathbb{Q}^+$, the p-adic valuation of the Kepler period $T = 2\\pi a^{3/2}/\\sqrt{\\mu}$ satisfies\n$$v_p(T/2\\pi) = \\frac{3}{2} v_p(a) - \\frac{1}{2} v_p(\\mu).$$\n\nMoreover, this p-adic invariant can be read off from the vertex depths of the p-adic tropical orbit: the depth of each vertex equals the p-adic valuation of the corresponding coefficient.\n\n**Test**:\n1. For primes $p < 1000$ and rational parameters $a = m/n$, $\\mu = r/s$ with $1 \\le m,n,r,s \\le 100$\n2. Compute $v_p(T/2\\pi)$ directly from $T = 2\\pi a^{3/2}/\\mu^{1/2}$\n3. Compare with $3v_p(a)/2 - v_p(\\mu)/2$\n4. When $v_p(a)$ is even and $v_p(\\mu)$ is even (so the formula gives an integer), verify exact equality\n\n**Impact**: Would establish a number-theoretic invariant of Kepler orbits computable from the tropical curve. The p-adic period valuation would be the first arithmetic orbital invariant derived from tropical geometry.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalKeplerOrbits.lean` — `tropicalVal_mul`, `tropicalVal_pow`, `tropicalVal_inv`\n\n**Proof Strategy**: Express $T$ as a product $2\\pi \\cdot a^{3/2} \\cdot \\mu^{-1/2}$, apply the p-adic valuation homomorphism, and use the power rule for p-adic valuations. The key subtlety is handling $a^{3/2}$ and $\\mu^{1/2}$ when they are not rational — restrict to cases where $a$ and $\\mu$ are perfect squares modulo the prime.\n\n**Domain Bridges**: Number Theory ↔ Celestial Mechanics, P-adic Analysis ↔ Tropical Geometry\n\n**Lineage**: Extends the tropical valuation homomorphism (Theorems 2.1–2.5) to p-adic valuations of orbital quantities.\n\n**Ambition**: ★★★ (Solid extension — uses well-understood p-adic machinery)\n\n---",
       "source_exp_id": "b18b48d6",
@@ -8229,7 +8229,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0355",
+      "id": "fd_0448",
       "title": "Direction 5: Tropical KAM Stability (Grand Challenge)",
       "description": "**Conjecture**: Tropical quasi-periodic orbits on tropical tori are structurally stable under tropical perturbations that preserve the Newton polytope subdivision. Specifically, the tropical analog of the KAM theorem holds: for \"most\" frequency vectors (a tropical Diophantine condition), the tropical invariant torus persists under perturbation.\n\n**Test**:\n1. Define a tropical integrable system as a collection of piecewise-linear functions $H_1, \\ldots, H_n$ with the tropical Poisson bracket $\\{H_i, H_j\\}_{\\text{trop}} = 0$\n2. Construct tropical tori as level sets of these functions\n3. Apply random tropical perturbations (piecewise-linear deformations) with varying amplitudes\n4. Track whether the level-set topology is preserved\n5. Measure the \"tropical rotation number\" and test whether preservation correlates with Diophantine conditions on the frequency vector\n\n**Impact**: A tropical KAM theorem would revolutionize our understanding of stability in Hamiltonian systems. It would replace the analytical KAM machinery (convergence of infinite series, small divisor estimates) with finite combinatorial verification. The Diophantine condition on frequencies would become a condition on the Newton polytope subdivision, making it algorithmically checkable.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalKeplerOrbits.lean` — tropical valuation theory, scaling invariance, vis-viva identity\n\n**Proof Strategy**: Begin with the tropical analog of the Hamilton-Jacobi equation. In the min-plus semiring, the generating function becomes piecewise-linear, and the small-divisor problem becomes a question about lattice geometry. The key insight: the Diophantine condition $|\\langle k, \\omega \\rangle| \\ge C/|k|^\\tau$ tropicalizes to a condition on the depth of lattice points relative to the Newton polytope boundary.\n\n**Domain Bridges**: Tropical Geometry ↔ Hamiltonian Mechanics ↔ Number Theory ↔ Ergodic Theory\n\n**Lineage**: Extends the tropical vis-viva identity (Theorem 5.1) to full Hamiltonian mechanics.\n\n**Ambition**: ★★★★★ (Paradigm-shifting — would create tropical Hamiltonian mechanics)",
       "source_exp_id": "b18b48d6",
@@ -8258,7 +8258,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0355",
+      "id": "fd_0449",
       "title": "Direction 1: Constructive Newman's Lemma",
       "description": "**Conjecture**: Local confluence plus termination implies (global) confluence. Moreover, the proof is constructive: given a locally confluent, terminating system and two terms $s \\to^* t_1$, $s \\to^* t_2$, one can *compute* the common reduct $u$ with $t_1 \\to^* u$ and $t_2 \\to^* u$.\n\n**Test**: Implement the constructive confluence proof for 100 randomly generated locally confluent, terminating systems with ≤ 5 rules. For each, generate 1000 pairs of reducts from a common ancestor and verify that the computed common reduct exists and is correct.\n\n**Impact**: This would eliminate the need to assume global confluence — systems could be certified confluent from local checks alone, which is what Knuth-Bendix completion actually produces.\n\n**Catalog References**: `Pythagorean/ConvergentRewriteSystems.lean` (Confluent, Terminating, Convergent)\n\n**Proof Strategy**: Well-founded induction on the termination order. Given $s \\to^* t_1$ and $s \\to^* t_2$, induct on the length of both sequences. At each step, local confluence gives a one-step reconciliation, and the inductive hypothesis extends it. The key insight is that termination provides the well-founded measure.\n\n**Domain Bridges**: Logic (constructive proof theory), Computer Science (automated reasoning)\n\n**Lineage**: Newman (1942), Huet (1980)\n\n**Ambition**: ★★★☆☆ (Well-understood proof, but constructive formalization requires care)\n\n---",
       "source_exp_id": "c217f217",
@@ -8283,7 +8283,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0356",
+      "id": "fd_0450",
       "title": "Direction 2: Multi-Sorted Signatures and Typed Rewriting",
       "description": "**Conjecture**: The Master Theorem extends to multi-sorted (many-sorted) signatures: for a convergent rewrite system over a multi-sorted signature $\\Sigma = (S, \\Omega)$ with sorts $S$ and typed operations $\\Omega$, the normal form preserves evaluation in every multi-sorted algebra satisfying the equations.\n\n**Test**: Define 20 multi-sorted signatures (e.g., vector spaces with scalar and vector sorts, ring-module pairs). For each, generate random typed terms, compute normal forms, and verify evaluation preservation in random multi-sorted algebras.\n\n**Impact**: Multi-sorted signatures cover most practical applications: compiler IRs have types, algebraic specifications are multi-sorted, and categorical constructions are inherently typed.\n\n**Catalog References**: `Pythagorean/ConvergentRewriteSystems.lean` (Sig, Term, SigAlgebra, convergent_nf_preserves_eval)\n\n**Proof Strategy**: Generalize `Sig` to include a sort set `S : Type*` and typed operations `interp : (f : Fin numOps) → (Fin (arity f) → carrier (argSort f)) → carrier (resultSort f)`. The proof structure is identical — only the typing constraints change. The key challenge is managing sort constraints in the substitution lemma.\n\n**Domain Bridges**: Type theory, Programming language semantics, Universal algebra\n\n**Lineage**: Goguen and Meseguer (1992), order-sorted algebra\n\n**Ambition**: ★★★☆☆ (Straightforward generalization with significant engineering)\n\n---",
       "source_exp_id": "c217f217",
@@ -8309,7 +8309,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0357",
+      "id": "fd_0451",
       "title": "Direction 3: Formal Knuth-Bendix Completion",
       "description": "**Conjecture**: The Knuth-Bendix completion algorithm, when it terminates, produces a convergent rewrite system derived from the input equations. Moreover, the algorithm's output can be packaged as a `ConvergentQuotientOptimizer`.\n\n**Test**: Run Knuth-Bendix completion on 50 finitely presented algebraic theories (groups, monoids, rings, lattices with extra axioms). For each successful completion, verify that the output system is convergent and that normal forms preserve evaluation.\n\n**Impact**: This would close the loop: from equations to certified optimizer, fully automatically. The `ConvergentQuotientOptimizer` would be constructible from any equational theory where Knuth-Bendix succeeds.\n\n**Catalog References**: `Pythagorean/ConvergentRewriteSystems.lean` (ConvergentQuotientOptimizer, DerivedFrom, Convergent)\n\n**Proof Strategy**: \n1. Define critical pairs and the completion procedure.\n2. Prove that each completion step preserves the equational theory (new rules are derivable from existing equations).\n3. Prove that a terminating completion produces a locally confluent system.\n4. Apply Newman's Lemma (Direction 1) to obtain global confluence.\n5. Bundle the result as a `ConvergentQuotientOptimizer`.\n\n**Domain Bridges**: Automated reasoning, Abstract algebra, Computational group theory\n\n**Lineage**: Knuth and Bendix (1970), Huet (1981)\n\n**Ambition**: ★★★★☆ (Substantial formalization effort, well-understood mathematics)\n\n---",
       "source_exp_id": "c217f217",
@@ -8386,7 +8386,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0353",
+      "id": "fd_0452",
       "title": "Tropical Riemann-Roch Bounds on Neural Network Expressiveness",
       "description": "Conjecture: For any continuous piecewise-linear function f: [0,1]^d → ℝ with N affine regions, the minimum number of hidden neurons in a depth-2 ReLU network uniformly approximating f to within ε is bounded below by max(0, r(D_f) - g(D_f)), where D_f is the tropical divisor on the tropical curve associated to f's Newton polytope, r is the Baker-Norine rank, and g is the tropical genus. This bound is tight for generic f as ε → 0. Test: For d = 2, compute the tropical Riemann-Roch bound for functions with known optimal ReLU approximations (e.g., max-affine compositions, triangulated surfaces) and verify the bound matches known tight lower bounds within a constant factor. Refutation: exhibit a function family where the bound is off by a super-constant factor. Impact: Establishes the first topological invariant governing neural network approximation capacity, providing a principled algebraic-geometric explanation for empirical scaling laws and connecting tropical Riemann-Roch theory to deep learning.",
       "source_exp_id": "pi_brainstorm",
@@ -8434,7 +8434,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0355",
+      "id": "fd_0453",
       "title": "Direction 2: Equality Saturation Extraction Correctness",
       "description": "**Conjecture:** For a convergent rewrite system R and an e-graph G saturated by R, extracting the cheapest representative from each e-class yields a term semantically equivalent to any other representative — i.e., the extraction function is a certified optimizer in the sense of the Master Optimizer Theorem.\n\n**Test:** Implement bounded e-graph saturation for 100 random convergent systems. For each system, saturate an e-graph with 1000 random terms, extract cheapest representatives using a monotone cost model, and compare eval(extract(t)) with eval(t) across 100 random algebras. Any mismatch refutes the soundness claim.\n\n**Impact:** Would provide the first machine-verified correctness proof for equality saturation extraction, connecting the e-graph literature (Willsey et al., 2021) to the convergent rewriting framework.\n\n**Catalog References:**\n- `Pythagorean/ConvergentRewriteOptimizer.lean`: `nf_constant_on_eqvGen`, `quotientNf_mk`, `eval_eq_of_nf_eq`\n\n**Proof Strategy:** Model the e-graph as the quotient Quot(EqvGen R). Show that extraction is a section of the quotient map (like nf). By `nf_constant_on_eqvGen`, any section that is constant on equivalence classes preserves semantics. The key lemma is that e-graph saturation computes exactly EqvGen(R) — this requires proving that saturation is complete (no missing equivalences) for convergent systems.\n\n**Domain Bridges:** SMT solvers, compiler optimization (egg framework), program synthesis.\n\n**Lineage:** Directly extends the quotient factorization theorem to the e-graph setting.\n\n**Ambition:** Solid extension — high confidence of correctness, but formalization is technically demanding.\n\n---",
       "source_exp_id": "fe78ac2b",
@@ -8459,7 +8459,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0356",
+      "id": "fd_0454",
       "title": "Direction 3: Certified Knuth-Bendix Completion",
       "description": "**Conjecture:** The Knuth-Bendix completion procedure, when it terminates, produces a convergent rewrite system. Composing completion with the Master Optimizer Theorem yields an automated pipeline: input equational axioms → output certified optimizer.\n\n**Test:** Run completion on 500 sets of random equations over small signatures. For each completed system, verify convergence (bounded confluence check + termination check) and verify that the master theorem holds empirically (normalize random terms, compare evaluations).\n\n**Impact:** Would automate the construction of certified optimizers from equational specifications, eliminating the need to manually construct convergent systems.\n\n**Catalog References:**\n- `Pythagorean/ConvergentRewriteOptimizer.lean`: `CertifiedNormalizer`, `convergent_rewrite_induces_optimizer`\n- `Catalog/Pythagorean/VerifiedCompilerSynthesis.lean`: `adjoint_semantics_principle`\n\n**Proof Strategy:** Formalize the completion procedure as a function from equation sets to rewrite systems. Prove: (1) each completion step preserves the equational theory, (2) if completion terminates, the output is confluent, (3) termination of the output system follows from the termination ordering used to orient equations. The hardest part is formalizing the critical pair lemma.\n\n**Domain Bridges:** Automated theorem proving, universal algebra, group theory (word problems).\n\n**Lineage:** Extends `CertifiedNormalizer` from a manually constructed certificate to an automatically generated one.\n\n**Ambition:** Solid extension — well-understood mathematics, but substantial formalization effort.\n\n---",
       "source_exp_id": "fe78ac2b",
@@ -8484,7 +8484,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0357",
+      "id": "fd_0455",
       "title": "Direction 4: Gröbner Bases as Convergent Polynomial Rewriting",
       "description": "**Conjecture:** Buchberger's algorithm produces a convergent rewrite system on the polynomial ring k[x₁,...,xₙ], and the Master Optimizer Theorem specializes to: for any polynomial p and any ideal I, the Gröbner normal form of p evaluates identically to p at every point of the variety V(I).\n\n**Test:** For 100 random polynomial ideals in k[x,y,z] (k = Z/p for small primes p), compute Gröbner bases using Buchberger's algorithm, normalize random polynomials, and verify eval(nf(p)) = eval(p) at 1000 random points. Any mismatch refutes the application of the master theorem to polynomial rewriting.\n\n**Impact:** Would establish the formal connection between convergent rewriting and computational algebraic geometry, unifying two major traditions in symbolic computation.\n\n**Catalog References:**\n- `Pythagorean/ConvergentRewriteOptimizer.lean`: `ring_rewrite_nf_preserves_eval`, `convergent_rewrite_induces_optimizer`\n\n**Proof Strategy:** Model polynomial reduction as a rewrite system on the type `MvPolynomial σ R`. Show that S-polynomial reduction preserves ideal membership (soundness), and that Buchberger's criterion guarantees confluence. Termination follows from the well-ordering on leading monomials. Then instantiate the master theorem.\n\n**Domain Bridges:** Algebraic geometry (ideal membership), robotics (kinematics constraints), cryptography (algebraic attacks).\n\n**Lineage:** Extends `ring_rewrite_nf_preserves_eval` from the toy `RingExpr` type to Mathlib's `MvPolynomial`.\n\n**Ambition:** Grand challenge — requires significant new infrastructure connecting rewriting to Mathlib's polynomial algebra.\n\n---",
       "source_exp_id": "fe78ac2b",
@@ -8511,7 +8511,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0358",
+      "id": "fd_0456",
       "title": "Direction 5: Universal Certified Algebraic Computation Framework",
       "description": "**Conjecture:** Every finitely presented equational theory admits a certified optimizer: either a convergent rewrite system (via completion) or a quotient-based normalizer (via the master theorem applied to a partial completion). The framework subsumes constant folding, polynomial simplification, equality saturation, and Gröbner reduction as special cases.\n\n**Test:** Collect 50 equational theories from the literature (groups, rings, lattices, Boolean algebras, etc.). For each, attempt completion and optimizer construction. Measure: (a) fraction of theories where completion succeeds, (b) fraction where the resulting optimizer is empirically correct on 10,000 test evaluations.\n\n**Impact:** Would establish convergent rewriting as the universal backend for certified algebraic computation — a single framework replacing dozens of ad hoc correctness proofs.\n\n**Catalog References:**\n- `Pythagorean/ConvergentRewriteOptimizer.lean`: all main theorems\n- `Catalog/Pythagorean/VerifiedCompilerSynthesis.lean`: `InterpreterSpec`, `adjoint_semantics_principle`\n\n**Proof Strategy:** Define a type class `CertifiedTheory` packaging an equational theory, a (possibly partial) convergent system, and the soundness proof. Show that the master theorem applies whenever the system is convergent. For incomplete systems, use the quotient factorization to provide partial optimization guarantees.\n\n**Domain Bridges:** All of: compiler optimization, symbolic algebra, SMT, theorem proving, physics (operator normal ordering), quantum computing (circuit optimization).\n\n**Lineage:** Unifies all four preceding directions into a single architecture.\n\n**Ambition:** Grand challenge — paradigm-shifting if achieved, requiring years of formalization effort.",
       "source_exp_id": "fe78ac2b",
@@ -8529,8 +8529,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 1.0,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "1031338c",
       "timestamp": "2026-05-22T17:45:15.952825+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
@@ -8538,7 +8538,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0355",
+      "id": "fd_0457",
       "title": "Direction 1: De Bruijn Church-Rosser — Eliminating the Sorry",
       "description": "**Conjecture**: The full Church-Rosser proof via parallel reduction (including `subst_subst_parBeta`, `ParBeta.to_star`, and `parBeta_diamond`) can be formalized sorry-free in Lean 4 using de Bruijn indexed lambda terms.\n\n**Test**: Redefine `Lam` with de Bruijn indices, implement capture-avoiding substitution via lifting/shifting, and reprove `Lam.subst_subst_parBeta`. The proof should go through by standard induction on `ParBeta` since the substitution swap lemma holds for de Bruijn substitution. Verify with `#print axioms church_rosser` showing only standard axioms.\n\n**Impact**: Converts all 2 sorries in the formalization to complete proofs, yielding a fully verified Church-Rosser theorem. This is the most immediate next step.\n\n**Catalog References**: `Pythagorean/ChurchRosserBisimulation.lean` (subst_subst_parBeta, ParBeta.to_star)\n\n**Proof Strategy**: Define `LamDB` with constructors `var (n : Nat)`, `app`, `lam` (no binder variable). Define `shift`, `subst` following standard de Bruijn conventions. Prove substitution lemmas. Define `ParBetaDB` and reprove diamond property. The Takahashi method transfers directly.\n\n**Domain Bridges**: Proof theory → verified compilation\n\n**Lineage**: Extends the current formalization by fixing the representation layer.\n\n**Ambition**: Solid extension — well-understood technique, high confidence of success.\n\n---",
       "source_exp_id": "1bbcaa5d",
@@ -8562,7 +8562,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0356",
+      "id": "fd_0458",
       "title": "Direction 2: Strong Normalization Implies Finite Strong Bisimulation",
       "description": "**Conjecture**: For simply typed lambda calculus (STLC), β-equivalent terms of the same type produce *strongly bisimilar* bounded FTS at sufficient depth. Unlike the untyped case (where the counterexample (λx.x)y vs. y shows failure), typing constraints ensure that all normal forms at the same type have compatible transition structures.\n\n**Test**: Formalize STLC typing judgment. Prove strong normalization (or assume it). Show that β-equivalent well-typed terms of the same type at a normal form share the same normal form (Church-Rosser + uniqueness of normal forms in STLC). Derive that toFTS at the normalization depth for both terms yields FTS with identical structure from the shared normal form onward. Construct a strong bisimulation that pairs terms along their normalization paths.\n\n**Impact**: Would be the first formal result showing that TYPING converts weak bisimulation into strong bisimulation. This connects type theory directly to coalgebraic semantics.\n\n**Catalog References**: `Pythagorean/ChurchRosserBisimulation.lean`, `Pythagorean/BoundedBetaDefs.lean`\n\n**Proof Strategy**: Key insight: in STLC, every term has a unique normal form. If BetaEq(t,u) and both are well-typed, their unique normal forms must be equal (v = nf(t) = nf(u)). Then toFTS(d', t) and toFTS(d', u) both contain v, and from v onward the FTS is identical. The bisimulation relates states on the normalization paths of t and u.\n\n**Domain Bridges**: Type theory → coalgebra → program verification\n\n**Lineage**: Builds on Church-Rosser + strong normalization.\n\n**Ambition**: Grand challenge — would require significant new formalization (STLC, strong normalization) but the payoff is transformative.\n\n---",
       "source_exp_id": "1bbcaa5d",
@@ -8586,7 +8586,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0357",
+      "id": "fd_0459",
       "title": "Direction 3: Normalization Cost as Bisimulation Distance",
       "description": "**Conjecture**: There exists a metric d on lambda terms such that d(t, u) equals the minimum depth at which toFTS(d, t) and toFTS(d, u) become weakly bisimilar, and this metric is bounded above by the sum of normalization costs (number of β-steps to normal form).\n\n**Test**: For small simply-typed terms (size ≤ 10), compute:\n1. The minimum depth d* at which weak bisimulation holds\n2. The sum of normalization step counts\n3. Check if d* ≤ normalization_cost(t) + normalization_cost(u)\n\nA single counterexample disproves the conjecture. If it holds for all small terms, investigate whether it follows from the structure of the normalization proof.\n\n**Impact**: Would establish a quantitative bridge between proof complexity (normalization cost) and behavioral distinguishability (bisimulation depth). This connects denotational and operational semantics at a quantitative level.\n\n**Catalog References**: `Pythagorean/ChurchRosserBisimulation.lean` (betaEq_joinable_with_sufficient_budget)\n\n**Proof Strategy**: Use the existing joinability budget theorem as a starting point. The budget max(k₁, k₂) from Church-Rosser is an upper bound, but the actual bisimulation depth might be much smaller due to weak bisimulation's ability to stutter.\n\n**Domain Bridges**: Proof complexity → operational semantics → metric spaces\n\n**Lineage**: Extends the joinability budget analysis.\n\n**Ambition**: Grand challenge — would create a new area at the intersection of proof complexity and coalgebra.\n\n---",
       "source_exp_id": "1bbcaa5d",
@@ -8611,7 +8611,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0358",
+      "id": "fd_0460",
       "title": "Direction 4: Confluence-to-Bisimulation for Term Rewriting Systems",
       "description": "**Conjecture**: The transfer principle (confluence → shared behavioral core → modal invariance) generalizes from lambda calculus to any abstract rewriting system (ARS) satisfying the Church-Rosser property. Specifically, for any ARS (A, →) with CR, the FTS induced by bounded rewriting preserves modal-logical properties across equivalence classes.\n\n**Test**: \n1. Define a generic ARS structure in Lean 4 with states, rewrite steps, and equivalence.\n2. Define bounded FTS for ARS.\n3. Prove that CR for the ARS implies weak bisimulation and common-reduct strong bisimulation for the bounded FTS.\n4. Instantiate for: (a) lambda calculus, (b) combinatory logic (S, K reduction), (c) string rewriting systems.\n\n**Impact**: Would establish a general metatheorem: confluence is a bisimulation generator for ANY rewriting system. This would connect the entire field of rewriting theory to coalgebraic semantics.\n\n**Catalog References**: `Pythagorean/ChurchRosserBisimulation.lean` (all transfer theorems)\n\n**Proof Strategy**: Abstract the proof of `common_reduct_strong_bisimilar` to work over a generic ARS type class. The key properties needed are: transitivity of multi-step reduction, embedding of single steps into multi-step, and the Church-Rosser property. All are standard ARS axioms.\n\n**Domain Bridges**: Rewriting theory → coalgebra → universal algebra\n\n**Lineage**: Direct generalization of the lambda calculus results.\n\n**Ambition**: Solid extension with paradigm-shifting potential — straightforward to formalize but opens an entirely new research program.\n\n---",
       "source_exp_id": "1bbcaa5d",
@@ -8636,7 +8636,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0359",
+      "id": "fd_0461",
       "title": "Direction 5: Bisimulation-Preserving Compilation",
       "description": "**Conjecture**: A compiler pass that maps source terms to target terms while preserving β-equivalence automatically preserves all modal-logical properties of the bounded FTS semantics. This can be used as a CORRECTNESS CRITERION for compiler optimizations: an optimization is sound if and only if it maps β-equivalent source terms to β-equivalent target terms.\n\n**Test**: \n1. Implement a simple compiler (e.g., CPS transformation, closure conversion, or A-normal form) as a function `compile : Lam → Lam`.\n2. Verify (formally or by exhaustive testing on small terms) that `BetaEq t u → BetaEq (compile t) (compile u)`.\n3. Derive that the compiled terms have weakly bisimilar bounded FTS.\n4. Check that specific modal properties (e.g., \"can reduce to a value in k steps\") are preserved.\n\n**Impact**: Would provide a mechanical certification method for compiler correctness based on bisimulation theory rather than logical relations or contextual equivalence.\n\n**Catalog References**: `Pythagorean/ChurchRosserBisimulation.lean` (beta_equiv_weakBisimilar, bisimilar_modal_invariance)\n\n**Proof Strategy**: The key insight is that `beta_equiv_weakBisimilar` is unconditional — it doesn't require Church-Rosser. So any function preserving β-equivalence automatically preserves weak bisimilarity of bounded FTS. The modal invariance then follows from `bisimilar_modal_invariance` (via weak version). This is a DIRECT APPLICATION of existing theorems.\n\n**Domain Bridges**: Compiler verification → concurrency theory → modal logic\n\n**Lineage**: Application of the weak bisimulation and modal invariance theorems.\n\n**Ambition**: Solid extension with immediate practical impact — could be implemented and tested within weeks.",
       "source_exp_id": "1bbcaa5d",
@@ -8840,7 +8840,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0369",
+      "id": "fd_0462",
       "title": "Direction 4: Rank Conjecture Resolution",
       "description": "**Conjecture:** For Drużkowski Keller maps in dimension n ≤ 5, the matrix A has rank strictly less than n. (Stated as `cubic_linear_keller_rank_conjecture` in the formalization.)\n\n**Test:** Extend the exhaustive enumeration to dimension 4 with entries in {-1, 0, 1}. For dimension 5, use sparse matrix sampling. If the conjecture holds, attempt to prove it for dimension 2 first (should be feasible: a 2×2 Keller map with rank 2 leads to A being invertible, but then the cubic term is \"too rich\" to maintain det = 1).\n\n**Impact:** If true, this provides a strong new constraint on Keller maps that could lead to a dimension-by-dimension proof strategy. If false, the counterexample would be intrinsically interesting.\n\n**Catalog References:**\n- `Catalog/Algebra/Jacobian/DruzkowskiTheory.lean` — `cubic_linear_keller_rank_conjecture`\n- `Catalog/Algebra/Jacobian/NilpotenceTheory.lean` — nilpotency from det constraints\n\n**Proof Strategy:** For n = 2: if rank(A) = 2, then A is invertible. Show that det(I + 3A·diag(v²)) cannot be identically 1 when A is 2×2 invertible, using explicit expansion and the fact that the cubic terms cannot cancel. For general n, use the connection between rank deficiency and the structure of the nilpotent cone.\n\n**Domain Bridges:** Linear algebra (matrix rank) ↔ Algebraic geometry (nilpotent varieties) ↔ Number theory (rational point counting for computational tests)\n\n**Lineage:** Builds on `isNilpotent_of_det_one_add_smul` and the computational experiments.\n\n**Ambition:** Solid extension — testable and provable for small dimensions.\n\n---",
       "source_exp_id": "1c1ae8b2",
@@ -8865,7 +8865,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0370",
+      "id": "fd_0463",
       "title": "Direction 5: Weyl Algebra Formalization and Dixmier Bridge Completion",
       "description": "**Conjecture:** The Dixmier Conjecture (every endomorphism of the Weyl algebra A_n(K) is an automorphism) is equivalent to the Jacobian Conjecture. Formally complete the bridge JC ⟺ DC.\n\n**Test:** Define the Weyl algebra A_1(K) = K⟨x, ∂⟩/(∂x - x∂ = 1) in Lean, verify basic properties (simplicity, GK-dimension 2, the commutation relation), and prove that endomorphisms of A_1 induce Keller maps on gr(A_1) ≅ K[x,ξ].\n\n**Impact:** This would be the first formal verification of the Jacobian–Dixmier equivalence, connecting commutative algebra to quantum mechanics (the Weyl algebra models canonical commutation relations). It would also create reusable Weyl algebra infrastructure for future Mathlib contributions.\n\n**Catalog References:**\n- `Catalog/Algebra/Jacobian/DruzkowskiTheory.lean` — `jacobian_implies_dixmier_abstract`\n- `Catalog/Speculative/AutoResearch/Algebra/Jacobian/DixmierBridge.lean` — `dixmier_of_jacobian` (placeholder)\n\n**Proof Strategy:** \n1. Define the Weyl algebra as a quotient of the free algebra.\n2. Establish the filtration by order and the isomorphism gr(A_n) ≅ K[x₁,...,xₙ,ξ₁,...,ξₙ].\n3. Show that endomorphisms of A_n induce polynomial endomorphisms of gr(A_n).\n4. Prove the Keller condition on the induced map from the commutation relations.\n5. Apply JC to get invertibility, then lift back through the filtration.\n\n**Domain Bridges:** Noncommutative algebra (Weyl algebra) ↔ Commutative algebra (polynomial maps) ↔ Differential geometry (symbol calculus) ↔ Quantum mechanics (CCR)\n\n**Lineage:** Completes `jacobian_implies_dixmier_abstract` from the current cycle.\n\n**Ambition:** Grand challenge — requires building new Mathlib infrastructure for noncommutative algebra.",
       "source_exp_id": "1c1ae8b2",
@@ -8892,7 +8892,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0372",
+      "id": "fd_0464",
       "title": "Direction 1: Dynamical Ramanujan Conjecture for Prime Squaring Graphs",
       "description": "**Conjecture**: For prime $p$, the squaring graph $G_p$ (undirected functional graph of $x \\mapsto x^2$ on $\\mathbb{Z}/p\\mathbb{Z}$) is a dynamical Ramanujan graph: the second-largest eigenvalue of its adjacency matrix satisfies $\\lambda_2(G_p) \\leq 2\\sqrt{\\Delta(G_p) - 1}$, where $\\Delta$ is the maximum degree.\n\n**Test**: For all primes $p \\leq 10^4$, compute the full spectrum of the undirected squaring graph adjacency matrix (sparse eigensolver). Verify the Ramanujan bound. Compare $\\lambda_2$ distributions for primes vs. composites of comparable size.\n\n**Impact**: If true, this would establish primes as spectrally optimal among squaring graphs, giving the strongest possible separation from composites (whose spectral gaps are suppressed by basin fragmentation). This would be the first example of a number-theoretic Ramanujan family arising from a single endomorphism.\n\n**Catalog References**: `Pythagorean/SpectralGap.lean` — `prime_sq_idempotents_eq_zero_or_one`, `prime_idempotentSubtype_card`\n\n**Proof Strategy**: For the forward direction, leverage the connection between squaring graphs of $\\mathbb{F}_p$ and Cayley graphs of the multiplicative group. The quadratic residue structure induces a natural correspondence with Paley graphs, for which Ramanujan-type bounds are known via Weil's theorem on character sums.\n\n**Domain Bridges**: Number theory ↔ spectral graph theory ↔ algebraic geometry (Weil conjectures)\n\n**Lineage**: Extends the prime rigidity theorem (`prime_sq_idempotents_eq_zero_or_one`) from fixed-point counting to full spectral characterization.\n\n**Ambition**: Grand challenge — would unify arithmetic dynamics with Ramanujan graph theory.\n\n---",
       "source_exp_id": "9afcf878",
@@ -9051,7 +9051,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0393",
+      "id": "fd_0465",
       "title": "Direction 2: Polynomial Saturation Depth for Finite Convergent Systems",
       "description": "**Conjecture:** For every finite convergent rewrite system R with n elements and maximum rule size k, the saturation depth (number of rounds until the e-graph relation equals `EqvGen R.rel` on the reachable universe) is bounded by O(n^k).\n\n**Test:** Generate 1000 random finite convergent systems with carrier sizes 5–50 and rule sizes 1–5. For each, compute the exact saturation depth and the size of the reachable normal-form closure. Fit the relationship depth = f(n, k) to polynomial and exponential models. A single family where depth grows super-polynomially in n for fixed k would falsify the conjecture.\n\n**Impact:** A positive result would establish that equality saturation is always efficient for finite convergent systems, resolving a practical question about when e-graph-based optimization terminates quickly. A negative result would identify structural barriers to efficient saturation.\n\n**Catalog References:** `Pythagorean/EqualitySaturationExtraction.lean` (Convergent', BoundedEGraph), `Catalog/Pythagorean/ConvergentRewriteOptimizer.lean` (IsConfluent, CertifiedNormalizer).\n\n**Proof Strategy:** For an upper bound: analyze the number of distinct equivalence classes in the e-graph. Each saturation step must either merge two classes or add a new term. Since the carrier is finite with n elements, at most n-1 merges are possible. The depth is bounded by the longest chain of rule applications needed to discover all merges.\n\n**Domain Bridges:** Complexity theory (decision procedures), automated reasoning (termination analysis), combinatorics (closure operators on finite lattices).\n\n**Lineage:** Tests the computational content of `nf_constant_on_eqvGen'` — if normal forms are constant on EqvGen classes, how quickly does bounded saturation discover this?\n\n**Ambition:** ★★★☆☆ (Medium — computational experiments are straightforward; proving the bound formally is hard)\n\n---",
       "source_exp_id": "eda0211e",
@@ -9092,7 +9092,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8999999999999999,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "9b28b14f",
       "timestamp": "2026-05-23T11:39:51.997093+00:00",
       "catalog_references": [],
@@ -9128,7 +9128,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0401",
+      "id": "fd_0466",
       "title": "Direction 4: Domain-Specific Profile Analysis for Pythagorean Certificates",
       "description": "**Conjecture:** For the specific certificate families arising from Pythagorean triple obstructions, the profile collision rate is bounded by O(1) (constant number of families per profile), yielding an unconditional polynomial width bound.\n\n**Test:** Implement the Pythagorean certificate framework using the catalog's sandwich definitions. Enumerate certificates for small cases (n ≤ 10) and measure empirical collision rates. Compare profile-injective antichain sizes against the polynomial bound.\n\n**Impact:** Converts the abstract polynomial width theorem into a concrete algorithmic tool for Pythagorean obstruction search. If collision rates are empirically low, this validates the profile method for the motivating application.\n\n**Catalog References:**\n- `Pythagorean/PolynomialWidth.lean`: all main theorems\n- `Pythagorean/CertificatePosetWQO.lean`: all definitions\n- `Pythagorean/SandwichDefs.lean`: `CertifiedSandwichFamily`, `SandwichCompleteUpTo`\n\n**Proof Strategy:** Analyze the specific structure of Pythagorean certificates — monotonicity of the coloring property, constraints from the triple structure. Show that the triple structure forces certificates in the same profile class to be highly correlated, limiting incomparability.\n\n**Domain Bridges:** Number theory (Pythagorean triples), Ramsey theory (coloring obstructions), SAT solving (certificate extraction)\n\n**Lineage:** Applies `polynomial_profile_width_bound` and `achievableProfiles_upper_bound` to the motivating domain.\n\n**Ambition:** ★★☆☆☆ (Moderate — primarily computational, with focused theoretical analysis)\n\n---",
       "source_exp_id": "1f042eaa",
@@ -9153,7 +9153,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0402",
+      "id": "fd_0467",
       "title": "Direction 5: Universal Polynomial Width Conjecture",
       "description": "**Conjecture (Grand Challenge):** For every fixed certificate size bound t, the width of the bounded certificate family poset on Fin n is O(n^{d(t)}) for some exponent d(t) — without the profile-injectivity hypothesis.\n\n**Test:** For n = 2, 3, 4 and t = 1, 2, compute exact poset widths (via Dilworth's theorem / maximum matching). Compare against polynomial predictions. Any exponential-size antichain for fixed t would be a disproof.\n\n**Impact:** This would be a landmark result in quantitative WQO theory. It would show that bounded certificate families have intrinsically polynomial obstruction complexity, converting the finite-basis theorem into a polynomial-time searchability theorem.\n\n**Catalog References:**\n- `Pythagorean/PolynomialWidth.lean`: `bounded_certificate_width_polynomial_exists`, `polynomial_beats_exponential`\n- `Pythagorean/CertificatePosetWQO.lean`: `finite_antichain_of_bounded`, `bounded_certificate_family_wqo`\n\n**Proof Strategy:** Combine Directions 1 and 2: use the sharp Sperner bound for the profile-injective component and the collision structure theorem for the profile-collision component. Alternatively, develop a direct Dilworth-type decomposition of the family poset into polynomially many chains.\n\n**Domain Bridges:** Well-quasi-order theory, Ramsey theory, structural graph theory (Robertson-Seymour), computational complexity (parameterized complexity, obstruction sets)\n\n**Lineage:** The culmination of the polynomial width program. Removes all hypotheses from `bounded_certificate_width_polynomial_exists`.\n\n**Ambition:** ★★★★★ (Grand challenge — may require fundamentally new techniques)\n\n---",
       "source_exp_id": "1f042eaa",
@@ -9424,7 +9424,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0393",
+      "id": "fd_0468",
       "title": "Direction 2: Quantitative ULC Margin Bounds (Corrected Tropical Conjecture)",
       "description": "**Conjecture:** For positive weights $w_1 \\geq \\cdots \\geq w_m > 0$, the ULC margin satisfies:\n\n$$\\text{margin}_k \\geq \\frac{(w_{\\max} - w_{\\min})^2}{8m^2 \\cdot w_{\\max} \\cdot w_{\\min}} \\cdot \\frac{k(m-k)}{m-1}$$\n\n(Note: the factor is $1/8$ instead of $1/4$ in the original conjecture, based on computational evidence showing the $1/4$ version has rare violations for extreme heterogeneity.)\n\n**Test:** Generate $10^6$ random weight vectors with $m \\in \\{3, \\ldots, 25\\}$, $w_i \\in [0.01, 100]$. Compute the ratio LHS/RHS for all valid $k$. The conjecture is falsified if any ratio < 1. If it holds, fit the optimal constant $c$ in $\\text{margin}_k \\geq c \\cdot (w_{\\max} - w_{\\min})^2 / (m^2 w_{\\max} w_{\\min}) \\cdot k(m-k)/(m-1)$.\n\n**Impact:** Would give the first explicit, computable lower bound on the ULC gap, with applications to robustness certification in machine learning.\n\n**Catalog References:** `Pythagorean/UltraLogConcaveDefs.lean` (ulcMargin, minUlcMargin)\n\n**Proof Strategy:** Start with the case $m = 3, k = 1$ where the bound reduces to an explicit AM-GM-type inequality. Extend by induction using the ESP recurrence.\n\n**Domain Bridges:** Tropical geometry (margin bounds) ↔ Machine learning (adversarial robustness)\n\n**Lineage:** Builds on `ulcMargin` and `tropicalUlcMarginConj` from `Pythagorean/UltraLogConcave.lean`\n\n**Ambition:** Solid extension — quantitative refinement of a classical inequality\n\n---",
       "source_exp_id": "7d4778d1",
@@ -9523,7 +9523,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0401",
+      "id": "fd_0469",
       "title": "Direction 4: Decreasing Diagrams for Confluence Without Termination",
       "description": "**Conjecture:** Van Oostrom's decreasing diagram technique can be formalized to prove confluence of non-terminating systems (e.g., lambda calculus β-reduction), bypassing the termination requirement of Newman's Lemma.\n\n**Test:** Formalize the decreasing diagram condition and prove that parallel β-reduction satisfies it. Derive Church-Rosser for β-reduction as a corollary. Compare with the direct proof via Tait-Martin-Löf parallel reduction (already in `Catalog/FINAL/Logic/Confluence.lean`).\n\n**Impact:** Provides a more general confluence proof technique applicable to systems where termination fails (lambda calculus, conditional rewriting, higher-order rewriting). Would significantly extend the applicability of the certified optimization pipeline.\n\n**Catalog References:** `Catalog/FINAL/Logic/Confluence.lean` (Church-Rosser via parallel reduction), `Pythagorean/KnuthBendixCompletion.lean` (Newman's Lemma).\n\n**Proof Strategy:** Define a labelling function on reduction steps. Prove the decreasing diagram condition: for every local peak a ← b → c, there exists a decreasing joining sequence. The key lemma is that the multiset of labels strictly decreases in each diagram completion.\n\n**Domain Bridges:** Rewriting theory ↔ homotopy theory (diagrams as 2-cells); lambda calculus ↔ programming language theory.\n\n**Lineage:** Extends Newman's Lemma to the non-terminating case.\n\n**Ambition:** Grand challenge — the decreasing diagram technique is subtle and requires careful handling of label orderings.\n\n---",
       "source_exp_id": "43aa1bfc",
@@ -9548,7 +9548,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0402",
+      "id": "fd_0470",
       "title": "Direction 5: Certified Equality Saturation via Completion",
       "description": "**Conjecture:** Equality saturation (as implemented in the egg library) can be formalized as a variant of KB completion operating on e-graphs, with a certified extraction procedure that produces terms equivalent to the input under the equational theory.\n\n**Test:** Formalize e-graphs as a data structure (union-find on term nodes), define saturation as iterated application of rewrite rules to the e-graph, and prove that the extracted term is equivalent to the input. Verify by running on arithmetic optimization examples: `(a * 2) / 2 → a`, `(a + 0) * 1 → a`.\n\n**Impact:** Would connect our formalization to the most active area of practical rewriting applications — compiler optimization via equality saturation. A certified egg-like system would enable verified compiler optimizations with machine-checked correctness guarantees.\n\n**Catalog References:** `Pythagorean/KnuthBendixCompletion.lean` (convergent normalizers), `Catalog/FINAL/Pythagorean/ConvergentRewriteOptimizer.lean` (certified optimization).\n\n**Proof Strategy:** The key insight is that an e-graph represents a set of equivalent terms, and saturation adds all consequences of the rewrite rules. Extraction selects a representative from each equivalence class. The correctness proof shows that the extracted term is in the equivalence class of the input.\n\n**Domain Bridges:** Rewriting ↔ compiler optimization; e-graphs ↔ congruence closure; term rewriting ↔ SMT solving.\n\n**Lineage:** Direct application of the certified optimizer framework to modern compiler technology.\n\n**Ambition:** Solid extension with high practical impact — equality saturation is widely used in industry.",
       "source_exp_id": "43aa1bfc",
@@ -9571,7 +9571,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0396",
+      "id": "fd_0471",
       "title": "Direction 1: Full-Scale Tropical KAM Density (Grand Challenge)",
       "description": "**Conjecture**: For any dimension n ≥ 2 and any C-decay function C(K) = γ/K^τ (with γ > 0, τ > n−1), the set of frequency vectors ω ∈ [0,1]ⁿ satisfying TropicalDiophantine(K, C(K), ω) for all K ∈ ℕ has Lebesgue measure converging to 1 as γ → 0⁺. Equivalently, the set of frequencies that are tropically Diophantine at all scales simultaneously has full measure.\n\n**Test**: \n1. For n = 2, γ ∈ {0.01, 0.001, 0.0001} and τ = 1.5, sample 10,000 random ω ∈ [0,1]² uniformly.\n2. For each ω, compute TropicalDiophantine(K, γ/K^τ, ω) for K = 1, 2, ..., 100.\n3. Let ρ(γ) = fraction of ω satisfying the condition for all K ≤ 100.\n4. Measure whether ρ(γ) → 1 as γ → 0⁺.\n5. A single example where ρ(γ) does NOT approach 1 would refute the conjecture.\n\n**Impact**: This would establish the full measure-theoretic content of KAM theory in the tropical setting, completing the translation from classical dynamics. It would show that \"most\" frequencies are tropically stable.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalKeplerOrbits.lean` (tropicalVal, scaling invariance); `Pythagorean/TropicalKAMStability.lean` (TropicalDiophantine, resonance rigidity).\n\n**Proof Strategy**: Adapt the classical measure-theoretic argument (Borel-Cantelli lemma applied to resonance strips) to the tropical setting. For each K, the set of ω with |⟨k, ω⟩| < C(K) for some k with ‖k‖₁ = K has measure O(K^(n-1) · C(K)). If Σ_K K^(n-1) · C(K) < ∞, the complement has full measure.\n\n**Domain Bridges**: Ergodic theory (measure-theoretic density), analytic number theory (Diophantine approximation), probability (random frequency analysis).\n\n**Lineage**: Extends `tropical_KAM_finite_scale` from finite K to K → ∞.\n\n**Ambition**: Grand challenge — paradigm-shifting. Would establish tropical KAM as a complete alternative to classical KAM, not just a finite-scale fragment.\n\n---",
       "source_exp_id": "8b647382",
@@ -9626,7 +9626,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0398",
+      "id": "fd_0472",
       "title": "Direction 3: Algorithmic Lattice-Reduced Diophantine Certification",
       "description": "**Conjecture**: The time complexity of checking TropicalDiophantine(K, C, ω) can be reduced from O((2K)ⁿ) to O(poly(K, n)) using lattice reduction algorithms (LLL/BKZ). Specifically, if the shortest vector in the dual lattice of the frequency module has length ≥ C, then the Diophantine condition holds.\n\n**Test**:\n1. Implement both brute-force and LLL-based Diophantine checkers.\n2. For n ∈ {2, 3, 4, 5} and K ∈ {5, 10, 20, 50, 100}, compare:\n   a. Correctness: do both methods agree on all inputs?\n   b. Runtime: measure wall-clock time.\n3. Refutation: if the LLL-based checker disagrees with brute force on any input, or if it fails to achieve polynomial runtime.\n\n**Impact**: Would make tropical KAM certification practical in high dimensions, enabling applications to many-body celestial mechanics and high-dimensional optimization.\n\n**Catalog References**: `Pythagorean/TropicalKAMDefs.lean` (l1Norm, latticeInner, TropicalDiophantine).\n\n**Proof Strategy**: Reduce the Diophantine condition to a closest vector problem (CVP) in a lattice constructed from the frequency vector. Use LLL to find short vectors approximating the dual lattice, then bound the gap.\n\n**Domain Bridges**: Computational number theory (lattice algorithms), cryptography (lattice-based crypto), combinatorial optimization (integer programming).\n\n**Lineage**: Extends the Diophantine checker algorithm from brute-force to efficient.\n\n**Ambition**: Solid extension — practical algorithmic improvement.\n\n---",
       "source_exp_id": "8b647382",
@@ -9653,7 +9653,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0401",
+      "id": "fd_0473",
       "title": "Forbidden Minor Characterization of Hard Formulas",
       "description": "Conjecture: Formulas requiring clause space ≥ k can be characterized by the presence of a specific graph minor in their configuration graph (analogous to the grid minor theorem for treewidth). Specifically, BConfGraph(F, s) contains a path-like minor of width Ω(s).\n\nTest: For all unsatisfiable CNFs over 3 variables, compute BConfGraph(F, s) and search for the largest grid minor or path minor. Correlate minor size with clause space. If clause space k formulas consistently have path minors of width ≥ k/c for some constant c, this supports the conjecture.\n\nImpact: Would provide a purely combinatorial certificate that a formula is hard (requires large space), importable from Robertson-Seymour theory.",
       "source_exp_id": "6f30f84f",
@@ -9682,7 +9682,7 @@
       ]
     },
     {
-      "id": "fd_0402",
+      "id": "fd_0474",
       "title": "Pathwidth-Guided SAT Solving",
       "description": "Conjecture: A SAT solver that computes an approximate path decomposition of the (estimated) configuration graph and uses it to guide clause learning and forgetting will achieve lower peak memory usage than standard CDCL solvers on structured instances, with at most a constant factor overhead in time.\n\nTest: Implement a prototype solver that (a) estimates BConfGraph structure from the clause database, (b) computes an approximate path decomposition, (c) uses the decomposition to prioritize which clauses to keep in memory. Compare peak memory and solving time against MiniSat/CaDiCaL on SAT Competition benchmarks. Measure the correlation between estimated pathwidth and actual peak memory.\n\nImpact: A practical SAT solving paradigm informed by structural graph theory, potentially solving memory-bound instances more efficiently.",
       "source_exp_id": "6f30f84f",
@@ -9741,7 +9741,7 @@
       ]
     },
     {
-      "id": "fd_0401",
+      "id": "fd_0475",
       "title": "Direction 1: Cohomological Obstruction to Compression Equality",
       "description": "**Conjecture:** The gap κ_sh(J, F) − κ_pre(F) is controlled by the first sheaf cohomology group H¹(C, J; K) of a suitable coefficient sheaf K derived from the probe family. Specifically, the gap is zero if and only if a certain obstruction class in H¹ vanishes.\n\n**Test:** For finite sites with ≤ 5 objects, enumerate all Grothendieck topologies and all presheaves. Compute the compression gap and the first cohomology group. Verify that nonzero gaps correspond exactly to nonvanishing obstruction classes.\n\n**Impact:** This would transform the compression gap from an ad hoc invariant into a cohomological invariant, placing it within the standard toolkit of algebraic geometry. It would provide the first information-theoretic interpretation of sheaf cohomology on finite sites.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/SheafCompressionFiniteSite.lean` — compression gap definition\n- `Pythagorean/ProbeComplexity/Theorems.lean` — probe complexity invariants\n\n**Proof Strategy:** Define K as the presheaf of \"separation defects\" at each object. Show that the Čech cohomology H¹ of K relative to J computes the obstruction to extending a presheaf-level separating family to a topology-compatible one. The key step is showing that the gluing data for topology compatibility forms a cocycle.\n\n**Domain Bridges:** Algebraic geometry (sheaf cohomology) ↔ Information theory (compression gaps) ↔ Combinatorics (finite site enumeration)\n\n**Lineage:** Extends Theorem 5 (compression equality) by characterizing the exact obstruction when equality fails.\n\n**Ambition:** Grand challenge — would establish a new dictionary between information theory and cohomological algebra.\n\n---",
       "source_exp_id": "5fb0b81c",
@@ -9767,7 +9767,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0402",
+      "id": "fd_0476",
       "title": "Direction 2: Topos-Level Compression Invariant",
       "description": "**Conjecture:** The sheaf compression number, minimized over all sheaves in the topos Sh(C, J), defines a well-defined invariant κ(C, J) of the topos itself. Moreover, equivalent topoi (sites with equivalent sheaf categories) have the same compression invariant: if Sh(C, J) ≃ Sh(C', J'), then κ(C, J) = κ(C', J').\n\n**Test:** Identify pairs of inequivalent finite sites with equivalent sheaf categories (e.g., sites related by Morita equivalence). Compute κ for each site in the pair and verify equality. Test on all finite sites with ≤ 4 objects.\n\n**Impact:** This would elevate compression from a sheaf-level invariant to a topos-level invariant, providing a new \"geometric complexity\" measure for topoi alongside dimension, Euler characteristic, and cohomological dimension.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/SheafCompressionFiniteSite.lean` — sheafCompressionNumber definition\n- `Pythagorean/ProbeComplexity/RepresentableDimension.lean` — representable dimension invariant\n\n**Proof Strategy:** Use the characterization of topos equivalences via flat functors or geometric morphisms. Show that the compression invariant is preserved by the adjunction defining the equivalence. The key technical step is showing that probe separation is preserved by the inverse image functor of a geometric morphism.\n\n**Domain Bridges:** Topos theory ↔ Categorical complexity ↔ Morita theory\n\n**Lineage:** Extends Theorem 6 (upper bound) by asking for the tightest possible bound intrinsic to the topos.\n\n**Ambition:** Grand challenge — would create a new invariant theory for topoi.\n\n---",
       "source_exp_id": "5fb0b81c",
@@ -9793,7 +9793,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0403",
+      "id": "fd_0477",
       "title": "Direction 3: Subadditivity of Sheaf Compression",
       "description": "**Conjecture:** Sheaf compression is subadditive under finite coproducts of presheaves:\n\n    κ_sh(J, F ⊕ G) ≤ κ_sh(J, F) + κ_sh(J, G)\n\nMore precisely, if P separates F and Q separates G and both are topology-compatible, then P ∪ Q separates F ⊕ G and is topology-compatible.\n\n**Test:** Enumerate all pairs of presheaves on finite sites with ≤ 4 objects. Compute κ_sh for each presheaf and for their coproduct. Verify the inequality.\n\n**Impact:** Subadditivity would establish that sheaf compression behaves like an entropy measure, opening the door to a full information-theoretic framework for geometric compression.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/SheafCompressionFiniteSite.lean` — compression number definitions\n- `Pythagorean/ProbeComplexity/Theorems.lean` — profile capacity bound (information-theoretic)\n\n**Proof Strategy:** Given separating families P for F and Q for G, show P ∪ Q separates F ⊕ G. For topology compatibility, P ∪ Q is compatible whenever P or Q is (by monotonicity). The main difficulty is showing that separation is preserved under coproduct — sections of F ⊕ G at X are F(X) ⊔ G(X), and probes from P distinguish F-sections while probes from Q distinguish G-sections.\n\n**Domain Bridges:** Information theory (entropy subadditivity) ↔ Category theory (coproducts) ↔ Combinatorics (union bounds)\n\n**Lineage:** Extends Theorem 3 (monotonicity) to coproduct decompositions.\n\n**Ambition:** Solid extension — likely provable with current techniques.\n\n---",
       "source_exp_id": "5fb0b81c",
@@ -9813,28 +9813,6 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-23T15:22:56.693588+00:00",
-      "catalog_references": [],
-      "ambition_level": "extension",
-      "lineage_refs": [],
-      "domain_bridges": []
-    },
-    {
-      "id": "fd_0399",
-      "title": "Renormalization Fixed Points for Proof Search Dynamics",
-      "description": "Conjecture: For families of formal theorem libraries or SAT/proof-search instances equipped with a local search dynamics (e.g. tactic expansion, clause learning, or rewrite saturation), there exists a coarse-graining operator on the state-transition graph such that the induced flow has a small finite set of universality classes, and the critical exponents of search-time blowup are invariant within each class under semantics-preserving refactorings. Test: Define a concrete coarse-graining on benchmark families, measure scaling exponents for search time / proof length / branching entropy before and after refactorings, and check whether these exponents collapse to stable class-specific values; refutation occurs if exponents vary arbitrarily under equivalent presentations or no stable fixed-point behavior appears. Impact: Would create a statistical-physics theory of automated reasoning, enabling architecture-independent hardness prediction, benchmark generation by universality class, and principled transfer of solver heuristics across domains.",
-      "source_exp_id": "pi_brainstorm",
-      "source_path": "brainstorm",
-      "domains": [
-        "Proof Complexity",
-        "Statistical Mechanics"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.8,
-      "status": "pruned",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-23T15:23:03.108177+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
@@ -9866,7 +9844,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0401",
+      "id": "fd_0478",
       "title": "Direction 2: Higher-Order Equality Saturation",
       "description": "**Conjecture**: The extraction soundness theorem (`extraction_semantics_preserved`) extends to higher-order rewrite systems on simply-typed lambda terms, where `EqvGen R` includes β-reduction and η-expansion, provided the e-graph's sameClass relation is sound for the higher-order EqvGen.\n\n**Test**: Implement a higher-order e-graph over simply-typed lambda terms with β and η rules plus user-defined axioms. Generate 500 random well-typed lambda terms (types with depth ≤ 3, terms with depth ≤ 5). Run saturation with β, η, and 5 random equational axioms. Verify:\n- Extraction preserves denotation in the standard set-theoretic model.\n- Saturation terminates for strongly normalizing systems.\n- Cost-optimal extraction finds smaller terms than β-normal forms.\n\n**Falsification**: Any instance where extraction changes denotation in the set-theoretic model, or where saturation diverges for a strongly normalizing system within reasonable bounds (10^6 steps), refutes the conjecture.\n\n**Impact**: Would enable verified optimization of functional programs, proof term simplification, and higher-order unification-based synthesis.\n\n**Catalog References**: `Pythagorean/EqualitySaturationExtraction.lean` (extraction_semantics_preserved, extraction_agrees_with_quotient_nf_semantically).\n\n**Proof Strategy**: Define HigherOrderTerm as an inductive type with App and Lam constructors. Define substitution and β-reduction. Instantiate SaturatedEGraphExtractor with the higher-order EqvGen. The key challenge is handling binders and α-equivalence in the e-graph representation.\n\n**Domain Bridges**: Proof assistants (proof term optimization), functional compilers (GHC, MLton), program synthesis (type-guided search).\n\n**Lineage**: Extends the first-order quotient framework to higher-order settings.\n\n**Ambition**: Grand challenge — higher-order equality saturation is an active research frontier with no complete formalization.\n\n---",
       "source_exp_id": "2c3aa2d5",
@@ -9891,7 +9869,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0402",
+      "id": "fd_0479",
       "title": "Direction 3: Polynomial Saturation Depth Bound",
       "description": "**Conjecture**: For every finite convergent rewrite system R with m rules of maximum size k over a finite alphabet of size n, and every seed set S of total size s, the saturation depth required to achieve completeness (`complete_sameClass`) is bounded by O(m · k² · s).\n\n**Test**: Generate 200 random finite convergent systems with varying parameters (m ∈ {2,4,8,16}, k ∈ {2,3,4,5}, n ∈ {3,4,5}). For each, select 100 random seed sets of varying sizes (s ∈ {10, 50, 100, 500}). Compute:\n- Exact saturation depth by running saturation to completion.\n- Fit growth rate against m · k² · s.\n- Search for outliers where depth exceeds the predicted bound.\n\n**Falsification**: A family of systems where saturation depth grows as Ω(m · k² · s · log(s)) or faster would refute the linear bound. Even a single system with super-quadratic growth in s would be significant.\n\n**Impact**: Would establish that equality saturation is not just correct but computationally tractable for convergent systems, justifying its use in performance-critical settings.\n\n**Catalog References**: `Pythagorean/EqualitySaturationExtraction.lean` (SaturatedEGraphExtractor, cheapest_extraction_sound_and_optimal), `Pythagorean/ConvergentRewriteOptimizer.lean` (CertifiedNormalizer, nf_unique_of_confluent).\n\n**Proof Strategy**: Use the fact that in a convergent system, every term has a unique normal form. The key insight is that the number of distinct normal forms reachable from S is bounded by |S|, and each normal-form class has bounded diameter in the rewrite graph. Bound the diameter using the termination order.\n\n**Domain Bridges**: Computational complexity (decision procedures), automated reasoning (completion procedures), database theory (chase termination).\n\n**Lineage**: Builds directly on bounded_extractor_sound_of_complete, seeking to make the \"bounded\" qualifier unnecessary for convergent systems.\n\n**Ambition**: Solid extension — the linear bound is likely achievable for many natural systems but may fail for pathological ones.\n\n---",
       "source_exp_id": "2c3aa2d5",
@@ -9915,7 +9893,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0403",
+      "id": "fd_0480",
       "title": "Direction 4: Verified Equality-Saturation Compiler Pass",
       "description": "**Conjecture**: The theorems `extraction_semantics_preserved` and `cheapest_extraction_sound_and_optimal` can be instantiated with a concrete term type (arithmetic expressions with +, ×, constants, variables), a concrete rewrite system (commutativity, associativity, distributivity, identity laws), and a concrete cost model (operation count) to produce a verified compiler optimization pass that provably preserves evaluation semantics while minimizing instruction count.\n\n**Test**: Implement the concrete instantiation. Generate 10,000 random arithmetic expressions (depth 3-8). For each:\n- Run the verified extractor.\n- Verify semantics preservation under 100 random variable assignments.\n- Compare extracted cost to normal-form cost and original cost.\n- Measure compilation time.\n\n**Falsification**: Any expression where the extracted result evaluates differently from the original under any assignment refutes the soundness instantiation. Any systematic failure to find lower-cost equivalents compared to normalization refutes the practical utility claim.\n\n**Impact**: Would produce the first verified equality-saturation-based compiler pass, bridging the gap between our abstract theorems and practical compiler construction.\n\n**Catalog References**: `Pythagorean/EqualitySaturationExtraction.lean` (all main theorems), `Pythagorean/ConvergentRewriteOptimizer.lean` (RingExpr, ring_rewrite_nf_preserves_eval, addComm_rewrite_sound).\n\n**Proof Strategy**: Instantiate SaturatedEGraphExtractor with RingExpr from the catalog. Define the rewrite system as the union of commutativity, associativity, and identity rules. Prove soundness using addComm_rewrite_sound and analogous lemmas. Define cost as the number of Add and Mul nodes. Run the subagent on each instantiation lemma.\n\n**Domain Bridges**: Verified compilation (CompCert, CakeML), hardware synthesis (circuit optimization), numerical computing (floating-point expression optimization).\n\n**Lineage**: Direct application of the full theorem cluster to the RingExpr type from the convergent rewrite catalog.\n\n**Ambition**: Solid extension — all components exist; the challenge is connecting them cleanly.\n\n---",
       "source_exp_id": "2c3aa2d5",
@@ -9935,33 +9913,6 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-23T16:04:37.610209+00:00",
-      "catalog_references": [],
-      "ambition_level": "extension",
-      "lineage_refs": [],
-      "domain_bridges": []
-    },
-    {
-      "id": "fd_0410",
-      "title": "Direction 4: Computational Soundness via Categorical Reductions",
-      "description": "**Conjecture.** The categorical framework enables a *functorial* approach to computational soundness reductions: if extraction is a natural section in the information-theoretic setting, then the computational security reduction (from special soundness to knowledge soundness) is itself natural — it commutes with protocol morphisms.\n\nSpecifically: the security game for knowledge soundness defines a functor from protocols to advantage functions. The reduction from special soundness is a natural transformation between this functor and the extraction section. Composing reductions (for composite protocols) corresponds to composing natural transformations.\n\n**Test.** Formalize the security game as a functor for Schnorr and Okamoto protocols. Verify that the rewinding reduction (which runs the adversary twice with different challenges) commutes with the morphism from Schnorr to Okamoto. Measure concrete security loss under composition.\n\n**Impact.** Would make security reductions compositional: the security of a composite protocol is automatically bounded by the securities of its components, without re-proving the reduction.\n\n**Catalog References.** `Catalog/Cryptography/AffineSigmaExtraction.lean` (information-theoretic extraction).\n\n**Proof Strategy.** Model the rewinding extractor as a probabilistic left inverse of the transcript map. Show that the rewinding probability (related to the forking lemma) is preserved under protocol morphisms. Use the composition theorem to bound the composite rewinding probability.\n\n**Domain Bridges.** Cryptography × Probability Theory × Game Theory.\n\n**Lineage.** Bridges Theorems 2 and 3 to computational security.\n\n**Ambition.** ★★★★☆ (High impact, requires probabilistic formalization.)\n\n---",
-      "source_exp_id": "28f50d65",
-      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/28f50d65",
-      "domains": [
-        "Pythagorean",
-        "Algebra",
-        "Geometry",
-        "Computation",
-        "Cryptography",
-        "Bridges",
-        "Logic"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-23T16:55:21.432111+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
@@ -9993,29 +9944,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0399",
-      "title": "p-adic Shadow of Real Persistence",
-      "description": "Conjecture: For every finite filtered CW complex X with integer boundary matrices of entry size at most B, the ordinary real-valued persistence barcode of X over Q determines, for all but finitely many primes p > P(B, X), the p-primary torsion barcode of the integral persistent homology of X up to a uniformly bounded ambiguity depending only on the barcode collision pattern of equal-length intervals. Test: Compute large ensembles of filtered complexes with known integer persistence data; compare whether complexes with identical rational barcodes but distinct large-p torsion barcodes occur infinitely often or only at finitely many exceptional primes. A proof would require an explicit reconstruction or obstruction theorem; a refutation is a family with fixed Q-barcode and infinitely many large primes carrying genuinely different p-torsion persistence. Impact: This would reveal an unexpected adelic rigidity principle linking classical persistence to arithmetic persistence, enabling prediction of torsion behavior from cheap field computations and reshaping computational topology over Z.",
-      "source_exp_id": "pi_brainstorm",
-      "source_path": "brainstorm",
-      "domains": [
-        "Topological Data Analysis",
-        "Arithmetic Topology"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.8,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-23T16:56:09.375638+00:00",
-      "catalog_references": [],
-      "ambition_level": "extension",
-      "lineage_refs": [],
-      "domain_bridges": []
-    },
-    {
-      "id": "fd_0400",
+      "id": "fd_0481",
       "title": "Direction 1: Sharp Total KAM Radius",
       "description": "**Conjecture.** For fixed K and any (K, C)-Diophantine frequency ω, the constant C/K is the *optimal universal total perturbation budget* for geometric schedules that preserve all finite-step resonance profiles. Specifically, for any B > C/K, there exists a perturbation schedule with total budget B that destroys the Diophantine property.\n\n**Test.** Take ω = [1, φ], K = 10, estimate C. Generate perturbation schedules with cumulative size approaching C/K from above (e.g., 1.01 · C/K, 1.1 · C/K). At each attempt, compute the Diophantine constant of the perturbed frequency and check whether it drops to zero. The conjecture is refuted if many schedules with total budget > C/K still preserve the Diophantine property.\n\n**Impact.** If true, this identifies C/K as a sharp phase transition threshold — a critical point in the stability landscape. This would connect tropical KAM to critical phenomena in statistical physics and percolation theory.\n\n**Catalog References.** `Pythagorean/TropicalKAMRenormalization.lean`: `total_perturbation_budget_bound`, `certifyMultiScaleKAM_sound`.\n\n**Proof Strategy.** Construct an explicit adversarial schedule by choosing perturbations that push ω toward the nearest resonance at each step. Show that a budget of C/K suffices to reach exact resonance.\n\n**Domain Bridges.** Critical phenomena (physics), extremal combinatorics (mathematics), worst-case analysis (computer science).\n\n**Lineage.** Extends Theorem 2 (finite budget bound) from upper bound to exact characterization.\n\n**Ambition.** Grand challenge — would establish a sharp phase transition in tropical KAM stability.\n\n---",
       "source_exp_id": "faaeb97d",
@@ -10043,7 +9972,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0401",
+      "id": "fd_0482",
       "title": "Direction 2: Universality Under Random Perturbations",
       "description": "**Conjecture.** If the perturbation at each step j is drawn uniformly from the admissible ball (i.e., each component of δ_j is uniform in [-ε_j, ε_j] with ε_j = C/(2^{j+1} · 2K)), then the normalized profile 2^m · C*(K, ω_m) converges in distribution to a universal random variable independent of the initial ω (among Diophantine frequencies of the same class).\n\n**Test.** For ω = [1, φ] and ω = [1, √2] with the same K and C, generate 10,000 random perturbation schedules of length m = 50. Compute histograms of 2^m · C*(K, ω_m) for both initial frequencies. Test whether the distributions are statistically identical using a Kolmogorov-Smirnov test. The conjecture is refuted if the distributions differ significantly at large m.\n\n**Impact.** Would establish a universality class for tropical KAM renormalization, connecting to deep results in statistical mechanics and random matrix theory.\n\n**Catalog References.** `Pythagorean/TropicalKAMRenormalization.lean`: `tropical_diophantine_iterated_stable`, `renormConst_tendsto_zero`.\n\n**Proof Strategy.** Establish mixing properties of the renormalization map on the space of Diophantine profiles. Show that the map is ergodic with respect to a natural measure.\n\n**Domain Bridges.** Statistical physics (universality), probability theory (convergence in distribution), random matrix theory (spectral universality).\n\n**Lineage.** Extends Theorem 4 (asymptotic decay) from deterministic to stochastic setting.\n\n**Ambition.** Grand challenge — would create a new field of stochastic tropical dynamics.\n\n---",
       "source_exp_id": "faaeb97d",
@@ -10070,7 +9999,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0402",
+      "id": "fd_0483",
       "title": "Direction 3: Infinite-Dimensional Extension (PDE Setting)",
       "description": "**Conjecture.** The tropical KAM renormalization theorem extends to countably many frequencies: if ω : ℕ → ℝ satisfies a weighted Diophantine condition ∑|k_i ω_i| ≥ C/||k||_1^τ for some τ > 1, then the iterated perturbation theorem holds with decay C/2^m and total budget C · ζ(τ)/K (where ζ is the Riemann zeta function).\n\n**Test.** Truncate to n = 20 frequencies chosen as ω_i = 1/(i+1)^{1/2} (a Diophantine sequence). Compute the weighted constant C for K = 5. Apply 10 perturbation steps and verify the predicted bound C/2^{10} against the observed constant. The conjecture is refuted if the finite-dimensional approximation diverges from the predicted bound.\n\n**Impact.** Would extend tropical KAM to infinite-dimensional Hamiltonian systems (nonlinear Schrödinger, KdV), providing the first tropical framework for PDE stability.\n\n**Catalog References.** `Pythagorean/TropicalKAMRenormalization.lean`: `one_step_stability`, `tropical_diophantine_iterated_stable`.\n\n**Proof Strategy.** Replace Fin n with ℕ in all definitions. Use the weighted L1 norm ||k||_{1,τ} = ∑|k_i| · i^τ and adapt the perturbation bound accordingly. The key technical challenge is convergence of the infinite-dimensional lattice sum.\n\n**Domain Bridges.** PDE theory (Hamiltonian PDEs), functional analysis (infinite-dimensional dynamics), mathematical physics (quantum field theory).\n\n**Lineage.** Extends all theorems from finite to infinite dimension.\n\n**Ambition.** Solid extension — finite-dimensional proofs should adapt with careful convergence arguments.\n\n---",
       "source_exp_id": "faaeb97d",
@@ -10089,8 +10018,8 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
+      "status": "in_progress",
+      "consumed_by_exp_id": "cd0398a7",
       "timestamp": "2026-05-23T16:56:42.458577+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
@@ -10098,7 +10027,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0403",
+      "id": "fd_0484",
       "title": "Direction 4: Variable Contraction Rates",
       "description": "**Conjecture.** The one-step stability theorem can be generalized: if |δ_i| < C'/(α · K) for some α > 1, then the perturbed frequency is (K, C'(1 - 1/α))-Diophantine. The renormalization flow then has decay rate (1 - 1/α)^m and total budget C · α/(K(α-1)).\n\n**Test.** Implement the generalized one-step theorem computationally. For α = 3 (contraction rate 2/3 instead of 1/2), verify that 10 steps of perturbation with bound C'/(3K) yield observed constants above C · (2/3)^{10}. Refuted if the observed constant drops below the predicted bound.\n\n**Impact.** Would provide a continuous family of renormalization flows parameterized by the contraction rate, connecting to the theory of iterated function systems and fractal geometry.\n\n**Catalog References.** `Pythagorean/TropicalKAMRenormalization.lean`: `one_step_stability` (to be generalized), `geom_series_half_sum` (to be generalized to arbitrary geometric ratio).\n\n**Proof Strategy.** Reprove one_step_stability with parameter α. The key inequality becomes |⟨k,δ⟩| < (1/α) · C', giving |⟨k,ω+δ⟩| ≥ C' - C'/α = C'(1 - 1/α).\n\n**Domain Bridges.** Fractal geometry (iterated function systems), optimization (convergence rates), control theory (contraction mappings).\n\n**Lineage.** Generalizes Theorem 1 and Theorem 2 with a free parameter.\n\n**Ambition.** Solid extension — the proof structure carries over directly.\n\n---",
       "source_exp_id": "faaeb97d",
@@ -10124,33 +10053,7 @@
       "domain_bridges": []
     },
     {
-      "id": "fd_0404",
-      "title": "Direction 5: Continued Fraction Connection",
-      "description": "**Conjecture.** For one-dimensional frequencies ω = [1, α] with α irrational, the Diophantine constant C(K, ω) at scale K is determined by the continued fraction expansion of α. Specifically, if α = [a₀; a₁, a₂, ...] and p_n/q_n are the convergents, then C(K, ω) = min{|q_n α - p_n| : q_n ≤ K} and the renormalization flow C(K, ω_m)/2^m is controlled by the growth rate of the partial quotients a_n.\n\n**Test.** Compute C(K, ω) for ω = [1, α] where α is the golden ratio (all a_n = 1), √2 (periodic continued fraction), and e (unbounded partial quotients). Compare with the continued fraction prediction. The conjecture is refuted if the formulas disagree.\n\n**Impact.** Would forge a direct link between tropical KAM renormalization and the metric theory of Diophantine approximation, connecting to deep results of Khintchine, Lévy, and Margulis.\n\n**Catalog References.** `Pythagorean/TropicalKAMRenormalization.lean`: `tropical_diophantine_iterated_stable`, `Pythagorean/TropicalKAMStability.lean`: `rational_not_diophantine_at_scale`.\n\n**Proof Strategy.** Use the three-distance theorem and properties of convergents to express C(K, [1, α]) in terms of best rational approximations. Then track how perturbations affect convergents.\n\n**Domain Bridges.** Number theory (continued fractions), ergodic theory (Gauss map), coding theory (Stern-Brocot tree).\n\n**Lineage.** Connects Theorem 1 to classical Diophantine approximation theory.\n\n**Ambition.** Solid extension with deep number-theoretic consequences.",
-      "source_exp_id": "faaeb97d",
-      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/faaeb97d",
-      "domains": [
-        "Pythagorean",
-        "Computation",
-        "Tropical",
-        "Bridges",
-        "MachineLearning",
-        "Logic"
-      ],
-      "proof_strategy": "",
-      "research_mode": "prove",
-      "depth_estimate": 3,
-      "priority_score": 0.7,
-      "status": "available",
-      "consumed_by_exp_id": "",
-      "timestamp": "2026-05-23T16:56:42.514650+00:00",
-      "catalog_references": [],
-      "ambition_level": "extension",
-      "lineage_refs": [],
-      "domain_bridges": []
-    },
-    {
-      "id": "fd_0405",
+      "id": "fd_0485",
       "title": "Proof-State Ricci Curvature Predicts Search Compressibility",
       "description": "Conjecture: For tactic/state transition graphs arising from a fixed theorem domain and prover, the average Ollivier-Ricci curvature of the reachable proof-state graph above a theorem-specific scale threshold has a monotone inverse relationship with minimal proof-search entropy and with the size of any complete admissible guidance policy. Concretely, among families of formally generated proof-state graphs with bounded branching, there exists c > 0 such that if the mean coarse Ricci curvature is at least kappa > 0, then the number of states needed by an optimal complete search policy is at most exp(c/kappa), while families with curvature tending to 0 require superpolynomial policy size. Test: Generate proof-state graphs from benchmark theorem families in Lean/Coq/Isabelle, estimate coarse Ricci curvature, compute or approximate minimal successful policy size / search entropy, and check whether the predicted curvature-compressibility law holds and separates easy from hard domains better than degree, pathwidth, or spectral-gap baselines. Refutation occurs if high-curvature families still require large incompressible policies or if curvature shows no robust predictive power after controlling for graph size and branching. Impact: This would create a geometric theory of theorem proving, yielding principled hardness predictors, new prover heuristics based on curvature shaping, and a bridge between optimal transport, discrete geometry, and automated reasoning.",
       "source_exp_id": "pi_brainstorm",
@@ -10167,6 +10070,56 @@
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-23T16:56:50.673604+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0409",
+      "title": "Direction 4: Tropical Dimension Equals Clause Space for Monotone Formulas",
+      "description": "**Conjecture**: For monotone unsatisfiable CNF formulas (no negated literals), the clause space equals the tropical dimension of the configuration graph viewed as a tropical variety.\n\n**Test**:\n1. Define the tropical embedding: map each configuration to a point in $\\mathbb{T}^N$ (tropical semiring).\n2. Compute the tropical dimension of the configuration space for small monotone formulas.\n3. Compare with the clause space.\n\n**Impact**: Would connect proof complexity to tropical geometry, importing tools from algebraic geometry.\n\n**Catalog References**:\n- `Pythagorean/ForbiddenMinor/Defs.lean`: `Config`, `Clause`, `Literal`\n\n**Proof Strategy**: Show that monotone formulas have configuration graphs whose tropical convex hulls have dimension equal to the maximum clause set size. The monotonicity constraint eliminates cancellations in the tropical semiring.\n\n**Domain Bridges**: Tropical Geometry ↔ Proof Complexity\n\n**Lineage**: Novel connection; builds on tropical geometry foundations.\n\n**Ambition**: Speculative — would open an entirely new research direction.\n\n---",
+      "source_exp_id": "9b28b14f",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/9b28b14f",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Geometry",
+        "Computation",
+        "Tropical",
+        "Bridges",
+        "Logic",
+        "Speculative"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-23T16:57:22.083739+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0486",
+      "title": "Profinite Limit Law for Persistent Homology Torsion",
+      "description": "Conjecture: Let (X_n) be any Benjamini–Schramm convergent sequence of finite bounded-degree simplicial complexes with uniformly bounded dimension. For each homological degree k, the normalized p-primary torsion barcode measure of H_k(X_n; Z), viewed as a measure on birth-death pairs with weights log_p of invariant-factor multiplicities, converges for every prime p to a deterministic limit measure depending only on the local weak limit of (X_n). Moreover, the family of limit measures over all p determines the asymptotic normalized integral barcode up to vanishing error. Test: Compute torsion barcodes for large random complexes and deterministic expander-based complexes with the same local weak limit; confirm convergence and universality across models, or refute by exhibiting two sequences with identical local weak limit but distinct torsion limit laws. Impact: This would create a new local-to-global principle for arithmetic topology, linking random geometry, profinite invariants, and persistent homology, and would enable prediction of large-scale torsion structure from local statistics alone.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Topological Data Analysis",
+        "Random Simplicial Complexes"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-23T16:57:28.977268+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
@@ -14456,6 +14409,151 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-23T16:55:29.859117+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0404",
+      "title": "Direction 5: Continued Fraction Connection",
+      "description": "**Conjecture.** For one-dimensional frequencies ω = [1, α] with α irrational, the Diophantine constant C(K, ω) at scale K is determined by the continued fraction expansion of α. Specifically, if α = [a₀; a₁, a₂, ...] and p_n/q_n are the convergents, then C(K, ω) = min{|q_n α - p_n| : q_n ≤ K} and the renormalization flow C(K, ω_m)/2^m is controlled by the growth rate of the partial quotients a_n.\n\n**Test.** Compute C(K, ω) for ω = [1, α] where α is the golden ratio (all a_n = 1), √2 (periodic continued fraction), and e (unbounded partial quotients). Compare with the continued fraction prediction. The conjecture is refuted if the formulas disagree.\n\n**Impact.** Would forge a direct link between tropical KAM renormalization and the metric theory of Diophantine approximation, connecting to deep results of Khintchine, Lévy, and Margulis.\n\n**Catalog References.** `Pythagorean/TropicalKAMRenormalization.lean`: `tropical_diophantine_iterated_stable`, `Pythagorean/TropicalKAMStability.lean`: `rational_not_diophantine_at_scale`.\n\n**Proof Strategy.** Use the three-distance theorem and properties of convergents to express C(K, [1, α]) in terms of best rational approximations. Then track how perturbations affect convergents.\n\n**Domain Bridges.** Number theory (continued fractions), ergodic theory (Gauss map), coding theory (Stern-Brocot tree).\n\n**Lineage.** Connects Theorem 1 to classical Diophantine approximation theory.\n\n**Ambition.** Solid extension with deep number-theoretic consequences.",
+      "source_exp_id": "faaeb97d",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/faaeb97d",
+      "domains": [
+        "Pythagorean",
+        "Computation",
+        "Tropical",
+        "Bridges",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-23T16:56:42.514650+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0406",
+      "title": "Direction 1: Minor-Space Correspondence Conjecture",
+      "description": "**Conjecture**: There exist absolute constants $c, d > 0$ such that for all unsatisfiable CNF formulas $F$:\n$$\\frac{1}{d} \\cdot \\text{clauseSpace}(F) \\leq \\text{maxPathMinorWidth}(\\text{bConfGraph}(F, \\text{clauseSpace}(F))) \\leq c \\cdot \\text{clauseSpace}(F)$$\n\n**Test**: For all non-isomorphic unsatisfiable CNF formulas over $n = 3, 4, 5$ variables:\n1. Compute `clauseSpace(F)` by exhaustive resolution refutation search.\n2. Compute `maxPathMinorWidth(bConfGraph(F, clauseSpace(F)))` by minor detection.\n3. Plot `clauseSpace` vs. `maxPathMinorWidth` and fit the linear relationship.\n4. If the ratio `maxPathMinorWidth / clauseSpace` grows or shrinks unboundedly with $n$, the conjecture fails.\n\n**Impact**: This would establish that clause space — a proof complexity measure — is equivalent (up to constants) to a purely graph-theoretic parameter. This would import the entire machinery of Robertson-Seymour theory into proof complexity.\n\n**Catalog References**: \n- `Pythagorean/ForbiddenMinor/Defs.lean`: `clauseSpace`, `bConfGraph`, `maxPathMinorWidth`, `PathMinorOfWidth`\n- `Pythagorean/ForbiddenMinor/Theorems.lean`: `path_minor_total_vertices`\n- `Catalog/Pythagorean/ConfigGraph/Theorems.lean`: `pathwidth_le_of_spaceBound`\n\n**Proof Strategy**: \n- Upper bound ($\\leq c \\cdot \\text{clauseSpace}$): Use the trace-to-pathwidth correspondence from `pathwidth_le_of_spaceBound`. Any refutation trace with interval property gives a path decomposition of width ≤ clauseSpace. Convert this to a path minor bound.\n- Lower bound ($\\geq \\frac{1}{d} \\cdot \\text{clauseSpace}$): This is the harder direction. Use an information bottleneck argument: any path through the configuration graph must pass through a \"bottleneck\" where at least $\\Omega(\\text{clauseSpace})$ clauses are simultaneously in memory.\n\n**Domain Bridges**: Graph Minor Theory ↔ Proof Complexity ↔ Information Theory\n\n**Lineage**: Extends Ben-Sasson–Wigderson width-space relationship (2001) and Atserias–Dalmau space-pathwidth correspondence (2008).\n\n**Ambition**: Grand challenge — would create the field of \"structural proof complexity.\"\n\n---",
+      "source_exp_id": "9b28b14f",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/9b28b14f",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Computation",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-23T16:57:22.003339+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0407",
+      "title": "Direction 2: Resolution DPI Tightness",
+      "description": "**Conjecture**: The Resolution Data Processing Inequality holds for the set-theoretic mutual information `resMutualInfo`, and equality holds if and only if the resolution step is a bijection on clause sets (i.e., a renaming, not a proper resolution or erasure).\n\n**Test**:\n1. Enumerate all possible single-step transitions $C_1 \\to C_2$ for small configurations.\n2. For each transition, compute `resMutualInfo(C_1, C_3)` vs. `resMutualInfo(C_1, C_2)` for all reachable $C_3$.\n3. Verify $I(C_1; C_3) \\leq I(C_1; C_2)$ computationally.\n4. Characterize when equality holds.\n\n**Impact**: Would establish that resolution has its own information theory, with clause space playing the role of channel capacity.\n\n**Catalog References**:\n- `Pythagorean/ForbiddenMinor/Defs.lean`: `resMutualInfo`, `resEntropy`, `ConfigAdj`\n- `Pythagorean/ForbiddenMinor/Theorems.lean`: `resolution_mutual_info_self`, `entropy_mono_add`\n\n**Proof Strategy**: Case-analyze on the three types of resolution steps (axiom introduction, resolution, erasure). For each, show that the step acts as a \"lossy channel\" using the log-sum inequality and inclusion-exclusion.\n\n**Domain Bridges**: Information Theory ↔ Proof Complexity\n\n**Lineage**: Analogous to Shannon's Data Processing Inequality (1948), applied to the discrete setting of clause sets.\n\n**Ambition**: Solid extension — would create \"resolution information theory.\"\n\n---",
+      "source_exp_id": "9b28b14f",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/9b28b14f",
+      "domains": [
+        "Pythagorean",
+        "Computation",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-23T16:57:22.031096+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0408",
+      "title": "Direction 3: Finite Obstruction Set for Clause Space",
+      "description": "**Conjecture**: For each $k \\geq 1$, the set of minor-minimal formulas with clause space $\\geq k$ is finite.\n\n**Test**:\n1. For $k = 2, 3, 4$, enumerate all unsatisfiable CNF formulas with clause space $\\geq k$.\n2. Compute the minor order on their configuration graphs.\n3. Find the minor-minimal elements.\n4. Verify that the set is finite for each $k$.\n\n**Impact**: Would import the Robertson-Seymour finite basis theorem into proof complexity, giving a finite \"hardness certificate\" for each clause space level.\n\n**Catalog References**:\n- `Pythagorean/ForbiddenMinor/Defs.lean`: `PathMinorOfWidth`, `clauseSpace`\n- `Catalog/Pythagorean/ConfigGraph/Defs.lean`: `PathDecomposition`, `BoundedConfigAdj`\n\n**Proof Strategy**: Define the appropriate minor order on CNF formulas via their configuration graphs. Show that this order is a well-quasi-order (by embedding into the graph minor order, which is a WQO by Robertson-Seymour). Apply the finite basis theorem.\n\n**Domain Bridges**: Well-Quasi-Orders ↔ Proof Complexity ↔ Structural Graph Theory\n\n**Lineage**: Directly imports Robertson-Seymour Graph Minor Theorem (1983-2004).\n\n**Ambition**: Grand challenge — would give a completely new structural characterization of proof hardness.\n\n---",
+      "source_exp_id": "9b28b14f",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/9b28b14f",
+      "domains": [
+        "Pythagorean",
+        "Computation",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-23T16:57:22.057278+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0410",
+      "title": "Direction 5: W[1]-Hard Formulas Contain Grid Minors",
+      "description": "**Conjecture**: If deciding whether a parameterized CNF formula family has clause space $\\leq k$ is W[1]-hard (parameterized by $k$), then the configuration graphs of formulas in the family contain $k \\times k$ grid minors.\n\n**Test**:\n1. Identify known W[1]-hard formula families (e.g., certain constraint satisfaction problems).\n2. Construct their configuration graphs for small instances.\n3. Search for grid minors algorithmically.\n4. Correlate grid minor size with the parameterized complexity.\n\n**Impact**: Would connect the W-hierarchy of parameterized complexity to the minor hierarchy of structural graph theory.\n\n**Catalog References**:\n- `Pythagorean/ForbiddenMinor/Defs.lean`: `bConfGraph`, `PathMinorOfWidth`\n- `Pythagorean/ForbiddenMinor/Theorems.lean`: `path_minor_total_vertices`\n\n**Proof Strategy**: Use the Grid Minor Theorem (Robertson-Seymour-Thomas): graphs of treewidth $\\geq f(k)$ contain $k \\times k$ grid minors. Show that W[1]-hardness implies large treewidth of configuration graphs. The connection goes through the fixed-parameter tractability of bounded-treewidth problems.\n\n**Domain Bridges**: Parameterized Complexity ↔ Graph Minor Theory ↔ Proof Complexity\n\n**Lineage**: Connects Downey-Fellows parameterized complexity (1999) with Robertson-Seymour theory.\n\n**Ambition**: Grand challenge — would unify three major areas of theoretical computer science.",
+      "source_exp_id": "9b28b14f",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/9b28b14f",
+      "domains": [
+        "Pythagorean",
+        "Computation",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-23T16:57:22.111942+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0399",
+      "title": "p-adic Shadow of Real Persistence",
+      "description": "Conjecture: For every finite filtered CW complex X with integer boundary matrices of entry size at most B, the ordinary real-valued persistence barcode of X over Q determines, for all but finitely many primes p > P(B, X), the p-primary torsion barcode of the integral persistent homology of X up to a uniformly bounded ambiguity depending only on the barcode collision pattern of equal-length intervals. Test: Compute large ensembles of filtered complexes with known integer persistence data; compare whether complexes with identical rational barcodes but distinct large-p torsion barcodes occur infinitely often or only at finitely many exceptional primes. A proof would require an explicit reconstruction or obstruction theorem; a refutation is a family with fixed Q-barcode and infinitely many large primes carrying genuinely different p-torsion persistence. Impact: This would reveal an unexpected adelic rigidity principle linking classical persistence to arithmetic persistence, enabling prediction of torsion behavior from cheap field computations and reshaping computational topology over Z.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Topological Data Analysis",
+        "Arithmetic Topology"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-23T16:56:09.375638+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
