@@ -401,5 +401,8 @@
   "9c17fb68": "direction_4_matrix_and_determinant_expansion_famil.json",
   "b8fdd075": "direction_5_neural_proof_guidance_via_cycle_pressu.json",
   "9166b277": "direction_5_weyl_algebra_formalization_and_dixmier.json",
-  "134fe3c3": "direction_5_monad_algebras_as_verified_normal_form.json"
+  "134fe3c3": "direction_5_monad_algebras_as_verified_normal_form.json",
+  "1f042eaa": "direction_2_polynomial_width_growth.json",
+  "321c9149": "certified_space_certificates_for_sat_solvers.json",
+  "abda161f": "direction_4_non_convergent_extraction_soundness.json"
 }

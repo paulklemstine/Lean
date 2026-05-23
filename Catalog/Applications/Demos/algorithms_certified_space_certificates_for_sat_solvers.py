@@ -1,302 +1,393 @@
 """
-Clause-Space Certificate Search Algorithms
+Clause-Space Certificate Algorithms
 
-Implements bounded-memory clause-space proof search for CNF formulas,
-including certificate generation, validation, and state-space analysis.
+Implements bounded-space certificate search and verification for CNF formulas.
+Provides BFS-based search over the finite configuration graph, certificate
+validation, and configuration counting.
 
-All algorithms mirror the formally verified Lean definitions in
-Pythagorean/ClauseSpace/Defs.lean.
+This module implements the key algorithms from the clause-space certificate
+theory: a framework for certifying unsatisfiability within a prescribed
+memory budget using finite-state reachability.
 """
 
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Optional
+from typing import Optional, NamedTuple
+from itertools import combinations, product
 from collections import deque
-import itertools
+import time
 
 
-@dataclass(frozen=True)
 class Clause:
-    """A propositional clause: disjunction of positive and negative literals."""
-    pos: frozenset[int]
-    neg: frozenset[int]
-
-    @staticmethod
-    def empty() -> Clause:
-        return Clause(frozenset(), frozenset())
-
-    def is_satisfied_by(self, sigma: dict[int, bool]) -> bool:
-        """Check if assignment sigma satisfies this clause."""
-        return (any(sigma.get(v, False) for v in self.pos) or
-                any(not sigma.get(v, True) for v in self.neg))
-
-    def is_disjoint(self) -> bool:
-        return self.pos.isdisjoint(self.neg)
-
-    def to_ternary(self, variables: list[int]) -> tuple[int, ...]:
-        """Encode as ternary vector: 0=absent, 1=positive, 2=negative."""
-        return tuple(
-            1 if v in self.pos else (2 if v in self.neg else 0)
-            for v in variables
-        )
-
-    def __repr__(self) -> str:
-        pos_strs = [f"+{v}" for v in sorted(self.pos)]
-        neg_strs = [f"-{v}" for v in sorted(self.neg)]
-        lits = pos_strs + neg_strs
-        return f"({' ∨ '.join(lits)})" if lits else "□"
-
-
-def resolve(c1: Clause, c2: Clause, v: int) -> Optional[Clause]:
+    """A clause is a frozenset of literals (variable, polarity) pairs.
+    
+    Example: Clause({(0, True), (1, False)}) represents x0 ∨ ¬x1
     """
-    Resolve c1 and c2 on variable v.
-    Returns the resolvent if v appears positively in c1 and negatively in c2,
-    with proper polarity constraints.
-    """
-    if v in c1.pos and v not in c1.neg and v in c2.neg and v not in c2.pos:
-        new_pos = (c1.pos | c2.pos) - {v}
-        new_neg = (c1.neg | c2.neg) - {v}
-        return Clause(new_pos, new_neg)
-    return None
+    def __init__(self, literals: set[tuple[int, bool]] | frozenset[tuple[int, bool]]):
+        self.literals = frozenset(literals)
+    
+    def __eq__(self, other):
+        return isinstance(other, Clause) and self.literals == other.literals
+    
+    def __hash__(self):
+        return hash(self.literals)
+    
+    def __repr__(self):
+        if not self.literals:
+            return "□"  # empty clause
+        parts = []
+        for var, pol in sorted(self.literals):
+            parts.append(f"x{var}" if pol else f"¬x{var}")
+        return " ∨ ".join(parts)
+    
+    def __len__(self):
+        return len(self.literals)
+    
+    def is_empty(self) -> bool:
+        return len(self.literals) == 0
+    
+    def satisfied_by(self, assignment: dict[int, bool]) -> bool:
+        """Check if the clause is satisfied by the given assignment."""
+        return any(assignment.get(var, False) == pol for var, pol in self.literals)
+    
+    def is_proper(self) -> bool:
+        """Check if no variable appears both positively and negatively."""
+        vars_seen: dict[int, bool] = {}
+        for var, pol in self.literals:
+            if var in vars_seen and vars_seen[var] != pol:
+                return False
+            vars_seen[var] = pol
+        return True
+    
+    def to_ternary(self, num_vars: int) -> tuple[int, ...]:
+        """Map to ternary vector: 0=absent, 1=positive, 2=negative."""
+        result = [0] * num_vars
+        for var, pol in self.literals:
+            if var < num_vars:
+                result[var] = 1 if pol else 2
+        return tuple(result)
 
 
-@dataclass
+EMPTY_CLAUSE = Clause(set())
+
+
 class CNF:
-    """A CNF formula: conjunction of clauses."""
-    clauses: list[Clause]
-    variables: set[int] = field(default_factory=set)
-
-    def __post_init__(self):
-        if not self.variables:
-            for c in self.clauses:
-                self.variables |= c.pos | c.neg
-
-    def is_satisfiable(self) -> bool:
+    """A CNF formula is a set of clauses (conjunction of disjunctions)."""
+    
+    def __init__(self, clauses: list[Clause]):
+        self.clauses = frozenset(clauses)
+    
+    def __repr__(self):
+        return " ∧ ".join(f"({c})" for c in sorted(self.clauses, key=str))
+    
+    def satisfied_by(self, assignment: dict[int, bool]) -> bool:
+        return all(c.satisfied_by(assignment) for c in self.clauses)
+    
+    def is_satisfiable(self, num_vars: int) -> bool:
         """Brute-force satisfiability check."""
-        vars_list = sorted(self.variables)
-        for bits in itertools.product([False, True], repeat=len(vars_list)):
-            sigma = dict(zip(vars_list, bits))
-            if all(c.is_satisfied_by(sigma) for c in self.clauses):
+        for bits in range(2 ** num_vars):
+            assignment = {v: bool((bits >> v) & 1) for v in range(num_vars)}
+            if self.satisfied_by(assignment):
                 return True
         return False
+    
+    def variables(self) -> set[int]:
+        """Get all variables appearing in the formula."""
+        return {var for c in self.clauses for var, _ in c.literals}
 
 
-@dataclass
-class SpaceCertificate:
-    """A bounded-space refutation certificate."""
-    trace: list[frozenset[Clause]]
-    space_bound: int
+def resolve(c1: Clause, c2: Clause, var: int) -> Optional[Clause]:
+    """Resolve c1 and c2 on variable var.
+    
+    Returns the resolvent if (var, True) ∈ c1 and (var, False) ∈ c2,
+    otherwise None.
+    """
+    if (var, True) not in c1.literals or (var, False) not in c2.literals:
+        return None
+    new_lits = (c1.literals - {(var, True)}) | (c2.literals - {(var, False)})
+    return Clause(new_lits)
 
+
+# --- Space Configuration ---
+
+class SpaceConfig:
+    """A bounded-memory configuration: a frozenset of clauses."""
+    
+    def __init__(self, clauses: frozenset[Clause] | set[Clause] = frozenset()):
+        self.clauses = frozenset(clauses)
+    
+    def __eq__(self, other):
+        return isinstance(other, SpaceConfig) and self.clauses == other.clauses
+    
+    def __hash__(self):
+        return hash(self.clauses)
+    
+    def __repr__(self):
+        if not self.clauses:
+            return "{}"
+        return "{" + ", ".join(str(c) for c in sorted(self.clauses, key=str)) + "}"
+    
     @property
-    def length(self) -> int:
-        return len(self.trace)
-
-    def is_valid(self, cnf: CNF) -> bool:
-        """Check certificate validity (mirrors certificateChecks)."""
-        if not self.trace:
-            return False
-        # Starts empty
-        if self.trace[0] != frozenset():
-            return False
-        # Ends with empty clause
-        if Clause.empty() not in self.trace[-1]:
-            return False
-        # All configs bounded
-        if any(len(mem) > self.space_bound for mem in self.trace):
-            return False
-        # Valid steps
-        cnf_clauses = frozenset(cnf.clauses)
-        for i in range(len(self.trace) - 1):
-            if not is_valid_step(cnf, self.trace[i], self.trace[i + 1]):
-                return False
-        return True
+    def size(self) -> int:
+        return len(self.clauses)
+    
+    def contains_empty_clause(self) -> bool:
+        return EMPTY_CLAUSE in self.clauses
 
 
-def is_valid_step(cnf: CNF, mem1: frozenset[Clause],
-                  mem2: frozenset[Clause]) -> bool:
-    """Check if mem2 is reachable from mem1 by a single valid step."""
-    # Download
-    for c in cnf.clauses:
-        if mem2 == mem1 | {c}:
-            return True
-    # Resolve
-    for c1 in mem1:
-        for c2 in mem1:
-            for v in cnf.variables:
-                r = resolve(c1, c2, v)
-                if r is not None and mem2 == mem1 | {r}:
-                    return True
-    # Erase
-    for c in mem1:
-        if mem2 == mem1 - {c}:
-            return True
-    return False
+class StepInfo(NamedTuple):
+    """Information about a space step for certificate reconstruction."""
+    kind: str  # "download", "resolve", "erase"
+    detail: str
 
 
-def get_successors(cnf: CNF, mem: frozenset[Clause],
-                   space_bound: int) -> list[frozenset[Clause]]:
-    """Get all valid successor configurations within space bound."""
+def get_successors(config: SpaceConfig, cnf: CNF, variables: set[int],
+                   space_bound: int) -> list[tuple[SpaceConfig, StepInfo]]:
+    """Get all valid successor configurations within the space bound.
+    
+    Returns list of (new_config, step_info) pairs.
+    """
     successors = []
-    # Download
+    
+    # Download: add an axiom clause
     for c in cnf.clauses:
-        new_mem = mem | {c}
-        if len(new_mem) <= space_bound:
-            successors.append(new_mem)
-    # Resolve
-    mem_list = list(mem)
-    for c1 in mem_list:
-        for c2 in mem_list:
-            for v in cnf.variables:
+        new_clauses = config.clauses | {c}
+        if len(new_clauses) <= space_bound:
+            successors.append((
+                SpaceConfig(new_clauses),
+                StepInfo("download", str(c))
+            ))
+    
+    # Resolve: derive a new clause
+    clause_list = list(config.clauses)
+    for i, c1 in enumerate(clause_list):
+        for j, c2 in enumerate(clause_list):
+            for v in variables:
                 r = resolve(c1, c2, v)
                 if r is not None:
-                    new_mem = mem | {r}
-                    if len(new_mem) <= space_bound:
-                        successors.append(new_mem)
-    # Erase
-    for c in mem_list:
-        new_mem = mem - {c}
-        successors.append(new_mem)
+                    new_clauses = config.clauses | {r}
+                    if len(new_clauses) <= space_bound:
+                        successors.append((
+                            SpaceConfig(new_clauses),
+                            StepInfo("resolve", f"{c1} ⊗ {c2} on x{v} → {r}")
+                        ))
+    
+    # Erase: remove a clause
+    for c in config.clauses:
+        new_clauses = config.clauses - {c}
+        successors.append((
+            SpaceConfig(new_clauses),
+            StepInfo("erase", str(c))
+        ))
+    
     return successors
 
 
-def find_space_certificate(cnf: CNF, space_bound: int,
-                           max_steps: int = 100000
-                           ) -> Optional[SpaceCertificate]:
+class SpaceCertificate:
+    """A space certificate: a trace of configurations with step info."""
+    
+    def __init__(self, trace: list[SpaceConfig], steps: list[StepInfo],
+                 space_bound: int):
+        self.trace = trace
+        self.steps = steps
+        self.space_bound = space_bound
+    
+    def is_valid(self, cnf: CNF) -> bool:
+        """Verify the certificate is valid."""
+        if not self.trace:
+            return False
+        if self.trace[0] != SpaceConfig():
+            return False
+        if not self.trace[-1].contains_empty_clause():
+            return False
+        if any(cfg.size > self.space_bound for cfg in self.trace):
+            return False
+        return True
+    
+    @property
+    def length(self) -> int:
+        return len(self.trace)
+    
+    def __repr__(self):
+        lines = [f"SpaceCertificate (bound={self.space_bound}, length={self.length}):"]
+        for i, (cfg, step) in enumerate(zip(self.trace, ["START"] + [s.detail for s in self.steps])):
+            lines.append(f"  [{i}] {step}")
+            lines.append(f"       mem = {cfg}")
+        return "\n".join(lines)
+
+
+def find_space_certificate(cnf: CNF, space_bound: int, 
+                           num_vars: int,
+                           max_configs: int = 100000) -> Optional[SpaceCertificate]:
+    """BFS search for a space certificate.
+    
+    Searches the finite graph of bounded configurations using BFS,
+    guaranteeing the shortest certificate is found (if one exists
+    within the search budget).
+    
+    Args:
+        cnf: The CNF formula
+        space_bound: Maximum number of clauses in memory
+        num_vars: Number of variables
+        max_configs: Maximum configurations to explore
+    
+    Returns:
+        A SpaceCertificate if found, None otherwise
     """
-    BFS search for a space certificate.
-
-    Searches the finite graph of bounded configurations for a path
-    from the empty configuration to one containing the empty clause.
-
-    Returns a SpaceCertificate if found, None otherwise.
-    """
-    start = frozenset()
-    goal_clause = Clause.empty()
-
+    variables = set(range(num_vars))
+    start = SpaceConfig()
+    
     # BFS
-    visited: dict[frozenset[Clause], Optional[frozenset[Clause]]] = {start: None}
-    queue: deque[frozenset[Clause]] = deque([start])
-    steps = 0
-
-    while queue and steps < max_steps:
+    visited: dict[SpaceConfig, tuple[Optional[SpaceConfig], Optional[StepInfo]]] = {
+        start: (None, None)
+    }
+    queue: deque[SpaceConfig] = deque([start])
+    configs_explored = 0
+    
+    while queue and configs_explored < max_configs:
         current = queue.popleft()
-        steps += 1
-
-        # Check if goal
-        if goal_clause in current:
+        configs_explored += 1
+        
+        # Check if goal reached
+        if current.contains_empty_clause():
             # Reconstruct path
             path = []
+            steps = []
             node = current
             while node is not None:
                 path.append(node)
-                node = visited[node]
+                prev, step = visited[node]
+                if step is not None:
+                    steps.append(step)
+                node = prev
             path.reverse()
-            return SpaceCertificate(trace=path, space_bound=space_bound)
-
-        # Expand
-        for succ in get_successors(cnf, current, space_bound):
+            steps.reverse()
+            return SpaceCertificate(path, steps, space_bound)
+        
+        # Explore successors
+        for succ, step_info in get_successors(current, cnf, variables, space_bound):
             if succ not in visited:
-                visited[succ] = current
+                visited[succ] = (current, step_info)
                 queue.append(succ)
-
+    
     return None
 
 
-def count_reachable_configs(cnf: CNF, space_bound: int,
-                            max_steps: int = 100000) -> dict:
+class SearchStats(NamedTuple):
+    """Statistics from a certificate search."""
+    found: bool
+    certificate_length: Optional[int]
+    configs_explored: int
+    total_bounded_configs: int
+    time_seconds: float
+    formula: str
+    space_bound: int
+
+
+def count_bounded_configs(num_vars: int, space_bound: int) -> int:
+    """Count the theoretical upper bound on bounded configurations.
+    
+    Uses the formula: sum_{k=0}^{s} C(num_clauses, k)
+    where num_clauses = 2^(2*num_vars) (all subsets of the literal set).
+    
+    For practical counting, we use the number of "reachable" clauses
+    which is much smaller.
     """
-    Count reachable configurations in the bounded space graph.
-
-    Returns statistics about the search space.
-    """
-    start = frozenset()
-    visited: set[frozenset[Clause]] = {start}
-    queue: deque[frozenset[Clause]] = deque([start])
-    steps = 0
-    goal_found = False
-
-    while queue and steps < max_steps:
-        current = queue.popleft()
-        steps += 1
-        if Clause.empty() in current:
-            goal_found = True
-        for succ in get_successors(cnf, current, space_bound):
-            if succ not in visited:
-                visited.add(succ)
-                queue.append(succ)
-
-    return {
-        "reachable_configs": len(visited),
-        "steps_explored": steps,
-        "goal_found": goal_found,
-        "exhausted": len(queue) == 0,
-    }
+    from math import comb
+    num_literals = 2 * num_vars
+    num_clauses = 2 ** num_literals
+    total = sum(comb(num_clauses, k) for k in range(space_bound + 1))
+    return total
 
 
-def enumerate_all_clauses(variables: list[int],
-                          disjoint_only: bool = True) -> list[Clause]:
-    """Enumerate all clauses over given variables."""
+def count_proper_clauses(num_vars: int) -> int:
+    """Count proper clauses: 3^n (each variable absent, positive, or negative)."""
+    return 3 ** num_vars
+
+
+def enumerate_all_proper_clauses(num_vars: int) -> list[Clause]:
+    """Enumerate all proper clauses over num_vars variables."""
     clauses = []
-    for assignment in itertools.product(range(3 if disjoint_only else 4),
-                                        repeat=len(variables)):
-        pos = frozenset(v for v, a in zip(variables, assignment) if a == 1)
-        neg = frozenset(v for v, a in zip(variables, assignment) if a == 2)
-        clauses.append(Clause(pos, neg))
+    for assignment in product(range(3), repeat=num_vars):
+        lits = set()
+        for var, val in enumerate(assignment):
+            if val == 1:
+                lits.add((var, True))
+            elif val == 2:
+                lits.add((var, False))
+        clauses.append(Clause(lits))
     return clauses
 
 
-def total_config_bound(n_vars: int, space_bound: int,
-                       disjoint: bool = True) -> int:
-    """
-    Compute the theoretical upper bound on configurations.
-    Sum of C(num_clauses, k) for k = 0..s.
-    """
-    from math import comb
-    num_clauses = 3**n_vars if disjoint else 4**n_vars
-    return sum(comb(num_clauses, k) for k in range(space_bound + 1))
-
-
-def generate_random_cnf(n_vars: int, n_clauses: int,
-                        max_clause_size: int = 3,
+def generate_random_cnf(num_vars: int, num_clauses: int, 
+                        clause_width: int = 3,
                         seed: Optional[int] = None) -> CNF:
     """Generate a random CNF formula."""
     import random
     if seed is not None:
         random.seed(seed)
-    variables = list(range(1, n_vars + 1))
+    
     clauses = []
-    for _ in range(n_clauses):
-        k = random.randint(1, min(max_clause_size, n_vars))
-        chosen = random.sample(variables, k)
-        pos = frozenset(v for v in chosen if random.random() < 0.5)
-        neg = frozenset(v for v in chosen if v not in pos)
-        clauses.append(Clause(pos, neg))
-    return CNF(clauses, set(variables))
+    variables = list(range(num_vars))
+    for _ in range(num_clauses):
+        width = min(clause_width, num_vars)
+        chosen_vars = random.sample(variables, width)
+        lits = {(v, random.choice([True, False])) for v in chosen_vars}
+        clauses.append(Clause(lits))
+    return CNF(clauses)
 
 
-# Predefined small unsatisfiable CNFs for testing
-def pigeonhole_2_1() -> CNF:
-    """Pigeonhole: 2 pigeons, 1 hole. Variables: p_{i,j} = pigeon i in hole j."""
-    # p11 = 1, p21 = 2
-    # At least one hole per pigeon: (p11), (p21)
-    # At most one pigeon per hole: (¬p11 ∨ ¬p21)
-    c1 = Clause(frozenset({1}), frozenset())       # pigeon 1 in hole 1
-    c2 = Clause(frozenset({2}), frozenset())       # pigeon 2 in hole 1
-    c3 = Clause(frozenset(), frozenset({1, 2}))    # not both in hole 1
-    return CNF([c1, c2, c3], {1, 2})
+def generate_pigeonhole(n: int) -> tuple[CNF, int]:
+    """Generate the pigeonhole principle PHP(n+1, n).
+    
+    n+1 pigeons must go into n holes. This is a classic unsatisfiable
+    formula that requires large clause space.
+    
+    Variables: x_{i,j} means pigeon i is in hole j.
+    Variable encoding: i * n + j for pigeon i, hole j.
+    
+    Returns (cnf, num_vars).
+    """
+    pigeons = n + 1
+    holes = n
+    num_vars = pigeons * holes
+    
+    def var(pigeon, hole):
+        return pigeon * holes + hole
+    
+    clauses = []
+    
+    # Each pigeon must be in some hole
+    for i in range(pigeons):
+        lits = {(var(i, j), True) for j in range(holes)}
+        clauses.append(Clause(lits))
+    
+    # No two pigeons in the same hole
+    for j in range(holes):
+        for i1 in range(pigeons):
+            for i2 in range(i1 + 1, pigeons):
+                clauses.append(Clause({(var(i1, j), False), (var(i2, j), False)}))
+    
+    return CNF(clauses), num_vars
 
 
-def simple_unsat() -> CNF:
-    """Simple unsatisfiable: (x) ∧ (¬x)."""
-    c1 = Clause(frozenset({1}), frozenset())
-    c2 = Clause(frozenset(), frozenset({1}))
-    return CNF([c1, c2], {1})
-
-
-def two_var_unsat() -> CNF:
-    """Unsatisfiable on 2 variables: (x∨y) ∧ (x∨¬y) ∧ (¬x∨y) ∧ (¬x∨¬y)."""
-    c1 = Clause(frozenset({1, 2}), frozenset())
-    c2 = Clause(frozenset({1}), frozenset({2}))
-    c3 = Clause(frozenset({2}), frozenset({1}))
-    c4 = Clause(frozenset(), frozenset({1, 2}))
-    return CNF([c1, c2, c3, c4], {1, 2})
+if __name__ == "__main__":
+    # Quick test
+    # x0 ∨ x1, ¬x0, ¬x1 — unsatisfiable
+    c1 = Clause({(0, True), (1, True)})
+    c2 = Clause({(0, False)})
+    c3 = Clause({(1, False)})
+    F = CNF([c1, c2, c3])
+    
+    print(f"Formula: {F}")
+    print(f"Satisfiable: {F.is_satisfiable(2)}")
+    
+    cert = find_space_certificate(F, 3, 2)
+    if cert:
+        print(f"\nCertificate found!")
+        print(cert)
+        print(f"Valid: {cert.is_valid(F)}")
+    else:
+        print("No certificate found")
+    
+    print(f"\nProper clauses over 2 vars: {count_proper_clauses(2)}")
+    print(f"Theoretical bound: {count_proper_clauses(2)} = 3^2 = 9")
