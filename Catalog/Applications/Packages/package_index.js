@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Circuit Complexity / Proof-Theoretic Growth Hierarchies",
     "date": "2026-05-24T19:19:36Z",
     "exp_id": "0ef9fa27",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6304071532846716,
+    "quality": "partial"
   },
   {
     "filename": "direction_2_multiplicative_type_complexity_for_pro.json",
@@ -6925,8 +6925,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-24T19:19:36Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6304071532846716,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -8547,25 +8547,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-21T13:14:13.518997+00:00"
   },
   {
-    "id": "fd_0260",
-    "title": "Direction 3: Depth Rigidity for Generalized Tower Families",
-    "description": "**Conjecture:** There exists a family of functions $\\{f_n\\}$ beyond iterExp such that:\n1. Each $f_n$ is computable by an inverse-free DAG of depth $n$.\n2. No inverse-free DAG of depth $< n$ computes $f_n$.\n3. The depth lower bound grows faster than $\\log n$ despite unrestricted sharing.\n\n**Test:**\n- Define candidate families: hyper-operators $H(a, n, x)$, tetration variants, compositions of tower functions with polynomial arguments.\n- For each candidate family, compute the growth rate and check whether the majorant classification distinguishes level $n$ from level $n - 1$.\n- Enumerate small DAGs and test agreement with candidate functions.\n- Disproof protocol: for a candidate $f_n$, exhibit a DAG of depth $o(n)$ computing it.\n\n**Impact:** Extending depth rigidity beyond the iterExp family would establish a robust theory of sequential barriers, applicable to a wider class of mathematical computations.\n\n**Catalog References:** `Catalog/Algebra/TightDepthHierarchy/Defs.lean` (growth rank, tower majorant), `Catalog/Speculative/DagDepthHierarchy/Defs.lean` (DAG definitions)\n\n**Proof Strategy:** The key ingredient is a growth classification theorem that distinguishes tower levels. For generalized families, one needs to show that the growth rate of $f_n$ exceeds any tower of level $< n$ with polynomial arguments \u2014 the same majorant analysis used for iterExp, but applied to the new family.\n\n**Domain Bridges:** Ordinal analysis (fast-growing hierarchies), reverse mathematics, proof theory (consistency strengths), computer science (hierarchy theorems).\n\n**Lineage:** Natural generalization of the iterExp depth hierarchy. The existing majorant framework should extend with moderate effort.\n\n**Ambition:** Medium \u2014 the framework is in place; the challenge is identifying families where the growth analysis yields clean bounds.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5b867260",
-    "consumed_by_exp_id": "0ef9fa27",
-    "timestamp": "2026-05-21T15:14:30.988156+00:00"
-  },
-  {
     "id": "fd_0413",
     "title": "Direction 2: Probe Complexity as Representable Dimension",
     "description": "**Conjecture (Grand Challenge):** Define the *representable dimension* of a presheaf `F` as the minimum number of generators in any representable cover. Then for any finite category `C`, the supremum of representable dimensions over all presheaves separated by a probe family `P` equals a computable invariant of `(C, P)` \u2014 specifically, `\u03a3_{Y \u2208 C} |MeasurementSpace(P, Y)|` where the measurement space is the image of the probe restriction map.\n\n**Test:** For categories with `|Ob(C)| \u2264 4`, compute the representable dimension of all finite-valued presheaves separated by various probe families. Plot the supremum against the measurement space invariant. A counterexample where the supremum exceeds the invariant, or is strictly less for all probe families, would refute the conjecture.\n\n**Impact:** This would establish probe complexity as a *categorical dimension theory* \u2014 a computable invariant that governs the structural complexity of all presheaves observable by a given measurement scheme. It would be a major bridge between information theory and categorical geometry.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` \u2014 `card_presheaf_le_card_restrictions`, `probeRestrictionMap_injective`\n- `Catalog/Pythagorean/ProbeComplexity/Defs.lean` \u2014 `probeComplexity`\n\n**Proof Strategy:** Upper bound: use the measurement space cardinality to bound the number of distinct elements, then bound generators. Lower bound: construct presheaves that realize all measurement signatures as distinct generators.\n\n**Domain Bridges:** VC dimension (learning theory), Rademacher complexity, metric dimension (graph theory), information dimension.\n\n**Lineage:** Combines `card_presheaf_le_card_restrictions` with `probeComplexity` from the catalog.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if true; would create a new dimension theory.\n\n---",
@@ -9652,10 +9633,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2c97bffa",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "85616e6f",
     "timestamp": "2026-05-24T04:06:59.228688+00:00"
   },
   {
