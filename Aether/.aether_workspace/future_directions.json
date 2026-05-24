@@ -5137,7 +5137,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 1.0,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "f2269ca9",
       "timestamp": "2026-05-21T13:14:13.518997+00:00",
       "catalog_references": [],
@@ -13447,6 +13447,48 @@
       "ambition_level": "extension",
       "lineage_refs": [],
       "domain_bridges": []
+    },
+    {
+      "id": "fd_0769",
+      "title": "Fully identifiable",
+      "description": "(affine-injective): witness uniquely determined; fibers are singletons",
+      "source_exp_id": "f2269ca9",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f2269ca9",
+      "domains": [
+        "Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-24T21:10:37.800701+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0770",
+      "title": "Quotient-identifiable",
+      "description": "(nonlinear with finite fibers): witness determined up to a finite symmetry group; fibers are finite G-orbits",
+      "source_exp_id": "f2269ca9",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f2269ca9",
+      "domains": [
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-24T21:10:37.838390+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
     }
   ],
   "pruned": [
@@ -21645,6 +21687,48 @@
       "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T20:33:32.600125+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0771",
+      "title": "Partially identifiable",
+      "description": "(positive-dimensional fibers): witness constrained to a positive-dimensional variety; additional structural information needed",
+      "source_exp_id": "f2269ca9",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f2269ca9",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-24T21:10:37.874678+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": []
+    },
+    {
+      "id": "fd_0772",
+      "title": "Non-identifiable",
+      "description": "(degenerate): transcripts carry no witness information; witness map is constant on the domain",
+      "source_exp_id": "f2269ca9",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f2269ca9",
+      "domains": [
+        "Bridges"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.75,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-24T21:10:37.911226+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
