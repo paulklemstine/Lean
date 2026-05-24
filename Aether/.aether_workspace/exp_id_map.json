@@ -471,5 +471,6 @@
   "091a2875": "direction_1_defect_theory__quantifying_the_gap.json",
   "d2dfe412": "direction_2_chain_rule_for_compression_defect.json",
   "2cfcb628": "direction_3_complete_characterization_for_monoid_c.json",
-  "6a43eac7": "direction_2_higher_order_equality_saturation.json"
+  "6a43eac7": "direction_2_higher_order_equality_saturation.json",
+  "d7b81867": "direction_4_continuous_time_renormalization_flow.json"
 }

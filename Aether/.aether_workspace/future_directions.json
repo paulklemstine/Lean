@@ -10991,7 +10991,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7999999999999999,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "d7b81867",
       "timestamp": "2026-05-23T21:44:40.852508+00:00",
       "catalog_references": [],
