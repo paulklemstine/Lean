@@ -496,5 +496,6 @@
   "cc40b0df": "direction_1_many_sorted_and_higher_order_convergen.json",
   "0161dbef": "direction_2_e_graph_extraction_as_approximate_quot.json",
   "c23d3e3a": "direction_3_normalization_cost_as_bisimulation_dis.json",
-  "fa761e16": "direction_4_operator_norm_optimization_for_concret.json"
+  "fa761e16": "direction_4_operator_norm_optimization_for_concret.json",
+  "26796a9b": "direction_1_exponential_convergence_via_spectral_g.json"
 }
