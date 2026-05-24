@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Homological Information Theory / Sheaf Compression",
     "date": "2026-05-24T17:30:44Z",
     "exp_id": "964b5789",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.587857837837838,
+    "quality": "partial"
   },
   {
     "filename": "direction_2_crt_product_bottleneck_theorem.json",
@@ -6785,8 +6785,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-24T17:30:44Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.587857837837838,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -9650,25 +9650,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T06:31:50.490834+00:00"
   },
   {
-    "id": "fd_0613",
-    "title": "Direction 5: Spectral Decomposition of Compression",
-    "description": "**Conjecture:** For a presheaf $F$ on a finite site with a filtration $0 = F_0 \\subseteq F_1 \\subseteq \\cdots \\subseteq F_n = F$ (chain of sub-presheaves), the compression number is bounded by the sum of \"graded pieces\":\n$$\\kappa_{\\mathrm{sh}}(J, F) \\leq \\sum_{i=1}^n \\kappa_{\\mathrm{sh}}(J, F_i / F_{i-1})$$\nfor suitable quotient presheaves $F_i / F_{i-1}$.\n\n**Test:** Construct filtered presheaves on small sites. Compute compression numbers for all graded pieces and verify the inequality.\n\n**Impact:** This would connect sheaf compression to homological algebra, establishing a \"spectral sequence\" for information complexity. It would allow computing compression numbers of complex presheaves by decomposition into simpler pieces \u2014 analogous to how entropy decomposes along independence structures.\n\n**Catalog References:**\n- `Catalog/Pythagorean/ProbeComplexity/CompressionSpectrumStructure.lean` \u2014 existing spectral structure\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 subadditivity as base case\n\n**Proof Strategy:** If $F$ has a filtration with semisimple graded pieces (each $F_i / F_{i-1}$ is a coproduct of simple presheaves), apply subadditivity iteratively. The general case requires understanding how separation interacts with exact sequences of presheaves.\n\n**Domain Bridges:** Homological algebra (spectral sequences), representation theory (Jordan\u2013H\u00f6lder filtrations), algebraic K-theory (additivity of invariants).\n\n**Lineage:** Extension of coproduct subadditivity to general filtrations.\n\n**Ambition:** Paradigm-shifting \u2014 would launch \"homological information theory.\"",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "04157109",
-    "consumed_by_exp_id": "964b5789",
-    "timestamp": "2026-05-24T06:31:50.522012+00:00"
-  },
-  {
     "id": "fd_0614",
     "title": "Direction 1: Coalgebraic Temporal Adjunction for Infinite Traces",
     "description": "**Conjecture:** The adjunction triple \u27e8a\u27e9 \u22a3 (ext_a)* \u22a3 [a] extends from finite traces to the final coalgebra of the trace functor, yielding a **coalgebraic temporal adjunction** that captures \u03c9-regular properties (liveness, fairness) in addition to safety properties. Specifically, the diamond and box on infinite traces (streams) should arise as colimit/limit constructions over the finite-trace adjunctions.\n\n**Test:** Formalize the final coalgebra for Act = {a,b} as the type of infinite streams Stream(Fin 2). Verify that the pullback along stream-cons (adding an action to the front) has left and right adjoints, and that these coincide with the standard CTL* modalities EX and AX on Kripke structures with at most 4 states.\n\n**Impact:** Would provide a categorical foundation for the full spectrum of temporal logics (LTL, CTL, CTL*, \u03bc-calculus) as instances of a single adjunction framework, potentially simplifying the landscape of temporal verification tools.\n\n**Catalog References:**\n- `Pythagorean/TemporalAdjunction/Theorems.lean`: `diamond_left_adjoint`, `box_right_adjoint` (finite-trace base case)\n- `Catalog/Pythagorean/YonedaBisimulation/Correspondence.lean`: `yoneda_bisim_det_iff` (trace equivalence)\n\n**Proof Strategy:** Define the stream-level modalities as limits of the finite-trace adjunctions using `CategoryTheory.Limits`. The key lemma is that the adjunction triple is compatible with the transition maps of the inverse system, so the limit inherits the adjunction structure.\n\n**Domain Bridges:** Connects process algebra (temporal logic) \u2192 coalgebra (infinite behaviors) \u2192 automata theory (\u03c9-regular languages). The coalgebraic diamond should correspond to the EX operator of CTL, and the Beck-Chevalley condition should give EU (Exists-Until).\n\n**Lineage:** Jacobs, *Introduction to Coalgebra* (2016); Pattinson, *Coalgebraic Modal Logic* (2003); C\u00eerstea et al., *Modalities in Coalgebraic Logics* (2011).\n\n**Ambition:** \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires significant coalgebraic infrastructure)\n\n---",
@@ -10345,10 +10326,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1e04b63c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "074616c0",
     "timestamp": "2026-05-24T15:13:46.828263+00:00"
   },
   {
@@ -10406,5 +10387,63 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "c65efb7d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T16:19:49.650838+00:00"
+  },
+  {
+    "id": "fd_0734",
+    "title": "Direction 1: Split Exact Additivity",
+    "description": "**Conjecture:** For every split filtration on a finite site, compression is exactly additive:\n```\n\u03ba_sh(J, F) = \u03a3\u1d62 \u03ba_sh(J, gr\u1d62F)\n```\nwhen each extension in the filtration splits (i.e., the total presheaf is isomorphic to the direct sum of its graded pieces).\n\n**Test:** Enumerate all split filtrations on sites with 2\u20134 objects and compare exact compression numbers with graded sums. A single counterexample refutes the conjecture. The Python demo (`demo.py`) includes tests for this setting.\n\n**Impact:** If true, this establishes compression as a genuinely additive invariant on split exact sequences, placing it in the landscape of algebraic K-theory. If false, the failure mode reveals obstructions to additivity that are themselves interesting invariants.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/CompressionFiltration.lean` \u2014 `compression_split_le` (upper bound direction)\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `sheafCompressionNumber_coprod_le`\n\n**Proof Strategy:** Prove the reverse inequality by showing that any separator for the coproduct restricts to a separator for each component. The main difficulty is extracting component-wise separation from coproduct separation without additional structural assumptions.\n\n**Domain Bridges:** Algebraic K-theory (Grothendieck group), representation theory (split exact sequences), information theory (independence of sources implies entropy additivity).\n\n**Lineage:** Extends `compression_extension_le` from upper bound to equality in the split case.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Achievable with current formalism; requires careful analysis of the reverse inequality.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "964b5789",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T17:30:48.451554+00:00"
+  },
+  {
+    "id": "fd_0735",
+    "title": "Direction 2: Submodularity of Compression on the Lattice of Subpresheaves",
+    "description": "**Conjecture:** For subpresheaves A, B \u2264 F on a finite site with Grothendieck topology J:\n```\n\u03ba(A \u2228 B) + \u03ba(A \u2227 B) \u2264 \u03ba(A) + \u03ba(B)\n```\nwhere \u2228 and \u2227 are join and meet in the subpresheaf lattice.\n\n**Test:** Brute-force all pairs (A, B) of subpresheaves on sites with 2\u20133 objects and 2\u20133 sections per object. Compute all four compression numbers and verify the inequality. A counterexample is equally valuable \u2014 it would show compression is not submodular and would identify the structural obstruction.\n\n**Impact:** If true, compression becomes a submodular function, unlocking greedy algorithms and matroid-theoretic methods for filtration optimization. If false, the failure structure characterizes exactly when greedy decomposition fails.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/CompressionFiltration.lean` \u2014 `compression_le_of_sep_implies` (monotonicity)\n- `Catalog/Pythagorean/ProbeComplexity/CompressionSpectrumStructure.lean` \u2014 `compressionNumber_le_of_sep`\n\n**Proof Strategy:** Attempt a modular inequality proof using the lattice structure of probe families. Key step: construct a separator for A\u2228B from separators for A and B, using their intersection to control the redundancy.\n\n**Domain Bridges:** Combinatorial optimization (submodular function minimization), matroid theory, entropy inequalities (submodularity of Shannon entropy).\n\n**Lineage:** Builds on monotonicity (`compression_le_of_sep_implies`) and extension inequality.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 \u2014 Would be a significant structural result; counterexample search is computationally tractable.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "964b5789",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T17:30:48.574829+00:00"
+  },
+  {
+    "id": "fd_0737",
+    "title": "Direction 4: Derived Compression Invariants",
+    "description": "**Conjecture:** There exist higher compression invariants \u03ba\u207f(J, F) for n \u2265 1, generalizing \u03ba = \u03ba\u2070, that form a long exact sequence:\n```\n... \u2192 \u03ba\u207f(A) \u2192 \u03ba\u207f(B) \u2192 \u03ba\u207f(Q) \u2192 \u03ba\u207f\u207a\u00b9(A) \u2192 ...\n```\nfor each short exact sequence 0 \u2192 A \u2192 B \u2192 Q \u2192 0 of presheaves.\n\n**Test:** Define \u03ba\u00b9 as the \"compression defect of the extension\": \u03ba\u00b9(A \u2192 B \u2192 Q) = \u03ba(A) + \u03ba(Q) - \u03ba(B). Check whether \u03ba\u00b9 satisfies its own long exact sequence on small examples. If not, attempt to modify the definition to achieve exactness.\n\n**Impact:** This would establish a full cohomological theory of information complexity, with sheaf compression as the H\u2070 and higher invariants measuring the cost of consistency checking across overlapping data.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/CompressionFiltration.lean` \u2014 `compressionDefect`\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `compressionDefect_nonneg`\n\n**Proof Strategy:** Model after the definition of derived functors via projective/injective resolutions. The key challenge is defining \u03ba\u207f intrinsically (not just as a defect of the previous level) and showing functoriality.\n\n**Domain Bridges:** Homological algebra (derived functors), algebraic topology (cohomology), quantum information theory (higher-order entanglement measures).\n\n**Lineage:** Grand challenge building on the entire compression framework.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if achievable; currently speculative but falsifiable through small examples.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "964b5789",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T17:30:48.671230+00:00"
   }
 ];
