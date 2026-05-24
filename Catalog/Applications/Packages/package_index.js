@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorial Optimization / Hypergraph Theory",
     "date": "2026-05-24T23:13:42Z",
     "exp_id": "f6e7fe77",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.49450347826086954,
+    "quality": "partial"
   },
   {
     "filename": "direction_3_extension_to_product_and_sum_types.json",
@@ -121,8 +121,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.49450347826086954,
+      "quality": "partial"
     }
   ],
   "edges": [],
@@ -275,22 +275,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.574939+00:00"
   },
   {
-    "id": "seed_104",
-    "title": "Zeta Functions of Directed Graphs and the Graph Riemann Hypothesis",
-    "description": "The key insight is that every directed graph G has a zeta function zeta_G(s) = prod(1 - lambda^{-s})^{-1} where the product is over eigenvalues of the graph's adjacency matrix, and the Riemann Hypothesis for this function is equivalent to a purely combinatorial condition on G. Conjecture: For a directed graph G with n vertices, zeta_G(s) satisfies the Riemann Hypothesis (all non-trivial zeros lie on Re(s) = 1/2) if and only if G is a Ramanujan digraph: every eigenvalue lambda of the adjacency matrix satisfies |lambda| <= 2 sqrt(d-1) where d is the maximum out-degree. This is the directed graph analog of the Ramanujan graph theorem of Lubotzky-Phillips-Sarnak. Why now: the undirected case is settled (Ramanujan graphs exist and have optimal spectral gap), but the directed case is wide open. Recent work by Lubetzky and Peres (2016) on cutoff on directed Ramanujan graphs suggests the spectral gap characterization extends. Test: prove the conjecture for directed Cayley graphs of finite groups, then verify computationally for random directed d-regular graphs with n=20, 50, 100 vertices. Impact: a combinatorial Riemann Hypothesis \u2014 if true, it means the deepest mystery of number theory has a purely graph-theoretic characterization.",
-    "domains": [
-      "Algebra",
-      "NumberTheory",
-      "Computation"
-    ],
-    "priority_score": 0.91,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.144820+00:00"
-  },
-  {
     "id": "seed_029",
     "title": "ABC Conjecture Formalization",
     "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
@@ -422,10 +406,10 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 0.87,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "561cc547",
     "timestamp": "2026-05-24T22:37:54.665768+00:00"
   },
   {
@@ -594,10 +578,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.85,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5eb5bdbc",
     "timestamp": "2026-05-24T22:37:54.986795+00:00"
   },
   {
@@ -703,10 +687,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.83,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "34c2669a",
     "timestamp": "2026-05-24T22:37:54.373036+00:00"
   },
   {
@@ -903,6 +887,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:13:13.815028+00:00"
+  },
+  {
+    "id": "fd_0804",
+    "title": "Spectral Universality of Proof Search Graphs",
+    "description": "Conjecture: For any sufficiently expressive formal system S and any complete deterministic proof search procedure A, if one forms the finite directed graph G_n whose vertices are all derivable proof states of description length at most n and whose edges are one-step inference expansions under A, then after degree-normalization the empirical spectral measure of the non-backtracking operator of G_n converges, along a density-1 subsequence of n, to a universal law depending only on the logical fragment of S (e.g. propositional, first-order, dependent type theory) and not on the encoding details of A. Test: Construct G_n for multiple theorem-proving environments and encodings, compute normalized spectra, and check whether spectral distributions collapse within each logical fragment but separate across fragments; refutation occurs if asymptotic spectra remain encoding-sensitive or fail to stabilize. Impact: This would introduce a new invariant of formal reasoning, enabling complexity diagnostics for proof systems, transfer principles between provers, and potentially a spectral theory of mathematical creativity.",
+    "domains": [
+      "Mathematical Logic",
+      "Spectral Graph Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:13:53.546170+00:00"
   },
   {
     "id": "seed_026",
@@ -1152,10 +1151,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "83d44e07",
     "timestamp": "2026-05-24T23:12:21.863215+00:00"
   },
   {
@@ -1196,5 +1195,82 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "33261812",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.890989+00:00"
+  },
+  {
+    "id": "fd_0800",
+    "title": "Direction 2: Heterogeneity\u2013Gap Conjecture",
+    "description": "**Conjecture:** For every \u03b5 > 0, there exists \u03b4 > 0 such that for all hypergraphs H on n \u2265 10 vertices with edge heterogeneity \u03c3\u00b2(H) > \u03b4, we have \u03c4(H) \u2212 \u2308\u03c4*(H)\u2309 \u2265 1. In other words, sufficiently heterogeneous hypergraphs always have a positive integrality gap beyond the ceiling rounding gap.\n\n**Test:** Generate 10,000 random hypergraphs on n = 15 vertices with edges of sizes {2, 3, 4, 5} at varying proportions. For each, compute \u03c3\u00b2, \u03c4, \u03c4*, and \u03c4 \u2212 \u2308\u03c4*\u2309. Plot the gap vs \u03c3\u00b2 and identify the critical threshold \u03b4*. Attempt to disprove by finding hypergraphs with \u03c3\u00b2 > 2 and \u03c4 = \u2308\u03c4*\u2309.\n\n**Impact:** If true, this would establish edge-size heterogeneity as a sufficient condition for integrality gap positivity, providing a simple structural certificate that LP relaxation is strictly better than integer programming for a given instance. This has direct implications for algorithm selection in practice.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `edgeHeterogeneity`, `IsHeterogeneous`, `heterogeneity_zero_of_uniform`.\n\n**Proof Strategy:** For the forward direction, construct explicit fractional transversals that exploit heterogeneity to achieve sub-integer values. For necessity, construct uniform hypergraphs where \u03c4 = \u2308\u03c4*\u2309. The probabilistic method may yield existence proofs for extreme heterogeneity.\n\n**Domain Bridges:** Connects to information theory (entropy of edge-size distribution), statistical mechanics (disorder parameter), and algebraic combinatorics (chromatic polynomials).\n\n**Lineage:** Builds on `heterogeneity_zero_of_uniform` and `integrality_gap_upper`.\n\n**Ambition:** Grand challenge \u2014 this would be a new structural result in combinatorial optimization with no direct precedent.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6e7fe77",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:13:44.233016+00:00"
+  },
+  {
+    "id": "fd_0801",
+    "title": "Direction 3: Concentration of \u03c4* on Random Hypergraphs",
+    "description": "**Conjecture:** For the Erd\u0151s\u2013R\u00e9nyi random k-uniform hypergraph H(n, p) with p = c/n^{k-1}, the fractional transversal number satisfies Var[\u03c4*(H)] = O(1) as n \u2192 \u221e, while Var[\u03c4(H)] = \u03a9(log n). The fractional predictor |V| \u2212 \u2308\u03c4*\u2309 has strictly smaller variance than the integer predictor |V| \u2212 \u03c4.\n\n**Test:** Generate 1,000 random 3-uniform hypergraphs on n \u2208 {20, 50, 100, 200} vertices at density p = 2/n\u00b2. Compute sample variances of \u03c4* and \u03c4. Verify that Var[\u03c4*] grows sub-logarithmically while Var[\u03c4] grows logarithmically. Plot variance ratio Var[\u03c4*]/Var[\u03c4] vs n.\n\n**Impact:** This would rigorously establish the \"smoothing effect\" of fractional relaxation \u2014 that convex relaxations produce more concentrated (lower-variance) estimators of combinatorial thresholds. This has profound implications for phase transition prediction in random CSPs: it would prove that LP-based predictors are statistically superior to integer-based predictors.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `indicator_isFracTransversal` (\u03c4* \u2264 \u03c4), `weak_duality`.\n\n**Proof Strategy:** For the upper bound on Var[\u03c4*], use the Lipschitz property of LP optima: adding/removing one edge changes \u03c4* by at most 1, so the Azuma\u2013Hoeffding inequality gives exponential concentration. For the lower bound on Var[\u03c4], exhibit specific configurations where \u03c4 jumps by \u2265 1 with probability \u0398(1/\u221an).\n\n**Domain Bridges:** Connects to probability theory (concentration inequalities), statistical physics (self-averaging), and random matrix theory (spectral gaps of constraint matrices).\n\n**Lineage:** Extends the deterministic bound \u03c4* \u2264 \u03c4 to a probabilistic separation of their fluctuations.\n\n**Ambition:** Grand challenge \u2014 proving concentration inequalities for LP optima on random combinatorial structures is at the frontier of probabilistic combinatorics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6e7fe77",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:13:44.246682+00:00"
+  },
+  {
+    "id": "fd_0802",
+    "title": "Direction 4: Tropical Transversal Geometry",
+    "description": "**Conjecture:** The fractional transversal polytope P_\u03c4(H) = {x \u2208 \u211d^V_\u22650 : \u03a3_{v\u2208e} x(v) \u2265 1, \u2200 e \u2208 E} has a natural tropicalization T_\u03c4(H) in the tropical semiring (\u211d \u222a {\u221e}, min, +). The tropical transversal number \u2014 the tropical minimum of the tropical linear form \u2014 equals the integer transversal number \u03c4(H), establishing \u03c4 as the \"tropical shadow\" of \u03c4*.\n\n**Test:** Compute the tropicalization of P_\u03c4(H) for small hypergraphs (n \u2264 8) using polymake or TOPCOM. Verify that the tropical optimum coincides with \u03c4(H) in all cases. Check whether the tropical variety of the transversal polytope has a fan structure related to the hypertree decomposition of H.\n\n**Impact:** This would establish a direct geometric bridge between fractional (classical) and integer (tropical) transversal theory, potentially yielding new algorithms for computing \u03c4 via tropical methods and new structural insights via tropical intersection theory.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 full development; potential connection to `Tropical/` catalog files.\n\n**Proof Strategy:** Use the correspondence between classical linear programs and their tropicalizations established by Develin and Sturmfels [2004]. Show that the transversal LP tropicalizes to an integer program whose optimum is \u03c4(H).\n\n**Domain Bridges:** Connects to algebraic geometry (tropical varieties), polyhedral combinatorics (normal fans), and phylogenetics (tree metrics).\n\n**Lineage:** Novel direction extending the classical/fractional framework to tropical algebra.\n\n**Ambition:** Grand challenge \u2014 tropical optimization for combinatorial problems is largely unexplored.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6e7fe77",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:13:44.261184+00:00"
+  },
+  {
+    "id": "fd_0803",
+    "title": "Direction 5: Weighted and Multi-Objective Extensions",
+    "description": "**Conjecture:** For weighted hypergraphs where vertex v has cost w(v) > 0 and edge e has demand d(e) > 0, the weighted integrality gap satisfies \u03c4_w(H) \u2264 d_max \u00b7 \u03c4*_w(H), where the threshold rounding uses threshold 1/(d_max \u00b7 max_e d(e)). For multi-objective transversal problems with k objectives, the Pareto front of fractional solutions has at most O(n^{k-1}) vertices, each roundable with gap bound d_max.\n\n**Test:** Implement weighted LP transversal computation and threshold rounding for random weighted hypergraphs on n = 20 vertices with random costs w(v) ~ Uniform[1, 10] and demands d(e) ~ Uniform[1, 3]. Verify the gap bound holds in 1,000 trials. For the multi-objective case, compute Pareto fronts for 2-objective problems and verify the vertex count bound.\n\n**Impact:** Weighted extensions are essential for practical applications (facility location, network design) where resources have different costs. The multi-objective extension would connect transversal theory to multi-criteria optimization, a field with growing practical importance.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `integrality_gap_upper`, `threshold_isTransversal`, `threshold_card_bound`.\n\n**Proof Strategy:** Generalize the threshold rounding argument: for weighted problems, use threshold w(v) \u00b7 x(v) \u2265 1/d_max. The size bound becomes \u03a3_{v\u2208S} w(v) \u2264 d_max \u00b7 \u03a3_v w(v) \u00b7 x(v). For multi-objective, use the theory of parametric LP to bound the number of breakpoints.\n\n**Domain Bridges:** Connects to operations research (facility location), algorithmic game theory (cost sharing), and welfare economics (Pareto efficiency).\n\n**Lineage:** Direct generalization of `integrality_gap_upper` to weighted settings.\n\n**Ambition:** Solid extension \u2014 the weighted case follows the same proof structure, while the multi-objective case introduces genuinely new complexity.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6e7fe77",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:13:44.276911+00:00"
   }
 ];

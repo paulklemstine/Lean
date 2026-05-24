@@ -158,25 +158,12 @@ class QualityEvaluator:
             concept_title, catalog_references or [], existing_titles
         )
 
-        # LLM evaluations (single call for all 3)
-        if self.pi_agent:
-            llm_scores = self._eval_llm_dimensions(
-                lean_source, concept_title, concept_description, result_dir
-            )
-            score.importance = llm_scores.get("importance", 0.5)
-            score.usefulness = llm_scores.get("usefulness", 0.5)
-            score.applications = llm_scores.get("applications", 0.5)
-
-            # "So What?" gate: does this result matter to a mathematician outside the subfield?
-            so_what_adjustment = self._eval_so_what(
-                concept_title, concept_description, lean_source
-            )
-            score.importance = max(0.0, min(1.0, score.importance + so_what_adjustment))
-        else:
-            # Heuristic fallback
-            score.importance = min(1.0, score.proof_depth * 0.7 + score.novelty * 0.3)
-            score.usefulness = min(1.0, score.cross_domain * 0.5 + score.proof_depth * 0.5)
-            score.applications = min(1.0, score.cross_domain * 0.6 + score.artifact_richness * 0.4)
+        # Heuristic evaluation for importance, usefulness, applications
+        # (LLM grading disabled — it gave avg importance=0.17, max=0.36,
+        # systematically suppressing composites for every package)
+        score.importance = min(1.0, score.proof_depth * 0.7 + score.novelty * 0.3)
+        score.usefulness = min(1.0, score.cross_domain * 0.5 + score.proof_depth * 0.5)
+        score.applications = min(1.0, score.cross_domain * 0.6 + score.artifact_richness * 0.4)
 
         return score
 

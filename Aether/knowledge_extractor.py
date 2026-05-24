@@ -1741,6 +1741,12 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Warning: catalog pruning failed: {e}")
 
+        # 7. Structural hole mining — find domain pairs with no edges, generate bridge directions
+        try:
+            await asyncio.to_thread(self._mine_structural_holes)
+        except Exception as e:
+            print(f"[Cleanup] Warning: structural hole mining failed: {e}")
+
         return job
 
     def _cleanup_future_directions(self) -> None:
@@ -1835,6 +1841,103 @@ Research mode: {concept.research_mode}
 
         notes = result.get("notes", "")
         print(f"[Cleanup] Directions cleanup: removed {removed}, brainstormed 1 new. {notes}")
+
+    def _mine_structural_holes(self) -> None:
+        """Find domain pairs with no edges in the knowledge graph and generate bridge directions.
+
+        Structural holes are pairs of domains that have no provenance edges between them.
+        These are the highest-value bridge targets: a theorem connecting two disconnected
+        domains would create new knowledge graph edges and unlock cross-domain research.
+        """
+        import json as _json
+        from research_memory import FutureDirection, FutureDirectionsManager
+
+        lineage_path = self.catalog_root.parent / "Applications" / "Packages" / "lineage.json"
+        if not lineage_path.exists():
+            return
+
+        try:
+            with open(lineage_path, 'r', encoding='utf-8') as f:
+                graph_data = _json.load(f)
+        except Exception:
+            return
+
+        nodes = graph_data.get("nodes", [])
+        edges = graph_data.get("edges", [])
+
+        if not nodes or not edges:
+            return
+
+        # Build domain sets per node
+        node_domains = {}
+        for n in nodes:
+            nid = n.get("id", "")
+            domains = n.get("domains", []) or ([n.get("primary_domain", "Bridges")] if n.get("primary_domain") else [])
+            node_domains[nid] = set(domains)
+
+        # Find which domain pairs are connected (have at least one edge)
+        connected_pairs = set()
+        for e in edges:
+            src = e.get("source", "")
+            tgt = e.get("target", "")
+            src_domains = node_domains.get(src, set())
+            tgt_domains = node_domains.get(tgt, set())
+            for sd in src_domains:
+                for td in tgt_domains:
+                    if sd != td:
+                        connected_pairs.add((min(sd, td), max(sd, td)))
+
+        # Find all domain pairs and identify holes
+        all_domains = set()
+        for domains in node_domains.values():
+            all_domains.update(domains)
+
+        all_pairs = set()
+        domain_list = sorted(all_domains)
+        for i, d1 in enumerate(domain_list):
+            for d2 in domain_list[i+1:]:
+                all_pairs.add((d1, d2))
+
+        holes = all_pairs - connected_pairs
+
+        if not holes:
+            return
+
+        # Only run every ~5 cycles to save pollen
+        if self.cycle_count % 5 != 0 and self.cycle_count > 0:
+            return
+
+        print(f"[StructuralHoles] Found {len(holes)} disconnected domain pairs out of {len(all_pairs)} total")
+
+        # Generate bridge directions for the top holes (limit to 3 per run)
+        fd_manager = FutureDirectionsManager(self.workspace)
+        added = 0
+        for d1, d2 in sorted(holes)[:3]:
+            existing_bridge = any(
+                d1 in d.domains and d2 in d.domains
+                for d in fd_manager._directions
+                if d.status == "available"
+            )
+            if existing_bridge:
+                continue
+
+            direction = FutureDirection(
+                id=fd_manager._next_id(),
+                title=f"Bridge: {d1} ↔ {d2}",
+                description=f"The key insight is that {d1} and {d2} have no provenance connections in the knowledge graph — they are structural holes. A theorem connecting {d1} structures to {d2} results would create the first knowledge graph edge between these domains and unlock cross-domain research. Why now: the catalog has sufficient depth in both domains to make a bridge theorem tractable. Find a specific result in {d1} that has an analog or consequence in {d2}, state the precise correspondence, and prove it.",
+                source_exp_id="structural_hole",
+                source_path="hole_mining",
+                domains=[d1, d2],
+                depth_estimate=4,
+                priority_score=0.90,
+                proof_strategy=f"Search catalog for {d1} theorems with structural analogs in {d2}. Formalize the analogy as a functor or reduction. Prove the correspondence.",
+            )
+            fd_manager.add_direction(direction)
+            added += 1
+            print(f"[StructuralHoles] Added bridge direction: {d1} ↔ {d2}")
+
+        if added > 0:
+            fd_manager._save()
 
     def _prune_catalog(self) -> None:
         """Immortalize best theorems into FINAL/, remove junk from the Catalog.
@@ -2466,6 +2569,13 @@ Research mode: {concept.research_mode}
 
         # 8. COMMIT
         self.commit(job)
+
+        # 9. Challenge problem generation from successful research
+        if job.quality_score and job.quality_score >= 0.5:
+            try:
+                self._generate_challenge_problem(job)
+            except Exception as e:
+                print(f"[Challenge] Warning: challenge generation failed: {e}")
 
         return job
 
