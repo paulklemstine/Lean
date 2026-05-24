@@ -5059,7 +5059,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 1.0,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "9198e7f7",
       "timestamp": "2026-05-21T13:13:45.062750+00:00",
       "catalog_references": [],
