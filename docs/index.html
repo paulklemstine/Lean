@@ -241,7 +241,7 @@
     </div>
 
     <script src="js/state.js"></script>
-    <script src="packages_db.js"></script>
+    <script src="package_index.js"></script>
     <script src="js/theme.js"></script>
     <script src="js/sidebar.js"></script>
     <script src="js/lightbox.js"></script>
@@ -282,7 +282,7 @@
                 const prevDirCount = (window.FUTURE_DIRECTIONS || []).length;
 
                 const script = document.createElement('script');
-                script.src = 'packages_db.js?v=' + Date.now();
+                script.src = 'package_index.js?v=' + Date.now();
                 script.onload = () => {
                     try {
                         const newIndex = window.PACKAGE_INDEX || [];
@@ -322,7 +322,7 @@
                     }
                     script.remove();
                 };
-                script.onerror = () => { console.warn('[Aether] Failed to load packages_db.js'); script.remove(); };
+                script.onerror = () => { console.warn('[Aether] Failed to load package_index.js'); script.remove(); };
                 document.head.appendChild(script);
             } catch (err) {
                 console.warn('[Aether] Poll error:', err);

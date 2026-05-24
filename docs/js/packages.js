@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const packageView = document.getElementById('package-view');
     const tabs = document.querySelectorAll('.tab-btn');
 
+    // Package data cache: filename -> data
+    if (!window.Aether.packageCache) window.Aether.packageCache = {};
+
     // Tab switching
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -15,21 +18,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    window.loadPackage = function(filename) {
-        if (!window.PACKAGE_DB || !window.PACKAGE_DB[filename]) {
-            alert(`Error: ${filename} not found in packages_db.js`);
+    window.loadPackage = async function(filename) {
+        // Check cache first
+        if (window.Aether.packageCache[filename]) {
+            const data = window.Aether.packageCache[filename];
+            window.Aether.currentPackage = data;
+            renderPackage(data, filename);
+            welcomeScreen.classList.add('hidden');
+            packageView.classList.remove('hidden');
+            renderMathInElement(document.getElementById('package-view'), {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false},
+                    {left: '\\[', right: '\\]', display: true}
+                ],
+                throwOnError: false
+            });
             return;
         }
 
+        // Show loading state
+        welcomeScreen.classList.add('hidden');
+        packageView.classList.remove('hidden');
+        document.getElementById('pkg-title').textContent = 'Loading...';
+        document.getElementById('pkg-domain').textContent = '';
+        document.getElementById('pkg-date').textContent = '';
+        const timeEl = document.getElementById('pkg-time');
+        if (timeEl) timeEl.style.display = 'none';
+
         try {
-            const data = window.PACKAGE_DB[filename];
+            const resp = await fetch(filename);
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const data = await resp.json();
+            window.Aether.packageCache[filename] = data;
             window.Aether.currentPackage = data;
             renderPackage(data, filename);
 
-            welcomeScreen.classList.add('hidden');
-            packageView.classList.remove('hidden');
-
-            // Trigger KaTeX render
             renderMathInElement(document.getElementById('package-view'), {
                 delimiters: [
                     {left: '$$', right: '$$', display: true},
@@ -41,7 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } catch(err) {
             console.error(err);
-            alert(`Error rendering package data: ${err.message}`);
+            document.getElementById('pkg-title').textContent = 'Error';
+            document.getElementById('content-article').innerHTML = `<p style="color:var(--text-muted)">Failed to load ${filename}: ${err.message}</p>`;
         }
     };
 
@@ -83,8 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             paperDiv.innerHTML = '<p style="color:var(--text-muted)">No research paper provided.</p>';
         }
-
-        // Visualizations (tab removed — skip rendering)
 
         // Algorithms (pseudocode) rendered above demos in the Interactive tab
         renderCodeBlocks('content-algorithms', data.algorithms, 'pseudocode');
@@ -133,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderLineageLinks(container, pkgData) {
         const pkgExpId = pkgData.exp_id || '';
-        if (!window.PACKAGE_DB || !window.PACKAGE_INDEX) {
+        if (!window.PACKAGE_DB_INDEX || !window.PACKAGE_INDEX) {
             container.innerHTML = '';
             return;
         }
@@ -150,18 +174,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const parents = parentIds.map(id => {
             const fn = expIdToFilename[id];
             if (!fn) return null;
-            const data = window.PACKAGE_DB[fn];
-            return { filename: fn, title: data ? data.title : id, exp_id: id };
+            const entry = window.PACKAGE_DB_INDEX[fn];
+            return { filename: fn, title: entry ? entry.title : id, exp_id: id };
         }).filter(Boolean);
 
         // Find children: packages whose source_exp_ids contains this package's exp_id
         const children = [];
         window.PACKAGE_INDEX.forEach(p => {
             if (p.exp_id === pkgExpId) return;
-            const data = window.PACKAGE_DB[p.filename];
-            if (!data || !data.source_exp_ids) return;
-            if (data.source_exp_ids.includes(pkgExpId)) {
-                children.push({ filename: p.filename, title: data.title || p.title, exp_id: p.exp_id });
+            const entry = window.PACKAGE_DB_INDEX[p.filename];
+            if (!entry || !entry.source_exp_ids) return;
+            if (entry.source_exp_ids.includes(pkgExpId)) {
+                children.push({ filename: p.filename, title: entry.title || p.title, exp_id: p.exp_id });
             }
         });
 

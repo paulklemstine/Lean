@@ -1899,7 +1899,7 @@
             const node = findNodeAt(e.offsetX, e.offsetY);
             if (node) {
                 const filename = node.id + '.json';
-                if (window.PACKAGE_DB && window.PACKAGE_DB[filename]) {
+                if (window.PACKAGE_DB_INDEX && window.PACKAGE_DB_INDEX[filename]) {
                     loadPackage(filename);
                 }
             }
@@ -2005,7 +2005,7 @@
                 const node = findNodeAt(touch.clientX - rect.left, touch.clientY - rect.top);
                 if (node) {
                     const filename = node.id + '.json';
-                    if (window.PACKAGE_DB && window.PACKAGE_DB[filename]) {
+                    if (window.PACKAGE_DB_INDEX && window.PACKAGE_DB_INDEX[filename]) {
                         loadPackage(filename);
                     }
                 }

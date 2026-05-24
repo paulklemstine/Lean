@@ -154,7 +154,7 @@ def update_index():
     os.makedirs(viz_dir, exist_ok=True)
 
     package_index = []
-    package_db = {}
+    package_db_index = {}  # lightweight: {filename: {title, exp_id, source_exp_ids, domain}}
     total_viz_extracted = 0
 
     # Load quality scores from autoresearch data
@@ -195,8 +195,6 @@ def update_index():
                     )
                     if rel_path:
                         viz["file"] = rel_path
-                        # Remove the bulky data from the in-memory copy
-                        # that goes into packages_db.js
                         del viz["data"]
                         total_viz_extracted += 1
 
@@ -211,8 +209,10 @@ def update_index():
                     with open(alg_path, 'w', encoding='utf-8') as af:
                         af.write(alg_code)
                     alg["code_file"] = f"visualizations/{alg_filename}"
-                    # Keep code inline in the JSON for Pyodide — it needs it
-                    # at runtime. But we've also saved it as a file.
+
+        # Rewrite the individual JSON file with extracted viz paths
+        with open(f, 'w', encoding='utf-8') as out_f:
+            json.dump(data, out_f, indent=2, ensure_ascii=False)
 
         package_index.append({
             "filename": f,
@@ -224,39 +224,44 @@ def update_index():
             "quality": quality_label,
         })
 
-        package_db[f] = data
+        # Lightweight index for lineage links (no big text fields)
+        package_db_index[f] = {
+            "title": data.get("title", "Untitled Research"),
+            "exp_id": data.get("exp_id", ""),
+            "source_exp_ids": data.get("source_exp_ids", []),
+            "domain": data.get("domain", "General"),
+        }
 
     package_index.sort(key=lambda x: x["date"], reverse=True)
 
     js_content = f"""// AUTO-GENERATED FILE. DO NOT EDIT.
-// This file bundles all JSON packages so they can be loaded from file:// without CORS issues.
-// Visualizations have been extracted to the visualizations/ directory as real files.
-// Each visualization entry has a "file" field pointing to the extracted image.
+// Lightweight index for sidebar, graph, and lineage links.
+// Full package data is loaded on-demand from individual .json files.
 
 window.PACKAGE_INDEX = {json.dumps(package_index, indent=2)};
 
-window.PACKAGE_DB = {json.dumps(package_db, indent=2)};
+window.PACKAGE_DB_INDEX = {json.dumps(package_db_index, indent=2)};
 """
 
-    with open("packages_db.js", "w", encoding="utf-8") as out:
+    with open("package_index.js", "w", encoding="utf-8") as out:
         out.write(js_content)
 
     # Calculate sizes
-    db_size = os.path.getsize("packages_db.js")
+    idx_size = os.path.getsize("package_index.js")
     viz_size = sum(
         os.path.getsize(os.path.join(viz_dir, f))
         for f in os.listdir(viz_dir)
         if os.path.isfile(os.path.join(viz_dir, f))
     )
 
-    print(f"Successfully bundled {len(json_files)} packages into packages_db.js ({db_size/1024:.0f} KB)")
+    print(f"Generated package_index.js ({idx_size/1024:.0f} KB) with {len(json_files)} packages")
     print(f"Extracted {total_viz_extracted} visualizations into visualizations/ ({viz_size/1024:.0f} KB)")
 
     # Generate knowledge graph data
     generate_graph_data(script_dir, package_index)
 
     # Append future research directions
-    append_future_directions(script_dir, os.path.join(script_dir, "packages_db.js"))
+    append_future_directions(script_dir, os.path.join(script_dir, "package_index.js"))
 
     # Ensure .nojekyll exists for GitHub Pages
     nojekyll_path = os.path.join(script_dir, ".nojekyll")
@@ -268,9 +273,9 @@ window.PACKAGE_DB = {json.dumps(package_db, indent=2)};
 
 
 def generate_graph_data(script_dir, package_index):
-    """Read lineage.json and append window.PACKAGE_GRAPH to packages_db.js."""
+    """Read lineage.json and append window.PACKAGE_GRAPH to package_index.js."""
     lineage_path = os.path.join(script_dir, "lineage.json")
-    db_path = os.path.join(script_dir, "packages_db.js")
+    db_path = os.path.join(script_dir, "package_index.js")
 
     # Domain → shape mapping for the Knowledge Graph
     DOMAIN_SHAPES = {
@@ -403,7 +408,7 @@ def generate_graph_data(script_dir, package_index):
                     node["priority_score"] = None
                     node["quality"] = "unrated"
 
-    # Append to packages_db.js
+    # Append to package_index.js
     graph_js = f"""
 
 // Knowledge Graph Data (auto-generated from lineage.json)
@@ -412,11 +417,11 @@ window.PACKAGE_GRAPH = {json.dumps(graph_data, indent=2)};
     with open(db_path, 'a', encoding='utf-8') as f:
         f.write(graph_js)
 
-    print(f"Appended PACKAGE_GRAPH to packages_db.js ({len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges, {len(graph_data.get('domain_bridges', []))} bridges)")
+    print(f"Appended PACKAGE_GRAPH to package_index.js ({len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges, {len(graph_data.get('domain_bridges', []))} bridges)")
 
 
 def append_future_directions(script_dir, db_path):
-    """Read future_directions.json and append window.FUTURE_DIRECTIONS to packages_db.js.
+    """Read future_directions.json and append window.FUTURE_DIRECTIONS to package_index.js.
 
     Tries the Aether workspace first (local dev), then falls back to
     future_directions.json in the Packages directory (CI/GitHub Pages).
@@ -487,7 +492,7 @@ window.FUTURE_DIRECTIONS = {json.dumps(display_dirs, indent=2)};
     with open(db_path, 'a', encoding='utf-8') as f:
         f.write(fd_js)
 
-    print(f"Appended FUTURE_DIRECTIONS to packages_db.js ({len(display_dirs)} directions)")
+    print(f"Appended FUTURE_DIRECTIONS to package_index.js ({len(display_dirs)} directions)")
 
 
 if __name__ == "__main__":
