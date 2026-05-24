@@ -9644,7 +9644,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8999999999999999,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "b1e09de9",
       "timestamp": "2026-05-23T15:05:43.190169+00:00",
       "catalog_references": [],
