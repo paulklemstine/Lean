@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Dynamics / Spectral Graph Theory",
     "date": "2026-05-24T16:54:41Z",
     "exp_id": "3a93ca93",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6300167123287672,
+    "quality": "partial"
   },
   {
     "filename": "direction_1_contractivity_of_evaluation_strategies.json",
@@ -6757,8 +6757,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-24T16:54:41Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6300167123287672,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -8626,25 +8626,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-22T20:20:08.810718+00:00"
   },
   {
-    "id": "fd_0373",
-    "title": "Direction 2: CRT Product Bottleneck Theorem",
-    "description": "**Conjecture**: For coprime $a, b \\geq 2$, the minimum basin conductance satisfies $h_{\\text{basin}}(ab) \\leq \\min(h_{\\text{basin}}(a), h_{\\text{basin}}(b))$, up to an explicit normalization factor depending on $a$ and $b$. More precisely, the basin structure of $ab$ is controlled by the product of the basin structures of $a$ and $b$ via CRT.\n\n**Test**: For all coprime pairs $(a, b)$ with $2 \\leq a \\leq b \\leq 100$, compute $h_{\\text{basin}}(ab)$, $h_{\\text{basin}}(a)$, and $h_{\\text{basin}}(b)$. Verify the monotonicity inequality. Identify the optimal normalization.\n\n**Impact**: Would give a formal product formula for spectral deterioration under factorization, proving that \"more factors = worse expansion\" in a quantitatively precise sense.\n\n**Catalog References**: `Pythagorean/SpectralGap.lean` \u2014 `arithmetic_fragmentation_theorem`, `sqBasin_disjoint_of_ne_idempotent`; `Catalog/FINAL/Pythagorean/DynamicalSquaring.lean` \u2014 `crt_squaring_equivariant`\n\n**Proof Strategy**: Use the CRT equivariance of squaring (`crt_squaring_equivariant`) to decompose the adjacency matrix of $G_{ab}$ as a tensor-like product. Basin conductance of the product should be bounded by the minimum of the factor conductances via standard product graph inequalities.\n\n**Domain Bridges**: Number theory (CRT) \u2194 spectral graph theory (product graphs) \u2194 combinatorics\n\n**Lineage**: Direct extension of the CRT squaring equivariance theorem and basin disjointness.\n\n**Ambition**: Solid extension \u2014 concrete and provable with existing Lean infrastructure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "9afcf878",
-    "consumed_by_exp_id": "3a93ca93",
-    "timestamp": "2026-05-23T01:31:08.320754+00:00"
-  },
-  {
     "id": "fd_0403",
     "title": "Extension to Stronger Proof Systems",
     "description": "Conjecture: The clause-space-to-pathwidth correspondence extends to polynomial calculus (monomial space) and cutting planes (inequality space), with the same universal constant or a constant depending only on the proof system.\n\nTest: Define configuration graphs for polynomial calculus (configurations = sets of monomials) and cutting planes (configurations = sets of inequalities). Enumerate small instances (n \u2264 3 variables). Compute space and pathwidth. Verify the proportionality constant.\n\nImpact: Would unify space complexity across proof systems under a single graph-theoretic framework.",
@@ -9280,10 +9261,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ecf7ce66",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d0ac1ba4",
     "timestamp": "2026-05-23T22:51:26.030576+00:00"
   },
   {
@@ -9982,10 +9963,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "383acc58",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9cefb91e",
     "timestamp": "2026-05-24T09:38:00.835754+00:00"
   },
   {
