@@ -328,6 +328,27 @@ class KnowledgeExtractor:
         # Inflight concepts (to avoid repeating requests)
         inflight_concepts = [j.concept.title for j in self.inflight.values()] if hasattr(self, 'inflight') and self.inflight else []
 
+        # Domain diversity: cap any domain at 30% of inflight jobs
+        inflight_domain_counts = {}
+        total_inflight = len(self.inflight) if hasattr(self, 'inflight') and self.inflight else 0
+        if hasattr(self, 'inflight') and self.inflight:
+            for j in self.inflight.values():
+                d = j.concept.domain if hasattr(j, 'concept') else ''
+                inflight_domain_counts[d] = inflight_domain_counts.get(d, 0) + 1
+        oversaturated_domains = set()
+        if total_inflight > 0:
+            for d, count in inflight_domain_counts.items():
+                if count / total_inflight > 0.30:
+                    oversaturated_domains.add(d)
+        if oversaturated_domains and loop_result['domain'] in oversaturated_domains:
+            print(f"[Discover] Domain {loop_result['domain']} is oversaturated ({inflight_domain_counts.get(loop_result['domain'], 0)}/{total_inflight} inflight), redirecting to under-explored domain")
+            # Find the least-represented domain among available options
+            all_domains = ['Algebra', 'Bridges', 'Computation', 'Cryptography', 'EML', 'Geometry', 'Logic', 'MachineLearning', 'Physics', 'Pythagorean', 'Speculative', 'Tropical']
+            under_explored = [d for d in all_domains if d not in oversaturated_domains and d not in inflight_domain_counts]
+            if under_explored:
+                loop_result['domain'] = under_explored[0]
+                print(f"[Discover] Redirected to {loop_result['domain']}")
+
         # Pi-Agent: THE BRAINS — selects the specific concept
         # Prefer future directions from previous cycles
         source_exp_ids = []

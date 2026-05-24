@@ -698,6 +698,15 @@ class FutureDirectionsManager:
         available.sort(key=lambda d: d.priority_score, reverse=True)
         return available[:limit]
 
+    def _domain_counts(self) -> Dict[str, int]:
+        """Count how many available directions each domain has."""
+        counts: Dict[str, int] = {}
+        for d in self._directions:
+            if d.status == "available":
+                for domain in d.domains:
+                    counts[domain] = counts.get(domain, 0) + 1
+        return counts
+
     def select_direction_weighted(
         self, domain_filter: Optional[str] = None,
         recent_domain_quality: Optional[Dict[str, float]] = None,
@@ -1050,6 +1059,17 @@ class FutureDirectionsManager:
         # bridge_bonus: cross-domain bridges add value (additive, up to ~0.15)
         bridge_bonus = 0.05 * min(len(direction.domain_bridges), 3) if direction.domain_bridges else 0.0
 
+        # domain_diversity_penalty: oversaturated domains get -0.1
+        domain_diversity_penalty = 0.0
+        domain_counts = self._domain_counts()
+        for d in direction.domains:
+            if domain_counts.get(d, 0) > 50:
+                domain_diversity_penalty = -0.1
+                break
+
+        # arxiv_boost: directions sourced from ArXiv mining get +0.15
+        arxiv_boost = 0.15 if direction.source_exp_id and direction.source_exp_id.startswith("arxiv") else 0.0
+
         return (
             0.18 * novelty
             + 0.12 * outcome_bonus
@@ -1062,6 +1082,8 @@ class FutureDirectionsManager:
             + 0.05 * catalog_anchor_bonus
             + fun_bonus
             + bridge_bonus
+            + domain_diversity_penalty
+            + arxiv_boost
         )
 
     def prune_directions(

@@ -109,12 +109,16 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
        explaining the discovery to a broad audience.
 
     9. FUTURE_DIRECTIONS ARE MANDATORY OUTPUT: Every research cycle MUST produce
-       a FUTURE_DIRECTIONS.md that identifies 3-5 specific, testable scientific
-       hypotheses, including 1-2 grand_challenge paradigm-shifting conjectures and
-       2-3 solid extensions building directly on Catalog theorems. Each direction
-       must use the structured format with explicit fields: Conjecture, Test, Impact,
-       Catalog References, Proof Strategy, Domain Bridges, Lineage, and Ambition.
-       Every hypothesis must be daring enough to matter and specific enough to fail.
+       a FUTURE_DIRECTIONS.md with 3-5 research directions. Each direction MUST be
+       a freeform paragraph of original mathematical insight — NOT a filled-out form.
+       Avoid templated Conjecture/Test/Impact patterns. Instead, write as a
+       mathematician explaining to a colleague: what you discovered, why it matters,
+       and what should come next. Each direction MUST include:
+       - A "The key insight is..." sentence that states the core novelty in plain language
+       - A "Why now?" justification: what recent result makes this tractable
+       - At least ONE direction must bridge to a domain outside your current focus
+         (e.g., if working in Pythagorean, bridge to Analysis, Probability, or Cryptography)
+       Every direction must be daring enough to matter and specific enough to fail.
 
     10. FUTURE_DIRECTIONS.MD MUST BE STANDALONE AND SYNTHESIZED: The
         FUTURE_DIRECTIONS.md must begin with a ## Synthesis section that ties all
@@ -221,8 +225,9 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
 
     5. DEMAND ALL MANDATORY DELIVERABLES: Every brief must explicitly request
        that Aristotle produce ALL of:
-       (a) A structured FUTURE_DIRECTIONS.md with 3-5 testable scientific hypotheses —
-           each a falsifiable conjecture with a clear test, not a vague exploration.
+       (a) A FUTURE_DIRECTIONS.md with 3-5 research directions — each must include
+           "The key insight is..." and "Why now?" sentences. At least one direction
+           must bridge to a different domain. Write as original prose, not templates.
        (b) A RESEARCH_PAPER.md that is a STANDALONE scientific document — someone
            reading ONLY this paper (no access to the code) must understand what was
            discovered, why it matters, and what to investigate next.
@@ -1059,7 +1064,7 @@ class PiAgentClient:
             ---
 
             Output a JSON array of objects:
-            [{{"title": "...", "description": "Conjecture: [precise statement]. Test: [what would confirm/refute]. Impact: [what this enables]",
+            [{{"title": "...", "description": "The key insight is [core novelty]. Why now: [what makes this tractable]. [Freeform mathematical insight — what to prove and why it matters]",
                "domain": "...", "research_mode": "prove", "priority_score": 0.85,
                "catalog_references": ["..."]}}]
         """)
@@ -1266,12 +1271,14 @@ class PiAgentClient:
             5. Filling sorries only when they close significant open problems.
 
             Be SPECIFIC and MATHEMATICAL. Don't say "explore X" — propose a
-            falsifiable hypothesis: "Conjecture: X holds Y. Test: if Z then the
-            conjecture fails. Impact: this would open field W." Reference specific
+            research direction with: The key insight is [what's genuinely new].
+            Why now: [what recent result makes this tractable]. What to prove and
+            why it matters — in your own words, not a template. Reference specific
             catalog theorems by name, preferring files from Catalog/FINAL/ (vetted,
             high-quality results). Do real science — hypotheses that can fail.
+            At least one concept MUST bridge to a different domain.
 
-            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "Conjecture: [precise falsifiable statement]. Test: [what confirms/refutes]. Impact: [what this enables]", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
+            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "The key insight is [core novelty]. Why now: [what makes this tractable]. [Freeform mathematical insight]", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
         """)
 
         # Concept generation: try LLM with short timeout, quick fallback to local

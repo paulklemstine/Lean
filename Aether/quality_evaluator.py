@@ -166,6 +166,12 @@ class QualityEvaluator:
             score.importance = llm_scores.get("importance", 0.5)
             score.usefulness = llm_scores.get("usefulness", 0.5)
             score.applications = llm_scores.get("applications", 0.5)
+
+            # "So What?" gate: does this result matter to a mathematician outside the subfield?
+            so_what_adjustment = self._eval_so_what(
+                concept_title, concept_description, lean_source
+            )
+            score.importance = max(0.0, min(1.0, score.importance + so_what_adjustment))
         else:
             # Heuristic fallback
             score.importance = min(1.0, score.proof_depth * 0.7 + score.novelty * 0.3)
@@ -526,6 +532,57 @@ class QualityEvaluator:
         return {"importance": 0.5, "usefulness": 0.5, "applications": 0.5}
 
     # ── Convenience ──
+
+    def _eval_so_what(self, concept_title: str, concept_description: str, lean_source: str) -> float:
+        """Ask the LLM 'so what?' — does this matter to a mathematician outside the subfield?
+
+        Returns an adjustment to importance: -0.15 for generic answers, +0.1 for compelling ones.
+        """
+        if not self.pi_agent:
+            return 0.0
+
+        # Truncate for prompt
+        desc_preview = (concept_description or "")[:500]
+        title_preview = (concept_title or "Untitled")[:120]
+
+        # Count key proof elements for context
+        theorem_count = len(re.findall(r'\b(?:theorem|lemma)\s+\w+', lean_source or ""))
+        sorry_count = (lean_source or "").count("sorry")
+
+        prompt = (
+            f"Research: \"{title_preview}\"\n"
+            f"Description: {desc_preview}\n"
+            f"Theorems: {theorem_count}, Sorry: {sorry_count}\n\n"
+            "In ONE sentence, why does this result matter to a mathematician "
+            "who does NOT work in this subfield? Be honest — if the result is "
+            "a minor extension of known techniques or only interesting to specialists, say so.\n\n"
+            "Respond in this exact JSON format:\n"
+            '{"significance": "generic"|"noteworthy"|"compelling", "reason": "one sentence"}\n\n'
+            '"generic" = minor extension, specialist-only, or restates known results\n'
+            '"noteworthy" = meaningful contribution with some broader interest\n'
+            '"compelling" = resolves a long-standing question, opens a new area, or bridges disconnected fields'
+        )
+
+        try:
+            raw = self.pi_agent._call_ollama(
+                "You are a blunt mathematical significance assessor. Be skeptical.",
+                prompt, timeout=30
+            )
+            result = self.pi_agent._parse_json_response(raw)
+            if not result:
+                return 0.0
+
+            sig = result.get("significance", "generic")
+            if sig == "compelling":
+                return 0.1
+            elif sig == "noteworthy":
+                return 0.0
+            else:  # generic
+                return -0.15
+
+        except Exception as e:
+            print(f"[QualityEval] So-What gate failed: {e}")
+            return 0.0
 
     def is_worth_integrating(self, score: QualityScore, threshold: float = 0.25) -> bool:
         """Should this result be integrated into the catalog?"""
