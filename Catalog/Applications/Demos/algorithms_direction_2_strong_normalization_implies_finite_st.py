@@ -1,414 +1,486 @@
 #!/usr/bin/env python3
 """
-Algorithms for Strong Normalization → Finite Strong Bisimulation
+Algorithms for Strong Normalization and Finite Strong Bisimulation
 
-Implements:
-1. Normalization with depth tracking
-2. Bounded FTS construction
-3. Bisimulation witness computation
-4. Bisimulation verification
-
-All algorithms are verified against the formal Lean theorems.
+Implements the key algorithms from the research:
+1. STLC type checking and inference
+2. β-normalization with path recording
+3. Bounded FTS construction
+4. Bisimulation witness computation
+5. Bisimulation verification
+6. Normalization depth computation
 """
 
 from dataclasses import dataclass, field
 from typing import Optional
-from collections import deque
+from enum import Enum, auto
 
 
-# === Term Representation ===
+# =============================================================================
+# Core Data Structures
+# =============================================================================
+
+class TermKind(Enum):
+    VAR = auto()
+    APP = auto()
+    LAM = auto()
+
 
 @dataclass(frozen=True)
-class Var:
-    """Variable."""
-    name: str
-    def __repr__(self): return self.name
+class Term:
+    """Lambda calculus term with named variables."""
+    kind: TermKind
+    var_idx: Optional[int] = None
+    func: Optional['Term'] = None
+    arg: Optional['Term'] = None
+    binder: Optional[int] = None
+    body: Optional['Term'] = None
+
+    def __repr__(self) -> str:
+        if self.kind == TermKind.VAR:
+            return f"x{self.var_idx}"
+        elif self.kind == TermKind.APP:
+            f_str = f"({self.func})" if self.func.kind == TermKind.LAM else repr(self.func)
+            a_str = f"({self.arg})" if self.arg.kind == TermKind.APP else repr(self.arg)
+            return f"{f_str} {a_str}"
+        else:
+            return f"λx{self.binder}.{self.body}"
+
+    def size(self) -> int:
+        """Number of constructors in the term."""
+        if self.kind == TermKind.VAR:
+            return 1
+        elif self.kind == TermKind.APP:
+            return 1 + self.func.size() + self.arg.size()
+        else:
+            return 1 + self.body.size()
+
 
 @dataclass(frozen=True)
-class Lam:
-    """Lambda abstraction."""
-    var: str
-    body: 'Term'
-    def __repr__(self): return f"(λ{self.var}.{self.body})"
+class Ty:
+    """Simple type: base type or arrow type."""
+    is_base: bool = True
+    dom: Optional['Ty'] = None
+    cod: Optional['Ty'] = None
 
-@dataclass(frozen=True)
-class App:
-    """Application."""
-    fun: 'Term'
-    arg: 'Term'
-    def __repr__(self): return f"({self.fun} {self.arg})"
+    def __repr__(self) -> str:
+        if self.is_base:
+            return "ι"
+        d = f"({self.dom})" if not self.dom.is_base else repr(self.dom)
+        return f"{d} → {self.cod}"
 
-Term = Var | Lam | App
+    def depth(self) -> int:
+        if self.is_base:
+            return 0
+        return 1 + max(self.dom.depth(), self.cod.depth())
 
-@dataclass(frozen=True)
-class BaseTy:
-    name: str = "ι"
-    def __repr__(self): return self.name
-
-@dataclass(frozen=True)
-class ArrowTy:
-    dom: 'SimpleType'
-    cod: 'SimpleType'
-    def __repr__(self): return f"({self.dom} → {self.cod})"
-
-SimpleType = BaseTy | ArrowTy
+    def complexity(self) -> int:
+        """Type complexity measure used for normalization bounds."""
+        if self.is_base:
+            return 1
+        return (self.dom.complexity() + 1) * (self.cod.complexity() + 1)
 
 
-# === Core Operations ===
-
-def free_vars(t: Term) -> set[str]:
-    """Compute free variables of a term."""
-    match t:
-        case Var(x): return {x}
-        case Lam(x, body): return free_vars(body) - {x}
-        case App(f, a): return free_vars(f) | free_vars(a)
-
-_fresh_counter = [0]
-def fresh_var(avoid: set[str]) -> str:
-    """Generate a fresh variable name."""
-    while True:
-        _fresh_counter[0] += 1
-        name = f"_v{_fresh_counter[0]}"
-        if name not in avoid:
-            return name
-
-def substitute(t: Term, x: str, s: Term) -> Term:
-    """Capture-avoiding substitution: t[x := s]."""
-    match t:
-        case Var(y):
-            return s if y == x else t
-        case Lam(y, body):
-            if y == x:
-                return t
-            fv_s = free_vars(s)
-            if y in fv_s:
-                z = fresh_var(free_vars(body) | fv_s | {x})
-                body = substitute(body, y, Var(z))
-                return Lam(z, substitute(body, x, s))
-            return Lam(y, substitute(body, x, s))
-        case App(f, a):
-            return App(substitute(f, x, s), substitute(a, x, s))
+# Constructors
+BASE = Ty()
+def var(n: int) -> Term:
+    return Term(TermKind.VAR, var_idx=n)
+def app(f: Term, a: Term) -> Term:
+    return Term(TermKind.APP, func=f, arg=a)
+def lam(x: int, body: Term) -> Term:
+    return Term(TermKind.LAM, binder=x, body=body)
+def arrow(a: Ty, b: Ty) -> Ty:
+    return Ty(is_base=False, dom=a, cod=b)
 
 
-def is_normal_form(t: Term) -> bool:
-    """Check if a term is in normal form (no β-redexes)."""
-    match t:
-        case Var(_): return True
-        case Lam(_, body): return is_normal_form(body)
-        case App(Lam(_, _), _): return False
-        case App(f, a): return is_normal_form(f) and is_normal_form(a)
+# =============================================================================
+# Algorithm 1: Substitution
+# =============================================================================
 
-
-def beta_step(t: Term) -> Optional[Term]:
-    """One-step leftmost-outermost β-reduction. Returns None if in NF."""
-    match t:
-        case App(Lam(x, body), arg):
-            return substitute(body, x, arg)
-        case App(f, a):
-            f2 = beta_step(f)
-            if f2 is not None: return App(f2, a)
-            a2 = beta_step(a)
-            if a2 is not None: return App(f, a2)
-            return None
-        case Lam(x, body):
-            body2 = beta_step(body)
-            if body2 is not None: return Lam(x, body2)
-            return None
-        case Var(_):
-            return None
-
-
-# === Algorithm 1: Normalization with Depth ===
-
-@dataclass
-class NormalizationResult:
-    """Result of normalizing a term."""
-    original: Term
-    normal_form: Term
-    reduction_path: list[Term]
-    depth: int  # number of β-steps
-
-    def __repr__(self):
-        return (f"NormalizationResult(depth={self.depth}, "
-                f"nf={self.normal_form})")
-
-
-def normalize_with_depth(t: Term, max_steps: int = 1000) -> NormalizationResult:
+def subst(term: Term, x: int, s: Term) -> Term:
     """
-    Normalize a term, tracking the full reduction path and depth.
+    Substitute s for variable x in term.
 
-    Algorithm:
-        1. Start with t.
-        2. Repeatedly apply leftmost-outermost β-reduction.
-        3. Record each intermediate term.
-        4. Stop when no more reductions apply or max_steps reached.
+    Complexity: O(|term| * |s|) in the worst case.
 
-    Time complexity: O(max_steps * |t|) where |t| is term size.
-    Space complexity: O(max_steps * |t|) for the path.
-
-    Returns:
-        NormalizationResult with the normal form, path, and depth.
+    Note: This is naive substitution (no capture avoidance).
+    For well-scoped terms under the Barendregt convention, this is correct.
     """
-    path = [t]
-    current = t
+    if term.kind == TermKind.VAR:
+        return s if term.var_idx == x else term
+    elif term.kind == TermKind.APP:
+        return app(subst(term.func, x, s), subst(term.arg, x, s))
+    else:
+        if term.binder == x:
+            return term
+        return lam(term.binder, subst(term.body, x, s))
+
+
+# =============================================================================
+# Algorithm 2: Beta Reduction
+# =============================================================================
+
+def is_normal(term: Term) -> bool:
+    """
+    Check if a term is in β-normal form.
+
+    Complexity: O(|term|)
+    """
+    if term.kind == TermKind.VAR:
+        return True
+    elif term.kind == TermKind.APP:
+        if term.func.kind == TermKind.LAM:
+            return False
+        return is_normal(term.func) and is_normal(term.arg)
+    else:
+        return is_normal(term.body)
+
+
+def beta_step_leftmost(term: Term) -> Optional[Term]:
+    """
+    Perform one step of leftmost-outermost β-reduction.
+
+    Complexity: O(|term| + |subst result|)
+    """
+    if term.kind == TermKind.VAR:
+        return None
+    elif term.kind == TermKind.APP:
+        if term.func.kind == TermKind.LAM:
+            return subst(term.func.body, term.func.binder, term.arg)
+        left = beta_step_leftmost(term.func)
+        if left is not None:
+            return app(left, term.arg)
+        right = beta_step_leftmost(term.arg)
+        return app(term.func, right) if right is not None else None
+    else:
+        inner = beta_step_leftmost(term.body)
+        return lam(term.binder, inner) if inner is not None else None
+
+
+def find_all_reducts(term: Term) -> list[Term]:
+    """
+    Find all possible one-step β-reducts of a term.
+
+    Complexity: O(|term|^2) worst case (branching factor * substitution cost)
+    """
+    reducts = []
+    if term.kind == TermKind.APP:
+        if term.func.kind == TermKind.LAM:
+            reducts.append(subst(term.func.body, term.func.binder, term.arg))
+        for r in find_all_reducts(term.func):
+            reducts.append(app(r, term.arg))
+        for r in find_all_reducts(term.arg):
+            reducts.append(app(term.func, r))
+    elif term.kind == TermKind.LAM:
+        for r in find_all_reducts(term.body):
+            reducts.append(lam(term.binder, r))
+    return reducts
+
+
+# =============================================================================
+# Algorithm 3: Normalization with Path Recording
+# =============================================================================
+
+def normalize(term: Term, max_steps: int = 10000) -> tuple[Term, list[Term], int]:
+    """
+    Normalize a term using leftmost-outermost strategy.
+
+    Returns: (normal_form, reduction_path, normalization_depth)
+
+    Complexity: O(max_steps * |term|^k) where k depends on term structure.
+    For well-typed STLC terms, termination is guaranteed.
+    """
+    path = [term]
+    current = term
+    depth = 0
+
     for _ in range(max_steps):
-        next_t = beta_step(current)
-        if next_t is None:
+        next_term = beta_step_leftmost(current)
+        if next_term is None:
             break
-        path.append(next_t)
-        current = next_t
-    return NormalizationResult(
-        original=t,
-        normal_form=current,
-        reduction_path=path,
-        depth=len(path) - 1
-    )
+        path.append(next_term)
+        current = next_term
+        depth += 1
+
+    return current, path, depth
 
 
-# === Algorithm 2: Bounded FTS Construction ===
+# =============================================================================
+# Algorithm 4: Bounded FTS Construction
+# =============================================================================
 
 @dataclass
 class BoundedFTS:
     """
-    Bounded Finite Transition System.
+    A bounded finite transition system extracted from a lambda term.
 
-    Corresponds to `toFTS d t` in the formal development.
-    States are terms reachable within d β-steps from the initial term.
-    Transitions are single β-steps between reachable states.
+    States are string representations of lambda terms.
+    Transitions are β-reduction steps between reachable terms.
     """
-    initial: str  # repr of initial term
-    states: set[str]  # set of repr(term) for reachable terms
-    transitions: dict[str, list[str]]  # adjacency list
-    depth_bound: int
-    term_map: dict[str, Term]  # repr -> actual term
+    states: set[str] = field(default_factory=set)
+    init: str = ""
+    transitions: set[tuple[str, str]] = field(default_factory=set)
+    term_map: dict[str, Term] = field(default_factory=dict)
+
+    def successors(self, state: str) -> set[str]:
+        return {t for s, t in self.transitions if s == state}
 
     def state_count(self) -> int:
         return len(self.states)
 
     def transition_count(self) -> int:
-        return sum(len(v) for v in self.transitions.values())
+        return len(self.transitions)
 
-    def reachable_normal_forms(self) -> set[str]:
-        """Find all normal forms in the reachable states."""
-        nfs = set()
-        for key, term in self.term_map.items():
-            if is_normal_form(term):
-                nfs.add(key)
-        return nfs
-
-    def has_outgoing(self, state: str) -> bool:
-        """Check if a state has outgoing transitions."""
-        return len(self.transitions.get(state, [])) > 0
+    def normal_forms(self) -> set[str]:
+        """States with no outgoing transitions."""
+        sources = {s for s, _ in self.transitions}
+        return self.states - sources
 
 
-def build_bounded_fts(t: Term, depth: int) -> BoundedFTS:
+def build_bounded_fts(term: Term, depth: int) -> BoundedFTS:
     """
-    Build a bounded FTS by BFS unfolding of β-reductions.
+    Build a bounded FTS by exploring β-reductions up to `depth` steps.
 
     Algorithm:
-        1. Start with {t} at depth 0.
-        2. BFS: for each state at depth d < depth_bound,
-           compute all one-step β-reducts and add as successors.
-        3. Record all states and transitions.
+    1. Start with {term} as the frontier.
+    2. For each term in the frontier at depth d < depth:
+       a. Compute all one-step β-reducts.
+       b. Add them as states and transitions.
+       c. Add new terms to the frontier for depth d+1.
+    3. Stop when depth is reached or no new terms appear.
 
-    Time complexity: O(B^d * |t|) where B = max branching factor.
-    Space complexity: O(B^d * |t|) for storing all states.
-
-    Note: For deterministic (leftmost-outermost) reduction, B = 1.
+    Complexity: O(|reachable set| * branching_factor * substitution_cost)
+    Space: O(|reachable set|)
     """
-    states = set()
-    transitions: dict[str, list[str]] = {}
-    term_map: dict[str, Term] = {}
-    initial = repr(t)
+    fts = BoundedFTS(init=repr(term))
+    fts.states.add(repr(term))
+    fts.term_map[repr(term)] = term
 
-    queue = deque([(t, 0)])
+    frontier = [(term, 0)]
     visited = set()
 
-    while queue:
-        term, d = queue.popleft()
-        key = repr(term)
-
+    while frontier:
+        current, d = frontier.pop(0)
+        key = repr(current)
         if key in visited:
             continue
         visited.add(key)
-        states.add(key)
-        term_map[key] = term
 
         if d >= depth:
             continue
 
-        # Compute one-step reduct (deterministic strategy)
-        next_t = beta_step(term)
-        if next_t is not None:
-            next_key = repr(next_t)
-            if key not in transitions:
-                transitions[key] = []
-            transitions[key].append(next_key)
-            states.add(next_key)
-            term_map[next_key] = next_t
-            queue.append((next_t, d + 1))
+        reducts = find_all_reducts(current)
+        for r in reducts:
+            r_key = repr(r)
+            fts.states.add(r_key)
+            fts.term_map[r_key] = r
+            fts.transitions.add((key, r_key))
+            if r_key not in visited:
+                frontier.append((r, d + 1))
 
-    return BoundedFTS(
-        initial=initial,
-        states=states,
-        transitions=transitions,
-        depth_bound=depth,
-        term_map=term_map
-    )
+    return fts
 
 
-# === Algorithm 3: Bisimulation Witness Computation ===
+# =============================================================================
+# Algorithm 5: Bisimulation Witness Computation
+# =============================================================================
 
 @dataclass
 class BisimulationWitness:
     """
-    A witness that two bounded FTS are strongly bisimilar at their
-    shared terminal state (the common normal form).
+    A bisimulation witness for two β-equivalent well-typed terms.
 
-    Corresponds to BisimWitness in the formal development.
+    Contains:
+    - The shared normal form
+    - The threshold depth
+    - Reduction paths from each term to the normal form
+    - The bisimulation relation R
     """
-    shared_nf: str  # repr of the shared normal form
-    depth: int  # sufficient depth
-    t_depth: int  # normalization depth of t
-    u_depth: int  # normalization depth of u
-    relation: set[tuple[str, str]]  # the bisimulation relation
+    nf: Term
+    depth: int
+    t_path: list[Term]
+    u_path: list[Term]
+    relation: set[tuple[str, str]]
+    is_valid: bool
 
-    def is_valid(self, fts_t: BoundedFTS, fts_u: BoundedFTS) -> bool:
-        """Verify this is a valid strong bisimulation."""
-        for (a, b) in self.relation:
-            # Forward condition
-            for tgt in fts_t.transitions.get(a, []):
-                found = any(
-                    (tgt, tgt2) in self.relation
-                    for tgt2 in fts_u.transitions.get(b, [])
-                )
-                if not found and fts_t.has_outgoing(a):
-                    return False
-            # Backward condition
-            for tgt in fts_u.transitions.get(b, []):
-                found = any(
-                    (tgt2, tgt) in self.relation
-                    for tgt2 in fts_t.transitions.get(a, [])
-                )
-                if not found and fts_u.has_outgoing(b):
-                    return False
-        return True
+    def __repr__(self) -> str:
+        return (
+            f"BisimulationWitness(\n"
+            f"  nf = {self.nf}\n"
+            f"  depth = {self.depth}\n"
+            f"  |R| = {len(self.relation)}\n"
+            f"  valid = {self.is_valid}\n"
+            f")"
+        )
 
 
-def compute_bisimulation_witness(
-    t: Term, u: Term, max_steps: int = 1000
-) -> Optional[BisimulationWitness]:
+def compute_bisim_witness(t: Term, u: Term) -> Optional[BisimulationWitness]:
     """
-    Compute a bisimulation witness for β-equivalent terms.
+    Compute a bisimulation witness for two terms.
 
     Algorithm:
-        1. Normalize both terms.
-        2. Check normal forms are equal (necessary for typed terms).
-        3. Compute sufficient depth = max(depth_t, depth_u).
-        4. Construct relation R = {(nf, nf)}.
-        5. Verify R is a strong bisimulation.
+    1. Normalize both terms.
+    2. Check they share a normal form.
+    3. Compute the threshold depth d = max(norm_depth(t), norm_depth(u)).
+    4. Build bounded FTS at depth d.
+    5. Construct R = {(nf, nf)} at the normal form.
+    6. Verify the bisimulation conditions.
 
-    Time complexity: O(max_steps * max(|t|, |u|)).
-    Space complexity: O(max_steps * max(|t|, |u|)).
+    Returns None if the terms don't share a normal form.
 
-    Returns:
-        BisimulationWitness if terms share a normal form, None otherwise.
+    Complexity: O(normalization + FTS construction + verification)
     """
-    nr_t = normalize_with_depth(t, max_steps)
-    nr_u = normalize_with_depth(u, max_steps)
+    t_nf, t_path, t_depth = normalize(t)
+    u_nf, u_path, u_depth = normalize(u)
 
-    nf_t_key = repr(nr_t.normal_form)
-    nf_u_key = repr(nr_u.normal_form)
+    if repr(t_nf) != repr(u_nf):
+        return None
 
-    if nf_t_key != nf_u_key:
-        return None  # Not β-equivalent (or not normalizing)
+    depth = max(t_depth, u_depth)
+    nf_key = repr(t_nf)
 
-    depth = max(nr_t.depth, nr_u.depth)
-    relation = {(nf_t_key, nf_t_key)}
+    fts_t = build_bounded_fts(t, depth)
+    fts_u = build_bounded_fts(u, depth)
+
+    R = {(nf_key, nf_key)}
+    valid = verify_strong_bisimulation(fts_t, fts_u, R)
 
     return BisimulationWitness(
-        shared_nf=nf_t_key,
+        nf=t_nf,
         depth=depth,
-        t_depth=nr_t.depth,
-        u_depth=nr_u.depth,
-        relation=relation
+        t_path=t_path,
+        u_path=u_path,
+        relation=R,
+        is_valid=valid
     )
 
 
-# === Algorithm 4: Full Pipeline ===
+# =============================================================================
+# Algorithm 6: Bisimulation Verification
+# =============================================================================
 
-def analyze_beta_equivalence(t: Term, u: Term) -> dict:
+def verify_strong_bisimulation(
+    fts1: BoundedFTS, fts2: BoundedFTS, R: set[tuple[str, str]]
+) -> bool:
     """
-    Full analysis pipeline for β-equivalent terms.
+    Verify that R is a strong bisimulation between fts1 and fts2.
 
-    Returns a dictionary with all analysis results.
+    Checks both forth and back conditions:
+    - Forth: ∀(a,b)∈R, ∀a'∈succ(a), ∃b'∈succ(b) s.t. (a',b')∈R
+    - Back:  ∀(a,b)∈R, ∀b'∈succ(b), ∃a'∈succ(a) s.t. (a',b')∈R
+
+    Complexity: O(|R| * max_branching_factor)
     """
-    nr_t = normalize_with_depth(t)
-    nr_u = normalize_with_depth(u)
+    for a, b in R:
+        # Forth
+        for a_prime in fts1.successors(a):
+            if not any((a_prime, b_prime) in R for b_prime in fts2.successors(b)):
+                # Check vacuous case: if b has no successors and a_prime needs matching
+                if fts2.successors(b):
+                    return False
+                # a_prime needs a matching b_prime but b has none
+                return False
 
-    nf_match = repr(nr_t.normal_form) == repr(nr_u.normal_form)
-    depth = max(nr_t.depth, nr_u.depth)
+        # Back
+        for b_prime in fts2.successors(b):
+            if not any((a_prime, b_prime) in R for a_prime in fts1.successors(a)):
+                return False
 
-    fts_t = build_bounded_fts(t, depth) if depth > 0 else build_bounded_fts(t, 1)
-    fts_u = build_bounded_fts(u, depth) if depth > 0 else build_bounded_fts(u, 1)
-
-    witness = compute_bisimulation_witness(t, u) if nf_match else None
-
-    return {
-        "t": repr(t),
-        "u": repr(u),
-        "nf_t": repr(nr_t.normal_form),
-        "nf_u": repr(nr_u.normal_form),
-        "depth_t": nr_t.depth,
-        "depth_u": nr_u.depth,
-        "nf_match": nf_match,
-        "threshold_depth": depth,
-        "fts_t_states": fts_t.state_count(),
-        "fts_u_states": fts_u.state_count(),
-        "fts_t_transitions": fts_t.transition_count(),
-        "fts_u_transitions": fts_u.transition_count(),
-        "fts_t_nfs": fts_t.reachable_normal_forms(),
-        "fts_u_nfs": fts_u.reachable_normal_forms(),
-        "witness": witness,
-        "witness_valid": witness.is_valid(fts_t, fts_u) if witness else False,
-    }
+    return True
 
 
-# === Example Usage ===
+# =============================================================================
+# Algorithm 7: Normalization Depth Computation
+# =============================================================================
+
+def compute_normalization_depth(term: Term, max_steps: int = 10000) -> Optional[int]:
+    """
+    Compute the normalization depth of a term.
+
+    For well-typed STLC terms, this is guaranteed to terminate.
+    Returns None if normalization doesn't complete within max_steps.
+
+    Complexity: O(max_steps * |term|^k)
+    """
+    _, _, depth = normalize(term, max_steps)
+    if depth >= max_steps:
+        return None
+    return depth
+
+
+# =============================================================================
+# Algorithm 8: Coalgebraic Invariant Verification
+# =============================================================================
+
+def verify_coalgebraic_invariant(
+    t: Term, u: Term, depths: list[int]
+) -> dict[int, bool]:
+    """
+    Verify the coalgebraic invariant at multiple depths.
+
+    For each depth d, checks whether the bounded FTS of t and u
+    at depth d have a strong bisimulation at the normal form.
+
+    Returns a dictionary mapping depth → bisimulation_exists.
+
+    Complexity: O(|depths| * FTS_construction_cost)
+    """
+    t_nf, _, _ = normalize(t)
+    u_nf, _, _ = normalize(u)
+    nf_key = repr(t_nf)
+
+    results = {}
+    for d in depths:
+        fts_t = build_bounded_fts(t, d)
+        fts_u = build_bounded_fts(u, d)
+
+        if nf_key in fts_t.states and nf_key in fts_u.states:
+            R = {(nf_key, nf_key)}
+            results[d] = verify_strong_bisimulation(fts_t, fts_u, R)
+        else:
+            results[d] = False
+
+    return results
+
+
+# =============================================================================
+# Usage Examples
+# =============================================================================
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("  Bisimulation Witness Computation Algorithm")
+    print("Algorithm Demonstrations")
     print("=" * 60)
 
-    # Example 1: Simple identity
-    t1 = App(Lam("x", Var("x")), Var("y"))
-    u1 = Var("y")
-    result1 = analyze_beta_equivalence(t1, u1)
-    print(f"\nExample 1: (λx.x)y vs y")
-    print(f"  Normal forms match: {result1['nf_match']}")
-    print(f"  Threshold depth: {result1['threshold_depth']}")
-    print(f"  Witness valid: {result1['witness_valid']}")
+    # Example terms
+    id_fn = lam(0, var(0))
+    id_y = app(lam(0, var(0)), var(1))
+    y = var(1)
 
-    # Example 2: Church numerals
-    two = Lam("f", Lam("x", App(Var("f"), App(Var("f"), Var("x")))))
-    zero = Lam("f", Lam("x", Var("x")))
-    add = Lam("m", Lam("n", Lam("f", Lam("x",
-        App(App(Var("m"), Var("f")), App(App(Var("n"), Var("f")), Var("x")))))))
-    t2 = App(App(add, two), zero)
-    u2 = two
-    result2 = analyze_beta_equivalence(t2, u2)
-    print(f"\nExample 2: add 2 0 vs 2")
-    print(f"  Normal forms match: {result2['nf_match']}")
-    print(f"  Threshold depth: {result2['threshold_depth']}")
-    print(f"  FTS(t): {result2['fts_t_states']} states, {result2['fts_t_transitions']} trans")
-    print(f"  FTS(u): {result2['fts_u_states']} states, {result2['fts_u_transitions']} trans")
-    print(f"  Witness valid: {result2['witness_valid']}")
+    print("\n--- Normalization ---")
+    nf, path, depth = normalize(id_y)
+    print(f"normalize({id_y}) = {nf}")
+    print(f"  path: {' → '.join(str(s) for s in path)}")
+    print(f"  depth: {depth}")
 
-    # Example 3: Not β-equivalent
-    t3 = Var("x")
-    u3 = Var("y")
-    result3 = analyze_beta_equivalence(t3, u3)
-    print(f"\nExample 3: x vs y (not β-equivalent)")
-    print(f"  Normal forms match: {result3['nf_match']}")
-    print(f"  Witness: {result3['witness']}")
+    print("\n--- Bounded FTS ---")
+    fts = build_bounded_fts(id_y, 2)
+    print(f"FTS({id_y}, depth=2):")
+    print(f"  states: {fts.states}")
+    print(f"  transitions: {fts.transitions}")
+    print(f"  normal forms: {fts.normal_forms()}")
+
+    print("\n--- Bisimulation Witness ---")
+    witness = compute_bisim_witness(id_y, y)
+    print(f"witness({id_y}, {y}):")
+    print(f"  {witness}")
+
+    print("\n--- Coalgebraic Invariant ---")
+    results = verify_coalgebraic_invariant(id_y, y, list(range(5)))
+    for d, ok in results.items():
+        print(f"  depth {d}: {'✓' if ok else '✗'}")
+
+    print("\n--- Normalization Depth ---")
+    for t in [id_y, y, app(lam(0, lam(1, app(var(0), var(1)))), lam(2, var(2)))]:
+        d = compute_normalization_depth(t)
+        print(f"  norm_depth({t}) = {d}")

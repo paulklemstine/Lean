@@ -448,5 +448,6 @@
   "a756f94b": "phase_transition_in_certificate_complexity.json",
   "20be209e": "direction_4_bisimulation_cohomology.json",
   "c8703e71": "direction_1_compression_additivity_under_products.json",
-  "905cb737": "pathwidth_guided_sat_solving.json"
+  "905cb737": "pathwidth_guided_sat_solving.json",
+  "2d991129": "direction_2_strong_normalization_implies_finite_st.json"
 }
