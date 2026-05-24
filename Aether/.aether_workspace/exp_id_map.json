@@ -514,5 +514,6 @@
   "48c11aea": "direction_3_coalgebraic_final_semantics.json",
   "b3d8e1fb": "direction_4_derived_compression_invariants.json",
   "a9d54ec0": "direction_1_lorentzian_polynomial_support_is_m_con.json",
-  "743ad8f3": "direction_1_persistence_zeta_function_multiplicati.json"
+  "743ad8f3": "direction_1_persistence_zeta_function_multiplicati.json",
+  "c3483166": "direction_3_minor_monotonicity_of_defect.json"
 }
