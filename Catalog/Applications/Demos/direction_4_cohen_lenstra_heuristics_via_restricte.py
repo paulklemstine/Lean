@@ -2,592 +2,911 @@
 """
 Cohen-Lenstra Heuristics: Applications
 
-Real-world applications of the Haar-cokernel bridge:
-  1. Predicting class group statistics for quadratic fields
-  2. Cryptographic randomness testing via p-adic valuations
-  3. Statistical mechanics simulation of the bosonic lattice gas
-  4. Information-theoretic analysis of number field discriminants
+Real-world applications of the Cohen-Lenstra framework:
+1. Predicting class group statistics for number fields
+2. Analyzing random matrix universality
+3. Computing restricted-product cylinder distributions
+4. Information-theoretic analysis of arithmetic statistics
 """
 
-import math
+from math import log, sqrt, prod, isqrt, gcd
+from typing import List, Dict, Tuple
+from collections import Counter
 import random
-from typing import List, Tuple, Dict
 
 
-# ============================================================
-# Application 1: Class Group Predictions
-# ============================================================
+# =============================================================================
+# Application 1: Class Number Distribution Predictor
+# =============================================================================
 
-def cohen_lenstra_prediction(p: int, max_order: int = 20) -> Dict[int, float]:
+def predict_class_group_statistics(
+    primes: List[int],
+    discriminant_bound: int = 10000
+) -> Dict[int, Dict[str, float]]:
     """
-    Predict the distribution of p-parts of class groups of imaginary
-    quadratic fields using the Cohen-Lenstra heuristics.
+    For each prime p, predict and estimate the frequency of various
+    p-group structures in class groups of imaginary quadratic fields.
 
-    For each k, Prob(|Cl(K)[p^∞]| = p^k) = (1 - 1/p) * (1/p)^k.
-
-    Returns a dictionary mapping p^k to its probability.
+    Returns:
+        Dictionary mapping primes to prediction/empirical comparison
     """
-    distribution = {}
-    for k in range(max_order):
-        prob = (1 - 1/p) * (1/p)**k
-        distribution[p**k] = prob
-        if prob < 1e-15:
-            break
-    return distribution
+    results = {}
+
+    for p in primes:
+        # CL prediction for trivial p-part
+        trivial_pred = 1.0
+        for k in range(1, 50):
+            trivial_pred *= (1 - p ** (-k))
+
+        # CL prediction for cyclic Z/pZ
+        # P(Cl[p] = Z/pZ) = (1/|Aut(Z/pZ)|) / Z_p = 1/(p-1) * Z_p^{-1}
+        # Actually: P(Cl[p^inf] has type lambda) = 1/(|Aut(G_lambda)| * Z_p)
+        # For lambda = [1]: |Aut(Z/pZ)| = p-1
+        cyclic_p_pred = 1.0 / (p - 1) * trivial_pred
+
+        results[p] = {
+            'trivial_prediction': trivial_pred,
+            'cyclic_p_prediction': cyclic_p_pred,
+        }
+
+    return results
 
 
-def expected_class_group_ppart_size(p: int, n_terms: int = 100) -> float:
+def display_predictions(primes: List[int]):
+    """Display formatted prediction table."""
+    results = predict_class_group_statistics(primes)
+
+    print("Cohen-Lenstra Predictions for Imaginary Quadratic Fields")
+    print("=" * 65)
+    print(f"{'Prime':>6} {'P(trivial)':>12} {'P(Z/pZ)':>12} {'P(nontrivial)':>14}")
+    print("-" * 65)
+
+    for p in primes:
+        r = results[p]
+        triv = r['trivial_prediction']
+        cyc = r['cyclic_p_prediction']
+        nontriv = 1 - triv
+        print(f"{p:>6} {triv:>12.8f} {cyc:>12.8f} {nontriv:>14.8f}")
+
+
+# =============================================================================
+# Application 2: Universality Testing
+# =============================================================================
+
+def test_universality(p: int = 2, n: int = 3, k: int = 2, trials: int = 5000):
     """
-    Compute E[|Cl(K)[p^∞]|] under Cohen-Lenstra heuristics.
+    Test whether different random matrix distributions produce the
+    same cokernel statistics (universality).
 
-    E[|G|] = ∑_k p^k * (1-1/p) * (1/p)^k = (1-1/p) * ∑_k 1 = ∞
-
-    Wait — this diverges! The correct computation uses the full
-    Cohen-Lenstra distribution over all abelian p-groups:
-      E[|G|] = η_p = ∏_{k≥1} (1 - p^{-k})^{-1}
-
-    For the cyclic approximation (first moment):
-      E[p^{v_p}] = ∑_k p^k * (1-1/p) * (1/p)^k = (1-1/p) * ∑ 1 diverges
-    but
-      E[v_p] = ∑_k k * (1-1/p) * (1/p)^k = 1/(p-1)
+    Compares:
+    1. Uniform entries in Z/p^kZ
+    2. Bernoulli entries (0 or 1)
+    3. Sparse entries (0 with probability 1/2)
     """
-    # Expected valuation
-    E_val = 1 / (p - 1)
+    mod = p ** k
 
-    # η_p (the actual Cohen-Lenstra prediction for average p-part size)
-    eta = 1.0
-    for k in range(1, n_terms + 1):
-        eta /= (1 - p**(-k))
-    return E_val, eta
-
-
-def class_group_moments(p: int, max_moment: int = 4) -> List[float]:
-    """
-    Compute moments E[v_p^m] of the p-adic valuation distribution.
-
-    E[v_p^m] = (1-1/p) * ∑_{k=0}^∞ k^m * (1/p)^k
-
-    The generating function for these moments is related to the
-    polylogarithm Li_{-m}(1/p).
-    """
-    moments = []
-    for m in range(max_moment + 1):
-        # Numerical computation
-        s = 0.0
-        for k in range(500):
-            s += k**m * (1 - 1/p) * (1/p)**k
-            if (1/p)**k < 1e-300:
-                break
-        moments.append(s)
-    return moments
-
-
-# ============================================================
-# Application 2: Randomness Testing
-# ============================================================
-
-def padic_randomness_test(data: List[int], p: int) -> Dict[str, float]:
-    """
-    Test randomness of integer data using p-adic valuation distribution.
-
-    Under the null hypothesis that data is uniformly distributed
-    (modulo sufficiently large powers of p), the p-adic valuations
-    should follow the geometric distribution.
-
-    Returns chi-squared statistic and p-value.
-    """
-    n = len(data)
-    valuations = []
-    for x in data:
-        if x == 0:
-            valuations.append(10)  # Cap at 10 for finite test
+    def compute_det_valuation(A: List[List[int]]) -> int:
+        """Compute p-adic valuation of det(A) mod p^k (for 2x2 and 3x3)."""
+        if n == 2:
+            det = (A[0][0] * A[1][1] - A[0][1] * A[1][0]) % mod
+        elif n == 3:
+            det = (A[0][0] * (A[1][1]*A[2][2] - A[1][2]*A[2][1])
+                  - A[0][1] * (A[1][0]*A[2][2] - A[1][2]*A[2][0])
+                  + A[0][2] * (A[1][0]*A[2][1] - A[1][1]*A[2][0])) % mod
         else:
-            v = 0
-            temp = abs(x)
-            while temp % p == 0:
-                v += 1
-                temp //= p
-            valuations.append(min(v, 10))
+            det = A[0][0] % mod
 
-    # Count observed frequencies
-    max_val = max(valuations)
-    observed = [0] * (max_val + 1)
-    for v in valuations:
-        observed[v] += 1
+        if det == 0:
+            return k
+        val = 0
+        while det % p == 0 and val < k:
+            val += 1
+            det //= p
+        return val
 
-    # Expected frequencies
-    expected = [n * (1 - 1/p) * (1/p)**k for k in range(max_val + 1)]
-
-    # Chi-squared statistic
-    chi2 = sum((o - e)**2 / e for o, e in zip(observed, expected) if e > 0)
-
-    return {
-        "chi_squared": chi2,
-        "degrees_of_freedom": max_val,
-        "observed": observed,
-        "expected": [round(e, 2) for e in expected],
-        "sample_size": n
+    distributions = {
+        'Uniform': lambda: [[random.randint(0, mod-1) for _ in range(n)] for _ in range(n)],
+        'Bernoulli': lambda: [[random.randint(0, 1) for _ in range(n)] for _ in range(n)],
+        'Sparse': lambda: [[random.randint(0, mod-1) if random.random() > 0.5 else 0
+                           for _ in range(n)] for _ in range(n)],
     }
 
+    print(f"\nUniversality Test: p={p}, n={n}, k={k}, {trials} trials")
+    print("=" * 70)
 
-# ============================================================
-# Application 3: Statistical Mechanics
-# ============================================================
+    all_results = {}
+    for name, gen in distributions.items():
+        val_counts = Counter()
+        for _ in range(trials):
+            A = gen()
+            v = compute_det_valuation(A)
+            val_counts[v] += 1
 
-def bosonic_energy_spectrum(p: int, max_energy: int = 20) -> List[Tuple[int, float, int]]:
+        all_results[name] = {v: c/trials for v, c in val_counts.items()}
+
+    # Display comparison
+    max_val = max(max(r.keys()) for r in all_results.values())
+    header = f"{'Valuation':>10}"
+    for name in distributions:
+        header += f" {name:>12}"
+    print(header)
+    print("-" * (10 + 13 * len(distributions)))
+
+    for v in range(max_val + 1):
+        row = f"{v:>10}"
+        for name in distributions:
+            freq = all_results[name].get(v, 0)
+            row += f" {freq:>12.4f}"
+        print(row)
+
+    # Compute total variation distances
+    print()
+    names = list(distributions.keys())
+    for i in range(len(names)):
+        for j in range(i+1, len(names)):
+            all_vals = set(all_results[names[i]].keys()) | set(all_results[names[j]].keys())
+            tv = 0.5 * sum(abs(all_results[names[i]].get(v, 0) - all_results[names[j]].get(v, 0))
+                          for v in all_vals)
+            print(f"TV distance ({names[i]} vs {names[j]}): {tv:.4f}")
+
+
+# =============================================================================
+# Application 3: Restricted Product Cylinder Distributions
+# =============================================================================
+
+def cylinder_distribution(
+    primes: List[int],
+    n: int = 2,
+    k: int = 2
+) -> Dict[tuple, float]:
     """
-    Compute the energy spectrum of the bosonic lattice gas at fugacity 1/p.
+    Build the restricted-product cylinder distribution over a finite
+    set of primes. For each prime p, the local distribution is the
+    normalized CL weight on partitions bounded by (n, k).
 
-    Each energy level n corresponds to partitions of n:
-      - Energy: n * log(p)
-      - Degeneracy: number of partitions of n
-      - Boltzmann weight: p^{-n}
-
-    Returns list of (energy_level, weight, degeneracy).
+    Returns the product distribution on tuples of partitions.
     """
-    # Compute partition numbers using DP
-    partitions = [0] * (max_energy + 1)
-    partitions[0] = 1
-    for k in range(1, max_energy + 1):
-        for j in range(k, max_energy + 1):
-            partitions[j] += partitions[j - k]
+    from itertools import product as iter_product
 
-    spectrum = []
-    for n in range(max_energy + 1):
-        weight = partitions[n] * p**(-n)
-        spectrum.append((n, weight, partitions[n]))
+    def partitions_bounded_local(n, k):
+        result = [[]]
+        def gen(parts, max_val, rem):
+            if rem == 0: return
+            for v in range(min(max_val, k), 0, -1):
+                new = parts + [v]
+                result.append(new)
+                gen(new, v, rem - 1)
+        gen([], k, n)
+        return result
 
-    return spectrum
+    def aut_order_local(p, partition):
+        if not partition: return 1
+        r = len(partition)
+        e = sum(min(partition[i], partition[j]) for i in range(r) for j in range(r))
+        mx = max(partition)
+        cols = [sum(1 for x in partition if x >= kk) for kk in range(1, mx + 1)]
+        num = 1
+        de = 0
+        for c in cols:
+            for j in range(1, c + 1):
+                num *= (p ** j - 1)
+                de += j
+        return num * (p ** (e - de))
+
+    local_dists = {}
+    for p in primes:
+        parts = partitions_bounded_local(n, k)
+        weights = {tuple(part): 1.0 / aut_order_local(p, part) for part in parts}
+        total = sum(weights.values())
+        local_dists[p] = {t: w / total for t, w in weights.items()}
+
+    # Build product
+    local_states = {p: list(local_dists[p].keys()) for p in primes}
+    product_dist = {}
+    for combo in iter_product(*[local_states[p] for p in primes]):
+        weight = prod(local_dists[primes[i]][combo[i]] for i in range(len(primes)))
+        product_dist[combo] = weight
+
+    return product_dist
 
 
-def free_energy(p: int, n_terms: int = 100) -> float:
+def display_cylinder_distribution(primes: List[int], n: int = 2, k: int = 2, top_k: int = 10):
+    """Display the top entries of a cylinder distribution."""
+    dist = cylinder_distribution(primes, n, k)
+
+    print(f"\nCylinder Distribution for S = {primes}, n={n}, k={k}")
+    print("=" * 70)
+    print(f"State space size: {len(dist)}")
+    print(f"Sum of weights: {sum(dist.values()):.10f}")
+    print()
+
+    # Show top entries
+    sorted_dist = sorted(dist.items(), key=lambda x: -x[1])[:top_k]
+    print(f"Top {top_k} states:")
+    for state, weight in sorted_dist:
+        parts_str = " × ".join(str(state[i]) if state[i] else "trivial"
+                              for i in range(len(primes)))
+        print(f"  {parts_str:>40}: {weight:.8f}")
+
+    # Entropy
+    h = -sum(w * log(w) for w in dist.values() if w > 0)
+    print(f"\nEntropy: H(mu_S) = {h:.6f} nats")
+
+    # Verify entropy additivity
+    local_entropies = {}
+    for p in primes:
+        parts = [[]]
+        def gen(pts, mv, rm):
+            if rm == 0: return
+            for v in range(min(mv, k), 0, -1):
+                new = pts + [v]
+                parts.append(new)
+                gen(new, v, rm - 1)
+        gen([], k, n)
+        weights = {tuple(part): 1.0 / (lambda pp, pa: (lambda r, e, mx, cols, num, de:
+            num * (pp ** (e - de)))(len(pa),
+            sum(min(pa[i], pa[j]) for i in range(len(pa)) for j in range(len(pa))) if pa else 0,
+            max(pa) if pa else 0,
+            [sum(1 for x in pa if x >= kk) for kk in range(1, (max(pa) if pa else 0) + 1)],
+            prod((pp ** j - 1) for c in [sum(1 for x in pa if x >= kk) for kk in range(1, (max(pa) if pa else 0) + 1)] for j in range(1, c + 1)) if pa else 1,
+            sum(j for c in [sum(1 for x in pa if x >= kk) for kk in range(1, (max(pa) if pa else 0) + 1)] for j in range(1, c + 1)) if pa else 0
+            ))(p, part)
+                   for part in parts}
+        total = sum(weights.values())
+        dist_local = {t: w / total for t, w in weights.items()}
+        local_entropies[p] = -sum(w * log(w) for w in dist_local.values() if w > 0)
+
+    sum_local = sum(local_entropies.values())
+    print(f"Sum of local entropies: {sum_local:.6f}")
+    print(f"Entropy additivity error: {abs(h - sum_local):.2e}")
+
+
+# =============================================================================
+# Application 4: Gibbs Energy Interpretation
+# =============================================================================
+
+def gibbs_interpretation(p: int = 3, n: int = 3, k: int = 3):
     """
-    Compute the free energy F = -log(Z) of the bosonic lattice gas.
+    Interpret CL weights as a Gibbs distribution:
+    mu(G) ∝ exp(-E(G)) where E(G) = log|Aut(G)|.
 
-    F = -∑_{k=1}^∞ log(1 / (1 - p^{-k})) = ∑_{k=1}^∞ log(1 - p^{-k})
+    This connects arithmetic statistics to statistical mechanics.
     """
-    F = 0.0
-    for k in range(1, n_terms + 1):
-        F += math.log(1 - p**(-k))
-    return F
+    from math import exp as math_exp
+
+    def partitions_local(n, k):
+        result = [[]]
+        def gen(pts, mv, rm):
+            if rm == 0: return
+            for v in range(min(mv, k), 0, -1):
+                new = pts + [v]
+                result.append(new)
+                gen(new, v, rm - 1)
+        gen([], k, n)
+        return result
+
+    def aut_local(p, part):
+        if not part: return 1
+        r = len(part)
+        e = sum(min(part[i], part[j]) for i in range(r) for j in range(r))
+        mx = max(part)
+        cols = [sum(1 for x in part if x >= kk) for kk in range(1, mx + 1)]
+        num = 1; de = 0
+        for c in cols:
+            for j in range(1, c + 1):
+                num *= (p ** j - 1); de += j
+        return num * (p ** (e - de))
+
+    parts = partitions_local(n, k)
+
+    print(f"\nGibbs / Statistical Mechanics Interpretation (p={p})")
+    print("=" * 70)
+    print()
+    print("Cohen-Lenstra weight: mu(G) = 1/|Aut(G)| / Z")
+    print("Gibbs form: mu(G) = exp(-E(G)) / Z  where E(G) = log|Aut(G)|")
+    print()
+    print(f"{'Partition':>15} {'|Aut(G)|':>12} {'Energy E':>10} {'CL Weight':>12} {'Gibbs exp(-E)':>14}")
+    print("-" * 70)
+
+    for part in parts:
+        ao = aut_local(p, part)
+        energy = log(ao) if ao > 0 else 0
+        cl_w = 1.0 / ao
+        gibbs_w = math_exp(-energy)
+        if cl_w > 0.001:
+            print(f"{str(tuple(part)):>15} {ao:>12} {energy:>10.4f} {cl_w:>12.6f} {gibbs_w:>14.6f}")
+
+    print()
+    print("Note: CL weight and exp(-E) agree exactly (by construction).")
+    print("The 'temperature' is fixed at T=1 in natural units.")
+    print()
+
+    # Partition function
+    Z = sum(1.0 / aut_local(p, part) for part in parts)
+    print(f"Partition function Z = {Z:.8f}")
+    free_energy = -log(Z)
+    print(f"Free energy F = -log(Z) = {free_energy:.6f}")
+
+    # Mean energy
+    mean_E = sum(log(aut_local(p, part)) / aut_local(p, part) for part in parts) / Z
+    print(f"Mean energy <E> = {mean_E:.6f}")
+
+    # Entropy
+    entropy = -sum((1.0/aut_local(p, part)/Z) * log(1.0/aut_local(p, part)/Z)
+                   for part in parts if aut_local(p, part) > 0)
+    print(f"Entropy S = {entropy:.6f}")
+    print(f"Verification: F = <E> - S = {mean_E - entropy:.6f} (should equal {free_energy:.6f})")
+    print()
 
 
-def average_energy(p: int, n_terms: int = 100) -> float:
-    """
-    Compute the average energy <E> = -∂F/∂β evaluated at β = 1.
+# =============================================================================
+# Main
+# =============================================================================
 
-    <E> = ∑_{k=1}^∞ k * log(p) * p^{-k} / (1 - p^{-k})
-    """
-    E = 0.0
-    for k in range(1, n_terms + 1):
-        E += k * math.log(p) * p**(-k) / (1 - p**(-k))
-    return E
+def main():
+    print()
+    print("╔══════════════════════════════════════════════════════════════╗")
+    print("║  Cohen-Lenstra Heuristics: Applications                    ║")
+    print("╚══════════════════════════════════════════════════════════════╝")
+    print()
 
+    # Application 1: Predictions
+    print("APPLICATION 1: Class Group Predictions")
+    display_predictions([2, 3, 5, 7, 11, 13, 17, 19, 23, 29])
+    print()
 
-# ============================================================
-# Application 4: Information Theory
-# ============================================================
+    # Application 2: Universality
+    print("\nAPPLICATION 2: Random Matrix Universality")
+    test_universality(p=2, n=2, k=2, trials=3000)
+    print()
 
-def information_content(p: int) -> float:
-    """
-    The information content (surprisal) of observing valuation k = 0:
-      I(0) = -log_2(1 - 1/p)
+    # Application 3: Cylinder distributions
+    print("\nAPPLICATION 3: Restricted Product Cylinder Distributions")
+    display_cylinder_distribution([2, 3, 5], n=2, k=2, top_k=8)
+    print()
 
-    This measures how "surprising" it is that a random p-adic integer
-    is a unit (has valuation 0).
-    """
-    return -math.log2(1 - 1/p)
+    # Application 4: Gibbs interpretation
+    print("\nAPPLICATION 4: Statistical Mechanics Interpretation")
+    gibbs_interpretation(p=3, n=2, k=2)
 
-
-def kullback_leibler_divergence(p: int, empirical: Dict[int, float]) -> float:
-    """
-    Compute KL divergence D(empirical || theoretical) where the theoretical
-    distribution is the geometric distribution from Haar measure.
-
-    D = ∑_k q(k) * log(q(k) / f(k))
-
-    where q is empirical and f is (1-1/p) * (1/p)^k.
-    """
-    D = 0.0
-    for k, q_k in empirical.items():
-        if q_k > 0:
-            f_k = (1 - 1/p) * (1/p)**k
-            if f_k > 0:
-                D += q_k * math.log(q_k / f_k)
-    return D
-
-
-def mutual_information_valuations(p1: int, p2: int, data: List[int]) -> float:
-    """
-    Estimate the mutual information I(v_{p1}; v_{p2}) between the p1-adic
-    and p2-adic valuations of the data.
-
-    Under the Cohen-Lenstra model, these should be independent (I = 0),
-    reflecting the restricted product structure.
-    """
-    n = len(data)
-
-    def val(x, p):
-        if x == 0:
-            return 0
-        v = 0
-        while x % p == 0:
-            v += 1
-            x //= p
-        return min(v, 5)
-
-    # Joint distribution
-    joint = {}
-    for x in data:
-        v1, v2 = val(x, p1), val(x, p2)
-        joint[(v1, v2)] = joint.get((v1, v2), 0) + 1
-
-    # Marginals
-    marg1, marg2 = {}, {}
-    for (v1, v2), c in joint.items():
-        marg1[v1] = marg1.get(v1, 0) + c
-        marg2[v2] = marg2.get(v2, 0) + c
-
-    # MI computation
-    MI = 0.0
-    for (v1, v2), c in joint.items():
-        p_joint = c / n
-        p1_marg = marg1[v1] / n
-        p2_marg = marg2[v2] / n
-        if p_joint > 0 and p1_marg > 0 and p2_marg > 0:
-            MI += p_joint * math.log(p_joint / (p1_marg * p2_marg))
-
-    return MI
-
-
-# ============================================================
-# Main demonstration
-# ============================================================
 
 if __name__ == "__main__":
-    print("=" * 70)
-    print("APPLICATION 1: CLASS GROUP PREDICTIONS")
-    print("=" * 70)
-
-    for p in [2, 3, 5]:
-        print(f"\nPrime p = {p}:")
-        dist = cohen_lenstra_prediction(p)
-        for order, prob in list(dist.items())[:6]:
-            print(f"  Prob(|Cl[p^∞]| = {order}) = {prob:.8f}")
-
-        E_val, eta = expected_class_group_ppart_size(p)
-        print(f"  E[v_p] = {E_val:.6f}")
-        print(f"  η_p = {eta:.8f}")
-
-        moments = class_group_moments(p)
-        print(f"  Moments E[v^m]: {[f'{m:.4f}' for m in moments]}")
-
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: RANDOMNESS TESTING")
-    print("=" * 70)
-
-    random.seed(42)
-    data = [random.randint(1, 10**6) for _ in range(10000)]
-    for p in [2, 3, 5]:
-        result = padic_randomness_test(data, p)
-        print(f"\nPrime p = {p}:")
-        print(f"  Chi-squared: {result['chi_squared']:.4f}")
-        print(f"  Degrees of freedom: {result['degrees_of_freedom']}")
-        print(f"  Observed: {result['observed'][:6]}")
-        print(f"  Expected: {result['expected'][:6]}")
-
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: STATISTICAL MECHANICS")
-    print("=" * 70)
-
-    for p in [2, 3]:
-        print(f"\nBosonic lattice gas at fugacity q = 1/{p}:")
-        spectrum = bosonic_energy_spectrum(p, 10)
-        print(f"  {'Level':>6} {'Weight':>12} {'Degeneracy':>12}")
-        for level, weight, deg in spectrum:
-            print(f"  {level:>6} {weight:>12.8f} {deg:>12}")
-        F = free_energy(p)
-        E = average_energy(p)
-        print(f"  Free energy F = {F:.8f}")
-        print(f"  Average energy <E> = {E:.8f}")
-
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: INFORMATION THEORY")
-    print("=" * 70)
-
-    for p in [2, 3, 5, 7, 11]:
-        I = information_content(p)
-        print(f"  p = {p}: Information content I(v=0) = {I:.6f} bits")
-
-    # Test independence of valuations
-    data = list(range(1, 10001))
-    MI = mutual_information_valuations(2, 3, data)
-    print(f"\n  Mutual information I(v_2; v_3) = {MI:.6f}")
-    print(f"  (Should be ≈ 0 under Cohen-Lenstra independence)")
+    main()
 
 
 #!/usr/bin/env python3
 """
-Cohen-Lenstra Heuristics: Interactive Demonstration
+Cohen-Lenstra Heuristics: Demonstration
 
-This script demonstrates the connection between Haar measure on p-adic integers
-and the Cohen-Lenstra distribution on class groups. It:
-  1. Computes Cohen-Lenstra predictions for primes p ≤ 100
-  2. Simulates random elements of Z_p via digit sampling
-  3. Empirically verifies the geometric distribution of p-adic valuations
-  4. Computes the entropy log(p)/(p-1) for each prime
-  5. Visualizes the bosonic partition function connection
+This script demonstrates the mathematical framework for Cohen-Lenstra heuristics
+via restricted product measures. It includes:
+
+1. Cohen-Lenstra predictions for trivial p-part frequencies
+2. Comparison with empirical class group data for imaginary quadratic fields
+3. Random matrix cokernel distribution experiments
+4. Entropy calculations for product distributions
+5. Interactive exploration mode
+
+Usage:
+    python demo.py              # Run all demonstrations
+    python demo.py --interactive  # Interactive mode
 """
 
-import math
+import sys
 import random
+from math import log, sqrt, gcd, isqrt
+from typing import List, Dict, Tuple, Optional
 from collections import Counter
-from typing import List, Tuple
 
-# ============================================================
-# § 1: Core Cohen-Lenstra Functions
-# ============================================================
-
-def geom_prob(p: int, k: int) -> float:
-    """
-    The geometric probability mass function:
-      Prob(v_p = k) = (1 - 1/p) * (1/p)^k
-
-    This is the pushforward of Haar measure on Z_p under the
-    p-adic valuation map.
-    """
-    return (1 - 1/p) * (1/p)**k
+# Import algorithms (self-contained versions included below for portability)
 
 
-def eta_partial_product(p: int, n: int) -> float:
-    """
-    The partial Dedekind-type product ∏_{j=1}^{n} (1 - p^{-j}).
-    Converges to the inverse of the Cohen-Lenstra normalizer η_p.
-    """
-    result = 1.0
-    for j in range(1, n + 1):
-        result *= (1 - p**(-j))
+# =============================================================================
+# Core algorithms (self-contained)
+# =============================================================================
+
+def partitions_bounded(n: int, k: int) -> List[List[int]]:
+    """Enumerate partitions with at most n parts, each <= k."""
+    result = [[]]
+    def generate(parts, max_val, remaining):
+        if remaining == 0:
+            return
+        for v in range(min(max_val, k), 0, -1):
+            new_parts = parts + [v]
+            result.append(new_parts)
+            generate(new_parts, v, remaining - 1)
+    generate([], k, n)
     return result
 
 
-def bosonic_partition(p: int, n: int = 50) -> float:
+def aut_order(p: int, partition: List[int]) -> int:
+    """Compute |Aut(G)| for the p-group with given invariant factors."""
+    if not partition:
+        return 1
+    r = len(partition)
+    end_order_exp = sum(min(partition[i], partition[j])
+                        for i in range(r) for j in range(r))
+    max_part = max(partition)
+    col_lengths = [sum(1 for x in partition if x >= kk) for kk in range(1, max_part + 1)]
+    numerator = 1
+    denom_exp = 0
+    for c_k in col_lengths:
+        for j in range(1, c_k + 1):
+            numerator *= (p ** j - 1)
+            denom_exp += j
+    return numerator * (p ** (end_order_exp - denom_exp))
+
+
+def cl_weight(p: int, partition: List[int]) -> float:
+    """Cohen-Lenstra weight 1/|Aut(G)|."""
+    return 1.0 / aut_order(p, partition)
+
+
+def cl_trivial_probability(p: int, K: int = 50) -> float:
+    """CL prediction for trivial p-part: prod_{k=1}^K (1 - p^{-k})."""
+    result = 1.0
+    for k in range(1, K + 1):
+        result *= (1 - p ** (-k))
+    return result
+
+
+def shannon_entropy(dist: Dict[tuple, float]) -> float:
+    """Shannon entropy of a finite distribution."""
+    return -sum(p * log(p) for p in dist.values() if p > 0)
+
+
+def valuation_count(p: int, k: int, n: int) -> int:
+    """Count of elements in {0,...,p^k-1} with exact p-adic valuation n."""
+    if n >= k:
+        return 1 if n == k else 0
+    return p ** (k - n) - p ** (k - n - 1)
+
+
+# =============================================================================
+# Class group computation (simplified)
+# =============================================================================
+
+def is_prime(n: int) -> bool:
+    """Simple primality test."""
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+
+def class_number_imaginary_quadratic(d: int) -> int:
     """
-    The bosonic partition function Z(p) = ∏_{k=1}^{n} (1 - p^{-k})^{-1}.
-    This is η_p, the Cohen-Lenstra normalization constant.
-    Also equals the grand canonical partition function of a bosonic lattice gas.
+    Compute the class number of Q(sqrt(-d)) using Minkowski bound
+    and reduced binary quadratic forms.
+
+    For fundamental discriminant -d (d > 0), count reduced forms
+    ax^2 + bxy + cy^2 with discriminant b^2 - 4ac = -d.
     """
-    return 1.0 / eta_partial_product(p, n)
+    if d <= 0:
+        return 0
 
+    # Determine the discriminant
+    if d % 4 == 3:
+        D = d
+    else:
+        D = 4 * d
 
-def shannon_entropy(p: int, max_k: int = 200) -> float:
-    """
-    Shannon entropy of the geometric distribution on p-adic valuations:
-      H = -∑_k geom_prob(p,k) * log(geom_prob(p,k))
+    # Count reduced forms with discriminant -D
+    # A reduced form (a, b, c) satisfies:
+    # -a < b <= a < c, or 0 <= b <= a = c
+    # and b^2 - 4ac = -D, i.e., 4ac = b^2 + D
+    count = 0
+    # b has same parity as D
+    b_start = D % 2
+    bound = isqrt(D // 3)
 
-    Theorem: H = log(p) / (p - 1)
-    """
-    H = 0.0
-    for k in range(max_k):
-        q = geom_prob(p, k)
-        if q > 0:
-            H -= q * math.log(q)
-    return H
+    for b in range(b_start, bound + 1, 2):
+        rem = D + b * b
+        if rem % 4 != 0:
+            continue
+        target = rem // 4  # = a * c
 
+        # Find all a with a >= max(1, b) (or a >= 1 if b >= 0)
+        # and a^2 <= target (i.e., a <= sqrt(target))
+        a_min = max(1, b) if b > 0 else 1
+        if b == 0:
+            a_min = 1
 
-def target_entropy(p: int) -> float:
-    """The theoretical entropy: -log(1-1/p) + log(p) / (p - 1)."""
-    return -math.log(1 - 1/p) + math.log(p) / (p - 1)
-
-
-# ============================================================
-# § 2: P-adic Simulation
-# ============================================================
-
-def sample_padic_valuation(p: int) -> int:
-    """
-    Sample a random p-adic valuation by simulating a Haar-random element of Z_p.
-
-    Algorithm: Sample digits d_0, d_1, d_2, ... ∈ {0, 1, ..., p-1} independently
-    and uniformly. The p-adic valuation is the index of the first nonzero digit.
-    This is equivalent to sampling from the geometric distribution.
-    """
-    k = 0
-    while True:
-        digit = random.randint(0, p - 1)
-        if digit != 0:
-            return k
-        k += 1
-
-
-def simulate_valuation_distribution(p: int, num_samples: int = 100000) -> dict:
-    """
-    Simulate the distribution of p-adic valuations by sampling.
-    Returns a dictionary mapping valuation k to empirical frequency.
-    """
-    counts = Counter()
-    for _ in range(num_samples):
-        v = sample_padic_valuation(p)
-        counts[v] += 1
-    return {k: counts[k] / num_samples for k in sorted(counts.keys())}
-
-
-# ============================================================
-# § 3: Demonstrations
-# ============================================================
-
-def demo_cohen_lenstra_predictions():
-    """Compute Cohen-Lenstra predictions for primes p ≤ 100."""
-    print("=" * 70)
-    print("COHEN-LENSTRA PREDICTIONS FOR PRIMES p ≤ 100")
-    print("=" * 70)
-    print(f"{'p':>5} {'η_p':>12} {'Prob(v=0)':>12} {'Prob(v=1)':>12} "
-          f"{'Prob(v=2)':>12} {'Entropy':>12} {'log(p)/(p-1)':>14}")
-    print("-" * 70)
-
-    primes = [p for p in range(2, 101) if all(p % d != 0 for d in range(2, int(p**0.5) + 1))]
-
-    for p in primes:
-        eta = bosonic_partition(p)
-        probs = [geom_prob(p, k) for k in range(3)]
-        H = shannon_entropy(p)
-        H_target = target_entropy(p)
-        print(f"{p:>5} {eta:>12.6f} {probs[0]:>12.6f} {probs[1]:>12.6f} "
-              f"{probs[2]:>12.6f} {H:>12.6f} {H_target:>14.6f}")
-
-
-def demo_simulation():
-    """Simulate random Z_p elements and verify the geometric distribution."""
-    print("\n" + "=" * 70)
-    print("SIMULATION: EMPIRICAL vs THEORETICAL DISTRIBUTION")
-    print("=" * 70)
-
-    for p in [2, 3, 5, 7]:
-        print(f"\nPrime p = {p}, 100000 samples:")
-        print(f"{'k':>5} {'Empirical':>12} {'Theoretical':>12} {'Ratio':>10}")
-        print("-" * 42)
-
-        empirical = simulate_valuation_distribution(p)
-        for k in range(min(8, max(empirical.keys()) + 1)):
-            emp = empirical.get(k, 0)
-            theo = geom_prob(p, k)
-            ratio = emp / theo if theo > 0 else float('inf')
-            print(f"{k:>5} {emp:>12.6f} {theo:>12.6f} {ratio:>10.4f}")
-
-        # Verify sum ≈ 1
-        total = sum(empirical.values())
-        print(f"  Total probability: {total:.6f} (should be ≈ 1.0)")
-
-
-def demo_entropy_divergence():
-    """Show entropy log(p)/(p-1) for each prime and total divergence."""
-    print("\n" + "=" * 70)
-    print("ENTROPY: log(p)/(p-1) AND CUMULATIVE SUM")
-    print("=" * 70)
-    print(f"{'p':>5} {'H(p)':>12} {'Cumulative':>12} {'Error':>14}")
-    print("-" * 50)
-
-    primes = [p for p in range(2, 200) if all(p % d != 0 for d in range(2, int(p**0.5) + 1))]
-    cumulative = 0.0
-
-    for p in primes[:30]:
-        H_computed = shannon_entropy(p)
-        H_target = target_entropy(p)
-        cumulative += H_target
-        error = abs(H_computed - H_target) / H_target
-        print(f"{p:>5} {H_target:>12.6f} {cumulative:>12.6f} {error:>14.2e}")
-
-    print(f"\n  The cumulative entropy diverges — reflecting the infinite")
-    print(f"  information content of class groups across all primes.")
-
-
-def demo_bosonic_partition():
-    """Visualize the bosonic partition function connection."""
-    print("\n" + "=" * 70)
-    print("BOSONIC PARTITION FUNCTION Z(p) = ∏(1 - p^{-k})^{-1}")
-    print("=" * 70)
-    print(f"\n{'p':>5} {'Z(p)=η_p':>14} {'1/η_p':>14} {'log Z(p)':>14}")
-    print("-" * 50)
-
-    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
-
-    for p in primes:
-        Z = bosonic_partition(p)
-        print(f"{p:>5} {Z:>14.8f} {1/Z:>14.8f} {math.log(Z):>14.8f}")
-
-    print(f"\n  Convergence of partial products for p = 2:")
-    print(f"  {'n':>5} {'Z_2(n)':>14} {'|Z_2(n) - Z_2(50)|':>22}")
-    Z_limit = bosonic_partition(2, 50)
-    for n in range(1, 21):
-        Z_n = bosonic_partition(2, n)
-        print(f"  {n:>5} {Z_n:>14.8f} {abs(Z_n - Z_limit):>22.2e}")
-
-
-def demo_verified_algorithm():
-    """
-    Verified algorithm: compute geomProb(p, k) and verify against
-    counting in Z/p^n Z for n > k.
-    """
-    print("\n" + "=" * 70)
-    print("VERIFIED ALGORITHM: HAAR MEASURE ON FINITE QUOTIENTS")
-    print("=" * 70)
-
-    for p in [2, 3, 5]:
-        print(f"\nPrime p = {p}:")
-        print(f"  {'k':>3} {'Theory':>12} {'Z/p^(k+1)':>12} {'Z/p^(k+2)':>12} "
-              f"{'Z/p^(k+3)':>12}")
-        print("  " + "-" * 55)
-
-        for k in range(5):
-            theory = geom_prob(p, k)
-            # Count elements of Z/p^n Z with valuation exactly k
-            quotient_checks = []
-            for n in [k + 1, k + 2, k + 3]:
-                count = 0
-                total = p ** n
-                for x in range(total):
-                    # Compute p-adic valuation of x in Z/p^n Z
-                    if x == 0:
-                        v = n  # Convention: v(0) = n in Z/p^n Z
-                    else:
-                        v = 0
-                        temp = x
-                        while temp % p == 0:
-                            v += 1
-                            temp //= p
-                    if v == k:
+        a_max = isqrt(target)
+        for a in range(a_min, a_max + 1):
+            if target % a == 0:
+                c = target // a
+                if a <= c:  # reduced form condition
+                    if b > 0 and a == b:
+                        count += 1  # boundary case
+                    elif a == c:
+                        count += 1  # boundary case
+                    elif b == 0:
                         count += 1
-                quotient_checks.append(count / total)
+                    else:
+                        count += 1
+    # Handle b = 0 separately if not covered
+    if b_start > 0 and D % 4 == 0:
+        target = D // 4
+        a_max = isqrt(target)
+        for a in range(1, a_max + 1):
+            if target % a == 0:
+                c = target // a
+                if a <= c:
+                    count += 1
 
-            print(f"  {k:>3} {theory:>12.6f} {quotient_checks[0]:>12.6f} "
-                  f"{quotient_checks[1]:>12.6f} {quotient_checks[2]:>12.6f}")
+    return count
 
 
-# ============================================================
-# § 4: Main
-# ============================================================
+def class_group_p_part_trivial(d: int, p: int) -> bool:
+    """
+    Check if the p-part of Cl(Q(sqrt(-d))) is trivial.
+    This is equivalent to p not dividing the class number.
+    """
+    h = class_number_imaginary_quadratic(d)
+    return h % p != 0
+
+
+# =============================================================================
+# Demo 1: Cohen-Lenstra Predictions
+# =============================================================================
+
+def demo_cl_predictions():
+    """Display Cohen-Lenstra predictions for the first 20 primes."""
+    print("=" * 70)
+    print("DEMO 1: Cohen-Lenstra Predictions for Trivial p-Part")
+    print("=" * 70)
+    print()
+    print("For imaginary quadratic fields Q(sqrt(-d)), the Cohen-Lenstra")
+    print("heuristic predicts the probability that the p-part of the class")
+    print("group is trivial:")
+    print()
+    print(f"{'Prime p':>8} {'CL Prediction':>15} {'= prod(1-p^{-k})':>20}")
+    print("-" * 50)
+
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
+              31, 37, 41, 43, 47, 53, 59, 61, 67, 71]
+
+    for p in primes:
+        pred = cl_trivial_probability(p)
+        print(f"{p:>8} {pred:>15.8f} {'':>20}")
+
+    print()
+    print("Note: For p=2, the actual heuristic uses a modified weight")
+    print("(the 'u=0' version). The value shown is the raw product formula.")
+    print()
+
+
+# =============================================================================
+# Demo 2: Empirical Class Group Data
+# =============================================================================
+
+def demo_empirical_class_groups(max_d: int = 10000):
+    """Compare CL predictions with empirical class group data."""
+    print("=" * 70)
+    print(f"DEMO 2: Empirical Class Group Data (prime d <= {max_d})")
+    print("=" * 70)
+    print()
+
+    primes_to_test = [3, 5, 7, 11, 13]
+    prime_discriminants = [d for d in range(3, max_d + 1) if is_prime(d) and d % 4 == 3]
+
+    n_fields = len(prime_discriminants)
+    print(f"Number of fields: {n_fields}")
+    print()
+
+    print(f"{'Prime p':>8} {'CL Pred':>10} {'Empirical':>10} {'Discrepancy':>12} {'StdErr':>10}")
+    print("-" * 55)
+
+    for p in primes_to_test:
+        trivial_count = 0
+        for d in prime_discriminants:
+            h = class_number_imaginary_quadratic(d)
+            if h % p != 0:
+                trivial_count += 1
+
+        empirical = trivial_count / n_fields
+        prediction = cl_trivial_probability(p)
+        stderr = sqrt(empirical * (1 - empirical) / n_fields)
+        discrepancy = empirical - prediction
+
+        print(f"{p:>8} {prediction:>10.6f} {empirical:>10.6f} {discrepancy:>+12.6f} {stderr:>10.6f}")
+
+    print()
+    print("The discrepancies should be within ~2 standard errors of zero.")
+    print()
+
+
+# =============================================================================
+# Demo 3: Random Matrix Cokernel Distributions
+# =============================================================================
+
+def demo_random_matrices(p: int = 2, n: int = 2, k: int = 3, num_samples: int = 5000):
+    """Sample random matrices and compare cokernel statistics to CL weights."""
+    print("=" * 70)
+    print(f"DEMO 3: Random Matrix Cokernels (p={p}, n={n}, k={k})")
+    print("=" * 70)
+    print()
+
+    mod = p ** k
+
+    # Sample random matrices and compute "cokernel" via simple SNF
+    partition_counts: Dict[tuple, int] = Counter()
+
+    for _ in range(num_samples):
+        # Generate random matrix
+        A = [[random.randint(0, mod - 1) for _ in range(n)] for _ in range(n)]
+
+        # Compute determinant mod p^k as a rough proxy
+        # For a more accurate computation, we'd need full SNF
+        # Here we use a simplified approach: compute det and extract p-adic valuation
+        det = A[0][0] * A[1][1] - A[0][1] * A[1][0] if n == 2 else A[0][0]
+        det = det % mod
+
+        # Extract p-adic valuation of det
+        if det == 0:
+            val = k
+        else:
+            val = 0
+            temp = det
+            while temp % p == 0 and val < k:
+                val += 1
+                temp //= p
+
+        # For 2x2 matrices, the cokernel type is determined by the SNF
+        # Simplified: just use valuation as proxy for partition
+        if val == 0:
+            part = ()  # trivial group
+        elif val <= k:
+            part = tuple([min(val, k)])  # cyclic group Z/p^val
+        else:
+            part = tuple([k])
+
+        partition_counts[part] = partition_counts.get(part, 0) + 1
+
+    # Compute CL predictions
+    print(f"Sampled {num_samples} random {n}x{n} matrices over Z/{mod}Z")
+    print()
+
+    all_parts = partitions_bounded(n, k)
+    cl_weights = {}
+    for part in all_parts:
+        t = tuple(part)
+        cl_weights[t] = cl_weight(p, part)
+    total_cl = sum(cl_weights.values())
+    cl_normalized = {t: w / total_cl for t, w in cl_weights.items()}
+
+    print(f"{'Partition':>15} {'Empirical':>12} {'CL Weight':>12} {'|Aut(G)|':>10}")
+    print("-" * 55)
+
+    for part in sorted(cl_normalized.keys(), key=lambda x: -cl_normalized.get(x, 0)):
+        emp = partition_counts.get(part, 0) / num_samples
+        cl_w = cl_normalized.get(part, 0)
+        ao = aut_order(p, list(part))
+        if cl_w > 0.001 or emp > 0.001:
+            print(f"{str(part):>15} {emp:>12.4f} {cl_w:>12.4f} {ao:>10}")
+
+    print()
+    print("Note: The empirical distribution uses a simplified cokernel proxy.")
+    print("Full SNF computation would give more accurate results.")
+    print()
+
+
+# =============================================================================
+# Demo 4: Entropy of Product Distributions
+# =============================================================================
+
+def demo_entropy():
+    """Demonstrate entropy additivity for product distributions."""
+    print("=" * 70)
+    print("DEMO 4: Entropy Additivity for Product Distributions")
+    print("=" * 70)
+    print()
+
+    primes = [2, 3, 5]
+    n, k = 2, 2
+
+    local_distributions = {}
+    local_entropies = {}
+
+    for p in primes:
+        parts = partitions_bounded(n, k)
+        weights = {tuple(part): cl_weight(p, part) for part in parts}
+        total = sum(weights.values())
+        dist = {t: w / total for t, w in weights.items()}
+        local_distributions[p] = dist
+        local_entropies[p] = shannon_entropy(dist)
+
+    print(f"Local CL distributions for n={n}, k={k}:")
+    print()
+    for p in primes:
+        h = local_entropies[p]
+        print(f"  p={p}: H(mu_p) = {h:.6f} nats")
+
+    sum_local = sum(local_entropies.values())
+    print(f"\n  Sum of local entropies: {sum_local:.6f}")
+
+    # Compute product distribution entropy
+    # Build product distribution
+    product_dist = {}
+    local_states = {p: list(local_distributions[p].keys()) for p in primes}
+
+    from itertools import product as iter_product
+    for combo in iter_product(*[local_states[p] for p in primes]):
+        weight = 1.0
+        for i, p in enumerate(primes):
+            weight *= local_distributions[p][combo[i]]
+        product_dist[combo] = weight
+
+    product_entropy = shannon_entropy(product_dist)
+    print(f"  Product entropy: H(mu_S) = {product_entropy:.6f}")
+    print(f"  Difference: {abs(product_entropy - sum_local):.2e}")
+    print(f"\n  Entropy additivity verified: H(prod) = sum(H_local)")
+    print()
+
+
+# =============================================================================
+# Demo 5: Valuation Distribution
+# =============================================================================
+
+def demo_valuations():
+    """Demonstrate the geometric distribution of p-adic valuations."""
+    print("=" * 70)
+    print("DEMO 5: Geometric Distribution of p-adic Valuations")
+    print("=" * 70)
+    print()
+
+    p, k = 3, 6
+    mod = p ** k
+
+    print(f"p = {p}, k = {k}, working in Z/{mod}Z")
+    print()
+    print(f"{'Valuation n':>12} {'Count':>10} {'Empirical':>12} {'Geometric':>12} {'Match?':>8}")
+    print("-" * 60)
+
+    for n in range(k):
+        # Direct count
+        count = sum(1 for x in range(mod)
+                    if (x == 0 and n == k) or
+                    (x > 0 and all(x % (p ** i) == 0 for i in range(1, n + 1))
+                     and (n == 0 or x % (p ** n) == 0)
+                     and x % (p ** (n + 1)) != 0))
+
+        # Formula count
+        formula_count = valuation_count(p, k, n)
+        prop = count / mod
+        geom = p ** (-n) * (1 - 1/p)
+
+        match = "✓" if abs(prop - geom) < 1e-10 else "✗"
+        print(f"{n:>12} {formula_count:>10} {prop:>12.8f} {geom:>12.8f} {match:>8}")
+
+    # Valuation k (the zero element)
+    print(f"{'k=' + str(k):>12} {'1':>10} {1/mod:>12.8f} {'(boundary)':>12}")
+    print()
+    print("The empirical proportions exactly match p^{-n}(1 - p^{-1}).")
+    print("This is the finite-level shadow of the Haar measure geometric law.")
+    print()
+
+
+# =============================================================================
+# Interactive Mode
+# =============================================================================
+
+def interactive_mode():
+    """Interactive exploration of Cohen-Lenstra distributions."""
+    print("=" * 70)
+    print("INTERACTIVE MODE: Cohen-Lenstra Explorer")
+    print("=" * 70)
+    print()
+    print("Commands:")
+    print("  cl <p> <n> <k>  - Show CL distribution for given parameters")
+    print("  aut <p> <part>  - Compute |Aut(G)| for partition (e.g., aut 2 2,1)")
+    print("  pred <p>        - CL prediction for trivial p-part")
+    print("  entropy <p> <n> <k> - Shannon entropy of local CL distribution")
+    print("  val <p> <k>     - Valuation distribution table")
+    print("  quit            - Exit")
+    print()
+
+    while True:
+        try:
+            cmd = input("cl> ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print()
+            break
+
+        if not cmd:
+            continue
+
+        parts = cmd.split()
+        command = parts[0].lower()
+
+        if command == "quit" or command == "q":
+            break
+        elif command == "cl" and len(parts) == 4:
+            p, n, k = int(parts[1]), int(parts[2]), int(parts[3])
+            all_parts = partitions_bounded(n, k)
+            weights = {tuple(part): cl_weight(p, part) for part in all_parts}
+            total = sum(weights.values())
+            dist = {t: w / total for t, w in weights.items()}
+            print(f"\nCL distribution for p={p}, n={n}, k={k}:")
+            for part, w in sorted(dist.items(), key=lambda x: -x[1]):
+                if w > 0.001:
+                    print(f"  {str(part):>15}: {w:.6f}  |Aut|={aut_order(p, list(part))}")
+            print(f"  Total: {sum(dist.values()):.10f}")
+            print()
+        elif command == "aut" and len(parts) >= 3:
+            p = int(parts[1])
+            part = [int(x) for x in parts[2].split(",")]
+            ao = aut_order(p, part)
+            print(f"|Aut(G_{part})| for p={p}: {ao}")
+            print()
+        elif command == "pred" and len(parts) == 2:
+            p = int(parts[1])
+            pred = cl_trivial_probability(p)
+            print(f"P(trivial {p}-part) = {pred:.10f}")
+            print()
+        elif command == "entropy" and len(parts) == 4:
+            p, n, k = int(parts[1]), int(parts[2]), int(parts[3])
+            all_parts = partitions_bounded(n, k)
+            weights = {tuple(part): cl_weight(p, part) for part in all_parts}
+            total = sum(weights.values())
+            dist = {t: w / total for t, w in weights.items()}
+            h = shannon_entropy(dist)
+            print(f"H(CL({p},{n},{k})) = {h:.6f} nats")
+            print()
+        elif command == "val" and len(parts) == 3:
+            p, k = int(parts[1]), int(parts[2])
+            print(f"\nValuation distribution for p={p}, k={k}:")
+            for n in range(k):
+                count = valuation_count(p, k, n)
+                geom = p ** (-n) * (1 - 1/p)
+                print(f"  v={n}: count={count}, prop={geom:.8f}")
+            print()
+        else:
+            print("Unknown command. Type 'quit' to exit.")
+            print()
+
+
+# =============================================================================
+# Main
+# =============================================================================
+
+def main():
+    """Run all demonstrations."""
+    if "--interactive" in sys.argv or "-i" in sys.argv:
+        interactive_mode()
+        return
+
+    print()
+    print("╔══════════════════════════════════════════════════════════════╗")
+    print("║  Cohen-Lenstra Heuristics via Restricted Product Measures  ║")
+    print("║                    Demonstration Suite                     ║")
+    print("╚══════════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_cl_predictions()
+    demo_valuations()
+    demo_entropy()
+
+    # Use smaller bound for class group computation (it's slow)
+    demo_empirical_class_groups(max_d=5000)
+
+    demo_random_matrices(p=2, n=2, k=3, num_samples=3000)
+
+    print("=" * 70)
+    print("All demonstrations complete.")
+    print()
+    print("To explore interactively, run: python demo.py --interactive")
+    print("=" * 70)
+
 
 if __name__ == "__main__":
-    random.seed(42)  # For reproducibility
-
-    demo_cohen_lenstra_predictions()
-    demo_simulation()
-    demo_entropy_divergence()
-    demo_bosonic_partition()
-    demo_verified_algorithm()
-
-    print("\n" + "=" * 70)
-    print("SUMMARY")
-    print("=" * 70)
-    print("""
-Key results verified:
-  1. The geometric distribution (1-1/p)·(1/p)^k sums to 1 ✓
-  2. Empirical p-adic valuations match the geometric distribution ✓
-  3. Shannon entropy equals log(p)/(p-1) ✓
-  4. Bosonic partition function η_p = ∏(1-p^{-k})^{-1} converges ✓
-  5. Finite quotient Z/p^n Z counts match Haar predictions ✓
-
-The Cohen-Lenstra heuristics arise naturally from Haar measure on Z_p:
-  • Haar measure pushforward under v_p gives the geometric distribution
-  • The normalization constant η_p is the bosonic partition function
-  • The entropy log(p)/(p-1) connects to the Riemann zeta function
-""")
+    main()
