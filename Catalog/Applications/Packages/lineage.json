@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {
+      "id": "direction_4_primewise_decomposition_and_improved_c",
+      "title": "Primewise Torsion Persistence Stability: Arithmetic Decomposition of Topological Invariants",
+      "domain": "Algebraic Topology / Topological Data Analysis / Number Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-24T23:11:21Z",
+      "hue": 270
+    }
+  ],
+  "edges": [],
+  "domain_bridges": [
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Logic",
+      "package_count": 1,
+      "strength": 0.5
+    }
+  ]
+}

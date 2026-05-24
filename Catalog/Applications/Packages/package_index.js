@@ -2,16 +2,54 @@
 // Lightweight index for sidebar, graph, and lineage links.
 // Full package data is loaded on-demand from individual .json files.
 
-window.PACKAGE_INDEX = [];
+window.PACKAGE_INDEX = [
+  {
+    "filename": "direction_4_primewise_decomposition_and_improved_c.json",
+    "title": "Primewise Torsion Persistence Stability: Arithmetic Decomposition of Topological Invariants",
+    "domain": "Algebraic Topology / Topological Data Analysis / Number Theory",
+    "date": "2026-05-24T23:11:21Z",
+    "exp_id": "2d14ce54",
+    "quality_score": null,
+    "quality": "unrated"
+  }
+];
 
-window.PACKAGE_DB_INDEX = {};
+window.PACKAGE_DB_INDEX = {
+  "direction_4_primewise_decomposition_and_improved_c.json": {
+    "title": "Primewise Torsion Persistence Stability: Arithmetic Decomposition of Topological Invariants",
+    "exp_id": "2d14ce54",
+    "source_exp_ids": [
+      "ed1c493e"
+    ],
+    "domain": "Algebraic Topology / Topological Data Analysis / Number Theory"
+  }
+};
 
 
 // Knowledge Graph Data (auto-generated from lineage.json)
 window.PACKAGE_GRAPH = {
-  "nodes": [],
+  "nodes": [
+    {
+      "id": "direction_4_primewise_decomposition_and_improved_c",
+      "title": "Primewise Torsion Persistence Stability: Arithmetic Decomposition of Topological Invariants",
+      "domain": "Algebraic Topology / Topological Data Analysis / Number Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-24T23:11:21Z",
+      "hue": 270,
+      "priority_score": null,
+      "quality": "unrated"
+    }
+  ],
   "edges": [],
-  "domain_bridges": []
+  "domain_bridges": [
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Logic",
+      "package_count": 1,
+      "strength": 0.5
+    }
+  ]
 };
 
 
