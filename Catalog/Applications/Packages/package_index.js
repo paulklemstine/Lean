@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography / Algebraic Geometry",
     "date": "2026-05-24T21:10:32Z",
     "exp_id": "f2269ca9",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6384805217391305,
+    "quality": "partial"
   },
   {
     "filename": "direction_3_interaction_information_and_synergy_de.json",
@@ -7149,8 +7149,8 @@ window.PACKAGE_GRAPH = {
       "shape": "dodecahedron",
       "date": "2026-05-24T21:10:32Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6384805217391305,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -8813,26 +8813,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-21T13:13:45.028934+00:00"
   },
   {
-    "id": "fd_0225",
-    "title": "Direction 2: Nonlinear Extraction Obstructions",
-    "description": "**Conjecture:** For \u03a3-protocols whose acceptance condition involves *nonlinear* functions of the witness (e.g., quadratic forms over ZMod q), extraction from two transcripts is impossible in general, but extraction from O(n\u00b2) transcripts suffices when the acceptance is degree-2 in the witness.\n\n**Test:** Construct a concrete protocol with acceptance equation z = t + c\u00b7w\u00b2 over GF(q) and attempt extraction from 2 transcripts. This should fail (two values of a quadratic give two solutions). Then test whether 3 transcripts suffice (overdetermined system of quadratics).\n\n**Impact:** Would precisely delineate the boundary of the affine extraction framework and motivate the polynomial generalization.\n\n**Catalog References:** `Catalog/Cryptography/AffineSigmaExtraction.lean` \u2014 Theorem `no_unique_extract_of_noninj` (establishes the linear obstruction; this direction asks about nonlinear obstructions).\n\n**Proof Strategy:** For degree-d acceptance in w, the system z_i = t + c_i \u00b7 f(w) for d+1 transcripts yields a polynomial system. Apply resultant or Gr\u00f6bner basis methods to characterize solvability. In the formal setting, work with `MvPolynomial` over `ZMod q`.\n\n**Domain Bridges:** Cryptography \u00d7 Algebraic Geometry (algebraic varieties defined by acceptance equations), Cryptography \u00d7 Computational Algebra (Gr\u00f6bner bases).\n\n**Lineage:** Complementary to Direction 1 (which extends the degree of the challenge polynomial, while this extends the degree of the witness polynomial).\n\n**Ambition:** Solid extension \u2014 identifies the exact nonlinear boundary.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "88ddcb11",
-    "consumed_by_exp_id": "f2269ca9",
-    "timestamp": "2026-05-21T13:14:13.518997+00:00"
-  },
-  {
     "id": "fd_0413",
     "title": "Direction 2: Probe Complexity as Representable Dimension",
     "description": "**Conjecture (Grand Challenge):** Define the *representable dimension* of a presheaf `F` as the minimum number of generators in any representable cover. Then for any finite category `C`, the supremum of representable dimensions over all presheaves separated by a probe family `P` equals a computable invariant of `(C, P)` \u2014 specifically, `\u03a3_{Y \u2208 C} |MeasurementSpace(P, Y)|` where the measurement space is the image of the probe restriction map.\n\n**Test:** For categories with `|Ob(C)| \u2264 4`, compute the representable dimension of all finite-valued presheaves separated by various probe families. Plot the supremum against the measurement space invariant. A counterexample where the supremum exceeds the invariant, or is strictly less for all probe families, would refute the conjecture.\n\n**Impact:** This would establish probe complexity as a *categorical dimension theory* \u2014 a computable invariant that governs the structural complexity of all presheaves observable by a given measurement scheme. It would be a major bridge between information theory and categorical geometry.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/FiniteRepresentability.lean` \u2014 `card_presheaf_le_card_restrictions`, `probeRestrictionMap_injective`\n- `Catalog/Pythagorean/ProbeComplexity/Defs.lean` \u2014 `probeComplexity`\n\n**Proof Strategy:** Upper bound: use the measurement space cardinality to bound the number of distinct elements, then bound generators. Lower bound: construct presheaves that realize all measurement signatures as distinct generators.\n\n**Domain Bridges:** VC dimension (learning theory), Rademacher complexity, metric dimension (graph theory), information dimension.\n\n**Lineage:** Combines `card_presheaf_le_card_restrictions` with `probeComplexity` from the catalog.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if true; would create a new dimension theory.\n\n---",
@@ -9793,10 +9773,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "905cb737",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5d7efda",
     "timestamp": "2026-05-24T01:44:39.287040+00:00"
   },
   {
@@ -9972,10 +9952,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0195dcfa",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "06588409",
     "timestamp": "2026-05-24T07:09:23.960984+00:00"
   },
   {
@@ -10625,6 +10605,34 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T18:38:01.987284+00:00"
   },
   {
+    "id": "fd_0769",
+    "title": "Fully identifiable",
+    "description": "(affine-injective): witness uniquely determined; fibers are singletons",
+    "domains": [
+      "Geometry"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f2269ca9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T21:10:37.800701+00:00"
+  },
+  {
+    "id": "fd_0770",
+    "title": "Quotient-identifiable",
+    "description": "(nonlinear with finite fibers): witness determined up to a finite symmetry group; fibers are finite G-orbits",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f2269ca9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T21:10:37.838390+00:00"
+  },
+  {
     "id": "fd_0301",
     "title": "Direction 5: Residual Finiteness and Semantic Distinguishability",
     "description": "**Conjecture:** For the free group on n generators, every pair of distinct reduced words of length \u2264 L can be distinguished by evaluation into a finite group of size bounded by a computable function f(n, L). Specifically, we conjecture f(n, L) \u2264 (2n)^(L+1), and that the symmetric group S_{L+1} suffices as a universal test group.\n\n**Test:** Enumerate all reduced words of length \u2264 L for n = 2 generators and L \u2208 {3, 4, 5, 6}. For each pair, search for a separating assignment into S_k for k \u2208 {3, 4, 5, 6, 7}. Record the smallest k that suffices for each pair. Plot the maximum required k as a function of L. Falsification: if any pair with L \u2264 5 requires k > 7, the bound conjecture is too tight.\n\n**Impact:** If confirmed, this gives a concrete **compiler testing oracle**: to verify that a free group optimizer preserves semantics, it suffices to test on a finite set of groups of bounded size. This connects residual finiteness (a deep group-theoretic property) to practical software testing.\n\n**Catalog References:**\n- `Pythagorean/VerifiedCompilerSynthesis.lean`: `evalFreeGroup`, `freeGroup_eval_natural`\n\n**Proof Strategy:** The residual finiteness of free groups is classical (M. Hall, 1949). The quantitative bound requires more careful analysis, possibly using the Magnus embedding or the Stallings folding construction.\n\n**Domain Bridges:** Combinatorial group theory, software testing, property-based testing, QuickCheck-style testing.\n\n**Lineage:** Extends the conjecture testing in demo.py to a formal mathematical question.\n\n**Ambition:** Solid extension with a testable quantitative component.",
@@ -10845,10 +10853,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a9d54ec0",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33261812",
     "timestamp": "2026-05-24T20:32:53.023081+00:00"
   }
 ];
