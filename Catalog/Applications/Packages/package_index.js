@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Persistence Theory / Topological Data Analysis / Analytic Number Theory",
     "date": "2026-05-24T20:33:28Z",
     "exp_id": "743ad8f3",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.5771814147909968,
+    "quality": "partial"
   },
   {
     "filename": "direction_1_lorentzian_polynomial_support_is_m_con.json",
@@ -7065,8 +7065,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-24T20:33:28Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.5771814147909968,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -9724,10 +9724,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2d991129",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "93aa3255",
     "timestamp": "2026-05-24T02:18:45.845825+00:00"
   },
   {
@@ -9802,24 +9802,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "2c97bffa",
     "consumed_by_exp_id": "85616e6f",
     "timestamp": "2026-05-24T04:06:59.228688+00:00"
-  },
-  {
-    "id": "fd_0598",
-    "title": "Direction 1: Persistence Zeta Function Multiplicativity",
-    "description": "**Conjecture:** For filtered finite abelian groups F\u2081 and F\u2082 with coprime torsion exponents, the persistence zeta function Z(s) = \u220f_p (1 + len(barcode_p) \u00b7 p^{-s}) satisfies\n\nZ(F\u2081 \u00d7 F\u2082, s) = Z(F\u2081, s) \u00b7 Z(F\u2082, s).\n\n**Test:** Compute Z(s) on all products of filtrations with \u2264 5 levels over groups of order \u2264 120. Compare Z(product) with Z\u2081 \u00b7 Z\u2082 for s \u2208 {1, 2, 3}. Computational experiments (see `applications.py`) show multiplicativity holds when the two filtrations have coprime support, but can fail when supports overlap due to barcode length interaction.\n\n**Impact:** If multiplicative, Z(s) would be a genuine arithmetic invariant of persistence modules with Euler-product structure, directly analogous to Dedekind zeta functions. This would establish the first formal connection between persistence theory and analytic number theory.\n\n**Catalog References:** `Pythagorean/AdelicPersistentHomology.lean` \u2014 `persistence_zeta` definition (Python), `bounded_torsion_implies_bounded_primeSupport`.\n\n**Proof Strategy:** Prove multiplicativity for filtrations with coprime support using the CRT persistence theorem (`persistence_CRT_decomposition`). The coprime-support case should follow from independence of prime barcodes. For the general case, investigate correction terms from barcode interaction at shared primes.\n\n**Domain Bridges:** Analytic number theory \u2194 topological data analysis. The Euler product for \u03b6(s) is the classical prototype; persistence zeta is its TDA analogue.\n\n**Lineage:** Extends `persistence_CRT_decomposition` and `adelic_reconstruction_correct_set`.\n\n**Ambition:** Grand challenge \u2014 if true in generality, opens an entire field.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "641e2bf5",
-    "consumed_by_exp_id": "743ad8f3",
-    "timestamp": "2026-05-24T04:42:20.931240+00:00"
   },
   {
     "id": "fd_0609",
@@ -10384,10 +10366,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cc40b0df",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c1bdccd8",
     "timestamp": "2026-05-24T13:25:41.474792+00:00"
   },
   {
