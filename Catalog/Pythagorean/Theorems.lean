@@ -1,311 +1,319 @@
-import CompilerLowerBound.GrowthBound
+/-
+# Coalgebraic Final Semantics: Main Theorems
 
-/-!
-# Compiler Lower Bound Theory — Theorems
+This file proves the core theorems of coalgebraic final semantics for simple types:
 
-## Main Results
+1. **Quotient Coalgebra Structure**: The behavioral equivalence quotient inherits coalgebra structure.
+2. **Morphism Kernel Bisimulation**: Kernel of any coalgebra morphism is a bisimulation.
+3. **Uniqueness of Final Coalgebra**: Any two final coalgebras are isomorphic.
+4. **Arity Bound**: Branching degree bounded by type arity.
+5. **Modal Depth Theory**: n-step equivalence forms a descending chain.
+6. **Morphisms Preserve Behavioral Equivalence**.
+7. **Cross-domain: Simulation and automata-theoretic connection**.
 
-### Core Lower Bound (Theorem 1)
-- `emlDepth_lower_bound_inverseFree`: Any inverse-free EML expression computing
-  `iterExp n` on positive reals has `emlDepth ≥ n`.
-
-### Compiler Impossibility Meta-Theorem (Theorem 2)
-- `optPass_iterExp_depth_lower_bound`: For any `OptPass`, transformed `iterExp`
-  programs retain EML depth at least `n`.
-
-### Concrete Pass Theorems (Theorem 3)
-- Semantics and inverse-freeness preservation for CSE, constant folding,
-  and algebraic simplification.
-
-### Pipeline Theorem (Theorem 4)
-- `pipeline_iterExp_depth_lower_bound`: Arbitrary pipelines of passes
-  cannot break the depth barrier.
-
-## Proof Architecture
-
-The compiler impossibility follows by **semantic transport**:
-1. `P.transform G` computes the same function (semantics preservation)
-2. `P.transform G` is inverse-free (inverse-freeness preservation)
-3. Apply the core lower bound to `P.transform G`
-
-This pattern lifts a representation-independent lower bound into a
-compiler impossibility theorem — the first such result in mechanized
-compiler theory.
+**Application keywords:** coalgebraic semantics, final coalgebra, bisimulation minimization,
+Myhill–Nerode for λ-calculus, polynomial functors, canonical models, observational equivalence
 -/
 
-noncomputable section
+import CoalgebraicSemantics.Defs
 
-open Real
+open STLCType
 
-/-! ## Canonical Construction Lemmas -/
+universe u
 
-/-- The canonical EML expression for iterExp n evaluates correctly. -/
-theorem emlExprIterExp_eval (n : ℕ) (x : ℝ) :
-    (emlExprIterExp n).eval x = iterExp n x := by
-  induction n with
-  | zero => rfl
-  | succ n ih => simp [emlExprIterExp, EMLExpr.eval, ih, iterExp, one_mul]
-
-/-- The canonical EML expression for iterExp n has emlDepth exactly n. -/
-theorem emlExprIterExp_emlDepth (n : ℕ) :
-    (emlExprIterExp n).emlDepth = n := by
-  induction n with
-  | zero => rfl
-  | succ n ih => simp [emlExprIterExp, EMLExpr.emlDepth, ih]; omega
-
-/-- The canonical `emlExprIterExp n` is inverse-free. -/
-theorem emlExprIterExp_inverseFree (n : ℕ) :
-    (emlExprIterExp n).InverseFree := by
-  induction n with
-  | zero => exact trivial
-  | succ n ih => exact ⟨trivial, ih⟩
-
-/-- The canonical expression computes iterExp n. -/
-theorem emlExprIterExp_computesIterExp (n : ℕ) :
-    ComputesIterExp n (emlExprIterExp n) := by
-  intro x _
-  exact emlExprIterExp_eval n x
-
-/-! ## Core Lower Bound -/
+/-! ## Theorem 1: Quotient Coalgebra Structure -/
 
 /-
-Structural bound: expRank ≤ emlDepth. Each `eml` layer contributes
-    at most 1 to both measures, while field operations contribute to
-    neither.
+The structure map respects behavioral equivalence.
 -/
-theorem EMLExpr.expRank_le_emlDepth (e : EMLExpr) : e.expRank ≤ e.emlDepth := by
-  induction' e with a b ha hb;
-  all_goals norm_num [ EMLExpr.expRank, EMLExpr.emlDepth ] at * ; repeat' omega
+theorem str_respects_behavioral_equiv (A : STLCType) (C : FiniteCoalgebra A)
+    (x y : C.Carrier)
+    (h : BehavioralEquiv A C x y) :
+    (match C.str x with
+     | Sum.inl () => (Sum.inl () : TypePolynomialFunctor A (SemanticQuotient A C))
+     | Sum.inr fx => Sum.inr (fun i => @Quotient.mk _ (behavioralSetoid A C) (fx i))) =
+    (match C.str y with
+     | Sum.inl () => (Sum.inl () : TypePolynomialFunctor A (SemanticQuotient A C))
+     | Sum.inr fy => Sum.inr (fun i => @Quotient.mk _ (behavioralSetoid A C) (fy i))) := by
+  rcases h with ⟨ R, hR, hxy ⟩;
+  cases h : C.str x <;> cases h' : C.str y <;> simp_all +decide;
+  · exact absurd ( hR.terminal_left x y hxy h ) ( by simp +decide [ h' ] );
+  · have := hR.terminal_right x y hxy; aesop;
+  · have := hR.branching x y _ _ hxy h h';
+    exact funext fun i => Quotient.sound ⟨ R, hR, this i ⟩
 
-/-- **Core lower bound**: Any inverse-free EML expression computing `iterExp n`
-    on positive reals has EML depth at least `n`.
-
-    This is the decisive semantic lower bound. It says that the intrinsic
-    complexity of iterated exponentiation cannot be hidden by any syntactic
-    rearrangement that avoids inversions.
-
-    **Proof**: By the structural bound `expRank ≤ emlDepth`, it suffices to
-    show `n ≤ expRank e`. This follows from `expRank_lower_bound_iterExp`
-    in the GrowthBound module. -/
-theorem emlDepth_lower_bound_inverseFree
-    (n : ℕ) (e : EMLExpr)
-    (hrep : ComputesIterExp n e)
-    (hinv : e.InverseFree) :
-    n ≤ e.emlDepth :=
-  le_trans (expRank_lower_bound_iterExp n e hrep hinv) (e.expRank_le_emlDepth)
-
-/-! ## Compiler Impossibility Meta-Theorem -/
-
-/-- **Compiler lower bound meta-theorem**: For any semantics-preserving
-    optimization pass that preserves inverse-freeness, the transformed output
-    of an `iterExp n` program has EML depth at least `n`.
-
-    This converts a representation-independent complexity lower bound into
-    a **compiler impossibility theorem**: even a verified optimizing compiler
-    with global rewrites, DAG sharing, and algebraic simplification cannot
-    collapse the dependency height of iterated exponentiation.
-
-    **Proof**: By semantic transport.
-    1. `P.transform G` computes `iterExp n` (by semantics preservation)
-    2. `P.transform G` is inverse-free (by inverse-freeness preservation)
-    3. Apply `emlDepth_lower_bound_inverseFree` to `P.transform G` -/
-theorem optPass_iterExp_depth_lower_bound
-    (P : OptPass)
-    {n : ℕ} {G : EMLExpr}
-    (hcomp : ComputesIterExp n G)
-    (hinv : G.InverseFree) :
-    n ≤ (P.transform G).emlDepth := by
-  apply emlDepth_lower_bound_inverseFree
-  · intro x hx
-    rw [P.preserves_semantics G x hx]
-    exact hcomp x hx
-  · exact P.preserves_inverseFree G hinv
-
-/-- Every optimization pass satisfies `CannotReduceIterExpDepth`. -/
-theorem optPass_cannot_reduce_depth (P : OptPass) :
-    CannotReduceIterExpDepth P :=
-  fun _n _G hcomp hinv _ => optPass_iterExp_depth_lower_bound P hcomp hinv
-
-/-! ## CSE Pass Theorems -/
-
-/-- CSE preserves semantics (trivially, since it's the identity on trees). -/
-theorem cse_preserves_semantics :
-    ∀ (G : EMLExpr) (x : ℝ), 0 < x → (cseTransform G).eval x = G.eval x :=
-  fun _ _ _ => rfl
-
-/-- CSE preserves inverse-freeness. -/
-theorem cse_preserves_inverseFree :
-    ∀ G, G.InverseFree → (cseTransform G).InverseFree :=
-  fun _ h => h
-
-/-- The CSE optimization pass. -/
-def csePass : OptPass where
-  transform := cseTransform
-  preserves_semantics := cse_preserves_semantics
-  preserves_inverseFree := cse_preserves_inverseFree
-
-/-- CSE cannot reduce iterExp depth below `n`. -/
-theorem cse_cannot_reduce_iterExp_depth
-    {n : ℕ} {G : EMLExpr}
-    (hcomp : ComputesIterExp n G)
-    (hinv : G.InverseFree) :
-    n ≤ (csePass.transform G).emlDepth :=
-  optPass_iterExp_depth_lower_bound csePass hcomp hinv
-
-/-! ## Constant Folding Pass Theorems -/
+/-- The descended structure map on the quotient. -/
+noncomputable def quotientStr (A : STLCType) (C : FiniteCoalgebra A) :
+    SemanticQuotient A C → TypePolynomialFunctor A (SemanticQuotient A C) :=
+  Quotient.lift
+    (fun x => match C.str x with
+              | Sum.inl () => (Sum.inl () : TypePolynomialFunctor A (SemanticQuotient A C))
+              | Sum.inr fx => Sum.inr (fun i => @Quotient.mk _ (behavioralSetoid A C) (fx i)))
+    (fun x y (h : BehavioralEquiv A C x y) =>
+      str_respects_behavioral_equiv A C x y h)
 
 /-
-Constant folding preserves evaluation semantics.
+**Theorem 1 (Quotient Has Coalgebra Structure)**
 -/
-theorem constFold_preserves_semantics :
-    ∀ (G : EMLExpr) (x : ℝ), 0 < x → (constFoldTransform G).eval x = G.eval x := by
-  intro G x hx;
-  induction G generalizing x <;> simp_all +decide [ EMLExpr.eval ];
-  any_goals tauto;
-  · rename_i a b ha hb;
-    rw [ ← ha x hx, ← hb x hx ];
-    rw [ show constFoldTransform ( a.add b ) = match constFoldTransform a, constFoldTransform b with | .const ca, .const cb => .const ( ca + cb ) | a', b' => .add a' b' from rfl ];
-    cases h : constFoldTransform a <;> cases h' : constFoldTransform b <;> simp +decide [ h, h' ];
-    all_goals rfl;
-  · rename_i a b ha hb;
-    rw [ ← ha x hx, ← hb x hx ];
-    rw [ show constFoldTransform ( a.mul b ) = match constFoldTransform a, constFoldTransform b with | .const ca, .const cb => .const ( ca * cb ) | a', b' => .mul a' b' from rfl ];
-    cases h : constFoldTransform a <;> cases h' : constFoldTransform b <;> simp +decide [ h, h' ];
-    all_goals rfl;
-  · rename_i a ha;
-    convert congr_arg Neg.neg ( ha x hx ) using 1;
-    rw [ show constFoldTransform a.neg = match constFoldTransform a with | .const ca => .const ( -ca ) | a' => .neg a' from rfl ];
-    cases h : constFoldTransform a <;> simp +decide [ h, EMLExpr.eval ];
-  · rename_i a ha;
-    rw [ ← ha x hx ];
-    rw [ show constFoldTransform a.inv = match constFoldTransform a with | .const ca => .const ca⁻¹ | a' => .inv a' from rfl ];
-    cases h : constFoldTransform a <;> simp +decide [ h, EMLExpr.eval ];
-  · rename_i a b ha hb;
-    rw [ ← ha x hx, ← hb x hx ];
-    rw [ show constFoldTransform ( a.eml b ) = match constFoldTransform a, constFoldTransform b with | .const ca, .const cb => .const ( ca * Real.exp cb ) | a', b' => .eml a' b' from rfl ];
-    cases h : constFoldTransform a <;> cases h' : constFoldTransform b <;> simp +decide [ h, h' ];
-    all_goals rfl;
+theorem quotient_has_coalgebra_structure
+    (A : STLCType) (C : FiniteCoalgebra A) :
+    ∃ qstr : SemanticQuotient A C → TypePolynomialFunctor A (SemanticQuotient A C),
+      ∀ x : C.Carrier,
+        qstr (Quotient.mk (behavioralSetoid A C) x) =
+        TypePolynomialFunctor.map (Quotient.mk (behavioralSetoid A C)) (C.str x) := by
+  convert @str_respects_behavioral_equiv A C;
+  constructor <;> intro h;
+  · exact fun x y h => str_respects_behavioral_equiv A C x y h;
+  · use fun x => Quotient.liftOn' x (fun x => match C.str x with
+      | Sum.inl () => (Sum.inl () : TypePolynomialFunctor A (SemanticQuotient A C))
+      | Sum.inr fx => Sum.inr (fun i => @Quotient.mk _ (behavioralSetoid A C) (fx i))) (fun x y (h : BehavioralEquiv A C x y) =>
+      str_respects_behavioral_equiv A C x y h);
+    intro x; exact (by
+    cases h : C.str x <;> simp +decide [ h ];
+    · rfl;
+    · rfl)
+
+/-! ## Theorem 2: Morphism Kernel is a Bisimulation -/
+
+/-- The kernel relation of a function. -/
+def kernelRel {α β : Type*} (f : α → β) (x y : α) : Prop := f x = f y
 
 /-
-Constant folding preserves inverse-freeness.
+**Theorem 2 (Morphism Kernel Bisimulation)**
 -/
-theorem constFold_preserves_inverseFree :
-    ∀ G, G.InverseFree → (constFoldTransform G).InverseFree := by
-  intro G hG;
-  induction' G with a b ih_a ih_b <;> simp_all +decide [ EMLExpr.InverseFree ];
-  all_goals norm_cast;
-  · rw [ constFoldTransform ];
-    cases h : constFoldTransform b <;> cases h' : constFoldTransform ih_a <;> simp_all +decide [ EMLExpr.InverseFree ];
-  · rename_i a b ha hb;
-    rw [ show constFoldTransform ( a.mul b ) = match constFoldTransform a, constFoldTransform b with | .const ca, .const cb => .const ( ca * cb ) | a', b' => .mul a' b' from rfl ];
-    cases h : constFoldTransform a <;> cases h' : constFoldTransform b <;> simp_all +decide [ EMLExpr.InverseFree ];
-  · rename_i a ha;
-    cases h : constFoldTransform a <;> simp_all +decide [ EMLExpr.InverseFree ];
-    all_goals unfold constFoldTransform; simp_all +decide [ EMLExpr.InverseFree ] ;
-  · rename_i a b ha hb;
-    -- By definition of `constFoldTransform`, we know that `constFoldTransform (a.eml b)` is either a constant or an eml of two expressions.
-    by_cases h_const : ∃ ca cb : ℝ, constFoldTransform a = .const ca ∧ constFoldTransform b = .const cb;
-    · obtain ⟨ ca, cb, ha, hb ⟩ := h_const; simp +decide [ *, constFoldTransform ] ;
-      trivial;
-    · rw [ show constFoldTransform ( a.eml b ) = .eml ( constFoldTransform a ) ( constFoldTransform b ) from ?_ ];
-      · exact ⟨ ha, hb ⟩;
-      · exact ( by rw [ show constFoldTransform ( a.eml b ) = match constFoldTransform a, constFoldTransform b with | .const ca, .const cb => .const ( ca * Real.exp cb ) | a', b' => .eml a' b' from rfl ] ; aesop )
+theorem morphism_kernel_is_bisimulation
+    (A : STLCType) (C D : FiniteCoalgebra A)
+    (f : CoalgebraHom A C D) :
+    IsBisimulation A C (kernelRel f.toFun) := by
+  constructor <;> intro x y hxy hx <;> simp_all +decide [ kernelRel ];
+  · have h_comm : D.str (f.toFun x) = TypePolynomialFunctor.map f.toFun (C.str x) := by
+      exact f.comm x
+    have h_comm_y : D.str (f.toFun y) = TypePolynomialFunctor.map f.toFun (C.str y) := by
+      exact f.comm y
+    have := f.comm y; simp_all +decide [ TypePolynomialFunctor.map ] ;
+    cases h : C.str y <;> aesop;
+  · have := f.comm x; have := f.comm y; simp_all +decide [ IsBisimulation ] ;
+    cases h : C.str x <;> simp_all +decide [ TypePolynomialFunctor.map ];
+  · intro hxy' hx' hy' i
+    have h_eq : TypePolynomialFunctor.map (f.toFun) (C.str x) = TypePolynomialFunctor.map (f.toFun) (C.str y) := by
+      have := f.comm x; have := f.comm y; aesop;
+    cases h : C.str x <;> cases h' : C.str y <;> simp_all +decide [ TypePolynomialFunctor.map ];
+    injection h_eq with h_eq ; replace h_eq := congr_fun h_eq i ; aesop
 
-/-- The constant folding optimization pass. -/
-def constFoldPass : OptPass where
-  transform := constFoldTransform
-  preserves_semantics := constFold_preserves_semantics
-  preserves_inverseFree := constFold_preserves_inverseFree
+/-- Morphism-identified states are behaviorally equivalent. -/
+theorem morphism_identifies_implies_behavioral_equiv
+    (A : STLCType) (C D : FiniteCoalgebra A)
+    (f : CoalgebraHom A C D)
+    {x y : C.Carrier} (h : f.toFun x = f.toFun y) :
+    BehavioralEquiv A C x y :=
+  ⟨kernelRel f.toFun, morphism_kernel_is_bisimulation A C D f, h⟩
 
-/-- Constant folding cannot reduce iterExp depth below `n`. -/
-theorem constFold_cannot_reduce_iterExp_depth
-    {n : ℕ} {G : EMLExpr}
-    (hcomp : ComputesIterExp n G)
-    (hinv : G.InverseFree) :
-    n ≤ (constFoldPass.transform G).emlDepth :=
-  optPass_iterExp_depth_lower_bound constFoldPass hcomp hinv
+/-! ## Theorem 3: Uniqueness of Final Coalgebra -/
 
-/-! ## Algebraic Simplification Pass Theorems -/
+/-- A coalgebra isomorphism. -/
+structure CoalgebraIso (A : STLCType) (C D : FiniteCoalgebra A) where
+  fwd : CoalgebraHom A C D
+  bwd : CoalgebraHom A D C
+  left_inv : ∀ x, bwd.toFun (fwd.toFun x) = x
+  right_inv : ∀ y, fwd.toFun (bwd.toFun y) = y
+
+/-- Finality in a class of coalgebras. -/
+structure IsFinalIn (A : STLCType) (F : FiniteCoalgebra A)
+    (inClass : FiniteCoalgebra A → Prop) : Prop where
+  self_in_class : inClass F
+  univ : ∀ C : FiniteCoalgebra A, inClass C →
+    ∃ f : CoalgebraHom A C F,
+      ∀ g : CoalgebraHom A C F, ∀ x, g.toFun x = f.toFun x
 
 /-
-Algebraic simplification preserves evaluation semantics.
+**Theorem 3 (Uniqueness of Final Coalgebra)**
 -/
-theorem algSimp_preserves_semantics :
-    ∀ (G : EMLExpr) (x : ℝ), 0 < x → (algSimpTransform G).eval x = G.eval x := by
-  intro G x hx;
-  induction' G with G1 G2 hG1 hG2 generalizing x;
-  all_goals unfold algSimpTransform; simp +decide [ *, EMLExpr.eval ];
-  rename_i a ha;
-  rw [ ← ha x hx ];
-  cases h : algSimpTransform a ; simp +decide [ h ];
-  all_goals norm_num [ EMLExpr.eval ]
+theorem final_coalgebra_unique
+    (A : STLCType) {inClass : FiniteCoalgebra A → Prop}
+    {F G : FiniteCoalgebra A}
+    (hF : IsFinalIn A F inClass)
+    (hG : IsFinalIn A G inClass) :
+    Nonempty (CoalgebraIso A F G) := by
+  obtain ⟨f, hf⟩ : ∃ f : CoalgebraHom A G F, ∀ g : CoalgebraHom A G F, ∀ x, g.toFun x = f.toFun x := by
+    exact hF.univ G hG.self_in_class
+  obtain ⟨g, hg⟩ : ∃ g : CoalgebraHom A F G, ∀ h : CoalgebraHom A F G, ∀ y, h.toFun y = g.toFun y := by
+    exact hG.univ F hF.self_in_class;
+  refine' ⟨ g, f, _, _ ⟩;
+  · have := hF.univ F hF.self_in_class;
+    obtain ⟨ f, hf ⟩ := this;
+    convert hf ( CoalgebraHom.comp ‹CoalgebraHom A G F› g ) using 1;
+    simp +decide [ ← hf ( CoalgebraHom.id A F ) ];
+    rfl;
+  · have := hG.univ;
+    obtain ⟨ h, hh ⟩ := this G hG.self_in_class;
+    convert hh ( CoalgebraHom.comp g f ) using 1;
+    simp +decide [ ← hh ( CoalgebraHom.id A G ) ];
+    rfl
+
+/-! ## Theorem 4: Type Shape Controls Arity -/
+
+/-- The branching degree of a state. -/
+def branchingDegree (A : STLCType) (C : FiniteCoalgebra A) (x : C.Carrier) : ℕ :=
+  match C.str x with
+  | Sum.inl _ => 0
+  | Sum.inr _ => arityOf A
+
+/-- **Theorem 4 (Arity Bound)** -/
+theorem transition_arity_bounded_by_type
+    (A : STLCType) (C : FiniteCoalgebra A) (x : C.Carrier) :
+    branchingDegree A C x ≤ arityOf A := by
+  unfold branchingDegree
+  cases C.str x with
+  | inl _ => exact Nat.zero_le _
+  | inr _ => exact le_refl _
+
+theorem arr_arity_pos (A B : STLCType) : 0 < arityOf (.arr A B) := by
+  unfold arityOf; omega
+
+/-! ## Theorem 5: Modal Depth Approximation -/
+
+/-- n-step behavioral equivalence: agreement up to depth n. -/
+def BehavEquivN (A : STLCType) (C : FiniteCoalgebra A) :
+    ℕ → C.Carrier → C.Carrier → Prop
+  | 0 => fun _ _ => True
+  | n + 1 => fun x y =>
+    (C.str x = Sum.inl () ↔ C.str y = Sum.inl ()) ∧
+    ∀ (fx : Fin (arityOf A) → C.Carrier) (fy : Fin (arityOf A) → C.Carrier),
+      C.str x = Sum.inr fx → C.str y = Sum.inr fy →
+      ∀ i, BehavEquivN A C n (fx i) (fy i)
+
+/-- n-step equivalence is reflexive. -/
+theorem behavEquivN_refl (A : STLCType) (C : FiniteCoalgebra A) :
+    ∀ (n : ℕ) (x : C.Carrier), BehavEquivN A C n x x := by
+  intro n; induction n with
+  | zero => intro _; trivial
+  | succ n ih =>
+    intro x
+    refine ⟨Iff.rfl, fun fx fy hfx hfy i => ?_⟩
+    rw [hfx] at hfy; cases hfy; exact ih (fx i)
+
+/-- n-step equivalence is symmetric. -/
+theorem behavEquivN_symm (A : STLCType) (C : FiniteCoalgebra A) :
+    ∀ (n : ℕ) (x y : C.Carrier), BehavEquivN A C n x y → BehavEquivN A C n y x := by
+  intro n; induction n with
+  | zero => intros; trivial
+  | succ n ih =>
+    intro x y ⟨h_iff, h_branch⟩
+    exact ⟨h_iff.symm, fun fy fx hfy hfx i => ih _ _ (h_branch fx fy hfx hfy i)⟩
+
+/-- n-step equivalence is transitive. -/
+theorem behavEquivN_trans (A : STLCType) (C : FiniteCoalgebra A) :
+    ∀ (n : ℕ) (x y z : C.Carrier),
+      BehavEquivN A C n x y → BehavEquivN A C n y z → BehavEquivN A C n x z := by
+  intro n; induction n with
+  | zero => intros; trivial
+  | succ n ih =>
+    intro x y z ⟨hxy_iff, hxy_br⟩ ⟨hyz_iff, hyz_br⟩
+    refine ⟨Iff.trans hxy_iff hyz_iff, fun fx fz hfx hfz i => ?_⟩
+    have hy_not_term : ¬(C.str y = Sum.inl ()) := by
+      intro hy; have := hxy_iff.mpr hy; rw [this] at hfx; simp at hfx
+    obtain ⟨fy, hfy⟩ : ∃ fy, C.str y = Sum.inr fy := by
+      cases h : C.str y with
+      | inl u => exact absurd h hy_not_term
+      | inr g => exact ⟨g, rfl⟩
+    exact ih _ _ _ (hxy_br fx fy hfx hfy i) (hyz_br fy fz hfy hfz i)
+
+/-- **Theorem 5 (Descending Chain)**: (n+1)-step equivalence refines n-step. -/
+theorem behavEquivN_descending (A : STLCType) (C : FiniteCoalgebra A) :
+    ∀ (n : ℕ) (x y : C.Carrier),
+      BehavEquivN A C (n + 1) x y → BehavEquivN A C n x y := by
+  intro n; induction n with
+  | zero => intros; trivial
+  | succ n ih =>
+    intro x y ⟨h_iff, h_branch⟩
+    exact ⟨h_iff, fun fx fy hfx hfy i => ih _ _ (h_branch fx fy hfx hfy i)⟩
+
+/-- **Theorem (Bisimulation implies n-equivalence for all n)** -/
+theorem behavioral_implies_nstep
+    (A : STLCType) (C : FiniteCoalgebra A)
+    {x y : C.Carrier}
+    (h : BehavioralEquiv A C x y) :
+    ∀ n, BehavEquivN A C n x y := by
+  obtain ⟨R, hR, hxy⟩ := h
+  intro n
+  induction n generalizing x y with
+  | zero => trivial
+  | succ n ih =>
+    refine ⟨⟨fun hsx => hR.terminal_left x y hxy hsx,
+            fun hsy => hR.terminal_right x y hxy hsy⟩,
+           fun fx fy hfx hfy i => ?_⟩
+    exact ih (hR.branching x y fx fy hxy hfx hfy i)
+
+/-! ## Canonical Behavior Construction -/
+
+/-- The canonical (minimized) coalgebra: quotient by behavioral equivalence. -/
+noncomputable def canonicalCoalgebra (A : STLCType) (C : FiniteCoalgebra A) :
+    FiniteCoalgebra A where
+  Carrier := SemanticQuotient A C
+  str := quotientStr A C
+  fin := @Quotient.finite _ C.fin (behavioralSetoid A C)
+
+/-- The canonical projection is a coalgebra morphism. -/
+noncomputable def canonicalProjection (A : STLCType) (C : FiniteCoalgebra A) :
+    CoalgebraHom A C (canonicalCoalgebra A C) where
+  toFun := Quotient.mk (behavioralSetoid A C)
+  comm := fun x => by
+    simp only [canonicalCoalgebra, quotientStr, Quotient.lift_mk]
+    cases hsx : C.str x with
+    | inl u => simp [TypePolynomialFunctor.map]
+    | inr fx => simp only [TypePolynomialFunctor.map]; rfl
+
+/-- The canonical projection is surjective. -/
+theorem canonical_projection_surjective (A : STLCType) (C : FiniteCoalgebra A) :
+    Function.Surjective (canonicalProjection A C).toFun :=
+  Quotient.exists_rep
+
+/-- Behavioral equivalence on the quotient collapses to equality. -/
+theorem quotient_behavioral_equiv_eq
+    (A : STLCType) (C : FiniteCoalgebra A)
+    {x y : C.Carrier}
+    (h : BehavioralEquiv A C x y) :
+    (Quotient.mk (behavioralSetoid A C) x : SemanticQuotient A C) =
+    Quotient.mk (behavioralSetoid A C) y :=
+  Quotient.sound h
+
+/-! ## Cross-Domain: Simulation Relations -/
+
+/-- A simulation relation between coalgebras (automata-theoretic bridge). -/
+structure IsSimulation (A : STLCType) (C D : FiniteCoalgebra A)
+    (R : C.Carrier → D.Carrier → Prop) : Prop where
+  terminal_sim : ∀ x y, R x y → C.str x = Sum.inl () → D.str y = Sum.inl ()
+  branching_sim : ∀ x y (fx : Fin (arityOf A) → C.Carrier) (fy : Fin (arityOf A) → D.Carrier),
+    R x y → C.str x = Sum.inr fx → D.str y = Sum.inr fy →
+    ∀ i, R (fx i) (fy i)
 
 /-
-Algebraic simplification preserves inverse-freeness.
+The graph of a coalgebra morphism is a simulation.
 -/
-theorem algSimp_preserves_inverseFree :
-    ∀ G, G.InverseFree → (algSimpTransform G).InverseFree := by
-  intro G hG;
-  induction' G with a b ha hbizing hG;
-  all_goals unfold algSimpTransform; simp_all +decide [ EMLExpr.InverseFree ];
-  cases h : algSimpTransform ‹_› <;> aesop
+theorem morphism_graph_is_simulation
+    (A : STLCType) (C D : FiniteCoalgebra A)
+    (f : CoalgebraHom A C D) :
+    IsSimulation A C D (fun x y => f.toFun x = y) := by
+  constructor;
+  · intro x y hxy hx; have := f.comm x; aesop;
+  · intro x y fx fy hxy hx hy i; have := f.comm x; simp_all +decide [ TypePolynomialFunctor.map ] ;
+    injection this.symm with h; aesop;
 
-/-- The algebraic simplification optimization pass. -/
-def algSimpPass : OptPass where
-  transform := algSimpTransform
-  preserves_semantics := algSimp_preserves_semantics
-  preserves_inverseFree := algSimp_preserves_inverseFree
+/-! ## Base Type Analysis -/
 
-/-- Algebraic simplification cannot reduce iterExp depth below `n`. -/
-theorem algSimp_cannot_reduce_iterExp_depth
-    {n : ℕ} {G : EMLExpr}
-    (hcomp : ComputesIterExp n G)
-    (hinv : G.InverseFree) :
-    n ≤ (algSimpPass.transform G).emlDepth :=
-  optPass_iterExp_depth_lower_bound algSimpPass hcomp hinv
-
-/-! ## Composition Theorem -/
-
-/-- Composition of passes preserves the impossibility result.
-    The obstruction is **stable under composition**: no amount
-    of local ingenuity aggregates into a global depth collapse. -/
-theorem composed_pass_iterExp_depth_lower_bound
-    (P Q : OptPass)
-    {n : ℕ} {G : EMLExpr}
-    (hcomp : ComputesIterExp n G)
-    (hinv : G.InverseFree) :
-    n ≤ ((P.comp Q).transform G).emlDepth :=
-  optPass_iterExp_depth_lower_bound (P.comp Q) hcomp hinv
-
-/-! ## Pipeline Theorem -/
-
-/-- **Pipeline impossibility theorem**: For any list of semantics-preserving
-    inverse-free-preserving optimization passes, the pipeline output of an
-    `iterExp n` program has EML depth at least `n`.
-
-    The obstruction is **stable under arbitrary composition**: no sequence of
-    correct optimizations can break the intrinsic depth barrier. -/
-theorem pipeline_iterExp_depth_lower_bound
-    (ps : List OptPass)
-    {n : ℕ} {G : EMLExpr}
-    (hcomp : ComputesIterExp n G)
-    (hinv : G.InverseFree) :
-    n ≤ ((runPipeline ps).transform G).emlDepth :=
-  optPass_iterExp_depth_lower_bound (runPipeline ps) hcomp hinv
-
-/-! ## Canonical Construction Instantiation -/
-
-/-- Any optimization pass applied to the canonical `emlExprIterExp n` produces
-    output with EML depth at least `n`. -/
-theorem canonical_iterExp_depth_after_pass
-    (P : OptPass) (n : ℕ) :
-    n ≤ (P.transform (emlExprIterExp n)).emlDepth :=
-  optPass_iterExp_depth_lower_bound P (emlExprIterExp_computesIterExp n) (emlExprIterExp_inverseFree n)
-
-/-- Any pipeline applied to the canonical construction preserves depth ≥ n. -/
-theorem canonical_iterExp_depth_after_pipeline
-    (ps : List OptPass) (n : ℕ) :
-    n ≤ ((runPipeline ps).transform (emlExprIterExp n)).emlDepth :=
-  pipeline_iterExp_depth_lower_bound ps (emlExprIterExp_computesIterExp n) (emlExprIterExp_inverseFree n)
-
-end
+/-- For base types, `TypePolynomialFunctor` is isomorphic to `Unit ⊕ Unit`. -/
+noncomputable def base_type_equiv (X : Type u) :
+    TypePolynomialFunctor STLCType.base X ≃ (Unit ⊕ Unit) where
+  toFun x := match x with
+    | Sum.inl u => Sum.inl u
+    | Sum.inr _ => Sum.inr ()
+  invFun x := match x with
+    | Sum.inl u => Sum.inl u
+    | Sum.inr () => Sum.inr Fin.elim0
+  left_inv x := by
+    cases x with
+    | inl u => rfl
+    | inr f =>
+      show Sum.inr Fin.elim0 = Sum.inr f
+      congr; ext i; exact Fin.elim0 i
+  right_inv x := by cases x with | inl u => rfl | inr u => rfl

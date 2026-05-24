@@ -1,259 +1,263 @@
+/-
+# Coalgebraic Final Semantics for Simply Typed λ-Calculus
+
+## Core Definitions
+
+This file establishes the foundational definitions for a coalgebraic semantics
+of simple types: polynomial functors indexed by type structure, finite coalgebras,
+coalgebra morphisms, bisimulation, and behavioral equivalence.
+
+The key insight is that each simple type `A` determines a finitary polynomial
+endofunctor `F_A` on `Type`, and the semantic universe of terms of type `A`
+is captured by the final coalgebra of `F_A` restricted to term-generated systems.
+
+**Application keywords:** coalgebraic semantics, final coalgebra, polynomial functors,
+bisimulation minimization, Myhill–Nerode for λ-calculus, finite-state denotational
+semantics, categorical automata theory, canonical models, observational equivalence
+-/
 import Mathlib
 
-/-!
-# Compiler Lower Bound Theory — Definitions
+universe u
 
-This file defines the core structures for a formal impossibility theory of
-semantics-preserving compiler optimization in inverse-free EML expressions.
+/-! ## Simple Types -/
 
-## Overview
+/-- Simple types for STLC: a base type and arrow types. -/
+inductive STLCType : Type
+  | base : STLCType
+  | arr  : STLCType → STLCType → STLCType
+  deriving DecidableEq, Repr
 
-We formalize **EML (Exp-Mul-Log) expressions**, a natural algebraic language where
-transcendence enters through the operation `eml(a,b) = a * exp(b)`. We then define:
+namespace STLCType
 
-- `EMLExpr.InverseFree`: expressions without multiplicative inverse nodes
-- `ComputesIterExp`: semantic predicate for computing iterated exponentials
-- `OptPass`: structure bundling a transformation with semantics/inverse-freeness preservation
-- Concrete optimization passes: CSE, constant folding, algebraic simplification
-- `OptPass.comp`, `runPipeline`: pass composition and pipeline execution
+/-- The codomain arity of a type: counts the number of arguments
+    in a right-nested arrow chain ending at the codomain.
+    For `A₁ → A₂ → ⋯ → Aₙ → base`, this returns `n`. -/
+def arityOf : STLCType → ℕ
+  | .base     => 0
+  | .arr _ B  => arityOf B + 1
 
-## Cross-Domain Connections
+/-- The size of a type (total number of constructors). -/
+def size : STLCType → ℕ
+  | .base    => 1
+  | .arr A B => size A + size B + 1
 
-- **Circuit Complexity**: EML expressions are algebraic circuits; `emlDepth` is circuit depth
-- **Verified Compilation**: `OptPass` models verified compiler passes (CompCert, CakeML)
-- **Abstract Interpretation**: Semantics preservation captures correctness of abstract rewrites
-- **Parallel Computation**: `emlDepth` is the critical path length / parallel time
+/-- Size is always positive. -/
+theorem size_pos (A : STLCType) : 0 < size A := by
+  cases A with
+  | base => simp [size]
+  | arr A B => unfold size; omega
+
+/-- The order (depth of arrow nesting on the left) of a simple type. -/
+def order : STLCType → ℕ
+  | .base    => 0
+  | .arr A B => max (order A + 1) (order B)
+
+end STLCType
+
+open STLCType
+
+/-! ## Type Polynomial Functor
+
+The key construction: a simple type `A` induces a polynomial endofunctor
+`F_A : Type u → Type u`. The shape is:
+- Base type → `Unit ⊕ X⁰ ≅ Unit ⊕ Unit` (terminal or single observation)
+- Arrow type `A → B` → `Unit ⊕ X^(arityOf(A→B))` (terminal or branching)
+
+More precisely, `TypePolynomialFunctor A X = Unit ⊕ (Fin (arityOf A) → X)`.
+The `Unit` summand represents a terminal/halted state, and the function space
+represents the branching transitions available at non-terminal states.
 -/
 
-noncomputable section
+/-- The polynomial functor on `Type u` determined by a simple type `A`.
+    States are either terminal (`Sum.inl ()`) or have `arityOf A` successor states. -/
+def TypePolynomialFunctor (A : STLCType) (X : Type u) : Type u :=
+  Unit ⊕ (Fin (arityOf A) → X)
 
-open Real
+/-- The functorial action of `TypePolynomialFunctor A` on morphisms. -/
+def TypePolynomialFunctor.map {A : STLCType} {X Y : Type u} (f : X → Y) :
+    TypePolynomialFunctor A X → TypePolynomialFunctor A Y
+  | .inl u => .inl u
+  | .inr g => .inr (f ∘ g)
 
-/-! ## Expression Language -/
+/-- Functoriality: map respects identity. -/
+theorem TypePolynomialFunctor.map_id {A : STLCType} {X : Type u} :
+    TypePolynomialFunctor.map (A := A) (id : X → X) = id := by
+  ext x; cases x <;> rfl
 
-/-- EML expression language: transcendence enters only through `eml(a,b) = a * exp(b)`.
-    This is a natural algebraic language sitting between polynomial arithmetic and
-    the full exp-log algebra. -/
-inductive EMLExpr where
-  | var : EMLExpr
-  | const : ℝ → EMLExpr
-  | add : EMLExpr → EMLExpr → EMLExpr
-  | mul : EMLExpr → EMLExpr → EMLExpr
-  | neg : EMLExpr → EMLExpr
-  | inv : EMLExpr → EMLExpr
-  | eml : EMLExpr → EMLExpr → EMLExpr
+/-- Functoriality: map respects composition. -/
+theorem TypePolynomialFunctor.map_comp {A : STLCType} {X Y Z : Type u}
+    (f : X → Y) (g : Y → Z) :
+    TypePolynomialFunctor.map (A := A) (g ∘ f) =
+    TypePolynomialFunctor.map g ∘ TypePolynomialFunctor.map f := by
+  ext x; cases x <;> rfl
 
-/-! ## Semantics -/
+/-! ## Finite Coalgebras -/
 
-/-- Evaluation of `EMLExpr` at a point `x : ℝ`.
-    The key operation: `eml(a,b)` evaluates to `a(x) * exp(b(x))`. -/
-def EMLExpr.eval : EMLExpr → ℝ → ℝ
-  | .var, x => x
-  | .const c, _ => c
-  | .add a b, x => a.eval x + b.eval x
-  | .mul a b, x => a.eval x * b.eval x
-  | .neg a, x => -(a.eval x)
-  | .inv a, x => (a.eval x)⁻¹
-  | .eml a b, x => a.eval x * Real.exp (b.eval x)
+/-- A finite coalgebra for a type-indexed polynomial functor.
+    This is the core semantic object: a finite state space
+    equipped with a structure map that decomposes each state
+    into either terminal or branching behavior. -/
+structure FiniteCoalgebra (A : STLCType) where
+  /-- The carrier (state space) of the coalgebra. -/
+  Carrier : Type u
+  /-- The structure map: each state is either terminal or has
+      `arityOf A` successors. -/
+  str : Carrier → TypePolynomialFunctor A Carrier
+  /-- The carrier is finite. -/
+  [fin : Finite Carrier]
 
-/-! ## Depth and Complexity Measures -/
+/-- A coalgebra morphism between finite coalgebras: a function on carriers
+    that commutes with the structure maps up to the functorial action. -/
+structure CoalgebraHom (A : STLCType) (C D : FiniteCoalgebra A) where
+  /-- The underlying function on carriers. -/
+  toFun : C.Carrier → D.Carrier
+  /-- Commutativity: the structure map commutes with the morphism. -/
+  comm : ∀ x, D.str (toFun x) = TypePolynomialFunctor.map toFun (C.str x)
 
-/-- EML depth: counts the maximum nesting depth of `eml` operations,
-    ignoring field operations. This is the key complexity measure that
-    captures exponential nesting depth — the "critical path" through
-    transcendental operations. -/
-def EMLExpr.emlDepth : EMLExpr → ℕ
-  | .var => 0
-  | .const _ => 0
-  | .add a b => max a.emlDepth b.emlDepth
-  | .mul a b => max a.emlDepth b.emlDepth
-  | .neg a => a.emlDepth
-  | .inv a => a.emlDepth
-  | .eml a b => 1 + max a.emlDepth b.emlDepth
+/-- Identity coalgebra morphism. -/
+def CoalgebraHom.id (A : STLCType) (C : FiniteCoalgebra A) : CoalgebraHom A C C where
+  toFun := _root_.id
+  comm := fun x => by
+    simp [TypePolynomialFunctor.map]
+    cases C.str x with
+    | inl u => rfl
+    | inr g => rfl
 
-/-- Size of an EMLExpr tree (total node count). -/
-def EMLExpr.size : EMLExpr → ℕ
-  | .var => 1
-  | .const _ => 1
-  | .add a b => 1 + a.size + b.size
-  | .mul a b => 1 + a.size + b.size
-  | .neg a => 1 + a.size
-  | .inv a => 1 + a.size
-  | .eml a b => 1 + a.size + b.size
+/-- Composition of coalgebra morphisms. -/
+def CoalgebraHom.comp {A : STLCType} {C D E : FiniteCoalgebra A}
+    (g : CoalgebraHom A D E) (f : CoalgebraHom A C D) : CoalgebraHom A C E where
+  toFun := g.toFun ∘ f.toFun
+  comm := fun x => by
+    simp [Function.comp, g.comm, f.comm, TypePolynomialFunctor.map]
+    cases C.str x with
+    | inl u => rfl
+    | inr h => rfl
 
-/-! ## Iterated Exponential -/
+/-! ## Bisimulation -/
 
-/-- The iterated exponential: `iterExp 0 x = x`, `iterExp (n+1) x = exp(iterExp n x)`.
-    This is the family of functions that witnesses the depth hierarchy:
-    computing `iterExp n` requires EML depth at least `n`. -/
-def iterExp : ℕ → ℝ → ℝ
-  | 0, x => x
-  | n + 1, x => Real.exp (iterExp n x)
+/-- A bisimulation relation on a finite coalgebra: a relation `R` such that
+    related states have matching structure (both terminal or both branching
+    with related successors). -/
+structure IsBisimulation (A : STLCType) (C : FiniteCoalgebra A)
+    (R : C.Carrier → C.Carrier → Prop) : Prop where
+  /-- If `R x y` and `x` is terminal, then `y` is terminal. -/
+  terminal_left : ∀ x y, R x y → C.str x = .inl () → C.str y = .inl ()
+  /-- If `R x y` and `y` is terminal, then `x` is terminal. -/
+  terminal_right : ∀ x y, R x y → C.str y = .inl () → C.str x = .inl ()
+  /-- If `R x y` and both are branching, their successors are related. -/
+  branching : ∀ x y (fx : Fin (arityOf A) → C.Carrier) (fy : Fin (arityOf A) → C.Carrier),
+    R x y → C.str x = .inr fx → C.str y = .inr fy →
+    ∀ i, R (fx i) (fy i)
 
-/-! ## Representability -/
+/-- Behavioral equivalence: the largest bisimulation on a coalgebra.
+    Two states are behaviorally equivalent if there exists some
+    bisimulation relating them. -/
+def BehavioralEquiv (A : STLCType) (C : FiniteCoalgebra A)
+    (x y : C.Carrier) : Prop :=
+  ∃ R : C.Carrier → C.Carrier → Prop,
+    IsBisimulation A C R ∧ R x y
 
-/-- `e : EMLExpr` represents function `f` on positive reals.
-    This is the semantic correctness predicate: `e` computes `f`
-    on the domain of interest. -/
-def RepresentsOnPos (e : EMLExpr) (f : ℝ → ℝ) : Prop :=
-  ∀ x > 0, e.eval x = f x
+/-! ## Behavioral Equivalence is an Equivalence Relation -/
 
-/-! ## Inverse-Freeness -/
+/-- Equality is a bisimulation. -/
+theorem eq_isBisimulation (A : STLCType) (C : FiniteCoalgebra A) :
+    IsBisimulation A C (· = ·) where
+  terminal_left := fun _ _ h hx => h ▸ hx
+  terminal_right := fun _ _ h hy => h ▸ hy
+  branching := fun _ _ fx _ h hx hy i => by subst h; rw [hx] at hy; cases hy; rfl
 
-/-- An EML expression is **inverse-free** if it contains no `inv` nodes.
-    This is the key syntactic invariant that ensures monotonic growth,
-    enabling depth lower bounds. Without inverse-freeness, one could
-    potentially cancel exponential growth, defeating the lower bound. -/
-def EMLExpr.InverseFree : EMLExpr → Prop
-  | .var => True
-  | .const _ => True
-  | .add a b => a.InverseFree ∧ b.InverseFree
-  | .mul a b => a.InverseFree ∧ b.InverseFree
-  | .neg a => a.InverseFree
-  | .inv _ => False
-  | .eml a b => a.InverseFree ∧ b.InverseFree
+/-- Behavioral equivalence is reflexive. -/
+theorem BehavioralEquiv.refl (A : STLCType) (C : FiniteCoalgebra A)
+    (x : C.Carrier) : BehavioralEquiv A C x x :=
+  ⟨(· = ·), eq_isBisimulation A C, rfl⟩
 
-/-! ## Exponential Rank -/
+/-- The converse relation of a bisimulation is a bisimulation. -/
+theorem IsBisimulation.flip {A : STLCType} {C : FiniteCoalgebra A}
+    {R : C.Carrier → C.Carrier → Prop} (hR : IsBisimulation A C R) :
+    IsBisimulation A C (fun a b => R b a) where
+  terminal_left := fun a b hab => hR.terminal_right b a hab
+  terminal_right := fun a b hab => hR.terminal_left b a hab
+  branching := fun a b fa fb hab ha hb i => hR.branching b a fb fa hab hb ha i
 
-/-- Exponential rank: a syntactic invariant measuring the maximum depth of
-    exponential nesting an EML expression can produce.
+/-- Behavioral equivalence is symmetric. -/
+theorem BehavioralEquiv.symm {A : STLCType} {C : FiniteCoalgebra A}
+    {x y : C.Carrier} (h : BehavioralEquiv A C x y) :
+    BehavioralEquiv A C y x := by
+  obtain ⟨R, hR, hxy⟩ := h
+  exact ⟨fun a b => R b a, hR.flip, hxy⟩
 
-    - Field operations preserve the max rank of their arguments
-    - `eml(a,b) = a * exp(b)` wraps one exponential around `b`,
-      so the rank is `max(rank(a), rank(b) + 1)`
+/-- Behavioral equivalence is transitive. -/
+theorem BehavioralEquiv.trans {A : STLCType} {C : FiniteCoalgebra A}
+    {x y z : C.Carrier}
+    (hxy : BehavioralEquiv A C x y)
+    (hyz : BehavioralEquiv A C y z) :
+    BehavioralEquiv A C x z := by
+  obtain ⟨R₁, hR₁, hr₁⟩ := hxy
+  obtain ⟨R₂, hR₂, hr₂⟩ := hyz
+  refine ⟨fun a c => ∃ b, R₁ a b ∧ R₂ b c, ?_, ⟨y, hr₁, hr₂⟩⟩
+  constructor
+  · intro a c ⟨b, hab, hbc⟩ hsa
+    exact hR₂.terminal_left b c hbc (hR₁.terminal_left a b hab hsa)
+  · intro a c ⟨b, hab, hbc⟩ hsc
+    exact hR₁.terminal_right a b hab (hR₂.terminal_right b c hbc hsc)
+  · intro a c fa fc ⟨b, hab, hbc⟩ hsa hsc i
+    -- b must be branching since a is branching and R₁ a b
+    have hsb_not_term : C.str b ≠ .inl () := by
+      intro h_term
+      have := hR₁.terminal_right a b hab h_term
+      rw [this] at hsa; simp at hsa
+    obtain ⟨fb, hfb⟩ : ∃ fb : Fin (arityOf A) → C.Carrier, C.str b = .inr fb := by
+      cases hsb : C.str b with
+      | inl u => exact absurd hsb hsb_not_term
+      | inr g => exact ⟨g, rfl⟩
+    exact ⟨fb i,
+      hR₁.branching a b fa fb hab hsa hfb i,
+      hR₂.branching b c fb fc hbc hfb hsc i⟩
 
-    The chain of reasoning is: `n ≤ expRank e ≤ emlDepth e`
-    for any inverse-free `e` computing `iterExp n`. -/
-def EMLExpr.expRank : EMLExpr → ℕ
-  | .var => 0
-  | .const _ => 0
-  | .add a b => max a.expRank b.expRank
-  | .mul a b => max a.expRank b.expRank
-  | .neg a => a.expRank
-  | .inv a => a.expRank
-  | .eml a b => max a.expRank (b.expRank + 1)
+/-- The setoid on a finite coalgebra's carrier induced by behavioral equivalence. -/
+def behavioralSetoid (A : STLCType) (C : FiniteCoalgebra A) :
+    Setoid C.Carrier where
+  r := BehavioralEquiv A C
+  iseqv := ⟨BehavioralEquiv.refl A C,
+            fun h => BehavioralEquiv.symm h,
+            fun h1 h2 => BehavioralEquiv.trans h1 h2⟩
 
-/-! ## Semantic Predicates -/
+/-! ## Observation and Modal Invariance -/
 
-/-- An EML expression `e` computes `iterExp n` if it agrees with `iterExp n`
-    on all positive real inputs. -/
-def ComputesIterExp (n : ℕ) (e : EMLExpr) : Prop :=
-  RepresentsOnPos e (iterExp n)
+/-- An observation on a coalgebra state: is the state terminal? -/
+def isTerminal (A : STLCType) (C : FiniteCoalgebra A) (x : C.Carrier) : Bool :=
+  match C.str x with
+  | .inl _ => true
+  | .inr _ => false
 
-/-! ## Optimization Pass Structure -/
+/-- Same observation shape: two states agree on terminality. -/
+def sameObservationShape (A : STLCType) (C : FiniteCoalgebra A)
+    (x y : C.Carrier) : Prop :=
+  isTerminal A C x = isTerminal A C y
 
-/-- An **optimization pass** on EML expressions.
-    Bundles a syntactic transformation with proofs that it preserves:
-    1. Denotational semantics (pointwise on positive reals)
-    2. Inverse-freeness
+/-- **Theorem (Behavioral Equivalence Preserves Observation Shape)**:
+    Behaviorally equivalent states have the same observation shape.
+    This is a key compatibility theorem needed for quotient descent. -/
+theorem behavioral_equiv_preserves_observation
+    (A : STLCType) (C : FiniteCoalgebra A)
+    {x y : C.Carrier}
+    (h : BehavioralEquiv A C x y) :
+    sameObservationShape A C x y := by
+  obtain ⟨R, hR, hxy⟩ := h
+  simp only [sameObservationShape, isTerminal]
+  cases hsx : C.str x with
+  | inl u =>
+    have := hR.terminal_left x y hxy hsx
+    rw [this]
+  | inr fx =>
+    cases hsy : C.str y with
+    | inl u =>
+      have := hR.terminal_right x y hxy hsy
+      rw [this] at hsx; exact absurd hsx (by simp)
+    | inr fy => rfl
 
-    This is the central compiler-theoretic structure. It captures the
-    essential constraints that any correct, structure-preserving optimizer
-    must satisfy. The key insight is that these two preservation properties
-    are exactly what is needed to transport the depth lower bound through
-    any optimization. -/
-structure OptPass where
-  /-- The syntactic transformation on EML expressions -/
-  transform : EMLExpr → EMLExpr
-  /-- The transformation preserves evaluation on positive reals -/
-  preserves_semantics :
-    ∀ (G : EMLExpr) (x : ℝ), 0 < x → (transform G).eval x = G.eval x
-  /-- The transformation preserves inverse-freeness -/
-  preserves_inverseFree :
-    ∀ G, G.InverseFree → (transform G).InverseFree
+/-! ## Quotient Construction -/
 
-/-- The impossibility predicate: an optimization pass cannot reduce the
-    EML depth of inverse-free expressions computing `iterExp n` below `n`. -/
-def CannotReduceIterExpDepth (P : OptPass) : Prop :=
-  ∀ n G,
-    ComputesIterExp n G →
-    G.InverseFree →
-    n ≤ G.emlDepth →
-    n ≤ (P.transform G).emlDepth
-
-/-! ## Concrete Optimization Passes -/
-
-/-- **Common Subexpression Elimination (CSE)**: In a tree representation,
-    CSE is the identity since there's no sharing to exploit. In a DAG
-    representation, CSE would identify and merge structurally equal subtrees,
-    reducing size but not depth. -/
-def cseTransform : EMLExpr → EMLExpr := id
-
-/-- **Constant Folding**: Replaces `const a ⊕ const b` with `const (a ⊕ b)`.
-    Recursively simplifies constant subexpressions. This reduces size and
-    may reduce depth (by collapsing chains of constant operations), but
-    cannot reduce the EML depth of expressions computing `iterExp n`
-    because the essential exponential nesting remains. -/
-def constFoldTransform : EMLExpr → EMLExpr
-  | .var => .var
-  | .const c => .const c
-  | .add a b =>
-    match constFoldTransform a, constFoldTransform b with
-    | .const ca, .const cb => .const (ca + cb)
-    | a', b' => .add a' b'
-  | .mul a b =>
-    match constFoldTransform a, constFoldTransform b with
-    | .const ca, .const cb => .const (ca * cb)
-    | a', b' => .mul a' b'
-  | .neg a =>
-    match constFoldTransform a with
-    | .const ca => .const (-ca)
-    | a' => .neg a'
-  | .inv a =>
-    match constFoldTransform a with
-    | .const ca => .const ca⁻¹
-    | a' => .inv a'
-  | .eml a b =>
-    match constFoldTransform a, constFoldTransform b with
-    | .const ca, .const cb => .const (ca * exp cb)
-    | a', b' => .eml a' b'
-
-/-- **Algebraic Simplification**: Applies basic algebraic identities.
-    - `neg (neg e) → e`
-    Recursively applied. This is a conservative pass that preserves
-    the expression structure while eliminating redundant negations. -/
-def algSimpTransform : EMLExpr → EMLExpr
-  | .var => .var
-  | .const c => .const c
-  | .add a b => .add (algSimpTransform a) (algSimpTransform b)
-  | .mul a b => .mul (algSimpTransform a) (algSimpTransform b)
-  | .neg a =>
-    match algSimpTransform a with
-    | .neg a' => a'
-    | a' => .neg a'
-  | .inv a => .inv (algSimpTransform a)
-  | .eml a b => .eml (algSimpTransform a) (algSimpTransform b)
-
-/-! ## Pass Composition and Pipelines -/
-
-/-- Compose two optimization passes: apply `Q` first, then `P`. -/
-def OptPass.comp (P Q : OptPass) : OptPass where
-  transform := P.transform ∘ Q.transform
-  preserves_semantics := by
-    intro G x hx
-    simp only [Function.comp]
-    rw [P.preserves_semantics _ x hx, Q.preserves_semantics G x hx]
-  preserves_inverseFree := fun G hG =>
-    P.preserves_inverseFree _ (Q.preserves_inverseFree G hG)
-
-/-- The identity optimization pass: transforms nothing. -/
-def OptPass.identity : OptPass where
-  transform := _root_.id
-  preserves_semantics := fun _ _ _ => rfl
-  preserves_inverseFree := fun _ hG => hG
-
-/-- Run a pipeline of optimization passes sequentially (right to left). -/
-def runPipeline : List OptPass → OptPass
-  | [] => OptPass.identity
-  | p :: ps => p.comp (runPipeline ps)
-
-/-! ## Canonical Constructions -/
-
-/-- The canonical `EMLExpr` representing `iterExp n`:
-    `eml(1, eml(1, ... eml(1, var)...))` with `n` nested `eml` layers.
-    This is the optimal construction: `emlDepth = n` and `size = 2n + 1`. -/
-def emlExprIterExp : ℕ → EMLExpr
-  | 0 => .var
-  | n + 1 => .eml (.const 1) (emlExprIterExp n)
-
-end
+/-- The quotient type of a coalgebra carrier by behavioral equivalence. -/
+def SemanticQuotient (A : STLCType) (C : FiniteCoalgebra A) : Type u :=
+  Quotient (behavioralSetoid A C)
