@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1786 of the highest-quality
+A curated collection of 1787 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1786
+Total files: 1787
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -263,6 +263,7 @@ import FINAL.Bridges.BerggrenResidualAutomata
 import FINAL.Bridges.BerggrenTransferDuality
 import FINAL.Bridges.BerggrenTropicalLensing
 import FINAL.Bridges.BerggrenVoronoiDuality
+import FINAL.Bridges.BisimCohomology
 import FINAL.Bridges.BisimulationMetric
 import FINAL.Bridges.BooleanThermodynamicEliminationDuality
 import FINAL.Bridges.BordaRobustness
