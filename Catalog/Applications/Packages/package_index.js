@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Type Theory / Compositional Complexity",
     "date": "2026-05-24T18:39:12Z",
     "exp_id": "074616c0",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6143661421988151,
+    "quality": "partial"
   },
   {
     "filename": "direction_4_certified_discrete_optimization_on_m_c.json",
@@ -6897,8 +6897,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-24T18:39:12Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6143661421988151,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -8830,10 +8830,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "43aa1bfc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e448ab4",
     "timestamp": "2026-05-23T15:05:10.266990+00:00"
   },
   {
@@ -9065,10 +9065,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ed1c493e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d14ce54",
     "timestamp": "2026-05-23T19:16:51.939867+00:00"
   },
   {
@@ -9599,10 +9599,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2c97bffa",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "48c11aea",
     "timestamp": "2026-05-24T04:06:59.157063+00:00"
   },
   {
@@ -9635,10 +9635,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "641e2bf5",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "743ad8f3",
     "timestamp": "2026-05-24T04:42:20.931240+00:00"
   },
   {
@@ -10372,10 +10372,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "964b5789",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3d8e1fb",
     "timestamp": "2026-05-24T17:30:48.671230+00:00"
   },
   {
@@ -10511,23 +10511,5 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "c23d3e3a",
     "consumed_by_exp_id": "13e7b2a7",
     "timestamp": "2026-05-24T14:33:01.106772+00:00"
-  },
-  {
-    "id": "fd_0725",
-    "title": "Direction 2: Multiplicative Type Complexity for Products and Sums",
-    "description": "**Conjecture**: Extending simple types with products `A \u00d7 B` and sums `A + B`, the state bound extends to:\n- `typeStateBound(A \u00d7 B) = typeStateBound(A) \u00b7 typeStateBound(B)`\n- `typeStateBound(A + B) = typeStateBound(A) + typeStateBound(B)`\n\nand these extended bounds remain exact (or tight upper bounds) for the corresponding \u03bb-calculus with pairs and case expressions.\n\n**Test**: Implement the extended type system with \u03b2-reduction for pairs and case. Enumerate small closed terms and verify that the proposed bounds are neither exceeded nor wastefully large.\n\n**Impact**: Would show that products correspond to *independent composition* of state spaces (Cartesian product) while sums correspond to *disjoint union*, mirroring the standard automata-theoretic construction. This would establish a complete dictionary between type constructors and state-space operations.\n\n**Catalog References**: `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_arrow_recurrence`, `typeStateBound_arrow_gt_components`.\n\n**Proof Strategy**: Define extended `typeStateBound` recursively on the extended type grammar. Prove the upper bound by induction on typing derivations, using the product and sum elimination rules. For tightness, construct witness terms that realize the full product/sum state space.\n\n**Domain Bridges**: Category theory (products/coproducts as state-space operations), circuit complexity (parallel composition \u2194 products, branching \u2194 sums).\n\n**Lineage**: Direct extension of the arrow recurrence theorem `typeStateBound_arrow_recurrence`.\n\n**Ambition**: Solid extension.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "1e04b63c",
-    "consumed_by_exp_id": "074616c0",
-    "timestamp": "2026-05-24T15:13:46.828263+00:00"
   }
 ];
