@@ -511,5 +511,6 @@
   "074616c0": "direction_2_multiplicative_type_complexity_for_pro.json",
   "0ef9fa27": "direction_3_depth_rigidity_for_generalized_tower_f.json",
   "13e7b2a7": "direction_2_church_rosser_via_de_bruijn_indices.json",
-  "48c11aea": "direction_3_coalgebraic_final_semantics.json"
+  "48c11aea": "direction_3_coalgebraic_final_semantics.json",
+  "b3d8e1fb": "direction_4_derived_compression_invariants.json"
 }
