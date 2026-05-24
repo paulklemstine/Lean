@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_5_complexity_of_lorentzian_recognition.json",
+    "title": "Complexity of Lorentzian Recognition: Recursive Spectral Certificates and Fixed-Parameter Tractability",
+    "domain": "Algebraic Combinatorics / Complexity Theory",
+    "date": "2026-05-24T23:12:19Z",
+    "exp_id": "33261812",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_4_primewise_decomposition_and_improved_c.json",
     "title": "Primewise Torsion Persistence Stability: Arithmetic Decomposition of Topological Invariants",
     "domain": "Algebraic Topology / Topological Data Analysis / Number Theory",
     "date": "2026-05-24T23:11:21Z",
     "exp_id": "2d14ce54",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.5216596518375242,
+    "quality": "partial"
   }
 ];
 
@@ -22,6 +31,14 @@ window.PACKAGE_DB_INDEX = {
       "ed1c493e"
     ],
     "domain": "Algebraic Topology / Topological Data Analysis / Number Theory"
+  },
+  "direction_5_complexity_of_lorentzian_recognition.json": {
+    "title": "Complexity of Lorentzian Recognition: Recursive Spectral Certificates and Fixed-Parameter Tractability",
+    "exp_id": "33261812",
+    "source_exp_ids": [
+      "a9d54ec0"
+    ],
+    "domain": "Algebraic Combinatorics / Complexity Theory"
   }
 };
 
@@ -33,9 +50,20 @@ window.PACKAGE_GRAPH = {
       "id": "direction_4_primewise_decomposition_and_improved_c",
       "title": "Primewise Torsion Persistence Stability: Arithmetic Decomposition of Topological Invariants",
       "domain": "Algebraic Topology / Topological Data Analysis / Number Theory",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-24T23:11:21Z",
+      "hue": 91,
+      "priority_score": 0.5216596518375242,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_5_complexity_of_lorentzian_recognition",
+      "title": "Complexity of Lorentzian Recognition: Recursive Spectral Certificates and Fixed-Parameter Tractability",
+      "domain": "Algebraic Combinatorics / Complexity Theory",
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
-      "date": "2026-05-24T23:11:21Z",
+      "date": "2026-05-24T23:12:19Z",
       "hue": 270,
       "priority_score": null,
       "quality": "unrated"
@@ -55,22 +83,6 @@ window.PACKAGE_GRAPH = {
 
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
-  {
-    "id": "seed_094",
-    "title": "Proof Complexity Collapse: P=NP via Proof Checking",
-    "description": "The key insight is that proof checking is fundamentally different from proof search. Conjecture: There exists a proof system in which every true quantifier-free formula has a proof of polynomial size, and this proof can be verified in polynomial time. The barrier has been that existing proof systems (Frege, Extended Frege) have exponential lower bounds for specific formulas. But what if we construct a NEW proof system based on EML computations? Define EML-Frege where each proof step is an EML identity (exp-log composition) verified by numeric evaluation. Since EML identities can be checked in O(1) field operations, and every boolean circuit can be simulated by an EML network of depth O(log n), we get a quasi-polynomial proof system. Why now: recent breakthroughs in circuit lower bounds (Williams 2014, 2023) and the EML single-operator universality result suggest that EML-Frege could break the natural proofs barrier. Test: prove that EML-Frege polynomially simulates Extended Frege for CNF formulas, and show it has no exponential lower bounds under the EML independence assumption. Impact: if EML-Frege has short proofs for all tautologies, then NP = coNP in this proof system, which would be the most significant result in proof complexity since Cook's theorem.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "EML"
-    ],
-    "priority_score": 0.97,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.047681+00:00"
-  },
   {
     "id": "seed_005",
     "title": "P vs NP Problem",
@@ -553,22 +565,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.916894+00:00"
   },
   {
-    "id": "seed_085",
-    "title": "EML Differential Calculus: Chain Rules for exp-log Compositions",
-    "description": "The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the derivative has a canonical EML chain rule form: (exp(h) * log(g))' = exp(h) * log(g) * (h' + g'/g). This factorization is the key structural insight: the derivative of an EML function factors through the original function itself, multiplied by a simple expression involving only the inner functions and their derivatives. This is stronger than the general Leibniz rule because the EML structure forces the derivative into a canonical form. For depth-d EML functions, the derivative can be written recursively as f' = f * (h'_1 + g'_1/g_1) where each h'_i and g'_i are depth-(d-1) EML functions. Test: compute the 3rd derivative of f(x) = exp(x^2) * log(x+1) and verify it can be written as an EML expression. Impact: establishes that EML functions form a differential algebra, enabling automatic EML differentiation for verified numerical computation.",
-    "domains": [
-      "EML",
-      "Analysis",
-      "Algebra"
-    ],
-    "priority_score": 0.88,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.961577+00:00"
-  },
-  {
     "id": "seed_089",
     "title": "Stereographic Sheaf Theory: Gluing Data on Spheres",
     "description": "Sheaf theory studies how local data glues to form global objects. The stereographic projection gives S^n a two-chart atlas with Mobius transition maps. Define a new class of sheaves called stereographic sheaves where the gluing data is constrained by the conformal structure of the stereographic atlas. A stereographic sheaf on S^n is a sheaf F such that for each chart U_i of the stereographic cover, the restriction F|U_i is a sheaf on R^n, and the transition function F(U_0 cap U_1) is a sheaf morphism that commutes with the Mobius transition. Conjecture: The category of stereographic sheaves on S^n is a proper subcategory of all sheaves on S^n, characterized by the condition that Cech cohomology with respect to the stereographic cover satisfies a Mobius compatibility. This subcategory has better computational properties: H^k(S^n, F) can be computed from the transition function alone for stereographic sheaves, reducing the computation of sheaf cohomology on S^n to a single gluing datum. Test: prove the equivalence with locally constant sheaves on RP^n for n=2,3. Compute H^1(S^2, Z) = Z/2Z for the constant sheaf Z. Impact: a new computational tool for sheaf cohomology that exploits conformal structure, with applications to topological data analysis and differential equations on spheres.",
@@ -723,22 +719,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.591547+00:00"
-  },
-  {
-    "id": "seed_048",
-    "title": "Tropical Riemann-Roch Theorem",
-    "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.86,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.649949+00:00"
   },
   {
     "id": "seed_069",
@@ -1456,6 +1436,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.899298+00:00"
   },
   {
+    "id": "fd_0789",
+    "title": "Arithmetic Phase Transitions in Proof Search via p-adic Energy Landscapes",
+    "description": "Conjecture: For any finitely presented first-order theory T and any fixed automated proof system P, there exists a canonically defined p-adic proof energy E_p on partial derivations such that the distribution of successful proof trajectories exhibits a sharp phase transition at a critical prime-dependent inverse temperature beta_p; moreover, theories with non-isomorphic arithmetic content have distinct critical spectra {beta_p}_p. Test: Define E_p from valuation growth of denominators, coefficient heights, and modular obstruction data along proof states; run controlled proof search on benchmark theories (group theory, number theory, algebraic geometry fragments) under Gibbs-biased sampling exp(-beta E_p), estimate success probability as a function of beta and p, and check whether (1) a statistically sharp threshold exists and (2) the resulting critical spectrum classifies theories better than standard syntactic features. Refutation occurs if no reproducible threshold appears or if spectra fail to distinguish arithmetic structure beyond trivial size effects. Impact: This would introduce a new measurable invariant of mathematical theories, connect automated reasoning with arithmetic geometry and statistical mechanics, and suggest temperature-tuned theorem provers that exploit hidden number-theoretic structure in proof space.",
+    "domains": [
+      "Automated Reasoning",
+      "Arithmetic Geometry"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:47.101012+00:00"
+  },
+  {
     "id": "seed_026",
     "title": "Lehmer's Mahler Measure Problem",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
@@ -1548,21 +1543,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
   },
   {
-    "id": "seed_059",
-    "title": "Game of Life Universality",
-    "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
-    "domains": [
-      "Computation",
-      "Speculative"
-    ],
-    "priority_score": 0.77,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.731405+00:00"
-  },
-  {
     "id": "seed_028",
     "title": "Percolation Threshold",
     "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
@@ -1592,22 +1572,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.723031+00:00"
-  },
-  {
-    "id": "seed_066",
-    "title": "Alien Number Systems: Beyond Base-N",
-    "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
-    "domains": [
-      "NumberTheory",
-      "Computation",
-      "Speculative"
-    ],
-    "priority_score": 0.76,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.788357+00:00"
   },
   {
     "id": "seed_067",
@@ -1667,5 +1631,113 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
+  },
+  {
+    "id": "fd_0783",
+    "title": "Synthesis",
+    "description": "The results in this work establish that torsion persistence is not a monolithic phenomenon but decomposes canonically into independent prime channels, each with its own stability law. This opens five interconnected research directions: (1) proving the sharp valuation-sensitive improvement conjecture, (2) developing functorial localization for persistence modules, (3) extending to higher-dimensional torsion phenomena, (4) building practical algorithms for arithmetic TDA, and (5) establishing entropy-theoretic bounds for primewise information content. These directions are unified by the principle that **arithmetic structure provides hidden regularity in topological data**.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.456980+00:00"
+  },
+  {
+    "id": "fd_0784",
+    "title": "Direction 1: Sharp Valuation-Sensitive Stability Bound",
+    "description": "**Conjecture**: For filtrations whose interleaving maps have p-adic divisibility controlled by \u03bd = v_p(\u03b4), the primewise stability modulus satisfies\n\n```\n\u03b5_p \u2264 \u03b4 / p^\u03bd\n```\n\nwhere \u03bd is the p-adic valuation of the interleaving defect.\n\n**Test**: Construct explicit filtrations over Z/p^k Z for k = 1, 2, 3 with interleaving maps whose matrix entries are divisible by p^\u03bd. Compute the actual primewise shift and compare against \u03b4/p^\u03bd. The conjecture predicts a monotone decrease; a single counterexample falsifies it.\n\n**Impact**: This would establish that p-adic arithmetic directly controls topological stability \u2014 a bridge between valuation theory and TDA that has no precedent.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `primeShiftBound_improved`, `primeShiftBound_improved_strict`\n\n**Proof Strategy**: Define a \"p-controlled interleaving\" structure where forward/backward maps factor through p^\u03bd-multiplication. Transport the existing stability proof through this factorization, extracting the improved constant at each step. The key technical lemma: if the interleaving map sends x to p^\u03bd \u00b7 f(x) for injective f, then the induced birth shift is bounded by \u03b4/p^\u03bd rather than \u03b4.\n\n**Domain Bridges**: p-adic analysis, arithmetic geometry, Iwasawa theory\n\n**Lineage**: Extends `pTorsionBirthSet_deltaClose` and `primeShiftBound_improved_strict`\n\n**Ambition**: Grand challenge \u2014 this would be the first theorem importing valuation theory into persistence stability\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.476543+00:00"
+  },
+  {
+    "id": "fd_0785",
+    "title": "Direction 2: Functorial Localization of Persistence Modules",
+    "description": "**Conjecture**: There exists a functor L_p from the category of \u2124-persistence modules to \u2124_(p)-persistence modules (localization at p) such that:\n\n1. L_p preserves interleavings (with the same parameter \u03b4)\n2. PTorsionBirthSet(p, F) = TorsionBirthSet(L_p(F))\n3. L_p transforms interleavings into potentially tighter interleavings when the interleaving maps have p-local structure\n\n**Test**: Implement L_p for finite persistence modules represented as sequences of finitely generated abelian groups. Verify properties (1)-(2) on 100 random examples. Search for examples where (3) gives strictly improved \u03b4.\n\n**Impact**: This would make primewise stability a corollary of ordinary stability applied to a localized module \u2014 conceptually clean and opening the door to all localization techniques from commutative algebra.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `pTorsionBirthSet_eq_torsionBirthSet`, `pTorsionBirthSet_deltaClose`\n\n**Proof Strategy**: Define L_p as the tensor product with \u2124_(p). Show that \u2124_(p) is flat over \u2124, so tensoring preserves exact sequences and injective maps. The interleaving maps descend to L_p since tensor product is functorial. The key: show that PTorsionBirthSet equals the torsion birth set of the localized module.\n\n**Domain Bridges**: Commutative algebra, algebraic topology, derived categories\n\n**Lineage**: Extends `prime_channel_independence` and `torsion_detector_factorizes_over_primes`\n\n**Ambition**: Solid extension \u2014 builds systematic algebraic infrastructure\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.492421+00:00"
+  },
+  {
+    "id": "fd_0786",
+    "title": "Direction 3: Primewise Birth Spectra Distinguish Filtrations",
+    "description": "**Conjecture** (Hypothesis D): There exist filtrations F, G with TorsionBirthSet(F) = TorsionBirthSet(G) (as global sets) but PTorsionBirthSet(p, F) \u2260 PTorsionBirthSet(p, G) for some prime p.\n\n**Test**: Exhaustive search over filtered abelian groups with at most 4 levels and torsion orders dividing 30. For each pair with matching global birth, check if primewise births differ. The conjecture predicts at least one distinguishing example.\n\n**Impact**: Proves the primewise invariant is strictly finer than the global one \u2014 the prime decomposition has real information content beyond relabeling.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `mem_globalTorsionBirthSet_implies_exists_prime`\n\n**Proof Strategy**: Construct F with Z/2Z at level 1 and Z/6Z at level 3; construct G with Z/3Z at level 1 and Z/6Z at level 3. Both have global torsion birth at level 1, but F has 2-torsion birth at 1 and 3-torsion birth at 3, while G has 3-torsion birth at 1 and 2-torsion birth at 3. Formalize this in Lean.\n\n**Domain Bridges**: Algebraic topology, data science, topological signal processing\n\n**Lineage**: Direct test of the theory's discriminating power\n\n**Ambition**: Solid extension \u2014 concrete and falsifiable\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.506271+00:00"
+  },
+  {
+    "id": "fd_0787",
+    "title": "Direction 4: Global Stability as Max Envelope",
+    "description": "**Conjecture** (Hypothesis C): For finite-type filtrations with finitely many active primes,\n\n```\noptimal_global_shift(F, G) = sup_p optimal_prime_shift(p, F, G)\n```\n\nwhere the supremum is over all primes p.\n\n**Test**: Compute both sides on 1000 random filtration pairs with torsion orders in {2, 3, 5, 6, 10, 15, 30}. The conjecture predicts exact equality. A single instance of strict inequality (global < max primewise, or global > max primewise) would falsify it.\n\n**Impact**: Confirms that the primewise decomposition is a complete refinement \u2014 no information is lost, and the global bound is exactly the worst-case prime channel.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `global_stability_from_primewise`\n\n**Proof Strategy**: The inequality global \u2264 sup_p is immediate from `global_stability_from_primewise`. The reverse requires showing that the global birth distance equals the maximum primewise birth distance. This follows from the decomposition theorem: the global birth is at the minimum of all prime births, and the Hausdorff distance between minima is bounded by the max of individual distances.\n\n**Domain Bridges**: Metric geometry, minimax theory\n\n**Lineage**: Extends `global_stability_from_primewise` and `globalTorsionBirthSet_deltaClose`\n\n**Ambition**: Solid extension \u2014 proves completeness of the decomposition\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.518980+00:00"
+  },
+  {
+    "id": "fd_0788",
+    "title": "Direction 5: Primewise Entropy and Data Processing Inequality",
+    "description": "**Conjecture** (Hypothesis E): Define the primewise birth entropy as\n\n```\nH_p(F) = -\u03a3_i (count of p-torsion births at level i / total) * log(...)\n```\n\n(using a suitable normalization over a family of filtrations). Then applying a prime-selective functor cannot increase H_p \u2014 i.e., the primewise entropy satisfies a data processing inequality.\n\n**Test**: Define empirical birth entropy for finite filtration families. Compute before and after applying a prime-selective simplification (e.g., killing q-torsion for q \u2260 p). Check whether H_p decreases or stays constant. The conjecture predicts H_p never increases; a single increase falsifies it.\n\n**Impact**: Connects persistence theory to information theory via the arithmetic channel model. Would establish that primewise torsion is not just algebraically natural but information-theoretically optimal.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `torsion_detector_factorizes_over_primes`, `prime_channel_independence`\n\n**Proof Strategy**: Model the prime-selective functor as a deterministic channel in the sense of information theory. Use the standard data processing inequality for deterministic maps. The key: show that the prime-selective functor is a retraction (left inverse of inclusion), hence post-processing, hence cannot increase mutual information.\n\n**Domain Bridges**: Information theory, statistical mechanics, topological data analysis\n\n**Lineage**: Grand challenge extending the cross-domain signal processing interpretation\n\n**Ambition**: Grand challenge \u2014 merges information theory with arithmetic topology",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.532304+00:00"
   }
 ];

@@ -4,9 +4,18 @@
       "id": "direction_4_primewise_decomposition_and_improved_c",
       "title": "Primewise Torsion Persistence Stability: Arithmetic Decomposition of Topological Invariants",
       "domain": "Algebraic Topology / Topological Data Analysis / Number Theory",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-24T23:11:21Z",
+      "hue": 91
+    },
+    {
+      "id": "direction_5_complexity_of_lorentzian_recognition",
+      "title": "Complexity of Lorentzian Recognition: Recursive Spectral Certificates and Fixed-Parameter Tractability",
+      "domain": "Algebraic Combinatorics / Complexity Theory",
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
-      "date": "2026-05-24T23:11:21Z",
+      "date": "2026-05-24T23:12:19Z",
       "hue": 270
     }
   ],
