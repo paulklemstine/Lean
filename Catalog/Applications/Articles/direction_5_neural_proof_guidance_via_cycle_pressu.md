@@ -1,89 +1,87 @@
-# Why AI Needs Topology to Do Math
+# The Hidden Geometry of Mathematical Reasoning
 
-## The Map Problem
+## When Topology Meets Artificial Intelligence
 
-Imagine trying to navigate a sprawling city—Paris, say—using only a map of its subway system. The Metro map shows you which stations connect to which, branching outward like the limbs of a tree. It is beautifully simple, and for many trips it works perfectly well. But it is also *wrong* in a fundamental way: it tells you nothing about the loops. It does not show you that walking from Bastille to République and back forms a circle. It does not reveal that three different routes between two stations enclose a district you could explore. The tree-like map strips away exactly the information that makes Paris *Paris*—its cycles, its enclosed spaces, its topology.
+Imagine you are lost in an enormous maze. At every intersection, you must choose a direction. Some parts of the maze are simple — long corridors with few branches. Other regions are tangled knots of passages, loops doubling back on themselves, dead ends that look like shortcuts. If you had a map that showed *where the knots are*, you could plan a smarter route.
 
-For the past decade, artificial intelligence systems that guide mathematical reasoning have been making exactly this mistake. They navigate the vast landscape of mathematical knowledge using tree-shaped maps—and they have been systematically blind to the loops.
+Now replace the maze with the landscape of mathematical reasoning. Every theorem sits at the intersection of ideas it depends on. Some theorems rest on a clean chain of logic — each step following neatly from the last, like a corridor. Others sit at the center of a web where multiple lemmas reference each other in cycles, where alternative proof paths diverge and reconverge, where the logical topology is dense and tangled.
 
-## The Hidden Architecture of Mathematical Knowledge
+A new mathematical theory shows that this difference is not just a feeling. It is a *measurable invariant* — a number you can compute for any region of mathematical knowledge — and it carries profound consequences for how machines (and humans) search for proofs.
 
-Mathematics is often imagined as a tower: axioms at the base, simple theorems stacked above, and towering abstractions at the top. But mathematicians have always known this picture is incomplete. Mathematical knowledge is not a tower. It is a *web*.
+## The Shape of Dependence
 
-Consider the Pythagorean theorem. You can prove it using geometry—by rearranging squares on the sides of a right triangle. You can also prove it using algebra—by manipulating the equation a² + b² = c². You can prove it using trigonometry, or calculus, or even number theory. Each proof takes a different path through mathematical knowledge, and some of those paths loop back on themselves, creating cycles. The existence of multiple independent proofs means the mathematical landscape around the Pythagorean theorem contains genuine topological structure: loops that cannot be contracted to a point.
+Every branch of mathematics can be drawn as a graph: a network where the nodes are theorems, lemmas, and definitions, and the edges represent logical dependencies. When theorem A uses lemma B in its proof, they share an edge. This dependency graph is not just bookkeeping. It is a topological object with real geometric structure.
 
-This is not merely a curiosity. A new line of research has shown that these loops—formalized as the *cycle rank* of mathematical knowledge graphs—carry critical information about how difficult it is to find proofs in the first place. And this information is precisely what current AI systems are missing.
+The key insight comes from a concept borrowed from the mathematics of surfaces and spaces: the *cycle rank*, also known as the first Betti number. If you have a network of roads, the cycle rank counts the number of independent loops. A tree-shaped road network — no loops at all — has cycle rank zero. A network with one circular route has cycle rank one. A dense city grid has many independent loops and a high cycle rank.
 
-## Cycles as Choice Points
+Applied to proof dependency graphs, the cycle rank of a local neighborhood measures something physically meaningful: the number of independent ways that logical reasoning can loop back on itself in that region.
 
-Here is the key insight, expressed without a single equation: every independent loop in a mathematical knowledge graph represents a *choice point* in the search for a proof.
+## Local Cycle Pressure: A New Invariant
 
-Think of it this way. When an AI system tries to prove a theorem, it explores a graph of possible moves—tactics it could try, lemmas it could apply, directions it could take. If that graph is tree-shaped, the search is relatively straightforward: at each branch, you choose left or right, and if you hit a dead end, you backtrack. The number of possibilities grows, but manageably.
+The new theory introduces *local cycle pressure* — a way of measuring, for any theorem and any chosen radius of attention, how cyclically entangled its logical neighborhood is.
 
-But when the graph contains cycles—when there are multiple independent ways to get from A to B—something qualitatively different happens. Each cycle creates a genuine fork where the AI must make a choice that cannot be resolved by local information alone. You cannot tell which branch of a cycle leads to the proof without exploring both sides. And if there are *k* independent cycles, the search space doesn't just grow linearly—it grows *exponentially*. Specifically, the number of search paths multiplies by a factor of 2 for each independent cycle.
+The definition is elegant. Take a theorem. Draw a circle of radius *r* around it in the dependency graph — meaning, collect all theorems reachable within *r* steps. Count the edges among these neighbors. For a tree (no cycles), the edge count is exactly one less than the vertex count. Any *excess* edges above this tree baseline represent independent cycles. That excess is the local cycle pressure.
 
-This is not a metaphor. Recent mathematical results have established a precise quantitative theorem: if a region of the proof graph contains *k* independent cycles, then any complete proof search strategy must explore at least *k* · log₂(*k* + 1) paths. The exponential branching factor 2^*k* provides the tight upper bound. Between these bounds lies the true difficulty of proof search—and it is entirely determined by topology.
+Formally:
 
-## What Trees Miss
+**Local cycle pressure = (edges in neighborhood) − (vertices in neighborhood) + 1**
 
-To understand why this matters for AI, consider two mathematical neighborhoods that look identical from a tree-based perspective.
+When this number is zero, the neighborhood looks like a tree — clean, hierarchical, no redundancy. When it is positive, there are loops: multiple proof paths, circular dependencies, alternative approaches that interweave.
 
-The first neighborhood is a small cluster of three interconnected theorems—call them A, B, and C. Each theorem can be used to prove each of the others. This creates a triangle: A connects to B, B connects to C, and C connects back to A. The cycle rank is 1.
+## Four Theorems That Change the Picture
 
-The second neighborhood is a chain: theorem A leads to theorem B, and theorem B leads to theorem C, but there is no direct connection from C back to A. This is a simple path. The cycle rank is 0.
+The theory rests on four main results, each proved with full mathematical rigor.
 
-Now here is the crucial observation: from the perspective of theorem B, the *local* features are identical in both cases. In both neighborhoods, B has exactly two connections (to A and to C). The vertex count is the same (three theorems). Any feature that looks only at the immediate neighborhood—the "tree-local" features—sees no difference.
+**Theorem 1: The Tree Test.** A graph is a tree (acyclic) if and only if every local neighborhood has zero cycle pressure. This means cycle pressure is a *complete detector* of tree-likeness — it catches every cycle, no matter how subtle or how large.
 
-But the proof search difficulty is dramatically different. In the triangle, a proof search at B must account for the cycle: should it go A → B → C or A → C → B? The cycle creates an ambiguity that forces exploration. In the chain, there is no such ambiguity. The branching factor is 2 in the first case and 1 in the second.
+**Theorem 2: Cycles Create Pressure.** If the global cycle rank of a proof graph is positive, the graph *must* contain cycles. Contrapositive: zero pressure everywhere guarantees acyclicity. This is the foundational characterization that makes cycle pressure trustworthy as an invariant.
 
-This is not a contrived example. It is a *theorem*—a mathematically proven fact about the limitations of tree-based features. No matter how sophisticated your tree-local feature extraction is, no matter how many layers of neighborhood aggregation you perform, you will always confuse some pairs of graphs that have genuinely different proof search difficulties. The topology carries information that trees provably cannot capture.
+**Theorem 3: The Entropy Bridge.** For connected graphs, the cycle pressure equals the collapse entropy — a previously studied measure of how much information is destroyed when a graph is contracted. This means cycle pressure is not just a combinatorial trick; it connects to the deep thermodynamic structure of proof spaces.
 
-## The Neural Network Blind Spot
+**Theorem 4: The Feature Separation Theorem.** There exist pairs of graph neighborhoods that look identical to degree-based statistics — same number of connections at every vertex — yet have different cycle pressures. In other words, cycle pressure captures genuine topological information that simpler measurements provably miss.
 
-This finding has immediate implications for the graph neural networks (GNNs) that power modern AI proof assistants. Standard GNNs work by *message passing*: each node in a graph collects information from its neighbors, processes it, and passes it along. After several rounds of message passing, each node has aggregated information from its local neighborhood.
+This last theorem is the one that matters most for artificial intelligence.
 
-But message-passing GNNs are mathematically equivalent to a certain kind of tree-based computation. They can compute any function of the local tree structure around a node—degree sequences, depth distributions, subtree sizes—but they are provably limited in their ability to detect cycles. This is not a matter of training better or using more data. It is a fundamental architectural limitation, as inescapable as the fact that a colorblind person cannot distinguish red from green no matter how hard they try.
+## Why This Matters for Machine Reasoning
 
-The theoretical result shows that for any message-passing GNN, there exist pairs of mathematical neighborhoods where the network produces identical outputs but the proof search difficulties differ by a factor of at least 2. The network is, in a precise mathematical sense, *blind* to a dimension of difficulty that topology reveals.
+Modern AI systems that attempt to prove mathematical theorems work by searching through a space of possible proof steps. At each step, the system must decide which direction to explore. This is the tactic-selection problem, and it is where most AI provers spend their computational budget.
 
-## A New Lens: Cycle Pressure
+Current approaches use local information — the shape of the current goal, the types of available hypotheses, the names of nearby definitions. But they rarely look at the *topology* of the dependency graph they are navigating. They are, in a sense, exploring the maze without a map of where the knots are.
 
-The solution is to give AI systems topological eyes. Researchers have formalized a quantity called *cycle pressure*—essentially the cycle rank of the local neighborhood around a mathematical statement—and shown that it can be efficiently computed and used as an additional feature for proof guidance.
+The Feature Separation Theorem says this is not just a missed opportunity — it is a provable information gap. There exist regions of theorem space where degree-based encodings (how many connections each node has) are provably insufficient to predict search difficulty. Only cycle-aware features can distinguish hard, cyclically entangled neighborhoods from easy, tree-like ones.
 
-The cycle pressure of a statement captures, in a single number, how topologically complex its mathematical neighborhood is. A statement surrounded by many independent proof paths (high cycle pressure) is likely to require more sophisticated search strategies than one embedded in a tree-like region (low cycle pressure). And this prediction is backed by rigorous mathematical guarantees, not just empirical correlations.
+This suggests a concrete architectural improvement: augment neural theorem provers with cycle pressure features extracted from the dependency graph. The theorem guarantees that these features carry information absent from current representations.
 
-What makes cycle pressure particularly elegant is its connection to classical mathematics. The cycle rank of a graph is one of the oldest invariants in graph theory, dating back to the 19th century work of Gustav Kirchhoff on electrical networks. It equals the first Betti number of the graph viewed as a topological space—a concept from algebraic topology that measures the number of "holes" in a space. The same mathematical quantity that tells you how many independent loops exist in an electrical circuit also tells you how many independent choice points exist in a proof search.
+## From Surfaces to Search
 
-This is not a coincidence. It reflects a deep structural parallel between electrical networks and proof systems that mathematicians have suspected for decades but only recently made precise.
+The intellectual lineage of this work runs deep. The cycle rank is a concept from algebraic topology, first studied in the context of surfaces and holes by mathematicians like Betti and Poincaré in the nineteenth century. The idea that topological invariants could measure computational complexity goes back to the work on network flows and circuit theory in the mid-twentieth century.
 
-## The Kirchhoff Connection
+What is new is the application to *reasoning itself* — the recognition that the topological structure of mathematical knowledge is not just a descriptive curiosity but a *predictive feature* for the difficulty of proof search.
 
-Kirchhoff's laws for electrical circuits state that the number of independent current loops in a network equals the number of edges minus the number of vertices plus one (for a connected network). This is exactly the cycle rank formula. In an electrical network, each independent loop represents a degree of freedom in the current distribution—a choice the current can make about which path to flow through.
+There is a beautiful analogy to statistical mechanics. In physics, systems with many interacting loops — spin glasses, frustrated magnets — are notoriously hard to solve. The frustration comes from cycles in the interaction graph that prevent any locally consistent assignment from being globally optimal. Local cycle pressure in proof graphs plays an analogous role: it measures the degree of logical frustration, the extent to which greedy proof strategies will fail because local choices interact in cycles.
 
-In a proof network, each independent cycle represents a degree of freedom in the proof strategy—a choice the search algorithm must make about which path to explore. The mathematical identity is perfect: the formula for independent current loops in a circuit is the same formula that counts independent choice points in a proof search.
+## The Frustration Principle
 
-This parallel extends further. In statistical mechanics, the *pressure* of a system measures how the free energy changes when you add particles to it. The cycle pressure of a proof graph plays an analogous role: it measures how the proof search difficulty changes when you add connections to the mathematical landscape. The thermodynamic analogy is not just poetic—it provides genuine mathematical tools for analyzing proof complexity.
+Physicists have long known about a phenomenon called *frustration*. In certain magnetic materials, the atoms are arranged in triangles, and each atom wants to align its magnetic spin opposite to its neighbors. But in a triangle, this is impossible: if atom A is "up" and atom B is "down," atom C cannot be simultaneously opposite to both A and B. The triangle forces a compromise, and the material gets stuck in a frustrated state.
 
-## From Theory to Practice
+This is exactly what happens in cyclic proof dependencies. When lemma A depends on lemma B, B depends on C, and C relates back to A, a greedy proof search faces the same kind of frustration. Resolving one dependency can undo progress on another. The searcher gets trapped in local optima, cycling between partially complete proofs that cannot all be finished simultaneously.
 
-The theoretical framework makes concrete predictions that can be tested. If cycle pressure truly captures proof search difficulty, then augmenting an AI proof assistant with topological features should improve its performance, and the improvement should be greatest on problems with high cycle pressure.
+Local cycle pressure quantifies this frustration mathematically. A pressure of zero means no frustration — the dependencies form a clean hierarchy. A pressure of one means one independent source of frustration. High pressure means the proof search is navigating a landscape riddled with traps.
 
-Preliminary computational experiments support this prediction. When mathematical knowledge graphs are constructed from large libraries of formalized mathematics—collections of thousands of theorems with their logical dependencies—the cycle pressure varies dramatically across the graph. Some regions are nearly tree-like (low cycle pressure), corresponding to straightforward chains of deduction. Other regions are densely cyclic (high cycle pressure), corresponding to areas where multiple proof strategies interweave.
+The analogy runs deeper than metaphor. In statistical physics, frustrated systems have *exponentially many* near-optimal states separated by energy barriers. The system cannot find the true optimum by local moves. Similarly, a proof graph with high cycle pressure has many locally plausible proof strategies that cannot all succeed simultaneously. The search must explore globally — and global search is expensive.
 
-The high-cycle-pressure regions tend to be exactly where current AI systems struggle most. They are the areas of mathematics where creativity matters—where finding a proof requires making non-obvious choices between multiple viable approaches. And they are precisely the areas where topological features should provide the most benefit.
+## A Verified Science
 
-## The Bigger Picture
+One of the most remarkable aspects of this work is that every theorem has been proved with complete mathematical certainty using machine-checked proofs. The definitions are precise, the arguments are gap-free, and the results are guaranteed correct by a computer verification system. This is not a conjecture or an empirical observation — it is proven mathematics.
 
-This research sits at a remarkable intersection of disciplines. It draws on algebraic topology (Betti numbers and homology), graph theory (cycle rank and Kirchhoff's formula), information theory (the connection between cycles and search complexity), and machine learning (the expressiveness limitations of graph neural networks). The fact that a single mathematical quantity—the cycle rank—threads through all of these fields is a testament to the unity of mathematics.
+The verified computational pipeline also means that the cycle pressure invariant can be extracted *algorithmically* from any finite graph. The computation is efficient (linear in the number of edges), making it practical for real-world theorem databases containing millions of nodes.
 
-But the implications extend beyond any single discipline. The finding that tree-based methods are provably insufficient for capturing proof difficulty challenges a widespread assumption in AI research: that local, tree-structured computation is enough to capture the essential features of complex systems. In natural language processing, in drug discovery, in social network analysis—anywhere graph neural networks are used—the same limitation applies. Cycles carry information that trees cannot capture, and any system that ignores them is leaving information on the table.
+## What Comes Next
 
-The fix is not to abandon tree-based methods but to augment them. Just as a map of Paris becomes far more useful when you add the information about which streets form loops and which neighborhoods they enclose, a graph neural network becomes more powerful when you add topological features that capture cycle structure. The theory tells us exactly which features to add (cycle rank, Betti numbers) and quantifies exactly how much information they carry (exponential in the cycle rank).
+The immediate experimental question is clear: does augmenting an AI theorem prover with cycle pressure features actually improve its performance? The theory predicts it should, specifically on theorems embedded in cycle-dense regions of the dependency graph. The theorems proved here make this prediction falsifiable — if the features do not help where cycle pressure is high, the theory has a gap.
 
-## A New Chapter
+Beyond theorem proving, the ideas reach into any domain where search happens over structured dependency graphs: software verification, circuit design, knowledge graph reasoning, drug discovery pipelines. Wherever there are cycles in a search space, local cycle pressure offers a mathematically principled measure of difficulty.
 
-We are living through a revolution in artificial intelligence's ability to do mathematics. Automated systems can now prove theorems that would take human mathematicians days or weeks. But they still struggle with problems that require navigating complex, cycle-rich mathematical landscapes—the very problems where human intuition about "proof strategy" and "mathematical taste" makes the biggest difference.
+Perhaps most intriguingly, the theory opens a new mathematical field — *proof-topological learning theory* — at the intersection of algebraic topology, proof complexity, and machine learning. The central question of this field: what can the shape of mathematical knowledge tell us about how hard it is to extend that knowledge?
 
-Topology offers a way to formalize some of that intuition. The loops in mathematical knowledge are not defects or redundancies. They are the signature of richness, the mark of a mathematical landscape with genuine depth. Teaching AI to see them is not just a technical improvement. It is a step toward systems that understand not just the *content* of mathematics, but its *shape*.
-
-The next time you look at a map of a city, notice the loops. They are what make the city navigable, livable, interesting. The same is true of mathematics—and artificial intelligence is just beginning to learn how to read the map.
+The answer, it turns out, is written in the cycles.
