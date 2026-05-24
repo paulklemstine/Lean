@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Typed Lambda Calculus / Concurrency Theory / Process Semantics",
     "date": "2026-05-24T21:49:56Z",
     "exp_id": "93aa3255",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.5989629213483147,
+    "quality": "partial"
   },
   {
     "filename": "direction_4_compression_stability_under_probe_enla.json",
@@ -7205,8 +7205,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-24T21:49:56Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.5989629213483147,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -9851,23 +9851,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T01:44:39.355462+00:00"
   },
   {
-    "id": "fd_0583",
-    "title": "Direction 1: Full-State Strong Bisimulation via Normalization-Path Synchronization",
-    "description": "**Conjecture**: For well-typed \u03b2-equivalent STLC terms `t \u2261\u03b2 u : A`, there exists a depth `d` and a relation `R` that pairs ALL states in `toFTS(d, t)` with states in `toFTS(d, u)` (not just the normal forms) and is a strong bisimulation \u2014 provided one restricts to a canonical normalization strategy (e.g., leftmost-outermost reduction).\n\n**Test**: Enumerate all well-typed STLC terms up to size 10, compute canonical normalization paths for \u03b2-equivalent pairs, construct the path-indexed pairing, and verify the bisimulation conditions computationally. A single pair where the path-indexed pairing fails the forth/back conditions would refute the conjecture.\n\n**Impact**: Would upgrade our Main Theorem from a normal-form-centric bisimulation to a full operational bisimulation, connecting to the Hennessy-Milner characterization of behavioral equivalence.\n\n**Catalog References**: `Pythagorean/StrongNormBisimProof.lean` (Main Theorem), `Pythagorean/BoundedBetaTheorems.lean` (weak bisimilarity).\n\n**Proof Strategy**: Define `R(s\u2081, s\u2082) \u2194 s\u2081` and `s\u2082` are at the same index along canonical normalization paths from `t` and `u` respectively, with padding by the normal form at the end. Prove the forth/back conditions by induction on the path index, using confluence to handle non-deterministic branching.\n\n**Domain Bridges**: Concurrency theory (CCS/CSP process equivalences), operational semantics.\n\n**Lineage**: Extends `strong_norm_implies_finite_strong_bisim`.\n\n**Ambition**: Solid extension \u2014 directly builds on catalog infrastructure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "2d991129",
-    "consumed_by_exp_id": "93aa3255",
-    "timestamp": "2026-05-24T02:18:45.845825+00:00"
-  },
-  {
     "id": "fd_0584",
     "title": "Direction 2: Polymorphic Bisimulation for System F",
     "description": "**Conjecture**: The main theorem extends to System F (polymorphic lambda calculus): \u03b2-equivalent well-typed System F terms of the same type yield strongly bisimilar bounded FTS at sufficient depth, with the depth bounded by a function of the type complexity and term size.\n\n**Test**: Implement System F typing and normalization. Generate polymorphic identity, Church-encoded data types, and parametric functions. Compute bounded FTS and check bisimulation for \u03b2-equivalent pairs. The conjecture predicts success for all well-typed pairs and failure for ill-typed ones.\n\n**Impact**: Would extend the coalgebraic finiteness principle to the type system underlying ML, Haskell, and many proof assistants. Parametricity would provide additional bisimulation structure.\n\n**Catalog References**: `Pythagorean/STLCDefs.lean` (type system), `Pythagorean/StrongNormBisimProof.lean` (main theorem).\n\n**Proof Strategy**: Use Girard's strong normalization for System F (via reducibility candidates). Extend the bounded FTS construction and shared-NF argument. The main challenge is that type abstraction/application adds new reduction rules.\n\n**Domain Bridges**: Programming language theory, parametricity, categorical semantics.\n\n**Lineage**: Generalizes all current theorems from STLC to System F.\n\n**Ambition**: Grand challenge \u2014 requires substantial new infrastructure.\n\n---",
@@ -10354,10 +10337,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "83c7f0bc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6e7fe77",
     "timestamp": "2026-05-24T12:10:26.866730+00:00"
   },
   {
@@ -10520,10 +10503,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1e04b63c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21d0ab18",
     "timestamp": "2026-05-24T15:13:46.789137+00:00"
   },
   {
@@ -10914,10 +10897,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "85616e6f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fee94b6c",
     "timestamp": "2026-05-24T21:47:58.819762+00:00"
   },
   {
