@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_2_multiplicative_type_complexity_for_pro.json",
+    "title": "A Compositional Algebra of Type Complexity: Products, Sums, and Arrows as Operations on Finite State Spaces",
+    "domain": "Type Theory / Compositional Complexity",
+    "date": "2026-05-24T18:39:12Z",
+    "exp_id": "074616c0",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_4_certified_discrete_optimization_on_m_c.json",
     "title": "Certified Discrete Optimization on M-Convex Sets",
     "domain": "Discrete Convex Analysis / Combinatorial Optimization",
     "date": "2026-05-24T18:38:36Z",
     "exp_id": "9cefb91e",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7039087394957984,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_morita_invariance_of_.json",
@@ -2947,6 +2956,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Asymptotic Analysis / Growth Rate Classification"
   },
+  "direction_2_multiplicative_type_complexity_for_pro.json": {
+    "title": "A Compositional Algebra of Type Complexity: Products, Sums, and Arrows as Operations on Finite State Spaces",
+    "exp_id": "074616c0",
+    "source_exp_ids": [
+      "1e04b63c"
+    ],
+    "domain": "Type Theory / Compositional Complexity"
+  },
   "direction_3_extension_to_non_discrete_sites_grand_.json": {
     "title": "The Categorical Compression Number: Observational Complexity of Finite Categories",
     "exp_id": "ecf7ce66",
@@ -4195,7 +4212,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:13:06Z",
-      "hue": 134,
+      "hue": 271,
       "priority_score": 0.5887871910112359,
       "quality": "partial"
     },
@@ -4206,7 +4223,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T02:14:23Z",
-      "hue": 281,
+      "hue": 271,
       "priority_score": 0.5528654545454545,
       "quality": "partial"
     },
@@ -4217,7 +4234,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T02:15:16Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.5126836363636363,
       "quality": "partial"
     },
@@ -4239,7 +4256,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T04:04:01Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.593005,
       "quality": "partial"
     },
@@ -4250,7 +4267,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T04:04:27Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.60206,
       "quality": "partial"
     },
@@ -4261,7 +4278,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T04:04:52Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.4975610810810811,
       "quality": "partial"
     },
@@ -4272,7 +4289,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:13Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.5651711864406781,
       "quality": "partial"
     },
@@ -4283,7 +4300,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T04:05:41Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.5633306976744187,
       "quality": "partial"
     },
@@ -4294,7 +4311,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T05:58:00Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.5970350000000001,
       "quality": "partial"
     },
@@ -4305,7 +4322,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T05:58:35Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.5859753846153847,
       "quality": "partial"
     },
@@ -4327,7 +4344,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:10:21Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.5413612307692308,
       "quality": "partial"
     },
@@ -4349,7 +4366,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T07:14:00Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.5125644067796611,
       "quality": "partial"
     },
@@ -4360,7 +4377,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T07:18:18Z",
-      "hue": 90,
+      "hue": 280,
       "priority_score": 0.628605945945946,
       "quality": "partial"
     },
@@ -4371,7 +4388,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T08:10:20Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.6016142857142857,
       "quality": "partial"
     },
@@ -4382,7 +4399,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T08:13:20Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.6674113043478261,
       "quality": "partial"
     },
@@ -4393,7 +4410,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:13:44Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.5779700000000001,
       "quality": "partial"
     },
@@ -4415,7 +4432,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T08:14:39Z",
-      "hue": 280,
+      "hue": 270,
       "priority_score": 0.5432873754152824,
       "quality": "partial"
     },
@@ -4426,7 +4443,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T08:15:03Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.5409484210526316,
       "quality": "partial"
     },
@@ -4437,7 +4454,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T09:14:59Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.5715264285714285,
       "quality": "partial"
     },
@@ -4459,7 +4476,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T09:16:14Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.5408047368421054,
       "quality": "partial"
     },
@@ -4470,7 +4487,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:13:08Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.5886800000000001,
       "quality": "partial"
     },
@@ -4481,7 +4498,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T10:13:38Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.5761535211267607,
       "quality": "partial"
     },
@@ -4492,7 +4509,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T10:14:03Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.5848295774647887,
       "quality": "partial"
     },
@@ -4503,7 +4520,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T10:14:31Z",
-      "hue": 275,
+      "hue": 280,
       "priority_score": 0.5697046511627908,
       "quality": "partial"
     },
@@ -4514,7 +4531,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T10:14:52Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.5760103225806452,
       "quality": "partial"
     },
@@ -4547,7 +4564,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T11:28:55Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.5686274418604651,
       "quality": "partial"
     },
@@ -4558,7 +4575,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:04Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.5542911292702858,
       "quality": "partial"
     },
@@ -4569,7 +4586,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T12:13:31Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.6004208510638298,
       "quality": "partial"
     },
@@ -4580,7 +4597,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T12:24:54Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.5420642857142858,
       "quality": "partial"
     },
@@ -4602,7 +4619,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T13:10:29Z",
-      "hue": 292,
+      "hue": 91,
       "priority_score": 0.5100726829268293,
       "quality": "partial"
     },
@@ -4624,7 +4641,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T13:14:08Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6183296694214876,
       "quality": "partial"
     },
@@ -4646,7 +4663,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-05-21T14:10:33Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.48387636363636366,
       "quality": "partial"
     },
@@ -4657,7 +4674,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:13:43Z",
-      "hue": 270,
+      "hue": 359,
       "priority_score": 0.5830017064846418,
       "quality": "partial"
     },
@@ -4668,7 +4685,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T14:14:17Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.5625773913043478,
       "quality": "partial"
     },
@@ -4679,7 +4696,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-21T14:14:53Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.5255,
       "quality": "partial"
     },
@@ -4690,7 +4707,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T14:15:32Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.470852,
       "quality": "partial"
     },
@@ -4712,7 +4729,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T15:14:54Z",
-      "hue": 95,
+      "hue": 91,
       "priority_score": 0.599588,
       "quality": "partial"
     },
@@ -4723,7 +4740,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T15:15:26Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.5278915044247788,
       "quality": "partial"
     },
@@ -4734,7 +4751,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T15:16:00Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.49556,
       "quality": "partial"
     },
@@ -4745,7 +4762,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T15:16:34Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.532244,
       "quality": "partial"
     },
@@ -4767,7 +4784,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T16:17:46Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.5442517495987159,
       "quality": "partial"
     },
@@ -4778,7 +4795,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-21T16:18:43Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.578576,
       "quality": "partial"
     },
@@ -4789,7 +4806,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T17:14:39Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.5688292533659731,
       "quality": "partial"
     },
@@ -4800,7 +4817,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T17:15:09Z",
-      "hue": 270,
+      "hue": 95,
       "priority_score": 0.5766854545454545,
       "quality": "partial"
     },
@@ -4833,7 +4850,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T18:09:01Z",
-      "hue": 271,
+      "hue": 314,
       "priority_score": 0.5170912195121952,
       "quality": "partial"
     },
@@ -4855,7 +4872,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T18:39:31Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6285482352941176,
       "quality": "partial"
     },
@@ -4866,7 +4883,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T18:42:42Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.5018789473684211,
       "quality": "partial"
     },
@@ -4877,7 +4894,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T19:10:31Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.5388959450171822,
       "quality": "partial"
     },
@@ -4888,7 +4905,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T19:13:53Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.5579738461538462,
       "quality": "partial"
     },
@@ -4899,7 +4916,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T19:14:18Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.501764827586207,
       "quality": "partial"
     },
@@ -4910,7 +4927,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:10:25Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.5623400000000001,
       "quality": "partial"
     },
@@ -4921,7 +4938,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-21T20:13:32Z",
-      "hue": 280,
+      "hue": 272,
       "priority_score": 0.5607200000000001,
       "quality": "partial"
     },
@@ -4932,7 +4949,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T20:13:59Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.5721905494505495,
       "quality": "partial"
     },
@@ -4943,7 +4960,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T20:14:37Z",
-      "hue": 134,
+      "hue": 100,
       "priority_score": 0.573812,
       "quality": "partial"
     },
@@ -4954,7 +4971,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T21:10:29Z",
-      "hue": 270,
+      "hue": 280,
       "priority_score": 0.6320339622641511,
       "quality": "partial"
     },
@@ -4976,7 +4993,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T21:25:46Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.49454,
       "quality": "partial"
     },
@@ -4998,7 +5015,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-21T21:41:12Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.5573,
       "quality": "partial"
     },
@@ -5009,7 +5026,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-21T22:20:03Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.5041826168224299,
       "quality": "partial"
     },
@@ -5020,7 +5037,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-21T22:24:27Z",
-      "hue": 90,
+      "hue": 275,
       "priority_score": 0.48482882352941176,
       "quality": "partial"
     },
@@ -5031,7 +5048,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-21T22:24:58Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.514171150442478,
       "quality": "partial"
     },
@@ -5042,7 +5059,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-21T22:44:36Z",
-      "hue": 272,
+      "hue": 95,
       "priority_score": 0.50787875,
       "quality": "partial"
     },
@@ -5064,7 +5081,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-21T23:14:11Z",
-      "hue": 271,
+      "hue": 89,
       "priority_score": 0.5106062857142857,
       "quality": "partial"
     },
@@ -5086,7 +5103,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-21T23:47:45Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.5972942857142858,
       "quality": "partial"
     },
@@ -5097,7 +5114,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T00:10:05Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.5814371428571429,
       "quality": "partial"
     },
@@ -5108,7 +5125,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-22T00:14:37Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.5935593548387097,
       "quality": "partial"
     },
@@ -5119,7 +5136,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-22T00:15:03Z",
-      "hue": 92,
+      "hue": 95,
       "priority_score": 0.5889856842105263,
       "quality": "partial"
     },
@@ -5130,7 +5147,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T00:47:21Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.5383651162790699,
       "quality": "partial"
     },
@@ -5152,7 +5169,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-22T03:13:54Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.4894383910915865,
       "quality": "partial"
     },
@@ -5163,7 +5180,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T03:41:03Z",
-      "hue": 112,
+      "hue": 91,
       "priority_score": 0.5791883168455176,
       "quality": "partial"
     },
@@ -5174,7 +5191,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T03:50:31Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.5928165991902834,
       "quality": "partial"
     },
@@ -5185,7 +5202,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T03:58:58Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.514116551724138,
       "quality": "partial"
     },
@@ -5196,7 +5213,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T04:03:42Z",
-      "hue": 92,
+      "hue": 112,
       "priority_score": 0.602988132780083,
       "quality": "partial"
     },
@@ -5207,7 +5224,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-22T04:06:54Z",
-      "hue": 90,
+      "hue": 112,
       "priority_score": 0.6258959001782533,
       "quality": "partial"
     },
@@ -5218,7 +5235,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T04:16:14Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.46671859154929585,
       "quality": "partial"
     },
@@ -5229,7 +5246,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-22T05:16:32Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.5850626395939087,
       "quality": "partial"
     },
@@ -5240,7 +5257,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-22T05:23:34Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.5310033492822968,
       "quality": "partial"
     },
@@ -5251,7 +5268,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-22T05:33:36Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.4295967300380229,
       "quality": "partial"
     },
@@ -5262,7 +5279,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-22T05:43:04Z",
-      "hue": 292,
+      "hue": 271,
       "priority_score": 0.5178048230181391,
       "quality": "partial"
     },
@@ -5273,7 +5290,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T05:46:30Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.494785656213705,
       "quality": "partial"
     },
@@ -5295,7 +5312,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-22T06:18:17Z",
-      "hue": 90,
+      "hue": 95,
       "priority_score": 0.6389513807012102,
       "quality": "partial"
     },
@@ -5306,7 +5323,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-22T06:26:03Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.5900086740804107,
       "quality": "partial"
     },
@@ -5317,7 +5334,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-22T06:33:21Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.5767283103247133,
       "quality": "partial"
     },
@@ -5328,7 +5345,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-22T16:05:05Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.585776,
       "quality": "partial"
     },
@@ -5339,7 +5356,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T16:05:48Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.5643915080153213,
       "quality": "partial"
     },
@@ -5350,7 +5367,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-22T17:39:33Z",
-      "hue": 271,
+      "hue": 314,
       "priority_score": 0.6351202264185676,
       "quality": "partial"
     },
@@ -5361,7 +5378,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-22T17:40:19Z",
-      "hue": 89,
+      "hue": 92,
       "priority_score": 0.5476015412965414,
       "quality": "partial"
     },
@@ -5372,7 +5389,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T17:43:14Z",
-      "hue": 272,
+      "hue": 95,
       "priority_score": 0.5780864918268367,
       "quality": "partial"
     },
@@ -5383,7 +5400,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T20:20:05Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.5504448033863032,
       "quality": "partial"
     },
@@ -5394,7 +5411,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-22T20:20:39Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.5937628571428573,
       "quality": "partial"
     },
@@ -5405,7 +5422,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T20:21:09Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.5557722025316456,
       "quality": "partial"
     },
@@ -5416,7 +5433,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-22T20:21:38Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.5835749473684211,
       "quality": "partial"
     },
@@ -5427,7 +5444,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T20:22:01Z",
-      "hue": 91,
+      "hue": 95,
       "priority_score": 0.6705294736842107,
       "quality": "partial"
     },
@@ -5438,7 +5455,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-22T20:22:55Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.596758181818182,
       "quality": "partial"
     },
@@ -5449,7 +5466,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-22T22:35:14Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.639877628458498,
       "quality": "partial"
     },
@@ -5460,7 +5477,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T22:35:42Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.6414200000000001,
       "quality": "partial"
     },
@@ -5471,7 +5488,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-22T22:36:11Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7242063414634147,
       "quality": "substantial"
     },
@@ -5482,7 +5499,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-22T22:37:11Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.6491776470588235,
       "quality": "partial"
     },
@@ -5493,7 +5510,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-22T22:37:41Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6195200000000001,
       "quality": "partial"
     },
@@ -5504,7 +5521,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-22T22:38:09Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.5822892602739727,
       "quality": "partial"
     },
@@ -5515,7 +5532,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-23T00:21:48Z",
-      "hue": 271,
+      "hue": 89,
       "priority_score": 0.5673440482352294,
       "quality": "partial"
     },
@@ -5537,7 +5554,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-23T00:22:55Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.6783338461538462,
       "quality": "partial"
     },
@@ -5559,7 +5576,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-23T01:30:03Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.612120324224178,
       "quality": "partial"
     },
@@ -5570,7 +5587,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-23T01:30:34Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6363195488721805,
       "quality": "partial"
     },
@@ -5581,7 +5598,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T01:31:05Z",
-      "hue": 275,
+      "hue": 90,
       "priority_score": 0.5699044651162791,
       "quality": "partial"
     },
@@ -5592,7 +5609,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-23T01:31:35Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.6176169230769231,
       "quality": "partial"
     },
@@ -5603,7 +5620,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-23T01:32:42Z",
-      "hue": 91,
+      "hue": 280,
       "priority_score": 0.599468,
       "quality": "partial"
     },
@@ -5614,7 +5631,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-23T03:00:46Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.6376576470588236,
       "quality": "partial"
     },
@@ -5625,7 +5642,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T03:02:30Z",
-      "hue": 275,
+      "hue": 272,
       "priority_score": 0.5827003076923076,
       "quality": "partial"
     },
@@ -5636,7 +5653,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T03:02:58Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6132036363636364,
       "quality": "partial"
     },
@@ -5647,7 +5664,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T05:11:47Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6007897326203209,
       "quality": "partial"
     },
@@ -5658,7 +5675,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T05:13:10Z",
-      "hue": 272,
+      "hue": 92,
       "priority_score": 0.56435,
       "quality": "partial"
     },
@@ -5669,7 +5686,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T07:45:52Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.6409749763033176,
       "quality": "partial"
     },
@@ -5680,7 +5697,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-23T07:46:22Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.65123,
       "quality": "partial"
     },
@@ -5702,7 +5719,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-23T07:48:55Z",
-      "hue": 314,
+      "hue": 90,
       "priority_score": 0.5994938461538463,
       "quality": "partial"
     },
@@ -5713,7 +5730,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T10:08:02Z",
-      "hue": 271,
+      "hue": 89,
       "priority_score": 0.5895737931034484,
       "quality": "partial"
     },
@@ -5724,7 +5741,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-23T10:08:37Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.5642818181818182,
       "quality": "partial"
     },
@@ -5735,7 +5752,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-23T10:10:41Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.4951571428571429,
       "quality": "partial"
     },
@@ -5746,7 +5763,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-23T11:38:51Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.5551215384615384,
       "quality": "partial"
     },
@@ -5779,7 +5796,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T12:52:24Z",
-      "hue": 100,
+      "hue": 271,
       "priority_score": 0.606835172413793,
       "quality": "partial"
     },
@@ -5790,7 +5807,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-23T12:53:45Z",
-      "hue": 314,
+      "hue": 90,
       "priority_score": 0.7144977358490566,
       "quality": "substantial"
     },
@@ -5801,7 +5818,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T13:56:19Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.6378680000000001,
       "quality": "partial"
     },
@@ -5812,7 +5829,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-23T15:04:24Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.6895212987012987,
       "quality": "partial"
     },
@@ -5823,7 +5840,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-23T15:05:07Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7147484563758388,
       "quality": "substantial"
     },
@@ -5834,7 +5851,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-23T15:05:40Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.579522105263158,
       "quality": "partial"
     },
@@ -5845,7 +5862,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-23T15:22:54Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.6483711578947369,
       "quality": "partial"
     },
@@ -5856,7 +5873,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-23T16:04:34Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7050740192926046,
       "quality": "substantial"
     },
@@ -5867,7 +5884,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-23T16:54:41Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.6474518309859154,
       "quality": "partial"
     },
@@ -5900,7 +5917,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T16:57:18Z",
-      "hue": 280,
+      "hue": 90,
       "priority_score": 0.6040400000000001,
       "quality": "partial"
     },
@@ -5911,7 +5928,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T18:06:55Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.6682113043478262,
       "quality": "partial"
     },
@@ -5922,7 +5939,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-23T18:40:50Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6219683636363637,
       "quality": "partial"
     },
@@ -5944,7 +5961,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T18:41:51Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.648824,
       "quality": "partial"
     },
@@ -5955,7 +5972,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-23T19:15:38Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.6766905263157896,
       "quality": "partial"
     },
@@ -5966,7 +5983,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-23T19:16:10Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.6418672727272727,
       "quality": "partial"
     },
@@ -5977,7 +5994,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-23T19:16:47Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.68018,
       "quality": "partial"
     },
@@ -5988,7 +6005,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T19:52:51Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.5921000000000001,
       "quality": "partial"
     },
@@ -5999,7 +6016,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-23T19:53:31Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.606692,
       "quality": "partial"
     },
@@ -6021,7 +6038,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-23T20:30:01Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.6238394174757282,
       "quality": "partial"
     },
@@ -6043,7 +6060,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T20:31:05Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.5719195528956169,
       "quality": "partial"
     },
@@ -6065,7 +6082,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-23T21:08:08Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.6591120754716981,
       "quality": "partial"
     },
@@ -6076,7 +6093,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-23T21:08:55Z",
-      "hue": 91,
+      "hue": 95,
       "priority_score": 0.6132154430379748,
       "quality": "partial"
     },
@@ -6087,7 +6104,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-23T21:44:07Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.609791570247934,
       "quality": "partial"
     },
@@ -6098,7 +6115,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T21:44:38Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.5724113402061857,
       "quality": "partial"
     },
@@ -6109,7 +6126,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-23T21:45:10Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.5960300000000001,
       "quality": "partial"
     },
@@ -6120,7 +6137,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T22:51:22Z",
-      "hue": 92,
+      "hue": 281,
       "priority_score": 0.5942026519337016,
       "quality": "partial"
     },
@@ -6142,7 +6159,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-23T22:52:29Z",
-      "hue": 95,
+      "hue": 91,
       "priority_score": 0.66398,
       "quality": "partial"
     },
@@ -6153,7 +6170,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-23T23:29:08Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.628533043478261,
       "quality": "partial"
     },
@@ -6164,7 +6181,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-23T23:29:41Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7411981818181818,
       "quality": "substantial"
     },
@@ -6175,7 +6192,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-23T23:30:12Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.640476551724138,
       "quality": "partial"
     },
@@ -6186,7 +6203,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T00:06:43Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.6400952879581152,
       "quality": "partial"
     },
@@ -6197,7 +6214,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T01:10:51Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6228860683760684,
       "quality": "partial"
     },
@@ -6208,7 +6225,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T01:43:55Z",
-      "hue": 90,
+      "hue": 112,
       "priority_score": 0.635582077922078,
       "quality": "partial"
     },
@@ -6219,7 +6236,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T01:44:36Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.6648620560747664,
       "quality": "partial"
     },
@@ -6230,7 +6247,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T02:18:42Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.523735,
       "quality": "partial"
     },
@@ -6241,7 +6258,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T02:19:12Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.6145190825688074,
       "quality": "partial"
     },
@@ -6252,7 +6269,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T02:19:46Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.5830479802955666,
       "quality": "partial"
     },
@@ -6263,7 +6280,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T02:57:16Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6017030456852792,
       "quality": "partial"
     },
@@ -6274,7 +6291,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T03:32:28Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.588884,
       "quality": "partial"
     },
@@ -6285,7 +6302,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T04:05:50Z",
-      "hue": 95,
+      "hue": 280,
       "priority_score": 0.62276552332913,
       "quality": "partial"
     },
@@ -6296,7 +6313,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T04:06:22Z",
-      "hue": 90,
+      "hue": 314,
       "priority_score": 0.6663309090909091,
       "quality": "partial"
     },
@@ -6307,7 +6324,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-24T04:06:55Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.6956388235294118,
       "quality": "partial"
     },
@@ -6318,7 +6335,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T04:40:20Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.5732771007371008,
       "quality": "partial"
     },
@@ -6329,7 +6346,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T04:40:53Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.6740600000000001,
       "quality": "partial"
     },
@@ -6340,7 +6357,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-24T04:41:37Z",
-      "hue": 91,
+      "hue": 275,
       "priority_score": 0.5885787665198239,
       "quality": "partial"
     },
@@ -6351,7 +6368,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T04:42:17Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.5748261935483872,
       "quality": "partial"
     },
@@ -6362,7 +6379,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T05:14:53Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.5941597468354431,
       "quality": "partial"
     },
@@ -6373,7 +6390,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T06:31:16Z",
-      "hue": 90,
+      "hue": 112,
       "priority_score": 0.6103032258064518,
       "quality": "partial"
     },
@@ -6384,7 +6401,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-24T06:31:47Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.5884203319502076,
       "quality": "partial"
     },
@@ -6395,7 +6412,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-24T07:06:47Z",
-      "hue": 91,
+      "hue": 275,
       "priority_score": 0.6889400000000001,
       "quality": "partial"
     },
@@ -6406,7 +6423,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T07:07:44Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.6478684210526315,
       "quality": "partial"
     },
@@ -6417,7 +6434,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T07:08:46Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.6393285714285715,
       "quality": "partial"
     },
@@ -6428,7 +6445,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-24T07:09:20Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.6851968168168169,
       "quality": "partial"
     },
@@ -6439,7 +6456,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-24T07:47:27Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.5831032432432433,
       "quality": "partial"
     },
@@ -6472,7 +6489,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T08:57:14Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.6690714285714285,
       "quality": "partial"
     },
@@ -6483,7 +6500,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T08:57:54Z",
-      "hue": 271,
+      "hue": 275,
       "priority_score": 0.6340440481927712,
       "quality": "partial"
     },
@@ -6494,7 +6511,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T08:58:31Z",
-      "hue": 275,
+      "hue": 271,
       "priority_score": 0.6894560000000001,
       "quality": "partial"
     },
@@ -6505,7 +6522,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-24T08:59:05Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.646583157894737,
       "quality": "partial"
     },
@@ -6538,7 +6555,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T09:39:17Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6047975000000001,
       "quality": "partial"
     },
@@ -6549,7 +6566,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T10:16:07Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.6101822857142858,
       "quality": "partial"
     },
@@ -6571,7 +6588,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T10:17:40Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.6585304347826088,
       "quality": "partial"
     },
@@ -6582,7 +6599,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-24T10:54:23Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6775674285714287,
       "quality": "partial"
     },
@@ -6615,7 +6632,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T11:30:55Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.60842,
       "quality": "partial"
     },
@@ -6626,7 +6643,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T11:31:40Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.663369411764706,
       "quality": "partial"
     },
@@ -6637,7 +6654,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T11:32:13Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.6054671428571429,
       "quality": "partial"
     },
@@ -6648,7 +6665,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T12:10:20Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.5901500000000001,
       "quality": "partial"
     },
@@ -6659,7 +6676,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T12:11:06Z",
-      "hue": 271,
+      "hue": 101,
       "priority_score": 0.6567341176470589,
       "quality": "partial"
     },
@@ -6681,7 +6698,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-24T12:46:19Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.6191093165664299,
       "quality": "partial"
     },
@@ -6703,7 +6720,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T12:47:54Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.591716,
       "quality": "partial"
     },
@@ -6725,7 +6742,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T13:26:16Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.619143373493976,
       "quality": "partial"
     },
@@ -6736,7 +6753,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T14:32:56Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.5760354838709678,
       "quality": "partial"
     },
@@ -6747,7 +6764,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-24T14:33:32Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6694595000000001,
       "quality": "partial"
     },
@@ -6769,7 +6786,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T14:34:53Z",
-      "hue": 272,
+      "hue": 95,
       "priority_score": 0.5903987781350483,
       "quality": "partial"
     },
@@ -6780,7 +6797,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T15:13:43Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.6872818181818183,
       "quality": "partial"
     },
@@ -6791,7 +6808,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-24T16:19:45Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.5958299408284025,
       "quality": "partial"
     },
@@ -6802,7 +6819,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T16:53:53Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.6342721739130435,
       "quality": "partial"
     },
@@ -6813,7 +6830,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T16:54:41Z",
-      "hue": 280,
+      "hue": 90,
       "priority_score": 0.6300167123287672,
       "quality": "partial"
     },
@@ -6835,7 +6852,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-24T18:36:27Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.592474081632653,
       "quality": "partial"
     },
@@ -6846,7 +6863,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T18:37:23Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.5639563303467083,
       "quality": "partial"
     },
@@ -6857,7 +6874,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T18:37:58Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6732538823529413,
       "quality": "partial"
     },
@@ -6868,6 +6885,17 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T18:38:36Z",
+      "hue": 90,
+      "priority_score": 0.7039087394957984,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_multiplicative_type_complexity_for_pro",
+      "title": "A Compositional Algebra of Type Complexity: Products, Sums, and Arrows as Operations on Finite State Spaces",
+      "domain": "Type Theory / Compositional Complexity",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-24T18:39:12Z",
       "hue": 271,
       "priority_score": null,
       "quality": "unrated"
@@ -7381,6 +7409,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "direction_1_convergent_rewrite_systems_as_quotient",
       "target": "direction_2_multi_sorted_signatures_and_typed_rewr",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_tight_type_complexity_bounds",
+      "target": "direction_2_multiplicative_type_complexity_for_pro",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -8748,6 +8783,76 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-22T20:20:08.810718+00:00"
   },
   {
+    "id": "fd_0468",
+    "title": "Direction 2: Quantitative ULC Margin Bounds (Corrected Tropical Conjecture)",
+    "description": "**Conjecture:** For positive weights $w_1 \\geq \\cdots \\geq w_m > 0$, the ULC margin satisfies:\n\n$$\\text{margin}_k \\geq \\frac{(w_{\\max} - w_{\\min})^2}{8m^2 \\cdot w_{\\max} \\cdot w_{\\min}} \\cdot \\frac{k(m-k)}{m-1}$$\n\n(Note: the factor is $1/8$ instead of $1/4$ in the original conjecture, based on computational evidence showing the $1/4$ version has rare violations for extreme heterogeneity.)\n\n**Test:** Generate $10^6$ random weight vectors with $m \\in \\{3, \\ldots, 25\\}$, $w_i \\in [0.01, 100]$. Compute the ratio LHS/RHS for all valid $k$. The conjecture is falsified if any ratio < 1. If it holds, fit the optimal constant $c$ in $\\text{margin}_k \\geq c \\cdot (w_{\\max} - w_{\\min})^2 / (m^2 w_{\\max} w_{\\min}) \\cdot k(m-k)/(m-1)$.\n\n**Impact:** Would give the first explicit, computable lower bound on the ULC gap, with applications to robustness certification in machine learning.\n\n**Catalog References:** `Pythagorean/UltraLogConcaveDefs.lean` (ulcMargin, minUlcMargin)\n\n**Proof Strategy:** Start with the case $m = 3, k = 1$ where the bound reduces to an explicit AM-GM-type inequality. Extend by induction using the ESP recurrence.\n\n**Domain Bridges:** Tropical geometry (margin bounds) \u2194 Machine learning (adversarial robustness)\n\n**Lineage:** Builds on `ulcMargin` and `tropicalUlcMarginConj` from `Pythagorean/UltraLogConcave.lean`\n\n**Ambition:** Solid extension \u2014 quantitative refinement of a classical inequality\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d4778d1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T15:04:27.265396+00:00"
+  },
+  {
+    "id": "fd_0394",
+    "title": "Direction 3: Shepp\u2013Olkin Entropy Maximization",
+    "description": "**Conjecture:** Among all ultra-log-concave distributions on $\\{0, \\ldots, m\\}$ with given mean $\\mu$, the binomial distribution $\\text{Bin}(m, \\mu/m)$ maximizes Shannon entropy.\n\n**Test:** For $m = 8$ and $\\mu = 4$:\n1. Generate 10,000 random ULC distributions (from positive weight vectors with mean approximately $\\mu$)\n2. Compute Shannon entropy for each\n3. Compare with $H(\\text{Bin}(8, 0.5))$\n4. The conjecture is falsified if any ULC distribution has strictly higher entropy\n\n**Impact:** Establishes the binomial as the \"least informative\" ULC distribution, analogous to how the Gaussian maximizes entropy under variance constraints. This would connect combinatorics to information theory in a new way.\n\n**Catalog References:** `Pythagorean/UltraLogConcaveDefs.lean` (UltraLogConcaveSeq), `applications.py` (entropy computation)\n\n**Proof Strategy:** Use the method of Lagrange multipliers on the entropy functional subject to the ULC constraints and the mean constraint. Show that the KKT conditions are satisfied by the binomial distribution.\n\n**Domain Bridges:** Information theory \u2194 Combinatorics\n\n**Lineage:** New direction building on the UltraLogConcaveSeq structure\n\n**Ambition:** Grand challenge \u2014 would establish a deep information-theoretic characterization of ULC\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7d4778d1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T15:04:27.302223+00:00"
+  },
+  {
+    "id": "fd_0398",
+    "title": "Direction 1: Concrete First-Order Term Algebra with Certified Matching",
+    "description": "**Conjecture:** A formalization of first-order terms with substitution, matching, and unification can be connected to the abstract completion framework via a simulation theorem: each concrete completion step (orient, deduce, simplify, delete, compose, collapse) satisfies the abstract `KBStep` interface.\n\n**Test:** Formalize first-order terms over a signature `Sig` (as in `Catalog/Pythagorean/ConvergentRewriteSystems.lean`), define the six Huet completion rules concretely, and prove that each preserves the equational theory. Verify by running the extracted procedure on the free group presentation `{1\u00b7x = x, x\u207b\u00b9\u00b7x = 1, (x\u00b7y)\u00b7z = x\u00b7(y\u00b7z)}` and checking that the output matches known convergent presentations.\n\n**Impact:** Bridges the gap between abstract correctness (our current formalization) and executable certified code. Would enable certified-by-construction completion implementations.\n\n**Catalog References:** `Catalog/FINAL/Pythagorean/ConvergentRewriteSystems.lean` (term definitions), `Catalog/FINAL/Bridges/KnuthBendixCompletion.lean` (abstract framework).\n\n**Proof Strategy:** Define an `instance : KBStepSatisfied (ConcreteOrient \u03c3)` for each of the six operations. The key lemma is that rewriting at a position preserves the equational closure \u2014 this requires a substitution lemma and a context closure lemma.\n\n**Domain Bridges:** Term rewriting \u2194 type theory (substitution is shared infrastructure); formal languages \u2194 algebra (matching = parsing).\n\n**Lineage:** Direct extension of the current abstract framework.\n\n**Ambition:** Solid extension \u2014 requires substantial but well-understood formalization work.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43aa1bfc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T15:05:10.266990+00:00"
+  },
+  {
+    "id": "fd_0470",
+    "title": "Direction 5: Certified Equality Saturation via Completion",
+    "description": "**Conjecture:** Equality saturation (as implemented in the egg library) can be formalized as a variant of KB completion operating on e-graphs, with a certified extraction procedure that produces terms equivalent to the input under the equational theory.\n\n**Test:** Formalize e-graphs as a data structure (union-find on term nodes), define saturation as iterated application of rewrite rules to the e-graph, and prove that the extracted term is equivalent to the input. Verify by running on arithmetic optimization examples: `(a * 2) / 2 \u2192 a`, `(a + 0) * 1 \u2192 a`.\n\n**Impact:** Would connect our formalization to the most active area of practical rewriting applications \u2014 compiler optimization via equality saturation. A certified egg-like system would enable verified compiler optimizations with machine-checked correctness guarantees.\n\n**Catalog References:** `Pythagorean/KnuthBendixCompletion.lean` (convergent normalizers), `Catalog/FINAL/Pythagorean/ConvergentRewriteOptimizer.lean` (certified optimization).\n\n**Proof Strategy:** The key insight is that an e-graph represents a set of equivalent terms, and saturation adds all consequences of the rewrite rules. Extraction selects a representative from each equivalence class. The correctness proof shows that the extracted term is in the equivalence class of the input.\n\n**Domain Bridges:** Rewriting \u2194 compiler optimization; e-graphs \u2194 congruence closure; term rewriting \u2194 SMT solving.\n\n**Lineage:** Direct application of the certified optimizer framework to modern compiler technology.\n\n**Ambition:** Solid extension with high practical impact \u2014 equality saturation is widely used in industry.",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43aa1bfc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T15:05:10.425467+00:00"
+  },
+  {
     "id": "fd_0403",
     "title": "Extension to Stronger Proof Systems",
     "description": "Conjecture: The clause-space-to-pathwidth correspondence extends to polynomial calculus (monomial space) and cutting planes (inequality space), with the same universal constant or a constant depending only on the proof system.\n\nTest: Define configuration graphs for polynomial calculus (configurations = sets of monomials) and cutting planes (configurations = sets of inequalities). Enumerate small instances (n \u2264 3 variables). Compute space and pathwidth. Verify the proportionality constant.\n\nImpact: Would unify space complexity across proof systems under a single graph-theoretic framework.",
@@ -8765,74 +8870,23 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-23T15:22:25.286203+00:00"
   },
   {
-    "id": "fd_0468",
-    "title": "Direction 2: Quantitative ULC Margin Bounds (Corrected Tropical Conjecture)",
-    "description": "**Conjecture:** For positive weights $w_1 \\geq \\cdots \\geq w_m > 0$, the ULC margin satisfies:\n\n$$\\text{margin}_k \\geq \\frac{(w_{\\max} - w_{\\min})^2}{8m^2 \\cdot w_{\\max} \\cdot w_{\\min}} \\cdot \\frac{k(m-k)}{m-1}$$\n\n(Note: the factor is $1/8$ instead of $1/4$ in the original conjecture, based on computational evidence showing the $1/4$ version has rare violations for extreme heterogeneity.)\n\n**Test:** Generate $10^6$ random weight vectors with $m \\in \\{3, \\ldots, 25\\}$, $w_i \\in [0.01, 100]$. Compute the ratio LHS/RHS for all valid $k$. The conjecture is falsified if any ratio < 1. If it holds, fit the optimal constant $c$ in $\\text{margin}_k \\geq c \\cdot (w_{\\max} - w_{\\min})^2 / (m^2 w_{\\max} w_{\\min}) \\cdot k(m-k)/(m-1)$.\n\n**Impact:** Would give the first explicit, computable lower bound on the ULC gap, with applications to robustness certification in machine learning.\n\n**Catalog References:** `Pythagorean/UltraLogConcaveDefs.lean` (ulcMargin, minUlcMargin)\n\n**Proof Strategy:** Start with the case $m = 3, k = 1$ where the bound reduces to an explicit AM-GM-type inequality. Extend by induction using the ESP recurrence.\n\n**Domain Bridges:** Tropical geometry (margin bounds) \u2194 Machine learning (adversarial robustness)\n\n**Lineage:** Builds on `ulcMargin` and `tropicalUlcMarginConj` from `Pythagorean/UltraLogConcave.lean`\n\n**Ambition:** Solid extension \u2014 quantitative refinement of a classical inequality\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d4778d1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T15:04:27.265396+00:00"
-  },
-  {
-    "id": "fd_0394",
-    "title": "Direction 3: Shepp\u2013Olkin Entropy Maximization",
-    "description": "**Conjecture:** Among all ultra-log-concave distributions on $\\{0, \\ldots, m\\}$ with given mean $\\mu$, the binomial distribution $\\text{Bin}(m, \\mu/m)$ maximizes Shannon entropy.\n\n**Test:** For $m = 8$ and $\\mu = 4$:\n1. Generate 10,000 random ULC distributions (from positive weight vectors with mean approximately $\\mu$)\n2. Compute Shannon entropy for each\n3. Compare with $H(\\text{Bin}(8, 0.5))$\n4. The conjecture is falsified if any ULC distribution has strictly higher entropy\n\n**Impact:** Establishes the binomial as the \"least informative\" ULC distribution, analogous to how the Gaussian maximizes entropy under variance constraints. This would connect combinatorics to information theory in a new way.\n\n**Catalog References:** `Pythagorean/UltraLogConcaveDefs.lean` (UltraLogConcaveSeq), `applications.py` (entropy computation)\n\n**Proof Strategy:** Use the method of Lagrange multipliers on the entropy functional subject to the ULC constraints and the mean constraint. Show that the KKT conditions are satisfied by the binomial distribution.\n\n**Domain Bridges:** Information theory \u2194 Combinatorics\n\n**Lineage:** New direction building on the UltraLogConcaveSeq structure\n\n**Ambition:** Grand challenge \u2014 would establish a deep information-theoretic characterization of ULC\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7d4778d1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T15:04:27.302223+00:00"
-  },
-  {
-    "id": "fd_0398",
-    "title": "Direction 1: Concrete First-Order Term Algebra with Certified Matching",
-    "description": "**Conjecture:** A formalization of first-order terms with substitution, matching, and unification can be connected to the abstract completion framework via a simulation theorem: each concrete completion step (orient, deduce, simplify, delete, compose, collapse) satisfies the abstract `KBStep` interface.\n\n**Test:** Formalize first-order terms over a signature `Sig` (as in `Catalog/Pythagorean/ConvergentRewriteSystems.lean`), define the six Huet completion rules concretely, and prove that each preserves the equational theory. Verify by running the extracted procedure on the free group presentation `{1\u00b7x = x, x\u207b\u00b9\u00b7x = 1, (x\u00b7y)\u00b7z = x\u00b7(y\u00b7z)}` and checking that the output matches known convergent presentations.\n\n**Impact:** Bridges the gap between abstract correctness (our current formalization) and executable certified code. Would enable certified-by-construction completion implementations.\n\n**Catalog References:** `Catalog/FINAL/Pythagorean/ConvergentRewriteSystems.lean` (term definitions), `Catalog/FINAL/Bridges/KnuthBendixCompletion.lean` (abstract framework).\n\n**Proof Strategy:** Define an `instance : KBStepSatisfied (ConcreteOrient \u03c3)` for each of the six operations. The key lemma is that rewriting at a position preserves the equational closure \u2014 this requires a substitution lemma and a context closure lemma.\n\n**Domain Bridges:** Term rewriting \u2194 type theory (substitution is shared infrastructure); formal languages \u2194 algebra (matching = parsing).\n\n**Lineage:** Direct extension of the current abstract framework.\n\n**Ambition:** Solid extension \u2014 requires substantial but well-understood formalization work.\n\n---",
+    "id": "fd_0475",
+    "title": "Direction 1: Cohomological Obstruction to Compression Equality",
+    "description": "**Conjecture:** The gap \u03ba_sh(J, F) \u2212 \u03ba_pre(F) is controlled by the first sheaf cohomology group H\u00b9(C, J; K) of a suitable coefficient sheaf K derived from the probe family. Specifically, the gap is zero if and only if a certain obstruction class in H\u00b9 vanishes.\n\n**Test:** For finite sites with \u2264 5 objects, enumerate all Grothendieck topologies and all presheaves. Compute the compression gap and the first cohomology group. Verify that nonzero gaps correspond exactly to nonvanishing obstruction classes.\n\n**Impact:** This would transform the compression gap from an ad hoc invariant into a cohomological invariant, placing it within the standard toolkit of algebraic geometry. It would provide the first information-theoretic interpretation of sheaf cohomology on finite sites.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/SheafCompressionFiniteSite.lean` \u2014 compression gap definition\n- `Pythagorean/ProbeComplexity/Theorems.lean` \u2014 probe complexity invariants\n\n**Proof Strategy:** Define K as the presheaf of \"separation defects\" at each object. Show that the \u010cech cohomology H\u00b9 of K relative to J computes the obstruction to extending a presheaf-level separating family to a topology-compatible one. The key step is showing that the gluing data for topology compatibility forms a cocycle.\n\n**Domain Bridges:** Algebraic geometry (sheaf cohomology) \u2194 Information theory (compression gaps) \u2194 Combinatorics (finite site enumeration)\n\n**Lineage:** Extends Theorem 5 (compression equality) by characterizing the exact obstruction when equality fails.\n\n**Ambition:** Grand challenge \u2014 would establish a new dictionary between information theory and cohomological algebra.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Geometry",
+      "Computation",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.9999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "43aa1bfc",
+    "source_exp_id": "5fb0b81c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T15:05:10.266990+00:00"
-  },
-  {
-    "id": "fd_0470",
-    "title": "Direction 5: Certified Equality Saturation via Completion",
-    "description": "**Conjecture:** Equality saturation (as implemented in the egg library) can be formalized as a variant of KB completion operating on e-graphs, with a certified extraction procedure that produces terms equivalent to the input under the equational theory.\n\n**Test:** Formalize e-graphs as a data structure (union-find on term nodes), define saturation as iterated application of rewrite rules to the e-graph, and prove that the extracted term is equivalent to the input. Verify by running on arithmetic optimization examples: `(a * 2) / 2 \u2192 a`, `(a + 0) * 1 \u2192 a`.\n\n**Impact:** Would connect our formalization to the most active area of practical rewriting applications \u2014 compiler optimization via equality saturation. A certified egg-like system would enable verified compiler optimizations with machine-checked correctness guarantees.\n\n**Catalog References:** `Pythagorean/KnuthBendixCompletion.lean` (convergent normalizers), `Catalog/FINAL/Pythagorean/ConvergentRewriteOptimizer.lean` (certified optimization).\n\n**Proof Strategy:** The key insight is that an e-graph represents a set of equivalent terms, and saturation adds all consequences of the rewrite rules. Extraction selects a representative from each equivalence class. The correctness proof shows that the extracted term is in the equivalence class of the input.\n\n**Domain Bridges:** Rewriting \u2194 compiler optimization; e-graphs \u2194 congruence closure; term rewriting \u2194 SMT solving.\n\n**Lineage:** Direct application of the certified optimizer framework to modern compiler technology.\n\n**Ambition:** Solid extension with high practical impact \u2014 equality saturation is widely used in industry.",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "43aa1bfc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T15:05:10.425467+00:00"
+    "timestamp": "2026-05-23T15:22:56.613338+00:00"
   },
   {
     "id": "seed_002",
@@ -8884,12 +8938,11 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-21T14:15:35.259694+00:00"
   },
   {
-    "id": "fd_0475",
-    "title": "Direction 1: Cohomological Obstruction to Compression Equality",
-    "description": "**Conjecture:** The gap \u03ba_sh(J, F) \u2212 \u03ba_pre(F) is controlled by the first sheaf cohomology group H\u00b9(C, J; K) of a suitable coefficient sheaf K derived from the probe family. Specifically, the gap is zero if and only if a certain obstruction class in H\u00b9 vanishes.\n\n**Test:** For finite sites with \u2264 5 objects, enumerate all Grothendieck topologies and all presheaves. Compute the compression gap and the first cohomology group. Verify that nonzero gaps correspond exactly to nonvanishing obstruction classes.\n\n**Impact:** This would transform the compression gap from an ad hoc invariant into a cohomological invariant, placing it within the standard toolkit of algebraic geometry. It would provide the first information-theoretic interpretation of sheaf cohomology on finite sites.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/SheafCompressionFiniteSite.lean` \u2014 compression gap definition\n- `Pythagorean/ProbeComplexity/Theorems.lean` \u2014 probe complexity invariants\n\n**Proof Strategy:** Define K as the presheaf of \"separation defects\" at each object. Show that the \u010cech cohomology H\u00b9 of K relative to J computes the obstruction to extending a presheaf-level separating family to a topology-compatible one. The key step is showing that the gluing data for topology compatibility forms a cocycle.\n\n**Domain Bridges:** Algebraic geometry (sheaf cohomology) \u2194 Information theory (compression gaps) \u2194 Combinatorics (finite site enumeration)\n\n**Lineage:** Extends Theorem 5 (compression equality) by characterizing the exact obstruction when equality fails.\n\n**Ambition:** Grand challenge \u2014 would establish a new dictionary between information theory and cohomological algebra.\n\n---",
+    "id": "fd_0405",
+    "title": "Direction 1: Sharp Helly Bound Conjecture",
+    "description": "**Conjecture:** For every finite category C (discrete model) and separating probe family P, the global representable dimension satisfies:\n\n  GlobalRepDim(F) \u2264 |Ob| \u00b7 max_{Y \u2208 Ob} |F(Y)|\n\nwhenever F is locally boundedly generated at radius |P| + 1. In particular, the exponential dependence on |P| in our current bound |Ob| \u00b7 n^|P| can be eliminated.\n\n**Test:** Exhaustive search on discrete categories with |Ob| \u2264 10 and |P| \u2264 4. Compute the tightest bound B such that LocallyBoundedGen(F, |P|+1, n) implies GlobalRepDim(F) \u2264 B for all F. Compare B against |Ob|\u00b7n and |Ob|\u00b7n^|P|.\n\n**Impact:** A linear bound would make the Helly theorem directly useful for distributed systems where the probe set is large. The current exponential bound limits practical applicability.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/HellyTheory.lean` \u2014 `globalBound_of_localBound_separated`\n- `Bridges/Catalog/Pythagorean/ProbeComplexity/HellyPrinciple.lean` \u2014 `repFinGen_of_local_on_helly_bound`\n\n**Proof Strategy:** The key obstacle is that our current proof uses the product bound ProbeCapacity \u2264 n^|P|. An alternative approach: use separation to argue that elements of F(Y) are determined by their restrictions to probe objects, so the *injective* image has size at most max probe fiber. This would give a linear bound but requires controlling the restriction map more carefully.\n\n**Domain Bridges:** Optimization (tight LP relaxation bounds), information theory (channel capacity bounds).\n\n**Lineage:** Directly extends Theorem B of the current work.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish that the Helly mechanism is as efficient as classical Helly in geometry.\n\n---",
     "domains": [
       "Pythagorean",
-      "Algebra",
       "Geometry",
       "Computation",
       "Bridges",
@@ -8898,9 +8951,385 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "5fb0b81c",
+    "source_exp_id": "924ea2bc",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T15:22:56.613338+00:00"
+    "timestamp": "2026-05-23T16:56:02.124973+00:00"
+  },
+  {
+    "id": "fd_0483",
+    "title": "Direction 3: Infinite-Dimensional Extension (PDE Setting)",
+    "description": "**Conjecture.** The tropical KAM renormalization theorem extends to countably many frequencies: if \u03c9 : \u2115 \u2192 \u211d satisfies a weighted Diophantine condition \u2211|k_i \u03c9_i| \u2265 C/||k||_1^\u03c4 for some \u03c4 > 1, then the iterated perturbation theorem holds with decay C/2^m and total budget C \u00b7 \u03b6(\u03c4)/K (where \u03b6 is the Riemann zeta function).\n\n**Test.** Truncate to n = 20 frequencies chosen as \u03c9_i = 1/(i+1)^{1/2} (a Diophantine sequence). Compute the weighted constant C for K = 5. Apply 10 perturbation steps and verify the predicted bound C/2^{10} against the observed constant. The conjecture is refuted if the finite-dimensional approximation diverges from the predicted bound.\n\n**Impact.** Would extend tropical KAM to infinite-dimensional Hamiltonian systems (nonlinear Schr\u00f6dinger, KdV), providing the first tropical framework for PDE stability.\n\n**Catalog References.** `Pythagorean/TropicalKAMRenormalization.lean`: `one_step_stability`, `tropical_diophantine_iterated_stable`.\n\n**Proof Strategy.** Replace Fin n with \u2115 in all definitions. Use the weighted L1 norm ||k||_{1,\u03c4} = \u2211|k_i| \u00b7 i^\u03c4 and adapt the perturbation bound accordingly. The key technical challenge is convergence of the infinite-dimensional lattice sum.\n\n**Domain Bridges.** PDE theory (Hamiltonian PDEs), functional analysis (infinite-dimensional dynamics), mathematical physics (quantum field theory).\n\n**Lineage.** Extends all theorems from finite to infinite dimension.\n\n**Ambition.** Solid extension \u2014 finite-dimensional proofs should adapt with careful convergence arguments.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "faaeb97d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T16:56:42.458577+00:00"
+  },
+  {
+    "id": "fd_0487",
+    "title": "Direction 1: Upper Bound Proof for Trees",
+    "description": "**Conjecture:** For every finite tree $G$, root $q$, and subset $S \\subseteq V \\setminus \\{q\\}$:\n$$r(D_S) \\leq \\mathrm{tropRank}(L_S) - 1.$$\n\n**Test:** Exhaustive computation on all labeled trees up to 12 vertices, all roots, all subsets. Current verification covers $n \\leq 3$. Extend to $n = 8$ using optimized Dhar's burning algorithm for divisor rank (avoid BFS).\n\n**Impact:** Trees are the simplest nontrivial class where both invariants are well-controlled. A proof here would establish the first fully verified instance of the tropical-chip-firing bridge and validate the proof architecture (Strategy A: reduced divisors + minor combinatorics) for extension to broader graph classes.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean` \u2014 `rootedSubsetDivisor`, `graphLaplacian`, `laplacianPrincipalMinor`, `IsTree`\n- `Pythagorean/TropicalBridge/Theorems.lean` \u2014 `rootedSubsetDivisor_total`, `principalMinor_row_sum`\n- `Catalog/Tropical/ChipFiring/Theorems.lean` \u2014 `divisorDegree_laplacian_zero`, `linearEquivalent_degree_eq`\n\n**Proof Strategy:** For trees, every degree-zero divisor has a unique $q$-reduced representative. Show that if the $q$-reduced form of $D_S$ has rank $r$, then $L_S$ contains a tropically nonsingular $(r+1) \\times (r+1)$ submatrix. The key step is to translate chip-firing moves on the tree into tropical linear combinations of Laplacian rows, using the tree's path structure to control cancellations.\n\n**Domain Bridges:** Tropical geometry \u2194 graph Brill\u2013Noether theory; spectral graph theory (tree eigenvalues are well-understood) \u2194 tropical rank.\n\n**Lineage:** Extends Baker\u2013Norine [2007] tropical Riemann\u2013Roch to incorporate Laplacian minor structure; builds on Develin\u2013Santos\u2013Sturmfels [2005] tropical rank theory.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 (Solid extension \u2014 trees are the natural testing ground, and the tools are available.)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1bf245b7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T18:40:54.081123+00:00"
+  },
+  {
+    "id": "fd_0489",
+    "title": "Direction 3: Tropical Hodge Decomposition for Graph Divisors",
+    "description": "**Conjecture (Grand Challenge):** There exists a decomposition of the degree-zero divisor lattice $\\mathrm{Div}^0(G)$ into orthogonal tropical-algebraic components:\n$$\\mathrm{Div}^0(G) = \\bigoplus_{k=0}^{g} H^k_{\\mathrm{trop}}(G)$$\nwhere $g$ is the genus and $H^k_{\\mathrm{trop}}(G)$ consists of divisors whose rank is controlled by tropical rank- $k$ principal minors. Specifically, $D \\in H^k_{\\mathrm{trop}}(G)$ iff the minimal supporting subset $S$ satisfies $\\mathrm{tropRank}(L_S) = k + 1$.\n\n**Test:** For all connected graphs on $n \\leq 7$, compute the partition of $\\mathrm{Div}^0(G)$ by tropical rank of minimal supporting subset. Check whether the components satisfy orthogonality (vanishing inner product in the chip-firing lattice).\n\n**Impact:** A tropical Hodge decomposition would be a paradigm shift \u2014 it would provide a new structural theory for graph divisors paralleling the Hodge decomposition in Riemannian geometry. This could unify chip-firing, tropical geometry, and spectral graph theory into a single framework.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Theorems.lean` \u2014 `support_rootedSubsetDivisor_subset` (support localization as prototype for component membership)\n- `Catalog/Tropical/FactorRank.lean` \u2014 `tropFactorRank`, `tropDecompOfRank` (tropical decomposition machinery)\n\n**Proof Strategy:** Begin by defining the \"tropical support rank\" of a divisor as the tropical rank of the minimal principal minor containing its support. Show this defines a filtration (not just partition) compatible with chip-firing equivalence. The key lemma: if $D_1 \\sim D_2$ and $D_1$ has tropical support rank $k$, then $D_2$ has tropical support rank $\\leq k$.\n\n**Domain Bridges:** Combinatorial Hodge theory \u2194 tropical algebraic geometry \u2194 discrete differential forms \u2194 graph Laplacian eigenspace decomposition.\n\n**Lineage:** Would parallel the work of Adiprasito\u2013Huh\u2013Katz [2018] on Hodge theory for matroids, transposed to the chip-firing/divisor setting.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 paradigm-shifting if successful.)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1bf245b7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T18:40:54.138979+00:00"
+  },
+  {
+    "id": "fd_0502",
+    "title": "Direction 1: Polynomial Certificate Conjecture for Natural Properties",
+    "description": "**Conjecture:** For every natural monotone graph property $P$ (triangle detection, $k$-clique, connectivity) with monotone circuit complexity $s(n) = n^{\\omega(1)}$, there exists a hereditary certificate scheme with family size bounded by $\\text{poly}(n)$ that is complete up to $s(n)$.\n\n**Test:** For triangle detection with $s(n) = \\lceil n^{3/2} \\rceil$:\n1. Enumerate all sandwich certificate families on $n = 5, 6, 7, 8$ vertices.\n2. For each $n$, compute the minimum-size complete family against all monotone circuits of size $\\leq s(n)$.\n3. Fit the growth of minimum family size to $C \\cdot n^d$.\n4. If $d > 10$ for the best fit, the conjecture is under pressure. If $d \\leq 4$, it is strongly supported.\n\n**Impact:** A positive resolution would reduce monotone lower bounds to a certificate-search problem: find a polynomial-size obstruction family. This would be the monotone analogue of the PCP theorem's role in hardness of approximation.\n\n**Catalog References:**\n- `Pythagorean/SandwichDefs.lean`: `CertifiedSandwichFamily`, `SandwichCompleteUpTo`\n- `Pythagorean/AsymptoticCompactness.lean`: `HereditaryCertificateScheme`, `no_small_circuit_of_scheme`\n\n**Proof Strategy:** Reconstruct Razborov's sunflower-based approximations as explicit certificate families. The sunflower lemma provides polynomial bounds on the required test cases. Formalize the connection between approximating polynomials and certificate witnesses.\n\n**Domain Bridges:** Circuit complexity \u2192 combinatorics (sunflower bounds) \u2192 certificate theory\n\n**Lineage:** Extends `no_small_circuit_of_scheme` by adding quantitative polynomial bounds. Builds on Razborov [1985] and Alon-Boppana [1987].\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand Challenge) \u2014 Would transform monotone complexity theory from a collection of results to a systematic science.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "865652b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T19:16:13.492004+00:00"
+  },
+  {
+    "id": "fd_0503",
+    "title": "Direction 2: Definability of Certificate Families in Restricted Logics",
+    "description": "**Conjecture:** For every monotone graph property definable in $\\text{MSO}_2$ (monadic second-order logic with edge quantification), the corresponding certificate families are uniformly definable in existential second-order logic ($\\Sigma^1_1$). That is, there exists a fixed $\\Sigma^1_1$ formula $\\Phi(n, s, x)$ such that $\\{x \\mid \\Phi(n, s, x)\\}$ is a complete certificate family at parameters $(n, s)$.\n\n**Test:**\n1. Express the triangle certificate family (positive: graphs with triangles; negative: triangle-free graphs) as a $\\Sigma^1_1$ formula.\n2. Verify that the formula has bounded quantifier rank (independent of $n$).\n3. Check whether the quantifier rank of the formula correlates with the polynomial degree of the family size bound.\n\n**Impact:** Would establish a formal connection between descriptive complexity (what can be defined) and certificate complexity (what can be certified). This would be the first result connecting monotone lower bound theory to the logical definability hierarchy.\n\n**Catalog References:**\n- `Pythagorean/AsymptoticCompactness.lean`: `sandwichCompleteUpTo_iff_no_small_circuit`\n- `Pythagorean/SandwichDefs.lean`: `CertifiedSandwichFamily`\n\n**Proof Strategy:** Use Skolemization of the completeness condition. The universal quantification over circuits becomes an existential second-order condition via the duality theorem. Bound the quantifier alternation using the structure of monotone circuits.\n\n**Domain Bridges:** Circuit complexity \u2192 descriptive complexity \u2192 finite model theory\n\n**Lineage:** Builds on `sandwichCompleteUpTo_iff_no_small_circuit` (finite duality). Connects to Fagin's theorem and the Immerman-Vardi theorem.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 \u2014 Would open a new chapter in descriptive complexity, connecting circuit lower bounds to logical definability.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "865652b3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T19:16:13.523350+00:00"
+  },
+  {
+    "id": "fd_0510",
+    "title": "Direction 4: Primewise Decomposition and Improved Constants (Grand Challenge)",
+    "description": "**Conjecture**: When torsion birth sets are computed separately for each prime p, the stability constant can be improved. Specifically, for p-primary torsion birth sets:\n\n```\nNatSetDeltaClose(TorsionBirthSet_p(F), TorsionBirthSet_p(F'), \u03b4/ord_p(\u03b4))\n```\n\nwhere ord_p(\u03b4) accounts for the p-adic structure of the interleaving parameter.\n\n**Test**: Compute p-primary torsion births for p = 2, 3, 5, 7 on:\n- Filtrations with \u2124/30\u2124 \u2245 \u2124/2\u2124 \u00d7 \u2124/3\u2124 \u00d7 \u2124/5\u2124 torsion\n- Mixed filtrations where different primes appear at different levels\n- Search for examples where the primewise bound is strictly better than the global bound \u03b4\n\n**Impact**: Would establish that torsion persistence has *more* structure than classical persistence: the prime decomposition provides a natural multi-channel invariant with independent stability in each channel.\n\n**Catalog References**: `TorsionBirthSet`, `prime_selectivity_filtration`, `torsion_birthSet_deltaClose`\n\n**Proof Strategy**: Use the Chinese Remainder Theorem to decompose torsion detection primewise. Each prime detector is functorial independently, and the interleaving may have different effective shifts for different primes.\n\n**Domain Bridges**: Number theory (p-adic analysis), algebraic topology (localization at primes), signal processing (multi-channel filtering)\n\n**Lineage**: Extends `prime_selectivity_filtration` from detection to stability.\n\n**Ambition**: Grand challenge \u2014 the p-adic improvement conjecture is speculative and may be false.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ed1c493e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T19:16:51.939867+00:00"
+  },
+  {
+    "id": "fd_0518",
+    "title": "Direction 2: Lorentzian Closure Under Multiplication",
+    "description": "**Conjecture:** If $f$ and $g$ are Lorentzian polynomials of degrees $d_1$ and $d_2$ respectively, then $f \\cdot g$ is Lorentzian of degree $d_1 + d_2$.\n\n**Test:** For $n = 2, 3$ variables and degrees $d_1, d_2 \\leq 4$, enumerate pairs of Lorentzian polynomials (using random nonneg coefficients on M-convex supports) and verify that their product is Lorentzian by checking all three conditions. Report any counterexample or confirm for 1000 pairs.\n\n**Impact:** This is the fundamental structural theorem of Br\u00e4nd\u00e9n\u2013Huh theory. It immediately implies that products of nonneg linear forms are Lorentzian, which is the bridge to Newton's inequality. It also enables inductive arguments on the degree of Lorentzian polynomials.\n\n**Catalog References:** `Pythagorean/LorentzianDefs.lean` (IsLorentzian, MConvexSupport, HasAtMostOnePosEigenvalue)\n\n**Proof Strategy:** The proof in Br\u00e4nd\u00e9n\u2013Huh uses the characterization of Lorentzian polynomials as limits of products of linear forms (in the \"strictly Lorentzian\" case) and a continuity argument. The key technical step is showing that the Hessian eigenvalue condition is preserved under multiplication, which requires the Cauchy\u2013Binet formula for minors of product matrices.\n\n**Domain Bridges:** Connects to real algebraic geometry (hyperbolic polynomials), optimization (semidefinite programming characterization of Lorentzian cone), and tropical geometry (product of tropical polynomials).\n\n**Lineage:** Extends `linear_lorentzian` and `IsLorentzian` from the current formalization.\n\n**Ambition:** Grand challenge \u2014 the proof is technically demanding and requires substantial algebraic infrastructure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0148538d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T20:30:05.017974+00:00"
+  },
+  {
+    "id": "fd_0520",
+    "title": "Direction 4: Spectral Gap Bounds for Lorentzian Hessians",
+    "description": "**Conjecture:** For any Lorentzian polynomial $f$ of degree $d$ in $n$ variables with coefficients in $[0, 1]$, and any multi-index $\\alpha$ with $|\\alpha| = d-2$:\n$$\\lambda_{\\max}(\\text{Hess}_\\alpha f) - \\lambda_2^+(\\text{Hess}_\\alpha f) \\geq \\frac{1}{d^2}$$\n\n**Test:** For $n \\leq 8$ and $d \\leq 6$, generate random Lorentzian polynomials by:\n1. Choose an M-convex support uniformly at random\n2. Assign random coefficients in $[0, 1]$\n3. Check Lorentzian property\n4. If Lorentzian, compute all Hessian eigenvalues and spectral gaps\nReport the minimum gap across all instances and check against $1/d^2$.\n\n**Impact:** A spectral gap bound would provide quantitative stability for the Lorentzian property \u2014 measuring how \"far\" a polynomial is from losing its Lorentzian structure. This has implications for perturbation theory and numerical algorithms.\n\n**Catalog References:** `Pythagorean/LorentzianDefs.lean` (hessianMatrix, HasAtMostOnePosEigenvalue)\n\n**Proof Strategy:** For the bivariate case ($n = 2$), the Hessian is $2 \\times 2$ and the spectral gap can be computed explicitly using the discriminant. For general $n$, a perturbation theory argument using Weyl's inequality may give the bound.\n\n**Domain Bridges:** Connects to numerical linear algebra (eigenvalue perturbation), optimization (condition numbers of semidefinite programs), and spectral graph theory.\n\n**Lineage:** Extends the spectral analysis in `LorentzianDefs.lean`.\n\n**Ambition:** Solid extension \u2014 the bivariate case should be provable; the general case is more challenging.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0148538d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T20:30:05.071452+00:00"
+  },
+  {
+    "id": "fd_0523",
+    "title": "Direction 2: Sharp Representable Dimension Bound",
+    "description": "**Conjecture:** For all finite presheaf models with non-trivial fibers (|F(Y)| \u2265 2 for all Y):\n```\n\u03ba(F, r) \u2264 \u2308|Ob| / max_Y |F(Y)|\u2309 + 1\n```\n\nIn particular, when all fibers have the same size s \u2265 2, we conjecture \u03ba \u2264 \u2308|Ob|/s\u2309 + 1. The \"+1\" may be removable for specific classes of restriction maps.\n\n**Test:** Generate all models on \u2264 5 objects with uniform fiber size s \u2208 {2, 3, 4} and identity restriction maps. Compute \u03ba for each and check the bound. A violation refutes the conjecture.\n\n**Impact:** This would turn the crude bound \u03ba \u2264 |Ob| into a tight parametric bound, making \u03ba efficiently estimable without search.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/RepresentableDimension.lean` (repDim definition)\n- `Pythagorean/ProbeComplexity/ToposCompressionInvariant.lean` (Theorem D)\n\n**Proof Strategy:** Use probabilistic arguments: a random probe family of size k separates with high probability when k \u00b7 log(s) \u2265 log(|F(Y)|) for all Y. This gives a probabilistic upper bound; derandomize for the deterministic claim.\n\n**Domain Bridges:** Probabilistic method in combinatorics, coding theory (sphere-packing bounds).\n\n**Lineage:** Sharpens Theorem D (\u03ba \u2264 repDim).\n\n**Ambition:** \u2605\u2605\u2605 (Moderate \u2014 bounds of this type are common in combinatorics but connecting to categorical structure adds novelty.)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf52c47f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T20:31:08.683193+00:00"
+  },
+  {
+    "id": "fd_0525",
+    "title": "Direction 4: Compression and VC Dimension",
+    "description": "**Conjecture:** For a presheaf model (Ob, F, r) where F(Y) \u2286 2^S for some finite set S (i.e., fibers are sets of subsets), the compression number \u03ba is bounded below by the VC dimension of the induced set system:\n```\nVCdim({F(Y) : Y \u2208 Ob}) \u2264 \u03ba(F, r)\n```\n\n**Test:** Construct set systems with known VC dimension d \u2208 {1, 2, 3, 4} and embed them as presheaf models. Compute \u03ba and check the bound. A counterexample would refute the conjecture.\n\n**Impact:** This would formally connect the topos compression invariant to one of the most important quantities in machine learning theory, establishing a bridge between categorical geometry and statistical learning theory.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/ToposCompressionInvariant.lean` (Theorem E, observation complexity)\n\n**Proof Strategy:** Show that VC-shattering implies non-separability by small probe families. If a set system shatters a set of size d, then at least d probes are needed to distinguish all shattered subsets.\n\n**Domain Bridges:** Machine learning (VC theory), computational geometry, PAC learning.\n\n**Lineage:** Extends Theorem E (observation complexity bound) to VC-theoretic setting.\n\n**Ambition:** \u2605\u2605\u2605\u2605 (High \u2014 connecting category theory to learning theory is novel and impactful.)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf52c47f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T20:31:16.683134+00:00"
+  },
+  {
+    "id": "fd_0534",
+    "title": "Direction 5: Bicategorical Yoneda for Causal Bisimulation",
+    "description": "**Conjecture:** For concurrent systems with independence relations (event structures, pomset languages), the category of experiments acquires a 2-categorical structure: two traces related by an independence-induced permutation give a 2-morphism. Bicategorical Yoneda extensionality \u2014 natural isomorphism of 2-presheaves \u2014 recovers *causal bisimulation* (history-preserving bisimulation), which is strictly finer than interleaving bisimulation.\n\n**Test:** Define a 3-process concurrent system with actions `{a, b, c}` where `a \u2225 b` (independent) but `a ; c` and `b ; c` (causally dependent). Compute the 2-nerve presheaf. Verify that two pomset-equivalent processes have isomorphic 2-nerves, while two interleaving-equivalent but causally-different processes have non-isomorphic 2-nerves. A single example suffices to validate.\n\n**Impact:** Would provide the correct categorical framework for verification of distributed systems where causal ordering matters (e.g., consensus protocols, distributed databases).\n\n**Catalog References:** `Pythagorean/YonedaBisimulation/Defs.lean` \u2014 generalizes `Exp Act` from a 1-category to a 2-category, and `IsBisimulation` to the causal setting.\n\n**Proof Strategy:** Define independence relations on `Act`. Build the 2-category of pomsets as a quotient of `FreeCategory(Discrete Act)` by independence equivalences. Show that 2-naturality encodes both the zigzag condition and the causal coherence condition.\n\n**Domain Bridges:** Concurrency theory (true concurrency), 2-category theory, distributed systems verification, event structures.\n\n**Lineage:** Winskel (1987), Nielsen-Plotkin-Winskel (1981), Leinster (2004).\n\n**Ambition:** Grand challenge. \u2605\u2605\u2605\u2605\u2605",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78d0c67f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T21:08:27.032087+00:00"
+  },
+  {
+    "id": "fd_0536",
+    "title": "Direction 2: Average-Case State Growth and Phase Transitions",
+    "description": "**Conjecture:** For random closed lambda terms of size *n* sampled uniformly, the logarithmic growth rate `log(stateGrowth(t, d)) / d` concentrates around a value `\u03bb(n)` that undergoes a phase transition at a critical duplication threshold. Below the threshold, `\u03bb(n) = O(log n)`; above it, `\u03bb(n) = \u0398(n)`.\n\n**Test:** Generate 10,000 random closed lambda terms of sizes n = 5, 10, 15, 20. Compute `stateGrowth(t, d)` for d = 0, ..., 15. Estimate the empirical growth rate `\u03bb\u0302(t) = stateGrowth(t, 15)^{1/15}`. Plot the distribution of `\u03bb\u0302` as a function of n. A bimodal distribution would support the phase transition hypothesis; a unimodal one would refute it.\n\n**Impact:** Would establish a quantitative analogue of complexity phase transitions in combinatorial optimization, showing that random lambda terms exhibit a sharp behavioral transition.\n\n**Catalog References:** `Pythagorean/BranchComplexity.lean` (state growth, branching complexity).\n\n**Proof Strategy:** Use analytic combinatorics of random lambda terms (Boltzmann sampling) combined with branching process theory to derive expected offspring counts.\n\n**Domain Bridges:** Statistical physics (phase transitions), analytic combinatorics (random structures), probability theory (branching processes).\n\n**Lineage:** New direction inspired by the branching process interpretation.\n\n**Ambition:** Grand challenge \u2014 requires combining multiple mathematical fields with novel computational experiments.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4721083",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T21:44:10.817265+00:00"
+  },
+  {
+    "id": "fd_0537",
+    "title": "Direction 3: Type-Theoretic Branching Bounds",
+    "description": "**Conjecture:** For simply-typed lambda terms of type `\u03c4`, there exists a function `B(\u03c4)` depending only on the type such that `stateGrowth(t, d) \u2264 B(\u03c4)^d` for all terms `t : \u03c4`. Moreover, `B(\u03c4)` is computable from the type structure and grows polynomially in the type size.\n\n**Test:** Implement a simply-typed lambda term generator. For each type \u03c4 of size \u2264 10, generate 100 terms, compute stateGrowth for d \u2264 10, and verify that the maximum growth rate matches the predicted B(\u03c4). A term exceeding the predicted bound refutes the conjecture.\n\n**Impact:** Would provide certified complexity bounds for typed programming languages, directly applicable to compilation and optimization.\n\n**Catalog References:** `Pythagorean/BoundedBetaTheorems.lean` (finiteness), `Pythagorean/STLCDefs.lean` (simply typed lambda calculus).\n\n**Proof Strategy:** Use strong normalization of STLC to bound reduction path lengths, combined with the branching complexity bound to control width. The key insight is that types constrain both depth and branching.\n\n**Domain Bridges:** Type theory, programming language theory, compilation (optimization budget prediction).\n\n**Lineage:** Extension \u2014 combines branching bounds with existing STLC formalization.\n\n**Ambition:** Extension \u2014 technically demanding but builds on well-established foundations.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4721083",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T21:44:10.849402+00:00"
+  },
+  {
+    "id": "fd_0538",
+    "title": "Direction 4: Generating Function Analysis of Reduction Graphs",
+    "description": "**Conjecture:** For a term `t` with hereditary branching complexity `B`, the generating function `G_t(z) = \u03a3 stateGrowth(t, d) z^d` has a meromorphic continuation to the disk |z| < 1/(B-\u03b5) for some \u03b5 > 0, and its dominant singularity determines the precise asymptotic growth rate of stateGrowth.\n\n**Test:** Compute stateGrowth(t, d) for d = 0, ..., 20 for 50 terms with known hereditary branching. Fit rational function approximations to the partial sums. Verify that the fitted pole location matches 1/B within 10%. Systematic deviation would refute the meromorphic continuation hypothesis.\n\n**Impact:** Would connect lambda calculus complexity to the powerful machinery of analytic combinatorics, enabling asymptotic analysis techniques from the Flajolet-Sedgewick framework.\n\n**Catalog References:** `Pythagorean/BranchComplexity.lean` (state growth, exponential bound).\n\n**Proof Strategy:** Encode the recurrence `stateGrowth(t, d+1) \u2264 B \u00b7 stateGrowth(t, d)` as a generating function inequality. Use the transfer lemma to extract asymptotics from singularity structure.\n\n**Domain Bridges:** Analytic combinatorics, complex analysis, formal power series.\n\n**Lineage:** New direction inspired by the recurrence theorem.\n\n**Ambition:** Grand challenge \u2014 meromorphic continuation is non-trivial to establish formally.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4721083",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T21:44:10.878099+00:00"
+  },
+  {
+    "id": "fd_0539",
+    "title": "Direction 5: State-Space Growth and Computational Complexity Classes",
+    "description": "**Conjecture:** There exist closed lambda terms `t_n` of size O(n) encoding Boolean circuits of size n such that `stateGrowth(t_n, poly(n)) \u2265 2^{\u03a9(n)}` if and only if the circuit computes a function outside P/poly. Equivalently, polynomial state-space growth for all bounded-depth reductions characterizes a complexity class related to NC or LOGSPACE.\n\n**Test:** Encode known NP-complete problems (3-SAT instances) as lambda terms. Compute state growth for small instances (n \u2264 20). Compare growth rates for satisfiable vs. unsatisfiable instances. A systematic difference would support the complexity-theoretic connection; no difference would weaken it.\n\n**Impact:** Would establish the first formal bridge between lambda calculus state-space geometry and circuit complexity, potentially illuminating the P vs NP question from a new angle.\n\n**Catalog References:** `Pythagorean/BranchComplexity.lean` (exponential bound, branching process interpretation).\n\n**Proof Strategy:** Encode Boolean circuits as lambda terms using Church encodings. Relate the reduction graph to the circuit's computation tree. Show that state-space growth captures the circuit's branching behavior.\n\n**Domain Bridges:** Computational complexity theory, circuit complexity, lambda calculus encodings.\n\n**Lineage:** New direction \u2014 grand challenge connecting to the central open problem in CS.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful, with clear falsification criteria.",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f4721083",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T21:44:10.906738+00:00"
+  },
+  {
+    "id": "fd_0540",
+    "title": "Direction 1: Sharpness of the \u03b1-Budget Law",
+    "description": "**Conjecture:** For each \u03b1 > 1, the degradation factor C(1 \u2212 1/\u03b1) in `one_step_stability_alpha` is sharp: for any \u03b5 > 0, there exist a dimension n, a (K, C)-Diophantine frequency \u03c9, and a perturbation \u03b4 with |\u03b4\u1d62| < C/(\u03b1K) such that \u03c9 + \u03b4 is not (K, C(1 \u2212 1/\u03b1) + \u03b5)-Diophantine.\n\n**Test:** Construct explicit extremal examples. For n = 1, \u03c9 = (C,), K = 1, and \u03b4 = (C/(\u03b1K) \u2212 \u03b7) for small \u03b7, compute |\u03c9 + \u03b4| = C + C/(\u03b1K) \u2212 \u03b7 and verify whether the minimum over k \u2208 {\u22121, 1} approaches C(1 \u2212 1/\u03b1). For n \u2265 2, search computationally over integer vectors k that align with the perturbation direction.\n\n**Impact:** If sharp, confirms the theory is optimal. If not sharp, reveals a gap that could be exploited for tighter bounds.\n\n**Catalog References:** `Pythagorean/VariableContractionRenorm.lean` \u2192 `one_step_stability_alpha`\n\n**Proof Strategy:** Construct \u03c9 and \u03b4 so that \u27e8k, \u03b4\u27e9 has the same sign as \u27e8k, \u03c9\u27e9 for the worst-case k, making the reverse triangle inequality tight.\n\n**Domain Bridges:** Optimization theory (tight relaxation gaps), information theory (capacity-achieving codes).\n\n**Lineage:** Extends the one-step stability theorem.\n\n**Ambition:** Extension \u2014 validates the existing theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9612022",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T21:44:40.765831+00:00"
+  },
+  {
+    "id": "fd_0541",
+    "title": "Direction 2: Multi-Parameter Contraction Cascades",
+    "description": "**Conjecture:** If different contraction parameters \u03b1\u2080, \u03b1\u2081, ..., \u03b1_{m-1} > 1 are used at each step, the final Diophantine constant after m steps is C \u00b7 \u220f\u2c7c (1 \u2212 1/\u03b1\u2c7c), and the total budget is \u2211\u2c7c C \u00b7 \u220f_{i<j} (1 \u2212 1/\u03b1\u1d62) / (\u03b1\u2c7c \u00b7 K) \u2264 C/K.\n\n**Test:** Formalize the multi-parameter decay theorem. Computationally verify the budget inequality for random sequences of \u03b1 values. Test whether the budget bound C/K still holds with equality in the limit.\n\n**Impact:** Enables adaptive contraction strategies where the rate changes based on observed perturbation magnitudes \u2014 directly applicable to adaptive control and online optimization.\n\n**Catalog References:** `Pythagorean/VariableContractionRenorm.lean` \u2192 `renormalization_decay_alpha`, `renorm_budget_alpha`\n\n**Proof Strategy:** Induction on m, applying the one-step theorem at each stage with the current \u03b1\u2c7c. The budget bound follows from telescoping: each term is C \u00b7 \u220f_{i<j} r\u1d62 / (\u03b1\u2c7c K), and the sum telescopes because \u2211 r\u1d62/\u03b1\u1d62 factors appropriately.\n\n**Domain Bridges:** Adaptive control theory, online convex optimization, variable-rate coding.\n\n**Lineage:** Direct generalization of the fixed-\u03b1 multi-step theorem.\n\n**Ambition:** Extension \u2014 natural next step, moderate difficulty.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9612022",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T21:44:40.794031+00:00"
+  },
+  {
+    "id": "fd_0542",
+    "title": "Direction 3: Nonlinear Contraction Profiles and Fractal Geometry",
+    "description": "**Conjecture (Grand Challenge):** There exists a class of nonlinear contraction maps f : \u211d\u208a \u2192 \u211d\u208a (beyond linear C \u21a6 C\u00b7r) such that the one-step stability theorem generalizes: if perturbations are bounded by g(C)/K for an appropriate function g, then the Diophantine constant degrades from C to f(C). The resulting orbit {C, f(C), f\u00b2(C), ...} defines a non-geometric decay profile, and the total budget \u2211 g(f\u207f(C))/K may converge to a fractal-dimensional quantity.\n\n**Test:** Start with f(C) = C^\u03b2 for \u03b2 \u2208 (0,1). Check whether a one-step stability theorem holds with perturbation bound C^\u03b2/(K\u00b7C^{\u03b2-1}) = C/K. Compute the orbit sum and check whether it converges. Investigate whether the Hausdorff dimension of the attractor of the IFS generated by {f} relates to the budget.\n\n**Impact:** Would establish a genuine bridge between Diophantine approximation and fractal geometry, potentially explaining the measure-theoretic structure of Diophantine frequency sets.\n\n**Catalog References:** `Pythagorean/VariableContractionRenorm.lean` \u2192 `contraction_factor_lt_one`, `lyapunov_decay`\n\n**Proof Strategy:** Modify the triangle inequality argument in the one-step proof to accommodate nonlinear bounds. The key challenge is that the perturbation bound g(C)/K must be compatible with the L1 norm estimate.\n\n**Domain Bridges:** Fractal geometry, dynamical systems, measure theory, multifractal analysis.\n\n**Lineage:** Extends the linear contraction theory.\n\n**Ambition:** Grand Challenge \u2014 requires fundamentally new ideas.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9612022",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T21:44:40.824284+00:00"
+  },
+  {
+    "id": "fd_0545",
+    "title": "Direction 1: M\u00f6bius Rigidity and Boolean Lattice Zeta Transform",
+    "description": "**Conjecture:** The coefficient consistency operator for the powerset identity is equivalent (up to basis change) to the Boolean lattice zeta transform, and any proof system factoring through this transform has certificate rank exactly 2^n. Formally: the M\u00f6bius function \u03bc on the Boolean lattice 2^[n] defines an inverse transform, and the rank of the zeta matrix equals the rank of the identity on the lattice, which is 2^n.\n\n**Test:** For n \u2264 8, construct the zeta matrix Z_{S,T} = [T \u2286 S] and the M\u00f6bius matrix M = Z^{-1}. Verify that:\n- Z has rank 2^n over Q, GF(2), GF(3), GF(5)\n- Z \u00d7 M = I (identity)\n- Any row/column-deletion of Z (compressing below 2^n) has strictly smaller rank\n- The zeta matrix triangularity gives det(Z) = 1\n\n**Impact:** Would establish that the rank barrier is not specific to the identity matrix but extends to the entire family of inclusion-ordered transforms on the Boolean lattice. This connects proof complexity to incidence algebras and Rota's foundation of combinatorics.\n\n**Catalog References:**\n- `Catalog/Pythagorean/CertificateRank/Theorems.lean`: `certificateRank_ge_of_separating`\n- `Catalog/Pythagorean/CommComplexity/Theorems.lean`: `det_comm_card_lower_bound`\n\n**Proof Strategy:** Define the zeta matrix explicitly as `Matrix (Finset (Fin n)) (Finset (Fin n)) K` with entry `Z S T = if T \u2286 S then 1 else 0`. Show it is unitriangular under inclusion ordering, hence has determinant 1 and full rank. Then show the canonical certificate system's constraint matrix is row-equivalent to the M\u00f6bius inverse.\n\n**Domain Bridges:** Combinatorics (incidence algebras) \u2194 Proof complexity (rank barriers) \u2194 Harmonic analysis (Boolean Fourier transform)\n\n**Lineage:** Extends Theorem B (full rank of canonical system) via the connection to zeta/M\u00f6bius transforms.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 \u2014 Establishes a deep structural explanation for the rank barrier.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e275862",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T21:45:13.129637+00:00"
+  },
+  {
+    "id": "fd_0563",
+    "title": "Direction 3: Higher-Dimensional Extension",
+    "description": "**Conjecture:** For a simplicial complex $\\Delta$ of dimension $d$ with a combinatorial Laplacian $L_d$ on $d$-chains, the equality characterization generalizes: a subset of $d$-simplices $S$ achieves equality between the higher-dimensional divisor rank and tropical rank if and only if $S$ forms a \"simplicial tree\" \u2014 a connected acyclic subcomplex in the appropriate homological sense (trivial $d$-th reduced homology).\n\n**Test:** Implement the combinatorial Laplacian for 2-dimensional simplicial complexes. Compute divisor rank and tropical rank for all subsets of triangles in small triangulations (e.g., the boundary of the octahedron, the torus triangulation). Search for the equality locus and check whether it corresponds to acyclic subcomplexes.\n\n**Impact:** This would extend the entire tropical chip-firing bridge from graphs (1-dimensional) to higher-dimensional complexes, with applications to discrete Hodge theory, topological data analysis, and higher-dimensional network flows.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/EqualityCharacterization.lean`: `restrictedLaplacian`, `laplacian_energy_eq_edge_sum`\n- `Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`\n\n**Proof Strategy:** Define the higher Laplacian $L_d = \\partial_d^T \\partial_d + \\partial_{d+1} \\partial_{d+1}^T$ (Hodge Laplacian). Prove a decomposition theorem analogous to Theorem 3.1 for the restricted higher Laplacian. Show that the energy formula generalizes with boundary and coboundary terms.\n\n**Domain Bridges:** Algebraic topology (simplicial homology), discrete Hodge theory, tropical geometry (higher tropical linear spaces).\n\n**Lineage:** Eckmann (1944) combinatorial Hodge theory, Duval\u2013Klivans\u2013Martin simplicial matrix tree theorem.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 the 2-dimensional case is tractable with existing tools.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f5e6c231",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-23T23:29:11.503162+00:00"
   },
   {
     "id": "seed_038",
@@ -8996,12 +9425,12 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-23T16:56:50.673604+00:00"
   },
   {
-    "id": "fd_0405",
-    "title": "Direction 1: Sharp Helly Bound Conjecture",
-    "description": "**Conjecture:** For every finite category C (discrete model) and separating probe family P, the global representable dimension satisfies:\n\n  GlobalRepDim(F) \u2264 |Ob| \u00b7 max_{Y \u2208 Ob} |F(Y)|\n\nwhenever F is locally boundedly generated at radius |P| + 1. In particular, the exponential dependence on |P| in our current bound |Ob| \u00b7 n^|P| can be eliminated.\n\n**Test:** Exhaustive search on discrete categories with |Ob| \u2264 10 and |P| \u2264 4. Compute the tightest bound B such that LocallyBoundedGen(F, |P|+1, n) implies GlobalRepDim(F) \u2264 B for all F. Compare B against |Ob|\u00b7n and |Ob|\u00b7n^|P|.\n\n**Impact:** A linear bound would make the Helly theorem directly useful for distributed systems where the probe set is large. The current exponential bound limits practical applicability.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/HellyTheory.lean` \u2014 `globalBound_of_localBound_separated`\n- `Bridges/Catalog/Pythagorean/ProbeComplexity/HellyPrinciple.lean` \u2014 `repFinGen_of_local_on_helly_bound`\n\n**Proof Strategy:** The key obstacle is that our current proof uses the product bound ProbeCapacity \u2264 n^|P|. An alternative approach: use separation to argue that elements of F(Y) are determined by their restrictions to probe objects, so the *injective* image has size at most max probe fiber. This would give a linear bound but requires controlling the restriction map more carefully.\n\n**Domain Bridges:** Optimization (tight LP relaxation bounds), information theory (channel capacity bounds).\n\n**Lineage:** Directly extends Theorem B of the current work.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish that the Helly mechanism is as efficient as classical Helly in geometry.\n\n---",
+    "id": "fd_0571",
+    "title": "Direction 1: Defect Classification Conjecture",
+    "description": "**Conjecture.** For finite presheaf models with identity self-restrictions (res(Y,Y) = id), the compression defect satisfies \u03b4(M\u2081, M\u2082) = \u03ba(M\u2081) + \u03ba(M\u2082) \u2212 max(\u03ba(M\u2081), \u03ba(M\u2082)) = min(\u03ba(M\u2081), \u03ba(M\u2082)), i.e., \u03ba(M\u2081 \u00d7 M\u2082) = max(\u03ba(M\u2081), \u03ba(M\u2082)).\n\n**Test.** Enumerate all models with \u2264 4 objects, fibers \u2264 4, identity self-restriction, and compute defects. Check whether \u03b4 = min(\u03ba\u2081, \u03ba\u2082) universally holds for this subclass.\n\n**Impact.** If true, this would show that identity-on-diagonal models have \"dimensional\" behavior where products behave like taking the max \u2014 like covering dimension under Cartesian products. If false, the counterexample would reveal exactly what makes compression non-dimensional.\n\n**Catalog References.** `Pythagorean/ProbeComplexity/CompressionProduct.lean` (compressionDefect, compression_prod_le, max_le_compression_prod).\n\n**Proof Strategy.** For the upper bound, use the existing sub-additivity proof. For the lower bound, show that when res(Y,Y) = id, any probe that separates at Y in M\u2081 also works in the product (via identity self-restriction), so probes can be \"shared\" across factors. Formalize the sharing lemma as a new helper.\n\n**Domain Bridges.** Covering dimension theory (dim(X \u00d7 Y) \u2264 dim(X) + dim(Y), with equality for well-behaved spaces); Krull dimension of tensor products of rings.\n\n**Lineage.** Directly extends `compression_prod_le` and `max_le_compression_prod`.\n\n**Ambition.** \u2605\u2605\u2605 (Paradigm-classifying: would determine whether \u03ba is dimension-like or entropy-like.)\n\n---",
     "domains": [
       "Pythagorean",
-      "Geometry",
+      "Algebra",
       "Computation",
       "Bridges",
       "Logic"
@@ -9009,79 +9438,35 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "924ea2bc",
+    "source_exp_id": "c8703e71",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T16:56:02.124973+00:00"
+    "timestamp": "2026-05-24T01:43:58.843112+00:00"
   },
   {
-    "id": "fd_0483",
-    "title": "Direction 3: Infinite-Dimensional Extension (PDE Setting)",
-    "description": "**Conjecture.** The tropical KAM renormalization theorem extends to countably many frequencies: if \u03c9 : \u2115 \u2192 \u211d satisfies a weighted Diophantine condition \u2211|k_i \u03c9_i| \u2265 C/||k||_1^\u03c4 for some \u03c4 > 1, then the iterated perturbation theorem holds with decay C/2^m and total budget C \u00b7 \u03b6(\u03c4)/K (where \u03b6 is the Riemann zeta function).\n\n**Test.** Truncate to n = 20 frequencies chosen as \u03c9_i = 1/(i+1)^{1/2} (a Diophantine sequence). Compute the weighted constant C for K = 5. Apply 10 perturbation steps and verify the predicted bound C/2^{10} against the observed constant. The conjecture is refuted if the finite-dimensional approximation diverges from the predicted bound.\n\n**Impact.** Would extend tropical KAM to infinite-dimensional Hamiltonian systems (nonlinear Schr\u00f6dinger, KdV), providing the first tropical framework for PDE stability.\n\n**Catalog References.** `Pythagorean/TropicalKAMRenormalization.lean`: `one_step_stability`, `tropical_diophantine_iterated_stable`.\n\n**Proof Strategy.** Replace Fin n with \u2115 in all definitions. Use the weighted L1 norm ||k||_{1,\u03c4} = \u2211|k_i| \u00b7 i^\u03c4 and adapt the perturbation bound accordingly. The key technical challenge is convergence of the infinite-dimensional lattice sum.\n\n**Domain Bridges.** PDE theory (Hamiltonian PDEs), functional analysis (infinite-dimensional dynamics), mathematical physics (quantum field theory).\n\n**Lineage.** Extends all theorems from finite to infinite dimension.\n\n**Ambition.** Solid extension \u2014 finite-dimensional proofs should adapt with careful convergence arguments.\n\n---",
+    "id": "fd_0572",
+    "title": "Direction 2: Confusability Graph Correspondence",
+    "description": "**Conjecture.** There exists a natural graph invariant \u03b3 such that \u03ba(M) = \u03b3(G_M) for all finite presheaf models M, where G_M is the \"confusability graph\" whose vertices are global sections and edges connect observationally indistinguishable pairs. Specifically, \u03b3 is the minimum clique cover number of the \"total separation graph.\"\n\n**Test.** For each model M with \u2264 3 objects, construct the separation graph at each object Y (vertices = F(Y), edges = pairs separated by at least one probe). Compute clique cover numbers, chromatic numbers, and independence numbers. Compare each candidate \u03b3 with \u03ba(M).\n\n**Impact.** Would establish a formal dictionary between presheaf compression and zero-error information theory / graph capacity theory. Product of models would correspond to strong product of graphs, connecting \u03ba-additivity to the deep open problem of Shannon capacity additivity.\n\n**Catalog References.** `Pythagorean/ProbeComplexity/CompressionProduct.lean` (distinguishabilityCardAt, probeIndistinguishable_prod_iff, distinguishabilityCardAt_prod).\n\n**Proof Strategy.** Define the confusability graph formally in Lean. Show that probe families correspond to graph colorings of the complement. The minimum family size equals the chromatic number of the complement = clique cover number of the original.\n\n**Domain Bridges.** Shannon capacity of graphs (Lov\u00e1sz theta function); zero-error information theory; Ramsey theory.\n\n**Lineage.** Builds on `distinguishabilityCardAt_prod` (multiplicativity = strong graph product capacity).\n\n**Ambition.** \u2605\u2605\u2605\u2605 (Grand challenge: connects to major open problems in graph theory.)\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "faaeb97d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T16:56:42.458577+00:00"
-  },
-  {
-    "id": "fd_0487",
-    "title": "Direction 1: Upper Bound Proof for Trees",
-    "description": "**Conjecture:** For every finite tree $G$, root $q$, and subset $S \\subseteq V \\setminus \\{q\\}$:\n$$r(D_S) \\leq \\mathrm{tropRank}(L_S) - 1.$$\n\n**Test:** Exhaustive computation on all labeled trees up to 12 vertices, all roots, all subsets. Current verification covers $n \\leq 3$. Extend to $n = 8$ using optimized Dhar's burning algorithm for divisor rank (avoid BFS).\n\n**Impact:** Trees are the simplest nontrivial class where both invariants are well-controlled. A proof here would establish the first fully verified instance of the tropical-chip-firing bridge and validate the proof architecture (Strategy A: reduced divisors + minor combinatorics) for extension to broader graph classes.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean` \u2014 `rootedSubsetDivisor`, `graphLaplacian`, `laplacianPrincipalMinor`, `IsTree`\n- `Pythagorean/TropicalBridge/Theorems.lean` \u2014 `rootedSubsetDivisor_total`, `principalMinor_row_sum`\n- `Catalog/Tropical/ChipFiring/Theorems.lean` \u2014 `divisorDegree_laplacian_zero`, `linearEquivalent_degree_eq`\n\n**Proof Strategy:** For trees, every degree-zero divisor has a unique $q$-reduced representative. Show that if the $q$-reduced form of $D_S$ has rank $r$, then $L_S$ contains a tropically nonsingular $(r+1) \\times (r+1)$ submatrix. The key step is to translate chip-firing moves on the tree into tropical linear combinations of Laplacian rows, using the tree's path structure to control cancellations.\n\n**Domain Bridges:** Tropical geometry \u2194 graph Brill\u2013Noether theory; spectral graph theory (tree eigenvalues are well-understood) \u2194 tropical rank.\n\n**Lineage:** Extends Baker\u2013Norine [2007] tropical Riemann\u2013Roch to incorporate Laplacian minor structure; builds on Develin\u2013Santos\u2013Sturmfels [2005] tropical rank theory.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 (Solid extension \u2014 trees are the natural testing ground, and the tools are available.)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
       "Computation",
-      "Tropical",
-      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "1bf245b7",
+    "source_exp_id": "c8703e71",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T18:40:54.081123+00:00"
+    "timestamp": "2026-05-24T01:43:59.133091+00:00"
   },
   {
-    "id": "fd_0489",
-    "title": "Direction 3: Tropical Hodge Decomposition for Graph Divisors",
-    "description": "**Conjecture (Grand Challenge):** There exists a decomposition of the degree-zero divisor lattice $\\mathrm{Div}^0(G)$ into orthogonal tropical-algebraic components:\n$$\\mathrm{Div}^0(G) = \\bigoplus_{k=0}^{g} H^k_{\\mathrm{trop}}(G)$$\nwhere $g$ is the genus and $H^k_{\\mathrm{trop}}(G)$ consists of divisors whose rank is controlled by tropical rank- $k$ principal minors. Specifically, $D \\in H^k_{\\mathrm{trop}}(G)$ iff the minimal supporting subset $S$ satisfies $\\mathrm{tropRank}(L_S) = k + 1$.\n\n**Test:** For all connected graphs on $n \\leq 7$, compute the partition of $\\mathrm{Div}^0(G)$ by tropical rank of minimal supporting subset. Check whether the components satisfy orthogonality (vanishing inner product in the chip-firing lattice).\n\n**Impact:** A tropical Hodge decomposition would be a paradigm shift \u2014 it would provide a new structural theory for graph divisors paralleling the Hodge decomposition in Riemannian geometry. This could unify chip-firing, tropical geometry, and spectral graph theory into a single framework.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Theorems.lean` \u2014 `support_rootedSubsetDivisor_subset` (support localization as prototype for component membership)\n- `Catalog/Tropical/FactorRank.lean` \u2014 `tropFactorRank`, `tropDecompOfRank` (tropical decomposition machinery)\n\n**Proof Strategy:** Begin by defining the \"tropical support rank\" of a divisor as the tropical rank of the minimal principal minor containing its support. Show this defines a filtration (not just partition) compatible with chip-firing equivalence. The key lemma: if $D_1 \\sim D_2$ and $D_1$ has tropical support rank $k$, then $D_2$ has tropical support rank $\\leq k$.\n\n**Domain Bridges:** Combinatorial Hodge theory \u2194 tropical algebraic geometry \u2194 discrete differential forms \u2194 graph Laplacian eigenspace decomposition.\n\n**Lineage:** Would parallel the work of Adiprasito\u2013Huh\u2013Katz [2018] on Hodge theory for matroids, transposed to the chip-firing/divisor setting.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 paradigm-shifting if successful.)\n\n---",
+    "id": "fd_0577",
+    "title": "Direction 1: Memory-Pathwidth Correlation",
+    "description": "**Conjecture:** For industrial SAT benchmark families with strong modular structure (hardware verification, bounded model checking, planning), the estimated pathwidth of the evolving clause interaction graph is positively correlated (Spearman \u03c1 > 0.7) with peak clause-database memory under CDCL solvers.\n\n**Test:** Instrument MiniSat or CaDiCaL to log the clause interaction graph at regular intervals during solving. Compute approximate pathwidth using the greedy elimination heuristic. Measure Spearman rank correlation between pathwidth traces and peak memory across 500+ SAT Competition benchmarks. Control for formula size.\n\n**Impact:** If confirmed, this validates pathwidth as a *predictive* structural invariant for solver memory, not just a theoretical bound. If falsified (\u03c1 < 0.3), the theory would need revision \u2014 perhaps treewidth or a different graph parameter is more appropriate.\n\n**Catalog References:** `Catalog/Pythagorean/ConfigGraph/Defs.lean` (PathDecomposition, ResolutionTrace), `Catalog/Pythagorean/ConfigGraph/Theorems.lean` (clauseSpace_le_maxBagSize_of_valid_decomp).\n\n**Proof Strategy:** Formalize the correlation claim as a probabilistic statement over a measure on CNF families. Use the existing frontier bound theorem to derive upper bounds on expected memory given expected pathwidth.\n\n**Domain Bridges:** Connects to benchmark science, empirical algorithm analysis, and statistical learning theory.\n\n**Lineage:** Extends the clause space / pathwidth bridge from `Catalog/Pythagorean/ConfigGraph/Theorems.lean`.\n\n**Ambition:** Solid extension \u2014 validates existing theory empirically.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1bf245b7",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T18:40:54.138979+00:00"
-  },
-  {
-    "id": "fd_0502",
-    "title": "Direction 1: Polynomial Certificate Conjecture for Natural Properties",
-    "description": "**Conjecture:** For every natural monotone graph property $P$ (triangle detection, $k$-clique, connectivity) with monotone circuit complexity $s(n) = n^{\\omega(1)}$, there exists a hereditary certificate scheme with family size bounded by $\\text{poly}(n)$ that is complete up to $s(n)$.\n\n**Test:** For triangle detection with $s(n) = \\lceil n^{3/2} \\rceil$:\n1. Enumerate all sandwich certificate families on $n = 5, 6, 7, 8$ vertices.\n2. For each $n$, compute the minimum-size complete family against all monotone circuits of size $\\leq s(n)$.\n3. Fit the growth of minimum family size to $C \\cdot n^d$.\n4. If $d > 10$ for the best fit, the conjecture is under pressure. If $d \\leq 4$, it is strongly supported.\n\n**Impact:** A positive resolution would reduce monotone lower bounds to a certificate-search problem: find a polynomial-size obstruction family. This would be the monotone analogue of the PCP theorem's role in hardness of approximation.\n\n**Catalog References:**\n- `Pythagorean/SandwichDefs.lean`: `CertifiedSandwichFamily`, `SandwichCompleteUpTo`\n- `Pythagorean/AsymptoticCompactness.lean`: `HereditaryCertificateScheme`, `no_small_circuit_of_scheme`\n\n**Proof Strategy:** Reconstruct Razborov's sunflower-based approximations as explicit certificate families. The sunflower lemma provides polynomial bounds on the required test cases. Formalize the connection between approximating polynomials and certificate witnesses.\n\n**Domain Bridges:** Circuit complexity \u2192 combinatorics (sunflower bounds) \u2192 certificate theory\n\n**Lineage:** Extends `no_small_circuit_of_scheme` by adding quantitative polynomial bounds. Builds on Razborov [1985] and Alon-Boppana [1987].\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand Challenge) \u2014 Would transform monotone complexity theory from a collection of results to a systematic science.\n\n---",
-    "domains": [
-      "Pythagorean",
       "Computation",
       "Bridges",
       "MachineLearning",
@@ -9090,16 +9475,17 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "865652b3",
+    "source_exp_id": "905cb737",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T19:16:13.492004+00:00"
+    "timestamp": "2026-05-24T01:44:39.253474+00:00"
   },
   {
-    "id": "fd_0503",
-    "title": "Direction 2: Definability of Certificate Families in Restricted Logics",
-    "description": "**Conjecture:** For every monotone graph property definable in $\\text{MSO}_2$ (monadic second-order logic with edge quantification), the corresponding certificate families are uniformly definable in existential second-order logic ($\\Sigma^1_1$). That is, there exists a fixed $\\Sigma^1_1$ formula $\\Phi(n, s, x)$ such that $\\{x \\mid \\Phi(n, s, x)\\}$ is a complete certificate family at parameters $(n, s)$.\n\n**Test:**\n1. Express the triangle certificate family (positive: graphs with triangles; negative: triangle-free graphs) as a $\\Sigma^1_1$ formula.\n2. Verify that the formula has bounded quantifier rank (independent of $n$).\n3. Check whether the quantifier rank of the formula correlates with the polynomial degree of the family size bound.\n\n**Impact:** Would establish a formal connection between descriptive complexity (what can be defined) and certificate complexity (what can be certified). This would be the first result connecting monotone lower bound theory to the logical definability hierarchy.\n\n**Catalog References:**\n- `Pythagorean/AsymptoticCompactness.lean`: `sandwichCompleteUpTo_iff_no_small_circuit`\n- `Pythagorean/SandwichDefs.lean`: `CertifiedSandwichFamily`\n\n**Proof Strategy:** Use Skolemization of the completeness condition. The universal quantification over circuits becomes an existential second-order condition via the duality theorem. Bound the quantifier alternation using the structure of monotone circuits.\n\n**Domain Bridges:** Circuit complexity \u2192 descriptive complexity \u2192 finite model theory\n\n**Lineage:** Builds on `sandwichCompleteUpTo_iff_no_small_circuit` (finite duality). Connects to Fagin's theorem and the Immerman-Vardi theorem.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 \u2014 Would open a new chapter in descriptive complexity, connecting circuit lower bounds to logical definability.\n\n---",
+    "id": "fd_0578",
+    "title": "Direction 2: Separator-Aware Forgetting Dominates Activity-Only Forgetting",
+    "description": "**Conjecture:** On SAT instances whose clause interaction graphs have empirical pathwidth \u2264 k (for k \u2264 50), path-respecting forgetting achieves strictly lower peak memory than LBD/activity-only forgetting in GLUCOSE, with at most 2x runtime overhead, on \u2265 60% of industrial benchmarks.\n\n**Test:** Implement path-respecting forgetting as a plugin for CaDiCaL. On each database reduction event, retain clauses in the current bag + active frontier instead of using LBD scores. Benchmark against stock CaDiCaL on SAT Competition 2023 industrial track. Measure peak memory, runtime, and solve rate.\n\n**Impact:** If confirmed, this demonstrates practical value of the structural theory \u2014 a new clause management strategy competitive with state-of-the-art. If falsified, the overhead of maintaining decompositions may be too high, suggesting that approximate pathwidth-awareness (without exact decompositions) is the right level of abstraction.\n\n**Catalog References:** `Pythagorean/ClauseInteractionPathwidth/Theorems.lean` (activeFrontier_card_le_width_succ, retainAtCut_preserves_frontier_edges).\n\n**Proof Strategy:** The correctness guarantee follows from our local edge preservation theorem. The quantitative claim requires empirical validation.\n\n**Domain Bridges:** Connects to systems engineering, SAT solver architecture, and algorithm engineering.\n\n**Lineage:** Direct application of the frontier bound and edge preservation theorems.\n\n**Ambition:** Solid extension \u2014 translates theory into practice.\n\n---",
     "domains": [
       "Pythagorean",
+      "Algebra",
       "Computation",
       "Bridges",
       "Logic"
@@ -9107,17 +9493,90 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "865652b3",
+    "source_exp_id": "905cb737",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T19:16:13.523350+00:00"
+    "timestamp": "2026-05-24T01:44:39.287040+00:00"
   },
   {
-    "id": "fd_0510",
-    "title": "Direction 4: Primewise Decomposition and Improved Constants (Grand Challenge)",
-    "description": "**Conjecture**: When torsion birth sets are computed separately for each prime p, the stability constant can be improved. Specifically, for p-primary torsion birth sets:\n\n```\nNatSetDeltaClose(TorsionBirthSet_p(F), TorsionBirthSet_p(F'), \u03b4/ord_p(\u03b4))\n```\n\nwhere ord_p(\u03b4) accounts for the p-adic structure of the interleaving parameter.\n\n**Test**: Compute p-primary torsion births for p = 2, 3, 5, 7 on:\n- Filtrations with \u2124/30\u2124 \u2245 \u2124/2\u2124 \u00d7 \u2124/3\u2124 \u00d7 \u2124/5\u2124 torsion\n- Mixed filtrations where different primes appear at different levels\n- Search for examples where the primewise bound is strictly better than the global bound \u03b4\n\n**Impact**: Would establish that torsion persistence has *more* structure than classical persistence: the prime decomposition provides a natural multi-channel invariant with independent stability in each channel.\n\n**Catalog References**: `TorsionBirthSet`, `prime_selectivity_filtration`, `torsion_birthSet_deltaClose`\n\n**Proof Strategy**: Use the Chinese Remainder Theorem to decompose torsion detection primewise. Each prime detector is functorial independently, and the interleaving may have different effective shifts for different primes.\n\n**Domain Bridges**: Number theory (p-adic analysis), algebraic topology (localization at primes), signal processing (multi-channel filtering)\n\n**Lineage**: Extends `prime_selectivity_filtration` from detection to stability.\n\n**Ambition**: Grand challenge \u2014 the p-adic improvement conjecture is speculative and may be false.\n\n---",
+    "id": "fd_0580",
+    "title": "Direction 4: Dynamic Programming Equivalence",
+    "description": "**Conjecture:** For CNFs F with clause interaction pathwidth pw(confGraph(F)) \u2264 k, a path-guided solver (CDCL with pathwidth-bounded forgetting) and a bag-state dynamic program have asymptotically equivalent memory requirements: both \u0398(2^k \u00b7 |F|).\n\n**Test:** Implement both a pathwidth-bounded CDCL variant and an explicit DP algorithm over path decompositions for the same formula families. Compare state counts, retained clause counts, and peak memory on synthetic bounded-pathwidth CNFs with k \u2208 {2, 4, 6, 8, 10}. Measure the constant factor.\n\n**Impact:** If confirmed, this establishes a formal computational equivalence between two paradigms \u2014 clause learning and dynamic programming \u2014 unified by pathwidth. This would be a landmark result connecting proof search to algebraic computation. If falsified, the constant factors differ too much for practical equivalence, but the asymptotic relationship may still hold.\n\n**Catalog References:** `Pythagorean/ClauseInteractionPathwidth/Theorems.lean` (cut_locality, bag_locality_of_clause_evaluation).\n\n**Proof Strategy:** The upper bound (DP memory \u2264 O(2^k \u00b7 |F|)) follows from the cut locality theorem: at each bag, the DP state space is bounded by 2^|bagVars|. The lower bound requires a counting argument showing that any solving strategy must represent this many states.\n\n**Domain Bridges:** Connects to automata theory, transfer-matrix methods in statistical physics, database join processing, and constraint satisfaction.\n\n**Lineage:** Extends the cut locality theorem into a computational equivalence.\n\n**Ambition:** Grand challenge \u2014 would unify two major algorithmic paradigms.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "905cb737",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T01:44:39.355462+00:00"
+  },
+  {
+    "id": "fd_0583",
+    "title": "Direction 1: Full-State Strong Bisimulation via Normalization-Path Synchronization",
+    "description": "**Conjecture**: For well-typed \u03b2-equivalent STLC terms `t \u2261\u03b2 u : A`, there exists a depth `d` and a relation `R` that pairs ALL states in `toFTS(d, t)` with states in `toFTS(d, u)` (not just the normal forms) and is a strong bisimulation \u2014 provided one restricts to a canonical normalization strategy (e.g., leftmost-outermost reduction).\n\n**Test**: Enumerate all well-typed STLC terms up to size 10, compute canonical normalization paths for \u03b2-equivalent pairs, construct the path-indexed pairing, and verify the bisimulation conditions computationally. A single pair where the path-indexed pairing fails the forth/back conditions would refute the conjecture.\n\n**Impact**: Would upgrade our Main Theorem from a normal-form-centric bisimulation to a full operational bisimulation, connecting to the Hennessy-Milner characterization of behavioral equivalence.\n\n**Catalog References**: `Pythagorean/StrongNormBisimProof.lean` (Main Theorem), `Pythagorean/BoundedBetaTheorems.lean` (weak bisimilarity).\n\n**Proof Strategy**: Define `R(s\u2081, s\u2082) \u2194 s\u2081` and `s\u2082` are at the same index along canonical normalization paths from `t` and `u` respectively, with padding by the normal form at the end. Prove the forth/back conditions by induction on the path index, using confluence to handle non-deterministic branching.\n\n**Domain Bridges**: Concurrency theory (CCS/CSP process equivalences), operational semantics.\n\n**Lineage**: Extends `strong_norm_implies_finite_strong_bisim`.\n\n**Ambition**: Solid extension \u2014 directly builds on catalog infrastructure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d991129",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T02:18:45.845825+00:00"
+  },
+  {
+    "id": "fd_0584",
+    "title": "Direction 2: Polymorphic Bisimulation for System F",
+    "description": "**Conjecture**: The main theorem extends to System F (polymorphic lambda calculus): \u03b2-equivalent well-typed System F terms of the same type yield strongly bisimilar bounded FTS at sufficient depth, with the depth bounded by a function of the type complexity and term size.\n\n**Test**: Implement System F typing and normalization. Generate polymorphic identity, Church-encoded data types, and parametric functions. Compute bounded FTS and check bisimulation for \u03b2-equivalent pairs. The conjecture predicts success for all well-typed pairs and failure for ill-typed ones.\n\n**Impact**: Would extend the coalgebraic finiteness principle to the type system underlying ML, Haskell, and many proof assistants. Parametricity would provide additional bisimulation structure.\n\n**Catalog References**: `Pythagorean/STLCDefs.lean` (type system), `Pythagorean/StrongNormBisimProof.lean` (main theorem).\n\n**Proof Strategy**: Use Girard's strong normalization for System F (via reducibility candidates). Extend the bounded FTS construction and shared-NF argument. The main challenge is that type abstraction/application adds new reduction rules.\n\n**Domain Bridges**: Programming language theory, parametricity, categorical semantics.\n\n**Lineage**: Generalizes all current theorems from STLC to System F.\n\n**Ambition**: Grand challenge \u2014 requires substantial new infrastructure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d991129",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T02:18:45.879901+00:00"
+  },
+  {
+    "id": "fd_0585",
+    "title": "Direction 3: Quantitative Bisimulation Metrics from Normalization Depth",
+    "description": "**Conjecture**: For well-typed STLC terms `t` and `u` of type `A` (not necessarily \u03b2-equivalent), define `d_A(t, u)` as the minimum depth `d` such that `toFTS(d, t)` and `toFTS(d, u)` are strongly bisimilar (or \u221e if no such `d` exists). Then `d_A` is a pseudometric on well-typed terms of type `A`, and `d_A(t, u) = 0` iff `t \u2261\u03b2 u`.\n\n**Test**: Enumerate well-typed terms up to size 8. For each pair, compute the minimum bisimulation depth. Verify the triangle inequality `d_A(t, v) \u2264 d_A(t, u) + d_A(u, v)` for all triples. Check that `d_A(t, u) = 0` iff the terms share a normal form.\n\n**Impact**: Would create a quantitative semantics for typed programs \u2014 measuring \"how different\" two programs are, not just \"whether they're equivalent.\" This connects to program metrics, quantitative information flow, and approximate computing.\n\n**Catalog References**: `Pythagorean/BoundedBetaDefs.lean` (bounded FTS), `Pythagorean/StrongNormBisimProof.lean` (bisimulation).\n\n**Proof Strategy**: For the metric axioms, use the transitivity of bisimulation (already proved as `Bisimilar.trans'`) and the coalgebraic invariant. The hard part is proving the triangle inequality, which requires showing that bisimulation at depth `d\u2081 + d\u2082` can be decomposed.\n\n**Domain Bridges**: Metric semantics, quantitative verification, approximate program equivalence.\n\n**Lineage**: Extends `typed_betaEq_coalgebraic_invariant` to a quantitative setting.\n\n**Ambition**: Grand challenge \u2014 novel mathematical construction.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d991129",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T02:18:45.914953+00:00"
+  },
+  {
+    "id": "fd_0587",
+    "title": "Direction 5: Types as Dissipation: Entropy Decrease Along Normalization",
+    "description": "**Conjecture**: Define the \"operational entropy\" of a term `t` at depth `d` as `H(d, t) = log\u2082(|boundedStateSet(d, t)|)`. For well-typed terms, `H(d, t)` is non-decreasing with `d` but eventually stabilizes. The stabilization depth equals the normalization depth, and the final entropy `H(\u221e, t)` depends only on the \u03b2-equivalence class.\n\n**Test**: Compute `H(d, t)` for well-typed terms up to size 10 at depths 0 through 20. Plot the growth curves. Verify that: (a) entropy stabilizes at the normalization depth, (b) \u03b2-equivalent terms have the same stable entropy, (c) the stable entropy is bounded by the type complexity.\n\n**Impact**: Would connect normalization to thermodynamic concepts \u2014 types as \"dissipation\" mechanisms that drive systems toward low-entropy attractors (normal forms). This is speculative but could inspire new connections between proof theory and statistical physics.\n\n**Catalog References**: `Pythagorean/BoundedBetaTheorems.lean` (finite_states_of_bounded_beta), `Pythagorean/StrongNormBisimProof.lean` (wellTyped_finite_normDepth).\n\n**Proof Strategy**: The stabilization follows from strong normalization: once all reachable terms have been discovered (at normalization depth), no new terms appear at larger depths. The \u03b2-equivalence invariance follows from the shared normal form theorem.\n\n**Domain Bridges**: Statistical physics, information theory, proof theory (Curry-Howard), computational complexity.\n\n**Lineage**: Extends `finite_states_of_bounded_beta` and `betaEq_typed_behavioral_eq`.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if true.",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Physics",
       "Bridges",
       "Logic",
       "Speculative"
@@ -9125,235 +9584,211 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "ed1c493e",
+    "source_exp_id": "2d991129",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T19:16:51.939867+00:00"
+    "timestamp": "2026-05-24T02:18:45.980719+00:00"
   },
   {
-    "id": "fd_0518",
-    "title": "Direction 2: Lorentzian Closure Under Multiplication",
-    "description": "**Conjecture:** If $f$ and $g$ are Lorentzian polynomials of degrees $d_1$ and $d_2$ respectively, then $f \\cdot g$ is Lorentzian of degree $d_1 + d_2$.\n\n**Test:** For $n = 2, 3$ variables and degrees $d_1, d_2 \\leq 4$, enumerate pairs of Lorentzian polynomials (using random nonneg coefficients on M-convex supports) and verify that their product is Lorentzian by checking all three conditions. Report any counterexample or confirm for 1000 pairs.\n\n**Impact:** This is the fundamental structural theorem of Br\u00e4nd\u00e9n\u2013Huh theory. It immediately implies that products of nonneg linear forms are Lorentzian, which is the bridge to Newton's inequality. It also enables inductive arguments on the degree of Lorentzian polynomials.\n\n**Catalog References:** `Pythagorean/LorentzianDefs.lean` (IsLorentzian, MConvexSupport, HasAtMostOnePosEigenvalue)\n\n**Proof Strategy:** The proof in Br\u00e4nd\u00e9n\u2013Huh uses the characterization of Lorentzian polynomials as limits of products of linear forms (in the \"strictly Lorentzian\" case) and a continuity argument. The key technical step is showing that the Hessian eigenvalue condition is preserved under multiplication, which requires the Cauchy\u2013Binet formula for minors of product matrices.\n\n**Domain Bridges:** Connects to real algebraic geometry (hyperbolic polynomials), optimization (semidefinite programming characterization of Lorentzian cone), and tropical geometry (product of tropical polynomials).\n\n**Lineage:** Extends `linear_lorentzian` and `IsLorentzian` from the current formalization.\n\n**Ambition:** Grand challenge \u2014 the proof is technically demanding and requires substantial algebraic infrastructure.\n\n---",
+    "id": "fd_0595",
+    "title": "Direction 3: Coalgebraic Final Semantics",
+    "description": "**Conjecture (Grand Challenge):** The bisimulation quotient of `toFTS d t` for sufficiently large `d` is the initial algebra of a finitary endofunctor on `Set` determined by the type `A`. Specifically, the functor sends a set `X` to `1 + X^k` where `k` depends on the type structure, and the initial algebra of this functor is the \"canonical model\" of type `A`.\n\n**Test:** For types `o`, `o \u2192 o`, and `(o \u2192 o) \u2192 o \u2192 o`, compute the bisimulation quotient structure (states + transitions) for a large sample of terms and check whether the quotient coalgebra is always isomorphic to the same finite object (up to the type).\n\n**Impact:** This would connect the entire theory to the categorical semantics of coalgebra. The \"canonical finite-state semantics\" would be precisely the final coalgebra in a suitable category \u2014 making the Myhill\u2013Nerode analogy a theorem rather than a metaphor.\n\n**Catalog References:** `Pythagorean/BisimMinimization.lean` (SemanticQuotient, BehavioralEquiv), `Pythagorean/StrongNormBisimulation.lean` (CoalgebraicInvariant)\n\n**Proof Strategy:**\n1. Define the appropriate endofunctor F_A for each type A\n2. Show that the bisimulation quotient of the FTS of the \u03b7-long normal form is an F_A-coalgebra\n3. Prove that this coalgebra satisfies the universal property of finality among finite F_A-coalgebras\n\n**Domain Bridges:** Category theory (final coalgebras), universal algebra (Birkhoff variety theorem), modal logic (coalgebraic modal logic)\n\n**Lineage:** Builds on `typed_coalgebraic_invariant` from StrongNormBisimulation\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if achieved; connects three major mathematical traditions\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2c97bffa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T04:06:59.157063+00:00"
+  },
+  {
+    "id": "fd_0597",
+    "title": "Direction 5: Arrow-Depth Exponential Complexity",
+    "description": "**Conjecture:** The function `typeStateBound A` can be chosen to be singly exponential in the arrow depth of `A` (i.e., `2^{O(depth(A))}`) rather than growing with the full type size. Specifically, there exists a constant `c` such that `typeStateBound A \u2264 c^{depth(A)+1}` for all simple types `A`.\n\n**Test:** Fit the empirical maximum quotient sizes across types of depth 1\u20136 and check whether the growth rate matches single exponential, double exponential, or polynomial scaling. Search for types where the observed maximum exceeds `2^{depth+1}`.\n\n**Impact:** This would establish that the semantic state complexity of typed programs is controlled by a single structural parameter (arrow depth) rather than full type size \u2014 a dramatic simplification with implications for program analysis and compiler optimization.\n\n**Catalog References:** `Pythagorean/BisimMinimization.lean` (typeStateBound), `Pythagorean/STLCDefs.lean` (Ty.depth, Ty.complexity)\n\n**Proof Strategy:**\n1. Analyze the recursive structure of typeStateBound more carefully\n2. Show that the multiplicative formula (s+1)*(t+1) for arrow types, when accumulated over a balanced type tree, yields at most exponential growth in depth\n3. Use the observation that most type subterms are shared in practice\n\n**Domain Bridges:** Descriptive complexity (quantifier depth vs. state complexity), automata theory (star height problem), computational complexity (parametrized complexity)\n\n**Lineage:** Refines the `typeStateBound` definition and bound\n\n**Ambition:** \u2605\u2605\u2606\u2606\u2606 \u2014 Primarily combinatorial, good starting point for extensions",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2c97bffa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T04:06:59.228688+00:00"
+  },
+  {
+    "id": "fd_0598",
+    "title": "Direction 1: Persistence Zeta Function Multiplicativity",
+    "description": "**Conjecture:** For filtered finite abelian groups F\u2081 and F\u2082 with coprime torsion exponents, the persistence zeta function Z(s) = \u220f_p (1 + len(barcode_p) \u00b7 p^{-s}) satisfies\n\nZ(F\u2081 \u00d7 F\u2082, s) = Z(F\u2081, s) \u00b7 Z(F\u2082, s).\n\n**Test:** Compute Z(s) on all products of filtrations with \u2264 5 levels over groups of order \u2264 120. Compare Z(product) with Z\u2081 \u00b7 Z\u2082 for s \u2208 {1, 2, 3}. Computational experiments (see `applications.py`) show multiplicativity holds when the two filtrations have coprime support, but can fail when supports overlap due to barcode length interaction.\n\n**Impact:** If multiplicative, Z(s) would be a genuine arithmetic invariant of persistence modules with Euler-product structure, directly analogous to Dedekind zeta functions. This would establish the first formal connection between persistence theory and analytic number theory.\n\n**Catalog References:** `Pythagorean/AdelicPersistentHomology.lean` \u2014 `persistence_zeta` definition (Python), `bounded_torsion_implies_bounded_primeSupport`.\n\n**Proof Strategy:** Prove multiplicativity for filtrations with coprime support using the CRT persistence theorem (`persistence_CRT_decomposition`). The coprime-support case should follow from independence of prime barcodes. For the general case, investigate correction terms from barcode interaction at shared primes.\n\n**Domain Bridges:** Analytic number theory \u2194 topological data analysis. The Euler product for \u03b6(s) is the classical prototype; persistence zeta is its TDA analogue.\n\n**Lineage:** Extends `persistence_CRT_decomposition` and `adelic_reconstruction_correct_set`.\n\n**Ambition:** Grand challenge \u2014 if true in generality, opens an entire field.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "641e2bf5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T04:42:20.931240+00:00"
+  },
+  {
+    "id": "fd_0609",
+    "title": "Direction 1: Equality Criterion for Coproduct Subadditivity",
+    "description": "**Conjecture:** $\\kappa_{\\mathrm{sh}}(J, F \\oplus G) = \\kappa_{\\mathrm{sh}}(J, F) + \\kappa_{\\mathrm{sh}}(J, G)$ if and only if no jointly admissible family of size $< \\kappa_{\\mathrm{sh}}(F) + \\kappa_{\\mathrm{sh}}(G)$ exists.\n\n**Test:** Enumerate all presheaf pairs $(F, G)$ on categories with $\\leq 4$ objects and section sets of size $\\leq 3$. For each pair, compute both sides and search exhaustively for jointly admissible families. Verify the biconditional.\n\n**Impact:** Characterizes when geometric data sources are \"informationally independent\" \u2014 the presheaf analogue of $I(X;Y) = 0$. This would identify the geometric structures that preclude compression savings.\n\n**Catalog References:**\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `sheafCompressionNumber_coprod_le`, `JointlyAdmissible`\n- `Catalog/FINAL/Bridges/SheafCompressionFiniteSite.lean` \u2014 `sheafCompressionCards`, monotonicity\n\n**Proof Strategy:** Forward direction follows from Theorem 4 (contrapositive). Reverse direction requires showing that when no small jointly admissible family exists, every coproduct witness has cardinality $\\geq \\kappa(F) + \\kappa(G)$. This likely requires a structural decomposition theorem for coproduct-separating families.\n\n**Domain Bridges:** Information theory (characterization of independent sources), combinatorics (disjointness of separating families), coding theory (source separation).\n\n**Lineage:** Direct extension of Theorems 2 and 4 from `CoproductSubadditivity.lean`.\n\n**Ambition:** Solid extension \u2014 completes the subadditivity theory by characterizing the equality case.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
       "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "04157109",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T06:31:50.392796+00:00"
+  },
+  {
+    "id": "fd_0611",
+    "title": "Direction 3: Multiplicative Bound for Products",
+    "description": "**Conjecture:** For the pointwise product presheaf $(F \\times G)(X) = F(X) \\times G(X)$:\n$$\\kappa_{\\mathrm{sh}}(J, F \\times G) \\leq \\kappa_{\\mathrm{sh}}(J, F) + \\kappa_{\\mathrm{sh}}(J, G).$$\n\nMore ambitiously: $\\kappa_{\\mathrm{sh}}(J, F \\times G) = \\max(\\kappa_{\\mathrm{sh}}(J, F), \\kappa_{\\mathrm{sh}}(J, G))$.\n\n**Test:** Enumerate products of presheaf pairs on small categories. Compute $\\kappa_{\\mathrm{sh}}$ for $F$, $G$, and $F \\times G$. Check both the additive and max bounds.\n\n**Impact:** Products represent \"simultaneous observation\" of two data sources. If the max bound holds, it says that observing two data streams simultaneously requires only as many probes as the harder stream \u2014 a powerful \"free lunch\" theorem. This would distinguish $\\kappa_{\\mathrm{sh}}$ from entropy (which is additive for products of independent sources).\n\n**Catalog References:**\n- `Catalog/Pythagorean/ProbeComplexity/CompressionProduct.lean` \u2014 existing product formula work\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 subadditivity methodology\n\n**Proof Strategy:** For the additive bound, the same union-of-witnesses strategy should work (products are separated component-wise). For the max bound, one needs to show that a family separating $F$ also separates $F \\times G$ if it separates $G$. This is plausible since product projections are surjective.\n\n**Domain Bridges:** Category theory (product vs coproduct duality), coding theory (joint vs separate coding), information theory (entropy of product sources).\n\n**Lineage:** Dual of the coproduct subadditivity from `CoproductSubadditivity.lean`.\n\n**Ambition:** Solid extension (additive bound) / grand challenge (max bound).\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "04157109",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T06:31:50.459503+00:00"
+  },
+  {
+    "id": "fd_0612",
+    "title": "Direction 4: Data Processing Inequality",
+    "description": "**Conjecture:** For a natural transformation $\\eta : F \\Rightarrow G$ (a presheaf morphism):\n$$\\kappa_{\\mathrm{sh}}(J, G) \\leq \\kappa_{\\mathrm{sh}}(J, F)$$\nprovided $\\eta$ is objectwise surjective.\n\nMore generally, if $\\eta$ is objectwise $k$-to-one: $\\kappa_{\\mathrm{sh}}(J, G) \\leq \\kappa_{\\mathrm{sh}}(J, F)$.\n\n**Test:** Construct surjective presheaf morphisms on small sites. Verify the inequality. Test with $k$-to-one maps to explore the quantitative version.\n\n**Impact:** This would be the categorical analogue of the data processing inequality $H(g(X)) \\leq H(X)$: processing data can only decrease its complexity. Combined with subadditivity, this would complete the axiomatic picture of $\\kappa_{\\mathrm{sh}}$ as an information measure.\n\n**Catalog References:**\n- `Catalog/FINAL/Bridges/SheafCompressionFiniteSite.lean` \u2014 `PresheafSeparatedByProbes`, monotonicity\n- `Catalog/Pythagorean/ProbeComplexity/Theorems.lean` \u2014 profile map injectivity\n\n**Proof Strategy:** If $P$ separates $F$ and $\\eta$ is surjective, then $P$ separates $G$: for $s \\neq t$ in $G(X)$, lift to $\\tilde{s} \\neq \\tilde{t}$ in $F(X)$ (surjectivity + naturality), find a distinguishing probe for $F$, and push forward through $\\eta$.\n\n**Domain Bridges:** Information theory (data processing inequality), category theory (functoriality of complexity), signal processing (lossy compression).\n\n**Lineage:** Uses separation machinery from `SheafCompressionFiniteSite.lean`.\n\n**Ambition:** Grand challenge \u2014 would complete the information-theoretic axiomatics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "04157109",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T06:31:50.490834+00:00"
+  },
+  {
+    "id": "fd_0614",
+    "title": "Direction 1: Coalgebraic Temporal Adjunction for Infinite Traces",
+    "description": "**Conjecture:** The adjunction triple \u27e8a\u27e9 \u22a3 (ext_a)* \u22a3 [a] extends from finite traces to the final coalgebra of the trace functor, yielding a **coalgebraic temporal adjunction** that captures \u03c9-regular properties (liveness, fairness) in addition to safety properties. Specifically, the diamond and box on infinite traces (streams) should arise as colimit/limit constructions over the finite-trace adjunctions.\n\n**Test:** Formalize the final coalgebra for Act = {a,b} as the type of infinite streams Stream(Fin 2). Verify that the pullback along stream-cons (adding an action to the front) has left and right adjoints, and that these coincide with the standard CTL* modalities EX and AX on Kripke structures with at most 4 states.\n\n**Impact:** Would provide a categorical foundation for the full spectrum of temporal logics (LTL, CTL, CTL*, \u03bc-calculus) as instances of a single adjunction framework, potentially simplifying the landscape of temporal verification tools.\n\n**Catalog References:**\n- `Pythagorean/TemporalAdjunction/Theorems.lean`: `diamond_left_adjoint`, `box_right_adjoint` (finite-trace base case)\n- `Catalog/Pythagorean/YonedaBisimulation/Correspondence.lean`: `yoneda_bisim_det_iff` (trace equivalence)\n\n**Proof Strategy:** Define the stream-level modalities as limits of the finite-trace adjunctions using `CategoryTheory.Limits`. The key lemma is that the adjunction triple is compatible with the transition maps of the inverse system, so the limit inherits the adjunction structure.\n\n**Domain Bridges:** Connects process algebra (temporal logic) \u2192 coalgebra (infinite behaviors) \u2192 automata theory (\u03c9-regular languages). The coalgebraic diamond should correspond to the EX operator of CTL, and the Beck-Chevalley condition should give EU (Exists-Until).\n\n**Lineage:** Jacobs, *Introduction to Coalgebra* (2016); Pattinson, *Coalgebraic Modal Logic* (2003); C\u00eerstea et al., *Modalities in Coalgebraic Logics* (2011).\n\n**Ambition:** \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires significant coalgebraic infrastructure)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0195dcfa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T07:09:23.960984+00:00"
+  },
+  {
+    "id": "fd_0615",
+    "title": "Direction 2: Sheaf Cohomology of Bisimulation Obstructions",
+    "description": "**Conjecture:** The first sheaf cohomology group H\u00b9(Exp_Act, \u03a9) is trivial if and only if the LTS satisfies the image-finiteness condition of the Hennessy-Milner theorem. When H\u00b9 is nontrivial, its elements classify obstructions to extending local bisimulation equivalences to global ones \u2014 analogous to how H\u00b9 classifies fiber bundle triviality in algebraic topology.\n\n**Test:** Compute H\u00b9 for the 4-state LTS L = {s\u2080 \u2192_a s\u2081 \u2192_b s\u2082, s\u2080 \u2192_a s\u2083 \u2192_b s\u2082} using the \u010cech cohomology of the nerve cover. If H\u00b9(L, \u03a9) \u2245 \u2124/2\u2124 (generated by the symmetry swapping s\u2081 and s\u2083), the conjecture gains evidence. If H\u00b9 is trivial for all image-finite LTS with \u2264 6 states, strong evidence. Falsification: find an image-finite LTS with nontrivial H\u00b9.\n\n**Impact:** Would establish a direct computational bridge between algebraic topology and process algebra, potentially enabling topological methods for analyzing concurrent system equivalence.\n\n**Catalog References:**\n- `Pythagorean/TemporalAdjunction/Defs.lean`: `TraceSieve` (the sieve structure)\n- `Pythagorean/TemporalAdjunction/Theorems.lean`: `sieve_nonBoolean` (non-trivial sieve structure)\n- `Catalog/Pythagorean/YonedaBisimulation/Properties.lean`: `bisimUnion_is_bisimulation`\n\n**Proof Strategy:** Construct the \u010cech complex for the trace cover, compute the coboundary maps explicitly for small LTS, and identify the cohomology group. Use `Mathlib.AlgebraicTopology.SimplicialObject` for the nerve construction.\n\n**Domain Bridges:** Process algebra \u2192 algebraic topology \u2192 sheaf theory. If successful, opens a path to using persistent homology for analyzing families of LTS.\n\n**Lineage:** Johnstone, *Sketches of an Elephant* (2002, \u00a7C3); Bredon, *Sheaf Theory* (1997); Winskel, *The Formal Semantics of Programming Languages* (1993).\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 connects two largely separate fields)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0195dcfa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T07:09:23.997434+00:00"
+  },
+  {
+    "id": "fd_0617",
+    "title": "Direction 4: Modal Homotopy Type Theory for Temporal Logic",
+    "description": "**Conjecture:** The adjunction triple \u27e8a\u27e9 \u22a3 (ext_a)* \u22a3 [a] is an instance of a **crisp modality** in modal homotopy type theory (HoTT). Specifically, there exists a mode theory M with modes {time, state} and a modality \u03bc_a : time \u2192 state for each action a, such that the diamond is the left adjoint \u03a3_{\u03bc_a} and the box is the right adjoint \u03a0_{\u03bc_a}. The identity types in the time mode carry **bisimulation structure**: two traces are identified in the time mode iff they are bisimilar in the LTS.\n\n**Test:** Formalize the mode theory for Act = {a} in the Agda implementation of modal HoTT (Gratzer et al., 2020). Verify that the diamond and box modalities in the type theory match the Lean-verified definitions. If the identity types do not correspond to bisimulation, the conjecture is falsified.\n\n**Impact:** Would establish temporal logic as a native fragment of homotopy type theory, opening the door to using HoTT proof assistants for temporal verification and potentially connecting temporal bisimulation to homotopy equivalence.\n\n**Catalog References:**\n- `Pythagorean/TemporalAdjunction/Theorems.lean`: `diamond_left_adjoint`, `box_right_adjoint` (the adjunction to formalize)\n- `Catalog/Pythagorean/YonedaBisimulation/Correspondence.lean`: `bisimilar_implies_hm_equiv'` (bisimulation = HM equivalence)\n\n**Proof Strategy:** Use the framework of Schreiber's \"Differential Cohomology in a Cohesive \u221e-Topos\" to construct the mode theory. The key insight is that the experiment category Exp_Act should be a (\u221e,1)-category whose higher morphisms encode bisimulation relations.\n\n**Domain Bridges:** Temporal logic \u2192 homotopy type theory \u2192 \u221e-topos theory \u2192 synthetic homotopy theory. If bisimulation = homotopy equivalence, then the entire HoTT toolkit becomes available for process algebra.\n\n**Lineage:** Shulman, \"Brouwer's Fixed-Point Theorem in Real-Cohesive HoTT\" (2018); Gratzer et al., \"Multimodal Dependent Type Theory\" (2020); Schreiber, *Differential Cohomology in a Cohesive \u221e-Topos* (2013).\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 unifies two foundational programs)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0195dcfa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T07:09:24.070933+00:00"
+  },
+  {
+    "id": "fd_0618",
+    "title": "Direction 5: Probabilistic Temporal Adjunction",
+    "description": "**Conjecture:** Replacing the Boolean-valued transition relation `step : S \u2192 Act \u2192 S \u2192 Prop` with a probability-valued version `step : S \u2192 Act \u2192 S \u2192 [0,1]` (a Markov kernel), the adjunction triple lifts to the **Giry monad**: the diamond becomes the expected value operator E[P | do action a], the box becomes the essential infimum operator ess-inf[P | do action a], and the pullback becomes conditioning on the action. The resulting Heyting algebra is the algebra of **measurable predicates** up to almost-sure equality.\n\n**Test:** For the 3-state Markov chain with states {s\u2080, s\u2081, s\u2082}, transitions s\u2080\u2192_a s\u2081 (prob 0.7) and s\u2080\u2192_a s\u2082 (prob 0.3), verify:\n- E[P | a](s\u2080) = 0.7 \u00b7 P(s\u2081) + 0.3 \u00b7 P(s\u2082) for indicator functions P.\n- The adjunction E_a \u22a3 ext_a* \u22a3 ess-inf_a holds on measurable predicates.\n- The Beck-Chevalley condition holds for composition of probabilistic actions.\nFalsification: find a Markov kernel where the composition law fails.\n\n**Impact:** Would provide a categorical foundation for probabilistic model checking (PRISM, Storm), unifying the logical and probabilistic approaches to verification under a single adjunction framework.\n\n**Catalog References:**\n- `Pythagorean/TemporalAdjunction/Theorems.lean`: `diamond_compose`, `box_compose` (deterministic Beck-Chevalley)\n- `Catalog/FINAL/Bridges/BisimulationMetric.lean`: bisimulation metrics (quantitative process equivalence)\n\n**Proof Strategy:** Use Mathlib's measure theory (`MeasureTheory.Measure`) to define the Giry monad. The key lemma is that the Radon-Nikodym derivative provides the adjunction between the direct and inverse image measures.\n\n**Domain Bridges:** Process algebra \u2192 probability theory \u2192 measure theory \u2192 Markov decision processes \u2192 reinforcement learning. The probabilistic adjunction should give the Bellman optimality equations as a special case.\n\n**Lineage:** Giry, \"A Categorical Approach to Probability Theory\" (1982); Panangaden, *Labelled Markov Processes* (2009); Kwiatkowska et al., \"PRISM 4.0\" (2011).\n\n**Ambition:** \u2605\u2605\u2605\u2605 (Grand challenge \u2014 bridges formal verification and probability)",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0195dcfa",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T07:09:24.108290+00:00"
+  },
+  {
+    "id": "fd_0622",
+    "title": "Direction 4: Metrized Graph / Tropical Curve Extension",
+    "description": "**Conjecture:** The structural defect extends to metrized graphs (tropical curves) \u0393 with edge lengths, where \u03b2\u2081 is defined via the first Betti number of the underlying topological space and \u03ba counts connected components of \u0393 \u2212 {q} intersecting a given closed subset. The defect formula \u03b4 = \u03b2\u2081 + \u03ba \u2212 1 continues to hold in this continuous setting.\n\n**Test:** Implement tropical curve chip-firing computation with rational edge lengths. Test on subdivisions of small graphs (replacing edges by paths of varying lengths). Verify that the defect depends only on the combinatorial type, not the edge lengths.\n\n**Impact:** Would establish the defect as a *tropical* invariant \u2014 independent of metric refinement. This connects to tropical Brill\u2013Noether theory and the work of Cools\u2013Draisma\u2013Payne\u2013Robeva.\n\n**Catalog References:** `Pythagorean/TropicalBridge/DefectTheory.lean`.\n\n**Proof Strategy:** Show that edge subdivision (replacing an edge by a path) preserves \u03b2\u2081 and \u03ba. Use the Baker\u2013Norine specialization lemma to relate divisor rank on the metrized graph to rank on finite models. Conclude that the defect is a combinatorial type invariant.\n\n**Domain Bridges:** Tropical geometry \u2194 algebraic curves \u2194 Berkovich analytification.\n\n**Lineage:** Extends Baker\u2013Norine to the continuous setting via Gathmann\u2013Kerber and CDPR.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 Grand challenge.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
       "Tropical",
-      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "0148538d",
+    "source_exp_id": "091a2875",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T20:30:05.017974+00:00"
+    "timestamp": "2026-05-24T07:47:31.125006+00:00"
   },
   {
-    "id": "fd_0520",
-    "title": "Direction 4: Spectral Gap Bounds for Lorentzian Hessians",
-    "description": "**Conjecture:** For any Lorentzian polynomial $f$ of degree $d$ in $n$ variables with coefficients in $[0, 1]$, and any multi-index $\\alpha$ with $|\\alpha| = d-2$:\n$$\\lambda_{\\max}(\\text{Hess}_\\alpha f) - \\lambda_2^+(\\text{Hess}_\\alpha f) \\geq \\frac{1}{d^2}$$\n\n**Test:** For $n \\leq 8$ and $d \\leq 6$, generate random Lorentzian polynomials by:\n1. Choose an M-convex support uniformly at random\n2. Assign random coefficients in $[0, 1]$\n3. Check Lorentzian property\n4. If Lorentzian, compute all Hessian eigenvalues and spectral gaps\nReport the minimum gap across all instances and check against $1/d^2$.\n\n**Impact:** A spectral gap bound would provide quantitative stability for the Lorentzian property \u2014 measuring how \"far\" a polynomial is from losing its Lorentzian structure. This has implications for perturbation theory and numerical algorithms.\n\n**Catalog References:** `Pythagorean/LorentzianDefs.lean` (hessianMatrix, HasAtMostOnePosEigenvalue)\n\n**Proof Strategy:** For the bivariate case ($n = 2$), the Hessian is $2 \\times 2$ and the spectral gap can be computed explicitly using the discriminant. For general $n$, a perturbation theory argument using Weyl's inequality may give the bound.\n\n**Domain Bridges:** Connects to numerical linear algebra (eigenvalue perturbation), optimization (condition numbers of semidefinite programs), and spectral graph theory.\n\n**Lineage:** Extends the spectral analysis in `LorentzianDefs.lean`.\n\n**Ambition:** Solid extension \u2014 the bivariate case should be provable; the general case is more challenging.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0148538d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T20:30:05.071452+00:00"
-  },
-  {
-    "id": "fd_0523",
-    "title": "Direction 2: Sharp Representable Dimension Bound",
-    "description": "**Conjecture:** For all finite presheaf models with non-trivial fibers (|F(Y)| \u2265 2 for all Y):\n```\n\u03ba(F, r) \u2264 \u2308|Ob| / max_Y |F(Y)|\u2309 + 1\n```\n\nIn particular, when all fibers have the same size s \u2265 2, we conjecture \u03ba \u2264 \u2308|Ob|/s\u2309 + 1. The \"+1\" may be removable for specific classes of restriction maps.\n\n**Test:** Generate all models on \u2264 5 objects with uniform fiber size s \u2208 {2, 3, 4} and identity restriction maps. Compute \u03ba for each and check the bound. A violation refutes the conjecture.\n\n**Impact:** This would turn the crude bound \u03ba \u2264 |Ob| into a tight parametric bound, making \u03ba efficiently estimable without search.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/RepresentableDimension.lean` (repDim definition)\n- `Pythagorean/ProbeComplexity/ToposCompressionInvariant.lean` (Theorem D)\n\n**Proof Strategy:** Use probabilistic arguments: a random probe family of size k separates with high probability when k \u00b7 log(s) \u2265 log(|F(Y)|) for all Y. This gives a probabilistic upper bound; derandomize for the deterministic claim.\n\n**Domain Bridges:** Probabilistic method in combinatorics, coding theory (sphere-packing bounds).\n\n**Lineage:** Sharpens Theorem D (\u03ba \u2264 repDim).\n\n**Ambition:** \u2605\u2605\u2605 (Moderate \u2014 bounds of this type are common in combinatorics but connecting to categorical structure adds novelty.)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf52c47f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T20:31:08.683193+00:00"
-  },
-  {
-    "id": "fd_0525",
-    "title": "Direction 4: Compression and VC Dimension",
-    "description": "**Conjecture:** For a presheaf model (Ob, F, r) where F(Y) \u2286 2^S for some finite set S (i.e., fibers are sets of subsets), the compression number \u03ba is bounded below by the VC dimension of the induced set system:\n```\nVCdim({F(Y) : Y \u2208 Ob}) \u2264 \u03ba(F, r)\n```\n\n**Test:** Construct set systems with known VC dimension d \u2208 {1, 2, 3, 4} and embed them as presheaf models. Compute \u03ba and check the bound. A counterexample would refute the conjecture.\n\n**Impact:** This would formally connect the topos compression invariant to one of the most important quantities in machine learning theory, establishing a bridge between categorical geometry and statistical learning theory.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/ToposCompressionInvariant.lean` (Theorem E, observation complexity)\n\n**Proof Strategy:** Show that VC-shattering implies non-separability by small probe families. If a set system shatters a set of size d, then at least d probes are needed to distinguish all shattered subsets.\n\n**Domain Bridges:** Machine learning (VC theory), computational geometry, PAC learning.\n\n**Lineage:** Extends Theorem E (observation complexity bound) to VC-theoretic setting.\n\n**Ambition:** \u2605\u2605\u2605\u2605 (High \u2014 connecting category theory to learning theory is novel and impactful.)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf52c47f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T20:31:16.683134+00:00"
-  },
-  {
-    "id": "fd_0534",
-    "title": "Direction 5: Bicategorical Yoneda for Causal Bisimulation",
-    "description": "**Conjecture:** For concurrent systems with independence relations (event structures, pomset languages), the category of experiments acquires a 2-categorical structure: two traces related by an independence-induced permutation give a 2-morphism. Bicategorical Yoneda extensionality \u2014 natural isomorphism of 2-presheaves \u2014 recovers *causal bisimulation* (history-preserving bisimulation), which is strictly finer than interleaving bisimulation.\n\n**Test:** Define a 3-process concurrent system with actions `{a, b, c}` where `a \u2225 b` (independent) but `a ; c` and `b ; c` (causally dependent). Compute the 2-nerve presheaf. Verify that two pomset-equivalent processes have isomorphic 2-nerves, while two interleaving-equivalent but causally-different processes have non-isomorphic 2-nerves. A single example suffices to validate.\n\n**Impact:** Would provide the correct categorical framework for verification of distributed systems where causal ordering matters (e.g., consensus protocols, distributed databases).\n\n**Catalog References:** `Pythagorean/YonedaBisimulation/Defs.lean` \u2014 generalizes `Exp Act` from a 1-category to a 2-category, and `IsBisimulation` to the causal setting.\n\n**Proof Strategy:** Define independence relations on `Act`. Build the 2-category of pomsets as a quotient of `FreeCategory(Discrete Act)` by independence equivalences. Show that 2-naturality encodes both the zigzag condition and the causal coherence condition.\n\n**Domain Bridges:** Concurrency theory (true concurrency), 2-category theory, distributed systems verification, event structures.\n\n**Lineage:** Winskel (1987), Nielsen-Plotkin-Winskel (1981), Leinster (2004).\n\n**Ambition:** Grand challenge. \u2605\u2605\u2605\u2605\u2605",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "78d0c67f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T21:08:27.032087+00:00"
-  },
-  {
-    "id": "fd_0536",
-    "title": "Direction 2: Average-Case State Growth and Phase Transitions",
-    "description": "**Conjecture:** For random closed lambda terms of size *n* sampled uniformly, the logarithmic growth rate `log(stateGrowth(t, d)) / d` concentrates around a value `\u03bb(n)` that undergoes a phase transition at a critical duplication threshold. Below the threshold, `\u03bb(n) = O(log n)`; above it, `\u03bb(n) = \u0398(n)`.\n\n**Test:** Generate 10,000 random closed lambda terms of sizes n = 5, 10, 15, 20. Compute `stateGrowth(t, d)` for d = 0, ..., 15. Estimate the empirical growth rate `\u03bb\u0302(t) = stateGrowth(t, 15)^{1/15}`. Plot the distribution of `\u03bb\u0302` as a function of n. A bimodal distribution would support the phase transition hypothesis; a unimodal one would refute it.\n\n**Impact:** Would establish a quantitative analogue of complexity phase transitions in combinatorial optimization, showing that random lambda terms exhibit a sharp behavioral transition.\n\n**Catalog References:** `Pythagorean/BranchComplexity.lean` (state growth, branching complexity).\n\n**Proof Strategy:** Use analytic combinatorics of random lambda terms (Boltzmann sampling) combined with branching process theory to derive expected offspring counts.\n\n**Domain Bridges:** Statistical physics (phase transitions), analytic combinatorics (random structures), probability theory (branching processes).\n\n**Lineage:** New direction inspired by the branching process interpretation.\n\n**Ambition:** Grand challenge \u2014 requires combining multiple mathematical fields with novel computational experiments.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4721083",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T21:44:10.817265+00:00"
-  },
-  {
-    "id": "fd_0537",
-    "title": "Direction 3: Type-Theoretic Branching Bounds",
-    "description": "**Conjecture:** For simply-typed lambda terms of type `\u03c4`, there exists a function `B(\u03c4)` depending only on the type such that `stateGrowth(t, d) \u2264 B(\u03c4)^d` for all terms `t : \u03c4`. Moreover, `B(\u03c4)` is computable from the type structure and grows polynomially in the type size.\n\n**Test:** Implement a simply-typed lambda term generator. For each type \u03c4 of size \u2264 10, generate 100 terms, compute stateGrowth for d \u2264 10, and verify that the maximum growth rate matches the predicted B(\u03c4). A term exceeding the predicted bound refutes the conjecture.\n\n**Impact:** Would provide certified complexity bounds for typed programming languages, directly applicable to compilation and optimization.\n\n**Catalog References:** `Pythagorean/BoundedBetaTheorems.lean` (finiteness), `Pythagorean/STLCDefs.lean` (simply typed lambda calculus).\n\n**Proof Strategy:** Use strong normalization of STLC to bound reduction path lengths, combined with the branching complexity bound to control width. The key insight is that types constrain both depth and branching.\n\n**Domain Bridges:** Type theory, programming language theory, compilation (optimization budget prediction).\n\n**Lineage:** Extension \u2014 combines branching bounds with existing STLC formalization.\n\n**Ambition:** Extension \u2014 technically demanding but builds on well-established foundations.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4721083",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T21:44:10.849402+00:00"
-  },
-  {
-    "id": "fd_0538",
-    "title": "Direction 4: Generating Function Analysis of Reduction Graphs",
-    "description": "**Conjecture:** For a term `t` with hereditary branching complexity `B`, the generating function `G_t(z) = \u03a3 stateGrowth(t, d) z^d` has a meromorphic continuation to the disk |z| < 1/(B-\u03b5) for some \u03b5 > 0, and its dominant singularity determines the precise asymptotic growth rate of stateGrowth.\n\n**Test:** Compute stateGrowth(t, d) for d = 0, ..., 20 for 50 terms with known hereditary branching. Fit rational function approximations to the partial sums. Verify that the fitted pole location matches 1/B within 10%. Systematic deviation would refute the meromorphic continuation hypothesis.\n\n**Impact:** Would connect lambda calculus complexity to the powerful machinery of analytic combinatorics, enabling asymptotic analysis techniques from the Flajolet-Sedgewick framework.\n\n**Catalog References:** `Pythagorean/BranchComplexity.lean` (state growth, exponential bound).\n\n**Proof Strategy:** Encode the recurrence `stateGrowth(t, d+1) \u2264 B \u00b7 stateGrowth(t, d)` as a generating function inequality. Use the transfer lemma to extract asymptotics from singularity structure.\n\n**Domain Bridges:** Analytic combinatorics, complex analysis, formal power series.\n\n**Lineage:** New direction inspired by the recurrence theorem.\n\n**Ambition:** Grand challenge \u2014 meromorphic continuation is non-trivial to establish formally.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4721083",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T21:44:10.878099+00:00"
-  },
-  {
-    "id": "fd_0539",
-    "title": "Direction 5: State-Space Growth and Computational Complexity Classes",
-    "description": "**Conjecture:** There exist closed lambda terms `t_n` of size O(n) encoding Boolean circuits of size n such that `stateGrowth(t_n, poly(n)) \u2265 2^{\u03a9(n)}` if and only if the circuit computes a function outside P/poly. Equivalently, polynomial state-space growth for all bounded-depth reductions characterizes a complexity class related to NC or LOGSPACE.\n\n**Test:** Encode known NP-complete problems (3-SAT instances) as lambda terms. Compute state growth for small instances (n \u2264 20). Compare growth rates for satisfiable vs. unsatisfiable instances. A systematic difference would support the complexity-theoretic connection; no difference would weaken it.\n\n**Impact:** Would establish the first formal bridge between lambda calculus state-space geometry and circuit complexity, potentially illuminating the P vs NP question from a new angle.\n\n**Catalog References:** `Pythagorean/BranchComplexity.lean` (exponential bound, branching process interpretation).\n\n**Proof Strategy:** Encode Boolean circuits as lambda terms using Church encodings. Relate the reduction graph to the circuit's computation tree. Show that state-space growth captures the circuit's branching behavior.\n\n**Domain Bridges:** Computational complexity theory, circuit complexity, lambda calculus encodings.\n\n**Lineage:** New direction \u2014 grand challenge connecting to the central open problem in CS.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful, with clear falsification criteria.",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f4721083",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T21:44:10.906738+00:00"
-  },
-  {
-    "id": "fd_0540",
-    "title": "Direction 1: Sharpness of the \u03b1-Budget Law",
-    "description": "**Conjecture:** For each \u03b1 > 1, the degradation factor C(1 \u2212 1/\u03b1) in `one_step_stability_alpha` is sharp: for any \u03b5 > 0, there exist a dimension n, a (K, C)-Diophantine frequency \u03c9, and a perturbation \u03b4 with |\u03b4\u1d62| < C/(\u03b1K) such that \u03c9 + \u03b4 is not (K, C(1 \u2212 1/\u03b1) + \u03b5)-Diophantine.\n\n**Test:** Construct explicit extremal examples. For n = 1, \u03c9 = (C,), K = 1, and \u03b4 = (C/(\u03b1K) \u2212 \u03b7) for small \u03b7, compute |\u03c9 + \u03b4| = C + C/(\u03b1K) \u2212 \u03b7 and verify whether the minimum over k \u2208 {\u22121, 1} approaches C(1 \u2212 1/\u03b1). For n \u2265 2, search computationally over integer vectors k that align with the perturbation direction.\n\n**Impact:** If sharp, confirms the theory is optimal. If not sharp, reveals a gap that could be exploited for tighter bounds.\n\n**Catalog References:** `Pythagorean/VariableContractionRenorm.lean` \u2192 `one_step_stability_alpha`\n\n**Proof Strategy:** Construct \u03c9 and \u03b4 so that \u27e8k, \u03b4\u27e9 has the same sign as \u27e8k, \u03c9\u27e9 for the worst-case k, making the reverse triangle inequality tight.\n\n**Domain Bridges:** Optimization theory (tight relaxation gaps), information theory (capacity-achieving codes).\n\n**Lineage:** Extends the one-step stability theorem.\n\n**Ambition:** Extension \u2014 validates the existing theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b9612022",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T21:44:40.765831+00:00"
-  },
-  {
-    "id": "fd_0541",
-    "title": "Direction 2: Multi-Parameter Contraction Cascades",
-    "description": "**Conjecture:** If different contraction parameters \u03b1\u2080, \u03b1\u2081, ..., \u03b1_{m-1} > 1 are used at each step, the final Diophantine constant after m steps is C \u00b7 \u220f\u2c7c (1 \u2212 1/\u03b1\u2c7c), and the total budget is \u2211\u2c7c C \u00b7 \u220f_{i<j} (1 \u2212 1/\u03b1\u1d62) / (\u03b1\u2c7c \u00b7 K) \u2264 C/K.\n\n**Test:** Formalize the multi-parameter decay theorem. Computationally verify the budget inequality for random sequences of \u03b1 values. Test whether the budget bound C/K still holds with equality in the limit.\n\n**Impact:** Enables adaptive contraction strategies where the rate changes based on observed perturbation magnitudes \u2014 directly applicable to adaptive control and online optimization.\n\n**Catalog References:** `Pythagorean/VariableContractionRenorm.lean` \u2192 `renormalization_decay_alpha`, `renorm_budget_alpha`\n\n**Proof Strategy:** Induction on m, applying the one-step theorem at each stage with the current \u03b1\u2c7c. The budget bound follows from telescoping: each term is C \u00b7 \u220f_{i<j} r\u1d62 / (\u03b1\u2c7c K), and the sum telescopes because \u2211 r\u1d62/\u03b1\u1d62 factors appropriately.\n\n**Domain Bridges:** Adaptive control theory, online convex optimization, variable-rate coding.\n\n**Lineage:** Direct generalization of the fixed-\u03b1 multi-step theorem.\n\n**Ambition:** Extension \u2014 natural next step, moderate difficulty.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b9612022",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T21:44:40.794031+00:00"
-  },
-  {
-    "id": "fd_0542",
-    "title": "Direction 3: Nonlinear Contraction Profiles and Fractal Geometry",
-    "description": "**Conjecture (Grand Challenge):** There exists a class of nonlinear contraction maps f : \u211d\u208a \u2192 \u211d\u208a (beyond linear C \u21a6 C\u00b7r) such that the one-step stability theorem generalizes: if perturbations are bounded by g(C)/K for an appropriate function g, then the Diophantine constant degrades from C to f(C). The resulting orbit {C, f(C), f\u00b2(C), ...} defines a non-geometric decay profile, and the total budget \u2211 g(f\u207f(C))/K may converge to a fractal-dimensional quantity.\n\n**Test:** Start with f(C) = C^\u03b2 for \u03b2 \u2208 (0,1). Check whether a one-step stability theorem holds with perturbation bound C^\u03b2/(K\u00b7C^{\u03b2-1}) = C/K. Compute the orbit sum and check whether it converges. Investigate whether the Hausdorff dimension of the attractor of the IFS generated by {f} relates to the budget.\n\n**Impact:** Would establish a genuine bridge between Diophantine approximation and fractal geometry, potentially explaining the measure-theoretic structure of Diophantine frequency sets.\n\n**Catalog References:** `Pythagorean/VariableContractionRenorm.lean` \u2192 `contraction_factor_lt_one`, `lyapunov_decay`\n\n**Proof Strategy:** Modify the triangle inequality argument in the one-step proof to accommodate nonlinear bounds. The key challenge is that the perturbation bound g(C)/K must be compatible with the L1 norm estimate.\n\n**Domain Bridges:** Fractal geometry, dynamical systems, measure theory, multifractal analysis.\n\n**Lineage:** Extends the linear contraction theory.\n\n**Ambition:** Grand Challenge \u2014 requires fundamentally new ideas.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b9612022",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T21:44:40.824284+00:00"
-  },
-  {
-    "id": "fd_0545",
-    "title": "Direction 1: M\u00f6bius Rigidity and Boolean Lattice Zeta Transform",
-    "description": "**Conjecture:** The coefficient consistency operator for the powerset identity is equivalent (up to basis change) to the Boolean lattice zeta transform, and any proof system factoring through this transform has certificate rank exactly 2^n. Formally: the M\u00f6bius function \u03bc on the Boolean lattice 2^[n] defines an inverse transform, and the rank of the zeta matrix equals the rank of the identity on the lattice, which is 2^n.\n\n**Test:** For n \u2264 8, construct the zeta matrix Z_{S,T} = [T \u2286 S] and the M\u00f6bius matrix M = Z^{-1}. Verify that:\n- Z has rank 2^n over Q, GF(2), GF(3), GF(5)\n- Z \u00d7 M = I (identity)\n- Any row/column-deletion of Z (compressing below 2^n) has strictly smaller rank\n- The zeta matrix triangularity gives det(Z) = 1\n\n**Impact:** Would establish that the rank barrier is not specific to the identity matrix but extends to the entire family of inclusion-ordered transforms on the Boolean lattice. This connects proof complexity to incidence algebras and Rota's foundation of combinatorics.\n\n**Catalog References:**\n- `Catalog/Pythagorean/CertificateRank/Theorems.lean`: `certificateRank_ge_of_separating`\n- `Catalog/Pythagorean/CommComplexity/Theorems.lean`: `det_comm_card_lower_bound`\n\n**Proof Strategy:** Define the zeta matrix explicitly as `Matrix (Finset (Fin n)) (Finset (Fin n)) K` with entry `Z S T = if T \u2286 S then 1 else 0`. Show it is unitriangular under inclusion ordering, hence has determinant 1 and full rank. Then show the canonical certificate system's constraint matrix is row-equivalent to the M\u00f6bius inverse.\n\n**Domain Bridges:** Combinatorics (incidence algebras) \u2194 Proof complexity (rank barriers) \u2194 Harmonic analysis (Boolean Fourier transform)\n\n**Lineage:** Extends Theorem B (full rank of canonical system) via the connection to zeta/M\u00f6bius transforms.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 \u2014 Establishes a deep structural explanation for the rank barrier.\n\n---",
+    "id": "fd_0624",
+    "title": "Direction 1: Submodularity of Sheaf Compression",
+    "description": "**Conjecture:** For every finite site $(C, J)$ and presheaves $F, G, H$ with nonempty compression card sets, the sheaf compression number satisfies the submodular inequality:\n$$\\kappa_{\\mathrm{sh}}(F \\oplus G) + \\kappa_{\\mathrm{sh}}(G \\oplus H) \\geq \\kappa_{\\mathrm{sh}}(G) + \\kappa_{\\mathrm{sh}}(F \\oplus G \\oplus H)$$\n\n**Test:** Exhaustive enumeration over all presheaf triples on categories with \u2264 3 objects and section sets of size \u2264 4. Compute both sides for every triple and report any violation. For the triangle category $a \\to b \\to c$ with trivial topology, this is approximately $4^3 = 64$ triples.\n\n**Impact:** If true, $\\kappa_{\\mathrm{sh}}$ defines a polymatroid rank function on the lattice of coproduct-closed presheaf collections. This would immediately import the entire theory of submodular optimization \u2014 greedy algorithms, Lov\u00e1sz extensions, matroid intersection \u2014 into categorical compression theory.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/ChainRule.lean` \u2014 `sheafCompressionNumber_coprod_le`, `sheafCompressionNumber_le_coprod_left`\n- `Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `sheafCompressionNumber_coprod_le`\n\n**Proof Strategy:** Use the witness decomposition approach: an optimal witness for $F \\oplus G \\oplus H$ projects to witnesses for $F \\oplus G$ and $G \\oplus H$ with controlled overlap. The shared $G$-component creates the submodularity slack. Alternatively, prove via the defect decomposition: submodularity is equivalent to $I_{\\mathrm{sh}}(F; H \\mid G) \\leq I_{\\mathrm{sh}}(F; H)$, which states that conditioning cannot increase mutual compression.\n\n**Domain Bridges:** Polymatroid theory, submodular optimization, matroid rank functions, combinatorial optimization\n\n**Lineage:** Extends `sheafCompressionNumber_coprod_le` (subadditivity) and `conditionalCompressionDefect_nonneg` (monotonicity)\n\n**Ambition:** \u2605\u2605\u2605\u2605 \u2014 Would establish sheaf compression as a polymatroid, unlocking algorithmic applications\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -9365,14 +9800,197 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "7e275862",
+    "source_exp_id": "d2dfe412",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T21:45:13.129637+00:00"
+    "timestamp": "2026-05-24T07:48:03.102295+00:00"
   },
   {
-    "id": "fd_0563",
-    "title": "Direction 3: Higher-Dimensional Extension",
-    "description": "**Conjecture:** For a simplicial complex $\\Delta$ of dimension $d$ with a combinatorial Laplacian $L_d$ on $d$-chains, the equality characterization generalizes: a subset of $d$-simplices $S$ achieves equality between the higher-dimensional divisor rank and tropical rank if and only if $S$ forms a \"simplicial tree\" \u2014 a connected acyclic subcomplex in the appropriate homological sense (trivial $d$-th reduced homology).\n\n**Test:** Implement the combinatorial Laplacian for 2-dimensional simplicial complexes. Compute divisor rank and tropical rank for all subsets of triangles in small triangulations (e.g., the boundary of the octahedron, the torus triangulation). Search for the equality locus and check whether it corresponds to acyclic subcomplexes.\n\n**Impact:** This would extend the entire tropical chip-firing bridge from graphs (1-dimensional) to higher-dimensional complexes, with applications to discrete Hodge theory, topological data analysis, and higher-dimensional network flows.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/EqualityCharacterization.lean`: `restrictedLaplacian`, `laplacian_energy_eq_edge_sum`\n- `Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`\n\n**Proof Strategy:** Define the higher Laplacian $L_d = \\partial_d^T \\partial_d + \\partial_{d+1} \\partial_{d+1}^T$ (Hodge Laplacian). Prove a decomposition theorem analogous to Theorem 3.1 for the restricted higher Laplacian. Show that the energy formula generalizes with boundary and coboundary terms.\n\n**Domain Bridges:** Algebraic topology (simplicial homology), discrete Hodge theory, tropical geometry (higher tropical linear spaces).\n\n**Lineage:** Eckmann (1944) combinatorial Hodge theory, Duval\u2013Klivans\u2013Martin simplicial matrix tree theorem.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 the 2-dimensional case is tractable with existing tools.\n\n---",
+    "id": "fd_0625",
+    "title": "Direction 2: Data Processing Inequality for Presheaf Morphisms",
+    "description": "**Conjecture:** If $\\phi: G \\to H$ is a natural transformation of presheaves that is \"profile-preserving\" (i.e., for every probe $Z$ and morphism $f: Z \\to X$, the restriction maps factor through $\\phi$), then:\n$$I_{\\mathrm{sh}}(F; H) \\leq I_{\\mathrm{sh}}(F; G)$$\n\n**Test:** Enumerate all natural transformations between presheaves on the arrow category with section sets of size \u2264 3. For each, check if it is profile-preserving and verify the inequality. A single counterexample would require refining the \"profile-preserving\" condition.\n\n**Impact:** This would be the sheaf-theoretic data processing inequality, the foundational result of channel theory. It would establish that mutual compression decreases along \"information channels\" (natural transformations), opening the door to categorical channel capacity, rate-distortion theory, and source coding theorems for structured data.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/ChainRule.lean` \u2014 `mutualCompression`, `mutualCompression_le_left`\n- `Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `card_hom_le_profile_capacity`\n\n**Proof Strategy:** Show that a profile-preserving morphism $G \\to H$ induces a factorization of the profile map for $F \\oplus H$ through the profile map for $F \\oplus G$. Then the injectivity of the profile map (from `profileMap_injective`) gives the cardinality bound, which translates to a compression number inequality.\n\n**Domain Bridges:** Channel theory, rate-distortion theory, Markov chains, statistical sufficiency\n\n**Lineage:** Extends `card_hom_le_profile_capacity` (profile capacity bound) and `mutualCompression_le_left` (upper bound)\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Grand challenge. Would create categorical channel theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d2dfe412",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T07:48:03.135434+00:00"
+  },
+  {
+    "id": "fd_0626",
+    "title": "Direction 3: Interaction Information and Synergy Detection",
+    "description": "**Conjecture:** The ternary interaction information\n$$I_{\\mathrm{sh}}(F; G; H) := I_{\\mathrm{sh}}(F; G) + I_{\\mathrm{sh}}(F; H) - I_{\\mathrm{sh}}(F; G \\oplus H)$$\ncan be **negative** for suitable presheaves on a finite site, indicating categorical synergy: $F$ shares more information with $(G, H)$ jointly than with each separately.\n\n**Test:** Brute-force search over all presheaf triples on the arrow category and triangle category. Compute $I_{\\mathrm{sh}}(F;G;H)$ for each and identify the first negative instance. If no instance exists up to section size 5, conjecture positivity and attempt a proof.\n\n**Impact:** Negative interaction information is a signature of synergistic information in neuroscience, distributed computing, and cryptography. Demonstrating it in the categorical setting would validate sheaf compression as a genuine multi-variate information measure, not merely a pairwise one.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/ChainRule.lean` \u2014 `mutualCompression`, `conditionalMutualCompression`, `mutualCompression_chain_rule`\n\n**Proof Strategy:** Construct an explicit counterexample. Consider presheaves where $F$'s sections encode a \"parity\" of $G$ and $H$'s sections \u2014 this is the categorical analogue of XOR, which produces synergy in classical information theory. The key is finding presheaves where the coproduct $G \\oplus H$ reveals structure invisible to $G$ or $H$ alone.\n\n**Domain Bridges:** Neuroscience (integrated information theory), cryptography (secret sharing), distributed computing (coordination complexity)\n\n**Lineage:** Builds on `mutualCompression_chain_rule` (chain rule) and `conditionalMutualCompression_eq_explicit` (defect decomposition)\n\n**Ambition:** \u2605\u2605\u2605 \u2014 Conceptually important, computationally tractable\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d2dfe412",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T07:48:03.169425+00:00"
+  },
+  {
+    "id": "fd_0627",
+    "title": "Direction 4: Logarithmic Refinement via Profile Capacity",
+    "description": "**Conjecture:** Define the **logarithmic compression entropy**:\n$$h_{\\mathrm{sh}}(J, F) := \\log_2 \\prod_{Z \\in P^*} |F(Z)|$$\nwhere $P^*$ is an optimal separating probe family. Then $h_{\\mathrm{sh}}$ satisfies a chain rule analogous to Shannon entropy:\n$$h_{\\mathrm{sh}}(J, F \\oplus G) \\leq h_{\\mathrm{sh}}(J, F) + h_{\\mathrm{sh}}(J, G)$$\nwith equality iff the optimal probe families for $F$ and $G$ are disjoint.\n\n**Test:** Compute $h_{\\mathrm{sh}}$ on all presheaves over the arrow category with section sizes \u2264 4. Verify subadditivity and characterize equality cases.\n\n**Impact:** This bridges sheaf compression to classical information theory by replacing the combinatorial compression number (probe count) with a capacity-weighted entropy. It would enable direct comparison with Shannon entropy and provide tighter bounds for applications.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `card_hom_le_profile_capacity`\n- `Pythagorean/ProbeComplexity/ChainRule.lean` \u2014 `sheafCompressionNumber_coprod_le`\n\n**Proof Strategy:** Use `card_hom_le_profile_capacity` to bound section counts by profile products. The logarithm converts products to sums, giving the subadditivity. Equality analysis requires understanding when optimal probe families can be \"merged\" without waste.\n\n**Domain Bridges:** Shannon entropy, source coding, rate-distortion theory, counting complexity\n\n**Lineage:** Direct extension of `card_hom_le_profile_capacity` into the chain rule framework\n\n**Ambition:** \u2605\u2605\u2605\u2605 \u2014 Bridges discrete compression to continuous information theory\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d2dfe412",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T07:48:03.202711+00:00"
+  },
+  {
+    "id": "fd_0628",
+    "title": "Direction 5: Computational Complexity of Compression Numbers",
+    "description": "**Conjecture:** Computing $\\kappa_{\\mathrm{sh}}(J, F)$ for a finite site with $n$ objects is NP-hard in general (under appropriate encodings of the presheaf and topology), but admits polynomial-time algorithms when:\n1. The underlying category is a tree (no directed cycles)\n2. The topology is trivial or discrete\n3. All section sets have bounded size\n\n**Test:** Implement the exhaustive algorithm and measure runtime scaling on random categories with $n = 3, 4, 5, 6, 7$ objects. Identify the phase transition where exhaustive search becomes infeasible. For special cases, implement polynomial algorithms and verify correctness against the exhaustive baseline.\n\n**Impact:** Understanding the computational complexity of compression numbers is essential for practical applications. Polynomial algorithms for special cases would enable sheaf compression to be applied to real-world datasets (databases, networks, sensor arrays) at scale.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/ChainRule.lean` \u2014 all compression number definitions\n- `Pythagorean/ProbeComplexity/Defs.lean` \u2014 `ProbeFamily.IsSeparating`\n\n**Proof Strategy:** For the NP-hardness direction, reduce from SET COVER: given a universe $U$ and collection $\\mathcal{S}$, construct a category where objects correspond to sets, morphisms encode element membership, and the compression number equals the minimum cover size. For polynomial cases, exploit tree structure for dynamic programming or bounded section size for constraint propagation.\n\n**Domain Bridges:** Computational complexity, approximation algorithms, parameterized complexity, database query optimization\n\n**Lineage:** Motivated by the exhaustive search algorithm in `algorithms.py`\n\n**Ambition:** \u2605\u2605\u2605 \u2014 Practical importance, connects to CS theory",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d2dfe412",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T07:48:03.238238+00:00"
+  },
+  {
+    "id": "fd_0629",
+    "title": "Direction 1: Semigroup Probe Complexity and the Identity Barrier",
+    "description": "**Conjecture:** There exists a complete characterization of finite semigroups $S$ for which the right regular representation $\\rho: S \\to \\text{End}(S)$ is injective. Specifically: $\\rho$ is injective if and only if $S$ has a right identity element (an element $e$ with $a \\cdot e = a$ for all $a$).\n\n**Test:** Enumerate all semigroups of order $\\leq 6$ and check whether right regular injectivity correlates perfectly with the existence of a right identity. A single semigroup with injective $\\rho$ but no right identity would refute the conjecture; a single semigroup with a right identity but non-injective $\\rho$ would also refute it.\n\n**Impact:** Would give the exact algebraic boundary where the One-Probe Theorem fails. Currently we know monoids always satisfy right detection and right zero bands fail it, but the precise dividing line is unknown.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/MonoidCategory.lean` \u2014 `rightDetects_of_monoid`, `not_rightDetects_iff`\n- `Pythagorean/ProbeComplexity/Defs.lean` \u2014 `ProbeFamily.IsSeparating`\n\n**Proof Strategy:** Formalize semigroup categories (one-object categories where composition comes from a semigroup, using `Mul` instead of `Monoid`). Prove the forward direction ($\\text{right identity} \\implies \\text{injective}$) using the same $c = e$ argument. For the reverse direction, use the GAP computational algebra system to search for counterexamples.\n\n**Domain Bridges:** Semigroup theory \u2192 automata theory (syntactic semigroups of regular languages), category theory (semicategories).\n\n**Lineage:** Direct extension of `rightDetects_of_monoid`. The proof technique (using the identity) immediately suggests the right identity hypothesis.\n\n**Ambition:** Medium \u2014 computationally verifiable and theoretically clean.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2cfcb628",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T08:23:29.238998+00:00"
+  },
+  {
+    "id": "fd_0630",
+    "title": "Direction 2: Enriched One-Object Categories (Rings and Algebras)",
+    "description": "**Conjecture:** For a ring $R$ viewed as an $\\text{Ab}$-enriched one-object category, the *additive probe complexity* (requiring probes to separate morphisms up to additive structure) satisfies $\\kappa_{\\text{Ab}}(BR) = 0$ iff $R$ is the zero ring, and $\\kappa_{\\text{Ab}}(BR) = 1$ iff $R$ is nonzero. Furthermore, the separating element can always be taken to be the multiplicative identity $1_R$.\n\n**Test:** Verify for matrix rings $M_n(\\mathbb{F}_q)$, polynomial quotient rings $\\mathbb{F}_q[x]/(f)$, and group rings $\\mathbb{F}_q[G]$ for small $q$, $n$, and $|G|$.\n\n**Impact:** Would extend the monoid classification to the enriched setting, showing that the identity-as-separator principle is robust across enrichment levels. This connects probe complexity to ring theory and representation theory.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/MonoidCategory.lean` \u2014 `singleton_isSeparating_singleObj_iff`\n- `Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `probeComplexity_le_card`\n\n**Proof Strategy:** Define Ab-enriched probe families requiring separation of group homomorphisms. The key step is showing that multiplicative identity $1_R$ separates: if $a \\cdot 1 = b \\cdot 1$ then $a = b$, identical to the monoid case.\n\n**Domain Bridges:** Ring theory \u2192 algebraic K-theory, Morita theory, noncommutative geometry.\n\n**Lineage:** Enriched generalization of the monoid theorem. Uses the same core insight.\n\n**Ambition:** Medium-high \u2014 requires enriched category theory infrastructure but the core proof should be similar.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2cfcb628",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T08:23:29.279419+00:00"
+  },
+  {
+    "id": "fd_0631",
+    "title": "Direction 3: Probe Complexity of Finite Group Action Categories",
+    "description": "**Conjecture (Grand Challenge):** For a finite group $G$ acting on a finite set $X$, the probe complexity of the associated action category (objects: elements of $X$, morphisms: group elements acting between orbits) is equal to the number of orbits minus the number of orbits on which the action is faithful.\n\n**Test:** Compute $\\kappa$ for $S_3$ acting on $\\{1,2,3\\}$ (one orbit, faithful, expected $\\kappa = 0$?), $S_3$ acting on $\\{1,2,3\\} \\sqcup \\{4\\}$ (two orbits), and cyclic group actions on various sets.\n\n**Impact:** Would be the first non-trivial probe complexity classification for multi-object categories. Would connect probe complexity to the orbit-stabilizer theorem and representation theory.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `probeComplexity_pos_iff`, `card_hom_le_profile_capacity`\n- `Pythagorean/ProbeComplexity/MonoidCategory.lean` \u2014 `probeComplexity_singleObj_eq_one_iff` (base case)\n\n**Proof Strategy:** Use the orbit decomposition to reduce to individual orbits. For each orbit, the endomorphism monoid is the stabilizer, so the monoid theorem applies. The challenge is understanding how probes from different orbits interact.\n\n**Domain Bridges:** Group actions \u2192 combinatorics (Burnside's lemma), topology (covering spaces), physics (gauge theory).\n\n**Lineage:** Multi-object generalization of the monoid classification. The monoid case handles single orbits.\n\n**Ambition:** High \u2014 requires new proof techniques beyond the identity-separator argument.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2cfcb628",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T08:23:29.317753+00:00"
+  },
+  {
+    "id": "fd_0640",
+    "title": "Direction 2: M-Convex Cardinality Bound",
+    "description": "**Conjecture:** For any M-convex subset $S \\subseteq \\{x \\in \\mathbb{N}^n : \\sum x_i = d\\}$:\n$$|S| \\leq \\binom{n+d-1}{d}$$\n\n**Test:** For $n \\leq 5$ and $d \\leq 4$, enumerate all M-convex subsets of the simplex and verify the bound. The full simplex achieves the bound (Theorem 7.1 verifies it is M-convex). Any M-convex subset exceeding $\\binom{n+d-1}{d}$ would falsify the conjecture.\n\n**Impact:** Would establish an optimal cardinality bound for discrete convex sets with the exchange property, with applications to coding theory and combinatorial optimization.\n\n**Catalog References:** `Pythagorean/MConvexBridge.lean` (mconvex_cardinality_conjecture, full_simplex_is_mconvex_nat).\n\n**Proof Strategy:**\n1. Show that any M-convex subset of the simplex $\\Delta_{n,d}$ is an \"ideal\" in a natural partial order on compositions.\n2. Use the exchange property to show that if $\\alpha \\in S$ and $\\beta \\leq \\alpha$ coordinate-wise with $\\sum \\beta_k = d$, then $\\beta \\in S$ (this is the \"Bruhat order\" characterization).\n3. Conclude $S = \\Delta_{n,d}$, giving $|S| = \\binom{n+d-1}{d}$.\n\nNote: Step 2 requires careful analysis \u2014 not all M-convex sets are order ideals, so the proof may need a more subtle argument involving the exchange graph diameter.\n\n**Domain Bridges:** Enumerative combinatorics \u2194 Discrete convex analysis \u2194 Matroid theory.\n\n**Lineage:** Directly extends `full_simplex_is_mconvex_nat` and `mconvex_cardinality_conjecture`.\n\n**Ambition:** Solid extension \u2014 likely provable with careful combinatorial arguments.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "383acc58",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T09:38:00.767155+00:00"
+  },
+  {
+    "id": "fd_0644",
+    "title": "Direction 1: Cycle-Pressure Benefit Hypothesis",
+    "description": "**Conjecture:** On theorem graphs stratified by top decile of local cycle pressure, any tactic-prediction model augmented with cycle-aware features (lcp, cycle rank, shell growth) achieves at least 10% relative improvement in proof success rate over a degree-only baseline.\n\n**Test:** Extract dependency graphs from Mathlib. Compute local cycle pressure at each theorem node. Stratify by pressure decile. Train two models: (a) GNN with degree + type features, (b) GNN with degree + type + cycle-aware features. Compare proof success rate on held-out theorems in the top pressure decile.\n\n**Impact:** First empirical validation of the theorem-proven information gap (Feature Separation Theorem). A positive result would establish cycle pressure as a practical architectural prior for theorem proving.\n\n**Catalog References:**\n- `Pythagorean/ProofTheoreticTopology/LocalCyclePressure.lean` \u2014 `exists_same_degree_diff_cycleRank`, `cycleAwareScore_separates`\n- `Catalog/Pythagorean/ProofTheoreticTopology/CoreCollapseEntropy.lean` \u2014 entropy framework\n\n**Proof Strategy:** The theoretical backbone is already complete (Feature Separation Theorem proves the information gap exists). The empirical test requires extracting Mathlib's dependency graph, computing cycle pressure features, and running controlled experiments.\n\n**Domain Bridges:** Machine learning \u00d7 proof theory \u00d7 graph topology\n\n**Lineage:** Directly extends the Feature Separation Theorem (Theorem 4) from existence to quantitative prediction.\n\n**Ambition:** \ud83d\udfe1 Solid extension \u2014 experimentally validates a formally proved information gap.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb71073",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T10:16:10.464577+00:00"
+  },
+  {
+    "id": "fd_0645",
+    "title": "Direction 2: No-Harm Tree Regime Hypothesis",
+    "description": "**Conjecture:** On theorems in the bottom decile of local cycle pressure (tree-like dependency neighborhoods), cycle-aware augmentation changes proof success rate by at most 2% in either direction.\n\n**Test:** Same experimental setup as Direction 1, but evaluate on the bottom pressure decile. Compute confidence intervals for the difference in success rates.\n\n**Impact:** Validates the theoretical prediction that cycle pressure is zero in tree regions (Theorem 1) and thus adds no information there. Together with Direction 1, this would establish cycle pressure as a *targeted* feature: helps where it matters, harmless where it doesn't.\n\n**Catalog References:**\n- `Pythagorean/ProofTheoreticTopology/LocalCyclePressure.lean` \u2014 `subsetCycleRank_nonpos_of_isAcyclic`, `graphCycleRankZ_eq_zero_of_isTree`\n\n**Proof Strategy:** Theorem 1 (acyclic \u21d2 zero pressure) provides the theoretical prediction. The test verifies that zero-pressure regions are indeed easy for both models.\n\n**Domain Bridges:** Machine learning \u00d7 formal verification\n\n**Lineage:** Logical complement of Direction 1; together they fully characterize the regime behavior.\n\n**Ambition:** \ud83d\udfe2 Extension \u2014 straightforward corollary of the tree characterization theorem.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3cb71073",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T10:16:15.048304+00:00"
+  },
+  {
+    "id": "fd_0660",
+    "title": "Direction 1: Full Proof of the Universal Defect Formula",
+    "description": "**Conjecture:** For every finite connected graph G, root q \u2208 V(G), and nonempty S \u2286 V \\ {q}:\n\ntropRank(L_S) - 1 - r(D_S) = \u03b2\u2081(G[S]) + \u03ba(G,q,S) - 1\n\n**Test:** Implement exact tropical rank computation (via enumeration of tropically nonsingular submatrices) and exact Baker\u2013Norine rank (via complete chip-firing reachability). Run exhaustive verification on all connected graphs with n \u2264 8 vertices. A single counterexample disproves the conjecture. If confirmed, attempt formal proof via the verified inductive step (Theorem `defect_formula_cycle_step` in `UniversalDefect.lean`).\n\n**Impact:** Would establish a tropical index theorem \u2014 the first known instance of an analytic-index = topological-index equality in discrete/combinatorial mathematics. Would unify tropical linear algebra and chip-firing theory through a single equation.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/UniversalDefect.lean` \u2014 `structuralDefect_increment_on_cycle`, `defect_formula_cycle_step`\n- `Pythagorean/TropicalBridge/DefectTheory.lean` \u2014 `structuralDefect_nonneg`, `structuralDefect_eq_zero_iff`\n- `Pythagorean/TropicalBridge/HigherDefectTheory.lean` \u2014 `higherStructuralDefect_spectral_slope`\n\n**Proof Strategy:** Induction on cycle rank \u03b2\u2081(G[S]). Base case (\u03b2\u2081 = 0) via zero-defect rigidity. Inductive step via `structuralDefect_increment_on_cycle` \u2014 needs verification that tropical rank increases by exactly 1 per cycle addition.\n\n**Domain Bridges:** Tropical geometry \u2194 algebraic topology \u2194 combinatorial optimization\n\n**Lineage:** Extends Baker\u2013Norine [2007], Develin\u2013Santos\u2013Sturmfels [2005]\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 Grand Challenge\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -9385,9 +10003,399 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f5e6c231",
+    "source_exp_id": "14718e14",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-23T23:29:11.503162+00:00"
+    "timestamp": "2026-05-24T10:55:08.590391+00:00"
+  },
+  {
+    "id": "fd_0661",
+    "title": "Direction 2: Tropical Kernel Dimension Formula",
+    "description": "**Conjecture:** For any connected graph G and S \u2286 V \\ {q}:\n\ndim_trop(ker(L_S)) = \u03b2\u2081(G[S]) + \u03ba(G,q,S)\n\nwhere dim_trop denotes tropical dimension (maximum number of tropically independent generators).\n\n**Test:** For all connected graphs on n \u2264 6 vertices, compute the tropical kernel of L_S (vectors v with L_S \u2297 v = 0_trop in min-plus) and verify its tropical dimension equals \u03b2\u2081 + \u03ba. This is equivalent to the defect formula via tropical rank-nullity: tropRank + dim_trop(ker) = |S|.\n\n**Impact:** Would provide an independent proof of the universal defect formula via tropical rank-nullity, and would connect tropical kernels to graph homology \u2014 specifically, the generators should correspond to cycle indicators and component indicators.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/UniversalDefect.lean` \u2014 `TropicalVal`, `tropAdd`, `tropMul`\n- `Pythagorean/TropicalBridge/Defs.lean` \u2014 `graphLaplacian`, `laplacianPrincipalMinor`\n\n**Proof Strategy:** Show ker(L_S) is generated by: (1) characteristic vectors of independent cycles in G[S] (contributing \u03b2\u2081 generators), and (2) indicator vectors of q-visible components (contributing \u03ba generators). Verify tropical independence.\n\n**Domain Bridges:** Tropical linear algebra \u2194 simplicial homology\n\n**Lineage:** Builds on tropical rank-nullity analogues in [DSS05]\n\n**Ambition:** \u2605\u2605\u2605\u2605 Major extension\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14718e14",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T10:55:08.624242+00:00"
+  },
+  {
+    "id": "fd_0666",
+    "title": "Direction 1: Exact Bounded Nerve Correspondence",
+    "description": "**Conjecture**: For every finite LTS `L` and every bound `n \u2265 2`, the bounded nerve subobject lattice (trace predicates up to depth `n` with stability) is Boolean if and only if `L` is fully deterministic.\n\n**Test**: Exhaustively enumerate all LTS with \u2264 4 states and \u2264 2 actions. For each, compute the lattice of stable trace predicates up to depth `n = 3`. Check whether every element has a complement. Compare with the determinism predicate. A single counterexample (deterministic LTS with non-Boolean bounded lattice, or nondeterministic LTS with Boolean bounded lattice) falsifies the conjecture.\n\n**Impact**: Would extend the state-level diamond distributivity theorem to a full trace-level characterization, completing the topos-theoretic picture where nerve subobjects (not just state predicates) carry the logical content.\n\n**Catalog References**: `Pythagorean/BooleanTopos/Theorems.lean` \u2014 `diamond_distributive_iff_det`; `Pythagorean/TemporalAdjunction/Theorems.lean` \u2014 `lts_diamond_conj_of_det`, `det_of_diamond_conj`.\n\n**Proof Strategy**: Define `BoundedNerveSubobject n L` as state-trace predicates where traces have length \u2264 n, with stability. Construct explicit complements in the deterministic case by induction on trace length. For the nondeterministic direction, lift the singleton witness from `nondeterministic_diamond_witness` to the trace level.\n\n**Domain Bridges**: Process algebra \u2194 lattice theory, finite model theory \u2194 topos theory.\n\n**Lineage**: Direct extension of `diamond_distributive_iff_det`.\n\n**Ambition**: Medium \u2014 this is a solid structural extension that validates the topos interpretation at the combinatorial level.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fcefb6e6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T11:32:16.657346+00:00"
+  },
+  {
+    "id": "fd_0667",
+    "title": "Direction 2: Concurrency and Asynchronous Composition",
+    "description": "**Conjecture**: For the asynchronous (interleaving) product of LTS `L\u2081 \u2225 L\u2082`, the modal algebra of the product is Boolean if and only if each component `L\u1d62` is fully deterministic and the shared actions have no interference (i.e., independent actions commute without creating branching).\n\n**Test**: Compute products of small deterministic and nondeterministic systems with 2\u20133 states and 1\u20132 actions each. For each product, check diamond distributivity. Seek a product of two deterministic components whose interleaving creates non-Boolean behavior (this would falsify the \"if\" direction), or a product with nondeterministic components that nonetheless has a Boolean modal algebra (falsifying the \"only if\" direction).\n\n**Impact**: Would extend the determinism-Booleanity correspondence to the most important construction in concurrency theory \u2014 parallel composition. This could yield logical invariants for compositional verification.\n\n**Catalog References**: `Pythagorean/BooleanTopos/Theorems.lean` \u2014 `diamond_distributive_iff_det`, `branching_gives_nonBoolean_modal_logic`.\n\n**Proof Strategy**: Define `asyncProduct L\u2081 L\u2082` with interleaving semantics. Show that diamond distributivity of the product reduces to diamond distributivity of components plus a commutativity condition on shared actions. Use `diamond_distributive_iff_det` on each component.\n\n**Domain Bridges**: Process algebra \u2194 concurrency theory, modal logic \u2194 compositional verification.\n\n**Lineage**: Extends `diamond_distributive_iff_det` to composed systems.\n\n**Ambition**: High \u2014 this addresses the fundamental question of whether logical classification is compositional, which is essential for scalability.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fcefb6e6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T11:32:16.692007+00:00"
+  },
+  {
+    "id": "fd_0671",
+    "title": "Direction 1: Random Hypergraph Threshold Concentration",
+    "description": "**Conjecture:** For Erd\u0151s\u2013R\u00e9nyi random hypergraphs $\\mathcal{H}(n, p)$ of rank $r$, the empirical 50%-threshold $k_{1/2}$ satisfies\n$$|k_{1/2} - (n - \\tau(\\mathcal{H}))| = O(\\sqrt{n})$$\nwith high probability as $n \\to \\infty$.\n\n**Test:** Generate random $r$-uniform hypergraphs for $r \\in \\{2, 3, 4\\}$, $n \\in \\{20, 50, 100\\}$, and edge probabilities $p \\in \\{0.1, 0.3, 0.5\\}$. For each instance, compute $\\tau$ (exact for small $n$, greedy for large $n$), simulate the empirical threshold via random sampling, and measure the gap $|k_{1/2} - k_\\tau|$. Plot gap versus $\\sqrt{n}$ and test whether the ratio stabilizes.\n\n**Impact:** If confirmed, this would extend the extremal duality theorem to a probabilistic concentration result, establishing the transversal predictor as the correct centering for the stochastic phase transition \u2014 analogous to how the mean centers a Gaussian.\n\n**Catalog References:** `Catalog/Pythagorean/CertificatePhaseTransition.lean` (exists_transition_window), `Catalog/Pythagorean/SharpThresholdConcentration.lean`\n\n**Proof Strategy:** Use Talagrand's concentration inequality on the Lipschitz function $f(S) = \\mathbf{1}[\\text{Sat}(C, S)]$ applied to the random set model. The transversal number controls the median, and concentration bounds the fluctuation.\n\n**Domain Bridges:** Statistical physics (order parameter fluctuations), random $k$-SAT (threshold window), coding theory (random code distances).\n\n**Lineage:** Extends Theorem 3.5 (extremal characterization) from worst-case to average-case.\n\n**Ambition:** Grand challenge \u2014 if proved, this would be a foundational result in random combinatorics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "83c7f0bc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T12:10:25.152601+00:00"
+  },
+  {
+    "id": "fd_0672",
+    "title": "Direction 2: Fractional Predictor Refinement",
+    "description": "**Conjecture:** For obstruction hypergraphs with heterogeneous edge sizes, the fractional transversal predictor $k_{\\tau^*} = |V| - \\lceil\\tau^*(C)\\rceil$ tracks the empirical threshold more smoothly than the integer predictor $k_\\tau = |V| - \\tau(C)$, with strictly smaller residual variance across parametric families.\n\n**Test:** Construct families of mixed-rank hypergraphs (edges of sizes 2, 3, and 4) on $n = 10, 15, 20$ vertices. Compute both $\\tau(C)$ and $\\tau^*(C)$ (via LP solver). Compare $|k_{1/2} - k_\\tau|$ versus $|k_{1/2} - k_{\\tau^*}|$ across 50+ instances. Report mean squared error for each predictor.\n\n**Impact:** Establishes the fractional relaxation as a practical, polynomial-time threshold estimator. Opens a route to asymptotic prediction theory using LP duality.\n\n**Catalog References:** `Pythagorean/TransversalPredictor.lean` (integral_to_fractional_hittingSet, fracWeight_ge_transversalNumber)\n\n**Proof Strategy:** Show that $\\tau^* = \\tau$ for uniform hypergraphs (integrality of uniform covering LPs), and that $\\tau^* < \\tau$ gaps arise precisely from structural heterogeneity that also causes threshold smoothing.\n\n**Domain Bridges:** LP duality, approximation algorithms, fractional combinatorics, mean-field theory in statistical physics.\n\n**Lineage:** Builds directly on Theorem 3.9 (fractional \u2264 integral).\n\n**Ambition:** Solid extension \u2014 computationally testable and directly applicable.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "83c7f0bc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T12:10:26.866730+00:00"
+  },
+  {
+    "id": "fd_0673",
+    "title": "Direction 3: Transversal Predictor for Random k-SAT",
+    "description": "**Conjecture:** The random $k$-SAT threshold $\\alpha_k$ can be expressed (or tightly approximated) as a transversal-density function of the clause hypergraph: specifically, the threshold density $\\alpha_k$ equals the point where the expected fractional transversal number of the random clause hypergraph crosses from sub-linear to linear growth in the number of variables.\n\n**Test:** For $k = 3, 4, 5$ and $n = 50, 100, 200$ variables, generate random $k$-SAT instances at clause densities near the conjectured threshold. Compute the greedy transversal number of the clause hypergraph and plot $\\tau_g / n$ as a function of clause density. Identify the density at which $\\tau_g / n$ crosses a critical value and compare with the known $k$-SAT thresholds.\n\n**Impact:** If confirmed, this would provide a new structural explanation for the $k$-SAT threshold \u2014 one based on obstruction geometry rather than replica symmetry breaking or second-moment methods.\n\n**Catalog References:** `Catalog/Computation/Hypergraph/Defs.lean` (hitting_set_iff_monotone_sat), `Catalog/Pythagorean/CertificatePhaseTransition.lean`\n\n**Proof Strategy:** Use the cavity method heuristics from statistical physics to estimate $\\tau^*$ for random hypergraphs, then compare with rigorous second-moment bounds.\n\n**Domain Bridges:** Random $k$-SAT, statistical physics (replica method), computational complexity, probabilistic combinatorics.\n\n**Lineage:** Grand extension of the extremal duality theorem to the most studied random CSP.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "83c7f0bc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T12:10:27.225038+00:00"
+  },
+  {
+    "id": "fd_0674",
+    "title": "Direction 4: Greedy Approximation Universality",
+    "description": "**Conjecture:** On bounded-rank certificate hypergraphs with rank $r$, the greedy transversal number $\\tau_g(C)$ satisfies\n$$\\tau(C) \\leq \\tau_g(C) \\leq H_r \\cdot \\tau(C)$$\nand the greedy predictor $k_{\\tau_g} = |V| - \\tau_g(C)$ remains within an additive $O(r \\log n)$ of the true threshold $k_{1/2}$ for all instances.\n\n**Test:** Benchmark greedy vs. exact transversal numbers for triangle systems ($r = 3$) on $K_4$ through $K_{12}$ (using ILP for larger instances). Tabulate the ratio $\\tau_g / \\tau$ and the gap $|k_{1/2} - k_{\\tau_g}|$.\n\n**Impact:** Validates the greedy algorithm as a practical threshold estimator with formal approximation guarantees, making the theory applicable to instances where exact computation is infeasible.\n\n**Catalog References:** `Pythagorean/TransversalPredictor.lean` (choice_hittingSet_sound)\n\n**Proof Strategy:** The upper bound $\\tau_g \\leq H_r \\cdot \\tau$ follows from the classical Chv\u00e1tal analysis of greedy set cover. The additive gap bound requires bounding $|V| \\cdot (H_r - 1) \\cdot \\tau / |V|$ which gives $O(r \\log r) \\cdot \\tau / |V|$ per unit.\n\n**Domain Bridges:** Approximation algorithms, online algorithms, competitive analysis, practical SAT solving heuristics.\n\n**Lineage:** Builds on choice_hittingSet_sound and the classical set cover theorem.\n\n**Ambition:** Solid extension \u2014 directly implementable and testable.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "83c7f0bc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T12:10:27.261542+00:00"
+  },
+  {
+    "id": "fd_0681",
+    "title": "Direction 1: Explicit Polynomial State-Space Bounds",
+    "description": "**Conjecture:** For any closed affine de Bruijn term t of branching complexity B and reduction depth d, the number of distinct reachable terms satisfies:\n\n```\n|StateSet(t, d)| \u2264 (B + 1)^d \u00b7 size(t)^c\n```\n\nfor some universal constant c.\n\n**Test:** Generate affine terms with B \u2208 {1, 2, ..., 10} and enumerate all reachable terms at depths d = 1, ..., 15. Fit the growth curve to polynomial and exponential models. If the data fits a polynomial in B and d, the conjecture is supported; if the growth is superpolynomial in d for some fixed B, the conjecture fails.\n\n**Impact:** An explicit polynomial bound would provide the first machine-independent polynomiality criterion for higher-order computation based purely on syntactic structure. This would bridge implicit computational complexity with practical program analysis.\n\n**Catalog References:** `Catalog/Pythagorean/DeBruijnComplexity.lean` (Theorem C: stateGrowthDB_branch_bounded)\n\n**Proof Strategy:** Use the monotonicity theorem to bound the \"width\" of the reduction graph. At each step, the branching complexity can only decrease, so the number of possible BC values is bounded by B+1. Combine with finiteness of bounded reducts (from BoundedBetaTheorems.lean) to bound the total count.\n\n**Domain Bridges:** Complexity theory (implicit characterizations), program analysis (static bounds on execution), combinatorics (counting lattice paths with constraints).\n\n**Lineage:** Extends Theorem C from a qualitative bound to a quantitative one.\n\n**Ambition:** Grand challenge \u2014 would establish a new polynomiality criterion for \u03bb-calculus.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fdb6f72c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T12:45:48.229094+00:00"
+  },
+  {
+    "id": "fd_0682",
+    "title": "Direction 2: Affine Type System Connection",
+    "description": "**Conjecture:** There exists a simple affine type system such that every well-typed term is AffineClosed, and the typing derivation structurally implies the monotonicity property.\n\n```\n\u0393 \u22a2_affine t : A  \u2192  AffineClosed t\n```\n\n**Test:** Define a minimal affine type system (variables used at most once in the typing context). Implement a type checker. Verify that all well-typed terms satisfy AffineClosed and that the type checker accepts all hand-crafted affine terms from the test suite.\n\n**Impact:** Would connect the syntactic AffineClosed predicate to a well-understood type-theoretic framework, enabling composition of monotonicity guarantees across program modules.\n\n**Catalog References:** `Catalog/Pythagorean/DeBruijnComplexity.lean` (AffineClosed definition)\n\n**Proof Strategy:** Define affine typing rules ensuring each variable in the context is used at most once. Prove the subject reduction theorem (typing preserved by \u03b2-reduction). Derive AffineClosed from the typing derivation by structural induction.\n\n**Domain Bridges:** Type theory (linear/affine types), programming languages (Rust's ownership system), proof theory (linear logic sequent calculus).\n\n**Lineage:** Natural extension of the AffineClosed preservation theorem.\n\n**Ambition:** Solid extension \u2014 well-understood territory with clear formal targets.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fdb6f72c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T12:45:48.264202+00:00"
+  },
+  {
+    "id": "fd_0696",
+    "title": "Direction 1: Simply-Typed Convergent Normalization",
+    "description": "**Conjecture:** The many-sorted master theorem generalizes conservatively to simply-typed lambda calculi with algebraic base types. When restricted to first-order operation symbols with no binders, the higher-order semantic preservation theorem reduces exactly to `ms_nf_preserves_eval`.\n\n**Test:** Implement a simply-typed syntax where `Sort := SimpleType` (base types plus function types). Define typed \u03b2-reduction alongside algebraic rewrite rules. Verify that on the first-order fragment (no \u03bb-abstractions, no function types), the typed normalizer agrees with the many-sorted normalizer on 10,000 random terms.\n\n**Impact:** This would unify the convergent rewrite framework with normalization-by-evaluation and typed lambda calculus semantics, creating a single formal platform for both algebraic simplification and functional program optimization.\n\n**Catalog References:**\n- `Pythagorean/ManySortedConvergentRewriteOptimizer.lean`: `ms_nf_preserves_eval`\n- `Catalog/Pythagorean/ConvergentRewriteOptimizer.lean`: `nf_preserves_eval`, `CertifiedNormalizer`\n\n**Proof Strategy:** Define `SimpleType := BaseSort | Arrow SimpleType SimpleType`. Interpret terms via a logical-relations argument over the type structure. Show that the first-order restriction collapses `SimpleType` to `BaseSort`, recovering the many-sorted definitions.\n\n**Domain Bridges:** Type theory \u2194 universal algebra \u2194 compiler optimization\n\n**Lineage:** Extends `ms_nf_preserves_eval` via Strategy C (logical relations)\n\n**Ambition:** Grand challenge \u2014 would connect rewriting theory to the foundations of typed computation\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc40b0df",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T13:25:39.541840+00:00"
+  },
+  {
+    "id": "fd_0697",
+    "title": "Direction 2: Tensor-Sorted Extension for Scientific Computing",
+    "description": "**Conjecture:** Extending the sort system to include scalar, vector, and rank-2 tensor sorts yields a convergent rewrite fragment whose normal forms preserve bilinear energy expressions `E = v^T A v` across all tested numerical models.\n\n**Test:** Define a three-sorted signature with sorts `{Scal, Vec, Mat}` and operations including matrix-vector multiplication, bilinear pairing, and tensor product. Implement 6-8 rewrite rules (including `A(v+w) \u2192 Av + Aw`, `(A+B)v \u2192 Av + Bv`, `\u03b1(Av) \u2192 (\u03b1A)v`). Generate 5,000 random tensor expressions and verify semantic preservation in models over \u211a and \u2124.\n\n**Impact:** Would demonstrate that the many-sorted framework supports symbolic simplification in physics-inspired tensor calculi, opening a path to certified optimization in computational mechanics and quantum mechanics.\n\n**Catalog References:**\n- `Pythagorean/ManySortedConvergentRewriteOptimizer.lean`: `ModuleSig`, `ModRewrite`, `modRewrite_sound`\n\n**Proof Strategy:** Extend `ModuleSig` with a `Mat` sort and matrix operations. Prove soundness of new rules using Mathlib's `Matrix` API. The many-sorted master theorem applies directly since it is parametric in the signature.\n\n**Domain Bridges:** Physics \u2194 linear algebra \u2194 scientific computing\n\n**Lineage:** Extends the module instantiation (Theorems 4-5) to higher-rank tensors\n\n**Ambition:** Solid extension \u2014 builds directly on existing infrastructure\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc40b0df",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T13:25:41.474792+00:00"
+  },
+  {
+    "id": "fd_0698",
+    "title": "Direction 3: Sortwise Canonical Forms and the Word Problem",
+    "description": "**Conjecture:** For the two-sorted module rewrite system, every term of vector sort reduces to a unique linear-combination normal form: a sum of scalar-vector products where each vector variable appears at most once.\n\n**Test:** Generate 10,000 random vector terms and normalize them from two different rewrite schedules (left-to-right vs. right-to-left). Compare the resulting normal forms syntactically. A single counterexample (two different normal forms from the same term) disproves confluence/canonicity.\n\n**Impact:** If true, this solves the word problem for the free module over a free ring, giving a decision procedure for module expression equivalence. This would be a significant result in computational algebra.\n\n**Catalog References:**\n- `Pythagorean/ManySortedConvergentRewriteOptimizer.lean`: `ModRewrite`, `MSCertifiedNormalizer`\n- `Catalog/Pythagorean/ConvergentRewriteOptimizer.lean`: `nf_unique_of_confluent`\n\n**Proof Strategy:** Prove confluence of `ModRewrite` using a critical-pair analysis (Newman's Lemma). Show that normal forms are syntactically unique by induction on term structure, leveraging the fact that the distributivity rule is the only non-trivial rule and it strictly decreases the \"smul-nesting depth.\"\n\n**Domain Bridges:** Universal algebra \u2194 computational algebra \u2194 automated reasoning\n\n**Lineage:** Extends confluence analysis from `nf_unique_of_confluent`\n\n**Ambition:** Solid extension \u2014 precise and falsifiable\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc40b0df",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T13:25:41.565887+00:00"
+  },
+  {
+    "id": "fd_0699",
+    "title": "Direction 4: Representation-Theoretic Invariant Detection",
+    "description": "**Conjecture:** In module expressions carrying a finite group action, normal forms statistically increase the detection rate of invariant subexpressions (vectors fixed by all group elements) compared with raw syntax.\n\n**Test:** Implement a model with `R = \u2124[G]` (group ring of a small group like `S\u2083` or `\u2124/3\u2124`) acting on a 3-dimensional representation. Generate 5,000 random expressions, normalize, and compare the rate at which invariant subexpressions (evaluating to vectors in the fixed subspace `V^G`) are syntactically identifiable before and after normalization.\n\n**Impact:** Would demonstrate that algebraic normalization has representation-theoretic content: it doesn't just simplify \u2014 it reveals symmetry structure. This connects the rewrite framework to a deep mathematical domain.\n\n**Catalog References:**\n- `Pythagorean/ManySortedConvergentRewriteOptimizer.lean`: `moduleAlgebra`, `modRewrite_sound`\n\n**Proof Strategy:** Define the group algebra as a concrete ring and the representation as a concrete module. The many-sorted master theorem guarantees that evaluation is preserved, so invariant detection rates should be equal (preserved invariants). The hypothesis is that normalized *syntax* makes invariants more *syntactically apparent*.\n\n**Domain Bridges:** Representation theory \u2194 module theory \u2194 symbolic computation\n\n**Lineage:** Builds on the module instantiation (Theorems 4-5)\n\n**Ambition:** Grand challenge \u2014 connects algebra to symmetry detection\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cc40b0df",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T13:25:41.657298+00:00"
+  },
+  {
+    "id": "fd_0724",
+    "title": "Direction 1: Global Tightness Conjecture",
+    "description": "**Conjecture**: For every simple type `A`, there exists a closed well-typed term `t` of type `A` and a depth `d` such that `canonicalQuotientSize(d, t) = typeStateBound(A)`.\n\n**Test**: Enumerate all \u03b2-reducible closed terms of small types (up to type depth 3 and term size 15) and compute their canonical quotient sizes at increasing depths. If any type has `max canonicalQuotientSize < typeStateBound`, the conjecture is falsified.\n\n**Impact**: If true, this elevates `typeStateBound` from an upper bound to an exact state-complexity function \u2014 the higher-order analogue of the Myhill-Nerode minimal state count. This would be the foundational theorem of higher-order state complexity theory.\n\n**Catalog References**: `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity`, `quotientSize_le_typeStateBound_forall_depth`.\n\n**Proof Strategy**: Construct explicit witness terms recursively on the type structure. For arrow types `A \u2192 B`, build a term whose reduction tree branches into `typeStateBound(A)` paths, each leading to a distinct configuration. Use the separation argument: show that the witness term's reachable states are pairwise inequivalent under bounded behavioral equivalence. The upper bound theorem provides the squeeze: `canonicalQuotientSize \u2264 typeStateBound` combined with the lower bound from the separation argument yields equality.\n\n**Domain Bridges**: Automata theory (exact state complexity), descriptive complexity (types as resource bounds), combinatorics (extremal counting of \u03bb-terms).\n\n**Lineage**: Extends the catalog theorem `quotientSize_le_typeStateBound_forall_depth` from upper bound to exact equality.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1e04b63c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T15:13:46.789137+00:00"
+  },
+  {
+    "id": "fd_0726",
+    "title": "Direction 3: Exact Growth Rate of the Endomorphism Tower",
+    "description": "**Conjecture**: The sequence `a(0) = 1, a(n+1) = (a(n) + 1)^2` satisfies:\n```\na(n) = \u230ac^{2^n}\u230b  for some constant c \u2248 1.7549...\n```\nMoreover, `typeStateBound(iterEndTy n) = a(n)` exactly, and the constant `c` is the unique positive root of the functional equation `c^2 = c + 1` (i.e., the golden ratio \u03c6 \u2248 1.618... gives `c = \u03c6^{1/...}` \u2014 to be determined exactly).\n\n**Test**: Compute `a(n)` for `n = 0, ..., 10` and fit `log log a(n)` against `n` to extract the growth constant. Compare with candidate closed-form expressions.\n\n**Impact**: Would give a precise asymptotic formula for state complexity growth along the endomorphism tower, connecting type complexity to classical sequences in combinatorial number theory.\n\n**Catalog References**: `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `iterEndTy_bounds`, `typeStateBound_iterEndTy_ge_exp`, `typeStateBound_iterEndTy_strictMono`.\n\n**Proof Strategy**: Analyze the recurrence `a(n+1) = a(n)^2 + 2a(n) + 1` by taking logarithms and studying the dynamical system `b(n+1) = 2b(n) + log(1 + 2/a(n) + 1/a(n)^2)`.\n\n**Domain Bridges**: Dynamical systems (iterated maps), number theory (tower sequences), analytic combinatorics.\n\n**Lineage**: Quantitative refinement of `typeStateBound_iterEndTy_ge_exp`.\n\n**Ambition**: Solid extension.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1e04b63c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T15:13:46.864667+00:00"
+  },
+  {
+    "id": "fd_0727",
+    "title": "Direction 4: Shape Invariance Conjecture",
+    "description": "**Conjecture**: If two simple types have the same *arrow profile* (the multiset of depths of all leaf occurrences of `base`), then they have the same `typeStateBound`.\n\n**Test**: Enumerate all types of size \u2264 10, compute their arrow profiles and state bounds, and check whether the profile uniquely determines the bound. A counterexample would be two types with the same profile but different bounds.\n\n**Impact**: If true, this would show that `typeStateBound` depends only on a compressed structural signature, not on the full type tree. This would enable efficient computation of state bounds from profiles alone (linear time vs. tree traversal) and suggest a canonical normal form for types under state-complexity equivalence.\n\n**Catalog References**: `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity`, `typeStateBound_ge_branchComplexity`.\n\n**Proof Strategy**: Define arrow profiles formally and prove that the multiplicative recurrence for `typeStateBound` depends only on the profile. The key lemma would be: if `complexity(A) = complexity(A')` and `complexity(B) = complexity(B')`, then `typeStateBound(A \u2192 B) = typeStateBound(A' \u2192 B')` \u2014 which follows immediately from the recurrence. The deeper question is whether distinct type trees can have the same complexity but different profiles.\n\n**Domain Bridges**: Combinatorics (tree isomorphism, profile equivalence), algebra (quotient structures).\n\n**Lineage**: Structural refinement of `typeStateBound_eq_complexity`.\n\n**Ambition**: Grand challenge \u2014 would establish a classification theory for type complexity.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1e04b63c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T15:13:46.905792+00:00"
+  },
+  {
+    "id": "fd_0729",
+    "title": "Direction 1: Continuous Tropical Geometry of Weighted Metric Graphs",
+    "description": "**Conjecture:** The universality of the structural defect extends to metric graphs (tropical curves) with arbitrary positive real edge lengths. Specifically, for a compact metric graph \u0393 with edge lengths \u2113(e) > 0, the Baker\u2013Norine rank of the divisor D_S depends only on the combinatorial type of \u0393, not on the edge lengths.\n\n**Test:** Implement a metric graph divisor rank algorithm using Dhar's burning algorithm generalized to metric graphs. Compare ranks across families of metric graphs with the same combinatorial type but varying edge lengths. A single instance where the rank changes with edge lengths would disprove this conjecture.\n\n**Impact:** If true, this would unify discrete and continuous tropical geometry under a single universality principle. It would imply that the moduli space M_g^trop stratifies by defect in a way that is purely combinatorial. This would have implications for the realizability problem in tropical algebraic geometry.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/WeightedDefect.lean`: `weighted_structural_defect_formula` (discrete universality)\n- `Pythagorean/TropicalBridge/WeightedDefect.lean`: `weightedGraphLaplacian_row_sum` (conservation law)\n\n**Proof Strategy:** Generalize the discrete Laplacian to the continuous Laplacian on metric graphs. Show that the rank of D_S, computed via Dhar's algorithm, depends only on the underlying graph topology. The key step would be proving that the tropical Jacobian's structure (as a real torus) does not affect the rank computation.\n\n**Domain Bridges:** Tropical geometry \u2194 algebraic geometry, metric graph theory \u2194 Berkovich spaces\n\n**Lineage:** Extends `weightedGraphLaplacian_row_sum` and `weighted_structural_defect_formula` to continuous setting.\n\n**Ambition:** Grand challenge \u2014 would resolve a fundamental question in tropical geometry.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c65efb7d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T16:19:49.650838+00:00"
+  },
+  {
+    "id": "fd_0734",
+    "title": "Direction 1: Split Exact Additivity",
+    "description": "**Conjecture:** For every split filtration on a finite site, compression is exactly additive:\n```\n\u03ba_sh(J, F) = \u03a3\u1d62 \u03ba_sh(J, gr\u1d62F)\n```\nwhen each extension in the filtration splits (i.e., the total presheaf is isomorphic to the direct sum of its graded pieces).\n\n**Test:** Enumerate all split filtrations on sites with 2\u20134 objects and compare exact compression numbers with graded sums. A single counterexample refutes the conjecture. The Python demo (`demo.py`) includes tests for this setting.\n\n**Impact:** If true, this establishes compression as a genuinely additive invariant on split exact sequences, placing it in the landscape of algebraic K-theory. If false, the failure mode reveals obstructions to additivity that are themselves interesting invariants.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/CompressionFiltration.lean` \u2014 `compression_split_le` (upper bound direction)\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `sheafCompressionNumber_coprod_le`\n\n**Proof Strategy:** Prove the reverse inequality by showing that any separator for the coproduct restricts to a separator for each component. The main difficulty is extracting component-wise separation from coproduct separation without additional structural assumptions.\n\n**Domain Bridges:** Algebraic K-theory (Grothendieck group), representation theory (split exact sequences), information theory (independence of sources implies entropy additivity).\n\n**Lineage:** Extends `compression_extension_le` from upper bound to equality in the split case.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Achievable with current formalism; requires careful analysis of the reverse inequality.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "964b5789",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T17:30:48.451554+00:00"
+  },
+  {
+    "id": "fd_0735",
+    "title": "Direction 2: Submodularity of Compression on the Lattice of Subpresheaves",
+    "description": "**Conjecture:** For subpresheaves A, B \u2264 F on a finite site with Grothendieck topology J:\n```\n\u03ba(A \u2228 B) + \u03ba(A \u2227 B) \u2264 \u03ba(A) + \u03ba(B)\n```\nwhere \u2228 and \u2227 are join and meet in the subpresheaf lattice.\n\n**Test:** Brute-force all pairs (A, B) of subpresheaves on sites with 2\u20133 objects and 2\u20133 sections per object. Compute all four compression numbers and verify the inequality. A counterexample is equally valuable \u2014 it would show compression is not submodular and would identify the structural obstruction.\n\n**Impact:** If true, compression becomes a submodular function, unlocking greedy algorithms and matroid-theoretic methods for filtration optimization. If false, the failure structure characterizes exactly when greedy decomposition fails.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/CompressionFiltration.lean` \u2014 `compression_le_of_sep_implies` (monotonicity)\n- `Catalog/Pythagorean/ProbeComplexity/CompressionSpectrumStructure.lean` \u2014 `compressionNumber_le_of_sep`\n\n**Proof Strategy:** Attempt a modular inequality proof using the lattice structure of probe families. Key step: construct a separator for A\u2228B from separators for A and B, using their intersection to control the redundancy.\n\n**Domain Bridges:** Combinatorial optimization (submodular function minimization), matroid theory, entropy inequalities (submodularity of Shannon entropy).\n\n**Lineage:** Builds on monotonicity (`compression_le_of_sep_implies`) and extension inequality.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 \u2014 Would be a significant structural result; counterexample search is computationally tractable.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "964b5789",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T17:30:48.574829+00:00"
+  },
+  {
+    "id": "fd_0737",
+    "title": "Direction 4: Derived Compression Invariants",
+    "description": "**Conjecture:** There exist higher compression invariants \u03ba\u207f(J, F) for n \u2265 1, generalizing \u03ba = \u03ba\u2070, that form a long exact sequence:\n```\n... \u2192 \u03ba\u207f(A) \u2192 \u03ba\u207f(B) \u2192 \u03ba\u207f(Q) \u2192 \u03ba\u207f\u207a\u00b9(A) \u2192 ...\n```\nfor each short exact sequence 0 \u2192 A \u2192 B \u2192 Q \u2192 0 of presheaves.\n\n**Test:** Define \u03ba\u00b9 as the \"compression defect of the extension\": \u03ba\u00b9(A \u2192 B \u2192 Q) = \u03ba(A) + \u03ba(Q) - \u03ba(B). Check whether \u03ba\u00b9 satisfies its own long exact sequence on small examples. If not, attempt to modify the definition to achieve exactness.\n\n**Impact:** This would establish a full cohomological theory of information complexity, with sheaf compression as the H\u2070 and higher invariants measuring the cost of consistency checking across overlapping data.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/CompressionFiltration.lean` \u2014 `compressionDefect`\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `compressionDefect_nonneg`\n\n**Proof Strategy:** Model after the definition of derived functors via projective/injective resolutions. The key challenge is defining \u03ba\u207f intrinsically (not just as a defect of the previous level) and showing functoriality.\n\n**Domain Bridges:** Homological algebra (derived functors), algebraic topology (cohomology), quantum information theory (higher-order entanglement measures).\n\n**Lineage:** Grand challenge building on the entire compression framework.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if achievable; currently speculative but falsifiable through small examples.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "964b5789",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T17:30:48.671230+00:00"
+  },
+  {
+    "id": "fd_0739",
+    "title": "Direction 1: Topos-Generator Characterization (Grand Challenge)",
+    "description": "**Conjecture:** For any finite category C with finite hom-sets, \u03ba(C) equals the minimum cardinality of a finite separating family of representable presheaves in the presheaf category [C^op, Set].\n\n**Test:** For finite categories with \u2264 4 objects and \u2264 12 morphisms, compute both \u03ba(C) and the minimum separating family of representables in [C^op, Set]. Check equality. A counterexample would be a category where the internal topos-theoretic notion of separation diverges from the external probe-based notion.\n\n**Impact:** If true, this gives \u03ba a purely topos-internal characterization, completing its promotion from a category-level statistic to a topos-level invariant. It would establish \u03ba as the first finitary, computable invariant of presheaf toposes with an explicit formula. This could reshape how algebraic geometers compare site presentations.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/MoritaInvariance.lean` \u2014 Morita invariance of \u03ba\n- `Pythagorean/ProbeComplexity/Defs.lean` \u2014 definition of separating probe families\n- `Catalog/Pythagorean/ProbeComplexity/CategoricalDimension.lean` \u2014 separating families in module categories\n\n**Proof Strategy:** Translate the probe separation condition into the language of presheaf categories. A probe Z \u2208 Obj(C) induces the representable presheaf y(Z) = Hom(\u2212, Z). The probe family P separates morphisms iff {y(Z) : Z \u2208 P} jointly detects all natural transformations between representables. Use the Yoneda lemma to bridge the internal and external perspectives.\n\n**Domain Bridges:** Algebraic geometry (site presentations), topos theory (generator complexity), mathematical logic (Beth definability)\n\n**Lineage:** Extends `kappa_eq_of_karoubi_equivalence` by giving \u03ba a coordinate-free definition\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if solved\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d0ac1ba4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T18:38:01.987284+00:00"
   },
   {
     "id": "fd_0301",
@@ -9447,348 +10455,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-22T16:05:51.144818+00:00"
   },
   {
-    "id": "fd_0571",
-    "title": "Direction 1: Defect Classification Conjecture",
-    "description": "**Conjecture.** For finite presheaf models with identity self-restrictions (res(Y,Y) = id), the compression defect satisfies \u03b4(M\u2081, M\u2082) = \u03ba(M\u2081) + \u03ba(M\u2082) \u2212 max(\u03ba(M\u2081), \u03ba(M\u2082)) = min(\u03ba(M\u2081), \u03ba(M\u2082)), i.e., \u03ba(M\u2081 \u00d7 M\u2082) = max(\u03ba(M\u2081), \u03ba(M\u2082)).\n\n**Test.** Enumerate all models with \u2264 4 objects, fibers \u2264 4, identity self-restriction, and compute defects. Check whether \u03b4 = min(\u03ba\u2081, \u03ba\u2082) universally holds for this subclass.\n\n**Impact.** If true, this would show that identity-on-diagonal models have \"dimensional\" behavior where products behave like taking the max \u2014 like covering dimension under Cartesian products. If false, the counterexample would reveal exactly what makes compression non-dimensional.\n\n**Catalog References.** `Pythagorean/ProbeComplexity/CompressionProduct.lean` (compressionDefect, compression_prod_le, max_le_compression_prod).\n\n**Proof Strategy.** For the upper bound, use the existing sub-additivity proof. For the lower bound, show that when res(Y,Y) = id, any probe that separates at Y in M\u2081 also works in the product (via identity self-restriction), so probes can be \"shared\" across factors. Formalize the sharing lemma as a new helper.\n\n**Domain Bridges.** Covering dimension theory (dim(X \u00d7 Y) \u2264 dim(X) + dim(Y), with equality for well-behaved spaces); Krull dimension of tensor products of rings.\n\n**Lineage.** Directly extends `compression_prod_le` and `max_le_compression_prod`.\n\n**Ambition.** \u2605\u2605\u2605 (Paradigm-classifying: would determine whether \u03ba is dimension-like or entropy-like.)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c8703e71",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T01:43:58.843112+00:00"
-  },
-  {
-    "id": "fd_0572",
-    "title": "Direction 2: Confusability Graph Correspondence",
-    "description": "**Conjecture.** There exists a natural graph invariant \u03b3 such that \u03ba(M) = \u03b3(G_M) for all finite presheaf models M, where G_M is the \"confusability graph\" whose vertices are global sections and edges connect observationally indistinguishable pairs. Specifically, \u03b3 is the minimum clique cover number of the \"total separation graph.\"\n\n**Test.** For each model M with \u2264 3 objects, construct the separation graph at each object Y (vertices = F(Y), edges = pairs separated by at least one probe). Compute clique cover numbers, chromatic numbers, and independence numbers. Compare each candidate \u03b3 with \u03ba(M).\n\n**Impact.** Would establish a formal dictionary between presheaf compression and zero-error information theory / graph capacity theory. Product of models would correspond to strong product of graphs, connecting \u03ba-additivity to the deep open problem of Shannon capacity additivity.\n\n**Catalog References.** `Pythagorean/ProbeComplexity/CompressionProduct.lean` (distinguishabilityCardAt, probeIndistinguishable_prod_iff, distinguishabilityCardAt_prod).\n\n**Proof Strategy.** Define the confusability graph formally in Lean. Show that probe families correspond to graph colorings of the complement. The minimum family size equals the chromatic number of the complement = clique cover number of the original.\n\n**Domain Bridges.** Shannon capacity of graphs (Lov\u00e1sz theta function); zero-error information theory; Ramsey theory.\n\n**Lineage.** Builds on `distinguishabilityCardAt_prod` (multiplicativity = strong graph product capacity).\n\n**Ambition.** \u2605\u2605\u2605\u2605 (Grand challenge: connects to major open problems in graph theory.)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c8703e71",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T01:43:59.133091+00:00"
-  },
-  {
-    "id": "fd_0577",
-    "title": "Direction 1: Memory-Pathwidth Correlation",
-    "description": "**Conjecture:** For industrial SAT benchmark families with strong modular structure (hardware verification, bounded model checking, planning), the estimated pathwidth of the evolving clause interaction graph is positively correlated (Spearman \u03c1 > 0.7) with peak clause-database memory under CDCL solvers.\n\n**Test:** Instrument MiniSat or CaDiCaL to log the clause interaction graph at regular intervals during solving. Compute approximate pathwidth using the greedy elimination heuristic. Measure Spearman rank correlation between pathwidth traces and peak memory across 500+ SAT Competition benchmarks. Control for formula size.\n\n**Impact:** If confirmed, this validates pathwidth as a *predictive* structural invariant for solver memory, not just a theoretical bound. If falsified (\u03c1 < 0.3), the theory would need revision \u2014 perhaps treewidth or a different graph parameter is more appropriate.\n\n**Catalog References:** `Catalog/Pythagorean/ConfigGraph/Defs.lean` (PathDecomposition, ResolutionTrace), `Catalog/Pythagorean/ConfigGraph/Theorems.lean` (clauseSpace_le_maxBagSize_of_valid_decomp).\n\n**Proof Strategy:** Formalize the correlation claim as a probabilistic statement over a measure on CNF families. Use the existing frontier bound theorem to derive upper bounds on expected memory given expected pathwidth.\n\n**Domain Bridges:** Connects to benchmark science, empirical algorithm analysis, and statistical learning theory.\n\n**Lineage:** Extends the clause space / pathwidth bridge from `Catalog/Pythagorean/ConfigGraph/Theorems.lean`.\n\n**Ambition:** Solid extension \u2014 validates existing theory empirically.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "905cb737",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T01:44:39.253474+00:00"
-  },
-  {
-    "id": "fd_0578",
-    "title": "Direction 2: Separator-Aware Forgetting Dominates Activity-Only Forgetting",
-    "description": "**Conjecture:** On SAT instances whose clause interaction graphs have empirical pathwidth \u2264 k (for k \u2264 50), path-respecting forgetting achieves strictly lower peak memory than LBD/activity-only forgetting in GLUCOSE, with at most 2x runtime overhead, on \u2265 60% of industrial benchmarks.\n\n**Test:** Implement path-respecting forgetting as a plugin for CaDiCaL. On each database reduction event, retain clauses in the current bag + active frontier instead of using LBD scores. Benchmark against stock CaDiCaL on SAT Competition 2023 industrial track. Measure peak memory, runtime, and solve rate.\n\n**Impact:** If confirmed, this demonstrates practical value of the structural theory \u2014 a new clause management strategy competitive with state-of-the-art. If falsified, the overhead of maintaining decompositions may be too high, suggesting that approximate pathwidth-awareness (without exact decompositions) is the right level of abstraction.\n\n**Catalog References:** `Pythagorean/ClauseInteractionPathwidth/Theorems.lean` (activeFrontier_card_le_width_succ, retainAtCut_preserves_frontier_edges).\n\n**Proof Strategy:** The correctness guarantee follows from our local edge preservation theorem. The quantitative claim requires empirical validation.\n\n**Domain Bridges:** Connects to systems engineering, SAT solver architecture, and algorithm engineering.\n\n**Lineage:** Direct application of the frontier bound and edge preservation theorems.\n\n**Ambition:** Solid extension \u2014 translates theory into practice.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "905cb737",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T01:44:39.287040+00:00"
-  },
-  {
-    "id": "fd_0580",
-    "title": "Direction 4: Dynamic Programming Equivalence",
-    "description": "**Conjecture:** For CNFs F with clause interaction pathwidth pw(confGraph(F)) \u2264 k, a path-guided solver (CDCL with pathwidth-bounded forgetting) and a bag-state dynamic program have asymptotically equivalent memory requirements: both \u0398(2^k \u00b7 |F|).\n\n**Test:** Implement both a pathwidth-bounded CDCL variant and an explicit DP algorithm over path decompositions for the same formula families. Compare state counts, retained clause counts, and peak memory on synthetic bounded-pathwidth CNFs with k \u2208 {2, 4, 6, 8, 10}. Measure the constant factor.\n\n**Impact:** If confirmed, this establishes a formal computational equivalence between two paradigms \u2014 clause learning and dynamic programming \u2014 unified by pathwidth. This would be a landmark result connecting proof search to algebraic computation. If falsified, the constant factors differ too much for practical equivalence, but the asymptotic relationship may still hold.\n\n**Catalog References:** `Pythagorean/ClauseInteractionPathwidth/Theorems.lean` (cut_locality, bag_locality_of_clause_evaluation).\n\n**Proof Strategy:** The upper bound (DP memory \u2264 O(2^k \u00b7 |F|)) follows from the cut locality theorem: at each bag, the DP state space is bounded by 2^|bagVars|. The lower bound requires a counting argument showing that any solving strategy must represent this many states.\n\n**Domain Bridges:** Connects to automata theory, transfer-matrix methods in statistical physics, database join processing, and constraint satisfaction.\n\n**Lineage:** Extends the cut locality theorem into a computational equivalence.\n\n**Ambition:** Grand challenge \u2014 would unify two major algorithmic paradigms.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "905cb737",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T01:44:39.355462+00:00"
-  },
-  {
-    "id": "fd_0583",
-    "title": "Direction 1: Full-State Strong Bisimulation via Normalization-Path Synchronization",
-    "description": "**Conjecture**: For well-typed \u03b2-equivalent STLC terms `t \u2261\u03b2 u : A`, there exists a depth `d` and a relation `R` that pairs ALL states in `toFTS(d, t)` with states in `toFTS(d, u)` (not just the normal forms) and is a strong bisimulation \u2014 provided one restricts to a canonical normalization strategy (e.g., leftmost-outermost reduction).\n\n**Test**: Enumerate all well-typed STLC terms up to size 10, compute canonical normalization paths for \u03b2-equivalent pairs, construct the path-indexed pairing, and verify the bisimulation conditions computationally. A single pair where the path-indexed pairing fails the forth/back conditions would refute the conjecture.\n\n**Impact**: Would upgrade our Main Theorem from a normal-form-centric bisimulation to a full operational bisimulation, connecting to the Hennessy-Milner characterization of behavioral equivalence.\n\n**Catalog References**: `Pythagorean/StrongNormBisimProof.lean` (Main Theorem), `Pythagorean/BoundedBetaTheorems.lean` (weak bisimilarity).\n\n**Proof Strategy**: Define `R(s\u2081, s\u2082) \u2194 s\u2081` and `s\u2082` are at the same index along canonical normalization paths from `t` and `u` respectively, with padding by the normal form at the end. Prove the forth/back conditions by induction on the path index, using confluence to handle non-deterministic branching.\n\n**Domain Bridges**: Concurrency theory (CCS/CSP process equivalences), operational semantics.\n\n**Lineage**: Extends `strong_norm_implies_finite_strong_bisim`.\n\n**Ambition**: Solid extension \u2014 directly builds on catalog infrastructure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d991129",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T02:18:45.845825+00:00"
-  },
-  {
-    "id": "fd_0584",
-    "title": "Direction 2: Polymorphic Bisimulation for System F",
-    "description": "**Conjecture**: The main theorem extends to System F (polymorphic lambda calculus): \u03b2-equivalent well-typed System F terms of the same type yield strongly bisimilar bounded FTS at sufficient depth, with the depth bounded by a function of the type complexity and term size.\n\n**Test**: Implement System F typing and normalization. Generate polymorphic identity, Church-encoded data types, and parametric functions. Compute bounded FTS and check bisimulation for \u03b2-equivalent pairs. The conjecture predicts success for all well-typed pairs and failure for ill-typed ones.\n\n**Impact**: Would extend the coalgebraic finiteness principle to the type system underlying ML, Haskell, and many proof assistants. Parametricity would provide additional bisimulation structure.\n\n**Catalog References**: `Pythagorean/STLCDefs.lean` (type system), `Pythagorean/StrongNormBisimProof.lean` (main theorem).\n\n**Proof Strategy**: Use Girard's strong normalization for System F (via reducibility candidates). Extend the bounded FTS construction and shared-NF argument. The main challenge is that type abstraction/application adds new reduction rules.\n\n**Domain Bridges**: Programming language theory, parametricity, categorical semantics.\n\n**Lineage**: Generalizes all current theorems from STLC to System F.\n\n**Ambition**: Grand challenge \u2014 requires substantial new infrastructure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d991129",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T02:18:45.879901+00:00"
-  },
-  {
-    "id": "fd_0585",
-    "title": "Direction 3: Quantitative Bisimulation Metrics from Normalization Depth",
-    "description": "**Conjecture**: For well-typed STLC terms `t` and `u` of type `A` (not necessarily \u03b2-equivalent), define `d_A(t, u)` as the minimum depth `d` such that `toFTS(d, t)` and `toFTS(d, u)` are strongly bisimilar (or \u221e if no such `d` exists). Then `d_A` is a pseudometric on well-typed terms of type `A`, and `d_A(t, u) = 0` iff `t \u2261\u03b2 u`.\n\n**Test**: Enumerate well-typed terms up to size 8. For each pair, compute the minimum bisimulation depth. Verify the triangle inequality `d_A(t, v) \u2264 d_A(t, u) + d_A(u, v)` for all triples. Check that `d_A(t, u) = 0` iff the terms share a normal form.\n\n**Impact**: Would create a quantitative semantics for typed programs \u2014 measuring \"how different\" two programs are, not just \"whether they're equivalent.\" This connects to program metrics, quantitative information flow, and approximate computing.\n\n**Catalog References**: `Pythagorean/BoundedBetaDefs.lean` (bounded FTS), `Pythagorean/StrongNormBisimProof.lean` (bisimulation).\n\n**Proof Strategy**: For the metric axioms, use the transitivity of bisimulation (already proved as `Bisimilar.trans'`) and the coalgebraic invariant. The hard part is proving the triangle inequality, which requires showing that bisimulation at depth `d\u2081 + d\u2082` can be decomposed.\n\n**Domain Bridges**: Metric semantics, quantitative verification, approximate program equivalence.\n\n**Lineage**: Extends `typed_betaEq_coalgebraic_invariant` to a quantitative setting.\n\n**Ambition**: Grand challenge \u2014 novel mathematical construction.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d991129",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T02:18:45.914953+00:00"
-  },
-  {
-    "id": "fd_0587",
-    "title": "Direction 5: Types as Dissipation: Entropy Decrease Along Normalization",
-    "description": "**Conjecture**: Define the \"operational entropy\" of a term `t` at depth `d` as `H(d, t) = log\u2082(|boundedStateSet(d, t)|)`. For well-typed terms, `H(d, t)` is non-decreasing with `d` but eventually stabilizes. The stabilization depth equals the normalization depth, and the final entropy `H(\u221e, t)` depends only on the \u03b2-equivalence class.\n\n**Test**: Compute `H(d, t)` for well-typed terms up to size 10 at depths 0 through 20. Plot the growth curves. Verify that: (a) entropy stabilizes at the normalization depth, (b) \u03b2-equivalent terms have the same stable entropy, (c) the stable entropy is bounded by the type complexity.\n\n**Impact**: Would connect normalization to thermodynamic concepts \u2014 types as \"dissipation\" mechanisms that drive systems toward low-entropy attractors (normal forms). This is speculative but could inspire new connections between proof theory and statistical physics.\n\n**Catalog References**: `Pythagorean/BoundedBetaTheorems.lean` (finite_states_of_bounded_beta), `Pythagorean/StrongNormBisimProof.lean` (wellTyped_finite_normDepth).\n\n**Proof Strategy**: The stabilization follows from strong normalization: once all reachable terms have been discovered (at normalization depth), no new terms appear at larger depths. The \u03b2-equivalence invariance follows from the shared normal form theorem.\n\n**Domain Bridges**: Statistical physics, information theory, proof theory (Curry-Howard), computational complexity.\n\n**Lineage**: Extends `finite_states_of_bounded_beta` and `betaEq_typed_behavioral_eq`.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if true.",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d991129",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T02:18:45.980719+00:00"
-  },
-  {
-    "id": "fd_0595",
-    "title": "Direction 3: Coalgebraic Final Semantics",
-    "description": "**Conjecture (Grand Challenge):** The bisimulation quotient of `toFTS d t` for sufficiently large `d` is the initial algebra of a finitary endofunctor on `Set` determined by the type `A`. Specifically, the functor sends a set `X` to `1 + X^k` where `k` depends on the type structure, and the initial algebra of this functor is the \"canonical model\" of type `A`.\n\n**Test:** For types `o`, `o \u2192 o`, and `(o \u2192 o) \u2192 o \u2192 o`, compute the bisimulation quotient structure (states + transitions) for a large sample of terms and check whether the quotient coalgebra is always isomorphic to the same finite object (up to the type).\n\n**Impact:** This would connect the entire theory to the categorical semantics of coalgebra. The \"canonical finite-state semantics\" would be precisely the final coalgebra in a suitable category \u2014 making the Myhill\u2013Nerode analogy a theorem rather than a metaphor.\n\n**Catalog References:** `Pythagorean/BisimMinimization.lean` (SemanticQuotient, BehavioralEquiv), `Pythagorean/StrongNormBisimulation.lean` (CoalgebraicInvariant)\n\n**Proof Strategy:**\n1. Define the appropriate endofunctor F_A for each type A\n2. Show that the bisimulation quotient of the FTS of the \u03b7-long normal form is an F_A-coalgebra\n3. Prove that this coalgebra satisfies the universal property of finality among finite F_A-coalgebras\n\n**Domain Bridges:** Category theory (final coalgebras), universal algebra (Birkhoff variety theorem), modal logic (coalgebraic modal logic)\n\n**Lineage:** Builds on `typed_coalgebraic_invariant` from StrongNormBisimulation\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if achieved; connects three major mathematical traditions\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2c97bffa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T04:06:59.157063+00:00"
-  },
-  {
-    "id": "fd_0597",
-    "title": "Direction 5: Arrow-Depth Exponential Complexity",
-    "description": "**Conjecture:** The function `typeStateBound A` can be chosen to be singly exponential in the arrow depth of `A` (i.e., `2^{O(depth(A))}`) rather than growing with the full type size. Specifically, there exists a constant `c` such that `typeStateBound A \u2264 c^{depth(A)+1}` for all simple types `A`.\n\n**Test:** Fit the empirical maximum quotient sizes across types of depth 1\u20136 and check whether the growth rate matches single exponential, double exponential, or polynomial scaling. Search for types where the observed maximum exceeds `2^{depth+1}`.\n\n**Impact:** This would establish that the semantic state complexity of typed programs is controlled by a single structural parameter (arrow depth) rather than full type size \u2014 a dramatic simplification with implications for program analysis and compiler optimization.\n\n**Catalog References:** `Pythagorean/BisimMinimization.lean` (typeStateBound), `Pythagorean/STLCDefs.lean` (Ty.depth, Ty.complexity)\n\n**Proof Strategy:**\n1. Analyze the recursive structure of typeStateBound more carefully\n2. Show that the multiplicative formula (s+1)*(t+1) for arrow types, when accumulated over a balanced type tree, yields at most exponential growth in depth\n3. Use the observation that most type subterms are shared in practice\n\n**Domain Bridges:** Descriptive complexity (quantifier depth vs. state complexity), automata theory (star height problem), computational complexity (parametrized complexity)\n\n**Lineage:** Refines the `typeStateBound` definition and bound\n\n**Ambition:** \u2605\u2605\u2606\u2606\u2606 \u2014 Primarily combinatorial, good starting point for extensions",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2c97bffa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T04:06:59.228688+00:00"
-  },
-  {
-    "id": "fd_0598",
-    "title": "Direction 1: Persistence Zeta Function Multiplicativity",
-    "description": "**Conjecture:** For filtered finite abelian groups F\u2081 and F\u2082 with coprime torsion exponents, the persistence zeta function Z(s) = \u220f_p (1 + len(barcode_p) \u00b7 p^{-s}) satisfies\n\nZ(F\u2081 \u00d7 F\u2082, s) = Z(F\u2081, s) \u00b7 Z(F\u2082, s).\n\n**Test:** Compute Z(s) on all products of filtrations with \u2264 5 levels over groups of order \u2264 120. Compare Z(product) with Z\u2081 \u00b7 Z\u2082 for s \u2208 {1, 2, 3}. Computational experiments (see `applications.py`) show multiplicativity holds when the two filtrations have coprime support, but can fail when supports overlap due to barcode length interaction.\n\n**Impact:** If multiplicative, Z(s) would be a genuine arithmetic invariant of persistence modules with Euler-product structure, directly analogous to Dedekind zeta functions. This would establish the first formal connection between persistence theory and analytic number theory.\n\n**Catalog References:** `Pythagorean/AdelicPersistentHomology.lean` \u2014 `persistence_zeta` definition (Python), `bounded_torsion_implies_bounded_primeSupport`.\n\n**Proof Strategy:** Prove multiplicativity for filtrations with coprime support using the CRT persistence theorem (`persistence_CRT_decomposition`). The coprime-support case should follow from independence of prime barcodes. For the general case, investigate correction terms from barcode interaction at shared primes.\n\n**Domain Bridges:** Analytic number theory \u2194 topological data analysis. The Euler product for \u03b6(s) is the classical prototype; persistence zeta is its TDA analogue.\n\n**Lineage:** Extends `persistence_CRT_decomposition` and `adelic_reconstruction_correct_set`.\n\n**Ambition:** Grand challenge \u2014 if true in generality, opens an entire field.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "641e2bf5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T04:42:20.931240+00:00"
-  },
-  {
-    "id": "fd_0609",
-    "title": "Direction 1: Equality Criterion for Coproduct Subadditivity",
-    "description": "**Conjecture:** $\\kappa_{\\mathrm{sh}}(J, F \\oplus G) = \\kappa_{\\mathrm{sh}}(J, F) + \\kappa_{\\mathrm{sh}}(J, G)$ if and only if no jointly admissible family of size $< \\kappa_{\\mathrm{sh}}(F) + \\kappa_{\\mathrm{sh}}(G)$ exists.\n\n**Test:** Enumerate all presheaf pairs $(F, G)$ on categories with $\\leq 4$ objects and section sets of size $\\leq 3$. For each pair, compute both sides and search exhaustively for jointly admissible families. Verify the biconditional.\n\n**Impact:** Characterizes when geometric data sources are \"informationally independent\" \u2014 the presheaf analogue of $I(X;Y) = 0$. This would identify the geometric structures that preclude compression savings.\n\n**Catalog References:**\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `sheafCompressionNumber_coprod_le`, `JointlyAdmissible`\n- `Catalog/FINAL/Bridges/SheafCompressionFiniteSite.lean` \u2014 `sheafCompressionCards`, monotonicity\n\n**Proof Strategy:** Forward direction follows from Theorem 4 (contrapositive). Reverse direction requires showing that when no small jointly admissible family exists, every coproduct witness has cardinality $\\geq \\kappa(F) + \\kappa(G)$. This likely requires a structural decomposition theorem for coproduct-separating families.\n\n**Domain Bridges:** Information theory (characterization of independent sources), combinatorics (disjointness of separating families), coding theory (source separation).\n\n**Lineage:** Direct extension of Theorems 2 and 4 from `CoproductSubadditivity.lean`.\n\n**Ambition:** Solid extension \u2014 completes the subadditivity theory by characterizing the equality case.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "04157109",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T06:31:50.392796+00:00"
-  },
-  {
-    "id": "fd_0611",
-    "title": "Direction 3: Multiplicative Bound for Products",
-    "description": "**Conjecture:** For the pointwise product presheaf $(F \\times G)(X) = F(X) \\times G(X)$:\n$$\\kappa_{\\mathrm{sh}}(J, F \\times G) \\leq \\kappa_{\\mathrm{sh}}(J, F) + \\kappa_{\\mathrm{sh}}(J, G).$$\n\nMore ambitiously: $\\kappa_{\\mathrm{sh}}(J, F \\times G) = \\max(\\kappa_{\\mathrm{sh}}(J, F), \\kappa_{\\mathrm{sh}}(J, G))$.\n\n**Test:** Enumerate products of presheaf pairs on small categories. Compute $\\kappa_{\\mathrm{sh}}$ for $F$, $G$, and $F \\times G$. Check both the additive and max bounds.\n\n**Impact:** Products represent \"simultaneous observation\" of two data sources. If the max bound holds, it says that observing two data streams simultaneously requires only as many probes as the harder stream \u2014 a powerful \"free lunch\" theorem. This would distinguish $\\kappa_{\\mathrm{sh}}$ from entropy (which is additive for products of independent sources).\n\n**Catalog References:**\n- `Catalog/Pythagorean/ProbeComplexity/CompressionProduct.lean` \u2014 existing product formula work\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 subadditivity methodology\n\n**Proof Strategy:** For the additive bound, the same union-of-witnesses strategy should work (products are separated component-wise). For the max bound, one needs to show that a family separating $F$ also separates $F \\times G$ if it separates $G$. This is plausible since product projections are surjective.\n\n**Domain Bridges:** Category theory (product vs coproduct duality), coding theory (joint vs separate coding), information theory (entropy of product sources).\n\n**Lineage:** Dual of the coproduct subadditivity from `CoproductSubadditivity.lean`.\n\n**Ambition:** Solid extension (additive bound) / grand challenge (max bound).\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "04157109",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T06:31:50.459503+00:00"
-  },
-  {
-    "id": "fd_0612",
-    "title": "Direction 4: Data Processing Inequality",
-    "description": "**Conjecture:** For a natural transformation $\\eta : F \\Rightarrow G$ (a presheaf morphism):\n$$\\kappa_{\\mathrm{sh}}(J, G) \\leq \\kappa_{\\mathrm{sh}}(J, F)$$\nprovided $\\eta$ is objectwise surjective.\n\nMore generally, if $\\eta$ is objectwise $k$-to-one: $\\kappa_{\\mathrm{sh}}(J, G) \\leq \\kappa_{\\mathrm{sh}}(J, F)$.\n\n**Test:** Construct surjective presheaf morphisms on small sites. Verify the inequality. Test with $k$-to-one maps to explore the quantitative version.\n\n**Impact:** This would be the categorical analogue of the data processing inequality $H(g(X)) \\leq H(X)$: processing data can only decrease its complexity. Combined with subadditivity, this would complete the axiomatic picture of $\\kappa_{\\mathrm{sh}}$ as an information measure.\n\n**Catalog References:**\n- `Catalog/FINAL/Bridges/SheafCompressionFiniteSite.lean` \u2014 `PresheafSeparatedByProbes`, monotonicity\n- `Catalog/Pythagorean/ProbeComplexity/Theorems.lean` \u2014 profile map injectivity\n\n**Proof Strategy:** If $P$ separates $F$ and $\\eta$ is surjective, then $P$ separates $G$: for $s \\neq t$ in $G(X)$, lift to $\\tilde{s} \\neq \\tilde{t}$ in $F(X)$ (surjectivity + naturality), find a distinguishing probe for $F$, and push forward through $\\eta$.\n\n**Domain Bridges:** Information theory (data processing inequality), category theory (functoriality of complexity), signal processing (lossy compression).\n\n**Lineage:** Uses separation machinery from `SheafCompressionFiniteSite.lean`.\n\n**Ambition:** Grand challenge \u2014 would complete the information-theoretic axiomatics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "04157109",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T06:31:50.490834+00:00"
-  },
-  {
-    "id": "fd_0614",
-    "title": "Direction 1: Coalgebraic Temporal Adjunction for Infinite Traces",
-    "description": "**Conjecture:** The adjunction triple \u27e8a\u27e9 \u22a3 (ext_a)* \u22a3 [a] extends from finite traces to the final coalgebra of the trace functor, yielding a **coalgebraic temporal adjunction** that captures \u03c9-regular properties (liveness, fairness) in addition to safety properties. Specifically, the diamond and box on infinite traces (streams) should arise as colimit/limit constructions over the finite-trace adjunctions.\n\n**Test:** Formalize the final coalgebra for Act = {a,b} as the type of infinite streams Stream(Fin 2). Verify that the pullback along stream-cons (adding an action to the front) has left and right adjoints, and that these coincide with the standard CTL* modalities EX and AX on Kripke structures with at most 4 states.\n\n**Impact:** Would provide a categorical foundation for the full spectrum of temporal logics (LTL, CTL, CTL*, \u03bc-calculus) as instances of a single adjunction framework, potentially simplifying the landscape of temporal verification tools.\n\n**Catalog References:**\n- `Pythagorean/TemporalAdjunction/Theorems.lean`: `diamond_left_adjoint`, `box_right_adjoint` (finite-trace base case)\n- `Catalog/Pythagorean/YonedaBisimulation/Correspondence.lean`: `yoneda_bisim_det_iff` (trace equivalence)\n\n**Proof Strategy:** Define the stream-level modalities as limits of the finite-trace adjunctions using `CategoryTheory.Limits`. The key lemma is that the adjunction triple is compatible with the transition maps of the inverse system, so the limit inherits the adjunction structure.\n\n**Domain Bridges:** Connects process algebra (temporal logic) \u2192 coalgebra (infinite behaviors) \u2192 automata theory (\u03c9-regular languages). The coalgebraic diamond should correspond to the EX operator of CTL, and the Beck-Chevalley condition should give EU (Exists-Until).\n\n**Lineage:** Jacobs, *Introduction to Coalgebra* (2016); Pattinson, *Coalgebraic Modal Logic* (2003); C\u00eerstea et al., *Modalities in Coalgebraic Logics* (2011).\n\n**Ambition:** \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires significant coalgebraic infrastructure)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0195dcfa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T07:09:23.960984+00:00"
-  },
-  {
-    "id": "fd_0615",
-    "title": "Direction 2: Sheaf Cohomology of Bisimulation Obstructions",
-    "description": "**Conjecture:** The first sheaf cohomology group H\u00b9(Exp_Act, \u03a9) is trivial if and only if the LTS satisfies the image-finiteness condition of the Hennessy-Milner theorem. When H\u00b9 is nontrivial, its elements classify obstructions to extending local bisimulation equivalences to global ones \u2014 analogous to how H\u00b9 classifies fiber bundle triviality in algebraic topology.\n\n**Test:** Compute H\u00b9 for the 4-state LTS L = {s\u2080 \u2192_a s\u2081 \u2192_b s\u2082, s\u2080 \u2192_a s\u2083 \u2192_b s\u2082} using the \u010cech cohomology of the nerve cover. If H\u00b9(L, \u03a9) \u2245 \u2124/2\u2124 (generated by the symmetry swapping s\u2081 and s\u2083), the conjecture gains evidence. If H\u00b9 is trivial for all image-finite LTS with \u2264 6 states, strong evidence. Falsification: find an image-finite LTS with nontrivial H\u00b9.\n\n**Impact:** Would establish a direct computational bridge between algebraic topology and process algebra, potentially enabling topological methods for analyzing concurrent system equivalence.\n\n**Catalog References:**\n- `Pythagorean/TemporalAdjunction/Defs.lean`: `TraceSieve` (the sieve structure)\n- `Pythagorean/TemporalAdjunction/Theorems.lean`: `sieve_nonBoolean` (non-trivial sieve structure)\n- `Catalog/Pythagorean/YonedaBisimulation/Properties.lean`: `bisimUnion_is_bisimulation`\n\n**Proof Strategy:** Construct the \u010cech complex for the trace cover, compute the coboundary maps explicitly for small LTS, and identify the cohomology group. Use `Mathlib.AlgebraicTopology.SimplicialObject` for the nerve construction.\n\n**Domain Bridges:** Process algebra \u2192 algebraic topology \u2192 sheaf theory. If successful, opens a path to using persistent homology for analyzing families of LTS.\n\n**Lineage:** Johnstone, *Sketches of an Elephant* (2002, \u00a7C3); Bredon, *Sheaf Theory* (1997); Winskel, *The Formal Semantics of Programming Languages* (1993).\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 connects two largely separate fields)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0195dcfa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T07:09:23.997434+00:00"
-  },
-  {
-    "id": "fd_0617",
-    "title": "Direction 4: Modal Homotopy Type Theory for Temporal Logic",
-    "description": "**Conjecture:** The adjunction triple \u27e8a\u27e9 \u22a3 (ext_a)* \u22a3 [a] is an instance of a **crisp modality** in modal homotopy type theory (HoTT). Specifically, there exists a mode theory M with modes {time, state} and a modality \u03bc_a : time \u2192 state for each action a, such that the diamond is the left adjoint \u03a3_{\u03bc_a} and the box is the right adjoint \u03a0_{\u03bc_a}. The identity types in the time mode carry **bisimulation structure**: two traces are identified in the time mode iff they are bisimilar in the LTS.\n\n**Test:** Formalize the mode theory for Act = {a} in the Agda implementation of modal HoTT (Gratzer et al., 2020). Verify that the diamond and box modalities in the type theory match the Lean-verified definitions. If the identity types do not correspond to bisimulation, the conjecture is falsified.\n\n**Impact:** Would establish temporal logic as a native fragment of homotopy type theory, opening the door to using HoTT proof assistants for temporal verification and potentially connecting temporal bisimulation to homotopy equivalence.\n\n**Catalog References:**\n- `Pythagorean/TemporalAdjunction/Theorems.lean`: `diamond_left_adjoint`, `box_right_adjoint` (the adjunction to formalize)\n- `Catalog/Pythagorean/YonedaBisimulation/Correspondence.lean`: `bisimilar_implies_hm_equiv'` (bisimulation = HM equivalence)\n\n**Proof Strategy:** Use the framework of Schreiber's \"Differential Cohomology in a Cohesive \u221e-Topos\" to construct the mode theory. The key insight is that the experiment category Exp_Act should be a (\u221e,1)-category whose higher morphisms encode bisimulation relations.\n\n**Domain Bridges:** Temporal logic \u2192 homotopy type theory \u2192 \u221e-topos theory \u2192 synthetic homotopy theory. If bisimulation = homotopy equivalence, then the entire HoTT toolkit becomes available for process algebra.\n\n**Lineage:** Shulman, \"Brouwer's Fixed-Point Theorem in Real-Cohesive HoTT\" (2018); Gratzer et al., \"Multimodal Dependent Type Theory\" (2020); Schreiber, *Differential Cohomology in a Cohesive \u221e-Topos* (2013).\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 unifies two foundational programs)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0195dcfa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T07:09:24.070933+00:00"
-  },
-  {
-    "id": "fd_0618",
-    "title": "Direction 5: Probabilistic Temporal Adjunction",
-    "description": "**Conjecture:** Replacing the Boolean-valued transition relation `step : S \u2192 Act \u2192 S \u2192 Prop` with a probability-valued version `step : S \u2192 Act \u2192 S \u2192 [0,1]` (a Markov kernel), the adjunction triple lifts to the **Giry monad**: the diamond becomes the expected value operator E[P | do action a], the box becomes the essential infimum operator ess-inf[P | do action a], and the pullback becomes conditioning on the action. The resulting Heyting algebra is the algebra of **measurable predicates** up to almost-sure equality.\n\n**Test:** For the 3-state Markov chain with states {s\u2080, s\u2081, s\u2082}, transitions s\u2080\u2192_a s\u2081 (prob 0.7) and s\u2080\u2192_a s\u2082 (prob 0.3), verify:\n- E[P | a](s\u2080) = 0.7 \u00b7 P(s\u2081) + 0.3 \u00b7 P(s\u2082) for indicator functions P.\n- The adjunction E_a \u22a3 ext_a* \u22a3 ess-inf_a holds on measurable predicates.\n- The Beck-Chevalley condition holds for composition of probabilistic actions.\nFalsification: find a Markov kernel where the composition law fails.\n\n**Impact:** Would provide a categorical foundation for probabilistic model checking (PRISM, Storm), unifying the logical and probabilistic approaches to verification under a single adjunction framework.\n\n**Catalog References:**\n- `Pythagorean/TemporalAdjunction/Theorems.lean`: `diamond_compose`, `box_compose` (deterministic Beck-Chevalley)\n- `Catalog/FINAL/Bridges/BisimulationMetric.lean`: bisimulation metrics (quantitative process equivalence)\n\n**Proof Strategy:** Use Mathlib's measure theory (`MeasureTheory.Measure`) to define the Giry monad. The key lemma is that the Radon-Nikodym derivative provides the adjunction between the direct and inverse image measures.\n\n**Domain Bridges:** Process algebra \u2192 probability theory \u2192 measure theory \u2192 Markov decision processes \u2192 reinforcement learning. The probabilistic adjunction should give the Bellman optimality equations as a special case.\n\n**Lineage:** Giry, \"A Categorical Approach to Probability Theory\" (1982); Panangaden, *Labelled Markov Processes* (2009); Kwiatkowska et al., \"PRISM 4.0\" (2011).\n\n**Ambition:** \u2605\u2605\u2605\u2605 (Grand challenge \u2014 bridges formal verification and probability)",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0195dcfa",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T07:09:24.108290+00:00"
-  },
-  {
     "id": "fd_0621",
     "title": "Direction 3: Minor Monotonicity of Defect",
     "description": "**Conjecture:** If H is obtained from G by deleting an edge e inside G[S] (with e not incident to q), then:\n$$\\delta(H,q,S) \\leq \\delta(G,q,S)$$\n\nMoreover, equality holds if and only if e is a bridge of G[S].\n\n**Test:** For each connected graph G with n \u2264 7, each root q, each S, and each eligible edge e \u2208 E(G[S]), compute \u03b4(G,q,S) and \u03b4(G\u2212e,q,S). Verify the inequality and check the equality condition.\n\n**Impact:** Would establish that the defect is monotone under edge deletion inside G[S], making it a well-behaved complexity measure. This connects to graph minor theory and matroid theory.\n\n**Catalog References:** `Pythagorean/TropicalBridge/DefectTheory.lean` (inducedCycleRank, structuralDefect).\n\n**Proof Strategy:** Edge deletion inside G[S] decreases e(G[S]) by 1. If the deleted edge is a bridge, c(G[S]) increases by 1, so \u03b2\u2081 stays the same. If not a bridge, c stays the same, so \u03b2\u2081 decreases by 1. In both cases, \u03ba is unchanged (edge deletion inside S doesn't affect G \u2212 {q} components). Combine to get \u03b4(H) \u2264 \u03b4(G).\n\n**Domain Bridges:** Matroid theory \u2194 graph minor theory \u2194 topological complexity measures.\n\n**Lineage:** Extends the nonnegativity theorem.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 Solid extension.\n\n---",
@@ -9807,175 +10473,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "091a2875",
     "consumed_by_exp_id": "c3483166",
     "timestamp": "2026-05-24T07:47:31.073461+00:00"
-  },
-  {
-    "id": "fd_0622",
-    "title": "Direction 4: Metrized Graph / Tropical Curve Extension",
-    "description": "**Conjecture:** The structural defect extends to metrized graphs (tropical curves) \u0393 with edge lengths, where \u03b2\u2081 is defined via the first Betti number of the underlying topological space and \u03ba counts connected components of \u0393 \u2212 {q} intersecting a given closed subset. The defect formula \u03b4 = \u03b2\u2081 + \u03ba \u2212 1 continues to hold in this continuous setting.\n\n**Test:** Implement tropical curve chip-firing computation with rational edge lengths. Test on subdivisions of small graphs (replacing edges by paths of varying lengths). Verify that the defect depends only on the combinatorial type, not the edge lengths.\n\n**Impact:** Would establish the defect as a *tropical* invariant \u2014 independent of metric refinement. This connects to tropical Brill\u2013Noether theory and the work of Cools\u2013Draisma\u2013Payne\u2013Robeva.\n\n**Catalog References:** `Pythagorean/TropicalBridge/DefectTheory.lean`.\n\n**Proof Strategy:** Show that edge subdivision (replacing an edge by a path) preserves \u03b2\u2081 and \u03ba. Use the Baker\u2013Norine specialization lemma to relate divisor rank on the metrized graph to rank on finite models. Conclude that the defect is a combinatorial type invariant.\n\n**Domain Bridges:** Tropical geometry \u2194 algebraic curves \u2194 Berkovich analytification.\n\n**Lineage:** Extends Baker\u2013Norine to the continuous setting via Gathmann\u2013Kerber and CDPR.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 Grand challenge.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "091a2875",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T07:47:31.125006+00:00"
-  },
-  {
-    "id": "fd_0624",
-    "title": "Direction 1: Submodularity of Sheaf Compression",
-    "description": "**Conjecture:** For every finite site $(C, J)$ and presheaves $F, G, H$ with nonempty compression card sets, the sheaf compression number satisfies the submodular inequality:\n$$\\kappa_{\\mathrm{sh}}(F \\oplus G) + \\kappa_{\\mathrm{sh}}(G \\oplus H) \\geq \\kappa_{\\mathrm{sh}}(G) + \\kappa_{\\mathrm{sh}}(F \\oplus G \\oplus H)$$\n\n**Test:** Exhaustive enumeration over all presheaf triples on categories with \u2264 3 objects and section sets of size \u2264 4. Compute both sides for every triple and report any violation. For the triangle category $a \\to b \\to c$ with trivial topology, this is approximately $4^3 = 64$ triples.\n\n**Impact:** If true, $\\kappa_{\\mathrm{sh}}$ defines a polymatroid rank function on the lattice of coproduct-closed presheaf collections. This would immediately import the entire theory of submodular optimization \u2014 greedy algorithms, Lov\u00e1sz extensions, matroid intersection \u2014 into categorical compression theory.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/ChainRule.lean` \u2014 `sheafCompressionNumber_coprod_le`, `sheafCompressionNumber_le_coprod_left`\n- `Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `sheafCompressionNumber_coprod_le`\n\n**Proof Strategy:** Use the witness decomposition approach: an optimal witness for $F \\oplus G \\oplus H$ projects to witnesses for $F \\oplus G$ and $G \\oplus H$ with controlled overlap. The shared $G$-component creates the submodularity slack. Alternatively, prove via the defect decomposition: submodularity is equivalent to $I_{\\mathrm{sh}}(F; H \\mid G) \\leq I_{\\mathrm{sh}}(F; H)$, which states that conditioning cannot increase mutual compression.\n\n**Domain Bridges:** Polymatroid theory, submodular optimization, matroid rank functions, combinatorial optimization\n\n**Lineage:** Extends `sheafCompressionNumber_coprod_le` (subadditivity) and `conditionalCompressionDefect_nonneg` (monotonicity)\n\n**Ambition:** \u2605\u2605\u2605\u2605 \u2014 Would establish sheaf compression as a polymatroid, unlocking algorithmic applications\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d2dfe412",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T07:48:03.102295+00:00"
-  },
-  {
-    "id": "fd_0625",
-    "title": "Direction 2: Data Processing Inequality for Presheaf Morphisms",
-    "description": "**Conjecture:** If $\\phi: G \\to H$ is a natural transformation of presheaves that is \"profile-preserving\" (i.e., for every probe $Z$ and morphism $f: Z \\to X$, the restriction maps factor through $\\phi$), then:\n$$I_{\\mathrm{sh}}(F; H) \\leq I_{\\mathrm{sh}}(F; G)$$\n\n**Test:** Enumerate all natural transformations between presheaves on the arrow category with section sets of size \u2264 3. For each, check if it is profile-preserving and verify the inequality. A single counterexample would require refining the \"profile-preserving\" condition.\n\n**Impact:** This would be the sheaf-theoretic data processing inequality, the foundational result of channel theory. It would establish that mutual compression decreases along \"information channels\" (natural transformations), opening the door to categorical channel capacity, rate-distortion theory, and source coding theorems for structured data.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/ChainRule.lean` \u2014 `mutualCompression`, `mutualCompression_le_left`\n- `Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `card_hom_le_profile_capacity`\n\n**Proof Strategy:** Show that a profile-preserving morphism $G \\to H$ induces a factorization of the profile map for $F \\oplus H$ through the profile map for $F \\oplus G$. Then the injectivity of the profile map (from `profileMap_injective`) gives the cardinality bound, which translates to a compression number inequality.\n\n**Domain Bridges:** Channel theory, rate-distortion theory, Markov chains, statistical sufficiency\n\n**Lineage:** Extends `card_hom_le_profile_capacity` (profile capacity bound) and `mutualCompression_le_left` (upper bound)\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Grand challenge. Would create categorical channel theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d2dfe412",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T07:48:03.135434+00:00"
-  },
-  {
-    "id": "fd_0626",
-    "title": "Direction 3: Interaction Information and Synergy Detection",
-    "description": "**Conjecture:** The ternary interaction information\n$$I_{\\mathrm{sh}}(F; G; H) := I_{\\mathrm{sh}}(F; G) + I_{\\mathrm{sh}}(F; H) - I_{\\mathrm{sh}}(F; G \\oplus H)$$\ncan be **negative** for suitable presheaves on a finite site, indicating categorical synergy: $F$ shares more information with $(G, H)$ jointly than with each separately.\n\n**Test:** Brute-force search over all presheaf triples on the arrow category and triangle category. Compute $I_{\\mathrm{sh}}(F;G;H)$ for each and identify the first negative instance. If no instance exists up to section size 5, conjecture positivity and attempt a proof.\n\n**Impact:** Negative interaction information is a signature of synergistic information in neuroscience, distributed computing, and cryptography. Demonstrating it in the categorical setting would validate sheaf compression as a genuine multi-variate information measure, not merely a pairwise one.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/ChainRule.lean` \u2014 `mutualCompression`, `conditionalMutualCompression`, `mutualCompression_chain_rule`\n\n**Proof Strategy:** Construct an explicit counterexample. Consider presheaves where $F$'s sections encode a \"parity\" of $G$ and $H$'s sections \u2014 this is the categorical analogue of XOR, which produces synergy in classical information theory. The key is finding presheaves where the coproduct $G \\oplus H$ reveals structure invisible to $G$ or $H$ alone.\n\n**Domain Bridges:** Neuroscience (integrated information theory), cryptography (secret sharing), distributed computing (coordination complexity)\n\n**Lineage:** Builds on `mutualCompression_chain_rule` (chain rule) and `conditionalMutualCompression_eq_explicit` (defect decomposition)\n\n**Ambition:** \u2605\u2605\u2605 \u2014 Conceptually important, computationally tractable\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d2dfe412",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T07:48:03.169425+00:00"
-  },
-  {
-    "id": "fd_0627",
-    "title": "Direction 4: Logarithmic Refinement via Profile Capacity",
-    "description": "**Conjecture:** Define the **logarithmic compression entropy**:\n$$h_{\\mathrm{sh}}(J, F) := \\log_2 \\prod_{Z \\in P^*} |F(Z)|$$\nwhere $P^*$ is an optimal separating probe family. Then $h_{\\mathrm{sh}}$ satisfies a chain rule analogous to Shannon entropy:\n$$h_{\\mathrm{sh}}(J, F \\oplus G) \\leq h_{\\mathrm{sh}}(J, F) + h_{\\mathrm{sh}}(J, G)$$\nwith equality iff the optimal probe families for $F$ and $G$ are disjoint.\n\n**Test:** Compute $h_{\\mathrm{sh}}$ on all presheaves over the arrow category with section sizes \u2264 4. Verify subadditivity and characterize equality cases.\n\n**Impact:** This bridges sheaf compression to classical information theory by replacing the combinatorial compression number (probe count) with a capacity-weighted entropy. It would enable direct comparison with Shannon entropy and provide tighter bounds for applications.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `card_hom_le_profile_capacity`\n- `Pythagorean/ProbeComplexity/ChainRule.lean` \u2014 `sheafCompressionNumber_coprod_le`\n\n**Proof Strategy:** Use `card_hom_le_profile_capacity` to bound section counts by profile products. The logarithm converts products to sums, giving the subadditivity. Equality analysis requires understanding when optimal probe families can be \"merged\" without waste.\n\n**Domain Bridges:** Shannon entropy, source coding, rate-distortion theory, counting complexity\n\n**Lineage:** Direct extension of `card_hom_le_profile_capacity` into the chain rule framework\n\n**Ambition:** \u2605\u2605\u2605\u2605 \u2014 Bridges discrete compression to continuous information theory\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d2dfe412",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T07:48:03.202711+00:00"
-  },
-  {
-    "id": "fd_0628",
-    "title": "Direction 5: Computational Complexity of Compression Numbers",
-    "description": "**Conjecture:** Computing $\\kappa_{\\mathrm{sh}}(J, F)$ for a finite site with $n$ objects is NP-hard in general (under appropriate encodings of the presheaf and topology), but admits polynomial-time algorithms when:\n1. The underlying category is a tree (no directed cycles)\n2. The topology is trivial or discrete\n3. All section sets have bounded size\n\n**Test:** Implement the exhaustive algorithm and measure runtime scaling on random categories with $n = 3, 4, 5, 6, 7$ objects. Identify the phase transition where exhaustive search becomes infeasible. For special cases, implement polynomial algorithms and verify correctness against the exhaustive baseline.\n\n**Impact:** Understanding the computational complexity of compression numbers is essential for practical applications. Polynomial algorithms for special cases would enable sheaf compression to be applied to real-world datasets (databases, networks, sensor arrays) at scale.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/ChainRule.lean` \u2014 all compression number definitions\n- `Pythagorean/ProbeComplexity/Defs.lean` \u2014 `ProbeFamily.IsSeparating`\n\n**Proof Strategy:** For the NP-hardness direction, reduce from SET COVER: given a universe $U$ and collection $\\mathcal{S}$, construct a category where objects correspond to sets, morphisms encode element membership, and the compression number equals the minimum cover size. For polynomial cases, exploit tree structure for dynamic programming or bounded section size for constraint propagation.\n\n**Domain Bridges:** Computational complexity, approximation algorithms, parameterized complexity, database query optimization\n\n**Lineage:** Motivated by the exhaustive search algorithm in `algorithms.py`\n\n**Ambition:** \u2605\u2605\u2605 \u2014 Practical importance, connects to CS theory",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d2dfe412",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T07:48:03.238238+00:00"
-  },
-  {
-    "id": "fd_0629",
-    "title": "Direction 1: Semigroup Probe Complexity and the Identity Barrier",
-    "description": "**Conjecture:** There exists a complete characterization of finite semigroups $S$ for which the right regular representation $\\rho: S \\to \\text{End}(S)$ is injective. Specifically: $\\rho$ is injective if and only if $S$ has a right identity element (an element $e$ with $a \\cdot e = a$ for all $a$).\n\n**Test:** Enumerate all semigroups of order $\\leq 6$ and check whether right regular injectivity correlates perfectly with the existence of a right identity. A single semigroup with injective $\\rho$ but no right identity would refute the conjecture; a single semigroup with a right identity but non-injective $\\rho$ would also refute it.\n\n**Impact:** Would give the exact algebraic boundary where the One-Probe Theorem fails. Currently we know monoids always satisfy right detection and right zero bands fail it, but the precise dividing line is unknown.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/MonoidCategory.lean` \u2014 `rightDetects_of_monoid`, `not_rightDetects_iff`\n- `Pythagorean/ProbeComplexity/Defs.lean` \u2014 `ProbeFamily.IsSeparating`\n\n**Proof Strategy:** Formalize semigroup categories (one-object categories where composition comes from a semigroup, using `Mul` instead of `Monoid`). Prove the forward direction ($\\text{right identity} \\implies \\text{injective}$) using the same $c = e$ argument. For the reverse direction, use the GAP computational algebra system to search for counterexamples.\n\n**Domain Bridges:** Semigroup theory \u2192 automata theory (syntactic semigroups of regular languages), category theory (semicategories).\n\n**Lineage:** Direct extension of `rightDetects_of_monoid`. The proof technique (using the identity) immediately suggests the right identity hypothesis.\n\n**Ambition:** Medium \u2014 computationally verifiable and theoretically clean.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2cfcb628",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T08:23:29.238998+00:00"
-  },
-  {
-    "id": "fd_0630",
-    "title": "Direction 2: Enriched One-Object Categories (Rings and Algebras)",
-    "description": "**Conjecture:** For a ring $R$ viewed as an $\\text{Ab}$-enriched one-object category, the *additive probe complexity* (requiring probes to separate morphisms up to additive structure) satisfies $\\kappa_{\\text{Ab}}(BR) = 0$ iff $R$ is the zero ring, and $\\kappa_{\\text{Ab}}(BR) = 1$ iff $R$ is nonzero. Furthermore, the separating element can always be taken to be the multiplicative identity $1_R$.\n\n**Test:** Verify for matrix rings $M_n(\\mathbb{F}_q)$, polynomial quotient rings $\\mathbb{F}_q[x]/(f)$, and group rings $\\mathbb{F}_q[G]$ for small $q$, $n$, and $|G|$.\n\n**Impact:** Would extend the monoid classification to the enriched setting, showing that the identity-as-separator principle is robust across enrichment levels. This connects probe complexity to ring theory and representation theory.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/MonoidCategory.lean` \u2014 `singleton_isSeparating_singleObj_iff`\n- `Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `probeComplexity_le_card`\n\n**Proof Strategy:** Define Ab-enriched probe families requiring separation of group homomorphisms. The key step is showing that multiplicative identity $1_R$ separates: if $a \\cdot 1 = b \\cdot 1$ then $a = b$, identical to the monoid case.\n\n**Domain Bridges:** Ring theory \u2192 algebraic K-theory, Morita theory, noncommutative geometry.\n\n**Lineage:** Enriched generalization of the monoid theorem. Uses the same core insight.\n\n**Ambition:** Medium-high \u2014 requires enriched category theory infrastructure but the core proof should be similar.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2cfcb628",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T08:23:29.279419+00:00"
-  },
-  {
-    "id": "fd_0631",
-    "title": "Direction 3: Probe Complexity of Finite Group Action Categories",
-    "description": "**Conjecture (Grand Challenge):** For a finite group $G$ acting on a finite set $X$, the probe complexity of the associated action category (objects: elements of $X$, morphisms: group elements acting between orbits) is equal to the number of orbits minus the number of orbits on which the action is faithful.\n\n**Test:** Compute $\\kappa$ for $S_3$ acting on $\\{1,2,3\\}$ (one orbit, faithful, expected $\\kappa = 0$?), $S_3$ acting on $\\{1,2,3\\} \\sqcup \\{4\\}$ (two orbits), and cyclic group actions on various sets.\n\n**Impact:** Would be the first non-trivial probe complexity classification for multi-object categories. Would connect probe complexity to the orbit-stabilizer theorem and representation theory.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/Theorems.lean` \u2014 `probeComplexity_pos_iff`, `card_hom_le_profile_capacity`\n- `Pythagorean/ProbeComplexity/MonoidCategory.lean` \u2014 `probeComplexity_singleObj_eq_one_iff` (base case)\n\n**Proof Strategy:** Use the orbit decomposition to reduce to individual orbits. For each orbit, the endomorphism monoid is the stabilizer, so the monoid theorem applies. The challenge is understanding how probes from different orbits interact.\n\n**Domain Bridges:** Group actions \u2192 combinatorics (Burnside's lemma), topology (covering spaces), physics (gauge theory).\n\n**Lineage:** Multi-object generalization of the monoid classification. The monoid case handles single orbits.\n\n**Ambition:** High \u2014 requires new proof techniques beyond the identity-separator argument.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2cfcb628",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T08:23:29.317753+00:00"
   },
   {
     "id": "fd_0639",
@@ -9998,336 +10495,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T09:38:00.733259+00:00"
   },
   {
-    "id": "fd_0640",
-    "title": "Direction 2: M-Convex Cardinality Bound",
-    "description": "**Conjecture:** For any M-convex subset $S \\subseteq \\{x \\in \\mathbb{N}^n : \\sum x_i = d\\}$:\n$$|S| \\leq \\binom{n+d-1}{d}$$\n\n**Test:** For $n \\leq 5$ and $d \\leq 4$, enumerate all M-convex subsets of the simplex and verify the bound. The full simplex achieves the bound (Theorem 7.1 verifies it is M-convex). Any M-convex subset exceeding $\\binom{n+d-1}{d}$ would falsify the conjecture.\n\n**Impact:** Would establish an optimal cardinality bound for discrete convex sets with the exchange property, with applications to coding theory and combinatorial optimization.\n\n**Catalog References:** `Pythagorean/MConvexBridge.lean` (mconvex_cardinality_conjecture, full_simplex_is_mconvex_nat).\n\n**Proof Strategy:**\n1. Show that any M-convex subset of the simplex $\\Delta_{n,d}$ is an \"ideal\" in a natural partial order on compositions.\n2. Use the exchange property to show that if $\\alpha \\in S$ and $\\beta \\leq \\alpha$ coordinate-wise with $\\sum \\beta_k = d$, then $\\beta \\in S$ (this is the \"Bruhat order\" characterization).\n3. Conclude $S = \\Delta_{n,d}$, giving $|S| = \\binom{n+d-1}{d}$.\n\nNote: Step 2 requires careful analysis \u2014 not all M-convex sets are order ideals, so the proof may need a more subtle argument involving the exchange graph diameter.\n\n**Domain Bridges:** Enumerative combinatorics \u2194 Discrete convex analysis \u2194 Matroid theory.\n\n**Lineage:** Directly extends `full_simplex_is_mconvex_nat` and `mconvex_cardinality_conjecture`.\n\n**Ambition:** Solid extension \u2014 likely provable with careful combinatorial arguments.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "383acc58",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T09:38:00.767155+00:00"
-  },
-  {
-    "id": "fd_0642",
-    "title": "Direction 4: Certified Discrete Optimization on M-Convex Sets",
-    "description": "**Conjecture:** The steepest-descent algorithm on an M-convex set terminates in at most $O(n \\cdot D)$ steps, where $D$ is the exchange diameter, and produces a *certifiably optimal* solution for any linear objective.\n\n**Test:** Run the steepest-descent algorithm on M-convex subsets of simplices $\\Delta_{n,d}$ for $n \\leq 6$, $d \\leq 5$ with random linear objectives. Measure iteration counts and verify optimality by brute force. Any instance exceeding $O(n \\cdot D)$ iterations would refine the bound.\n\n**Impact:** Would provide formally verified optimization algorithms with certified complexity bounds, applicable to scheduling, resource allocation, and network flow problems.\n\n**Catalog References:** `Pythagorean/MConvexBridge.lean` (mconvex_implies_exchange_connected, checkMConvex_sound).\n\n**Proof Strategy:**\n1. Define the steepest-descent algorithm in Lean as a computable function.\n2. Prove termination using the exchange distance as a well-founded measure.\n3. Prove correctness: local optimality implies global optimality by M-convexity.\n4. Derive the complexity bound from the diameter of the exchange graph.\n\n**Domain Bridges:** Optimization theory \u2194 Discrete convex analysis \u2194 Formal verification.\n\n**Lineage:** Directly extends `mconvex_implies_exchange_connected` (provides the connectivity needed for termination).\n\n**Ambition:** Solid extension \u2014 the algorithmic theory is well-established; the novelty is in formal verification.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "383acc58",
-    "consumed_by_exp_id": "9cefb91e",
-    "timestamp": "2026-05-24T09:38:00.835754+00:00"
-  },
-  {
-    "id": "fd_0644",
-    "title": "Direction 1: Cycle-Pressure Benefit Hypothesis",
-    "description": "**Conjecture:** On theorem graphs stratified by top decile of local cycle pressure, any tactic-prediction model augmented with cycle-aware features (lcp, cycle rank, shell growth) achieves at least 10% relative improvement in proof success rate over a degree-only baseline.\n\n**Test:** Extract dependency graphs from Mathlib. Compute local cycle pressure at each theorem node. Stratify by pressure decile. Train two models: (a) GNN with degree + type features, (b) GNN with degree + type + cycle-aware features. Compare proof success rate on held-out theorems in the top pressure decile.\n\n**Impact:** First empirical validation of the theorem-proven information gap (Feature Separation Theorem). A positive result would establish cycle pressure as a practical architectural prior for theorem proving.\n\n**Catalog References:**\n- `Pythagorean/ProofTheoreticTopology/LocalCyclePressure.lean` \u2014 `exists_same_degree_diff_cycleRank`, `cycleAwareScore_separates`\n- `Catalog/Pythagorean/ProofTheoreticTopology/CoreCollapseEntropy.lean` \u2014 entropy framework\n\n**Proof Strategy:** The theoretical backbone is already complete (Feature Separation Theorem proves the information gap exists). The empirical test requires extracting Mathlib's dependency graph, computing cycle pressure features, and running controlled experiments.\n\n**Domain Bridges:** Machine learning \u00d7 proof theory \u00d7 graph topology\n\n**Lineage:** Directly extends the Feature Separation Theorem (Theorem 4) from existence to quantitative prediction.\n\n**Ambition:** \ud83d\udfe1 Solid extension \u2014 experimentally validates a formally proved information gap.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3cb71073",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T10:16:10.464577+00:00"
-  },
-  {
-    "id": "fd_0645",
-    "title": "Direction 2: No-Harm Tree Regime Hypothesis",
-    "description": "**Conjecture:** On theorems in the bottom decile of local cycle pressure (tree-like dependency neighborhoods), cycle-aware augmentation changes proof success rate by at most 2% in either direction.\n\n**Test:** Same experimental setup as Direction 1, but evaluate on the bottom pressure decile. Compute confidence intervals for the difference in success rates.\n\n**Impact:** Validates the theoretical prediction that cycle pressure is zero in tree regions (Theorem 1) and thus adds no information there. Together with Direction 1, this would establish cycle pressure as a *targeted* feature: helps where it matters, harmless where it doesn't.\n\n**Catalog References:**\n- `Pythagorean/ProofTheoreticTopology/LocalCyclePressure.lean` \u2014 `subsetCycleRank_nonpos_of_isAcyclic`, `graphCycleRankZ_eq_zero_of_isTree`\n\n**Proof Strategy:** Theorem 1 (acyclic \u21d2 zero pressure) provides the theoretical prediction. The test verifies that zero-pressure regions are indeed easy for both models.\n\n**Domain Bridges:** Machine learning \u00d7 formal verification\n\n**Lineage:** Logical complement of Direction 1; together they fully characterize the regime behavior.\n\n**Ambition:** \ud83d\udfe2 Extension \u2014 straightforward corollary of the tree characterization theorem.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3cb71073",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T10:16:15.048304+00:00"
-  },
-  {
-    "id": "fd_0660",
-    "title": "Direction 1: Full Proof of the Universal Defect Formula",
-    "description": "**Conjecture:** For every finite connected graph G, root q \u2208 V(G), and nonempty S \u2286 V \\ {q}:\n\ntropRank(L_S) - 1 - r(D_S) = \u03b2\u2081(G[S]) + \u03ba(G,q,S) - 1\n\n**Test:** Implement exact tropical rank computation (via enumeration of tropically nonsingular submatrices) and exact Baker\u2013Norine rank (via complete chip-firing reachability). Run exhaustive verification on all connected graphs with n \u2264 8 vertices. A single counterexample disproves the conjecture. If confirmed, attempt formal proof via the verified inductive step (Theorem `defect_formula_cycle_step` in `UniversalDefect.lean`).\n\n**Impact:** Would establish a tropical index theorem \u2014 the first known instance of an analytic-index = topological-index equality in discrete/combinatorial mathematics. Would unify tropical linear algebra and chip-firing theory through a single equation.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/UniversalDefect.lean` \u2014 `structuralDefect_increment_on_cycle`, `defect_formula_cycle_step`\n- `Pythagorean/TropicalBridge/DefectTheory.lean` \u2014 `structuralDefect_nonneg`, `structuralDefect_eq_zero_iff`\n- `Pythagorean/TropicalBridge/HigherDefectTheory.lean` \u2014 `higherStructuralDefect_spectral_slope`\n\n**Proof Strategy:** Induction on cycle rank \u03b2\u2081(G[S]). Base case (\u03b2\u2081 = 0) via zero-defect rigidity. Inductive step via `structuralDefect_increment_on_cycle` \u2014 needs verification that tropical rank increases by exactly 1 per cycle addition.\n\n**Domain Bridges:** Tropical geometry \u2194 algebraic topology \u2194 combinatorial optimization\n\n**Lineage:** Extends Baker\u2013Norine [2007], Develin\u2013Santos\u2013Sturmfels [2005]\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 Grand Challenge\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14718e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T10:55:08.590391+00:00"
-  },
-  {
-    "id": "fd_0661",
-    "title": "Direction 2: Tropical Kernel Dimension Formula",
-    "description": "**Conjecture:** For any connected graph G and S \u2286 V \\ {q}:\n\ndim_trop(ker(L_S)) = \u03b2\u2081(G[S]) + \u03ba(G,q,S)\n\nwhere dim_trop denotes tropical dimension (maximum number of tropically independent generators).\n\n**Test:** For all connected graphs on n \u2264 6 vertices, compute the tropical kernel of L_S (vectors v with L_S \u2297 v = 0_trop in min-plus) and verify its tropical dimension equals \u03b2\u2081 + \u03ba. This is equivalent to the defect formula via tropical rank-nullity: tropRank + dim_trop(ker) = |S|.\n\n**Impact:** Would provide an independent proof of the universal defect formula via tropical rank-nullity, and would connect tropical kernels to graph homology \u2014 specifically, the generators should correspond to cycle indicators and component indicators.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/UniversalDefect.lean` \u2014 `TropicalVal`, `tropAdd`, `tropMul`\n- `Pythagorean/TropicalBridge/Defs.lean` \u2014 `graphLaplacian`, `laplacianPrincipalMinor`\n\n**Proof Strategy:** Show ker(L_S) is generated by: (1) characteristic vectors of independent cycles in G[S] (contributing \u03b2\u2081 generators), and (2) indicator vectors of q-visible components (contributing \u03ba generators). Verify tropical independence.\n\n**Domain Bridges:** Tropical linear algebra \u2194 simplicial homology\n\n**Lineage:** Builds on tropical rank-nullity analogues in [DSS05]\n\n**Ambition:** \u2605\u2605\u2605\u2605 Major extension\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14718e14",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T10:55:08.624242+00:00"
-  },
-  {
-    "id": "fd_0666",
-    "title": "Direction 1: Exact Bounded Nerve Correspondence",
-    "description": "**Conjecture**: For every finite LTS `L` and every bound `n \u2265 2`, the bounded nerve subobject lattice (trace predicates up to depth `n` with stability) is Boolean if and only if `L` is fully deterministic.\n\n**Test**: Exhaustively enumerate all LTS with \u2264 4 states and \u2264 2 actions. For each, compute the lattice of stable trace predicates up to depth `n = 3`. Check whether every element has a complement. Compare with the determinism predicate. A single counterexample (deterministic LTS with non-Boolean bounded lattice, or nondeterministic LTS with Boolean bounded lattice) falsifies the conjecture.\n\n**Impact**: Would extend the state-level diamond distributivity theorem to a full trace-level characterization, completing the topos-theoretic picture where nerve subobjects (not just state predicates) carry the logical content.\n\n**Catalog References**: `Pythagorean/BooleanTopos/Theorems.lean` \u2014 `diamond_distributive_iff_det`; `Pythagorean/TemporalAdjunction/Theorems.lean` \u2014 `lts_diamond_conj_of_det`, `det_of_diamond_conj`.\n\n**Proof Strategy**: Define `BoundedNerveSubobject n L` as state-trace predicates where traces have length \u2264 n, with stability. Construct explicit complements in the deterministic case by induction on trace length. For the nondeterministic direction, lift the singleton witness from `nondeterministic_diamond_witness` to the trace level.\n\n**Domain Bridges**: Process algebra \u2194 lattice theory, finite model theory \u2194 topos theory.\n\n**Lineage**: Direct extension of `diamond_distributive_iff_det`.\n\n**Ambition**: Medium \u2014 this is a solid structural extension that validates the topos interpretation at the combinatorial level.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fcefb6e6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T11:32:16.657346+00:00"
-  },
-  {
-    "id": "fd_0667",
-    "title": "Direction 2: Concurrency and Asynchronous Composition",
-    "description": "**Conjecture**: For the asynchronous (interleaving) product of LTS `L\u2081 \u2225 L\u2082`, the modal algebra of the product is Boolean if and only if each component `L\u1d62` is fully deterministic and the shared actions have no interference (i.e., independent actions commute without creating branching).\n\n**Test**: Compute products of small deterministic and nondeterministic systems with 2\u20133 states and 1\u20132 actions each. For each product, check diamond distributivity. Seek a product of two deterministic components whose interleaving creates non-Boolean behavior (this would falsify the \"if\" direction), or a product with nondeterministic components that nonetheless has a Boolean modal algebra (falsifying the \"only if\" direction).\n\n**Impact**: Would extend the determinism-Booleanity correspondence to the most important construction in concurrency theory \u2014 parallel composition. This could yield logical invariants for compositional verification.\n\n**Catalog References**: `Pythagorean/BooleanTopos/Theorems.lean` \u2014 `diamond_distributive_iff_det`, `branching_gives_nonBoolean_modal_logic`.\n\n**Proof Strategy**: Define `asyncProduct L\u2081 L\u2082` with interleaving semantics. Show that diamond distributivity of the product reduces to diamond distributivity of components plus a commutativity condition on shared actions. Use `diamond_distributive_iff_det` on each component.\n\n**Domain Bridges**: Process algebra \u2194 concurrency theory, modal logic \u2194 compositional verification.\n\n**Lineage**: Extends `diamond_distributive_iff_det` to composed systems.\n\n**Ambition**: High \u2014 this addresses the fundamental question of whether logical classification is compositional, which is essential for scalability.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fcefb6e6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T11:32:16.692007+00:00"
-  },
-  {
-    "id": "fd_0671",
-    "title": "Direction 1: Random Hypergraph Threshold Concentration",
-    "description": "**Conjecture:** For Erd\u0151s\u2013R\u00e9nyi random hypergraphs $\\mathcal{H}(n, p)$ of rank $r$, the empirical 50%-threshold $k_{1/2}$ satisfies\n$$|k_{1/2} - (n - \\tau(\\mathcal{H}))| = O(\\sqrt{n})$$\nwith high probability as $n \\to \\infty$.\n\n**Test:** Generate random $r$-uniform hypergraphs for $r \\in \\{2, 3, 4\\}$, $n \\in \\{20, 50, 100\\}$, and edge probabilities $p \\in \\{0.1, 0.3, 0.5\\}$. For each instance, compute $\\tau$ (exact for small $n$, greedy for large $n$), simulate the empirical threshold via random sampling, and measure the gap $|k_{1/2} - k_\\tau|$. Plot gap versus $\\sqrt{n}$ and test whether the ratio stabilizes.\n\n**Impact:** If confirmed, this would extend the extremal duality theorem to a probabilistic concentration result, establishing the transversal predictor as the correct centering for the stochastic phase transition \u2014 analogous to how the mean centers a Gaussian.\n\n**Catalog References:** `Catalog/Pythagorean/CertificatePhaseTransition.lean` (exists_transition_window), `Catalog/Pythagorean/SharpThresholdConcentration.lean`\n\n**Proof Strategy:** Use Talagrand's concentration inequality on the Lipschitz function $f(S) = \\mathbf{1}[\\text{Sat}(C, S)]$ applied to the random set model. The transversal number controls the median, and concentration bounds the fluctuation.\n\n**Domain Bridges:** Statistical physics (order parameter fluctuations), random $k$-SAT (threshold window), coding theory (random code distances).\n\n**Lineage:** Extends Theorem 3.5 (extremal characterization) from worst-case to average-case.\n\n**Ambition:** Grand challenge \u2014 if proved, this would be a foundational result in random combinatorics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "83c7f0bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T12:10:25.152601+00:00"
-  },
-  {
-    "id": "fd_0672",
-    "title": "Direction 2: Fractional Predictor Refinement",
-    "description": "**Conjecture:** For obstruction hypergraphs with heterogeneous edge sizes, the fractional transversal predictor $k_{\\tau^*} = |V| - \\lceil\\tau^*(C)\\rceil$ tracks the empirical threshold more smoothly than the integer predictor $k_\\tau = |V| - \\tau(C)$, with strictly smaller residual variance across parametric families.\n\n**Test:** Construct families of mixed-rank hypergraphs (edges of sizes 2, 3, and 4) on $n = 10, 15, 20$ vertices. Compute both $\\tau(C)$ and $\\tau^*(C)$ (via LP solver). Compare $|k_{1/2} - k_\\tau|$ versus $|k_{1/2} - k_{\\tau^*}|$ across 50+ instances. Report mean squared error for each predictor.\n\n**Impact:** Establishes the fractional relaxation as a practical, polynomial-time threshold estimator. Opens a route to asymptotic prediction theory using LP duality.\n\n**Catalog References:** `Pythagorean/TransversalPredictor.lean` (integral_to_fractional_hittingSet, fracWeight_ge_transversalNumber)\n\n**Proof Strategy:** Show that $\\tau^* = \\tau$ for uniform hypergraphs (integrality of uniform covering LPs), and that $\\tau^* < \\tau$ gaps arise precisely from structural heterogeneity that also causes threshold smoothing.\n\n**Domain Bridges:** LP duality, approximation algorithms, fractional combinatorics, mean-field theory in statistical physics.\n\n**Lineage:** Builds directly on Theorem 3.9 (fractional \u2264 integral).\n\n**Ambition:** Solid extension \u2014 computationally testable and directly applicable.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "83c7f0bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T12:10:26.866730+00:00"
-  },
-  {
-    "id": "fd_0673",
-    "title": "Direction 3: Transversal Predictor for Random k-SAT",
-    "description": "**Conjecture:** The random $k$-SAT threshold $\\alpha_k$ can be expressed (or tightly approximated) as a transversal-density function of the clause hypergraph: specifically, the threshold density $\\alpha_k$ equals the point where the expected fractional transversal number of the random clause hypergraph crosses from sub-linear to linear growth in the number of variables.\n\n**Test:** For $k = 3, 4, 5$ and $n = 50, 100, 200$ variables, generate random $k$-SAT instances at clause densities near the conjectured threshold. Compute the greedy transversal number of the clause hypergraph and plot $\\tau_g / n$ as a function of clause density. Identify the density at which $\\tau_g / n$ crosses a critical value and compare with the known $k$-SAT thresholds.\n\n**Impact:** If confirmed, this would provide a new structural explanation for the $k$-SAT threshold \u2014 one based on obstruction geometry rather than replica symmetry breaking or second-moment methods.\n\n**Catalog References:** `Catalog/Computation/Hypergraph/Defs.lean` (hitting_set_iff_monotone_sat), `Catalog/Pythagorean/CertificatePhaseTransition.lean`\n\n**Proof Strategy:** Use the cavity method heuristics from statistical physics to estimate $\\tau^*$ for random hypergraphs, then compare with rigorous second-moment bounds.\n\n**Domain Bridges:** Random $k$-SAT, statistical physics (replica method), computational complexity, probabilistic combinatorics.\n\n**Lineage:** Grand extension of the extremal duality theorem to the most studied random CSP.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "83c7f0bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T12:10:27.225038+00:00"
-  },
-  {
-    "id": "fd_0674",
-    "title": "Direction 4: Greedy Approximation Universality",
-    "description": "**Conjecture:** On bounded-rank certificate hypergraphs with rank $r$, the greedy transversal number $\\tau_g(C)$ satisfies\n$$\\tau(C) \\leq \\tau_g(C) \\leq H_r \\cdot \\tau(C)$$\nand the greedy predictor $k_{\\tau_g} = |V| - \\tau_g(C)$ remains within an additive $O(r \\log n)$ of the true threshold $k_{1/2}$ for all instances.\n\n**Test:** Benchmark greedy vs. exact transversal numbers for triangle systems ($r = 3$) on $K_4$ through $K_{12}$ (using ILP for larger instances). Tabulate the ratio $\\tau_g / \\tau$ and the gap $|k_{1/2} - k_{\\tau_g}|$.\n\n**Impact:** Validates the greedy algorithm as a practical threshold estimator with formal approximation guarantees, making the theory applicable to instances where exact computation is infeasible.\n\n**Catalog References:** `Pythagorean/TransversalPredictor.lean` (choice_hittingSet_sound)\n\n**Proof Strategy:** The upper bound $\\tau_g \\leq H_r \\cdot \\tau$ follows from the classical Chv\u00e1tal analysis of greedy set cover. The additive gap bound requires bounding $|V| \\cdot (H_r - 1) \\cdot \\tau / |V|$ which gives $O(r \\log r) \\cdot \\tau / |V|$ per unit.\n\n**Domain Bridges:** Approximation algorithms, online algorithms, competitive analysis, practical SAT solving heuristics.\n\n**Lineage:** Builds on choice_hittingSet_sound and the classical set cover theorem.\n\n**Ambition:** Solid extension \u2014 directly implementable and testable.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "83c7f0bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T12:10:27.261542+00:00"
-  },
-  {
-    "id": "fd_0681",
-    "title": "Direction 1: Explicit Polynomial State-Space Bounds",
-    "description": "**Conjecture:** For any closed affine de Bruijn term t of branching complexity B and reduction depth d, the number of distinct reachable terms satisfies:\n\n```\n|StateSet(t, d)| \u2264 (B + 1)^d \u00b7 size(t)^c\n```\n\nfor some universal constant c.\n\n**Test:** Generate affine terms with B \u2208 {1, 2, ..., 10} and enumerate all reachable terms at depths d = 1, ..., 15. Fit the growth curve to polynomial and exponential models. If the data fits a polynomial in B and d, the conjecture is supported; if the growth is superpolynomial in d for some fixed B, the conjecture fails.\n\n**Impact:** An explicit polynomial bound would provide the first machine-independent polynomiality criterion for higher-order computation based purely on syntactic structure. This would bridge implicit computational complexity with practical program analysis.\n\n**Catalog References:** `Catalog/Pythagorean/DeBruijnComplexity.lean` (Theorem C: stateGrowthDB_branch_bounded)\n\n**Proof Strategy:** Use the monotonicity theorem to bound the \"width\" of the reduction graph. At each step, the branching complexity can only decrease, so the number of possible BC values is bounded by B+1. Combine with finiteness of bounded reducts (from BoundedBetaTheorems.lean) to bound the total count.\n\n**Domain Bridges:** Complexity theory (implicit characterizations), program analysis (static bounds on execution), combinatorics (counting lattice paths with constraints).\n\n**Lineage:** Extends Theorem C from a qualitative bound to a quantitative one.\n\n**Ambition:** Grand challenge \u2014 would establish a new polynomiality criterion for \u03bb-calculus.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fdb6f72c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T12:45:48.229094+00:00"
-  },
-  {
-    "id": "fd_0682",
-    "title": "Direction 2: Affine Type System Connection",
-    "description": "**Conjecture:** There exists a simple affine type system such that every well-typed term is AffineClosed, and the typing derivation structurally implies the monotonicity property.\n\n```\n\u0393 \u22a2_affine t : A  \u2192  AffineClosed t\n```\n\n**Test:** Define a minimal affine type system (variables used at most once in the typing context). Implement a type checker. Verify that all well-typed terms satisfy AffineClosed and that the type checker accepts all hand-crafted affine terms from the test suite.\n\n**Impact:** Would connect the syntactic AffineClosed predicate to a well-understood type-theoretic framework, enabling composition of monotonicity guarantees across program modules.\n\n**Catalog References:** `Catalog/Pythagorean/DeBruijnComplexity.lean` (AffineClosed definition)\n\n**Proof Strategy:** Define affine typing rules ensuring each variable in the context is used at most once. Prove the subject reduction theorem (typing preserved by \u03b2-reduction). Derive AffineClosed from the typing derivation by structural induction.\n\n**Domain Bridges:** Type theory (linear/affine types), programming languages (Rust's ownership system), proof theory (linear logic sequent calculus).\n\n**Lineage:** Natural extension of the AffineClosed preservation theorem.\n\n**Ambition:** Solid extension \u2014 well-understood territory with clear formal targets.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fdb6f72c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T12:45:48.264202+00:00"
-  },
-  {
-    "id": "fd_0696",
-    "title": "Direction 1: Simply-Typed Convergent Normalization",
-    "description": "**Conjecture:** The many-sorted master theorem generalizes conservatively to simply-typed lambda calculi with algebraic base types. When restricted to first-order operation symbols with no binders, the higher-order semantic preservation theorem reduces exactly to `ms_nf_preserves_eval`.\n\n**Test:** Implement a simply-typed syntax where `Sort := SimpleType` (base types plus function types). Define typed \u03b2-reduction alongside algebraic rewrite rules. Verify that on the first-order fragment (no \u03bb-abstractions, no function types), the typed normalizer agrees with the many-sorted normalizer on 10,000 random terms.\n\n**Impact:** This would unify the convergent rewrite framework with normalization-by-evaluation and typed lambda calculus semantics, creating a single formal platform for both algebraic simplification and functional program optimization.\n\n**Catalog References:**\n- `Pythagorean/ManySortedConvergentRewriteOptimizer.lean`: `ms_nf_preserves_eval`\n- `Catalog/Pythagorean/ConvergentRewriteOptimizer.lean`: `nf_preserves_eval`, `CertifiedNormalizer`\n\n**Proof Strategy:** Define `SimpleType := BaseSort | Arrow SimpleType SimpleType`. Interpret terms via a logical-relations argument over the type structure. Show that the first-order restriction collapses `SimpleType` to `BaseSort`, recovering the many-sorted definitions.\n\n**Domain Bridges:** Type theory \u2194 universal algebra \u2194 compiler optimization\n\n**Lineage:** Extends `ms_nf_preserves_eval` via Strategy C (logical relations)\n\n**Ambition:** Grand challenge \u2014 would connect rewriting theory to the foundations of typed computation\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc40b0df",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T13:25:39.541840+00:00"
-  },
-  {
-    "id": "fd_0697",
-    "title": "Direction 2: Tensor-Sorted Extension for Scientific Computing",
-    "description": "**Conjecture:** Extending the sort system to include scalar, vector, and rank-2 tensor sorts yields a convergent rewrite fragment whose normal forms preserve bilinear energy expressions `E = v^T A v` across all tested numerical models.\n\n**Test:** Define a three-sorted signature with sorts `{Scal, Vec, Mat}` and operations including matrix-vector multiplication, bilinear pairing, and tensor product. Implement 6-8 rewrite rules (including `A(v+w) \u2192 Av + Aw`, `(A+B)v \u2192 Av + Bv`, `\u03b1(Av) \u2192 (\u03b1A)v`). Generate 5,000 random tensor expressions and verify semantic preservation in models over \u211a and \u2124.\n\n**Impact:** Would demonstrate that the many-sorted framework supports symbolic simplification in physics-inspired tensor calculi, opening a path to certified optimization in computational mechanics and quantum mechanics.\n\n**Catalog References:**\n- `Pythagorean/ManySortedConvergentRewriteOptimizer.lean`: `ModuleSig`, `ModRewrite`, `modRewrite_sound`\n\n**Proof Strategy:** Extend `ModuleSig` with a `Mat` sort and matrix operations. Prove soundness of new rules using Mathlib's `Matrix` API. The many-sorted master theorem applies directly since it is parametric in the signature.\n\n**Domain Bridges:** Physics \u2194 linear algebra \u2194 scientific computing\n\n**Lineage:** Extends the module instantiation (Theorems 4-5) to higher-rank tensors\n\n**Ambition:** Solid extension \u2014 builds directly on existing infrastructure\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc40b0df",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T13:25:41.474792+00:00"
-  },
-  {
-    "id": "fd_0698",
-    "title": "Direction 3: Sortwise Canonical Forms and the Word Problem",
-    "description": "**Conjecture:** For the two-sorted module rewrite system, every term of vector sort reduces to a unique linear-combination normal form: a sum of scalar-vector products where each vector variable appears at most once.\n\n**Test:** Generate 10,000 random vector terms and normalize them from two different rewrite schedules (left-to-right vs. right-to-left). Compare the resulting normal forms syntactically. A single counterexample (two different normal forms from the same term) disproves confluence/canonicity.\n\n**Impact:** If true, this solves the word problem for the free module over a free ring, giving a decision procedure for module expression equivalence. This would be a significant result in computational algebra.\n\n**Catalog References:**\n- `Pythagorean/ManySortedConvergentRewriteOptimizer.lean`: `ModRewrite`, `MSCertifiedNormalizer`\n- `Catalog/Pythagorean/ConvergentRewriteOptimizer.lean`: `nf_unique_of_confluent`\n\n**Proof Strategy:** Prove confluence of `ModRewrite` using a critical-pair analysis (Newman's Lemma). Show that normal forms are syntactically unique by induction on term structure, leveraging the fact that the distributivity rule is the only non-trivial rule and it strictly decreases the \"smul-nesting depth.\"\n\n**Domain Bridges:** Universal algebra \u2194 computational algebra \u2194 automated reasoning\n\n**Lineage:** Extends confluence analysis from `nf_unique_of_confluent`\n\n**Ambition:** Solid extension \u2014 precise and falsifiable\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc40b0df",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T13:25:41.565887+00:00"
-  },
-  {
-    "id": "fd_0699",
-    "title": "Direction 4: Representation-Theoretic Invariant Detection",
-    "description": "**Conjecture:** In module expressions carrying a finite group action, normal forms statistically increase the detection rate of invariant subexpressions (vectors fixed by all group elements) compared with raw syntax.\n\n**Test:** Implement a model with `R = \u2124[G]` (group ring of a small group like `S\u2083` or `\u2124/3\u2124`) acting on a 3-dimensional representation. Generate 5,000 random expressions, normalize, and compare the rate at which invariant subexpressions (evaluating to vectors in the fixed subspace `V^G`) are syntactically identifiable before and after normalization.\n\n**Impact:** Would demonstrate that algebraic normalization has representation-theoretic content: it doesn't just simplify \u2014 it reveals symmetry structure. This connects the rewrite framework to a deep mathematical domain.\n\n**Catalog References:**\n- `Pythagorean/ManySortedConvergentRewriteOptimizer.lean`: `moduleAlgebra`, `modRewrite_sound`\n\n**Proof Strategy:** Define the group algebra as a concrete ring and the representation as a concrete module. The many-sorted master theorem guarantees that evaluation is preserved, so invariant detection rates should be equal (preserved invariants). The hypothesis is that normalized *syntax* makes invariants more *syntactically apparent*.\n\n**Domain Bridges:** Representation theory \u2194 module theory \u2194 symbolic computation\n\n**Lineage:** Builds on the module instantiation (Theorems 4-5)\n\n**Ambition:** Grand challenge \u2014 connects algebra to symmetry detection\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cc40b0df",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T13:25:41.657298+00:00"
-  },
-  {
     "id": "fd_0707",
     "title": "Direction 2: Church-Rosser via de Bruijn Indices",
     "description": "**Conjecture**: With a capture-avoiding substitution (de Bruijn indices), the full Church-Rosser theorem is provable, and the `subst_subst_parBeta` sorry in `ChurchRosserBisimulation.lean` can be eliminated. Moreover, Church-Rosser gives uniqueness of normal forms, which upgrades `eqPathDist_le_normCost_sum` to an unconditional theorem: for all \u03b2-equivalent normalizing terms, `d(t, u) \u2264 normCost(t) + normCost(u)`.\n\n**Test**: Implement de Bruijn lambda terms in Lean 4, prove `subst_subst_parBeta`, and verify the full proof chain compiles without sorry.\n\n**Impact**: Removes the one remaining sorry in the ChurchRosserBisimulation development and closes the gap between the quantitative pseudometric and the full normalization cost bound.\n\n**Catalog References**: `Catalog/Speculative/AutoResearch/ChurchRosserBisimulation.lean` (subst_subst_parBeta, church_rosser), `Catalog/Pythagorean/NormalizationBisimDistance.lean` (eqPathDist_le_normCost_sum)\n\n**Proof Strategy**: Define de Bruijn terms, lift/shift operations, capture-avoiding substitution. Prove the substitution lemma by mutual induction on parallel reduction and de Bruijn index structure.\n\n**Domain Bridges**: Type theory, proof engineering, formal verification\n\n**Lineage**: Directly extends `ChurchRosserBisimulation.lean`\n\n**Ambition**: Solid extension \u2014 standard but essential infrastructure\n\n---",
@@ -10346,24 +10513,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T14:33:01.106772+00:00"
   },
   {
-    "id": "fd_0724",
-    "title": "Direction 1: Global Tightness Conjecture",
-    "description": "**Conjecture**: For every simple type `A`, there exists a closed well-typed term `t` of type `A` and a depth `d` such that `canonicalQuotientSize(d, t) = typeStateBound(A)`.\n\n**Test**: Enumerate all \u03b2-reducible closed terms of small types (up to type depth 3 and term size 15) and compute their canonical quotient sizes at increasing depths. If any type has `max canonicalQuotientSize < typeStateBound`, the conjecture is falsified.\n\n**Impact**: If true, this elevates `typeStateBound` from an upper bound to an exact state-complexity function \u2014 the higher-order analogue of the Myhill-Nerode minimal state count. This would be the foundational theorem of higher-order state complexity theory.\n\n**Catalog References**: `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity`, `quotientSize_le_typeStateBound_forall_depth`.\n\n**Proof Strategy**: Construct explicit witness terms recursively on the type structure. For arrow types `A \u2192 B`, build a term whose reduction tree branches into `typeStateBound(A)` paths, each leading to a distinct configuration. Use the separation argument: show that the witness term's reachable states are pairwise inequivalent under bounded behavioral equivalence. The upper bound theorem provides the squeeze: `canonicalQuotientSize \u2264 typeStateBound` combined with the lower bound from the separation argument yields equality.\n\n**Domain Bridges**: Automata theory (exact state complexity), descriptive complexity (types as resource bounds), combinatorics (extremal counting of \u03bb-terms).\n\n**Lineage**: Extends the catalog theorem `quotientSize_le_typeStateBound_forall_depth` from upper bound to exact equality.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1e04b63c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T15:13:46.789137+00:00"
-  },
-  {
     "id": "fd_0725",
     "title": "Direction 2: Multiplicative Type Complexity for Products and Sums",
     "description": "**Conjecture**: Extending simple types with products `A \u00d7 B` and sums `A + B`, the state bound extends to:\n- `typeStateBound(A \u00d7 B) = typeStateBound(A) \u00b7 typeStateBound(B)`\n- `typeStateBound(A + B) = typeStateBound(A) + typeStateBound(B)`\n\nand these extended bounds remain exact (or tight upper bounds) for the corresponding \u03bb-calculus with pairs and case expressions.\n\n**Test**: Implement the extended type system with \u03b2-reduction for pairs and case. Enumerate small closed terms and verify that the proposed bounds are neither exceeded nor wastefully large.\n\n**Impact**: Would show that products correspond to *independent composition* of state spaces (Cartesian product) while sums correspond to *disjoint union*, mirroring the standard automata-theoretic construction. This would establish a complete dictionary between type constructors and state-space operations.\n\n**Catalog References**: `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_arrow_recurrence`, `typeStateBound_arrow_gt_components`.\n\n**Proof Strategy**: Define extended `typeStateBound` recursively on the extended type grammar. Prove the upper bound by induction on typing derivations, using the product and sum elimination rules. For tightness, construct witness terms that realize the full product/sum state space.\n\n**Domain Bridges**: Category theory (products/coproducts as state-space operations), circuit complexity (parallel composition \u2194 products, branching \u2194 sums).\n\n**Lineage**: Direct extension of the arrow recurrence theorem `typeStateBound_arrow_recurrence`.\n\n**Ambition**: Solid extension.\n\n---",
@@ -10380,138 +10529,5 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1e04b63c",
     "consumed_by_exp_id": "074616c0",
     "timestamp": "2026-05-24T15:13:46.828263+00:00"
-  },
-  {
-    "id": "fd_0726",
-    "title": "Direction 3: Exact Growth Rate of the Endomorphism Tower",
-    "description": "**Conjecture**: The sequence `a(0) = 1, a(n+1) = (a(n) + 1)^2` satisfies:\n```\na(n) = \u230ac^{2^n}\u230b  for some constant c \u2248 1.7549...\n```\nMoreover, `typeStateBound(iterEndTy n) = a(n)` exactly, and the constant `c` is the unique positive root of the functional equation `c^2 = c + 1` (i.e., the golden ratio \u03c6 \u2248 1.618... gives `c = \u03c6^{1/...}` \u2014 to be determined exactly).\n\n**Test**: Compute `a(n)` for `n = 0, ..., 10` and fit `log log a(n)` against `n` to extract the growth constant. Compare with candidate closed-form expressions.\n\n**Impact**: Would give a precise asymptotic formula for state complexity growth along the endomorphism tower, connecting type complexity to classical sequences in combinatorial number theory.\n\n**Catalog References**: `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `iterEndTy_bounds`, `typeStateBound_iterEndTy_ge_exp`, `typeStateBound_iterEndTy_strictMono`.\n\n**Proof Strategy**: Analyze the recurrence `a(n+1) = a(n)^2 + 2a(n) + 1` by taking logarithms and studying the dynamical system `b(n+1) = 2b(n) + log(1 + 2/a(n) + 1/a(n)^2)`.\n\n**Domain Bridges**: Dynamical systems (iterated maps), number theory (tower sequences), analytic combinatorics.\n\n**Lineage**: Quantitative refinement of `typeStateBound_iterEndTy_ge_exp`.\n\n**Ambition**: Solid extension.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1e04b63c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T15:13:46.864667+00:00"
-  },
-  {
-    "id": "fd_0727",
-    "title": "Direction 4: Shape Invariance Conjecture",
-    "description": "**Conjecture**: If two simple types have the same *arrow profile* (the multiset of depths of all leaf occurrences of `base`), then they have the same `typeStateBound`.\n\n**Test**: Enumerate all types of size \u2264 10, compute their arrow profiles and state bounds, and check whether the profile uniquely determines the bound. A counterexample would be two types with the same profile but different bounds.\n\n**Impact**: If true, this would show that `typeStateBound` depends only on a compressed structural signature, not on the full type tree. This would enable efficient computation of state bounds from profiles alone (linear time vs. tree traversal) and suggest a canonical normal form for types under state-complexity equivalence.\n\n**Catalog References**: `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity`, `typeStateBound_ge_branchComplexity`.\n\n**Proof Strategy**: Define arrow profiles formally and prove that the multiplicative recurrence for `typeStateBound` depends only on the profile. The key lemma would be: if `complexity(A) = complexity(A')` and `complexity(B) = complexity(B')`, then `typeStateBound(A \u2192 B) = typeStateBound(A' \u2192 B')` \u2014 which follows immediately from the recurrence. The deeper question is whether distinct type trees can have the same complexity but different profiles.\n\n**Domain Bridges**: Combinatorics (tree isomorphism, profile equivalence), algebra (quotient structures).\n\n**Lineage**: Structural refinement of `typeStateBound_eq_complexity`.\n\n**Ambition**: Grand challenge \u2014 would establish a classification theory for type complexity.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1e04b63c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T15:13:46.905792+00:00"
-  },
-  {
-    "id": "fd_0729",
-    "title": "Direction 1: Continuous Tropical Geometry of Weighted Metric Graphs",
-    "description": "**Conjecture:** The universality of the structural defect extends to metric graphs (tropical curves) with arbitrary positive real edge lengths. Specifically, for a compact metric graph \u0393 with edge lengths \u2113(e) > 0, the Baker\u2013Norine rank of the divisor D_S depends only on the combinatorial type of \u0393, not on the edge lengths.\n\n**Test:** Implement a metric graph divisor rank algorithm using Dhar's burning algorithm generalized to metric graphs. Compare ranks across families of metric graphs with the same combinatorial type but varying edge lengths. A single instance where the rank changes with edge lengths would disprove this conjecture.\n\n**Impact:** If true, this would unify discrete and continuous tropical geometry under a single universality principle. It would imply that the moduli space M_g^trop stratifies by defect in a way that is purely combinatorial. This would have implications for the realizability problem in tropical algebraic geometry.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/WeightedDefect.lean`: `weighted_structural_defect_formula` (discrete universality)\n- `Pythagorean/TropicalBridge/WeightedDefect.lean`: `weightedGraphLaplacian_row_sum` (conservation law)\n\n**Proof Strategy:** Generalize the discrete Laplacian to the continuous Laplacian on metric graphs. Show that the rank of D_S, computed via Dhar's algorithm, depends only on the underlying graph topology. The key step would be proving that the tropical Jacobian's structure (as a real torus) does not affect the rank computation.\n\n**Domain Bridges:** Tropical geometry \u2194 algebraic geometry, metric graph theory \u2194 Berkovich spaces\n\n**Lineage:** Extends `weightedGraphLaplacian_row_sum` and `weighted_structural_defect_formula` to continuous setting.\n\n**Ambition:** Grand challenge \u2014 would resolve a fundamental question in tropical geometry.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c65efb7d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T16:19:49.650838+00:00"
-  },
-  {
-    "id": "fd_0734",
-    "title": "Direction 1: Split Exact Additivity",
-    "description": "**Conjecture:** For every split filtration on a finite site, compression is exactly additive:\n```\n\u03ba_sh(J, F) = \u03a3\u1d62 \u03ba_sh(J, gr\u1d62F)\n```\nwhen each extension in the filtration splits (i.e., the total presheaf is isomorphic to the direct sum of its graded pieces).\n\n**Test:** Enumerate all split filtrations on sites with 2\u20134 objects and compare exact compression numbers with graded sums. A single counterexample refutes the conjecture. The Python demo (`demo.py`) includes tests for this setting.\n\n**Impact:** If true, this establishes compression as a genuinely additive invariant on split exact sequences, placing it in the landscape of algebraic K-theory. If false, the failure mode reveals obstructions to additivity that are themselves interesting invariants.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/CompressionFiltration.lean` \u2014 `compression_split_le` (upper bound direction)\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `sheafCompressionNumber_coprod_le`\n\n**Proof Strategy:** Prove the reverse inequality by showing that any separator for the coproduct restricts to a separator for each component. The main difficulty is extracting component-wise separation from coproduct separation without additional structural assumptions.\n\n**Domain Bridges:** Algebraic K-theory (Grothendieck group), representation theory (split exact sequences), information theory (independence of sources implies entropy additivity).\n\n**Lineage:** Extends `compression_extension_le` from upper bound to equality in the split case.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Achievable with current formalism; requires careful analysis of the reverse inequality.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "964b5789",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T17:30:48.451554+00:00"
-  },
-  {
-    "id": "fd_0735",
-    "title": "Direction 2: Submodularity of Compression on the Lattice of Subpresheaves",
-    "description": "**Conjecture:** For subpresheaves A, B \u2264 F on a finite site with Grothendieck topology J:\n```\n\u03ba(A \u2228 B) + \u03ba(A \u2227 B) \u2264 \u03ba(A) + \u03ba(B)\n```\nwhere \u2228 and \u2227 are join and meet in the subpresheaf lattice.\n\n**Test:** Brute-force all pairs (A, B) of subpresheaves on sites with 2\u20133 objects and 2\u20133 sections per object. Compute all four compression numbers and verify the inequality. A counterexample is equally valuable \u2014 it would show compression is not submodular and would identify the structural obstruction.\n\n**Impact:** If true, compression becomes a submodular function, unlocking greedy algorithms and matroid-theoretic methods for filtration optimization. If false, the failure structure characterizes exactly when greedy decomposition fails.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/CompressionFiltration.lean` \u2014 `compression_le_of_sep_implies` (monotonicity)\n- `Catalog/Pythagorean/ProbeComplexity/CompressionSpectrumStructure.lean` \u2014 `compressionNumber_le_of_sep`\n\n**Proof Strategy:** Attempt a modular inequality proof using the lattice structure of probe families. Key step: construct a separator for A\u2228B from separators for A and B, using their intersection to control the redundancy.\n\n**Domain Bridges:** Combinatorial optimization (submodular function minimization), matroid theory, entropy inequalities (submodularity of Shannon entropy).\n\n**Lineage:** Builds on monotonicity (`compression_le_of_sep_implies`) and extension inequality.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2606 \u2014 Would be a significant structural result; counterexample search is computationally tractable.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "964b5789",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T17:30:48.574829+00:00"
-  },
-  {
-    "id": "fd_0737",
-    "title": "Direction 4: Derived Compression Invariants",
-    "description": "**Conjecture:** There exist higher compression invariants \u03ba\u207f(J, F) for n \u2265 1, generalizing \u03ba = \u03ba\u2070, that form a long exact sequence:\n```\n... \u2192 \u03ba\u207f(A) \u2192 \u03ba\u207f(B) \u2192 \u03ba\u207f(Q) \u2192 \u03ba\u207f\u207a\u00b9(A) \u2192 ...\n```\nfor each short exact sequence 0 \u2192 A \u2192 B \u2192 Q \u2192 0 of presheaves.\n\n**Test:** Define \u03ba\u00b9 as the \"compression defect of the extension\": \u03ba\u00b9(A \u2192 B \u2192 Q) = \u03ba(A) + \u03ba(Q) - \u03ba(B). Check whether \u03ba\u00b9 satisfies its own long exact sequence on small examples. If not, attempt to modify the definition to achieve exactness.\n\n**Impact:** This would establish a full cohomological theory of information complexity, with sheaf compression as the H\u2070 and higher invariants measuring the cost of consistency checking across overlapping data.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/CompressionFiltration.lean` \u2014 `compressionDefect`\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `compressionDefect_nonneg`\n\n**Proof Strategy:** Model after the definition of derived functors via projective/injective resolutions. The key challenge is defining \u03ba\u207f intrinsically (not just as a defect of the previous level) and showing functoriality.\n\n**Domain Bridges:** Homological algebra (derived functors), algebraic topology (cohomology), quantum information theory (higher-order entanglement measures).\n\n**Lineage:** Grand challenge building on the entire compression framework.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if achievable; currently speculative but falsifiable through small examples.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "964b5789",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T17:30:48.671230+00:00"
-  },
-  {
-    "id": "fd_0739",
-    "title": "Direction 1: Topos-Generator Characterization (Grand Challenge)",
-    "description": "**Conjecture:** For any finite category C with finite hom-sets, \u03ba(C) equals the minimum cardinality of a finite separating family of representable presheaves in the presheaf category [C^op, Set].\n\n**Test:** For finite categories with \u2264 4 objects and \u2264 12 morphisms, compute both \u03ba(C) and the minimum separating family of representables in [C^op, Set]. Check equality. A counterexample would be a category where the internal topos-theoretic notion of separation diverges from the external probe-based notion.\n\n**Impact:** If true, this gives \u03ba a purely topos-internal characterization, completing its promotion from a category-level statistic to a topos-level invariant. It would establish \u03ba as the first finitary, computable invariant of presheaf toposes with an explicit formula. This could reshape how algebraic geometers compare site presentations.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/MoritaInvariance.lean` \u2014 Morita invariance of \u03ba\n- `Pythagorean/ProbeComplexity/Defs.lean` \u2014 definition of separating probe families\n- `Catalog/Pythagorean/ProbeComplexity/CategoricalDimension.lean` \u2014 separating families in module categories\n\n**Proof Strategy:** Translate the probe separation condition into the language of presheaf categories. A probe Z \u2208 Obj(C) induces the representable presheaf y(Z) = Hom(\u2212, Z). The probe family P separates morphisms iff {y(Z) : Z \u2208 P} jointly detects all natural transformations between representables. Use the Yoneda lemma to bridge the internal and external perspectives.\n\n**Domain Bridges:** Algebraic geometry (site presentations), topos theory (generator complexity), mathematical logic (Beth definability)\n\n**Lineage:** Extends `kappa_eq_of_karoubi_equivalence` by giving \u03ba a coordinate-free definition\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if solved\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d0ac1ba4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T18:38:01.987284+00:00"
   }
 ];
