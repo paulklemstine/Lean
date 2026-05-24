@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_3_extension_to_product_and_sum_types.json",
+    "title": "The Growth Regime Trichotomy: How Type Constructors Generate Computational Complexity Classes",
+    "domain": "Type Theory / Computational Complexity",
+    "date": "2026-05-24T23:13:01Z",
+    "exp_id": "fee94b6c",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_5_complexity_of_lorentzian_recognition.json",
     "title": "Complexity of Lorentzian Recognition: Recursive Spectral Certificates and Fixed-Parameter Tractability",
     "domain": "Algebraic Combinatorics / Complexity Theory",
     "date": "2026-05-24T23:12:19Z",
     "exp_id": "33261812",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6423696551724138,
+    "quality": "partial"
   },
   {
     "filename": "direction_4_primewise_decomposition_and_improved_c.json",
@@ -31,6 +40,14 @@ window.PACKAGE_DB_INDEX = {
       "ed1c493e"
     ],
     "domain": "Algebraic Topology / Topological Data Analysis / Number Theory"
+  },
+  "direction_3_extension_to_product_and_sum_types.json": {
+    "title": "The Growth Regime Trichotomy: How Type Constructors Generate Computational Complexity Classes",
+    "exp_id": "fee94b6c",
+    "source_exp_ids": [
+      "85616e6f"
+    ],
+    "domain": "Type Theory / Computational Complexity"
   },
   "direction_5_complexity_of_lorentzian_recognition.json": {
     "title": "Complexity of Lorentzian Recognition: Recursive Spectral Certificates and Fixed-Parameter Tractability",
@@ -53,7 +70,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -64,7 +81,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 270,
+      "hue": 272,
+      "priority_score": 0.6423696551724138,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_3_extension_to_product_and_sum_types",
+      "title": "The Growth Regime Trichotomy: How Type Constructors Generate Computational Complexity Classes",
+      "domain": "Type Theory / Computational Complexity",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-24T23:13:01Z",
+      "hue": 90,
       "priority_score": null,
       "quality": "unrated"
     }
@@ -97,22 +125,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.322674+00:00"
-  },
-  {
-    "id": "seed_103",
-    "title": "Gravity as Quantum Error Correction: Spacetime from Codes",
-    "description": "The key insight is that the holographic principle in physics (AdS/CFT) can be rederived from quantum error correction. If the boundary CFT is a quantum error-correcting code with parameters [[n, k, d]], then the bulk AdS geometry emerges from the code's encoding. Conjecture: The Ryu-Takayanagi formula S(A) = Area(gamma_A) / (4G) is equivalent to the quantum Singleton bound d <= n - k + 1 applied to the boundary code, where the code distance d equals the minimal geodesic length through the bulk. Why now: recent work by Pastawski, Preskill, and Harrow (2015) showed that the AdS/CFT correspondence can be modeled by tensor networks (HaPPY code), but the converse \u2014 deriving AdS geometry FROM the code \u2014 has not been proven. Test: for the [[5,1,3]] code (the smallest perfect code), show that the code's Tanner graph IS the Penrose diagram of AdS_2, and the code distance 3 equals the geodesic length through the bulk. Impact: spacetime IS a quantum error-correcting code. Gravity is not a force \u2014 it's the logical operator of a quantum code.",
-    "domains": [
-      "Physics",
-      "Computation",
-      "Cryptography"
-    ],
-    "priority_score": 0.96,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.135909+00:00"
   },
   {
     "id": "seed_001",
@@ -222,22 +234,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:55.066174+00:00"
   },
   {
-    "id": "seed_101",
-    "title": "AdS/CFT for Proof Theory: Holographic Verification",
-    "description": "The key insight is that the AdS/CFT correspondence in physics says a gravitational theory in the bulk is equivalent to a conformal field theory on the boundary. Translate this to proof theory: a proof of length n in the bulk (the full proof) corresponds to a verified specification of length O(log n) on the boundary (a certificate). Conjecture: Every proof of a theorem T in Peano Arithmetic of length n has a holographic certificate of length O(log n) that can be verified in time O((log n)^2). The certificate is constructed by projecting each proof step onto the boundary of the proof space (the initial axioms and final conclusion) and keeping only the holographic data. Why now: the PCP theorem already shows that proofs have short probabilistic certificates, but holographic verification would give DETERMINISTIC short certificates \u2014 a much stronger result. Test: for a specific proof system (Frege), construct holographic certificates for proofs of the pigeonhole principle and verify that the certificate length is O(log n). Impact: proof verification becomes as fast as reading the theorem statement, enabling trustless proof checking at scale.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Physics"
-    ],
-    "priority_score": 0.94,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.118574+00:00"
-  },
-  {
     "id": "seed_004",
     "title": "Twin Prime Conjecture",
     "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
@@ -267,38 +263,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.395345+00:00"
   },
   {
-    "id": "seed_097",
-    "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps",
-    "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
-    "domains": [
-      "Cryptography",
-      "NumberTheory",
-      "Computation"
-    ],
-    "priority_score": 0.93,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.074843+00:00"
-  },
-  {
-    "id": "seed_100",
-    "title": "Entropy as a Topological Invariant: The Boltzmann Bridge",
-    "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode \u2014 exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
-    "domains": [
-      "Physics",
-      "Topology",
-      "Analysis"
-    ],
-    "priority_score": 0.93,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.107798+00:00"
-  },
-  {
     "id": "seed_038",
     "title": "Langlands Program: Functoriality",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
@@ -313,22 +277,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.574939+00:00"
-  },
-  {
-    "id": "seed_053",
-    "title": "Certified Novelty Detection for Theorem Provers",
-    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Bridges"
-    ],
-    "priority_score": 0.92,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.687353+00:00"
   },
   {
     "id": "seed_099",
@@ -360,22 +308,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.707683+00:00"
-  },
-  {
-    "id": "seed_098",
-    "title": "Consciousness Complexity: Integrated Information as a Topological Invariant",
-    "description": "The key insight is that Tononi's Phi (integrated information) may be a topological invariant, not just a measure. If neural states form a sheaf over the brain's connectome, then Phi equals the dimension of the first sheaf cohomology group H^1(C, F) where C is the connectome graph and F is the neural state sheaf. Conjecture: Phi is a topological invariant of the sheaf (C, F) \u2014 it is preserved under sheaf isomorphisms and changes continuously under continuous deformation of the connectome. A system with Phi = 0 has H^1 = 0 (acyclic sheaf, no information integration), while Phi > 0 means H^1 > 0 (cycles in the sheaf, integrated information). Why now: sheaf cohomology has been successfully applied to neural coding by Curry (2019), and the connection between Phi and cohomology was conjectured by Tegmark (2019) but never formalized. Test: compute Phi for small connectome topologies (chain, ring, complete graph) and show Phi = dim(H^1) in each case. Impact: consciousness becomes a mathematical invariant with the same status as the Euler characteristic \u2014 a topological quantity that can be computed, compared, and used to classify systems.",
-    "domains": [
-      "Speculative",
-      "Topology",
-      "Physics"
-    ],
-    "priority_score": 0.91,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.085984+00:00"
   },
   {
     "id": "seed_104",
@@ -423,22 +355,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.694274+00:00"
-  },
-  {
-    "id": "seed_079",
-    "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences",
-    "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
-    "domains": [
-      "Logic",
-      "Speculative",
-      "Computation"
-    ],
-    "priority_score": 0.9,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.907595+00:00"
   },
   {
     "id": "seed_084",
@@ -518,21 +434,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.613489+00:00"
   },
   {
-    "id": "seed_055",
-    "title": "Research Depth via Proof-Theoretic Ordinal Analysis",
-    "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research. Construct a formalization that computes the proof-theoretic ordinal of research output.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.88,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.701095+00:00"
-  },
-  {
     "id": "seed_068",
     "title": "EML Single Operator Church-Turing Thesis",
     "description": "Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos, exp, log, polynomials) by showing each reduces to EML compositions. If true, this means a single EML neuron (exp+log) is computationally universal.",
@@ -547,22 +448,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.808552+00:00"
-  },
-  {
-    "id": "seed_080",
-    "title": "Mobius Arithmetic: Number Theory on the Mobius Band",
-    "description": "Construct a number system on the Mobius band where the integers wrap with a twist: n and -n are identified with opposite orientations. Define the Mobius integers Z_tilde as Z x {+1, -1} modulo the identification (n, +1) ~ (-n, -1). Develop arithmetic on Z_tilde where addition wraps through the identification. Conjecture: The ring Z_tilde of Mobius integers has class number 1, and its prime spectrum forms a double cover of the ordinary primes (each ordinary prime p splits into two oriented primes p_plus and p_minus). The Mobius zeta function zeta_tilde(s) has zeros off the critical line, which is expected since Z_tilde is a non-Ore ring. Test: factor 6 in Z_tilde as 2_plus times 3_plus and 2_minus times 3_minus and verify these are distinct factorizations. Prove unique factorization for Z_tilde up to orientation. Impact: a new algebraic number system with intrinsic orientation, connecting number theory to topology via the double cover Z to Z_tilde.",
-    "domains": [
-      "Geometry",
-      "NumberTheory",
-      "Algebra"
-    ],
-    "priority_score": 0.88,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.916894+00:00"
   },
   {
     "id": "seed_089",
@@ -643,22 +528,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.827715+00:00"
   },
   {
-    "id": "seed_081",
-    "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics",
-    "description": "Landauer's principle states that erasing one bit of information dissipates at least kT*ln(2) of heat. Apply this to proof theory: erasing a proof of theorem T to recover a shorter proof is an information-theoretic process with a thermodynamic cost. Conjecture: The minimum energy required to compress a proof of n steps into a proof of m steps (m < n) is at least kT*(n-m)*ln(2), and this bound is tight for proofs in propositional logic. A proof of length n contains n bits of information (each step is a binary choice in the search tree). Compressing it to m steps requires erasing n-m bits, each costing kT*ln(2) by Landauer. This gives a physical lower bound on proof compression that is independent of the proof system. Test: formalize proof compression as an irreversible computation and derive the Landauer bound. Compute the erasure cost for compressing a 1000-step proof of the fundamental theorem of algebra into a 100-step proof. Impact: connects information thermodynamics to proof complexity, providing a physical lower bound on proof compression.",
-    "domains": [
-      "Physics",
-      "Computation",
-      "Logic"
-    ],
-    "priority_score": 0.87,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.927388+00:00"
-  },
-  {
     "id": "seed_086",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
@@ -737,38 +606,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.817888+00:00"
   },
   {
-    "id": "seed_074",
-    "title": "Inverse Stereographic Cryptography: Projection as One-Way Function",
-    "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
-    "domains": [
-      "Geometry",
-      "Cryptography",
-      "Computation"
-    ],
-    "priority_score": 0.86,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.861448+00:00"
-  },
-  {
-    "id": "seed_082",
-    "title": "Fractal Topology: Hausdorff Dimension as a Topological Invariant",
-    "description": "The Hausdorff dimension is normally a metric property, not a topological one. Investigate whether it can be made topological through the lens of fractal topology. Define the fractal topological dimension d_f(X) of a metric space X as the infimum of d such that X embeds in R^d with Hausdorff dimension preserved. Conjecture: For compact metric spaces, the Hausdorff dimension is a topological invariant modulo homeomorphisms that are bi-Lipschitz on a dense open set. More precisely, if X and Y are homeomorphic compact subsets of R^n, and the homeomorphism is bi-Lipschitz on a set of full Hausdorff dimension in X, then dim_H(X) = dim_H(Y). This would mean that fractal dimension is not just a metric accident but a topological invariant up to rough isometries. Test: compute d_f for the Sierpinski gasket (expected: 1 since connected, Hausdorff dimension log3/log2) and the Cantor set (expected: 0 since totally disconnected). Prove that the Koch curve and any bi-Lipschitz-equivalent curve have equal Hausdorff dimensions. Impact: elevates fractal dimension from a metric curiosity to a topological invariant, with applications to shape classification and topological data analysis.",
-    "domains": [
-      "Geometry",
-      "Topology",
-      "Analysis"
-    ],
-    "priority_score": 0.86,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.935767+00:00"
-  },
-  {
     "id": "seed_087",
     "title": "EML Information Geometry: Fisher Information of exp-log Models",
     "description": "Information geometry studies statistical manifolds via the Fisher information metric. Define the EML statistical manifold M_EML as the set of probability distributions parameterized by EML functions: p(x; theta) = exp(theta_1 * g_1(x)) * log(theta_2 * g_2(x) + theta_3) normalized to a probability distribution. Conjecture: The EML manifold M_EML is a dually flat statistical manifold whose dual potentials are the cumulant generating functions of the EML activation. The Fisher information on M_EML induces a Hessian metric with constant negative curvature, making it a hyperbolic geometry of model parameters. This means natural gradient descent on M_EML has well-defined geodesics, and the dual flatness enables efficient Fisher vector products. The negative curvature reflects the exponential sensitivity of EML networks to parameter changes: small perturbations in theta cause exponentially large changes in the output. Test: compute the Fisher metric for a single EML neuron f(x; a,b) = exp(a)*log(b*x+1) and verify it induces a Hessian manifold with constant negative curvature. Prove that the alpha-connections on M_EML are projectively flat for alpha=1. Impact: gives EML networks a differential-geometric foundation for natural gradient descent, with provable convergence properties.",
@@ -783,22 +620,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.978415+00:00"
-  },
-  {
-    "id": "seed_090",
-    "title": "Inverse Stereographic Neural Field Theory",
-    "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
-    "domains": [
-      "Geometry",
-      "MachineLearning",
-      "Physics"
-    ],
-    "priority_score": 0.86,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.006665+00:00"
   },
   {
     "id": "seed_006",
@@ -816,21 +637,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.330478+00:00"
   },
   {
-    "id": "seed_020",
-    "title": "Hilbert 12: Kronecker-Weber Generalization",
-    "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
-    "domains": [
-      "Algebra",
-      "NumberTheory"
-    ],
-    "priority_score": 0.85,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.438452+00:00"
-  },
-  {
     "id": "seed_033",
     "title": "Schanuel's Conjecture",
     "description": "Prove Schanuel's conjecture: if z\u2081,...,z\u2099 are Q-linearly independent complex numbers, then the transcendence degree of {z\u2081,...,z\u2099,e^z\u2081,...,e^z\u2099} over Q is at least n. Formalize implications for the Lindemann-Weierstrass theorem.",
@@ -844,22 +650,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.537163+00:00"
-  },
-  {
-    "id": "seed_041",
-    "title": "Machine Learning Generalization Bounds",
-    "description": "Prove tighter generalization bounds for deep neural networks. Formalize PAC-Bayes bounds, compression-based bounds, and connect network architecture to sample complexity. Establish when overparameterized networks provably generalize.",
-    "domains": [
-      "MachineLearning",
-      "Computation",
-      "Algebra"
-    ],
-    "priority_score": 0.85,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.598768+00:00"
   },
   {
     "id": "seed_046",
@@ -972,22 +762,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.553079+00:00"
   },
   {
-    "id": "seed_042",
-    "title": "Category-Theoretic Neural Architectures",
-    "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Bridges"
-    ],
-    "priority_score": 0.84,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.605600+00:00"
-  },
-  {
     "id": "seed_049",
     "title": "Tropical Brill-Noether Theory",
     "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
@@ -1036,38 +810,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.835896+00:00"
   },
   {
-    "id": "seed_076",
-    "title": "Inverse Stereographic Renormalization Group",
-    "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
-    "domains": [
-      "Geometry",
-      "Physics",
-      "Algebra"
-    ],
-    "priority_score": 0.84,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.880860+00:00"
-  },
-  {
-    "id": "seed_083",
-    "title": "Temporal Logic of Proofs: When You Prove Something Matters",
-    "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Speculative"
-    ],
-    "priority_score": 0.84,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.945264+00:00"
-  },
-  {
     "id": "seed_093",
     "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry",
     "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
@@ -1097,21 +839,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.373036+00:00"
-  },
-  {
-    "id": "seed_023",
-    "title": "Hilbert 16: Topology of Algebraic Curves",
-    "description": "Study the topology of real algebraic curves and surfaces. Formalize the Harnack bound, classify real algebraic curves by arrangement of ovals, and connect to the second part on limit cycles of planar polynomial ODEs.",
-    "domains": [
-      "Geometry",
-      "Topology"
-    ],
-    "priority_score": 0.83,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.462191+00:00"
   },
   {
     "id": "seed_034",
@@ -1190,21 +917,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.359184+00:00"
   },
   {
-    "id": "seed_018",
-    "title": "Hilbert 6: Axiomatization of Physics",
-    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
-    "domains": [
-      "Physics",
-      "Logic"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.419969+00:00"
-  },
-  {
     "id": "seed_027",
     "title": "Euler-Mascheroni Constant Irrationality",
     "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
@@ -1232,21 +944,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.559748+00:00"
-  },
-  {
-    "id": "seed_045",
-    "title": "Reversible Computing and Thermodynamic Efficiency",
-    "description": "Prove that reversible circuits achieve Landauer's bound for erasure. Formalize the connection between computational complexity and thermodynamic entropy. Construct provably optimal reversible implementations of common algorithms.",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.626763+00:00"
   },
   {
     "id": "seed_047",
@@ -1312,22 +1009,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.854005+00:00"
   },
   {
-    "id": "seed_077",
-    "title": "Stereographic Proof Compression: Proofs on Spheres",
-    "description": "A proof is a sequence of steps. Map each step to a point on S^n via stereographic projection. The proof distance between theorems is the spherical distance between their proof endpoints. Conjecture: Two theorems whose proofs are close in spherical distance share a common subproof of length at least n minus spherical_distance. Test: compute proof distances for a set of 20 basic theorems in Lean 4 and verify the subproof bound. Impact: geometric proof mining and automated lemma discovery.",
-    "domains": [
-      "Geometry",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.890109+00:00"
-  },
-  {
     "id": "seed_011",
     "title": "Perfect Cuboid (Euler Brick)",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -1343,36 +1024,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.366802+00:00"
   },
   {
-    "id": "seed_019",
-    "title": "Hilbert 11: Quadratic Forms over Algebraic Fields",
-    "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
-    "domains": [
-      "Algebra",
-      "NumberTheory"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.429656+00:00"
-  },
-  {
-    "id": "seed_022",
-    "title": "Hilbert 15: Schubert Calculus Rigorization",
-    "description": "Provide rigorous foundations for Schubert's enumerative geometry. Formalize intersection theory on Grassmannians and flag varieties, proving Schubert calculus results via modern algebraic geometry.",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.455464+00:00"
-  },
-  {
     "id": "seed_031",
     "title": "Frankl's Union-Closed Conjecture",
     "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
@@ -1386,22 +1037,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.520566+00:00"
-  },
-  {
-    "id": "seed_057",
-    "title": "Consciousness as Integrated Information",
-    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
-    "domains": [
-      "Speculative",
-      "Logic",
-      "Computation"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.714432+00:00"
   },
   {
     "id": "seed_064",
@@ -1420,22 +1055,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.771675+00:00"
   },
   {
-    "id": "seed_078",
-    "title": "Inverse Stereographic Tropical Lift",
-    "description": "Tropical geometry replaces + with max and * with +. Stereographic projection maps spheres to planes. What is the tropical stereographic projection? Define it as: map a tropical point (x1 + ... + xn) on the tropical projective space to a tropical hyperplane via an analogous pole construction. Conjecture: The tropical stereographic projection is a tropical rational function of degree 2 (a tropical Mobius transformation). Test: construct it explicitly for TP^1 -> TR^1 and prove it is a tropical homeomorphism. Impact: connects tropical geometry and conformal geometry.",
-    "domains": [
-      "Geometry",
-      "Tropical",
-      "Algebra"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.899298+00:00"
-  },
-  {
     "id": "fd_0789",
     "title": "Arithmetic Phase Transitions in Proof Search via p-adic Energy Landscapes",
     "description": "Conjecture: For any finitely presented first-order theory T and any fixed automated proof system P, there exists a canonically defined p-adic proof energy E_p on partial derivations such that the distribution of successful proof trajectories exhibits a sharp phase transition at a critical prime-dependent inverse temperature beta_p; moreover, theories with non-isomorphic arithmetic content have distinct critical spectra {beta_p}_p. Test: Define E_p from valuation growth of denominators, coefficient heights, and modular obstruction data along proof states; run controlled proof search on benchmark theories (group theory, number theory, algebraic geometry fragments) under Gibbs-biased sampling exp(-beta E_p), estimate success probability as a function of beta and p, and check whether (1) a statistically sharp threshold exists and (2) the resulting critical spectrum classifies theories better than standard syntactic features. Refutation occurs if no reproducible threshold appears or if spectra fail to distinguish arithmetic structure beyond trivial size effects. Impact: This would introduce a new measurable invariant of mathematical theories, connect automated reasoning with arithmetic geometry and statistical mechanics, and suggest temperature-tuned theorem provers that exploit hidden number-theoretic structure in proof space.",
@@ -1449,6 +1068,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:11:47.101012+00:00"
+  },
+  {
+    "id": "fd_0795",
+    "title": "Benford Renormalization for Integer Dynamical Systems",
+    "description": "Conjecture: Let T: N -> N be an integer dynamical map given by a piecewise rational rule with multiplicative expansion on average (including maps such as 3n+1, reverse-and-add, and x -> x^2+c restricted to integer orbits where defined). For every such T in a precise non-degenerate class, the mantissae of the orbit values {T^k(n)} are Benford-distributed for natural density 1 of initial seeds n if and only if the additive cocycle log_10 T^k(n) mod 1 has no nontrivial rational eigen-obstruction. Test: Formalize the obstruction criterion, then compute orbit mantissa statistics and spectral data across large families of maps; confirmation requires sharp agreement with Benford frequencies exactly in the obstruction-free cases, while any systematic non-Benford behavior in a certified obstruction-free family refutes the conjecture. Impact: This would create a new universality theory for arithmetic dynamics, linking number theory, ergodic spectra, and digit laws, and could yield a diagnostic invariant for predicting pseudorandomness and hardness in discrete algorithms.",
+    "domains": [
+      "Arithmetic Dynamics",
+      "Ergodic Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:12:30.270617+00:00"
   },
   {
     "id": "seed_026",
@@ -1482,21 +1116,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.351682+00:00"
   },
   {
-    "id": "seed_021",
-    "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions",
-    "description": "Resolve whether the general 7th-degree equation can be solved using functions of only 2 variables. Formalize Kolmogorov's superposition theorem and explore its implications for approximation theory.",
-    "domains": [
-      "Algebra",
-      "Analysis"
-    ],
-    "priority_score": 0.78,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.446288+00:00"
-  },
-  {
     "id": "seed_052",
     "title": "Tropical Convexity and Helly Theorem",
     "description": "Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
@@ -1513,22 +1132,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.679862+00:00"
   },
   {
-    "id": "seed_065",
-    "title": "Integrated Information via Tensor Networks",
-    "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
-    "domains": [
-      "Physics",
-      "Computation",
-      "Speculative"
-    ],
-    "priority_score": 0.78,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.779231+00:00"
-  },
-  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -1541,21 +1144,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
-  },
-  {
-    "id": "seed_028",
-    "title": "Percolation Threshold",
-    "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
-    "domains": [
-      "Probability",
-      "Physics"
-    ],
-    "priority_score": 0.76,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.498731+00:00"
   },
   {
     "id": "seed_058",
@@ -1574,22 +1162,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.723031+00:00"
   },
   {
-    "id": "seed_067",
-    "title": "Sonic Mathematics: Counterpoint as Category Theory",
-    "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
-    "domains": [
-      "Algebra",
-      "Speculative",
-      "Bridges"
-    ],
-    "priority_score": 0.74,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.799987+00:00"
-  },
-  {
     "id": "seed_007",
     "title": "196-Algorithm Non-Termination",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
@@ -1604,21 +1176,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.336768+00:00"
   },
   {
-    "id": "seed_060",
-    "title": "Musical Counterpoint as Constraint Satisfaction",
-    "description": "Formalize the rules of species counterpoint as a constraint satisfaction problem. Prove that optimal voice leading minimizes a well-defined cost function and connect to lattice theory.",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "priority_score": 0.72,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.739741+00:00"
-  },
-  {
     "id": "seed_008",
     "title": "10 is a Solitary Number",
     "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
@@ -1631,25 +1188,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
-  },
-  {
-    "id": "fd_0783",
-    "title": "Synthesis",
-    "description": "The results in this work establish that torsion persistence is not a monolithic phenomenon but decomposes canonically into independent prime channels, each with its own stability law. This opens five interconnected research directions: (1) proving the sharp valuation-sensitive improvement conjecture, (2) developing functorial localization for persistence modules, (3) extending to higher-dimensional torsion phenomena, (4) building practical algorithms for arithmetic TDA, and (5) establishing entropy-theoretic bounds for primewise information content. These directions are unified by the principle that **arithmetic structure provides hidden regularity in topological data**.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:11:24.456980+00:00"
   },
   {
     "id": "fd_0784",
@@ -1739,5 +1277,104 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "2d14ce54",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:11:24.532304+00:00"
+  },
+  {
+    "id": "fd_0790",
+    "title": "Direction 1: Hardness of Unrestricted-Degree Lorentzian Recognition",
+    "description": "**Conjecture.** When the degree d is part of the input (not fixed), deciding whether a homogeneous polynomial with nonneg integer coefficients is Lorentzian is coNP-hard.\n\n**Test.** Reduce a known coNP-hard problem \u2014 such as verifying that a symmetric matrix has no positive eigenvalue (which is coNP-complete for matrices given in factored form) \u2014 to Lorentzian recognition. Construct explicit polynomial families where any recursive certificate must examine at least n^{\u03a9(d)} quadratic leaves. A disproof would exhibit a polynomial-time algorithm for unrestricted-degree recognition.\n\n**Impact.** This would be the first formal hardness result for any Hodge-theoretic positivity predicate, creating a new complexity class boundary. It would definitively separate \"fixed-degree tractable\" from \"unrestricted-degree hard\" and motivate the development of approximation algorithms.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `card_multiindex_le_pow`, `quadratic_leaf_count_le` (upper bounds that the hardness would complement).\n\n**Proof Strategy.** Encode 3-SAT unsatisfiability as a Lorentzian recognition instance. Given a 3-SAT formula \u03c6 on m clauses, construct a degree-(m+2) polynomial P_\u03c6 in n variables such that P_\u03c6 is Lorentzian iff \u03c6 is unsatisfiable. The construction uses the clause-variable incidence structure to define derivative branches that are Lorentzian iff the clause is satisfied.\n\n**Domain Bridges.** Computational complexity \u2192 algebraic combinatorics. Connects the Cook\u2013Levin theory of NP-completeness to Hodge-theoretic positivity.\n\n**Lineage.** Builds on `quadratic_leaf_count_le` (polynomial upper bound) to show the bound is tight in degree.\n\n**Ambition.** Grand challenge. A positive resolution would be a landmark in algebraic complexity theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33261812",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:12:21.832370+00:00"
+  },
+  {
+    "id": "fd_0791",
+    "title": "Direction 2: Sparse-Support Certificate Compression",
+    "description": "**Conjecture.** For matroid basis generating polynomials of rank r on ground set [n], the number of nonzero quadratic leaves is O(n^2 \u00b7 r^{d-4}) rather than n^{d-2}, where d is the degree.\n\n**Test.** Compute derivative leaves for uniform matroids U_{r,n}, graphic matroids of sparse graphs, and transversal matroids. Count the number of nonzero quadratic leaves and compare to the worst-case bound n^{d-2}. A disproof would exhibit a matroid family where the nonzero leaf count matches the worst case.\n\n**Impact.** This would make Lorentzian recognition practical for partition-function polynomials arising in combinatorial optimization and statistical physics, where support is typically sparse relative to the ambient monomial space.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `multiIndexSet`, `numberOfQuadraticLeaves`; `Speculative/AutoResearch/LorentzianMConvex.lean`: `NewtonSupport`, `IsMConvexExchangeNat`.\n\n**Proof Strategy.** Use the M-convex exchange property of the Newton support (from the existing catalog) to show that many derivative branches have zero coefficient. The exchange property constrains which multiindices can appear in the support of iterated derivatives, dramatically pruning the recursion tree.\n\n**Domain Bridges.** Matroid theory \u2192 algorithmic complexity \u2192 statistical physics (partition functions of matroids).\n\n**Lineage.** Builds on the M-convex support theorem in `LorentzianMConvex.lean` and the leaf-counting bound in this cycle.\n\n**Ambition.** Solid extension. The uniform matroid case should be provable; general matroids require new structural lemmas.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33261812",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:12:21.848642+00:00"
+  },
+  {
+    "id": "fd_0792",
+    "title": "Direction 3: Completeness of Recursive Spectral Certificates",
+    "description": "**Conjecture.** The recursive spectral predicate (all quadratic leaves have Lorentzian Hessian signature) is equivalent to the Br\u00e4nd\u00e9n\u2013Huh definition of Lorentzianity for homogeneous polynomials with nonneg coefficients.\n\n**Test.** Verify computationally for all homogeneous polynomials of degree \u2264 5 in \u2264 4 variables that the recursive predicate matches the full Br\u00e4nd\u00e9n\u2013Huh definition (which additionally requires the polynomial to be a limit of products of linear forms with nonneg coefficients). A disproof would exhibit a polynomial that satisfies the recursive predicate but is not Lorentzian in the full sense.\n\n**Impact.** A positive resolution would show that our certified algorithm is not just sound but complete: it exactly characterizes Lorentzianity. This would be the first formal completeness result for any recursive characterization of Lorentzianity.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `IsRecursivelyLorentzian`, `RecursiveLorentzianCertificate`, `recursive_certificate_sound`.\n\n**Proof Strategy.** For one direction (recursive \u27f9 Lorentzian), use the characterization theorem of Br\u00e4nd\u00e9n\u2013Huh: a homogeneous polynomial with nonneg coefficients, support satisfying the exchange property, and Hessian signature condition on all quadratic leaves is Lorentzian. The converse (Lorentzian \u27f9 recursive) follows from closure of Lorentzianity under partial differentiation.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 spectral linear algebra.\n\n**Lineage.** Direct continuation of `recursive_certificate_sound` (soundness).\n\n**Ambition.** Solid extension. The key obstacle is formalizing enough of the Br\u00e4nd\u00e9n\u2013Huh theory in Lean.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33261812",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:12:21.863215+00:00"
+  },
+  {
+    "id": "fd_0793",
+    "title": "Direction 4: Efficient Sampling from Lorentzian Certificates",
+    "description": "**Conjecture.** Given a degree-d Lorentzian polynomial f in n variables, one can sample from the probability distribution proportional to the coefficients of f in expected time O(n^{d+1} \u00b7 log n), using the recursive certificate structure as a guide.\n\n**Test.** Implement a certificate-guided sampling algorithm for matroid basis generating polynomials and compare runtime and mixing time to state-of-the-art methods (e.g., basis exchange walks). A disproof would show that certificate-guided sampling has provably worse mixing time than exchange walks for some matroid family.\n\n**Impact.** This would create the first direct algorithmic application of Lorentzian certificates, connecting the complexity theory of recognition to the complexity of sampling.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `IsRecursivelyLorentzian`, `lorentzian_reversed_cauchy_schwarz` (the reversed Cauchy\u2013Schwarz provides the key mixing-time bound).\n\n**Proof Strategy.** Use the reversed Cauchy\u2013Schwarz inequality to bound the spectral gap of a Markov chain defined by the derivative tree. At each internal node of the certificate tree, use the Lorentzian signature to construct a log-concave conditional distribution, then sample via rejection sampling with bounded rejection probability.\n\n**Domain Bridges.** Algorithmic combinatorics \u2192 statistical physics \u2192 probability (Markov chain mixing).\n\n**Lineage.** Extends `lorentzian_reversed_cauchy_schwarz` from a structural result to an algorithmic tool.\n\n**Ambition.** Grand challenge. Connecting certificate structure to sampling efficiency would be a significant advance.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33261812",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:12:21.876594+00:00"
+  },
+  {
+    "id": "fd_0794",
+    "title": "Direction 5: Numerical Stability of Lorentzian Recognition",
+    "description": "**Conjecture.** There exists \u03b5\u2080 > 0 depending only on d such that if all quadratic leaves of a degree-d polynomial f satisfy the spectral condition with margin \u03b5\u2080 (i.e., the second-largest eigenvalue of each Hessian is at most \u2212\u03b5\u2080 \u00b7 \u2016H\u2016), then f is Lorentzian even under O(\u03b5\u2080\u00b2)-perturbations of the coefficients.\n\n**Test.** Perturb the coefficients of known Lorentzian polynomials (elementary symmetric polynomials, matroid basis polynomials) by random noise of varying magnitude, and check how the eigenvalue gap of the quadratic leaves degrades. A disproof would exhibit a Lorentzian polynomial whose Lorentzianity is destroyed by arbitrarily small perturbations.\n\n**Impact.** This would make Lorentzian recognition practical with floating-point arithmetic, enabling deployment in machine learning and optimization pipelines where exact computation is infeasible.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `HasAtMostOnePositiveEigenvalue`, `lorentzian_signature_tangent_neg_semidef` (the tangent-space theorem suggests spectral gaps persist under perturbation).\n\n**Proof Strategy.** Use the tangent-space negativity theorem to establish that the spectral gap of the Hessian is lower-semicontinuous in the coefficients. The key inequality is: if Q(x) > 0 and the second eigenvalue of H has magnitude \u03b4, then tangent-space negativity holds with margin \u03b4 \u00b7 \u2016x\u2016\u00b2 / \u2016Hx\u2016.\n\n**Domain Bridges.** Numerical linear algebra \u2192 optimization \u2192 engineering applications (robust ML, robust control).\n\n**Lineage.** Extends `lorentzian_signature_tangent_neg_semidef` to a quantitative/robust setting.\n\n**Ambition.** Solid extension. The qualitative result (openness of Lorentzianity) is known; the quantitative bound is new.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33261812",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:12:21.890989+00:00"
   }
 ];
