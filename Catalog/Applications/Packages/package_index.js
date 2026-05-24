@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Graph Theory / SAT Solving / Pathwidth",
     "date": "2026-05-24T22:29:16Z",
     "exp_id": "a5d7efda",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6584232258064516,
+    "quality": "partial"
   },
   {
     "filename": "direction_1_full_state_strong_bisimulation_via_nor.json",
@@ -7233,8 +7233,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-24T22:29:16Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6584232258064516,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -9849,24 +9849,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T01:44:39.253474+00:00"
   },
   {
-    "id": "fd_0578",
-    "title": "Direction 2: Separator-Aware Forgetting Dominates Activity-Only Forgetting",
-    "description": "**Conjecture:** On SAT instances whose clause interaction graphs have empirical pathwidth \u2264 k (for k \u2264 50), path-respecting forgetting achieves strictly lower peak memory than LBD/activity-only forgetting in GLUCOSE, with at most 2x runtime overhead, on \u2265 60% of industrial benchmarks.\n\n**Test:** Implement path-respecting forgetting as a plugin for CaDiCaL. On each database reduction event, retain clauses in the current bag + active frontier instead of using LBD scores. Benchmark against stock CaDiCaL on SAT Competition 2023 industrial track. Measure peak memory, runtime, and solve rate.\n\n**Impact:** If confirmed, this demonstrates practical value of the structural theory \u2014 a new clause management strategy competitive with state-of-the-art. If falsified, the overhead of maintaining decompositions may be too high, suggesting that approximate pathwidth-awareness (without exact decompositions) is the right level of abstraction.\n\n**Catalog References:** `Pythagorean/ClauseInteractionPathwidth/Theorems.lean` (activeFrontier_card_le_width_succ, retainAtCut_preserves_frontier_edges).\n\n**Proof Strategy:** The correctness guarantee follows from our local edge preservation theorem. The quantitative claim requires empirical validation.\n\n**Domain Bridges:** Connects to systems engineering, SAT solver architecture, and algorithm engineering.\n\n**Lineage:** Direct application of the frontier bound and edge preservation theorems.\n\n**Ambition:** Solid extension \u2014 translates theory into practice.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "905cb737",
-    "consumed_by_exp_id": "a5d7efda",
-    "timestamp": "2026-05-24T01:44:39.287040+00:00"
-  },
-  {
     "id": "fd_0580",
     "title": "Direction 4: Dynamic Programming Equivalence",
     "description": "**Conjecture:** For CNFs F with clause interaction pathwidth pw(confGraph(F)) \u2264 k, a path-guided solver (CDCL with pathwidth-bounded forgetting) and a bag-state dynamic program have asymptotically equivalent memory requirements: both \u0398(2^k \u00b7 |F|).\n\n**Test:** Implement both a pathwidth-bounded CDCL variant and an explicit DP algorithm over path decompositions for the same formula families. Compare state counts, retained clause counts, and peak memory on synthetic bounded-pathwidth CNFs with k \u2208 {2, 4, 6, 8, 10}. Measure the constant factor.\n\n**Impact:** If confirmed, this establishes a formal computational equivalence between two paradigms \u2014 clause learning and dynamic programming \u2014 unified by pathwidth. This would be a landmark result connecting proof search to algebraic computation. If falsified, the constant factors differ too much for practical equivalence, but the asymptotic relationship may still hold.\n\n**Catalog References:** `Pythagorean/ClauseInteractionPathwidth/Theorems.lean` (cut_locality, bag_locality_of_clause_evaluation).\n\n**Proof Strategy:** The upper bound (DP memory \u2264 O(2^k \u00b7 |F|)) follows from the cut locality theorem: at each bag, the DP state space is bounded by 2^|bagVars|. The lower bound requires a counting argument showing that any solving strategy must represent this many states.\n\n**Domain Bridges:** Connects to automata theory, transfer-matrix methods in statistical physics, database join processing, and constraint satisfaction.\n\n**Lineage:** Extends the cut locality theorem into a computational equivalence.\n\n**Ambition:** Grand challenge \u2014 would unify two major algorithmic paradigms.\n\n---",
@@ -10300,10 +10282,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "14718e14",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd2f08b2",
     "timestamp": "2026-05-24T10:55:08.624242+00:00"
   },
   {

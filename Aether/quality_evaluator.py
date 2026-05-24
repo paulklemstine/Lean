@@ -63,15 +63,15 @@ class QualityScore:
     def composite(self) -> float:
         """Weighted composite score (9 axes)."""
         return (
-            0.18 * self.proof_depth +
-            0.13 * self.novelty +
-            0.13 * self.cross_domain +
-            0.07 * self.artifact_richness +
-            0.07 * self.actionability +
-            0.14 * self.importance +
-            0.10 * self.usefulness +
-            0.08 * self.applications +
-            0.10 * self.catalog_anchoring
+            0.15 * self.proof_depth +
+            0.12 * self.novelty +
+            0.10 * self.cross_domain +
+            0.05 * self.artifact_richness +
+            0.06 * self.actionability +
+            0.18 * self.importance +
+            0.12 * self.usefulness +
+            0.14 * self.applications +
+            0.08 * self.catalog_anchoring
         )
 
     @property
@@ -235,6 +235,17 @@ class QualityEvaluator:
             for _ in re.finditer(pat, lean_source, re.MULTILINE)
         )
 
+        # Detect hypothesis-only proofs: "exact h_something" or "exact this_hypothesis"
+        hypothesis_proof_patterns = [
+            r":=\s*exact\s+h\w+",          # exact h_foo
+            r":=\s*exact\s+this_\w+",       # exact this_hypothesis
+            r":=\s*exact\s+\w+_hyp\b",      # exact some_hyp
+        ]
+        hypothesis_proof_count = sum(
+            1 for pat in hypothesis_proof_patterns
+            for _ in re.finditer(pat, lean_source, re.MULTILINE)
+        )
+
         # Count theorems/lemmas
         theorem_count = len(re.findall(r'\b(?:theorem|lemma)\s+\w+', lean_source))
         if theorem_count == 0:
@@ -275,6 +286,24 @@ class QualityEvaluator:
             if line.strip() == "" or line.strip().startswith("theorem") or line.strip().startswith("lemma"):
                 current_nesting = max(0, current_nesting - 1)
 
+        # Detect hypothesis reuse: extract hypothesis names from theorem signatures
+        # If >50% of theorems share the same hypothesis name, penalize
+        hypothesis_names = re.findall(r'\(h(\w+)\s*:', lean_source)
+        hypothesis_names += re.findall(r'\(h(\w+)\s+:', lean_source)
+        hypothesis_reuse_penalty = 0.0
+        if hypothesis_names:
+            from collections import Counter
+            name_counts = Counter(hypothesis_names)
+            most_common_count = name_counts.most_common(1)[0][1]
+            if most_common_count > 2 and most_common_count / max(theorem_count, 1) > 0.5:
+                hypothesis_reuse_penalty = 0.3  # >50% of theorems reuse the same hypothesis
+
+        # Hypothesis-only proof penalty: if most proofs just invoke assumed hypotheses
+        hypothesis_proof_ratio = hypothesis_proof_count / max(theorem_count, 1)
+        hypothesis_proof_penalty = 0.0
+        if hypothesis_proof_ratio > 0.5:
+            hypothesis_proof_penalty = 0.3  # >50% of theorems proved by exact h_*
+
         # Composite depth score
         tactic_ratio = deep_count / max(deep_count + shallow_count, 1)
         line_score = min(1.0, total_lines / 300)
@@ -290,7 +319,7 @@ class QualityEvaluator:
             0.15 * def_score +
             0.10 * nesting_score +
             0.10 * (1.0 - trivial_count / max(theorem_count, 1))
-        ) - sorry_penalty
+        ) - sorry_penalty - hypothesis_proof_penalty - hypothesis_reuse_penalty
 
         return max(0.0, min(1.0, depth))
 
