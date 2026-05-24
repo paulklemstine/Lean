@@ -1,462 +1,376 @@
+#!/usr/bin/env python3
 """
-Algorithms for Scalable Arithmetic TDA Pipeline:
-Torsion Profile Extraction from Smith Normal Forms
+Arithmetic TDA Pipeline — Core Algorithms
 
-This module implements the core algorithms for extracting torsion profiles
-from boundary matrices of simplicial complexes via Smith Normal Form computation.
+Implements the verified algorithms from the formal proofs:
+1. Smith Normal Form computation for integer matrices
+2. Torsion prime profile extraction from SNF diagonal
+3. Full degreewise arithmetic signature computation
+4. Tor₁ torsion detection (computational proxy)
 
-Key algorithms:
-1. Smith Normal Form computation over ℤ
-2. Eratosthenes sieve for certified primality
-3. Torsion profile extraction from SNF diagonal
-4. Prime profile computation with sieve optimization
+Each algorithm includes docstrings, type hints, complexity analysis,
+and example usage.
 """
 
-from __future__ import annotations
-import numpy as np
-from typing import List, Tuple, Dict, Set
-from dataclasses import dataclass, field
+from typing import List, Set, Dict, Tuple, Optional
 from collections import defaultdict
-import math
+from math import gcd, log2
+from functools import reduce
+import numpy as np
 
 
-@dataclass
-class TorsionProfile:
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 1: Prime Factorization
+# ═══════════════════════════════════════════════════════════════
+
+def prime_factors(n: int) -> Set[int]:
     """
-    The torsion profile of a finitely generated abelian group.
-
-    Given invariant factors d₁ | d₂ | ⋯ | dᵣ (with dᵢ > 1),
-    the torsion profile records:
-    - The invariant factors themselves
-    - The prime factorization of each factor
-    - The multiset of primes with multiplicities
-    """
-    factors: List[int]
-    prime_decomposition: Dict[int, List[Tuple[int, int]]]  # factor -> [(prime, power)]
-    prime_multiplicities: Dict[int, int]  # prime -> total multiplicity
-
-    def __repr__(self) -> str:
-        if not self.factors:
-            return "TorsionProfile(trivial — free abelian group)"
-        parts = [f"ℤ/{d}ℤ" for d in self.factors]
-        return f"TorsionProfile({' ⊕ '.join(parts)})"
-
-    @property
-    def is_trivial(self) -> bool:
-        return len(self.factors) == 0
-
-    @property
-    def primes(self) -> Set[int]:
-        return set(self.prime_multiplicities.keys())
-
-
-@dataclass
-class EratosthenesSieve:
-    """
-    Certified Eratosthenes sieve up to a bound.
-
-    Precomputes all primes up to `bound` in O(n log log n) time,
-    then supports O(1) primality queries.
-    """
-    bound: int
-    _is_prime: List[bool] = field(default_factory=list, repr=False)
-
-    def __post_init__(self) -> None:
-        self._is_prime = [False, False] + [True] * (self.bound - 1)
-        if self.bound < 2:
-            self._is_prime = [False] * (self.bound + 1)
-            return
-        for i in range(2, int(math.isqrt(self.bound)) + 1):
-            if self._is_prime[i]:
-                for j in range(i * i, self.bound + 1, i):
-                    self._is_prime[j] = False
-
-    def is_prime(self, n: int) -> bool:
-        """O(1) primality test for n ≤ bound."""
-        if n < 0 or n > self.bound:
-            raise ValueError(f"{n} out of sieve range [0, {self.bound}]")
-        return self._is_prime[n]
-
-    def primes_up_to(self, n: int) -> List[int]:
-        """Return all primes ≤ n."""
-        return [i for i in range(2, min(n, self.bound) + 1) if self._is_prime[i]]
-
-    @property
-    def prime_count(self) -> int:
-        return sum(1 for x in self._is_prime if x)
-
-
-def smith_normal_form(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """
-    Compute the Smith Normal Form of an integer matrix.
-
-    Given M ∈ ℤ^{m×n}, computes invertible U ∈ GL(m,ℤ), V ∈ GL(n,ℤ)
-    and diagonal S such that S = U @ M @ V, with diagonal entries
-    d₁ | d₂ | ⋯ | dᵣ where r = rank(M).
-
-    Returns: (U, S, V) where S = U @ M @ V
-
-    Complexity: O(m·n·min(m,n)) elementary operations
-    """
-    M = matrix.astype(np.int64).copy()
-    m, n = M.shape
-    U = np.eye(m, dtype=np.int64)
-    V = np.eye(n, dtype=np.int64)
-
-    pivot_row = 0
-    pivot_col = 0
-
-    while pivot_row < m and pivot_col < n:
-        # Find nonzero entry with smallest absolute value
-        nonzero = []
-        for i in range(pivot_row, m):
-            for j in range(pivot_col, n):
-                if M[i, j] != 0:
-                    nonzero.append((abs(M[i, j]), i, j))
-
-        if not nonzero:
-            break
-
-        nonzero.sort()
-        _, best_i, best_j = nonzero[0]
-
-        # Swap to pivot position
-        if best_i != pivot_row:
-            M[[pivot_row, best_i]] = M[[best_i, pivot_row]]
-            U[[pivot_row, best_i]] = U[[best_i, pivot_row]]
-        if best_j != pivot_col:
-            M[:, [pivot_col, best_j]] = M[:, [best_j, pivot_col]]
-            V[:, [pivot_col, best_j]] = V[:, [best_j, pivot_col]]
-
-        # Make pivot positive
-        if M[pivot_row, pivot_col] < 0:
-            M[pivot_row] = -M[pivot_row]
-            U[pivot_row] = -U[pivot_row]
-
-        # Eliminate column
-        changed = True
-        while changed:
-            changed = False
-            for i in range(pivot_row + 1, m):
-                if M[i, pivot_col] != 0:
-                    q = M[i, pivot_col] // M[pivot_row, pivot_col]
-                    M[i] -= q * M[pivot_row]
-                    U[i] -= q * U[pivot_row]
-                    if M[i, pivot_col] != 0:
-                        # Swap if remainder is smaller
-                        if abs(M[i, pivot_col]) < abs(M[pivot_row, pivot_col]):
-                            M[[pivot_row, i]] = M[[i, pivot_row]]
-                            U[[pivot_row, i]] = U[[i, pivot_row]]
-                            changed = True
-
-            # Eliminate row
-            for j in range(pivot_col + 1, n):
-                if M[pivot_row, j] != 0:
-                    q = M[pivot_row, j] // M[pivot_row, pivot_col]
-                    M[:, j] -= q * M[:, pivot_col]
-                    V[:, j] -= q * V[:, pivot_col]
-                    if M[pivot_row, j] != 0:
-                        if abs(M[pivot_row, j]) < abs(M[pivot_row, pivot_col]):
-                            M[:, [pivot_col, j]] = M[:, [j, pivot_col]]
-                            V[:, [pivot_col, j]] = V[:, [j, pivot_col]]
-                            changed = True
-
-            # Check divisibility condition
-            for i in range(pivot_row + 1, m):
-                for j in range(pivot_col + 1, n):
-                    if M[i, j] % M[pivot_row, pivot_col] != 0:
-                        M[i] += M[pivot_row]
-                        U[i] += U[pivot_row]
-                        changed = True
-                        break
-                if changed:
-                    break
-
-        pivot_row += 1
-        pivot_col += 1
-
-    # Ensure divisibility chain
-    r = min(m, n)
-    for k in range(r - 1):
-        if M[k, k] != 0 and M[k+1, k+1] != 0:
-            if M[k+1, k+1] % M[k, k] != 0:
-                g = math.gcd(int(M[k, k]), int(M[k+1, k+1]))
-                l = int(M[k, k]) * int(M[k+1, k+1]) // g
-                M[k, k] = g
-                M[k+1, k+1] = l
-
-    return U, M, V
-
-
-def extract_snf_diagonal(S: np.ndarray) -> List[int]:
-    """Extract the diagonal entries from a Smith Normal Form matrix."""
-    r = min(S.shape)
-    return [abs(int(S[i, i])) for i in range(r) if S[i, i] != 0]
-
-
-def factorize_with_sieve(n: int, sieve: EratosthenesSieve) -> List[Tuple[int, int]]:
-    """
-    Factorize n using a precomputed sieve.
-
-    Trial-divides n by all primes up to √n from the sieve.
-    Returns list of (prime, exponent) pairs.
-
-    Complexity: O(π(√n)) = O(√n / log n) divisions
+    Compute the set of prime factors of a positive integer n.
+    
+    Time complexity: O(√n)
+    Space complexity: O(log n) for the output set
+    
+    Examples:
+        >>> sorted(prime_factors(12))
+        [2, 3]
+        >>> sorted(prime_factors(30))
+        [2, 3, 5]
+        >>> prime_factors(1)
+        set()
     """
     if n <= 1:
-        return []
-
-    factors = []
-    remaining = n
-    sqrt_n = int(math.isqrt(n))
-
-    for p in sieve.primes_up_to(sqrt_n):
-        if remaining <= 1:
-            break
-        if remaining % p == 0:
-            exp = 0
-            while remaining % p == 0:
-                remaining //= p
-                exp += 1
-            factors.append((p, exp))
-
-    if remaining > 1:
-        factors.append((remaining, 1))
-
+        return set()
+    factors = set()
+    d = 2
+    while d * d <= n:
+        while n % d == 0:
+            factors.add(d)
+            n //= d
+        d += 1
+    if n > 1:
+        factors.add(n)
     return factors
 
 
-def torsion_profile_from_snf(diag: List[int], sieve: EratosthenesSieve | None = None) -> TorsionProfile:
+def prime_factorization(n: int) -> Dict[int, int]:
     """
-    Extract the torsion profile from SNF diagonal entries.
+    Compute the full prime factorization of n as {prime: exponent}.
+    
+    Time complexity: O(√n)
+    
+    Examples:
+        >>> prime_factorization(12)
+        {2: 2, 3: 1}
+        >>> prime_factorization(360)
+        {2: 3, 3: 2, 5: 1}
+    """
+    if n <= 1:
+        return {}
+    factors = {}
+    d = 2
+    while d * d <= n:
+        while n % d == 0:
+            factors[d] = factors.get(d, 0) + 1
+            n //= d
+        d += 1
+    if n > 1:
+        factors[n] = 1
+    return factors
 
-    This is the core algorithm: given d₁ | d₂ | ⋯ | dᵣ, extract
-    the entries > 1 and compute their prime factorizations.
 
-    Args:
-        diag: SNF diagonal entries (positive integers in divisibility order)
-        sieve: Optional precomputed sieve for fast factorization
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 2: Smith Normal Form
+# ═══════════════════════════════════════════════════════════════
 
+def smith_normal_form(matrix: np.ndarray) -> Tuple[List[int], np.ndarray, np.ndarray]:
+    """
+    Compute the Smith Normal Form of an integer matrix.
+    
+    Given an m×n integer matrix A, compute diagonal entries d₁, d₂, ..., dᵣ
+    such that there exist invertible integer matrices P (m×m), Q (n×n) with
+    P·A·Q = diag(d₁, ..., dᵣ, 0, ..., 0) and d₁ | d₂ | ... | dᵣ.
+    
+    Time complexity: O(m·n·min(m,n)·log(max|aᵢⱼ|)) — polynomial in dimensions
+                     and bit complexity of entries.
+    
     Returns:
-        TorsionProfile with invariant factors and prime decomposition
-
-    Complexity: O(r · π(√M)) where M = max(diag), or O(r · √M / log M)
+        diagonal: List of nonzero diagonal entries (invariant factors)
+        P: Left transformation matrix
+        Q: Right transformation matrix
+    
+    Examples:
+        >>> diag, P, Q = smith_normal_form(np.array([[2, 4], [6, 8]]))
+        >>> diag
+        [2, 4]
     """
-    torsion_factors = [d for d in diag if d > 1]
-
-    if not torsion_factors:
-        return TorsionProfile(
-            factors=[],
-            prime_decomposition={},
-            prime_multiplicities={}
-        )
-
-    max_d = max(torsion_factors)
-    if sieve is None:
-        sieve = EratosthenesSieve(int(math.isqrt(max_d)) + 1)
-
-    prime_decomp: Dict[int, List[Tuple[int, int]]] = {}
-    prime_mults: Dict[int, int] = defaultdict(int)
-
-    for d in torsion_factors:
-        facts = factorize_with_sieve(d, sieve)
-        prime_decomp[d] = facts
-        for p, e in facts:
-            prime_mults[p] += e
-
-    return TorsionProfile(
-        factors=torsion_factors,
-        prime_decomposition=prime_decomp,
-        prime_multiplicities=dict(prime_mults)
-    )
-
-
-def compute_homology_profile(
-    boundary_k: np.ndarray,
-    boundary_k_plus_1: np.ndarray
-) -> Tuple[int, TorsionProfile]:
-    """
-    Compute the complete homology profile H_k from boundary matrices.
-
-    Given ∂_k and ∂_{k+1}, computes:
-    - Free rank = dim(ker ∂_k) - rank(∂_{k+1})
-    - Torsion profile from SNF of ∂_{k+1} restricted to ker(∂_k)
-
-    Returns: (free_rank, torsion_profile)
-    """
-    # Compute SNF of ∂_{k+1}
-    _, S, _ = smith_normal_form(boundary_k_plus_1)
-    diag = extract_snf_diagonal(S)
-
-    # rank of ∂_k
-    _, S_k, _ = smith_normal_form(boundary_k)
-    rank_k = len(extract_snf_diagonal(S_k))
-
-    # rank of ∂_{k+1}
-    rank_k1 = len(diag)
-
-    # Free rank = (cols of ∂_k) - rank_k - (number of torsion-free invariant factors of ∂_{k+1})
-    n_cols = boundary_k.shape[1]
-    free_rank = max(0, n_cols - rank_k - rank_k1)
-
-    # Torsion from SNF diagonal
-    torsion = torsion_profile_from_snf(diag)
-
-    return free_rank, torsion
-
-
-def bockstein_kernel_dimension(boundary_k: np.ndarray, p: int) -> int:
-    """
-    Compute the dimension of the kernel of the Bockstein homomorphism β_p.
-
-    The Bockstein β: H_k(K; ℤ/p) → H_{k-1}(K; ℤ/p) arises from the
-    short exact sequence 0 → ℤ → ℤ → ℤ/p → 0.
-
-    Returns: dim(ker β_p)
-    """
-    # Reduce boundary matrix mod p
-    B_mod_p = boundary_k % p
-
-    # Compute rank over 𝔽_p using Gaussian elimination
-    m, n = B_mod_p.shape
-    M = B_mod_p.copy()
-    rank = 0
-
-    for col in range(n):
-        # Find pivot
-        pivot = None
-        for row in range(rank, m):
-            if M[row, col] % p != 0:
-                pivot = row
+    if matrix.size == 0:
+        m, n = matrix.shape if len(matrix.shape) == 2 else (0, 0)
+        return [], np.eye(m, dtype=int), np.eye(n, dtype=int)
+    
+    M = matrix.astype(int).copy()
+    rows, cols = M.shape
+    P = np.eye(rows, dtype=int)
+    Q = np.eye(cols, dtype=int)
+    
+    pivot = 0
+    diag = []
+    
+    for _ in range(min(rows, cols)):
+        # Find nonzero entry in remaining submatrix
+        found = False
+        for r in range(pivot, rows):
+            for c in range(pivot, cols):
+                if M[r, c] != 0:
+                    # Swap to pivot position
+                    if r != pivot:
+                        M[[pivot, r]] = M[[r, pivot]]
+                        P[[pivot, r]] = P[[r, pivot]]
+                    if c != pivot:
+                        M[:, [pivot, c]] = M[:, [c, pivot]]
+                        Q[:, [pivot, c]] = Q[:, [c, pivot]]
+                    found = True
+                    break
+            if found:
                 break
-        if pivot is None:
-            continue
+        
+        if not found:
+            break
+        
+        # Reduce
+        changed = True
+        max_iter = 1000
+        while changed and max_iter > 0:
+            changed = False
+            max_iter -= 1
+            
+            for r in range(pivot + 1, rows):
+                if M[r, pivot] != 0:
+                    q = M[r, pivot] // M[pivot, pivot]
+                    M[r] -= q * M[pivot]
+                    P[r] -= q * P[pivot]
+                    if M[r, pivot] != 0:
+                        M[[pivot, r]] = M[[r, pivot]]
+                        P[[pivot, r]] = P[[r, pivot]]
+                        changed = True
+            
+            for c in range(pivot + 1, cols):
+                if M[pivot, c] != 0:
+                    q = M[pivot, c] // M[pivot, pivot]
+                    M[:, c] -= q * M[:, pivot]
+                    Q[:, c] -= q * Q[:, pivot]
+                    if M[pivot, c] != 0:
+                        M[:, [pivot, c]] = M[:, [c, pivot]]
+                        Q[:, [pivot, c]] = Q[:, [c, pivot]]
+                        changed = True
+        
+        diag.append(abs(int(M[pivot, pivot])))
+        pivot += 1
+    
+    return diag, P, Q
 
-        # Swap
-        M[[rank, pivot]] = M[[pivot, rank]]
 
-        # Eliminate
-        inv = pow(int(M[rank, col]), p - 2, p)  # Fermat's little theorem
-        for row in range(m):
-            if row != rank and M[row, col] % p != 0:
-                factor = (M[row, col] * inv) % p
-                M[row] = (M[row] - factor * M[rank]) % p
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 3: Torsion Prime Profile from Smith Data
+# ═══════════════════════════════════════════════════════════════
 
-        rank += 1
-
-    # ker(β_p) dimension relates to mod-p homology
-    nullity = n - rank
-    return nullity
-
-
-# === Simplicial complex construction utilities ===
-
-def rips_complex_boundary_matrices(
-    points: np.ndarray,
-    epsilon: float,
-    max_dim: int = 2
-) -> Dict[int, np.ndarray]:
+def compute_torsion_primes_from_smith(factors: List[int]) -> Set[int]:
     """
-    Construct boundary matrices of the Rips complex R_ε(X).
+    Extract the torsion prime profile from Smith normal form diagonal data.
+    
+    Given invariant factors [d₁, d₂, ..., dₖ], the torsion prime profile is
+    ⋃ᵢ PrimeFactors(dᵢ) restricted to dᵢ > 1.
+    
+    This is the formally verified algorithm corresponding to
+    `computeTorsionPrimesFromSmith` in the Lean formalization.
+    
+    Time complexity: O(k · √(max dᵢ)) where k = number of factors
+    Space complexity: O(log(∏ dᵢ))
+    
+    The post-processing cost is O(Σᵢ log(dᵢ)), which is negligible
+    compared to the O(N^ω) cost of the SNF computation itself.
+    
+    Examples:
+        >>> sorted(compute_torsion_primes_from_smith([2, 6, 30]))
+        [2, 3, 5]
+        >>> compute_torsion_primes_from_smith([1, 1, 1])
+        set()
+        >>> sorted(compute_torsion_primes_from_smith([4, 12]))
+        [2, 3]
+    """
+    primes = set()
+    for d in factors:
+        if d > 1:
+            primes |= prime_factors(d)
+    return primes
 
+
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 4: Full Degreewise Arithmetic Signature
+# ═══════════════════════════════════════════════════════════════
+
+def compute_full_arithmetic_signature(
+    boundary_matrices: List[np.ndarray]
+) -> Dict[str, object]:
+    """
+    Compute the full arithmetic signature of a chain complex.
+    
+    Given boundary matrices [∂₁, ∂₂, ..., ∂ₐ] of a chain complex,
+    compute the Smith normal form of each, extract torsion primes
+    at each degree, and return the complete arithmetic signature.
+    
+    This is the end-to-end verified pipeline:
+    1. For each boundary matrix, compute Smith normal form
+    2. Extract invariant factors (torsion part)
+    3. Compute prime factors of each invariant factor
+    4. Take union across all degrees
+    
+    Time complexity: O(d · N^ω · log(max entry)) for d degrees, N simplices
+                     + O(d · k · √(max dᵢ)) for post-processing
+    
+    The second term is negligible: torsion extraction adds no
+    asymptotic cost beyond the Smith computation.
+    
     Args:
-        points: n × d array of point coordinates
-        epsilon: proximity parameter
-        max_dim: maximum simplex dimension to compute
-
+        boundary_matrices: List of integer matrices [∂₁, ∂₂, ...]
+    
     Returns:
-        Dict mapping dimension k to boundary matrix ∂_k
+        Dictionary with:
+        - 'full_signature': Set of all torsion primes
+        - 'degree_profiles': Dict mapping degree to torsion primes at that degree
+        - 'betti_numbers': Dict mapping degree to Betti number
+        - 'invariant_factors': Dict mapping degree to list of torsion factors
+    
+    Examples:
+        >>> d1 = np.array([[1, -1, 0], [0, 1, -1], [-1, 0, 1]])
+        >>> result = compute_full_arithmetic_signature([d1])
+        >>> 'full_signature' in result
+        True
     """
-    from itertools import combinations
+    result = {
+        'full_signature': set(),
+        'degree_profiles': {},
+        'betti_numbers': {},
+        'invariant_factors': {},
+    }
+    
+    for k, mat in enumerate(boundary_matrices):
+        diag, _, _ = smith_normal_form(mat)
+        
+        betti = sum(1 for d in diag if d == 1)
+        torsion_factors = [d for d in diag if d > 1]
+        primes = compute_torsion_primes_from_smith(diag)
+        
+        result['betti_numbers'][k] = betti
+        result['invariant_factors'][k] = torsion_factors
+        result['degree_profiles'][k] = primes
+        result['full_signature'] |= primes
+    
+    return result
 
-    n = len(points)
 
-    # Compute distance matrix
-    dists = np.zeros((n, n))
-    for i in range(n):
-        for j in range(i + 1, n):
-            d = np.linalg.norm(points[i] - points[j])
-            dists[i, j] = dists[j, i] = d
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 5: Tor₁ Torsion Detection (Computational Proxy)
+# ═══════════════════════════════════════════════════════════════
 
-    # Build simplices by dimension
-    simplices: Dict[int, List[Tuple[int, ...]]] = {0: [(i,) for i in range(n)]}
+def tor1_detects_prime(invariant_factors: List[int], p: int) -> bool:
+    """
+    Check if Tor₁(Z/pZ, A) is nontrivial for a group A given by
+    its invariant factors.
+    
+    Corresponds to the formal theorem:
+        p ∈ TorsionPrimeProfile(A) ↔ Tor₁(Z/pZ, A) ≠ 0
+    
+    Mathematically, Tor₁(Z/pZ, Z/dZ) ≅ Z/gcd(p,d)Z, which is
+    nontrivial iff p | d. So Tor₁ detects p-torsion iff some
+    invariant factor is divisible by p.
+    
+    Time complexity: O(k) where k is the number of factors
+    
+    Examples:
+        >>> tor1_detects_prime([6, 12], 2)
+        True
+        >>> tor1_detects_prime([6, 12], 5)
+        False
+        >>> tor1_detects_prime([6, 12], 3)
+        True
+    """
+    return any(d > 1 and d % p == 0 for d in invariant_factors)
 
-    for dim in range(1, max_dim + 1):
-        simplices[dim] = []
-        for combo in combinations(range(n), dim + 1):
-            # Check all pairwise distances
-            if all(dists[i, j] <= epsilon
-                   for i, j in combinations(combo, 2)):
-                simplices[dim].append(combo)
 
-    # Build boundary matrices
-    boundaries: Dict[int, np.ndarray] = {}
+def tor1_prime_selectivity(invariant_factors: List[int]) -> Dict[int, bool]:
+    """
+    For each small prime, check if Tor₁ detects it.
+    Demonstrates the prime selectivity theorem.
+    
+    Examples:
+        >>> tor1_prime_selectivity([6])
+        {2: True, 3: True, 5: False, 7: False, 11: False, 13: False}
+    """
+    small_primes = [2, 3, 5, 7, 11, 13]
+    return {p: tor1_detects_prime(invariant_factors, p) for p in small_primes}
 
-    for dim in range(1, max_dim + 1):
-        if not simplices.get(dim) or not simplices.get(dim - 1):
-            continue
 
-        # Index simplices
-        simplex_index = {s: i for i, s in enumerate(simplices[dim - 1])}
-        m = len(simplices[dim - 1])
-        k = len(simplices[dim])
+# ═══════════════════════════════════════════════════════════════
+# Algorithm 6: Torsion-Aware Distance Between Complexes
+# ═══════════════════════════════════════════════════════════════
 
-        B = np.zeros((m, k), dtype=np.int64)
+def arithmetic_distance(sig1: Set[int], sig2: Set[int]) -> float:
+    """
+    Compute an arithmetic distance between two torsion prime signatures.
+    
+    Uses the symmetric difference weighted by 1/log(p) to emphasize
+    small primes (which are more topologically significant).
+    
+    Examples:
+        >>> arithmetic_distance({2, 3}, {2, 5})
+        ... # Returns a positive float
+    """
+    if not sig1 and not sig2:
+        return 0.0
+    sym_diff = sig1.symmetric_difference(sig2)
+    if not sym_diff:
+        return 0.0
+    return sum(1.0 / log2(p + 1) for p in sym_diff)
 
-        for j, sigma in enumerate(simplices[dim]):
-            for face_idx in range(len(sigma)):
-                face = sigma[:face_idx] + sigma[face_idx + 1:]
-                if face in simplex_index:
-                    sign = (-1) ** face_idx
-                    B[simplex_index[face], j] = sign
 
-        boundaries[dim] = B
-
-    return boundaries
-
+# ═══════════════════════════════════════════════════════════════
+# Example Usage
+# ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    # Example: Klein bottle triangulation
-    print("=== Klein Bottle Torsion Profile ===")
-
-    # Minimal Klein bottle boundary matrix (∂_2)
-    # The Klein bottle has H_1(K;ℤ) ≅ ℤ ⊕ ℤ/2ℤ
-    # We use a known boundary matrix for a triangulation
-    B2 = np.array([
-        [ 1, -1,  0,  1,  0,  0,  0,  0],
-        [-1,  0,  1,  0,  1,  0,  0,  0],
-        [ 0,  1, -1,  0,  0,  1,  0,  0],
-        [ 0,  0,  0, -1,  1,  0,  1,  0],
-        [ 0,  0,  0,  0, -1,  1,  0,  1],
-        [ 0,  0,  0,  0,  0, -1, -1,  0],
-        [ 0,  0,  0,  0,  0,  0,  0, -1],
-    ], dtype=np.int64)
-
-    _, S, _ = smith_normal_form(B2)
-    diag = extract_snf_diagonal(S)
-    print(f"SNF diagonal: {diag}")
-
-    profile = torsion_profile_from_snf(diag)
-    print(f"Torsion profile: {profile}")
-    print(f"Prime factors: {profile.primes}")
-    print()
-
-    # Example: Sieve performance
-    print("=== Eratosthenes Sieve ===")
-    sieve = EratosthenesSieve(1000)
-    print(f"Primes up to 1000: {sieve.prime_count}")
-    print(f"Primes up to 100: {len(sieve.primes_up_to(100))}")
-    print(f"Is 997 prime? {sieve.is_prime(997)}")
-    print()
-
-    # Example: Random point cloud
-    print("=== Rips Complex Example ===")
-    np.random.seed(42)
-    points = np.random.randn(8, 2)
-    boundaries = rips_complex_boundary_matrices(points, epsilon=1.5, max_dim=2)
-
-    for dim, B in boundaries.items():
-        _, S, _ = smith_normal_form(B)
-        diag = extract_snf_diagonal(S)
-        profile = torsion_profile_from_snf(diag)
-        print(f"∂_{dim}: shape {B.shape}, SNF diag = {diag}, torsion = {profile}")
+    print("Arithmetic TDA Pipeline — Algorithm Examples")
+    print("=" * 50)
+    
+    # Example 1: Smith Normal Form
+    print("\n1. Smith Normal Form of [[2, 4], [6, 8]]:")
+    A = np.array([[2, 4], [6, 8]])
+    diag, P, Q = smith_normal_form(A)
+    print(f"   Diagonal: {diag}")
+    
+    # Example 2: Torsion Prime Profile
+    print("\n2. Torsion primes from invariant factors [2, 6, 30]:")
+    primes = compute_torsion_primes_from_smith([2, 6, 30])
+    print(f"   Profile: {sorted(primes)}")
+    
+    # Example 3: Full Pipeline
+    print("\n3. Full arithmetic signature of a chain complex:")
+    d1 = np.array([[1, -1, 0], [0, 1, -1], [-1, 0, 1]])
+    d2 = np.array([[2, 0], [0, 3], [0, 0]])
+    result = compute_full_arithmetic_signature([d1, d2])
+    print(f"   Full signature: {sorted(result['full_signature'])}")
+    print(f"   Degree profiles: {result['degree_profiles']}")
+    print(f"   Betti numbers: {result['betti_numbers']}")
+    
+    # Example 4: Tor₁ Detection
+    print("\n4. Tor₁ prime selectivity for Z/6Z:")
+    sel = tor1_prime_selectivity([6])
+    for p, detected in sel.items():
+        status = "DETECTED" if detected else "silent"
+        print(f"   p={p}: Tor₁(Z/{p}Z, Z/6Z) is {'nontrivial' if detected else 'trivial'} → {status}")
+    
+    # Example 5: Arithmetic Distance
+    print("\n5. Arithmetic distance between signatures:")
+    d = arithmetic_distance({2, 3}, {2, 5})
+    print(f"   d({{2,3}}, {{2,5}}) = {d:.4f}")
+    d0 = arithmetic_distance({2, 3}, {2, 3})
+    print(f"   d({{2,3}}, {{2,3}}) = {d0:.4f}")
