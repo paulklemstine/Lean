@@ -498,5 +498,6 @@
   "c23d3e3a": "direction_3_normalization_cost_as_bisimulation_dis.json",
   "fa761e16": "direction_4_operator_norm_optimization_for_concret.json",
   "26796a9b": "direction_1_exponential_convergence_via_spectral_g.json",
-  "e1f2d4e0": "direction_1_optimal_generator_bounds.json"
+  "e1f2d4e0": "direction_1_optimal_generator_bounds.json",
+  "1e04b63c": "direction_2_tight_type_complexity_bounds.json"
 }
