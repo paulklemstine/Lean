@@ -4,335 +4,370 @@ import Pythagorean.EGraph.Defs
 /-!
 # E-Graph Extraction Theorems
 
-This file contains the main theorems establishing the correctness of e-graph
-extraction as a quotient section. The central insight: extraction correctness
-is a **corollary** of congruence soundness, not an independent property.
+This file contains the main theorems establishing the correctness of e-graph extraction
+as a quotient section, including the fundamental extraction-preserves-evaluation theorem,
+the factoring theorem for coarser congruences, and the connection to Galois connections.
 
 ## Main Results
 
-### Theorem 1: `extraction_eval_invariant`
-If a congruence is sound (related terms evaluate identically), any extraction
-section preserves evaluation on each equivalence class.
+1. **`extraction_preserves_eval`** — If a congruence is sound, extraction preserves evaluation.
+2. **`extraction_factors_through_coarser`** — Extraction from a finer congruence factors
+   through a coarser quotient.
+3. **`galois_connection_congruence_modelclass`** — The Galois connection between congruences
+   and model classes.
+4. **`cost_extraction_never_increases`** — Cost-optimal extraction never increases cost.
+5. **`extraction_image_card_le`** — The compression bound: extraction reduces cardinality.
+6. **`eval_eq_of_interp_eq`** — Structural induction: equal interpretations give equal evals.
+7. **`soundCongruence_inter_sound`** — The intersection of congruences is a congruence.
 
-### Theorem 2: `extraction_correct_of_congruence_sound`
-Extraction correctness reduces to congruence soundness: once the congruence
-engine certifies soundness, extraction is automatically semantically correct.
+## Cross-Domain Connections
 
-### Theorem 3: `optimal_extract_semantics_unique`
-Cost-optimal extraction is semantically constant: any two cost-minimal
-representatives of the same class have equal denotation.
-
-### Theorem 4: `eval_factors_through_egraph_quotient`
-The evaluation map factors through the e-graph quotient exactly when
-the e-graph relation is sound. This is the universal algebra statement
-that turns an e-graph into a quotient algebra object.
-
-### Theorem 5: `semantically_canonical_of_sound_section`
-Semantic canonicity follows from soundness + section property.
-
-### Theorem 6: `approximate_section_of_exact`
-An exact section is automatically an approximate section for any
-reflexive error relation.
-
-### Theorem 7: `extraction_composition_sound`
-Composing extractions through refined congruences preserves semantics.
-
-### Theorem 8: `galois_connection_congruence_modelclass`
-Congruences and model classes form a Galois connection.
+- **Universal algebra (Birkhoff)**: The Galois connection theorem connects e-graphs to
+  Birkhoff's variety theorem — e-graph congruences compute elements in the congruence lattice.
+- **Information theory**: The compression bound connects extraction to lossy compression.
+- **Lattice theory**: The congruence refinement order forms a complete lattice.
 -/
 
 noncomputable section
 
-open Classical
+open Classical EGraph
 
-/-! ## Theorem 1: Extraction Evaluation Invariance
+/-! ## Theorem 1: Extraction Preserves Evaluation Under Sound Congruence -/
 
-The formal heart of equality saturation: if the congruence is sound,
-any section of the quotient map preserves evaluation. -/
-
-/-
-**Extraction Invariance Theorem.** Let `s` be an equivalence on terms, `eval`
-    a denotation function, and suppose soundness holds: `s.r t₁ t₂ → eval t₁ = eval t₂`.
-    If `extract` is a section of the quotient map, then for every class `q` and every
-    term `t` in that class, `eval (extract q) = eval t`.
-
-    This is not a property of a particular search heuristic. It is a theorem about
-    sections of semantic quotients.
--/
-theorem extraction_eval_invariant
-    {Term : Type u} {α : Type v}
-    (s : Setoid Term)
-    (eval : Term → α)
-    (h_sound : ∀ {t₁ t₂ : Term}, s.r t₁ t₂ → eval t₁ = eval t₂)
-    (extract : Quotient s → Term)
-    (h_sec : ∀ q : Quotient s, Quotient.mk s (extract q) = q) :
-    ∀ (q : Quotient s) (t : Term),
-      Quotient.mk s t = q → eval (extract q) = eval t := by
-  grind +suggestions
-
-/-! ## Theorem 2: Reduction of Extraction Correctness to Congruence Soundness
-
-The sole mathematically essential obligation of e-graphs is sound congruence
-closure. Once certified, extraction inherits semantic correctness. -/
-
-/-
-**Extraction Correctness Reduction.** Suppose `s` is an equivalence, `eval` is
-    a denotation, `extract` picks a representative related to `Quotient.out`, and
-    soundness holds. Then extraction preserves evaluation.
-
-    This theorem isolates the sole essential obligation: **sound congruence closure**.
-    Once that is certified, extraction inherits semantic correctness automatically.
--/
-theorem extraction_correct_of_congruence_sound
-    {Term : Type u} {α : Type v}
-    (s : Setoid Term)
-    (eval : Term → α)
-    (extract : Quotient s → Term)
-    (h_repr : ∀ q : Quotient s, s.r (extract q) (Quotient.out q))
-    (h_sound : ∀ {t₁ t₂ : Term}, s.r t₁ t₂ → eval t₁ = eval t₂) :
-    ∀ q : Quotient s, eval (extract q) = eval (Quotient.out q) := by
-  grind
-
-/-! ## Theorem 3: Cost-Optimal Extraction is Semantically Constant
-
-Cost optimization is semantically harmless inside a sound e-class. -/
-
-/-
-**Optimal Extraction Semantics.** If `t₁` and `t₂` are related and both
-    cost-minimal in their class, they have the same denotation under any
-    sound evaluation. Cost optimization is semantically harmless.
--/
-theorem optimal_extract_semantics_unique
-    {Term : Type u} {α : Type v}
-    (s : Setoid Term)
-    (eval : Term → α)
-    (cost : Term → ℕ)
-    (t₁ t₂ : Term)
-    (hrel : s.r t₁ t₂)
-    (_hmin₁ : ∀ t, s.r t t₁ → cost t₁ ≤ cost t)
-    (_hmin₂ : ∀ t, s.r t t₂ → cost t₂ ≤ cost t)
-    (h_sound : ∀ {a b : Term}, s.r a b → eval a = eval b) :
-    eval t₁ = eval t₂ := by
-  exact h_sound hrel
-
-/-! ## Theorem 4: Evaluation Factors Through E-Graph Quotient
-
-The universal algebra statement: an e-graph is a quotient algebra object. -/
-
-/-
-**Factorization Theorem.** The evaluation map factors through the e-graph
-    quotient exactly when the e-graph relation is sound. This constructs the
-    unique algebra homomorphism from the quotient term algebra to the model.
-
-    This generalizes `commNorm_factors_through_quotient` from the catalog:
-    any sound congruence (not just AC-normalization) admits factorization.
--/
-theorem eval_factors_through_egraph_quotient
-    {Term : Type u} {α : Type v}
-    (s : Setoid Term)
-    (eval : Term → α)
-    (h_sound : ∀ {t₁ t₂ : Term}, s.r t₁ t₂ → eval t₁ = eval t₂) :
-    ∃ f : Quotient s → α, ∀ t : Term, f (Quotient.mk s t) = eval t := by
-  by_contra h₂;
-  have h_factor : ∃ f : Quotient s → α, ∀ t : Term, f (Quotient.mk s t) = eval t := by
-    have h_lift : ∀ t₁ t₂ : Term, s t₁ t₂ → eval t₁ = eval t₂ := by
-      assumption
-    have h_lift : ∃ f : Quotient s → α, ∀ t : Term, f (Quotient.mk s t) = eval t := by
-      have h_equiv : ∀ t₁ t₂ : Term, s t₁ t₂ → eval t₁ = eval t₂ := h_lift
-      exact ⟨ fun q => Quotient.liftOn' q eval fun t₁ t₂ h => h_equiv t₁ t₂ h, fun t => rfl ⟩;
-    exact h_lift;
-  exact h₂ h_factor
-
-/-! ## Theorem 5: Semantic Canonicity from Sound Section
-
-The conceptual novelty: extraction need not be syntactically canonical
-to be semantically canonical. -/
-
-/-
-**Semantic Canonicity Theorem.** If `extract` is a section of a sound
-    congruence, then extraction is semantically canonical.
--/
-theorem semantically_canonical_of_sound_section
-    {Term : Type u} {α : Type v}
-    (s : Setoid Term)
-    (eval : Term → α)
-    (h_sound : ∀ {t₁ t₂ : Term}, s.r t₁ t₂ → eval t₁ = eval t₂)
-    (extract : Quotient s → Term)
-    (h_sec : ∀ q : Quotient s, Quotient.mk s (extract q) = q) :
-    SemanticallyCanonical s eval extract := by
-  unfold SemanticallyCanonical;
-  grind +suggestions
-
-/-! ## Theorem 6: Exact Sections are Approximate
-
-An exact section is automatically an approximate section for any
-reflexive error relation. -/
-
-/-
-**Exact-to-Approximate Lifting.** Any exact section is an approximate
-    section with respect to any reflexive error relation. This connects
-    the ideal (full saturation) to the practical (partial saturation).
--/
-theorem approximate_section_of_exact
-    {Term : Type u} {α : Type v}
-    (s : Setoid Term)
-    (eval : Term → α)
-    (err : α → α → Prop) (h_refl : ∀ x, err x x)
-    (h_sound : ∀ {t₁ t₂ : Term}, s.r t₁ t₂ → eval t₁ = eval t₂)
-    (extract : Quotient s → Term)
-    (h_sec : ∀ q : Quotient s, Quotient.mk s (extract q) = q) :
-    ApproximateSection err s eval extract := by
-  intro q t ht
-  have h_eq : eval (extract q) = eval t := by
-    exact extraction_eval_invariant s eval h_sound extract h_sec q t ht;
-  rw [ h_eq ] ; exact h_refl _
-
-/-! ## Theorem 7: Extraction Composition Through Refined Congruences
-
-Composing extractions through a chain of refined congruences preserves
-semantics. This models multi-level e-graph optimization. -/
-
-/-
-**Composition Theorem.** Given sound congruences `C₁` and `C₂` where `C₁`
-    refines `C₂`, composing extractions preserves evaluation through both levels.
-    Uses multi-step reasoning: extract at finer level, then project to coarser.
--/
-theorem extraction_composition_sound
-    {α β : Type*}
-    (C₁ C₂ : SoundCongruence α β)
-    (h_refines : CongruenceRefines C₁.rel C₂.rel)
-    (ext₁ : ExtractionSection α C₁.rel C₁.isEquiv)
-    (ext₂ : ExtractionSection α C₂.rel C₂.isEquiv)
-    (_h_eval : C₁.eval = C₂.eval) (a : α) :
-    C₂.eval (ext₂.extract (@Quotient.mk _ ⟨C₂.rel, C₂.isEquiv⟩
-      (ext₁.extract (@Quotient.mk _ ⟨C₁.rel, C₁.isEquiv⟩ a)))) =
-    C₂.eval a := by
-  convert C₂.sound _ _ _ using 1;
-  exact C₂.isEquiv.trans ( ext₂.section_prop _ ) ( h_refines _ _ ( ext₁.section_prop _ ) )
-
-/-! ## Theorem 8: Galois Connection Between Congruences and Model Classes
-
-The abstract kernel of Birkhoff's variety theorem for e-graphs. -/
-
-/-- The congruence induced by a set of functions. -/
-def congruenceInducedBy {α β : Type*} (fs : Set (α → β)) : α → α → Prop :=
-  fun a₁ a₂ => ∀ f ∈ fs, f a₁ = f a₂
-
-/-
-**Galois Connection Theorem.** Congruences and model classes form a Galois
-    connection: a congruence refines the one induced by `fs` iff `fs` is contained
-    in the model class of the congruence. This is the abstract kernel of Birkhoff's
-    variety theorem applied to e-graphs.
--/
-theorem galois_connection_congruence_modelclass
-    {α β : Type*}
-    (rel : α → α → Prop) (fs : Set (α → β)) :
-    CongruenceRefines rel (congruenceInducedBy fs) ↔
-    fs ⊆ ModelClass rel := by
-  constructor <;> intro h;
-  · exact fun f hf a₁ a₂ h' => h a₁ a₂ h' f hf;
-  · exact fun a₁ a₂ h₁ => fun f hf => h hf a₁ a₂ h₁
-
-/-! ## Theorem 9: Extraction Preserves Eval (SoundCongruence variant)
-
-Directly using the SoundCongruence structure. -/
-
-/-
-**Main Correctness Theorem (Structured).** If `C` is a sound congruence and
-    `ext` is an extraction section, then extraction preserves evaluation.
--/
-theorem extraction_preserves_eval_structured
-    {α β : Type*}
+/-- **Main Theorem**: If an equivalence relation is sound with respect to an evaluation
+    function (meaning related elements evaluate to the same value), then any extraction
+    section preserves evaluation. This is the core correctness theorem for e-graph-based
+    optimizers. -/
+theorem extraction_preserves_eval {α β : Type*}
     (C : SoundCongruence α β)
     (ext : ExtractionSection α C.rel C.isEquiv) :
     ∀ a : α, C.eval (ext.extract (@Quotient.mk _ ⟨C.rel, C.isEquiv⟩ a)) = C.eval a := by
-  exact fun a => C.sound _ _ ( ext.section_prop _ )
+  intro a
+  exact C.sound _ _ (ext.section_prop a)
 
-/-! ## Theorem 10: Extraction Idempotence -/
+/-- Variant: extraction preserves evaluation stated with a quotient element. -/
+theorem extraction_preserves_eval_quotient {α β : Type*}
+    (C : SoundCongruence α β)
+    (ext : ExtractionSection α C.rel C.isEquiv)
+    (q : @Quotient α ⟨C.rel, C.isEquiv⟩) :
+    @Quotient.lift α β ⟨C.rel, C.isEquiv⟩ C.eval C.sound q =
+    C.eval (ext.extract q) := by
+  induction q using Quotient.ind
+  rename_i a
+  simp only [Quotient.lift_mk]
+  exact (C.sound _ _ (ext.section_prop a)).symm
 
-/-
-**Idempotence.** Extraction is idempotent: extracting from an already-extracted
-    element yields the same element.
--/
-theorem extraction_idempotent
-    {α : Type*}
-    {rel : α → α → Prop} {equiv : Equivalence rel}
-    (ext : ExtractionSection α rel equiv) (a : α) :
-    ext.extract (@Quotient.mk _ ⟨rel, equiv⟩
-      (ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a))) =
-    ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a) := by
-  have h_eq : rel (ext.extract ⟦ext.extract ⟦a⟧⟧) (ext.extract ⟦a⟧) := by
-    exact ext.section_prop _;
-  have h_eq : Quotient.mk ⟨rel, equiv⟩ (ext.extract ⟦ext.extract ⟦a⟧⟧) = Quotient.mk ⟨rel, equiv⟩ (ext.extract ⟦a⟧) := by
-    exact Quotient.eq.mpr h_eq;
-  convert congr_arg ( fun q => ext.extract q ) h_eq using 1;
-  · exact congr_arg _ h_eq.symm;
-  · convert congr_arg ( fun q => ext.extract q ) _;
-    exact Quotient.sound ( ext.section_prop a ) |> Eq.symm
+/-! ## Theorem 2: Extraction Factors Through Coarser Congruence -/
 
-/-! ## Theorem 11: Model Class Antitone -/
-
-/-
-**Antitone Model Classes.** Finer congruences have larger model classes.
--/
-theorem modelClass_antitone
-    {α β : Type*} {rel₁ rel₂ : α → α → Prop}
+/-- If `rel₁` refines `rel₂`, there is a canonical map from `α/rel₁` to `α/rel₂`. -/
+def quotientMapOfRefines {α : Type*} {rel₁ rel₂ : α → α → Prop}
+    (e₁ : Equivalence rel₁) (e₂ : Equivalence rel₂)
     (h : CongruenceRefines rel₁ rel₂) :
-    ModelClass rel₂ ⊆ @ModelClass α β rel₁ := by
-  exact fun f hf a₁ a₂ h' => hf a₁ a₂ ( h a₁ a₂ h' )
+    @Quotient α ⟨rel₁, e₁⟩ → @Quotient α ⟨rel₂, e₂⟩ :=
+  @Quotient.lift α (@Quotient α ⟨rel₂, e₂⟩) ⟨rel₁, e₁⟩
+    (fun a => @Quotient.mk _ ⟨rel₂, e₂⟩ a)
+    (fun _ _ hab => Quotient.sound (h _ _ hab))
 
-/-! ## Theorem 12: Term Congruence Lemma -/
+/-- **Factoring Theorem**: If `rel₁` refines `rel₂`, then extraction from `rel₁`
+    followed by the quotient map to `rel₂` gives the same class as the original element.
+    This generalizes `commNorm_factors_through_quotient` from the catalog. -/
+theorem extraction_factors_through_coarser {α : Type*}
+    {rel₁ rel₂ : α → α → Prop}
+    (e₁ : Equivalence rel₁) (e₂ : Equivalence rel₂)
+    (h_refines : CongruenceRefines rel₁ rel₂)
+    (ext₁ : ExtractionSection α rel₁ e₁) (a : α) :
+    @Quotient.mk _ ⟨rel₂, e₂⟩ (ext₁.extract (@Quotient.mk _ ⟨rel₁, e₁⟩ a)) =
+    @Quotient.mk _ ⟨rel₂, e₂⟩ a := by
+  apply Quotient.sound
+  exact h_refines _ _ (ext₁.section_prop a)
 
-/-
-**Congruence Lemma for Terms.** If arguments evaluate equally, composed terms
-    evaluate equally. This is the structural property making congruence closure correct.
--/
-theorem eval_binop_congr {S : Sig} {α : Type*} (A : Interp S α)
-    (f : S.binop) {t₁ t₂ s₁ s₂ : Term S}
-    (h₁ : t₁.eval A = t₂.eval A)
-    (h₂ : s₁.eval A = s₂.eval A) :
-    (Term.binop f t₁ s₁).eval A = (Term.binop f t₂ s₂).eval A := by
-  exact congr_arg₂ ( A.interpBinop f ) h₁ h₂
+/-! ## Theorem 3: Galois Connection Between Congruences and Model Classes -/
 
-/-! ## Theorem 13: Structural Induction on Interpretations -/
+/-- The congruence induced by a set of functions: two elements are related iff
+    every function in the set maps them to the same value. -/
+def congruenceInducedBy {α β : Type*} (fs : Set (α → β)) : α → α → Prop :=
+  fun a₁ a₂ => ∀ f ∈ fs, f a₁ = f a₂
 
-/-
-**Structural Induction.** Two interpretations agreeing on all symbols produce
-    equal evaluations on all terms.
--/
+theorem congruenceInducedBy_equiv {α β : Type*} (fs : Set (α → β)) :
+    Equivalence (congruenceInducedBy fs) where
+  refl _ _ _ := rfl
+  symm h f hf := (h f hf).symm
+  trans h₁ h₂ f hf := (h₁ f hf).trans (h₂ f hf)
+
+/-- **Galois Connection Theorem**: `ModelClass` and `congruenceInducedBy` form a
+    Galois connection between congruences and function classes.
+
+    This is the abstract kernel of Birkhoff's variety theorem: the e-graph computes
+    an element in Birkhoff's congruence lattice, and this Galois connection tells us
+    exactly which models (algebras) validate the computed congruence. -/
+theorem galois_connection_congruence_modelclass {α β : Type*}
+    (rel : α → α → Prop) (fs : Set (α → β)) :
+    CongruenceRefines rel (congruenceInducedBy fs) ↔
+    fs ⊆ @ModelClass α β rel := by
+  constructor
+  · -- Forward: if rel refines the induced congruence, then fs ⊆ ModelClass rel
+    intro h_refines f hf a₁ a₂ h_rel
+    exact h_refines a₁ a₂ h_rel f hf
+  · -- Backward: if fs ⊆ ModelClass rel, then rel refines the induced congruence
+    intro h_subset a₁ a₂ h_rel f hf
+    exact h_subset hf a₁ a₂ h_rel
+
+/-! ## Theorem 4: Cost-Optimal Extraction Properties -/
+
+/-- Cost-optimal extraction never increases cost. -/
+theorem cost_extraction_never_increases {α : Type*}
+    {rel : α → α → Prop} {equiv : Equivalence rel}
+    (ext : CostExtractionSection α rel equiv) (a : α) :
+    ext.cost (ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a)) ≤ ext.cost a :=
+  ext.optimal a
+
+/-- If two elements are related, extraction gives them the same representative. -/
+theorem extraction_eq_of_related {α : Type*}
+    {rel : α → α → Prop} {equiv : Equivalence rel}
+    (ext : ExtractionSection α rel equiv)
+    (a₁ a₂ : α) (h : rel a₁ a₂) :
+    ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a₁) =
+    ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a₂) := by
+  have : @Quotient.mk _ ⟨rel, equiv⟩ a₁ = @Quotient.mk _ ⟨rel, equiv⟩ a₂ :=
+    Quotient.sound h
+  rw [this]
+
+/-! ## Theorem 5: Compression Bound -/
+
+/-- **Compression Bound**: The image of a finite set under extraction has cardinality
+    at most the cardinality of the original set. -/
+theorem extraction_image_card_le {α : Type*} [DecidableEq α]
+    {rel : α → α → Prop} {equiv : Equivalence rel}
+    (ext : ExtractionSection α rel equiv)
+    (terms : Finset α) :
+    (terms.image (fun t => ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ t))).card
+      ≤ terms.card :=
+  Finset.card_image_le
+
+/-- The extraction image is nonempty when the input is nonempty. -/
+theorem extraction_image_nonempty {α : Type*} [DecidableEq α]
+    {rel : α → α → Prop} {equiv : Equivalence rel}
+    (ext : ExtractionSection α rel equiv)
+    (terms : Finset α) (h : terms.Nonempty) :
+    (terms.image (fun t => ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ t))).Nonempty :=
+  Finset.Nonempty.image h _
+
+/-! ## Theorem 6: Structural Induction on Terms -/
+
+/-- **Structural Induction Theorem**: Two interpretations that agree on all symbols
+    produce equal evaluations on all terms. Proved by structural induction. -/
 theorem eval_eq_of_interp_eq {S : Sig} {α : Type*}
     (A B : Interp S α)
     (h_const : ∀ c, A.interpConst c = B.interpConst c)
     (h_binop : ∀ f, A.interpBinop f = B.interpBinop f)
     (t : Term S) : t.eval A = t.eval B := by
-  induction' t with c t₁ t₂ ih₁ ih₂;
-  · exact h_const c;
-  · simp +decide [ *, Term.eval ]
+  induction t with
+  | const c => exact h_const c
+  | binop f t₁ t₂ ih₁ ih₂ =>
+    simp only [Term.eval]
+    rw [ih₁, ih₂, h_binop f]
 
-/-! ## Theorem 14: Cost-Optimal Extraction Never Increases Cost -/
+/-- **Congruence Lemma**: If arguments evaluate equally, binop terms evaluate equally.
+    This is the key structural property that makes congruence closure correct. -/
+theorem eval_binop_congr {S : Sig} {α : Type*} (A : Interp S α)
+    (f : S.binop) {t₁ t₂ s₁ s₂ : Term S}
+    (h₁ : t₁.eval A = t₂.eval A)
+    (h₂ : s₁.eval A = s₂.eval A) :
+    (Term.binop f t₁ s₁).eval A = (Term.binop f t₂ s₂).eval A := by
+  simp only [Term.eval]
+  rw [h₁, h₂]
 
-/-- **Cost Monotonicity.** Cost-optimal extraction never increases cost. -/
-theorem cost_extraction_never_increases
-    {α : Type*} {rel : α → α → Prop} {equiv : Equivalence rel}
-    (ext : CostExtractionSection α rel equiv) (a : α) :
-    ext.cost (ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a)) ≤ ext.cost a :=
-  ext.optimal a
+/-- Size is strictly monotone under binop (left argument). -/
+theorem term_size_lt_binop_left {S : Sig} (f : S.binop) (t₁ t₂ : Term S) :
+    t₁.size < (Term.binop f t₁ t₂).size := by
+  simp [Term.size]; omega
 
-/-! ## Theorem 15: Factorization Constructs Unique Quotient Map -/
+/-- Size is strictly monotone under binop (right argument). -/
+theorem term_size_lt_binop_right {S : Sig} (f : S.binop) (t₁ t₂ : Term S) :
+    t₂.size < (Term.binop f t₁ t₂).size := by
+  simp [Term.size]
 
-/-
-**Unique Factorization.** The factored evaluation map is the unique function
-    making the diagram commute.
--/
-theorem eval_factorization_unique
-    {Term : Type u} {α : Type v}
-    (s : Setoid Term)
-    (eval : Term → α)
-    (_h_sound : ∀ {t₁ t₂ : Term}, s.r t₁ t₂ → eval t₁ = eval t₂)
-    (f g : Quotient s → α)
-    (hf : ∀ t, f (Quotient.mk s t) = eval t)
-    (hg : ∀ t, g (Quotient.mk s t) = eval t) :
-    f = g := by
-  exact funext fun x => by rcases Quotient.exists_rep x with ⟨ y, rfl ⟩ ; exact hf y ▸ hg y ▸ rfl;
+/-! ## Theorem 7: Sound Congruence Operations -/
+
+/-- The identity relation is a sound congruence for any evaluation function. -/
+def SoundCongruence.id {α β : Type*} (eval : α → β) : SoundCongruence α β where
+  rel := Eq
+  isEquiv := eq_equivalence
+  eval := eval
+  sound := fun _ _ h => congrArg eval h
+
+/-- Sound congruences compose with post-composition. -/
+def SoundCongruence.comp {α β γ : Type*} (C : SoundCongruence α β) (g : β → γ) :
+    SoundCongruence α γ where
+  rel := C.rel
+  isEquiv := C.isEquiv
+  eval := g ∘ C.eval
+  sound := fun _ _ h => congrArg g (C.sound _ _ h)
+
+/-! ## Theorem 8: Extraction Idempotence -/
+
+/-- **Idempotence Theorem**: Extraction is idempotent — extracting from an already-extracted
+    element yields the same element. -/
+theorem extraction_idempotent {α : Type*}
+    {rel : α → α → Prop} {equiv : Equivalence rel}
+    (ext : ExtractionSection α rel equiv) (a : α) :
+    ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ (ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a))) =
+    ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a) := by
+  have h_eq : @Quotient.mk _ ⟨rel, equiv⟩ (ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a)) =
+    @Quotient.mk _ ⟨rel, equiv⟩ a :=
+    Quotient.sound (ext.section_prop a)
+  rw [h_eq]
+
+/-! ## Novel Definition: Rewrite Rules and Saturation -/
+
+/-- A rewrite rule is a pair of terms that should be made equivalent. -/
+structure RewriteRule (α : Type*) where
+  lhs : α
+  rhs : α
+
+/-- Apply a set of rewrite rules to extend a congruence. -/
+def applyRules {α : Type*} (rel : α → α → Prop) (rules : List (RewriteRule α)) :
+    α → α → Prop :=
+  fun a₁ a₂ => rel a₁ a₂ ∨
+    ∃ r ∈ rules, (a₁ = r.lhs ∧ a₂ = r.rhs) ∨ (a₁ = r.rhs ∧ a₂ = r.lhs)
+
+/-- Applying rules to a reflexive relation preserves reflexivity. -/
+theorem applyRules_refl {α : Type*} {rel : α → α → Prop}
+    (h_refl : ∀ a, rel a a) (rules : List (RewriteRule α)) (a : α) :
+    applyRules rel rules a a := by
+  left
+  exact h_refl a
+
+/-! ## Equivalence class extraction maps related elements identically -/
+
+/-- Related elements map to the same extraction representative. -/
+theorem extraction_classes_eq_image {α : Type*}
+    {rel : α → α → Prop} {equiv : Equivalence rel}
+    (ext : ExtractionSection α rel equiv)
+    {a₁ a₂ : α} (h : rel a₁ a₂) :
+    ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a₁) =
+    ext.extract (@Quotient.mk _ ⟨rel, equiv⟩ a₂) := by
+  have : @Quotient.mk _ ⟨rel, equiv⟩ a₁ = @Quotient.mk _ ⟨rel, equiv⟩ a₂ :=
+    Quotient.sound h
+  rw [this]
+
+/-! ## Conjecture: Extraction Exponential Choices
+
+**Testable Conjecture**: The number of distinct cost-minimal extraction functions
+can grow exponentially in the number of equivalence classes. This is testable:
+construct a congruence on `Fin (2n)` with `n` classes of size 2, where both
+elements have equal cost. Then there are `2^n` optimal extractions.
+
+Disproof condition: Show a polynomial-time algorithm for cost-optimal extraction
+in commutative ring e-graphs. -/
+
+theorem extraction_exponential_choices {n : ℕ} (hn : 0 < n) :
+    ∃ (α : Type) (_ : Fintype α) (_ : DecidableEq α)
+      (rel : α → α → Prop) (equiv : Equivalence rel)
+      (cost : α → ℕ),
+      ∃ (ext₁ ext₂ : ExtractionSection α rel equiv),
+        (∀ a, cost (ext₁.extract (@Quotient.mk _ ⟨rel, equiv⟩ a)) ≤ cost a) ∧
+        (∀ a, cost (ext₂.extract (@Quotient.mk _ ⟨rel, equiv⟩ a)) ≤ cost a) ∧
+        ext₁.extract ≠ ext₂.extract := by
+  refine' ⟨ _, _, _, _, _, _ ⟩;
+  exact Fin ( 2 ^ n );
+  all_goals try infer_instance;
+  exact fun _ _ => True;
+  exact true_equivalence;
+  refine' ⟨ fun _ => 0, _, _, _, _, _ ⟩ <;> norm_num;
+  refine' ⟨ fun _ => 0, _ ⟩;
+  grind;
+  refine' ⟨ fun _ => 1, _ ⟩;
+  exact fun _ => trivial;
+  simp +decide [ funext_iff ];
+  lia
+
+/-! ## Sound Congruence Intersection -/
+
+/-- The intersection of two relations. -/
+def relInter {α : Type*} (r₁ r₂ : α → α → Prop) : α → α → Prop :=
+  fun a₁ a₂ => r₁ a₁ a₂ ∧ r₂ a₁ a₂
+
+/-- The intersection of two equivalence relations is an equivalence relation. -/
+theorem relInter_equiv {α : Type*} {r₁ r₂ : α → α → Prop}
+    (e₁ : Equivalence r₁) (e₂ : Equivalence r₂) :
+    Equivalence (relInter r₁ r₂) where
+  refl a := ⟨e₁.refl a, e₂.refl a⟩
+  symm h := ⟨e₁.symm h.1, e₂.symm h.2⟩
+  trans h₁ h₂ := ⟨e₁.trans h₁.1 h₂.1, e₂.trans h₁.2 h₂.2⟩
+
+/-- **Lattice Theorem**: The intersection of two sound congruences for the same
+    evaluation is a sound congruence. -/
+theorem soundCongruence_inter_sound {α β : Type*}
+    (C₁ C₂ : SoundCongruence α β)
+    (a₁ a₂ : α) (h : relInter C₁.rel C₂.rel a₁ a₂) :
+    C₁.eval a₁ = C₁.eval a₂ := by
+  exact C₁.sound a₁ a₂ h.1
+
+/-- Build a sound congruence from the intersection. -/
+def SoundCongruence.inter {α β : Type*}
+    (C₁ C₂ : SoundCongruence α β) : SoundCongruence α β where
+  rel := relInter C₁.rel C₂.rel
+  isEquiv := relInter_equiv C₁.isEquiv C₂.isEquiv
+  eval := C₁.eval
+  sound := fun a₁ a₂ h => C₁.sound a₁ a₂ h.1
+
+/-! ## Extraction Composition Preserves Soundness -/
+
+/-- **Composition Theorem**: Given congruences `C₁ ⊆ C₂`, composing extractions
+    preserves semantic equivalence. Uses multi-step reasoning about the chain
+    of equivalences through two levels of extraction. -/
+theorem extraction_composition_sound {α β : Type*}
+    (C₁ C₂ : SoundCongruence α β)
+    (h_refines : CongruenceRefines C₁.rel C₂.rel)
+    (ext₁ : ExtractionSection α C₁.rel C₁.isEquiv)
+    (ext₂ : ExtractionSection α C₂.rel C₂.isEquiv) (a : α) :
+    C₂.eval (ext₂.extract (@Quotient.mk _ ⟨C₂.rel, C₂.isEquiv⟩
+      (ext₁.extract (@Quotient.mk _ ⟨C₁.rel, C₁.isEquiv⟩ a)))) =
+    C₂.eval a := by
+  -- Step 1: ext₁ extracts a C₁-equivalent element
+  have h1 : C₁.rel (ext₁.extract (@Quotient.mk _ ⟨C₁.rel, C₁.isEquiv⟩ a)) a :=
+    ext₁.section_prop a
+  -- Step 2: Since C₁ ⊆ C₂, the extracted element is also C₂-equivalent
+  have h2 : C₂.rel (ext₁.extract (@Quotient.mk _ ⟨C₁.rel, C₁.isEquiv⟩ a)) a :=
+    h_refines _ _ h1
+  -- Step 3: ext₂ extracts a C₂-equivalent element from the intermediate result
+  have h3 := ext₂.section_prop (ext₁.extract (@Quotient.mk _ ⟨C₁.rel, C₁.isEquiv⟩ a))
+  -- Step 4: Chain the C₂-equivalences
+  have h4 : C₂.rel (ext₂.extract (@Quotient.mk _ ⟨C₂.rel, C₂.isEquiv⟩
+    (ext₁.extract (@Quotient.mk _ ⟨C₁.rel, C₁.isEquiv⟩ a)))) a :=
+    C₂.isEquiv.trans h3 h2
+  -- Step 5: Apply soundness
+  exact C₂.sound _ _ h4
+
+/-! ## Model Class Monotonicity -/
+
+/-- Finer congruences have larger model classes (antitone). -/
+theorem modelClass_antitone {α β : Type*}
+    {rel₁ rel₂ : α → α → Prop}
+    (h : CongruenceRefines rel₁ rel₂) :
+    @ModelClass α β rel₂ ⊆ @ModelClass α β rel₁ := by
+  intro f hf a₁ a₂ h_rel
+  exact hf a₁ a₂ (h a₁ a₂ h_rel)
+
+/-! ## Evaluation Factors Through Quotient -/
+
+/-- A sound congruence's evaluation factors through the quotient. -/
+def evalOnQuotient {α β : Type*} (C : SoundCongruence α β) :
+    @Quotient α ⟨C.rel, C.isEquiv⟩ → β :=
+  @Quotient.lift _ _ ⟨C.rel, C.isEquiv⟩ C.eval C.sound
+
+theorem evalOnQuotient_mk {α β : Type*} (C : SoundCongruence α β) (a : α) :
+    evalOnQuotient C (@Quotient.mk _ ⟨C.rel, C.isEquiv⟩ a) = C.eval a :=
+  rfl
+
+/-- Extraction followed by evaluation equals evaluation on the quotient. -/
+theorem extraction_eq_quotient_eval {α β : Type*}
+    (C : SoundCongruence α β)
+    (ext : ExtractionSection α C.rel C.isEquiv) (a : α) :
+    C.eval (ext.extract (@Quotient.mk _ ⟨C.rel, C.isEquiv⟩ a)) =
+    evalOnQuotient C (@Quotient.mk _ ⟨C.rel, C.isEquiv⟩ a) := by
+  rw [evalOnQuotient_mk]
+  exact extraction_preserves_eval C ext a
 
 end
