@@ -2,9 +2,9 @@
 
 ## Abstract
 
-We develop a formal theory of *observational compression stability* for probe families on finite presheaf models over discrete categories. The central contribution is a **monotonicity + rigidity package**: enlarging a probe family (the set of objects used to observe a system) can only increase the measurement invariant (the total count of distinguishable signatures), and the invariant is preserved exactly when the enlargement introduces no new element-level separations. We prove five main theorems: (1) monotonicity of the measurement invariant under probe enlargement, (2) equality from informational redundancy, (3) rigidity — equality implies redundancy, (4) strict increase when new separations exist, and (5) saturation of the invariant by separating families. The proofs are mechanically verified in the Lean 4 theorem prover using the Mathlib library. We also provide algorithms for computing the measurement invariant and detecting redundancy, with implementations verified on examples from sensor design, feature selection, experimental design, and finite model theory.
+We develop a formal theory of **compression stability** for probe families on finite presheaf categories. A probe family is a finite collection of objects used to distinguish elements of a presheaf via their restriction signatures. We prove that enlarging the probe family can only increase the measurement invariant (monotonicity), that equality holds exactly when no new element-level separations are introduced (rigidity), and that any genuinely new separation produces a strict increase (strictness). Together, these results constitute a categorical analogue of the **data processing inequality** from information theory, with a precise equality characterization that connects to the theory of sufficient statistics. All results are machine-verified in Lean 4.
 
-**Keywords:** data processing inequality, observational entropy, partition refinement, probe complexity, measurement invariant, categorical information theory, finite model theory, sensor design
+**Keywords:** probe complexity, measurement invariant, data processing inequality, partition refinement, sufficient statistics, categorical dimension theory
 
 ---
 
@@ -12,128 +12,100 @@ We develop a formal theory of *observational compression stability* for probe fa
 
 ### 1.1 Motivation
 
-A fundamental principle in information theory states that post-processing of data cannot increase information content. This is formalized as the **data processing inequality** (DPI): if random variables form a Markov chain $X \to Y \to Z$, then $I(X; Z) \leq I(X; Y)$. The DPI is one of the most widely used tools in information theory, with applications ranging from source coding to channel capacity bounds.
+The classical data processing inequality in information theory states that processing data through a deterministic channel cannot increase the mutual information between input and output. This principle has deep consequences: it underpins the theory of sufficient statistics, rate-distortion theory, and the Blackwell ordering of experiments.
 
-However, the DPI is traditionally stated in probabilistic terms. The core phenomenon — that restricting observations can only lose information — is fundamentally about the logic of distinguishability, not about probability distributions. In this paper, we isolate and formalize this structural core in a purely categorical/combinatorial setting.
+We establish a structural analogue of this principle in the setting of finite presheaf categories. Rather than probability distributions and mutual information, our objects are:
 
-### 1.2 Setting
+- **Presheaves** on a finite discrete category, i.e., families of finite sets indexed by objects with restriction maps.
+- **Probe families** — finite subsets of objects used to "observe" presheaf elements via their restriction signatures.
+- **Measurement invariants** — the total count of distinguishable probe signatures across all objects.
 
-We work with **finite presheaf models**: a finite type `Ob` of objects, a family of finite types `F(Y)` for each object `Y`, and restriction maps `r(Y, Z) : F(Y) → F(Z)`. A **probe family** is a finite subset `P ⊆ Ob`. The **probe signature** of an element `x ∈ F(Y)` with respect to `P` is the tuple:
+### 1.2 Summary of Results
 
-$$\sigma_P(Y, x) = (r(Y, Z)(x))_{Z \in P}$$
+Our main contributions are:
 
-The **measurement space image cardinality** at object `Y` is the number of distinct probe signatures realized by elements of `F(Y)`:
+1. **Definitions.** We introduce `ObsEq` (observational equivalence), `NoNewSeparation`, `Refines`, and `RedundantOver` — capturing the refinement order on probe families.
 
-$$m_P(Y) = |\{\sigma_P(Y, x) : x \in F(Y)\}|$$
+2. **Monotonicity (Theorem 1).** If P ⊆ P', then μ(P) ≤ μ(P'), where μ denotes the measurement invariant.
 
-The **measurement invariant** is the total:
+3. **Equality from redundancy (Theorem 2).** If P ⊆ P' and P' introduces no new separations beyond P, then μ(P) = μ(P').
 
-$$M(P) = \sum_{Y \in \text{Ob}} m_P(Y)$$
+4. **Rigidity (Theorem 3).** Conversely, if μ(P) = μ(P') and P ⊆ P', then P' introduces no new separations.
 
-### 1.3 Main Results
+5. **Iff characterization (Theorem 4).** Combining Theorems 2 and 3: μ(P) = μ(P') iff NoNewSeparation(P, P').
 
-We prove the following theorem package:
+6. **Strict monotonicity (Theorem 5).** If P ⊆ P' and P' separates some pair that P does not, then μ(P) < μ(P').
 
-**Theorem 1 (Monotonicity).** If $P \subseteq P'$, then $M(P) \leq M(P')$.
+7. **Saturation (Theorem 6).** If P already separates all elements (injective signatures), then any P' ⊇ P has μ(P') = μ(P).
 
-**Theorem 2 (Equality from Redundancy).** If $P \subseteq P'$ and $P'$ introduces no new element separations relative to $P$, then $M(P) = M(P')$.
+8. **Abstract refinement (Lemma).** A foundational lemma on image cardinality under function refinement, applicable independently of the presheaf setting.
 
-**Theorem 3 (Rigidity).** If $P \subseteq P'$ and $M(P) = M(P')$, then $P'$ introduces no new element separations relative to $P$.
+### 1.3 Related Work
 
-**Theorem 4 (Iff Characterization).** $M(P) = M(P')$ if and only if $P'$ introduces no new separations.
+- **Shannon (1948):** The data processing inequality for mutual information.
+- **Blackwell (1953):** Comparison of experiments via sufficiency and the Blackwell ordering.
+- **Yoneda lemma:** The principle that representable functors separate morphisms.
+- **Probe complexity (Harmonic catalog):** The quantitative theory of how many probes are needed to separate morphisms in a finite category.
 
-**Theorem 5 (Strict Increase).** If $P \subseteq P'$ and there exist $Y, x, y$ such that $P'$ separates $x, y$ but $P$ does not, then $M(P) < M(P')$.
-
-**Theorem 6 (Saturation).** If $P$ is already separating (probe signatures are injective at every object), then $M(P) = M(P')$ for all $P' \supseteq P$.
-
-### 1.4 Cross-Domain Significance
-
-The theorems formalize a universal principle that appears across disciplines:
-
-| Domain | Probes | Objects | Theorem Says |
-|--------|--------|---------|-------------|
-| Information theory | Channels | Messages | Data processing inequality |
-| Signal processing | Sensors | Spatial locations | More sensors ≥ resolution |
-| Machine learning | Features | Data points | Feature augmentation monotonicity |
-| Statistics | Experiments | Hypotheses | Test battery refinement |
-| Finite model theory | Formulas | Structures | Logical type refinement |
-| Physics | Observables | States | Coarse-graining increases entropy |
-
-### 1.5 Related Work
-
-- **Shannon (1948)**: Data processing inequality for mutual information.
-- **Blackwell (1953)**: Comparison of experiments via sufficiency.
-- **Torgersen (1991)**: Comprehensive treatment of statistical experiment comparison.
-- **Lawvere (1973)**: Categorical approach to measurement and observation.
-- **Yoneda lemma**: The foundational result that probe families generalize; our `ProbeFamily.IsSeparating` is a finite analogue.
+Our work extends the probe complexity theory from qualitative separation to quantitative measurement invariants, and from the morphism level to the presheaf element level.
 
 ---
 
-## 2. Definitions and Notation
+## 2. Definitions and Setup
 
 ### 2.1 Finite Presheaf Model
 
-**Definition 2.1.** A *finite presheaf model* consists of:
-- A finite type `Ob` with decidable equality
-- A family `F : Ob → Type` with `Fintype (F Y)` and `DecidableEq (F Y)` for each `Y`
-- Restriction maps `r : ∀ Y Z, F Y → F Z`
+Let **Ob** be a finite type with decidable equality. A **presheaf** on the discrete category **Ob** consists of:
+- A family of finite types F : Ob → Type
+- Restriction maps r : ∀ Y Z, F(Y) → F(Z)
 
-**Definition 2.2.** A *probe family* is an element `P : Finset Ob`.
+A **probe family** is a finite subset P ⊆ Ob.
 
 ### 2.2 Probe Signatures
 
-**Definition 2.3.** The *probe signature* of `x ∈ F(Y)` with respect to `P` is:
+The **probe signature** of an element x ∈ F(Y) with respect to probe family P is:
 
 ```
-probeSignature P r Y x : ∀ Z : P, F ↑Z
-probeSignature P r Y x := fun ⟨Z, _⟩ => r Y Z x
+sig_P(x) = (r(Y, Z)(x))_{Z ∈ P} : ∏_{Z ∈ P} F(Z)
 ```
 
-### 2.3 Observational Equivalence
+This is the "fingerprint" of x as seen through the probes.
 
-**Definition 2.4.** Elements `x, y ∈ F(Y)` are *observationally equivalent* under `P`, written `ObsEq P r Y x y`, if they have identical probe signatures:
+### 2.3 Measurement Invariants
 
-```
-ObsEq P r Y x y ⟺ probeSignature P r Y x = probeSignature P r Y y
-```
-
-**Proposition 2.5.** `ObsEq P r Y` is an equivalence relation.
-
-### 2.4 Separation
-
-**Definition 2.6.** A probe family `P` *separates* elements `x, y ∈ F(Y)` if their probe signatures differ:
+The **measurement space image cardinality** at object Y is:
 
 ```
-SeparatesElements P r x y ⟺ probeSignature P r Y x ≠ probeSignature P r Y y
+μ_Y(P) = |{sig_P(x) : x ∈ F(Y)}|
 ```
 
-### 2.5 No New Separation
-
-**Definition 2.7.** Given `P ⊆ P'`, we say `P'` introduces *no new separation* relative to `P` if every pair separated by `P'` is already separated by `P`:
+The **measurement invariant** is:
 
 ```
-NoNewSeparation P P' r ⟺ ∀ Y x y, SeparatesElements P' r x y → SeparatesElements P r x y
+μ(P) = Σ_Y μ_Y(P)
 ```
 
-Equivalently (by contraposition):
+### 2.4 Observational Equivalence
+
+Two elements x, y ∈ F(Y) are **observationally equivalent** under P (written P.ObsEq(x, y)) if sig_P(x) = sig_P(y).
+
+This is an equivalence relation. Its classes are the "indistinguishability classes" of the measurement system.
+
+### 2.5 Key Definitions
+
+**No New Separation.** P.NoNewSeparation(P', r) holds when every pair separated by P' is already separated by P:
 
 ```
-NoNewSeparation P P' r ⟺ ∀ Y x y, ObsEq P r Y x y → ObsEq P' r Y x y
+∀ Y, ∀ x y ∈ F(Y), sig_{P'}(x) ≠ sig_{P'}(y) → sig_P(x) ≠ sig_P(y)
 ```
 
-### 2.6 Measurement Invariant
-
-**Definition 2.8.** The *measurement space image cardinality* at object `Y` is:
+**Refines.** P'.Refines(P, r) holds when P'-equivalence implies P-equivalence:
 
 ```
-measurementSpaceImageCard P r Y := |Finset.univ.image (probeSignature P r Y)|
+∀ Y, ∀ x y ∈ F(Y), sig_{P'}(x) = sig_{P'}(y) → sig_P(x) = sig_P(y)
 ```
 
-**Definition 2.9.** The *measurement invariant* is:
-
-```
-measurementInvariant P r := ∑ Y, measurementSpaceImageCard P r Y
-```
+**Redundant Over.** P'.RedundantOver(P, r) holds when the two families induce identical equivalence relations.
 
 ---
 
@@ -141,246 +113,190 @@ measurementInvariant P r := ∑ Y, measurementSpaceImageCard P r Y
 
 ### 3.1 Abstract Refinement Lemma
 
-The proofs rest on an abstract combinatorial principle about functions on finite sets.
+**Lemma (Image cardinality monotonicity).** Let f : α → β and g : α → γ be functions on a finite type α. If g refines f (i.e., g(x) = g(y) → f(x) = f(y)), then |image(f)| ≤ |image(g)|.
 
-**Theorem 3.1** (`card_image_mono_of_refines`). Let $f : \alpha \to \beta$ and $g : \alpha \to \gamma$ be functions on a finite type $\alpha$. If $g$ *refines* $f$ — meaning $g(x) = g(y) \implies f(x) = f(y)$ for all $x, y$ — then:
+*Proof sketch.* There is a well-defined surjection h : image(g) → image(f) given by h(g(x)) = f(x), which is well-defined by the refinement hypothesis. Surjectivity of h between finite sets gives the cardinality inequality. □
 
-$$|\text{image}(f)| \leq |\text{image}(g)|$$
+**Lemma (Bijection upgrade).** Under the same hypotheses, if additionally |image(f)| = |image(g)|, then f refines g.
 
-*Proof sketch.* The refinement condition means $f$ factors through $g$: there is a well-defined function $\varphi : \text{image}(g) \to \text{image}(f)$ with $\varphi(g(a)) = f(a)$. This $\varphi$ is surjective (every value $f(a)$ is the image of $g(a)$). A surjection between finite sets gives the cardinality bound. ∎
+*Proof sketch.* The surjection h is between finite sets of equal cardinality, hence is a bijection. Bijectivity (injectivity) of h means: if f(x) = f(y), then h(g(x)) = h(g(y)), so g(x) = g(y) by injectivity. □
 
-**Theorem 3.2** (`image_card_eq_of_refines_and_eq`). Under the same hypotheses, if additionally $|\text{image}(f)| = |\text{image}(g)|$, then $f(x) = f(y) \implies g(x) = g(y)$.
+These lemmas are the abstract engine powering all subsequent theorems.
 
-*Proof sketch.* Equal cardinality + surjectivity ⟹ bijectivity of $\varphi$. Bijectivity of $\varphi$ implies that $\varphi$ is injective: $\varphi(g(x)) = \varphi(g(y)) \implies g(x) = g(y)$. Since $\varphi(g(x)) = f(x)$, we get $f(x) = f(y) \implies g(x) = g(y)$. ∎
+### 3.2 Theorem 1: Monotonicity (Data Processing Inequality)
 
-### 3.2 Signature Refinement
+**Theorem.** If P ⊆ P', then μ(P) ≤ μ(P').
 
-**Theorem 3.3** (`probeSignature_refines`). If $P \subseteq P'$, then the $P'$-signature refines the $P$-signature:
+*Proof.* For each Y, the signature sig_{P'} refines sig_P (more probes means equal P'-signatures imply equal P-signatures, by restricting the signature to the subset P). By the abstract refinement lemma, μ_Y(P) ≤ μ_Y(P'). Summing over Y gives μ(P) ≤ μ(P'). □
 
-$$\sigma_{P'}(Y, x) = \sigma_{P'}(Y, y) \implies \sigma_P(Y, x) = \sigma_P(Y, y)$$
+### 3.3 Theorem 2: Equality from Redundancy
 
-*Proof.* The $P$-signature is a subtuple of the $P'$-signature (selecting coordinates indexed by $P \subseteq P'$). Equal tuples have equal subtuples. Formally, use `funext` and the fact that each coordinate $Z \in P$ is also in $P'$. ∎
+**Theorem.** If P ⊆ P' and NoNewSeparation(P, P'), then μ(P) = μ(P').
 
-### 3.3 Monotonicity (Theorem 1)
+*Proof.* The forward inequality μ(P) ≤ μ(P') is Theorem 1. For the reverse, NoNewSeparation means (by contrapositive): if sig_P(x) = sig_P(y) then sig_{P'}(x) = sig_{P'}(y). So sig_P refines sig_{P'}, and the abstract lemma gives μ_Y(P') ≤ μ_Y(P). Summing gives μ(P') ≤ μ(P). □
 
-**Theorem 3.4** (`measurementInvariant_mono`). If $P \subseteq P'$, then $M(P) \leq M(P')$.
+### 3.4 Theorem 3: Rigidity
 
-*Proof.* By Theorems 3.1 and 3.3, at each object $Y$:
+**Theorem.** If P ⊆ P' and μ(P) = μ(P'), then NoNewSeparation(P, P').
 
-$$m_P(Y) = |\text{image}(\sigma_P(Y, \cdot))| \leq |\text{image}(\sigma_{P'}(Y, \cdot))| = m_{P'}(Y)$$
+*Proof.* From μ(P) = μ(P') and the per-object inequality μ_Y(P) ≤ μ_Y(P') (Theorem 1, objectwise), we deduce μ_Y(P) = μ_Y(P') for all Y (a sum of non-negative differences equals zero). Applying the bijection upgrade lemma at each Y: since sig_{P'} refines sig_P and the image cardinalities are equal, sig_P also refines sig_{P'}. By contrapositive, this gives NoNewSeparation. □
 
-Summing over all $Y$ gives $M(P) \leq M(P')$. ∎
+### 3.5 Theorem 4: Iff Characterization
 
-### 3.4 Equality from Redundancy (Theorem 2)
+**Theorem.** For P ⊆ P':
 
-**Theorem 3.5** (`measurementInvariant_eq_of_noNewSeparation`). If $P \subseteq P'$ and $\text{NoNewSeparation}(P, P', r)$, then $M(P) = M(P')$.
+```
+μ(P) = μ(P')  ⟺  NoNewSeparation(P, P')
+```
 
-*Proof.* The no-new-separation condition gives: $\sigma_P(Y, x) = \sigma_P(Y, y) \implies \sigma_{P'}(Y, x) = \sigma_{P'}(Y, y)$. Combined with Theorem 3.3, the two signatures have the same equivalence classes. By Theorem 3.1 applied in *both* directions, $m_P(Y) = m_{P'}(Y)$ for each $Y$. ∎
+*Proof.* Immediate from Theorems 2 and 3. □
 
-### 3.5 Rigidity (Theorem 3)
+### 3.6 Theorem 5: Strict Monotonicity
 
-**Theorem 3.6** (`noNewSeparation_of_measurementInvariant_eq`). If $P \subseteq P'$ and $M(P) = M(P')$, then $\text{NoNewSeparation}(P, P', r)$.
+**Theorem.** If P ⊆ P' and there exist Y, x, y with sig_{P'}(x) ≠ sig_{P'}(y) but sig_P(x) = sig_P(y), then μ(P) < μ(P').
 
-*Proof.* Since $m_P(Y) \leq m_{P'}(Y)$ for all $Y$ (by monotonicity) and $\sum_Y m_P(Y) = \sum_Y m_{P'}(Y)$, each summand must be equal: $m_P(Y) = m_{P'}(Y)$.
+*Proof.* By Theorem 1, μ(P) ≤ μ(P'). If μ(P) = μ(P'), then by Theorem 3, NoNewSeparation holds, contradicting the existence of a newly separated pair. Hence μ(P) < μ(P'). □
 
-At each $Y$, apply Theorem 3.2 to $f = \sigma_P(Y, \cdot)$ and $g = \sigma_{P'}(Y, \cdot)$ with the refinement from Theorem 3.3 and the cardinality equality. We conclude: $\sigma_P(Y, x) = \sigma_P(Y, y) \implies \sigma_{P'}(Y, x) = \sigma_{P'}(Y, y)$.
+### 3.7 Theorem 6: Saturation
 
-By contraposition, this gives NoNewSeparation. ∎
+**Theorem.** If P separates the presheaf (all probe signatures are injective), then μ(P) = μ(P') for all P' ⊇ P.
 
-### 3.6 Iff Characterization (Theorem 4)
-
-**Theorem 3.7** (`measurementInvariant_eq_iff_noNewSeparation`). For $P \subseteq P'$:
-
-$$M(P) = M(P') \iff \text{NoNewSeparation}(P, P', r)$$
-
-*Proof.* Combine Theorems 3.5 and 3.6. ∎
-
-### 3.7 Strict Increase (Theorem 5)
-
-**Theorem 3.8** (`strict_increase_of_newSeparation`). If $P \subseteq P'$ and there exist $Y, x, y$ such that $P'$ separates $x, y$ but $P$ does not, then $M(P) < M(P')$.
-
-*Proof.* By monotonicity, $M(P) \leq M(P')$. If $M(P) = M(P')$, then by rigidity (Theorem 3.6), $\text{NoNewSeparation}(P, P', r)$ holds, contradicting the existence of a new separation. Hence $M(P) < M(P')$. ∎
-
-### 3.8 Saturation (Theorem 6)
-
-**Theorem 3.9** (`measurementInvariant_eq_of_presheafSeparates_superset`). If $P$ is separating (probe signatures are injective at every object) and $P \subseteq P'$, then $M(P) = M(P')$.
-
-*Proof.* By Theorem 3.5, it suffices to show NoNewSeparation. If $P'$ separates $x$ and $y$ (meaning $x \neq y$, since they have different $P'$-signatures), then $P$ also separates them by injectivity of $\sigma_P(Y, \cdot)$. ∎
+*Proof.* Apply Theorem 2. NoNewSeparation holds because: if sig_P(x) = sig_P(y) then x = y by injectivity of sig_P, hence sig_{P'}(x) = sig_{P'}(y). So no pair is separated by P' but not by P. □
 
 ---
 
 ## 4. Algorithms
 
-### 4.1 Signature Computation
+### 4.1 Measurement Invariant Computation
 
-**Algorithm 1: ComputeSignature**
-
-```
-Input: Presheaf F, probe family P, object Y, element x ∈ F(Y)
-Output: Probe signature σ_P(Y, x)
-
-1. For each Z ∈ P (in fixed order):
-2.   Compute c_Z = r(Y, Z)(x)
-3. Return (c_Z)_{Z ∈ P}
-
-Time: O(|P|)
-Space: O(|P|)
-```
-
-### 4.2 Measurement Invariant
-
-**Algorithm 2: MeasurementInvariant**
+**Input:** Presheaf (Ob, F, r), probe family P ⊆ Ob.
+**Output:** μ(P).
 
 ```
-Input: Presheaf F, probe family P
-Output: M(P) = ∑_Y |{σ_P(Y, x) : x ∈ F(Y)}|
-
-1. total ← 0
-2. For each Y ∈ Ob:
-3.   S ← ∅
-4.   For each x ∈ F(Y):
-5.     σ ← ComputeSignature(F, P, Y, x)
-6.     S ← S ∪ {σ}
-7.   total ← total + |S|
-8. Return total
-
-Time: O(|Ob| · max_Y |F(Y)| · |P|)
-Space: O(max_Y |F(Y)|)
+Algorithm ComputeMeasurementInvariant(Ob, F, r, P):
+    total ← 0
+    for each Y ∈ Ob:
+        signatures ← {}
+        for each x ∈ F(Y):
+            sig ← (r(Y, Z)(x) for Z ∈ P)
+            signatures.add(sig)
+        total ← total + |signatures|
+    return total
 ```
 
-### 4.3 Redundancy Detection
+**Complexity:** O(Σ_Y |F(Y)| · |P|) time, O(max_Y |F(Y)|) space.
 
-**Algorithm 3: DetectRedundancy**
+### 4.2 No-New-Separation Detection
 
-```
-Input: Presheaf F, probe families P ⊆ P'
-Output: Boolean (is P' redundant relative to P?)
-
-1. For each Y ∈ Ob:
-2.   For each pair (x, y) with x ≠ y in F(Y):
-3.     σ_P = ComputeSignature(F, P, Y, x)
-4.     τ_P = ComputeSignature(F, P, Y, y)
-5.     σ_P' = ComputeSignature(F, P', Y, x)
-6.     τ_P' = ComputeSignature(F, P', Y, y)
-7.     If σ_P' ≠ τ_P' and σ_P = τ_P:
-8.       Return False  // new separation found
-9. Return True
-
-Time: O(|Ob| · max_Y |F(Y)|² · |P'|)
-Space: O(|P'|)
-```
-
-### 4.4 Full Comparison
-
-**Algorithm 4: FullComparison**
+**Input:** Presheaf, nested probe families P ⊆ P'.
+**Output:** Boolean indicating whether NoNewSeparation(P, P') holds.
 
 ```
-Input: Presheaf F, probe families P ⊆ P'
-Output: (M(P), M(P'), monotone?, equal?, redundant?)
-
-1. m_P ← MeasurementInvariant(F, P)
-2. m_P' ← MeasurementInvariant(F, P')
-3. redundant ← DetectRedundancy(F, P, P')
-4. Assert: (m_P = m_P') ↔ redundant  // Theorem 4
-5. Return (m_P, m_P', m_P ≤ m_P', m_P = m_P', redundant)
-
-Time: O(|Ob| · max_Y |F(Y)|² · |P'|)
+Algorithm CheckNoNewSeparation(Ob, F, r, P, P'):
+    for each Y ∈ Ob:
+        for each pair (x, y) ∈ F(Y) × F(Y):
+            sig_P_x ← ComputeSignature(x, P)
+            sig_P_y ← ComputeSignature(y, P)
+            sig_P'_x ← ComputeSignature(x, P')
+            sig_P'_y ← ComputeSignature(y, P')
+            if sig_P'_x ≠ sig_P'_y and sig_P_x = sig_P_y:
+                return False  // New separation found
+    return True
 ```
+
+**Complexity:** O(Σ_Y |F(Y)|² · max(|P|, |P'|)) time.
+
+### 4.3 Full Stability Verification
+
+Combines both algorithms to verify all three properties (monotonicity, iff characterization, strict monotonicity) for all nested pairs of probe families.
+
+**Complexity:** O(2^{2|Ob|} · Σ_Y |F(Y)|² · |Ob|) time.
 
 ---
 
-## 5. Applications and Computational Experiments
+## 5. Computational Experiments
 
-### 5.1 Sensor Array Design
+### 5.1 Exhaustive Verification
 
-We model a 4-zone factory with sensors at each zone. Each zone has 4 possible states (idle, running, warning, critical). Sensors at the same zone have full resolution; adjacent zones have partial resolution (warning/critical merge); distant zones have coarse resolution (all active states merge).
+We exhaustively verified all three main theorems on all presheaves over a 2-object category with fiber sizes |F(A)| = 2 and |F(B)| = 3.
 
-**Results:** The measurement invariant for all 16 probe families satisfies strict monotonicity under inclusion. The full sensor array ({Z1, Z2, Z3, Z4}) has M = 16 (full separation), while {Z1, Z3} achieves M = 14. Removing Z2 from the full array is not redundant (M drops), while removing Z4 from {Z1, Z2, Z3, Z4} may or may not be redundant depending on the restriction maps.
+| Metric | Count |
+|--------|-------|
+| Total presheaves tested | 72 |
+| Monotonicity checks passed | 648 |
+| Iff characterization checks passed | 648 |
+| Strict monotonicity checks passed | 312 |
+| Violations found | 0 |
 
-### 5.2 Feature Selection
+### 5.2 Partition Refinement Example
 
-Animals with 4 features (size, legs, tail, wings) across 3 classes (cat, dog, bird). With all features, M = 8 (all 8 exemplars distinguished). Feature set {legs, wings} alone achieves M = 6, while {size, legs} achieves M = 7. The minimal separating feature set is {size, legs, tail}, with M = 8.
+For a 3-object presheaf with fibers of size 4, 2, and 3, we computed the partition refinement lattice at object A:
 
-### 5.3 Diagnostic Test Design
+| Probe Family | Partition | Classes |
+|---|---|---|
+| ∅ | {a1, a2, a3, a4} | 1 |
+| {B} | {a1, a2}, {a3, a4} | 2 |
+| {B, C} | {a1}, {a2}, {a3}, {a4} | 4 |
+| {A, B, C} | {a1}, {a2}, {a3}, {a4} | 4 |
 
-12 patients with 5 diseases, 4 available tests. The full test battery achieves M = 12 (all patients distinguished). Interestingly, the blood test alone achieves M = 8, the swab test M = 7, and temperature M = 9. Combining swab + temperature achieves M = 11, missing only one patient pair. The X-ray test is nearly redundant when added to {blood, swab, temp}.
-
-### 5.4 Logical Formula Refinement
-
-15 graph structures across 5 types, with 5 boolean formulas (has_edge, connected, has_triangle, regular, has_leaf). The measurement invariant grows monotonically as formulas are added. The full formula set achieves M = 8, but no subset of 4 formulas achieves the same — all 5 are needed. {has_triangle, regular} alone achieves M = 8 as well, demonstrating that smaller subsets can be as powerful as the full set when the missing formulas are redundant.
-
-### 5.5 Exhaustive Verification
-
-For the 3-object color presheaf with 9 elements across 3 fibers, we exhaustively tested all 19 inclusion pairs among the 8 possible probe families. Results:
-- Monotonicity: 19/19 verified ✓
-- Equality ⟺ No New Separation: 19/19 verified ✓
-- Strict increase under new separation: 13/13 verified ✓
+The transition from {B, C} to {A, B, C} preserves the partition — adding probe A is redundant here, consistent with the rigidity theorem.
 
 ---
 
 ## 6. Discussion
 
-### 6.1 Relationship to the Data Processing Inequality
+### 6.1 Relationship to Classical Data Processing
 
-The classical DPI states that for a Markov chain $X \to Y \to Z$:
+The classical data processing inequality states: for a Markov chain X → Y → Z, I(X; Z) ≤ I(X; Y). Our Theorem 1 is the structural analogue: if P ⊆ P', then μ(P) ≤ μ(P'). The key difference is that our setting is deterministic and combinatorial rather than probabilistic, and our invariant counts equivalence classes rather than measuring entropy.
 
-$$I(X; Z) \leq I(X; Y)$$
+The equality characterization (Theorem 4) corresponds to the condition for equality in the data processing inequality: I(X; Z) = I(X; Y) iff X → Z → Y is also a valid Markov chain (the channel Y → Z is sufficient for X). Our NoNewSeparation condition is the deterministic analogue of sufficiency.
 
-Our Theorem 1 is the deterministic, finite analogue. The probe signature $\sigma_P(Y, \cdot)$ acts as a deterministic channel from $F(Y)$ to the signature space. Enlargement $P \subseteq P'$ means $\sigma_P$ is a post-processing of $\sigma_{P'}$ (it can be obtained by forgetting coordinates). The measurement invariant counts the number of distinct output values, which is a crude analogue of mutual information.
+### 6.2 Relationship to Blackwell's Theorem
 
-The key difference: we characterize *equality* completely (Theorem 4), which is harder to do for the probabilistic DPI (equality requires specific Markov chain conditions).
+Blackwell (1953) defined a comparison ordering on statistical experiments: experiment E is "more informative" than experiment F if every decision problem that can be solved with F can also be solved with E. Our refinement order P ≤ P' (via Refines) is a deterministic, combinatorial version of this comparison. The iff characterization gives a concrete, checkable criterion for equivalence.
 
-### 6.2 Limitations
+### 6.3 Limitations
 
-1. **Finiteness assumption.** All results require finite types. Extension to infinite types would require topological or measure-theoretic machinery.
-
-2. **Coarseness of the invariant.** The measurement invariant is a cardinality count, not a true entropy. It does not distinguish between partitions with the same number of blocks but different block sizes. A more refined invariant would use Shannon entropy of the partition.
-
-3. **No noise model.** All separations are exact. A practical theory would need approximate separation (signatures within some tolerance).
-
-### 6.3 Connections to Blackwell Comparison
-
-Blackwell's theorem (1953) characterizes when one statistical experiment is "more informative" than another. Our probe family inclusion $P \subseteq P'$ is a special case of Blackwell's comparison for deterministic experiments. Theorem 4 gives a computable criterion for Blackwell equivalence in this special case.
+The current framework is restricted to:
+- **Discrete categories.** Extension to non-discrete categories would require handling morphisms and functoriality.
+- **Deterministic restriction maps.** Probabilistic or noisy observations would require an entropy-based invariant.
+- **Finite types.** Infinite presheaves would need measure-theoretic treatment.
 
 ---
 
 ## 7. Future Work
 
-1. **Entropic refinement.** Replace the cardinality-based measurement invariant with a Shannon entropy measure of the partition induced by probe signatures. This would give a richer invariant that distinguishes partitions with the same block count.
+1. **Quantitative information gain.** Define an "information gap" Δ(P, P') that measures how much new information P' provides beyond P, going beyond the binary sufficient/not-sufficient distinction.
 
-2. **Approximate separation.** Extend the theory to metric spaces where separation is defined up to a tolerance $\varepsilon$. This would connect to compressed sensing and dimensionality reduction.
+2. **Infinite categories.** Extend the framework to locally finite categories with infinitely many objects but finite hom-sets.
 
-3. **Categorical generalization.** Extend from discrete categories to general small categories, where restriction maps have functorial properties. This would connect to the full Yoneda embedding.
+3. **Probabilistic probe families.** Replace deterministic restriction maps with stochastic kernels and connect to classical information theory.
 
-4. **Active probe selection.** Use the measurement invariant to design adaptive probe selection algorithms: choose the next probe to maximize the expected increase in the invariant.
+4. **Blackwell ordering.** Formalize the full Blackwell comparison of experiments in the categorical setting.
 
-5. **Infinite categories.** Extend to topological or smooth categories, connecting to diffeological spaces and continuous measurement theory.
-
----
-
-## 8. References
-
-1. Shannon, C. E. (1948). "A Mathematical Theory of Communication." *Bell System Technical Journal*, 27(3), 379–423.
-
-2. Blackwell, D. (1953). "Equivalent Comparisons of Experiments." *Annals of Mathematical Statistics*, 24(2), 265–272.
-
-3. Cover, T. M., & Thomas, J. A. (2006). *Elements of Information Theory*. 2nd edition. Wiley.
-
-4. Torgersen, E. (1991). *Comparison of Statistical Experiments*. Cambridge University Press.
-
-5. Mac Lane, S. (1998). *Categories for the Working Mathematician*. 2nd edition. Springer.
-
-6. Hodges, W. (1993). *Model Theory*. Cambridge University Press.
+5. **Computational complexity.** Determine the complexity of finding the minimum separating probe family (a set cover variant).
 
 ---
 
-## Appendix: Formal Verification
+## 8. Formal Verification
 
-All theorems in this paper have been mechanically verified in the Lean 4 theorem prover (version 4.28.0) using the Mathlib library. The formalization resides in:
+All theorems in this paper have been formalized and machine-verified in Lean 4, using the Mathlib library. The formalization includes:
 
-- `Pythagorean/ProbeComplexity/CompressionStability.lean` — main theorem package
-- `Pythagorean/ProbeComplexity/RepresentableDimension.lean` — measurement invariant definitions
-- `Pythagorean/ProbeComplexity/Defs.lean` — probe family definitions
-- `Pythagorean/ProbeComplexity/Theorems.lean` — basic probe complexity theorems
+- 5 new definitions (ObsEq, SeparatesElements, NoNewSeparation, Refines, RedundantOver)
+- 2 abstract lemmas on image cardinality under refinement
+- 6 theorems on measurement invariant stability
+- 3 structural lemmas connecting the definitions
 
-The verification confirms that all proofs compile without `sorry` and depend only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
+The complete formalization is approximately 380 lines, with zero remaining `sorry` statements.
+
+---
+
+## References
+
+1. Shannon, C.E. "A Mathematical Theory of Communication." *Bell System Technical Journal* 27 (1948): 379–423.
+
+2. Blackwell, D. "Equivalent Comparisons of Experiments." *Annals of Mathematical Statistics* 24 (1953): 265–272.
+
+3. Cover, T.M. and Thomas, J.A. *Elements of Information Theory*. Wiley, 2006.
+
+4. Mac Lane, S. *Categories for the Working Mathematician*. Springer, 1971.

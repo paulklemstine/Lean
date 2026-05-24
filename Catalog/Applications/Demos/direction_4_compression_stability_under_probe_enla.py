@@ -1,461 +1,445 @@
 #!/usr/bin/env python3
 """
-Applications of Compression Stability Theory
+applications.py — Real-World Applications of Compression Stability Theory
 
-This module demonstrates real-world applications of the probe enlargement
-monotonicity and rigidity theorems across several domains:
+Demonstrates how the categorical data processing inequality and
+measurement rigidity theorem apply to concrete domains:
 
-1. Sensor array design (signal processing)
-2. Feature selection (machine learning)
-3. Experimental design (statistics)
-4. Formula refinement (finite model theory)
-
-Each application constructs a concrete finite presheaf model and uses
-the measurement invariant machinery to analyze observational complexity.
+1. Sensor placement optimization
+2. Feature selection in machine learning
+3. Statistical sufficient statistics
+4. Signal sampling resolution
 """
 
-from typing import Any, Callable, Dict, List, Set, Tuple
+from algorithms import (
+    FinitePresheaf,
+    compute_measurement_invariant,
+    compute_partition,
+    check_no_new_separation,
+    verify_compression_stability,
+)
 from itertools import combinations
-from collections import defaultdict
 
 
-# =============================================================================
-# Shared infrastructure
-# =============================================================================
+# ─────────────────────────────────────────────────────────────────────────────
+# Application 1: Sensor Placement Optimization
+# ─────────────────────────────────────────────────────────────────────────────
 
-class FinitePresheaf:
-    """A presheaf on a finite discrete category."""
+def sensor_placement_demo():
+    """Model a sensor network as a presheaf and optimize sensor placement.
 
-    def __init__(self, objects: List[str], fibers: Dict[str, List[Any]],
-                 restriction: Dict[Tuple[str, str], Callable]):
-        self.objects = objects
-        self.fibers = fibers
-        self.restriction = restriction
+    Scenario: A factory floor has 3 zones (objects). Each zone has several
+    possible states (presheaf elements). Sensors placed in a zone can
+    detect states in other zones via signal propagation (restriction maps).
 
-    def restrict(self, y: str, z: str, x: Any) -> Any:
-        return self.restriction[(y, z)](x)
-
-
-def probe_signature(F: FinitePresheaf, P: Set[str], y: str, x: Any) -> Tuple:
-    return tuple(F.restrict(y, z, x) for z in sorted(P))
-
-
-def measurement_invariant(F: FinitePresheaf, P: Set[str]) -> int:
-    total = 0
-    for y in F.objects:
-        sigs = set(probe_signature(F, P, y, x) for x in F.fibers[y])
-        total += len(sigs)
-    return total
-
-
-def no_new_separation(F: FinitePresheaf, P: Set[str], Pp: Set[str]) -> bool:
-    for y in F.objects:
-        elems = F.fibers[y]
-        for i in range(len(elems)):
-            for j in range(i + 1, len(elems)):
-                sig_Pp_i = probe_signature(F, Pp, y, elems[i])
-                sig_Pp_j = probe_signature(F, Pp, y, elems[j])
-                sig_P_i = probe_signature(F, P, y, elems[i])
-                sig_P_j = probe_signature(F, P, y, elems[j])
-                if sig_Pp_i != sig_Pp_j and sig_P_i == sig_P_j:
-                    return False
-    return True
-
-
-# =============================================================================
-# Application 1: Sensor Array Design
-# =============================================================================
-
-def app_sensor_array():
-    """Model a sensor array monitoring a physical system.
-
-    Objects represent spatial locations. Fibers represent possible states
-    at each location. Restriction maps model how a sensor at one location
-    can partially observe the state at another.
-
-    Scenario: A factory floor with 4 zones, each with a set of possible
-    machine states. Sensors at each zone can detect states at other zones
-    with varying resolution (e.g., noise, distance).
+    Question: What is the minimum number of sensors needed to distinguish
+    all possible states? When does adding a sensor help vs. being redundant?
     """
     print("=" * 70)
-    print("APPLICATION 1: Sensor Array Design")
+    print("APPLICATION 1: Sensor Placement Optimization")
     print("=" * 70)
+    print()
+    print("Scenario: Factory floor with 3 zones, each with multiple states.")
+    print("Sensors in one zone detect states in others via signal propagation.")
+    print()
 
-    zones = ['Z1', 'Z2', 'Z3', 'Z4']
-    # Each zone has 4 possible states
-    states = {
-        'Z1': ['idle', 'running', 'warning', 'critical'],
-        'Z2': ['idle', 'running', 'warning', 'critical'],
-        'Z3': ['idle', 'running', 'warning', 'critical'],
-        'Z4': ['idle', 'running', 'warning', 'critical'],
-    }
+    presheaf = FinitePresheaf(
+        objects=['zone1', 'zone2', 'zone3'],
+        fibers={
+            'zone1': ['normal', 'warning', 'critical', 'shutdown'],
+            'zone2': ['idle', 'running', 'overload'],
+            'zone3': ['cold', 'warm', 'hot'],
+        },
+        restrictions={
+            ('zone1', 'zone1'): {s: s for s in ['normal', 'warning', 'critical', 'shutdown']},
+            ('zone1', 'zone2'): {'normal': 'idle', 'warning': 'running',
+                                  'critical': 'overload', 'shutdown': 'idle'},
+            ('zone1', 'zone3'): {'normal': 'cold', 'warning': 'warm',
+                                  'critical': 'hot', 'shutdown': 'cold'},
+            ('zone2', 'zone1'): {'idle': 'normal', 'running': 'warning', 'overload': 'critical'},
+            ('zone2', 'zone2'): {s: s for s in ['idle', 'running', 'overload']},
+            ('zone2', 'zone3'): {'idle': 'cold', 'running': 'warm', 'overload': 'hot'},
+            ('zone3', 'zone1'): {'cold': 'normal', 'warm': 'warning', 'hot': 'critical'},
+            ('zone3', 'zone2'): {'cold': 'idle', 'warm': 'running', 'hot': 'overload'},
+            ('zone3', 'zone3'): {s: s for s in ['cold', 'warm', 'hot']},
+        }
+    )
 
-    # Sensors detect: same zone = full resolution
-    # Adjacent zones = partial (merge warning/critical)
-    # Distant zones = coarse (merge running/warning/critical into "active")
-    def make_sensor_map(from_zone: str, to_zone: str):
-        dist = abs(int(from_zone[1]) - int(to_zone[1]))
-        if dist == 0:
-            return lambda x: x  # full resolution
-        elif dist == 1:
-            # merge warning and critical
-            return lambda x: 'alarm' if x in ('warning', 'critical') else x
-        else:
-            # merge everything except idle
-            return lambda x: 'idle' if x == 'idle' else 'active'
+    zones = presheaf.objects
+    print("Analysis of sensor placement strategies:")
+    print()
 
-    restriction = {}
-    for z1 in zones:
-        for z2 in zones:
-            restriction[(z1, z2)] = make_sensor_map(z1, z2)
+    best_single = None
+    best_single_mi = 0
 
-    F = FinitePresheaf(zones, states, restriction)
-
-    print("\n  Scenario: 4-zone factory, sensors with distance-based resolution")
-    print("  States per zone: idle, running, warning, critical")
-    print("  Sensor resolution: full (same zone), partial (adjacent), coarse (distant)")
-
-    # Evaluate different sensor placements
-    print("\n  Sensor Placement     | Meas. Invariant | Separating?")
-    print("  " + "-" * 55)
-
-    all_placements = []
     for size in range(len(zones) + 1):
         for subset in combinations(zones, size):
-            P = set(subset)
-            inv = measurement_invariant(F, P)
+            s = set(subset)
+            mi = compute_measurement_invariant(presheaf, s)
+            label = sorted(s) if s else '∅'
+
+            # Check if separating
             is_sep = all(
-                len(set(probe_signature(F, P, y, x) for x in F.fibers[y])) == len(F.fibers[y])
-                for y in F.objects
+                len(compute_partition(presheaf, s, y)) == len(presheaf.fibers[y])
+                for y in zones
             )
-            all_placements.append((P, inv, is_sep))
-            print(f"  {str(P):23s}| {inv:15d} | {'YES' if is_sep else 'no'}")
 
-    # Find optimal placement
-    min_sep = min((p for p in all_placements if p[2]), key=lambda p: len(p[0]))
-    print(f"\n  Optimal placement (minimum sensors for full separation): {min_sep[0]}")
-    print(f"  Measurement invariant: {min_sep[1]}")
+            sep_str = " [SEPARATING]" if is_sep else ""
+            print(f"  Sensors at {str(label):>35s}: μ = {mi}{sep_str}")
 
-    # Show redundancy analysis
-    full = set(zones)
-    for z in zones:
-        reduced = full - {z}
-        nns = no_new_separation(F, reduced, full)
-        print(f"  Removing {z} from full array: redundant = {nns}")
+            if len(s) == 1 and mi > best_single_mi:
+                best_single = s
+                best_single_mi = mi
+
+    print()
+    print(f"Best single sensor: {best_single} (μ = {best_single_mi})")
+
+    # Analyze redundancy
+    print()
+    print("Redundancy analysis:")
+    for s1 in combinations(zones, 1):
+        s1 = set(s1)
+        for z in zones:
+            if z not in s1:
+                s2 = s1 | {z}
+                is_redundant, new_seps = check_no_new_separation(presheaf, s1, s2)
+                if is_redundant:
+                    print(f"  Adding {z} to {sorted(s1)} is REDUNDANT")
+                else:
+                    print(f"  Adding {z} to {sorted(s1)} creates {len(new_seps)} new separations")
+    print()
 
 
-# =============================================================================
-# Application 2: Feature Selection in ML
-# =============================================================================
+# ─────────────────────────────────────────────────────────────────────────────
+# Application 2: Feature Selection in Machine Learning
+# ─────────────────────────────────────────────────────────────────────────────
 
-def app_feature_selection():
-    """Model feature selection as probe family comparison.
+def feature_selection_demo():
+    """Model feature selection as probe family selection.
 
-    Objects represent data classes. Fibers represent data points in each class.
-    Features (probes) project data points to feature values.
+    Each "object" is a data point class, each "element" is a data instance,
+    and each "probe" is a feature. The measurement invariant measures
+    discriminative power.
     """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Feature Selection")
     print("=" * 70)
+    print("APPLICATION 2: Feature Selection for Classification")
+    print("=" * 70)
+    print()
+    print("Model: Objects = sample groups, Elements = instances,")
+    print("       Probes = features, Signatures = feature vectors.")
+    print()
 
-    classes = ['cat', 'dog', 'bird']
-    # Each class has several exemplars characterized by features
-    data = {
-        'cat':  [(2, 4, 1, 0), (3, 4, 1, 0), (2, 4, 2, 0)],  # (size, legs, tail, wings)
-        'dog':  [(3, 4, 1, 0), (4, 4, 1, 0), (5, 4, 1, 0)],
-        'bird': [(1, 2, 0, 1), (2, 2, 0, 1)],
-    }
+    # 3 classes, each with several instances
+    # Features are measurements that map instances to discrete values
+    presheaf = FinitePresheaf(
+        objects=['cat', 'dog', 'bird'],
+        fibers={
+            'cat': ['persian', 'siamese', 'tabby'],
+            'dog': ['labrador', 'poodle'],
+            'bird': ['eagle', 'sparrow', 'penguin'],
+        },
+        restrictions={
+            # Feature "size": maps each animal to a size category
+            ('cat', 'cat'): {'persian': 'persian', 'siamese': 'siamese', 'tabby': 'tabby'},
+            ('cat', 'dog'): {'persian': 'poodle', 'siamese': 'poodle', 'tabby': 'labrador'},
+            ('cat', 'bird'): {'persian': 'sparrow', 'siamese': 'sparrow', 'tabby': 'sparrow'},
+            ('dog', 'cat'): {'labrador': 'tabby', 'poodle': 'siamese'},
+            ('dog', 'dog'): {'labrador': 'labrador', 'poodle': 'poodle'},
+            ('dog', 'bird'): {'labrador': 'eagle', 'poodle': 'sparrow'},
+            ('bird', 'cat'): {'eagle': 'persian', 'sparrow': 'siamese', 'penguin': 'tabby'},
+            ('bird', 'dog'): {'eagle': 'labrador', 'sparrow': 'poodle', 'penguin': 'labrador'},
+            ('bird', 'bird'): {'eagle': 'eagle', 'sparrow': 'sparrow', 'penguin': 'penguin'},
+        }
+    )
 
-    features = ['size', 'legs', 'tail', 'wings']
+    classes = presheaf.objects
+    features = classes  # In this model, probes correspond to feature groups
 
-    # Restriction maps: project to feature value
-    restriction = {}
-    for cls in classes:
-        for i, feat in enumerate(features):
-            restriction[(cls, feat)] = (lambda idx: lambda x: x[idx])(i)
-        for cls2 in classes:
-            restriction[(cls, cls2)] = lambda x: x  # identity between classes
-
-    # Use features as probe objects
-    all_objects = features
-    fibers = data
-
-    F = FinitePresheaf(classes, fibers, restriction)
-
-    print("\n  Data: animals with features (size, legs, tail, wings)")
-    for cls in classes:
-        print(f"    {cls}: {data[cls]}")
-
-    print(f"\n  Features: {features}")
-    print("\n  Feature Set        | Meas. Invariant | Classes distinguished")
-    print("  " + "-" * 60)
-
+    print("Feature discriminative power (measurement invariant):")
     for size in range(len(features) + 1):
         for subset in combinations(features, size):
-            P = set(subset)
-            inv = measurement_invariant(F, P)
-            # Count how many elements are uniquely identified
-            n_distinct = sum(
-                len(set(probe_signature(F, P, y, x) for x in F.fibers[y]))
-                for y in classes
-            )
-            print(f"  {str(P):21s}| {inv:15d} | {n_distinct} / {sum(len(v) for v in data.values())}")
+            s = set(subset)
+            mi = compute_measurement_invariant(presheaf, s)
+            total = presheaf.total_card()
+            pct = (mi / total * 100) if total > 0 else 0
+            label = sorted(s) if s else 'none'
+            print(f"  Features {str(label):>25s}: μ = {mi}/{total} ({pct:.0f}% resolution)")
+    print()
 
-    # Find minimal feature set that separates all exemplars
-    for size in range(len(features) + 1):
-        for subset in combinations(features, size):
-            P = set(subset)
+    # Show partitions for each feature set at each class
+    print("Partition refinement by class:")
+    for y in classes:
+        print(f"  Class '{y}': instances = {presheaf.fibers[y]}")
+        for size in range(len(features) + 1):
+            for subset in combinations(features, size):
+                s = set(subset)
+                part = compute_partition(presheaf, s, y)
+                label = sorted(s) if s else 'none'
+                print(f"    Features {str(label):>20s}: {part}")
+        print()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Application 3: Statistical Sufficient Statistics
+# ─────────────────────────────────────────────────────────────────────────────
+
+def sufficient_statistics_demo():
+    """Demonstrate the connection to sufficient statistics.
+
+    If T(X) is a sufficient statistic for parameter θ, then the probe
+    family consisting only of T has the same measurement invariant as
+    the full data X. This is exactly our redundancy theorem.
+    """
+    print("=" * 70)
+    print("APPLICATION 3: Sufficient Statistics Detection")
+    print("=" * 70)
+    print()
+    print("Testing which statistics are sufficient (i.e., redundant over the full data).")
+    print()
+
+    # Simple model: 2 parameter values, data takes several possible values
+    presheaf = FinitePresheaf(
+        objects=['theta0', 'theta1'],
+        fibers={
+            'theta0': ['d1', 'd2', 'd3', 'd4'],
+            'theta1': ['d1', 'd2', 'd3', 'd4'],
+        },
+        restrictions={
+            ('theta0', 'theta0'): {'d1': 'd1', 'd2': 'd2', 'd3': 'd3', 'd4': 'd4'},
+            ('theta0', 'theta1'): {'d1': 'd1', 'd2': 'd2', 'd3': 'd3', 'd4': 'd4'},
+            ('theta1', 'theta0'): {'d1': 'd1', 'd2': 'd1', 'd3': 'd3', 'd4': 'd3'},
+            ('theta1', 'theta1'): {'d1': 'd1', 'd2': 'd2', 'd3': 'd3', 'd4': 'd4'},
+        }
+    )
+
+    # theta0 observes everything; theta1 collapses d1≡d2 and d3≡d4
+    full_probes = {'theta0', 'theta1'}
+    single_theta0 = {'theta0'}
+    single_theta1 = {'theta1'}
+
+    mi_full = compute_measurement_invariant(presheaf, full_probes)
+    mi_t0 = compute_measurement_invariant(presheaf, single_theta0)
+    mi_t1 = compute_measurement_invariant(presheaf, single_theta1)
+
+    print(f"  Full observation μ({{θ₀, θ₁}}) = {mi_full}")
+    print(f"  Statistic θ₀ only: μ({{θ₀}}) = {mi_t0}", end="")
+    r0, _ = check_no_new_separation(presheaf, single_theta0, full_probes)
+    print(f"  {'→ SUFFICIENT (redundant)' if r0 else '→ NOT sufficient'}")
+
+    print(f"  Statistic θ₁ only: μ({{θ₁}}) = {mi_t1}", end="")
+    r1, _ = check_no_new_separation(presheaf, single_theta1, full_probes)
+    print(f"  {'→ SUFFICIENT (redundant)' if r1 else '→ NOT sufficient'}")
+
+    print()
+    print("Partition structure:")
+    for y in presheaf.objects:
+        print(f"  Parameter {y}:")
+        for probes, name in [(full_probes, "full"), (single_theta0, "θ₀"), (single_theta1, "θ₁")]:
+            part = compute_partition(presheaf, probes, y)
+            print(f"    {name:>6s}: {part}")
+    print()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Application 4: Signal Sampling Resolution
+# ─────────────────────────────────────────────────────────────────────────────
+
+def sampling_resolution_demo():
+    """Demonstrate the connection to signal sampling.
+
+    More sample points (probes) give finer signal resolution.
+    Redundant sample points are those that don't improve resolution.
+    """
+    print("=" * 70)
+    print("APPLICATION 4: Signal Sampling Resolution Analysis")
+    print("=" * 70)
+    print()
+    print("Model: Discretized signal with multiple sample points.")
+    print("Each sample point observes the signal through a measurement map.")
+    print()
+
+    # Signal takes values at 4 time points, observed through sampling
+    presheaf = FinitePresheaf(
+        objects=['t0', 't1', 't2', 't3'],
+        fibers={
+            't0': ['lo', 'mid', 'hi'],
+            't1': ['lo', 'mid', 'hi'],
+            't2': ['lo', 'mid', 'hi'],
+            't3': ['lo', 'mid', 'hi'],
+        },
+        restrictions={
+            (t1, t2): ({'lo': 'lo', 'mid': 'mid', 'hi': 'hi'} if t1 == t2
+                       else {'lo': 'lo', 'mid': 'lo', 'hi': 'mid'})
+            for t1 in ['t0', 't1', 't2', 't3']
+            for t2 in ['t0', 't1', 't2', 't3']
+        }
+    )
+
+    sample_points = presheaf.objects
+    print("Sampling strategies and resolution:")
+    for size in range(len(sample_points) + 1):
+        for subset in combinations(sample_points, size):
+            s = set(subset)
+            mi = compute_measurement_invariant(presheaf, s)
+            label = sorted(s) if s else 'none'
+            print(f"  Samples at {str(label):>25s}: resolution = {mi}")
+    print()
+
+    # Find minimal separating sets
+    print("Minimal separating sample sets:")
+    found_min = False
+    for size in range(1, len(sample_points) + 1):
+        for subset in combinations(sample_points, size):
+            s = set(subset)
             is_sep = all(
-                len(set(probe_signature(F, P, y, x) for x in F.fibers[y])) == len(F.fibers[y])
-                for y in classes
+                len(compute_partition(presheaf, s, y)) == len(presheaf.fibers[y])
+                for y in sample_points
             )
             if is_sep:
-                print(f"\n  Minimal separating feature set: {P}")
-                print(f"  These {len(P)} features suffice to uniquely identify all exemplars.")
-                break
-        else:
-            continue
-        break
+                # Check minimality: no proper subset is separating
+                is_minimal = True
+                for elem in s:
+                    smaller = s - {elem}
+                    is_sep_smaller = all(
+                        len(compute_partition(presheaf, smaller, y)) == len(presheaf.fibers[y])
+                        for y in sample_points
+                    )
+                    if is_sep_smaller:
+                        is_minimal = False
+                        break
+                if is_minimal:
+                    print(f"  {sorted(s)} (size {len(s)})")
+                    found_min = True
+        if found_min:
+            break
+    print()
 
 
-# =============================================================================
-# Application 3: Experimental Design
-# =============================================================================
-
-def app_experimental_design():
-    """Model statistical experiment design as probe family selection.
-
-    Each "test" is a probe that maps subjects to outcomes.
-    The question: how many tests are needed to distinguish all subjects?
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Experimental Design (Diagnostic Tests)")
-    print("=" * 70)
-
-    # 5 diseases, each with a set of patients (represented by symptom profiles)
-    diseases = ['flu', 'cold', 'allergy', 'covid', 'strep']
-    patients = {
-        'flu':     ['p1', 'p2', 'p3'],
-        'cold':    ['p4', 'p5'],
-        'allergy': ['p6', 'p7', 'p8'],
-        'covid':   ['p9', 'p10'],
-        'strep':   ['p11', 'p12'],
-    }
-
-    # Available tests and their outcomes per patient
-    tests = ['blood', 'swab', 'temp', 'xray']
-    test_results = {
-        'blood': {'p1': 'high_wbc', 'p2': 'high_wbc', 'p3': 'normal',
-                  'p4': 'normal', 'p5': 'normal',
-                  'p6': 'high_ige', 'p7': 'high_ige', 'p8': 'normal',
-                  'p9': 'high_wbc', 'p10': 'high_wbc',
-                  'p11': 'high_wbc', 'p12': 'normal'},
-        'swab':  {'p1': 'neg', 'p2': 'neg', 'p3': 'neg',
-                  'p4': 'neg', 'p5': 'neg',
-                  'p6': 'neg', 'p7': 'neg', 'p8': 'neg',
-                  'p9': 'pos_covid', 'p10': 'pos_covid',
-                  'p11': 'pos_strep', 'p12': 'pos_strep'},
-        'temp':  {'p1': 'high', 'p2': 'high', 'p3': 'moderate',
-                  'p4': 'normal', 'p5': 'low_grade',
-                  'p6': 'normal', 'p7': 'normal', 'p8': 'normal',
-                  'p9': 'high', 'p10': 'moderate',
-                  'p11': 'high', 'p12': 'moderate'},
-        'xray':  {'p1': 'clear', 'p2': 'clear', 'p3': 'clear',
-                  'p4': 'clear', 'p5': 'clear',
-                  'p6': 'clear', 'p7': 'clear', 'p8': 'clear',
-                  'p9': 'hazy', 'p10': 'clear',
-                  'p11': 'clear', 'p12': 'clear'},
-    }
-
-    restriction = {}
-    for disease in diseases:
-        for test in tests:
-            restriction[(disease, test)] = (lambda t: lambda p: test_results[t][p])(test)
-        for d2 in diseases:
-            restriction[(disease, d2)] = lambda p: p
-
-    F = FinitePresheaf(diseases, patients, restriction)
-
-    print("\n  Scenario: 12 patients with 5 possible diseases")
-    print(f"  Available tests: {tests}")
-
-    print("\n  Test Battery          | Meas. Invariant | Patients distinguished")
-    print("  " + "-" * 65)
-
-    for size in range(len(tests) + 1):
-        for subset in combinations(tests, size):
-            P = set(subset)
-            inv = measurement_invariant(F, P)
-            n_distinct = sum(
-                len(set(probe_signature(F, P, y, x) for x in F.fibers[y]))
-                for y in diseases
-            )
-            total = sum(len(patients[d]) for d in diseases)
-            print(f"  {str(P):24s}| {inv:15d} | {n_distinct} / {total}")
-
-    # Redundancy analysis
-    full_battery = set(tests)
-    print(f"\n  Redundancy analysis for full battery {full_battery}:")
-    for test in tests:
-        reduced = full_battery - {test}
-        inv_full = measurement_invariant(F, full_battery)
-        inv_reduced = measurement_invariant(F, reduced)
-        is_redundant = (inv_full == inv_reduced)
-        print(f"    Remove {test:6s}: invariant {inv_reduced:2d} → {inv_full:2d}, "
-              f"redundant = {is_redundant}")
-
-
-# =============================================================================
-# Application 4: Logical Formula Refinement
-# =============================================================================
-
-def app_formula_refinement():
-    """Model logical formula sets as probe families.
-
-    In finite model theory, adding formulas to a language refines
-    the indistinguishability relation on structures. This application
-    models that phenomenon.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: Logical Formula Refinement (Finite Model Theory)")
-    print("=" * 70)
-
-    # Finite structures (small graphs) as "elements"
-    # Formulas as "probes" that evaluate to truth values
-    graph_types = ['empty', 'path', 'cycle', 'star', 'complete']
-    structures = {
-        'empty':    ['E2', 'E3', 'E4'],      # empty on 2,3,4 vertices
-        'path':     ['P2', 'P3', 'P4'],
-        'cycle':    ['C3', 'C4', 'C5'],
-        'star':     ['S3', 'S4', 'S5'],
-        'complete': ['K2', 'K3', 'K4'],
-    }
-
-    # Formulas and their truth values on each structure
-    formulas = ['has_edge', 'connected', 'has_triangle', 'regular', 'has_leaf']
-    formula_eval = {
-        'has_edge':     {'E2': 0, 'E3': 0, 'E4': 0, 'P2': 1, 'P3': 1, 'P4': 1,
-                         'C3': 1, 'C4': 1, 'C5': 1, 'S3': 1, 'S4': 1, 'S5': 1,
-                         'K2': 1, 'K3': 1, 'K4': 1},
-        'connected':    {'E2': 0, 'E3': 0, 'E4': 0, 'P2': 1, 'P3': 1, 'P4': 1,
-                         'C3': 1, 'C4': 1, 'C5': 1, 'S3': 1, 'S4': 1, 'S5': 1,
-                         'K2': 1, 'K3': 1, 'K4': 1},
-        'has_triangle': {'E2': 0, 'E3': 0, 'E4': 0, 'P2': 0, 'P3': 0, 'P4': 0,
-                         'C3': 1, 'C4': 0, 'C5': 0, 'S3': 0, 'S4': 0, 'S5': 0,
-                         'K2': 0, 'K3': 1, 'K4': 1},
-        'regular':      {'E2': 1, 'E3': 1, 'E4': 1, 'P2': 1, 'P3': 0, 'P4': 0,
-                         'C3': 1, 'C4': 1, 'C5': 1, 'S3': 0, 'S4': 0, 'S5': 0,
-                         'K2': 1, 'K3': 1, 'K4': 1},
-        'has_leaf':     {'E2': 0, 'E3': 0, 'E4': 0, 'P2': 1, 'P3': 1, 'P4': 1,
-                         'C3': 0, 'C4': 0, 'C5': 0, 'S3': 1, 'S4': 1, 'S5': 1,
-                         'K2': 0, 'K3': 0, 'K4': 0},
-    }
-
-    restriction = {}
-    for gt in graph_types:
-        for f in formulas:
-            restriction[(gt, f)] = (lambda ff: lambda s: formula_eval[ff][s])(f)
-        for gt2 in graph_types:
-            restriction[(gt, gt2)] = lambda s: s
-
-    F = FinitePresheaf(graph_types, structures, restriction)
-
-    print("\n  Structures: small graphs (empty, paths, cycles, stars, complete)")
-    print(f"  Formulas: {formulas}")
-
-    print("\n  Formula Set               | Inv | Types distinguished")
-    print("  " + "-" * 55)
-
-    for size in range(len(formulas) + 1):
-        for subset in combinations(formulas, size):
-            P = set(subset)
-            inv = measurement_invariant(F, P)
-            n_types = sum(
-                len(set(probe_signature(F, P, y, x) for x in F.fibers[y]))
-                for y in graph_types
-            )
-            total = sum(len(v) for v in structures.values())
-            if size <= 2 or size == len(formulas):
-                print(f"  {str(P):28s}| {inv:3d} | {n_types} / {total}")
-
-    print("\n  (Showing only formulas sets of size 0-2 and full set)")
-    print("  Monotonicity: adding formulas never decreases the invariant.")
-
-
-# =============================================================================
+# ─────────────────────────────────────────────────────────────────────────────
 # Main
-# =============================================================================
+# ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    print()
     print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║    Applications of Compression Stability Theory                    ║")
+    print("║   Applications of Compression Stability Theory                      ║")
     print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
 
-    app_sensor_array()
-    app_feature_selection()
-    app_experimental_design()
-    app_formula_refinement()
+    sensor_placement_demo()
+    feature_selection_demo()
+    sufficient_statistics_demo()
+    sampling_resolution_demo()
 
-    print("\n" + "=" * 70)
+    print("=" * 70)
     print("All applications demonstrated successfully.")
     print("=" * 70)
 
 
 #!/usr/bin/env python3
+"""Build PACKAGE.json from the individual deliverable files."""
+import json
+
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
+lean_code = read_file('Pythagorean/ProbeComplexity/CompressionStability.lean')
+
+package = {
+    "title": "Compression Stability Under Probe Enlargement: A Categorical Data Processing Inequality",
+    "domain": "Category Theory / Information Theory / Probe Complexity",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Compression Stability Interactive Demo",
+            "code": demo_code
+        },
+        {
+            "name": "Real-World Applications",
+            "code": applications_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Measurement Invariant Computation",
+            "pseudocode": (
+                "Algorithm ComputeMeasurementInvariant(Ob, F, r, P):\n"
+                "    total ← 0\n"
+                "    for each Y ∈ Ob:\n"
+                "        signatures ← {}\n"
+                "        for each x ∈ F(Y):\n"
+                "            sig ← (r(Y, Z)(x) for Z ∈ P)\n"
+                "            signatures.add(sig)\n"
+                "        total ← total + |signatures|\n"
+                "    return total\n"
+                "\n"
+                "Complexity: O(Σ_Y |F(Y)| · |P|) time, O(max_Y |F(Y)|) space."
+            ),
+            "code": algorithms_code
+        }
+    ],
+    "lean_proofs": lean_code
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print("PACKAGE.json built successfully.")
+
+
+#!/usr/bin/env python3
 """
-Compression Stability Under Probe Enlargement — Interactive Demo
+demo.py — Interactive Demonstration of Compression Stability Under Probe Enlargement
 
-This script demonstrates the core theorems of observational compression
-stability on finite discrete categories. It implements the measurement
-invariant, probe signatures, and verifies the monotonicity/rigidity
-package computationally on small examples.
-
-Usage:
-    python demo.py
+Demonstrates the categorical data processing inequality: enlarging a probe family
+can only increase the measurement invariant, with equality iff no new separations
+are created.
 """
 
-from itertools import combinations, product
+from itertools import product, combinations
 from collections import defaultdict
-from typing import Dict, List, Set, Tuple, Any, Callable
+import json
 
 
-# =============================================================================
-# Core Definitions
-# =============================================================================
+# ─────────────────────────────────────────────────────────────────────────────
+# Core data structures
+# ─────────────────────────────────────────────────────────────────────────────
 
 class FinitePresheaf:
-    """A presheaf on a finite discrete category.
+    """A presheaf on a discrete finite category is just a family of finite sets
+    with restriction maps r(Y, Z) : F(Y) → F(Z)."""
 
-    Represented as:
-    - objects: list of object names
-    - fibers: dict mapping each object Y to a list of elements of F(Y)
-    - restriction: dict mapping (Y, Z) to a function F(Y) -> F(Z)
-    """
-
-    def __init__(self, objects: List[str], fibers: Dict[str, List[Any]],
-                 restriction: Dict[Tuple[str, str], Callable]):
-        self.objects = objects
+    def __init__(self, fibers: dict, restrictions: dict):
+        """
+        fibers: {object: [elements]}
+        restrictions: {(Y, Z): {elem_of_FY: elem_of_FZ}}
+        """
+        self.objects = sorted(fibers.keys())
         self.fibers = fibers
-        self.restriction = restriction
+        self.restrictions = restrictions
 
-    def restrict(self, y: str, z: str, x: Any) -> Any:
-        """Apply the restriction map r(Y, Z) to element x ∈ F(Y)."""
-        return self.restriction[(y, z)](x)
+    def restrict(self, y, z, x):
+        """Apply restriction map r(y, z) to element x of F(y)."""
+        return self.restrictions[(y, z)][x]
 
 
-def probe_signature(presheaf: FinitePresheaf, probe_family: Set[str],
-                     y: str, x: Any) -> Tuple:
-    """Compute the probe signature of element x ∈ F(Y) with respect to probe family P.
-
-    The signature is the tuple (r(Y, Z)(x) for Z in P), recording how x
-    is "seen" by each probe object.
-    """
+def probe_signature(presheaf, probe_family, y, x):
+    """Compute the probe signature of element x at object y.
+    Returns a tuple of restriction values for each probe object."""
     return tuple(presheaf.restrict(y, z, x) for z in sorted(probe_family))
 
 
-def measurement_space_image_card(presheaf: FinitePresheaf,
-                                  probe_family: Set[str], y: str) -> int:
-    """Count the number of distinct probe signatures at object Y."""
+def measurement_space_image_card(presheaf, probe_family, y):
+    """Count distinct probe signatures at object y."""
     sigs = set()
     for x in presheaf.fibers[y]:
         sig = probe_signature(presheaf, probe_family, y, x)
@@ -463,443 +447,411 @@ def measurement_space_image_card(presheaf: FinitePresheaf,
     return len(sigs)
 
 
-def measurement_invariant(presheaf: FinitePresheaf,
-                           probe_family: Set[str]) -> int:
-    """Compute the measurement invariant: sum of distinct signatures over all objects."""
+def measurement_invariant(presheaf, probe_family):
+    """Sum of distinct signature counts over all objects."""
     return sum(measurement_space_image_card(presheaf, probe_family, y)
                for y in presheaf.objects)
 
 
-def separates_elements(presheaf: FinitePresheaf, probe_family: Set[str],
-                        y: str, x1: Any, x2: Any) -> bool:
-    """Check whether probe family P separates elements x1, x2 at object Y."""
-    return probe_signature(presheaf, probe_family, y, x1) != \
+def obs_eq(presheaf, probe_family, y, x1, x2):
+    """Check if x1 and x2 are observationally equivalent under probe_family at y."""
+    return probe_signature(presheaf, probe_family, y, x1) == \
            probe_signature(presheaf, probe_family, y, x2)
 
 
-def no_new_separation(presheaf: FinitePresheaf, P: Set[str],
-                       P_prime: Set[str]) -> bool:
-    """Check whether P' introduces no new separations relative to P.
-
-    Returns True iff every pair separated by P' is already separated by P.
-    """
+def no_new_separation(presheaf, p_small, p_large):
+    """Check if p_large introduces no new separations beyond p_small."""
     for y in presheaf.objects:
-        elems = presheaf.fibers[y]
-        for i in range(len(elems)):
-            for j in range(i + 1, len(elems)):
-                x1, x2 = elems[i], elems[j]
-                if separates_elements(presheaf, P_prime, y, x1, x2) and \
-                   not separates_elements(presheaf, P, y, x1, x2):
-                    return False
+        for x1, x2 in combinations(presheaf.fibers[y], 2):
+            # If p_large separates but p_small doesn't, that's a new separation
+            if not obs_eq(presheaf, p_large, y, x1, x2) and \
+               obs_eq(presheaf, p_small, y, x1, x2):
+                return False
     return True
 
 
-def has_new_separation(presheaf: FinitePresheaf, P: Set[str],
-                        P_prime: Set[str]) -> bool:
-    """Check whether P' introduces at least one new separation."""
-    return not no_new_separation(presheaf, P, P_prime)
-
-
-def restriction_map(presheaf: FinitePresheaf, P: Set[str], P_prime: Set[str],
-                     y: str) -> Dict[Tuple, Tuple]:
-    """Build the restriction map from P'-signatures to P-signatures at object Y.
-
-    For each realized P'-signature, compute the corresponding P-signature.
-    """
-    result = {}
-    for x in presheaf.fibers[y]:
-        sig_prime = probe_signature(presheaf, P_prime, y, x)
-        sig = probe_signature(presheaf, P, y, x)
-        result[sig_prime] = sig
-    return result
-
-
-def algorithm_compare(presheaf: FinitePresheaf, P: Set[str],
-                       P_prime: Set[str]) -> Dict:
-    """Complete comparison algorithm for nested probe families.
-
-    Returns a dictionary with:
-    - invariant_P: measurement invariant of P
-    - invariant_P': measurement invariant of P'
-    - is_monotone: whether invariant_P ≤ invariant_P'
-    - is_equal: whether invariant_P = invariant_P'
-    - no_new_sep: whether P' introduces no new separations
-    - restriction_maps: the restriction map at each object
-    - signatures_P: realized signatures under P at each object
-    - signatures_P': realized signatures under P' at each object
-    """
-    inv_P = measurement_invariant(presheaf, P)
-    inv_P_prime = measurement_invariant(presheaf, P_prime)
-
-    rest_maps = {}
-    sigs_P = {}
-    sigs_P_prime = {}
+def find_new_separations(presheaf, p_small, p_large):
+    """Find all pairs newly separated by p_large but not by p_small."""
+    new_seps = []
     for y in presheaf.objects:
-        rest_maps[y] = restriction_map(presheaf, P, P_prime, y)
-        sigs_P[y] = set(probe_signature(presheaf, P, y, x)
-                        for x in presheaf.fibers[y])
-        sigs_P_prime[y] = set(probe_signature(presheaf, P_prime, y, x)
-                              for x in presheaf.fibers[y])
-
-    return {
-        'invariant_P': inv_P,
-        'invariant_P_prime': inv_P_prime,
-        'is_monotone': inv_P <= inv_P_prime,
-        'is_equal': inv_P == inv_P_prime,
-        'no_new_sep': no_new_separation(presheaf, P, P_prime),
-        'restriction_maps': rest_maps,
-        'signatures_P': sigs_P,
-        'signatures_P_prime': sigs_P_prime,
-    }
+        for x1, x2 in combinations(presheaf.fibers[y], 2):
+            if not obs_eq(presheaf, p_large, y, x1, x2) and \
+               obs_eq(presheaf, p_small, y, x1, x2):
+                new_seps.append((y, x1, x2))
+    return new_seps
 
 
-# =============================================================================
-# Example Presheaves
-# =============================================================================
+# ─────────────────────────────────────────────────────────────────────────────
+# Example presheaves
+# ─────────────────────────────────────────────────────────────────────────────
 
-def example_color_presheaf():
-    """A presheaf modeling colored points with projection-based restrictions.
-
-    Objects: {A, B, C}
-    F(A) = {a1, a2, a3}, F(B) = {b1, b2}, F(C) = {c1, c2, c3, c4}
-    Restriction maps project to "color classes."
-    """
-    objects = ['A', 'B', 'C']
+def make_color_presheaf():
+    """A presheaf over {A, B, C} where F(A)={r,g,b}, F(B)={0,1}, F(C)={x,y,z}.
+    Restrictions project in various ways."""
     fibers = {
-        'A': ['a1', 'a2', 'a3'],
-        'B': ['b1', 'b2'],
-        'C': ['c1', 'c2', 'c3', 'c4'],
+        'A': ['r', 'g', 'b'],
+        'B': ['0', '1'],
+        'C': ['x', 'y', 'z'],
     }
-    # Define restriction maps based on "color" equivalence classes
-    # r(Y, Z): elements of F(Y) map to elements of F(Z)
-    color_map = {
-        ('A', 'A'): {'a1': 'a1', 'a2': 'a2', 'a3': 'a3'},
-        ('A', 'B'): {'a1': 'b1', 'a2': 'b1', 'a3': 'b2'},
-        ('A', 'C'): {'a1': 'c1', 'a2': 'c2', 'a3': 'c3'},
+    restrictions = {
+        ('A', 'A'): {'r': 'r', 'g': 'g', 'b': 'b'},
+        ('A', 'B'): {'r': '0', 'g': '1', 'b': '0'},
+        ('A', 'C'): {'r': 'x', 'g': 'y', 'b': 'z'},
+        ('B', 'A'): {'0': 'r', '1': 'g'},
+        ('B', 'B'): {'0': '0', '1': '1'},
+        ('B', 'C'): {'0': 'x', '1': 'y'},
+        ('C', 'A'): {'x': 'r', 'y': 'g', 'z': 'b'},
+        ('C', 'B'): {'x': '0', 'y': '1', 'z': '0'},
+        ('C', 'C'): {'x': 'x', 'y': 'y', 'z': 'z'},
+    }
+    return FinitePresheaf(fibers, restrictions)
+
+
+def make_collapsing_presheaf():
+    """A presheaf where some restrictions collapse elements, creating
+    interesting separation behavior."""
+    fibers = {
+        'A': ['a1', 'a2', 'a3', 'a4'],
+        'B': ['b1', 'b2'],
+        'C': ['c1', 'c2', 'c3'],
+    }
+    restrictions = {
+        ('A', 'A'): {'a1': 'a1', 'a2': 'a2', 'a3': 'a3', 'a4': 'a4'},
+        ('A', 'B'): {'a1': 'b1', 'a2': 'b1', 'a3': 'b2', 'a4': 'b2'},
+        ('A', 'C'): {'a1': 'c1', 'a2': 'c2', 'a3': 'c1', 'a4': 'c3'},
         ('B', 'A'): {'b1': 'a1', 'b2': 'a3'},
         ('B', 'B'): {'b1': 'b1', 'b2': 'b2'},
-        ('B', 'C'): {'b1': 'c1', 'b2': 'c3'},
-        ('C', 'A'): {'c1': 'a1', 'c2': 'a2', 'c3': 'a3', 'c4': 'a3'},
-        ('C', 'B'): {'c1': 'b1', 'c2': 'b1', 'c3': 'b2', 'c4': 'b2'},
-        ('C', 'C'): {'c1': 'c1', 'c2': 'c2', 'c3': 'c3', 'c4': 'c4'},
+        ('B', 'C'): {'b1': 'c1', 'b2': 'c1'},
+        ('C', 'A'): {'c1': 'a1', 'c2': 'a2', 'c3': 'a4'},
+        ('C', 'B'): {'c1': 'b1', 'c2': 'b1', 'c3': 'b2'},
+        ('C', 'C'): {'c1': 'c1', 'c2': 'c2', 'c3': 'c3'},
     }
-    restriction = {k: (lambda m: lambda x: m[x])(v) for k, v in color_map.items()}
-    return FinitePresheaf(objects, fibers, restriction)
+    return FinitePresheaf(fibers, restrictions)
 
 
-def example_binary_presheaf(n: int):
-    """A presheaf on n objects where F(i) = {0, 1}^n (binary strings).
-
-    Restriction r(i, j) is the projection to the j-th coordinate.
-    This is the canonical "full measurement" presheaf.
-    """
-    objects = [str(i) for i in range(n)]
-    fibers = {str(i): list(range(2**n)) for i in range(n)}
-
-    def restrict(y, z, x):
-        """Project binary representation of x to bit z."""
-        return (x >> int(z)) & 1
-
-    restriction = {(str(i), str(j)): (lambda j: lambda x: (x >> j) & 1)(int(j))
-                   for i in range(n) for j in range(n)}
-    return FinitePresheaf(objects, fibers, restriction)
-
-
-def example_simple_presheaf():
-    """Simplest nontrivial example: 2 objects, small fibers.
-
-    Objects: {0, 1}
-    F(0) = {a, b, c}, F(1) = {x, y}
-    """
-    objects = ['0', '1']
-    fibers = {
-        '0': ['a', 'b', 'c'],
-        '1': ['x', 'y'],
-    }
-    maps = {
-        ('0', '0'): {'a': 'a', 'b': 'b', 'c': 'c'},
-        ('0', '1'): {'a': 'x', 'b': 'x', 'c': 'y'},  # a,b merge, c separate
-        ('1', '0'): {'x': 'a', 'y': 'b'},
-        ('1', '1'): {'x': 'x', 'y': 'y'},
-    }
-    restriction = {k: (lambda m: lambda x: m[x])(v) for k, v in maps.items()}
-    return FinitePresheaf(objects, fibers, restriction)
-
-
-# =============================================================================
-# Demonstrations
-# =============================================================================
+# ─────────────────────────────────────────────────────────────────────────────
+# Demo 1: Monotonicity verification
+# ─────────────────────────────────────────────────────────────────────────────
 
 def demo_monotonicity():
-    """Demonstrate monotonicity of the measurement invariant."""
+    """Verify monotonicity for all nested probe families on a small presheaf."""
     print("=" * 70)
-    print("DEMO 1: Monotonicity Under Probe Enlargement")
+    print("DEMO 1: Monotonicity of Measurement Invariant")
+    print("(Categorical Data Processing Inequality)")
     print("=" * 70)
+    print()
 
-    F = example_simple_presheaf()
-    print(f"\nPresheaf on objects {F.objects}")
-    print(f"  F(0) = {F.fibers['0']}")
-    print(f"  F(1) = {F.fibers['1']}")
-    print(f"  r(0,1): a->x, b->x, c->y  (a and b merge)")
-
-    # Test all probe families ordered by inclusion
-    all_probes = [set(), {'0'}, {'1'}, {'0', '1'}]
-
-    print("\n  Probe Family P    | meas_inv(P) | signatures at 0        | signatures at 1")
-    print("  " + "-" * 80)
-
-    for P in all_probes:
-        inv = measurement_invariant(F, P)
-        sigs0 = set(probe_signature(F, P, '0', x) for x in F.fibers['0'])
-        sigs1 = set(probe_signature(F, P, '1', x) for x in F.fibers['1'])
-        print(f"  {str(P):20s}| {inv:11d} | {str(sigs0):23s}| {sigs1}")
-
-    print("\n  Monotonicity verification:")
-    for i in range(len(all_probes)):
-        for j in range(i + 1, len(all_probes)):
-            P, P_prime = all_probes[i], all_probes[j]
-            if P.issubset(P_prime):
-                inv_P = measurement_invariant(F, P)
-                inv_Pp = measurement_invariant(F, P_prime)
-                status = "✓" if inv_P <= inv_Pp else "✗"
-                print(f"    {status} {P} ⊆ {P_prime}: "
-                      f"meas_inv({P}) = {inv_P} ≤ {inv_Pp} = meas_inv({P_prime})")
-
-
-def demo_equality_characterization():
-    """Demonstrate the equality ⟺ no-new-separation characterization."""
-    print("\n" + "=" * 70)
-    print("DEMO 2: Equality ⟺ No New Separation")
-    print("=" * 70)
-
-    F = example_color_presheaf()
-    print(f"\nPresheaf on objects {F.objects}")
-    for y in F.objects:
-        print(f"  F({y}) = {F.fibers[y]}")
-
-    all_probes = []
-    for size in range(len(F.objects) + 1):
-        for subset in combinations(F.objects, size):
-            all_probes.append(set(subset))
-
-    print(f"\n  Testing all {len(all_probes)} probe families...")
-    print("\n  P ⊆ P'             | inv(P) | inv(P') | equal? | no_new_sep? | match?")
-    print("  " + "-" * 75)
-
-    all_match = True
-    count = 0
-    for i in range(len(all_probes)):
-        for j in range(i + 1, len(all_probes)):
-            P = all_probes[i]
-            P_prime = all_probes[j]
-            if not P.issubset(P_prime):
-                continue
-
-            result = algorithm_compare(F, P, P_prime)
-            is_eq = result['is_equal']
-            nns = result['no_new_sep']
-            match = (is_eq == nns)
-            if not match:
-                all_match = False
-            count += 1
-
-            symbol = "✓" if match else "✗"
-            print(f"  {str(P):9s}⊆ {str(P_prime):9s}| {result['invariant_P']:6d} | "
-                  f"{result['invariant_P_prime']:7d} | {str(is_eq):6s} | {str(nns):11s} | {symbol}")
-
-    print(f"\n  Tested {count} inclusion pairs.")
-    print(f"  Theorem verified: equality ⟺ no new separation: {'ALL MATCH ✓' if all_match else 'FAILURE ✗'}")
-
-
-def demo_strict_monotonicity():
-    """Demonstrate strict monotonicity when new separations exist."""
-    print("\n" + "=" * 70)
-    print("DEMO 3: Strict Monotonicity Under New Separations")
-    print("=" * 70)
-
-    F = example_simple_presheaf()
-    P = set()       # empty probe family — merges everything
-    P_prime = {'1'}  # probe with object 1
-
-    print(f"\n  P = ∅, P' = {{'1'}}")
-    print(f"  F(0) = {F.fibers['0']}, r(0,1): a->x, b->x, c->y")
-
-    inv_P = measurement_invariant(F, P)
-    inv_Pp = measurement_invariant(F, P_prime)
-
-    print(f"\n  meas_inv(∅) = {inv_P}")
-    print(f"  meas_inv({{'1'}}) = {inv_Pp}")
-
-    # Find new separations
-    new_seps = []
-    for y in F.objects:
-        elems = F.fibers[y]
-        for i in range(len(elems)):
-            for j in range(i + 1, len(elems)):
-                x1, x2 = elems[i], elems[j]
-                if separates_elements(F, P_prime, y, x1, x2) and \
-                   not separates_elements(F, P, y, x1, x2):
-                    new_seps.append((y, x1, x2))
-
-    print(f"\n  New separations introduced by P':")
-    for y, x1, x2 in new_seps:
-        print(f"    At object {y}: {x1} and {x2} are now separated")
-
-    if new_seps:
-        print(f"\n  ∃ new separation ⟹ strict increase: {inv_P} < {inv_Pp}? "
-              f"{'✓ YES' if inv_P < inv_Pp else '✗ NO'}")
-
-
-def demo_restriction_map():
-    """Demonstrate the restriction map from P'-signatures to P-signatures."""
-    print("\n" + "=" * 70)
-    print("DEMO 4: Signature Restriction Map")
-    print("=" * 70)
-
-    F = example_color_presheaf()
-    P = {'A'}
-    P_prime = {'A', 'B'}
-
-    print(f"\n  P = {P}, P' = {P_prime}")
-
-    for y in F.objects:
-        rest_map = restriction_map(F, P, P_prime, y)
-        print(f"\n  Object {y}:")
-        print(f"    P-signatures:  {set(probe_signature(F, P, y, x) for x in F.fibers[y])}")
-        print(f"    P'-signatures: {set(probe_signature(F, P_prime, y, x) for x in F.fibers[y])}")
-        print(f"    Restriction map (P' → P):")
-        for sig_prime, sig in sorted(rest_map.items()):
-            print(f"      {sig_prime} ↦ {sig}")
-
-    # Verify surjectivity
-    print("\n  Restriction map surjectivity check:")
-    for y in F.objects:
-        rest_map = restriction_map(F, P, P_prime, y)
-        p_sigs = set(probe_signature(F, P, y, x) for x in F.fibers[y])
-        image = set(rest_map.values())
-        is_surj = (image == p_sigs)
-        print(f"    Object {y}: surjective = {is_surj} ✓" if is_surj
-              else f"    Object {y}: surjective = {is_surj} ✗")
-
-
-def demo_separating_saturation():
-    """Demonstrate that separating families saturate the invariant."""
-    print("\n" + "=" * 70)
-    print("DEMO 5: Separating Family Saturation")
-    print("=" * 70)
-
-    F = example_simple_presheaf()
-    P_full = set(F.objects)  # all objects — always separating
-
-    print(f"\n  Full probe family P = {P_full}")
-    inv_full = measurement_invariant(F, P_full)
-    print(f"  meas_inv(P_full) = {inv_full}")
-
-    # Check that any superset (which is P_full itself, since it's already maximal)
-    # has the same invariant — but also check if smaller separating families exist
-    print("\n  Checking all probe families for separation:")
-    for size in range(len(F.objects) + 1):
-        for subset in combinations(F.objects, size):
-            P = set(subset)
-            inv = measurement_invariant(F, P)
-            # Check if P is separating (all signatures injective)
-            is_sep = True
-            for y in F.objects:
-                sigs = [probe_signature(F, P, y, x) for x in F.fibers[y]]
-                if len(sigs) != len(set(sigs)):
-                    is_sep = False
-                    break
-            status = "SEP" if is_sep else "   "
-            print(f"    [{status}] P = {str(P):20s} meas_inv = {inv}")
-
-    print(f"\n  Theorem: once a family is separating, the invariant equals the total")
-    print(f"  objectwise cardinality: ∑_Y |F(Y)| = "
-          f"{sum(len(F.fibers[y]) for y in F.objects)}")
-
-
-def demo_exhaustive_test():
-    """Exhaustive test of the conjecture on all probe family pairs for small categories."""
-    print("\n" + "=" * 70)
-    print("DEMO 6: Exhaustive Verification on Small Categories")
-    print("=" * 70)
-
-    F = example_color_presheaf()
-    objects = F.objects
-
-    all_probes = []
+    psh = make_color_presheaf()
+    objects = psh.objects
+    all_subsets = []
     for size in range(len(objects) + 1):
         for subset in combinations(objects, size):
-            all_probes.append(set(subset))
+            all_subsets.append(set(subset))
 
-    monotonicity_ok = 0
-    monotonicity_fail = 0
-    equality_iff_ok = 0
-    equality_iff_fail = 0
-    strict_ok = 0
-    strict_fail = 0
-    total_pairs = 0
+    print(f"Category objects: {objects}")
+    print(f"Fiber sizes: {', '.join(f'|F({y})| = {len(psh.fibers[y])}' for y in objects)}")
+    print()
 
-    for i in range(len(all_probes)):
-        for j in range(i + 1, len(all_probes)):
-            P = all_probes[i]
-            P_prime = all_probes[j]
-            if not P.issubset(P_prime):
-                continue
+    # Compute measurement invariant for each probe family
+    results = {}
+    for s in all_subsets:
+        key = frozenset(s)
+        mi = measurement_invariant(psh, s)
+        results[key] = mi
 
-            total_pairs += 1
-            result = algorithm_compare(F, P, P_prime)
+    print("Measurement invariants by probe family:")
+    for s in all_subsets:
+        key = frozenset(s)
+        label = str(sorted(s)) if s else '∅'
+        print(f"  P = {label:>12s}  →  μ(P) = {results[key]}")
+    print()
 
-            # Test monotonicity
-            if result['is_monotone']:
-                monotonicity_ok += 1
-            else:
-                monotonicity_fail += 1
+    # Verify monotonicity for all nested pairs
+    violations = 0
+    checks = 0
+    for s1 in all_subsets:
+        for s2 in all_subsets:
+            if s1 <= s2:
+                checks += 1
+                k1, k2 = frozenset(s1), frozenset(s2)
+                if results[k1] > results[k2]:
+                    violations += 1
+                    print(f"  VIOLATION: {sorted(s1)} ⊆ {sorted(s2)} but "
+                          f"μ({sorted(s1)}) = {results[k1]} > {results[k2]} = μ({sorted(s2)})")
 
-            # Test equality ⟺ no new separation
-            if result['is_equal'] == result['no_new_sep']:
-                equality_iff_ok += 1
-            else:
-                equality_iff_fail += 1
-
-            # Test strict monotonicity under new separation
-            if has_new_separation(F, P, P_prime):
-                if result['invariant_P'] < result['invariant_P_prime']:
-                    strict_ok += 1
-                else:
-                    strict_fail += 1
-
-    print(f"\n  Total inclusion pairs tested: {total_pairs}")
-    print(f"\n  Monotonicity (meas_inv(P) ≤ meas_inv(P')):")
-    print(f"    Passed: {monotonicity_ok}, Failed: {monotonicity_fail}")
-    print(f"\n  Equality ⟺ No New Separation:")
-    print(f"    Passed: {equality_iff_ok}, Failed: {equality_iff_fail}")
-    print(f"\n  Strict increase under new separation:")
-    print(f"    Passed: {strict_ok}, Failed: {strict_fail}")
-
-    all_ok = (monotonicity_fail == 0 and equality_iff_fail == 0 and strict_fail == 0)
-    print(f"\n  {'ALL TESTS PASSED ✓' if all_ok else 'SOME TESTS FAILED ✗'}")
+    print(f"Checked {checks} nested pairs: {'ALL MONOTONE ✓' if violations == 0 else f'{violations} VIOLATIONS!'}")
+    print()
 
 
-# =============================================================================
+# ─────────────────────────────────────────────────────────────────────────────
+# Demo 2: Equality characterization
+# ─────────────────────────────────────────────────────────────────────────────
+
+def demo_equality_characterization():
+    """Verify the iff characterization: equality ⟺ no new separation."""
+    print("=" * 70)
+    print("DEMO 2: Equality ⟺ No New Separation (Rigidity Theorem)")
+    print("=" * 70)
+    print()
+
+    psh = make_collapsing_presheaf()
+    objects = psh.objects
+
+    print(f"Category objects: {objects}")
+    print(f"Fiber sizes: {', '.join(f'|F({y})| = {len(psh.fibers[y])}' for y in objects)}")
+    print()
+
+    all_subsets = []
+    for size in range(len(objects) + 1):
+        for subset in combinations(objects, size):
+            all_subsets.append(set(subset))
+
+    iff_holds = True
+    for s1 in all_subsets:
+        for s2 in all_subsets:
+            if s1 <= s2 and s1 != s2:
+                mi1 = measurement_invariant(psh, s1)
+                mi2 = measurement_invariant(psh, s2)
+                nns = no_new_separation(psh, s1, s2)
+                eq = (mi1 == mi2)
+
+                if eq != nns:
+                    iff_holds = False
+
+                marker = "=" if eq else "<"
+                nns_str = "no new sep" if nns else "NEW SEP"
+                consistent = "✓" if eq == nns else "✗ INCONSISTENT!"
+
+                new_seps = find_new_separations(psh, s1, s2)
+                sep_info = ""
+                if new_seps:
+                    sep_info = f"  [new: {new_seps[:2]}{'...' if len(new_seps)>2 else ''}]"
+
+                print(f"  {sorted(s1)} ⊆ {sorted(s2)}: "
+                      f"μ={mi1} {marker} {mi2}, {nns_str} {consistent}{sep_info}")
+
+    print()
+    print(f"Equality ⟺ No New Separation: {'VERIFIED ✓' if iff_holds else 'FAILED ✗'}")
+    print()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Demo 3: Strict monotonicity
+# ─────────────────────────────────────────────────────────────────────────────
+
+def demo_strict_monotonicity():
+    """Verify strict monotonicity: new separation ⟹ strict increase."""
+    print("=" * 70)
+    print("DEMO 3: Strict Monotonicity (New Separation ⟹ Strict Increase)")
+    print("=" * 70)
+    print()
+
+    psh = make_collapsing_presheaf()
+    objects = psh.objects
+
+    all_subsets = []
+    for size in range(len(objects) + 1):
+        for subset in combinations(objects, size):
+            all_subsets.append(set(subset))
+
+    strict_holds = True
+    for s1 in all_subsets:
+        for s2 in all_subsets:
+            if s1 < s2:  # strict subset
+                mi1 = measurement_invariant(psh, s1)
+                mi2 = measurement_invariant(psh, s2)
+                new_seps = find_new_separations(psh, s1, s2)
+
+                if new_seps and mi1 >= mi2:
+                    strict_holds = False
+                    print(f"  VIOLATION: {sorted(s1)} ⊂ {sorted(s2)}, "
+                          f"new separation exists but μ={mi1} ≥ {mi2}")
+                elif new_seps:
+                    print(f"  {sorted(s1)} ⊂ {sorted(s2)}: "
+                          f"new sep → μ={mi1} < {mi2} ✓")
+
+    print()
+    print(f"Strict monotonicity: {'VERIFIED ✓' if strict_holds else 'FAILED ✗'}")
+    print()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Demo 4: Saturation — fully separating probes saturate
+# ─────────────────────────────────────────────────────────────────────────────
+
+def demo_saturation():
+    """Verify that once a probe family fully separates, enlargement is redundant."""
+    print("=" * 70)
+    print("DEMO 4: Saturation — Separating Families Are Stable")
+    print("=" * 70)
+    print()
+
+    psh = make_color_presheaf()
+    objects = psh.objects
+
+    all_subsets = []
+    for size in range(len(objects) + 1):
+        for subset in combinations(objects, size):
+            all_subsets.append(set(subset))
+
+    for s in all_subsets:
+        # Check if s is fully separating (all signatures injective)
+        separating = True
+        for y in objects:
+            sigs = [probe_signature(psh, s, y, x) for x in psh.fibers[y]]
+            if len(sigs) != len(set(sigs)):
+                separating = False
+                break
+
+        if separating:
+            mi = measurement_invariant(psh, s)
+            print(f"  P = {sorted(s)} is SEPARATING, μ(P) = {mi}")
+
+            # Check all supersets
+            for s2 in all_subsets:
+                if s <= s2 and s != s2:
+                    mi2 = measurement_invariant(psh, s2)
+                    status = "✓" if mi == mi2 else "✗ DIFFERENT!"
+                    print(f"    ⊆ {sorted(s2)}: μ = {mi2} {status}")
+    print()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Demo 5: Partition visualization
+# ─────────────────────────────────────────────────────────────────────────────
+
+def demo_partition_refinement():
+    """Visualize how probe enlargement refines the indistinguishability partition."""
+    print("=" * 70)
+    print("DEMO 5: Partition Refinement Under Probe Enlargement")
+    print("=" * 70)
+    print()
+
+    psh = make_collapsing_presheaf()
+
+    # Show partitions for increasing probe families
+    probe_chain = [set(), {'B'}, {'B', 'C'}, {'A', 'B', 'C'}]
+
+    for y in psh.objects:
+        print(f"  Object {y}, elements: {psh.fibers[y]}")
+        for probes in probe_chain:
+            # Group elements by their signature
+            groups = defaultdict(list)
+            for x in psh.fibers[y]:
+                sig = probe_signature(psh, probes, y, x)
+                groups[sig].append(x)
+
+            partition = [sorted(group) for group in groups.values()]
+            mi_local = len(partition)
+            probe_str = sorted(probes) if probes else '∅'
+            print(f"    P = {str(probe_str):>16s}: "
+                  f"partition = {partition}, classes = {mi_local}")
+        print()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Demo 6: Exhaustive search over small discrete categories
+# ─────────────────────────────────────────────────────────────────────────────
+
+def demo_exhaustive_small_categories():
+    """Enumerate all presheaves on 2-object categories with small fibers."""
+    print("=" * 70)
+    print("DEMO 6: Exhaustive Verification on Small Categories")
+    print("=" * 70)
+    print()
+
+    objects = ['A', 'B']
+    fiber_sizes = [2, 3]  # |F(A)| = 2, |F(B)| = 3
+
+    fibers = {
+        'A': list(range(fiber_sizes[0])),
+        'B': list(range(fiber_sizes[1])),
+    }
+
+    # Enumerate all possible restriction maps r(A, B) : F(A) → F(B)
+    # and r(B, A) : F(B) → F(A)
+    all_r_AB = list(product(fibers['B'], repeat=len(fibers['A'])))
+    all_r_BA = list(product(fibers['A'], repeat=len(fibers['B'])))
+
+    total_presheaves = 0
+    mono_verified = 0
+    iff_verified = 0
+    strict_verified = 0
+
+    for r_ab_vals in all_r_AB:
+        for r_ba_vals in all_r_BA:
+            r_AB = dict(zip(fibers['A'], r_ab_vals))
+            r_BA = dict(zip(fibers['B'], r_ba_vals))
+
+            restrictions = {
+                ('A', 'A'): {x: x for x in fibers['A']},
+                ('A', 'B'): r_AB,
+                ('B', 'A'): r_BA,
+                ('B', 'B'): {x: x for x in fibers['B']},
+            }
+
+            psh = FinitePresheaf(fibers, restrictions)
+            total_presheaves += 1
+
+            # Probe families: ∅, {A}, {B}, {A,B}
+            families = [set(), {'A'}, {'B'}, {'A', 'B'}]
+            mis = {frozenset(s): measurement_invariant(psh, s) for s in families}
+
+            # Check monotonicity
+            for s1 in families:
+                for s2 in families:
+                    if set(s1) <= set(s2):
+                        k1, k2 = frozenset(s1), frozenset(s2)
+                        assert mis[k1] <= mis[k2], "Monotonicity violation!"
+                        mono_verified += 1
+
+            # Check iff characterization
+            for s1 in families:
+                for s2 in families:
+                    if set(s1) <= set(s2):
+                        k1, k2 = frozenset(s1), frozenset(s2)
+                        eq = (mis[k1] == mis[k2])
+                        nns = no_new_separation(psh, set(s1), set(s2))
+                        assert eq == nns, "Iff characterization violation!"
+                        iff_verified += 1
+
+            # Check strict monotonicity
+            for s1 in families:
+                for s2 in families:
+                    if set(s1) < set(s2):
+                        k1, k2 = frozenset(s1), frozenset(s2)
+                        new_seps = find_new_separations(psh, set(s1), set(s2))
+                        if new_seps:
+                            assert mis[k1] < mis[k2], "Strict monotonicity violation!"
+                            strict_verified += 1
+
+    print(f"Tested {total_presheaves} presheaves over {{A, B}} with |F(A)|=2, |F(B)|=3")
+    print(f"Monotonicity checks passed: {mono_verified}")
+    print(f"Iff characterization checks passed: {iff_verified}")
+    print(f"Strict monotonicity checks passed: {strict_verified}")
+    print("ALL CHECKS PASSED ✓")
+    print()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Main
-# =============================================================================
+# ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    print()
     print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║     Compression Stability Under Probe Enlargement — Demo Suite     ║")
-    print("║                                                                    ║")
-    print("║  Verifying: enlarging observables refines partitions, weakly       ║")
-    print("║  increases measurement complexity, and preserves complexity        ║")
-    print("║  exactly when the added observables are informationally redundant. ║")
+    print("║   Compression Stability Under Probe Enlargement — Interactive Demo  ║")
+    print("║   Categorical Data Processing Inequality & Measurement Rigidity     ║")
     print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
 
     demo_monotonicity()
     demo_equality_characterization()
     demo_strict_monotonicity()
-    demo_restriction_map()
-    demo_separating_saturation()
-    demo_exhaustive_test()
+    demo_saturation()
+    demo_partition_refinement()
+    demo_exhaustive_small_categories()
 
-    print("\n" + "=" * 70)
+    print("=" * 70)
     print("All demonstrations complete.")
     print("=" * 70)
