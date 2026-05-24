@@ -491,5 +491,6 @@
   "019c05e7": "direction_1_exact__class_canonicity.json",
   "fdb6f72c": "direction_1_capture_free_monotonicity_via_de_bruij.json",
   "3f10a004": "direction_5_ehrhart_theory_of_lorentzian_permutohe.json",
-  "02ab4dc2": "direction_3_tropical_pythagorean_m_convexity_grand.json"
+  "02ab4dc2": "direction_3_tropical_pythagorean_m_convexity_grand.json",
+  "4e4533ed": "direction_5_certified_optimization_with_diophantin.json"
 }
