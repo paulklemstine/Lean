@@ -451,5 +451,6 @@
   "905cb737": "pathwidth_guided_sat_solving.json",
   "2d991129": "direction_2_strong_normalization_implies_finite_st.json",
   "14e41c17": "direction_3_kolmogorov_extension_for_restricted_pr.json",
-  "8448191b": "direction_1_finite_size_threshold_concentration.json"
+  "8448191b": "direction_1_finite_size_threshold_concentration.json",
+  "92ad612f": "direction_3_local_to_global_finite_generation_prob.json"
 }

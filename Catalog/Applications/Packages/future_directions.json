@@ -7000,7 +7000,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8999999999999999,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "7b121001",
       "timestamp": "2026-05-21T23:47:51.753569+00:00",
       "catalog_references": [],
