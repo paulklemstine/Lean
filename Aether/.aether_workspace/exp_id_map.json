@@ -447,5 +447,6 @@
   "9c306062": "direction_1_hennessy_milner_completeness_via_finit.json",
   "a756f94b": "phase_transition_in_certificate_complexity.json",
   "20be209e": "direction_4_bisimulation_cohomology.json",
-  "c8703e71": "direction_1_compression_additivity_under_products.json"
+  "c8703e71": "direction_1_compression_additivity_under_products.json",
+  "905cb737": "pathwidth_guided_sat_solving.json"
 }
