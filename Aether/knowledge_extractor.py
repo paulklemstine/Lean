@@ -49,6 +49,7 @@ from aristotle_loop import AristotleLoop
 from output_organizer import OutputOrganizer, normalize_domain
 from aristotle_sdk_client import AristotleSDKClient
 from git_automator import GitAutomator
+from arxiv_miner import ArxivMiner
 
 
 @dataclass
@@ -132,6 +133,20 @@ class KnowledgeExtractor:
         )
 
         self.research_context = ResearchContext(self.workspace)
+
+        # ArXiv miner for fresh ideas pipeline
+        arxiv_cfg = self.config.get("arxiv", {})
+        if arxiv_cfg.get("enabled", False):
+            from research_memory import FutureDirectionsManager
+            self._arxiv_fd_manager = FutureDirectionsManager(self.workspace)
+            self.arxiv_miner = ArxivMiner(
+                pi_agent=self.pi_agent,
+                catalog_analyzer=self.catalog_analyzer,
+                research_memory=self._arxiv_fd_manager,
+                config=arxiv_cfg,
+            )
+        else:
+            self.arxiv_miner = None
 
         # State
         self.cycle_count = 0
@@ -1747,6 +1762,13 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Warning: structural hole mining failed: {e}")
 
+        # 8. ArXiv fresh ideas pipeline — every 4 cycles
+        if self.arxiv_miner and self.cycle_count % 4 == 0:
+            try:
+                await asyncio.to_thread(self._mine_arxiv)
+            except Exception as e:
+                print(f"[Cleanup] Warning: ArXiv mining failed: {e}")
+
         return job
 
     def _cleanup_future_directions(self) -> None:
@@ -1938,6 +1960,165 @@ Research mode: {concept.research_mode}
 
         if added > 0:
             fd_manager._save()
+
+    def _mine_arxiv(self) -> None:
+        """Mine fresh research directions from recent ArXiv papers.
+
+        Runs every 4 cycles. Alternates between domain-specific and general
+        queries to balance relevance with cross-pollination.
+        """
+        if not self.arxiv_miner or not self.arxiv_miner.enabled:
+            return
+
+        # Determine domain from current inflight or cycle parity
+        domain = ""
+        if self.inflight:
+            domains = [j.concept.domain for j in self.inflight.values() if hasattr(j, 'concept') and j.concept]
+            if domains:
+                from collections import Counter
+                domain = Counter(domains).most_common(1)[0][0]
+
+        use_domain_query = (self.cycle_count % 2 == 1)
+        try:
+            direction = self.arxiv_miner.mine_future_direction(
+                domain=domain,
+                use_domain_query=use_domain_query,
+            )
+            if direction:
+                print(f"[ArXiv] Mined direction: {direction.title}")
+            else:
+                print(f"[ArXiv] No direction mined this cycle")
+        except Exception as e:
+            print(f"[ArXiv] Mining error (non-fatal): {e}")
+
+    def _generate_challenge_problem(self, job: ResearchJob) -> None:
+        """After a successful cycle, auto-create a challenge problem — a hard
+        conjecture or generalization that would take 2-3 cycles to resolve.
+
+        Challenge problems become grand-challenge targets with priority 0.95+,
+        derived from the key result of the completed package.
+        """
+        from research_memory import FutureDirection, FutureDirectionsManager
+
+        fd_manager = FutureDirectionsManager(self.workspace)
+
+        title = job.concept.title if hasattr(job, 'concept') and job.concept else "Unknown"
+        domain = job.concept.domain if hasattr(job, 'concept') and job.concept else "Bridges"
+        exp_id = job.job_id if hasattr(job, 'job_id') else ""
+
+        # Extract key theorem names from the lean result for context
+        key_theorems = []
+        if job.result_lean:
+            import re
+            for m in re.finditer(r"(?:theorem|lemma)\s+(\w+)", job.result_lean[:4000]):
+                key_theorems.append(m.group(1))
+        theorem_ctx = f" (e.g., {', '.join(key_theorems[:3])})" if key_theorems else ""
+
+        # Avoid duplicate challenge problems on the same source
+        existing_challenge = any(
+            d.source_exp_id == exp_id and d.title.startswith("Challenge:")
+            for d in fd_manager._directions
+            if d.status in ("available", "in_progress")
+        )
+        if existing_challenge:
+            print(f"[Challenge] Skipping — challenge already exists for {exp_id}")
+            return
+
+        # Determine challenge type based on what the package achieved
+        challenge_descriptions = {
+            "generalization": f"The key insight is that {title} establishes a specific result{theorem_ctx}, but the natural generalization remains open. Formulate and prove the most ambitious generalization that preserves the core proof technique. Why now: the base case is now proven in the catalog, providing a foundation to build on.",
+            "strengthening": f"The key insight is that {title} proves a result under restrictive hypotheses{theorem_ctx}. Strengthen the theorem by removing or weakening the strongest assumption used in the proof. Why now: the existing proof structure reveals exactly which lemmas depend on which assumptions, making targeted weakening tractable.",
+            "cross_domain": f"The key insight is that {title} lives in {domain}, but the underlying structure has analogs in at least one other domain. Find the precise category-theoretic or algebraic connection that transports this result to a new domain. Why now: the formal proof is now machine-checked, giving confidence in the structural properties needed for transport.",
+        }
+
+        # Pick the most appropriate challenge type
+        if "bridge" in domain.lower() or "bridge" in title.lower():
+            ctype = "cross_domain"
+        elif key_theorems and any("prime" in t.lower() or "finite" in t.lower() for t in key_theorems):
+            ctype = "generalization"
+        else:
+            ctype = "strengthening"
+
+        # Assign arc_id — each challenge problem starts a new 3-cycle arc
+        arc_id = f"arc_{fd_manager._next_id().replace('fd_', '')}"
+
+        direction = FutureDirection(
+            id=fd_manager._next_id(),
+            title=f"Challenge: {title}",
+            description=challenge_descriptions[ctype],
+            source_exp_id=exp_id,
+            source_path="challenge_generation",
+            domains=[domain],
+            depth_estimate=5,
+            priority_score=0.95,
+            proof_strategy=f"Start from the existing proof in {domain}{theorem_ctx}, identify the structural bottleneck, and formulate the stronger statement. The catalog proof provides the template.",
+            ambition_level="grand_challenge",
+            arc_id=arc_id,
+            arc_position=1,
+        )
+        fd_manager.add_direction(direction)
+        fd_manager._save()
+        print(f"[Challenge] Created challenge problem: Challenge: {title} (type={ctype}, priority=0.95)")
+
+    def _propagate_research_arc(self, job: ResearchJob) -> None:
+        """When an arc position completes, auto-seed the next arc position.
+
+        Arc structure: 1=foundation → 2=main theorem → 3=applications
+        Each subsequent position gets lower priority since it depends on the prior.
+        """
+        from research_memory import FutureDirection, FutureDirectionsManager
+
+        fd_manager = FutureDirectionsManager(self.workspace)
+
+        # Find the direction that was consumed by this job
+        consumed_id = ""
+        for d in fd_manager._directions:
+            if d.consumed_by_exp_id == job.job_id and d.arc_id:
+                consumed_id = d.id
+                arc_id = d.arc_id
+                arc_pos = d.arc_position
+                domains = d.domains
+                title = d.title
+                break
+        else:
+            return  # Not part of an arc
+
+        if arc_pos >= 3:
+            return  # Arc is complete
+
+        # Check if next position already exists
+        next_pos = arc_pos + 1
+        already_exists = any(
+            d.arc_id == arc_id and d.arc_position == next_pos and d.status in ("available", "in_progress")
+            for d in fd_manager._directions
+        )
+        if already_exists:
+            return
+
+        position_labels = {2: "Main Theorem", 3: "Applications"}
+        position_priorities = {2: 0.90, 3: 0.85}
+        position_descriptions = {
+            2: f"The key insight is that the foundation for {title} is now established in the catalog. Build the central theorem that this arc was designed to prove — the main result that justifies the entire research program. Why now: the foundational lemmas and definitions from cycle 1 are formalized and machine-checked, providing the precise building blocks needed.",
+            3: f"The key insight is that the main theorem of the {title} arc is now proven. Explore applications: find 2-3 concrete consequences in neighboring domains, computational implementations, or connections to open problems. Why now: the main theorem is formalized, so we can safely derive applications without proof-theoretic risk.",
+        }
+
+        direction = FutureDirection(
+            id=fd_manager._next_id(),
+            title=f"Arc {next_pos}/3: {position_labels[next_pos]} for {title}",
+            description=position_descriptions[next_pos],
+            source_exp_id=job.job_id,
+            source_path="arc_propagation",
+            domains=domains,
+            depth_estimate=5 if next_pos == 2 else 3,
+            priority_score=position_priorities[next_pos],
+            proof_strategy=f"Build on the catalog results from arc position {arc_pos}. Leverage the proven lemmas as dependencies.",
+            ambition_level="grand_challenge" if next_pos == 2 else "extension",
+            arc_id=arc_id,
+            arc_position=next_pos,
+        )
+        fd_manager.add_direction(direction)
+        fd_manager._save()
+        print(f"[Arc] Propagated arc {arc_id}: position {next_pos}/3 for {title} (priority={position_priorities[next_pos]})")
 
     def _prune_catalog(self) -> None:
         """Immortalize best theorems into FINAL/, remove junk from the Catalog.
@@ -2576,6 +2757,12 @@ Research mode: {concept.research_mode}
                 self._generate_challenge_problem(job)
             except Exception as e:
                 print(f"[Challenge] Warning: challenge generation failed: {e}")
+
+        # 10. Research arc propagation
+        try:
+            self._propagate_research_arc(job)
+        except Exception as e:
+            print(f"[Arc] Warning: arc propagation failed: {e}")
 
         return job
 

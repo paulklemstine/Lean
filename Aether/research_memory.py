@@ -253,6 +253,9 @@ class FutureDirection:
     ambition_level: str = "extension"                             # "grand_challenge" or "extension"
     lineage_refs: List[str] = field(default_factory=list)          # e.g. ["fd_0003", "exp_20250517_001"]
     domain_bridges: List[str] = field(default_factory=list)        # e.g. ["NumberTheory <-> Tropical", "Algebra <-> Physics"]
+    # --- Multi-cycle research arcs ---
+    arc_id: str = ""                                              # groups related directions (e.g. "arc_001")
+    arc_position: int = 0                                         # 1=foundation, 2=main theorem, 3=applications
 
     def to_dict(self) -> dict:
         return {
@@ -273,6 +276,8 @@ class FutureDirection:
             "ambition_level": self.ambition_level,
             "lineage_refs": self.lineage_refs,
             "domain_bridges": self.domain_bridges,
+            "arc_id": self.arc_id,
+            "arc_position": self.arc_position,
         }
 
     @classmethod
