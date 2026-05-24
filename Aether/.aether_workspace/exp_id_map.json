@@ -520,5 +520,6 @@
   "f2269ca9": "direction_2_nonlinear_extraction_obstructions.json",
   "85616e6f": "direction_5_arrow_depth_exponential_complexity.json",
   "73d0d4b0": "direction_4_compression_stability_under_probe_enla.json",
-  "93aa3255": "direction_1_full_state_strong_bisimulation_via_nor.json"
+  "93aa3255": "direction_1_full_state_strong_bisimulation_via_nor.json",
+  "a5d7efda": "direction_2_separator_aware_forgetting_dominates_a.json"
 }
