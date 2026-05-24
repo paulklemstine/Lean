@@ -11276,7 +11276,7 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "aa8cf039",
       "timestamp": "2026-05-24T00:06:46.587048+00:00",
       "catalog_references": [],

@@ -465,5 +465,6 @@
   "9198e7f7": "direction_4_effective_growth_bound_computation.json",
   "04157109": "direction_3_subadditivity_of_sheaf_compression.json",
   "849a89cc": "direction_1_congruence_closure_completeness_for_ty.json",
-  "aa8cf039": "direction_3_uniformity_sharpness_conjecture.json"
+  "aa8cf039": "direction_3_uniformity_sharpness_conjecture.json",
+  "8d704010": "configuration_graph_pathwidth.json"
 }
