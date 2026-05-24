@@ -4,24 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 
 # Tropical Rank / Laplacian Minor Bridge — Definitions
 
-This file establishes the foundational definitions for the bridge between
-Baker–Norine divisor rank on graphs and tropical matrix rank of Laplacian
-principal minors.
-
-## Main Definitions
-
-* `RootedSubsetData` — a basepoint `q` and a subset `S ⊆ V \ {q}`
-* `rootedSubsetDivisor` — the degree-zero divisor `D_S`
-* `graphLaplacian` — the standard combinatorial Laplacian matrix
-* `laplacianPrincipalMinor` — restriction of a matrix to rows/columns in `S`
-* `NestedCutFamily` — structure for monotonicity under subset inclusion
-* `firingIndependentOn` — chip-firing independence condition
-* `IsTree` — connected acyclic graph predicate
-
-## References
-
-* Baker, M. and Norine, S. "Riemann–Roch and Abel–Jacobi theory on a finite graph" (2007)
-* Develin, Santos, Sturmfels, "On the rank of a tropical matrix" (2005)
+Foundational definitions for the bridge between Baker–Norine divisor rank
+on graphs and tropical matrix rank of Laplacian principal minors.
 -/
 
 import Mathlib
@@ -48,8 +32,7 @@ def rootedSubsetDivisor
 
 /-! ### Graph Laplacian -/
 
-/-- The combinatorial graph Laplacian matrix `L(G)` with entries:
-    `L(v,v) = deg(v)`, `L(v,w) = -1` if `v ~ w`, `L(v,w) = 0` otherwise. -/
+/-- The combinatorial graph Laplacian matrix. -/
 def graphLaplacian
     {V : Type*} [Fintype V] [DecidableEq V]
     (G : SimpleGraph V) [DecidableRel G.Adj] : Matrix V V ℤ :=
@@ -66,29 +49,6 @@ def laplacianPrincipalMinor
     (L : Matrix V V ℤ) (S : Finset V) :
     Matrix S S ℤ :=
   fun i j => L i.1 j.1
-
-/-! ### Nested Cut Family -/
-
-/-- A nested cut family for subsets `S ⊆ T` relative to a root `q`:
-    vertices in `T \ S` adjacent to `S` must also be adjacent to `q`. -/
-structure NestedCutFamily
-    {V : Type*} [Fintype V] [DecidableEq V]
-    (G : SimpleGraph V) [DecidableRel G.Adj]
-    (q : V) (S T : Finset V) : Prop where
-  subset : S ⊆ T
-  hqT : q ∉ T
-  cut_condition : ∀ w, w ∈ T → w ∉ S → (∃ v ∈ S, G.Adj v w) → G.Adj q w
-
-/-! ### Firing Independence -/
-
-/-- A subset `S` is firing-independent on `G` if the Laplacian columns
-    restricted to `S` are linearly independent over ℤ. -/
-def firingIndependentOn
-    {V : Type*} [Fintype V] [DecidableEq V]
-    (G : SimpleGraph V) [DecidableRel G.Adj] (S : Finset V) : Prop :=
-  ∀ (c : V → ℤ), (∀ v, v ∉ S → c v = 0) →
-    (∀ (w : S), S.sum (fun v => c v * graphLaplacian G v w) = 0) →
-    (∀ v, c v = 0)
 
 /-! ### IsTree predicate -/
 

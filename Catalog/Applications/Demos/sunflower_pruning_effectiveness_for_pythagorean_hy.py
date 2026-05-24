@@ -1,462 +1,526 @@
 #!/usr/bin/env python3
 """
-Applications of Sunflower Pruning to Arithmetic Hypergraphs
+Applications of Sunflower Pruning Theory to Pythagorean Hypergraphs.
 
-Demonstrates real-world applications of the sunflower pruning theory:
-1. Minimum Pythagorean coloring certificates
-2. SAT preprocessing via sunflower reduction
-3. Kernel size analysis for FPT algorithms
-4. Transfer to other arithmetic hypergraphs (sum-free sets, Schur triples)
+Demonstrates real-world applications:
+1. Minimum transversal computation for Pythagorean coloring problems
+2. Kernelization: reducing instance size via sunflower contraction
+3. Overlap concentration analysis for arithmetic hypergraphs
+4. SAT-inspired preprocessing using sunflower cores
 """
 
-from algorithms import (
-    pythagorean_edges,
-    vertex_degree,
-    degree_profile,
-    max_degree_vertex,
-    find_sunflower,
-    naive_transversal_search,
-    sunflower_transversal_search,
-    overlap_analysis,
-    pruning_gain,
-)
+from __future__ import annotations
+import math
+from collections import defaultdict
+from typing import Optional
 
 
-def separator(title: str) -> None:
-    print(f"\n{'=' * 70}")
-    print(f"  {title}")
-    print(f"{'=' * 70}\n")
+# ═══════════════════════════════════════════════════════════════════════════
+# Utility: Pythagorean Hypergraph Construction
+# ═══════════════════════════════════════════════════════════════════════════
 
-
-# ─────────────────────────────────────────────────────────────────────
-# Application 1: Minimum Coloring Certificates
-# ─────────────────────────────────────────────────────────────────────
-
-def app_coloring_certificates():
-    """
-    Find minimum-size sets of 'forced' vertices for Pythagorean coloring.
-
-    A transversal of the Pythagorean hypergraph is a set T such that every
-    Pythagorean triple contains at least one element of T. This is equivalent
-    to: if we remove T from {1,...,n}, no Pythagorean triple remains fully
-    intact — which means any 2-coloring restricted to {1,...,n} \ T trivially
-    avoids monochromatic triples.
-    """
-    separator("APPLICATION 1: MINIMUM COLORING CERTIFICATES")
-    print("  Finding minimum transversals (hitting sets) of H_n.")
-    print("  These are the smallest 'blocker' sets for monochromatic triples.")
-    print()
-
-    for n in [25, 50, 75, 100]:
-        edges = pythagorean_edges(n)
-        if not edges:
-            print(f"  n={n:>3}: no triples, trivially colorable")
-            continue
-
-        # Find minimum k
-        for k in range(1, 30):
-            result, calls = sunflower_transversal_search(edges, k)
-            if result is not None:
-                print(f"  n={n:>3}: min transversal size = {k}, "
-                      f"example = {sorted(result)[:10]}{'...' if len(result) > 10 else ''}, "
-                      f"search calls = {calls}")
-                break
-        else:
-            print(f"  n={n:>3}: min transversal > 29")
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Application 2: SAT Preprocessing via Sunflower Reduction
-# ─────────────────────────────────────────────────────────────────────
-
-def sunflower_reduction(edges: set[frozenset[int]], k: int) -> set[frozenset[int]]:
-    """
-    Apply sunflower reduction: replace sunflowers with > k petals by their core.
-    Repeat until no more reductions possible.
-
-    This preserves the existence of size-k hitting sets (by our verified theorem).
-    """
-    reduced = set(edges)
-    rounds = 0
-
-    while True:
-        sf = find_sunflower(reduced, k + 1)
-        if sf is None:
-            break
-
-        sf_edges, kernel = sf
-        for e in sf_edges:
-            reduced.discard(e)
-        reduced.add(kernel)
-        rounds += 1
-
-    return reduced
-
-
-def app_sat_preprocessing():
-    """
-    Demonstrate sunflower-based preprocessing as a SAT simplification analog.
-
-    The monotone CNF encoding of "hit every Pythagorean triple" has one clause
-    per triple. Sunflower reduction collapses groups of clauses sharing a
-    common satisfying structure into a single shorter clause.
-    """
-    separator("APPLICATION 2: SAT PREPROCESSING VIA SUNFLOWER REDUCTION")
-    print("  Modeling hitting set as monotone SAT: each triple → one clause.")
-    print("  Sunflower reduction = clause simplification preserving satisfiability.")
-    print()
-
-    for n in [50, 100, 200, 500]:
-        edges = pythagorean_edges(n)
-        original_size = len(edges)
-
-        for k in [3, 5, 8]:
-            reduced = sunflower_reduction(edges, k)
-            reduced_size = len(reduced)
-            ratio = reduced_size / original_size if original_size > 0 else 1.0
-            print(f"  n={n:>3}, k={k}: {original_size:>4} edges → {reduced_size:>4} "
-                  f"({ratio:.1%} of original)")
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Application 3: FPT Kernel Size Analysis
-# ─────────────────────────────────────────────────────────────────────
-
-def app_kernel_analysis():
-    """
-    Analyze the kernel size after sunflower reduction.
-
-    In FPT theory, the sunflower lemma guarantees that after exhaustive
-    reduction, the remaining instance has bounded size (as a function of k only).
-    We measure how quickly this bound kicks in for the Pythagorean hypergraph.
-    """
-    separator("APPLICATION 3: FPT KERNEL SIZE ANALYSIS")
-    print("  After exhaustive sunflower reduction with parameter k,")
-    print("  how many edges remain? (FPT theory: at most O(k^r · r!) for r-uniform)")
-    print()
-
-    for n in [100, 200, 500]:
-        edges = pythagorean_edges(n)
-        print(f"  n={n}, |E|={len(edges)}:")
-        for k in [2, 3, 5, 8, 10]:
-            reduced = sunflower_reduction(edges, k)
-            # Count vertices in reduced instance
-            vertices = set()
-            for e in reduced:
-                vertices |= e
-            bound_3unif = k ** 3 * 6  # k^3 · 3! upper bound from sunflower lemma
-            print(f"    k={k:>2}: {len(reduced):>4} edges, "
-                  f"{len(vertices):>4} vertices "
-                  f"(FPT bound: {bound_3unif})")
-        print()
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Application 4: Transfer to Other Arithmetic Hypergraphs
-# ─────────────────────────────────────────────────────────────────────
-
-def schur_triples(n: int) -> set[frozenset[int]]:
-    """Schur triples: {a, b, c} with a + b = c, a ≤ b < c ≤ n."""
-    edges: set[frozenset[int]] = set()
+def pythagorean_edges(n: int) -> list[frozenset[int]]:
+    """All Pythagorean triple edges {a,b,c} with 1 ≤ a < b < c ≤ n."""
+    edges = []
     for a in range(1, n + 1):
-        for b in range(a, n + 1):
-            c = a + b
-            if c <= n:
-                edges.add(frozenset({a, b, c}))
+        for b in range(a + 1, n + 1):
+            c2 = a * a + b * b
+            c = int(math.isqrt(c2))
+            if c * c == c2 and c > b and c <= n:
+                edges.append(frozenset({a, b, c}))
     return edges
 
 
-def app_transfer():
-    """
-    Test sunflower pruning on Schur triple hypergraphs.
+def vertex_degrees(edges: list[frozenset[int]], n: int) -> dict[int, int]:
+    deg = defaultdict(int)
+    for e in edges:
+        for v in e:
+            deg[v] += 1
+    return dict(deg)
 
-    Schur triples {a, b, a+b} form another arithmetic 3-uniform hypergraph.
-    Do sunflower methods work equally well here?
-    """
-    separator("APPLICATION 4: TRANSFER TO SCHUR TRIPLE HYPERGRAPHS")
-    print("  Schur triples: {a, b, c} with a + b = c")
-    print("  Testing same sunflower analysis on a different arithmetic family.")
-    print()
 
+# ═══════════════════════════════════════════════════════════════════════════
+# Application 1: Minimum Transversal via Sunflower Pruning
+# ═══════════════════════════════════════════════════════════════════════════
+
+def find_min_transversal(edges: list[frozenset[int]], max_k: int = 20) -> Optional[frozenset[int]]:
+    """Find a minimum-size transversal (hitting set) using sunflower-pruned search.
+
+    Iteratively tries k = 1, 2, 3, ... until a hitting set is found.
+    Uses sunflower pruning for each attempt.
+    """
+    for k in range(1, max_k + 1):
+        result = _sf_search(edges, k, frozenset())
+        if result is not None:
+            return result
+    return None
+
+
+def _sf_search(
+    edges: list[frozenset[int]], budget: int, current: frozenset[int]
+) -> Optional[frozenset[int]]:
+    remaining = [e for e in edges if not (e & current)]
+    if not remaining:
+        return current
+    if budget == 0:
+        return None
+
+    # Sunflower pruning: find high-degree vertex forming sunflower
+    incidence: dict[int, list[frozenset[int]]] = defaultdict(list)
+    for e in remaining:
+        for v in e:
+            incidence[v].append(e)
+
+    # Try singleton-core sunflower
+    for v in sorted(incidence, key=lambda x: -len(incidence[x])):
+        if len(incidence[v]) <= budget:
+            break
+        inc = incidence[v]
+        sf: list[frozenset[int]] = []
+        for e in inc:
+            if all(e & f == frozenset({v}) for f in sf):
+                sf.append(e)
+                if len(sf) > budget:
+                    # Found sunflower with > budget petals → must include v
+                    return _sf_search(edges, budget - 1, current | {v})
+
+    # Fallback: branch on first uncovered edge
+    uncovered = remaining[0]
+    for v in sorted(uncovered):
+        r = _sf_search(edges, budget - 1, current | {v})
+        if r is not None:
+            return r
+    return None
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Application 2: Sunflower Kernelization
+# ═══════════════════════════════════════════════════════════════════════════
+
+def sunflower_kernel(edges: list[frozenset[int]], k: int) -> list[frozenset[int]]:
+    """Apply sunflower kernelization: repeatedly find large sunflowers and
+    contract them to their cores.
+
+    After exhaustive application, the resulting instance is a kernel of
+    bounded size (for fixed k), preserving hitting-set equivalence.
+    """
+    current = list(edges)
+    changed = True
+    reductions = 0
+
+    while changed:
+        changed = False
+        incidence: dict[int, list[frozenset[int]]] = defaultdict(list)
+        for e in current:
+            for v in e:
+                incidence[v].append(e)
+
+        for v in sorted(incidence, key=lambda x: -len(incidence[x])):
+            inc = incidence[v]
+            if len(inc) <= k:
+                continue
+            # Extract a sunflower with core {v}
+            sf: list[frozenset[int]] = []
+            for e in inc:
+                if all(e & f == frozenset({v}) for f in sf):
+                    sf.append(e)
+                    if len(sf) > k:
+                        # Replace sunflower with core
+                        sf_set = set(map(id, sf))
+                        current = [e for e in current if id(e) not in sf_set]
+                        current.append(frozenset({v}))
+                        reductions += 1
+                        changed = True
+                        break
+            if changed:
+                break
+
+    return current
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Application 3: Overlap Concentration Analysis
+# ═══════════════════════════════════════════════════════════════════════════
+
+def overlap_concentration_report(n: int) -> dict:
+    """Analyze how Pythagorean triple structure concentrates overlap around
+    specific vertices, creating the raw material for sunflower extraction."""
+    edges = pythagorean_edges(n)
+    deg = vertex_degrees(edges, n)
+
+    if not deg:
+        return {'n': n, 'edges': 0, 'report': 'No edges'}
+
+    # Degree distribution
+    max_deg = max(deg.values())
+    degree_hist = defaultdict(int)
+    for d in deg.values():
+        degree_hist[d] += 1
+
+    # Overlap analysis: for top vertices, compute pairwise intersection stats
+    top10 = sorted(deg, key=lambda v: -deg[v])[:10]
+    overlap_stats = []
+    for v in top10:
+        inc = [e for e in edges if v in e]
+        # Count pairs with intersection exactly {v}
+        singleton_pairs = 0
+        total_pairs = 0
+        for i, e1 in enumerate(inc):
+            for e2 in inc[i+1:]:
+                total_pairs += 1
+                if e1 & e2 == frozenset({v}):
+                    singleton_pairs += 1
+        overlap_stats.append({
+            'vertex': v,
+            'degree': deg[v],
+            'total_pairs': total_pairs,
+            'singleton_intersection_pairs': singleton_pairs,
+            'singleton_ratio': singleton_pairs / total_pairs if total_pairs > 0 else 0,
+        })
+
+    return {
+        'n': n,
+        'num_edges': len(edges),
+        'max_degree': max_deg,
+        'avg_degree_bound': 3 * len(edges) / n,
+        'degree_histogram_top5': sorted(degree_hist.items(), reverse=True)[:5],
+        'overlap_stats': overlap_stats,
+    }
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Application 4: SAT-Inspired Preprocessing
+# ═══════════════════════════════════════════════════════════════════════════
+
+def forced_variables(edges: list[frozenset[int]], k: int) -> set[int]:
+    """Identify vertices that MUST be in any hitting set of size ≤ k.
+
+    A vertex v is forced if:
+    - The edges through v form a sunflower with core {v}
+    - The sunflower has > k petals
+
+    This is a preprocessing step analogous to unit propagation in SAT.
+    """
+    forced = set()
+    incidence: dict[int, list[frozenset[int]]] = defaultdict(list)
+    for e in edges:
+        for v in e:
+            incidence[v].append(e)
+
+    for v, inc in incidence.items():
+        if len(inc) <= k:
+            continue
+        sf: list[frozenset[int]] = []
+        for e in inc:
+            if all(e & f == frozenset({v}) for f in sf):
+                sf.append(e)
+                if len(sf) > k:
+                    forced.add(v)
+                    break
+    return forced
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Main Demo
+# ═══════════════════════════════════════════════════════════════════════════
+
+if __name__ == '__main__':
+    print("=" * 72)
+    print("  APPLICATIONS OF SUNFLOWER PRUNING THEORY")
+    print("=" * 72)
+
+    # App 1: Minimum transversal
+    print("\n── Application 1: Minimum Transversal Computation ──")
     for n in [50, 100, 200]:
-        edges = schur_triples(n)
-        analysis = overlap_analysis(edges, n)
-        v = analysis["max_vertex"]
-        print(f"  Schur H_{n}: {len(edges)} edges, "
-              f"max degree = {analysis['max_degree']} (vertex {v})")
-
-        # Sunflower detection
-        sf = find_sunflower(edges, 5)
-        if sf:
-            _, kernel = sf
-            print(f"    Sunflower found: kernel = {set(kernel)}")
+        edges = pythagorean_edges(n)
+        result = find_min_transversal(edges, max_k=15)
+        if result:
+            print(f"  n={n}: min transversal size = {len(result)}, T = {sorted(result)[:10]}{'...' if len(result) > 10 else ''}")
         else:
-            print(f"    No sunflower with ≥5 petals found")
+            print(f"  n={n}: no transversal found with k ≤ 15")
 
-        # Compare search
-        k = 3
-        _, naive_calls = naive_transversal_search(edges, k)
-        _, sf_calls = sunflower_transversal_search(edges, k)
-        gain = pruning_gain(naive_calls, sf_calls)
-        print(f"    Search (k={k}): naive={naive_calls}, sf={sf_calls}, gain={gain:.1%}")
-        print()
+    # App 2: Kernelization
+    print("\n── Application 2: Sunflower Kernelization ──")
+    for n in [100, 200, 500]:
+        edges = pythagorean_edges(n)
+        for k in [3, 5]:
+            kernel = sunflower_kernel(edges, k)
+            reduction = (1 - len(kernel) / len(edges)) * 100 if edges else 0
+            print(f"  n={n}, k={k}: {len(edges)} edges → {len(kernel)} kernel edges ({reduction:.1f}% reduction)")
 
+    # App 3: Overlap concentration
+    print("\n── Application 3: Overlap Concentration ──")
+    for n in [100, 200]:
+        report = overlap_concentration_report(n)
+        print(f"\n  n={n}: {report['num_edges']} edges, max degree = {report['max_degree']}")
+        print(f"  Average degree lower bound (3|E|/n) = {report['avg_degree_bound']:.1f}")
+        print(f"  Top vertices by overlap concentration:")
+        for s in report['overlap_stats'][:3]:
+            print(f"    v={s['vertex']}: deg={s['degree']}, "
+                  f"{s['singleton_intersection_pairs']}/{s['total_pairs']} singleton pairs "
+                  f"({s['singleton_ratio']:.1%})")
 
-def main():
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║   APPLICATIONS OF SUNFLOWER PRUNING THEORY                 ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
+    # App 4: Forced variables
+    print("\n── Application 4: Forced Variables (SAT-style preprocessing) ──")
+    for n in [100, 200, 500]:
+        edges = pythagorean_edges(n)
+        for k in [3, 5, 8]:
+            fv = forced_variables(edges, k)
+            print(f"  n={n}, k={k}: {len(fv)} forced vertices: {sorted(fv)[:10]}{'...' if len(fv) > 10 else ''}")
 
-    app_coloring_certificates()
-    app_sat_preprocessing()
-    app_kernel_analysis()
-    app_transfer()
-
-    separator("CONCLUSION")
-    print("  Sunflower pruning is a versatile tool for arithmetic hypergraphs:")
-    print("  • Pythagorean triples: natural overlap from shared legs/hypotenuses")
-    print("  • Schur triples: natural overlap from shared addends/sums")
-    print("  • SAT preprocessing: sunflower reduction = verified clause collapse")
-    print("  • FPT kernelization: bounded residual instance after reduction")
-    print()
-    print("  The key insight: arithmetic structure creates exploitable regularity")
-    print("  in hypergraph overlap patterns.")
-
-
-if __name__ == "__main__":
-    main()
+    print("\n" + "=" * 72)
 
 
 #!/usr/bin/env python3
 """
-Sunflower Pruning Effectiveness for Pythagorean Hypergraphs — Interactive Demo
+Sunflower Pruning for Pythagorean Hypergraphs — Interactive Demo
 
-Demonstrates:
-1. Construction of the Pythagorean triple hypergraph H_n for various n
-2. Structural analysis: degree profiles, overlap patterns, sunflower detection
-3. Comparison of naive vs. sunflower-pruned transversal search
-4. Verification of the double-counting identity (incidence sum = 3 * |E|)
-5. Pruning gain measurements
+Demonstrates that the arithmetic structure of Pythagorean triples creates
+forced overlap patterns exploitable by sunflower-based branching, yielding
+dramatic search-tree reduction compared to naive hitting-set algorithms.
 
 Usage:
     python demo.py
 """
 
-from algorithms import (
-    pythagorean_edges,
-    vertex_degree,
-    degree_profile,
-    max_degree_vertex,
-    find_sunflower,
-    naive_transversal_search,
-    sunflower_transversal_search,
-    overlap_analysis,
-    pruning_gain,
-    recursive_calls_naive,
-    recursive_calls_sunflower,
-)
+from __future__ import annotations
+import time
+import math
+from itertools import combinations
+from collections import defaultdict
+from typing import Optional
 
 
-def separator(title: str) -> None:
-    print(f"\n{'=' * 70}")
-    print(f"  {title}")
-    print(f"{'=' * 70}\n")
+# ═══════════════════════════════════════════════════════════════════════════
+# Core Construction
+# ═══════════════════════════════════════════════════════════════════════════
+
+def pythagorean_edges(n: int) -> list[frozenset[int]]:
+    """All Pythagorean triple edges {a,b,c} with 1 ≤ a < b < c ≤ n."""
+    edges = []
+    for a in range(1, n + 1):
+        for b in range(a + 1, n + 1):
+            c2 = a * a + b * b
+            c = int(math.isqrt(c2))
+            if c * c == c2 and c > b and c <= n:
+                edges.append(frozenset({a, b, c}))
+    return edges
 
 
-def demo_hypergraph_construction():
-    """Demonstrate Pythagorean hypergraph construction and basic properties."""
-    separator("1. PYTHAGOREAN HYPERGRAPH CONSTRUCTION")
+def vertex_degrees(edges: list[frozenset[int]], n: int) -> dict[int, int]:
+    """Degree of each vertex in {1,...,n}."""
+    deg = defaultdict(int)
+    for e in edges:
+        for v in e:
+            deg[v] += 1
+    return dict(deg)
 
-    for n in [13, 25, 50, 100, 200]:
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Sunflower Detection
+# ═══════════════════════════════════════════════════════════════════════════
+
+def find_sunflower_singleton_core(
+    edges: list[frozenset[int]], min_petals: int
+) -> Optional[tuple[frozenset[int], list[frozenset[int]]]]:
+    """Find a sunflower with singleton core {v} and ≥ min_petals petals."""
+    incidence: dict[int, list[frozenset[int]]] = defaultdict(list)
+    for e in edges:
+        for v in e:
+            incidence[v].append(e)
+
+    for v in sorted(incidence, key=lambda x: -len(incidence[x])):
+        inc = incidence[v]
+        if len(inc) < min_petals:
+            continue
+        sunflower: list[frozenset[int]] = []
+        for e in inc:
+            if all(e & f == frozenset({v}) for f in sunflower):
+                sunflower.append(e)
+                if len(sunflower) >= min_petals:
+                    return frozenset({v}), sunflower
+    return None
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Hitting Set Search — Naive
+# ═══════════════════════════════════════════════════════════════════════════
+
+def naive_search(
+    edges: list[frozenset[int]], budget: int, current: frozenset[int],
+    counter: list[int]
+) -> Optional[frozenset[int]]:
+    counter[0] += 1
+    uncovered = next((e for e in edges if not (e & current)), None)
+    if uncovered is None:
+        return current
+    if budget == 0:
+        return None
+    for v in sorted(uncovered):
+        r = naive_search(edges, budget - 1, current | {v}, counter)
+        if r is not None:
+            return r
+    return None
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Hitting Set Search — Sunflower-Pruned
+# ═══════════════════════════════════════════════════════════════════════════
+
+def sunflower_search(
+    edges: list[frozenset[int]], budget: int, current: frozenset[int],
+    counter: list[int]
+) -> Optional[frozenset[int]]:
+    counter[0] += 1
+    remaining = [e for e in edges if not (e & current)]
+    if not remaining:
+        return current
+    if budget == 0:
+        return None
+    sf = find_sunflower_singleton_core(remaining, budget + 1)
+    if sf is not None:
+        core, _ = sf
+        for v in sorted(core):
+            r = sunflower_search(edges, budget - 1, current | {v}, counter)
+            if r is not None:
+                return r
+        return None
+    uncovered = remaining[0]
+    for v in sorted(uncovered):
+        r = sunflower_search(edges, budget - 1, current | {v}, counter)
+        if r is not None:
+            return r
+    return None
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Demo Runner
+# ═══════════════════════════════════════════════════════════════════════════
+
+def run_demo():
+    print("=" * 72)
+    print("  SUNFLOWER PRUNING FOR PYTHAGOREAN HYPERGRAPHS")
+    print("  Demonstrating arithmetic structure → search collapse")
+    print("=" * 72)
+
+    test_values = [50, 100, 200, 500]
+
+    # ── Part 1: Hypergraph Structure ──────────────────────────────────────
+    print("\n┌─────────────────────────────────────────────────────────────┐")
+    print("│  PART 1: Pythagorean Hypergraph Structure                  │")
+    print("└─────────────────────────────────────────────────────────────┘")
+    print(f"{'n':>6} │ {'|E|':>7} │ {'max deg':>8} │ {'vertex':>6} │ {'3|E|/n':>8} │ {'max SF':>6}")
+    print("───────┼─────────┼──────────┼────────┼──────────┼────────")
+
+    edge_data = {}
+    for n in test_values:
         edges = pythagorean_edges(n)
-        print(f"  H_{n:>3}: {len(edges):>5} edges")
-        if n <= 25:
-            for e in sorted(sorted(e) for e in edges):
-                print(f"    {e}")
+        edge_data[n] = edges
+        deg = vertex_degrees(edges, n)
+        if not deg:
+            print(f"{n:>6} │ {0:>7} │ {'—':>8} │ {'—':>6} │ {'—':>8} │ {'—':>6}")
+            continue
 
-    print("\n  Growth rate: edges grow roughly as Θ(n² / log n)")
+        max_v = max(deg, key=deg.get)
+        max_d = deg[max_v]
+        avg_bound = 3 * len(edges) / n if n > 0 else 0
 
+        # Find max sunflower around top vertex
+        inc = [e for e in edges if max_v in e]
+        sf: list[frozenset[int]] = []
+        for e in inc:
+            if all(e & f == frozenset({max_v}) for f in sf):
+                sf.append(e)
+        sf_size = len(sf)
 
-def demo_double_counting():
-    """Verify the incidence double-counting identity: ∑ deg(v) = 3·|E|."""
-    separator("2. INCIDENCE DOUBLE-COUNTING IDENTITY")
-    print("  Theorem: For any 3-uniform hypergraph H on vertex set V,")
-    print("           ∑_{v ∈ V} deg(v) = 3 · |E|")
-    print()
+        print(f"{n:>6} │ {len(edges):>7} │ {max_d:>8} │ {max_v:>6} │ {avg_bound:>8.1f} │ {sf_size:>6}")
 
-    for n in [50, 100, 200]:
-        edges = pythagorean_edges(n)
-        profile = degree_profile(edges, n)
-        incidence_sum = sum(profile.values())
+    # ── Part 2: Incidence Double-Counting Verification ────────────────────
+    print("\n┌─────────────────────────────────────────────────────────────┐")
+    print("│  PART 2: Verified Incidence Identity ∑ deg(v) = 3·|E|      │")
+    print("└─────────────────────────────────────────────────────────────┘")
+    for n in test_values:
+        edges = edge_data[n]
+        deg = vertex_degrees(edges, n)
+        deg_sum = sum(deg.values())
         three_E = 3 * len(edges)
-        match = "✓" if incidence_sum == three_E else "✗"
-        print(f"  n={n:>3}: ∑ deg(v) = {incidence_sum:>5},  3·|E| = {three_E:>5}  [{match}]")
+        status = "✓ VERIFIED" if deg_sum == three_E else "✗ FAILED"
+        print(f"  n={n:>4}: ∑ deg(v) = {deg_sum:>6},  3·|E| = {three_E:>6}  [{status}]")
 
+    # ── Part 3: Search Comparison ─────────────────────────────────────────
+    print("\n┌─────────────────────────────────────────────────────────────┐")
+    print("│  PART 3: Naive vs Sunflower-Pruned Transversal Search      │")
+    print("└─────────────────────────────────────────────────────────────┘")
 
-def demo_large_degree_vertex():
-    """Demonstrate the averaging argument: existence of high-degree vertices."""
-    separator("3. HIGH-DEGREE VERTEX EXISTENCE (AVERAGING)")
-    print("  Theorem: ∃ v ∈ {1,...,n} with deg(v) ≥ 3·|E|/n")
-    print()
+    # Use small k values and moderate n to keep runtime manageable
+    test_cases = [(50, 5), (50, 6), (100, 5), (100, 6)]
 
-    for n in [50, 100, 200]:
-        edges = pythagorean_edges(n)
-        v, d = max_degree_vertex(edges, n)
-        avg_bound = 3 * len(edges) / n
-        print(f"  n={n:>3}: max deg = {d:>3} (vertex {v:>3}),  "
-              f"avg bound = {avg_bound:.1f},  ratio = {d / avg_bound:.2f}x")
+    print(f"{'(n,k)':>10} │ {'naive calls':>12} │ {'SF calls':>12} │ {'ratio':>8} │ {'gain':>8}")
+    print("───────────┼──────────────┼──────────────┼──────────┼─────────")
 
+    for n, k in test_cases:
+        edges = edge_data.get(n, pythagorean_edges(n))
 
-def demo_sunflower_detection():
-    """Detect sunflowers in the Pythagorean hypergraph."""
-    separator("4. SUNFLOWER DETECTION")
-    print("  Looking for sunflowers (Δ-systems) with singleton cores...")
-    print()
+        # Naive search
+        counter_n = [0]
+        t0 = time.time()
+        result_n = naive_search(edges, k, frozenset(), counter_n)
+        t_naive = time.time() - t0
 
-    for n in [50, 100, 200]:
-        edges = pythagorean_edges(n)
+        # Sunflower search
+        counter_s = [0]
+        t0 = time.time()
+        result_s = sunflower_search(edges, k, frozenset(), counter_s)
+        t_sf = time.time() - t0
 
-        for min_petals in [3, 5, 8]:
-            sf = find_sunflower(edges, min_petals)
-            if sf is not None:
-                sf_edges, kernel = sf
-                print(f"  n={n:>3}, petals≥{min_petals}: FOUND "
-                      f"(kernel={set(kernel)}, {len(sf_edges)} petals)")
-                if n <= 100 and min_petals <= 3:
-                    for e in sf_edges[:5]:
-                        print(f"    edge: {sorted(e)}")
-            else:
-                print(f"  n={n:>3}, petals≥{min_petals}: not found")
+        cn, cs = counter_n[0], counter_s[0]
+        ratio = cn / cs if cs > 0 else float('inf')
+        gain = (1 - cs / cn) * 100 if cn > 0 else 0
 
+        print(f"  ({n},{k}){' ' * (5 - len(str(n)) - len(str(k)))} │ {cn:>12,} │ {cs:>12,} │ {ratio:>7.1f}x │ {gain:>6.1f}%")
 
-def demo_overlap_analysis():
-    """Analyze overlap structure around high-degree vertices."""
-    separator("5. OVERLAP STRUCTURE ANALYSIS")
+    # ── Part 4: Sunflower Core Statistics ─────────────────────────────────
+    print("\n┌─────────────────────────────────────────────────────────────┐")
+    print("│  PART 4: Sunflower Core Statistics (Overlap Concentration) │")
+    print("└─────────────────────────────────────────────────────────────┘")
 
-    for n in [50, 100, 200]:
-        edges = pythagorean_edges(n)
-        analysis = overlap_analysis(edges, n)
-        v = analysis["max_vertex"]
-        print(f"  n={n}: vertex {v}, degree {analysis['max_degree']}")
-        print(f"    Pairwise intersection sizes among incident edges:")
-        for sz, count in sorted(analysis["pairwise_intersection_sizes"].items()):
-            print(f"      |e₁ ∩ e₂| = {sz}: {count} pairs")
-        print()
-
-
-def demo_transversal_search():
-    """Compare naive vs. sunflower-pruned transversal search."""
-    separator("6. TRANSVERSAL SEARCH: NAIVE vs. SUNFLOWER-PRUNED")
-
-    results = []
-
-    for n in [25, 50, 100]:
-        edges = pythagorean_edges(n)
-        # Find a reasonable k by binary search
-        k = 1
-        while True:
-            result, _ = naive_transversal_search(edges, k)
-            if result is not None:
-                break
-            k += 1
-            if k > 12:
-                break
-
-        if k > 12:
-            print(f"  n={n}: minimum transversal too large, skipping")
+    for n in [100, 200, 500]:
+        edges = edge_data.get(n, pythagorean_edges(n))
+        deg = vertex_degrees(edges, n)
+        if not deg:
             continue
 
-        # Run both searches at budget k and k+1 for comparison
-        for budget in [k, k + 1]:
-            naive_result, naive_calls = naive_transversal_search(edges, budget)
-            sf_result, sf_calls = sunflower_transversal_search(edges, budget)
-            gain = pruning_gain(naive_calls, sf_calls)
-            results.append((n, budget, naive_calls, sf_calls, gain))
-            print(f"  n={n:>3}, k={budget}: "
-                  f"naive={naive_calls:>8} calls, "
-                  f"sunflower={sf_calls:>8} calls, "
-                  f"gain={gain:>6.1%}")
+        # Top-5 vertices by degree
+        top5 = sorted(deg, key=lambda v: -deg[v])[:5]
+        print(f"\n  n = {n} ({len(edges)} edges)")
+        print(f"  {'vertex':>8} │ {'degree':>7} │ {'sunflower size':>14} │ {'core':>6}")
+        print(f"  {'─'*8}─┼─{'─'*7}─┼─{'─'*14}─┼─{'─'*6}")
 
-    return results
+        for v in top5:
+            inc = [e for e in edges if v in e]
+            sf: list[frozenset[int]] = []
+            for e in inc:
+                if all(e & f == frozenset({v}) for f in sf):
+                    sf.append(e)
+            print(f"  {v:>8} │ {deg[v]:>7} │ {len(sf):>14} │ {{{v}}}")
 
-
-def demo_theoretical_bounds():
-    """Show theoretical recursive call bounds."""
-    separator("7. THEORETICAL RECURSIVE CALL BOUNDS")
-    print("  Naive (r=3): r^k = 3^k")
-    print("  Sunflower with singleton core (s=1): s^k = 1^k = 1")
-    print("  Sunflower with pair core (s=2): s^k = 2^k")
-    print()
-
+    # ── Part 5: Theoretical Branching Comparison ──────────────────────────
+    print("\n┌─────────────────────────────────────────────────────────────┐")
+    print("│  PART 5: Theoretical Branching: 3^k (naive) vs 1^k (core) │")
+    print("└─────────────────────────────────────────────────────────────┘")
+    print(f"  {'k':>4} │ {'3^k (naive)':>14} │ {'1^k (SF core)':>14} │ {'ratio':>10}")
+    print(f"  {'─'*4}─┼─{'─'*14}─┼─{'─'*14}─┼─{'─'*10}")
     for k in range(1, 11):
-        naive = recursive_calls_naive(3, k)
-        sf1 = recursive_calls_sunflower(1, k)
-        sf2 = recursive_calls_sunflower(2, k)
-        print(f"  k={k:>2}: naive=3^k={naive:>8},  "
-              f"sf(s=1)=1^k={sf1:>1},  "
-              f"sf(s=2)=2^k={sf2:>6},  "
-              f"gain(s=1)={1 - sf1 / naive:.1%},  "
-              f"gain(s=2)={1 - sf2 / naive:.1%}")
+        naive = 3 ** k
+        sf_val = 1
+        print(f"  {k:>4} │ {naive:>14,} │ {sf_val:>14} │ {naive:>10,}x")
+
+    print("\n" + "=" * 72)
+    print("  CONCLUSION: Arithmetic structure of Pythagorean triples creates")
+    print("  high-degree vertices with large singleton-core sunflowers,")
+    print("  enabling exponential search-tree compression via sunflower pruning.")
+    print("=" * 72)
 
 
-def demo_conjecture_test():
-    """Test the 90% pruning conjecture."""
-    separator("8. CONJECTURE TEST: 90% PRUNING GAIN")
-    print("  Conjecture: For n ≥ 50, sunflower pruning cuts calls by ≥ 90%")
-    print("  Test: 10 * sunflower_calls ≤ naive_calls")
-    print()
-
-    for n in [25, 50, 100]:
-        edges = pythagorean_edges(n)
-        # Find minimum transversal size
-        k = 1
-        while True:
-            result, _ = naive_transversal_search(edges, k)
-            if result is not None:
-                break
-            k += 1
-            if k > 10:
-                break
-
-        if k > 10:
-            continue
-
-        budget = k + 2  # Give some slack
-        _, naive_calls = naive_transversal_search(edges, budget)
-        _, sf_calls = sunflower_transversal_search(edges, budget)
-        passes = 10 * sf_calls <= naive_calls
-        gain = pruning_gain(naive_calls, sf_calls)
-        status = "PASS ✓" if passes else "FAIL ✗"
-        print(f"  n={n:>3}: naive={naive_calls:>8}, sf={sf_calls:>8}, "
-              f"gain={gain:.1%}, [{status}]")
-
-
-def main():
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║   SUNFLOWER PRUNING FOR PYTHAGOREAN HYPERGRAPHS — DEMO     ║")
-    print("╠══════════════════════════════════════════════════════════════╣")
-    print("║  Exploring how ancient number patterns tame modern          ║")
-    print("║  combinatorial explosion through sunflower compression.     ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
-
-    demo_hypergraph_construction()
-    demo_double_counting()
-    demo_large_degree_vertex()
-    demo_sunflower_detection()
-    demo_overlap_analysis()
-    demo_transversal_search()
-    demo_theoretical_bounds()
-    demo_conjecture_test()
-
-    separator("SUMMARY")
-    print("  The Pythagorean hypergraph exhibits rich overlap structure:")
-    print("  • High-degree vertices exist (by the averaging principle)")
-    print("  • Sunflowers with singleton cores appear naturally")
-    print("  • Sunflower branching provably dominates naive branching")
-    print("  • The arithmetic structure creates forced transversal coordinates")
-    print()
-    print("  All structural theorems verified in the Lean 4 formalization.")
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    run_demo()
