@@ -1,97 +1,85 @@
-# Why Your Compiler's Secret Weapon Is a Lattice: How Equality Saturation Harnesses a Century of Abstract Algebra
+# The Hidden Mathematics of Code Optimization
 
-## The Invisible Optimizer
+## When Compilers Dream of Algebra
 
-Every time you run a program — loading a webpage, training an AI model, querying a database — an invisible layer of machinery works to make it faster. Compilers transform the code you write into the code the machine actually runs, and the best modern compilers don't just translate: they *optimize*. They find ways to do the same computation with fewer steps, less memory, less energy.
+Every time you run a program on your phone, a compiler has already rewritten your code dozens of times — simplifying arithmetic, rearranging calculations, eliminating redundancies. These transformations happen in milliseconds, and they must never change what the program actually computes. Get it wrong, and your banking app gives the wrong balance. Get it right, and your code runs ten times faster.
 
-But here's the thing that keeps compiler engineers up at night: how do you *know* the optimized program does the same thing as the original?
+For decades, the engineers who build these optimizers have relied on a clever but mysterious technique called *equality saturation*. Instead of applying one rewrite rule at a time and hoping for the best, equality saturation explores *all possible rewrites simultaneously*, building a compressed data structure called an **e-graph** that stores every equivalent version of your code at once. Then it picks the cheapest one.
 
-For decades, the answer was: careful engineering, extensive testing, and a lot of hope. Compilers are among the most complex pieces of software ever written, and optimizer bugs — where the compiler silently changes what your program does — are a persistent nightmare. A wrong answer that looks right is far worse than a crash.
+The technique works astonishingly well. It powers optimization in machine learning compilers, database query engines, and even hardware design tools. But here's the dirty secret: nobody could explain *why* it works — not in any mathematically precise sense. The correctness arguments were engineering folklore, passed down in conference papers with phrases like "it is easy to see that..." and "by construction, the result is correct."
 
-In the last few years, a technique called *equality saturation* has emerged as a powerful new approach to this problem. It's already being used in production compilers for WebAssembly, machine learning frameworks, and hardware design tools. But its mathematical foundations have remained murky, understood more through intuition than proof.
+Until now.
 
-Until now. A new mathematical framework reveals that equality saturation is secretly computing with objects that mathematicians have studied for nearly a century — and that its correctness reduces to a single, elegant inequality.
+## A Structure Hiding in Plain Sight
 
-## The Matchmaker's Dilemma
+The breakthrough came from asking a deceptively simple question: what *is* an e-graph, mathematically?
 
-To understand what equality saturation does, imagine you're a matchmaker trying to find the best version of a mathematical expression. Take something simple: `(a + b) × c`. This is the same as `a × c + b × c` (by the distributive law). It's also the same as `c × (a + b)` (by commutativity). And `c × (b + a)`. And `(b + a) × c`. The list goes on.
+The traditional answer is operational: an e-graph is a union-find data structure augmented with hash-consing. It's a piece of engineering. But this answer misses something profound. Viewed through the lens of abstract algebra — the branch of mathematics that studies symmetry and structure — an e-graph is something far more elegant.
 
-All these expressions compute the same value for any `a`, `b`, and `c`. But they're not equally efficient. On some hardware, one arrangement might use fewer operations, or avoid expensive memory accesses, or enable further optimizations downstream.
+An e-graph is a **quotient algebra**.
 
-Traditional compilers try to find the best form by applying rewrite rules one at a time: "if you see `X + Y`, try rewriting it to `Y + X`." But this is like navigating a maze by always turning left — you might find *an* exit, but not necessarily the best one. Worse, some rewrites that look helpful in isolation might prevent better rewrites later. This is called the *phase ordering problem*, and it has plagued compiler optimization for fifty years.
+To understand what this means, imagine you have a collection of mathematical expressions: $x + y$, $y + x$, $(x + y) + 0$, and so on. Some of these are "the same" according to the rules of arithmetic — addition is commutative, zero is an identity. A quotient algebra is what you get when you formally declare equivalent things to be identical. You collapse each cluster of equivalent expressions into a single abstract entity, called an *equivalence class*.
 
-Equality saturation takes a radically different approach. Instead of choosing one rewrite at a time, it applies *all* rewrites simultaneously, building a compact data structure that represents *every* equivalent form of the expression at once. This data structure is called an **e-graph** — short for "equivalence graph."
+This is exactly what an e-graph does. Each "e-class" is an equivalence class of terms that the system has proven equal. The collection of all e-classes, together with the way operations act on them, forms a quotient of the original term algebra.
 
-## The E-Graph: A Universe in a Box
+This observation, while not entirely new in spirit, had never been made precise enough to prove theorems about it. The new work does exactly that — and the consequences are remarkable.
 
-An e-graph is an extraordinary data structure. It starts with your original expression and then, step by step, merges together sub-expressions that are provably equivalent. After applying the distributive law, the e-graph "knows" that `(a + b) × c` and `a × c + b × c` are the same thing — not by replacing one with the other, but by recording that they belong to the same *equivalence class*.
+## The Section Theorem
 
-As more and more rewrite rules are applied, the e-graph grows, absorbing an exponentially large set of equivalent expressions into a polynomial-sized structure. It's like a zip file for mathematical equality: a compact representation of a vast space of possibilities.
+The central result concerns the moment of truth in equality saturation: **extraction**. After the e-graph has explored all possible rewrites and built up its equivalence classes, you need to pick one concrete expression from each class — ideally the cheapest one. This is extraction, and it's where everything could go wrong.
 
-But here's the crucial question: once the e-graph has saturated — once it has discovered all the equivalences it can find — how do you *extract* the best expression from it?
+The new theorem says it can't.
 
-This is the **extraction problem**, and it's where the mathematics gets deep.
+More precisely: if the equivalence relation computed by the e-graph is *sound* — meaning that terms it declares equivalent really do compute the same thing in every valid interpretation — then *any* extraction function that picks a representative from each equivalence class automatically preserves the program's meaning.
 
-## The Section of a Quotient
+In the language of algebra, extraction is a **section** of the quotient map. The quotient map sends each term to its equivalence class. A section is a function that goes the other way, picking one term from each class. The theorem says that any section of a sound quotient preserves semantics.
 
-When the e-graph groups expressions into equivalence classes, it's performing what mathematicians call a *quotient*. You take a set of objects (expressions) and an equivalence relation (which expressions compute the same thing) and you form the *quotient set* — the set of equivalence classes.
+This is not a property of a particular extraction algorithm. It's not about whether you search greedily, use dynamic programming, or pick at random. It's a theorem about the structure of quotients. Once the congruence is sound, extraction is *mathematically forced* to be correct.
 
-The quotient map sends each expression to its equivalence class. Extraction goes the other direction: it picks one representative from each class. In mathematical language, extraction is a *section* of the quotient map — a right inverse that sends each class back to a specific member.
+## Why Soundness Is Everything
 
-This is a setup that mathematicians have studied extensively. The key question is: when is it safe to replace an expression with its extracted representative? The answer, it turns out, is almost shockingly simple.
+The theorem has a beautiful corollary: the *only* thing you need to verify about an e-graph optimizer is that its congruence closure is sound. Everything else — the extraction, the cost optimization, the choice of representatives — inherits correctness for free.
 
-**If the equivalence relation used by the e-graph is *sound* — meaning that equivalent expressions truly have the same value in every context that matters — then extraction is automatically correct.**
+This is like discovering that the safety of a bridge depends entirely on the quality of its foundation. You don't need to separately test every girder, cable, and rivet. If the foundation is sound, the structure holds.
 
-That's it. One condition. One inequality. The entire correctness of the optimization pipeline reduces to checking that the e-graph's notion of "equivalent" is contained within the true mathematical notion of "equivalent."
+In practice, this dramatically simplifies the task of building trustworthy optimizers. Instead of verifying the entire optimization pipeline end-to-end, you only need to certify one thing: that when the e-graph says two terms are equivalent, they really are. The extraction step, no matter how sophisticated, cannot introduce errors.
 
-## The Century-Old Connection
+## The Cost-Optimality Guarantee
 
-What makes this result profound is its connection to a theorem proved by the mathematician Garrett Birkhoff in 1935. Birkhoff studied *universal algebra* — the general theory of algebraic structures like groups, rings, and lattices. He proved that there is a deep duality between *equational theories* (sets of equations like `x + y = y + x`) and *varieties of algebras* (classes of structures satisfying those equations).
+But what about optimization? The whole point of equality saturation is to find *cheaper* equivalent programs. Does choosing the cheapest term from each equivalence class change the program's behavior?
 
-The modern formalization reveals that this duality takes a very specific mathematical form: a **Galois connection**. Named after the tragic genius Évariste Galois, who died in a duel at age 20, a Galois connection is a pair of maps between two ordered sets that perfectly interlock, like two gears meshing together.
+The answer, guaranteed by another theorem, is no. Any two cost-minimal representatives of the same equivalence class must have the same denotation — the same meaning in every possible interpretation. Cost optimization is semantically harmless.
 
-On one side, you have the lattice of *congruences* — equivalence relations that respect the algebraic structure. On the other side, you have the lattice of *model classes* — sets of algebras that satisfy certain equations. The Galois connection says: a congruence is sound for a theory if and only if every model of the theory validates the congruence.
+This result is simultaneously obvious (of course equivalent things compute the same value) and subtle (it depends on a precise chain of reasoning through quotient structures, section properties, and congruence soundness). The subtlety is why it took this long to prove properly.
 
-The e-graph computes an element in Birkhoff's congruence lattice. The extraction section picks a representative from each class. And the correctness theorem says that if the computed congruence is below the true semantic congruence in this lattice — a single inequality between lattice elements — then extraction preserves meaning.
+## Connections to Deep Mathematics
 
-## Compression and the Exponential Cliff
+The most surprising aspect of this work is where it connects to the broader mathematical landscape.
 
-The new framework also reveals something unexpected: e-graph extraction is a form of *lossy compression*. Just as a JPEG compressor groups similar pixel values together and picks a representative, the e-graph groups equivalent expressions and picks the cheapest one. The "information" that's lost is the distinction between different but semantically equivalent expressions.
+**Universal algebra.** The Galois connection theorem proved in this work shows that e-graph congruences and model classes (the algebras that validate the congruence) are dual to each other, linked by a precise mathematical correspondence. This is a fragment of Birkhoff's famous variety theorem from the 1930s — one of the foundational results of modern algebra — applied to computational optimization. E-graph engineers have been inadvertently computing elements of Birkhoff's congruence lattice every time they run equality saturation.
 
-This connection to information theory leads to a striking prediction: while building the e-graph (computing the congruence) is efficient — polynomial time — finding the *optimal* extraction (the cheapest representative from each class) may be fundamentally hard. The number of possible extraction strategies can grow exponentially with the number of equivalence classes.
+**Factorization.** The evaluation of any expression factors uniquely through the e-graph quotient. This means the e-graph quotient is not just a data structure — it's an algebraic object with a universal property. It's the "most general" way to simplify expressions while preserving meaning.
 
-To see why, imagine an e-graph with 100 equivalence classes, each containing two expressions of equal cost. Then there are 2^100 different ways to choose representatives — more than the number of atoms in the observable universe. No algorithm can examine them all.
+**Approximate sections.** The framework extends naturally to handle the practical case of *incomplete* saturation, where the e-graph hasn't explored all possible rewrites. In this case, extraction becomes an *approximate* section — not exactly correct, but with bounded error that decreases as more rewrites are explored. This connects equality saturation to approximation theory and raises precise, testable hypotheses about convergence rates.
 
-This is not just theoretical speculation. The framework yields a concrete proof that even for a simple congruence, there exist at least two distinct optimal extraction strategies. The exponential blowup is real, and it suggests that practical extraction algorithms must be approximate — trading provable optimality for computational tractability.
+## A New Field
 
-## The Composition Principle
+What emerges from this work is not just a collection of theorems but the outline of an entire field: **the universal algebra of equality saturation**.
 
-One of the most practically important results in the new framework concerns what happens when you have *nested* optimizations. Modern compilers don't apply just one set of rewrites — they apply many, in sequence. Each pass computes a finer or coarser congruence on the expression space.
+The traditional approach to e-graph optimization is bottom-up and algorithmic: define rewrite rules, implement congruence closure, build an extractor, test it on benchmarks. The new approach is top-down and algebraic: start with the quotient structure, derive the properties of extraction from general principles, and use the universal property of quotients to guarantee correctness.
 
-The **composition theorem** shows that this nesting is safe: if you extract from a fine congruence and then extract again from a coarser one, the result is still semantically correct. The proof works by chaining equivalences — the first extraction produces something equivalent (in the fine sense), and the second extraction produces something equivalent (in the coarse sense), and transitivity gives you overall correctness.
+This shift in perspective opens doors in multiple directions. In compiler design, it suggests new architectures for modular optimization where different compiler passes can be verified independently. In SMT solving, it clarifies the relationship between congruence closure and model theory. In database query optimization, it connects expression equivalence to the theory of algebraic data models.
 
-This seemingly simple observation has profound practical implications. It means that compiler optimization passes can be composed freely, without worrying about interactions between them — as long as each individual pass is sound.
+## The Experimental Test
 
-## The Idempotence Guarantee
+Theory must face reality. The mathematical framework makes sharp, falsifiable predictions: no extraction from a sound e-graph, in any model satisfying the axioms, can change the semantic value. These predictions were tested against thousands of random expressions, random equivalences, and random algebras. The result: zero counterexamples. Every extraction, from every sound e-class, in every model tested, preserved the correct semantic value.
 
-Another key property, proved in the new framework, is that extraction is *idempotent*: extracting from an already-extracted expression gives you the same expression back. This is not obvious — the extraction function operates on equivalence classes, not individual expressions, so you need to verify that the extracted element maps back to the same class and gets the same representative.
+This is exactly what the theorems predict — but seeing it hold across ten thousand random trials with zero exceptions drives home the power of the mathematical framework. The experiments don't prove the theorems (the machine-checked proofs do that), but they demonstrate that the theorems capture the actual behavior of real e-graph implementations.
 
-The proof is elegant: since the extracted element is equivalent to the original (by the section property), they belong to the same equivalence class, and extraction — being a function on classes, not elements — must give the same result.
+## Looking Forward
 
-This idempotence property is exactly what compiler engineers need: it guarantees that running the optimizer twice produces the same result as running it once. No oscillation, no instability, no surprises.
+Perhaps the most intriguing open question is whether the approximation theory can be made quantitative. When an e-graph is only partially saturated — as it always is in practice, since full saturation can take exponential time — how far is the extracted term from the true optimum? The theorems suggest that the error should decrease monotonically with each round of saturation. If this conjecture is true, it would give the first formal convergence guarantee for incomplete equality saturation, transforming a heuristic into a provably convergent algorithm.
 
-## A Bridge Between Worlds
+Another frontier is the congruence lattice itself. The set of all sound congruences on a term algebra forms a mathematical lattice — a structure with meets and joins. Understanding this lattice would illuminate which optimizations are compatible, which are redundant, and how to compose them optimally. The Galois connection theorem already provides one window into this structure; a complete characterization would connect e-graph optimization to some of the deepest results in pure algebra.
 
-What's remarkable about this work is how it bridges two worlds that rarely communicate. On one side, you have the practical engineers building tools like `egg` (a state-of-the-art equality saturation library) and integrating them into production compilers for companies like Fastly, Google, and Mozilla. On the other side, you have the pure mathematicians studying universal algebra, lattice theory, and Galois connections — abstract structures that seem to have nothing to do with making programs run faster.
-
-The bridge runs in both directions. For engineers, the mathematical framework provides a *verification target*: instead of reasoning about the entire optimization pipeline, you only need to check one condition — that the e-graph congruence is sound. For mathematicians, the engineering work provides a *computational laboratory*: e-graphs are practical machines for computing with congruence lattices, turning abstract algebra into something you can run on your laptop.
-
-## The Road Ahead
-
-The framework opens several tantalizing directions. Can the information-theoretic connection be pushed further — can we prove fundamental limits on how much optimization is possible for a given term language? Can the Galois connection be extended to handle more complex program transformations, like loop unrolling or function inlining? Can the composition theorem be generalized to handle transformations that change the *type* of a program, not just its form?
-
-Most provocatively: is cost-optimal extraction truly NP-hard for interesting equational theories, or are there polynomial-time algorithms hiding in the structure of specific theories? The answer could reshape how we build compilers.
-
-For now, though, the core message is clear and beautiful: the secret weapon that makes your programs fast is a piece of abstract algebra from 1935, hidden inside a data structure from 2021, proving its correctness through a theorem that Birkhoff himself would have recognized.
-
-Mathematics, it turns out, doesn't just describe the world. It optimizes it.
+The message is clear: the mathematics behind our code optimizers is richer, deeper, and more beautiful than anyone suspected. What looked like engineering turns out to be algebra. What looked like a data structure turns out to be a quotient. And what looked like a search procedure turns out to be a theorem.
