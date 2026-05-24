@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_2_fractional_predictor_refinement.json",
+    "title": "Fractional Transversal Refinement: LP-Dual Threshold Prediction and Integrality Gap Dynamics",
+    "domain": "Combinatorial Optimization / Hypergraph Theory",
+    "date": "2026-05-24T23:13:42Z",
+    "exp_id": "f6e7fe77",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_3_extension_to_product_and_sum_types.json",
     "title": "The Growth Regime Trichotomy: How Type Constructors Generate Computational Complexity Classes",
     "domain": "Type Theory / Computational Complexity",
     "date": "2026-05-24T23:13:01Z",
     "exp_id": "fee94b6c",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.5431629411764707,
+    "quality": "partial"
   },
   {
     "filename": "direction_5_complexity_of_lorentzian_recognition.json",
@@ -56,6 +65,14 @@ window.PACKAGE_DB_INDEX = {
       "a9d54ec0"
     ],
     "domain": "Algebraic Combinatorics / Complexity Theory"
+  },
+  "direction_2_fractional_predictor_refinement.json": {
+    "title": "Fractional Transversal Refinement: LP-Dual Threshold Prediction and Integrality Gap Dynamics",
+    "exp_id": "f6e7fe77",
+    "source_exp_ids": [
+      "83c7f0bc"
+    ],
+    "domain": "Combinatorial Optimization / Hypergraph Theory"
   }
 };
 
@@ -70,7 +87,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -81,7 +98,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.6423696551724138,
       "quality": "partial"
     },
@@ -92,7 +109,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 90,
+      "hue": 271,
+      "priority_score": 0.5431629411764707,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_2_fractional_predictor_refinement",
+      "title": "Fractional Transversal Refinement: LP-Dual Threshold Prediction and Integrality Gap Dynamics",
+      "domain": "Combinatorial Optimization / Hypergraph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-24T23:13:42Z",
+      "hue": 271,
       "priority_score": null,
       "quality": "unrated"
     }
@@ -157,22 +185,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.302055+00:00"
   },
   {
-    "id": "seed_095",
-    "title": "Topological Quantum Error Correction from Homological Persistence",
-    "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
-    "domains": [
-      "Physics",
-      "Topology",
-      "Computation"
-    ],
-    "priority_score": 0.95,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.057726+00:00"
-  },
-  {
     "id": "seed_014",
     "title": "Hodge Conjecture",
     "description": "Prove that every Hodge class on a non-singular projective algebraic variety is a rational linear combination of classes of algebraic cycles. Formalize the Hodge decomposition and explore the conjecture for specific varieties like abelian varieties and K3 surfaces.",
@@ -218,22 +230,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.411437+00:00"
   },
   {
-    "id": "seed_096",
-    "title": "Neural Network Training as Renormalization Group Flow",
-    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
-    "domains": [
-      "MachineLearning",
-      "Physics",
-      "Analysis"
-    ],
-    "priority_score": 0.94,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.066174+00:00"
-  },
-  {
     "id": "seed_004",
     "title": "Twin Prime Conjecture",
     "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
@@ -277,37 +273,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.574939+00:00"
-  },
-  {
-    "id": "seed_099",
-    "title": "Self-Referential Type Theory: Proofs That Modify Their Own Specifications",
-    "description": "The key insight is that Godel's incompleteness arises because a formal system cannot prove statements about itself \u2014 but a TYPE SYSTEM can. Construct a dependent type theory where types can refer to their own terms, creating a system where proofs can modify the specifications they are proving. Conjecture: There exists a consistent type theory T in which the type Type : Type is stratified by a self-reference level, and T can prove its own consistency within each level. The stratification prevents the paradox: Type_n : Type_{n+1} allows self-reference at level n without contradiction at level n+1. Why now: homotopy type theory has shown that types can be spaces, and the univalence axiom provides a principled way to equate equivalent types. Self-referential types are the natural next step. Test: formalize a type theory where terms can modify type specifications, prove that it is consistent by constructing a model in the category of globular sets, and show that Godel's incompleteness theorem does not apply because the stratification prevents diagonalization. Impact: a new foundation for mathematics where proofs can evolve their own specifications, enabling self-improving formal systems.",
-    "domains": [
-      "Logic",
-      "Algebra",
-      "Speculative"
-    ],
-    "priority_score": 0.92,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.097627+00:00"
-  },
-  {
-    "id": "seed_056",
-    "title": "Self-Modifying Research via Reflective Type Theory",
-    "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "priority_score": 0.91,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.707683+00:00"
   },
   {
     "id": "seed_104",
@@ -373,22 +338,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.953715+00:00"
   },
   {
-    "id": "seed_102",
-    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization",
-    "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
-    "domains": [
-      "Physics",
-      "Topology",
-      "MachineLearning"
-    ],
-    "priority_score": 0.9,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:55.127465+00:00"
-  },
-  {
     "id": "seed_003",
     "title": "Hadamard Matrix Conjecture",
     "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
@@ -416,38 +365,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.378958+00:00"
-  },
-  {
-    "id": "seed_043",
-    "title": "Certified Adversarial Robustness via Sheaf Cohomology",
-    "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Bridges"
-    ],
-    "priority_score": 0.88,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.613489+00:00"
-  },
-  {
-    "id": "seed_068",
-    "title": "EML Single Operator Church-Turing Thesis",
-    "description": "Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos, exp, log, polynomials) by showing each reduces to EML compositions. If true, this means a single EML neuron (exp+log) is computationally universal.",
-    "domains": [
-      "EML",
-      "Computation",
-      "Logic"
-    ],
-    "priority_score": 0.88,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.808552+00:00"
   },
   {
     "id": "seed_089",
@@ -652,38 +569,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.537163+00:00"
   },
   {
-    "id": "seed_046",
-    "title": "EML Universal Approximation",
-    "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
-    "domains": [
-      "EML",
-      "MachineLearning",
-      "Algebra"
-    ],
-    "priority_score": 0.85,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.634081+00:00"
-  },
-  {
-    "id": "seed_062",
-    "title": "Holographic Mathematics: Bulk-Boundary Proof Duality",
-    "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
-    "domains": [
-      "Physics",
-      "Algebra",
-      "Speculative"
-    ],
-    "priority_score": 0.85,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.756189+00:00"
-  },
-  {
     "id": "seed_075",
     "title": "Stereographic Neural Attention: Attention via Riemann Sphere",
     "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
@@ -794,22 +679,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.764550+00:00"
   },
   {
-    "id": "seed_071",
-    "title": "EML Training Dynamics as Tropical Gradient Flow",
-    "description": "Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize the tropical loss. Test: prove convergence for a single EML neuron trained on 3 data points in the tropical limit. Impact: bridges neural network optimization and tropical geometry.",
-    "domains": [
-      "EML",
-      "Tropical",
-      "MachineLearning"
-    ],
-    "priority_score": 0.84,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.835896+00:00"
-  },
-  {
     "id": "seed_093",
     "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry",
     "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
@@ -868,38 +737,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.567677+00:00"
-  },
-  {
-    "id": "seed_044",
-    "title": "Spectral Graph Theory Meets Network Robustness",
-    "description": "Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Geometry"
-    ],
-    "priority_score": 0.83,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.619910+00:00"
-  },
-  {
-    "id": "seed_072",
-    "title": "EML Quantum Activation Functions",
-    "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
-    "domains": [
-      "EML",
-      "Physics",
-      "MachineLearning"
-    ],
-    "priority_score": 0.83,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.845249+00:00"
   },
   {
     "id": "seed_010",
@@ -993,22 +830,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.748891+00:00"
   },
   {
-    "id": "seed_073",
-    "title": "EML Category: The Category of EML-Computable Maps",
-    "description": "Define the category EML_Comp where objects are R^n and morphisms are functions computable by finite EML compositions (exp, log, +, *, constants). Conjecture: EML_Comp is a Cartesian closed category with natural numbers object R (the reals). Test: prove closure under composition (trivial), products (pairing), and exponentials (currying via EML parameter sharing). Impact: puts EML computation on firm categorical foundations.",
-    "domains": [
-      "EML",
-      "Algebra",
-      "Logic"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.854005+00:00"
-  },
-  {
     "id": "seed_011",
     "title": "Perfect Cuboid (Euler Brick)",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -1039,22 +860,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.520566+00:00"
   },
   {
-    "id": "seed_064",
-    "title": "Strange Attractors as Algebraic Objects",
-    "description": "Treat chaotic attractors (Lorenz, Henon, Rossler) as algebraic objects \u2014 not just numerical phenomena. Conjecture: The Lorenz attractor's topology can be characterized as the inverse limit of a specific diagram in the category of finite directed graphs. Test: compute the inverse limit and compare its Cech cohomology to the known Lorenz template. Impact: if true, chaotic dynamics become amenable to algebraic topology and category-theoretic methods.",
-    "domains": [
-      "Analysis",
-      "Algebra",
-      "Speculative"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.771675+00:00"
-  },
-  {
     "id": "fd_0789",
     "title": "Arithmetic Phase Transitions in Proof Search via p-adic Energy Landscapes",
     "description": "Conjecture: For any finitely presented first-order theory T and any fixed automated proof system P, there exists a canonically defined p-adic proof energy E_p on partial derivations such that the distribution of successful proof trajectories exhibits a sharp phase transition at a critical prime-dependent inverse temperature beta_p; moreover, theories with non-isomorphic arithmetic content have distinct critical spectra {beta_p}_p. Test: Define E_p from valuation growth of denominators, coefficient heights, and modular obstruction data along proof states; run controlled proof search on benchmark theories (group theory, number theory, algebraic geometry fragments) under Gibbs-biased sampling exp(-beta E_p), estimate success probability as a function of beta and p, and check whether (1) a statistically sharp threshold exists and (2) the resulting critical spectrum classifies theories better than standard syntactic features. Refutation occurs if no reproducible threshold appears or if spectra fail to distinguish arithmetic structure beyond trivial size effects. Impact: This would introduce a new measurable invariant of mathematical theories, connect automated reasoning with arithmetic geometry and statistical mechanics, and suggest temperature-tuned theorem provers that exploit hidden number-theoretic structure in proof space.",
@@ -1083,6 +888,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:30.270617+00:00"
+  },
+  {
+    "id": "fd_0798",
+    "title": "Proof-Length Phase Transition for Random Quotients of Arithmetic Groups",
+    "description": "Conjecture: Let G_n be a family of arithmetic groups with natural finite presentations (for example SL_k(Z/NZ) or congruence quotients of SL_k(Z)), and let R_m be m additional relators sampled uniformly from words of length at most L in the generators. There exists a sharp threshold function m_c(n,L) such that with high probability, the shortest proof in a fixed sound proof system that G_n/<<R_m>> is trivial drops from superpolynomial length to polynomial length when m crosses m_c, while below threshold the quotient remains nontrivial and every such triviality proof requires superpolynomial length. Test: For increasing n,L, generate random quotients, measure empirical triviality probability and minimal certificate/proof lengths in formal systems or bounded proof calculi, and check for finite-size scaling around a common threshold; refutation occurs if no sharp threshold or no correlated proof-length collapse is observed. Impact: This would connect geometric group theory, random groups, and proof complexity, giving a concrete statistical-mechanical model for when algebraic structure becomes algorithmically easy to collapse, and could inspire new hardness benchmarks for theorem provers.",
+    "domains": [
+      "Geometric Group Theory",
+      "Proof Complexity"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:13:13.815028+00:00"
   },
   {
     "id": "seed_026",

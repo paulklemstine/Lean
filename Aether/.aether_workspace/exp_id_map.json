@@ -524,5 +524,6 @@
   "a5d7efda": "direction_2_separator_aware_forgetting_dominates_a.json",
   "2d14ce54": "direction_4_primewise_decomposition_and_improved_c.json",
   "33261812": "direction_5_complexity_of_lorentzian_recognition.json",
-  "fee94b6c": "direction_3_extension_to_product_and_sum_types.json"
+  "fee94b6c": "direction_3_extension_to_product_and_sum_types.json",
+  "f6e7fe77": "direction_2_fractional_predictor_refinement.json"
 }

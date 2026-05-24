@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_5_complexity_of_lorentzian_recognition",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_3_extension_to_product_and_sum_types",
@@ -25,7 +25,16 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 90
+      "hue": 271
+    },
+    {
+      "id": "direction_2_fractional_predictor_refinement",
+      "title": "Fractional Transversal Refinement: LP-Dual Threshold Prediction and Integrality Gap Dynamics",
+      "domain": "Combinatorial Optimization / Hypergraph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-24T23:13:42Z",
+      "hue": 271
     }
   ],
   "edges": [],
