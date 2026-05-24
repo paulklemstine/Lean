@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Probe Complexity / Cohomological Information Theory",
     "date": "2026-05-24T19:54:52Z",
     "exp_id": "b3d8e1fb",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.5655015013404827,
+    "quality": "partial"
   },
   {
     "filename": "direction_3_coalgebraic_final_semantics.json",
@@ -7009,8 +7009,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-24T19:54:52Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.5655015013404827,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -8651,10 +8651,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "88ddcb11",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2269ca9",
     "timestamp": "2026-05-21T13:14:13.518997+00:00"
   },
   {
@@ -8868,10 +8868,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "11db42eb",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "73d0d4b0",
     "timestamp": "2026-05-22T16:05:51.176745+00:00"
   },
   {
@@ -9944,10 +9944,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d2dfe412",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "021331cd",
     "timestamp": "2026-05-24T07:48:03.169425+00:00"
   },
   {
@@ -10466,27 +10466,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "964b5789",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T17:30:48.574829+00:00"
-  },
-  {
-    "id": "fd_0737",
-    "title": "Direction 4: Derived Compression Invariants",
-    "description": "**Conjecture:** There exist higher compression invariants \u03ba\u207f(J, F) for n \u2265 1, generalizing \u03ba = \u03ba\u2070, that form a long exact sequence:\n```\n... \u2192 \u03ba\u207f(A) \u2192 \u03ba\u207f(B) \u2192 \u03ba\u207f(Q) \u2192 \u03ba\u207f\u207a\u00b9(A) \u2192 ...\n```\nfor each short exact sequence 0 \u2192 A \u2192 B \u2192 Q \u2192 0 of presheaves.\n\n**Test:** Define \u03ba\u00b9 as the \"compression defect of the extension\": \u03ba\u00b9(A \u2192 B \u2192 Q) = \u03ba(A) + \u03ba(Q) - \u03ba(B). Check whether \u03ba\u00b9 satisfies its own long exact sequence on small examples. If not, attempt to modify the definition to achieve exactness.\n\n**Impact:** This would establish a full cohomological theory of information complexity, with sheaf compression as the H\u2070 and higher invariants measuring the cost of consistency checking across overlapping data.\n\n**Catalog References:**\n- `Pythagorean/ProbeComplexity/CompressionFiltration.lean` \u2014 `compressionDefect`\n- `Catalog/Pythagorean/ProbeComplexity/CoproductSubadditivity.lean` \u2014 `compressionDefect_nonneg`\n\n**Proof Strategy:** Model after the definition of derived functors via projective/injective resolutions. The key challenge is defining \u03ba\u207f intrinsically (not just as a defect of the previous level) and showing functoriality.\n\n**Domain Bridges:** Homological algebra (derived functors), algebraic topology (cohomology), quantum information theory (higher-order entanglement measures).\n\n**Lineage:** Grand challenge building on the entire compression framework.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if achievable; currently speculative but falsifiable through small examples.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "964b5789",
-    "consumed_by_exp_id": "b3d8e1fb",
-    "timestamp": "2026-05-24T17:30:48.671230+00:00"
   },
   {
     "id": "fd_0739",
