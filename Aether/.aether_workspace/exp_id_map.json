@@ -500,5 +500,6 @@
   "26796a9b": "direction_1_exponential_convergence_via_spectral_g.json",
   "e1f2d4e0": "direction_1_optimal_generator_bounds.json",
   "1e04b63c": "direction_2_tight_type_complexity_bounds.json",
-  "c65efb7d": "direction_3_weighted_graph_defect_formula.json"
+  "c65efb7d": "direction_3_weighted_graph_defect_formula.json",
+  "280f8cd0": "direction_1_contractivity_of_evaluation_strategies.json"
 }
