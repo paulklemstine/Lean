@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Representation Theory",
     "date": "2026-05-25T08:04:16Z",
     "exp_id": "561cc547",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7273700000000001,
+    "quality": "substantial"
   },
   {
     "filename": "symmetric_group_generation_probability.json",
@@ -513,8 +513,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-25T08:04:16Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7273700000000001,
+      "quality": "substantial"
     }
   ],
   "edges": [
@@ -1190,6 +1190,84 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T02:10:32.381941+00:00"
   },
   {
+    "id": "fd_0841",
+    "title": "Direction 2: Filtration Persistence Formula",
+    "description": "**Conjecture**: For an increasing filtration S\u2080 \u2286 S\u2081 \u2286 ... \u2286 S_m \u2286 V \\ {q}, the sequence of tropical kernel dimensions dim_trop(ker_trop(L_{S_k})) satisfies:\n\n  dim(S_{k+1}) - dim(S_k) = (number of new cycles born) + (number of new q-visible components born) - (number of component merges destroying q-invisible components)\n\nMoreover, the \"barcode\" of tropical kernel dimensions is completely determined by the births and deaths of cycles and q-visible components in the filtration.\n\n**Test**: Enumerate all increasing filtrations on connected graphs with n \u2264 6 vertices. For each filtration, compute the dimension sequence and compare to the predicted birth/death events. Verify the persistence formula matches in all cases.\n\n**Impact**: Creates a new invariant \u2014 the **tropical persistence barcode** \u2014 that combines topological persistence (like standard persistent homology) with algebraic structure (tropical linear algebra). This could provide strictly finer invariants than classical persistent homology for weighted networks.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedCycleRank, qVisibleComponentCount), `Pythagorean/TropicalBridge/UniversalDefect.lean` (universalDefect_eq).\n\n**Proof Strategy**: Induction on filtration length. At each step, adding a vertex v to S either:\n(a) connects to an existing component (no new cycle, no new component),\n(b) forms a bridge to q (new q-visible component),\n(c) closes a cycle (new cycle mode), or\n(d) merges two components.\nTrack each case and verify the dimension change formula.\n\n**Domain Bridges**: Tropical algebra \u2194 topological data analysis, computational topology \u2194 network science.\n\n**Lineage**: Directly extends the dimension formula to parameterized families, building on `inducedCycleRank_eq_zero_of_forest` for the tree base case.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new persistent tropical homology theory)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.277308+00:00"
+  },
+  {
+    "id": "fd_0842",
+    "title": "Direction 3: Weighted Extension",
+    "description": "**Conjecture**: For weighted graphs with edge weights w : E \u2192 \u2124 (or more generally w : E \u2192 \u211d), the tropical kernel dimension formula generalizes to:\n\n  dim_trop(ker_trop(L_S^w)) = \u03b2\u2081^w(G[S]) + \u03ba^w(G,q,S)\n\nwhere \u03b2\u2081^w counts the number of \"weight-compatible\" independent cycles (cycles where the minimum-weight edge is achieved at least twice) and \u03ba^w counts q-visible components whose connection to q has \"generic\" weight.\n\nFor generic weights (no weight coincidences), \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula. For degenerate weights, the dimension can increase due to additional coincidences.\n\n**Test**: Sample 10000 weighted graphs on n \u2264 6 vertices with weights drawn from {1, 2, ..., 10}. For each, compute the tropical kernel dimension by direct enumeration and compare to the predicted \u03b2\u2081^w + \u03ba^w. Identify the precise weight-degeneracy conditions that cause the formula to differ from the unweighted case.\n\n**Impact**: Extends tropical graph Hodge theory to the setting relevant for applications (communication networks, transportation networks, molecular graphs all have weighted edges). Would connect to tropical geometry's theory of valuated matroids.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (TropicalVal, tropMul), `Pythagorean/TropicalBridge/TropicalHodge.lean` (cycleIndicator, componentIndicator).\n\n**Proof Strategy**: Modify the cycle and component indicator constructions to account for edge weights. The key insight is that the tropical kernel condition becomes weight-dependent: for row i, the minimum of w(i,j) + v(j) over neighbors j must be achieved twice. Weight-compatible cycles are those where the indicator vector, adjusted by cumulative weights, still satisfies this condition.\n\n**Domain Bridges**: Tropical geometry \u2194 optimization (weighted matching), network science \u2194 statistical physics (Boltzmann weights).\n\n**Lineage**: Generalizes `componentIndicator_mem_tropicalKernel` from unit weights to arbitrary weights.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 natural generalization with clear proof path)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "efbbd353",
+    "timestamp": "2026-05-25T03:05:35.300943+00:00"
+  },
+  {
+    "id": "fd_0843",
+    "title": "Direction 4: Relative Tropical Hodge Theorem",
+    "description": "**Conjecture**: The tropical kernel of L_S is naturally isomorphic (as a tropical semi-module) to a relative tropical homology group:\n\n  ker_trop(L_S) \u2245 H\u2081^trop(G[S \u222a {q}], {q})\n\nwhere H\u2081^trop denotes the first tropical homology of the pair (G[S \u222a {q}], {q}), defined via a tropical chain complex using the incidence matrix of the graph.\n\n**Test**: Define the tropical chain complex C\u2080 \u2192 C\u2081 for the graph G[S \u222a {q}] with boundary map given by the incidence matrix. Compute H\u2081^trop(G[S \u222a {q}], {q}) = ker(\u2202\u2081^trop) / im(\u2202\u2080^trop) for all connected graphs on n \u2264 6. Verify isomorphism with the tropical kernel of L_S.\n\n**Impact**: This would be the foundational theorem connecting tropical linear algebra to tropical homology theory. It would justify calling the dimension formula a \"Hodge theorem\" by providing the precise homological interpretation. Opens the door to higher-dimensional tropical Hodge theory on simplicial complexes.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedSubgraph, tropicalKernel), `Pythagorean/TropicalBridge/TropicalHodge.lean` (structural theorems).\n\n**Proof Strategy**: Factor the Laplacian as L = \u2202\u1d40\u2202 (incidence factorization) in the tropical setting. Show that the tropical kernel of L_S corresponds to tropical 1-cycles that are boundaries from the q-side, i.e., relative 1-cycles. The cycle generators correspond to absolute 1-cycles (homology of G[S]), while the component generators correspond to relative 0-boundaries (paths from q to components).\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic topology (simplicial homology), combinatorics \u2194 algebraic geometry (tropical varieties).\n\n**Lineage**: Provides the theoretical foundation for all other directions, upgrading the dimension formula from a counting theorem to a structural isomorphism.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 would establish tropical Hodge theory as a subject)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.321656+00:00"
+  },
+  {
+    "id": "fd_0844",
+    "title": "Direction 5: Chip-Firing Correspondence",
+    "description": "**Conjecture**: Tropical kernel generators of L_S correspond to equivalence classes of \"balanced\" divisor deformations supported on S in the sense of Baker-Norine chip-firing theory. Specifically:\n\n  ker_trop(L_S) \u2245 { D \u2208 Div\u2070(G) : supp(D) \u2286 S, D is q-reduced and balanced }\n\nwhere \"balanced\" means every vertex fires at most to neighbors achieving the same potential, and the quotient is by tropical scaling.\n\n**Test**: For all connected graphs on n \u2264 6, compute:\n(a) The tropical kernel dimension via the formula,\n(b) The number of independent balanced q-reduced divisors supported on S.\nCompare dimensions and identify the explicit bijection between kernel generators and divisor classes.\n\n**Impact**: Connects tropical graph Hodge theory to one of the most active areas of combinatorial algebraic geometry. The Baker-Norine theorem gives a Riemann-Roch theorem for graphs; this conjecture would provide the Hodge-theoretic complement. Could lead to new algorithms for computing the Jacobian group of a graph.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernelProp \u2014 the balanced condition), `Pythagorean/TropicalBridge/TropicalHodge.lean` (tropicalKernel_leaf_eq \u2014 propagation along edges mirrors chip-firing).\n\n**Proof Strategy**: The leaf propagation lemma (`tropicalKernel_leaf_eq`) already shows that kernel vectors satisfy v(i) = v(j) along tree edges, which is exactly the condition for a divisor to be q-reduced on trees. Extend this to graphs with cycles by showing that the cycle generators correspond to the \"circuit divisors\" in chip-firing theory. The q-visible component generators correspond to \"lending\" operations from q to components.\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic geometry (divisor theory), combinatorics \u2194 number theory (arithmetic geometry of curves).\n\n**Lineage**: Extends `tropicalKernel_leaf_eq` and `tropicalKernel_edge_constant` to the full chip-firing dictionary.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 bridges two deep theories)",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.340182+00:00"
+  },
+  {
     "id": "seed_026",
     "title": "Lehmer's Mahler Measure Problem",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
@@ -1277,6 +1355,36 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.395345+00:00"
+  },
+  {
+    "id": "seed_051",
+    "title": "Tropical Intersection Theory",
+    "description": "Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical B\u00e9zout theorem with explicit bounds.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "priority_score": 0.9199999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.672853+00:00"
+  },
+  {
+    "id": "fd_0806",
+    "title": "Tropical Shadow of p-adic Persistent Homology",
+    "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
+    "domains": [
+      "Topological Data Analysis",
+      "Tropical Geometry"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:26:01.272574+00:00"
   },
   {
     "id": "fd_0847",
@@ -1412,84 +1520,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:05:35.257371+00:00"
   },
   {
-    "id": "fd_0841",
-    "title": "Direction 2: Filtration Persistence Formula",
-    "description": "**Conjecture**: For an increasing filtration S\u2080 \u2286 S\u2081 \u2286 ... \u2286 S_m \u2286 V \\ {q}, the sequence of tropical kernel dimensions dim_trop(ker_trop(L_{S_k})) satisfies:\n\n  dim(S_{k+1}) - dim(S_k) = (number of new cycles born) + (number of new q-visible components born) - (number of component merges destroying q-invisible components)\n\nMoreover, the \"barcode\" of tropical kernel dimensions is completely determined by the births and deaths of cycles and q-visible components in the filtration.\n\n**Test**: Enumerate all increasing filtrations on connected graphs with n \u2264 6 vertices. For each filtration, compute the dimension sequence and compare to the predicted birth/death events. Verify the persistence formula matches in all cases.\n\n**Impact**: Creates a new invariant \u2014 the **tropical persistence barcode** \u2014 that combines topological persistence (like standard persistent homology) with algebraic structure (tropical linear algebra). This could provide strictly finer invariants than classical persistent homology for weighted networks.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedCycleRank, qVisibleComponentCount), `Pythagorean/TropicalBridge/UniversalDefect.lean` (universalDefect_eq).\n\n**Proof Strategy**: Induction on filtration length. At each step, adding a vertex v to S either:\n(a) connects to an existing component (no new cycle, no new component),\n(b) forms a bridge to q (new q-visible component),\n(c) closes a cycle (new cycle mode), or\n(d) merges two components.\nTrack each case and verify the dimension change formula.\n\n**Domain Bridges**: Tropical algebra \u2194 topological data analysis, computational topology \u2194 network science.\n\n**Lineage**: Directly extends the dimension formula to parameterized families, building on `inducedCycleRank_eq_zero_of_forest` for the tree base case.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new persistent tropical homology theory)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.277308+00:00"
-  },
-  {
-    "id": "fd_0842",
-    "title": "Direction 3: Weighted Extension",
-    "description": "**Conjecture**: For weighted graphs with edge weights w : E \u2192 \u2124 (or more generally w : E \u2192 \u211d), the tropical kernel dimension formula generalizes to:\n\n  dim_trop(ker_trop(L_S^w)) = \u03b2\u2081^w(G[S]) + \u03ba^w(G,q,S)\n\nwhere \u03b2\u2081^w counts the number of \"weight-compatible\" independent cycles (cycles where the minimum-weight edge is achieved at least twice) and \u03ba^w counts q-visible components whose connection to q has \"generic\" weight.\n\nFor generic weights (no weight coincidences), \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula. For degenerate weights, the dimension can increase due to additional coincidences.\n\n**Test**: Sample 10000 weighted graphs on n \u2264 6 vertices with weights drawn from {1, 2, ..., 10}. For each, compute the tropical kernel dimension by direct enumeration and compare to the predicted \u03b2\u2081^w + \u03ba^w. Identify the precise weight-degeneracy conditions that cause the formula to differ from the unweighted case.\n\n**Impact**: Extends tropical graph Hodge theory to the setting relevant for applications (communication networks, transportation networks, molecular graphs all have weighted edges). Would connect to tropical geometry's theory of valuated matroids.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (TropicalVal, tropMul), `Pythagorean/TropicalBridge/TropicalHodge.lean` (cycleIndicator, componentIndicator).\n\n**Proof Strategy**: Modify the cycle and component indicator constructions to account for edge weights. The key insight is that the tropical kernel condition becomes weight-dependent: for row i, the minimum of w(i,j) + v(j) over neighbors j must be achieved twice. Weight-compatible cycles are those where the indicator vector, adjusted by cumulative weights, still satisfies this condition.\n\n**Domain Bridges**: Tropical geometry \u2194 optimization (weighted matching), network science \u2194 statistical physics (Boltzmann weights).\n\n**Lineage**: Generalizes `componentIndicator_mem_tropicalKernel` from unit weights to arbitrary weights.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 natural generalization with clear proof path)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.300943+00:00"
-  },
-  {
-    "id": "fd_0843",
-    "title": "Direction 4: Relative Tropical Hodge Theorem",
-    "description": "**Conjecture**: The tropical kernel of L_S is naturally isomorphic (as a tropical semi-module) to a relative tropical homology group:\n\n  ker_trop(L_S) \u2245 H\u2081^trop(G[S \u222a {q}], {q})\n\nwhere H\u2081^trop denotes the first tropical homology of the pair (G[S \u222a {q}], {q}), defined via a tropical chain complex using the incidence matrix of the graph.\n\n**Test**: Define the tropical chain complex C\u2080 \u2192 C\u2081 for the graph G[S \u222a {q}] with boundary map given by the incidence matrix. Compute H\u2081^trop(G[S \u222a {q}], {q}) = ker(\u2202\u2081^trop) / im(\u2202\u2080^trop) for all connected graphs on n \u2264 6. Verify isomorphism with the tropical kernel of L_S.\n\n**Impact**: This would be the foundational theorem connecting tropical linear algebra to tropical homology theory. It would justify calling the dimension formula a \"Hodge theorem\" by providing the precise homological interpretation. Opens the door to higher-dimensional tropical Hodge theory on simplicial complexes.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedSubgraph, tropicalKernel), `Pythagorean/TropicalBridge/TropicalHodge.lean` (structural theorems).\n\n**Proof Strategy**: Factor the Laplacian as L = \u2202\u1d40\u2202 (incidence factorization) in the tropical setting. Show that the tropical kernel of L_S corresponds to tropical 1-cycles that are boundaries from the q-side, i.e., relative 1-cycles. The cycle generators correspond to absolute 1-cycles (homology of G[S]), while the component generators correspond to relative 0-boundaries (paths from q to components).\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic topology (simplicial homology), combinatorics \u2194 algebraic geometry (tropical varieties).\n\n**Lineage**: Provides the theoretical foundation for all other directions, upgrading the dimension formula from a counting theorem to a structural isomorphism.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 would establish tropical Hodge theory as a subject)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.321656+00:00"
-  },
-  {
-    "id": "fd_0844",
-    "title": "Direction 5: Chip-Firing Correspondence",
-    "description": "**Conjecture**: Tropical kernel generators of L_S correspond to equivalence classes of \"balanced\" divisor deformations supported on S in the sense of Baker-Norine chip-firing theory. Specifically:\n\n  ker_trop(L_S) \u2245 { D \u2208 Div\u2070(G) : supp(D) \u2286 S, D is q-reduced and balanced }\n\nwhere \"balanced\" means every vertex fires at most to neighbors achieving the same potential, and the quotient is by tropical scaling.\n\n**Test**: For all connected graphs on n \u2264 6, compute:\n(a) The tropical kernel dimension via the formula,\n(b) The number of independent balanced q-reduced divisors supported on S.\nCompare dimensions and identify the explicit bijection between kernel generators and divisor classes.\n\n**Impact**: Connects tropical graph Hodge theory to one of the most active areas of combinatorial algebraic geometry. The Baker-Norine theorem gives a Riemann-Roch theorem for graphs; this conjecture would provide the Hodge-theoretic complement. Could lead to new algorithms for computing the Jacobian group of a graph.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernelProp \u2014 the balanced condition), `Pythagorean/TropicalBridge/TropicalHodge.lean` (tropicalKernel_leaf_eq \u2014 propagation along edges mirrors chip-firing).\n\n**Proof Strategy**: The leaf propagation lemma (`tropicalKernel_leaf_eq`) already shows that kernel vectors satisfy v(i) = v(j) along tree edges, which is exactly the condition for a divisor to be q-reduced on trees. Extend this to graphs with cycles by showing that the cycle generators correspond to the \"circuit divisors\" in chip-firing theory. The q-visible component generators correspond to \"lending\" operations from q to components.\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic geometry (divisor theory), combinatorics \u2194 number theory (arithmetic geometry of curves).\n\n**Lineage**: Extends `tropicalKernel_leaf_eq` and `tropicalKernel_edge_constant` to the full chip-firing dictionary.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 bridges two deep theories)",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.340182+00:00"
-  },
-  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -1504,6 +1534,22 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.378958+00:00"
   },
   {
+    "id": "seed_052",
+    "title": "Tropical Convexity and Helly Theorem",
+    "description": "Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
+    "domains": [
+      "Tropical",
+      "Geometry",
+      "Computation"
+    ],
+    "priority_score": 0.88,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.679862+00:00"
+  },
+  {
     "id": "seed_024",
     "title": "Legendre's Conjecture",
     "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
@@ -1516,22 +1562,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.470511+00:00"
-  },
-  {
-    "id": "seed_050",
-    "title": "Tropical Satake Isomorphism for GL_n",
-    "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Bridges"
-    ],
-    "priority_score": 0.87,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "561cc547",
-    "timestamp": "2026-05-24T22:37:54.665768+00:00"
   },
   {
     "id": "seed_025",
@@ -1667,21 +1697,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.559748+00:00"
   },
   {
-    "id": "seed_051",
-    "title": "Tropical Intersection Theory",
-    "description": "Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical B\u00e9zout theorem with explicit bounds.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.672853+00:00"
-  },
-  {
     "id": "seed_011",
     "title": "Perfect Cuboid (Euler Brick)",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -1710,21 +1725,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:30.270617+00:00"
-  },
-  {
-    "id": "fd_0806",
-    "title": "Tropical Shadow of p-adic Persistent Homology",
-    "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
-    "domains": [
-      "Topological Data Analysis",
-      "Tropical Geometry"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:26:01.272574+00:00"
   },
   {
     "id": "fd_0812",
@@ -1906,22 +1906,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "92e3853a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:08:48.964845+00:00"
-  },
-  {
-    "id": "seed_052",
-    "title": "Tropical Convexity and Helly Theorem",
-    "description": "Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
-    "domains": [
-      "Tropical",
-      "Geometry",
-      "Computation"
-    ],
-    "priority_score": 0.78,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.679862+00:00"
   },
   {
     "id": "seed_032",
