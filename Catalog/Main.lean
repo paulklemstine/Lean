@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1557 of the highest-quality
+A curated collection of 1569 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1557
+Total files: 1569
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -200,7 +200,9 @@ import FINAL.Bridges.BerggrenChronometricAutomata
 import FINAL.Bridges.BerggrenChronometricEntropy
 import FINAL.Bridges.BerggrenEntropyExtractor
 import FINAL.Bridges.BerggrenExpanderHash
+import FINAL.Bridges.BerggrenFactoring
 import FINAL.Bridges.BerggrenHeckeSpectral
+import FINAL.Bridges.BerggrenLanglandsBridge
 import FINAL.Bridges.BerggrenLatticeReduction
 import FINAL.Bridges.BerggrenLatticeReductionDuality
 import FINAL.Bridges.BerggrenMinorTrapdoors
@@ -231,6 +233,7 @@ import FINAL.Bridges.ChurchRosserDeBruijn
 import FINAL.Bridges.ClosureCapacitySecretSharingDuality
 import FINAL.Bridges.ClosureCircuitDuality
 import FINAL.Bridges.ClosureCosmologyDuality
+import FINAL.Bridges.ClosureDependency
 import FINAL.Bridges.ClosureEntropicGravityDuality
 import FINAL.Bridges.ClosureExtractorDuality
 import FINAL.Bridges.ClosureExtractorSpectrumDuality
@@ -245,18 +248,22 @@ import FINAL.Bridges.ClosureMatroidSecretSharing
 import FINAL.Bridges.ClosureMyhillNerodeDuality
 import FINAL.Bridges.ClosureNucleusDuality
 import FINAL.Bridges.ClosureOperadDuality
+import FINAL.Bridges.ClosureOperatorBridge
 import FINAL.Bridges.ClosurePressure
 import FINAL.Bridges.ClosureProofSemiring
 import FINAL.Bridges.ClosureRateDistortionDuality
 import FINAL.Bridges.ClosureRenormalizationDuality
 import FINAL.Bridges.ClosureScaleDuality
 import FINAL.Bridges.ClosureSecretSharingDuality
+import FINAL.Bridges.ClosureSheafCodeDuality
 import FINAL.Bridges.ClosureSheafLearningDuality
 import FINAL.Bridges.ClosureStoneSpectrumDuality
 import FINAL.Bridges.ClosureThermodynamicComputationDuality
 import FINAL.Bridges.ClosureVCDuality
 import FINAL.Bridges.CoalgebraicNeuralMyhillNerode
+import FINAL.Bridges.CoeffExtraction
 import FINAL.Bridges.Completeness
+import FINAL.Bridges.ComposableTransfer
 import FINAL.Bridges.CompositionalMusicSpec
 import FINAL.Bridges.CompressionStability
 import FINAL.Bridges.CondensationSemantics
@@ -273,6 +280,7 @@ import FINAL.Bridges.DetCompressionGap
 import FINAL.Bridges.DiffSpectrumTheory
 import FINAL.Bridges.DifferentialAlgebraicLearning
 import FINAL.Bridges.Duality
+import FINAL.Bridges.DynamicProgramming
 import FINAL.Bridges.DynamicalRamanujan
 import FINAL.Bridges.ECOCDefs
 import FINAL.Bridges.ECOCRobust
@@ -293,6 +301,7 @@ import FINAL.Bridges.FiniteDescriptionComplexity
 import FINAL.Bridges.FiniteRiesz
 import FINAL.Bridges.FiniteTransferCore
 import FINAL.Bridges.FiveFrontiers
+import FINAL.Bridges.FootprintHelpers
 import FINAL.Bridges.Foundations
 import FINAL.Bridges.FullEMLDiffClosure
 import FINAL.Bridges.FunctorialDecoding
@@ -377,6 +386,7 @@ import FINAL.Bridges.OperadAlgebraCode
 import FINAL.Bridges.OperadicNeuralProofSemiring
 import FINAL.Bridges.OperadicRealizationDuality
 import FINAL.Bridges.OperadicSemiringSemantics
+import FINAL.Bridges.OperadicStoneDuality
 import FINAL.Bridges.OperadicTropicalization
 import FINAL.Bridges.OperadicUltrametricCompression
 import FINAL.Bridges.Optimization
@@ -444,6 +454,7 @@ import FINAL.Bridges.StoneChuClosureDuality
 import FINAL.Bridges.StoneDualityMLAdvanced
 import FINAL.Bridges.StoneDualityMLCore
 import FINAL.Bridges.StoneWeierstrassTropicalPolytope
+import FINAL.Bridges.SubgroupUniversality
 import FINAL.Bridges.SubmodularCurvature
 import FINAL.Bridges.SumcheckSoundness
 import FINAL.Bridges.SunflowerPruning
@@ -493,6 +504,7 @@ import FINAL.Bridges.TropicalDeSitterCTheorem
 import FINAL.Bridges.TropicalDeepLearningTheory
 import FINAL.Bridges.TropicalDuality
 import FINAL.Bridges.TropicalEcosystemDynamics
+import FINAL.Bridges.TropicalFactorCoupling
 import FINAL.Bridges.TropicalFeedback
 import FINAL.Bridges.TropicalGaloisCore
 import FINAL.Bridges.TropicalGaloisSolvability

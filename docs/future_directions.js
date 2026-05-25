@@ -321,10 +321,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "83d44e07",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "243a6673",
     "timestamp": "2026-05-25T02:10:32.344475+00:00"
   },
   {
@@ -756,25 +756,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:14:59.768954+00:00"
   },
   {
-    "id": "fd_0895",
-    "title": "Direction 2: Universality of Phase Transition Critical Exponents",
-    "description": "**Conjecture:** The phase transition in generation probability exhibits universality: for any infinite family of finite groups $\\{G_n\\}$ with a natural parameterization of the subgroup family, the generation probability near the critical point satisfies\n$$P_{\\text{gen}}(G_n) \\sim A \\cdot |\\Phi(G_n)|^\\beta + \\text{lower order}$$\nwhere $\\beta$ is a universal critical exponent depending only on broad structural features (e.g., the rank of the group, whether it is a direct product or semidirect product).\n\n**The key insight is** that the multiplicative structure of the pressure (product factorization, free energy additivity) suggests that subgroup thermodynamics may satisfy a form of the central limit theorem, with fluctuations governed by universal distributions.\n\n**Why now?** The formal verification of product factorization and free energy additivity provides the mathematical infrastructure needed to rigorously state and test universality hypotheses.\n\n**Test:** Compute the generation probability and pressure for families $S_k^m$, $\\text{GL}_n(\\mathbb{F}_q)$, and $\\text{PSL}_2(p)$ near their respective phase transitions. Fit the critical exponent $\\beta$ and compare across families.\n\n**Impact:** Would establish a deep connection between finite group theory and the theory of critical phenomena, potentially importable techniques from renormalization group theory.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure bounds), `Algebra/SymmGroupGen/Basic.lean` (symmetric group generation)\n\n**Proof Strategy:** Establish a central limit theorem for the pressure contributions from independent subgroup families. Use the product factorization theorem as the independence condition. Apply Berry\u2013Esseen-type bounds for the convergence rate.\n\n**Domain Bridges:** Statistical mechanics (universality, critical exponents), probability theory (CLT, large deviations), random matrix theory.\n\n**Lineage:** Extends Direction 1 to a general framework.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "354ccda2",
-    "timestamp": "2026-05-25T17:14:59.791092+00:00"
-  },
-  {
     "id": "fd_0896",
     "title": "Direction 3: Pressure Theory for Almost Simple Groups",
     "description": "**Conjecture:** For a finite almost simple group $G$ with socle $S$, the pressure from the maximal subgroup family satisfies\n$$\\mathrm{pressure}(G, \\mathcal{M}) = O(|G|^{-\\epsilon})$$\nfor some $\\epsilon > 0$ depending on the type of $S$ (alternating, classical, exceptional, sporadic). This gives $P_{\\text{gen}} \\to 1$ as $|G| \\to \\infty$, recovering the Liebeck\u2013Shalev theorem with explicit rates.\n\n**The key insight is** that the pressure framework provides a systematic way to organize the contribution of each maximal subgroup type (geometric vs. non-geometric in the Aschbacher classification), with the dominant contribution coming from the geometric subgroups of smallest index.\n\n**Why now?** The entropy-energy bounds (Theorems 2\u20133) provide a framework to compute pressure without enumerating all maximal subgroups\u2014bounding the count and minimum index suffices.\n\n**Test:** Compute exact pressure for $\\text{PSL}_2(p)$ for primes $p \\leq 100$ and verify the conjectured decay rate. The maximal subgroups of $\\text{PSL}_2(p)$ are well-known.\n\n**Impact:** Would give the best known explicit bounds on generation probability for classical groups, with direct applications to cryptographic group selection.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (entropy-energy bounds)\n\n**Proof Strategy:** Use the Aschbacher classification of maximal subgroups of classical groups. For each class, bound the number of subgroups (entropy) and the minimum index (energy). Apply the upper bound theorem: pressure \u2264 |F| / D\u00b2.\n\n**Domain Bridges:** Finite simple group theory, Aschbacher classification, cryptography.\n\n**Lineage:** Applies the general pressure theory to the most important group families.\n\n**Ambition:** Solid extension \u2014 builds directly on established techniques.\n\n---",
@@ -873,26 +854,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "88770e41",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:32.525739+00:00"
-  },
-  {
-    "id": "fd_0919",
-    "title": "Direction 5: Tropical Morse Theory as a Topological Feature for Graph Neural Networks",
-    "description": "**Conjecture:** The tropical Morse spectrum (the sequence of critical values and event types) is a strictly more expressive graph feature than the Weisfeiler-Leman color refinement algorithm for weighted graphs. Specifically, there exist pairs of weighted graphs that are WL-equivalent but distinguished by their tropical Morse data.\n\n**Test:** (1) Generate pairs of WL-equivalent weighted graphs using known constructions (e.g., Cai-F\u00fcrer-Immerman graphs with weights). (2) Compute tropical Morse spectra for both graphs. (3) Check if the spectra differ. If they consistently differ, this proves strictly greater expressive power. (4) Implement a graph neural network layer that uses tropical Morse features and benchmark on graph classification tasks (MUTAG, PTC, PROTEINS datasets).\n\n**Impact:** Would provide a theoretically grounded, efficiently computable topological feature for graph machine learning that provably captures structural information missed by message-passing architectures. The O(|E| log |E|) computation time makes it practical as a preprocessing step.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `computeFiltration`, `critical_iff_topology_jump`\n\n**Proof Strategy:** The tropical Morse spectrum encodes the complete persistent homology of the weight filtration, which is known to be more expressive than WL for certain graph families. The key is constructing explicit counterexamples: WL-equivalent graphs whose weight filtrations produce different barcodes.\n\n**Domain Bridges:** Tropical geometry \u2192 machine learning \u2192 graph neural networks \u2192 computational biology\n\n**Lineage:** Uses the verified algorithm `computeFiltration` as a feature extractor.\n\n**Ambition:** Grand challenge \u2014 bridging formal mathematics and machine learning, with potential for practical impact in drug discovery and materials science.\n\n**The key insight is** that the tropical Morse filtration captures global topological information (homology, persistence) that is provably invisible to local message-passing architectures, giving it a fundamental expressiveness advantage.\n\n**Why now?** Graph neural networks are the dominant paradigm for graph learning, but their expressiveness limitations (bounded by WL hierarchy) are well-documented. The verified tropical Morse algorithm provides an efficient, provably correct topological feature that complements existing approaches.",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "db7ef9c7",
-    "timestamp": "2026-05-25T18:39:32.551338+00:00"
   },
   {
     "id": "fd_0921",
@@ -1220,6 +1181,121 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T20:35:38.515830+00:00"
   },
   {
+    "id": "fd_0943",
+    "title": "Direction 1: Characterization of Lorentzian Ground-State Families",
+    "description": "**Conjecture:** For stoquastic local Hamiltonians on n sites with bounded local dimension and bounded interaction range, the ground-state coefficient vector (in the occupation-number basis) forms the coefficient family of a Lorentzian polynomial of degree O(n). The certificate depth scales as O(n \u00b7 polylog(n)).\n\n**Test:** For the transverse-field Ising model on chains n \u2264 20, compute the ground state via exact diagonalization, extract the coefficient vector, and test Lorentzianity by checking all degree-2 derivative Hessians for the at-most-one-positive-eigenvalue condition. Record the fraction of parameter space (J, h) for which the condition holds.\n\n**Impact:** This would identify the exact boundary of applicability for certificate-driven quantum state preparation, replacing the current assumption that Lorentzianity holds with a proved characterization.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (IsRecursivelyLorentzian, RecursiveLorentzianCertificate), `Catalog/Pythagorean/CertificateSampling.lean` (certificate_verification_complexity)\n\n**Proof Strategy:** Induction on system size n. For the TFIM, use the transfer matrix formulation to express ground-state amplitudes as products of 2\u00d72 matrices, then verify the Hessian condition on the resulting polynomial. The key technical step is showing that the transfer matrix product preserves the Lorentzian property of the coefficient family.\n\n**Domain Bridges:** Condensed matter physics (Perron\u2013Frobenius theory), statistical mechanics (transfer matrices), combinatorial optimization (QUBO formulations as stoquastic Hamiltonians)\n\n**Lineage:** Builds on Br\u00e4nd\u00e9n\u2013Huh [2020] characterization of Lorentzian polynomials and Bravyi\u2013Gosset [2017] complexity of stoquastic systems.\n\n**Ambition:** Grand challenge \u2014 establishing a complete characterization would be a major theorem in mathematical physics.\n\n**The key insight is** that transfer matrix structure may enforce Lorentzianity automatically for nearest-neighbor stoquastic Hamiltonians, because the matrix product preserves strong log-concavity.\n\n**Why now?** The formal framework for recursive Lorentzian certificates now exists (LorentzianRecognitionComplete.lean), and computational tools for testing Hessian signatures are available for n \u2264 20.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b6d84b4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:09.676387+00:00"
+  },
+  {
+    "id": "fd_0944",
+    "title": "Direction 2: Robust Certificate Compilation for Approximate Lorentzianity",
+    "description": "**Conjecture:** If a nonneg coefficient vector w is \u03b5-close (in total variation distance) to the coefficient vector of a Lorentzian polynomial, then the compiled preparation tree produces a state with fidelity \u2265 1 - O(\u03b5\u00b2) against the true normalized coefficient state.\n\n**Test:** Perturb known Lorentzian coefficient families (e.g., binomial coefficients, matroid basis counts) by random nonneg noise of magnitude \u03b5, compile the perturbed family, and measure fidelity as a function of \u03b5. Test for \u03b5 \u2208 {0.001, 0.01, 0.05, 0.1}.\n\n**Impact:** Extends certificate compilation from exact to approximate settings, vastly increasing applicability to real physical systems where exact Lorentzianity may not hold.\n\n**Catalog References:** `Pythagorean/QuantumGroundStatePreparation.lean` (coeffState_normalized, coeffState_unique), `Catalog/Pythagorean/CertificateSampling.lean` (certificate_sampling_efficiency)\n\n**Proof Strategy:** Use the uniqueness theorem (coeffState_unique) to establish continuity of the compilation map, then bound the fidelity loss using the triangle inequality for L\u00b2 distance and the Lipschitz constant of normalization.\n\n**Domain Bridges:** Approximation theory, numerical stability analysis, quantum error analysis\n\n**Lineage:** Extension of exact certificate compilation (this work) to the robust setting.\n\n**Ambition:** Solid extension \u2014 the mathematical tools are largely available, but the quantitative bounds require careful analysis.\n\n**The key insight is** that L\u00b2 normalization is a Lipschitz map on the positive orthant, so small perturbations to coefficients yield small perturbations to the quantum state.\n\n**Why now?** The exact correctness theorems provide the foundation; the robust extension is the natural next step.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b6d84b4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:09.706179+00:00"
+  },
+  {
+    "id": "fd_0946",
+    "title": "Direction 4: Matroidal Quantum State Preparation",
+    "description": "**Conjecture:** For matroids whose basis-generating polynomial is Lorentzian (which includes all matroids, by the Adiprasito\u2013Huh\u2013Katz theorem), the certificate compilation produces a quantum state over bases with amplitudes proportional to basis weights. This gives a quantum polynomial-time sampler for matroid bases.\n\n**Test:** Implement certificate compilation for graphic matroids on small graphs (n \u2264 15 vertices), transversal matroids, and partition matroids. Compare the compiled amplitude vector with the exact basis-weight distribution.\n\n**Impact:** Connects Lorentzian certificate compilation to combinatorial optimization. Quantum sampling from matroid bases has applications to network reliability, linear algebra, and constraint satisfaction.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange \u2014 matroid exchange property)\n\n**Proof Strategy:** Use the Adiprasito\u2013Huh\u2013Katz theorem (Lorentzianity of matroid basis polynomials) as input, then apply the certificate compilation pipeline. The main work is constructing the recursive certificate from matroid structure.\n\n**Domain Bridges:** Matroid theory, combinatorial optimization, algebraic geometry (Hodge theory), network analysis\n\n**Lineage:** Extends the Br\u00e4nd\u00e9n\u2013Huh theory of Lorentzian polynomials to a computational application via certificate compilation.\n\n**Ambition:** Solid extension with potentially high impact in combinatorial optimization.\n\n**The key insight is** that matroid basis-generating polynomials are already known to be Lorentzian, so the certificate exists \u2014 we just need to extract it efficiently.\n\n**Why now?** The Adiprasito\u2013Huh\u2013Katz theorem (2018) provides the theoretical foundation; certificate compilation (this work) provides the preparation machinery.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b6d84b4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:09.763547+00:00"
+  },
+  {
+    "id": "fd_0950",
+    "title": "Direction 2: Tropical Interleaving Distance and Algebraic Stability",
+    "description": "**Conjecture:** There exists a categorical interleaving distance on the category of tropical persistence modules (parametrized by monotone functions \u211d \u2192 \u2124 with bounded local variation) such that (a) the interleaving distance is bounded above by the barcode distance, (b) the two distances are bi-Lipschitz equivalent for finite-type modules, and (c) the interleaving distance satisfies a universal property analogous to the Bubenik\u2013Scott framework for classical persistence.\n\n**Test:** Formalize the tropical persistence category in Lean 4. Verify the bi-Lipschitz equivalence computationally for graphs up to n = 50. Construct an explicit example showing the two distances are not equal (gap in the bi-Lipschitz constant).\n\n**Impact:** This would establish a complete algebraic stability theory for tropical persistence, paralleling the Chazal\u2013Cohen-Steiner\u2013Glisse\u2013Guibas\u2013Oudot framework [CCGGO09] for classical persistence. It would make tropical persistence amenable to the full toolkit of abstract persistence theory.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropical_event_profile_interleaved, tropicalBarcodeDist_nonneg, tropicalBarcodeDist_symm)\n\n**Proof Strategy:** Define the tropical persistence module as a functor from (\u211d, \u2264) to (\u2124-Mod, \u2264), where morphisms are order-preserving maps. The interleaving distance is the infimum \u03b4 such that the modules are \u03b4-shifted comparable. Use the monotonicity theorem (tropicalEventProfile_mono) as the starting point and extend to the full module structure.\n\n**Domain Bridges:** Category theory, homological algebra, abstract persistence theory\n\n**Lineage:** Extends Theorems 5.1\u20135.2 (interleaving) to a full categorical framework\n\n**Ambition:** Grand challenge \u2014 would unify tropical and classical persistence theory\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "834b245c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:41.991865+00:00"
+  },
+  {
+    "id": "fd_0951",
+    "title": "Direction 3: Sheaf-Theoretic Tropical Persistence",
+    "description": "**Conjecture:** The tropical persistence barcode can be realized as the derived pushforward of a constructible sheaf on the real line, valued in the category of tropical semimodules. The stability theorem then follows from the properness of the pushforward and the continuity of the derived functor, providing a conceptual explanation for the degree-dependent constant.\n\n**Test:** Construct the sheaf explicitly for path graphs and cycle graphs. Verify that the stalk at each point t equals the tropical kernel dimension. Check that the derived pushforward reproduces the event profile.\n\n**Impact:** This would connect tropical persistence to the rapidly developing theory of persistent sheaves (Curry, Kashiwara\u2013Schapira), opening access to powerful tools from algebraic geometry and microlocal analysis. It would also suggest natural higher-dimensional generalizations.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, TPB), `Catalog/Pythagorean/TropicalBridge/FiltrationPersistence.lean` (TropicalFiltration)\n\n**Proof Strategy:** Define the sheaf F on \u211d with stalks F_t = tropical kernel of G[activeVertices(f,t)]. The restriction maps are the natural inclusions. Constructibility follows from the finite number of critical values (entrance times). The pushforward to a point gives the global sections, which encode the barcode.\n\n**Domain Bridges:** Sheaf theory, derived categories, algebraic geometry, microlocal analysis\n\n**Lineage:** Conceptual reformulation of the entire stability framework\n\n**Ambition:** Grand challenge \u2014 would place tropical persistence in the mainstream of modern geometry\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "834b245c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:42.015713+00:00"
+  },
+  {
+    "id": "fd_0952",
+    "title": "Direction 4: Information-Theoretic Bounds on Tropical Barcode Stability",
+    "description": "**Conjecture:** The tropical barcode distance between random filtrations on a fixed graph G is, up to constants, equal to the mutual information between the filtration and the barcode, divided by the graph's entropy rate. Formally: d_T(TPB(G,f), TPB(G,g)) \u2248 I(f; TPB(G,f)) \u00b7 FiltrationSupDist(f,g) / H(G), where H(G) is the entropy of the degree sequence.\n\n**The key insight is** that the degree-weighted event profile is essentially a sufficient statistic for the filtration, and the stability constant (D+1) reflects the information capacity of a degree-D vertex.\n\n**Why now?** Recent advances in information-theoretic persistence (Bubenik, Vergne) have made the connection between persistence and entropy precise for classical barcodes. The tropical setting, with its natural connection to min-plus entropy and max-plus probability, is ripe for an analogous development.\n\n**Test:** Compute mutual information between filtration and barcode for G(n, c/n) with n = 100, c \u2208 {3, 5, 10}. Compare I(f; TPB(G,f)) / H(G) with the empirical stability ratio. Plot the relationship across 500 random graph instances.\n\n**Impact:** Would provide a principled, information-theoretic explanation for why the degree bound is the natural stability constant. Could lead to optimal data compression for tropical barcodes.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, certified_stability_bound)\n\n**Proof Strategy:** Model the filtration as a random process and the barcode as its image under a deterministic function. Apply the data processing inequality to bound the mutual information. Connect the channel capacity to the maximum degree via the capacity of a discrete memoryless channel with D+1 outputs.\n\n**Domain Bridges:** Information theory, entropy, data processing inequality, rate-distortion theory\n\n**Lineage:** Bridges from tropical persistence (Direction 1 foundation) to information theory\n\n**Ambition:** Solid extension \u2014 draws on mature information-theoretic tools\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "834b245c",
+    "consumed_by_exp_id": "7e5283ed",
+    "timestamp": "2026-05-25T21:13:42.045646+00:00"
+  },
+  {
     "id": "seed_005",
     "title": "P vs NP Problem",
     "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
@@ -1342,9 +1418,27 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
-    "id": "fd_0943",
-    "title": "Direction 1: Characterization of Lorentzian Ground-State Families",
-    "description": "**Conjecture:** For stoquastic local Hamiltonians on n sites with bounded local dimension and bounded interaction range, the ground-state coefficient vector (in the occupation-number basis) forms the coefficient family of a Lorentzian polynomial of degree O(n). The certificate depth scales as O(n \u00b7 polylog(n)).\n\n**Test:** For the transverse-field Ising model on chains n \u2264 20, compute the ground state via exact diagonalization, extract the coefficient vector, and test Lorentzianity by checking all degree-2 derivative Hessians for the at-most-one-positive-eigenvalue condition. Record the fraction of parameter space (J, h) for which the condition holds.\n\n**Impact:** This would identify the exact boundary of applicability for certificate-driven quantum state preparation, replacing the current assumption that Lorentzianity holds with a proved characterization.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (IsRecursivelyLorentzian, RecursiveLorentzianCertificate), `Catalog/Pythagorean/CertificateSampling.lean` (certificate_verification_complexity)\n\n**Proof Strategy:** Induction on system size n. For the TFIM, use the transfer matrix formulation to express ground-state amplitudes as products of 2\u00d72 matrices, then verify the Hessian condition on the resulting polynomial. The key technical step is showing that the transfer matrix product preserves the Lorentzian property of the coefficient family.\n\n**Domain Bridges:** Condensed matter physics (Perron\u2013Frobenius theory), statistical mechanics (transfer matrices), combinatorial optimization (QUBO formulations as stoquastic Hamiltonians)\n\n**Lineage:** Builds on Br\u00e4nd\u00e9n\u2013Huh [2020] characterization of Lorentzian polynomials and Bravyi\u2013Gosset [2017] complexity of stoquastic systems.\n\n**Ambition:** Grand challenge \u2014 establishing a complete characterization would be a major theorem in mathematical physics.\n\n**The key insight is** that transfer matrix structure may enforce Lorentzianity automatically for nearest-neighbor stoquastic Hamiltonians, because the matrix product preserves strong log-concavity.\n\n**Why now?** The formal framework for recursive Lorentzian certificates now exists (LorentzianRecognitionComplete.lean), and computational tools for testing Hessian signatures are available for n \u2264 20.\n\n---",
+    "id": "fd_0955",
+    "title": "Direction 1: Wreath Product Perturbation Theory",
+    "description": "**Conjecture:** For the wreath product $W_{k,m} = S_k \\wr S_m$ acting on $km$ points with imprimitive subgroup family $\\mathcal{I}_{k,m}$, the critical exponent $\\beta_{W}$ satisfies:\n$$\\beta_{W}(k,m) = \\beta_{\\text{product}}(k,m) + O(k^{-1})$$\nwhere $\\beta_{\\text{product}}$ is the exponent of the direct product $S_k^m$. In renormalization language, the imprimitive structure is an *irrelevant perturbation* for large $k$.\n\n**Test:** Compute the subgroup pair pressure of $S_k \\wr S_m$ for $k \\leq 8$, $m \\leq 5$ using GAP. Extract effective exponents via log-slope estimation. Compare with the direct product prediction $\\beta_{\\text{product}} = m \\cdot \\beta(S_k)$. A deviation growing as $k$ increases would refute the conjecture.\n\n**Impact:** If true, this would be the first proof that universality persists beyond exact factorization\u2014the algebraic analogue of showing that a phase transition's exponent is unchanged by short-range perturbations. If false, it identifies wreath product structure as a new relevant parameter.\n\n**Catalog References:** `Catalog/old/Pythagorean/SubgroupPressure.lean` (product factorization), `Pythagorean/SubgroupUniversality.lean` (exponent additivity).\n\n**Proof Strategy:** Define the wreath product pressure as a perturbation of the product pressure: $\\Pi_W = \\Pi_{\\text{prod}} + \\delta\\Pi$ where $\\delta\\Pi$ captures cross-factor subgroups. Use the divergence bound theorem to show that $\\delta\\Pi$ contributes sub-dominant scaling.\n\n**Domain Bridges:** Connects to representation theory (irreducible representations of wreath products via Clifford theory), probability (random walks on wreath products), and additive combinatorics (orbit counting).\n\n**Lineage:** Builds directly on `exponent_mul_of_two_sided_bounds` and `subgroupPairPressure_prod`.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 would establish the first non-trivial irrelevant perturbation result in algebraic statistical mechanics.\n\nThe key insight is that wreath products add controlled \"imprimitive interactions\" between direct product factors, and the question of whether these are relevant or irrelevant exactly parallels the Harris criterion in condensed matter physics.\n\nWhy now? The formal verification of exponent additivity for exact products provides the baseline against which perturbative deviations can be measured. Without the exact result, there would be no reference point for the approximate theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "354ccda2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:49:45.078780+00:00"
+  },
+  {
+    "id": "fd_0956",
+    "title": "Direction 2: Concentration of Subgroup Pressure",
+    "description": "**Conjecture:** For a random subgroup ensemble $\\mathcal{H}_n$ on $S_n$ (each subgroup included independently with probability $p$), the subgroup pair pressure concentrates:\n$$\\Pr\\left[|\\Pi(S_n; \\mathcal{H}_n) - \\mathbb{E}[\\Pi]| > t\\right] \\leq 2\\exp\\left(-\\frac{t^2 n}{C}\\right)$$\nfor some universal constant $C > 0$.\n\n**Test:** Sample random subgroup ensembles of $S_n$ for $n = 5, \\ldots, 15$. Compute pressure for each sample. Plot the variance versus $n$ and test for $O(1/n)$ decay.\n\n**Impact:** This would justify the thermodynamic limit: it says that for large groups, the pressure is essentially deterministic, and critical exponents are well-defined without averaging. This is the algebraic analogue of self-averaging in disordered systems.\n\n**Catalog References:** `Pythagorean/SubgroupUniversality.lean` (susceptibility bounds), `Catalog/old/Pythagorean/SubgroupPressure.lean` (pressure definition).\n\n**Proof Strategy:** Use McDiarmid's bounded differences inequality applied to the pressure function, viewed as a function of independent inclusion indicators. The bounded differences condition requires bounding the effect of adding or removing a single subgroup, which is $O([G:H]^{-2})$.\n\n**Domain Bridges:** Probability and concentration of measure (McDiarmid, Talagrand), random matrix theory (eigenvalue concentration), information theory (entropy concentration).\n\n**Lineage:** Extends `susceptibility_add_of_freeEnergy_add` and `divergence_bound_of_additive_susceptibility` to probabilistic settings.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 uses well-established probabilistic tools but applies them to a new algebraic setting.\n\nThe key insight is that subgroup pair pressure is a sum of independent bounded terms when subgroups are drawn randomly, making it amenable to standard concentration inequalities.\n\nWhy now? The formal definition of pressure and its algebraic properties are already verified, providing the mathematical scaffolding needed for probabilistic analysis.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1356,34 +1450,34 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2b6d84b4",
+    "source_exp_id": "354ccda2",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T21:13:09.676387+00:00"
+    "timestamp": "2026-05-25T21:49:45.104432+00:00"
   },
   {
-    "id": "fd_0944",
-    "title": "Direction 2: Robust Certificate Compilation for Approximate Lorentzianity",
-    "description": "**Conjecture:** If a nonneg coefficient vector w is \u03b5-close (in total variation distance) to the coefficient vector of a Lorentzian polynomial, then the compiled preparation tree produces a state with fidelity \u2265 1 - O(\u03b5\u00b2) against the true normalized coefficient state.\n\n**Test:** Perturb known Lorentzian coefficient families (e.g., binomial coefficients, matroid basis counts) by random nonneg noise of magnitude \u03b5, compile the perturbed family, and measure fidelity as a function of \u03b5. Test for \u03b5 \u2208 {0.001, 0.01, 0.05, 0.1}.\n\n**Impact:** Extends certificate compilation from exact to approximate settings, vastly increasing applicability to real physical systems where exact Lorentzianity may not hold.\n\n**Catalog References:** `Pythagorean/QuantumGroundStatePreparation.lean` (coeffState_normalized, coeffState_unique), `Catalog/Pythagorean/CertificateSampling.lean` (certificate_sampling_efficiency)\n\n**Proof Strategy:** Use the uniqueness theorem (coeffState_unique) to establish continuity of the compilation map, then bound the fidelity loss using the triangle inequality for L\u00b2 distance and the Lipschitz constant of normalization.\n\n**Domain Bridges:** Approximation theory, numerical stability analysis, quantum error analysis\n\n**Lineage:** Extension of exact certificate compilation (this work) to the robust setting.\n\n**Ambition:** Solid extension \u2014 the mathematical tools are largely available, but the quantitative bounds require careful analysis.\n\n**The key insight is** that L\u00b2 normalization is a Lipschitz map on the positive orthant, so small perturbations to coefficients yield small perturbations to the quantum state.\n\n**Why now?** The exact correctness theorems provide the foundation; the robust extension is the natural next step.\n\n---",
+    "id": "fd_0957",
+    "title": "Direction 3: Renormalization Group for Subgroup Ensembles",
+    "description": "**Conjecture:** There exists a coarse-graining map $\\mathcal{R}$ on subgroup ensembles such that:\n1. $\\mathcal{R}$ maps the pressure to a scaled version: $\\Pi(\\mathcal{R}(\\mathcal{H})) = \\lambda \\cdot \\Pi(\\mathcal{H})$ for some $\\lambda > 0$.\n2. Fixed points of $\\mathcal{R}$ correspond to universality classes.\n3. The linearization of $\\mathcal{R}$ at a fixed point has eigenvalues that determine critical exponents.\n\n**Test:** For $S_n$ with $n = 2^k$ (powers of 2), define $\\mathcal{R}$ by passing from maximal subgroups of $S_{2^k}$ to those of $S_{2^{k-1}}$ via restriction. Compute the pressure at each scale and test for fixed-point convergence.\n\n**Impact:** This would bring the full power of renormalization group theory into finite algebra, potentially classifying all universality classes for finite group generation.\n\n**Catalog References:** `Pythagorean/SubgroupUniversality.lean` (all theorems), `Catalog/old/Pythagorean/SubgroupPressure.lean` (product factorization as coarse-graining precursor).\n\n**Proof Strategy:** Define $\\mathcal{R}$ as restriction to a quotient or block structure. For direct products, $\\mathcal{R}$ simply selects one factor, and the fixed point is the single-factor pressure. Prove that the eigenvalue spectrum of the linearization determines the exponent.\n\n**Domain Bridges:** Quantum field theory (Wilson's renormalization group), dynamical systems (iterated function systems), ergodic theory (transfer operators), topology (scaling limits).\n\n**Lineage:** Extends `freeEnergy_directPower` to a dynamical framework where extensivity is one consequence of a deeper fixed-point structure.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 paradigm-shifting. Would unify algebraic generation theory with one of the most powerful frameworks in theoretical physics.\n\nThe key insight is that the extensivity theorem $F(m,t) = m \\cdot F(1,t)$ can be reinterpreted as a fixed-point equation: the free energy per factor is invariant under the \"add one more copy\" operation, which is the simplest renormalization group transformation.\n\nWhy now? The proven extensivity and exponent additivity theorems provide the first mathematical evidence that a fixed-point structure exists. Without these, the renormalization program would be purely speculative.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
       "Physics",
       "Bridges",
-      "MachineLearning",
-      "Logic"
+      "Logic",
+      "Speculative"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2b6d84b4",
+    "source_exp_id": "354ccda2",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T21:13:09.706179+00:00"
+    "timestamp": "2026-05-25T21:49:45.129187+00:00"
   },
   {
-    "id": "fd_0946",
-    "title": "Direction 4: Matroidal Quantum State Preparation",
-    "description": "**Conjecture:** For matroids whose basis-generating polynomial is Lorentzian (which includes all matroids, by the Adiprasito\u2013Huh\u2013Katz theorem), the certificate compilation produces a quantum state over bases with amplitudes proportional to basis weights. This gives a quantum polynomial-time sampler for matroid bases.\n\n**Test:** Implement certificate compilation for graphic matroids on small graphs (n \u2264 15 vertices), transversal matroids, and partition matroids. Compare the compiled amplitude vector with the exact basis-weight distribution.\n\n**Impact:** Connects Lorentzian certificate compilation to combinatorial optimization. Quantum sampling from matroid bases has applications to network reliability, linear algebra, and constraint satisfaction.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange \u2014 matroid exchange property)\n\n**Proof Strategy:** Use the Adiprasito\u2013Huh\u2013Katz theorem (Lorentzianity of matroid basis polynomials) as input, then apply the certificate compilation pipeline. The main work is constructing the recursive certificate from matroid structure.\n\n**Domain Bridges:** Matroid theory, combinatorial optimization, algebraic geometry (Hodge theory), network analysis\n\n**Lineage:** Extends the Br\u00e4nd\u00e9n\u2013Huh theory of Lorentzian polynomials to a computational application via certificate compilation.\n\n**Ambition:** Solid extension with potentially high impact in combinatorial optimization.\n\n**The key insight is** that matroid basis-generating polynomials are already known to be Lorentzian, so the certificate exists \u2014 we just need to extract it efficiently.\n\n**Why now?** The Adiprasito\u2013Huh\u2013Katz theorem (2018) provides the theoretical foundation; certificate compilation (this work) provides the preparation machinery.\n\n---",
+    "id": "fd_0958",
+    "title": "Direction 4: Arithmetic Statistics via Subgroup Pressure",
+    "description": "**Conjecture:** For the family $\\text{GL}_n(\\mathbb{F}_q)$ with $q$ fixed and $n \\to \\infty$, the free energy per dimension stabilizes:\n$$\\lim_{n \\to \\infty} \\frac{1}{n} \\log \\Pi(\\text{GL}_n(\\mathbb{F}_q)) = F_\\infty(q)$$\nand $F_\\infty(q)$ has a power-law singularity as $q \\to 1^+$ (viewing $q$ as a continuous parameter via $q$-analogues).\n\n**Test:** Compute $\\Pi(\\text{GL}_n(\\mathbb{F}_q))$ for $q = 2, 3, 4, 5, 7$ and $n = 2, \\ldots, 6$ using parabolic subgroup indices. Plot $\\frac{1}{n} \\log \\Pi$ versus $n$ and test for convergence. Then fit $F_\\infty(q)$ versus $q-1$ for a power law.\n\n**Impact:** This would connect subgroup thermodynamics to the Cohen-Lenstra heuristics and arithmetic statistics, where $q$-analogues of group-theoretic quantities play a central role. The singularity at $q = 1$ would be a genuine phase transition connecting finite group theory to number theory.\n\n**Catalog References:** `Pythagorean/SubgroupUniversality.lean` (extensivity, convexity), `Catalog/old/Pythagorean/SubgroupPressure.lean` (pressure definition).\n\n**Proof Strategy:** Use the parabolic subgroup structure of $\\text{GL}_n(\\mathbb{F}_q)$ to decompose the pressure into Gaussian binomial coefficients. Apply the extensivity framework by viewing $\\text{GL}_n$ as an approximate product of root subgroups.\n\n**Domain Bridges:** Number theory (Cohen-Lenstra heuristics), algebraic geometry (counting points on varieties over $\\mathbb{F}_q$), combinatorics ($q$-analogues), random matrix theory (distribution of $\\text{GL}_n(\\mathbb{F}_q)$ matrices).\n\n**Lineage:** Extends `freeEnergy_directPower` to non-product families via $q$-deformation of the extensivity axiom.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 uses computable data from well-studied groups but interprets it through the novel thermodynamic lens.\n\nThe key insight is that $q$-analogues naturally interpolate between discrete group families, providing the continuous parameter needed for critical exponent extraction.\n\nWhy now? The Lean formalization provides the precise definitions and correctness guarantees needed to make quantitative predictions about $F_\\infty(q)$ that can be tested computationally.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1396,9 +1490,29 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2b6d84b4",
+    "source_exp_id": "354ccda2",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T21:13:09.763547+00:00"
+    "timestamp": "2026-05-25T21:49:45.153662+00:00"
+  },
+  {
+    "id": "fd_0959",
+    "title": "Direction 5: Information-Theoretic Universality via Entropy Bounds",
+    "description": "**Conjecture:** The Shannon entropy of the distribution of subgroup containment\u2014defined as $H(\\mathcal{H}) = -\\sum_H p_H \\log p_H$ where $p_H = [G:H]^{-2} / \\Pi$\u2014satisfies:\n$$H(\\mathcal{H}_{G \\times K}) = H(\\mathcal{H}_G) + H(\\mathcal{H}_K) + O(\\log \\min(|G|, |K|)^{-1})$$\nfor independent product families, and the mutual information $I(\\mathcal{H}_G; \\mathcal{H}_K)$ vanishes.\n\n**Test:** Compute the entropy for $S_n \\times S_m$ and compare with $H(S_n) + H(S_m)$ for various $n, m$. Measure mutual information for wreath product families where independence is only approximate.\n\n**Impact:** This would reinterpret universality through information theory: universality classes correspond to families with the same entropy scaling, and critical exponents are information-theoretic invariants.\n\n**Catalog References:** `Pythagorean/SubgroupUniversality.lean` (pressure additivity, susceptibility additivity), `Catalog/old/Pythagorean/SubgroupPressure.lean` (pressure product theorem).\n\n**Proof Strategy:** Use the product factorization theorem $\\Pi(G \\times K) = \\Pi(G) \\cdot \\Pi(K)$ to decompose the normalized weights. Apply properties of entropy for product distributions.\n\n**Domain Bridges:** Information theory (Shannon entropy, mutual information), coding theory (channel capacity), machine learning (information bottleneck), quantum information (entanglement entropy).\n\n**Lineage:** Extends `log_pressure_prod_eq_add` to an entropic framework.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 leverages well-known information-theoretic tools but creates a novel bridge to algebraic combinatorics.\n\nThe key insight is that the pressure normalization turns subgroup contributions into a probability distribution, and the additivity of log-pressure under products is exactly the additivity of entropy for independent random variables.\n\nWhy now? The formalized product and additivity theorems provide the algebraic scaffolding, and the computational framework (log-slope, second differences) enables quantitative testing of information-theoretic predictions across families.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "354ccda2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:49:45.182975+00:00"
   },
   {
     "id": "seed_013",
@@ -1843,27 +1957,30 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:03.321531+00:00"
   },
   {
-    "id": "fd_0950",
-    "title": "Direction 2: Tropical Interleaving Distance and Algebraic Stability",
-    "description": "**Conjecture:** There exists a categorical interleaving distance on the category of tropical persistence modules (parametrized by monotone functions \u211d \u2192 \u2124 with bounded local variation) such that (a) the interleaving distance is bounded above by the barcode distance, (b) the two distances are bi-Lipschitz equivalent for finite-type modules, and (c) the interleaving distance satisfies a universal property analogous to the Bubenik\u2013Scott framework for classical persistence.\n\n**Test:** Formalize the tropical persistence category in Lean 4. Verify the bi-Lipschitz equivalence computationally for graphs up to n = 50. Construct an explicit example showing the two distances are not equal (gap in the bi-Lipschitz constant).\n\n**Impact:** This would establish a complete algebraic stability theory for tropical persistence, paralleling the Chazal\u2013Cohen-Steiner\u2013Glisse\u2013Guibas\u2013Oudot framework [CCGGO09] for classical persistence. It would make tropical persistence amenable to the full toolkit of abstract persistence theory.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropical_event_profile_interleaved, tropicalBarcodeDist_nonneg, tropicalBarcodeDist_symm)\n\n**Proof Strategy:** Define the tropical persistence module as a functor from (\u211d, \u2264) to (\u2124-Mod, \u2264), where morphisms are order-preserving maps. The interleaving distance is the infimum \u03b4 such that the modules are \u03b4-shifted comparable. Use the monotonicity theorem (tropicalEventProfile_mono) as the starting point and extend to the full module structure.\n\n**Domain Bridges:** Category theory, homological algebra, abstract persistence theory\n\n**Lineage:** Extends Theorems 5.1\u20135.2 (interleaving) to a full categorical framework\n\n**Ambition:** Grand challenge \u2014 would unify tropical and classical persistence theory\n\n---",
+    "id": "fd_0960",
+    "title": "Direction 1: Full k-WL Separation via Non-Uniform CFI Weights",
+    "description": "**Conjecture:** For every fixed k \u2208 \u2115, there exist edge-weighted graphs G\u2081, G\u2082 such that k-WL(G\u2081) = k-WL(G\u2082) but TMS(G\u2081) \u2260 TMS(G\u2082). Specifically, the Cai-F\u00fcrer-Immerman graph pairs built from n-cycles with n > k, equipped with non-uniform gadget weights w_gadget = 1/(2i+1) for gadget i, achieve TMS separation through differing H\u2081 barcode lengths.\n\n**Test:** (1) Implement CFI construction with non-uniform weights for k = 2, 3, 4. (2) Verify k-WL equivalence using the pebble game. (3) Compute TMS and check that exactly one H\u2081 barcode endpoint differs. (4) Falsified if all weight assignments yield identical TMS for any k.\n\n**Impact:** Would establish TMS as the first single, efficiently computable graph invariant that provably exceeds the entire WL hierarchy for weighted graphs. This would be a landmark result in descriptive complexity theory.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `tms_strictly_expressive_over_WL1` (1-WL case)\n- `Pythagorean/TropicalMorse/Theorems.lean`: `spectral_gap_contrapositive` (separation mechanism)\n- `Pythagorean/TropicalMorse/Defs.lean`: `TMSpectrum`, `WL1Equiv`\n\n**Proof Strategy:** Extend the formal framework to include k-WL equivalence (defined as the k-variable counting logic equivalence). Use the CFI symmetry lemma: CFI pairs are k-WL equivalent for k < dim(base graph). Then show that non-uniform weights break the parity symmetry in the weight filtration, producing a critical value gap in the H\u2081 barcode at the \"parity cycle\" threshold.\n\n**Domain Bridges:** Descriptive complexity \u2194 Tropical geometry \u2194 Finite model theory\n\n**Lineage:** Builds on Cai-F\u00fcrer-Immerman (1992) + our strict expressiveness theorem\n\n**Ambition:** Grand challenge \u2014 would resolve a major open question in GNN expressiveness theory\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Geometry",
+      "Computation",
       "Tropical",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "834b245c",
+    "source_exp_id": "db7ef9c7",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T21:13:41.991865+00:00"
+    "timestamp": "2026-05-25T21:51:37.119607+00:00"
   },
   {
-    "id": "fd_0951",
-    "title": "Direction 3: Sheaf-Theoretic Tropical Persistence",
-    "description": "**Conjecture:** The tropical persistence barcode can be realized as the derived pushforward of a constructible sheaf on the real line, valued in the category of tropical semimodules. The stability theorem then follows from the properness of the pushforward and the continuity of the derived functor, providing a conceptual explanation for the degree-dependent constant.\n\n**Test:** Construct the sheaf explicitly for path graphs and cycle graphs. Verify that the stalk at each point t equals the tropical kernel dimension. Check that the derived pushforward reproduces the event profile.\n\n**Impact:** This would connect tropical persistence to the rapidly developing theory of persistent sheaves (Curry, Kashiwara\u2013Schapira), opening access to powerful tools from algebraic geometry and microlocal analysis. It would also suggest natural higher-dimensional generalizations.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, TPB), `Catalog/Pythagorean/TropicalBridge/FiltrationPersistence.lean` (TropicalFiltration)\n\n**Proof Strategy:** Define the sheaf F on \u211d with stalks F_t = tropical kernel of G[activeVertices(f,t)]. The restriction maps are the natural inclusions. Constructibility follows from the finite number of critical values (entrance times). The pushforward to a point gives the global sections, which encode the barcode.\n\n**Domain Bridges:** Sheaf theory, derived categories, algebraic geometry, microlocal analysis\n\n**Lineage:** Conceptual reformulation of the entire stability framework\n\n**Ambition:** Grand challenge \u2014 would place tropical persistence in the mainstream of modern geometry\n\n---",
+    "id": "fd_0961",
+    "title": "Direction 2: Differentiable Tropical Morse Features for End-to-End Learning",
+    "description": "**Conjecture:** The tropical Morse spectrum, while piecewise-constant in edge weights, admits a smooth relaxation via the soft-min function: replacing the hard threshold t with a temperature-parameterized sigmoid produces a differentiable approximation whose gradient has O(E) sparsity and O(E log E) computation time.\n\n**Test:** (1) Implement the soft-TMS with temperature parameter \u03c4. (2) Verify that as \u03c4 \u2192 0, soft-TMS \u2192 hard TMS. (3) Train a GNN on MUTAG with soft-TMS features; compare test accuracy against standard GNN and GNN + hard-TMS. (4) Falsified if soft-TMS gradients are dense (O(E\u00b2) nonzeros) or if convergence requires \u03c4 \u2192 0 faster than O(1/\u221aepoch).\n\n**Impact:** Would enable fully differentiable training of GNNs with topological features, resolving the main practical barrier to adoption.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `sublevel_perturbation_containment` (stability foundation)\n- `Pythagorean/TropicalMorse/Defs.lean`: `sublevelAdj` (threshold mechanism to relax)\n\n**Proof Strategy:** Define soft-sublevel adjacency: softAdj(G, t, i, j) = \u03c3((t - w(i,j))/\u03c4) where \u03c3 is the sigmoid. Show that the soft Betti numbers are differentiable in w and t, with Lipschitz constant 1/\u03c4. Use the stability theorem to bound the approximation error.\n\n**Domain Bridges:** Optimization theory \u2194 Tropical geometry \u2194 Deep learning\n\n**Lineage:** Extends stability theorem + connects to differentiable rendering literature\n\n**Ambition:** Solid extension \u2014 engineering challenge with clear theoretical grounding\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1876,16 +1993,38 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "834b245c",
+    "source_exp_id": "db7ef9c7",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T21:13:42.015713+00:00"
+    "timestamp": "2026-05-25T21:51:37.153172+00:00"
   },
   {
-    "id": "fd_0952",
-    "title": "Direction 4: Information-Theoretic Bounds on Tropical Barcode Stability",
-    "description": "**Conjecture:** The tropical barcode distance between random filtrations on a fixed graph G is, up to constants, equal to the mutual information between the filtration and the barcode, divided by the graph's entropy rate. Formally: d_T(TPB(G,f), TPB(G,g)) \u2248 I(f; TPB(G,f)) \u00b7 FiltrationSupDist(f,g) / H(G), where H(G) is the entropy of the degree sequence.\n\n**The key insight is** that the degree-weighted event profile is essentially a sufficient statistic for the filtration, and the stability constant (D+1) reflects the information capacity of a degree-D vertex.\n\n**Why now?** Recent advances in information-theoretic persistence (Bubenik, Vergne) have made the connection between persistence and entropy precise for classical barcodes. The tropical setting, with its natural connection to min-plus entropy and max-plus probability, is ripe for an analogous development.\n\n**Test:** Compute mutual information between filtration and barcode for G(n, c/n) with n = 100, c \u2208 {3, 5, 10}. Compare I(f; TPB(G,f)) / H(G) with the empirical stability ratio. Plot the relationship across 500 random graph instances.\n\n**Impact:** Would provide a principled, information-theoretic explanation for why the degree bound is the natural stability constant. Could lead to optimal data compression for tropical barcodes.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, certified_stability_bound)\n\n**Proof Strategy:** Model the filtration as a random process and the barcode as its image under a deterministic function. Apply the data processing inequality to bound the mutual information. Connect the channel capacity to the maximum degree via the capacity of a discrete memoryless channel with D+1 outputs.\n\n**Domain Bridges:** Information theory, entropy, data processing inequality, rate-distortion theory\n\n**Lineage:** Bridges from tropical persistence (Direction 1 foundation) to information theory\n\n**Ambition:** Solid extension \u2014 draws on mature information-theoretic tools\n\n---",
+    "id": "fd_0962",
+    "title": "Direction 3: Tropical Morse Spectra as Quantum Graph State Classifiers",
+    "description": "**Conjecture:** The tropical Morse spectrum of the interaction graph of a quantum error-correcting code determines the code distance and the number of logical qubits. Specifically, for CSS codes built from a graph G, the code distance equals the minimum critical value gap in TMS(G), and the number of logical qubits equals \u03b2\u2081(G).\n\n**Test:** (1) Construct the interaction graphs of the [[7,1,3]] Steane code, [[9,1,3]] Shor code, and surface codes on n\u00d7n grids for n = 3,5,7. (2) Compute TMS and extract critical value gaps. (3) Verify that min gap = code distance. (4) Falsified if the relationship breaks for any CSS code.\n\n**Impact:** Would establish a direct bridge between tropical geometry and quantum error correction, potentially enabling topological optimization of quantum codes via TMS gradient descent.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `redundant_edges_eq_cycle_rank` (\u03b2\u2081 computation)\n- `Pythagorean/TropicalMorse/Theorems.lean`: `morse_betti_correspondence` (topological invariants)\n\n**Proof Strategy:** For CSS codes, the logical operators correspond to non-trivial cycles in the code graph. The code distance is the minimum-weight logical operator, which corresponds to the shortest non-trivial cycle in the weight filtration. Show that this equals the minimum critical value at which a cycle event occurs.\n\n**Domain Bridges:** Quantum information theory \u2194 Tropical geometry \u2194 Algebraic topology\n\n**Lineage:** Novel cross-domain connection enabled by the Morse-Betti correspondence\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if correct, connects two major fields\n\n---",
     "domains": [
       "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "db7ef9c7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:51:37.177766+00:00"
+  },
+  {
+    "id": "fd_0963",
+    "title": "Direction 4: Verified O(E log E) Implementation with Correctness Certificate",
+    "description": "**Conjecture:** The Kruskal-based TMS algorithm can be fully formalized in Lean 4 with a machine-checked proof that (1) it terminates, (2) it produces a valid TMSpectrum (sorted, complete), and (3) the event types correctly reflect the topology changes (each merge reduces \u03b2\u2080 by 1, each cycle increases \u03b2\u2081 by 1).\n\n**Test:** (1) Formalize union-find with path compression in Lean 4. (2) Prove the O(E \u03b1(V)) amortized bound. (3) Formalize the Kruskal loop with the invariant that \u03b2\u2080 + \u03b2\u2081 counts correctly. (4) Extract executable code via Lean's compiler. (5) Falsified if the extracted code disagrees with the Python implementation on any test case.\n\n**Impact:** Would produce the first formally verified topological data analysis algorithm, establishing a new standard for trustworthy scientific computing.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Defs.lean`: `FiltrationStep`, `TMSpectrum`\n- `Pythagorean/TropicalMorse/Theorems.lean`: `cycle_rank_additive_over_filtration` (correctness invariant)\n- `Pythagorean/TropicalBridge/FiltrationPersistence.lean`: `tropicalKernelDim_of_barcode` (barcode reconstruction)\n\n**Proof Strategy:** Use the existing `Filtration` structure as the specification. Define a computable function `computeTMS : EdgeWeightedGraph n \u2192 TMSpectrum` and prove it produces the same event sequence as the abstract specification. The key lemma is that Kruskal's edge ordering is a valid filtration ordering.\n\n**Domain Bridges:** Verified programming \u2194 Algorithm design \u2194 Topological data analysis\n\n**Lineage:** Direct extension of current formalization + catalog filtration theory\n\n**Ambition:** Solid extension \u2014 tractable with current Lean 4 tooling\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
       "Computation",
       "Tropical",
       "Bridges",
@@ -1894,9 +2033,30 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "834b245c",
+    "source_exp_id": "db7ef9c7",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T21:13:42.045646+00:00"
+    "timestamp": "2026-05-25T21:51:37.203392+00:00"
+  },
+  {
+    "id": "fd_0964",
+    "title": "Direction 5: Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
+    "description": "**Conjecture:** The tropical Morse spectrum generalizes from graphs (1-skeleta) to simplicial complexes of arbitrary dimension, yielding a complete invariant for the persistent homology barcode in all dimensions. For a weighted d-dimensional simplicial complex K with weight function w on simplices, the d-dimensional TMS records critical values where H_k changes for 0 \u2264 k \u2264 d, and the resulting invariant is strictly more expressive than the d-WL test.\n\n**Test:** (1) Define the TMS for weighted 2-complexes (triangulated surfaces). (2) Compute TMS for the torus, Klein bottle, and projective plane with random edge/face weights. (3) Verify that TMS distinguishes them while 2-WL does not. (4) Falsified if 2-WL already distinguishes all weighted 2-complexes tested.\n\n**Impact:** Would extend the entire tropical Morse framework from graph theory to computational topology, opening applications in mesh analysis, computational geometry, and topological materials science.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `euler_char_from_filtration` (1D case to generalize)\n- `Pythagorean/TropicalMorse/Theorems.lean`: `dehn_sommerville_1d` (Dehn-Sommerville to generalize)\n\n**Proof Strategy:** The key challenge is defining \"merge\" and \"cycle birth\" in higher dimensions. Use discrete Morse theory (Forman, 1998): a simplex \u03c3 is critical if it is not paired in a discrete gradient field. The tropical Morse spectrum becomes the sequence of critical simplices ordered by weight, with event types determined by the dimension of the critical simplex.\n\n**Domain Bridges:** Algebraic topology \u2194 Tropical geometry \u2194 Computational geometry \u2194 Discrete Morse theory\n\n**Lineage:** Generalization of all current results from dimension 1 to arbitrary dimension\n\n**Ambition:** Grand challenge \u2014 requires substantial new theory, but the framework is clear",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "db7ef9c7",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:51:37.228515+00:00"
   },
   {
     "id": "seed_032",

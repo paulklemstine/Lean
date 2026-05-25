@@ -7,7 +7,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "direction_3_compositional_witness_synthesis_algori",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "direction_2_higher_order_log_concavity_and_partiti",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_5_chip_firing_correspondence",
@@ -34,7 +34,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_1_brauer_manin_obstructions_for_integral",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "yang_mills_mass_gap",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 280
+      "hue": 100
     },
     {
       "id": "direction_3_concentration_of__on_random_hypergraph",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "direction_1_tight_spectral_gap_via_lorentzian_stru",
@@ -79,7 +79,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_4_relative_tropical_hodge_theorem",
@@ -88,7 +88,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_5_weighted_and_multi_objective_extension",
@@ -106,7 +106,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T17:14:28Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_5_phase_transitions_in_generation_probab",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:14:56Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_2_character_expansion_and_strong_couplin",
@@ -124,7 +124,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -142,7 +142,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T17:57:55Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "direction_4_higher_order_tensor_calculus_with_eins",
@@ -151,7 +151,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:02:50Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_2_hypergraph_transversals_as_tropical_co",
@@ -160,7 +160,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T18:03:18Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_5_tropical_morse_theory_for_network_phas",
@@ -187,7 +187,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T18:40:46Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_multivariate_k_fold_log_concavity_and_",
@@ -196,7 +196,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T19:29:15Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "direction_5_higher_order_completion_and_lambda_cal",
@@ -205,7 +205,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:01:45Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "direction_3_compositional_rounding_certificates_fo",
@@ -214,7 +214,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:02:12Z",
-      "hue": 89
+      "hue": 271
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -223,7 +223,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:34:49Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_1_submodular_objectives_and_the_curvatur",
@@ -232,7 +232,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:35:13Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "direction_3_weighted_extension",
@@ -241,7 +241,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T20:35:34Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "langlands_program_functoriality",
@@ -250,7 +250,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:35:56Z",
-      "hue": 90
+      "hue": 359
     },
     {
       "id": "direction_2_mixing_time_bounds_from_concavity_dept",
@@ -259,7 +259,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T21:12:32Z",
-      "hue": 280
+      "hue": 271
     },
     {
       "id": "direction_3_quantum_ground_state_preparation_via_l",
@@ -268,7 +268,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T21:13:06Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1_stability_theory_for_tropical_persiste",
@@ -277,6 +277,24 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T21:13:36Z",
+      "hue": 270
+    },
+    {
+      "id": "direction_2_universality_of_phase_transition_criti",
+      "title": "Universality of Critical Exponents in Subgroup Thermodynamics",
+      "domain": "Algebraic Statistical Mechanics / Finite Group Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T21:49:23Z",
+      "hue": 90
+    },
+    {
+      "id": "direction_5_tropical_morse_theory_as_a_topological",
+      "title": "Tropical Morse Theory as a Topological Feature for Graph Neural Networks",
+      "domain": "Tropical Geometry / Topological Data Analysis / Graph Neural Networks",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T21:51:06Z",
       "hue": 270
     }
   ],
@@ -317,6 +335,13 @@
       "type": "provenance"
     },
     {
+      "source": "direction_5_phase_transitions_in_generation_probab",
+      "target": "direction_2_universality_of_phase_transition_criti",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
       "source": "direction_5_weighted_and_multi_objective_extension",
       "target": "direction_3_compositional_rounding_certificates_fo",
       "strength": 1.0,
@@ -345,6 +370,13 @@
       "type": "provenance"
     },
     {
+      "source": "direction_5_tropical_morse_theory_for_network_phas",
+      "target": "direction_5_tropical_morse_theory_as_a_topological",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
       "source": "direction_4_relative_tropical_hodge_theorem",
       "target": "direction_5_tropical_morse_theory_for_network_phas",
       "strength": 1.0,
@@ -356,8 +388,14 @@
     {
       "domain_a": "Geometry",
       "domain_b": "Tropical",
-      "package_count": 5,
+      "package_count": 6,
       "strength": 1.0
+    },
+    {
+      "domain_a": "Logic",
+      "domain_b": "Tropical",
+      "package_count": 3,
+      "strength": 0.9000000000000001
     },
     {
       "domain_a": "Algebra",
@@ -366,16 +404,10 @@
       "strength": 0.9000000000000001
     },
     {
-      "domain_a": "Logic",
-      "domain_b": "Tropical",
-      "package_count": 2,
-      "strength": 0.7
-    },
-    {
       "domain_a": "Geometry",
       "domain_b": "Logic",
-      "package_count": 1,
-      "strength": 0.5
+      "package_count": 2,
+      "strength": 0.7
     },
     {
       "domain_a": "Algebra",

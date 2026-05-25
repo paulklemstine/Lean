@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Topological Data Analysis / Graph Neural Networks",
     "date": "2026-05-25T21:51:06Z",
     "exp_id": "db7ef9c7",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7304195636363637,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_universality_of_phase_transition_criti.json",
@@ -933,8 +933,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-25T21:51:06Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7304195636363637,
+      "quality": "substantial"
     }
   ],
   "edges": [
