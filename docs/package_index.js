@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean",
     "date": "2026-05-25T00:55:11Z",
     "exp_id": "21d0ab18",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.707316371361133,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_tensor_sorted_extension_for_scientific.json",
@@ -261,8 +261,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.707316371361133,
+      "quality": "substantial"
     }
   ],
   "edges": [],
@@ -324,10 +324,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75d10c50",
     "timestamp": "2026-05-24T22:37:54.411437+00:00"
   },
   {
@@ -357,7 +357,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
@@ -375,7 +375,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
@@ -395,7 +395,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
@@ -416,7 +416,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
@@ -435,11 +435,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
+    "priority_score": 1.0,
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1f8fa3a8",
     "timestamp": "2026-05-24T23:12:21.876594+00:00"
   },
   {
@@ -455,7 +455,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
@@ -473,7 +473,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f6e7fe77",
@@ -493,7 +493,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f6e7fe77",
@@ -512,12 +512,121 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f6e7fe77",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:13:44.276911+00:00"
+  },
+  {
+    "id": "fd_0784",
+    "title": "Direction 1: Sharp Valuation-Sensitive Stability Bound",
+    "description": "**Conjecture**: For filtrations whose interleaving maps have p-adic divisibility controlled by \u03bd = v_p(\u03b4), the primewise stability modulus satisfies\n\n```\n\u03b5_p \u2264 \u03b4 / p^\u03bd\n```\n\nwhere \u03bd is the p-adic valuation of the interleaving defect.\n\n**Test**: Construct explicit filtrations over Z/p^k Z for k = 1, 2, 3 with interleaving maps whose matrix entries are divisible by p^\u03bd. Compute the actual primewise shift and compare against \u03b4/p^\u03bd. The conjecture predicts a monotone decrease; a single counterexample falsifies it.\n\n**Impact**: This would establish that p-adic arithmetic directly controls topological stability \u2014 a bridge between valuation theory and TDA that has no precedent.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `primeShiftBound_improved`, `primeShiftBound_improved_strict`\n\n**Proof Strategy**: Define a \"p-controlled interleaving\" structure where forward/backward maps factor through p^\u03bd-multiplication. Transport the existing stability proof through this factorization, extracting the improved constant at each step. The key technical lemma: if the interleaving map sends x to p^\u03bd \u00b7 f(x) for injective f, then the induced birth shift is bounded by \u03b4/p^\u03bd rather than \u03b4.\n\n**Domain Bridges**: p-adic analysis, arithmetic geometry, Iwasawa theory\n\n**Lineage**: Extends `pTorsionBirthSet_deltaClose` and `primeShiftBound_improved_strict`\n\n**Ambition**: Grand challenge \u2014 this would be the first theorem importing valuation theory into persistence stability\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.476543+00:00"
+  },
+  {
+    "id": "fd_0787",
+    "title": "Direction 4: Global Stability as Max Envelope",
+    "description": "**Conjecture** (Hypothesis C): For finite-type filtrations with finitely many active primes,\n\n```\noptimal_global_shift(F, G) = sup_p optimal_prime_shift(p, F, G)\n```\n\nwhere the supremum is over all primes p.\n\n**Test**: Compute both sides on 1000 random filtration pairs with torsion orders in {2, 3, 5, 6, 10, 15, 30}. The conjecture predicts exact equality. A single instance of strict inequality (global < max primewise, or global > max primewise) would falsify it.\n\n**Impact**: Confirms that the primewise decomposition is a complete refinement \u2014 no information is lost, and the global bound is exactly the worst-case prime channel.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `global_stability_from_primewise`\n\n**Proof Strategy**: The inequality global \u2264 sup_p is immediate from `global_stability_from_primewise`. The reverse requires showing that the global birth distance equals the maximum primewise birth distance. This follows from the decomposition theorem: the global birth is at the minimum of all prime births, and the Hausdorff distance between minima is bounded by the max of individual distances.\n\n**Domain Bridges**: Metric geometry, minimax theory\n\n**Lineage**: Extends `global_stability_from_primewise` and `globalTorsionBirthSet_deltaClose`\n\n**Ambition**: Solid extension \u2014 proves completeness of the decomposition\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.518980+00:00"
+  },
+  {
+    "id": "fd_0807",
+    "title": "Direction 1: Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
+    "description": "**Conjecture:** For the cubic surface $X_k : x^3+y^3+z^3 = k$, the Brauer-Manin obstruction is the only obstruction to the integral Hasse principle. That is, if $k$ is everywhere locally admissible and survives the Brauer-Manin filtration, then $k$ is representable.\n\n**Test:** Compute the Brauer group $\\text{Br}(X_k)/\\text{Br}(\\mathbb{Q})$ for specific $k$ values (e.g., $k = 33, 42, 114$) and verify that the Brauer-Manin set $X_k(\\mathbb{A}_\\mathbb{Z})^{\\text{Br}}$ is nonempty whenever solutions exist. A counterexample would be a $k$ with nonempty Brauer-Manin set but no integral point.\n\n**Impact:** This would establish the three-cubes problem as a test case for the Colliot-Th\u00e9l\u00e8ne conjecture on integral points, one of the central open problems in arithmetic geometry. It would also provide the first formal connection between computational Diophantine search and cohomological obstructions.\n\n**The key insight is** that the mod 9 obstruction we formalized is the shadow of a Brauer class at the prime 3, and the general Brauer-Manin framework subsumes all such modular obstructions into a single cohomological invariant.\n\n**Why now?** The formal infrastructure for local admissibility (`ThreeCubeLocalAdmissible`, `EverywhereLocallyAdmissible`) created in this cycle provides the precise definitions needed to state and test Brauer-Manin predictions. Mathlib's growing \u00e9tale cohomology library makes partial formalization feasible.\n\n**Catalog References:** `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean), `not_threeCubeLocalAdmissible_mod9_of_eq_four_or_five` (Algebra/SumThreeCubes/LocalObstruction.lean)\n\n**Proof Strategy:** Formalize the Brauer group of a smooth cubic surface over $\\mathbb{Q}$, compute generators via Azumaya algebras, and evaluate the Brauer-Manin pairing at each completion of $\\mathbb{Q}$.\n\n**Domain Bridges:** Arithmetic geometry, \u00e9tale cohomology, class field theory\n\n**Lineage:** Extends the local-global implication (Theorem 4) from modular arithmetic to cohomological invariants\n\n**Ambition:** Grand challenge \u2014 would resolve a major case of the integral Hasse principle\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "34c2669a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:26:36.179554+00:00"
+  },
+  {
+    "id": "fd_0808",
+    "title": "Direction 2: Density Heuristics via the Circle Method",
+    "description": "**Conjecture:** For each admissible $k$ (i.e., $k \\not\\equiv 4,5 \\pmod{9}$), the number of representations $|\\{(x,y,z) \\in [-N,N]^3 : x^3+y^3+z^3 = k\\}|$ grows as $c_k \\cdot N^{1/3}$ for an explicit constant $c_k > 0$ depending on the singular series and singular integral.\n\n**Test:** Compute empirical counts of representations for $k \\in \\{0, 1, 2, 3, 6, 7, 8, 9\\}$ up to $N = 10^6$ and compare with the predicted asymptotic. Measure the relative error $|R(N) - c_k N^{1/3}| / (c_k N^{1/3})$ and verify it decreases with $N$.\n\n**Impact:** Would provide the first formally grounded connection between the combinatorial/algebraic framework and analytic number theory. The singular series in the density prediction is a product of local densities, directly connecting to our `ThreeCubeLocalAdmissible` counts.\n\n**The key insight is** that the local admissibility counts $|A_n|/n$ at each modulus $n$ are the local factors of the singular series, and the everywhere-local-admissibility theorem guarantees this product converges when $k$ is admissible.\n\n**Why now?** The formal definitions of local admissibility and the computational infrastructure for counting admissible residues provide the exact data needed to compute singular series factors and compare with empirical density.\n\n**Catalog References:** `ThreeCubeLocalAdmissible` (Algebra/SumThreeCubes/Defs.lean), `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean)\n\n**Proof Strategy:** Formalize the circle method setup for cubic forms, compute the singular integral, and bound the minor arc contributions.\n\n**Domain Bridges:** Analytic number theory, harmonic analysis, probability theory\n\n**Lineage:** Connects the discrete local admissibility framework to continuous density predictions\n\n**Ambition:** Solid extension \u2014 the circle method for three cubes is at the boundary of current analytic technique\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "34c2669a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:26:36.199585+00:00"
+  },
+  {
+    "id": "fd_0810",
+    "title": "Direction 4: Parametric Families and Algebraic Curves on Cubic Surfaces",
+    "description": "**Conjecture:** The parametric family $k = -3ab(a+b)$ (from `sum_three_cubes_neg_sum`) covers a positive density of admissible integers. More precisely, $|\\{k \\in [1,N] : k = 3ab(a+b) \\text{ for some } a,b \\in \\mathbb{Z}\\}| \\gg N^{2/3}$.\n\n**Test:** Enumerate all values of $-3ab(a+b)$ for $|a|, |b| \\leq 1000$ and measure the density of covered integers in $[1, 10^6]$. Compare with the predicted $N^{2/3}$ growth.\n\n**Impact:** Parametric families correspond to **algebraic curves** on the cubic surface. Understanding which curves pass through integer points, and how densely they cover the integers, connects Diophantine approximation to the geometry of rational curves on cubic surfaces.\n\n**The key insight is** that each parametric identity for sums of three cubes corresponds to a rational curve on $X_k$ parametrized over $\\mathbb{Z}$, and the union of all such curves determines a \"constructively representable\" subset whose density is a geometric invariant.\n\n**Why now?** The formal proof of `sumThreeCubesRep_neg_iff` and the identity $a^3 + b^3 + (-a-b)^3 = -3ab(a+b)$ provide the first verified parametric family, which can be used as a template for formalizing others.\n\n**Catalog References:** `sumThreeCubesRep_neg_iff` (Algebra/SumThreeCubes/Symmetry.lean), `sum_three_cubes_neg_sum` (Catalog/Algebra/LocalGlobal.lean)\n\n**Proof Strategy:** Enumerate known parametric families, compute their images, and prove density bounds using sieve methods.\n\n**Domain Bridges:** Algebraic geometry (rational curves on surfaces), sieve theory, additive combinatorics\n\n**Lineage:** Extends sign symmetry to full parametric family analysis\n\n**Ambition:** Solid extension \u2014 combines known identities with density estimation\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "34c2669a",
+    "consumed_by_exp_id": "40a05224",
+    "timestamp": "2026-05-25T00:26:38.290698+00:00"
+  },
+  {
+    "id": "fd_0811",
+    "title": "Direction 5: Generalization to Higher-Degree Diagonal Surfaces",
+    "description": "**Conjecture (Waring-type local-global):** For the equation $x_1^n + x_2^n + \\cdots + x_s^n = k$ with $s$ sufficiently large relative to $n$, the only local obstructions arise from $n$-th power residue conditions at primes dividing $n$, analogous to the mod-9 obstruction for $n=3, s=3$.\n\n**Test:** Compute local admissible sets for $x^4+y^4+z^4+w^4 = k$ modulo all $n \\leq 100$ and identify the obstructing moduli. Compare with the predicted pattern (obstructions only at powers of 2 and primes $p \\equiv 1 \\pmod{4}$).\n\n**Impact:** Would establish a general theory of local obstructions for Waring-type problems, unifying the three-cubes result with classical results on sums of squares, biquadrates, and higher powers.\n\n**The key insight is** that our framework\u2014local admissibility, everywhere local admissibility, the global-to-local implication\u2014generalizes verbatim to $x_1^n + \\cdots + x_s^n = k$ by replacing cubes with $n$-th powers, and the new obstructions reflect the arithmetic of $n$-th power residues.\n\n**Why now?** The Lean definitions `ThreeCubeLocalAdmissible` and `EverywhereLocallyAdmissible` are parametric in the modulus and can be straightforwardly generalized to arbitrary degree, making this the natural next step.\n\n**Catalog References:** All definitions in `Algebra/SumThreeCubes/Defs.lean`, the obstruction framework in `Algebra/SumThreeCubes/LocalObstruction.lean`\n\n**Proof Strategy:** Generalize definitions to $n$-th powers, classify $n$-th power residues modulo prime powers, and prove the analogue of Theorem 4 (global implies local) for general degree.\n\n**Domain Bridges:** Waring's problem, algebraic number theory ($n$-th power reciprocity), analytic number theory (circle method for higher powers)\n\n**Lineage:** Direct generalization of the entire framework from degree 3 to degree $n$\n\n**Ambition:** Grand challenge \u2014 would create a unified formal theory of local obstructions for additive Diophantine problems",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "34c2669a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:26:39.059352+00:00"
   },
   {
     "id": "seed_003",
@@ -702,62 +811,45 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.520566+00:00"
   },
   {
-    "id": "fd_0784",
-    "title": "Direction 1: Sharp Valuation-Sensitive Stability Bound",
-    "description": "**Conjecture**: For filtrations whose interleaving maps have p-adic divisibility controlled by \u03bd = v_p(\u03b4), the primewise stability modulus satisfies\n\n```\n\u03b5_p \u2264 \u03b4 / p^\u03bd\n```\n\nwhere \u03bd is the p-adic valuation of the interleaving defect.\n\n**Test**: Construct explicit filtrations over Z/p^k Z for k = 1, 2, 3 with interleaving maps whose matrix entries are divisible by p^\u03bd. Compute the actual primewise shift and compare against \u03b4/p^\u03bd. The conjecture predicts a monotone decrease; a single counterexample falsifies it.\n\n**Impact**: This would establish that p-adic arithmetic directly controls topological stability \u2014 a bridge between valuation theory and TDA that has no precedent.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `primeShiftBound_improved`, `primeShiftBound_improved_strict`\n\n**Proof Strategy**: Define a \"p-controlled interleaving\" structure where forward/backward maps factor through p^\u03bd-multiplication. Transport the existing stability proof through this factorization, extracting the improved constant at each step. The key technical lemma: if the interleaving map sends x to p^\u03bd \u00b7 f(x) for injective f, then the induced birth shift is bounded by \u03b4/p^\u03bd rather than \u03b4.\n\n**Domain Bridges**: p-adic analysis, arithmetic geometry, Iwasawa theory\n\n**Lineage**: Extends `pTorsionBirthSet_deltaClose` and `primeShiftBound_improved_strict`\n\n**Ambition**: Grand challenge \u2014 this would be the first theorem importing valuation theory into persistence stability\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:11:24.476543+00:00"
-  },
-  {
-    "id": "fd_0787",
-    "title": "Direction 4: Global Stability as Max Envelope",
-    "description": "**Conjecture** (Hypothesis C): For finite-type filtrations with finitely many active primes,\n\n```\noptimal_global_shift(F, G) = sup_p optimal_prime_shift(p, F, G)\n```\n\nwhere the supremum is over all primes p.\n\n**Test**: Compute both sides on 1000 random filtration pairs with torsion orders in {2, 3, 5, 6, 10, 15, 30}. The conjecture predicts exact equality. A single instance of strict inequality (global < max primewise, or global > max primewise) would falsify it.\n\n**Impact**: Confirms that the primewise decomposition is a complete refinement \u2014 no information is lost, and the global bound is exactly the worst-case prime channel.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `global_stability_from_primewise`\n\n**Proof Strategy**: The inequality global \u2264 sup_p is immediate from `global_stability_from_primewise`. The reverse requires showing that the global birth distance equals the maximum primewise birth distance. This follows from the decomposition theorem: the global birth is at the minimum of all prime births, and the Hausdorff distance between minima is bounded by the max of individual distances.\n\n**Domain Bridges**: Metric geometry, minimax theory\n\n**Lineage**: Extends `global_stability_from_primewise` and `globalTorsionBirthSet_deltaClose`\n\n**Ambition**: Solid extension \u2014 proves completeness of the decomposition\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:11:24.518980+00:00"
-  },
-  {
-    "id": "fd_0807",
-    "title": "Direction 1: Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
-    "description": "**Conjecture:** For the cubic surface $X_k : x^3+y^3+z^3 = k$, the Brauer-Manin obstruction is the only obstruction to the integral Hasse principle. That is, if $k$ is everywhere locally admissible and survives the Brauer-Manin filtration, then $k$ is representable.\n\n**Test:** Compute the Brauer group $\\text{Br}(X_k)/\\text{Br}(\\mathbb{Q})$ for specific $k$ values (e.g., $k = 33, 42, 114$) and verify that the Brauer-Manin set $X_k(\\mathbb{A}_\\mathbb{Z})^{\\text{Br}}$ is nonempty whenever solutions exist. A counterexample would be a $k$ with nonempty Brauer-Manin set but no integral point.\n\n**Impact:** This would establish the three-cubes problem as a test case for the Colliot-Th\u00e9l\u00e8ne conjecture on integral points, one of the central open problems in arithmetic geometry. It would also provide the first formal connection between computational Diophantine search and cohomological obstructions.\n\n**The key insight is** that the mod 9 obstruction we formalized is the shadow of a Brauer class at the prime 3, and the general Brauer-Manin framework subsumes all such modular obstructions into a single cohomological invariant.\n\n**Why now?** The formal infrastructure for local admissibility (`ThreeCubeLocalAdmissible`, `EverywhereLocallyAdmissible`) created in this cycle provides the precise definitions needed to state and test Brauer-Manin predictions. Mathlib's growing \u00e9tale cohomology library makes partial formalization feasible.\n\n**Catalog References:** `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean), `not_threeCubeLocalAdmissible_mod9_of_eq_four_or_five` (Algebra/SumThreeCubes/LocalObstruction.lean)\n\n**Proof Strategy:** Formalize the Brauer group of a smooth cubic surface over $\\mathbb{Q}$, compute generators via Azumaya algebras, and evaluate the Brauer-Manin pairing at each completion of $\\mathbb{Q}$.\n\n**Domain Bridges:** Arithmetic geometry, \u00e9tale cohomology, class field theory\n\n**Lineage:** Extends the local-global implication (Theorem 4) from modular arithmetic to cohomological invariants\n\n**Ambition:** Grand challenge \u2014 would resolve a major case of the integral Hasse principle\n\n---",
+    "id": "fd_0813",
+    "title": "Direction 1: Confluence and Unique Normal Forms",
+    "description": "**Conjecture:** The 8-rule distributivity fragment defined in `TensorSortedRewrite.lean` is confluent modulo associativity-commutativity of scalar addition, i.e., any two reduction sequences from the same term yield syntactically equal normal forms up to AC-equivalence of `scalAdd`.\n\n**Test:** Enumerate all tensor terms of depth \u2264 5 with 3 scalar, 3 vector, and 2 matrix variables. For each term, compute all possible reduction sequences (using breadth-first enumeration of rule applications). Check that all terminal forms are AC-equivalent. A single counterexample \u2014 two irreducible forms that differ by more than scalar-addition reordering \u2014 refutes the conjecture. Run over \u211a for exact arithmetic.\n\n**Impact:** Confluence implies that normalization is deterministic up to AC, which is essential for using the rewrite system as a certified decision procedure. Without confluence, different simplification strategies could produce different \"simplified\" forms, undermining trust in automated preprocessing.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `TensorRewrite`, `normStep`, `normStep_sound_*`.\n\n**Proof Strategy:** Define a weight function that strictly decreases under each oriented rule (the current `tensorWeight` increases, but a redex-counting measure should decrease). Prove local confluence by showing all critical pairs are joinable. Apply Newman's lemma (termination + local confluence \u2192 confluence).\n\n**Domain Bridges:** Term rewriting theory \u2192 optimization preprocessing \u2192 compiler correctness for scientific code.\n\n**Lineage:** Extends Theorem 1 (one-step soundness) and Theorem 6 (normStep soundness) toward a complete decision procedure.\n\n**Ambition:** Medium \u2014 requires careful critical pair analysis but builds on well-understood rewriting theory.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "34c2669a",
+    "source_exp_id": "c1bdccd8",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:26:36.179554+00:00"
+    "timestamp": "2026-05-25T00:54:40.932722+00:00"
   },
   {
-    "id": "fd_0808",
-    "title": "Direction 2: Density Heuristics via the Circle Method",
-    "description": "**Conjecture:** For each admissible $k$ (i.e., $k \\not\\equiv 4,5 \\pmod{9}$), the number of representations $|\\{(x,y,z) \\in [-N,N]^3 : x^3+y^3+z^3 = k\\}|$ grows as $c_k \\cdot N^{1/3}$ for an explicit constant $c_k > 0$ depending on the singular series and singular integral.\n\n**Test:** Compute empirical counts of representations for $k \\in \\{0, 1, 2, 3, 6, 7, 8, 9\\}$ up to $N = 10^6$ and compare with the predicted asymptotic. Measure the relative error $|R(N) - c_k N^{1/3}| / (c_k N^{1/3})$ and verify it decreases with $N$.\n\n**Impact:** Would provide the first formally grounded connection between the combinatorial/algebraic framework and analytic number theory. The singular series in the density prediction is a product of local densities, directly connecting to our `ThreeCubeLocalAdmissible` counts.\n\n**The key insight is** that the local admissibility counts $|A_n|/n$ at each modulus $n$ are the local factors of the singular series, and the everywhere-local-admissibility theorem guarantees this product converges when $k$ is admissible.\n\n**Why now?** The formal definitions of local admissibility and the computational infrastructure for counting admissible residues provide the exact data needed to compute singular series factors and compare with empirical density.\n\n**Catalog References:** `ThreeCubeLocalAdmissible` (Algebra/SumThreeCubes/Defs.lean), `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean)\n\n**Proof Strategy:** Formalize the circle method setup for cubic forms, compute the singular integral, and bound the minor arc contributions.\n\n**Domain Bridges:** Analytic number theory, harmonic analysis, probability theory\n\n**Lineage:** Connects the discrete local admissibility framework to continuous density predictions\n\n**Ambition:** Solid extension \u2014 the circle method for three cubes is at the boundary of current analytic technique\n\n---",
+    "id": "fd_0814",
+    "title": "Direction 2: Complex Inner Product Spaces and Quantum Observables",
+    "description": "**Conjecture:** The tensor-sorted rewrite system extends to complex scalars `\u2102` with a sesquilinear pairing `\u27e8v, w\u27e9 = \u2211\u1d62 conj(v\u1d62) \u00b7 w\u1d62`, and all 8 rewrite rules remain sound under this interpretation. Furthermore, the energy invariance theorem (Theorem 3) generalizes to Hermitian-matrix expectation values `\u27e8\u03c8| H |\u03c8\u27e9`, preserving the real-valuedness of observables.\n\n**Test:** Implement the complex evaluator over `\u2102\u207f` with `n \u2208 {2, 4, 8}`. Generate 10,000 random Hermitian matrices and complex vectors. For each, normalize the expression `\u27e8\u03c8, H\u00b7\u03c8\u27e9` and verify: (a) the numerical value is preserved to machine precision, (b) the result is real-valued (imaginary part < 10\u207b\u00b9\u00b2). A single complex-valued result from a Hermitian observable refutes the real-valuedness claim.\n\n**Impact:** This bridges the tensor rewrite system to finite-dimensional quantum mechanics, where `\u27e8\u03c8| H |\u03c8\u27e9` is the fundamental observable. Certified simplification of quantum expectation values would have applications in quantum chemistry (Hartree-Fock energy expressions), quantum information (entanglement witnesses), and quantum computing (circuit optimization for variational quantum eigensolvers).\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `energy`, `energy_add`, `energy_add_of_symmetric`, `dotProd_comm_of_symmetric`.\n\n**Proof Strategy:** Replace `CommRing R` with `StarRing \u2102` (or `RCLike`). Replace `dotProd` with the sesquilinear form. Modify `dotProd_smul_left` to use `starRingEnd` (conjugation). The key challenge is that `\u27e8a\u2022v, w\u27e9 = conj(a) \u00b7 \u27e8v, w\u27e9`, not `a \u00b7 \u27e8v, w\u27e9`. This requires modifying the `dot_smulVec_left` rewrite rule to track conjugation.\n\n**Domain Bridges:** Linear algebra \u2192 quantum mechanics \u2192 quantum computing \u2192 quantum chemistry.\n\n**Lineage:** Direct extension of Theorems 3-5 to the complex/Hermitian setting.\n\n**Ambition:** Grand challenge \u2014 requires significant new infrastructure (star-rings, sesquilinearity) and breaks the symmetry of the current rewrite rules.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c1bdccd8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:54:40.947177+00:00"
+  },
+  {
+    "id": "fd_0815",
+    "title": "Direction 3: Sparse Matrix Structure Preservation",
+    "description": "**Conjecture:** For sparse matrices (with at most `s` nonzero entries per row, where `s \u226a n`), the normalized form produced by the distributivity rewrite system preserves sparsity structure: if all matrix variables in a term are `s`-sparse, then the semantic matrix produced by evaluating any intermediate or final term has at most `s` nonzero entries per row.\n\n**Test:** Generate 5,000 random sparse matrices (CSR format) with `n = 100`, `s = 5`. Build random tensor terms of depth 4. Normalize and evaluate, checking the sparsity pattern of all intermediate matrix results. A single dense intermediate matrix refutes the conjecture. Compute the sparsity ratio (nnz/n\u00b2) before and after normalization.\n\n**Impact:** Sparsity preservation is critical for scalability. Finite element stiffness matrices, graph Laplacians, and many physics operators are sparse. If normalization destroys sparsity, the certified simplification becomes computationally useless for large problems. Proving sparsity preservation would make the rewrite system practical for real-world scientific computing.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `TensorRewrite`, `evalMat`, `evalVec`.\n\n**Proof Strategy:** Add a `Sparse` predicate on matrix terms and prove that each rewrite rule preserves it. The key insight: distributivity rules never multiply matrices together (no `matMul` in the current fragment), so sparsity of individual matrices is preserved through addition and scalar multiplication.\n\n**Domain Bridges:** Numerical linear algebra \u2192 finite elements \u2192 graph algorithms \u2192 scientific computing at scale.\n\n**Lineage:** Extends Theorem 1 with structural properties beyond semantic equality.\n\n**Ambition:** Medium \u2014 the current fragment avoids matrix-matrix multiplication, which is the main source of fill-in.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -766,20 +858,22 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
-    "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:26:36.199585+00:00"
+    "source_exp_id": "c1bdccd8",
+    "consumed_by_exp_id": "bcea68ad",
+    "timestamp": "2026-05-25T00:54:40.959769+00:00"
   },
   {
-    "id": "fd_0810",
-    "title": "Direction 4: Parametric Families and Algebraic Curves on Cubic Surfaces",
-    "description": "**Conjecture:** The parametric family $k = -3ab(a+b)$ (from `sum_three_cubes_neg_sum`) covers a positive density of admissible integers. More precisely, $|\\{k \\in [1,N] : k = 3ab(a+b) \\text{ for some } a,b \\in \\mathbb{Z}\\}| \\gg N^{2/3}$.\n\n**Test:** Enumerate all values of $-3ab(a+b)$ for $|a|, |b| \\leq 1000$ and measure the density of covered integers in $[1, 10^6]$. Compare with the predicted $N^{2/3}$ growth.\n\n**Impact:** Parametric families correspond to **algebraic curves** on the cubic surface. Understanding which curves pass through integer points, and how densely they cover the integers, connects Diophantine approximation to the geometry of rational curves on cubic surfaces.\n\n**The key insight is** that each parametric identity for sums of three cubes corresponds to a rational curve on $X_k$ parametrized over $\\mathbb{Z}$, and the union of all such curves determines a \"constructively representable\" subset whose density is a geometric invariant.\n\n**Why now?** The formal proof of `sumThreeCubesRep_neg_iff` and the identity $a^3 + b^3 + (-a-b)^3 = -3ab(a+b)$ provide the first verified parametric family, which can be used as a template for formalizing others.\n\n**Catalog References:** `sumThreeCubesRep_neg_iff` (Algebra/SumThreeCubes/Symmetry.lean), `sum_three_cubes_neg_sum` (Catalog/Algebra/LocalGlobal.lean)\n\n**Proof Strategy:** Enumerate known parametric families, compute their images, and prove density bounds using sieve methods.\n\n**Domain Bridges:** Algebraic geometry (rational curves on surfaces), sieve theory, additive combinatorics\n\n**Lineage:** Extends sign symmetry to full parametric family analysis\n\n**Ambition:** Solid extension \u2014 combines known identities with density estimation\n\n---",
+    "id": "fd_0816",
+    "title": "Direction 4: Higher-Order Tensor Calculus with Einstein Summation",
+    "description": "**Conjecture:** The three-sorted calculus extends to an `n`-sorted system with sorts `Tensor(k)` for `k = 0, 1, 2, ...` (where `k` is the tensor order), equipped with contraction operations that generalize dot product and matrix-vector multiplication. The distributivity rewrite rules generalize to a universal schema: contraction distributes over addition at each pair of orders.\n\n**Test:** Implement a 4-sorted system (orders 0-3) and verify soundness for all pairwise contraction rules (6 pairs) on 1,000 random terms each. Check that the energy identity `E(T, v) = contract(v, contract(T, v))` holds for order-2 tensors `T` and order-1 vectors `v`, and that analogous identities hold for higher-order contractions. A single semantic mismatch refutes the extension.\n\n**Impact:** Real-world tensor computations (general relativity, continuum mechanics, machine learning) involve tensors of order 3 and above. Einstein summation notation is the lingua franca of theoretical physics. A formally verified rewrite system for Einstein summation would be a breakthrough in certified scientific computing, enabling symbolic optimization of tensor network contractions, finite element assembly kernels, and deep learning tensor operations.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `TensorSort`, `TensorTerm`, `TensorRewrite`.\n\n**Proof Strategy:** Parameterize `TensorSort` by `\u2115` (tensor order). Define contraction as a binary operation `contract : Tensor(j+k) \u2192 Tensor(k) \u2192 Tensor(j)`. Prove distributivity of contraction over addition by induction on tensor order, using the current matrix-vector case as the base.\n\n**Domain Bridges:** Tensor algebra \u2192 differential geometry \u2192 general relativity \u2192 machine learning \u2192 finite elements.\n\n**Lineage:** Extends the entire framework from 3 sorts to infinitely many.\n\n**Ambition:** Grand challenge \u2014 requires a fundamentally new inductive structure for sorts and terms, plus careful handling of index types.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
+      "Computation",
+      "Physics",
       "Bridges",
       "MachineLearning",
       "Logic"
@@ -787,18 +881,18 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "34c2669a",
+    "source_exp_id": "c1bdccd8",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:26:38.290698+00:00"
+    "timestamp": "2026-05-25T00:54:40.973612+00:00"
   },
   {
-    "id": "fd_0811",
-    "title": "Direction 5: Generalization to Higher-Degree Diagonal Surfaces",
-    "description": "**Conjecture (Waring-type local-global):** For the equation $x_1^n + x_2^n + \\cdots + x_s^n = k$ with $s$ sufficiently large relative to $n$, the only local obstructions arise from $n$-th power residue conditions at primes dividing $n$, analogous to the mod-9 obstruction for $n=3, s=3$.\n\n**Test:** Compute local admissible sets for $x^4+y^4+z^4+w^4 = k$ modulo all $n \\leq 100$ and identify the obstructing moduli. Compare with the predicted pattern (obstructions only at powers of 2 and primes $p \\equiv 1 \\pmod{4}$).\n\n**Impact:** Would establish a general theory of local obstructions for Waring-type problems, unifying the three-cubes result with classical results on sums of squares, biquadrates, and higher powers.\n\n**The key insight is** that our framework\u2014local admissibility, everywhere local admissibility, the global-to-local implication\u2014generalizes verbatim to $x_1^n + \\cdots + x_s^n = k$ by replacing cubes with $n$-th powers, and the new obstructions reflect the arithmetic of $n$-th power residues.\n\n**Why now?** The Lean definitions `ThreeCubeLocalAdmissible` and `EverywhereLocallyAdmissible` are parametric in the modulus and can be straightforwardly generalized to arbitrary degree, making this the natural next step.\n\n**Catalog References:** All definitions in `Algebra/SumThreeCubes/Defs.lean`, the obstruction framework in `Algebra/SumThreeCubes/LocalObstruction.lean`\n\n**Proof Strategy:** Generalize definitions to $n$-th powers, classify $n$-th power residues modulo prime powers, and prove the analogue of Theorem 4 (global implies local) for general degree.\n\n**Domain Bridges:** Waring's problem, algebraic number theory ($n$-th power reciprocity), analytic number theory (circle method for higher powers)\n\n**Lineage:** Direct generalization of the entire framework from degree 3 to degree $n$\n\n**Ambition:** Grand challenge \u2014 would create a unified formal theory of local obstructions for additive Diophantine problems",
+    "id": "fd_0817",
+    "title": "Direction 5: Certified Finite Element Assembly Pipeline",
+    "description": "**Conjecture:** The tensor-sorted rewrite system, combined with the energy invariance theorem, provides a formally verified preprocessing step for finite element assembly: if element stiffness matrices `K\u2081, ..., K\u2098` are assembled into a global stiffness matrix `K = \u2211 K\u1d62` and the displacement is decomposed as `u = \u2211 u\u2c7c`, then the total strain energy `E(K, u)` can be decomposed into element contributions plus coupling terms, and this decomposition is preserved by normalization.\n\n**Test:** Implement a 2D triangular mesh FEM with 100 elements. Build the symbolic energy expression `\u27e8u, K\u00b7u\u27e9` where `K = K\u2081 + ... + K\u2081\u2080\u2080`. Normalize the expression and verify: (a) the numerical energy matches direct computation to 10 decimal places, (b) the normalized form exposes element-wise energies, (c) the wall-clock time for symbolic normalization is within 10\u00d7 of direct numerical evaluation for meshes up to 1000 elements. Failure of (a) refutes soundness; failure of (c) indicates practical infeasibility.\n\n**Impact:** Finite element analysis is the backbone of computational engineering. A formally verified pipeline from symbolic assembly to numerical evaluation would provide unprecedented confidence in structural analysis codes used for safety-critical applications (bridges, aircraft, nuclear reactors).\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `energy_add`, `energy_invariant_of_rewrites`, `tensorRewrites_sound_*`.\n\n**Proof Strategy:** The energy expansion theorem (Theorem 4) already handles the case of two terms. Prove the multi-term generalization by induction on the number of summands. The coupling-term structure follows from the symmetric specialization (Theorem 5) when stiffness matrices are symmetric.\n\n**Domain Bridges:** Formal verification \u2192 structural engineering \u2192 computational mechanics \u2192 safety-critical systems.\n\n**Lineage:** Direct application of Theorems 3, 4, and 5 to a concrete engineering domain.\n\n**Ambition:** Medium-high \u2014 the formal mathematics is already present; the challenge is scaling the symbolic system to realistic problem sizes and connecting to existing FEM codes.",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
+      "Physics",
       "Bridges",
       "MachineLearning",
       "Logic"
@@ -806,9 +900,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "34c2669a",
+    "source_exp_id": "c1bdccd8",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:26:39.059352+00:00"
+    "timestamp": "2026-05-25T00:54:40.987422+00:00"
   },
   {
     "id": "seed_026",
@@ -835,10 +929,10 @@ window.FUTURE_DIRECTIONS = [
       "Probability"
     ],
     "priority_score": 0.88,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92e3853a",
     "timestamp": "2026-05-24T22:37:54.351682+00:00"
   },
   {
@@ -1109,26 +1203,42 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:54:49.105761+00:00"
   },
   {
-    "id": "fd_0813",
-    "title": "Direction 1: Confluence and Unique Normal Forms",
-    "description": "**Conjecture:** The 8-rule distributivity fragment defined in `TensorSortedRewrite.lean` is confluent modulo associativity-commutativity of scalar addition, i.e., any two reduction sequences from the same term yield syntactically equal normal forms up to AC-equivalence of `scalAdd`.\n\n**Test:** Enumerate all tensor terms of depth \u2264 5 with 3 scalar, 3 vector, and 2 matrix variables. For each term, compute all possible reduction sequences (using breadth-first enumeration of rule applications). Check that all terminal forms are AC-equivalent. A single counterexample \u2014 two irreducible forms that differ by more than scalar-addition reordering \u2014 refutes the conjecture. Run over \u211a for exact arithmetic.\n\n**Impact:** Confluence implies that normalization is deterministic up to AC, which is essential for using the rewrite system as a certified decision procedure. Without confluence, different simplification strategies could produce different \"simplified\" forms, undermining trust in automated preprocessing.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `TensorRewrite`, `normStep`, `normStep_sound_*`.\n\n**Proof Strategy:** Define a weight function that strictly decreases under each oriented rule (the current `tensorWeight` increases, but a redex-counting measure should decrease). Prove local confluence by showing all critical pairs are joinable. Apply Newman's lemma (termination + local confluence \u2192 confluence).\n\n**Domain Bridges:** Term rewriting theory \u2192 optimization preprocessing \u2192 compiler correctness for scientific code.\n\n**Lineage:** Extends Theorem 1 (one-step soundness) and Theorem 6 (normStep soundness) toward a complete decision procedure.\n\n**Ambition:** Medium \u2014 requires careful critical pair analysis but builds on well-understood rewriting theory.\n\n---",
+    "id": "fd_0824",
+    "title": "Spectral Universality of Zeta-Zero Persistence Landscapes",
+    "description": "Conjecture: Let K_T be a filtered simplicial complex built canonically from the first T nontrivial zeros of the Riemann zeta function by connecting zeros whose normalized gap statistics satisfy a fixed arithmetic-geometric rule. Then, after rescaling by mean spacing, the persistence landscape of K_T converges as T -> infinity to the same limiting law as the persistence landscape of the corresponding complex built from eigenangles of large random unitary matrices, if and only if the local zero statistics are GUE-universal. Test: Compute persistent homology of the zeta-zero complexes and random-matrix complexes for increasing T and compare convergence of barcode/landscape distributions; any stable discrepancy in the limit refutes the conjecture, while matching limits across multiple filtrations supports it. Impact: This would create a new topological-statistical probe of the Montgomery-Odlyzko philosophy, potentially turning random-matrix predictions about zeta zeros into computable topological invariants and opening a bridge between analytic number theory, TDA, and mathematical physics.",
+    "domains": [
+      "Analytic Number Theory",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:55:20.483190+00:00"
+  },
+  {
+    "id": "fd_0819",
+    "title": "Direction 1: General Recursive Witness Construction",
+    "description": "**Conjecture:** For every inhabited simple type *A*, there exists a closed term *t : A* and depth *d* such that `canonicalQuotientSize(d, t) = typeStateBound(A)`.\n\n**Test:** Implement an exhaustive search over closed terms up to size 20 for all inhabited types up to depth 4. For each type, verify whether any term achieves the type state bound. A single type where no term achieves the bound (up to large search depth) would falsify the conjecture.\n\n**Impact:** This would establish the first exact higher-order Myhill-Nerode theorem, transforming typeStateBound from a combinatorial estimate into a canonical semantic invariant.\n\n**Catalog References:**\n- `Catalog/Pythagorean/GlobalTightness.lean` \u2014 `global_tightness` (sorry), `global_tightness_base` (proved), `global_tightness_BB` (proved)\n- `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity`\n\n**Proof Strategy:** Structural induction on the type. Base case: proved (depth 0). Arrow case *A \u2192 B*: given witness terms for types *A* and *B*, construct a term of type *A \u2192 B* that uses all witnesses as \"test inputs\" to create a large reduction diamond. The key lemma: if *S_A* and *S_B* are pairwise-separated reachable families at types *A* and *B*, then a suitable composition produces a family of size \u2265 |S_A| \u00d7 |S_B| at type *A \u2192 B*.\n\n**Domain Bridges:** Automata theory (minimal DFA characterization), descriptive complexity (type \u2194 resource correspondence), combinatorics (extremal \u03bb-term families).\n\n**Lineage:** Extends Myhill-Nerode (1958) and Statman's type-complexity results (1979).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Field-opening if proved.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Computation",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c1bdccd8",
+    "source_exp_id": "21d0ab18",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:54:40.932722+00:00"
+    "timestamp": "2026-05-25T00:55:13.970837+00:00"
   },
   {
-    "id": "fd_0814",
-    "title": "Direction 2: Complex Inner Product Spaces and Quantum Observables",
-    "description": "**Conjecture:** The tensor-sorted rewrite system extends to complex scalars `\u2102` with a sesquilinear pairing `\u27e8v, w\u27e9 = \u2211\u1d62 conj(v\u1d62) \u00b7 w\u1d62`, and all 8 rewrite rules remain sound under this interpretation. Furthermore, the energy invariance theorem (Theorem 3) generalizes to Hermitian-matrix expectation values `\u27e8\u03c8| H |\u03c8\u27e9`, preserving the real-valuedness of observables.\n\n**Test:** Implement the complex evaluator over `\u2102\u207f` with `n \u2208 {2, 4, 8}`. Generate 10,000 random Hermitian matrices and complex vectors. For each, normalize the expression `\u27e8\u03c8, H\u00b7\u03c8\u27e9` and verify: (a) the numerical value is preserved to machine precision, (b) the result is real-valued (imaginary part < 10\u207b\u00b9\u00b2). A single complex-valued result from a Hermitian observable refutes the real-valuedness claim.\n\n**Impact:** This bridges the tensor rewrite system to finite-dimensional quantum mechanics, where `\u27e8\u03c8| H |\u03c8\u27e9` is the fundamental observable. Certified simplification of quantum expectation values would have applications in quantum chemistry (Hartree-Fock energy expressions), quantum information (entanglement witnesses), and quantum computing (circuit optimization for variational quantum eigensolvers).\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `energy`, `energy_add`, `energy_add_of_symmetric`, `dotProd_comm_of_symmetric`.\n\n**Proof Strategy:** Replace `CommRing R` with `StarRing \u2102` (or `RCLike`). Replace `dotProd` with the sesquilinear form. Modify `dotProd_smul_left` to use `starRingEnd` (conjugation). The key challenge is that `\u27e8a\u2022v, w\u27e9 = conj(a) \u00b7 \u27e8v, w\u27e9`, not `a \u00b7 \u27e8v, w\u27e9`. This requires modifying the `dot_smulVec_left` rewrite rule to track conjugation.\n\n**Domain Bridges:** Linear algebra \u2192 quantum mechanics \u2192 quantum computing \u2192 quantum chemistry.\n\n**Lineage:** Direct extension of Theorems 3-5 to the complex/Hermitian setting.\n\n**Ambition:** Grand challenge \u2014 requires significant new infrastructure (star-rings, sesquilinearity) and breaks the symmetry of the current rewrite rules.\n\n---",
+    "id": "fd_0820",
+    "title": "Direction 2: Eventual Saturation Theorem",
+    "description": "**Conjecture:** For every inhabited simple type *A*, there exists a closed term *t : A* and a threshold *d\u2080* such that for all *d \u2265 d\u2080*, `canonicalQuotientSize(d, t) = typeStateBound(A)`.\n\n**Test:** For the witness w\u2080 at type o \u2192 o, verify computationally that `canonicalQuotientSize(d, w\u2080) = 4` for all d \u2265 2 (up to d = 100). Extend to witnesses at higher types. A term where the quotient size fluctuates (increases past the bound and then decreases) would falsify eventual saturation (though not the weaker one-shot conjecture).\n\n**Impact:** Would show that the exact complexity is not depth-fragile \u2014 it's a stable, robust property. This is the difference between a point measurement and a thermodynamic equilibrium.\n\n**Catalog References:**\n- `Catalog/Pythagorean/GlobalTightness.lean` \u2014 `EventuallySaturatesTypeBound` (definition), `w\u2080_stateSet_eq` (proves saturation at d \u2265 2 for w\u2080)\n\n**Proof Strategy:** For strongly normalizing terms (all well-typed STLC terms), the bounded state set eventually stabilizes (new terms stop being reachable). Once stabilized at or above the type state bound, the upper bound from typeStateBound squeezes to equality. The key technical lemma: every well-typed term has a finite number of \u03b2-reducts (by strong normalization).\n\n**Domain Bridges:** Statistical physics (phase transitions, saturation phenomena), dynamical systems (fixed points of iterative processes).\n\n**Lineage:** Builds on strong normalization for STLC (Tait 1967, Girard 1972).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Strong extension of Direction 1.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1140,14 +1250,14 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c1bdccd8",
+    "source_exp_id": "21d0ab18",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:54:40.947177+00:00"
+    "timestamp": "2026-05-25T00:55:13.987111+00:00"
   },
   {
-    "id": "fd_0815",
-    "title": "Direction 3: Sparse Matrix Structure Preservation",
-    "description": "**Conjecture:** For sparse matrices (with at most `s` nonzero entries per row, where `s \u226a n`), the normalized form produced by the distributivity rewrite system preserves sparsity structure: if all matrix variables in a term are `s`-sparse, then the semantic matrix produced by evaluating any intermediate or final term has at most `s` nonzero entries per row.\n\n**Test:** Generate 5,000 random sparse matrices (CSR format) with `n = 100`, `s = 5`. Build random tensor terms of depth 4. Normalize and evaluate, checking the sparsity pattern of all intermediate matrix results. A single dense intermediate matrix refutes the conjecture. Compute the sparsity ratio (nnz/n\u00b2) before and after normalization.\n\n**Impact:** Sparsity preservation is critical for scalability. Finite element stiffness matrices, graph Laplacians, and many physics operators are sparse. If normalization destroys sparsity, the certified simplification becomes computationally useless for large problems. Proving sparsity preservation would make the rewrite system practical for real-world scientific computing.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `TensorRewrite`, `evalMat`, `evalVec`.\n\n**Proof Strategy:** Add a `Sparse` predicate on matrix terms and prove that each rewrite rule preserves it. The key insight: distributivity rules never multiply matrices together (no `matMul` in the current fragment), so sparsity of individual matrices is preserved through addition and scalar multiplication.\n\n**Domain Bridges:** Numerical linear algebra \u2192 finite elements \u2192 graph algorithms \u2192 scientific computing at scale.\n\n**Lineage:** Extends Theorem 1 with structural properties beyond semantic equality.\n\n**Ambition:** Medium \u2014 the current fragment avoids matrix-matrix multiplication, which is the main source of fill-in.\n\n---",
+    "id": "fd_0821",
+    "title": "Direction 3: Compositional Witness Synthesis Algorithm",
+    "description": "**Conjecture:** There exists a polynomial-time algorithm that, given an inhabited simple type *A* (represented as a tree), outputs a closed term *t : A* and depth *d* such that `canonicalQuotientSize(d, t) = typeStateBound(A)`. The term size is bounded by O(typeStateBound(A)^k) for some universal constant k.\n\n**Test:** Implement the algorithm for all inhabited types up to depth 5 (exhausting types with up to ~50 nodes). Compare synthesized witnesses against exhaustive search. Measure the ratio of synthesized term size to typeStateBound.\n\n**Impact:** Would provide a constructive, efficient procedure for generating maximal-complexity programs \u2014 turning the existence theorem into an algorithm.\n\n**Catalog References:**\n- `Catalog/Pythagorean/GlobalTightness.lean` \u2014 `synthesize_witness_base_arrow` (Python implementation for o \u2192 o)\n\n**Proof Strategy:** Define the algorithm by structural recursion on types, mirroring the proof of Direction 1. For the arrow case, compose subwitnesses using a canonical \"fan-out\" pattern that creates product-sized reduction diamonds.\n\n**Domain Bridges:** Program synthesis, automated testing (generating worst-case inputs), compiler benchmarking.\n\n**Lineage:** Extends exhaustive enumeration methods in lambda calculus combinatorics (Grygiel-Lescanne 2013).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Solid algorithmic extension.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1158,49 +1268,27 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c1bdccd8",
+    "source_exp_id": "21d0ab18",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:54:40.959769+00:00"
+    "timestamp": "2026-05-25T00:55:14.002937+00:00"
   },
   {
-    "id": "fd_0816",
-    "title": "Direction 4: Higher-Order Tensor Calculus with Einstein Summation",
-    "description": "**Conjecture:** The three-sorted calculus extends to an `n`-sorted system with sorts `Tensor(k)` for `k = 0, 1, 2, ...` (where `k` is the tensor order), equipped with contraction operations that generalize dot product and matrix-vector multiplication. The distributivity rewrite rules generalize to a universal schema: contraction distributes over addition at each pair of orders.\n\n**Test:** Implement a 4-sorted system (orders 0-3) and verify soundness for all pairwise contraction rules (6 pairs) on 1,000 random terms each. Check that the energy identity `E(T, v) = contract(v, contract(T, v))` holds for order-2 tensors `T` and order-1 vectors `v`, and that analogous identities hold for higher-order contractions. A single semantic mismatch refutes the extension.\n\n**Impact:** Real-world tensor computations (general relativity, continuum mechanics, machine learning) involve tensors of order 3 and above. Einstein summation notation is the lingua franca of theoretical physics. A formally verified rewrite system for Einstein summation would be a breakthrough in certified scientific computing, enabling symbolic optimization of tensor network contractions, finite element assembly kernels, and deep learning tensor operations.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `TensorSort`, `TensorTerm`, `TensorRewrite`.\n\n**Proof Strategy:** Parameterize `TensorSort` by `\u2115` (tensor order). Define contraction as a binary operation `contract : Tensor(j+k) \u2192 Tensor(k) \u2192 Tensor(j)`. Prove distributivity of contraction over addition by induction on tensor order, using the current matrix-vector case as the base.\n\n**Domain Bridges:** Tensor algebra \u2192 differential geometry \u2192 general relativity \u2192 machine learning \u2192 finite elements.\n\n**Lineage:** Extends the entire framework from 3 sorts to infinitely many.\n\n**Ambition:** Grand challenge \u2014 requires a fundamentally new inductive structure for sorts and terms, plus careful handling of index types.\n\n---",
+    "id": "fd_0822",
+    "title": "Direction 4: Extension to System F (Polymorphic Lambda Calculus)",
+    "description": "**Conjecture:** For System F (polymorphic lambda calculus), there exists a type complexity invariant analogous to typeStateBound that exactly characterizes the maximal bounded behavioral complexity of closed terms, with the invariant depending on the type and the instantiation.\n\n**Test:** Define a candidate invariant for simple System F types (e.g., \u2200\u03b1. \u03b1 \u2192 \u03b1, Church numerals \u2200\u03b1. (\u03b1 \u2192 \u03b1) \u2192 \u03b1 \u2192 \u03b1). Compute bounded state sets for small terms of these types. Check whether any numerical pattern emerges that could serve as the polymorphic type state bound.\n\n**Impact:** Would extend the entire theory to the dominant type system of functional programming, covering Haskell, ML, and dependently typed languages.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity` (the STLC case)\n\n**Proof Strategy:** Polymorphic types introduce quantifier complexity. The key challenge: \u2200\u03b1.\u03c4 has no fixed typeStateBound because \u03b1 can be instantiated at different types. One approach: define the bound as a supremum over instantiations. Another: define it relative to a fixed universe of types.\n\n**Domain Bridges:** Polymorphism in programming languages, parametricity (Reynolds 1983), categorical semantics.\n\n**Lineage:** Extends Statman's undecidability results for System F (1979) and Girard's normalization (1972).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Grand challenge, paradigm-shifting.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
       "Computation",
-      "Physics",
       "Bridges",
-      "MachineLearning",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c1bdccd8",
+    "source_exp_id": "21d0ab18",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:54:40.973612+00:00"
-  },
-  {
-    "id": "fd_0817",
-    "title": "Direction 5: Certified Finite Element Assembly Pipeline",
-    "description": "**Conjecture:** The tensor-sorted rewrite system, combined with the energy invariance theorem, provides a formally verified preprocessing step for finite element assembly: if element stiffness matrices `K\u2081, ..., K\u2098` are assembled into a global stiffness matrix `K = \u2211 K\u1d62` and the displacement is decomposed as `u = \u2211 u\u2c7c`, then the total strain energy `E(K, u)` can be decomposed into element contributions plus coupling terms, and this decomposition is preserved by normalization.\n\n**Test:** Implement a 2D triangular mesh FEM with 100 elements. Build the symbolic energy expression `\u27e8u, K\u00b7u\u27e9` where `K = K\u2081 + ... + K\u2081\u2080\u2080`. Normalize the expression and verify: (a) the numerical energy matches direct computation to 10 decimal places, (b) the normalized form exposes element-wise energies, (c) the wall-clock time for symbolic normalization is within 10\u00d7 of direct numerical evaluation for meshes up to 1000 elements. Failure of (a) refutes soundness; failure of (c) indicates practical infeasibility.\n\n**Impact:** Finite element analysis is the backbone of computational engineering. A formally verified pipeline from symbolic assembly to numerical evaluation would provide unprecedented confidence in structural analysis codes used for safety-critical applications (bridges, aircraft, nuclear reactors).\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `energy_add`, `energy_invariant_of_rewrites`, `tensorRewrites_sound_*`.\n\n**Proof Strategy:** The energy expansion theorem (Theorem 4) already handles the case of two terms. Prove the multi-term generalization by induction on the number of summands. The coupling-term structure follows from the symmetric specialization (Theorem 5) when stiffness matrices are symmetric.\n\n**Domain Bridges:** Formal verification \u2192 structural engineering \u2192 computational mechanics \u2192 safety-critical systems.\n\n**Lineage:** Direct application of Theorems 3, 4, and 5 to a concrete engineering domain.\n\n**Ambition:** Medium-high \u2014 the formal mathematics is already present; the challenge is scaling the symbolic system to realistic problem sizes and connecting to existing FEM codes.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:54:40.987422+00:00"
+    "timestamp": "2026-05-25T00:55:14.021207+00:00"
   },
   {
     "id": "seed_052",
