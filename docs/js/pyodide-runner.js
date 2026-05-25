@@ -332,33 +332,16 @@ document.addEventListener('DOMContentLoaded', () => {
         window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
 
         try {
-            // Load required packages via micropip (already loaded during init)
+            // Auto-detect and load all packages from the code imports
+            // Build the full wrapped code first so loadPackagesFromImports can scan it
+            let fullCode;
             if (isPlotly) {
-                await window.Aether.pyodideInstance.runPythonAsync(`
-                    import micropip
-                    await micropip.install("plotly")
-                    await micropip.install("numpy")
-                `);
-            }
-            if (isMatplotlib || (!isPlotly && !isMatplotlib)) {
-                await window.Aether.pyodideInstance.runPythonAsync(`
-                    import micropip
-                    await micropip.install("matplotlib")
-                    await micropip.install("numpy")
-                `);
-            }
-
-            outputContainer.innerHTML = '<div class="viz-loading">Running visualization...</div>';
-
-            if (isPlotly) {
-                // Plotly path: capture fig.to_html()
-                const wrappedCode = `
+                fullCode = `
 import plotly.io as pio
 import plotly.graph_objects as go
 
 ${code}
 
-# Capture the last plotly figure
 _viz_figs_ = [obj for obj in globals().values() if isinstance(obj, go.Figure)]
 if _viz_figs_:
     fig = _viz_figs_[-1]
@@ -367,10 +350,8 @@ if _viz_figs_:
 else:
     print("VIZERROR:No plotly Figure object found. Assign your figure to a variable named 'fig'.")
 `;
-                await window.Aether.pyodideInstance.runPythonAsync(wrappedCode);
             } else {
-                // Matplotlib path: capture plt.savefig() as base64 PNG
-                const wrappedCode = `
+                fullCode = `
 import matplotlib
 matplotlib.use('AGG')
 import matplotlib.pyplot as plt
@@ -379,7 +360,6 @@ import base64
 
 ${code}
 
-# Capture the current figure
 buf = io.BytesIO()
 plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
 buf.seek(0)
@@ -387,8 +367,15 @@ img_data = base64.b64encode(buf.read()).decode('utf-8')
 plt.close('all')
 print("VIZIMG:" + img_data)
 `;
-                await window.Aether.pyodideInstance.runPythonAsync(wrappedCode);
             }
+
+            // Load all packages detected from imports (numpy, scipy, pandas, etc.)
+            await window.Aether.pyodideInstance.loadPackagesFromImports(fullCode);
+
+            outputContainer.innerHTML = '<div class="viz-loading">Running visualization...</div>';
+
+            // Run the pre-built wrapped code
+            await window.Aether.pyodideInstance.runPythonAsync(fullCode);
 
             // Parse output for VIZIMG: or VIZHTML: markers
             if (stdout.includes('VIZIMG:')) {
