@@ -795,10 +795,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "c7a0d721",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -929,10 +929,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bc1e7c1a",
     "timestamp": "2026-05-25T00:26:36.199585+00:00"
   },
   {
@@ -1116,10 +1116,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.9999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "83d44e07",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "17be6579",
     "timestamp": "2026-05-25T02:10:32.344475+00:00"
   },
   {
@@ -1298,10 +1298,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0cdcddad",
     "timestamp": "2026-05-25T02:11:10.200317+00:00"
   },
   {
@@ -1339,10 +1339,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "962aab76",
     "timestamp": "2026-05-25T02:11:10.243679+00:00"
   },
   {
@@ -1377,10 +1377,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26ef7363",
     "timestamp": "2026-05-25T03:05:35.257371+00:00"
   },
   {
