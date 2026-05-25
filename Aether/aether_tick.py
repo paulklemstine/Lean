@@ -172,21 +172,28 @@ def rebuild_commit_push() -> bool:
     except Exception as e:
         print(f"[Tick] update_index.py error: {e}")
 
-    # Sync website to docs/ for GitHub Pages
+    # Sync website to docs/ for GitHub Pages (rsync only changed files)
     docs_dir = REPO_ROOT / "docs"
     print("[Tick] Syncing website to docs/...")
     try:
-        # Remove old docs content, copy fresh
-        if docs_dir.exists():
-            subprocess.run(["rm", "-rf", str(docs_dir)], timeout=30)
-        subprocess.run(["cp", "-r", str(PACKAGES_DIR), str(docs_dir)], timeout=60)
+        docs_dir.mkdir(parents=True, exist_ok=True)
+        result = subprocess.run(
+            ["rsync", "-a", "--delete", "--info=NAME", str(PACKAGES_DIR) + "/", str(docs_dir) + "/"],
+            capture_output=True, text=True, timeout=60
+        )
+        if result.returncode != 0:
+            print(f"[Tick] rsync warning: {result.stderr[:200]}")
         print("[Tick] docs/ synced")
     except Exception as e:
         print(f"[Tick] docs sync error: {e}")
 
-    # Git add, commit, push
+    # Git add only changed files (not -A which scans everything)
     try:
-        subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+        # Stage specific directories instead of -A
+        subprocess.run(["git", "add", "docs/"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
+        subprocess.run(["git", "add", ".aether_workspace/"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+        subprocess.run(["git", "add", "Catalog/"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
+        subprocess.run(["git", "add", "Aether/"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
 
         diff = subprocess.run(
             ["git", "diff", "--cached", "--quiet"],
@@ -213,7 +220,7 @@ def rebuild_commit_push() -> bool:
             return False
 
         push = subprocess.run(
-            ["git", "push"], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60
+            ["git", "push"], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
         )
         if push.returncode != 0:
             print(f"[Tick] git push failed: {push.stderr}")

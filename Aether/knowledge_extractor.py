@@ -80,6 +80,7 @@ class ResearchJob:
     sorry_count: int = 0
     theorem_count: int = 0
     files_integrated: int = 0  # Actual count of files written to Catalog during integrate
+    integrated_paths: list = None  # Paths of files written to Catalog (relative to repo root)
     error_message: Optional[str] = None
     source_exp_ids: list = None  # exp_ids of parent experiments whose future directions inspired this one
 
@@ -1391,6 +1392,7 @@ Research mode: {concept.research_mode}
 
         print(f"[Integrate] Pi successfully integrated {files_written} files.")
         job.files_integrated = files_written
+        job.integrated_paths = list(written_paths)
         job.status = "integrated"
         self.completed_count += 1
 
@@ -2546,7 +2548,31 @@ Research mode: {concept.research_mode}
             f"{job.concept.concept_description[:500]}"
         )
         try:
-            self.git.add(".")
+            # Add only the files we actually wrote, plus workspace and index
+            paths_to_add = []
+            if job.integrated_paths:
+                for p in job.integrated_paths:
+                    abs_path = self.catalog_root / p
+                    if abs_path.exists():
+                        # git add relative to repo root
+                        rel = abs_path.relative_to(self.catalog_root.parent)
+                        paths_to_add.append(str(rel))
+            # Always add workspace changes (future directions, memory)
+            paths_to_add.append(".aether_workspace/")
+            # Add packages index if it was regenerated
+            pkg_index = self.catalog_root / "Applications" / "Packages" / "package_index.js"
+            if pkg_index.exists():
+                paths_to_add.append("Catalog/Applications/Packages/package_index.js")
+            pkg_db = self.catalog_root / "Applications" / "Packages" / "packages_db.js"
+            if pkg_db.exists():
+                paths_to_add.append("Catalog/Applications/Packages/packages_db.js")
+            lineage = self.catalog_root / "Applications" / "Packages" / "lineage.json"
+            if lineage.exists():
+                paths_to_add.append("Catalog/Applications/Packages/lineage.json")
+
+            if paths_to_add:
+                for p in paths_to_add:
+                    self.git.add(p)
             self.git.commit(commit_msg)
             self.git.push()
         except Exception as e:

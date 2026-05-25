@@ -16,14 +16,14 @@ class GitAutomator:
     def __init__(self, repo_root: Path):
         self.repo_root = Path(repo_root)
 
-    def _run(self, cmd: List[str], cwd: Path = None) -> Tuple[bool, str]:
+    def _run(self, cmd: List[str], cwd: Path = None, timeout: int = 60) -> Tuple[bool, str]:
         try:
             result = subprocess.run(
                 cmd,
                 cwd=cwd or self.repo_root,
                 capture_output=True,
                 text=True,
-                timeout=60,
+                timeout=timeout,
             )
             return result.returncode == 0, result.stdout + result.stderr
         except Exception as e:
@@ -42,9 +42,9 @@ class GitAutomator:
         return ok
 
     def push(self, remote: str = "origin", branch: str = "master") -> bool:
-        ok, out = self._run(["git", "push", remote, branch])
+        ok, out = self._run(["git", "push", remote, branch], timeout=120)
         if not ok:
-            ok, out = self._run(["git", "push", "-u", remote, branch])
+            ok, out = self._run(["git", "push", "-u", remote, branch], timeout=120)
         return ok
 
     def create_commit_for_cycle(
@@ -57,7 +57,10 @@ class GitAutomator:
         version: str = "v3",
     ) -> bool:
         """Create a nicely formatted commit for a research cycle."""
-        self.add(".")
+        # Add specific files instead of everything
+        for f in changed_files:
+            self.add(f)
+        self.add(".aether_workspace/")
 
         changed_list = "\n".join(f"  - {c}" for c in changed_files[:10])
         if len(changed_files) > 10:
