@@ -322,25 +322,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T23:13:44.233016+00:00"
   },
   {
-    "id": "fd_0803",
-    "title": "Direction 5: Weighted and Multi-Objective Extensions",
-    "description": "**Conjecture:** For weighted hypergraphs where vertex v has cost w(v) > 0 and edge e has demand d(e) > 0, the weighted integrality gap satisfies \u03c4_w(H) \u2264 d_max \u00b7 \u03c4*_w(H), where the threshold rounding uses threshold 1/(d_max \u00b7 max_e d(e)). For multi-objective transversal problems with k objectives, the Pareto front of fractional solutions has at most O(n^{k-1}) vertices, each roundable with gap bound d_max.\n\n**Test:** Implement weighted LP transversal computation and threshold rounding for random weighted hypergraphs on n = 20 vertices with random costs w(v) ~ Uniform[1, 10] and demands d(e) ~ Uniform[1, 3]. Verify the gap bound holds in 1,000 trials. For the multi-objective case, compute Pareto fronts for 2-objective problems and verify the vertex count bound.\n\n**Impact:** Weighted extensions are essential for practical applications (facility location, network design) where resources have different costs. The multi-objective extension would connect transversal theory to multi-criteria optimization, a field with growing practical importance.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `integrality_gap_upper`, `threshold_isTransversal`, `threshold_card_bound`.\n\n**Proof Strategy:** Generalize the threshold rounding argument: for weighted problems, use threshold w(v) \u00b7 x(v) \u2265 1/d_max. The size bound becomes \u03a3_{v\u2208S} w(v) \u2264 d_max \u00b7 \u03a3_v w(v) \u00b7 x(v). For multi-objective, use the theory of parametric LP to bound the number of breakpoints.\n\n**Domain Bridges:** Connects to operations research (facility location), algorithmic game theory (cost sharing), and welfare economics (Pareto efficiency).\n\n**Lineage:** Direct generalization of `integrality_gap_upper` to weighted settings.\n\n**Ambition:** Solid extension \u2014 the weighted case follows the same proof structure, while the multi-objective case introduces genuinely new complexity.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "b9d16ed0",
-    "timestamp": "2026-05-24T23:13:44.276911+00:00"
-  },
-  {
     "id": "fd_0808",
     "title": "Direction 2: Density Heuristics via the Circle Method",
     "description": "**Conjecture:** For each admissible $k$ (i.e., $k \\not\\equiv 4,5 \\pmod{9}$), the number of representations $|\\{(x,y,z) \\in [-N,N]^3 : x^3+y^3+z^3 = k\\}|$ grows as $c_k \\cdot N^{1/3}$ for an explicit constant $c_k > 0$ depending on the singular series and singular integral.\n\n**Test:** Compute empirical counts of representations for $k \\in \\{0, 1, 2, 3, 6, 7, 8, 9\\}$ up to $N = 10^6$ and compare with the predicted asymptotic. Measure the relative error $|R(N) - c_k N^{1/3}| / (c_k N^{1/3})$ and verify it decreases with $N$.\n\n**Impact:** Would provide the first formally grounded connection between the combinatorial/algebraic framework and analytic number theory. The singular series in the density prediction is a product of local densities, directly connecting to our `ThreeCubeLocalAdmissible` counts.\n\n**The key insight is** that the local admissibility counts $|A_n|/n$ at each modulus $n$ are the local factors of the singular series, and the everywhere-local-admissibility theorem guarantees this product converges when $k$ is admissible.\n\n**Why now?** The formal definitions of local admissibility and the computational infrastructure for counting admissible residues provide the exact data needed to compute singular series factors and compare with empirical density.\n\n**Catalog References:** `ThreeCubeLocalAdmissible` (Algebra/SumThreeCubes/Defs.lean), `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean)\n\n**Proof Strategy:** Formalize the circle method setup for cubic forms, compute the singular integral, and bound the minor arc contributions.\n\n**Domain Bridges:** Analytic number theory, harmonic analysis, probability theory\n\n**Lineage:** Connects the discrete local admissibility framework to continuous density predictions\n\n**Ambition:** Solid extension \u2014 the circle method for three cubes is at the boundary of current analytic technique\n\n---",
@@ -639,10 +620,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f0f7ec54",
     "timestamp": "2026-05-25T03:05:35.277308+00:00"
   },
   {
@@ -1200,6 +1181,85 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:06:34.986047+00:00"
   },
   {
+    "id": "fd_0878",
+    "title": "Direction 1: Tropical Eigenvalue Theory and the Corrected Hodge Isomorphism",
+    "description": "**Conjecture:** For any connected graph G with classical first Betti number \u03b2\u2081, the tropical eigenspace E_0(L) = {x \u2208 (WithTop \u2115)^n : L \u2297 x = x} has a \"tropical dimension\" (number of generators over the tropical semiring) equal to \u03b2\u2081 + 1. The +1 accounts for the constant vector (the tropical analogue of the kernel of the classical Laplacian).\n\n**Test:** Compute E_0(L) for all connected graphs on n \u2264 7 vertices. Verify that the number of minimal generators of the tropical convex hull of E_0(L) equals \u03b2\u2081 + 1. A single counterexample disproves the conjecture.\n\n**Impact:** This would provide the \"correct\" tropical Hodge isomorphism, replacing the trivial kernel ker_trop(L) = {\u22a4} with a richer eigenspace that genuinely reflects topology. It would complete the tropical Hodge program initiated in this work.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalKernel_eq_top`, `tropicalLaplacian`\n\n**Proof Strategy:** Define the tropical eigenspace as {x : \u2200i, min_j(L_{ij} + x_j) = x_i}. Show that cycle vectors (indicator functions of fundamental cycles, with appropriate tropical values) satisfy this equation. Use the structure theorem for tropical convex sets (Develin-Sturmfels) to count generators.\n\n**Domain Bridges:** Tropical spectral theory \u2194 Classical spectral graph theory \u2194 Random walks on graphs\n\n**Lineage:** Extends `tropicalKernel_eq_top` from this work; builds on Akian-Gaubert-Guterman tropical spectral theory.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish tropical Hodge theory as a self-consistent framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.073627+00:00"
+  },
+  {
+    "id": "fd_0879",
+    "title": "Direction 2: Higher-Dimensional Tropical Homology via Simplicial Complexes",
+    "description": "**Conjecture:** For any finite simplicial complex K of dimension d, the tropical chain complex C_d \u2192 C_{d-1} \u2192 \u00b7\u00b7\u00b7 \u2192 C_0 (with boundary maps defined via min-plus incidence matrices) satisfies \u2202_{k-1} \u2218 \u2202_k = \u22a4-map (the tropical analogue of \u2202\u00b2 = 0). The resulting tropical Betti numbers \u03b2_k^trop satisfy \u03b2_k^trop \u2265 \u03b2_k^classical for all k.\n\n**Test:** Implement the tropical chain complex for the following simplicial complexes: triangulated torus (\u03b2\u2081 = 2, \u03b2\u2082 = 1), triangulated Klein bottle (\u03b2\u2081 = 1, \u03b2\u2082 = 0), and the M\u00f6bius strip (\u03b2\u2081 = 1, \u03b2\u2082 = 0). Verify the Betti number inequality.\n\n**Impact:** Extending tropical homology to higher dimensions would enable analysis of higher-order network structures (simplicial neural networks, higher-order topological data analysis).\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBoundary`, `tropicalBoundary_top`, `tropicalBoundary_preserves_inf`\n\n**Proof Strategy:** Define the higher boundary maps using incidence matrices of simplicial complexes with appropriate signs encoded tropically. The chain complex property \u2202\u00b2 = \u22a4 should follow from the cancellation of pairs in the tropical sum. Use the existing sub-additivity theorem as a template.\n\n**Domain Bridges:** Tropical geometry \u2194 Topological data analysis \u2194 Simplicial neural networks\n\n**Lineage:** Direct extension of the graph-level results in this work to simplicial complexes.\n\n**Ambition:** Solid extension \u2014 the graph case is established; the simplicial extension is natural.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.093108+00:00"
+  },
+  {
+    "id": "fd_0880",
+    "title": "Direction 3: Efficient Algorithms for Tropical Betti Numbers of Large Networks",
+    "description": "**Conjecture:** The tropical Betti number \u03b2\u2081 of a graph can be computed in O(|E| \u03b1(|V|)) time using a tropical variant of the union-find algorithm, where \u03b1 is the inverse Ackermann function. Furthermore, the tropical incidence factorization can be verified in O(|E| \u00b7 max_deg) time rather than the naive O(|V|\u00b2 \u00b7 |E|).\n\n**Test:** Implement the optimized algorithms and benchmark on random Erd\u0151s-R\u00e9nyi graphs G(n, p) for n = 10\u00b3, 10\u2074, 10\u2075 with p = c/n for c \u2208 {1.5, 2, 3, 5}. Measure wall-clock time and verify correctness against the naive implementation.\n\n**Impact:** Making tropical homological computations practical for large-scale networks (social networks, biological networks, internet topology) would bridge tropical algebra to data science.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBetti'`, `tropicalMinPlusMul`\n\n**Proof Strategy:** For \u03b2\u2081: during union-find, count the number of edges that close a cycle (creating a back-edge). Each back-edge contributes +1 to \u03b2\u2081. For factorization: instead of computing the full matrix product, check each off-diagonal entry (i,j) by iterating over the min(deg(i), deg(j)) common edges.\n\n**Domain Bridges:** Algorithmic graph theory \u2194 Network science \u2194 Computational topology\n\n**Lineage:** Builds on the `cycle_rank` algorithm in `algorithms.py`.\n\n**Ambition:** Solid extension \u2014 the algorithms are straightforward given the theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.111821+00:00"
+  },
+  {
+    "id": "fd_0881",
+    "title": "Direction 4: Tropical Sheaf Cohomology and the Chip-Firing Connection",
+    "description": "**Conjecture:** The Jacobian group Jac(G) of a graph G (the cokernel of the integer Laplacian, equivalently the group of chip-firing equivalence classes) embeds into the \"tropical Picard group\" Pic^trop(G), defined as the quotient of the tropical eigenspace E_0(L) by the image of the tropical boundary map. The order |Jac(G)| equals the number of spanning trees of G (Kirchhoff's theorem), and Pic^trop(G) has a natural tropical semimodule structure whose \"rank\" equals \u03b2\u2081.\n\n**Test:** For all graphs on n \u2264 6, compute:\n1. |Jac(G)| via the Matrix-Tree theorem (determinant of any cofactor of L)\n2. The number of spanning trees (should equal |Jac(G)|)\n3. The tropical Picard group Pic^trop(G) and verify the embedding\n\n**Impact:** This would connect tropical Hodge theory to the Baker-Norine program (Riemann-Roch for graphs) and the theory of divisors on tropical curves. It would also connect to algebraic geometry via the tropicalization of the Picard variety.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `rootedSubsetDivisor`\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalLaplacian`, `tropicalKernelSet`\n- `Pythagorean/TropicalBridge/DefectTheory.lean`: `structuralDefect`\n\n**Proof Strategy:** Define Pic^trop(G) using the tropical eigenspace from Direction 1. Construct the embedding Jac(G) \u2192 Pic^trop(G) by mapping each chip configuration to its tropical valuation. Use the structure theory of tropical modules.\n\n**Domain Bridges:** Tropical geometry \u2194 Algebraic geometry (Picard varieties) \u2194 Number theory (Jacobians)\n\n**Lineage:** Builds on Baker-Norine (2007) and the defect theory in `DefectTheory.lean`.\n\n**Ambition:** Grand challenge \u2014 connecting tropical Hodge theory to chip-firing would unify two major strands of combinatorial algebraic geometry.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.131066+00:00"
+  },
+  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -1533,85 +1593,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T14:24:37.143822+00:00"
   },
   {
-    "id": "fd_0878",
-    "title": "Direction 1: Tropical Eigenvalue Theory and the Corrected Hodge Isomorphism",
-    "description": "**Conjecture:** For any connected graph G with classical first Betti number \u03b2\u2081, the tropical eigenspace E_0(L) = {x \u2208 (WithTop \u2115)^n : L \u2297 x = x} has a \"tropical dimension\" (number of generators over the tropical semiring) equal to \u03b2\u2081 + 1. The +1 accounts for the constant vector (the tropical analogue of the kernel of the classical Laplacian).\n\n**Test:** Compute E_0(L) for all connected graphs on n \u2264 7 vertices. Verify that the number of minimal generators of the tropical convex hull of E_0(L) equals \u03b2\u2081 + 1. A single counterexample disproves the conjecture.\n\n**Impact:** This would provide the \"correct\" tropical Hodge isomorphism, replacing the trivial kernel ker_trop(L) = {\u22a4} with a richer eigenspace that genuinely reflects topology. It would complete the tropical Hodge program initiated in this work.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalKernel_eq_top`, `tropicalLaplacian`\n\n**Proof Strategy:** Define the tropical eigenspace as {x : \u2200i, min_j(L_{ij} + x_j) = x_i}. Show that cycle vectors (indicator functions of fundamental cycles, with appropriate tropical values) satisfy this equation. Use the structure theorem for tropical convex sets (Develin-Sturmfels) to count generators.\n\n**Domain Bridges:** Tropical spectral theory \u2194 Classical spectral graph theory \u2194 Random walks on graphs\n\n**Lineage:** Extends `tropicalKernel_eq_top` from this work; builds on Akian-Gaubert-Guterman tropical spectral theory.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish tropical Hodge theory as a self-consistent framework.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a0c77c0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:05:45.073627+00:00"
-  },
-  {
-    "id": "fd_0879",
-    "title": "Direction 2: Higher-Dimensional Tropical Homology via Simplicial Complexes",
-    "description": "**Conjecture:** For any finite simplicial complex K of dimension d, the tropical chain complex C_d \u2192 C_{d-1} \u2192 \u00b7\u00b7\u00b7 \u2192 C_0 (with boundary maps defined via min-plus incidence matrices) satisfies \u2202_{k-1} \u2218 \u2202_k = \u22a4-map (the tropical analogue of \u2202\u00b2 = 0). The resulting tropical Betti numbers \u03b2_k^trop satisfy \u03b2_k^trop \u2265 \u03b2_k^classical for all k.\n\n**Test:** Implement the tropical chain complex for the following simplicial complexes: triangulated torus (\u03b2\u2081 = 2, \u03b2\u2082 = 1), triangulated Klein bottle (\u03b2\u2081 = 1, \u03b2\u2082 = 0), and the M\u00f6bius strip (\u03b2\u2081 = 1, \u03b2\u2082 = 0). Verify the Betti number inequality.\n\n**Impact:** Extending tropical homology to higher dimensions would enable analysis of higher-order network structures (simplicial neural networks, higher-order topological data analysis).\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBoundary`, `tropicalBoundary_top`, `tropicalBoundary_preserves_inf`\n\n**Proof Strategy:** Define the higher boundary maps using incidence matrices of simplicial complexes with appropriate signs encoded tropically. The chain complex property \u2202\u00b2 = \u22a4 should follow from the cancellation of pairs in the tropical sum. Use the existing sub-additivity theorem as a template.\n\n**Domain Bridges:** Tropical geometry \u2194 Topological data analysis \u2194 Simplicial neural networks\n\n**Lineage:** Direct extension of the graph-level results in this work to simplicial complexes.\n\n**Ambition:** Solid extension \u2014 the graph case is established; the simplicial extension is natural.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a0c77c0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:05:45.093108+00:00"
-  },
-  {
-    "id": "fd_0880",
-    "title": "Direction 3: Efficient Algorithms for Tropical Betti Numbers of Large Networks",
-    "description": "**Conjecture:** The tropical Betti number \u03b2\u2081 of a graph can be computed in O(|E| \u03b1(|V|)) time using a tropical variant of the union-find algorithm, where \u03b1 is the inverse Ackermann function. Furthermore, the tropical incidence factorization can be verified in O(|E| \u00b7 max_deg) time rather than the naive O(|V|\u00b2 \u00b7 |E|).\n\n**Test:** Implement the optimized algorithms and benchmark on random Erd\u0151s-R\u00e9nyi graphs G(n, p) for n = 10\u00b3, 10\u2074, 10\u2075 with p = c/n for c \u2208 {1.5, 2, 3, 5}. Measure wall-clock time and verify correctness against the naive implementation.\n\n**Impact:** Making tropical homological computations practical for large-scale networks (social networks, biological networks, internet topology) would bridge tropical algebra to data science.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBetti'`, `tropicalMinPlusMul`\n\n**Proof Strategy:** For \u03b2\u2081: during union-find, count the number of edges that close a cycle (creating a back-edge). Each back-edge contributes +1 to \u03b2\u2081. For factorization: instead of computing the full matrix product, check each off-diagonal entry (i,j) by iterating over the min(deg(i), deg(j)) common edges.\n\n**Domain Bridges:** Algorithmic graph theory \u2194 Network science \u2194 Computational topology\n\n**Lineage:** Builds on the `cycle_rank` algorithm in `algorithms.py`.\n\n**Ambition:** Solid extension \u2014 the algorithms are straightforward given the theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a0c77c0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:05:45.111821+00:00"
-  },
-  {
-    "id": "fd_0881",
-    "title": "Direction 4: Tropical Sheaf Cohomology and the Chip-Firing Connection",
-    "description": "**Conjecture:** The Jacobian group Jac(G) of a graph G (the cokernel of the integer Laplacian, equivalently the group of chip-firing equivalence classes) embeds into the \"tropical Picard group\" Pic^trop(G), defined as the quotient of the tropical eigenspace E_0(L) by the image of the tropical boundary map. The order |Jac(G)| equals the number of spanning trees of G (Kirchhoff's theorem), and Pic^trop(G) has a natural tropical semimodule structure whose \"rank\" equals \u03b2\u2081.\n\n**Test:** For all graphs on n \u2264 6, compute:\n1. |Jac(G)| via the Matrix-Tree theorem (determinant of any cofactor of L)\n2. The number of spanning trees (should equal |Jac(G)|)\n3. The tropical Picard group Pic^trop(G) and verify the embedding\n\n**Impact:** This would connect tropical Hodge theory to the Baker-Norine program (Riemann-Roch for graphs) and the theory of divisors on tropical curves. It would also connect to algebraic geometry via the tropicalization of the Picard variety.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `rootedSubsetDivisor`\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalLaplacian`, `tropicalKernelSet`\n- `Pythagorean/TropicalBridge/DefectTheory.lean`: `structuralDefect`\n\n**Proof Strategy:** Define Pic^trop(G) using the tropical eigenspace from Direction 1. Construct the embedding Jac(G) \u2192 Pic^trop(G) by mapping each chip configuration to its tropical valuation. Use the structure theory of tropical modules.\n\n**Domain Bridges:** Tropical geometry \u2194 Algebraic geometry (Picard varieties) \u2194 Number theory (Jacobians)\n\n**Lineage:** Builds on Baker-Norine (2007) and the defect theory in `DefectTheory.lean`.\n\n**Ambition:** Grand challenge \u2014 connecting tropical Hodge theory to chip-firing would unify two major strands of combinatorial algebraic geometry.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a0c77c0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:05:45.131066+00:00"
-  },
-  {
     "id": "fd_0882",
     "title": "Direction 5: Tropical Morse Theory for Network Phase Transitions",
     "description": "**Conjecture:** For a weighted graph G with edge weights w: E \u2192 \u211d\u208a, define the tropical filtration G_t = {e \u2208 E : w(e) \u2264 t}. The tropical Betti numbers \u03b2_k^trop(G_t) as functions of t satisfy a tropical Morse inequality: the number of \"tropical critical values\" (values of t where \u03b2\u2081 changes) equals \u03b2\u2081(G), and each critical value corresponds to either a cycle creation (\u03b2\u2081 increases by 1) or a component merger (\u03b2\u2080 decreases by 1).\n\n**Test:** For weighted random graphs G(n, p) with uniform edge weights, compute the filtration G_t for t \u2208 [0, 1] and track \u03b2\u2080(G_t) and \u03b2\u2081(G_t). Verify that:\n1. \u03b2\u2081 increases by exactly 1 at each critical value where a cycle closes.\n2. The total number of critical values equals \u03b2\u2081(G) + (c \u2212 1) where c is the initial number of components.\n3. The persistence diagram (birth-death pairs) matches the classical persistence diagram.\n\n**Impact:** This would connect tropical homology to topological data analysis (persistent homology) and provide a tropical framework for studying network phase transitions. It bridges to statistical mechanics via the analogy between filtration threshold and temperature.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBetti'`, `tropicalBoundary`\n- `Pythagorean/TropicalBridge/WeightedDefect.lean`: weighted graph infrastructure\n\n**Proof Strategy:** The Morse inequality follows from the observation that each edge addition either closes a cycle or connects components. The tropical structure gives the exact correspondence. The persistence pairing follows from the standard theory of filtered chain complexes applied to the tropical setting.\n\n**Domain Bridges:** Tropical geometry \u2194 Topological data analysis \u2194 Statistical mechanics (phase transitions) \u2194 Symplectic geometry (Morse theory)\n\n**Lineage:** Extends the filtration idea from persistent homology to the tropical setting; builds on the Betti number machinery.\n\n**Ambition:** Grand challenge \u2014 connecting tropical homology to persistent homology would create a new computational tool for data science with tropical algebraic foundations.",
@@ -1630,6 +1611,104 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1a0c77c0",
     "consumed_by_exp_id": "88770e41",
     "timestamp": "2026-05-25T16:05:45.151288+00:00"
+  },
+  {
+    "id": "fd_0883",
+    "title": "Direction 1: Submodular Objectives and the Curvature-Gap Conjecture",
+    "description": "**Conjecture:** For a hypergraph H with max edge size d and a monotone submodular function f : 2^V \u2192 \u211d\u22650 with curvature \u03ba \u2208 [0,1], the threshold-rounded set S satisfies f(S) \u2264 d/(1-\u03ba) \u00b7 f_multilinear(x), where f_multilinear is the multilinear extension evaluated at the fractional solution x.\n\n**Test:** Implement random monotone submodular functions as weighted coverage functions on random hypergraphs with n=20. Compute the multilinear extension via sampling (1000 samples), apply threshold rounding, and measure the ratio f(S)/f_multilinear(x). Sweep curvature by varying the overlap structure of coverage sets. A single instance with ratio exceeding d/(1-\u03ba)+\u03b5 disproves the conjecture.\n\n**Impact:** This would extend the cost-agnostic rounding principle from linear to submodular objectives \u2014 the natural next level of expressiveness in optimization. Submodular functions model diminishing returns, which appear in welfare economics, sensor placement, and influence maximization.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`, `threshold_simultaneous_multiobjective_bound`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `threshold_isTransversal`, `threshold_card_bound`\n\n**Proof Strategy:** Decompose the multilinear extension as a convex combination of linear functions (this is known). Apply the existing weighted bound to each linear component, then aggregate. The curvature parameter \u03ba controls the gap between f(S) and the aggregated bound via Vondr\u00e1k's framework.\n\n**Domain Bridges:** Machine learning (feature selection), influence maximization in social networks, welfare economics (diminishing marginal returns)\n\n**Lineage:** Direct extension of Theorem 1 (weighted rounding) and Theorem 4 (simultaneous multi-objective) via the multilinear extension framework of C\u0103linescu et al. (2011).\n\n**Ambition:** Grand challenge \u2014 this would create the first certified rounding theory for nonlinear multi-criteria optimization in a combinatorial setting.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:39:08.850911+00:00"
+  },
+  {
+    "id": "fd_0884",
+    "title": "Direction 2: Hypergraph Transversals as Tropical Convex Optimization",
+    "description": "**Conjecture:** The set of feasible fractional transversals, when viewed through the tropical (min-plus) lens, has a *tropical convex hull* whose vertices correspond to basic feasible solutions of the covering LP, and threshold rounding is a tropical projection operator.\n\n**Test:** For small hypergraphs (n \u2264 8), enumerate all basic feasible solutions of the covering LP. Compute the tropical convex hull using established algorithms (Develin-Sturmfels). Check whether threshold rounding at 1/d maps each point to a tropically extremal integral solution. Falsifiable by finding a rounded point that is not tropically extremal.\n\n**Impact:** This would reveal the *geometric reason* behind the effectiveness of threshold rounding \u2014 it's not just a convenient algebraic trick but a reflection of tropical convex structure. This could lead to improved rounding schemes for specific hypergraph families where the tropical geometry is better behaved.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `threshold_set`, `weighted_threshold_cost_bound`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`\n\n**Proof Strategy:** Formalize tropical semiring operations (min, +) in Lean. Define tropical convexity for the covering polytope. Show that the threshold operator is a tropical retraction \u2014 a map that preserves tropical convex combinations. Use the tropical Carath\u00e9odory theorem to bound the number of support vertices.\n\n**Domain Bridges:** Tropical geometry, discrete convex analysis (Murota), phylogenetics (tropical tree space), algebraic statistics\n\n**Lineage:** Inspired by the Develin-Sturmfels theory of tropical convexity and the observation that the covering LP has a natural tropical interpretation.\n\n**Ambition:** Grand challenge \u2014 would establish the first formal connection between LP rounding theory and tropical convex geometry.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:39:08.874172+00:00"
+  },
+  {
+    "id": "fd_0885",
+    "title": "Direction 3: Compositional Rounding Certificates for Modular Hypergraphs",
+    "description": "**Conjecture:** If a hypergraph H decomposes as H = H\u2081 \u222a H\u2082 with V(H\u2081) \u2229 V(H\u2082) = V\u2080 (a shared boundary), and x\u2081, x\u2082 are feasible fractional transversals of H\u2081, H\u2082 agreeing on V\u2080, then the threshold roundings S\u2081, S\u2082 can be combined into a transversal S of H with cost(S) \u2264 max(d\u2081, d\u2082) \u00b7 (cost(x\u2081) + cost(x\u2082)), where d\u1d62 = max edge size of H\u1d62.\n\n**Test:** Generate pairs of random hypergraphs sharing 3-5 boundary vertices. Solve separate LPs, round separately, combine, and check both coverage and cost bound. A violation disproves the conjecture; consistent success over 1000 trials provides evidence.\n\n**Impact:** This would enable *modular certification*: verify rounding guarantees for subsystems independently, then compose. Essential for large-scale infrastructure design where the full system LP is intractable.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`, `threshold_set_isTransversal`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`\n\n**Proof Strategy:** The key step is showing that the boundary agreement condition ensures S\u2081 \u222a S\u2082 covers all edges, including those in H\u2081 \u2229 H\u2082. Use the separate weighted bounds for H\u2081 and H\u2082, then aggregate costs. The challenge is handling edges that cross the boundary.\n\n**Domain Bridges:** Software verification (compositional reasoning), distributed systems (partition-based optimization), VLSI design (hierarchical placement)\n\n**Lineage:** Extends the weighted rounding bound to decomposable structures, inspired by compositional verification in software engineering and tree decompositions in algorithmic graph theory.\n\n**Ambition:** Solid extension \u2014 directly builds on Theorem 1 with a clear combinatorial generalization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:39:08.895642+00:00"
+  },
+  {
+    "id": "fd_0886",
+    "title": "Direction 4: Statistical Physics of Random Transversals and Phase Transitions",
+    "description": "**Conjecture:** For random d-uniform hypergraphs on n vertices with m = c\u00b7n edges (c > 0 constant), the ratio \u03c4*(H)/n undergoes a phase transition at c = c*(d), and the integrality gap \u03c4(H)/\u03c4*(H) concentrates around a value strictly less than d for c above the transition, approaching d only at the critical density.\n\n**Test:** For d=3 and n=100, sweep c from 0.1 to 5.0. For each c, generate 100 random instances, solve the LP and find integral optima (or bound via rounding), and compute the empirical integrality gap distribution. Plot mean and variance of the gap as a function of c. A phase transition appears as a sharp change in the gap curve.\n\n**Impact:** Would establish the first rigorous connection between random hypergraph transversal theory and statistical physics phase transitions. The gap behavior at criticality could reveal universality classes for covering problems.\n\n**Catalog References:**\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`, `uniform_integrality_gap`\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`\n\n**Proof Strategy:** Use the second moment method to show concentration of \u03c4*/n. Apply the cavity method (heuristically) to predict the phase transition threshold c*(d). Formalize the upper bound d\u00b7\u03c4* and show it is not tight in the random setting by constructing a better rounding scheme that exploits randomness.\n\n**Domain Bridges:** Statistical physics (replica method, spin glasses), random constraint satisfaction, coding theory (LDPC codes as hypergraph covers)\n\n**Lineage:** Connects the deterministic integrality gap bound to the probabilistic theory of random CSPs, where phase transitions in satisfiability and covering have been predicted by physics but rarely proved.\n\n**Ambition:** Grand challenge \u2014 would bridge formal combinatorics and statistical physics via the integrality gap.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:39:08.918006+00:00"
+  },
+  {
+    "id": "fd_0887",
+    "title": "Direction 5: Mechanism Design with Certified Multi-Criteria Approximation",
+    "description": "**Conjecture:** There exists a truthful mechanism for hypergraph covering games where agents (vertices) report private costs, and the mechanism selects a transversal with simultaneously d-approximate welfare for every linear combination of agent costs \u2014 achieving certified multi-criteria incentive compatibility.\n\n**Test:** Implement a VCG-style mechanism using the weighted LP as the allocation rule and threshold rounding for the integral output. Verify truthfulness by checking that no agent can decrease their payment by misreporting, over 1000 random instances with strategic deviations. A single profitable deviation disproves truthfulness.\n\n**Impact:** Would provide the first *certified multi-criteria mechanism* for covering games. Current mechanism design focuses on single-objective approximation; simultaneous multi-objective guarantees are new.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `threshold_simultaneous_multiobjective_bound`, `scalarized_minimizer_is_pareto`\n\n**Proof Strategy:** Use the LP-based mechanism framework of Lavi-Swamy (2011). The key is showing that the threshold rounding operator, applied to the VCG allocation, preserves incentive compatibility while simultaneously controlling multiple cost objectives. The simultaneous bound (Theorem 4) provides the welfare guarantee; truthfulness follows from the LP structure.\n\n**Domain Bridges:** Algorithmic game theory, auction design, public goods provision, healthcare resource allocation\n\n**Lineage:** Extends the scalarization-Pareto theorem (Theorem 3) to strategic settings, bridging multi-objective optimization with mechanism design.\n\n**Ambition:** Solid extension \u2014 combines well-understood mechanism design techniques with the new multi-objective rounding results.\n\n---\n\n*The key insight connecting all five directions is that threshold rounding is not merely an algorithm but a structural operator on the covering polytope, and its properties \u2014 cost-agnosticism, Pareto preservation, pointwise domination \u2014 are geometric facts that transfer across domains.*\n\n*Why now? The formal verification of the weighted and multi-objective rounding bounds provides a machine-checked foundation on which these extensions can be built with confidence. Each direction can be tested computationally, stated formally, and \u2014 if true \u2014 proved with the same methodology.*",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:39:08.941019+00:00"
   },
   {
     "id": "seed_032",

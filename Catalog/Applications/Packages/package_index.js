@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorial Optimization / Polyhedral Combinatorics",
     "date": "2026-05-25T16:39:05Z",
     "exp_id": "b9d16ed0",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7379731931205967,
+    "quality": "substantial"
   },
   {
     "filename": "direction_4_relative_tropical_hodge_theorem.json",
@@ -317,8 +317,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7379731931205967,
+      "quality": "substantial"
     }
   ],
   "edges": [],
