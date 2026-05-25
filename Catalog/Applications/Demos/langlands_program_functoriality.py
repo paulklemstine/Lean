@@ -1,529 +1,656 @@
 #!/usr/bin/env python3
 """
-Applications of Symmetric Power Functoriality
+applications.py — Applications of symmetric power transfer theory.
 
-Demonstrates real-world applications of the transfer engine:
-1. Computing L-function coefficients for modular forms
-2. Studying the Sato-Tate distribution under transfer
-3. Detecting endoscopic behavior in families
-4. Complexity analysis of transferred Euler factors
+Demonstrates real-world applications:
+1. L-function coefficient computation
+2. Complexity growth analysis under functorial transfer
+3. Random matrix spectral statistics from self-dual parameters
 """
 
-from fractions import Fraction
-from typing import List, Tuple, Dict
-import math
-from algorithms import (SatakeGL2, SatakeGLn, symm_pow_transfer,
-                        recip_euler_factor, is_palindromic,
-                        elementary_symmetric, power_sum)
+import numpy as np
+from typing import List, Tuple
 
 
-# ============================================================================
-# Application 1: Modular Form L-Function Coefficients
-# ============================================================================
+# ─── Inline core functions ───────────────────────────────────────────────────
 
-def modular_form_satake(a_p: Fraction, omega_p: Fraction) -> SatakeGL2:
-    """Convert Hecke eigenvalue data to Satake parameters.
+def symm_pow_roots(n: int, alpha: complex, beta: complex) -> List[complex]:
+    return [alpha**(n - i) * beta**i for i in range(n + 1)]
 
-    Given the Hecke eigenvalue a_p = α + β and the nebentypus value
-    ω_p = αβ, recover (α, β) as roots of T² - a_p T + ω_p = 0.
+def euler_poly_from_roots(roots: List[complex]) -> np.ndarray:
+    poly = np.array([1.0 + 0j])
+    for r in roots:
+        poly = np.convolve(poly, np.array([-r, 1.0]))
+    return poly
 
-    For simplicity over Q, we work with the symmetric functions directly
-    and compute Satake parameters when the discriminant is a perfect square.
+def symm_pow_euler_coeffs(n: int, alpha: complex, beta: complex) -> np.ndarray:
+    return euler_poly_from_roots(symm_pow_roots(n, alpha, beta))
 
-    Example:
-        >>> pi = modular_form_satake(Fraction(5), Fraction(6))
-        >>> pi.trace()
-        Fraction(5, 1)
+
+# ─── Application 1: L-function Dirichlet coefficients ────────────────────────
+
+def local_euler_factor_coeffs(
+    n: int, alpha: float, beta: float, num_terms: int = 20
+) -> np.ndarray:
     """
-    # α, β are roots of T^2 - a_p T + omega_p
-    disc_num = a_p ** 2 - 4 * omega_p
-    # For exact computation, we need disc to be a perfect square
-    # Here we just store trace and det and compute algebraically
-    # Using the quadratic formula symbolically is not needed for our purposes
-    # since all our algorithms work with (α + β) and αβ via elementary symmetric polys
+    Compute the first `num_terms` coefficients of the local Euler factor
+    L_p(s, Sym^n π) = 1 / ∏(1 - r_i X).
 
-    # For demonstration, try to find rational roots
-    disc = a_p ** 2 - 4 * omega_p
-    if disc >= 0:
-        # Try to find exact square root
-        n = disc.numerator
-        d = disc.denominator
-        sn = int(math.isqrt(abs(n)))
-        sd = int(math.isqrt(abs(d)))
-        if sn * sn == n and sd * sd == d:
-            sqrt_disc = Fraction(sn, sd)
-            alpha = (a_p + sqrt_disc) / 2
-            beta = (a_p - sqrt_disc) / 2
-            return SatakeGL2(alpha, beta)
+    The inverse Euler polynomial is ∏(1 - r_i X). To get L_p itself,
+    we compute the power series expansion 1/P(X).
 
-    # Fallback: use trace and det directly (α = a_p, β = 0 is wrong but
-    # for this demo we need rational Satake params)
-    raise ValueError(f"Discriminant {disc} is not a perfect square over Q")
-
-
-def compute_symmetric_power_lcoeffs(
-    a_p: Fraction, omega_p: Fraction, m: int
-) -> List[Fraction]:
-    """Compute the coefficients of the Sym^m L-factor at prime p.
-
-    Given Hecke eigenvalue a_p and central character omega_p at a prime p,
-    returns the coefficients of L^{-1}(p^{-s}, Sym^m π).
-
-    These coefficients appear in the Dirichlet series expansion of
-    L(s, Sym^m π).
-    """
-    pi = modular_form_satake(a_p, omega_p)
-    transferred = symm_pow_transfer(m, pi)
-    return recip_euler_factor(transferred)
-
-
-def demo_modular_form():
-    """Demo: compute L-function coefficients from Hecke eigenvalues."""
-    print("=" * 70)
-    print("APPLICATION 1: Modular Form L-Function Coefficients")
-    print("=" * 70)
-
-    # Example: weight 2 modular form with a_p = 5, omega_p = 6
-    # This gives α = 2, β = 3 (roots of T² - 5T + 6)
-    a_p = Fraction(5)
-    omega_p = Fraction(6)
-
-    print(f"\nHecke eigenvalue a_p = {a_p}, central character ω_p = {omega_p}")
-
-    pi = modular_form_satake(a_p, omega_p)
-    print(f"Satake parameters: (α, β) = ({pi.alpha}, {pi.beta})")
-
-    for m in range(1, 5):
-        coeffs = compute_symmetric_power_lcoeffs(a_p, omega_p, m)
-        print(f"\nSym^{m} L-factor coefficients: {[str(c) for c in coeffs]}")
-        print(f"  This encodes L^{{-1}}(p^{{-s}}, Sym^{m} π) at this prime.")
-
-    print()
-
-
-# ============================================================================
-# Application 2: Endoscopic Detection in Families
-# ============================================================================
-
-def detect_endoscopic_primes(
-    eigenvalues: Dict[int, Tuple[Fraction, Fraction]]
-) -> List[int]:
-    """Detect primes where the representation is endoscopic.
-
-    At endoscopic primes, α = β, meaning the Sym² transfer degenerates.
-    This indicates special arithmetic behavior (e.g., the form has CM).
+    This is how automorphic L-functions are computed in practice:
+    the Satake parameters determine the local factor, and the Dirichlet
+    series coefficients arise from power series inversion.
 
     Args:
-        eigenvalues: Dict mapping primes p to (a_p, omega_p).
+        n: Symmetric power index
+        alpha, beta: Satake parameters at the prime p
+        num_terms: Number of power series terms
 
     Returns:
-        List of primes where the discriminant vanishes.
+        Coefficients [a_0, a_1, ..., a_{num_terms-1}] of L_p(X)
     """
-    endoscopic = []
-    for p, (a_p, omega_p) in eigenvalues.items():
-        disc = a_p ** 2 - 4 * omega_p
-        if disc == 0:
-            endoscopic.append(p)
-    return endoscopic
+    roots = symm_pow_roots(n, alpha, beta)
+    # Euler factor inverse: ∏(1 - r_i X)
+    inv_euler = np.array([1.0])
+    for r in roots:
+        inv_euler = np.convolve(inv_euler, np.array([1.0, -r]))
+
+    # Power series inversion: if P = Σ p_k X^k, then L = 1/P has
+    # L_0 = 1/p_0, L_k = -(1/p_0) Σ_{j=1}^{k} p_j L_{k-j}
+    d = len(inv_euler)
+    L = np.zeros(num_terms)
+    L[0] = 1.0 / inv_euler[0]
+    for k in range(1, num_terms):
+        s = 0.0
+        for j in range(1, min(k + 1, d)):
+            s += inv_euler[j] * L[k - j]
+        L[k] = -s / inv_euler[0]
+    return L
 
 
-def demo_endoscopic_detection():
-    """Demo: detect endoscopic primes in a family."""
+def demo_l_function():
+    """Demonstrate L-function coefficient computation."""
     print("=" * 70)
-    print("APPLICATION 2: Endoscopic Detection in Families")
+    print("  APPLICATION 1: L-FUNCTION DIRICHLET COEFFICIENTS")
     print("=" * 70)
-
-    # Simulated Hecke eigenvalue data
-    eigenvalues = {
-        2: (Fraction(3), Fraction(2)),      # disc = 9 - 8 = 1, generic
-        3: (Fraction(4), Fraction(4)),      # disc = 16 - 16 = 0, ENDOSCOPIC
-        5: (Fraction(7), Fraction(10)),     # disc = 49 - 40 = 9, generic
-        7: (Fraction(6), Fraction(9)),      # disc = 36 - 36 = 0, ENDOSCOPIC
-        11: (Fraction(5), Fraction(6)),     # disc = 25 - 24 = 1, generic
-        13: (Fraction(10), Fraction(25)),   # disc = 100 - 100 = 0, ENDOSCOPIC
-    }
-
-    print("\nPrime | a_p | ω_p | Disc | Status")
-    print("-" * 50)
-    for p in sorted(eigenvalues.keys()):
-        a_p, omega_p = eigenvalues[p]
-        disc = a_p ** 2 - 4 * omega_p
-        status = "ENDOSCOPIC" if disc == 0 else "generic"
-        print(f"  {p:4d} | {str(a_p):4s} | {str(omega_p):4s} | {str(disc):4s} | {status}")
-
-    endoscopic = detect_endoscopic_primes(eigenvalues)
-    print(f"\nEndoscopic primes: {endoscopic}")
-    print("At these primes, the Sym² Euler factor has a triple root.")
+    print()
+    print("  For the Ramanujan Δ function at p=2:")
+    print("  Satake parameters satisfy α·β = p^11 = 2048, α+β = τ(2) = -24")
     print()
 
+    # For Ramanujan Δ at p=2: τ(2) = -24, αβ = 2^11 = 2048
+    # α + β = -24, αβ = 2048
+    # α, β are roots of t^2 + 24t + 2048 = 0
+    disc = 24**2 - 4 * 2048
+    alpha = (-24 + np.sqrt(disc + 0j)) / 2
+    beta = (-24 - np.sqrt(disc + 0j)) / 2
+    print(f"  α = {alpha:.4f}")
+    print(f"  β = {beta:.4f}")
+    print(f"  αβ = {(alpha * beta).real:.0f}")
 
-# ============================================================================
-# Application 3: Complexity Growth Analysis
-# ============================================================================
+    for sym_n in [1, 2, 3, 4]:
+        coeffs = local_euler_factor_coeffs(sym_n, alpha, beta, 8)
+        print(f"\n  Sym^{sym_n} L-factor coefficients at p=2:")
+        for k, c in enumerate(coeffs):
+            print(f"    a_{k} = {c.real:>14.2f}")
 
-def analyze_complexity_growth(max_m: int = 15):
-    """Analyze how transfer degree and coefficient complexity grow with m."""
+
+# ─── Application 2: Complexity Growth Under Transfer ─────────────────────────
+
+def complexity_growth_analysis(max_n: int = 20):
+    """
+    Analyze the growth of algebraic complexity under symmetric power transfer.
+
+    The Euler polynomial of Sym^n has degree n+1. By the depth-degree tradeoff
+    (depth ≥ log₂(degree)), any algebraic circuit computing this polynomial
+    needs depth ≥ log₂(n+1).
+
+    This is "functoriality as complexity amplification."
+    """
+    print("\n" + "=" * 70)
+    print("  APPLICATION 2: COMPLEXITY GROWTH UNDER FUNCTORIAL TRANSFER")
     print("=" * 70)
-    print("APPLICATION 3: Complexity Growth Under Transfer")
-    print("=" * 70)
-
-    alpha, beta = Fraction(2), Fraction(3)
-    pi = SatakeGL2(alpha, beta)
-
-    print(f"\nParameter: (α, β) = ({alpha}, {beta})")
-    print(f"\n{'m':>3} | {'Degree':>6} | {'#Coeffs':>7} | {'Max |coeff|':>12} | {'log₂(max)':>10}")
-    print("-" * 55)
-
-    for m in range(1, max_m + 1):
-        transferred = symm_pow_transfer(m, pi)
-        coeffs = recip_euler_factor(transferred)
-        degree = len(coeffs) - 1
-        max_coeff = max(abs(c) for c in coeffs)
-        log_max = float(max_coeff).bit_length() if max_coeff > 0 else 0
-
-        print(f"  {m:2d} | {degree:6d} | {len(coeffs):7d} | {str(max_coeff):>12s} | {log_max:10.1f}")
-
     print()
-    print("  Degree grows as m+1 (linear).")
-    print("  Max coefficient grows exponentially in m.")
-    print("  Circuit depth lower bound: Ω(log(m+1)).")
+    print("  The Euler polynomial of Sym^n has degree n+1.")
+    print("  Circuit depth lower bound: depth ≥ ⌈log₂(n+1)⌉")
     print()
+    print(f"  {'n':>4} | {'Degree':>6} | {'Depth LB':>8} | {'#Roots':>6} | {'Complexity':>10}")
+    print("  " + "-" * 45)
+
+    for n in range(1, max_n + 1):
+        degree = n + 1
+        depth_lb = int(np.ceil(np.log2(degree))) if degree > 1 else 0
+        num_roots = n + 1
+        # Total multiplicative complexity: need n multiplications to build product
+        mul_complexity = n
+        print(f"  {n:>4} | {degree:>6} | {depth_lb:>8} | {num_roots:>6} | {mul_complexity:>10}")
 
 
-# ============================================================================
-# Application 4: Self-Reciprocity and Functional Equations
-# ============================================================================
+# ─── Application 3: Spectral Statistics of Self-Dual Transfer ────────────────
 
-def analyze_functional_equation(max_m: int = 8):
-    """Study the self-reciprocal property and its connection to functional equations."""
+def spectral_statistics(alpha_vals: List[float], n_vals: List[int]):
+    """
+    Analyze the spectral statistics (root distribution on the unit circle)
+    for self-dual transfers β = α⁻¹.
+
+    For unitary parameters (|α| = 1), the roots lie on the unit circle
+    and their spacing statistics connect to random matrix theory.
+    """
+    print("\n" + "=" * 70)
+    print("  APPLICATION 3: SPECTRAL STATISTICS OF SELF-DUAL TRANSFER")
     print("=" * 70)
-    print("APPLICATION 4: Self-Reciprocity and Functional Equations")
-    print("=" * 70)
-
-    # Parameter with αβ = 1 (trivial central character)
-    alpha = Fraction(3)
-    beta = Fraction(1, 3)
-    pi = SatakeGL2(alpha, beta)
-
-    print(f"\nParameter with det = 1: (α, β) = ({alpha}, {beta})")
-    print(f"αβ = {alpha * beta}")
-
-    print(f"\n{'m':>3} | {'Self-reciprocal':>15} | Coefficients")
-    print("-" * 70)
-
-    for m in range(1, max_m + 1):
-        transferred = symm_pow_transfer(m, pi)
-        coeffs = recip_euler_factor(transferred)
-        pal = is_palindromic(coeffs)
-        coeff_str = [str(c) for c in coeffs]
-        print(f"  {m:2d} | {'✓ Yes':>15s if pal else '✗ No':>15s} | {coeff_str}")
-
-    print()
-    print("  Self-reciprocity implies the functional equation L(s) = ε · L(1-s)")
-    print("  for the completed L-function, constraining its analytic behavior.")
     print()
 
+    for alpha_val in alpha_vals:
+        beta_val = 1.0 / alpha_val
+        print(f"  α = {alpha_val}, β = {beta_val:.4f}")
 
-# ============================================================================
-# Main
-# ============================================================================
+        for n in n_vals:
+            roots = symm_pow_roots(n, alpha_val, beta_val)
+            root_mags = [abs(r) for r in roots]
+            log_roots = [np.log(abs(r)) for r in roots if abs(r) > 0]
+
+            # Check palindromic structure of magnitudes
+            mags_sorted = sorted(root_mags)
+            is_symmetric = all(
+                abs(mags_sorted[i] * mags_sorted[-(i+1)] - 1.0) < 1e-10
+                for i in range(len(mags_sorted) // 2)
+            )
+
+            coeffs = symm_pow_euler_coeffs(n, alpha_val, beta_val)
+            abs_coeffs = np.abs(coeffs)
+
+            print(f"    Sym^{n}: roots ∈ [{min(root_mags):.4f}, {max(root_mags):.4f}]"
+                  f"  mag-symmetric: {'✓' if is_symmetric else '✗'}"
+                  f"  coeff range: [{min(abs_coeffs):.2f}, {max(abs_coeffs):.2f}]")
+        print()
+
+
+# ─── Application 4: Representation Growth ────────────────────────────────────
+
+def representation_growth(max_n: int = 15):
+    """
+    Track how the transferred local data grows with n.
+
+    For a fixed prime p with Satake parameters (α, β), the local datum
+    of Sym^n has n+1 roots. The total "representation complexity" grows
+    as the sum of absolute values of all roots.
+    """
+    print("\n" + "=" * 70)
+    print("  APPLICATION 4: REPRESENTATION GROWTH")
+    print("=" * 70)
+    print()
+
+    alpha, beta = 1.5, 0.8
+    print(f"  Satake parameters: α = {alpha}, β = {beta}")
+    print()
+    print(f"  {'n':>4} | {'#Roots':>6} | {'∑|roots|':>10} | {'∏|roots|':>12} | {'Max root':>10}")
+    print("  " + "-" * 55)
+
+    for n in range(1, max_n + 1):
+        roots = symm_pow_roots(n, alpha, beta)
+        abs_roots = [abs(r) for r in roots]
+        print(f"  {n:>4} | {len(roots):>6} | {sum(abs_roots):>10.4f} | "
+              f"{np.prod(abs_roots):>12.4f} | {max(abs_roots):>10.4f}")
+
+
+# ─── Main ────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  Applications of Symmetric Power Functoriality for GL(2)           ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
+    demo_l_function()
+    complexity_growth_analysis()
+    spectral_statistics([2.0, 3.0, 1.5], [2, 4, 6, 8])
+    representation_growth()
 
-    demo_modular_form()
-    demo_endoscopic_detection()
-    analyze_complexity_growth()
-    analyze_functional_equation()
-
-    print("All applications demonstrated successfully.")
+    print("\n" + "=" * 70)
+    print("  ALL APPLICATIONS COMPLETE")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Symmetric Power Functoriality for GL(2): Interactive Demo
+demo.py — Interactive demonstration of Langlands functoriality:
+Local Euler factors, symmetric power transfer, Hecke recurrences,
+and the unimodality conjecture for self-dual coefficients.
 
-Demonstrates the algebraic core of symmetric power transfers in the Langlands
-program. Computes Euler factors, verifies palindromic structure, tests
-endoscopic collapse, and probes conjectures computationally.
+Usage: python demo.py
 """
 
-from fractions import Fraction
-from typing import List, Tuple
-import itertools
+import numpy as np
+from numpy.polynomial import polynomial as P
+from itertools import product as iprod
 
 
-# ============================================================================
-# Core Definitions
-# ============================================================================
+# ─── Core Functions ──────────────────────────────────────────────────────────
 
-def symm_pow_roots(m: int, alpha, beta) -> list:
-    """Compute the m+1 roots of Sym^m(alpha, beta).
+def symm_pow_roots(n, alpha, beta):
+    """Roots of Sym^n(alpha, beta): alpha^(n-i) * beta^i for i=0..n."""
+    return [alpha**(n - i) * beta**i for i in range(n + 1)]
 
-    The i-th root is alpha^(m-i) * beta^i for i = 0, ..., m.
+
+def euler_poly_coeffs(roots):
     """
-    return [alpha ** (m - i) * beta ** i for i in range(m + 1)]
-
-
-def recip_euler_factor_coeffs(roots: list) -> list:
-    """Compute coefficients of the reciprocal Euler factor prod(1 - a_i * X).
-
-    Returns [c_0, c_1, ..., c_n] where the polynomial is sum c_k X^k.
+    Compute the polynomial ∏(X - r_i) as a coefficient list [a_0, a_1, ..., a_d].
+    Uses iterative multiplication by linear factors.
     """
-    # Start with polynomial [1]
-    coeffs = [type(roots[0])(1) if roots else 1]
-    for a in roots:
-        # Multiply by (1 - a*X): new_coeffs[k] = coeffs[k] - a * coeffs[k-1]
-        new_coeffs = [coeffs[0]]
-        for k in range(1, len(coeffs)):
-            new_coeffs.append(coeffs[k] - a * coeffs[k - 1])
-        new_coeffs.append(-a * coeffs[-1])
-        coeffs = new_coeffs
-    return coeffs
+    poly = np.array([1.0])
+    for r in roots:
+        # Multiply by (X - r): shift up by 1 and subtract r * current
+        poly = np.convolve(poly, np.array([-r, 1.0]))
+    return poly
 
 
-def is_palindromic(coeffs: list) -> bool:
-    """Check if coefficient list is palindromic up to sign alternation.
-
-    For self-reciprocal polynomials of the form arising from Euler factors
-    with det=1, we check if c_k = (-1)^(n) * c_{n-k} where n = deg.
-    """
-    n = len(coeffs) - 1
-    sign = (-1) ** n
-    return all(coeffs[k] == sign * coeffs[n - k] for k in range(n + 1))
+def hecke_trace(alpha, beta, m):
+    """Hecke trace t_m = alpha^m + beta^m."""
+    return alpha**m + beta**m
 
 
-def discriminant(alpha, beta):
-    """Discriminant (alpha - beta)^2."""
-    return (alpha - beta) ** 2
+def hecke_trace_recurrence(alpha, beta, m):
+    """Compute t_m via the recurrence t_{m+2} = (a+b)*t_{m+1} - ab*t_m."""
+    if m == 0:
+        return 2
+    if m == 1:
+        return alpha + beta
+    s = alpha + beta
+    p = alpha * beta
+    t_prev, t_curr = 2, s
+    for _ in range(m - 1):
+        t_prev, t_curr = t_curr, s * t_curr - p * t_prev
+    return t_curr
 
 
-def central_char(alpha, beta):
-    """Central character alpha * beta."""
-    return alpha * beta
+def root_product(n, alpha, beta):
+    """∏_{i=0}^{n} alpha^(n-i) * beta^i = (alpha*beta)^{n(n+1)/2}."""
+    prod = 1.0
+    for i in range(n + 1):
+        prod *= alpha**(n - i) * beta**i
+    return prod
 
 
-# ============================================================================
-# Demo 1: Euler Factor Computation
-# ============================================================================
+def is_unimodal(seq):
+    """Check if a sequence is unimodal (increases then decreases)."""
+    if len(seq) <= 2:
+        return True
+    increasing = True
+    for i in range(1, len(seq)):
+        if increasing:
+            if seq[i] < seq[i-1]:
+                increasing = False
+        else:
+            if seq[i] > seq[i-1]:
+                return False
+    return True
+
+
+def is_log_concave(seq):
+    """Check if a positive sequence is log-concave: a_i^2 >= a_{i-1}*a_{i+1}."""
+    for i in range(1, len(seq) - 1):
+        if seq[i] <= 0:
+            return False
+        if seq[i]**2 < seq[i-1] * seq[i+1] - 1e-10:
+            return False
+    return True
+
+
+# ─── Interactive Demo ────────────────────────────────────────────────────────
 
 def demo_euler_factors():
-    """Demonstrate Euler factor computation for Sym^2 and Sym^3."""
+    """Demonstrate local Euler factor computation for Sym^n."""
     print("=" * 70)
-    print("DEMO 1: Euler Factor Computation")
+    print("  SYMMETRIC POWER LOCAL EULER FACTORS")
     print("=" * 70)
 
-    alpha, beta = Fraction(2), Fraction(3)
-    print(f"\nGL(2) parameter: (α, β) = ({alpha}, {beta})")
-    print(f"Central character αβ = {alpha * beta}")
-    print(f"Discriminant (α-β)² = {discriminant(alpha, beta)}")
+    alpha, beta = 2.0, 3.0
+    print(f"\nSatake parameters: α = {alpha}, β = {beta}")
 
-    for m in range(1, 5):
-        roots = symm_pow_roots(m, alpha, beta)
-        coeffs = recip_euler_factor_coeffs(roots)
-        print(f"\nSym^{m} transfer:")
-        print(f"  Roots: {roots}")
-        print(f"  L⁻¹(X) coefficients: {[str(c) for c in coeffs]}")
-        print(f"  Degree: {len(coeffs) - 1}")
+    for n in range(1, 6):
+        roots = symm_pow_roots(n, alpha, beta)
+        coeffs = euler_poly_coeffs(roots)
+        print(f"\n  Sym^{n}:")
+        print(f"    Roots: {[f'{r:.1f}' for r in roots]}")
+        print(f"    Euler poly coefficients: {[f'{c:.1f}' for c in coeffs]}")
+        print(f"    Degree: {len(coeffs) - 1}")
 
+
+def demo_determinant():
+    """Verify determinant / central character compatibility."""
+    print("\n" + "=" * 70)
+    print("  DETERMINANT COMPATIBILITY: ∏ roots = (αβ)^{n(n+1)/2}")
+    print("=" * 70)
+
+    alpha, beta = 2.0, 3.0
+    print(f"\nSatake parameters: α = {alpha}, β = {beta}")
+
+    for n in range(1, 8):
+        prod = root_product(n, alpha, beta)
+        expected = (alpha * beta) ** (n * (n + 1) // 2)
+        match = abs(prod - expected) < 1e-6
+        status = "✓" if match else "✗"
+        print(f"  n={n}: ∏ roots = {prod:.4e}, (αβ)^{{n(n+1)/2}} = {expected:.4e}  [{status}]")
+
+
+def demo_hecke_recurrence():
+    """Test the Hecke trace recurrence t_{m+2} = (α+β)t_{m+1} - αβ·t_m."""
+    print("\n" + "=" * 70)
+    print("  HECKE TRACE RECURRENCE")
+    print("=" * 70)
+
+    alpha, beta = 2.0, 3.0
+    s = alpha + beta
+    p = alpha * beta
+    print(f"\nSatake parameters: α = {alpha}, β = {beta}")
+    print(f"  α + β = {s},  αβ = {p}")
+    print(f"\n  {'m':>3} | {'t_m (direct)':>14} | {'t_m (recurrence)':>16} | {'Match':>5}")
+    print("  " + "-" * 50)
+
+    for m in range(10):
+        direct = hecke_trace(alpha, beta, m)
+        recur = hecke_trace_recurrence(alpha, beta, m)
+        match = abs(direct - recur) < 1e-8
+        status = "✓" if match else "✗"
+        print(f"  {m:>3} | {direct:>14.2f} | {recur:>16.2f} | {status:>5}")
+
+
+def demo_self_duality():
+    """Demonstrate root inversion symmetry when β = α⁻¹."""
+    print("\n" + "=" * 70)
+    print("  SELF-DUALITY: β = α⁻¹ ⟹ ROOTS CLOSED UNDER INVERSION")
+    print("=" * 70)
+
+    alpha = 2.0
+    beta = 1.0 / alpha
+    print(f"\nSatake parameters: α = {alpha}, β = α⁻¹ = {beta}")
+
+    for n in range(1, 7):
+        roots = symm_pow_roots(n, alpha, beta)
+        inverses = [1.0 / r for r in roots]
+        # Check each inverse appears in the root list
+        all_closed = True
+        for inv in inverses:
+            if not any(abs(inv - r) < 1e-10 for r in roots):
+                all_closed = False
+                break
+        status = "✓ CLOSED" if all_closed else "✗ NOT CLOSED"
+        print(f"  n={n}: roots = {[f'{r:.4f}' for r in roots]}")
+        print(f"         1/roots = {[f'{r:.4f}' for r in inverses]}  [{status}]")
+
+
+def demo_unimodality_conjecture():
+    """Test the unimodality/log-concavity conjecture for self-dual coefficients."""
+    print("\n" + "=" * 70)
+    print("  CONJECTURE: UNIMODALITY OF |coefficients| FOR β = α⁻¹")
+    print("=" * 70)
+
+    test_alphas = [1.1, 1.5, 2.0, 3.0, 5.0, 10.0]
+    max_n = 20
+    print(f"\nTesting for α ∈ {test_alphas}, n = 1..{max_n}")
     print()
 
-
-# ============================================================================
-# Demo 2: Palindromic Structure Verification
-# ============================================================================
-
-def demo_palindromic():
-    """Verify palindromic structure when αβ = 1."""
-    print("=" * 70)
-    print("DEMO 2: Palindromic Structure (Self-Reciprocity) when αβ = 1")
-    print("=" * 70)
-
-    test_alphas = [Fraction(2), Fraction(3), Fraction(1, 3),
-                   Fraction(5, 2), Fraction(7, 4)]
-
+    failures = 0
     for alpha in test_alphas:
-        beta = Fraction(1, alpha)
-        print(f"\n(α, β) = ({alpha}, {beta}), αβ = {alpha * beta}")
+        beta = 1.0 / alpha
+        all_uni = True
+        all_lc = True
+        for n in range(1, max_n + 1):
+            roots = symm_pow_roots(n, alpha, beta)
+            coeffs = euler_poly_coeffs(roots)
+            abs_coeffs = [abs(c) for c in coeffs]
+            if not is_unimodal(abs_coeffs):
+                all_uni = False
+                failures += 1
+            if not is_log_concave(abs_coeffs):
+                all_lc = False
+        uni_status = "✓" if all_uni else "✗"
+        lc_status = "✓" if all_lc else "✗"
+        print(f"  α = {alpha:>5.1f}: Unimodal [{uni_status}]  Log-concave [{lc_status}]")
 
-        for m in range(1, 7):
-            roots = symm_pow_roots(m, alpha, beta)
-            coeffs = recip_euler_factor_coeffs(roots)
-            pal = is_palindromic(coeffs)
-            status = "✓ palindromic" if pal else "✗ NOT palindromic"
-            print(f"  Sym^{m}: {status}  coeffs = {[str(c) for c in coeffs]}")
-
-    print()
-
-
-# ============================================================================
-# Demo 3: Endoscopic Collapse
-# ============================================================================
-
-def demo_endoscopic_collapse():
-    """Verify endoscopic collapse when α = β."""
-    print("=" * 70)
-    print("DEMO 3: Endoscopic Collapse (α = β)")
-    print("=" * 70)
-
-    for a in [Fraction(2), Fraction(3), Fraction(1, 5)]:
-        print(f"\nα = β = {a}")
-        for m in range(1, 5):
-            roots = symm_pow_roots(m, a, a)
-            coeffs = recip_euler_factor_coeffs(roots)
-
-            # Check if it's (1 - a^m X)^{m+1}
-            expected_root = a ** m
-            # (1 - c*X)^{m+1} has coefficients C(m+1, k) * (-c)^k
-            from math import comb
-            expected = [Fraction(comb(m + 1, k)) * ((-expected_root) ** k)
-                        for k in range(m + 2)]
-
-            match = coeffs == expected
-            status = "✓ matches (1-α^m X)^{m+1}" if match else "✗ MISMATCH"
-            print(f"  Sym^{m}: {status}")
-
-    print()
+    if failures == 0:
+        print(f"\n  All {len(test_alphas) * max_n} tests PASSED — conjecture holds on this grid.")
+    else:
+        print(f"\n  {failures} failures detected — conjecture may be FALSE.")
 
 
-# ============================================================================
-# Demo 4: Twist Compatibility
-# ============================================================================
-
-def demo_twist():
-    """Verify twist compatibility: Sym^m(χ·π) = χ^m · Sym^m(π)."""
-    print("=" * 70)
-    print("DEMO 4: Twist Compatibility")
+def demo_coefficient_profiles():
+    """Show coefficient profiles for self-dual cases."""
+    print("\n" + "=" * 70)
+    print("  COEFFICIENT PROFILES FOR SELF-DUAL CASES (β = 1/α)")
     print("=" * 70)
 
-    alpha, beta = Fraction(2), Fraction(3)
-    chi = Fraction(5)
+    alpha = 2.0
+    beta = 1.0 / alpha
+    print(f"\nSatake parameters: α = {alpha}, β = {beta}")
 
-    for m in range(1, 5):
-        # Sym^m of twisted parameter
-        twisted_roots = symm_pow_roots(m, chi * alpha, chi * beta)
-
-        # Twisted Sym^m of original parameter
-        orig_roots = symm_pow_roots(m, alpha, beta)
-        scaled_roots = [chi ** m * r for r in orig_roots]
-
-        match = twisted_roots == scaled_roots
-        status = "✓" if match else "✗"
-        print(f"  Sym^{m}: Sym^{m}(χ·π) == χ^{m}·Sym^{m}(π)  {status}")
-
-    print()
+    for n in [2, 4, 6, 8]:
+        roots = symm_pow_roots(n, alpha, beta)
+        coeffs = euler_poly_coeffs(roots)
+        abs_coeffs = [abs(c) for c in coeffs]
+        print(f"\n  Sym^{n} coefficient magnitudes:")
+        for k, c in enumerate(abs_coeffs):
+            bar = "█" * int(c / max(abs_coeffs) * 40) if max(abs_coeffs) > 0 else ""
+            print(f"    coeff[{k:>2}] = {c:>12.4f}  {bar}")
 
 
-# ============================================================================
-# Demo 5: Conjecture Testing - Self-Reciprocal Stability
-# ============================================================================
-
-def demo_conjecture_selfreciprocal():
-    """Test the self-reciprocal stability conjecture for higher symmetric powers."""
-    print("=" * 70)
-    print("DEMO 5: Conjecture Test — Self-Reciprocal Stability")
-    print("=" * 70)
-    print("Testing: For αβ=1 and all m, is the Sym^m Euler factor palindromic?")
-
-    import random
-    random.seed(42)
-    max_m = 12
-    num_tests = 20
-    all_pass = True
-
-    for trial in range(num_tests):
-        # Random rational with αβ = 1
-        num = random.randint(1, 20)
-        den = random.randint(1, 20)
-        alpha = Fraction(num, den)
-        beta = Fraction(den, num)
-
-        for m in range(1, max_m + 1):
-            roots = symm_pow_roots(m, alpha, beta)
-            coeffs = recip_euler_factor_coeffs(roots)
-            if not is_palindromic(coeffs):
-                print(f"  ✗ COUNTEREXAMPLE: α={alpha}, m={m}")
-                all_pass = False
-
-    if all_pass:
-        print(f"  ✓ All {num_tests} random tests passed for m=1..{max_m}")
-    print()
-
-
-# ============================================================================
-# Demo 6: Central Character Under Transfer
-# ============================================================================
-
-def demo_central_char():
-    """Verify central character formula: product of Sym^m roots = (αβ)^{m(m+1)/2}."""
-    print("=" * 70)
-    print("DEMO 6: Central Character Under Transfer")
-    print("=" * 70)
-
-    alpha, beta = Fraction(2), Fraction(3)
-    det = alpha * beta
-    print(f"(α, β) = ({alpha}, {beta}), det = αβ = {det}")
-
-    for m in range(1, 7):
-        roots = symm_pow_roots(m, alpha, beta)
-        product = Fraction(1)
-        for r in roots:
-            product *= r
-
-        # Expected: (αβ)^{sum of i for i=0..m} but actually
-        # prod_{i=0}^m α^{m-i} β^i = α^{sum(m-i)} β^{sum(i)}
-        # = α^{m(m+1)/2} β^{m(m+1)/2} = (αβ)^{m(m+1)/2}
-        exponent = m * (m + 1) // 2
-        expected = det ** exponent
-
-        match = product == expected
-        status = "✓" if match else "✗"
-        print(f"  Sym^{m}: ∏ roots = {product} = (αβ)^{exponent} = {expected}  {status}")
-
-    print()
-
-
-# ============================================================================
-# Demo 7: Degree Growth (Complexity Amplification)
-# ============================================================================
-
-def demo_degree_growth():
-    """Show that transfer degree grows linearly: deg(Sym^m) = m+1."""
-    print("=" * 70)
-    print("DEMO 7: Degree Growth Under Transfer")
-    print("=" * 70)
-
-    for m in range(0, 10):
-        degree = m + 1
-        print(f"  Sym^{m}: Euler factor degree = {degree}")
-
-    print()
-    print("  The degree grows as m+1, giving unbounded circuit depth")
-    print("  for the family of Euler factor polynomials.")
-    print()
-
-
-# ============================================================================
-# Main
-# ============================================================================
+# ─── Main ────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     print()
     print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  Symmetric Power Functoriality for GL(2): Computational Explorer   ║")
+    print("║   LANGLANDS FUNCTORIALITY: LOCAL EULER DATA & SYMMETRIC POWER      ║")
+    print("║   TRANSFER — INTERACTIVE DEMONSTRATION                             ║")
     print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
 
     demo_euler_factors()
-    demo_palindromic()
-    demo_endoscopic_collapse()
-    demo_twist()
-    demo_conjecture_selfreciprocal()
-    demo_central_char()
-    demo_degree_growth()
+    demo_determinant()
+    demo_hecke_recurrence()
+    demo_self_duality()
+    demo_unimodality_conjecture()
+    demo_coefficient_profiles()
 
-    print("All demonstrations complete.")
+    print("\n" + "=" * 70)
+    print("  DEMO COMPLETE")
+    print("=" * 70)
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Coefficient profiles of symmetric power Euler polynomials.
+
+Shows how the coefficient magnitudes of Sym^n Euler polynomials form
+unimodal profiles for self-dual parameters (β = α⁻¹), illustrating
+the palindromic symmetry proven in the Lean formalization.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def symm_pow_roots(n, alpha, beta):
+    return [alpha**(n - i) * beta**i for i in range(n + 1)]
+
+def euler_poly_from_roots(roots):
+    poly = np.array([1.0 + 0j])
+    for r in roots:
+        poly = np.convolve(poly, np.array([-r, 1.0]))
+    return poly
+
+def symm_pow_euler_coeffs(n, alpha, beta):
+    return euler_poly_from_roots(symm_pow_roots(n, alpha, beta))
+
+
+fig, axes = plt.subplots(2, 3, figsize=(14, 9))
+fig.suptitle("Symmetric Power Euler Polynomial Coefficients\n"
+             r"$\mathrm{Sym}^n(\alpha, \alpha^{-1})$: Self-Dual Case",
+             fontsize=14, fontweight='bold')
+
+alpha = 2.0
+ns = [2, 4, 6, 8, 10, 12]
+
+for ax, n in zip(axes.flat, ns):
+    coeffs = symm_pow_euler_coeffs(n, alpha, 1.0/alpha)
+    abs_coeffs = np.abs(coeffs.real)
+    indices = np.arange(len(abs_coeffs))
+
+    colors = plt.cm.viridis(abs_coeffs / max(abs_coeffs) if max(abs_coeffs) > 0 else abs_coeffs)
+    ax.bar(indices, abs_coeffs, color=colors, edgecolor='black', linewidth=0.5)
+    ax.set_title(f"$\\mathrm{{Sym}}^{{{n}}}$  (degree {n+1})", fontsize=11)
+    ax.set_xlabel("Coefficient index $k$", fontsize=9)
+    ax.set_ylabel("$|a_k|$", fontsize=9)
+
+    # Mark the palindromic symmetry axis
+    mid = len(abs_coeffs) / 2 - 0.5
+    ax.axvline(mid, color='red', linestyle='--', alpha=0.5, label='Symmetry axis')
+    ax.legend(fontsize=7, loc='upper right')
+
+plt.tight_layout()
+plt.savefig("coefficient_profiles.png", dpi=150, bbox_inches='tight')
+print("Saved coefficient_profiles.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Hecke trace sequences and their recurrence structure.
+
+Plots the Hecke trace t_m = α^m + β^m for various Satake parameters,
+illustrating the second-order linear recurrence proven in the Lean formalization.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def hecke_trace_sequence(alpha, beta, length):
+    if length <= 0:
+        return []
+    s = alpha + beta
+    p = alpha * beta
+    result = [2.0]
+    if length == 1:
+        return result
+    result.append(s)
+    for m in range(2, length):
+        result.append(s * result[-1] - p * result[-2])
+    return result
+
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+fig.suptitle("Hecke Trace Sequences $t_m = \\alpha^m + \\beta^m$\n"
+             "Governed by recurrence: $t_{m+2} = (\\alpha+\\beta)\\,t_{m+1} - \\alpha\\beta\\,t_m$",
+             fontsize=13, fontweight='bold')
+
+length = 15
+
+# Panel 1: Real parameters
+ax = axes[0]
+params = [(2, 3), (1.5, 0.8), (3, 1), (1.1, 0.9)]
+for alpha, beta in params:
+    traces = hecke_trace_sequence(alpha, beta, length)
+    ax.semilogy(range(length), [abs(t) for t in traces], 'o-',
+                label=f"α={alpha}, β={beta}", markersize=4)
+ax.set_title("Real Parameters", fontsize=11)
+ax.set_xlabel("$m$")
+ax.set_ylabel("$|t_m|$")
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+
+# Panel 2: Self-dual (β = 1/α)
+ax = axes[1]
+for alpha in [1.5, 2.0, 3.0, 5.0]:
+    beta = 1.0/alpha
+    traces = hecke_trace_sequence(alpha, beta, length)
+    ax.plot(range(length), traces, 'o-',
+            label=f"α={alpha}, β=1/α", markersize=4)
+ax.set_title("Self-Dual: $\\beta = \\alpha^{-1}$", fontsize=11)
+ax.set_xlabel("$m$")
+ax.set_ylabel("$t_m$")
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+
+# Panel 3: Ratio t_{m+1}/t_m → max(|α|, |β|)
+ax = axes[2]
+for alpha, beta in [(2, 3), (1.5, 0.8), (3, 1)]:
+    traces = hecke_trace_sequence(alpha, beta, 25)
+    ratios = [abs(traces[m+1] / traces[m]) if abs(traces[m]) > 1e-10 else 0
+              for m in range(len(traces)-1)]
+    ax.plot(range(len(ratios)), ratios, 'o-',
+            label=f"α={alpha}, β={beta}", markersize=3)
+    ax.axhline(max(abs(alpha), abs(beta)), linestyle='--', alpha=0.3)
+ax.set_title("Ratio $|t_{m+1}/t_m| \\to \\max(|\\alpha|, |\\beta|)$", fontsize=11)
+ax.set_xlabel("$m$")
+ax.set_ylabel("$|t_{m+1}/t_m|$")
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig("hecke_traces.png", dpi=150, bbox_inches='tight')
+print("Saved hecke_traces.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Root geometry of symmetric power Euler polynomials.
+
+Shows the multiplicative structure of roots α^{n-i}β^i on a log scale,
+and the inversion symmetry for self-dual parameters.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def symm_pow_roots(n, alpha, beta):
+    return [alpha**(n - i) * beta**i for i in range(n + 1)]
+
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+fig.suptitle("Root Geometry of Symmetric Power Transfer\n"
+             "$\\mathrm{Sym}^n(\\alpha, \\beta)$: roots $= \\alpha^{n-i}\\beta^i$",
+             fontsize=13, fontweight='bold')
+
+# Panel 1: Root magnitudes on log scale
+ax = axes[0]
+alpha, beta = 2.0, 3.0
+for n in [2, 4, 6, 8, 10]:
+    roots = symm_pow_roots(n, alpha, beta)
+    log_roots = [np.log(abs(r)) for r in roots]
+    ax.plot(range(n+1), log_roots, 'o-', label=f"$n={n}$", markersize=5)
+ax.set_title(f"Root magnitudes ($\\alpha={alpha}, \\beta={beta}$)", fontsize=11)
+ax.set_xlabel("Root index $i$")
+ax.set_ylabel("$\\ln|\\alpha^{n-i}\\beta^i|$")
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+
+# Panel 2: Self-dual root symmetry
+ax = axes[1]
+alpha = 2.0
+n_vals = [4, 6, 8, 10]
+for n in n_vals:
+    roots = symm_pow_roots(n, alpha, 1.0/alpha)
+    log_roots = [np.log(abs(r)) for r in roots]
+    ax.plot(range(n+1), log_roots, 'o-', label=f"$n={n}$", markersize=5)
+ax.axhline(0, color='red', linestyle='--', alpha=0.5, label='$|r|=1$')
+ax.set_title(f"Self-dual: $\\beta=\\alpha^{{-1}}$ ($\\alpha={alpha}$)", fontsize=11)
+ax.set_xlabel("Root index $i$")
+ax.set_ylabel("$\\ln|\\alpha^{n-2i}|$")
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+
+# Panel 3: Determinant product growth
+ax = axes[2]
+alpha_vals = [1.5, 2.0, 3.0]
+n_range = range(1, 16)
+for alpha in alpha_vals:
+    beta = 2.0
+    products = [(alpha * beta) ** (n * (n + 1) // 2) for n in n_range]
+    ax.semilogy(list(n_range), products, 'o-',
+                label=f"$\\alpha={alpha}, \\beta={beta}$", markersize=4)
+ax.set_title("Determinant growth: $(\\alpha\\beta)^{n(n+1)/2}$", fontsize=11)
+ax.set_xlabel("$n$")
+ax.set_ylabel("$\\det(\\mathrm{Sym}^n)$")
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig("root_geometry.png", dpi=150, bbox_inches='tight')
+print("Saved root_geometry.png")

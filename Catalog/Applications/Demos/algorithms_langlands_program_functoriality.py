@@ -1,290 +1,223 @@
 #!/usr/bin/env python3
 """
-Algorithms for Symmetric Power Functoriality
+algorithms.py — Core algorithms for Langlands functoriality:
+Symmetric power transfer, Euler polynomial computation, and Hecke trace generation.
 
-Implements the core algorithms for computing symmetric power transfers,
-Euler factors, and related invariants for GL(2) Satake parameters.
+All algorithms correspond to formally verified Lean definitions.
 """
 
-from fractions import Fraction
-from typing import List, Optional, Tuple
-from dataclasses import dataclass
-import math
+from typing import List, Tuple
+import numpy as np
 
 
-@dataclass
-class SatakeGL2:
-    """An unramified local GL(2) parameter (Satake eigenvalues).
+def symm_pow_roots(n: int, alpha: complex, beta: complex) -> List[complex]:
+    """
+    Compute the roots of the n-th symmetric power Euler factor.
 
-    Represents the pair (α, β) encoding the Frobenius eigenvalues
-    at an unramified place.
+    Given Satake parameters (alpha, beta) for a GL₂ datum, the Sym^n transfer
+    has roots alpha^{n-i} * beta^i for i = 0, 1, ..., n.
+
+    Verified in Lean: symmPowDatum, symmPow_roots_homogeneous
+
+    Args:
+        n: Symmetric power index (≥ 0)
+        alpha: First Satake parameter
+        beta: Second Satake parameter
+
+    Returns:
+        List of n+1 roots
 
     Example:
-        >>> pi = SatakeGL2(Fraction(2), Fraction(3))
-        >>> pi.trace()
-        Fraction(5, 1)
-        >>> pi.det()
-        Fraction(6, 1)
+        >>> symm_pow_roots(2, 2, 3)
+        [4, 6, 9]  # [α², αβ, β²]
     """
-    alpha: Fraction
-    beta: Fraction
-
-    def trace(self) -> Fraction:
-        """Trace α + β (Hecke eigenvalue aₚ)."""
-        return self.alpha + self.beta
-
-    def det(self) -> Fraction:
-        """Determinant αβ (central character value ωₚ)."""
-        return self.alpha * self.beta
-
-    def discriminant(self) -> Fraction:
-        """Discriminant (α - β)²."""
-        return (self.alpha - self.beta) ** 2
-
-    def is_endoscopic(self) -> bool:
-        """Check if α = β (endoscopic/non-generic)."""
-        return self.alpha == self.beta
-
-    def twist(self, chi: Fraction) -> 'SatakeGL2':
-        """Twist by scalar χ: (α, β) ↦ (χα, χβ)."""
-        return SatakeGL2(chi * self.alpha, chi * self.beta)
+    return [alpha**(n - i) * beta**i for i in range(n + 1)]
 
 
-@dataclass
-class SatakeGLn:
-    """An unramified local GL(n) parameter.
+def euler_poly_from_roots(roots: List[complex]) -> np.ndarray:
+    """
+    Compute the Euler polynomial ∏(X - r_i) from a list of roots.
 
-    Represents the tuple (a₁, ..., aₙ) of Satake eigenvalues.
+    Uses iterative convolution with linear factors (X - r_i).
+    This is the certified algorithm corresponding to LocalEulerDatum.eulerPoly.
+
+    Complexity: O(d²) where d = len(roots)
+
+    Args:
+        roots: List of polynomial roots
+
+    Returns:
+        Coefficient array [a_0, a_1, ..., a_d] where poly = Σ a_i X^i
 
     Example:
-        >>> pi = SatakeGLn([Fraction(4), Fraction(6), Fraction(9)])
-        >>> pi.degree()
-        3
+        >>> euler_poly_from_roots([2, 3])
+        array([6, -5, 1])  # (X-2)(X-3) = X² - 5X + 6
     """
-    roots: List[Fraction]
+    poly = np.array([1.0 + 0j])
+    for r in roots:
+        poly = np.convolve(poly, np.array([-r, 1.0]))
+    return poly
 
-    def degree(self) -> int:
-        """Number of roots (= n for GL(n))."""
-        return len(self.roots)
 
-    def twist(self, chi: Fraction) -> 'SatakeGLn':
-        """Twist uniformly by scalar χ."""
-        return SatakeGLn([chi * r for r in self.roots])
+def symm_pow_euler_coeffs(n: int, alpha: complex, beta: complex) -> np.ndarray:
+    """
+    Compute the coefficient list of the Sym^n Euler polynomial.
 
-    def root_product(self) -> Fraction:
-        """Product of all roots (central character)."""
-        result = Fraction(1)
-        for r in self.roots:
-            result *= r
+    This is the main computational deliverable: a verified algorithm for
+    computing transferred local factors directly.
+
+    Verified in Lean: eulerPoly_symmPowDatum
+
+    Args:
+        n: Symmetric power index
+        alpha, beta: Satake parameters
+
+    Returns:
+        Coefficient array of ∏_{i=0}^{n} (X - α^{n-i}β^i)
+    """
+    roots = symm_pow_roots(n, alpha, beta)
+    return euler_poly_from_roots(roots)
+
+
+def hecke_trace_direct(alpha: complex, beta: complex, m: int) -> complex:
+    """
+    Compute the m-th Hecke trace directly: t_m = α^m + β^m.
+
+    Verified in Lean: heckeTrace
+
+    Args:
+        alpha, beta: Satake parameters
+        m: Index (≥ 0)
+
+    Returns:
+        α^m + β^m
+    """
+    return alpha**m + beta**m
+
+
+def hecke_trace_sequence(alpha: complex, beta: complex, length: int) -> List[complex]:
+    """
+    Compute a sequence of Hecke traces using the recurrence:
+        t_{m+2} = (α+β)·t_{m+1} - αβ·t_m
+
+    This avoids computing large powers and is numerically more stable.
+
+    Verified in Lean: heckeTrace_recurrence
+
+    Complexity: O(length)
+
+    Args:
+        alpha, beta: Satake parameters
+        length: Number of terms to compute
+
+    Returns:
+        List [t_0, t_1, ..., t_{length-1}]
+    """
+    if length <= 0:
+        return []
+    s = alpha + beta  # trace
+    p = alpha * beta  # determinant
+
+    result = [complex(2)]
+    if length == 1:
         return result
-
-
-def symm_pow_transfer(m: int, pi: SatakeGL2) -> SatakeGLn:
-    """Compute the symmetric m-th power transfer.
-
-    Maps GL(2) parameter (α, β) to GL(m+1) parameter with roots
-    (α^m, α^{m-1}β, ..., αβ^{m-1}, β^m).
-
-    Args:
-        m: Symmetric power degree (m ≥ 0).
-        pi: GL(2) Satake parameter.
-
-    Returns:
-        GL(m+1) Satake parameter.
-
-    Time complexity: O(m) multiplications.
-
-    Example:
-        >>> pi = SatakeGL2(Fraction(2), Fraction(3))
-        >>> sym2 = symm_pow_transfer(2, pi)
-        >>> sym2.roots
-        [Fraction(4, 1), Fraction(6, 1), Fraction(9, 1)]
-    """
-    roots = []
-    for i in range(m + 1):
-        root = pi.alpha ** (m - i) * pi.beta ** i
-        roots.append(root)
-    return SatakeGLn(roots)
-
-
-def recip_euler_factor(pi: SatakeGLn) -> List[Fraction]:
-    """Compute the reciprocal Euler factor as a polynomial.
-
-    Computes ∏ᵢ (1 - aᵢ X) and returns the coefficient list
-    [c₀, c₁, ..., cₙ] where the polynomial is ∑ cₖ Xᵏ.
-
-    Args:
-        pi: GL(n) Satake parameter.
-
-    Returns:
-        List of polynomial coefficients, from constant to leading term.
-
-    Time complexity: O(n²) ring operations.
-
-    Example:
-        >>> pi = SatakeGLn([Fraction(2), Fraction(3)])
-        >>> recip_euler_factor(pi)
-        [Fraction(1, 1), Fraction(-5, 1), Fraction(6, 1)]
-    """
-    coeffs = [Fraction(1)]
-    for a in pi.roots:
-        new_coeffs = [coeffs[0]]
-        for k in range(1, len(coeffs)):
-            new_coeffs.append(coeffs[k] - a * coeffs[k - 1])
-        new_coeffs.append(-a * coeffs[-1])
-        coeffs = new_coeffs
-    return coeffs
-
-
-def is_palindromic(coeffs: List[Fraction]) -> bool:
-    """Check if polynomial coefficients are palindromic (up to sign alternation).
-
-    A polynomial P(X) = ∑ cₖ Xᵏ of degree n is self-reciprocal if
-    cₖ = (-1)ⁿ · c_{n-k} for all k.
-
-    Args:
-        coeffs: Polynomial coefficients [c₀, c₁, ..., cₙ].
-
-    Returns:
-        True if the polynomial is self-reciprocal.
-
-    Example:
-        >>> is_palindromic([Fraction(1), Fraction(-3), Fraction(3), Fraction(-1)])
-        True
-    """
-    n = len(coeffs) - 1
-    if n < 0:
-        return True
-    sign = (-1) ** n
-    return all(coeffs[k] == sign * coeffs[n - k] for k in range(n + 1))
-
-
-def elementary_symmetric(roots: List[Fraction], k: int) -> Fraction:
-    """Compute the k-th elementary symmetric polynomial of the roots.
-
-    e_k(a₁, ..., aₙ) = ∑_{|S|=k} ∏_{i∈S} aᵢ
-
-    Args:
-        roots: List of values.
-        k: Degree of the elementary symmetric polynomial.
-
-    Returns:
-        Value of e_k.
-
-    Time complexity: O(C(n,k) · k).
-
-    Example:
-        >>> elementary_symmetric([Fraction(2), Fraction(3), Fraction(5)], 2)
-        Fraction(31, 1)
-    """
-    from itertools import combinations
-    result = Fraction(0)
-    for subset in combinations(roots, k):
-        product = Fraction(1)
-        for x in subset:
-            product *= x
-        result += product
+    result.append(s)
+    for m in range(2, length):
+        result.append(s * result[-1] - p * result[-2])
     return result
 
 
-def power_sum(roots: List[Fraction], k: int) -> Fraction:
-    """Compute the k-th power sum of the roots: p_k = ∑ aᵢᵏ.
-
-    Example:
-        >>> power_sum([Fraction(2), Fraction(3)], 2)
-        Fraction(13, 1)
+def root_product(n: int, alpha: complex, beta: complex) -> complex:
     """
-    return sum(r ** k for r in roots)
+    Compute ∏_{i=0}^{n} α^{n-i}·β^i = (αβ)^{n(n+1)/2}.
 
+    This is the determinant/central-character compatibility law.
+    Verified in Lean: symmPow_root_product
 
-def verify_euler_factor_identity(m: int, pi: SatakeGL2) -> bool:
-    """Verify that the Euler factor of Sym^m(π) equals the product of linear factors.
+    Args:
+        n: Symmetric power index
+        alpha, beta: Satake parameters
 
-    This checks the main theorem: L⁻¹(X, Sym^m π) = ∏ᵢ (1 - α^{m-i}β^i X).
-
-    Returns True if the identity holds (should always be True).
-
-    Example:
-        >>> pi = SatakeGL2(Fraction(2), Fraction(3))
-        >>> verify_euler_factor_identity(2, pi)
-        True
+    Returns:
+        Product of all roots
     """
-    transferred = symm_pow_transfer(m, pi)
-    computed_coeffs = recip_euler_factor(transferred)
-
-    # Independently compute the product of linear factors
-    check_coeffs = [Fraction(1)]
-    for i in range(m + 1):
-        root = pi.alpha ** (m - i) * pi.beta ** i
-        new_check = [check_coeffs[0]]
-        for k in range(1, len(check_coeffs)):
-            new_check.append(check_coeffs[k] - root * check_coeffs[k - 1])
-        new_check.append(-root * check_coeffs[-1])
-        check_coeffs = new_check
-
-    return computed_coeffs == check_coeffs
+    return (alpha * beta) ** (n * (n + 1) // 2)
 
 
-def verify_twist_compatibility(m: int, chi: Fraction, pi: SatakeGL2) -> bool:
-    """Verify Sym^m(χ·π) = χ^m · Sym^m(π).
-
-    Example:
-        >>> pi = SatakeGL2(Fraction(2), Fraction(3))
-        >>> verify_twist_compatibility(2, Fraction(5), pi)
-        True
+def verify_self_duality(n: int, alpha: complex, tol: float = 1e-10) -> bool:
     """
-    lhs = symm_pow_transfer(m, pi.twist(chi))
-    rhs = symm_pow_transfer(m, pi).twist(chi ** m)
-    return lhs.roots == rhs.roots
+    Verify that the roots of Sym^n(α, α⁻¹) are closed under inversion.
 
+    Verified in Lean: symmPow_roots_inv_closed
 
-def verify_endoscopic_collapse(m: int, alpha: Fraction) -> bool:
-    """Verify that when α = β, Sym^m Euler factor = (1 - α^m X)^{m+1}.
+    Args:
+        n: Symmetric power index
+        alpha: Satake parameter (nonzero)
+        tol: Numerical tolerance
 
-    Example:
-        >>> verify_endoscopic_collapse(2, Fraction(3))
-        True
+    Returns:
+        True if the root set is closed under inversion
     """
-    pi = SatakeGL2(alpha, alpha)
-    coeffs = recip_euler_factor(symm_pow_transfer(m, pi))
-
-    # Expected: (1 - α^m X)^{m+1}
-    c = alpha ** m
-    expected = [Fraction(1)]
-    single = [Fraction(1), -c]
-    for _ in range(m + 1):
-        new_expected = [Fraction(0)] * (len(expected) + len(single) - 1)
-        for i, a in enumerate(expected):
-            for j, b in enumerate(single):
-                new_expected[i + j] += a * b
-        expected = new_expected
-
-    return coeffs == expected
+    beta = 1.0 / alpha
+    roots = symm_pow_roots(n, alpha, beta)
+    for r in roots:
+        inv_r = 1.0 / r
+        if not any(abs(inv_r - s) < tol for s in roots):
+            return False
+    return True
 
 
-# ============================================================================
-# Example Usage
-# ============================================================================
+def coefficient_palindromic_check(
+    n: int, alpha: complex, tol: float = 1e-8
+) -> Tuple[bool, List[complex]]:
+    """
+    Check if the Euler polynomial of Sym^n(α, α⁻¹) has palindromic
+    coefficient magnitudes (a consequence of root inversion symmetry).
+
+    Args:
+        n: Symmetric power index
+        alpha: Satake parameter
+
+    Returns:
+        (is_palindromic, coefficients)
+    """
+    coeffs = symm_pow_euler_coeffs(n, alpha, 1.0 / alpha)
+    abs_coeffs = np.abs(coeffs)
+    d = len(abs_coeffs)
+    is_palin = all(
+        abs(abs_coeffs[i] - abs_coeffs[d - 1 - i]) < tol * max(1, abs_coeffs[i])
+        for i in range(d // 2 + 1)
+    )
+    return is_palin, coeffs.tolist()
+
+
+# ─── Example usage ───────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("Symmetric Power Transfer Algorithms")
-    print("=" * 50)
+    print("=== Symmetric Power Euler Polynomial Coefficients ===\n")
 
-    pi = SatakeGL2(Fraction(2), Fraction(3))
-    print(f"Parameter: ({pi.alpha}, {pi.beta})")
-    print(f"Trace: {pi.trace()}, Det: {pi.det()}, Discr: {pi.discriminant()}")
-    print()
+    alpha, beta = 2.0, 3.0
+    for n in range(1, 6):
+        coeffs = symm_pow_euler_coeffs(n, alpha, beta)
+        print(f"Sym^{n}({alpha}, {beta}): {np.real(coeffs).astype(int)}")
 
-    for m in range(1, 5):
-        transferred = symm_pow_transfer(m, pi)
-        coeffs = recip_euler_factor(transferred)
-        print(f"Sym^{m}: roots = {transferred.roots}")
-        print(f"  Euler factor coeffs: {coeffs}")
-        print(f"  Identity verified: {verify_euler_factor_identity(m, pi)}")
-        print(f"  Twist compatible: {verify_twist_compatibility(m, Fraction(5), pi)}")
-        print()
+    print("\n=== Hecke Trace Sequence ===\n")
+    traces = hecke_trace_sequence(2.0, 3.0, 10)
+    for m, t in enumerate(traces):
+        print(f"  t_{m} = {t.real:.0f}")
 
-    # Endoscopic test
-    print("Endoscopic collapse tests:")
-    for m in range(1, 6):
-        print(f"  m={m}: {verify_endoscopic_collapse(m, Fraction(3))}")
+    print("\n=== Determinant Compatibility ===\n")
+    for n in range(1, 8):
+        prod_direct = np.prod(symm_pow_roots(n, 2.0, 3.0))
+        prod_formula = root_product(n, 2.0, 3.0)
+        print(f"  n={n}: direct = {prod_direct.real:.0f}, formula = {prod_formula.real:.0f}")
+
+    print("\n=== Self-Duality Check (α=2, β=1/2) ===\n")
+    for n in range(1, 8):
+        ok = verify_self_duality(n, 2.0)
+        print(f"  n={n}: self-dual = {ok}")
+
+    print("\n=== Palindromic Coefficients (α=2, β=1/2) ===\n")
+    for n in range(1, 7):
+        is_pal, coeffs = coefficient_palindromic_check(n, 2.0)
+        print(f"  n={n}: palindromic = {is_pal}")
