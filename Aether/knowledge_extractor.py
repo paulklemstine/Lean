@@ -2418,7 +2418,6 @@ Research mode: {concept.research_mode}
         name = concept.title.replace(" ", "_").replace("-", "_") + ".lean"
         return [(lean_source, name)]
 
-    @staticmethod
     def _enrich_json_package(self, json_pkg_str: str, job) -> str:
         """Enrich JSON package with executable module code for Pyodide demos.
 
