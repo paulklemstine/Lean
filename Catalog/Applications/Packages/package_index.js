@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_1_tight_spectral_gap_via_lorentzian_stru.json",
+    "title": "Tight Spectral Gap via Lorentzian Structure",
+    "domain": "Pythagorean \u2014 Lorentzian Polynomials and Markov Chain Mixing",
+    "date": "2026-05-25T16:05:19Z",
+    "exp_id": "a6eebf63",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_3_concentration_of__on_random_hypergraph.json",
     "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
     "domain": "Combinatorial Optimization / Probability Theory",
@@ -141,6 +150,14 @@ window.PACKAGE_DB_INDEX = {
       "f6e7fe77"
     ],
     "domain": "Combinatorial Optimization / Probability Theory"
+  },
+  "direction_1_tight_spectral_gap_via_lorentzian_stru.json": {
+    "title": "Tight Spectral Gap via Lorentzian Structure",
+    "exp_id": "a6eebf63",
+    "source_exp_ids": [
+      "1f8fa3a8"
+    ],
+    "domain": "Pythagorean \u2014 Lorentzian Polynomials and Markov Chain Mixing"
   }
 };
 
@@ -155,7 +172,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -166,7 +183,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 100,
+      "hue": 271,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -177,7 +194,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 92,
+      "hue": 95,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -199,7 +216,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -221,7 +238,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -232,9 +249,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 89,
+      "hue": 91,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
+    },
+    {
+      "id": "direction_1_tight_spectral_gap_via_lorentzian_stru",
+      "title": "Tight Spectral Gap via Lorentzian Structure",
+      "domain": "Pythagorean \u2014 Lorentzian Polynomials and Markov Chain Mixing",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T16:05:19Z",
+      "hue": 275,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],
