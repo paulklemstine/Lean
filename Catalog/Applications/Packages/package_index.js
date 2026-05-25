@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_3_completeness_of_recursive_spectral_cer.json",
+    "title": "Completeness of Recursive Spectral Certificates for Lorentzian Polynomials",
+    "domain": "Algebraic Combinatorics / Spectral Linear Algebra",
+    "date": "2026-05-25T02:10:29Z",
+    "exp_id": "83d44e07",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_1_concrete_first_order_term_algebra_with.json",
     "title": "Certified Knuth-Bendix Completion: Concrete-to-Abstract Simulation for First-Order Term Algebra",
     "domain": "Term Rewriting Systems / Universal Algebra",
@@ -136,6 +145,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Type Theory / Computational Complexity"
   },
+  "direction_3_completeness_of_recursive_spectral_cer.json": {
+    "title": "Completeness of Recursive Spectral Certificates for Lorentzian Polynomials",
+    "exp_id": "83d44e07",
+    "source_exp_ids": [
+      "33261812"
+    ],
+    "domain": "Algebraic Combinatorics / Spectral Linear Algebra"
+  },
   "direction_5_complexity_of_lorentzian_recognition.json": {
     "title": "Complexity of Lorentzian Recognition: Recursive Spectral Certificates and Fixed-Parameter Tractability",
     "exp_id": "33261812",
@@ -200,7 +217,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.6423696551724138,
       "quality": "partial"
     },
@@ -222,7 +239,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.49450347826086954,
       "quality": "partial"
     },
@@ -233,7 +250,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7684672566371681,
       "quality": "substantial"
     },
@@ -244,7 +261,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.5684834461538462,
       "quality": "partial"
     },
@@ -255,7 +272,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T00:26:30Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7077656000000001,
       "quality": "substantial"
     },
@@ -266,7 +283,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 272,
+      "hue": 280,
       "priority_score": 0.7156088,
       "quality": "substantial"
     },
@@ -277,7 +294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.707316371361133,
       "quality": "substantial"
     },
@@ -288,12 +305,31 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7307101408450705,
       "quality": "substantial"
+    },
+    {
+      "id": "direction_3_completeness_of_recursive_spectral_cer",
+      "title": "Completeness of Recursive Spectral Certificates for Lorentzian Polynomials",
+      "domain": "Algebraic Combinatorics / Spectral Linear Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T02:10:29Z",
+      "hue": 281,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
-  "edges": [],
+  "edges": [
+    {
+      "source": "direction_5_complexity_of_lorentzian_recognition",
+      "target": "direction_3_completeness_of_recursive_spectral_cer",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    }
+  ],
   "domain_bridges": [
     {
       "domain_a": "Algebra",
@@ -849,10 +885,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.94,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "df37da21",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.657271+00:00"
   },
   {

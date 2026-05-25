@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_3_extension_to_product_and_sum_types",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "direction_1_coalgebraic_temporal_adjunction_for_in",
@@ -43,7 +43,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "eml_algebraic_independence_transcendence_results",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "sums_of_three_cubes",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T00:26:30Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "direction_2_tensor_sorted_extension_for_scientific",
@@ -70,7 +70,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 272
+      "hue": 280
     },
     {
       "id": "direction_1_global_tightness_conjecture",
@@ -79,7 +79,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_1_concrete_first_order_term_algebra_with",
@@ -88,10 +88,27 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
-      "hue": 92
+      "hue": 90
+    },
+    {
+      "id": "direction_3_completeness_of_recursive_spectral_cer",
+      "title": "Completeness of Recursive Spectral Certificates for Lorentzian Polynomials",
+      "domain": "Algebraic Combinatorics / Spectral Linear Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T02:10:29Z",
+      "hue": 281
     }
   ],
-  "edges": [],
+  "edges": [
+    {
+      "source": "direction_5_complexity_of_lorentzian_recognition",
+      "target": "direction_3_completeness_of_recursive_spectral_cer",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    }
+  ],
   "domain_bridges": [
     {
       "domain_a": "Algebra",
