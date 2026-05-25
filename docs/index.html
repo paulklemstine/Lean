@@ -263,6 +263,23 @@
             const pl = document.getElementById('package-list');
             if (pl) pl.innerHTML = '<li class="nav-item"><div class="nav-item-title text-red">Please run update_index.py to bundle packages</div></li>';
         }
+
+        // Lazy-load future directions on first access
+        window.loadFutureDirections = function(callback) {
+            if (window.FUTURE_DIRECTIONS) {
+                if (callback) callback();
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = 'future_directions.js';
+            script.onload = () => {
+                if (window.populateDomainFilter) window.populateDomainFilter();
+                if (callback) callback();
+            };
+            document.head.appendChild(script);
+        };
+
+        // Auto-load if already present (e.g. from cached script tag)
         if (window.FUTURE_DIRECTIONS && window.populateDomainFilter) {
             window.populateDomainFilter();
         }

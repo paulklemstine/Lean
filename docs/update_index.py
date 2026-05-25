@@ -271,8 +271,8 @@ window.PACKAGE_DB_INDEX = {json.dumps(package_db_index, indent=2)};
     # Generate knowledge graph data
     generate_graph_data(script_dir, package_index)
 
-    # Append future research directions
-    append_future_directions(script_dir, os.path.join(script_dir, "package_index.js"))
+    # Write future research directions to separate file (lazy-loaded)
+    append_future_directions(script_dir, os.path.join(script_dir, "future_directions.js"))
 
     # Ensure .nojekyll exists for GitHub Pages
     nojekyll_path = os.path.join(script_dir, ".nojekyll")
@@ -431,11 +431,9 @@ window.PACKAGE_GRAPH = {json.dumps(graph_data, indent=2)};
     print(f"Appended PACKAGE_GRAPH to package_index.js ({len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges, {len(graph_data.get('domain_bridges', []))} bridges)")
 
 
-def append_future_directions(script_dir, db_path):
-    """Read future_directions.json and append window.FUTURE_DIRECTIONS to package_index.js.
-
-    Tries the Aether workspace first (local dev), then falls back to
-    future_directions.json in the Packages directory (CI/GitHub Pages).
+def append_future_directions(script_dir, fd_js_path):
+    """Read future_directions.json and write window.FUTURE_DIRECTIONS to a separate
+    future_directions.js file (lazy-loaded on demand, not in the initial page load).
     """
     # Try Aether workspace (local dev)
     fd_path = os.path.abspath(os.path.join(script_dir, "..", "..", "..", "Aether", ".aether_workspace", "future_directions.json"))
@@ -500,10 +498,10 @@ def append_future_directions(script_dir, db_path):
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = {json.dumps(display_dirs, indent=2)};
 """
-    with open(db_path, 'a', encoding='utf-8') as f:
+    with open(fd_js_path, 'w', encoding='utf-8') as f:
         f.write(fd_js)
 
-    print(f"Appended FUTURE_DIRECTIONS to package_index.js ({len(display_dirs)} directions)")
+    print(f"Wrote FUTURE_DIRECTIONS to future_directions.js ({len(display_dirs)} directions)")
 
 
 if __name__ == "__main__":

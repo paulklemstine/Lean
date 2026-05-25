@@ -398,7 +398,11 @@ document.addEventListener('DOMContentLoaded', () => {
             narrativeDiv.innerHTML = '<p style="color:var(--text-muted)">No future directions narrative for this package.</p>';
         }
 
-        // Filtered direction cards from window.FUTURE_DIRECTIONS
+        // Filtered direction cards from window.FUTURE_DIRECTIONS (lazy-load if needed)
+        if (!window.FUTURE_DIRECTIONS && window.loadFutureDirections) {
+            window.loadFutureDirections(() => renderDirectionsTab(pkgData));
+            return;
+        }
         const cardsDiv = document.getElementById('content-directions-cards');
         const sectionTitle = document.getElementById('directions-section-title');
         const viewAllLink = document.getElementById('view-all-directions-link');

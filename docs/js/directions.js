@@ -73,7 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
         directionsView.classList.remove('hidden');
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         directionsLink.classList.add('active');
-        window.renderDirectionsView();
+        // Lazy-load future directions if not yet loaded
+        if (!window.FUTURE_DIRECTIONS && window.loadFutureDirections) {
+            window.loadFutureDirections(() => window.renderDirectionsView());
+        } else {
+            window.renderDirectionsView();
+        }
         if (window.innerWidth <= 768 && window.closeSidebar) window.closeSidebar();
     };
 
