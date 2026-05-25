@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "hadamard_matrix_conjecture.json",
+    "title": "Hadamard Existence by Algebraic Generation",
+    "domain": "Algebra / Combinatorics",
+    "date": "2026-05-25T17:49:47Z",
+    "exp_id": "e79eba9b",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_2_character_expansion_and_strong_couplin.json",
     "title": "Character Expansion Mass Gap: Representation-Theoretic Spectral Asymptotics in Lattice Yang-Mills Theory",
     "domain": "Mathematical Physics / Representation Theory / Spectral Analysis",
@@ -140,6 +149,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra / Probabilistic Group Theory / Statistical Mechanics"
   },
+  "hadamard_matrix_conjecture.json": {
+    "title": "Hadamard Existence by Algebraic Generation",
+    "exp_id": "e79eba9b",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra / Combinatorics"
+  },
   "direction_5_generalization_to_higher_degree_diagon.json": {
     "title": "A Uniform Local Obstruction Calculus for Diagonal Hypersurfaces",
     "exp_id": "e97c0f01",
@@ -257,7 +274,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -268,7 +285,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -290,7 +307,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -301,7 +318,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -312,7 +329,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7554863879178124,
       "quality": "substantial"
     },
@@ -323,7 +340,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 90,
+      "hue": 280,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -334,7 +351,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -345,7 +362,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7475694375378231,
       "quality": "substantial"
     },
@@ -356,7 +373,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7452328425357874,
       "quality": "substantial"
     },
@@ -367,7 +384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7379731931205967,
       "quality": "substantial"
     },
@@ -378,7 +395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T17:14:28Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7094771428571429,
       "quality": "substantial"
     },
@@ -389,7 +406,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:14:56Z",
-      "hue": 270,
+      "hue": 101,
       "priority_score": 0.7307286403906522,
       "quality": "substantial"
     },
@@ -400,9 +417,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7426729134392938,
       "quality": "substantial"
+    },
+    {
+      "id": "hadamard_matrix_conjecture",
+      "title": "Hadamard Existence by Algebraic Generation",
+      "domain": "Algebra / Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T17:49:47Z",
+      "hue": 275,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [

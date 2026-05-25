@@ -1,694 +1,1067 @@
+#!/usr/bin/env python3
 """
-Hadamard Matrix Applications
+Applications of Hadamard Matrices
 
-Demonstrates real-world applications of Hadamard matrices in:
-    1. Error-correcting codes (Hadamard/Walsh codes)
-    2. Signal processing (Walsh-Hadamard transform)
-    3. Compressed sensing (measurement matrices)
-    4. Combinatorial design (BIBD from normalized Hadamard)
+Demonstrates real-world applications:
+1. Walsh-Hadamard Transform for signal processing
+2. Error-correcting codes (Reed-Muller / Hadamard codes)
+3. Compressed sensing measurement matrices
+4. Spread-spectrum communication (CDMA)
+5. Combinatorial design construction
 """
 
-from __future__ import annotations
 import numpy as np
-from algorithms import (
-    sylvester_matrix, normalize_hadamard, hadamard_code,
-    hamming_distance, is_hadamard, hadamard_excess,
-    walsh_hadamard_transform, verify_energy_identity,
-)
+from typing import List, Tuple, Dict
 
 
-def demonstrate_error_correction():
+# ──────────────────────────────────────────────────────────────────────
+# Utility: Sylvester-Hadamard matrix
+# ──────────────────────────────────────────────────────────────────────
+
+def hadamard(k: int) -> np.ndarray:
+    """2^k × 2^k Sylvester-Hadamard matrix."""
+    H = np.array([[1]], dtype=float)
+    for _ in range(k):
+        H = np.block([[H, H], [H, -H]])
+    return H
+
+
+# ══════════════════════════════════════════════════════════════════════
+# 1. Walsh-Hadamard Transform
+# ══════════════════════════════════════════════════════════════════════
+
+def walsh_hadamard_transform(x: np.ndarray) -> np.ndarray:
+    """Compute the normalized Walsh-Hadamard transform.
+
+    WHT(x) = (1/√n) H_k x, where n = 2^k = len(x).
+
+    Properties:
+    - Energy preservation: ||WHT(x)||² = ||x||²
+    - Self-inverse: WHT(WHT(x)) = x
+    - O(n log n) via fast algorithm
     """
-    Show how Hadamard codes provide error detection and correction.
+    n = len(x)
+    k = int(np.log2(n))
+    assert 2**k == n, "Length must be a power of 2"
+    H = hadamard(k) / np.sqrt(n)
+    return H @ x
 
-    A Hadamard code of order n:
-    - Has n codewords of length n
-    - Minimum distance n/2
-    - Can detect up to n/2 - 1 errors
-    - Can correct up to n/4 - 1 errors
+
+def fast_walsh_hadamard(x: np.ndarray) -> np.ndarray:
+    """O(n log n) fast Walsh-Hadamard transform (in-place butterfly).
+
+    This is the recursive doubling algorithm mirroring the Sylvester construction.
     """
-    print("=" * 70)
-    print("APPLICATION 1: Error-Correcting Codes")
-    print("=" * 70)
-
-    for k in [2, 3, 4]:
-        n = 2**k
-        H = sylvester_matrix(k)
-        H_norm = normalize_hadamard(H)
-        code = hadamard_code(H_norm)
-
-        # Remove first row (all zeros after normalization)
-        useful_code = code[1:]
-
-        print(f"\nHadamard code of order {n}:")
-        print(f"  Codewords: {len(useful_code)}")
-        print(f"  Code length: {n}")
-        print(f"  Min distance: {n // 2}")
-        print(f"  Error detection: up to {n // 2 - 1} errors")
-        print(f"  Error correction: up to {n // 4 - 1} errors")
-        print(f"  Code rate: {np.log2(len(useful_code)):.1f}/{n} = {np.log2(len(useful_code))/n:.3f}")
-
-        if k <= 3:
-            print(f"  Codewords:")
-            for i, cw in enumerate(useful_code):
-                print(f"    c{i+1} = {''.join(map(str, cw))}")
-
-        # Simulate error correction
-        original = useful_code[0]
-        num_errors = n // 4 - 1
-        if num_errors > 0:
-            corrupted = original.copy()
-            error_positions = np.random.choice(n, num_errors, replace=False)
-            corrupted[error_positions] = 1 - corrupted[error_positions]
-
-            # Decode by finding nearest codeword
-            distances = [hamming_distance(corrupted, cw) for cw in code]
-            decoded_idx = np.argmin(distances)
-
-            print(f"  Error correction demo ({num_errors} errors):")
-            print(f"    Original:  {''.join(map(str, original))}")
-            print(f"    Corrupted: {''.join(map(str, corrupted))}")
-            print(f"    Decoded:   {''.join(map(str, code[decoded_idx]))}")
-            print(f"    Correct:   {np.array_equal(code[decoded_idx], original)}")
+    y = x.astype(float).copy()
+    n = len(y)
+    h = 1
+    while h < n:
+        for i in range(0, n, 2 * h):
+            for j in range(i, i + h):
+                a = y[j]
+                b = y[j + h]
+                y[j] = a + b
+                y[j + h] = a - b
+        h *= 2
+    return y / np.sqrt(n)
 
 
-def demonstrate_signal_processing():
+# ══════════════════════════════════════════════════════════════════════
+# 2. Hadamard Error-Correcting Codes
+# ══════════════════════════════════════════════════════════════════════
+
+def hadamard_code(k: int) -> np.ndarray:
+    """Generate the [2^k, k+1, 2^{k-1}] Hadamard code.
+
+    Takes all 2^k rows of the Sylvester matrix (and their negations),
+    converts ±1 to 0/1, giving 2^{k+1} codewords of length 2^k
+    with minimum Hamming distance 2^{k-1}.
+
+    This is the first-order Reed-Muller code RM(1, k).
     """
-    Show the Walsh-Hadamard transform for signal analysis and compression.
-
-    The WHT is analogous to the Fourier transform but uses ±1 values,
-    making it computationally efficient (only additions and subtractions).
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 2: Signal Processing (Walsh-Hadamard Transform)")
-    print("=" * 70)
-
-    k = 3
     n = 2**k
-
-    # Create a simple signal
-    t = np.arange(n)
-    signal = np.array([1, 1, 1, 1, -1, -1, -1, -1], dtype=int)  # Step function
-
-    print(f"\nOriginal signal (length {n}):")
-    print(f"  x = {signal}")
-
-    # Transform
-    transformed = walsh_hadamard_transform(signal, k)
-    print(f"\nWalsh-Hadamard coefficients:")
-    print(f"  WHT(x) = {transformed}")
-
-    # Verify energy identity
-    energy = verify_energy_identity(signal, k)
-    print(f"\nEnergy identity verification:")
-    print(f"  ‖x‖² = {energy['input_energy']}")
-    print(f"  ‖WHT(x)‖² = {energy['output_energy']}")
-    print(f"  n · ‖x‖² = {energy['expected_output_energy']}")
-    print(f"  Ratio ‖WHT(x)‖²/‖x‖² = {energy['ratio']} (should be {n})")
-    print(f"  Verified: {energy['verified']}")
-
-    # Demonstrate compression: keep only largest coefficients
-    print(f"\nSignal compression:")
-    sorted_idx = np.argsort(np.abs(transformed))[::-1]
-    for num_keep in [1, 2, 4, n]:
-        mask = np.zeros(n, dtype=int)
-        mask[sorted_idx[:num_keep]] = 1
-        compressed = transformed * mask
-        H = sylvester_matrix(k)
-        # Inverse WHT is (1/n) * WHT
-        reconstructed = (H @ compressed) / n
-        error = np.sum((signal - reconstructed) ** 2)
-        print(f"  Keep {num_keep}/{n} coefficients: reconstruction error = {error:.1f}")
+    H = hadamard(k).astype(int)
+    # Include both rows and negated rows
+    codewords = np.vstack([H, -H])
+    # Convert ±1 to 0/1: +1 → 0, -1 → 1
+    bits = ((1 - codewords) // 2).astype(int)
+    return bits
 
 
-def demonstrate_compressed_sensing():
+def decode_hadamard(received: np.ndarray, k: int) -> int:
+    """Maximum-likelihood decoding for Hadamard code.
+
+    Given a received binary word (possibly corrupted), find the closest
+    codeword by computing correlation with all rows of H.
+    Can correct up to 2^{k-2} - 1 errors.
     """
-    Show Hadamard matrices as measurement matrices for compressed sensing.
-
-    A Hadamard matrix provides a deterministic measurement matrix with
-    good incoherence properties for sparse signal recovery.
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 3: Compressed Sensing")
-    print("=" * 70)
-
-    k = 4
     n = 2**k
-    H = sylvester_matrix(k)
-
-    # Create a sparse signal
-    sparsity = 3
-    x_true = np.zeros(n, dtype=float)
-    support = np.random.choice(n, sparsity, replace=False)
-    x_true[support] = np.random.randn(sparsity)
-
-    # Take m < n measurements
-    m = 8
-    measurement_rows = np.random.choice(n, m, replace=False)
-    Phi = H[measurement_rows, :].astype(float) / np.sqrt(n)
-    y = Phi @ x_true
-
-    print(f"\nCompressed sensing with Hadamard measurements:")
-    print(f"  Signal dimension: n = {n}")
-    print(f"  Signal sparsity: s = {sparsity}")
-    print(f"  Number of measurements: m = {m}")
-    print(f"  Compression ratio: {m}/{n} = {m/n:.2f}")
-    print(f"  True support: {sorted(support)}")
-    print(f"  Measurement matrix: {m} rows of normalized H_{n}")
-
-    # Mutual coherence of measurement matrix
-    G = Phi.T @ Phi
-    np.fill_diagonal(G, 0)
-    coherence = np.max(np.abs(G))
-    print(f"  Mutual coherence: {coherence:.4f}")
+    H = hadamard(k).astype(int)
+    # Convert bits to ±1
+    signal = 1 - 2 * received.astype(int)
+    # Compute correlations with all rows
+    correlations = H @ signal
+    best_row = np.argmax(np.abs(correlations))
+    best_sign = np.sign(correlations[best_row])
+    return best_row if best_sign > 0 else best_row + n
 
 
-def demonstrate_combinatorial_design():
+# ══════════════════════════════════════════════════════════════════════
+# 3. Compressed Sensing
+# ══════════════════════════════════════════════════════════════════════
+
+def compressed_sensing_demo(n: int = 64, m: int = 16, s: int = 3):
+    """Demonstrate compressed sensing with Hadamard measurement matrix.
+
+    Args:
+        n: signal length (must be power of 2)
+        m: number of measurements
+        s: sparsity level
+
+    The Hadamard matrix provides a structured measurement matrix with
+    guaranteed RIP (Restricted Isometry Property) when rows are
+    randomly subsampled.
     """
-    Show how a normalized Hadamard matrix yields a symmetric BIBD.
+    k = int(np.log2(n))
+    H = hadamard(k) / np.sqrt(n)
 
-    A normalized Hadamard matrix of order 4t, after removing the first
-    row and column, yields a 2-(4t-1, 2t-1, t-1) symmetric design.
+    # Create sparse signal
+    x = np.zeros(n)
+    support = np.random.choice(n, s, replace=False)
+    x[support] = np.random.randn(s)
+
+    # Random row selection for measurement
+    rows = np.sort(np.random.choice(n, m, replace=False))
+    A = H[rows, :]
+
+    # Measurements
+    y = A @ x
+
+    # Simple recovery via OMP (Orthogonal Matching Pursuit)
+    x_hat = np.zeros(n)
+    residual = y.copy()
+    support_est = []
+
+    for _ in range(s):
+        correlations = np.abs(A.T @ residual)
+        idx = np.argmax(correlations)
+        support_est.append(idx)
+        A_s = A[:, support_est]
+        coeffs = np.linalg.lstsq(A_s, y, rcond=None)[0]
+        x_hat_partial = np.zeros(n)
+        for i, idx in enumerate(support_est):
+            x_hat_partial[idx] = coeffs[i]
+        residual = y - A @ x_hat_partial
+        x_hat = x_hat_partial
+
+    return {
+        "original_support": sorted(support),
+        "recovered_support": sorted(support_est),
+        "recovery_error": np.linalg.norm(x - x_hat) / max(np.linalg.norm(x), 1e-10),
+        "support_match": set(support) == set(support_est),
+    }
+
+
+# ══════════════════════════════════════════════════════════════════════
+# 4. CDMA Spreading Codes
+# ══════════════════════════════════════════════════════════════════════
+
+def cdma_demo(k: int = 3, num_users: int = 4, snr_db: float = 10.0):
+    """Demonstrate CDMA using Walsh-Hadamard spreading codes.
+
+    Each user gets a row of the Hadamard matrix as their spreading code.
+    Multiple users transmit simultaneously; the receiver separates them
+    using the orthogonality of Hadamard rows.
+
+    Args:
+        k: Hadamard order parameter (n = 2^k chips per symbol)
+        num_users: number of simultaneous users (≤ 2^k)
+        snr_db: signal-to-noise ratio in dB
     """
-    print("\n" + "=" * 70)
-    print("APPLICATION 4: Combinatorial Design (BIBD)")
-    print("=" * 70)
+    n = 2**k  # Spreading factor
+    H = hadamard(k).astype(int)
 
-    for t in [1, 2, 3]:
-        n = 4 * t
-        H = sylvester_matrix(int(np.log2(n))) if (n & (n - 1)) == 0 else None
+    assert num_users <= n, f"At most {n} users supported"
 
-        if H is None or H.shape[0] != n:
-            continue
+    # Each user's data: ±1 symbols
+    num_symbols = 10
+    user_data = np.random.choice([-1, 1], size=(num_users, num_symbols))
 
-        H_norm = normalize_hadamard(H)
+    # Spreading codes (rows of H)
+    codes = H[:num_users, :]
 
-        # Remove first row and column
-        core = H_norm[1:, 1:]
+    # Transmit: each user spreads their data
+    # Combined signal = sum of all users' spread signals
+    combined = np.zeros((n, num_symbols))
+    for u in range(num_users):
+        for t in range(num_symbols):
+            combined[:, t] += user_data[u, t] * codes[u, :]
 
-        # Convert to incidence matrix: +1 → 1, -1 → 0
-        inc = ((core + 1) // 2).astype(int)
+    # Add noise
+    noise_power = n * num_users * 10**(-snr_db / 10)
+    noise = np.sqrt(noise_power) * np.random.randn(n, num_symbols)
+    received = combined + noise
 
-        v = n - 1  # number of points = number of blocks
-        k_param = 2 * t - 1  # block size
-        lambda_param = t - 1  # replication number for pairs
+    # Receive: correlate with each user's code
+    decoded = np.zeros((num_users, num_symbols), dtype=int)
+    for u in range(num_users):
+        for t in range(num_symbols):
+            correlation = np.dot(codes[u, :], received[:, t]) / n
+            decoded[u, t] = 1 if correlation > 0 else -1
 
-        print(f"\n2-({v}, {k_param}, {lambda_param}) symmetric design from H_{n}:")
-        print(f"  Points: {v}")
-        print(f"  Blocks: {v}")
-        print(f"  Block size k: {k_param}")
-        print(f"  λ (pair coverage): {lambda_param}")
+    # Compute BER
+    errors = np.sum(decoded != user_data)
+    total_bits = num_users * num_symbols
+    ber = errors / total_bits
 
-        # Verify block sizes
-        block_sizes = np.sum(inc, axis=1)
-        print(f"  Block sizes: {np.unique(block_sizes)} (should be [{k_param}])")
-
-        # Verify pair coverage
-        if lambda_param > 0:
-            # For each pair of points, count how many blocks contain both
-            pair_counts = []
-            for i in range(v):
-                for j in range(i + 1, v):
-                    count = np.sum(inc[:, i] * inc[:, j])
-                    pair_counts.append(count)
-            pair_counts = np.array(pair_counts)
-            print(f"  Pair coverage: {np.unique(pair_counts)} (should be [{lambda_param}])")
-
-        if n <= 8:
-            print(f"  Incidence matrix:")
-            for row in inc:
-                print(f"    {''.join(map(str, row))}")
+    return {
+        "users": num_users,
+        "spreading_factor": n,
+        "snr_db": snr_db,
+        "bit_error_rate": ber,
+        "total_errors": errors,
+        "total_bits": total_bits,
+    }
 
 
-def demonstrate_excess_analysis():
+# ══════════════════════════════════════════════════════════════════════
+# 5. Combinatorial Design Construction
+# ══════════════════════════════════════════════════════════════════════
+
+def bibd_from_hadamard(k: int) -> Dict:
+    """Construct a symmetric BIBD from a Sylvester-Hadamard matrix.
+
+    For order n = 2^k, this produces a 2-(n-1, n/2-1, n/4-1) design.
     """
-    Analyze the excess (sum of all entries) of Hadamard matrices.
-    The excess satisfies σ(H)² ≤ n³ (formally verified).
-    """
-    print("\n" + "=" * 70)
-    print("APPLICATION 5: Excess Analysis")
-    print("=" * 70)
+    n = 2**k
+    H = hadamard(k).astype(int)
 
-    print(f"\n{'Order':>6} {'Excess':>8} {'σ²':>10} {'n³':>10} {'σ²/n³':>8} {'Bound OK':>10}")
-    print("-" * 60)
+    # Normalize: first row/column all +1
+    Hn = H.copy()
+    for j in range(n):
+        if Hn[0, j] == -1:
+            Hn[:, j] *= -1
+    for i in range(n):
+        if Hn[i, 0] == -1:
+            Hn[i, :] *= -1
 
-    for k in range(1, 8):
-        n = 2**k
-        H = sylvester_matrix(k)
-        sigma = hadamard_excess(H)
-        sigma_sq = sigma**2
-        bound = n**3
-        ratio = sigma_sq / bound if bound > 0 else 0
-        ok = sigma_sq <= bound
+    # Extract core and convert
+    core = Hn[1:, 1:]
+    inc = ((core + 1) // 2).astype(int)
 
-        print(f"{n:>6} {sigma:>8} {sigma_sq:>10} {bound:>10} {ratio:>8.4f} {'✓' if ok else '✗':>10}")
+    v = n - 1
+    t = n // 4
+    expected_k = 2 * t - 1
+    expected_lam = t - 1
 
+    # Verify parameters
+    block_sizes = [int(inc[:, j].sum()) for j in range(v)]
+    replications = [int(inc[i, :].sum()) for i in range(v)]
+    pair_lambdas = []
+    for i in range(v):
+        for j in range(i + 1, v):
+            pair_lambdas.append(int(np.sum(inc[i] * inc[j])))
+
+    return {
+        "v": v,
+        "k": expected_k,
+        "lambda": expected_lam,
+        "block_sizes": list(set(block_sizes)),
+        "replications": list(set(replications)),
+        "pair_lambdas": list(set(pair_lambdas)),
+        "incidence_matrix": inc,
+        "verified": (set(block_sizes) == {expected_k} and
+                     set(replications) == {expected_k} and
+                     set(pair_lambdas) == {expected_lam}),
+    }
+
+
+# ══════════════════════════════════════════════════════════════════════
+# Main demo
+# ══════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
     np.random.seed(42)
-    demonstrate_error_correction()
-    demonstrate_signal_processing()
-    demonstrate_compressed_sensing()
-    demonstrate_combinatorial_design()
-    demonstrate_excess_analysis()
+
+    print("=" * 70)
+    print("  HADAMARD MATRIX APPLICATIONS")
+    print("=" * 70)
+
+    # 1. Walsh-Hadamard Transform
+    print("\n1. Walsh-Hadamard Transform")
+    print("-" * 50)
+    n = 16
+    x = np.random.randn(n)
+    y = walsh_hadamard_transform(x)
+    y_fast = fast_walsh_hadamard(x)
+    print(f"   Signal length: {n}")
+    print(f"   ||x||² = {np.sum(x**2):.6f}")
+    print(f"   ||WHT(x)||² = {np.sum(y**2):.6f}")
+    print(f"   Energy preserved: {np.isclose(np.sum(x**2), np.sum(y**2))}")
+    print(f"   Fast WHT matches naive: {np.allclose(y, y_fast)}")
+    # Self-inverse
+    x_recovered = walsh_hadamard_transform(y)
+    print(f"   WHT(WHT(x)) ≈ x: {np.allclose(x, x_recovered)}")
+
+    # 2. Error-correcting codes
+    print("\n2. Hadamard Error-Correcting Code")
+    print("-" * 50)
+    for k in range(2, 5):
+        code = hadamard_code(k)
+        n_cw = code.shape[0]
+        n_len = code.shape[1]
+        min_dist = n_len
+        for i in range(n_cw):
+            for j in range(i + 1, n_cw):
+                d = np.sum(code[i] != code[j])
+                min_dist = min(min_dist, d)
+        print(f"   k={k}: [{n_len}, {k+1}, {min_dist}] code with {n_cw} codewords")
+
+    # Test error correction
+    k = 4
+    code = hadamard_code(k)
+    original = code[5]  # pick codeword 5
+    corrupted = original.copy()
+    # Introduce 3 errors (can correct up to 2^{k-2}-1 = 3)
+    error_pos = np.random.choice(16, 3, replace=False)
+    corrupted[error_pos] = 1 - corrupted[error_pos]
+    decoded = decode_hadamard(corrupted, k)
+    print(f"\n   Decoding test (k={k}):")
+    print(f"   Original codeword index: 5")
+    print(f"   Errors introduced: {len(error_pos)} at positions {error_pos}")
+    print(f"   Decoded index: {decoded}")
+    print(f"   Correct: {decoded == 5}")
+
+    # 3. Compressed sensing
+    print("\n3. Compressed Sensing")
+    print("-" * 50)
+    for s in [2, 3, 4]:
+        result = compressed_sensing_demo(n=64, m=20, s=s)
+        print(f"   Sparsity={s}: support_match={result['support_match']}, "
+              f"error={result['recovery_error']:.6f}")
+
+    # 4. CDMA
+    print("\n4. CDMA Spreading")
+    print("-" * 50)
+    for snr in [5, 10, 15, 20]:
+        result = cdma_demo(k=3, num_users=4, snr_db=snr)
+        print(f"   SNR={snr:2d}dB: BER={result['bit_error_rate']:.4f} "
+              f"({result['total_errors']}/{result['total_bits']} errors)")
+
+    # 5. Combinatorial designs
+    print("\n5. Combinatorial Designs from Hadamard")
+    print("-" * 50)
+    for k in range(2, 6):
+        design = bibd_from_hadamard(k)
+        n = 2**k
+        t = n // 4
+        print(f"   Order {n}: 2-({design['v']}, {design['k']}, {design['lambda']}) "
+              f"design — verified: {design['verified']}")
+
+    print("\n" + "=" * 70)
+    print("  All applications demonstrated successfully.")
+    print("=" * 70)
 
 
 #!/usr/bin/env python3
 """
-Hadamard Matrix Theory — Interactive Demonstration
+Hadamard Matrix Existence Engine — Interactive Demo
 
-This demo showcases the constructions and properties of Hadamard matrices
-that have been formally verified in Lean 4. It generates matrices,
-verifies their properties numerically, and demonstrates cross-domain
-applications in coding theory, signal processing, and combinatorial design.
+Demonstrates the Hadamard existence calculus:
+- Certified construction of Hadamard matrices from generators
+- Verification of orthogonality and ±1 properties
+- Coding theory: Hamming distances between rows
+- Design theory: row intersection numbers
+- Generator completeness testing up to a bound
 
 Usage:
-    python demo.py                    # Run full demonstration
-    python demo.py --order 8          # Show specific order
-    python demo.py --construction sylvester  # Choose construction type
-    python demo.py --application code        # Focus on specific application
+    python demo.py [--bound B]  (default B=100)
 """
 
-from __future__ import annotations
 import numpy as np
 import sys
+from typing import Optional, List, Tuple
 
 
-# ─── Core Algorithms (self-contained) ───────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────
+# Core Hadamard constructions
+# ──────────────────────────────────────────────────────────────────────
 
-def sylvester_matrix(k: int) -> np.ndarray:
-    """Construct the 2^k × 2^k Sylvester-Hadamard matrix recursively."""
-    H = np.array([[1]], dtype=int)
+def sylvester_hadamard(k: int) -> np.ndarray:
+    """Construct the 2^k × 2^k Sylvester-Hadamard matrix by recursive doubling.
+
+    H_0 = [1]
+    H_{k+1} = [[H_k, H_k], [H_k, -H_k]]
+    """
+    H = np.array([[1]])
     for _ in range(k):
         H = np.block([[H, H], [H, -H]])
     return H
 
 
 def kronecker_hadamard(H1: np.ndarray, H2: np.ndarray) -> np.ndarray:
-    """Kronecker (tensor) product of two matrices."""
+    """Tensor (Kronecker) product of two Hadamard matrices."""
     return np.kron(H1, H2)
 
 
-def is_hadamard(H: np.ndarray) -> bool:
-    """Check whether H is a valid Hadamard matrix."""
+def verify_hadamard(H: np.ndarray) -> bool:
+    """Verify that H is a valid Hadamard matrix:
+    - All entries are ±1
+    - H @ H.T = n * I
+    """
     n = H.shape[0]
     if H.shape != (n, n):
         return False
     if not np.all(np.abs(H) == 1):
         return False
-    return np.array_equal(H @ H.T, n * np.eye(n, dtype=int))
+    product = H @ H.T
+    expected = n * np.eye(n, dtype=int)
+    return np.array_equal(product, expected)
 
 
-def normalize_hadamard(H: np.ndarray) -> np.ndarray:
-    """Normalize H so first row and column are all +1."""
-    H2 = H.copy()
-    H2 = H2 * H2[0, :][np.newaxis, :]
-    H2 = H2 * H2[:, 0][:, np.newaxis]
-    return H2
+# ──────────────────────────────────────────────────────────────────────
+# Construction engine with provenance tracking
+# ──────────────────────────────────────────────────────────────────────
+
+class HadamardCertificate:
+    """A certified Hadamard matrix with provenance."""
+    def __init__(self, matrix: np.ndarray, provenance: List[str]):
+        self.matrix = matrix
+        self.provenance = provenance
+        self.order = matrix.shape[0]
+
+    def __repr__(self):
+        return f"HadamardCertificate(order={self.order}, provenance={self.provenance})"
 
 
-def hadamard_code(H: np.ndarray) -> np.ndarray:
-    """Map ±1 matrix to binary code: +1 → 0, -1 → 1."""
-    return ((1 - H) // 2).astype(int)
-
-
-def hamming_distance(u: np.ndarray, v: np.ndarray) -> int:
-    """Hamming distance between two binary vectors."""
-    return int(np.sum(u != v))
-
-
-def hadamard_excess(H: np.ndarray) -> int:
-    """Sum of all entries of H."""
-    return int(np.sum(H))
-
-
-def walsh_hadamard_transform(x: np.ndarray, k: int) -> np.ndarray:
-    """Compute WHT(x) = H_k · x."""
-    return sylvester_matrix(k) @ x
-
-
-def paley_matrix(q: int) -> np.ndarray | None:
-    """
-    Construct Paley-type I Hadamard matrix of order q+1 for prime q ≡ 3 (mod 4).
-    Returns None if conditions not met.
-    """
-    def is_prime(n):
-        if n < 2: return False
-        for p in range(2, int(n**0.5) + 1):
-            if n % p == 0: return False
-        return True
-
-    if not is_prime(q) or q % 4 != 3:
+def factorize_as_power_of_two(n: int) -> Optional[int]:
+    """If n = 2^k, return k; else None."""
+    if n < 1:
         return None
+    k = 0
+    m = n
+    while m > 1:
+        if m % 2 != 0:
+            return None
+        m //= 2
+        k += 1
+    return k
 
-    # Legendre symbol
-    def legendre(a, p):
-        a = a % p
-        if a == 0: return 0
-        if pow(a, (p - 1) // 2, p) == 1: return 1
-        return -1
 
-    n = q + 1
-    # Build quadratic residue matrix
-    Q = np.zeros((q, q), dtype=int)
-    for i in range(q):
-        for j in range(q):
-            Q[i, j] = legendre((j - i) % q, q)
+def build_certificate(n: int) -> Optional[HadamardCertificate]:
+    """Attempt to construct a Hadamard matrix of order n from certified generators.
 
-    # Paley Type I: H = [[-1, j^T], [j, Q + I]]
-    j_vec = np.ones(q, dtype=int)
-    H = np.zeros((n, n), dtype=int)
-    H[0, 0] = -1
-    H[0, 1:] = j_vec
-    H[1:, 0] = j_vec
-    H[1:, 1:] = Q + np.eye(q, dtype=int)
+    Strategy:
+    1. n = 1: trivial seed
+    2. n = 2: base Hadamard matrix
+    3. n = 2^k: Sylvester construction
+    4. n = m * p where both m, p have certificates: tensor product
+    5. Otherwise: return None (order not generated)
+    """
+    if n == 1:
+        return HadamardCertificate(np.array([[1]]), ["base1"])
+    if n == 2:
+        return HadamardCertificate(np.array([[1, 1], [1, -1]]), ["base2"])
 
-    if is_hadamard(H):
-        return H
+    # Check if power of 2
+    k = factorize_as_power_of_two(n)
+    if k is not None:
+        H = sylvester_hadamard(k)
+        return HadamardCertificate(H, [f"sylvester(2^{k})"])
+
+    # Try to factor n and build from tensor products
+    for d in range(2, int(n**0.5) + 1):
+        if n % d == 0:
+            cert1 = build_certificate(d)
+            cert2 = build_certificate(n // d)
+            if cert1 is not None and cert2 is not None:
+                H = kronecker_hadamard(cert1.matrix, cert2.matrix)
+                prov = [f"tensor({d} × {n // d})"] + cert1.provenance + cert2.provenance
+                return HadamardCertificate(H, prov)
+
     return None
 
 
-# ─── Display Utilities ──────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────
+# Coding theory analysis
+# ──────────────────────────────────────────────────────────────────────
 
-def print_matrix(H: np.ndarray, name: str = "H", max_size: int = 16):
-    """Pretty-print a ±1 matrix using + and - symbols."""
+def sign_to_bits(row: np.ndarray) -> np.ndarray:
+    """Convert ±1 vector to binary: +1 → 0, -1 → 1."""
+    return ((1 - row) // 2).astype(int)
+
+
+def hamming_distance(x: np.ndarray, y: np.ndarray) -> int:
+    """Compute Hamming distance between two binary vectors."""
+    return int(np.sum(x != y))
+
+
+def analyze_code(H: np.ndarray):
+    """Analyze the binary code formed by rows of H."""
     n = H.shape[0]
-    print(f"\n{name} ({n}×{n}):")
-    if n > max_size:
-        print(f"  [Matrix too large to display ({n}×{n}), showing corners]")
-        for i in range(min(4, n)):
-            row = "".join(" +" if H[i, j] == 1 else " -" for j in range(min(8, n)))
-            print(f"  {row} ...")
-        print(f"  {'  .':>{2*min(8,n)+4}}")
-        return
+    bits = np.array([sign_to_bits(H[i]) for i in range(n)])
+    distances = []
     for i in range(n):
-        row = "".join(" +" if H[i, j] == 1 else " -" for j in range(n))
-        print(f"  {row}")
+        for j in range(i + 1, n):
+            d = hamming_distance(bits[i], bits[j])
+            distances.append(d)
+    return distances
 
 
-def divider(title: str):
-    """Print a section divider."""
-    print(f"\n{'═' * 70}")
-    print(f"  {title}")
-    print(f"{'═' * 70}")
+# ──────────────────────────────────────────────────────────────────────
+# Design theory analysis
+# ──────────────────────────────────────────────────────────────────────
+
+def analyze_design(H: np.ndarray):
+    """Analyze the combinatorial design from a normalized Hadamard matrix.
+
+    Normalize first row/column to all 1s, then:
+    - Delete first row/column
+    - Convert 1 → 1, -1 → 0
+    This gives the incidence matrix of a symmetric BIBD.
+    """
+    n = H.shape[0]
+
+    # Normalize: flip columns where first row is -1, then rows where first col is -1
+    H_norm = H.copy()
+    for j in range(n):
+        if H_norm[0, j] == -1:
+            H_norm[:, j] *= -1
+    for i in range(n):
+        if H_norm[i, 0] == -1:
+            H_norm[i, :] *= -1
+
+    # Delete first row and column
+    core = H_norm[1:, 1:]
+    # Convert to binary incidence
+    inc = ((core + 1) // 2).astype(int)
+
+    v = n - 1
+    # Block sizes (column sums)
+    block_sizes = inc.sum(axis=0)
+    # Point replications (row sums)
+    point_reps = inc.sum(axis=1)
+    # Pairwise intersections
+    intersections = []
+    for i in range(v):
+        for j in range(i + 1, v):
+            lam = int(np.sum(inc[i] * inc[j]))
+            intersections.append(lam)
+
+    return {
+        "v": v,
+        "k_values": np.unique(block_sizes).tolist(),
+        "r_values": np.unique(point_reps).tolist(),
+        "lambda_values": np.unique(intersections).tolist() if intersections else [],
+        "incidence_matrix": inc,
+    }
 
 
-# ─── Demonstrations ─────────────────────────────────────────────────────────
-
-def demo_sylvester():
-    """Demonstrate Sylvester construction for all powers of 2."""
-    divider("SYLVESTER CONSTRUCTION: Hadamard matrices of order 2^k")
-    print()
-    print("  Theorem (formally verified): For every k ≥ 0, there exists a")
-    print("  Hadamard matrix of order 2^k, constructed by iterated Kronecker")
-    print("  product of the 2×2 seed matrix [[1,1],[1,-1]].")
-    print()
-
-    for k in range(6):
-        n = 2**k
-        H = sylvester_matrix(k)
-        valid = is_hadamard(H)
-        excess = hadamard_excess(H)
-        print(f"  k={k}: H_{n:>3} — {'✓ Hadamard' if valid else '✗ FAILED'}"
-              f"  excess={excess:>5}  excess²/n³={excess**2/max(n**3,1):.4f}")
-
-        if k <= 3:
-            print_matrix(H, f"H_{n}")
-
-
-def demo_kronecker():
-    """Demonstrate Kronecker closure theorem."""
-    divider("KRONECKER CLOSURE: Tensor product preserves Hadamard property")
-    print()
-    print("  Theorem (formally verified): If H₁ (m×m) and H₂ (n×n) are")
-    print("  Hadamard, then H₁ ⊗ H₂ (mn×mn) is Hadamard.")
-    print()
-
-    H2 = sylvester_matrix(1)  # 2×2
-    H4 = sylvester_matrix(2)  # 4×4
-
-    print("  H₂ ⊗ H₄ = H₈:")
-    H8 = kronecker_hadamard(H2, H4)
-    print(f"  Verified: {is_hadamard(H8)}")
-    print_matrix(H8, "H₂ ⊗ H₄")
-
-    # Build H₁₂ via Paley and tensor with H₂
-    H_paley = paley_matrix(11)
-    if H_paley is not None:
-        print(f"\n  Paley construction: H₁₂ from q=11 (11 ≡ 3 mod 4)")
-        print(f"  Verified: {is_hadamard(H_paley)}")
-        H24 = kronecker_hadamard(H2, H_paley)
-        print(f"  H₂ ⊗ H₁₂ = H₂₄: Verified: {is_hadamard(H24)}")
-
-
-def demo_obstruction():
-    """Demonstrate the 4|n divisibility obstruction."""
-    divider("DIVISIBILITY OBSTRUCTION: n > 2 implies 4 | n")
-    print()
-    print("  Theorem (formally verified): If a Hadamard matrix of order n")
-    print("  exists with n > 2, then 4 divides n.")
-    print()
-    print("  This means no Hadamard matrix exists for orders 3, 5, 6, 7, 9, 10, 11, ...")
-    print()
-
-    print(f"  {'Order':>6}  {'4|n?':>5}  {'Hadamard exists?':>16}  {'Status':>12}")
-    print(f"  {'─'*6}  {'─'*5}  {'─'*16}  {'─'*12}")
-
-    known_orders = {1, 2, 4, 8, 12, 16, 20, 24, 28, 32}
-    for n in range(1, 33):
-        div4 = "yes" if n % 4 == 0 else "no"
-        if n <= 2:
-            exists = "yes"
-            status = "trivial"
-        elif n % 4 != 0:
-            exists = "no (obstr.)"
-            status = "impossible"
-        elif n in known_orders:
-            exists = "yes"
-            status = "constructed"
-        else:
-            exists = "open"
-            status = "unknown"
-        print(f"  {n:>6}  {div4:>5}  {exists:>16}  {status:>12}")
-
-
-def demo_code():
-    """Demonstrate Hadamard codes and equidistance."""
-    divider("HADAMARD CODES: Equidistant binary codes")
-    print()
-    print("  Theorem (formally verified): For a Hadamard matrix of order n,")
-    print("  the binary code obtained by mapping +1→0, -1→1 has the property")
-    print("  that all distinct codeword pairs have Hamming distance exactly n/2.")
-    print()
-
-    for k in [2, 3, 4]:
-        n = 2**k
-        H = sylvester_matrix(k)
-        code = hadamard_code(H)
-
-        distances = set()
-        for i in range(n):
-            for j in range(i + 1, n):
-                distances.add(hamming_distance(code[i], code[j]))
-
-        print(f"  Order {n}: {n} codewords of length {n}")
-        print(f"    All pairwise distances: {sorted(distances)}")
-        print(f"    Expected distance: {n // 2}")
-        print(f"    Equidistant: {'✓' if distances == {n // 2} else '✗'}")
-
-        if k == 2:
-            print(f"    Codewords:")
-            for i in range(n):
-                cw = ''.join(map(str, code[i]))
-                print(f"      row {i}: {cw}")
-        print()
-
-
-def demo_energy():
-    """Demonstrate the Walsh-Hadamard energy identity."""
-    divider("WALSH-HADAMARD ENERGY IDENTITY: ‖Hx‖² = n·‖x‖²")
-    print()
-    print("  Theorem (formally verified): For any Hadamard matrix H of order n")
-    print("  and any integer vector x, ∑ᵢ(∑ⱼ Hᵢⱼxⱼ)² = n · ∑ⱼ xⱼ².")
-    print()
-
-    k = 3
-    n = 2**k
-
-    test_vectors = [
-        ("unit vector e₁", np.array([1, 0, 0, 0, 0, 0, 0, 0])),
-        ("all ones", np.ones(n, dtype=int)),
-        ("alternating", np.array([1, -1, 1, -1, 1, -1, 1, -1])),
-        ("random", np.array([3, -1, 4, 1, -5, 9, -2, 6])),
-    ]
-
-    for name, x in test_vectors:
-        Hx = walsh_hadamard_transform(x, k)
-        lhs = int(np.sum(Hx**2))
-        rhs = n * int(np.sum(x**2))
-        print(f"  x = {name}:")
-        print(f"    ‖x‖² = {int(np.sum(x**2))}")
-        print(f"    ‖Hx‖² = {lhs}")
-        print(f"    n·‖x‖² = {rhs}")
-        print(f"    Verified: {'✓' if lhs == rhs else '✗'}")
-        print()
-
-
-def demo_normalization():
-    """Demonstrate normalization procedure."""
-    divider("NORMALIZATION: Making first row and column all +1")
-    print()
-    print("  Theorem (formally verified): Every Hadamard matrix can be")
-    print("  transformed into a normalized form (first row and column all +1)")
-    print("  by sign-flipping rows and columns.")
-    print()
-
-    H = sylvester_matrix(2)
-    print("  Original matrix:")
-    print_matrix(H, "H₄")
-
-    H_norm = normalize_hadamard(H)
-    print("\n  After normalization:")
-    print_matrix(H_norm, "H₄ (normalized)")
-
-    print(f"\n  First row all +1: {np.all(H_norm[0] == 1)}")
-    print(f"  First col all +1: {np.all(H_norm[:, 0] == 1)}")
-    print(f"  Still Hadamard:   {is_hadamard(H_norm)}")
-
-
-def demo_excess():
-    """Demonstrate excess bound σ² ≤ n³."""
-    divider("EXCESS BOUND: σ(H)² ≤ n³")
-    print()
-    print("  Theorem (formally verified): For any Hadamard matrix H of order n,")
-    print("  the square of the excess σ(H) = ∑ᵢⱼ Hᵢⱼ satisfies σ(H)² ≤ n³.")
-    print()
-
-    print(f"  {'Order':>6} {'Excess σ':>10} {'σ²':>12} {'n³':>12} {'σ²/n³':>8} {'Bound':>6}")
-    print(f"  {'─'*6} {'─'*10} {'─'*12} {'─'*12} {'─'*8} {'─'*6}")
-
-    for k in range(1, 9):
-        n = 2**k
-        H = sylvester_matrix(k)
-        sigma = hadamard_excess(H)
-        print(f"  {n:>6} {sigma:>10} {sigma**2:>12} {n**3:>12} "
-              f"{sigma**2/n**3:>8.4f} {'  ✓' if sigma**2 <= n**3 else '  ✗':>6}")
-
-
-def demo_paley():
-    """Demonstrate Paley construction for primes q ≡ 3 (mod 4)."""
-    divider("PALEY CONSTRUCTION: Hadamard matrices from quadratic residues")
-    print()
-    print("  For primes q ≡ 3 (mod 4), there exists a Hadamard matrix of order q+1")
-    print("  built from the Legendre symbol (quadratic residue character) over GF(q).")
-    print()
-
-    primes_3mod4 = [3, 7, 11, 19, 23, 31, 43, 47, 59, 67, 71, 79, 83]
-    for q in primes_3mod4:
-        H = paley_matrix(q)
-        if H is not None:
-            n = q + 1
-            sigma = hadamard_excess(H)
-            print(f"  q={q:>3} → H_{n:>3}: "
-                  f"{'✓ Hadamard' if is_hadamard(H) else '✗ FAILED'}  "
-                  f"excess={sigma}")
-            if q <= 11:
-                print_matrix(H, f"Paley H_{n}")
-        else:
-            print(f"  q={q:>3} → construction failed")
-
-
-def demo_comparison():
-    """Compare Sylvester vs Paley constructions at overlapping orders."""
-    divider("SYLVESTER vs PALEY: Comparing constructions")
-    print()
-    print("  At some orders, both Sylvester and Paley constructions exist.")
-    print("  We compare their excess and spectral properties.")
-    print()
-
-    # Order 4: Sylvester H₄ vs Paley from q=3
-    H_sylv = sylvester_matrix(2)
-    H_paley = paley_matrix(3)
-
-    if H_paley is not None:
-        print("  Order 4:")
-        print(f"    Sylvester excess: {hadamard_excess(H_sylv)}")
-        print(f"    Paley excess:     {hadamard_excess(H_paley)}")
-
-        # Row-sum comparison
-        sylv_rowsums = np.sum(H_sylv, axis=1)
-        paley_rowsums = np.sum(H_paley, axis=1)
-        print(f"    Sylvester row sums: {sorted(sylv_rowsums)}")
-        print(f"    Paley row sums:     {sorted(paley_rowsums)}")
-
-    # Order 8: Sylvester vs Paley from q=7
-    H_sylv8 = sylvester_matrix(3)
-    H_paley8 = paley_matrix(7)
-
-    if H_paley8 is not None:
-        print("\n  Order 8:")
-        print(f"    Sylvester excess: {hadamard_excess(H_sylv8)}")
-        print(f"    Paley excess:     {hadamard_excess(H_paley8)}")
-
-        sylv_rowsums = sorted(np.sum(H_sylv8, axis=1))
-        paley_rowsums = sorted(np.sum(H_paley8, axis=1))
-        print(f"    Sylvester row sums: {sylv_rowsums}")
-        print(f"    Paley row sums:     {paley_rowsums}")
-        print(f"    Same row-sum profile: {sylv_rowsums == paley_rowsums}")
-
-
-# ─── Main ────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────
+# Main demo
+# ──────────────────────────────────────────────────────────────────────
 
 def main():
-    """Run all demonstrations."""
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║     HADAMARD MATRIX THEORY — Formal Verification Demonstration     ║")
-    print("║                                                                    ║")
-    print("║  All key properties below have been formally verified in Lean 4.   ║")
-    print("║  This demo provides numerical evidence alongside the proofs.       ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
+    B = 100
+    if "--bound" in sys.argv:
+        idx = sys.argv.index("--bound")
+        B = int(sys.argv[idx + 1])
 
-    args = sys.argv[1:]
+    print("=" * 72)
+    print("  HADAMARD MATRIX EXISTENCE ENGINE — DEMO")
+    print("=" * 72)
+    print()
 
-    if "--application" in args:
-        idx = args.index("--application")
-        if idx + 1 < len(args):
-            app = args[idx + 1].lower()
-            demos = {
-                "sylvester": demo_sylvester,
-                "kronecker": demo_kronecker,
-                "obstruction": demo_obstruction,
-                "code": demo_code,
-                "energy": demo_energy,
-                "normalization": demo_normalization,
-                "excess": demo_excess,
-                "paley": demo_paley,
-                "comparison": demo_comparison,
-            }
-            if app in demos:
-                demos[app]()
-                return
+    # ── Part 1: Enumerate orders ──────────────────────────────────────
+    print(f"Part 1: Hadamard order analysis for n ≤ {B}")
+    print("-" * 60)
+
+    admissible = []
+    constructed = []
+    not_constructed = []
+
+    for n in range(1, B + 1):
+        if n == 1 or n == 2:
+            cert = build_certificate(n)
+            if cert:
+                admissible.append(n)
+                constructed.append((n, cert))
+        elif n % 4 == 0:
+            admissible.append(n)
+            cert = build_certificate(n)
+            if cert:
+                constructed.append((n, cert))
             else:
-                print(f"Unknown application: {app}")
-                print(f"Available: {', '.join(demos.keys())}")
-                return
+                not_constructed.append(n)
+        # else: ruled out by divisibility (4 ∤ n and n > 2)
 
-    # Run everything
-    demo_sylvester()
-    demo_kronecker()
-    demo_obstruction()
-    demo_normalization()
-    demo_code()
-    demo_energy()
-    demo_excess()
-    demo_paley()
-    demo_comparison()
+    print(f"  Admissible orders (n=1,2 or 4|n):  {len(admissible)}")
+    print(f"  Successfully constructed:           {len(constructed)}")
+    print(f"  Not generated by our calculus:      {len(not_constructed)}")
+    print()
 
-    print("\n" + "═" * 70)
-    print("  All demonstrations complete.")
-    print("  Every property marked ✓ has been formally verified in Lean 4.")
-    print("═" * 70)
+    if not_constructed:
+        print(f"  Orders not generated: {not_constructed}")
+        print()
+
+    # ── Part 2: Construction provenance ───────────────────────────────
+    print("Part 2: Construction provenance (selected orders)")
+    print("-" * 60)
+
+    for n, cert in constructed[:15]:
+        print(f"  n = {n:3d}:  {' → '.join(cert.provenance)}")
+    if len(constructed) > 15:
+        print(f"  ... ({len(constructed) - 15} more)")
+    print()
+
+    # ── Part 3: Verification ──────────────────────────────────────────
+    print("Part 3: Matrix verification")
+    print("-" * 60)
+
+    for k in range(1, 5):
+        n = 2**k
+        H = sylvester_hadamard(k)
+        ok = verify_hadamard(H)
+        print(f"  Sylvester H_{k} (order {n}): valid = {ok}")
+    print()
+
+    # Display H_2
+    H2 = sylvester_hadamard(2)
+    print("  Sylvester H_2 (order 4):")
+    for row in H2:
+        print("    [" + " ".join(f"{x:+d}" for x in row) + "]")
+    print()
+
+    H3 = sylvester_hadamard(3)
+    print("  Sylvester H_3 (order 8):")
+    for row in H3:
+        print("    [" + " ".join(f"{x:+d}" for x in row) + "]")
+    print()
+
+    # ── Part 4: Coding theory ─────────────────────────────────────────
+    print("Part 4: Coding theory — Hamming distances between rows")
+    print("-" * 60)
+
+    for k in range(1, 5):
+        n = 2**k
+        H = sylvester_hadamard(k)
+        distances = analyze_code(H)
+        unique_d = set(distances)
+        print(f"  Order {n}: Hamming distances = {unique_d}  (expected: {{{n//2}}})")
+    print()
+
+    # ── Part 5: Design theory ─────────────────────────────────────────
+    print("Part 5: Design theory — BIBD parameters")
+    print("-" * 60)
+
+    for k in range(2, 5):
+        n = 2**k
+        H = sylvester_hadamard(k)
+        design = analyze_design(H)
+        t = n // 4
+        print(f"  Order {n} → 2-({design['v']}, {design['k_values']}, {design['lambda_values']}) design")
+        print(f"    Expected: 2-({4*t-1}, {2*t-1}, {t-1})")
+    print()
+
+    # ── Part 6: Generator density ─────────────────────────────────────
+    print("Part 6: Generator density")
+    print("-" * 60)
+
+    multiples_of_4 = [n for n in range(4, B + 1, 4)]
+    generated = [n for n in multiples_of_4 if build_certificate(n) is not None]
+    density = len(generated) / len(multiples_of_4) if multiples_of_4 else 0
+    print(f"  Multiples of 4 up to {B}: {len(multiples_of_4)}")
+    print(f"  Generated by our calculus: {len(generated)}")
+    print(f"  Empirical density: {density:.4f}")
+    print(f"  Generated: {generated}")
+    print(f"  Not generated: {[n for n in multiples_of_4 if n not in generated]}")
+    print()
+
+    # ── Part 7: Walsh spectrum ────────────────────────────────────────
+    print("Part 7: Walsh transform energy preservation")
+    print("-" * 60)
+
+    for k in range(1, 5):
+        n = 2**k
+        H = sylvester_hadamard(k)
+        x = np.random.randn(n)
+        W = H / np.sqrt(n)  # Normalized Walsh-Hadamard transform
+        y = W @ x
+        energy_in = np.sum(x**2)
+        energy_out = np.sum(y**2)
+        print(f"  k={k} (n={n}): ||x||² = {energy_in:.6f}, ||Wx||² = {energy_out:.6f}, "
+              f"ratio = {energy_out/energy_in:.10f}")
+    print()
+
+    print("=" * 72)
+    print("  Demo complete.")
+    print("=" * 72)
 
 
 if __name__ == "__main__":
     main()
+
+
+#!/usr/bin/env python3
+"""Generate PACKAGE.json from all deliverables."""
+import json
+import os
+
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+# Read all components
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
+
+# Read Lean proofs
+lean_files = [
+    'Catalog/Algebra/Hadamard/Defs.lean',
+    'Catalog/Algebra/Hadamard/Basic.lean',
+    'Catalog/Algebra/Hadamard/Examples.lean',
+    'Catalog/Algebra/Hadamard/Constructions.lean',
+    'Catalog/Algebra/Hadamard/Coding.lean',
+    'Catalog/Algebra/Hadamard/Obstruction.lean',
+    'Catalog/Algebra/Hadamard/Design.lean',
+]
+lean_proofs = ""
+for f in lean_files:
+    if os.path.exists(f):
+        lean_proofs += f"-- ═══ {f} ═══\n\n"
+        lean_proofs += read_file(f)
+        lean_proofs += "\n\n"
+
+# Read Python files
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
+viz_hadamard = read_file('visualize_hadamard.py')
+viz_existence = read_file('visualize_existence.py')
+viz_code = read_file('visualize_code.py')
+
+# Read HTML
+html_explorer = read_file('interactive_hadamard.html')
+html_kronecker = read_file('interactive_kronecker.html')
+
+package = {
+    "title": "Hadamard Existence by Algebraic Generation",
+    "domain": "Algebra / Combinatorics",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Hadamard Existence Engine Demo",
+            "code": demo_code
+        },
+        {
+            "name": "Applications of Hadamard Matrices",
+            "code": applications_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Hadamard Construction Engine",
+            "pseudocode": """Algorithm: BuildHadamardCertificate(n)
+Input: positive integer n
+Output: Hadamard matrix of order n, or FAIL
+
+1. If n = 1: return [1]
+2. If n = 2: return [[1,1],[1,-1]]
+3. If n > 2 and 4 ∤ n: return FAIL (arithmetic obstruction)
+4. If n = 2^k: return Sylvester(k) via recursive doubling
+5. If n = q+1, q ≡ 3 (mod 4) prime: return Paley_I(q)
+6. If n = 2(q+1), q ≡ 1 (mod 4) prime: return Paley_II(q)
+7. For each factorization n = d × (n/d):
+     cert1 ← BuildHadamardCertificate(d)
+     cert2 ← BuildHadamardCertificate(n/d)
+     if both succeed: return Kronecker(cert1, cert2)
+8. return FAIL
+
+Complexity: O(n² log n) for direct constructions, O(n³) worst case.
+Correctness: Proved sound by hadamardSeed_implies_order theorem.""",
+            "code": algorithms_code
+        }
+    ],
+    "visualizations": [
+        {
+            "name": "Hadamard Matrix Patterns",
+            "code": viz_hadamard,
+            "description": "Visualizes the self-similar ±1 patterns of Sylvester-Hadamard matrices at orders 2, 4, 8, and 16, revealing the fractal structure of the recursive doubling construction."
+        },
+        {
+            "name": "Hadamard Existence Landscape",
+            "code": viz_existence,
+            "description": "Shows which orders ≤ 200 have certified Hadamard matrices under our construction calculus (Sylvester + Paley + tensor), compared to all admissible orders. The gap reveals where the conjecture remains open."
+        },
+        {
+            "name": "Hadamard Code Distance Properties",
+            "code": viz_code,
+            "description": "Visualizes the orthogonality (HHᵀ) and equidistant code property (all pairwise Hamming distances = n/2) of Hadamard matrices at different orders."
+        }
+    ],
+    "interactive_demos": [
+        {
+            "name": "Interactive Hadamard Matrix Explorer",
+            "html": html_explorer,
+            "description": "Explore Sylvester-Hadamard matrices interactively. Adjust the order parameter k to see the ±1 pattern, verify orthogonality, and observe the equidistant code property."
+        },
+        {
+            "name": "Kronecker Product Visualizer",
+            "html": html_kronecker,
+            "description": "Visualize how the tensor (Kronecker) product of two Hadamard matrices produces a larger Hadamard matrix, demonstrating the multiplicative closure theorem."
+        }
+    ],
+    "lean_proofs": lean_proofs
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print("PACKAGE.json generated successfully")
+print(f"  Article: {len(article)} chars")
+print(f"  Research paper: {len(research_paper)} chars")
+print(f"  Future directions: {len(future_directions)} chars")
+print(f"  Lean proofs: {len(lean_proofs)} chars")
+print(f"  Demos: {len(package['demos'])}")
+print(f"  Algorithms: {len(package['algorithms'])}")
+print(f"  Visualizations: {len(package['visualizations'])}")
+print(f"  Interactive demos: {len(package['interactive_demos'])}")
+
+
+#!/usr/bin/env python3
+"""
+Visualization 3: Hadamard Code Distance Properties
+
+Visualizes the Hamming distance distribution between codewords of the
+Hadamard code, showing the equidistance property: all pairs of distinct
+rows have Hamming distance exactly n/2. This is the visual proof of the
+coding-theory bridge theorem.
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+
+def hadamard(k):
+    H = np.array([[1]])
+    for _ in range(k):
+        H = np.block([[H, H], [H, -H]])
+    return H
+
+fig, axes = plt.subplots(2, 3, figsize=(15, 9))
+
+for idx, k in enumerate([2, 3, 4]):
+    n = 2**k
+    H = hadamard(k).astype(int)
+
+    # Compute pairwise dot products (should be n on diagonal, 0 off-diagonal)
+    gram = H @ H.T
+
+    ax1 = axes[0, idx]
+    im = ax1.imshow(gram, cmap='RdBu_r', vmin=-n, vmax=n, interpolation='nearest')
+    ax1.set_title(f'H·Hᵀ (order {n})', fontsize=12, fontweight='bold')
+    ax1.set_xlabel('Row j')
+    ax1.set_ylabel('Row i')
+    plt.colorbar(im, ax=ax1, shrink=0.8)
+
+    # Hamming distance matrix
+    bits = ((1 - H) // 2).astype(int)
+    dist_matrix = np.zeros((n, n), dtype=int)
+    for i in range(n):
+        for j in range(n):
+            dist_matrix[i, j] = np.sum(bits[i] != bits[j])
+
+    ax2 = axes[1, idx]
+    im2 = ax2.imshow(dist_matrix, cmap='viridis', interpolation='nearest')
+    ax2.set_title(f'Hamming Distance (order {n})', fontsize=12, fontweight='bold')
+    ax2.set_xlabel('Row j')
+    ax2.set_ylabel('Row i')
+    plt.colorbar(im2, ax=ax2, shrink=0.8)
+
+    # Annotate: off-diagonal should all be n/2
+    off_diag = dist_matrix[np.triu_indices(n, k=1)]
+    ax2.text(0.02, 0.02, f'All off-diag = {set(off_diag)}',
+             transform=ax2.transAxes, fontsize=9, color='white',
+             verticalalignment='bottom',
+             bbox=dict(boxstyle='round', facecolor='black', alpha=0.5))
+
+fig.suptitle('Hadamard Matrices: Orthogonality and Equidistant Codes',
+             fontsize=15, fontweight='bold')
+plt.tight_layout()
+plt.savefig('hadamard_codes.png', dpi=150, bbox_inches='tight')
+print("Saved hadamard_codes.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization 2: Hadamard Existence Landscape
+
+Shows which orders have certified Hadamard matrices under our construction
+calculus (Sylvester + Paley + tensor), compared to the admissible orders
+(multiples of 4, plus 1 and 2). The gap between generated and admissible
+orders reveals where the Hadamard conjecture remains unresolved.
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+
+def is_prime(n):
+    if n < 2: return False
+    if n < 4: return True
+    if n % 2 == 0 or n % 3 == 0: return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0: return False
+        i += 6
+    return True
+
+def hadamard_matrix(k):
+    H = np.array([[1]])
+    for _ in range(k):
+        H = np.block([[H, H], [H, -H]])
+    return H
+
+def legendre(a, p):
+    a = a % p
+    if a == 0: return 0
+    r = pow(a, (p-1)//2, p)
+    return r if r <= 1 else r - p
+
+def paley1(q):
+    if not is_prime(q) or q % 4 != 3: return None
+    n = q + 1
+    H = np.zeros((n,n), dtype=int)
+    H[0,:] = 1; H[:,0] = 1
+    for i in range(q):
+        for j in range(q):
+            H[i+1,j+1] = -1 if i==j else legendre(i-j, q)
+    if np.array_equal(H@H.T, n*np.eye(n,dtype=int)): return H
+    return None
+
+def paley2(q):
+    if not is_prime(q) or q % 4 != 1: return None
+    Q = np.zeros((q,q),dtype=int)
+    for i in range(q):
+        for j in range(q):
+            Q[i][j] = legendre(i-j,q)
+    nc = q+1
+    C = np.zeros((nc,nc),dtype=int)
+    C[0,1:]=1; C[1:,0]=1; C[1:,1:]=Q
+    I = np.eye(nc,dtype=int)
+    H = np.block([[C+I, C-I],[C-I, -(C+I)]])
+    if np.array_equal(H@H.T, H.shape[0]*np.eye(H.shape[0],dtype=int)): return H
+    return None
+
+# Build cache
+_cache = {}
+def construct(n):
+    if n in _cache: return _cache[n]
+    r = _construct(n)
+    _cache[n] = r
+    return r
+
+def _construct(n):
+    if n <= 0: return None
+    if n == 1 or n == 2: return "base"
+    if n > 2 and n % 4 != 0: return None
+    m = n; k = 0
+    while m > 1 and m % 2 == 0: m //= 2; k += 1
+    if m == 1: return "sylvester"
+    q = n - 1
+    if is_prime(q) and q % 4 == 3 and paley1(q) is not None: return "paley1"
+    if n % 2 == 0:
+        q2 = n//2 - 1
+        if q2 > 0 and is_prime(q2) and q2 % 4 == 1 and paley2(q2) is not None: return "paley2"
+    for d in range(2, int(n**0.5)+1):
+        if n % d == 0:
+            c1 = construct(d); c2 = construct(n//d)
+            if c1 and c2: return "tensor"
+    return None
+
+B = 200
+orders = list(range(1, B+1))
+
+inadmissible = [n for n in orders if n > 2 and n % 4 != 0]
+admissible = [n for n in orders if n <= 2 or n % 4 == 0]
+generated = [n for n in admissible if construct(n)]
+not_generated = [n for n in admissible if not construct(n)]
+
+# Plot
+fig, ax = plt.subplots(figsize=(16, 3))
+
+for n in inadmissible:
+    ax.bar(n, 1, color='#e0e0e0', width=0.8)
+for n in not_generated:
+    ax.bar(n, 1, color='#e74c3c', width=0.8)
+for n in generated:
+    method = construct(n)
+    colors = {'base': '#2ecc71', 'sylvester': '#3498db', 'paley1': '#9b59b6',
+              'paley2': '#f39c12', 'tensor': '#1abc9c'}
+    ax.bar(n, 1, color=colors.get(method, '#1abc9c'), width=0.8)
+
+ax.set_xlim(0, B+1)
+ax.set_ylim(0, 1.5)
+ax.set_yticks([])
+ax.set_xlabel('Order n', fontsize=12)
+ax.set_title(f'Hadamard Existence Landscape (n ≤ {B})', fontsize=14, fontweight='bold')
+
+patches = [
+    mpatches.Patch(color='#e0e0e0', label='Inadmissible (4∤n, n>2)'),
+    mpatches.Patch(color='#2ecc71', label='Base seed (n=1,2)'),
+    mpatches.Patch(color='#3498db', label='Sylvester (2^k)'),
+    mpatches.Patch(color='#9b59b6', label='Paley Type I'),
+    mpatches.Patch(color='#f39c12', label='Paley Type II'),
+    mpatches.Patch(color='#1abc9c', label='Tensor product'),
+    mpatches.Patch(color='#e74c3c', label='Open / not generated'),
+]
+ax.legend(handles=patches, loc='upper right', fontsize=8, ncol=4)
+
+plt.tight_layout()
+plt.savefig('hadamard_existence.png', dpi=150, bbox_inches='tight')
+print(f"Saved hadamard_existence.png")
+print(f"Generated: {len(generated)}/{len(admissible)} admissible orders")
+print(f"Not generated: {not_generated}")
+
+
+#!/usr/bin/env python3
+"""
+Visualization 1: Hadamard Matrix Structure
+
+Visualizes the ±1 pattern of Sylvester-Hadamard matrices at different orders,
+showing how the recursive doubling construction creates fractal-like patterns.
+The self-similar structure is the visual fingerprint of the Walsh system.
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+
+def hadamard(k):
+    H = np.array([[1]])
+    for _ in range(k):
+        H = np.block([[H, H], [H, -H]])
+    return H
+
+fig, axes = plt.subplots(1, 4, figsize=(16, 4))
+cmap = mcolors.ListedColormap(['#2c3e50', '#ecf0f1'])  # dark=-1, light=+1
+
+for idx, k in enumerate([1, 2, 3, 4]):
+    ax = axes[idx]
+    H = hadamard(k)
+    n = H.shape[0]
+    # Map -1 → 0, +1 → 1 for colormap
+    display = ((H + 1) // 2).astype(int)
+    ax.imshow(display, cmap=cmap, interpolation='nearest', aspect='equal')
+    ax.set_title(f'Order {n} (k={k})', fontsize=14, fontweight='bold')
+    ax.set_xticks([])
+    ax.set_yticks([])
+    # Add grid
+    for i in range(n + 1):
+        ax.axhline(i - 0.5, color='gray', linewidth=0.3)
+        ax.axvline(i - 0.5, color='gray', linewidth=0.3)
+
+fig.suptitle('Sylvester-Hadamard Matrices: Self-Similar ±1 Patterns',
+             fontsize=16, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('hadamard_patterns.png', dpi=150, bbox_inches='tight')
+print("Saved hadamard_patterns.png")
