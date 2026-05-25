@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_1_brauer_manin_obstructions_for_integral.json",
+    "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
+    "domain": "Arithmetic Geometry / Number Theory",
+    "date": "2026-05-25T14:24:55Z",
+    "exp_id": "3265971b",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_5_chip_firing_correspondence.json",
     "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
     "domain": "Tropical Geometry / Combinatorial Algebraic Geometry",
     "date": "2026-05-25T14:24:33Z",
     "exp_id": "97def267",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7472302409097711,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_higher_order_log_concavity_and_partiti.json",
@@ -50,6 +59,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Number Theory / Arithmetic Geometry"
   },
+  "direction_1_brauer_manin_obstructions_for_integral.json": {
+    "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
+    "exp_id": "3265971b",
+    "source_exp_ids": [
+      "34c2669a"
+    ],
+    "domain": "Arithmetic Geometry / Number Theory"
+  },
   "direction_3_compositional_witness_synthesis_algori.json": {
     "title": "Compositional Witness Synthesis for Pythagorean Triples",
     "exp_id": "d78e63d5",
@@ -87,7 +104,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 314,
+      "hue": 91,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -98,7 +115,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -109,7 +126,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -120,7 +137,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 112,
+      "hue": 91,
+      "priority_score": 0.7472302409097711,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_brauer_manin_obstructions_for_integral",
+      "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
+      "domain": "Arithmetic Geometry / Number Theory",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-25T14:24:55Z",
+      "hue": 91,
       "priority_score": null,
       "quality": "unrated"
     }
