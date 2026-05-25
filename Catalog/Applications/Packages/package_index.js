@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "tropical_satake_isomorphism_for_gl_n.json",
+    "title": "Tropical Satake Isomorphism for GL_n: A Rank-Uniform Framework",
+    "domain": "Tropical Geometry / Representation Theory",
+    "date": "2026-05-25T08:04:16Z",
+    "exp_id": "561cc547",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "symmetric_group_generation_probability.json",
     "title": "Generation Probability of the Symmetric Group",
     "domain": "Algebra",
@@ -191,6 +200,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Transcendence Theory / Algebraic Independence"
   },
+  "tropical_satake_isomorphism_for_gl_n.json": {
+    "title": "Tropical Satake Isomorphism for GL_n: A Rank-Uniform Framework",
+    "exp_id": "561cc547",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Tropical Geometry / Representation Theory"
+  },
   "direction_3_extension_to_product_and_sum_types.json": {
     "title": "The Growth Regime Trichotomy: How Type Constructors Generate Computational Complexity Classes",
     "exp_id": "fee94b6c",
@@ -330,7 +347,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.5431629411764707,
       "quality": "partial"
     },
@@ -352,7 +369,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7684672566371681,
       "quality": "substantial"
     },
@@ -363,7 +380,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.5684834461538462,
       "quality": "partial"
     },
@@ -374,7 +391,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T00:26:30Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7077656000000001,
       "quality": "substantial"
     },
@@ -385,7 +402,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7156088,
       "quality": "substantial"
     },
@@ -396,7 +413,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.707316371361133,
       "quality": "substantial"
     },
@@ -407,7 +424,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
-      "hue": 95,
+      "hue": 271,
       "priority_score": 0.7307101408450705,
       "quality": "substantial"
     },
@@ -418,7 +435,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T02:10:29Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7655020869565218,
       "quality": "substantial"
     },
@@ -429,7 +446,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T02:11:07Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.657708624390244,
       "quality": "partial"
     },
@@ -440,7 +457,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T03:05:32Z",
-      "hue": 272,
+      "hue": 101,
       "priority_score": 0.6969741764705883,
       "quality": "partial"
     },
@@ -451,7 +468,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T03:06:21Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6889964000000002,
       "quality": "partial"
     },
@@ -462,7 +479,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-25T03:07:10Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7516518344827586,
       "quality": "substantial"
     },
@@ -473,7 +490,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T03:07:59Z",
-      "hue": 280,
+      "hue": 91,
       "priority_score": 0.6673754040895813,
       "quality": "partial"
     },
@@ -484,9 +501,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T03:08:46Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7275800000000001,
       "quality": "substantial"
+    },
+    {
+      "id": "tropical_satake_isomorphism_for_gl_n",
+      "title": "Tropical Satake Isomorphism for GL_n: A Rank-Uniform Framework",
+      "domain": "Tropical Geometry / Representation Theory",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T08:04:16Z",
+      "hue": 272,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [
@@ -535,8 +563,8 @@ window.PACKAGE_GRAPH = {
     {
       "domain_a": "Geometry",
       "domain_b": "Tropical",
-      "package_count": 2,
-      "strength": 0.7
+      "package_count": 3,
+      "strength": 0.9000000000000001
     },
     {
       "domain_a": "Algebra",
@@ -1298,10 +1326,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "0cdcddad",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:11:10.200317+00:00"
   },
   {
