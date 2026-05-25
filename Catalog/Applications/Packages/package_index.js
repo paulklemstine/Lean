@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_4_relative_tropical_hodge_theorem.json",
+    "title": "Tropical Hodge Theory for Graphs: Kernel Characterization, Incidence Factorization, and Betti Numbers",
+    "domain": "Tropical Algebra / Graph Theory / Algebraic Topology",
+    "date": "2026-05-25T16:05:40Z",
+    "exp_id": "1a0c77c0",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_1_tight_spectral_gap_via_lorentzian_stru.json",
     "title": "Tight Spectral Gap via Lorentzian Structure",
     "domain": "Pythagorean \u2014 Lorentzian Polynomials and Markov Chain Mixing",
     "date": "2026-05-25T16:05:19Z",
     "exp_id": "a6eebf63",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7475694375378231,
+    "quality": "substantial"
   },
   {
     "filename": "direction_3_concentration_of__on_random_hypergraph.json",
@@ -158,6 +167,14 @@ window.PACKAGE_DB_INDEX = {
       "1f8fa3a8"
     ],
     "domain": "Pythagorean \u2014 Lorentzian Polynomials and Markov Chain Mixing"
+  },
+  "direction_4_relative_tropical_hodge_theorem.json": {
+    "title": "Tropical Hodge Theory for Graphs: Kernel Characterization, Incidence Factorization, and Betti Numbers",
+    "exp_id": "1a0c77c0",
+    "source_exp_ids": [
+      "fd2f08b2"
+    ],
+    "domain": "Tropical Algebra / Graph Theory / Algebraic Topology"
   }
 };
 
@@ -172,7 +189,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -183,7 +200,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -194,7 +211,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 95,
+      "hue": 272,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -216,7 +233,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 275,
+      "hue": 271,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -227,7 +244,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.7554863879178124,
       "quality": "substantial"
     },
@@ -238,7 +255,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -260,7 +277,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 275,
+      "hue": 95,
+      "priority_score": 0.7475694375378231,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_relative_tropical_hodge_theorem",
+      "title": "Tropical Hodge Theory for Graphs: Kernel Characterization, Incidence Factorization, and Betti Numbers",
+      "domain": "Tropical Algebra / Graph Theory / Algebraic Topology",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T16:05:40Z",
+      "hue": 91,
       "priority_score": null,
       "quality": "unrated"
     }
@@ -269,13 +297,13 @@ window.PACKAGE_GRAPH = {
   "domain_bridges": [
     {
       "domain_a": "Algebra",
-      "domain_b": "Geometry",
-      "package_count": 1,
-      "strength": 0.5
+      "domain_b": "Tropical",
+      "package_count": 2,
+      "strength": 0.7
     },
     {
       "domain_a": "Algebra",
-      "domain_b": "Tropical",
+      "domain_b": "Geometry",
       "package_count": 1,
       "strength": 0.5
     },
