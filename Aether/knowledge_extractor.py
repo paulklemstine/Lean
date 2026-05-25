@@ -2382,7 +2382,7 @@ Research mode: {concept.research_mode}
         return [(lean_source, name)]
 
     @staticmethod
-    def _enrich_json_package(json_pkg_str: str, job) -> str:
+    def _enrich_json_package(self, json_pkg_str: str, job) -> str:
         """Enrich JSON package with executable module code for Pyodide demos.
 
         Adds a 'modules' dict mapping module names to their source code,
