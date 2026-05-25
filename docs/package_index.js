@@ -4,6 +4,33 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_1_stability_theory_for_tropical_persiste.json",
+    "title": "Stability Theory for Tropical Persistence Barcodes",
+    "domain": "Tropical Geometry / Topological Data Analysis / Graph Theory",
+    "date": "2026-05-25T21:13:36Z",
+    "exp_id": "834b245c",
+    "quality_score": 0.7197528467153285,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_3_quantum_ground_state_preparation_via_l.json",
+    "title": "Quantum Ground-State Preparation via Lorentzian Polynomial Certificates",
+    "domain": "Pythagorean / Algebraic Combinatorics / Quantum Computing",
+    "date": "2026-05-25T21:13:06Z",
+    "exp_id": "2b6d84b4",
+    "quality_score": 0.7215128,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_2_mixing_time_bounds_from_concavity_dept.json",
+    "title": "Mixing Time Bounds from Concavity Depth",
+    "domain": "Probability Theory / Markov Chains",
+    "date": "2026-05-25T21:12:32Z",
+    "exp_id": "0e278652",
+    "quality_score": 0.7286,
+    "quality": "substantial"
+  },
+  {
     "filename": "langlands_program_functoriality.json",
     "title": "Langlands Functoriality: Local Euler Data and Symmetric Power Transfer",
     "domain": "Algebra / Number Theory",
@@ -290,6 +317,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra / Combinatorics"
   },
+  "direction_1_stability_theory_for_tropical_persiste.json": {
+    "title": "Stability Theory for Tropical Persistence Barcodes",
+    "exp_id": "834b245c",
+    "source_exp_ids": [
+      "f0f7ec54"
+    ],
+    "domain": "Tropical Geometry / Topological Data Analysis / Graph Theory"
+  },
   "direction_2_filtration_persistence_formula.json": {
     "title": "Tropical Persistence Barcodes for Graph Filtrations",
     "exp_id": "f0f7ec54",
@@ -345,6 +380,22 @@ window.PACKAGE_DB_INDEX = {
       "b9d16ed0"
     ],
     "domain": "Mechanism Design / Multi-Objective Optimization / Combinatorial Algorithms"
+  },
+  "direction_2_mixing_time_bounds_from_concavity_dept.json": {
+    "title": "Mixing Time Bounds from Concavity Depth",
+    "exp_id": "0e278652",
+    "source_exp_ids": [
+      "56c2f88c"
+    ],
+    "domain": "Probability Theory / Markov Chains"
+  },
+  "direction_3_quantum_ground_state_preparation_via_l.json": {
+    "title": "Quantum Ground-State Preparation via Lorentzian Polynomial Certificates",
+    "exp_id": "2b6d84b4",
+    "source_exp_ids": [
+      "1f8fa3a8"
+    ],
+    "domain": "Pythagorean / Algebraic Combinatorics / Quantum Computing"
   },
   "direction_1_brauer_manin_obstructions_for_integral.json": {
     "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
@@ -506,7 +557,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -517,7 +568,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -528,7 +579,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -539,7 +590,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -550,7 +601,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7554863879178124,
       "quality": "substantial"
     },
@@ -561,7 +612,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 92,
+      "hue": 280,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -572,7 +623,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -616,7 +667,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T17:14:28Z",
-      "hue": 275,
+      "hue": 90,
       "priority_score": 0.7094771428571429,
       "quality": "substantial"
     },
@@ -627,7 +678,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:14:56Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7307286403906522,
       "quality": "substantial"
     },
@@ -638,7 +689,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7426729134392938,
       "quality": "substantial"
     },
@@ -649,7 +700,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:49:47Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.718787256166983,
       "quality": "substantial"
     },
@@ -660,7 +711,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T17:57:55Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7485430061705161,
       "quality": "substantial"
     },
@@ -671,7 +722,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:02:50Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7448372075471699,
       "quality": "substantial"
     },
@@ -682,7 +733,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T18:03:18Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.7496613212625398,
       "quality": "substantial"
     },
@@ -704,7 +755,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:39:59Z",
-      "hue": 280,
+      "hue": 90,
       "priority_score": 0.7061918953063686,
       "quality": "substantial"
     },
@@ -715,7 +766,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T18:40:46Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.6968374111334675,
       "quality": "partial"
     },
@@ -726,7 +777,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T19:29:15Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7239525714285715,
       "quality": "substantial"
     },
@@ -737,7 +788,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:01:45Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7661817738359202,
       "quality": "substantial"
     },
@@ -748,7 +799,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:02:12Z",
-      "hue": 270,
+      "hue": 89,
       "priority_score": 0.7190936000000001,
       "quality": "substantial"
     },
@@ -759,7 +810,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:34:49Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7132103632664923,
       "quality": "substantial"
     },
@@ -770,7 +821,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:35:13Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7238752112676057,
       "quality": "substantial"
     },
@@ -781,7 +832,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T20:35:34Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7266461478599222,
       "quality": "substantial"
     },
@@ -792,12 +843,52 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:35:56Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7224016949152543,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_mixing_time_bounds_from_concavity_dept",
+      "title": "Mixing Time Bounds from Concavity Depth",
+      "domain": "Probability Theory / Markov Chains",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T21:12:32Z",
+      "hue": 280,
+      "priority_score": 0.7286,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_quantum_ground_state_preparation_via_l",
+      "title": "Quantum Ground-State Preparation via Lorentzian Polynomial Certificates",
+      "domain": "Pythagorean / Algebraic Combinatorics / Quantum Computing",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T21:13:06Z",
+      "hue": 90,
+      "priority_score": 0.7215128,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_stability_theory_for_tropical_persiste",
+      "title": "Stability Theory for Tropical Persistence Barcodes",
+      "domain": "Tropical Geometry / Topological Data Analysis / Graph Theory",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T21:13:36Z",
+      "hue": 270,
+      "priority_score": 0.7197528467153285,
       "quality": "substantial"
     }
   ],
   "edges": [
+    {
+      "source": "direction_2_filtration_persistence_formula",
+      "target": "direction_1_stability_theory_for_tropical_persiste",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
     {
       "source": "direction_5_weighted_and_multi_objective_extension",
       "target": "direction_1_submodular_objectives_and_the_curvatur",
@@ -815,6 +906,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "direction_5_weighted_and_multi_objective_extension",
       "target": "direction_2_hypergraph_transversals_as_tropical_co",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_higher_order_log_concavity_and_partiti",
+      "target": "direction_2_mixing_time_bounds_from_concavity_dept",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -859,7 +957,7 @@ window.PACKAGE_GRAPH = {
     {
       "domain_a": "Geometry",
       "domain_b": "Tropical",
-      "package_count": 4,
+      "package_count": 5,
       "strength": 1.0
     },
     {
@@ -869,14 +967,26 @@ window.PACKAGE_GRAPH = {
       "strength": 0.9000000000000001
     },
     {
+      "domain_a": "Logic",
+      "domain_b": "Tropical",
+      "package_count": 2,
+      "strength": 0.7
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Logic",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
       "domain_a": "Algebra",
       "domain_b": "Logic",
       "package_count": 1,
       "strength": 0.5
     },
     {
-      "domain_a": "Logic",
-      "domain_b": "Tropical",
+      "domain_a": "Algebra",
+      "domain_b": "Pythagorean",
       "package_count": 1,
       "strength": 0.5
     },

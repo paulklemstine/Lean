@@ -135,10 +135,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1b3fdf32",
     "timestamp": "2026-05-24T23:11:24.476543+00:00"
   },
   {
@@ -290,25 +290,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:54:40.932722+00:00"
   },
   {
-    "id": "fd_0814",
-    "title": "Direction 2: Complex Inner Product Spaces and Quantum Observables",
-    "description": "**Conjecture:** The tensor-sorted rewrite system extends to complex scalars `\u2102` with a sesquilinear pairing `\u27e8v, w\u27e9 = \u2211\u1d62 conj(v\u1d62) \u00b7 w\u1d62`, and all 8 rewrite rules remain sound under this interpretation. Furthermore, the energy invariance theorem (Theorem 3) generalizes to Hermitian-matrix expectation values `\u27e8\u03c8| H |\u03c8\u27e9`, preserving the real-valuedness of observables.\n\n**Test:** Implement the complex evaluator over `\u2102\u207f` with `n \u2208 {2, 4, 8}`. Generate 10,000 random Hermitian matrices and complex vectors. For each, normalize the expression `\u27e8\u03c8, H\u00b7\u03c8\u27e9` and verify: (a) the numerical value is preserved to machine precision, (b) the result is real-valued (imaginary part < 10\u207b\u00b9\u00b2). A single complex-valued result from a Hermitian observable refutes the real-valuedness claim.\n\n**Impact:** This bridges the tensor rewrite system to finite-dimensional quantum mechanics, where `\u27e8\u03c8| H |\u03c8\u27e9` is the fundamental observable. Certified simplification of quantum expectation values would have applications in quantum chemistry (Hartree-Fock energy expressions), quantum information (entanglement witnesses), and quantum computing (circuit optimization for variational quantum eigensolvers).\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `energy`, `energy_add`, `energy_add_of_symmetric`, `dotProd_comm_of_symmetric`.\n\n**Proof Strategy:** Replace `CommRing R` with `StarRing \u2102` (or `RCLike`). Replace `dotProd` with the sesquilinear form. Modify `dotProd_smul_left` to use `starRingEnd` (conjugation). The key challenge is that `\u27e8a\u2022v, w\u27e9 = conj(a) \u00b7 \u27e8v, w\u27e9`, not `a \u00b7 \u27e8v, w\u27e9`. This requires modifying the `dot_smulVec_left` rewrite rule to track conjugation.\n\n**Domain Bridges:** Linear algebra \u2192 quantum mechanics \u2192 quantum computing \u2192 quantum chemistry.\n\n**Lineage:** Direct extension of Theorems 3-5 to the complex/Hermitian setting.\n\n**Ambition:** Grand challenge \u2014 requires significant new infrastructure (star-rings, sesquilinearity) and breaks the symmetry of the current rewrite rules.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:54:40.947177+00:00"
-  },
-  {
     "id": "fd_0822",
     "title": "Direction 4: Extension to System F (Polymorphic Lambda Calculus)",
     "description": "**Conjecture:** For System F (polymorphic lambda calculus), there exists a type complexity invariant analogous to typeStateBound that exactly characterizes the maximal bounded behavioral complexity of closed terms, with the invariant depending on the type and the instantiation.\n\n**Test:** Define a candidate invariant for simple System F types (e.g., \u2200\u03b1. \u03b1 \u2192 \u03b1, Church numerals \u2200\u03b1. (\u03b1 \u2192 \u03b1) \u2192 \u03b1 \u2192 \u03b1). Compute bounded state sets for small terms of these types. Check whether any numerical pattern emerges that could serve as the polymorphic type state bound.\n\n**Impact:** Would extend the entire theory to the dominant type system of functional programming, covering Haskell, ML, and dependently typed languages.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity` (the STLC case)\n\n**Proof Strategy:** Polymorphic types introduce quantifier complexity. The key challenge: \u2200\u03b1.\u03c4 has no fixed typeStateBound because \u03b1 can be instantiated at different types. One approach: define the bound as a supremum over instantiations. Another: define it relative to a fixed universe of types.\n\n**Domain Bridges:** Polymorphism in programming languages, parametricity (Reynolds 1983), categorical semantics.\n\n**Lineage:** Extends Statman's undecidability results for System F (1979) and Girard's normalization (1972).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Grand challenge, paradigm-shifting.\n\n---",
@@ -384,26 +365,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "83d44e07",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:10:32.381941+00:00"
-  },
-  {
-    "id": "fd_0837",
-    "title": "Direction 3: Quantum Ground-State Preparation via Lorentzian Certificates",
-    "description": "**Conjecture:** For a stoquastic Hamiltonian H whose ground-state amplitudes are the coefficients of a Lorentzian polynomial, the certificate tree provides an efficient quantum circuit for ground-state preparation, with depth O(n^(d\u22122) \u00b7 log n) and gate count O(n^d).\n\n**Test:** Implement the certificate-to-circuit compilation for (a) the transverse-field Ising model on small lattices (n \u2264 12), (b) the XX model, and (c) Rokhsar-Kivelson Hamiltonians. Simulate the circuit on a quantum emulator and compare fidelity vs. depth with Variational Quantum Eigensolver (VQE) and Quantum Approximate Optimization Algorithm (QAOA).\n\n**Impact:** Would establish that Lorentzian certificates are universal ground-state preparation recipes for stoquastic Hamiltonians, bridging algebraic combinatorics to quantum computing.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificate_sampling_efficiency`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `RecursiveLorentzianCertificate`\n\n**Proof Strategy:** Map each certificate node to a quantum gate sequence: the Lorentzian signature (one positive eigenvalue) means the Hessian can be decomposed as a rank-1 projector minus a positive semidefinite term. This decomposition defines a quantum channel whose fixed point is the target amplitude distribution. The recursive structure gives a depth-d\u22122 circuit that converges to the ground state.\n\n**Domain Bridges:** Quantum computing (Hamiltonian simulation), condensed matter physics (stoquastic models), classical simulation (sign-problem-free systems)\n\n**Lineage:** Builds on `certificate_depth_eq` and `RecursiveLorentzianCertificate` from the recognition catalog\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects algebraic combinatorics to quantum algorithms in a fundamentally new way.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "2b6d84b4",
-    "timestamp": "2026-05-25T02:11:10.221031+00:00"
   },
   {
     "id": "fd_0838",
@@ -523,24 +484,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T14:24:15.293101+00:00"
   },
   {
-    "id": "fd_0859",
-    "title": "Direction 2: Mixing Time Bounds from Concavity Depth",
-    "description": "**Conjecture**: For a probability distribution $\\pi$ on $\\{0, \\ldots, n\\}$ with k-fold log-concave weights ($k \\geq 1$), the spectral gap of the nearest-neighbor random walk satisfies $\\gamma \\geq c / n^{2/k}$ for an absolute constant $c > 0$, yielding mixing time $O(n^{2/k} \\log n)$.\n\n**Test**: For each $k = 1, 2, 3$, construct explicit k-fold log-concave distributions on $\\{0, \\ldots, n\\}$ for $n = 10, 20, 50, 100$. Compute the spectral gap of the tridiagonal transition matrix numerically. Plot $\\gamma \\cdot n^{2/k}$ and verify it is bounded below by a positive constant.\n\n**Impact**: This would provide the first quantitative link between concavity depth and algorithmic efficiency, turning k-fold log-concavity from a structural invariant into a computational resource.\n\n**The key insight is** that each layer of ratio-sequence log-concavity provides an additional functional inequality (a discrete Brascamp\u2013Lieb or modified log-Sobolev inequality) that accelerates the spectral decay by a polynomial factor.\n\n**Why now?** The spectral gap lower bound for ordinary log-concave distributions ($k = 1$) is already formalized in `Catalog/Pythagorean/CertificateSampling.lean` as `spectral_gap_log_concave_lower_bound`. Extending from $k = 1$ to general $k$ requires adapting the Markov chain comparison technique with the additional structural input from higher-order concavity.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateSampling.lean` (spectral_gap_log_concave_lower_bound, mixing_time_from_gap), `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (KFoldLogConcave, KFoldLogConcave.iterRatio_logConcave)\n\n**Proof Strategy**: Use the tower theorem to extract log-concavity at each ratio level. Each level provides an inequality that can be converted to a modified log-Sobolev inequality with improved constant. Chain these inequalities via tensorization to get the improved spectral gap.\n\n**Domain Bridges**: Discrete probability \u2192 Markov chain theory \u2192 statistical physics (mixing of Glauber dynamics)\n\n**Lineage**: Extends `spectral_gap_log_concave_lower_bound` and `certificate_sampling_efficiency`\n\n**Ambition**: Solid extension \u2014 builds directly on existing infrastructure with clear methodology.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "0e278652",
-    "timestamp": "2026-05-25T14:24:15.314374+00:00"
-  },
-  {
     "id": "fd_0861",
     "title": "Direction 4: Entropy Curvature and Information-Theoretic Depth",
     "description": "**Conjecture**: For a positive sequence $a$ normalized to a probability distribution $\\pi$, the k-fold log-concavity of $a$ implies that the discrete entropy functional $H(\\pi) = -\\sum \\pi_i \\log \\pi_i$ satisfies a $(k-1)$-th order curvature bound: the $(k-1)$-th iterated finite difference of $\\log(\\pi_i)$ has controlled sign.\n\n**Test**: For binomial distributions ($k = 1$) and geometric distributions ($k = \\infty$), compute iterated finite differences of $\\log(\\pi_i)$ and verify the sign pattern. For the geometric case, all iterated finite differences should vanish (corresponding to infinite depth).\n\n**Impact**: This would connect the k-fold hierarchy to information-theoretic quantities, enabling applications to channel capacity, data compression, and entropy-based learning theory.\n\n**The key insight is** that log-concavity is equivalent to the condition $\\Delta^2 \\log a_n \\leq 0$ (concavity of the log), and k-fold log-concavity corresponds to an alternating-sign condition on higher-order finite differences of $\\log a_n$ \u2014 the discrete analogue of higher-order curvature.\n\n**Why now?** The formalization of `LogConcaveN` and its equivalence to ratio sequence monotonicity provides the bridge between the concavity inequality and the finite-difference formulation. The existing `Real.log` infrastructure in Mathlib supports the finite-difference calculations.\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (LogConcaveN, KFoldLogConcave, RatioSeq), `Catalog/Pythagorean/CertificateSampling.lean` (ProbDist)\n\n**Proof Strategy**: Show that $\\text{LogConcaveN}(a)$ is equivalent to $\\Delta(\\log \\circ a)$ being nonincreasing, where $\\Delta f(n) = f(n+1) - f(n)$. Then k-fold log-concavity translates to iterated $\\Delta$ conditions on $\\log \\circ a$. Use the chain rule for finite differences to relate these to entropy curvature bounds.\n\n**Domain Bridges**: Discrete analysis \u2192 information theory \u2192 statistical learning theory\n\n**Lineage**: New direction building on `LogConcaveN` and `KFoldLogConcave`\n\n**Ambition**: Solid extension \u2014 natural and well-motivated with clear methodology.\n\n---",
@@ -620,25 +563,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "6a88b92d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T15:29:21.854833+00:00"
-  },
-  {
-    "id": "fd_0871",
-    "title": "Direction 4: Continuum Limit via Renormalization Group",
-    "description": "**Conjecture:** There exists a renormalization group transformation R that maps the lattice gauge theory at spacing a to one at spacing 2a, such that:\n1. R preserves the spectral gap up to a factor (1 - O(a\u00b2))\n2. The fixed point of R is the continuum Yang-Mills theory\n3. The mass gap at the fixed point is \u0394_\u221e = lim_{a\u21920} \u0394(a) > 0\n\n**Test:** Implement a block-spin RG transformation for SU(2) on a 16\u00d716 lattice. Measure the spectral gap at each RG step and verify convergence to a positive limit. Compare with known lattice QCD results: \u0394_\u221e \u2248 0.175(5) GeV\u00b2 for SU(3).\n\n**Impact:** Would complete the proof of the Yang-Mills mass gap, solving the Millennium Prize Problem.\n\n**Catalog References:**\n- `Physics/YangMillsMassGap.lean`: `spectral_gap_perturbation_stability`, `gap_cauchy_limit_positive`, `uniform_gap_infimum_positive`\n- `Physics/SpectralGap.lean`: `uniform_lattice_gap_persists_under_refinement`\n\n**Proof Strategy:** (A) Define the block-spin RG map as an averaging over short-distance gauge field fluctuations. (B) Prove that each RG step perturbs eigenvalues by O(a\u00b2) using the locality of the Wilson action. (C) Apply `spectral_gap_perturbation_stability` iteratively to bound the cumulative gap change. (D) Use `gap_cauchy_limit_positive` with the Cauchy sequence of gaps to prove positivity of the limit.\n\n**Domain Bridges:** Gauge theory \u2192 Renormalization group (statistical mechanics) \u2192 Harmonic analysis (wavelet theory for the block-spin map)\n\n**Lineage:** Combines `spectral_gap_perturbation_stability`, `uniform_gap_infimum_positive`, and `gap_cauchy_limit_positive` into a single continuum limit argument.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if achieved.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a88b92d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T15:29:21.874148+00:00"
   },
   {
     "id": "fd_0873",
@@ -807,10 +731,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2953ee13",
     "timestamp": "2026-05-25T17:14:31.235341+00:00"
   },
   {
@@ -889,46 +813,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T17:14:59.835069+00:00"
-  },
-  {
-    "id": "fd_0898",
-    "title": "Direction 5: Subgroup Coverings as Error-Correcting Codes",
-    "description": "**Conjecture:** The optimal subgroup covering family (minimizing pressure subject to covering all nongenerating pairs) corresponds to a code in a natural metric space on the subgroup lattice, and the minimum achievable pressure is related to the covering radius of this code.\n\n**The key insight is** that the pressure is an expected collision rate, analogous to the weight enumerator of a code. Minimizing pressure while maintaining coverage is the subgroup-lattice analogue of designing an efficient error-correcting code.\n\n**Why now?** The entropy-energy bounds establish that pressure is controlled by two parameters (count and index range) that are directly analogous to code parameters (length and minimum distance). The product factorization provides a product code construction.\n\n**Test:** For $S_n$ with $n \\leq 10$, enumerate all covering families (collections of maximal subgroups whose union contains all nongenerating pairs) and compute the minimum-pressure covering. Compare with the pressure from the full maximal subgroup family.\n\n**Impact:** Opens a new connection between group theory and coding theory, potentially yielding new efficient constructions for both subgroup coverings and codes.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (sieve inequality, entropy-energy bounds)\n\n**Proof Strategy:** Define a metric on the subgroup lattice using index ratios. Formulate the covering problem as a set cover with weighted costs. Apply known bounds from combinatorial optimization (greedy algorithm guarantees, LP relaxation bounds). Use product factorization for constructing product codes.\n\n**Domain Bridges:** Coding theory, combinatorial optimization, lattice theory.\n\n**Lineage:** Novel cross-domain bridge from the sieve inequality.\n\n**Ambition:** Solid extension with potential for surprising applications.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.855193+00:00"
-  },
-  {
-    "id": "fd_0902",
-    "title": "Direction 1: Stability Theory for Tropical Persistence Barcodes",
-    "description": "**Ambition:** grand_challenge\n\n**Conjecture:** There exists a metric $d_T$ on tropical persistence barcodes such that if two filtrations $F, F'$ have Hausdorff distance at most $\\epsilon$ (measured on vertex sets), then $d_T(\\text{TPB}(F), \\text{TPB}(F')) \\leq C \\cdot \\epsilon$ for a constant $C$ depending only on the maximum degree of $G$.\n\n**The key insight is** that the tropical kernel dimension $\\delta(S) = \\beta_1 + \\kappa_q$ decomposes into two Lipschitz components: the cycle rank changes by at most the degree when adding one vertex, and the visibility count changes by at most the number of components touched. This should yield a bottleneck stability theorem analogous to Cohen-Steiner-Edelsbrunner-Harer, but for the enriched tropical barcode.\n\n**Why now?** The formal decomposition $\\Delta\\delta = \\Delta\\beta_1 + \\Delta\\kappa_q$ and the barcode reconstruction theorem provide the algebraic infrastructure needed for stability. The event-based formulation makes perturbation analysis tractable: each event contributes a bounded amount to the total.\n\n**Test:** For random Erd\u0151s-R\u00e9nyi graphs $G(n, p)$ with $n \\leq 100$, compute tropical barcodes for filtrations differing by $\\epsilon$-perturbation of vertex ordering. Verify that barcode distances grow at most linearly in $\\epsilon$. Measure the empirical Lipschitz constant and compare to the degree-based bound.\n\n**Impact:** Would establish tropical persistence as a robust, noise-tolerant tool for data analysis, on par with classical persistent homology's stability guarantees.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean` \u2014 foundational definitions\n- `Pythagorean/TropicalBridge/FiltrationPersistence.lean` \u2014 barcode reconstruction\n\n**Proof Strategy:** Prove a one-step Lipschitz bound on $\\Delta\\delta$ using the degree bound on cycle rank changes and the component-touching bound on visibility changes. Then telescope over the filtration using the cumulative formula (`tropicalKernelDim_cumulative`). The bottleneck distance follows by the standard interleaving argument.\n\n**Domain Bridges:** Topological data analysis \u2194 metric geometry; tropical algebra \u2194 Lipschitz stability\n\n**Lineage:** Extends Cohen-Steiner-Edelsbrunner-Harer (2007) stability from $H_*$ to the richer tropical invariant.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f0f7ec54",
-    "consumed_by_exp_id": "834b245c",
-    "timestamp": "2026-05-25T17:58:10.295979+00:00"
   },
   {
     "id": "fd_0915",
@@ -1081,10 +965,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "edab5f0b",
     "timestamp": "2026-05-25T18:40:03.396854+00:00"
   },
   {
@@ -1239,23 +1123,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T20:01:51.882080+00:00"
   },
   {
-    "id": "fd_0935",
-    "title": "Direction 4: Normalization-Guided Proof Automation via Higher-Order Rewriting",
-    "description": "**Conjecture:** A simplification procedure based on higher-order completion modulo \u03b2 can decide equality in the equational theory of simply-typed combinatory algebra (S, K, I combinators with their defining equations) by normalizing both sides and comparing normal forms. This procedure, when integrated as a tactic, can automate proofs that currently require manual `simp` lemma engineering.\n\n**Test:** Implement a `ho_simp` tactic that: (1) takes a set of higher-order equations, (2) computes their completion (bounded), (3) normalizes both sides of the goal using the completed system, (4) checks syntactic equality of normal forms. Test on 50 equational goals involving function composition, map/filter laws, and monad laws. Compare proof length against `simp` with manually curated lemma sets.\n\n**Impact:** Current proof automation in type-theoretic proof assistants relies heavily on manually curated `simp` sets. A completion-based approach would automatically derive the needed simplification rules from equational axioms, reducing the human effort in proof engineering.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (HOEqGen_closed_under_subst \u2014 the generated theory respects substitution, which is essential for tactic soundness; leftmostReduce_sound \u2014 verified reduction is the computational backbone).\n\n**Proof Strategy:** The soundness theorem for the tactic follows from `HOEqGen_closed_under_subst`: if both sides normalize to the same term under a completed system derived from the equational axioms, they are in the generated equational theory. The main challenge is ensuring that the completion process terminates and produces a confluent system for the given axioms.\n\n**Domain Bridges:** Proof automation (tactic development), type theory (equational reasoning), software verification.\n\n**Lineage:** Applies the verified rewriting infrastructure as a proof automation tool.\n\n**Ambition:** Solid extension with immediate applicability.\n\n**\"The key insight is...\"** that completion doesn't just *simplify* expressions \u2014 it *decides* equational theories. A completed higher-order rewriting system is a decision procedure for its equational theory, and the closure theorems we've verified guarantee that this decision procedure is sound.\n\n**\"Why now?\"** The formal connection between rewriting and equational theory (HOEqGen and its closure under substitution) is now verified, providing the soundness foundation for a tactic.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:01:51.907267+00:00"
-  },
-  {
     "id": "fd_0936",
     "title": "Direction 5: Operadic Rewriting and Homotopical Completion",
     "description": "**Conjecture:** The substitution category formalized in our work (with `compSubst_assoc`, identity laws, and the presheaf-like action of terms) is the underlying category of a *colored operad* whose algebras are exactly the models of the STLC. Higher-order completion modulo \u03b2 can be interpreted as a homotopical completion in the sense of operadic Koszul duality: the completed rewriting system computes a cofibrant replacement of the operad.\n\n**Test:** Formalize the operad structure: define the composition operation on substitutions, verify the interchange law, and construct the corresponding operad. Then show that the critical pair computation of Direction 2 corresponds to computing the operadic Koszulity condition. Test on the associativity operad (whose Koszul dual is well-known) as a sanity check.\n\n**Impact:** This would connect higher-order rewriting to the rapidly growing field of homotopical algebra and operadic methods. It would provide a new perspective on completion as a *homological* computation, potentially yielding new termination criteria and complexity bounds for higher-order completion.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (compSubst_assoc, compSubst_idSubst_left, compSubst_idSubst_right \u2014 the categorical structure of substitutions is the starting point for the operadic construction).\n\n**Proof Strategy:** Define an operad `O` with colors `\u2115` (arities), operations `O(n\u2081,...,n\u2096; m) = Subst(n\u2081+...+n\u2096, m)`, and composition given by `compSubst`. Verify the operad axioms from the categorical properties already proved. Then define rewriting rules as generators of an operadic ideal, and show that completion computes the operadic Gr\u00f6bner basis.\n\n**Domain Bridges:** Homotopical algebra (operads, Koszul duality), algebraic topology (cofibrant replacements), homological algebra (resolutions).\n\n**Lineage:** Reinterprets the substitution category as operadic structure.\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects rewriting theory to homotopical algebra.\n\n**\"The key insight is...\"** that substitution composition is not just a *convenience* but an *operadic structure* \u2014 the multi-sorted composition operation of an operad whose algebras are exactly the models of the type theory. Completion, viewed through this lens, is computing a resolution of the operad.\n\n**\"Why now?\"** The categorical properties of substitution (associativity, identity, functoriality) are now formally verified, providing the raw material for an operadic construction. Recent advances in homotopical algebra (Loday-Vallette, Dotsenko-Khoroshkin) provide the theoretical tools for operadic completion.",
@@ -1272,6 +1139,85 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "2933a8cf",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T20:01:51.933532+00:00"
+  },
+  {
+    "id": "fd_0937",
+    "title": "Direction 1: Exact Weighted Tropical Dimension Formula",
+    "description": "**Conjecture:** For any finite weighted graph G with basepoint q and vertex subset S, the weighted tropical kernel dimension satisfies\n\n  dim_trop(G, q, S) = \u03b2\u2081^w(G, S) + \u03ba^w(G, q, S)\n\nwhere \u03b2\u2081^w counts \"weight-compatible independent cycles\" and \u03ba^w counts \"weight-degenerate q-visible components.\" Under generic weights, \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula.\n\n**The key insight is** that the weighted first Betti number \u03b2\u2081^w is not merely the cycle rank of the underlying graph but the cycle rank of the *weight-degeneracy subgraph* \u2014 the subgraph restricted to edges participating in local weight ties. This refined invariant interpolates between \u03b2\u2081 (when all weights are equal) and 0 (when weights are generic).\n\n**Why now?** The nine verified theorems (especially Theorems 3.4 and 3.9, relating genericity and degeneracy to kernel membership) provide the boundary cases. Computational experiments on small graphs (n \u2264 6) can now systematically test the formula and identify the correct definition of \u03b2\u2081^w by exhaustive comparison.\n\n**Test:** Enumerate all weighted graphs on 4-5 vertices with weights in {1,...,5}. For each, compute the kernel dimension by brute force and compare with \u03b2\u2081^w + \u03ba^w for candidate definitions of \u03b2\u2081^w. The conjecture is falsifiable if any graph violates the equality.\n\n**Impact:** An exact dimension formula would be the weighted tropical analogue of the Baker-Norine Riemann-Roch theorem, opening the door to tropical divisor theory with valuations.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorems 3.4, 3.9), `Pythagorean/TropicalBridge/WeightedDefect.lean` (structural defect formula).\n\n**Proof Strategy:** Define \u03b2\u2081^w via the weight-degeneracy subgraph. Prove lower bound by explicit cycle/component constructions (extending Theorems 3.5-3.6). Prove upper bound by showing every kernel vector decomposes as a sum of cycle and component contributions.\n\n**Domain Bridges:** Tropical algebraic geometry (tropical linear spaces), matroid theory (circuit rank).\n\n**Lineage:** Extends Baker-Norine [2007], Develin-Santos-Sturmfels [2005].\n\n**Ambition:** Grand challenge \u2014 would unify tropical divisor theory with weighted optimization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e8f8d5e4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:35:38.438401+00:00"
+  },
+  {
+    "id": "fd_0938",
+    "title": "Direction 2: Valuated Matroid Equivalence",
+    "description": "**Conjecture:** The weighted tropical kernel on S is isomorphic (as a tropical linear space) to the tropical linear space of a valuated graphic matroid M(G) restricted to S-indexed constraints. The weight function w defines the valuation on circuits.\n\n**The key insight is** that the tropical balance condition at each vertex defines a tropical hyperplane in the space of potentials, and the intersection of these hyperplanes is a tropical linear space whose combinatorial type is determined by the valuated matroid of the graph.\n\n**Why now?** The Dress-Wenzel theory of valuated matroids has matured significantly, with recent algorithmic advances in tropical linear algebra. The explicit cycle balance identity (Theorem 3.1) provides the concrete bridge: the valuation of a circuit is the alternating sum of edge weights around the cycle.\n\n**Test:** For the complete graph K\u2084 with various weight functions, compute the tropical linear space of the valuated graphic matroid and compare with the weighted tropical kernel. Agreement would confirm the equivalence.\n\n**Impact:** Would place weighted tropical graph Hodge theory within the established framework of tropical linear spaces, enabling the use of powerful tools from tropical intersection theory.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorem 3.1, cycle balance transport).\n\n**Proof Strategy:** Construct the valuated matroid from the weighted graph. Show the tropical Pl\u00fccker relations correspond to the balance conditions. Use the Dress-Wenzel axioms to verify the matroid structure.\n\n**Domain Bridges:** Tropical algebraic geometry, matroid theory, polyhedral combinatorics.\n\n**Lineage:** Extends Dress-Wenzel [1992], Murota [2003].\n\n**Ambition:** Grand challenge \u2014 would establish a foundational bridge between discrete Hodge theory and tropical linear algebra.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e8f8d5e4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:35:38.468806+00:00"
+  },
+  {
+    "id": "fd_0939",
+    "title": "Direction 3: Algorithmic Tropical Kernel Computation",
+    "description": "**Conjecture:** The weighted tropical kernel dimension can be computed in polynomial time O(|V|\u00b3 \u0394) for graphs with maximum degree \u0394, by reduction to a system of tropical linear inequalities.\n\n**The key insight is** that the tropical balance condition at each vertex is a tropical linear constraint, and the tropical kernel is the solution set of a tropical linear system. Tropical linear programming (Butkovi\u010d, Gaubert) provides polynomial-time algorithms for such systems.\n\n**Why now?** Tropical linear algebra has recently developed efficient algorithms for feasibility of tropical linear systems. The explicit structure of the weighted graph Laplacian (sparse, structured coefficients) should enable specialized algorithms faster than general-purpose tropical LP.\n\n**Test:** Implement a tropical LP-based kernel dimension algorithm and compare runtime/output with brute-force enumeration on graphs with n = 5-10. Polynomial scaling would confirm the conjecture.\n\n**Impact:** Would make weighted tropical Hodge theory computationally practical for real-world networks (power grids, routing networks) with thousands of vertices.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Definition 2.3, balance condition structure).\n\n**Proof Strategy:** Formulate balance conditions as tropical linear inequalities. Apply tropical Cramer's rule or tropical LP algorithms. Exploit graph sparsity for speedup.\n\n**Domain Bridges:** Combinatorial optimization, tropical linear programming, network algorithms.\n\n**Lineage:** Extends Butkovi\u010d [2010], Gaubert-Katz [2007].\n\n**Ambition:** Solid extension \u2014 would bridge theory to practice.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e8f8d5e4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:35:38.492371+00:00"
+  },
+  {
+    "id": "fd_0940",
+    "title": "Direction 4: Energy Landscape Metastability Detection",
+    "description": "**Conjecture:** For molecular energy landscapes modeled as weighted graphs, the weighted tropical kernel dimension at a vertex subset S equals the number of independent metastable degeneracies \u2014 configurations where multiple transition pathways have equal activation energy.\n\n**The key insight is** that tropical balance (minimum attained twice) is exactly the condition for metastability: a state where two escape routes have identical barrier heights, making the system poised between transitions. The kernel dimension counts independent such degeneracies.\n\n**Why now?** Molecular dynamics simulations routinely produce energy landscape graphs, but lack principled tools for detecting and counting metastable degeneracies. The tropical framework provides an algebraic characterization that can be computed directly from the landscape graph.\n\n**Test:** Apply the weighted tropical kernel algorithm to energy landscape graphs extracted from molecular dynamics simulations of small peptides. Compare detected metastable degeneracies with known folding intermediates.\n\n**Impact:** Would provide a new computational tool for identifying transition states in protein folding, materials science, and chemical kinetics.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorem 3.9, zero kernel under degeneracy).\n\n**Proof Strategy:** Model energy landscapes as weighted graphs. Show tropical balance \u2194 metastable degeneracy. Prove dimension = independent degeneracy count under appropriate non-degeneracy conditions.\n\n**Domain Bridges:** Statistical physics, computational chemistry, molecular dynamics.\n\n**Lineage:** Extends Frauenfelder [1991], Wales [2003].\n\n**Ambition:** Solid extension with high applied impact.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e8f8d5e4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:35:38.515830+00:00"
   },
   {
     "id": "seed_005",
@@ -1396,73 +1342,13 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
-    "id": "fd_0937",
-    "title": "Direction 1: Exact Weighted Tropical Dimension Formula",
-    "description": "**Conjecture:** For any finite weighted graph G with basepoint q and vertex subset S, the weighted tropical kernel dimension satisfies\n\n  dim_trop(G, q, S) = \u03b2\u2081^w(G, S) + \u03ba^w(G, q, S)\n\nwhere \u03b2\u2081^w counts \"weight-compatible independent cycles\" and \u03ba^w counts \"weight-degenerate q-visible components.\" Under generic weights, \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula.\n\n**The key insight is** that the weighted first Betti number \u03b2\u2081^w is not merely the cycle rank of the underlying graph but the cycle rank of the *weight-degeneracy subgraph* \u2014 the subgraph restricted to edges participating in local weight ties. This refined invariant interpolates between \u03b2\u2081 (when all weights are equal) and 0 (when weights are generic).\n\n**Why now?** The nine verified theorems (especially Theorems 3.4 and 3.9, relating genericity and degeneracy to kernel membership) provide the boundary cases. Computational experiments on small graphs (n \u2264 6) can now systematically test the formula and identify the correct definition of \u03b2\u2081^w by exhaustive comparison.\n\n**Test:** Enumerate all weighted graphs on 4-5 vertices with weights in {1,...,5}. For each, compute the kernel dimension by brute force and compare with \u03b2\u2081^w + \u03ba^w for candidate definitions of \u03b2\u2081^w. The conjecture is falsifiable if any graph violates the equality.\n\n**Impact:** An exact dimension formula would be the weighted tropical analogue of the Baker-Norine Riemann-Roch theorem, opening the door to tropical divisor theory with valuations.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorems 3.4, 3.9), `Pythagorean/TropicalBridge/WeightedDefect.lean` (structural defect formula).\n\n**Proof Strategy:** Define \u03b2\u2081^w via the weight-degeneracy subgraph. Prove lower bound by explicit cycle/component constructions (extending Theorems 3.5-3.6). Prove upper bound by showing every kernel vector decomposes as a sum of cycle and component contributions.\n\n**Domain Bridges:** Tropical algebraic geometry (tropical linear spaces), matroid theory (circuit rank).\n\n**Lineage:** Extends Baker-Norine [2007], Develin-Santos-Sturmfels [2005].\n\n**Ambition:** Grand challenge \u2014 would unify tropical divisor theory with weighted optimization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e8f8d5e4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:35:38.438401+00:00"
-  },
-  {
-    "id": "fd_0938",
-    "title": "Direction 2: Valuated Matroid Equivalence",
-    "description": "**Conjecture:** The weighted tropical kernel on S is isomorphic (as a tropical linear space) to the tropical linear space of a valuated graphic matroid M(G) restricted to S-indexed constraints. The weight function w defines the valuation on circuits.\n\n**The key insight is** that the tropical balance condition at each vertex defines a tropical hyperplane in the space of potentials, and the intersection of these hyperplanes is a tropical linear space whose combinatorial type is determined by the valuated matroid of the graph.\n\n**Why now?** The Dress-Wenzel theory of valuated matroids has matured significantly, with recent algorithmic advances in tropical linear algebra. The explicit cycle balance identity (Theorem 3.1) provides the concrete bridge: the valuation of a circuit is the alternating sum of edge weights around the cycle.\n\n**Test:** For the complete graph K\u2084 with various weight functions, compute the tropical linear space of the valuated graphic matroid and compare with the weighted tropical kernel. Agreement would confirm the equivalence.\n\n**Impact:** Would place weighted tropical graph Hodge theory within the established framework of tropical linear spaces, enabling the use of powerful tools from tropical intersection theory.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorem 3.1, cycle balance transport).\n\n**Proof Strategy:** Construct the valuated matroid from the weighted graph. Show the tropical Pl\u00fccker relations correspond to the balance conditions. Use the Dress-Wenzel axioms to verify the matroid structure.\n\n**Domain Bridges:** Tropical algebraic geometry, matroid theory, polyhedral combinatorics.\n\n**Lineage:** Extends Dress-Wenzel [1992], Murota [2003].\n\n**Ambition:** Grand challenge \u2014 would establish a foundational bridge between discrete Hodge theory and tropical linear algebra.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e8f8d5e4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:35:38.468806+00:00"
-  },
-  {
-    "id": "fd_0939",
-    "title": "Direction 3: Algorithmic Tropical Kernel Computation",
-    "description": "**Conjecture:** The weighted tropical kernel dimension can be computed in polynomial time O(|V|\u00b3 \u0394) for graphs with maximum degree \u0394, by reduction to a system of tropical linear inequalities.\n\n**The key insight is** that the tropical balance condition at each vertex is a tropical linear constraint, and the tropical kernel is the solution set of a tropical linear system. Tropical linear programming (Butkovi\u010d, Gaubert) provides polynomial-time algorithms for such systems.\n\n**Why now?** Tropical linear algebra has recently developed efficient algorithms for feasibility of tropical linear systems. The explicit structure of the weighted graph Laplacian (sparse, structured coefficients) should enable specialized algorithms faster than general-purpose tropical LP.\n\n**Test:** Implement a tropical LP-based kernel dimension algorithm and compare runtime/output with brute-force enumeration on graphs with n = 5-10. Polynomial scaling would confirm the conjecture.\n\n**Impact:** Would make weighted tropical Hodge theory computationally practical for real-world networks (power grids, routing networks) with thousands of vertices.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Definition 2.3, balance condition structure).\n\n**Proof Strategy:** Formulate balance conditions as tropical linear inequalities. Apply tropical Cramer's rule or tropical LP algorithms. Exploit graph sparsity for speedup.\n\n**Domain Bridges:** Combinatorial optimization, tropical linear programming, network algorithms.\n\n**Lineage:** Extends Butkovi\u010d [2010], Gaubert-Katz [2007].\n\n**Ambition:** Solid extension \u2014 would bridge theory to practice.\n\n---",
+    "id": "fd_0943",
+    "title": "Direction 1: Characterization of Lorentzian Ground-State Families",
+    "description": "**Conjecture:** For stoquastic local Hamiltonians on n sites with bounded local dimension and bounded interaction range, the ground-state coefficient vector (in the occupation-number basis) forms the coefficient family of a Lorentzian polynomial of degree O(n). The certificate depth scales as O(n \u00b7 polylog(n)).\n\n**Test:** For the transverse-field Ising model on chains n \u2264 20, compute the ground state via exact diagonalization, extract the coefficient vector, and test Lorentzianity by checking all degree-2 derivative Hessians for the at-most-one-positive-eigenvalue condition. Record the fraction of parameter space (J, h) for which the condition holds.\n\n**Impact:** This would identify the exact boundary of applicability for certificate-driven quantum state preparation, replacing the current assumption that Lorentzianity holds with a proved characterization.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (IsRecursivelyLorentzian, RecursiveLorentzianCertificate), `Catalog/Pythagorean/CertificateSampling.lean` (certificate_verification_complexity)\n\n**Proof Strategy:** Induction on system size n. For the TFIM, use the transfer matrix formulation to express ground-state amplitudes as products of 2\u00d72 matrices, then verify the Hessian condition on the resulting polynomial. The key technical step is showing that the transfer matrix product preserves the Lorentzian property of the coefficient family.\n\n**Domain Bridges:** Condensed matter physics (Perron\u2013Frobenius theory), statistical mechanics (transfer matrices), combinatorial optimization (QUBO formulations as stoquastic Hamiltonians)\n\n**Lineage:** Builds on Br\u00e4nd\u00e9n\u2013Huh [2020] characterization of Lorentzian polynomials and Bravyi\u2013Gosset [2017] complexity of stoquastic systems.\n\n**Ambition:** Grand challenge \u2014 establishing a complete characterization would be a major theorem in mathematical physics.\n\n**The key insight is** that transfer matrix structure may enforce Lorentzianity automatically for nearest-neighbor stoquastic Hamiltonians, because the matrix product preserves strong log-concavity.\n\n**Why now?** The formal framework for recursive Lorentzian certificates now exists (LorentzianRecognitionComplete.lean), and computational tools for testing Hessian signatures are available for n \u2264 20.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e8f8d5e4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:35:38.492371+00:00"
-  },
-  {
-    "id": "fd_0940",
-    "title": "Direction 4: Energy Landscape Metastability Detection",
-    "description": "**Conjecture:** For molecular energy landscapes modeled as weighted graphs, the weighted tropical kernel dimension at a vertex subset S equals the number of independent metastable degeneracies \u2014 configurations where multiple transition pathways have equal activation energy.\n\n**The key insight is** that tropical balance (minimum attained twice) is exactly the condition for metastability: a state where two escape routes have identical barrier heights, making the system poised between transitions. The kernel dimension counts independent such degeneracies.\n\n**Why now?** Molecular dynamics simulations routinely produce energy landscape graphs, but lack principled tools for detecting and counting metastable degeneracies. The tropical framework provides an algebraic characterization that can be computed directly from the landscape graph.\n\n**Test:** Apply the weighted tropical kernel algorithm to energy landscape graphs extracted from molecular dynamics simulations of small peptides. Compare detected metastable degeneracies with known folding intermediates.\n\n**Impact:** Would provide a new computational tool for identifying transition states in protein folding, materials science, and chemical kinetics.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorem 3.9, zero kernel under degeneracy).\n\n**Proof Strategy:** Model energy landscapes as weighted graphs. Show tropical balance \u2194 metastable degeneracy. Prove dimension = independent degeneracy count under appropriate non-degeneracy conditions.\n\n**Domain Bridges:** Statistical physics, computational chemistry, molecular dynamics.\n\n**Lineage:** Extends Frauenfelder [1991], Wales [2003].\n\n**Ambition:** Solid extension with high applied impact.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Tropical",
       "Physics",
       "Bridges",
       "Logic"
@@ -1470,9 +1356,49 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "e8f8d5e4",
+    "source_exp_id": "2b6d84b4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:35:38.515830+00:00"
+    "timestamp": "2026-05-25T21:13:09.676387+00:00"
+  },
+  {
+    "id": "fd_0944",
+    "title": "Direction 2: Robust Certificate Compilation for Approximate Lorentzianity",
+    "description": "**Conjecture:** If a nonneg coefficient vector w is \u03b5-close (in total variation distance) to the coefficient vector of a Lorentzian polynomial, then the compiled preparation tree produces a state with fidelity \u2265 1 - O(\u03b5\u00b2) against the true normalized coefficient state.\n\n**Test:** Perturb known Lorentzian coefficient families (e.g., binomial coefficients, matroid basis counts) by random nonneg noise of magnitude \u03b5, compile the perturbed family, and measure fidelity as a function of \u03b5. Test for \u03b5 \u2208 {0.001, 0.01, 0.05, 0.1}.\n\n**Impact:** Extends certificate compilation from exact to approximate settings, vastly increasing applicability to real physical systems where exact Lorentzianity may not hold.\n\n**Catalog References:** `Pythagorean/QuantumGroundStatePreparation.lean` (coeffState_normalized, coeffState_unique), `Catalog/Pythagorean/CertificateSampling.lean` (certificate_sampling_efficiency)\n\n**Proof Strategy:** Use the uniqueness theorem (coeffState_unique) to establish continuity of the compilation map, then bound the fidelity loss using the triangle inequality for L\u00b2 distance and the Lipschitz constant of normalization.\n\n**Domain Bridges:** Approximation theory, numerical stability analysis, quantum error analysis\n\n**Lineage:** Extension of exact certificate compilation (this work) to the robust setting.\n\n**Ambition:** Solid extension \u2014 the mathematical tools are largely available, but the quantitative bounds require careful analysis.\n\n**The key insight is** that L\u00b2 normalization is a Lipschitz map on the positive orthant, so small perturbations to coefficients yield small perturbations to the quantum state.\n\n**Why now?** The exact correctness theorems provide the foundation; the robust extension is the natural next step.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b6d84b4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:09.706179+00:00"
+  },
+  {
+    "id": "fd_0946",
+    "title": "Direction 4: Matroidal Quantum State Preparation",
+    "description": "**Conjecture:** For matroids whose basis-generating polynomial is Lorentzian (which includes all matroids, by the Adiprasito\u2013Huh\u2013Katz theorem), the certificate compilation produces a quantum state over bases with amplitudes proportional to basis weights. This gives a quantum polynomial-time sampler for matroid bases.\n\n**Test:** Implement certificate compilation for graphic matroids on small graphs (n \u2264 15 vertices), transversal matroids, and partition matroids. Compare the compiled amplitude vector with the exact basis-weight distribution.\n\n**Impact:** Connects Lorentzian certificate compilation to combinatorial optimization. Quantum sampling from matroid bases has applications to network reliability, linear algebra, and constraint satisfaction.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange \u2014 matroid exchange property)\n\n**Proof Strategy:** Use the Adiprasito\u2013Huh\u2013Katz theorem (Lorentzianity of matroid basis polynomials) as input, then apply the certificate compilation pipeline. The main work is constructing the recursive certificate from matroid structure.\n\n**Domain Bridges:** Matroid theory, combinatorial optimization, algebraic geometry (Hodge theory), network analysis\n\n**Lineage:** Extends the Br\u00e4nd\u00e9n\u2013Huh theory of Lorentzian polynomials to a computational application via certificate compilation.\n\n**Ambition:** Solid extension with potentially high impact in combinatorial optimization.\n\n**The key insight is** that matroid basis-generating polynomials are already known to be Lorentzian, so the certificate exists \u2014 we just need to extract it efficiently.\n\n**Why now?** The Adiprasito\u2013Huh\u2013Katz theorem (2018) provides the theoretical foundation; certificate compilation (this work) provides the preparation machinery.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2b6d84b4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:09.763547+00:00"
   },
   {
     "id": "seed_013",
@@ -1832,6 +1758,51 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:39:42.310379+00:00"
   },
   {
+    "id": "fd_0942",
+    "title": "Prime-Stable Minors Force Arithmetic Periodicity in Integer Persistence",
+    "description": "Conjecture: Let C(N) be an explicitly computable family of finite filtered chain complexes over Z, indexed by N, whose boundary matrices have entries given by polynomial functions of N. If for every prime p outside a finite exceptional set, the multiset of p-adic valuations of all nonzero maximal minors of the boundary maps is eventually periodic in N modulo some M(p), then the primewise persistence barcodes of C(N) are eventually periodic in N for a set of primes of natural density 1. Test: Construct concrete polynomial-boundary families C(N), compute Smith normal forms and primewise barcodes across many N and p, and check whether periodicity of valuation data predicts eventual barcode periodicity; a counterexample is any family where minor-valuation periodicity holds but barcode periodicity fails on a positive-density set of primes. Impact: This would create a new bridge from arithmetic combinatorics of matrix minors to topological dynamics of persistence, enabling prediction and compression of infinite arithmetic persistence families via finite congruence data.",
+    "domains": [
+      "Persistent Homology",
+      "Arithmetic Combinatorics"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:12:46.036335+00:00"
+  },
+  {
+    "id": "fd_0948",
+    "title": "Finite Prime Fingerprints Determine Arithmetic Varieties up to Isogeny/Derived T",
+    "description": "Conjecture: There exists a universal constant B depending only on dimension d such that for any two smooth projective varieties X,Y over Q of dimension d in a fixed geometric class (e.g. abelian varieties, K3 surfaces, or Calabi\u2013Yau threefolds), if their primewise Frobenius characteristic polynomials agree for every good prime p <= B, then X and Y are forced into the same arithmetic equivalence class (isogenous in the abelian case, same semisimplified l-adic Galois representation in general, and possibly derived equivalent in special classes). Test: For each class and dimension, compute databases of varieties and search for the smallest B for which collisions disappear; a single counterexample pair with matching data up to arbitrarily large tested bounds but inequivalent geometry refutes the strongest form. Confirmation comes from observing a sharp finite-identifiability threshold and proving it in low-dimensional families. Impact: This would turn arithmetic reconstruction from an asymptotic/infinite-prime phenomenon into a finite-data principle, enabling compressed arithmetic classification, new algorithms for recognition of varieties, and a bridge between Faltings-style rigidity and computational geometry.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Computational Number Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:17.989462+00:00"
+  },
+  {
+    "id": "fd_0954",
+    "title": "Adversarial Prime Blindness for Persistent Arithmetic Invariants",
+    "description": "Conjecture: There exists an explicit infinite family of finite filtered chain complexes over Z, computable in polynomial time, such that for every fixed finite set of primes S the full collection of S-local persistence invariants (including all p-primary barcode data for p in S) is identical for two non-isomorphic members of the family, yet their global integer persistence modules are non-isomorphic and are distinguished by torsion at a prime outside S. Test: Construct the family and algorithmically verify, for increasing size parameter N, that all localized invariants at primes in S coincide while Smith normal form over Z reveals a discrepancy at a new prime q_N not in S; refute by proving a finite-prime completeness theorem showing some universal finite S always determines the global module in this setting. Impact: This would establish a sharp impossibility theorem for finite-prime arithmetic summaries, forcing adelic or adaptive-prime methods in integer persistent homology and suggesting cryptographic-style hiding phenomena inside topological invariants.",
+    "domains": [
+      "Topological Data Analysis",
+      "Algebraic Number Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:49.686566+00:00"
+  },
+  {
     "id": "fd_0866",
     "title": "Direction 4: Tropical Persistent Homology for Network Data Analysis",
     "description": "**Conjecture**: For a filtration of graphs $G_1 \\subseteq G_2 \\subseteq \\cdots \\subseteq G_k$ arising from a point cloud (via Vietoris-Rips or similar construction), the sequence of tropical kernel dimensions $\\dim(\\ker_{\\text{trop}}(L_{G_i}))$ produces a \"tropical barcode\" that is stable under small perturbations of the input data, with stability constant equal to the minimum Fiedler eigenvalue across the filtration.\n\n**Test**:\n1. Generate 100 random point clouds in $\\mathbb{R}^d$ for $d \\in \\{2, 3, 5\\}$\n2. Compute tropical barcodes via the cycle rank sequence\n3. Compute classical persistent homology barcodes via standard algorithms\n4. Compare stability constants: measure the bottleneck distance between barcodes under perturbation\n5. Falsification: find a point cloud where the tropical barcode is strictly less stable than the classical barcode (would bound the stability constant)\n\n**Impact**: Could provide a faster alternative to standard persistent homology computation for topological data analysis. Tropical operations (min, plus) are simpler than field arithmetic, potentially enabling hardware acceleration.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `genus_nonneg_of_connected`\n- `Catalog/Pythagorean/AdelicPersistentHomology.lean`: persistent homology infrastructure (if available)\n\n**Proof Strategy**: Use the interlacing theorem for graph Laplacian eigenvalues to bound how the tropical kernel dimension changes when edges are added. The genus changes by exactly 1 when a non-tree edge is added, giving a Lipschitz bound on the barcode.\n\n**Domain Bridges**: Topological data analysis (persistent homology, barcodes) \u2194 Tropical geometry (tropical kernel dimension) \u2194 Spectral graph theory (eigenvalue interlacing)\n\n**Lineage**: Extends `genus_nonneg_of_connected`, connects to TDA\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The cycle rank interpretation is standard; the novelty is the stability analysis and tropical algorithmic framework.\n\n---",
@@ -1872,12 +1843,12 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:03.321531+00:00"
   },
   {
-    "id": "fd_0941",
-    "title": "Direction 5: Tropical Resilience Index for Infrastructure Networks",
-    "description": "**Conjecture:** The weighted tropical kernel dimension serves as a quantitative resilience index for infrastructure networks: dim_trop \u2265 k if and only if the network can withstand k simultaneous single-link failures without losing optimal routing capability for any node in S.\n\n**The key insight is** that each independent kernel direction corresponds to a \"degree of routing freedom\" \u2014 a way to reroute traffic optimally when a link fails. The tropical balance condition ensures that alternative routes are equally optimal, not merely feasible.\n\n**Why now?** Critical infrastructure networks (power grids, communication networks, water systems) face increasing threats from climate events and cyberattacks. Current resilience metrics (graph connectivity, min-cut) capture topological redundancy but not cost-weighted routing redundancy. The tropical framework fills this gap.\n\n**Test:** Analyze the IEEE 30-bus power system test case as a weighted graph. Compute the tropical kernel dimension and compare with known resilience assessments. Verify that dimension drops predict failure-prone configurations.\n\n**Impact:** Would provide network operators with a computationally tractable, mathematically rigorous resilience metric that accounts for edge costs.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorem 3.7, cross-domain identity connecting SP degeneracy and weight degeneracy).\n\n**Proof Strategy:** Formalize the connection between kernel directions and link-failure tolerance. Prove the equivalence between k-failure resilience and dim_trop \u2265 k using the structure of balanced potentials.\n\n**Domain Bridges:** Network science, infrastructure resilience, operations research.\n\n**Lineage:** Extends Sterbenz et al. [2010], Albert et al. [2004].\n\n**Ambition:** Solid extension with direct practical application.",
+    "id": "fd_0950",
+    "title": "Direction 2: Tropical Interleaving Distance and Algebraic Stability",
+    "description": "**Conjecture:** There exists a categorical interleaving distance on the category of tropical persistence modules (parametrized by monotone functions \u211d \u2192 \u2124 with bounded local variation) such that (a) the interleaving distance is bounded above by the barcode distance, (b) the two distances are bi-Lipschitz equivalent for finite-type modules, and (c) the interleaving distance satisfies a universal property analogous to the Bubenik\u2013Scott framework for classical persistence.\n\n**Test:** Formalize the tropical persistence category in Lean 4. Verify the bi-Lipschitz equivalence computationally for graphs up to n = 50. Construct an explicit example showing the two distances are not equal (gap in the bi-Lipschitz constant).\n\n**Impact:** This would establish a complete algebraic stability theory for tropical persistence, paralleling the Chazal\u2013Cohen-Steiner\u2013Glisse\u2013Guibas\u2013Oudot framework [CCGGO09] for classical persistence. It would make tropical persistence amenable to the full toolkit of abstract persistence theory.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropical_event_profile_interleaved, tropicalBarcodeDist_nonneg, tropicalBarcodeDist_symm)\n\n**Proof Strategy:** Define the tropical persistence module as a functor from (\u211d, \u2264) to (\u2124-Mod, \u2264), where morphisms are order-preserving maps. The interleaving distance is the infimum \u03b4 such that the modules are \u03b4-shifted comparable. Use the monotonicity theorem (tropicalEventProfile_mono) as the starting point and extend to the full module structure.\n\n**Domain Bridges:** Category theory, homological algebra, abstract persistence theory\n\n**Lineage:** Extends Theorems 5.1\u20135.2 (interleaving) to a full categorical framework\n\n**Ambition:** Grand challenge \u2014 would unify tropical and classical persistence theory\n\n---",
     "domains": [
       "Pythagorean",
-      "Geometry",
+      "Algebra",
       "Tropical",
       "Bridges",
       "Logic"
@@ -1885,9 +1856,47 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "e8f8d5e4",
+    "source_exp_id": "834b245c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:35:38.539952+00:00"
+    "timestamp": "2026-05-25T21:13:41.991865+00:00"
+  },
+  {
+    "id": "fd_0951",
+    "title": "Direction 3: Sheaf-Theoretic Tropical Persistence",
+    "description": "**Conjecture:** The tropical persistence barcode can be realized as the derived pushforward of a constructible sheaf on the real line, valued in the category of tropical semimodules. The stability theorem then follows from the properness of the pushforward and the continuity of the derived functor, providing a conceptual explanation for the degree-dependent constant.\n\n**Test:** Construct the sheaf explicitly for path graphs and cycle graphs. Verify that the stalk at each point t equals the tropical kernel dimension. Check that the derived pushforward reproduces the event profile.\n\n**Impact:** This would connect tropical persistence to the rapidly developing theory of persistent sheaves (Curry, Kashiwara\u2013Schapira), opening access to powerful tools from algebraic geometry and microlocal analysis. It would also suggest natural higher-dimensional generalizations.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, TPB), `Catalog/Pythagorean/TropicalBridge/FiltrationPersistence.lean` (TropicalFiltration)\n\n**Proof Strategy:** Define the sheaf F on \u211d with stalks F_t = tropical kernel of G[activeVertices(f,t)]. The restriction maps are the natural inclusions. Constructibility follows from the finite number of critical values (entrance times). The pushforward to a point gives the global sections, which encode the barcode.\n\n**Domain Bridges:** Sheaf theory, derived categories, algebraic geometry, microlocal analysis\n\n**Lineage:** Conceptual reformulation of the entire stability framework\n\n**Ambition:** Grand challenge \u2014 would place tropical persistence in the mainstream of modern geometry\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "834b245c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:42.015713+00:00"
+  },
+  {
+    "id": "fd_0952",
+    "title": "Direction 4: Information-Theoretic Bounds on Tropical Barcode Stability",
+    "description": "**Conjecture:** The tropical barcode distance between random filtrations on a fixed graph G is, up to constants, equal to the mutual information between the filtration and the barcode, divided by the graph's entropy rate. Formally: d_T(TPB(G,f), TPB(G,g)) \u2248 I(f; TPB(G,f)) \u00b7 FiltrationSupDist(f,g) / H(G), where H(G) is the entropy of the degree sequence.\n\n**The key insight is** that the degree-weighted event profile is essentially a sufficient statistic for the filtration, and the stability constant (D+1) reflects the information capacity of a degree-D vertex.\n\n**Why now?** Recent advances in information-theoretic persistence (Bubenik, Vergne) have made the connection between persistence and entropy precise for classical barcodes. The tropical setting, with its natural connection to min-plus entropy and max-plus probability, is ripe for an analogous development.\n\n**Test:** Compute mutual information between filtration and barcode for G(n, c/n) with n = 100, c \u2208 {3, 5, 10}. Compare I(f; TPB(G,f)) / H(G) with the empirical stability ratio. Plot the relationship across 500 random graph instances.\n\n**Impact:** Would provide a principled, information-theoretic explanation for why the degree bound is the natural stability constant. Could lead to optimal data compression for tropical barcodes.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, certified_stability_bound)\n\n**Proof Strategy:** Model the filtration as a random process and the barcode as its image under a deterministic function. Apply the data processing inequality to bound the mutual information. Connect the channel capacity to the maximum degree via the capacity of a discrete memoryless channel with D+1 outputs.\n\n**Domain Bridges:** Information theory, entropy, data processing inequality, rate-distortion theory\n\n**Lineage:** Bridges from tropical persistence (Direction 1 foundation) to information theory\n\n**Ambition:** Solid extension \u2014 draws on mature information-theoretic tools\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "834b245c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T21:13:42.045646+00:00"
   },
   {
     "id": "seed_032",
