@@ -359,24 +359,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:55:14.021207+00:00"
   },
   {
-    "id": "fd_0829",
-    "title": "Direction 5: Higher-Order Completion and Lambda-Calculus Integration",
-    "description": "**Conjecture:** The substitution functoriality theorem (`subst_comp`) and context closure theorems generalize to simply-typed lambda calculus with beta-reduction, enabling a higher-order completion procedure where beta-reduction steps are interleaved with equational rewriting steps, preserving the generated higher-order equational theory.\n\n**Test:**\n1. Define a simply-typed term algebra extending FOTerm with lambda abstraction and application.\n2. Implement higher-order matching (matching modulo beta-eta) and test on 500 term pairs.\n3. Attempt completion on simple higher-order equational theories (e.g., `map f (map g xs) = map (f \u2218 g) xs`) and check if the resulting rules are confluent modulo beta.\n4. Compare with Nipkow's higher-order completion results.\n\n**Impact:** Higher-order completion would bridge term rewriting to type theory and functional programming, enabling certified optimization of higher-order programs and certified simplification in dependent type theory proof assistants.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (`subst_comp`, `subst_comp3`, `rewrites_closed_under_subst_and_context`)\n\n**Proof Strategy:** The key challenge is that beta-reduction is not first-order rewriting \u2014 it involves variable binding. Use de Bruijn indices or locally nameless representation to make substitution explicit. Then show that the first-order closure theorems lift to the higher-order setting with appropriate modifications for alpha-equivalence.\n\n**Domain Bridges:** Type theory, functional programming, proof automation, category theory\n\n**Lineage:** Grand generalization of the substitution category structure in `subst_comp3`\n\n**Ambition:** Grand challenge \u2014 higher-order completion is an active research area with many open problems",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
-    "consumed_by_exp_id": "2933a8cf",
-    "timestamp": "2026-05-25T01:35:36.634466+00:00"
-  },
-  {
     "id": "fd_0830",
     "title": "Direction 1: M-Convexity Closure Under Differentiation",
     "description": "**Conjecture**: The support exchange property (M-convexity) is preserved by partial differentiation. That is, if $p$ is a homogeneous polynomial with nonneg coefficients whose support satisfies the matroid exchange axiom, then the support of $\\partial p / \\partial x_i$ also satisfies the exchange axiom.\n\nFormally:\n```\ntheorem SupportSatisfiesExchange.pderiv\n    {n : \u2115} {p : MvPolynomial (Fin n) \u211d} {i : Fin n} :\n    SupportSatisfiesExchange p \u2192\n    SupportSatisfiesExchange (MvPolynomial.pderiv i p)\n```\n\n**Test**: Exhaustively verify for all M-convex supports of degree \u2264 6 in \u2264 5 variables that the derivative support remains M-convex. A single counterexample disproves the conjecture; conversely, verified examples up to this bound provide strong evidence.\n\n**Impact**: This would complete the formal bridge between Lorentzian polynomial theory and matroid/discrete convex analysis, showing that the entire derivative hierarchy preserves the combinatorial structure of the support. It would also provide a new proof technique for M-convexity results in matroid theory.\n\n**The key insight is** that M-convexity of support is the combinatorial shadow of Lorentzianity, and the differentiation operation on polynomials corresponds to contraction in matroid theory. Proving this formally would establish a new certified interface between algebraic combinatorics and discrete convex analysis.\n\n**Why now?** The formal definitions of both SupportSatisfiesExchange and partial differentiation are now in the catalog, and the Br\u00e4nd\u00e9n\u2013Huh theory provides the mathematical framework. The exhaustive computational verification is newly feasible with the recognition algorithm.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `SupportSatisfiesExchange`, `pderiv_coeff_nonneg`\n\n**Proof Strategy**: Induction on degree. The base case (degree 2) reduces to checking that 2\u00d72 exchange axiom is preserved. The inductive step uses the multilinearity of the derivative and the exchange axiom structure.\n\n**Domain Bridges**: Matroid theory, discrete convex analysis, Hodge theory\n\n**Lineage**: Extends `recursive_complete_of_exchange` and `pderiv_coeff_nonneg`\n\n**Ambition**: Solid extension \u2014 this is a known consequence of Br\u00e4nd\u00e9n\u2013Huh theory but has not been formally verified\n\n---",
@@ -449,10 +431,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2b6d84b4",
     "timestamp": "2026-05-25T02:11:10.221031+00:00"
   },
   {
@@ -790,25 +772,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T16:39:08.850911+00:00"
   },
   {
-    "id": "fd_0885",
-    "title": "Direction 3: Compositional Rounding Certificates for Modular Hypergraphs",
-    "description": "**Conjecture:** If a hypergraph H decomposes as H = H\u2081 \u222a H\u2082 with V(H\u2081) \u2229 V(H\u2082) = V\u2080 (a shared boundary), and x\u2081, x\u2082 are feasible fractional transversals of H\u2081, H\u2082 agreeing on V\u2080, then the threshold roundings S\u2081, S\u2082 can be combined into a transversal S of H with cost(S) \u2264 max(d\u2081, d\u2082) \u00b7 (cost(x\u2081) + cost(x\u2082)), where d\u1d62 = max edge size of H\u1d62.\n\n**Test:** Generate pairs of random hypergraphs sharing 3-5 boundary vertices. Solve separate LPs, round separately, combine, and check both coverage and cost bound. A violation disproves the conjecture; consistent success over 1000 trials provides evidence.\n\n**Impact:** This would enable *modular certification*: verify rounding guarantees for subsystems independently, then compose. Essential for large-scale infrastructure design where the full system LP is intractable.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`, `threshold_set_isTransversal`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`\n\n**Proof Strategy:** The key step is showing that the boundary agreement condition ensures S\u2081 \u222a S\u2082 covers all edges, including those in H\u2081 \u2229 H\u2082. Use the separate weighted bounds for H\u2081 and H\u2082, then aggregate costs. The challenge is handling edges that cross the boundary.\n\n**Domain Bridges:** Software verification (compositional reasoning), distributed systems (partition-based optimization), VLSI design (hierarchical placement)\n\n**Lineage:** Extends the weighted rounding bound to decomposable structures, inspired by compositional verification in software engineering and tree decompositions in algorithmic graph theory.\n\n**Ambition:** Solid extension \u2014 directly builds on Theorem 1 with a clear combinatorial generalization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "b9d16ed0",
-    "consumed_by_exp_id": "2a42387f",
-    "timestamp": "2026-05-25T16:39:08.895642+00:00"
-  },
-  {
     "id": "fd_0886",
     "title": "Direction 4: Statistical Physics of Random Transversals and Phase Transitions",
     "description": "**Conjecture:** For random d-uniform hypergraphs on n vertices with m = c\u00b7n edges (c > 0 constant), the ratio \u03c4*(H)/n undergoes a phase transition at c = c*(d), and the integrality gap \u03c4(H)/\u03c4*(H) concentrates around a value strictly less than d for c above the transition, approaching d only at the critical density.\n\n**Test:** For d=3 and n=100, sweep c from 0.1 to 5.0. For each c, generate 100 random instances, solve the LP and find integral optima (or bound via rounding), and compute the empirical integrality gap distribution. Plot mean and variance of the gap as a function of c. A phase transition appears as a sharp change in the gap curve.\n\n**Impact:** Would establish the first rigorous connection between random hypergraph transversal theory and statistical physics phase transitions. The gap behavior at criticality could reveal universality classes for covering problems.\n\n**Catalog References:**\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`, `uniform_integrality_gap`\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`\n\n**Proof Strategy:** Use the second moment method to show concentration of \u03c4*/n. Apply the cavity method (heuristically) to predict the phase transition threshold c*(d). Formalize the upper bound d\u00b7\u03c4* and show it is not tight in the random setting by constructing a better rounding scheme that exploits randomness.\n\n**Domain Bridges:** Statistical physics (replica method, spin glasses), random constraint satisfaction, coding theory (LDPC codes as hypergraph covers)\n\n**Lineage:** Connects the deterministic integrality gap bound to the probabilistic theory of random CSPs, where phase transitions in satisfiability and covering have been predicted by physics but rarely proved.\n\n**Ambition:** Grand challenge \u2014 would bridge formal combinatorics and statistical physics via the integrality gap.\n\n---",
@@ -1033,10 +996,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f0f7ec54",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "834b245c",
     "timestamp": "2026-05-25T17:58:10.295979+00:00"
   },
   {
@@ -1052,7 +1015,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
@@ -1072,7 +1035,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
@@ -1092,7 +1055,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
@@ -1112,12 +1075,187 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:32.551338+00:00"
+  },
+  {
+    "id": "fd_0921",
+    "title": "Direction 1: Uniform Spectral Gap Bound for GL\u2082(\ud835\udd3d_q)",
+    "description": "**Conjecture**: For every prime $q \\geq 5$ and every certified pair $(g, h)$ in $\\text{GL}_2(\\mathbb{F}_q)$ (Singer-like $g$, primitive determinant $h$, generating pair), the spectral gap of $\\text{Cay}(\\text{GL}_2(\\mathbb{F}_q), \\{g, g^{-1}, h, h^{-1}\\})$ satisfies $\\gamma \\geq C/q$ for an absolute constant $C > 0$.\n\n**Test**: Compute spectral gaps for all certified pairs in $\\text{GL}_2(\\mathbb{F}_q)$ for $q \\in \\{5, 7, 11, 13\\}$. If $\\min_{\\text{pairs}} q \\cdot \\gamma$ is bounded below by a positive constant, the conjecture gains credibility. If some pair has $q \\cdot \\gamma < 0.1$, the conjecture needs revision.\n\n**Impact**: A proven uniform bound would yield the first family of explicit 4-regular expanders with certified algebraic witnesses, usable for derandomization and network design without numerical eigenvalue computation.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (harmonic_meanzero_eq_zero, certified_pair_harmonic_trivial), `Catalog/Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy**: Decompose the regular representation of $\\text{GL}_2(\\mathbb{F}_q)$ into irreducible representations. For each nontrivial irrep $\\rho$, bound $\\|\\frac{1}{4}\\sum_{s \\in S} \\rho(s)\\|$ using the Singer-like property of $g$ (which forces $\\rho(g)$ to have no invariant vectors in nontrivial reps of the natural module) and the primitivity of $\\det(h)$ (which ensures $\\rho$ doesn't factor through the determinant). The key insight is that Singer-like elements act without fixed points on the projective line, giving explicit contraction for the principal series representations.\n\n**Domain Bridges**: Spectral graph theory, number theory (Weil-type character sum bounds), representation theory of reductive groups.\n\n**Lineage**: Extends the qualitative spectral gap (Theorem 6.1 in the research paper) to quantitative bounds.\n\n**Ambition**: Grand challenge \u2014 would unify Bourgain\u2013Gamburd-type expansion with explicit algebraic certification.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad66d851",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:40:03.296660+00:00"
+  },
+  {
+    "id": "fd_0923",
+    "title": "Direction 3: Certified Expanders for Classical Groups",
+    "description": "**Conjecture**: For each classical group family ($\\text{Sp}_{2n}(\\mathbb{F}_q)$, $\\text{SO}_n(\\mathbb{F}_q)$, $\\text{SU}_n(\\mathbb{F}_{q^2})$), there exist certificate conditions (analogues of Singer-like and primitive-determinant) that guarantee generation and spectral expansion of the resulting Cayley graphs.\n\n**Test**: For $\\text{Sp}_4(\\mathbb{F}_3)$ and $\\text{SO}_3(\\mathbb{F}_5)$, enumerate certified pairs, build Cayley graphs, and compute spectral gaps. Compare with the GL\u2082 family.\n\n**Impact**: Would provide explicit expanders from every major family of finite groups of Lie type, dramatically expanding the toolkit for network design and coding theory.\n\n**Catalog References**: `Catalog/Algebra/MatrixGroupGeneration.lean` (the invariant subspace theorem applies to any finite field and module).\n\n**Proof Strategy**: The key insight is that Singer-like elements exist in all classical groups (as regular semisimple elements whose centralizer is a maximal torus), and the primitivity condition generalizes to the center of the group. The maximum principle proof transfers verbatim; only the generation step needs group-specific arguments.\n\n**Why now?** The formal infrastructure for the maximum principle and stability lemma is now in place and works for any finite group.\n\n**Domain Bridges**: Finite group theory, algebraic geometry (Deligne\u2013Lusztig theory), coding theory.\n\n**Lineage**: Direct extension of the GL\u2082 theory to other Lie-type groups.\n\n**Ambition**: Solid extension \u2014 builds directly on established methods.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad66d851",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:40:03.345424+00:00"
+  },
+  {
+    "id": "fd_0924",
+    "title": "Direction 4: Algorithmic Spectral Certification",
+    "description": "**Conjecture**: There exists a polynomial-time algorithm that, given a pair of matrices $(g, h) \\in \\text{GL}_n(\\mathbb{F}_q)$, either certifies that the spectral gap of $\\text{Cay}(\\text{GL}_n(\\mathbb{F}_q), \\{g, g^{-1}, h, h^{-1}\\})$ is at least $\\epsilon$, or reports \"unable to certify\" \u2014 with the guarantee that certified pairs are always genuine expanders.\n\n**Test**: Implement the algorithm for $n = 2$, $q \\in \\{3, 5, 7, 11\\}$. Measure the fraction of generating pairs that pass certification. Compare the certified gap lower bound with the true gap computed by eigenvalue decomposition.\n\n**Impact**: Would make expander verification practical for large groups where eigenvalue computation is infeasible. Applications to network verification, cryptographic protocol validation, and error-correcting code certification.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the full pipeline from certificate verification to spectral gap).\n\n**Proof Strategy**: The key insight is that checking the Singer-like condition (irreducible charpoly) and primitive determinant is polynomial, and the generation check can be replaced by a probabilistic membership test using the product replacement algorithm. The gap lower bound comes from representation-theoretic estimates that depend only on the certificate data, not on eigenvalue computation.\n\n**Why now?** The formal verification provides a trusted specification against which algorithmic implementations can be validated.\n\n**Domain Bridges**: Computational group theory, algorithm design, complexity theory, network verification.\n\n**Lineage**: Algorithmic counterpart to the theoretical certificate framework.\n\n**Ambition**: Solid extension \u2014 directly applicable engineering.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad66d851",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:40:03.370751+00:00"
+  },
+  {
+    "id": "fd_0925",
+    "title": "Direction 5: Certificates and Product Growth",
+    "description": "**Conjecture**: If $(g, h)$ is a certified pair in $\\text{GL}_n(\\mathbb{F}_q)$ and $A = \\{g, g^{-1}, h, h^{-1}\\}$, then the triple product $|A \\cdot A \\cdot A| \\geq |A|^{1+\\epsilon}$ for some $\\epsilon > 0$ depending only on $n$. That is, certified pairs exhibit product growth, linking certificate theory to the Helfgott\u2013Breuillard\u2013Green\u2013Tao program.\n\n**Test**: Compute $|A^k|$ for $k = 1, 2, 3, 4$ for certified pairs in $\\text{GL}_2(\\mathbb{F}_q)$ with $q \\in \\{5, 7, 11\\}$. Plot the growth rate $|A^k|^{1/k}$ and test for polynomial growth vs. rapid saturation.\n\n**Impact**: Would connect certificate-expansion theory to additive combinatorics, potentially providing new proofs of product theorems from algebraic data rather than combinatorial arguments.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the right_mul_closed_eq_univ lemma is a form of \"product saturation\"), `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility prevents containment in proper subgroups).\n\n**Proof Strategy**: The key insight is that irreducibility of the characteristic polynomial of $g$ prevents $\\langle g \\rangle$ from being contained in any proper algebraic subgroup of $\\text{GL}_n$, which by the Helfgott\u2013Pyber escape-from-subvarieties lemma forces rapid growth in the early stages of product expansion.\n\n**Why now?** The certificate framework provides a clean set of algebraic hypotheses under which product growth can be tested and potentially proved.\n\n**Domain Bridges**: Additive combinatorics, algebraic geometry (escape from subvarieties), model theory (stable group theory).\n\n**Lineage**: Bridges the certificate framework to the Bourgain\u2013Gamburd\u2013Helfgott program.\n\n**Ambition**: Grand challenge \u2014 would unify two major approaches to expansion in finite groups.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad66d851",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:40:03.396854+00:00"
+  },
+  {
+    "id": "fd_0927",
+    "title": "Direction 1: Lorentzian Equivalence via Hessian Descent",
+    "description": "**Conjecture**: For homogeneous polynomials with positive coefficients, recursive Lorentzianity (in the sense of `IsRecursivelyLorentzian` from `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`) is equivalent to k-fold directional log-concavity of the coefficient function for all k \u2264 degree, together with the support exchange property.\n\n**The key insight is** that the Hessian signature condition (at most one positive eigenvalue) for degree-2 derivative leaves is exactly the mixed directional log-concavity inequality applied to the coefficients of those leaves, and the recursive descent through partial derivatives mirrors the k-fold ratio transform hierarchy.\n\n**Test**: Implement the forward direction for degree \u2264 6: given a recursively Lorentzian polynomial, verify computationally that all coefficient-level mixed and axis inequalities hold. Search for a counterexample to the converse among polynomials with positive coefficients and exchange-closed support that fail the Hessian condition. A single explicit counterexample (n \u2264 5, d \u2264 6) would refute the conjecture.\n\n**Impact**: If true, this provides an elementary characterization of Lorentzian polynomials, replacing the spectral machinery of Hessian eigenvalue analysis with simple product inequalities on coefficients. This would make Lorentzianity checkable in O(n\u00b2 \u00b7 |support|) time rather than requiring eigenvalue computation.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (specifically `IsRecursivelyLorentzian`, `recursivelyLorentzian_iff_brandenHuh`, `recursive_certificate_sound`); `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave`, `kFoldLogConcave_mono`).\n\n**Proof Strategy**: Prove the forward direction by induction on degree. For degree 2, the mixed inequality IS the Hessian condition. For degree d, use `pderiv_coeff_nonneg` to show that partial derivatives preserve coefficient nonnegativity, and show that mixed DLC of the original polynomial implies mixed DLC of its partial derivatives (via a coefficient extraction argument). The converse would require showing that coefficient-level inequalities plus exchange imply the global Hessian condition, likely via the reversed Cauchy-Schwarz (`lorentzian_reversed_cauchy_schwarz`).\n\n**Domain Bridges**: Algebraic geometry (Lorentzian polynomials) \u2194 Discrete combinatorics (exchange properties) \u2194 Linear algebra (Hessian spectra).\n\n**Lineage**: Extends `recursivelyLorentzian_iff_brandenHuh` and connects to `support_rectangle_closure`.\n\n**Ambition**: Grand challenge \u2014 would fundamentally simplify the theory of Lorentzian polynomials.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a1f92284",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T19:29:17.881900+00:00"
+  },
+  {
+    "id": "fd_0928",
+    "title": "Direction 2: Valuated Matroid Theory via k-Fold Log-Concavity",
+    "description": "**Conjecture**: The k-fold directional log-concavity hierarchy provides a graded refinement of Murota's M-convexity. Specifically, for a function f on a fixed degree slice with exchange-closed support, the depth k at which f ceases to be k-fold directionally log-concave measures the \"Lorentzian depth\" of the underlying valuated matroid.\n\n**The key insight is** that the ratio transform R\u1d62f(m) = f(m+e\u1d62)/f(m) is the discrete analog of the logarithmic derivative, and applying it repeatedly extracts finer and finer curvature information from the valuation. The k-fold hierarchy thus provides an intrinsic notion of \"smoothness depth\" for valuated matroids, analogous to the differentiability class C^k for continuous functions.\n\n**Why now?** The product stability theorem (`mixedLogConcave_mul`, `directionalLogConcave_mul`) shows that the k-fold classes form multiplicative monoids. Combined with the tropical bridge (`negLog_supermodular_of_mixed`), this means k-fold directional log-concavity defines a hierarchy of tropical convexity classes that is preserved under the tropical product. No such hierarchy existed in Murota's theory.\n\n**Test**: Compute the k-fold depth of specific valuated matroids: uniform matroid valuations, graphical matroid valuations (with edge weights), and the Grassmannian valuations from algebraic geometry. Identify the first example where k-fold depth is finite but greater than 1. If all naturally occurring valuated matroids have infinite depth, this would suggest a deep structural theorem.\n\n**Impact**: Would create a new invariant for valuated matroids, potentially distinguishing matroids that are indistinguishable by existing invariants (basis exchange graph structure, Tutte polynomial, etc.).\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave`, `KFoldLogConcave.ratio`, `kFoldLogConcave_mono`); `Pythagorean/MultivariateLogConcavity.lean` (`KFoldDirectionalLogConcave`, `kfold_mono`, `directionalLogConcave_mul`).\n\n**Proof Strategy**: Define the Lorentzian depth as sup{k : KFoldDirectionalLogConcave k f}. Use the product stability theorem to show this is sub-additive under tropical convolution. Prove that exponential-type functions have infinite depth (already partially established by `exp_type_mixed_logconcave`). Show that graphic matroid valuations have depth at least d-2 using the connection to Kirchhoff's matrix tree theorem.\n\n**Domain Bridges**: Combinatorial optimization (valuated matroids, M-convexity) \u2194 Analysis (smoothness hierarchies) \u2194 Algebraic geometry (Grassmannian, tropical flag varieties).\n\n**Lineage**: Extends `kfold_mono` and `exp_type_mixed_logconcave`.\n\n**Ambition**: Solid extension with grand-challenge potential.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a1f92284",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T19:29:17.914245+00:00"
+  },
+  {
+    "id": "fd_0929",
+    "title": "Direction 3: Negative Dependence and Rapid Mixing via Directional Log-Concavity",
+    "description": "**Conjecture**: For a probability distribution \u03bc on {0,1}\u207f whose generating polynomial satisfies k-fold directional log-concavity (k \u2265 2), the Glauber dynamics Markov chain mixes in time O(n log n), with the mixing time constant depending on k.\n\n**The key insight is** that mixed directional log-concavity is exactly the condition of pairwise negative dependence (the FKG inequality reversed), and the higher-order conditions in the k-fold hierarchy provide increasingly strong spectral gap bounds. The k = 2 condition should imply a spectral gap of \u03a9(1/n), which by standard Markov chain theory gives O(n log n) mixing.\n\n**Why now?** Anari\u2013Liu\u2013Oveis Gharan\u2013Vinzant (2019) proved rapid mixing for distributions associated with log-concave polynomials, but their proof goes through the complete homogeneous polynomial machinery. Our direct coefficient-level approach via mixed DLC could yield a simpler proof with explicit constants.\n\n**Test**: Simulate Glauber dynamics for canonical partition functions of fermionic systems (tested in `applications.py`) and measure empirical mixing times. Compare mixing time against the k-fold depth of the generating polynomial. If there is a clear correlation (higher k \u2192 faster mixing), this provides strong evidence for the conjecture.\n\n**Impact**: Would provide the first direct link between the k-fold hierarchy and algorithmic efficiency, with applications to approximate counting, sampling, and statistical inference.\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave.mul`, `partitionFunctionCoeff_kFoldLogConcave_of_factorization`); `Pythagorean/MultivariateLogConcavity.lean` (`mixedLogConcave_mul`, `support_rectangle_closure`).\n\n**Proof Strategy**: Use the factored function theorem (`factored_mixed_logconcave`) to reduce to independent site distributions. Show that the product stability of mixed DLC (`mixedLogConcave_mul`) preserves the spectral gap bound under composition. Derive the mixing time bound from the spectral gap using the log-Sobolev inequality approach of Diaconis\u2013Saloff-Coste.\n\n**Domain Bridges**: Probability theory (mixing times, spectral gaps) \u2194 Statistical physics (Glauber dynamics, phase transitions) \u2194 Computer science (approximate counting, FPRAS).\n\n**Lineage**: Extends `mixedLogConcave_mul` and `factored_mixed_logconcave`.\n\n**Ambition**: Solid extension with immediate algorithmic impact.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a1f92284",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T19:29:17.948753+00:00"
+  },
+  {
+    "id": "fd_0930",
+    "title": "Direction 4: Tropical Hodge Theory via Supermodularity Hierarchies",
+    "description": "**Conjecture**: The supermodularity hierarchy induced by the tropical bridge (\u2212log of k-fold directional log-concavity) defines a tropical analog of the Hodge filtration on the cohomology of toric varieties. Specifically, the depth k at which \u2212log f ceases to satisfy the iterated supermodularity conditions corresponds to the weight filtration level in tropical Hodge theory.\n\n**The key insight is** that the tropical bridge theorem (`negLog_supermodular_of_mixed` and `exp_neg_supermodular_mixed`) establishes a perfect correspondence between multiplicative log-concavity and additive supermodularity. Iterating this correspondence through the k-fold hierarchy creates a tower of tropical convexity conditions that mirror the Lefschetz decomposition in Hodge theory.\n\n**Why now?** The recent proof of the Hodge-Riemann relations for matroids by Adiprasito\u2013Huh\u2013Katz used the hard Lefschetz property, which in the tropical setting corresponds to a specific supermodularity condition on tropical intersection numbers. Our hierarchy provides a natural graded refinement of this single condition.\n\n**Test**: Compute the tropical supermodularity depth for the tropical Grassmannians Gr(2,n) for n = 4,...,8. Compare with the known Hodge numbers of the corresponding toric varieties. If the depths match, this provides evidence for the correspondence.\n\n**Impact**: Would create the first computational approach to tropical Hodge theory, potentially enabling machine verification of Hodge-theoretic results that are currently proved only by deep analytic methods.\n\n**Catalog References**: `Pythagorean/MultivariateLogConcavity.lean` (`negLog_supermodular_of_mixed`, `exp_neg_supermodular_mixed`, `DiscreteSupermodular`); `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (`IsBrandenHuhLorentzian`, `QuadraticHasLorentzianSignature`).\n\n**Proof Strategy**: Define the tropical Lefschetz operator as the tropicalization of the algebraic Lefschetz operator. Show that the hard Lefschetz property for a Lorentzian polynomial tropicalizes to the supermodularity of \u2212log(coefficient function). Use the k-fold hierarchy to define tropical Hodge numbers. Verify the tropical Hodge-Riemann bilinear relations at each level of the hierarchy.\n\n**Domain Bridges**: Tropical geometry \u2194 Algebraic geometry (Hodge theory) \u2194 Combinatorics (matroid Chow rings).\n\n**Lineage**: Extends `negLog_supermodular_of_mixed` and connects to `lorentzian_reversed_cauchy_schwarz`.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if realized.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a1f92284",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T19:29:17.982054+00:00"
+  },
+  {
+    "id": "fd_0931",
+    "title": "Direction 5: M-Convex Optimization via Directional Log-Concavity Certificates",
+    "description": "**Conjecture**: For optimization problems on M-convex sets (base polyhedra of matroids, integral polymatroids), a directional log-concavity certificate for the objective function guarantees polynomial-time solvability via a simple exchange algorithm, with the convergence rate controlled by the k-fold depth.\n\n**The key insight is** that the rectangle closure theorem (`support_rectangle_closure`) provides a \"local-to-global\" principle: if the objective function satisfies mixed DLC, then any local improvement via coordinate exchange leads to a global improvement. Combined with the exchange property of the feasible set, this means the exchange algorithm cannot cycle and must converge to the optimum.\n\n**Why now?** Murota's discrete convex analysis provides polynomial-time algorithms for M-convex function minimization, but the algorithms require full M-convexity. Our graded hierarchy via k-fold depth suggests that partial log-concavity (depth k < d) may already suffice for efficient optimization, with the convergence rate degrading gracefully as k decreases.\n\n**Test**: Implement the exchange algorithm for weighted matroid intersection with various objective functions. Measure the number of exchange steps as a function of (n, d, k) where k is the k-fold depth. If the step count scales as O(n^{d-k}), this confirms the graded convergence theory.\n\n**Impact**: Would extend the reach of efficient discrete optimization algorithms to a broader class of objective functions, with certificates that are easier to verify than full M-convexity.\n\n**Catalog References**: `Pythagorean/MultivariateLogConcavity.lean` (`support_rectangle_closure`, `kfold_mono`, `CoeffDirectionalLogConcave`); `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (`SupportSatisfiesExchange`).\n\n**Proof Strategy**: Define a potential function \u03a6 = \u2212\u2211 log f(m\u209c) along the exchange algorithm trajectory. Show that each exchange step decreases \u03a6 by at least a quantity controlled by the k-fold depth. Use the product stability theorem to bound the total number of steps. Formalize the convergence proof and verify soundness of the exchange algorithm against the `SupportSatisfiesExchange` predicate.\n\n**Domain Bridges**: Combinatorial optimization (matroid intersection, submodular maximization) \u2194 Algorithm design (exchange algorithms, local search) \u2194 Economics (mechanism design, auction theory).\n\n**Lineage**: Extends `support_rectangle_closure` and connects to `SupportSatisfiesExchange`.\n\n**Ambition**: Solid extension with direct practical applications.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a1f92284",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T19:29:18.016009+00:00"
   },
   {
     "id": "seed_005",
@@ -1194,81 +1332,92 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:26:01.272574+00:00"
   },
   {
-    "id": "fd_0921",
-    "title": "Direction 1: Uniform Spectral Gap Bound for GL\u2082(\ud835\udd3d_q)",
-    "description": "**Conjecture**: For every prime $q \\geq 5$ and every certified pair $(g, h)$ in $\\text{GL}_2(\\mathbb{F}_q)$ (Singer-like $g$, primitive determinant $h$, generating pair), the spectral gap of $\\text{Cay}(\\text{GL}_2(\\mathbb{F}_q), \\{g, g^{-1}, h, h^{-1}\\})$ satisfies $\\gamma \\geq C/q$ for an absolute constant $C > 0$.\n\n**Test**: Compute spectral gaps for all certified pairs in $\\text{GL}_2(\\mathbb{F}_q)$ for $q \\in \\{5, 7, 11, 13\\}$. If $\\min_{\\text{pairs}} q \\cdot \\gamma$ is bounded below by a positive constant, the conjecture gains credibility. If some pair has $q \\cdot \\gamma < 0.1$, the conjecture needs revision.\n\n**Impact**: A proven uniform bound would yield the first family of explicit 4-regular expanders with certified algebraic witnesses, usable for derandomization and network design without numerical eigenvalue computation.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (harmonic_meanzero_eq_zero, certified_pair_harmonic_trivial), `Catalog/Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy**: Decompose the regular representation of $\\text{GL}_2(\\mathbb{F}_q)$ into irreducible representations. For each nontrivial irrep $\\rho$, bound $\\|\\frac{1}{4}\\sum_{s \\in S} \\rho(s)\\|$ using the Singer-like property of $g$ (which forces $\\rho(g)$ to have no invariant vectors in nontrivial reps of the natural module) and the primitivity of $\\det(h)$ (which ensures $\\rho$ doesn't factor through the determinant). The key insight is that Singer-like elements act without fixed points on the projective line, giving explicit contraction for the principal series representations.\n\n**Domain Bridges**: Spectral graph theory, number theory (Weil-type character sum bounds), representation theory of reductive groups.\n\n**Lineage**: Extends the qualitative spectral gap (Theorem 6.1 in the research paper) to quantitative bounds.\n\n**Ambition**: Grand challenge \u2014 would unify Bourgain\u2013Gamburd-type expansion with explicit algebraic certification.\n\n---",
+    "id": "fd_0932",
+    "title": "Direction 1: Intrinsically Typed Higher-Order Rewriting with \u03b2\u03b7-Completion",
+    "description": "**Conjecture:** For the simply-typed \u03bb-calculus with \u03b2\u03b7-reduction, substitution functoriality and rewrite closure extend to the \u03b2\u03b7 setting, and the generated equational theory descends cleanly to \u03b2\u03b7-equivalence classes. Concretely: if `HOEqGen(E, t, u)` and `t ~\u03b2\u03b7 t'`, `u ~\u03b2\u03b7 u'`, then `HOEqGen(E, t', u')` in a theory with \u03b2\u03b7-rules included.\n\n**Test:** Formalize intrinsically typed terms (indexed by context and type) using de Bruijn indices. Prove `subst_comp` and `hoRewrites_closed_under_subst` for typed terms. Then add \u03b7-contraction (`lam(app(rename(\u00b7+1, f), var 0)) \u2192 f`) and verify the \u03b7-commutation lemma: `eta_closed_under_subst`. Check computationally on typed terms up to size 12 that \u03b2\u03b7-normalization commutes with rewriting for orthogonal rule sets.\n\n**Impact:** Intrinsically typed terms would eliminate ill-scoped terms by construction, making the formalization stronger and aligning with the Fiore-Plotkin-Turi framework for abstract syntax. \u03b2\u03b7-completion is strictly more powerful than \u03b2-completion and is required for extensional reasoning about functional programs.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (subst_comp, beta_closed_under_subst, liftSubst_compSubst); `Pythagorean/ConcreteTermAlgebra.lean` (FOTerm.subst_comp as the first-order prototype).\n\n**Proof Strategy:** Start with the Autosubst-style approach: define a universe of types, index terms by `(Ctx, Ty)`, and derive the substitution lemmas mechanically. The \u03b7 case requires proving `subst(lam(app(rename(\u00b7+1, f), var 0)), \u03c3) = subst(f, \u03c3)` when f has appropriate type, which reduces to showing `liftSubst(\u03c3)(1) = rename(\u00b7+1)(\u03c3(0))` \u2014 a definitional equality.\n\n**Domain Bridges:** Type theory (intrinsic typing), categorical semantics (presheaves over contexts), proof automation (extensional simplification).\n\n**Lineage:** Direct extension of the current work's substitution calculus.\n\n**Ambition:** Solid extension \u2014 builds directly on verified infrastructure with clear proof path.\n\n**\"The key insight is...\"** that \u03b7-contraction is the *semantic* counterpart of \u03b2-reduction \u2014 where \u03b2 says \"functions compute,\" \u03b7 says \"things that compute like functions *are* functions\" \u2014 and the substitution calculus we have already verified handles both uniformly once the commutation lemma is established.\n\n**\"Why now?\"** The substitution infrastructure (11 lemmas from `liftRen_id` through `subst_comp`) is now verified and battle-tested. Extending to \u03b7 requires exactly one new commutation lemma and one new lifting property, both following the established pattern.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "ad66d851",
+    "source_exp_id": "2933a8cf",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:40:03.296660+00:00"
+    "timestamp": "2026-05-25T20:01:51.820906+00:00"
   },
   {
-    "id": "fd_0923",
-    "title": "Direction 3: Certified Expanders for Classical Groups",
-    "description": "**Conjecture**: For each classical group family ($\\text{Sp}_{2n}(\\mathbb{F}_q)$, $\\text{SO}_n(\\mathbb{F}_q)$, $\\text{SU}_n(\\mathbb{F}_{q^2})$), there exist certificate conditions (analogues of Singer-like and primitive-determinant) that guarantee generation and spectral expansion of the resulting Cayley graphs.\n\n**Test**: For $\\text{Sp}_4(\\mathbb{F}_3)$ and $\\text{SO}_3(\\mathbb{F}_5)$, enumerate certified pairs, build Cayley graphs, and compute spectral gaps. Compare with the GL\u2082 family.\n\n**Impact**: Would provide explicit expanders from every major family of finite groups of Lie type, dramatically expanding the toolkit for network design and coding theory.\n\n**Catalog References**: `Catalog/Algebra/MatrixGroupGeneration.lean` (the invariant subspace theorem applies to any finite field and module).\n\n**Proof Strategy**: The key insight is that Singer-like elements exist in all classical groups (as regular semisimple elements whose centralizer is a maximal torus), and the primitivity condition generalizes to the center of the group. The maximum principle proof transfers verbatim; only the generation step needs group-specific arguments.\n\n**Why now?** The formal infrastructure for the maximum principle and stability lemma is now in place and works for any finite group.\n\n**Domain Bridges**: Finite group theory, algebraic geometry (Deligne\u2013Lusztig theory), coding theory.\n\n**Lineage**: Direct extension of the GL\u2082 theory to other Lie-type groups.\n\n**Ambition**: Solid extension \u2014 builds directly on established methods.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:40:03.345424+00:00"
-  },
-  {
-    "id": "fd_0924",
-    "title": "Direction 4: Algorithmic Spectral Certification",
-    "description": "**Conjecture**: There exists a polynomial-time algorithm that, given a pair of matrices $(g, h) \\in \\text{GL}_n(\\mathbb{F}_q)$, either certifies that the spectral gap of $\\text{Cay}(\\text{GL}_n(\\mathbb{F}_q), \\{g, g^{-1}, h, h^{-1}\\})$ is at least $\\epsilon$, or reports \"unable to certify\" \u2014 with the guarantee that certified pairs are always genuine expanders.\n\n**Test**: Implement the algorithm for $n = 2$, $q \\in \\{3, 5, 7, 11\\}$. Measure the fraction of generating pairs that pass certification. Compare the certified gap lower bound with the true gap computed by eigenvalue decomposition.\n\n**Impact**: Would make expander verification practical for large groups where eigenvalue computation is infeasible. Applications to network verification, cryptographic protocol validation, and error-correcting code certification.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the full pipeline from certificate verification to spectral gap).\n\n**Proof Strategy**: The key insight is that checking the Singer-like condition (irreducible charpoly) and primitive determinant is polynomial, and the generation check can be replaced by a probabilistic membership test using the product replacement algorithm. The gap lower bound comes from representation-theoretic estimates that depend only on the certificate data, not on eigenvalue computation.\n\n**Why now?** The formal verification provides a trusted specification against which algorithmic implementations can be validated.\n\n**Domain Bridges**: Computational group theory, algorithm design, complexity theory, network verification.\n\n**Lineage**: Algorithmic counterpart to the theoretical certificate framework.\n\n**Ambition**: Solid extension \u2014 directly applicable engineering.\n\n---",
+    "id": "fd_0933",
+    "title": "Direction 2: Higher-Order Critical Pairs and Knuth-Bendix Completion Modulo \u03b2",
+    "description": "**Conjecture:** For finite, left-linear, simply-typed higher-order rewrite systems with no critical pairs up to \u03b2-normalized matching on terms of size \u2264 N, the generated \u03b2-aware one-step relation is locally confluent on all closed terms of size \u2264 N. Moreover, a decidable criterion for the absence of critical pairs exists for the class of higher-order pattern rewrite systems (in the sense of Miller).\n\n**Test:** Implement higher-order unification for Miller patterns. Enumerate all overlaps between pairs of rules in a given system. For each overlap, compute the critical pair and attempt to join it. Test on benchmark systems: map fusion, fold/build fusion, CPS transformation rules. Report the first system size at which a non-joinable critical pair appears (if any).\n\n**Impact:** A working higher-order Knuth-Bendix procedure would be a major advance in automated reasoning, enabling certified completion for equational theories of functional programs. Even a bounded version with correctness guarantees would be immediately useful.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (HoRewrite, hoRewrites_closed_under_subst \u2014 the closure property is essential for the completion step); `Pythagorean/ConcreteTermAlgebra.lean` (concrete_completion_correct \u2014 the first-order completion correctness theorem that we aim to lift).\n\n**Proof Strategy:** Define `CriticalPair(E)` as the set of pairs `(s, t)` arising from non-trivial overlaps of rules in E. Prove: if `CriticalPair(E)` is empty (up to \u03b2), then `HoRewrite(E)` is locally confluent. The proof uses `hoRewrites_closed_under_subst` to show that overlapping reductions can be completed. For the algorithmic part, implement Miller's higher-order pattern unification and verify it against the matching function.\n\n**Domain Bridges:** Automated theorem proving (completion procedures), unification theory (higher-order unification), compiler optimization (certified rule derivation).\n\n**Lineage:** Lifts the first-order completion correctness theorem to higher order.\n\n**Ambition:** Grand challenge \u2014 higher-order completion modulo \u03b2 is a known open problem in its full generality.\n\n**\"The key insight is...\"** that the closure theorems we have verified (`hoRewrites_closed_under_subst`, `hoRewrites_closed_under_context`) are exactly the properties needed to make the Knuth-Bendix completion step valid at higher order \u2014 the rest is \"just\" unification and critical pair analysis.\n\n**\"Why now?\"** The formal infrastructure for higher-order rewrite closure is now in place. The bottleneck has shifted from *closure properties* (solved) to *unification and overlap detection* (tractable with Miller patterns).\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
-      "Physics",
-      "Cryptography",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "ad66d851",
+    "source_exp_id": "2933a8cf",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:40:03.370751+00:00"
+    "timestamp": "2026-05-25T20:01:51.853060+00:00"
   },
   {
-    "id": "fd_0925",
-    "title": "Direction 5: Certificates and Product Growth",
-    "description": "**Conjecture**: If $(g, h)$ is a certified pair in $\\text{GL}_n(\\mathbb{F}_q)$ and $A = \\{g, g^{-1}, h, h^{-1}\\}$, then the triple product $|A \\cdot A \\cdot A| \\geq |A|^{1+\\epsilon}$ for some $\\epsilon > 0$ depending only on $n$. That is, certified pairs exhibit product growth, linking certificate theory to the Helfgott\u2013Breuillard\u2013Green\u2013Tao program.\n\n**Test**: Compute $|A^k|$ for $k = 1, 2, 3, 4$ for certified pairs in $\\text{GL}_2(\\mathbb{F}_q)$ with $q \\in \\{5, 7, 11\\}$. Plot the growth rate $|A^k|^{1/k}$ and test for polynomial growth vs. rapid saturation.\n\n**Impact**: Would connect certificate-expansion theory to additive combinatorics, potentially providing new proofs of product theorems from algebraic data rather than combinatorial arguments.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the right_mul_closed_eq_univ lemma is a form of \"product saturation\"), `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility prevents containment in proper subgroups).\n\n**Proof Strategy**: The key insight is that irreducibility of the characteristic polynomial of $g$ prevents $\\langle g \\rangle$ from being contained in any proper algebraic subgroup of $\\text{GL}_n$, which by the Helfgott\u2013Pyber escape-from-subvarieties lemma forces rapid growth in the early stages of product expansion.\n\n**Why now?** The certificate framework provides a clean set of algebraic hypotheses under which product growth can be tested and potentially proved.\n\n**Domain Bridges**: Additive combinatorics, algebraic geometry (escape from subvarieties), model theory (stable group theory).\n\n**Lineage**: Bridges the certificate framework to the Bourgain\u2013Gamburd\u2013Helfgott program.\n\n**Ambition**: Grand challenge \u2014 would unify two major approaches to expansion in finite groups.",
+    "id": "fd_0934",
+    "title": "Direction 3: Certified Stream Fusion via Higher-Order Completion",
+    "description": "**Conjecture:** The stream fusion transformation (converting recursive list operations to stream operations and then to tight loops) can be expressed as a finite set of higher-order rewrite rules, and the resulting system is confluent modulo \u03b2 on well-typed terms. The \u03b2-normal form of any term in the generated theory corresponds to the fused program.\n\n**Test:** Encode the GHC stream fusion rules (stream/unstream, map/stream, filter/stream, foldr/build) as higher-order equations. Apply bounded completion. Check that all critical pairs join. Benchmark the resulting rewriting system against GHC's actual fusion behavior on 20 benchmark programs from the nofib suite.\n\n**Impact:** Stream fusion is one of the most important optimizations in Haskell, but its correctness has never been formally established at the equational level. A certified higher-order rewriting approach would provide the first machine-checked correctness proof for a production compiler optimization.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (mapFusionEq, map_fusion_in_theory \u2014 the map fusion example demonstrates the approach); `Pythagorean/ConcreteTermAlgebra.lean` (rewrites_closed_under_subst_and_context \u2014 the closure property that makes rule application correct).\n\n**Proof Strategy:** Define stream type as `Stream a = \u2203s. (s \u2192 Step a s, s)` in the STLC (using existential encoding). Express stream fusion as rewrite rules. Use `hoRewrites_closed_under_subst` to verify that rule application is sound. Apply `subst_comp` to verify that composed transformations equal single-pass transformations.\n\n**Domain Bridges:** Compiler optimization (GHC), functional programming (deforestation), performance engineering.\n\n**Lineage:** Extends the map fusion example to a full optimization framework.\n\n**Ambition:** Solid extension with high practical impact.\n\n**\"The key insight is...\"** that stream fusion is not just a *specific* optimization but an *equational theory* \u2014 a set of higher-order equations whose closure under substitution and contexts (exactly what we've verified) generates all valid fusion transformations.\n\n**\"Why now?\"** Map fusion is already formalized as a higher-order equation in our framework. Stream fusion is a systematic generalization requiring the same infrastructure at larger scale.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2933a8cf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:01:51.882080+00:00"
+  },
+  {
+    "id": "fd_0935",
+    "title": "Direction 4: Normalization-Guided Proof Automation via Higher-Order Rewriting",
+    "description": "**Conjecture:** A simplification procedure based on higher-order completion modulo \u03b2 can decide equality in the equational theory of simply-typed combinatory algebra (S, K, I combinators with their defining equations) by normalizing both sides and comparing normal forms. This procedure, when integrated as a tactic, can automate proofs that currently require manual `simp` lemma engineering.\n\n**Test:** Implement a `ho_simp` tactic that: (1) takes a set of higher-order equations, (2) computes their completion (bounded), (3) normalizes both sides of the goal using the completed system, (4) checks syntactic equality of normal forms. Test on 50 equational goals involving function composition, map/filter laws, and monad laws. Compare proof length against `simp` with manually curated lemma sets.\n\n**Impact:** Current proof automation in type-theoretic proof assistants relies heavily on manually curated `simp` sets. A completion-based approach would automatically derive the needed simplification rules from equational axioms, reducing the human effort in proof engineering.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (HOEqGen_closed_under_subst \u2014 the generated theory respects substitution, which is essential for tactic soundness; leftmostReduce_sound \u2014 verified reduction is the computational backbone).\n\n**Proof Strategy:** The soundness theorem for the tactic follows from `HOEqGen_closed_under_subst`: if both sides normalize to the same term under a completed system derived from the equational axioms, they are in the generated equational theory. The main challenge is ensuring that the completion process terminates and produces a confluent system for the given axioms.\n\n**Domain Bridges:** Proof automation (tactic development), type theory (equational reasoning), software verification.\n\n**Lineage:** Applies the verified rewriting infrastructure as a proof automation tool.\n\n**Ambition:** Solid extension with immediate applicability.\n\n**\"The key insight is...\"** that completion doesn't just *simplify* expressions \u2014 it *decides* equational theories. A completed higher-order rewriting system is a decision procedure for its equational theory, and the closure theorems we've verified guarantee that this decision procedure is sound.\n\n**\"Why now?\"** The formal connection between rewriting and equational theory (HOEqGen and its closure under substitution) is now verified, providing the soundness foundation for a tactic.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "ad66d851",
+    "source_exp_id": "2933a8cf",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:40:03.396854+00:00"
+    "timestamp": "2026-05-25T20:01:51.907267+00:00"
+  },
+  {
+    "id": "fd_0936",
+    "title": "Direction 5: Operadic Rewriting and Homotopical Completion",
+    "description": "**Conjecture:** The substitution category formalized in our work (with `compSubst_assoc`, identity laws, and the presheaf-like action of terms) is the underlying category of a *colored operad* whose algebras are exactly the models of the STLC. Higher-order completion modulo \u03b2 can be interpreted as a homotopical completion in the sense of operadic Koszul duality: the completed rewriting system computes a cofibrant replacement of the operad.\n\n**Test:** Formalize the operad structure: define the composition operation on substitutions, verify the interchange law, and construct the corresponding operad. Then show that the critical pair computation of Direction 2 corresponds to computing the operadic Koszulity condition. Test on the associativity operad (whose Koszul dual is well-known) as a sanity check.\n\n**Impact:** This would connect higher-order rewriting to the rapidly growing field of homotopical algebra and operadic methods. It would provide a new perspective on completion as a *homological* computation, potentially yielding new termination criteria and complexity bounds for higher-order completion.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (compSubst_assoc, compSubst_idSubst_left, compSubst_idSubst_right \u2014 the categorical structure of substitutions is the starting point for the operadic construction).\n\n**Proof Strategy:** Define an operad `O` with colors `\u2115` (arities), operations `O(n\u2081,...,n\u2096; m) = Subst(n\u2081+...+n\u2096, m)`, and composition given by `compSubst`. Verify the operad axioms from the categorical properties already proved. Then define rewriting rules as generators of an operadic ideal, and show that completion computes the operadic Gr\u00f6bner basis.\n\n**Domain Bridges:** Homotopical algebra (operads, Koszul duality), algebraic topology (cofibrant replacements), homological algebra (resolutions).\n\n**Lineage:** Reinterprets the substitution category as operadic structure.\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects rewriting theory to homotopical algebra.\n\n**\"The key insight is...\"** that substitution composition is not just a *convenience* but an *operadic structure* \u2014 the multi-sorted composition operation of an operad whose algebras are exactly the models of the type theory. Completion, viewed through this lens, is computing a resolution of the operad.\n\n**\"Why now?\"** The categorical properties of substitution (associativity, identity, functoriality) are now formally verified, providing the raw material for an operadic construction. Recent advances in homotopical algebra (Loday-Vallette, Dotsenko-Khoroshkin) provide the theoretical tools for operadic completion.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2933a8cf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:01:51.933532+00:00"
   },
   {
     "id": "seed_013",
@@ -1714,104 +1863,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "ad66d851",
     "consumed_by_exp_id": "dc67a2b9",
     "timestamp": "2026-05-25T18:40:03.321531+00:00"
-  },
-  {
-    "id": "fd_0927",
-    "title": "Direction 1: Lorentzian Equivalence via Hessian Descent",
-    "description": "**Conjecture**: For homogeneous polynomials with positive coefficients, recursive Lorentzianity (in the sense of `IsRecursivelyLorentzian` from `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`) is equivalent to k-fold directional log-concavity of the coefficient function for all k \u2264 degree, together with the support exchange property.\n\n**The key insight is** that the Hessian signature condition (at most one positive eigenvalue) for degree-2 derivative leaves is exactly the mixed directional log-concavity inequality applied to the coefficients of those leaves, and the recursive descent through partial derivatives mirrors the k-fold ratio transform hierarchy.\n\n**Test**: Implement the forward direction for degree \u2264 6: given a recursively Lorentzian polynomial, verify computationally that all coefficient-level mixed and axis inequalities hold. Search for a counterexample to the converse among polynomials with positive coefficients and exchange-closed support that fail the Hessian condition. A single explicit counterexample (n \u2264 5, d \u2264 6) would refute the conjecture.\n\n**Impact**: If true, this provides an elementary characterization of Lorentzian polynomials, replacing the spectral machinery of Hessian eigenvalue analysis with simple product inequalities on coefficients. This would make Lorentzianity checkable in O(n\u00b2 \u00b7 |support|) time rather than requiring eigenvalue computation.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (specifically `IsRecursivelyLorentzian`, `recursivelyLorentzian_iff_brandenHuh`, `recursive_certificate_sound`); `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave`, `kFoldLogConcave_mono`).\n\n**Proof Strategy**: Prove the forward direction by induction on degree. For degree 2, the mixed inequality IS the Hessian condition. For degree d, use `pderiv_coeff_nonneg` to show that partial derivatives preserve coefficient nonnegativity, and show that mixed DLC of the original polynomial implies mixed DLC of its partial derivatives (via a coefficient extraction argument). The converse would require showing that coefficient-level inequalities plus exchange imply the global Hessian condition, likely via the reversed Cauchy-Schwarz (`lorentzian_reversed_cauchy_schwarz`).\n\n**Domain Bridges**: Algebraic geometry (Lorentzian polynomials) \u2194 Discrete combinatorics (exchange properties) \u2194 Linear algebra (Hessian spectra).\n\n**Lineage**: Extends `recursivelyLorentzian_iff_brandenHuh` and connects to `support_rectangle_closure`.\n\n**Ambition**: Grand challenge \u2014 would fundamentally simplify the theory of Lorentzian polynomials.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T19:29:17.881900+00:00"
-  },
-  {
-    "id": "fd_0928",
-    "title": "Direction 2: Valuated Matroid Theory via k-Fold Log-Concavity",
-    "description": "**Conjecture**: The k-fold directional log-concavity hierarchy provides a graded refinement of Murota's M-convexity. Specifically, for a function f on a fixed degree slice with exchange-closed support, the depth k at which f ceases to be k-fold directionally log-concave measures the \"Lorentzian depth\" of the underlying valuated matroid.\n\n**The key insight is** that the ratio transform R\u1d62f(m) = f(m+e\u1d62)/f(m) is the discrete analog of the logarithmic derivative, and applying it repeatedly extracts finer and finer curvature information from the valuation. The k-fold hierarchy thus provides an intrinsic notion of \"smoothness depth\" for valuated matroids, analogous to the differentiability class C^k for continuous functions.\n\n**Why now?** The product stability theorem (`mixedLogConcave_mul`, `directionalLogConcave_mul`) shows that the k-fold classes form multiplicative monoids. Combined with the tropical bridge (`negLog_supermodular_of_mixed`), this means k-fold directional log-concavity defines a hierarchy of tropical convexity classes that is preserved under the tropical product. No such hierarchy existed in Murota's theory.\n\n**Test**: Compute the k-fold depth of specific valuated matroids: uniform matroid valuations, graphical matroid valuations (with edge weights), and the Grassmannian valuations from algebraic geometry. Identify the first example where k-fold depth is finite but greater than 1. If all naturally occurring valuated matroids have infinite depth, this would suggest a deep structural theorem.\n\n**Impact**: Would create a new invariant for valuated matroids, potentially distinguishing matroids that are indistinguishable by existing invariants (basis exchange graph structure, Tutte polynomial, etc.).\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave`, `KFoldLogConcave.ratio`, `kFoldLogConcave_mono`); `Pythagorean/MultivariateLogConcavity.lean` (`KFoldDirectionalLogConcave`, `kfold_mono`, `directionalLogConcave_mul`).\n\n**Proof Strategy**: Define the Lorentzian depth as sup{k : KFoldDirectionalLogConcave k f}. Use the product stability theorem to show this is sub-additive under tropical convolution. Prove that exponential-type functions have infinite depth (already partially established by `exp_type_mixed_logconcave`). Show that graphic matroid valuations have depth at least d-2 using the connection to Kirchhoff's matrix tree theorem.\n\n**Domain Bridges**: Combinatorial optimization (valuated matroids, M-convexity) \u2194 Analysis (smoothness hierarchies) \u2194 Algebraic geometry (Grassmannian, tropical flag varieties).\n\n**Lineage**: Extends `kfold_mono` and `exp_type_mixed_logconcave`.\n\n**Ambition**: Solid extension with grand-challenge potential.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T19:29:17.914245+00:00"
-  },
-  {
-    "id": "fd_0929",
-    "title": "Direction 3: Negative Dependence and Rapid Mixing via Directional Log-Concavity",
-    "description": "**Conjecture**: For a probability distribution \u03bc on {0,1}\u207f whose generating polynomial satisfies k-fold directional log-concavity (k \u2265 2), the Glauber dynamics Markov chain mixes in time O(n log n), with the mixing time constant depending on k.\n\n**The key insight is** that mixed directional log-concavity is exactly the condition of pairwise negative dependence (the FKG inequality reversed), and the higher-order conditions in the k-fold hierarchy provide increasingly strong spectral gap bounds. The k = 2 condition should imply a spectral gap of \u03a9(1/n), which by standard Markov chain theory gives O(n log n) mixing.\n\n**Why now?** Anari\u2013Liu\u2013Oveis Gharan\u2013Vinzant (2019) proved rapid mixing for distributions associated with log-concave polynomials, but their proof goes through the complete homogeneous polynomial machinery. Our direct coefficient-level approach via mixed DLC could yield a simpler proof with explicit constants.\n\n**Test**: Simulate Glauber dynamics for canonical partition functions of fermionic systems (tested in `applications.py`) and measure empirical mixing times. Compare mixing time against the k-fold depth of the generating polynomial. If there is a clear correlation (higher k \u2192 faster mixing), this provides strong evidence for the conjecture.\n\n**Impact**: Would provide the first direct link between the k-fold hierarchy and algorithmic efficiency, with applications to approximate counting, sampling, and statistical inference.\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave.mul`, `partitionFunctionCoeff_kFoldLogConcave_of_factorization`); `Pythagorean/MultivariateLogConcavity.lean` (`mixedLogConcave_mul`, `support_rectangle_closure`).\n\n**Proof Strategy**: Use the factored function theorem (`factored_mixed_logconcave`) to reduce to independent site distributions. Show that the product stability of mixed DLC (`mixedLogConcave_mul`) preserves the spectral gap bound under composition. Derive the mixing time bound from the spectral gap using the log-Sobolev inequality approach of Diaconis\u2013Saloff-Coste.\n\n**Domain Bridges**: Probability theory (mixing times, spectral gaps) \u2194 Statistical physics (Glauber dynamics, phase transitions) \u2194 Computer science (approximate counting, FPRAS).\n\n**Lineage**: Extends `mixedLogConcave_mul` and `factored_mixed_logconcave`.\n\n**Ambition**: Solid extension with immediate algorithmic impact.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T19:29:17.948753+00:00"
-  },
-  {
-    "id": "fd_0930",
-    "title": "Direction 4: Tropical Hodge Theory via Supermodularity Hierarchies",
-    "description": "**Conjecture**: The supermodularity hierarchy induced by the tropical bridge (\u2212log of k-fold directional log-concavity) defines a tropical analog of the Hodge filtration on the cohomology of toric varieties. Specifically, the depth k at which \u2212log f ceases to satisfy the iterated supermodularity conditions corresponds to the weight filtration level in tropical Hodge theory.\n\n**The key insight is** that the tropical bridge theorem (`negLog_supermodular_of_mixed` and `exp_neg_supermodular_mixed`) establishes a perfect correspondence between multiplicative log-concavity and additive supermodularity. Iterating this correspondence through the k-fold hierarchy creates a tower of tropical convexity conditions that mirror the Lefschetz decomposition in Hodge theory.\n\n**Why now?** The recent proof of the Hodge-Riemann relations for matroids by Adiprasito\u2013Huh\u2013Katz used the hard Lefschetz property, which in the tropical setting corresponds to a specific supermodularity condition on tropical intersection numbers. Our hierarchy provides a natural graded refinement of this single condition.\n\n**Test**: Compute the tropical supermodularity depth for the tropical Grassmannians Gr(2,n) for n = 4,...,8. Compare with the known Hodge numbers of the corresponding toric varieties. If the depths match, this provides evidence for the correspondence.\n\n**Impact**: Would create the first computational approach to tropical Hodge theory, potentially enabling machine verification of Hodge-theoretic results that are currently proved only by deep analytic methods.\n\n**Catalog References**: `Pythagorean/MultivariateLogConcavity.lean` (`negLog_supermodular_of_mixed`, `exp_neg_supermodular_mixed`, `DiscreteSupermodular`); `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (`IsBrandenHuhLorentzian`, `QuadraticHasLorentzianSignature`).\n\n**Proof Strategy**: Define the tropical Lefschetz operator as the tropicalization of the algebraic Lefschetz operator. Show that the hard Lefschetz property for a Lorentzian polynomial tropicalizes to the supermodularity of \u2212log(coefficient function). Use the k-fold hierarchy to define tropical Hodge numbers. Verify the tropical Hodge-Riemann bilinear relations at each level of the hierarchy.\n\n**Domain Bridges**: Tropical geometry \u2194 Algebraic geometry (Hodge theory) \u2194 Combinatorics (matroid Chow rings).\n\n**Lineage**: Extends `negLog_supermodular_of_mixed` and connects to `lorentzian_reversed_cauchy_schwarz`.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if realized.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T19:29:17.982054+00:00"
-  },
-  {
-    "id": "fd_0931",
-    "title": "Direction 5: M-Convex Optimization via Directional Log-Concavity Certificates",
-    "description": "**Conjecture**: For optimization problems on M-convex sets (base polyhedra of matroids, integral polymatroids), a directional log-concavity certificate for the objective function guarantees polynomial-time solvability via a simple exchange algorithm, with the convergence rate controlled by the k-fold depth.\n\n**The key insight is** that the rectangle closure theorem (`support_rectangle_closure`) provides a \"local-to-global\" principle: if the objective function satisfies mixed DLC, then any local improvement via coordinate exchange leads to a global improvement. Combined with the exchange property of the feasible set, this means the exchange algorithm cannot cycle and must converge to the optimum.\n\n**Why now?** Murota's discrete convex analysis provides polynomial-time algorithms for M-convex function minimization, but the algorithms require full M-convexity. Our graded hierarchy via k-fold depth suggests that partial log-concavity (depth k < d) may already suffice for efficient optimization, with the convergence rate degrading gracefully as k decreases.\n\n**Test**: Implement the exchange algorithm for weighted matroid intersection with various objective functions. Measure the number of exchange steps as a function of (n, d, k) where k is the k-fold depth. If the step count scales as O(n^{d-k}), this confirms the graded convergence theory.\n\n**Impact**: Would extend the reach of efficient discrete optimization algorithms to a broader class of objective functions, with certificates that are easier to verify than full M-convexity.\n\n**Catalog References**: `Pythagorean/MultivariateLogConcavity.lean` (`support_rectangle_closure`, `kfold_mono`, `CoeffDirectionalLogConcave`); `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (`SupportSatisfiesExchange`).\n\n**Proof Strategy**: Define a potential function \u03a6 = \u2212\u2211 log f(m\u209c) along the exchange algorithm trajectory. Show that each exchange step decreases \u03a6 by at least a quantity controlled by the k-fold depth. Use the product stability theorem to bound the total number of steps. Formalize the convergence proof and verify soundness of the exchange algorithm against the `SupportSatisfiesExchange` predicate.\n\n**Domain Bridges**: Combinatorial optimization (matroid intersection, submodular maximization) \u2194 Algorithm design (exchange algorithms, local search) \u2194 Economics (mechanism design, auction theory).\n\n**Lineage**: Extends `support_rectangle_closure` and connects to `SupportSatisfiesExchange`.\n\n**Ambition**: Solid extension with direct practical applications.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T19:29:18.016009+00:00"
   },
   {
     "id": "seed_032",

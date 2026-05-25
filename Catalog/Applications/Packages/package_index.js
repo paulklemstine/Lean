@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorial Optimization / Hypergraph Theory",
     "date": "2026-05-25T20:02:12Z",
     "exp_id": "2a42387f",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7190936000000001,
+    "quality": "substantial"
   },
   {
     "filename": "direction_5_higher_order_completion_and_lambda_cal.json",
@@ -681,8 +681,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-25T20:02:12Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7190936000000001,
+      "quality": "substantial"
     }
   ],
   "edges": [
