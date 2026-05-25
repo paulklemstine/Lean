@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Mathematical Physics / Representation Theory / Spectral Analysis",
     "date": "2026-05-25T17:15:32Z",
     "exp_id": "a9352256",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7426729134392938,
+    "quality": "substantial"
   },
   {
     "filename": "direction_5_phase_transitions_in_generation_probab.json",
@@ -401,8 +401,8 @@ window.PACKAGE_GRAPH = {
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7426729134392938,
+      "quality": "substantial"
     }
   ],
   "edges": [

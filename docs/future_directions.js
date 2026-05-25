@@ -391,10 +391,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8e448ab4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2933a8cf",
     "timestamp": "2026-05-25T01:35:36.634466+00:00"
   },
   {
@@ -948,25 +948,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T16:05:45.131066+00:00"
   },
   {
-    "id": "fd_0869",
-    "title": "Direction 2: Character Expansion and Strong Coupling Mass Gap",
-    "description": "**Conjecture:** For any compact simple Lie group G and sufficiently small coupling \u03b2, the mass gap of the lattice Yang-Mills transfer matrix equals:\n\n$$\\Delta(\\beta) = -\\ln\\left(\\frac{\\beta \\cdot \\dim(\\rho_{\\text{fund}})}{|G|}\\right) + O(\\beta^2)$$\n\nwhere \u03c1_fund is the fundamental representation.\n\n**Test:** Verify this formula numerically for SU(2) (|G| computed via Haar measure normalization, dim(fund) = 2) at \u03b2 = 0.1, 0.2, ..., 1.0 by comparing with exact diagonalization of the transfer matrix on a 2\u00d72 lattice.\n\n**Impact:** Would provide the first rigorous mass gap result for non-abelian gauge theories in any dimension, extending Borgs-Seiler from abelian to non-abelian.\n\n**Catalog References:**\n- `Physics/YangMillsMassGap.lean`: `casimir_spectral_gap`, `mass_gap_lower_bound_certifies`\n- `Physics/SpectralGap.lean`: `gauge_energy_minimizer_yields_mass_gap`\n\n**Proof Strategy:** (A) Expand exp(-\u03b2\u00b7S) in characters using Peter-Weyl. (B) Show the transfer matrix kernel is dominated by the trivial character at strong coupling. (C) Bound the contribution of non-trivial representations using Casimir eigenvalue bounds (`casimir_spectral_gap`). (D) Apply `spectral_gap_perturbation_stability` to control error terms.\n\n**Domain Bridges:** Gauge theory \u2192 Representation theory (Peter-Weyl theorem) \u2192 Combinatorics (cluster expansion)\n\n**Lineage:** Builds directly on `casimir_spectral_gap` and `rep_theoretic_gap_bound`.\n\n**Ambition:** Solid extension \u2014 uses established techniques (cluster expansion) with our certified infrastructure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6a88b92d",
-    "consumed_by_exp_id": "a9352256",
-    "timestamp": "2026-05-25T15:29:21.834825+00:00"
-  },
-  {
     "id": "fd_0883",
     "title": "Direction 1: Submodular Objectives and the Curvature-Gap Conjecture",
     "description": "**Conjecture:** For a hypergraph H with max edge size d and a monotone submodular function f : 2^V \u2192 \u211d\u22650 with curvature \u03ba \u2208 [0,1], the threshold-rounded set S satisfies f(S) \u2264 d/(1-\u03ba) \u00b7 f_multilinear(x), where f_multilinear is the multilinear extension evaluated at the fractional solution x.\n\n**Test:** Implement random monotone submodular functions as weighted coverage functions on random hypergraphs with n=20. Compute the multilinear extension via sampling (1000 samples), apply threshold rounding, and measure the ratio f(S)/f_multilinear(x). Sweep curvature by varying the overlap structure of coverage sets. A single instance with ratio exceeding d/(1-\u03ba)+\u03b5 disproves the conjecture.\n\n**Impact:** This would extend the cost-agnostic rounding principle from linear to submodular objectives \u2014 the natural next level of expressiveness in optimization. Submodular functions model diminishing returns, which appear in welfare economics, sensor placement, and influence maximization.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`, `threshold_simultaneous_multiobjective_bound`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `threshold_isTransversal`, `threshold_card_bound`\n\n**Proof Strategy:** Decompose the multilinear extension as a convex combination of linear functions (this is known). Apply the existing weighted bound to each linear component, then aggregate. The curvature parameter \u03ba controls the gap between f(S) and the aggregated bound via Vondr\u00e1k's framework.\n\n**Domain Bridges:** Machine learning (feature selection), influence maximization in social networks, welfare economics (diminishing marginal returns)\n\n**Lineage:** Direct extension of Theorem 1 (weighted rounding) and Theorem 4 (simultaneous multi-objective) via the multilinear extension framework of C\u0103linescu et al. (2011).\n\n**Ambition:** Grand challenge \u2014 this would create the first certified rounding theory for nonlinear multi-criteria optimization in a combinatorial setting.\n\n---",
@@ -979,7 +960,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b9d16ed0",
@@ -999,11 +980,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
+    "priority_score": 1.0,
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "b9d16ed0",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "89ddcffd",
     "timestamp": "2026-05-25T16:39:08.874172+00:00"
   },
   {
@@ -1018,7 +999,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b9d16ed0",
@@ -1037,7 +1018,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b9d16ed0",
@@ -1057,12 +1038,107 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
+    "priority_score": 1.0,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "da756381",
+    "timestamp": "2026-05-25T16:39:08.941019+00:00"
+  },
+  {
+    "id": "fd_0888",
+    "title": "Direction 1: Sharp Constants in the Dimension-Degree Stability Law",
+    "description": "**Conjecture:** For every (n, d), the optimal constant C(n,d) such that entry-wise perturbation \u2264 C(n,d)\u00b7\u03b5 preserves Lorentzianity satisfies C(n,d) = \u0398(1/n) \u2014 linear in 1/n rather than the 1/n\u00b2 from our entry-based bound.\n\n**Test:** Compute C(n,d) numerically for e_k(x\u2081,...,x\u2099) with n \u2264 20, k \u2264 10 via binary search on the destruction threshold. If C(n,d) \u00b7 n is approximately constant across n, the conjecture is supported. A counterexample where C(n,d) \u00b7 n \u2192 0 would disprove it.\n\n**Impact:** Sharp constants would close the 4\u20135\u00d7 conservatism gap we observe empirically, making the certificate practically tight. This would make certified Lorentzian recognition competitive with uncertified numerical methods.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `quadFormBound_of_entry_bound`, `dimension_degree_stability_law_instance`\n\n**Proof Strategy:** Replace the entry-based AM-GM bound with a tighter analysis using Schur complements or matrix concentration inequalities. The key is showing that random symmetric perturbations with independent entries have spectral radius O(\u221an \u00b7 max_entry) rather than O(n \u00b7 max_entry).\n\n**Domain Bridges:** Numerical linear algebra (spectral radius of random matrices), high-dimensional probability (matrix Chernoff bounds)\n\n**Lineage:** Directly extends Theorem 4.4 of the current work.\n\n**Ambition:** Solid extension \u2014 would complete the quantitative picture opened by the perturbation theorem. \u2605\u2605\u2605\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
     "priority_score": 0.9999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b9d16ed0",
+    "source_exp_id": "2493279d",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:39:08.941019+00:00"
+    "timestamp": "2026-05-25T17:14:31.150620+00:00"
+  },
+  {
+    "id": "fd_0889",
+    "title": "Direction 2: Lorentzian Condition Numbers and Smoothed Analysis",
+    "description": "**Conjecture:** Under smoothed analysis (Gaussian perturbation of coefficients with variance \u03c3\u00b2), the probability that a degree-d polynomial near the Lorentzian boundary is misclassified decays as exp(\u2212\u03a9(\u03b5\u00b2/(n\u03c3\u00b2))), where \u03b5 is the spectral gap.\n\n**Test:** For polynomials with spectral gap \u03b5 close to 0, sample Gaussian perturbations at various \u03c3 and measure misclassification rate. Fit the exponential decay model. If the rate does not depend on \u03b5\u00b2/\u03c3\u00b2 but on a different quantity, the conjecture fails.\n\n**Impact:** Would establish Lorentzian recognition as numerically well-conditioned in the smoothed analysis sense, even for polynomials near the boundary. This is the strongest possible statement about practical reliability.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `HasGappedSignature`, `LorentzianConditionNumber`\n\n**Proof Strategy:** Use the perturbation theorem to reduce to bounding P[\u2016E\u2016_op > \u03b5] for Gaussian Wigner matrices E. Known tail bounds for the largest eigenvalue of GOE give the desired exponential decay.\n\n**Domain Bridges:** Smoothed analysis (Spielman\u2013Teng program), random matrix theory, computational complexity\n\n**Lineage:** Extends the condition number concept from numerical linear algebra to algebraic combinatorics.\n\n**Ambition:** Grand challenge \u2014 would merge Lorentzian polynomial theory with the Spielman\u2013Teng paradigm. \u2605\u2605\u2605\u2605\u2605\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2493279d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:31.171940+00:00"
+  },
+  {
+    "id": "fd_0890",
+    "title": "Direction 3: Tropical Shadows of Lorentzian Stability",
+    "description": "**Conjecture:** The tropicalization of the Lorentzian stability radius (infimum of coefficient perturbations destroying Lorentzianity) equals the minimum tropical spectral gap across tropical quadratic leaves.\n\n**Test:** Compute tropical quadratic leaves for small examples (complete graphs, uniform matroids). Compare the tropical spectral gap to the log of the exact stability radius. If they differ by more than O(log n), the conjecture fails.\n\n**Impact:** Would provide a purely combinatorial proxy for the numerical stability radius, computable in polynomial time without eigenvalue decomposition. This could enable Lorentzian certification for polynomials with millions of variables.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `UniformSpectralMargin`; `Catalog/Tropical/` \u2014 various tropical geometry files\n\n**Proof Strategy:** Use the Maslov dequantization: take the limit of log(stability_radius(t\u1d45 \u00b7 f)) / log(t) as t \u2192 \u221e. Show this limit equals the tropical spectral gap via the tropical eigenvalue theory of Akian, Gaubert, and Guterman.\n\n**Domain Bridges:** Tropical geometry, max-plus algebra, combinatorial optimization\n\n**Lineage:** Builds on both the stability theory (this work) and tropical Lorentzian theory.\n\n**Ambition:** Grand challenge \u2014 would create a new bridge between numerical stability and tropical geometry. \u2605\u2605\u2605\u2605\u2605\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2493279d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:31.193329+00:00"
+  },
+  {
+    "id": "fd_0891",
+    "title": "Direction 4: Certified Hyperbolicity via Lorentzian Leaf Margins",
+    "description": "**Conjecture:** A homogeneous polynomial p is hyperbolic with respect to direction e if and only if every quadratic leaf of p (relative to e) has gapped Lorentzian signature, and the minimum gap provides a certified hyperbolicity margin.\n\n**Test:** For known hyperbolic polynomials (determinant, elementary symmetric), compute quadratic leaf gaps relative to different directions e. Verify that the gap is positive exactly when p is hyperbolic w.r.t. e. Test non-hyperbolic polynomials to confirm the gap is zero or the signature fails.\n\n**Impact:** Would extend our stability theory from Lorentzian polynomials to the broader class of hyperbolic polynomials, which arise in optimization (hyperbolic programming), PDEs (hyperbolic operators), and control theory.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `HasGappedSignature`, `lorentzian_stable_under_leaf_perturbation`\n\n**Proof Strategy:** Use the Helton\u2013Vinnikov theorem (every hyperbolic polynomial is a determinant of a linear matrix pencil) to reduce to spectral analysis of the pencil. The gap translates to the minimum eigenvalue gap of the pencil restricted to the hyperbolicity cone.\n\n**Domain Bridges:** Hyperbolic programming, semidefinite optimization, PDE theory, robust control\n\n**Lineage:** Extends the Lorentzian framework to encompass G\u00e5rding's hyperbolicity theory.\n\n**Ambition:** Solid extension with grand-challenge potential if the characterization is complete. \u2605\u2605\u2605\u2605\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2493279d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:31.214977+00:00"
+  },
+  {
+    "id": "fd_0892",
+    "title": "Direction 5: Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
+    "description": "**Conjecture:** If a probability distribution \u03bc on {0,1}\u207f has a strongly log-concave generating polynomial (Lorentzian with spectral gap \u03b5), then any distribution \u03bd whose generating polynomial has coefficient-wise distance < C\u00b7\u03b5 from \u03bc's is also strongly log-concave, with explicit mixing time bounds for Markov chains on \u03bd's support.\n\n**Test:** Sample from distributions near the uniform matroid measure. Compute the generating polynomial's spectral gap. Verify that the mixing time of the natural random walk scales as predicted by the gap. If mixing time depends on a different quantity, refine the conjecture.\n\n**Impact:** Would provide the first certified mixing time bounds for sampling algorithms operating on approximately log-concave distributions \u2014 a central problem in machine learning and statistical physics.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`, `reversed_cauchy_schwarz_of_gapped`\n\n**Proof Strategy:** Use the stability radius to show the perturbed distribution has a Lorentzian generating polynomial. Then apply Anari\u2013Oveis Gharan\u2013Vinzant's framework linking Lorentzianity to modified log-Sobolev inequalities, which control mixing times.\n\n**Domain Bridges:** Markov chain Monte Carlo, statistical physics (Glauber dynamics), machine learning (sampling from energy-based models)\n\n**Lineage:** Connects the perturbation theorem to the probabilistic applications of Lorentzian polynomials.\n\n**Ambition:** Solid extension \u2014 the pieces exist but assembling them requires careful analysis. \u2605\u2605\u2605\u2605",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2493279d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:31.235341+00:00"
   },
   {
     "id": "seed_026",
@@ -1169,9 +1245,27 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:06:34.986047+00:00"
   },
   {
-    "id": "fd_0888",
-    "title": "Direction 1: Sharp Constants in the Dimension-Degree Stability Law",
-    "description": "**Conjecture:** For every (n, d), the optimal constant C(n,d) such that entry-wise perturbation \u2264 C(n,d)\u00b7\u03b5 preserves Lorentzianity satisfies C(n,d) = \u0398(1/n) \u2014 linear in 1/n rather than the 1/n\u00b2 from our entry-based bound.\n\n**Test:** Compute C(n,d) numerically for e_k(x\u2081,...,x\u2099) with n \u2264 20, k \u2264 10 via binary search on the destruction threshold. If C(n,d) \u00b7 n is approximately constant across n, the conjecture is supported. A counterexample where C(n,d) \u00b7 n \u2192 0 would disprove it.\n\n**Impact:** Sharp constants would close the 4\u20135\u00d7 conservatism gap we observe empirically, making the certificate practically tight. This would make certified Lorentzian recognition competitive with uncertified numerical methods.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `quadFormBound_of_entry_bound`, `dimension_degree_stability_law_instance`\n\n**Proof Strategy:** Replace the entry-based AM-GM bound with a tighter analysis using Schur complements or matrix concentration inequalities. The key is showing that random symmetric perturbations with independent entries have spectral radius O(\u221an \u00b7 max_entry) rather than O(n \u00b7 max_entry).\n\n**Domain Bridges:** Numerical linear algebra (spectral radius of random matrices), high-dimensional probability (matrix Chernoff bounds)\n\n**Lineage:** Directly extends Theorem 4.4 of the current work.\n\n**Ambition:** Solid extension \u2014 would complete the quantitative picture opened by the perturbation theorem. \u2605\u2605\u2605\n\n---",
+    "id": "fd_0894",
+    "title": "Direction 1: Full Wreath Product Phase Transition",
+    "description": "**Conjecture:** For the wreath product $W_{k,m} = S_k \\wr S_m$ in product action, the generation probability undergoes a sharp phase transition at a critical ratio $\\rho^* = k^*/m^*$ determined by the full maximal subgroup pressure (not just coordinate defects). Specifically, the non-coordinate-defect subgroups of $W_{k,m}$ (arising from the semidirect action of $S_m$ on $S_k^m$) contribute a pressure term that is sublinear in $m$, so that the phase transition location is shifted but not qualitatively changed from the base-group prediction.\n\n**Test:** For $km \\leq 12$, enumerate all maximal subgroups of $W_{k,m}$ using GAP and compute the full pressure. Compare with the coordinate-defect pressure $m \\cdot p(S_k)$. If the full pressure exceeds the coordinate-defect pressure by a multiplicative constant, the phase transition is merely shifted; if it changes the growth rate in $m$, the conjecture needs revision.\n\n**Impact:** Resolves the central motivating problem and establishes the first rigorous phase transition theorem for random generation in a structured permutation group family.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure definition, product factorization, block-defect formula)\n\n**Proof Strategy:** Classify maximal subgroups of $S_k \\wr S_m$ using O'Nan\u2013Scott theory. Separate into three types: (a) base-group coordinate defects (already handled), (b) \"diagonal\" subgroups from $S_m$-action, (c) \"twisted\" subgroups. Bound the pressure from types (b) and (c) using index estimates from the O'Nan\u2013Scott classification.\n\n**Domain Bridges:** Permutation group theory, O'Nan\u2013Scott classification, computational group theory.\n\n**Lineage:** Direct extension of Theorems 4 and 6 in the current work.\n\n**Ambition:** Grand challenge \u2014 would constitute a major advance in probabilistic group theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf039036",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:59.768954+00:00"
+  },
+  {
+    "id": "fd_0895",
+    "title": "Direction 2: Universality of Phase Transition Critical Exponents",
+    "description": "**Conjecture:** The phase transition in generation probability exhibits universality: for any infinite family of finite groups $\\{G_n\\}$ with a natural parameterization of the subgroup family, the generation probability near the critical point satisfies\n$$P_{\\text{gen}}(G_n) \\sim A \\cdot |\\Phi(G_n)|^\\beta + \\text{lower order}$$\nwhere $\\beta$ is a universal critical exponent depending only on broad structural features (e.g., the rank of the group, whether it is a direct product or semidirect product).\n\n**The key insight is** that the multiplicative structure of the pressure (product factorization, free energy additivity) suggests that subgroup thermodynamics may satisfy a form of the central limit theorem, with fluctuations governed by universal distributions.\n\n**Why now?** The formal verification of product factorization and free energy additivity provides the mathematical infrastructure needed to rigorously state and test universality hypotheses.\n\n**Test:** Compute the generation probability and pressure for families $S_k^m$, $\\text{GL}_n(\\mathbb{F}_q)$, and $\\text{PSL}_2(p)$ near their respective phase transitions. Fit the critical exponent $\\beta$ and compare across families.\n\n**Impact:** Would establish a deep connection between finite group theory and the theory of critical phenomena, potentially importable techniques from renormalization group theory.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure bounds), `Algebra/SymmGroupGen/Basic.lean` (symmetric group generation)\n\n**Proof Strategy:** Establish a central limit theorem for the pressure contributions from independent subgroup families. Use the product factorization theorem as the independence condition. Apply Berry\u2013Esseen-type bounds for the convergence rate.\n\n**Domain Bridges:** Statistical mechanics (universality, critical exponents), probability theory (CLT, large deviations), random matrix theory.\n\n**Lineage:** Extends Direction 1 to a general framework.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1183,85 +1277,69 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2493279d",
+    "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:31.150620+00:00"
+    "timestamp": "2026-05-25T17:14:59.791092+00:00"
   },
   {
-    "id": "fd_0889",
-    "title": "Direction 2: Lorentzian Condition Numbers and Smoothed Analysis",
-    "description": "**Conjecture:** Under smoothed analysis (Gaussian perturbation of coefficients with variance \u03c3\u00b2), the probability that a degree-d polynomial near the Lorentzian boundary is misclassified decays as exp(\u2212\u03a9(\u03b5\u00b2/(n\u03c3\u00b2))), where \u03b5 is the spectral gap.\n\n**Test:** For polynomials with spectral gap \u03b5 close to 0, sample Gaussian perturbations at various \u03c3 and measure misclassification rate. Fit the exponential decay model. If the rate does not depend on \u03b5\u00b2/\u03c3\u00b2 but on a different quantity, the conjecture fails.\n\n**Impact:** Would establish Lorentzian recognition as numerically well-conditioned in the smoothed analysis sense, even for polynomials near the boundary. This is the strongest possible statement about practical reliability.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `HasGappedSignature`, `LorentzianConditionNumber`\n\n**Proof Strategy:** Use the perturbation theorem to reduce to bounding P[\u2016E\u2016_op > \u03b5] for Gaussian Wigner matrices E. Known tail bounds for the largest eigenvalue of GOE give the desired exponential decay.\n\n**Domain Bridges:** Smoothed analysis (Spielman\u2013Teng program), random matrix theory, computational complexity\n\n**Lineage:** Extends the condition number concept from numerical linear algebra to algebraic combinatorics.\n\n**Ambition:** Grand challenge \u2014 would merge Lorentzian polynomial theory with the Spielman\u2013Teng paradigm. \u2605\u2605\u2605\u2605\u2605\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:31.171940+00:00"
-  },
-  {
-    "id": "fd_0890",
-    "title": "Direction 3: Tropical Shadows of Lorentzian Stability",
-    "description": "**Conjecture:** The tropicalization of the Lorentzian stability radius (infimum of coefficient perturbations destroying Lorentzianity) equals the minimum tropical spectral gap across tropical quadratic leaves.\n\n**Test:** Compute tropical quadratic leaves for small examples (complete graphs, uniform matroids). Compare the tropical spectral gap to the log of the exact stability radius. If they differ by more than O(log n), the conjecture fails.\n\n**Impact:** Would provide a purely combinatorial proxy for the numerical stability radius, computable in polynomial time without eigenvalue decomposition. This could enable Lorentzian certification for polynomials with millions of variables.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `UniformSpectralMargin`; `Catalog/Tropical/` \u2014 various tropical geometry files\n\n**Proof Strategy:** Use the Maslov dequantization: take the limit of log(stability_radius(t\u1d45 \u00b7 f)) / log(t) as t \u2192 \u221e. Show this limit equals the tropical spectral gap via the tropical eigenvalue theory of Akian, Gaubert, and Guterman.\n\n**Domain Bridges:** Tropical geometry, max-plus algebra, combinatorial optimization\n\n**Lineage:** Builds on both the stability theory (this work) and tropical Lorentzian theory.\n\n**Ambition:** Grand challenge \u2014 would create a new bridge between numerical stability and tropical geometry. \u2605\u2605\u2605\u2605\u2605\n\n---",
+    "id": "fd_0896",
+    "title": "Direction 3: Pressure Theory for Almost Simple Groups",
+    "description": "**Conjecture:** For a finite almost simple group $G$ with socle $S$, the pressure from the maximal subgroup family satisfies\n$$\\mathrm{pressure}(G, \\mathcal{M}) = O(|G|^{-\\epsilon})$$\nfor some $\\epsilon > 0$ depending on the type of $S$ (alternating, classical, exceptional, sporadic). This gives $P_{\\text{gen}} \\to 1$ as $|G| \\to \\infty$, recovering the Liebeck\u2013Shalev theorem with explicit rates.\n\n**The key insight is** that the pressure framework provides a systematic way to organize the contribution of each maximal subgroup type (geometric vs. non-geometric in the Aschbacher classification), with the dominant contribution coming from the geometric subgroups of smallest index.\n\n**Why now?** The entropy-energy bounds (Theorems 2\u20133) provide a framework to compute pressure without enumerating all maximal subgroups\u2014bounding the count and minimum index suffices.\n\n**Test:** Compute exact pressure for $\\text{PSL}_2(p)$ for primes $p \\leq 100$ and verify the conjectured decay rate. The maximal subgroups of $\\text{PSL}_2(p)$ are well-known.\n\n**Impact:** Would give the best known explicit bounds on generation probability for classical groups, with direct applications to cryptographic group selection.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (entropy-energy bounds)\n\n**Proof Strategy:** Use the Aschbacher classification of maximal subgroups of classical groups. For each class, bound the number of subgroups (entropy) and the minimum index (energy). Apply the upper bound theorem: pressure \u2264 |F| / D\u00b2.\n\n**Domain Bridges:** Finite simple group theory, Aschbacher classification, cryptography.\n\n**Lineage:** Applies the general pressure theory to the most important group families.\n\n**Ambition:** Solid extension \u2014 builds directly on established techniques.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
-      "Tropical",
+      "Computation",
       "Physics",
+      "Cryptography",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2493279d",
+    "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:31.193329+00:00"
+    "timestamp": "2026-05-25T17:14:59.812468+00:00"
   },
   {
-    "id": "fd_0891",
-    "title": "Direction 4: Certified Hyperbolicity via Lorentzian Leaf Margins",
-    "description": "**Conjecture:** A homogeneous polynomial p is hyperbolic with respect to direction e if and only if every quadratic leaf of p (relative to e) has gapped Lorentzian signature, and the minimum gap provides a certified hyperbolicity margin.\n\n**Test:** For known hyperbolic polynomials (determinant, elementary symmetric), compute quadratic leaf gaps relative to different directions e. Verify that the gap is positive exactly when p is hyperbolic w.r.t. e. Test non-hyperbolic polynomials to confirm the gap is zero or the signature fails.\n\n**Impact:** Would extend our stability theory from Lorentzian polynomials to the broader class of hyperbolic polynomials, which arise in optimization (hyperbolic programming), PDEs (hyperbolic operators), and control theory.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `HasGappedSignature`, `lorentzian_stable_under_leaf_perturbation`\n\n**Proof Strategy:** Use the Helton\u2013Vinnikov theorem (every hyperbolic polynomial is a determinant of a linear matrix pencil) to reduce to spectral analysis of the pencil. The gap translates to the minimum eigenvalue gap of the pencil restricted to the hyperbolicity cone.\n\n**Domain Bridges:** Hyperbolic programming, semidefinite optimization, PDE theory, robust control\n\n**Lineage:** Extends the Lorentzian framework to encompass G\u00e5rding's hyperbolicity theory.\n\n**Ambition:** Solid extension with grand-challenge potential if the characterization is complete. \u2605\u2605\u2605\u2605\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:31.214977+00:00"
-  },
-  {
-    "id": "fd_0892",
-    "title": "Direction 5: Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
-    "description": "**Conjecture:** If a probability distribution \u03bc on {0,1}\u207f has a strongly log-concave generating polynomial (Lorentzian with spectral gap \u03b5), then any distribution \u03bd whose generating polynomial has coefficient-wise distance < C\u00b7\u03b5 from \u03bc's is also strongly log-concave, with explicit mixing time bounds for Markov chains on \u03bd's support.\n\n**Test:** Sample from distributions near the uniform matroid measure. Compute the generating polynomial's spectral gap. Verify that the mixing time of the natural random walk scales as predicted by the gap. If mixing time depends on a different quantity, refine the conjecture.\n\n**Impact:** Would provide the first certified mixing time bounds for sampling algorithms operating on approximately log-concave distributions \u2014 a central problem in machine learning and statistical physics.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`, `reversed_cauchy_schwarz_of_gapped`\n\n**Proof Strategy:** Use the stability radius to show the perturbed distribution has a Lorentzian generating polynomial. Then apply Anari\u2013Oveis Gharan\u2013Vinzant's framework linking Lorentzianity to modified log-Sobolev inequalities, which control mixing times.\n\n**Domain Bridges:** Markov chain Monte Carlo, statistical physics (Glauber dynamics), machine learning (sampling from energy-based models)\n\n**Lineage:** Connects the perturbation theorem to the probabilistic applications of Lorentzian polynomials.\n\n**Ambition:** Solid extension \u2014 the pieces exist but assembling them requires careful analysis. \u2605\u2605\u2605\u2605",
+    "id": "fd_0897",
+    "title": "Direction 4: Large Deviation Principles for Generation",
+    "description": "**Conjecture:** The number of nongenerating pairs in $G^2$ satisfies a large deviation principle with rate function given by the Legendre transform of the log-pressure:\n$$\\Lambda^*(\\alpha) = \\sup_t \\{t\\alpha - \\log Z(t)\\}$$\nwhere $Z(t) = \\sum_H [G:H]^{-2t}$ is the pressure at \"inverse temperature\" $t$.\n\n**The key insight is** that the pressure at different \"temperatures\" $t$ (i.e., with exponent $-2t$ instead of $-2$) forms a family of partition functions whose Legendre transform controls the probability of atypical generation behavior.\n\n**Why now?** The product factorization theorem shows that pressure has the multiplicative structure needed for the G\u00e4rtner\u2013Ellis theorem, which gives large deviation principles from the log-moment generating function.\n\n**Test:** For $S_k^m$ with $m \\to \\infty$, compute $Z(t) = m \\cdot \\sum_M [S_k:M]^{-2t}$ for varying $t$ and verify the predicted rate function against Monte Carlo simulations.\n\n**Impact:** Would establish a complete probabilistic theory of random generation, going beyond first-moment bounds to exponential concentration.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (product factorization, free energy additivity)\n\n**Proof Strategy:** Define the generalized pressure $Z(t)$ and verify multiplicativity for product families. Apply the G\u00e4rtner\u2013Ellis theorem to the sequence of block-defect pressures. Verify the hypotheses (existence of the limit, differentiability of the log-moment generating function).\n\n**Domain Bridges:** Large deviation theory, probability theory, statistical mechanics (generalized ensembles).\n\n**Lineage:** Direct analytic extension of the free energy framework.\n\n**Ambition:** Solid extension with significant theoretical depth.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
       "Physics",
       "Bridges",
-      "MachineLearning",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2493279d",
+    "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:31.235341+00:00"
+    "timestamp": "2026-05-25T17:14:59.835069+00:00"
+  },
+  {
+    "id": "fd_0898",
+    "title": "Direction 5: Subgroup Coverings as Error-Correcting Codes",
+    "description": "**Conjecture:** The optimal subgroup covering family (minimizing pressure subject to covering all nongenerating pairs) corresponds to a code in a natural metric space on the subgroup lattice, and the minimum achievable pressure is related to the covering radius of this code.\n\n**The key insight is** that the pressure is an expected collision rate, analogous to the weight enumerator of a code. Minimizing pressure while maintaining coverage is the subgroup-lattice analogue of designing an efficient error-correcting code.\n\n**Why now?** The entropy-energy bounds establish that pressure is controlled by two parameters (count and index range) that are directly analogous to code parameters (length and minimum distance). The product factorization provides a product code construction.\n\n**Test:** For $S_n$ with $n \\leq 10$, enumerate all covering families (collections of maximal subgroups whose union contains all nongenerating pairs) and compute the minimum-pressure covering. Compare with the pressure from the full maximal subgroup family.\n\n**Impact:** Opens a new connection between group theory and coding theory, potentially yielding new efficient constructions for both subgroup coverings and codes.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (sieve inequality, entropy-energy bounds)\n\n**Proof Strategy:** Define a metric on the subgroup lattice using index ratios. Formulate the covering problem as a set cover with weighted costs. Apply known bounds from combinatorial optimization (greedy algorithm guarantees, LP relaxation bounds). Use product factorization for constructing product codes.\n\n**Domain Bridges:** Coding theory, combinatorial optimization, lattice theory.\n\n**Lineage:** Novel cross-domain bridge from the sieve inequality.\n\n**Ambition:** Solid extension with potential for surprising applications.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf039036",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:59.855193+00:00"
   },
   {
     "id": "seed_013",
@@ -1606,6 +1684,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:15:12.531139+00:00"
   },
   {
+    "id": "fd_0901",
+    "title": "Algorithmic Independence of Primewise Persistence Profiles",
+    "description": "Conjecture: There exists an explicit arithmetic family of filtered chain complexes C(N) over Z, computable from N in polynomial time, such that for infinitely many cutoffs N the collection of primewise barcode summary vectors B_p(C(N)) (for p <= polylog N) is pairwise algorithmically independent in the following testable sense: no predictor running in time poly(log N) and given {B_q(C(N)) : q != p, q <= polylog N} can recover B_p(C(N)) with advantage exceeding o(1) over the empirical base rate. Test: instantiate a canonical family C(N) (e.g. from arithmetic lattices, modular-symbol complexes, or filtered congruence complexes), compute B_p across many primes, and evaluate whether cross-prime prediction accuracy provably/empirically stays at chance while within-prime structure remains highly nontrivial. Refutation occurs if a uniform low-complexity predictor consistently reconstructs one prime's persistence from the others. Impact: This would reveal a new form of arithmetic pseudorandomness visible only through topological summaries, suggesting persistence as a probe of hidden independence phenomena across primes and enabling topology-based randomness tests for arithmetic objects.",
+    "domains": [
+      "Arithmetic Topology",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:15:46.019869+00:00"
+  },
+  {
     "id": "fd_0866",
     "title": "Direction 4: Tropical Persistent Homology for Network Data Analysis",
     "description": "**Conjecture**: For a filtration of graphs $G_1 \\subseteq G_2 \\subseteq \\cdots \\subseteq G_k$ arising from a point cloud (via Vietoris-Rips or similar construction), the sequence of tropical kernel dimensions $\\dim(\\ker_{\\text{trop}}(L_{G_i}))$ produces a \"tropical barcode\" that is stable under small perturbations of the input data, with stability constant equal to the minimum Fiedler eigenvalue across the filtration.\n\n**Test**:\n1. Generate 100 random point clouds in $\\mathbb{R}^d$ for $d \\in \\{2, 3, 5\\}$\n2. Compute tropical barcodes via the cycle rank sequence\n3. Compute classical persistent homology barcodes via standard algorithms\n4. Compare stability constants: measure the bottleneck distance between barcodes under perturbation\n5. Falsification: find a point cloud where the tropical barcode is strictly less stable than the classical barcode (would bound the stability constant)\n\n**Impact**: Could provide a faster alternative to standard persistent homology computation for topological data analysis. Tropical operations (min, plus) are simpler than field arithmetic, potentially enabling hardware acceleration.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `genus_nonneg_of_connected`\n- `Catalog/Pythagorean/AdelicPersistentHomology.lean`: persistent homology infrastructure (if available)\n\n**Proof Strategy**: Use the interlacing theorem for graph Laplacian eigenvalues to bound how the tropical kernel dimension changes when edges are added. The genus changes by exactly 1 when a non-tree edge is added, giving a Lipschitz bound on the barcode.\n\n**Domain Bridges**: Topological data analysis (persistent homology, barcodes) \u2194 Tropical geometry (tropical kernel dimension) \u2194 Spectral graph theory (eigenvalue interlacing)\n\n**Lineage**: Extends `genus_nonneg_of_connected`, connects to TDA\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The cycle rank interpretation is standard; the novelty is the stability analysis and tropical algorithmic framework.\n\n---",
@@ -1645,103 +1738,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1a0c77c0",
     "consumed_by_exp_id": "88770e41",
     "timestamp": "2026-05-25T16:05:45.151288+00:00"
-  },
-  {
-    "id": "fd_0894",
-    "title": "Direction 1: Full Wreath Product Phase Transition",
-    "description": "**Conjecture:** For the wreath product $W_{k,m} = S_k \\wr S_m$ in product action, the generation probability undergoes a sharp phase transition at a critical ratio $\\rho^* = k^*/m^*$ determined by the full maximal subgroup pressure (not just coordinate defects). Specifically, the non-coordinate-defect subgroups of $W_{k,m}$ (arising from the semidirect action of $S_m$ on $S_k^m$) contribute a pressure term that is sublinear in $m$, so that the phase transition location is shifted but not qualitatively changed from the base-group prediction.\n\n**Test:** For $km \\leq 12$, enumerate all maximal subgroups of $W_{k,m}$ using GAP and compute the full pressure. Compare with the coordinate-defect pressure $m \\cdot p(S_k)$. If the full pressure exceeds the coordinate-defect pressure by a multiplicative constant, the phase transition is merely shifted; if it changes the growth rate in $m$, the conjecture needs revision.\n\n**Impact:** Resolves the central motivating problem and establishes the first rigorous phase transition theorem for random generation in a structured permutation group family.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure definition, product factorization, block-defect formula)\n\n**Proof Strategy:** Classify maximal subgroups of $S_k \\wr S_m$ using O'Nan\u2013Scott theory. Separate into three types: (a) base-group coordinate defects (already handled), (b) \"diagonal\" subgroups from $S_m$-action, (c) \"twisted\" subgroups. Bound the pressure from types (b) and (c) using index estimates from the O'Nan\u2013Scott classification.\n\n**Domain Bridges:** Permutation group theory, O'Nan\u2013Scott classification, computational group theory.\n\n**Lineage:** Direct extension of Theorems 4 and 6 in the current work.\n\n**Ambition:** Grand challenge \u2014 would constitute a major advance in probabilistic group theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.768954+00:00"
-  },
-  {
-    "id": "fd_0895",
-    "title": "Direction 2: Universality of Phase Transition Critical Exponents",
-    "description": "**Conjecture:** The phase transition in generation probability exhibits universality: for any infinite family of finite groups $\\{G_n\\}$ with a natural parameterization of the subgroup family, the generation probability near the critical point satisfies\n$$P_{\\text{gen}}(G_n) \\sim A \\cdot |\\Phi(G_n)|^\\beta + \\text{lower order}$$\nwhere $\\beta$ is a universal critical exponent depending only on broad structural features (e.g., the rank of the group, whether it is a direct product or semidirect product).\n\n**The key insight is** that the multiplicative structure of the pressure (product factorization, free energy additivity) suggests that subgroup thermodynamics may satisfy a form of the central limit theorem, with fluctuations governed by universal distributions.\n\n**Why now?** The formal verification of product factorization and free energy additivity provides the mathematical infrastructure needed to rigorously state and test universality hypotheses.\n\n**Test:** Compute the generation probability and pressure for families $S_k^m$, $\\text{GL}_n(\\mathbb{F}_q)$, and $\\text{PSL}_2(p)$ near their respective phase transitions. Fit the critical exponent $\\beta$ and compare across families.\n\n**Impact:** Would establish a deep connection between finite group theory and the theory of critical phenomena, potentially importable techniques from renormalization group theory.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure bounds), `Algebra/SymmGroupGen/Basic.lean` (symmetric group generation)\n\n**Proof Strategy:** Establish a central limit theorem for the pressure contributions from independent subgroup families. Use the product factorization theorem as the independence condition. Apply Berry\u2013Esseen-type bounds for the convergence rate.\n\n**Domain Bridges:** Statistical mechanics (universality, critical exponents), probability theory (CLT, large deviations), random matrix theory.\n\n**Lineage:** Extends Direction 1 to a general framework.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.791092+00:00"
-  },
-  {
-    "id": "fd_0896",
-    "title": "Direction 3: Pressure Theory for Almost Simple Groups",
-    "description": "**Conjecture:** For a finite almost simple group $G$ with socle $S$, the pressure from the maximal subgroup family satisfies\n$$\\mathrm{pressure}(G, \\mathcal{M}) = O(|G|^{-\\epsilon})$$\nfor some $\\epsilon > 0$ depending on the type of $S$ (alternating, classical, exceptional, sporadic). This gives $P_{\\text{gen}} \\to 1$ as $|G| \\to \\infty$, recovering the Liebeck\u2013Shalev theorem with explicit rates.\n\n**The key insight is** that the pressure framework provides a systematic way to organize the contribution of each maximal subgroup type (geometric vs. non-geometric in the Aschbacher classification), with the dominant contribution coming from the geometric subgroups of smallest index.\n\n**Why now?** The entropy-energy bounds (Theorems 2\u20133) provide a framework to compute pressure without enumerating all maximal subgroups\u2014bounding the count and minimum index suffices.\n\n**Test:** Compute exact pressure for $\\text{PSL}_2(p)$ for primes $p \\leq 100$ and verify the conjectured decay rate. The maximal subgroups of $\\text{PSL}_2(p)$ are well-known.\n\n**Impact:** Would give the best known explicit bounds on generation probability for classical groups, with direct applications to cryptographic group selection.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (entropy-energy bounds)\n\n**Proof Strategy:** Use the Aschbacher classification of maximal subgroups of classical groups. For each class, bound the number of subgroups (entropy) and the minimum index (energy). Apply the upper bound theorem: pressure \u2264 |F| / D\u00b2.\n\n**Domain Bridges:** Finite simple group theory, Aschbacher classification, cryptography.\n\n**Lineage:** Applies the general pressure theory to the most important group families.\n\n**Ambition:** Solid extension \u2014 builds directly on established techniques.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.812468+00:00"
-  },
-  {
-    "id": "fd_0897",
-    "title": "Direction 4: Large Deviation Principles for Generation",
-    "description": "**Conjecture:** The number of nongenerating pairs in $G^2$ satisfies a large deviation principle with rate function given by the Legendre transform of the log-pressure:\n$$\\Lambda^*(\\alpha) = \\sup_t \\{t\\alpha - \\log Z(t)\\}$$\nwhere $Z(t) = \\sum_H [G:H]^{-2t}$ is the pressure at \"inverse temperature\" $t$.\n\n**The key insight is** that the pressure at different \"temperatures\" $t$ (i.e., with exponent $-2t$ instead of $-2$) forms a family of partition functions whose Legendre transform controls the probability of atypical generation behavior.\n\n**Why now?** The product factorization theorem shows that pressure has the multiplicative structure needed for the G\u00e4rtner\u2013Ellis theorem, which gives large deviation principles from the log-moment generating function.\n\n**Test:** For $S_k^m$ with $m \\to \\infty$, compute $Z(t) = m \\cdot \\sum_M [S_k:M]^{-2t}$ for varying $t$ and verify the predicted rate function against Monte Carlo simulations.\n\n**Impact:** Would establish a complete probabilistic theory of random generation, going beyond first-moment bounds to exponential concentration.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (product factorization, free energy additivity)\n\n**Proof Strategy:** Define the generalized pressure $Z(t)$ and verify multiplicativity for product families. Apply the G\u00e4rtner\u2013Ellis theorem to the sequence of block-defect pressures. Verify the hypotheses (existence of the limit, differentiability of the log-moment generating function).\n\n**Domain Bridges:** Large deviation theory, probability theory, statistical mechanics (generalized ensembles).\n\n**Lineage:** Direct analytic extension of the free energy framework.\n\n**Ambition:** Solid extension with significant theoretical depth.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.835069+00:00"
-  },
-  {
-    "id": "fd_0898",
-    "title": "Direction 5: Subgroup Coverings as Error-Correcting Codes",
-    "description": "**Conjecture:** The optimal subgroup covering family (minimizing pressure subject to covering all nongenerating pairs) corresponds to a code in a natural metric space on the subgroup lattice, and the minimum achievable pressure is related to the covering radius of this code.\n\n**The key insight is** that the pressure is an expected collision rate, analogous to the weight enumerator of a code. Minimizing pressure while maintaining coverage is the subgroup-lattice analogue of designing an efficient error-correcting code.\n\n**Why now?** The entropy-energy bounds establish that pressure is controlled by two parameters (count and index range) that are directly analogous to code parameters (length and minimum distance). The product factorization provides a product code construction.\n\n**Test:** For $S_n$ with $n \\leq 10$, enumerate all covering families (collections of maximal subgroups whose union contains all nongenerating pairs) and compute the minimum-pressure covering. Compare with the pressure from the full maximal subgroup family.\n\n**Impact:** Opens a new connection between group theory and coding theory, potentially yielding new efficient constructions for both subgroup coverings and codes.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (sieve inequality, entropy-energy bounds)\n\n**Proof Strategy:** Define a metric on the subgroup lattice using index ratios. Formulate the covering problem as a set cover with weighted costs. Apply known bounds from combinatorial optimization (greedy algorithm guarantees, LP relaxation bounds). Use product factorization for constructing product codes.\n\n**Domain Bridges:** Coding theory, combinatorial optimization, lattice theory.\n\n**Lineage:** Novel cross-domain bridge from the sieve inequality.\n\n**Ambition:** Solid extension with potential for surprising applications.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.855193+00:00"
   },
   {
     "id": "seed_032",
