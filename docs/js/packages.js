@@ -212,13 +212,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const outputContainer = document.createElement('div');
             outputContainer.className = 'gallery-img-container';
             outputContainer.style.cssText = 'min-height: 100px; display: flex; align-items: center; justify-content: center; background: var(--bg-secondary, #1e1e2e); border-radius: 8px; margin-top: 8px;';
-            outputContainer.innerHTML = '<span style="color:var(--text-muted)">Click "Generate" to render this visualization</span>';
+            outputContainer.innerHTML = '<div class="viz-loading">Loading visualization...</div>';
 
             genBtn.addEventListener('click', () => {
                 if (window.runVisualization) {
                     window.runVisualization(editor.value, outputContainer, genBtn);
                 }
             });
+
+            // Auto-run visualization on page load
+            if (window.runVisualization) {
+                window.runVisualization(item.code || '', outputContainer, genBtn);
+            }
 
             card.appendChild(header);
             card.appendChild(desc);
@@ -279,8 +284,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const iframe = document.createElement('iframe');
             iframe.className = 'interactive-demo-frame';
             iframe.sandbox = 'allow-scripts allow-same-origin';
-            iframe.srcdoc = item.html || '<p>No content</p>';
-            iframe.style.cssText = 'width: 100%; height: 400px; border: 1px solid var(--border-color, #333); border-radius: 12px; overflow: hidden;';
+            iframe.scrolling = 'no';
+            // Inject no-scrollbar style into the HTML
+            const htmlContent = item.html || '<p>No content</p>';
+            const noScrollbarStyle = '<style>html,body{margin:0;padding:0;overflow:hidden;width:100%;height:auto;}*{box-sizing:border-box;}</style>';
+            iframe.srcdoc = htmlContent.includes('<head>')
+                ? htmlContent.replace('<head>', '<head>' + noScrollbarStyle)
+                : noScrollbarStyle + htmlContent;
+            iframe.style.cssText = 'width: 100%; min-height: 400px; border: none; border-radius: 12px; overflow: hidden;';
+            // Auto-resize iframe to fit content, no scrollbars
+            iframe.addEventListener('load', () => {
+                try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    const height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
+                    if (height > 50) {
+                        iframe.style.height = height + 'px';
+                    }
+                } catch (e) {
+                    // Cross-origin — leave at min-height
+                }
+            });
 
             const source = document.createElement('pre');
             source.className = 'source-code collapsed';

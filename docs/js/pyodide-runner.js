@@ -7,12 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             console.log("Loading Pyodide...");
             window.Aether.pyodideInstance = await loadPyodide();
-            console.log("Pyodide loaded!");
+            // Load micropip so we can install packages later
+            await window.Aether.pyodideInstance.loadPackage("micropip");
+            console.log("Pyodide + micropip loaded!");
 
             document.querySelectorAll('.run-btn').forEach(btn => {
                 btn.disabled = false;
                 btn.textContent = 'Run Code';
             });
+
+            // Auto-run any pending visualizations
+            if (window.Aether.pendingVisualizations) {
+                for (const viz of window.Aether.pendingVisualizations) {
+                    window.runVisualization(viz.code, viz.outputContainer, viz.buttonEl);
+                }
+                window.Aether.pendingVisualizations = [];
+            }
         } catch (err) {
             console.error("Failed to load Pyodide:", err);
         }
@@ -298,26 +308,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Visualization Execution ---
     // Runs a Python visualization script (matplotlib or plotly) and renders the output inline.
-    // Auto-detects which library the script uses and captures the output accordingly.
+    // Auto-runs on page load. Auto-detects library and captures output.
     window.runVisualization = async function(code, outputContainer, buttonEl) {
         if (!window.Aether.pyodideInstance) {
-            outputContainer.innerHTML = '<p style="color:var(--text-muted)">Pyodide is still loading. Please wait...</p>';
+            // Queue for auto-run once Pyodide finishes loading
+            window.Aether.pendingVisualizations = window.Aether.pendingVisualizations || [];
+            window.Aether.pendingVisualizations.push({ code, outputContainer, buttonEl });
+            outputContainer.innerHTML = '<div class="viz-loading">Waiting for Pyodide...</div>';
             return;
         }
 
         const isPlotly = /plotly|go\.Figure|go\.Scatter|go\.Bar|go\.Heatmap|go\.Surface|go\.Contour|px\./.test(code);
         const isMatplotlib = /matplotlib|plt\./.test(code);
 
-        buttonEl.disabled = true;
-        buttonEl.textContent = 'Generating...';
-        outputContainer.innerHTML = '<div class="viz-loading">Preparing environment...</div>';
+        if (buttonEl) {
+            buttonEl.disabled = true;
+            buttonEl.textContent = 'Generating...';
+        }
+        outputContainer.innerHTML = '<div class="viz-loading">Installing packages...</div>';
 
         let stdout = "";
         window.Aether.pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
         window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
 
         try {
-            // Load required packages
+            // Load required packages via micropip (already loaded during init)
             if (isPlotly) {
                 await window.Aether.pyodideInstance.runPythonAsync(`
                     import micropip
@@ -325,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     await micropip.install("numpy")
                 `);
             }
-            if (isMatplotlib || !isPlotly) {
+            if (isMatplotlib || (!isPlotly && !isMatplotlib)) {
                 await window.Aether.pyodideInstance.runPythonAsync(`
                     import micropip
                     await micropip.install("matplotlib")
@@ -380,9 +395,7 @@ print("VIZIMG:" + img_data)
                 const imgData = stdout.substring(stdout.indexOf('VIZIMG:') + 7).trim();
                 const img = document.createElement('img');
                 img.src = 'data:image/png;base64,' + imgData;
-                img.style.maxWidth = '100%';
-                img.style.borderRadius = '8px';
-                img.style.cursor = 'pointer';
+                img.style.cssText = 'width: 100%; border-radius: 8px; cursor: pointer; display: block;';
                 img.title = 'Click to view full size';
                 img.addEventListener('click', () => {
                     if (window.openLightbox) {
@@ -410,8 +423,10 @@ print("VIZIMG:" + img_data)
         } catch (err) {
             outputContainer.innerHTML = `<pre class="code-output error">${stdout}\n${err.toString()}</pre>`;
         } finally {
-            buttonEl.disabled = false;
-            buttonEl.textContent = 'Regenerate';
+            if (buttonEl) {
+                buttonEl.disabled = false;
+                buttonEl.textContent = 'Regenerate';
+            }
         }
     };
 });
