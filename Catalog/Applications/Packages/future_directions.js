@@ -341,27 +341,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:54:40.947177+00:00"
   },
   {
-    "id": "fd_0816",
-    "title": "Direction 4: Higher-Order Tensor Calculus with Einstein Summation",
-    "description": "**Conjecture:** The three-sorted calculus extends to an `n`-sorted system with sorts `Tensor(k)` for `k = 0, 1, 2, ...` (where `k` is the tensor order), equipped with contraction operations that generalize dot product and matrix-vector multiplication. The distributivity rewrite rules generalize to a universal schema: contraction distributes over addition at each pair of orders.\n\n**Test:** Implement a 4-sorted system (orders 0-3) and verify soundness for all pairwise contraction rules (6 pairs) on 1,000 random terms each. Check that the energy identity `E(T, v) = contract(v, contract(T, v))` holds for order-2 tensors `T` and order-1 vectors `v`, and that analogous identities hold for higher-order contractions. A single semantic mismatch refutes the extension.\n\n**Impact:** Real-world tensor computations (general relativity, continuum mechanics, machine learning) involve tensors of order 3 and above. Einstein summation notation is the lingua franca of theoretical physics. A formally verified rewrite system for Einstein summation would be a breakthrough in certified scientific computing, enabling symbolic optimization of tensor network contractions, finite element assembly kernels, and deep learning tensor operations.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `TensorSort`, `TensorTerm`, `TensorRewrite`.\n\n**Proof Strategy:** Parameterize `TensorSort` by `\u2115` (tensor order). Define contraction as a binary operation `contract : Tensor(j+k) \u2192 Tensor(k) \u2192 Tensor(j)`. Prove distributivity of contraction over addition by induction on tensor order, using the current matrix-vector case as the base.\n\n**Domain Bridges:** Tensor algebra \u2192 differential geometry \u2192 general relativity \u2192 machine learning \u2192 finite elements.\n\n**Lineage:** Extends the entire framework from 3 sorts to infinitely many.\n\n**Ambition:** Grand challenge \u2014 requires a fundamentally new inductive structure for sorts and terms, plus careful handling of index types.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "d8aa38e8",
-    "timestamp": "2026-05-25T00:54:40.973612+00:00"
-  },
-  {
     "id": "fd_0822",
     "title": "Direction 4: Extension to System F (Polymorphic Lambda Calculus)",
     "description": "**Conjecture:** For System F (polymorphic lambda calculus), there exists a type complexity invariant analogous to typeStateBound that exactly characterizes the maximal bounded behavioral complexity of closed terms, with the invariant depending on the type and the instantiation.\n\n**Test:** Define a candidate invariant for simple System F types (e.g., \u2200\u03b1. \u03b1 \u2192 \u03b1, Church numerals \u2200\u03b1. (\u03b1 \u2192 \u03b1) \u2192 \u03b1 \u2192 \u03b1). Compute bounded state sets for small terms of these types. Check whether any numerical pattern emerges that could serve as the polymorphic type state bound.\n\n**Impact:** Would extend the entire theory to the dominant type system of functional programming, covering Haskell, ML, and dependently typed languages.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity` (the STLC case)\n\n**Proof Strategy:** Polymorphic types introduce quantifier complexity. The key challenge: \u2200\u03b1.\u03c4 has no fixed typeStateBound because \u03b1 can be instantiated at different types. One approach: define the bound as a supremum over instantiations. Another: define it relative to a fixed universe of types.\n\n**Domain Bridges:** Polymorphism in programming languages, parametricity (Reynolds 1983), categorical semantics.\n\n**Lineage:** Extends Statman's undecidability results for System F (1979) and Girard's normalization (1972).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Grand challenge, paradigm-shifting.\n\n---",
@@ -556,21 +535,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:05:35.300943+00:00"
   },
   {
-    "id": "fd_0847",
-    "title": "Arithmetic Phase Transition in Mod-p Topological Signatures of Chaotic Algebraic",
-    "description": "Conjecture: There exists a smooth projective variety X defined over Q and an algebraic self-map f: X -> X such that, for a density-positive set of primes p, the Vietoris-Rips persistence landscapes built from the finite orbit cloud of f on X(F_p) split into exactly two asymptotic universality classes distinguished by the Frobenius conjugacy class of p in a fixed finite Galois extension L/Q. More precisely, after rescaling by |X(F_p)|, the persistence landscape of the orbit cloud converges along primes in class C1 to a limit Lambda_1 and along primes in class C2 to a different limit Lambda_2 with Lambda_1 != Lambda_2. Test: Choose explicit candidates (e.g. endomorphisms on abelian surfaces, K3 reductions, or polynomial automorphisms compactified over Q), compute orbit clouds over many primes, build persistence landscapes, and statistically test whether primes partitioned by Frobenius class exhibit two stable non-equal limiting distributions; the conjecture is refuted if no such separation persists under growing p and orbit length, or if the observed classes do not align with any finite Galois splitting law. Impact: This would reveal a new bridge between arithmetic dynamics, Galois theory, and topological data analysis, showing that hidden number-theoretic symmetries can control emergent topological phases of finite-field dynamical systems.",
-    "domains": [
-      "Arithmetic Dynamics",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:06:34.986047+00:00"
-  },
-  {
     "id": "fd_0852",
     "title": "Direction 1: Sharp Dixon Asymptotics via M\u00f6bius Inversion",
     "description": "**Conjecture:** The exact number of generating pairs in $S_n$ can be expressed via M\u00f6bius inversion on the subgroup lattice:\n$$|\\{(\\sigma, \\tau) : \\langle \\sigma, \\tau \\rangle = S_n\\}| = \\sum_{H \\leq S_n} \\mu(H, S_n) \\cdot |H|^2$$\nand the leading terms of the asymptotic expansion satisfy $P_n = 1 - 1/n - 1/n^2 - 4/n^3 - 23/n^4 - O(1/n^5)$.\n\n**Test:** Verify the M\u00f6bius inversion formula computationally for $n \\leq 7$ using GAP, then formalize the first two terms of the asymptotic expansion in Lean by bounding contributions from subgroups of index $> n$.\n\n**Impact:** This would yield the first machine-verified sharp asymptotic for a generation probability, going far beyond the $O(1/n)$ bound from the point-stabilizer sieve.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `nongeneratingPairProbability_le_maximal_subgroup_sum`, `generatingPairProbability_eq_card_ratio`.\n\n**Proof Strategy:** Define the M\u00f6bius function on the subgroup lattice of $S_n$ using `Finpartition` or direct recursion. Formalize the inclusion-exclusion identity $\\sum_{H \\leq G} \\mu(H, G) = \\delta_{H,G}$. Then express the generating pair count as a M\u00f6bius sum and bound tail terms using subgroup index estimates.\n\n**Domain Bridges:** Analytic combinatorics (singularity analysis of generating functions), number theory (M\u00f6bius inversion analogues).\n\n**Lineage:** Direct extension of the subgroup sieve inequality proved in this cycle.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the subgroup lattice M\u00f6bius function and sharp subgroup counting bounds for $S_n$.\n\n**The key insight is** that the M\u00f6bius function on the subgroup lattice encodes *exactly* how much each subgroup contributes to the generation count, turning the subgroup sieve from an inequality into an identity.\n\n**Why now?** The subgroup sieve framework is now formalized, providing the \"\u2264\" half. The M\u00f6bius inversion provides the \"=\" half, and Mathlib's growing lattice theory API makes the combinatorial prerequisites increasingly accessible.\n\n---",
@@ -660,10 +624,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1f92284",
     "timestamp": "2026-05-25T14:24:15.334479+00:00"
   },
   {
@@ -785,26 +749,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "6a88b92d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T15:29:21.874148+00:00"
-  },
-  {
-    "id": "fd_0872",
-    "title": "Direction 5: Computational Certification of Mass Gap Bounds",
-    "description": "**Conjecture:** For SU(N) with N \u2264 5 on lattices of size L \u2264 8, the mass gap lower bound computed by `mass_gap_lower_bound` is within 10% of the true gap obtained by exact diagonalization.\n\n**Test:** Implement exact diagonalization of the SU(2) and SU(3) transfer matrices on 2\u00d72, 3\u00d73, and 4\u00d74 lattices. Compare the certified lower bound from `mass_gap_lower_bound_certifies` with the true gap. Measure the tightness ratio bound/true as a function of \u03b2 and L.\n\n**Impact:** Would validate the Casimir-based bound as a practical tool for certified quantum field theory computations, enabling rigorous uncertainty quantification in lattice QCD.\n\n**Catalog References:**\n- `Physics/YangMillsMassGap.lean`: `mass_gap_lower_bound`, `mass_gap_lower_bound_certifies`\n- `Physics/SpectralGap.lean`: `diagonal_hamiltonian_mass_gap`\n\n**Proof Strategy:** (A) Implement the transfer matrix construction numerically. (B) Use verified interval arithmetic to compute eigenvalues with rigorous error bounds. (C) Compare with `mass_gap_lower_bound` and prove that the difference converges to zero in the strong coupling limit. (D) Extend to weak coupling using perturbative corrections.\n\n**Domain Bridges:** Gauge theory \u2192 Numerical analysis (verified computation) \u2192 Computer science (certified algorithms)\n\n**Lineage:** Direct application of `mass_gap_lower_bound_certifies` with computational verification.\n\n**Ambition:** Solid extension \u2014 uses established numerical techniques with our certified bounds.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a88b92d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T15:29:21.893190+00:00"
   },
   {
     "id": "fd_0873",
@@ -957,31 +901,11 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b9d16ed0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:39:08.850911+00:00"
-  },
-  {
-    "id": "fd_0884",
-    "title": "Direction 2: Hypergraph Transversals as Tropical Convex Optimization",
-    "description": "**Conjecture:** The set of feasible fractional transversals, when viewed through the tropical (min-plus) lens, has a *tropical convex hull* whose vertices correspond to basic feasible solutions of the covering LP, and threshold rounding is a tropical projection operator.\n\n**Test:** For small hypergraphs (n \u2264 8), enumerate all basic feasible solutions of the covering LP. Compute the tropical convex hull using established algorithms (Develin-Sturmfels). Check whether threshold rounding at 1/d maps each point to a tropically extremal integral solution. Falsifiable by finding a rounded point that is not tropically extremal.\n\n**Impact:** This would reveal the *geometric reason* behind the effectiveness of threshold rounding \u2014 it's not just a convenient algebraic trick but a reflection of tropical convex structure. This could lead to improved rounding schemes for specific hypergraph families where the tropical geometry is better behaved.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `threshold_set`, `weighted_threshold_cost_bound`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`\n\n**Proof Strategy:** Formalize tropical semiring operations (min, +) in Lean. Define tropical convexity for the covering polytope. Show that the threshold operator is a tropical retraction \u2014 a map that preserves tropical convex combinations. Use the tropical Carath\u00e9odory theorem to bound the number of support vertices.\n\n**Domain Bridges:** Tropical geometry, discrete convex analysis (Murota), phylogenetics (tropical tree space), algebraic statistics\n\n**Lineage:** Inspired by the Develin-Sturmfels theory of tropical convexity and the observation that the covering LP has a natural tropical interpretation.\n\n**Ambition:** Grand challenge \u2014 would establish the first formal connection between LP rounding theory and tropical convex geometry.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "b9d16ed0",
-    "consumed_by_exp_id": "89ddcffd",
-    "timestamp": "2026-05-25T16:39:08.874172+00:00"
+    "consumed_by_exp_id": "1e2eba72",
+    "timestamp": "2026-05-25T16:39:08.850911+00:00"
   },
   {
     "id": "fd_0885",
@@ -1232,6 +1156,26 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T17:14:59.855193+00:00"
+  },
+  {
+    "id": "fd_0902",
+    "title": "Direction 1: Stability Theory for Tropical Persistence Barcodes",
+    "description": "**Ambition:** grand_challenge\n\n**Conjecture:** There exists a metric $d_T$ on tropical persistence barcodes such that if two filtrations $F, F'$ have Hausdorff distance at most $\\epsilon$ (measured on vertex sets), then $d_T(\\text{TPB}(F), \\text{TPB}(F')) \\leq C \\cdot \\epsilon$ for a constant $C$ depending only on the maximum degree of $G$.\n\n**The key insight is** that the tropical kernel dimension $\\delta(S) = \\beta_1 + \\kappa_q$ decomposes into two Lipschitz components: the cycle rank changes by at most the degree when adding one vertex, and the visibility count changes by at most the number of components touched. This should yield a bottleneck stability theorem analogous to Cohen-Steiner-Edelsbrunner-Harer, but for the enriched tropical barcode.\n\n**Why now?** The formal decomposition $\\Delta\\delta = \\Delta\\beta_1 + \\Delta\\kappa_q$ and the barcode reconstruction theorem provide the algebraic infrastructure needed for stability. The event-based formulation makes perturbation analysis tractable: each event contributes a bounded amount to the total.\n\n**Test:** For random Erd\u0151s-R\u00e9nyi graphs $G(n, p)$ with $n \\leq 100$, compute tropical barcodes for filtrations differing by $\\epsilon$-perturbation of vertex ordering. Verify that barcode distances grow at most linearly in $\\epsilon$. Measure the empirical Lipschitz constant and compare to the degree-based bound.\n\n**Impact:** Would establish tropical persistence as a robust, noise-tolerant tool for data analysis, on par with classical persistent homology's stability guarantees.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean` \u2014 foundational definitions\n- `Pythagorean/TropicalBridge/FiltrationPersistence.lean` \u2014 barcode reconstruction\n\n**Proof Strategy:** Prove a one-step Lipschitz bound on $\\Delta\\delta$ using the degree bound on cycle rank changes and the component-touching bound on visibility changes. Then telescope over the filtration using the cumulative formula (`tropicalKernelDim_cumulative`). The bottleneck distance follows by the standard interleaving argument.\n\n**Domain Bridges:** Topological data analysis \u2194 metric geometry; tropical algebra \u2194 Lipschitz stability\n\n**Lineage:** Extends Cohen-Steiner-Edelsbrunner-Harer (2007) stability from $H_*$ to the richer tropical invariant.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f0f7ec54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:58:10.295979+00:00"
   },
   {
     "id": "seed_005",
@@ -1681,6 +1625,38 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:59:02.941963+00:00"
   },
   {
+    "id": "fd_0908",
+    "title": "p-adic Universality of Chip-Firing Critical Groups Under Graph Lifts",
+    "description": "Conjecture: For every finite connected base graph G and every prime p not dividing |Jac(G)|, the sequence of p-primary critical groups of random n-sheeted lifts G_n has a universal limiting distribution, depending only on the first Betti number of G and not on finer combinatorics of G. More precisely, after normalizing by the deterministic free rank contribution, the Sylow-p subgroup of Jac(G_n) converges in law as n -> infinity to a Cohen-Lenstra-type distribution determined solely by b1(G). Test: Generate random lifts of several non-isomorphic base graphs with the same first Betti number, compute Jac(G_n), extract Sylow-p parts for increasing n, and compare empirical distributions across bases and against the predicted universal law; any persistent dependence on the detailed base graph refutes the conjecture. Impact: This would reveal a new universality class linking tropical geometry, random covering theory, sandpile groups, and arithmetic heuristics, and could provide a graph-theoretic laboratory for Cohen-Lenstra phenomena.",
+    "domains": [
+      "Algebraic Combinatorics",
+      "Probability",
+      "Arithmetic Geometry",
+      "Tropical Geometry"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:03:02.506322+00:00"
+  },
+  {
+    "id": "fd_0914",
+    "title": "Adelic Synchronization Threshold for Primewise Persistent Homology",
+    "description": "Conjecture: There exists an explicit arithmetic family of filtered chain complexes C(X) over Z, naturally attached to smooth projective varieties X/Q, for which the collection of primewise persistence diagrams {D_p(X)} exhibits a sharp synchronization law: if X and Y have isomorphic semisimplified l-adic Galois representations in one fixed cohomological degree, then for a density-1 set of primes p their normalized primewise persistence landscapes agree up to o(1); conversely, if the normalized landscapes agree on a density-1 set of primes, then the Frobenius trace distributions in that degree must agree. Test: Construct C_p(X) from point-count/Frobenius data for explicit families (elliptic curves, K3 surfaces, Calabi-Yau hypersurfaces), compute persistence landscapes across many good primes, and check whether density-1 agreement matches equality of Frobenius trace statistics and whether known non-isogenous examples fail synchronization on positive-density prime sets. Impact: This would turn persistent homology into a new adelic probe of arithmetic equivalence, potentially yielding computable topological fingerprints of Galois representations and a bridge between TDA and arithmetic geometry.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:03:31.504296+00:00"
+  },
+  {
     "id": "fd_0866",
     "title": "Direction 4: Tropical Persistent Homology for Network Data Analysis",
     "description": "**Conjecture**: For a filtration of graphs $G_1 \\subseteq G_2 \\subseteq \\cdots \\subseteq G_k$ arising from a point cloud (via Vietoris-Rips or similar construction), the sequence of tropical kernel dimensions $\\dim(\\ker_{\\text{trop}}(L_{G_i}))$ produces a \"tropical barcode\" that is stable under small perturbations of the input data, with stability constant equal to the minimum Fiedler eigenvalue across the filtration.\n\n**Test**:\n1. Generate 100 random point clouds in $\\mathbb{R}^d$ for $d \\in \\{2, 3, 5\\}$\n2. Compute tropical barcodes via the cycle rank sequence\n3. Compute classical persistent homology barcodes via standard algorithms\n4. Compare stability constants: measure the bottleneck distance between barcodes under perturbation\n5. Falsification: find a point cloud where the tropical barcode is strictly less stable than the classical barcode (would bound the stability constant)\n\n**Impact**: Could provide a faster alternative to standard persistent homology computation for topological data analysis. Tropical operations (min, plus) are simpler than field arithmetic, potentially enabling hardware acceleration.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `genus_nonneg_of_connected`\n- `Catalog/Pythagorean/AdelicPersistentHomology.lean`: persistent homology infrastructure (if available)\n\n**Proof Strategy**: Use the interlacing theorem for graph Laplacian eigenvalues to bound how the tropical kernel dimension changes when edges are added. The genus changes by exactly 1 when a non-tree edge is added, giving a Lipschitz bound on the barcode.\n\n**Domain Bridges**: Topological data analysis (persistent homology, barcodes) \u2194 Tropical geometry (tropical kernel dimension) \u2194 Spectral graph theory (eigenvalue interlacing)\n\n**Lineage**: Extends `genus_nonneg_of_connected`, connects to TDA\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The cycle rank interpretation is standard; the novelty is the stability analysis and tropical algorithmic framework.\n\n---",
@@ -1720,26 +1696,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1a0c77c0",
     "consumed_by_exp_id": "88770e41",
     "timestamp": "2026-05-25T16:05:45.151288+00:00"
-  },
-  {
-    "id": "fd_0902",
-    "title": "Direction 1: Stability Theory for Tropical Persistence Barcodes",
-    "description": "**Ambition:** grand_challenge\n\n**Conjecture:** There exists a metric $d_T$ on tropical persistence barcodes such that if two filtrations $F, F'$ have Hausdorff distance at most $\\epsilon$ (measured on vertex sets), then $d_T(\\text{TPB}(F), \\text{TPB}(F')) \\leq C \\cdot \\epsilon$ for a constant $C$ depending only on the maximum degree of $G$.\n\n**The key insight is** that the tropical kernel dimension $\\delta(S) = \\beta_1 + \\kappa_q$ decomposes into two Lipschitz components: the cycle rank changes by at most the degree when adding one vertex, and the visibility count changes by at most the number of components touched. This should yield a bottleneck stability theorem analogous to Cohen-Steiner-Edelsbrunner-Harer, but for the enriched tropical barcode.\n\n**Why now?** The formal decomposition $\\Delta\\delta = \\Delta\\beta_1 + \\Delta\\kappa_q$ and the barcode reconstruction theorem provide the algebraic infrastructure needed for stability. The event-based formulation makes perturbation analysis tractable: each event contributes a bounded amount to the total.\n\n**Test:** For random Erd\u0151s-R\u00e9nyi graphs $G(n, p)$ with $n \\leq 100$, compute tropical barcodes for filtrations differing by $\\epsilon$-perturbation of vertex ordering. Verify that barcode distances grow at most linearly in $\\epsilon$. Measure the empirical Lipschitz constant and compare to the degree-based bound.\n\n**Impact:** Would establish tropical persistence as a robust, noise-tolerant tool for data analysis, on par with classical persistent homology's stability guarantees.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean` \u2014 foundational definitions\n- `Pythagorean/TropicalBridge/FiltrationPersistence.lean` \u2014 barcode reconstruction\n\n**Proof Strategy:** Prove a one-step Lipschitz bound on $\\Delta\\delta$ using the degree bound on cycle rank changes and the component-touching bound on visibility changes. Then telescope over the filtration using the cumulative formula (`tropicalKernelDim_cumulative`). The bottleneck distance follows by the standard interleaving argument.\n\n**Domain Bridges:** Topological data analysis \u2194 metric geometry; tropical algebra \u2194 Lipschitz stability\n\n**Lineage:** Extends Cohen-Steiner-Edelsbrunner-Harer (2007) stability from $H_*$ to the richer tropical invariant.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f0f7ec54",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:58:10.295979+00:00"
   },
   {
     "id": "seed_032",

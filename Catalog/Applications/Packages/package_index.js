@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Combinatorial Optimization",
     "date": "2026-05-25T18:03:18Z",
     "exp_id": "89ddcffd",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7496613212625398,
+    "quality": "substantial"
   },
   {
     "filename": "direction_4_higher_order_tensor_calculus_with_eins.json",
@@ -513,8 +513,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-25T18:03:18Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7496613212625398,
+      "quality": "substantial"
     }
   ],
   "edges": [

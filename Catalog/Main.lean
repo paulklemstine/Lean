@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1503 of the highest-quality
+A curated collection of 1504 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1503
+Total files: 1504
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1180,6 +1180,7 @@ import FINAL.Pythagorean.DynamicalSquaring
 import FINAL.Pythagorean.EffectivePotential
 import FINAL.Pythagorean.EhrhartIDP
 import FINAL.Pythagorean.EhrhartSeries
+import FINAL.Pythagorean.EinsteinContraction
 import FINAL.Pythagorean.EmergentComputation
 import FINAL.Pythagorean.EqualitySaturationExtraction
 import FINAL.Pythagorean.ExplicitMorseTheory
@@ -1202,6 +1203,7 @@ import FINAL.Pythagorean.HigherHomology
 import FINAL.Pythagorean.HigherOrderLogConcavity
 import FINAL.Pythagorean.HypergraphTransversal
 import FINAL.Pythagorean.InvertedTreeCore
+import FINAL.Pythagorean.KeplerEccentricity
 import FINAL.Pythagorean.KnuthBendixCompletion
 import FINAL.Pythagorean.LagrangeFourSquare
 import FINAL.Pythagorean.LorentzianRecognitionComplete
@@ -1266,6 +1268,7 @@ import FINAL.Pythagorean.TorsionProfileTheorems
 import FINAL.Pythagorean.TropicalArithmeticUniversality
 import FINAL.Pythagorean.TropicalBerggrenZeta
 import FINAL.Pythagorean.TropicalCostMinimality
+import FINAL.Pythagorean.TropicalHypergraphTransversal
 import FINAL.Pythagorean.TropicalKAMStability
 import FINAL.Pythagorean.TropicalKAMTheorems
 import FINAL.Pythagorean.TropicalKeplerOrbits
@@ -1367,7 +1370,6 @@ import FINAL.Tropical.GaugeInvariance
 import FINAL.Tropical.GumbelFoundations
 import FINAL.Tropical.HardnessAmplification
 import FINAL.Tropical.HashInversion
-import FINAL.Tropical.HigherRank
 import FINAL.Tropical.HodgeCorrespondence
 import FINAL.Tropical.HorizonStability
 import FINAL.Tropical.HybridArgument
@@ -1394,7 +1396,6 @@ import FINAL.Tropical.MutualInformation
 import FINAL.Tropical.MyhillNerode
 import FINAL.Tropical.NNCompilationExtended
 import FINAL.Tropical.NerodeDecidability
-import FINAL.Tropical.NewResearch
 import FINAL.Tropical.NormalForm
 import FINAL.Tropical.OmegaMetaOracle
 import FINAL.Tropical.OracleApplicationsFrontier

@@ -7,7 +7,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_compositional_witness_synthesis_algori",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "direction_2_higher_order_log_concavity_and_partiti",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "direction_5_chip_firing_correspondence",
@@ -34,7 +34,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_1_brauer_manin_obstructions_for_integral",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "yang_mills_mass_gap",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "direction_3_generation_certificates_for_matrix_gro",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 281
+      "hue": 91
     },
     {
       "id": "direction_3_concentration_of__on_random_hypergraph",
@@ -97,7 +97,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_5_numerical_stability_of_lorentzian_reco",
@@ -106,7 +106,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T17:14:28Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_5_phase_transitions_in_generation_probab",
@@ -124,7 +124,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -133,7 +133,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:49:47Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "direction_2_filtration_persistence_formula",
@@ -143,12 +143,37 @@
       "shape": "star_of_david",
       "date": "2026-05-25T17:57:55Z",
       "hue": 270
+    },
+    {
+      "id": "direction_4_higher_order_tensor_calculus_with_eins",
+      "title": "Universal Einstein Contraction Calculus for Order-Indexed Tensors",
+      "domain": "Multilinear Algebra / Tensor Calculus / Scientific Computing",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T18:02:50Z",
+      "hue": 271
+    },
+    {
+      "id": "direction_2_hypergraph_transversals_as_tropical_co",
+      "title": "Hypergraph Transversals as Tropical Convex Optimization",
+      "domain": "Tropical Geometry / Combinatorial Optimization",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-25T18:03:18Z",
+      "hue": 90
     }
   ],
   "edges": [
     {
       "source": "yang_mills_mass_gap",
       "target": "direction_2_character_expansion_and_strong_couplin",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_weighted_and_multi_objective_extension",
+      "target": "direction_2_hypergraph_transversals_as_tropical_co",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -160,6 +185,12 @@
       "domain_b": "Tropical",
       "package_count": 3,
       "strength": 0.9000000000000001
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Tropical",
+      "package_count": 2,
+      "strength": 0.7
     },
     {
       "domain_a": "Algebra",
@@ -176,12 +207,6 @@
     {
       "domain_a": "Algebra",
       "domain_b": "Geometry",
-      "package_count": 1,
-      "strength": 0.5
-    },
-    {
-      "domain_a": "Geometry",
-      "domain_b": "Tropical",
       "package_count": 1,
       "strength": 0.5
     }
