@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_2_filtration_persistence_formula.json",
+    "title": "Tropical Persistence Barcodes for Graph Filtrations",
+    "domain": "Algebraic Graph Topology / Tropical Linear Algebra / Topological Data Analysis",
+    "date": "2026-05-25T17:57:55Z",
+    "exp_id": "f0f7ec54",
+    "quality_score": 0.7485430061705161,
+    "quality": "substantial"
+  },
+  {
     "filename": "hadamard_matrix_conjecture.json",
     "title": "Hadamard Existence by Algebraic Generation",
     "domain": "Algebra / Combinatorics",
@@ -157,6 +166,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra / Combinatorics"
   },
+  "direction_2_filtration_persistence_formula.json": {
+    "title": "Tropical Persistence Barcodes for Graph Filtrations",
+    "exp_id": "f0f7ec54",
+    "source_exp_ids": [
+      "fd2f08b2"
+    ],
+    "domain": "Algebraic Graph Topology / Tropical Linear Algebra / Topological Data Analysis"
+  },
   "direction_5_generalization_to_higher_degree_diagon.json": {
     "title": "A Uniform Local Obstruction Calculus for Diagonal Hypersurfaces",
     "exp_id": "e97c0f01",
@@ -274,7 +291,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -285,7 +302,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -296,7 +313,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 270,
+      "hue": 95,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -304,10 +321,10 @@ window.PACKAGE_GRAPH = {
       "id": "direction_5_chip_firing_correspondence",
       "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
       "domain": "Tropical Geometry / Combinatorial Algebraic Geometry",
-      "primary_domain": "Tropical",
-      "shape": "star",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -318,7 +335,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -340,7 +357,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 280,
+      "hue": 281,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -351,7 +368,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -362,7 +379,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7475694375378231,
       "quality": "substantial"
     },
@@ -373,7 +390,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 91,
+      "hue": 95,
       "priority_score": 0.7452328425357874,
       "quality": "substantial"
     },
@@ -384,7 +401,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7379731931205967,
       "quality": "substantial"
     },
@@ -395,7 +412,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T17:14:28Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7094771428571429,
       "quality": "substantial"
     },
@@ -406,7 +423,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:14:56Z",
-      "hue": 101,
+      "hue": 271,
       "priority_score": 0.7307286403906522,
       "quality": "substantial"
     },
@@ -417,7 +434,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7426729134392938,
       "quality": "substantial"
     },
@@ -428,8 +445,19 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:49:47Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.718787256166983,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_filtration_persistence_formula",
+      "title": "Tropical Persistence Barcodes for Graph Filtrations",
+      "domain": "Algebraic Graph Topology / Tropical Linear Algebra / Topological Data Analysis",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T17:57:55Z",
+      "hue": 270,
+      "priority_score": 0.7485430061705161,
       "quality": "substantial"
     }
   ],
@@ -446,8 +474,20 @@ window.PACKAGE_GRAPH = {
     {
       "domain_a": "Algebra",
       "domain_b": "Tropical",
-      "package_count": 2,
-      "strength": 0.7
+      "package_count": 3,
+      "strength": 0.9000000000000001
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Logic",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Logic",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
     },
     {
       "domain_a": "Algebra",

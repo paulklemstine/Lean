@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b633df37",
     "timestamp": "2026-05-24T22:37:54.583311+00:00"
   },
   {
@@ -534,25 +534,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "fd2f08b2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:05:35.257371+00:00"
-  },
-  {
-    "id": "fd_0841",
-    "title": "Direction 2: Filtration Persistence Formula",
-    "description": "**Conjecture**: For an increasing filtration S\u2080 \u2286 S\u2081 \u2286 ... \u2286 S_m \u2286 V \\ {q}, the sequence of tropical kernel dimensions dim_trop(ker_trop(L_{S_k})) satisfies:\n\n  dim(S_{k+1}) - dim(S_k) = (number of new cycles born) + (number of new q-visible components born) - (number of component merges destroying q-invisible components)\n\nMoreover, the \"barcode\" of tropical kernel dimensions is completely determined by the births and deaths of cycles and q-visible components in the filtration.\n\n**Test**: Enumerate all increasing filtrations on connected graphs with n \u2264 6 vertices. For each filtration, compute the dimension sequence and compare to the predicted birth/death events. Verify the persistence formula matches in all cases.\n\n**Impact**: Creates a new invariant \u2014 the **tropical persistence barcode** \u2014 that combines topological persistence (like standard persistent homology) with algebraic structure (tropical linear algebra). This could provide strictly finer invariants than classical persistent homology for weighted networks.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedCycleRank, qVisibleComponentCount), `Pythagorean/TropicalBridge/UniversalDefect.lean` (universalDefect_eq).\n\n**Proof Strategy**: Induction on filtration length. At each step, adding a vertex v to S either:\n(a) connects to an existing component (no new cycle, no new component),\n(b) forms a bridge to q (new q-visible component),\n(c) closes a cycle (new cycle mode), or\n(d) merges two components.\nTrack each case and verify the dimension change formula.\n\n**Domain Bridges**: Tropical algebra \u2194 topological data analysis, computational topology \u2194 network science.\n\n**Lineage**: Directly extends the dimension formula to parameterized families, building on `inducedCycleRank_eq_zero_of_forest` for the tree base case.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new persistent tropical homology theory)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "f0f7ec54",
-    "timestamp": "2026-05-25T03:05:35.277308+00:00"
   },
   {
     "id": "fd_0842",
@@ -1119,6 +1100,23 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:14:31.193329+00:00"
   },
   {
+    "id": "fd_0891",
+    "title": "Direction 4: Certified Hyperbolicity via Lorentzian Leaf Margins",
+    "description": "**Conjecture:** A homogeneous polynomial p is hyperbolic with respect to direction e if and only if every quadratic leaf of p (relative to e) has gapped Lorentzian signature, and the minimum gap provides a certified hyperbolicity margin.\n\n**Test:** For known hyperbolic polynomials (determinant, elementary symmetric), compute quadratic leaf gaps relative to different directions e. Verify that the gap is positive exactly when p is hyperbolic w.r.t. e. Test non-hyperbolic polynomials to confirm the gap is zero or the signature fails.\n\n**Impact:** Would extend our stability theory from Lorentzian polynomials to the broader class of hyperbolic polynomials, which arise in optimization (hyperbolic programming), PDEs (hyperbolic operators), and control theory.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `HasGappedSignature`, `lorentzian_stable_under_leaf_perturbation`\n\n**Proof Strategy:** Use the Helton\u2013Vinnikov theorem (every hyperbolic polynomial is a determinant of a linear matrix pencil) to reduce to spectral analysis of the pencil. The gap translates to the minimum eigenvalue gap of the pencil restricted to the hyperbolicity cone.\n\n**Domain Bridges:** Hyperbolic programming, semidefinite optimization, PDE theory, robust control\n\n**Lineage:** Extends the Lorentzian framework to encompass G\u00e5rding's hyperbolicity theory.\n\n**Ambition:** Solid extension with grand-challenge potential if the characterization is complete. \u2605\u2605\u2605\u2605\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2493279d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:31.214977+00:00"
+  },
+  {
     "id": "fd_0892",
     "title": "Direction 5: Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
     "description": "**Conjecture:** If a probability distribution \u03bc on {0,1}\u207f has a strongly log-concave generating polynomial (Lorentzian with spectral gap \u03b5), then any distribution \u03bd whose generating polynomial has coefficient-wise distance < C\u00b7\u03b5 from \u03bc's is also strongly log-concave, with explicit mixing time bounds for Markov chains on \u03bd's support.\n\n**Test:** Sample from distributions near the uniform matroid measure. Compute the generating polynomial's spectral gap. Verify that the mixing time of the natural random walk scales as predicted by the gap. If mixing time depends on a different quantity, refine the conjecture.\n\n**Impact:** Would provide the first certified mixing time bounds for sampling algorithms operating on approximately log-concave distributions \u2014 a central problem in machine learning and statistical physics.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`, `reversed_cauchy_schwarz_of_gapped`\n\n**Proof Strategy:** Use the stability radius to show the perturbed distribution has a Lorentzian generating polynomial. Then apply Anari\u2013Oveis Gharan\u2013Vinzant's framework linking Lorentzianity to modified log-Sobolev inequalities, which control mixing times.\n\n**Domain Bridges:** Markov chain Monte Carlo, statistical physics (Glauber dynamics), machine learning (sampling from energy-based models)\n\n**Lineage:** Connects the perturbation theorem to the probabilistic applications of Lorentzian polynomials.\n\n**Ambition:** Solid extension \u2014 the pieces exist but assembling them requires careful analysis. \u2605\u2605\u2605\u2605",
@@ -1139,23 +1137,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:14:31.235341+00:00"
   },
   {
-    "id": "fd_0891",
-    "title": "Direction 4: Certified Hyperbolicity via Lorentzian Leaf Margins",
-    "description": "**Conjecture:** A homogeneous polynomial p is hyperbolic with respect to direction e if and only if every quadratic leaf of p (relative to e) has gapped Lorentzian signature, and the minimum gap provides a certified hyperbolicity margin.\n\n**Test:** For known hyperbolic polynomials (determinant, elementary symmetric), compute quadratic leaf gaps relative to different directions e. Verify that the gap is positive exactly when p is hyperbolic w.r.t. e. Test non-hyperbolic polynomials to confirm the gap is zero or the signature fails.\n\n**Impact:** Would extend our stability theory from Lorentzian polynomials to the broader class of hyperbolic polynomials, which arise in optimization (hyperbolic programming), PDEs (hyperbolic operators), and control theory.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `HasGappedSignature`, `lorentzian_stable_under_leaf_perturbation`\n\n**Proof Strategy:** Use the Helton\u2013Vinnikov theorem (every hyperbolic polynomial is a determinant of a linear matrix pencil) to reduce to spectral analysis of the pencil. The gap translates to the minimum eigenvalue gap of the pencil restricted to the hyperbolicity cone.\n\n**Domain Bridges:** Hyperbolic programming, semidefinite optimization, PDE theory, robust control\n\n**Lineage:** Extends the Lorentzian framework to encompass G\u00e5rding's hyperbolicity theory.\n\n**Ambition:** Solid extension with grand-challenge potential if the characterization is complete. \u2605\u2605\u2605\u2605\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:31.214977+00:00"
-  },
-  {
     "id": "fd_0894",
     "title": "Direction 1: Full Wreath Product Phase Transition",
     "description": "**Conjecture:** For the wreath product $W_{k,m} = S_k \\wr S_m$ in product action, the generation probability undergoes a sharp phase transition at a critical ratio $\\rho^* = k^*/m^*$ determined by the full maximal subgroup pressure (not just coordinate defects). Specifically, the non-coordinate-defect subgroups of $W_{k,m}$ (arising from the semidirect action of $S_m$ on $S_k^m$) contribute a pressure term that is sublinear in $m$, so that the phase transition location is shifted but not qualitatively changed from the base-group prediction.\n\n**Test:** For $km \\leq 12$, enumerate all maximal subgroups of $W_{k,m}$ using GAP and compute the full pressure. Compare with the coordinate-defect pressure $m \\cdot p(S_k)$. If the full pressure exceeds the coordinate-defect pressure by a multiplicative constant, the phase transition is merely shifted; if it changes the growth rate in $m$, the conjecture needs revision.\n\n**Impact:** Resolves the central motivating problem and establishes the first rigorous phase transition theorem for random generation in a structured permutation group family.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure definition, product factorization, block-defect formula)\n\n**Proof Strategy:** Classify maximal subgroups of $S_k \\wr S_m$ using O'Nan\u2013Scott theory. Separate into three types: (a) base-group coordinate defects (already handled), (b) \"diagonal\" subgroups from $S_m$-action, (c) \"twisted\" subgroups. Bound the pressure from types (b) and (c) using index estimates from the O'Nan\u2013Scott classification.\n\n**Domain Bridges:** Permutation group theory, O'Nan\u2013Scott classification, computational group theory.\n\n**Lineage:** Direct extension of Theorems 4 and 6 in the current work.\n\n**Ambition:** Grand challenge \u2014 would constitute a major advance in probabilistic group theory.\n\n---",
@@ -1166,7 +1147,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "cf039036",
@@ -1185,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "cf039036",
@@ -1206,7 +1187,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "cf039036",
@@ -1225,7 +1206,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "cf039036",
@@ -1245,7 +1226,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "cf039036",
@@ -1684,6 +1665,22 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:15:46.019869+00:00"
   },
   {
+    "id": "fd_0907",
+    "title": "Spectral Sequence Stability via Persistent Homology Barcodes",
+    "description": "Conjecture: For first-quadrant homological spectral sequences E\u2081 \u21d2 H, if two spectral sequences have E\u2081 pages that are \u03b5-interleaved as bigraded persistence modules (with respect to the total-degree filtration), then their 'limit barcodes' \u2014 which record elements surviving to E\u221e as infinite bars and elements killed by d_r as finite bars of length r \u2014 are C\u00b7\u03b5-interleaved for a constant C depending only on the spectral sequence length (max page index). Test: For the Serre spectral sequences of the Hopf fibration S\u00b9\u2192S\u00b3\u2192S\u00b2 and its small perturbations (e.g., replacing S\u00b3 with a lens space L(3,1)), compute the E\u2081 interleaving distance and verify that the limit barcodes satisfy the conjectured stability bound. Secondary test on pairs of Adams spectral sequences for related spectra. Impact: This would establish the first stability theorem for spectral sequences, making differential computations robust under perturbation \u2014 with transformative applications to stable homotopy theory (Adams SS), symplectic topology (Eilenberg-Moore SS), and algebraic geometry (Leray SS for morphisms of varieties).",
+    "domains": [
+      "Algebraic Topology",
+      "Topological Data Analysis",
+      "Spectral Sequences"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:59:02.941963+00:00"
+  },
+  {
     "id": "fd_0866",
     "title": "Direction 4: Tropical Persistent Homology for Network Data Analysis",
     "description": "**Conjecture**: For a filtration of graphs $G_1 \\subseteq G_2 \\subseteq \\cdots \\subseteq G_k$ arising from a point cloud (via Vietoris-Rips or similar construction), the sequence of tropical kernel dimensions $\\dim(\\ker_{\\text{trop}}(L_{G_i}))$ produces a \"tropical barcode\" that is stable under small perturbations of the input data, with stability constant equal to the minimum Fiedler eigenvalue across the filtration.\n\n**Test**:\n1. Generate 100 random point clouds in $\\mathbb{R}^d$ for $d \\in \\{2, 3, 5\\}$\n2. Compute tropical barcodes via the cycle rank sequence\n3. Compute classical persistent homology barcodes via standard algorithms\n4. Compare stability constants: measure the bottleneck distance between barcodes under perturbation\n5. Falsification: find a point cloud where the tropical barcode is strictly less stable than the classical barcode (would bound the stability constant)\n\n**Impact**: Could provide a faster alternative to standard persistent homology computation for topological data analysis. Tropical operations (min, plus) are simpler than field arithmetic, potentially enabling hardware acceleration.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `genus_nonneg_of_connected`\n- `Catalog/Pythagorean/AdelicPersistentHomology.lean`: persistent homology infrastructure (if available)\n\n**Proof Strategy**: Use the interlacing theorem for graph Laplacian eigenvalues to bound how the tropical kernel dimension changes when edges are added. The genus changes by exactly 1 when a non-tree edge is added, giving a Lipschitz bound on the barcode.\n\n**Domain Bridges**: Topological data analysis (persistent homology, barcodes) \u2194 Tropical geometry (tropical kernel dimension) \u2194 Spectral graph theory (eigenvalue interlacing)\n\n**Lineage**: Extends `genus_nonneg_of_connected`, connects to TDA\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The cycle rank interpretation is standard; the novelty is the stability analysis and tropical algorithmic framework.\n\n---",
@@ -1723,6 +1720,26 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1a0c77c0",
     "consumed_by_exp_id": "88770e41",
     "timestamp": "2026-05-25T16:05:45.151288+00:00"
+  },
+  {
+    "id": "fd_0902",
+    "title": "Direction 1: Stability Theory for Tropical Persistence Barcodes",
+    "description": "**Ambition:** grand_challenge\n\n**Conjecture:** There exists a metric $d_T$ on tropical persistence barcodes such that if two filtrations $F, F'$ have Hausdorff distance at most $\\epsilon$ (measured on vertex sets), then $d_T(\\text{TPB}(F), \\text{TPB}(F')) \\leq C \\cdot \\epsilon$ for a constant $C$ depending only on the maximum degree of $G$.\n\n**The key insight is** that the tropical kernel dimension $\\delta(S) = \\beta_1 + \\kappa_q$ decomposes into two Lipschitz components: the cycle rank changes by at most the degree when adding one vertex, and the visibility count changes by at most the number of components touched. This should yield a bottleneck stability theorem analogous to Cohen-Steiner-Edelsbrunner-Harer, but for the enriched tropical barcode.\n\n**Why now?** The formal decomposition $\\Delta\\delta = \\Delta\\beta_1 + \\Delta\\kappa_q$ and the barcode reconstruction theorem provide the algebraic infrastructure needed for stability. The event-based formulation makes perturbation analysis tractable: each event contributes a bounded amount to the total.\n\n**Test:** For random Erd\u0151s-R\u00e9nyi graphs $G(n, p)$ with $n \\leq 100$, compute tropical barcodes for filtrations differing by $\\epsilon$-perturbation of vertex ordering. Verify that barcode distances grow at most linearly in $\\epsilon$. Measure the empirical Lipschitz constant and compare to the degree-based bound.\n\n**Impact:** Would establish tropical persistence as a robust, noise-tolerant tool for data analysis, on par with classical persistent homology's stability guarantees.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean` \u2014 foundational definitions\n- `Pythagorean/TropicalBridge/FiltrationPersistence.lean` \u2014 barcode reconstruction\n\n**Proof Strategy:** Prove a one-step Lipschitz bound on $\\Delta\\delta$ using the degree bound on cycle rank changes and the component-touching bound on visibility changes. Then telescope over the filtration using the cumulative formula (`tropicalKernelDim_cumulative`). The bottleneck distance follows by the standard interleaving argument.\n\n**Domain Bridges:** Topological data analysis \u2194 metric geometry; tropical algebra \u2194 Lipschitz stability\n\n**Lineage:** Extends Cohen-Steiner-Edelsbrunner-Harer (2007) stability from $H_*$ to the richer tropical invariant.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f0f7ec54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:58:10.295979+00:00"
   },
   {
     "id": "seed_032",
