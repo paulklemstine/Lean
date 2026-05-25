@@ -263,14 +263,14 @@ document.addEventListener('DOMContentLoaded', () => {
             content.style.cssText = 'width: 100%; border-radius: 12px;';
             content.innerHTML = item.html || '<p>No content</p>';
 
-            // innerHTML does not execute <script> tags — manually reinject them
+            // innerHTML does not execute <script> tags — execute them via Blob URLs
             content.querySelectorAll('script').forEach(oldScript => {
+                if (oldScript.src) return; // external scripts handled by browser
+                const blob = new Blob([oldScript.textContent], { type: 'application/javascript' });
+                const url = URL.createObjectURL(blob);
                 const newScript = document.createElement('script');
-                if (oldScript.src) {
-                    newScript.src = oldScript.src;
-                } else {
-                    newScript.textContent = oldScript.textContent;
-                }
+                newScript.src = url;
+                newScript.onload = () => URL.revokeObjectURL(url);
                 oldScript.parentNode.replaceChild(newScript, oldScript);
             });
 
