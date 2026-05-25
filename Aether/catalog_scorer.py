@@ -11,6 +11,7 @@ files to ensure full coverage over time.
 """
 
 import json
+import os
 import re
 import time
 from dataclasses import dataclass, field, asdict
@@ -363,9 +364,9 @@ class CatalogScorer:
     # ── Promotion / Demotion ──
 
     def promote_to_final(self, score: CatalogFileScore) -> None:
-        """Copy the file from Catalog/{Domain}/ to Catalog/FINAL/{Domain}/.
+        """Symlink the file from Catalog/{Domain}/ into FINAL/{Domain}/.
 
-        Creates FINAL/{Domain}/ directory if needed.
+        Creates a relative symlink instead of copying to avoid duplicate bytes.
         Updates score.in_final = True and score.promoted_at.
         """
         final_dir = self.catalog_root / "FINAL" / score.domain
@@ -374,9 +375,9 @@ class CatalogScorer:
         src = self.catalog_root / score.relative_path
         dst = final_dir / src.name
 
-        if src.exists():
-            import shutil
-            shutil.copy2(str(src), str(dst))
+        if src.exists() and not dst.exists():
+            rel_src = os.path.relpath(str(src), str(final_dir))
+            dst.symlink_to(rel_src)
             score.in_final = True
             score.promoted_at = time.time()
             # Update stored score

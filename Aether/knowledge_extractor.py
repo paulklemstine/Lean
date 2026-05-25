@@ -717,15 +717,20 @@ Research mode: {concept.research_mode}
         dir_path.mkdir(parents=True, exist_ok=True)
 
         # Copy the entire Lean-only Catalog into the project directory (skip .lake)
+        # Skip FINAL/ — those are symlinks to canonical copies already included
         catalog_dst = dir_path / "Catalog"
         lean_count = 0
         for src_file in self.catalog_root.rglob("*.lean"):
             if ".lake" in src_file.parts:
                 continue
+            if "FINAL" in src_file.parts:
+                continue
+            # Resolve symlinks — copy the real file content
+            real_src = src_file.resolve() if src_file.is_symlink() else src_file
             rel = src_file.relative_to(self.catalog_root)
             dst_file = catalog_dst / rel
             dst_file.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(src_file, dst_file)
+            shutil.copy2(real_src, dst_file)
             lean_count += 1
 
         # Copy Lean project configuration files
@@ -1746,12 +1751,12 @@ Research mode: {concept.research_mode}
         print(f"[Cleanup] Running global deduplication script...")
         try:
             # 1. Run global deduplication first to remove byte-for-byte exact copies
-            dedup_script = self.workspace / "Aether/dedup_catalog.py"
+            dedup_script = Path(__file__).parent / "dedup_catalog.py"
             if dedup_script.exists():
                 await asyncio.to_thread(
-                    subprocess.run, 
-                    ["python3", str(dedup_script)], 
-                    capture_output=True, 
+                    subprocess.run,
+                    ["python3", str(dedup_script)],
+                    capture_output=True,
                     timeout=120
                 )
             
@@ -2317,16 +2322,17 @@ Research mode: {concept.research_mode}
         self._cleanup_empty_dirs(catalog_root)
 
     def _immortalize_file(self, candidate: dict, final_dir: Path) -> None:
-        """Copy a .lean file into the FINAL directory."""
-        src = candidate["abs_path"]
+        """Symlink a .lean file into the FINAL directory (no duplicate bytes)."""
+        src = Path(candidate["abs_path"])
         domain = candidate["domain"]
         dest_dir = final_dir / domain
         dest_dir.mkdir(parents=True, exist_ok=True)
         dest = dest_dir / src.name
         if not dest.exists():
             try:
-                import shutil
-                shutil.copy2(str(src), str(dest))
+                # Create a relative symlink from FINAL back to the canonical file
+                rel_src = os.path.relpath(str(src), str(dest_dir))
+                dest.symlink_to(rel_src)
             except Exception:
                 pass
 
@@ -2546,7 +2552,7 @@ Research mode: {concept.research_mode}
         
         print(f"[Cleanup] Running global deduplication script...")
         try:
-            dedup_script = self.workspace / "Aether/dedup_catalog.py"
+            dedup_script = Path(__file__).parent / "dedup_catalog.py"
             if dedup_script.exists():
                 subprocess.run(
                     ["python3", str(dedup_script)],
