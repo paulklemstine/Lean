@@ -1360,13 +1360,20 @@ Research mode: {concept.research_mode}
             plan[p["path"]] = p["path"]  # Keep their original path
 
         # 3. Ask Pi to review domain-directory and FINAL/ placements (in batches of 25)
+        # Cap total reviews per integration to avoid spending the entire tick on one job
+        MAX_REVIEW_FILES = 100
         BATCH_SIZE = 25
         if review_parts:
-            # If few enough, review in one batch
-            batches = [review_parts[i:i + BATCH_SIZE] for i in range(0, len(review_parts), BATCH_SIZE)]
+            review_subset = review_parts[:MAX_REVIEW_FILES]
+            if len(review_parts) > MAX_REVIEW_FILES:
+                print(f"[Integrate] Reviewing {MAX_REVIEW_FILES} of {len(review_parts)} files (capped)")
+            batches = [review_subset[i:i + BATCH_SIZE] for i in range(0, len(review_subset), BATCH_SIZE)]
             for batch_idx, batch in enumerate(batches):
                 batch_plan = await self._review_file_batch(batch, batch_idx, len(batches))
                 plan.update(batch_plan)
+            # Auto-accept remaining files beyond the cap
+            for p in review_parts[MAX_REVIEW_FILES:]:
+                plan[p["path"]] = p["path"]
 
         # 4. Apply the changes — with deduplication and REJECT filtering
         written_paths = set()  # Track what we've already written to avoid duplicates
