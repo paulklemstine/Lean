@@ -80,7 +80,9 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int) -> None:
     extractor._load_inflight()
 
     # Recover stale in_progress directions (e.g., from crashed ticks)
-    recovered = extractor.fd_manager.recover_stale_directions()
+    from research_memory import FutureDirectionsManager
+    fd_manager = FutureDirectionsManager(extractor.workspace)
+    recovered = fd_manager.recover_stale_directions()
     if recovered:
         print(f"[Tick] Recovered {recovered} stale direction(s)")
 

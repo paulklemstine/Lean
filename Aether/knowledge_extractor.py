@@ -746,23 +746,36 @@ Research mode: {concept.research_mode}
         return dir_path
 
     async def _dispatch_to_aristotle(self, job: ResearchJob, max_retries: int = 2) -> str:
-        """Dispatch the job to Aristotle with retry on transient failures."""
+        """Dispatch the job to Aristotle with retry on transient failures.
+
+        The aristotlelib SDK creates a fresh httpx.AsyncClient per request with
+        a 30s timeout — too short for uploading a project with 7000+ .lean files.
+        We temporarily raise the module-level default before calling create_from_directory.
+        """
+        import aristotlelib.api_request as api_mod
         from aristotlelib import Project
 
+        # Temporarily increase timeout for the upload (default 30s is too short)
+        original_timeout = api_mod.DEFAULT_TIMEOUT_SECONDS
+        api_mod.DEFAULT_TIMEOUT_SECONDS = 300  # 5 minutes
+
         last_error = None
-        for attempt in range(max_retries + 1):
-            try:
-                project = await Project.create_from_directory(
-                    prompt=job.prompt,
-                    project_dir=str(job.project_dir),
-                )
-                return project.project_id
-            except Exception as e:
-                last_error = e
-                if attempt < max_retries:
-                    wait = 5 * (attempt + 1)
-                    print(f"[Dispatch] Attempt {attempt+1}/{max_retries+1} failed: {e}, retrying in {wait}s...")
-                    await asyncio.sleep(wait)
+        try:
+            for attempt in range(max_retries + 1):
+                try:
+                    project = await Project.create_from_directory(
+                        prompt=job.prompt,
+                        project_dir=str(job.project_dir),
+                    )
+                    return project.project_id
+                except Exception as e:
+                    last_error = e
+                    if attempt < max_retries:
+                        wait = 5 * (attempt + 1)
+                        print(f"[Dispatch] Attempt {attempt+1}/{max_retries+1} failed: {e}, retrying in {wait}s...")
+                        await asyncio.sleep(wait)
+        finally:
+            api_mod.DEFAULT_TIMEOUT_SECONDS = original_timeout
 
         raise last_error
 
