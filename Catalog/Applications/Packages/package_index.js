@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "symmetric_group_generation_probability.json",
+    "title": "Generation Probability of the Symmetric Group",
+    "domain": "Algebra",
+    "date": "2026-05-25T03:08:46Z",
+    "exp_id": "92e3853a",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "birch_and_swinnerton_dyer_conjecture.json",
     "title": "Tropical-Analytic Duality for Elliptic L-Functions",
     "domain": "Algebra / Arithmetic Geometry / Tropical Geometry",
     "date": "2026-05-25T03:07:59Z",
     "exp_id": "75d10c50",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6673754040895813,
+    "quality": "partial"
   },
   {
     "filename": "direction_3_sparse_matrix_structure_preservation.json",
@@ -254,6 +263,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Many-Sorted Rewriting / Linear Algebra / Scientific Computing"
   },
+  "symmetric_group_generation_probability.json": {
+    "title": "Generation Probability of the Symmetric Group",
+    "exp_id": "92e3853a",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra"
+  },
   "birch_and_swinnerton_dyer_conjecture.json": {
     "title": "Tropical-Analytic Duality for Elliptic L-Functions",
     "exp_id": "75d10c50",
@@ -291,7 +308,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -302,7 +319,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 179,
+      "hue": 90,
       "priority_score": 0.6423696551724138,
       "quality": "partial"
     },
@@ -324,7 +341,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.49450347826086954,
       "quality": "partial"
     },
@@ -335,7 +352,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7684672566371681,
       "quality": "substantial"
     },
@@ -346,7 +363,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 92,
+      "hue": 275,
       "priority_score": 0.5684834461538462,
       "quality": "partial"
     },
@@ -357,7 +374,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T00:26:30Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7077656000000001,
       "quality": "substantial"
     },
@@ -368,7 +385,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 95,
+      "hue": 90,
       "priority_score": 0.7156088,
       "quality": "substantial"
     },
@@ -379,7 +396,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 100,
+      "hue": 90,
       "priority_score": 0.707316371361133,
       "quality": "substantial"
     },
@@ -390,7 +407,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
-      "hue": 270,
+      "hue": 95,
       "priority_score": 0.7307101408450705,
       "quality": "substantial"
     },
@@ -401,7 +418,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T02:10:29Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7655020869565218,
       "quality": "substantial"
     },
@@ -423,7 +440,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T03:05:32Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.6969741764705883,
       "quality": "partial"
     },
@@ -434,7 +451,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T03:06:21Z",
-      "hue": 89,
+      "hue": 270,
       "priority_score": 0.6889964000000002,
       "quality": "partial"
     },
@@ -445,7 +462,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-25T03:07:10Z",
-      "hue": 92,
+      "hue": 272,
       "priority_score": 0.7516518344827586,
       "quality": "substantial"
     },
@@ -456,6 +473,17 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T03:07:59Z",
+      "hue": 280,
+      "priority_score": 0.6673754040895813,
+      "quality": "partial"
+    },
+    {
+      "id": "symmetric_group_generation_probability",
+      "title": "Generation Probability of the Symmetric Group",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T03:08:46Z",
       "hue": 272,
       "priority_score": null,
       "quality": "unrated"
@@ -557,21 +585,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.387127+00:00"
-  },
-  {
-    "id": "seed_017",
-    "title": "Birch and Swinnerton-Dyer Conjecture",
-    "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "75d10c50",
-    "timestamp": "2026-05-24T22:37:54.411437+00:00"
   },
   {
     "id": "seed_038",
@@ -1618,6 +1631,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:07:22.429094+00:00"
+  },
+  {
+    "id": "fd_0851",
+    "title": "Automorphic Monodromy from Persistence Under Hecke Correspondences",
+    "description": "Conjecture: There exists a canonical filtered simplicial complex K_N(f) attached to a cuspidal Hecke eigenform f of fixed weight and level, built from the Hecke orbit data {a_p(f)}_{p \\le N}, such that the stable persistent homology of the family {K_N(T_\\ell f)} over varying Hecke operators T_\\ell determines the local Satake parameters of f at a density-1 set of primes. In particular, two non-CM eigenforms with distinct automorphic representations yield asymptotically different persistence signatures under Hecke action. Test: Compute K_N(f) for large databases of modular forms, apply Hecke operators, and check whether barcode/landscape invariants classify forms up to matching Satake parameters outside a zero-density exceptional set; refuted if non-isomorphic forms repeatedly produce indistinguishable persistence signatures under all tested Hecke actions. Impact: This would create a new topological observable for automorphic representations, potentially giving a computational bridge between Langlands data, spectral statistics, and topological data analysis.",
+    "domains": [
+      "Number Theory",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:08:11.583910+00:00"
   },
   {
     "id": "fd_0835",

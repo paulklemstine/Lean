@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_5_complexity_of_lorentzian_recognition",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 179
+      "hue": 90
     },
     {
       "id": "direction_3_extension_to_product_and_sum_types",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_1_coalgebraic_temporal_adjunction_for_in",
@@ -43,7 +43,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "eml_algebraic_independence_transcendence_results",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "sums_of_three_cubes",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T00:26:30Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_2_tensor_sorted_extension_for_scientific",
@@ -70,7 +70,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "direction_1_global_tightness_conjecture",
@@ -79,7 +79,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "direction_1_concrete_first_order_term_algebra_with",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "direction_3_completeness_of_recursive_spectral_cer",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T02:10:29Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_4_efficient_sampling_from_lorentzian_cer",
@@ -115,7 +115,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T03:05:32Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "direction_4_parametric_families_and_algebraic_curv",
@@ -124,7 +124,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T03:06:21Z",
-      "hue": 89
+      "hue": 270
     },
     {
       "id": "direction_3_sparse_matrix_structure_preservation",
@@ -133,7 +133,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-25T03:07:10Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -142,6 +142,15 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T03:07:59Z",
+      "hue": 280
+    },
+    {
+      "id": "symmetric_group_generation_probability",
+      "title": "Generation Probability of the Symmetric Group",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T03:08:46Z",
       "hue": 272
     }
   ],
