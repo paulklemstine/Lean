@@ -258,36 +258,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             header.appendChild(title);
 
-            const iframe = document.createElement('iframe');
-            iframe.className = 'interactive-demo-frame';
-            iframe.sandbox = 'allow-scripts allow-same-origin';
-            iframe.scrolling = 'no';
-            // Inject no-scrollbar style into the HTML
-            const htmlContent = item.html || '<p>No content</p>';
-            const noScrollbarStyle = '<style>html,body{margin:0;padding:0;width:100%;height:auto;}*{box-sizing:border-box;}body::-webkit-scrollbar{display:none;}body{scrollbar-width:none;}</style>';
-            iframe.srcdoc = htmlContent.includes('<head>')
-                ? htmlContent.replace('<head>', '<head>' + noScrollbarStyle)
-                : noScrollbarStyle + htmlContent;
-            iframe.style.cssText = 'width: 100%; min-height: 400px; border: none; border-radius: 12px;';
-            // Auto-resize iframe to fit content dynamically
-            iframe.addEventListener('load', () => {
-                try {
-                    const doc = iframe.contentDocument || iframe.contentWindow.document;
-                    const resize = () => {
-                        const height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
-                        if (height > 50) iframe.style.height = height + 'px';
-                    };
-                    resize();
-                    // Watch for dynamic content changes
-                    new ResizeObserver(resize).observe(doc.body);
-                    new MutationObserver(resize).observe(doc.body, { childList: true, subtree: true, attributes: true });
-                } catch (e) {
-                    // Cross-origin — leave at min-height
-                }
-            });
+            const content = document.createElement('div');
+            content.className = 'interactive-demo-inline';
+            content.style.cssText = 'width: 100%; border-radius: 12px;';
+            content.innerHTML = item.html || '<p>No content</p>';
 
             card.appendChild(header);
-            card.appendChild(iframe);
+            card.appendChild(content);
             container.appendChild(card);
         });
     }
