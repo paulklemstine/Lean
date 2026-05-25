@@ -2179,7 +2179,7 @@ Research mode: {concept.research_mode}
 
         Auto-immortalizes clear winners, auto-removes clear junk,
         then sends one batch of gray-area files to PI-Agent for review.
-        Moves removed files to Catalog/old/ instead of deleting.
+        Deletes removed files.
         """
         catalog_root = self.catalog_root
         final_dir = catalog_root / "FINAL"
@@ -2241,20 +2241,17 @@ Research mode: {concept.research_mode}
             print(f"[Prune] Auto-immortalized {auto_immortalized} high-quality files")
 
         # Auto-remove clear junk: trivial-only, very short, or sorry-containing
-        # Move to Catalog/old/ instead of deleting
-        old_dir = catalog_root / "old"
+        # Delete instead of moving to old/
         auto_removed = 0
         for c in candidates:
             if c["sorries"] or (c["lines"] < 15 and c["trivial_only"]) or (c["theorems"] == 0 and c["lines"] < 30):
                 try:
-                    dest = old_dir / c["path"]
-                    dest.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.move(str(c["abs_path"]), str(dest))
+                    c["abs_path"].unlink(missing_ok=True)
                     auto_removed += 1
                 except Exception:
                     pass
         if auto_removed:
-            print(f"[Prune] Auto-removed {auto_removed} junk files (moved to old/)")
+            print(f"[Prune] Auto-removed {auto_removed} junk files")
 
         # Gray area: send to Pi-Agent for review
         gray_area = [c for c in candidates
@@ -2319,9 +2316,7 @@ Research mode: {concept.research_mode}
             c = next((c for c in batch if c["path"] == path_str), None)
             if c:
                 try:
-                    dest = old_dir / c["path"]
-                    dest.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.move(str(c["abs_path"]), str(dest))
+                    c["abs_path"].unlink(missing_ok=True)
                     llm_removed += 1
                 except Exception:
                     pass

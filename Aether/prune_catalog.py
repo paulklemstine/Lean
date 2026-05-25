@@ -2,8 +2,7 @@
 """Prune Catalog: batch quality review of .lean files.
 
 Processes files in batches, using quick heuristics for auto-decisions
-and PI-agent for gray-area files. Moves removed files to Catalog/old/
-instead of deleting them.
+and PI-agent for gray-area files. Deletes removed files.
 
 Usage:
     python3 prune_catalog.py                  # Process one batch
@@ -28,7 +27,6 @@ from pi_agent_client import PiAgentClient
 
 
 CATALOG_ROOT = Path(__file__).parent.parent / "Catalog"
-OLD_DIR = CATALOG_ROOT / "old"
 BATCH_SIZE = 10
 
 # Heuristic thresholds
@@ -138,7 +136,7 @@ def main():
     args = parser.parse_args()
 
     # Scan catalog
-    skip_dirs = {"FINAL", "Speculative", ".lake", "ResearchOutput", "Applications", "old"}
+    skip_dirs = {"FINAL", "Speculative", ".lake", "ResearchOutput", "Applications"}
     candidates = []
     for f in CATALOG_ROOT.rglob("*.lean"):
         parts = f.relative_to(CATALOG_ROOT).parts
@@ -168,19 +166,15 @@ def main():
     print(f"[Prune] Auto-keep: {len(to_keep)}, Auto-remove: {len(to_remove)}, Review: {len(to_review)}")
 
     # Execute auto-removes
-    if to_remove and not args.dry_run:
-        OLD_DIR.mkdir(parents=True, exist_ok=True)
     removed = 0
     for c in to_remove:
         if args.dry_run:
             print(f"  [dry-run] REMOVE: {c['path']}")
         else:
-            dest = OLD_DIR / c["path"]
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.move(str(c["abs_path"]), str(dest))
+            c["abs_path"].unlink(missing_ok=True)
             removed += 1
     if removed:
-        print(f"[Prune] Auto-removed {removed} junk files (moved to old/)")
+        print(f"[Prune] Auto-removed {removed} junk files")
 
     # Process review batches
     if to_review:
@@ -215,9 +209,7 @@ def main():
                     if args.dry_run:
                         print(f"  [dry-run] REMOVE (PI): {c['path']}")
                     else:
-                        dest = OLD_DIR / c["path"]
-                        dest.parent.mkdir(parents=True, exist_ok=True)
-                        shutil.move(str(c["abs_path"]), str(dest))
+                        c["abs_path"].unlink(missing_ok=True)
                         total_removed += 1
                 elif c["path"] in keep_paths:
                     total_kept += 1
@@ -234,7 +226,7 @@ def main():
     if not args.dry_run:
         cleaned = 0
         for d in sorted(CATALOG_ROOT.rglob("*"), reverse=True):
-            if d.is_dir() and not any(d.iterdir()) and d.name != "old":
+            if d.is_dir() and not any(d.iterdir()):
                 d.rmdir()
                 cleaned += 1
         if cleaned:
@@ -242,7 +234,7 @@ def main():
 
     # Summary
     final_count = sum(1 for _ in CATALOG_ROOT.rglob("*.lean")
-                      if not any(p in (".lake", "old", "Applications") for p in _.relative_to(CATALOG_ROOT).parts)
+                      if not any(p in (".lake", "Applications") for p in _.relative_to(CATALOG_ROOT).parts)
                       and _.name != "Main.lean")
     print(f"[Prune] Catalog now has {final_count} .lean files")
 
