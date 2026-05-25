@@ -1,360 +1,264 @@
-#!/usr/bin/env python3
 """
-Algorithms for Quantum Stabilizer Code Analysis
+Krawtchouk Polynomials and Quantum Weight Enumerator Algorithms
 
-Implements the key algorithms from the formal theory:
-1. Hamming bound computation and verification
-2. Singleton bound analysis
-3. Perfect code search (Diophantine solver)
-4. Toric code parameter computation
-5. Symplectic form computation over F₂
+Implements the core mathematical algorithms for quantum coding theory:
+1. Krawtchouk polynomial evaluation (three methods: direct, recurrence, matrix)
+2. Quantum MacWilliams transform
+3. Weight enumerator computation for stabilizer codes
+4. Tropical weight profile computation
+
+Time complexity: O(n²) for full Krawtchouk matrix, O(n) per polynomial evaluation.
+Space complexity: O(n²) for the matrix, O(n) for a single enumerator.
 """
 
-import math
+import numpy as np
+from math import comb, log, factorial
 from typing import List, Tuple, Optional, Dict
-import itertools
 
 
-# ============================================================
-# Algorithm 1: Hamming Sum & Bound Verification
-# ============================================================
+def krawtchouk(n: int, j: int, x: int) -> int:
+    """
+    Compute the Krawtchouk polynomial K_j(x; n) for binary codes.
 
-def hamming_sum(n: int, t: int) -> int:
-    """Compute Σ_{i=0}^{t} 3^i · C(n, i).
-    
-    Time complexity: O(t · n) for binomial coefficient computation.
-    Space complexity: O(1).
-    
-    Args:
-        n: Number of qubits.
-        t: Error correction radius.
-    
+    K_j(x; n) = Σ_{l=0}^{j} (-1)^l · C(x, l) · C(n-x, j-l)
+
+    This is the character table entry of the Hamming association scheme H(n, 2).
+
+    Parameters:
+        n: Code length
+        j: Polynomial index (0 ≤ j ≤ n)
+        x: Evaluation point (0 ≤ x ≤ n)
+
     Returns:
-        The Hamming packing sum.
-    
-    Example:
-        >>> hamming_sum(5, 1)
-        16
-        >>> hamming_sum(7, 1)
-        22
+        Integer value K_j(x; n)
+
+    Time complexity: O(j)
+    Space complexity: O(1)
+
+    >>> krawtchouk(5, 0, 3)
+    1
+    >>> krawtchouk(5, 1, 2)
+    1
+    >>> krawtchouk(5, 2, 1)
+    2
     """
-    return sum(3**i * math.comb(n, i) for i in range(t + 1))
-
-
-def verify_hamming_bound(n: int, k: int, d: int) -> Dict:
-    """Verify the quantum Hamming bound for given parameters.
-    
-    For a nondegenerate [[n, k, d]] stabilizer code:
-        Σ_{i=0}^{t} 3^i · C(n, i) ≤ 2^{n-k}
-    where t = ⌊(d-1)/2⌋.
-    
-    Time complexity: O(t · n).
-    
-    Returns:
-        Dictionary with bound details and satisfaction status.
-    """
-    t = (d - 1) // 2
-    hs = hamming_sum(n, t)
-    ss = 2 ** (n - k)
-    
-    return {
-        "parameters": f"[[{n},{k},{d}]]",
-        "correction_radius": t,
-        "hamming_sum": hs,
-        "syndrome_size": ss,
-        "satisfied": hs <= ss,
-        "perfect": hs == ss,
-        "packing_ratio": hs / ss if ss > 0 else float('inf'),
-        "slack": ss - hs,
-    }
-
-
-# ============================================================
-# Algorithm 2: Quantum Singleton Bound
-# ============================================================
-
-def verify_singleton_bound(n: int, k: int, d: int) -> Dict:
-    """Verify the quantum Singleton bound: 2d + k ≤ n + 2.
-    
-    For any stabilizer code [[n, k, d]], this must hold.
-    MDS codes achieve equality: 2d + k = n + 2.
-    
-    Time complexity: O(1).
-    
-    Returns:
-        Dictionary with bound details.
-    """
-    lhs = 2 * d + k
-    rhs = n + 2
-    
-    return {
-        "parameters": f"[[{n},{k},{d}]]",
-        "lhs": lhs,
-        "rhs": rhs,
-        "satisfied": lhs <= rhs,
-        "mds": lhs == rhs,
-        "slack": rhs - lhs,
-        "max_distance": (n - k + 2) // 2,
-        "max_k_for_d": n - 2 * d + 2 if 2 * d <= n + 2 else 0,
-    }
-
-
-# ============================================================
-# Algorithm 3: Perfect Code Search
-# ============================================================
-
-def find_perfect_codes(d: int, n_max: int = 100, k_min: int = 1) -> List[Tuple[int, int, int]]:
-    """Find all perfect quantum codes with distance d up to n_max qubits.
-    
-    A perfect code satisfies the Hamming bound with equality:
-        Σ_{i=0}^{t} 3^i · C(n, i) = 2^{n-k}
-    
-    For d = 3 (t = 1), this becomes: 1 + 3n = 2^{n-k}.
-    
-    Algorithm:
-        Iterate over possible values of m = n - k (syndrome dimension).
-        For each m, compute n = (2^m - 1) / (Σ 3^i terms).
-        Check if n is a non-negative integer and k ≥ k_min.
-    
-    Time complexity: O(n_max · log(n_max)).
-    
-    Args:
-        d: Minimum distance.
-        n_max: Maximum number of qubits to search.
-        k_min: Minimum number of logical qubits.
-    
-    Returns:
-        List of (n, k, d) tuples for perfect codes.
-    
-    Example:
-        >>> find_perfect_codes(3, 100)
-        [(5, 1, 3), (21, 15, 3)]
-    """
-    t = (d - 1) // 2
-    results = []
-    
-    for m in range(1, n_max + 1):  # m = n - k
-        target = 2 ** m
-        # Search for n such that hamming_sum(n, t) = target
-        for n in range(1, n_max + 1):
-            hs = hamming_sum(n, t)
-            if hs == target:
-                k = n - m
-                if k >= k_min and k <= n:
-                    results.append((n, k, d))
-            elif hs > target:
-                break
-    
-    return results
-
-
-def find_perfect_codes_d3(n_max: int = 1000) -> List[Tuple[int, int]]:
-    """Specialized search for d=3 perfect codes using Diophantine analysis.
-    
-    Solves 1 + 3n = 2^m where m = n - k.
-    
-    Key insight: 2^m ≡ 1 (mod 3) requires m to be even.
-    So we only check even m values.
-    
-    Time complexity: O(log(n_max)).
-    """
-    results = []
-    for m in range(2, 100, 2):  # m must be even
-        val = 2**m
-        n = (val - 1) // 3
-        if 1 + 3 * n == val and n <= n_max:
-            k = n - m
-            if k >= 1:
-                results.append((n, k))
-    return results
-
-
-# ============================================================
-# Algorithm 4: Toric Code Parameters
-# ============================================================
-
-def toric_code_params(L: int) -> Dict:
-    """Compute toric code parameters [[2L², 2, L]] and verify bounds.
-    
-    Time complexity: O(1).
-    
-    Args:
-        L: Linear dimension of the torus (L × L grid).
-    
-    Returns:
-        Dictionary with all parameter details and bound verification.
-    """
-    n = 2 * L**2
-    k = 2
-    d = L
-    t = (d - 1) // 2
-    
-    return {
-        "L": L,
-        "n": n,
-        "k": k,
-        "d": d,
-        "t": t,
-        "rate": k / n if n > 0 else 0,
-        "distance_sq_over_n": d**2 / n if n > 0 else 0,
-        "kd2": k * d**2,
-        "kd2_equals_n": k * d**2 == n,
-        "singleton_satisfied": 2 * d + k <= n + 2,
-        "singleton_slack": (n + 2) - (2 * d + k),
-        "hamming_sum": hamming_sum(n, t),
-        "syndrome_size": 2 ** (n - k),
-        "ground_space_dim": 2**k,
-    }
-
-
-# ============================================================
-# Algorithm 5: Symplectic Form over F₂
-# ============================================================
-
-def symplectic_inner_product(a: Tuple[List[int], List[int]],
-                              b: Tuple[List[int], List[int]]) -> int:
-    """Compute symplectic inner product of two binary Pauli vectors.
-    
-    For a = (x_a, z_a) and b = (x_b, z_b), the symplectic product is:
-        ⟨a, b⟩ = Σ_i (x_a[i] · z_b[i] + z_a[i] · x_b[i]) mod 2
-    
-    Two Pauli operators commute iff their symplectic product is 0.
-    
-    Time complexity: O(n).
-    
-    Args:
-        a: Pauli vector (x_part, z_part), each a list of 0/1 values.
-        b: Pauli vector (x_part, z_part).
-    
-    Returns:
-        0 if the operators commute, 1 if they anticommute.
-    """
-    n = len(a[0])
-    assert len(a[1]) == n and len(b[0]) == n and len(b[1]) == n
-    
     result = 0
-    for i in range(n):
-        result ^= (a[0][i] & b[1][i]) ^ (a[1][i] & b[0][i])
+    for l in range(j + 1):
+        result += ((-1) ** l) * comb(x, l) * comb(n - x, j - l)
     return result
 
 
-def is_isotropic(vectors: List[Tuple[List[int], List[int]]]) -> bool:
-    """Check if a set of binary Pauli vectors forms an isotropic subspace.
-    
-    An isotropic subspace has all pairwise symplectic products equal to 0.
-    This is the necessary condition for a valid stabilizer group.
-    
-    Time complexity: O(|S|² · n).
+def krawtchouk_recurrence(n: int, j: int, x: int) -> int:
     """
-    for i in range(len(vectors)):
-        for j in range(i, len(vectors)):
-            if symplectic_inner_product(vectors[i], vectors[j]) != 0:
-                return False
-    return True
+    Compute K_j(x; n) using the three-term recurrence relation.
 
+    (j+1) · K_{j+1}(x) = (n - 2x) · K_j(x) - (n - j + 1) · K_{j-1}(x)
 
-def pauli_weight(v: Tuple[List[int], List[int]]) -> int:
-    """Compute the weight of a Pauli vector.
-    
-    Weight = number of positions where the operator is non-identity,
-    i.e., where x[i] ≠ 0 or z[i] ≠ 0.
+    More numerically stable for large j.
+
+    Time complexity: O(j)
+    Space complexity: O(1)
     """
-    return sum(1 for x, z in zip(v[0], v[1]) if x != 0 or z != 0)
+    if j == 0:
+        return 1
+    K_prev = 1  # K_0 = 1
+    K_curr = n - 2 * x  # K_1 = n - 2x
+    if j == 1:
+        return K_curr
+    for i in range(1, j):
+        K_next = ((n - 2 * x) * K_curr - (n - i) * K_prev) // (i + 1)
+        K_prev = K_curr
+        K_curr = K_next
+    return K_curr
 
 
-# ============================================================
-# Algorithm 6: Code Parameter Feasibility
-# ============================================================
-
-def parameter_feasibility(n: int, k: int, d: int) -> Dict:
-    """Comprehensive feasibility check for [[n, k, d]] parameters.
-    
-    Checks:
-    - Basic validity (k ≤ n, d ≥ 1)
-    - Singleton bound (2d + k ≤ n + 2)
-    - Hamming bound (nondegenerate case)
-    - Whether the code could be perfect
-    - Whether it's MDS
-    
-    Time complexity: O(d · n) for Hamming sum computation.
+def krawtchouk_matrix(n: int) -> np.ndarray:
     """
-    t = (d - 1) // 2
-    hs = hamming_sum(n, t)
-    ss = 2 ** (n - k) if k <= n else 0
-    
-    return {
-        "parameters": f"[[{n},{k},{d}]]",
-        "valid_basic": k <= n and d >= 1,
-        "singleton_ok": 2 * d + k <= n + 2,
-        "hamming_ok": hs <= ss,
-        "is_perfect": hs == ss,
-        "is_mds": 2 * d + k == n + 2,
-        "hamming_sum": hs,
-        "syndrome_size": ss,
-        "redundancy": n - k if k <= n else None,
-        "correction_radius": t,
-    }
+    Compute the full (n+1) × (n+1) Krawtchouk matrix K where K[j, i] = K_j(i; n).
+
+    This is the character table of the Hamming association scheme H(n, 2).
+    It satisfies K · K^T = 2^n · diag(C(n,0), C(n,1), ..., C(n,n)).
+
+    Time complexity: O(n²)
+    Space complexity: O(n²)
+    """
+    K = np.zeros((n + 1, n + 1), dtype=float)
+    for j in range(n + 1):
+        for i in range(n + 1):
+            K[j, i] = krawtchouk(n, j, i)
+    return K
 
 
-# ============================================================
-# Main: Run All Demonstrations
-# ============================================================
+def macwilliams_transform(n: int, k: int, A: np.ndarray) -> np.ndarray:
+    """
+    Apply the quantum MacWilliams transform to compute B from A.
+
+    B_j = (1/2^(n-k)) · Σ_i A_i · K_j(i; n)
+
+    This is the fundamental duality transform for quantum weight enumerators.
+
+    Parameters:
+        n: Code length
+        k: Number of logical qubits
+        A: A-enumerator array of length n+1
+
+    Returns:
+        B-enumerator array of length n+1
+
+    Time complexity: O(n²)
+    """
+    K = krawtchouk_matrix(n)
+    B = K @ A / (2 ** (n - k))
+    return B
+
+
+def inverse_macwilliams(n: int, k: int, B: np.ndarray) -> np.ndarray:
+    """
+    Compute A from B by inverting the MacWilliams transform.
+
+    A_i = (1/2^(n+k)) · Σ_j B_j · K_i(j; n)
+
+    Time complexity: O(n²)
+    """
+    K = krawtchouk_matrix(n)
+    A = K @ B / (2 ** (n + k))
+    return A
+
+
+def verify_macwilliams(n: int, k: int, A: np.ndarray, B: np.ndarray,
+                       tol: float = 1e-10) -> bool:
+    """
+    Verify that (A, B) satisfies the quantum MacWilliams identity.
+
+    Returns True if B_j ≈ (1/2^(n-k)) · Σ_i A_i · K_j(i; n) for all j.
+    """
+    B_computed = macwilliams_transform(n, k, A)
+    return np.allclose(B, B_computed, atol=tol)
+
+
+def hamming_bound_sum(n: int, t: int) -> int:
+    """
+    Compute the Hamming packing sum: Σ_{j=0}^{t} 3^j · C(n, j).
+
+    This counts the number of n-qubit Pauli errors of weight ≤ t.
+    """
+    return sum(3**j * comb(n, j) for j in range(t + 1))
+
+
+def singleton_bound(n: int, d: int) -> int:
+    """
+    Maximum k for an [[n, k, d]] code satisfying the quantum Singleton bound.
+
+    2d + k ≤ n + 2, so k ≤ n - 2d + 2.
+    """
+    return max(0, n - 2 * d + 2)
+
+
+def bravyi_terhal_bound_2d(n: int, d: int, c: float = 1.0) -> float:
+    """
+    Maximum k for a 2D local code under the Bravyi-Terhal bound.
+
+    k · d² ≤ c · n, so k ≤ c · n / d².
+    """
+    if d == 0:
+        return float('inf')
+    return c * n / (d ** 2)
+
+
+def tropical_weight_profile(A: np.ndarray) -> np.ndarray:
+    """
+    Compute the tropical weight profile: -log(A_j) for positive entries.
+
+    Returns an array where entries with A_j ≤ 0 are set to infinity.
+    """
+    result = np.full_like(A, np.inf)
+    positive = A > 0
+    result[positive] = -np.log(A[positive])
+    return result
+
+
+def tropical_eval(weights: np.ndarray, z: float) -> float:
+    """
+    Evaluate the tropical polynomial: min_j(w_j + j · z).
+    """
+    n = len(weights) - 1
+    values = [weights[j] + j * z for j in range(n + 1)]
+    return min(values)
+
+
+# Known quantum codes
+KNOWN_CODES: Dict[str, dict] = {
+    "[[5,1,3]]": {
+        "n": 5, "k": 1, "d": 3,
+        "name": "Perfect 5-qubit code",
+        "A": np.array([1, 0, 0, 0, 0, 15]),  # Stabilizer: I + 15 weight-5
+        "description": "The smallest perfect quantum code, discovered by "
+                       "Laflamme, Miquel, Paz, and Zurek (1996)."
+    },
+    "[[7,1,3]]": {
+        "n": 7, "k": 1, "d": 3,
+        "name": "Steane code",
+        "A": np.array([1, 0, 0, 0, 7, 0, 0, 56]),
+        "description": "CSS code based on the classical [7,4,3] Hamming code."
+    },
+    "[[9,1,3]]": {
+        "n": 9, "k": 1, "d": 3,
+        "name": "Shor code",
+        "A": np.array([1, 0, 0, 0, 0, 0, 30, 0, 0, 225]),
+        "description": "The first quantum error-correcting code, based on "
+                       "repetition encoding (Shor, 1995)."
+    },
+}
+
 
 if __name__ == "__main__":
-    print("=== Algorithm Demonstrations ===")
-    print()
-    
-    # Hamming bound
-    print("1. Hamming Bound Verification:")
-    for params in [(5,1,3), (7,1,3), (9,1,3), (23,1,7)]:
-        result = verify_hamming_bound(*params)
-        status = "PERFECT" if result["perfect"] else (
-            "OK" if result["satisfied"] else "VIOLATED")
-        print(f"   {result['parameters']}: {status} "
-              f"(sum={result['hamming_sum']}, space={result['syndrome_size']})")
-    
-    print()
-    
-    # Perfect codes
-    print("2. Perfect Code Search (d=3):")
-    perfect = find_perfect_codes_d3(10000)
-    for n, k in perfect:
-        print(f"   [[{n},{k},3]]: 1 + 3·{n} = {1+3*n} = 2^{n-k}")
-    
-    print()
-    
-    # Toric codes
-    print("3. Toric Code Family:")
-    for L in [2, 3, 5, 10, 20]:
-        p = toric_code_params(L)
-        print(f"   L={L}: [[{p['n']},{p['k']},{p['d']}]], "
-              f"kd²=n: {p['kd2_equals_n']}, rate={p['rate']:.4f}")
-    
-    print()
-    
-    # Symplectic form
-    print("4. Symplectic Form Examples (n=3):")
-    # X₁ = (1,0,0 | 0,0,0)
-    x1 = ([1,0,0], [0,0,0])
-    # Z₁ = (0,0,0 | 1,0,0)
-    z1 = ([0,0,0], [1,0,0])
-    # X₂ = (0,1,0 | 0,0,0)
-    x2 = ([0,1,0], [0,0,0])
-    
-    print(f"   ⟨X₁, Z₁⟩ = {symplectic_inner_product(x1, z1)} (anticommute)")
-    print(f"   ⟨X₁, X₂⟩ = {symplectic_inner_product(x1, x2)} (commute)")
-    print(f"   ⟨X₁, X₁⟩ = {symplectic_inner_product(x1, x1)} (self-orthogonal)")
-    print(f"   Isotropic check {{X₁, X₂}}: {is_isotropic([x1, x2])}")
-    print(f"   Isotropic check {{X₁, Z₁}}: {is_isotropic([x1, z1])}")
-    
-    print()
-    
-    # Feasibility
-    print("5. Parameter Feasibility:")
-    for params in [(5,1,3), (6,1,3), (7,1,3), (5,2,3), (5,1,5)]:
-        f = parameter_feasibility(*params)
-        print(f"   {f['parameters']}: basic={f['valid_basic']}, "
-              f"singleton={f['singleton_ok']}, hamming={f['hamming_ok']}")
-    
-    print()
-    print("All algorithms completed.")
+    print("=== Krawtchouk Polynomial Tests ===")
+    # Verify known values
+    tests = [
+        (5, 0, 3, 1), (5, 1, 2, 1), (5, 2, 1, 2),
+        (5, 2, 2, -2), (7, 3, 1, 5), (5, 1, 0, 5),
+    ]
+    for n, j, x, expected in tests:
+        val = krawtchouk(n, j, x)
+        status = "✓" if val == expected else "✗"
+        print(f"  {status} K_{j}({x}; {n}) = {val} (expected {expected})")
+
+    # Verify recurrence matches direct computation
+    print("\n=== Recurrence Verification ===")
+    for n in [5, 7, 10]:
+        for j in range(n + 1):
+            for x in range(n + 1):
+                v1 = krawtchouk(n, j, x)
+                v2 = krawtchouk_recurrence(n, j, x)
+                if v1 != v2:
+                    print(f"  ✗ Mismatch at K_{j}({x}; {n}): {v1} vs {v2}")
+                    break
+        else:
+            print(f"  ✓ All values match for n = {n}")
+
+    # Verify Krawtchouk matrix orthogonality
+    print("\n=== Krawtchouk Matrix Orthogonality ===")
+    for n in [5, 7]:
+        K = krawtchouk_matrix(n)
+        diag = np.array([2**n * comb(n, j) for j in range(n + 1)])
+        product = K @ K.T
+        expected = np.diag(diag)
+        if np.allclose(product, expected):
+            print(f"  ✓ K · K^T = 2^{n} · diag(C({n},j)) for n = {n}")
+        else:
+            print(f"  ✗ Orthogonality fails for n = {n}")
+
+    # MacWilliams transform for known codes
+    print("\n=== MacWilliams Transform Verification ===")
+    for code_name, code in KNOWN_CODES.items():
+        n, k = code["n"], code["k"]
+        A = code["A"].astype(float)
+        B = macwilliams_transform(n, k, A)
+        print(f"  {code_name} ({code['name']}):")
+        print(f"    A = {A}")
+        print(f"    B = {B}")
+        print(f"    B[0] = {B[0]:.1f} (expected 2^{k} = {2**k})")
+        if abs(B[0] - 2**k) < 1e-10:
+            print(f"    ✓ B₀ = 2^k verified")
+        else:
+            print(f"    ✗ B₀ ≠ 2^k")

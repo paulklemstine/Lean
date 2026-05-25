@@ -1,467 +1,675 @@
-#!/usr/bin/env python3
 """
-Applications of Quantum Stabilizer Code Bounds
+Applications of Quantum MacWilliams Identity and Bravyi-Terhal Bound
 
-Real-world applications of the formalized code bounds theory:
-1. Quantum hardware resource estimation
-2. Error threshold analysis
-3. Code selection for fault-tolerant quantum computing
-4. Topological memory overhead analysis
+Demonstrates real-world applications:
+1. Code parameter optimization using linear programming bounds
+2. Toric code scaling analysis for quantum memory design
+3. Degenerate vs nondegenerate code comparison
+4. Tropical geometry of weight enumerators
 """
 
-import math
-from typing import List, Tuple, Dict
+import numpy as np
+from math import comb, log2, ceil, floor
 
 
-def hamming_sum(n: int, t: int) -> int:
-    """Hamming packing sum."""
-    return sum(3**i * math.comb(n, i) for i in range(t + 1))
+def krawtchouk(n, j, x):
+    """Krawtchouk polynomial K_j(x; n)."""
+    return sum((-1)**l * comb(x, l) * comb(n - x, j - l) for l in range(j + 1))
 
 
-# ============================================================
-# Application 1: Quantum Hardware Resource Estimation
-# ============================================================
+def krawtchouk_matrix(n):
+    """Full Krawtchouk matrix."""
+    return np.array([[krawtchouk(n, j, i) for i in range(n + 1)]
+                     for j in range(n + 1)], dtype=float)
 
-def estimate_resources(logical_qubits: int, target_distance: int,
-                       code_type: str = "toric") -> Dict:
-    """Estimate physical qubit requirements for fault-tolerant computation.
-    
-    Given desired logical qubits and error correction distance,
-    compute the physical resource overhead for different code families.
-    
-    Args:
-        logical_qubits: Number of logical qubits needed.
-        target_distance: Desired code distance for error suppression.
-        code_type: "toric", "surface", or "generic".
-    
-    Returns:
-        Resource estimate dictionary.
+
+def macwilliams_transform(n, k, A):
+    """Quantum MacWilliams transform: B = K · A / 2^(n-k)."""
+    K = krawtchouk_matrix(n)
+    return K @ A / (2 ** (n - k))
+
+
+# ─── Application 1: Code Parameter Optimization ───
+
+def find_optimal_codes(n_max=15, d_values=None):
     """
-    d = target_distance
-    
-    if code_type == "toric":
-        # Toric code: k = 2 per code block, n = 2d²
-        blocks_needed = math.ceil(logical_qubits / 2)
-        n_per_block = 2 * d**2
-        total_physical = blocks_needed * n_per_block
-        total_logical = blocks_needed * 2
-        
-        return {
-            "code_type": "Toric code [[2d², 2, d]]",
-            "blocks": blocks_needed,
-            "physical_per_block": n_per_block,
-            "total_physical": total_physical,
-            "total_logical": total_logical,
-            "overhead_ratio": total_physical / total_logical,
-            "correction_radius": (d - 1) // 2,
-        }
-    
-    elif code_type == "surface":
-        # Surface code: k = 1 per patch, n ≈ 2d² - 2d + 1
-        n_per_patch = 2 * d**2 - 2 * d + 1
-        total_physical = logical_qubits * n_per_patch
-        
-        return {
-            "code_type": f"Surface code [[~2d²-2d+1, 1, d]]",
-            "blocks": logical_qubits,
-            "physical_per_block": n_per_patch,
-            "total_physical": total_physical,
-            "total_logical": logical_qubits,
-            "overhead_ratio": total_physical / logical_qubits,
-            "correction_radius": (d - 1) // 2,
-        }
-    
-    else:  # Generic Singleton bound
-        # Best possible: n ≥ k + 2(d-1)
-        n_min = logical_qubits + 2 * (d - 1)
-        
-        return {
-            "code_type": "Generic (Singleton lower bound)",
-            "blocks": 1,
-            "physical_per_block": n_min,
-            "total_physical": n_min,
-            "total_logical": logical_qubits,
-            "overhead_ratio": n_min / logical_qubits,
-            "correction_radius": (d - 1) // 2,
-        }
+    Find optimal stabilizer code parameters using known bounds.
 
+    For each (n, d), find the maximum k satisfying:
+    - Singleton bound: 2d + k ≤ n + 2
+    - Hamming bound: Σ 3^j C(n,j) ≤ 2^(n-k) for j ≤ ⌊(d-1)/2⌋
 
-# ============================================================
-# Application 2: Error Threshold Analysis
-# ============================================================
-
-def error_threshold_analysis(physical_error_rate: float,
-                             code_distances: List[int]) -> Dict:
-    """Analyze logical error rate vs. physical error rate.
-    
-    For a code of distance d, the logical error rate scales as:
-        p_L ≈ (c · p)^{⌊d/2⌋ + 1}
-    where p is the physical error rate and c ≈ 1 for depolarizing noise.
-    
-    The threshold is the physical error rate below which increasing
-    distance improves the logical error rate.
+    Returns dict mapping (n, d) → max_k.
     """
-    results = []
-    for d in code_distances:
-        t = (d - 1) // 2
-        # Simplified model: p_L ≈ (100 * p)^(t+1) / 100
-        # More realistic threshold ≈ 1% for surface codes
-        threshold = 0.01
-        p_logical = (physical_error_rate / threshold) ** (t + 1) * threshold
-        
-        results.append({
-            "distance": d,
-            "correction_radius": t,
-            "logical_error_rate": p_logical,
-            "suppression_factor": (physical_error_rate / threshold) ** t,
-            "below_threshold": physical_error_rate < threshold,
-        })
-    
-    return {
-        "physical_error_rate": physical_error_rate,
-        "threshold": 0.01,
-        "results": results,
-    }
+    if d_values is None:
+        d_values = [1, 2, 3, 4, 5]
 
-
-# ============================================================
-# Application 3: Code Selection Guide
-# ============================================================
-
-def code_selection(n_available: int, k_needed: int,
-                   min_distance: int = 3) -> List[Dict]:
-    """Suggest quantum error-correcting codes for given constraints.
-    
-    Given available qubits and required logical qubits,
-    find codes that satisfy both Hamming and Singleton bounds.
-    """
-    candidates = []
-    
-    for d in range(min_distance, n_available // 2 + 2):
-        for k in range(k_needed, n_available + 1):
-            # Check Singleton
-            if 2 * d + k > n_available + 2:
+    results = {}
+    for n in range(1, n_max + 1):
+        for d in d_values:
+            if d > n + 1:
                 continue
-            
+
+            # Singleton bound
+            k_singleton = n - 2 * d + 2
+
+            # Hamming bound (nondegenerate)
             t = (d - 1) // 2
-            hs = hamming_sum(n_available, t)
-            ss = 2 ** (n_available - k)
-            
-            # Check Hamming
-            if hs > ss:
-                continue
-            
-            candidates.append({
-                "n": n_available,
-                "k": k,
-                "d": d,
-                "correction_radius": t,
-                "packing_ratio": hs / ss,
-                "is_perfect": hs == ss,
-                "is_mds": 2 * d + k == n_available + 2,
-            })
-    
-    # Sort by distance (descending), then k (descending)
-    candidates.sort(key=lambda x: (-x["d"], -x["k"]))
-    return candidates[:10]  # Top 10
+            hamming_sum = sum(3**j * comb(n, j) for j in range(t + 1))
+            if hamming_sum > 0:
+                k_hamming = n - ceil(log2(hamming_sum))
+            else:
+                k_hamming = n
+
+            k_max = min(k_singleton, k_hamming, n)
+            k_max = max(k_max, 0)
+
+            results[(n, d)] = k_max
+
+    return results
 
 
-# ============================================================
-# Application 4: Topological Memory Scaling
-# ============================================================
+# ─── Application 2: Toric Code Scaling ───
 
-def topological_memory_scaling(target_logical_error: float,
-                               physical_error_rate: float = 0.001) -> Dict:
-    """Determine toric code size needed for target logical error rate.
-    
-    For toric codes, the logical error rate scales as:
-        p_L ≈ (p / p_th)^{L/2}
-    
-    where p_th ≈ 11% for optimal decoding.
-    
-    Returns the minimum L and corresponding physical resources.
+def toric_code_analysis(L_values=None):
     """
-    p_th = 0.11  # Toric code threshold (optimal decoding)
-    ratio = physical_error_rate / p_th
-    
-    if ratio >= 1:
-        return {"feasible": False, "reason": "Above threshold"}
-    
-    # Need: ratio^{L/2} ≤ target
-    # L/2 · log(ratio) ≤ log(target)
-    # L ≥ 2 · log(target) / log(ratio)
-    
-    L_min = math.ceil(2 * math.log(target_logical_error) / math.log(ratio))
-    L_min = max(L_min, 2)
-    
-    n = 2 * L_min**2
-    estimated_logical_error = ratio ** (L_min / 2)
-    
-    return {
-        "feasible": True,
-        "L_min": L_min,
-        "physical_qubits": n,
-        "logical_qubits": 2,
-        "distance": L_min,
-        "estimated_logical_error": estimated_logical_error,
-        "target_logical_error": target_logical_error,
-        "overhead_ratio": n / 2,
+    Analyze toric code parameters and their relationship to bounds.
+
+    The toric code on an L×L lattice has:
+    - n = 2L² physical qubits
+    - k = 2 logical qubits
+    - d = L minimum distance
+
+    Saturates: k · d² = n (Bravyi-Terhal bound)
+    """
+    if L_values is None:
+        L_values = list(range(2, 21))
+
+    print("=" * 70)
+    print("TORIC CODE SCALING ANALYSIS")
+    print("=" * 70)
+    print(f"{'L':>4} {'n=2L²':>8} {'k':>4} {'d=L':>4} {'k·d²':>8} "
+          f"{'=n?':>5} {'Rate':>8} {'Singleton':>12}")
+    print("-" * 70)
+
+    for L in L_values:
+        n = 2 * L**2
+        k = 2
+        d = L
+        kd2 = k * d**2
+        saturates = "✓" if kd2 == n else "✗"
+        rate = k / n
+        singleton_margin = n + 2 - 2 * d - k
+
+        print(f"{L:4d} {n:8d} {k:4d} {d:4d} {kd2:8d} {saturates:>5} "
+              f"{rate:8.4f} {singleton_margin:12d}")
+
+    return L_values
+
+
+# ─── Application 3: Degeneracy Analysis ───
+
+def degeneracy_comparison():
+    """
+    Compare degenerate and nondegenerate codes.
+
+    For degenerate codes, the effective error-correction sphere is smaller
+    because stabilizer elements of weight < d share syndromes.
+    """
+    print("\n" + "=" * 70)
+    print("DEGENERATE vs NONDEGENERATE CODE COMPARISON")
+    print("=" * 70)
+
+    codes = {
+        "[[5,1,3]] Perfect": {
+            "n": 5, "k": 1, "d": 3,
+            "A": np.array([1, 0, 0, 0, 0, 15], dtype=float),
+            "degenerate": False,
+        },
+        "[[7,1,3]] Steane": {
+            "n": 7, "k": 1, "d": 3,
+            "A": np.array([1, 0, 0, 0, 7, 0, 0, 56], dtype=float),
+            "degenerate": True,  # A_4 = 7 > 0, but 4 ≥ d=3
+        },
+        "[[9,1,3]] Shor": {
+            "n": 9, "k": 1, "d": 3,
+            "A": np.array([1, 0, 0, 0, 0, 0, 30, 0, 0, 225], dtype=float),
+            "degenerate": True,
+        },
     }
 
+    for name, code in codes.items():
+        n, k, d = code["n"], code["k"], code["d"]
+        A = code["A"]
+        B = macwilliams_transform(n, k, A)
 
-# ============================================================
-# Main: Demonstrate Applications
-# ============================================================
+        t = (d - 1) // 2
+        hamming_sum = sum(3**j * comb(n, j) for j in range(t + 1))
+
+        # Check for degeneracy: A_j > 0 for 0 < j < d
+        degen_weights = [j for j in range(1, d) if A[j] > 0]
+        is_degen = len(degen_weights) > 0
+
+        print(f"\n{name}:")
+        print(f"  Parameters: n={n}, k={k}, d={d}")
+        print(f"  A-enumerator: {A}")
+        print(f"  Degenerate weights (0 < j < d with A_j > 0): {degen_weights}")
+        print(f"  Is degenerate: {is_degen}")
+        print(f"  Hamming sum (t={t}): {hamming_sum}")
+        print(f"  2^(n-k) = {2**(n-k)}")
+        print(f"  Hamming ratio: {hamming_sum / 2**(n-k):.4f}")
+
+        # Effective correction sphere for degenerate codes
+        effective_A = sum(A[j] for j in range(t + 1))
+        print(f"  Effective A-sum (j ≤ t): {effective_A:.0f}")
+        print(f"  Full Hamming sphere: {hamming_sum}")
+        if effective_A < hamming_sum:
+            print(f"  → Degenerate relaxation: {hamming_sum - effective_A:.0f} "
+                  f"fewer syndromes needed")
+
+
+# ─── Application 4: Tropical Geometry ───
+
+def tropical_analysis():
+    """
+    Analyze the tropical geometry of quantum weight enumerators.
+
+    The tropicalization maps:
+    A(z) = Σ A_j z^j → trop(A)(z) = min_j (-log(A_j) + j·z)
+
+    The break points of trop(A) correspond to the Newton polytope vertices.
+    """
+    print("\n" + "=" * 70)
+    print("TROPICAL GEOMETRY OF WEIGHT ENUMERATORS")
+    print("=" * 70)
+
+    codes = {
+        "[[5,1,3]]": np.array([1, 0, 0, 0, 0, 15], dtype=float),
+        "[[7,1,3]]": np.array([1, 0, 0, 0, 7, 0, 0, 56], dtype=float),
+        "[[9,1,3]]": np.array([1, 0, 0, 0, 0, 0, 30, 0, 0, 225], dtype=float),
+    }
+
+    for name, A in codes.items():
+        n = len(A) - 1
+        print(f"\n{name}:")
+
+        # Tropical A-weights
+        trop_A = []
+        for j in range(n + 1):
+            if A[j] > 0:
+                trop_A.append((j, -np.log(A[j])))
+                print(f"  trop(A)[{j}] = -log({A[j]:.0f}) = {-np.log(A[j]):.4f}")
+            else:
+                print(f"  trop(A)[{j}] = ∞ (A_{j} = 0)")
+
+        # Newton polytope vertices (convex hull of (j, trop_A_j))
+        if trop_A:
+            vertices = np.array(trop_A)
+            print(f"  Newton polytope vertices (j, -log A_j): "
+                  f"{[(int(v[0]), round(v[1], 4)) for v in vertices]}")
+
+        # Tropical evaluation at sample points
+        print(f"  Tropical polynomial evaluation:")
+        for z in [-2, -1, 0, 1, 2]:
+            val = min((-np.log(A[j]) + j * z if A[j] > 0 else float('inf'))
+                      for j in range(n + 1))
+            print(f"    trop(A)({z}) = {val:.4f}")
+
 
 if __name__ == "__main__":
+    print("\n" + "=" * 70)
+    print("APPLICATION 1: CODE PARAMETER OPTIMIZATION")
     print("=" * 70)
-    print("APPLICATION 1: Quantum Hardware Resource Estimation")
+
+    results = find_optimal_codes(n_max=12)
+    print(f"\nOptimal k for selected (n, d):")
+    print(f"{'n':>4} | {'d=1':>4} {'d=2':>4} {'d=3':>4} {'d=4':>4} {'d=5':>4}")
+    print("-" * 30)
+    for n in range(1, 13):
+        row = f"{n:4d} |"
+        for d in [1, 2, 3, 4, 5]:
+            if (n, d) in results:
+                row += f" {results[(n, d)]:4d}"
+            else:
+                row += "    -"
+        print(row)
+
+    toric_code_analysis()
+    degeneracy_comparison()
+    tropical_analysis()
+
+    print(f"\n{'=' * 70}")
+    print("ALL APPLICATIONS COMPLETE")
     print("=" * 70)
-    print()
-    
-    for k, d in [(10, 7), (50, 11), (100, 15), (1000, 21)]:
-        for code_type in ["toric", "surface", "generic"]:
-            r = estimate_resources(k, d, code_type)
-            print(f"  {k} logical qubits, d={d}, {code_type}: "
-                  f"{r['total_physical']:>10,} physical ({r['overhead_ratio']:.0f}x)")
-        print()
-    
-    print("=" * 70)
-    print("APPLICATION 2: Error Threshold Analysis")
-    print("=" * 70)
-    print()
-    
-    for p in [0.001, 0.005, 0.01, 0.02]:
-        analysis = error_threshold_analysis(p, [3, 5, 7, 11, 15, 21])
-        print(f"  Physical error rate: {p:.3f}")
-        for r in analysis["results"]:
-            print(f"    d={r['distance']:>2}: p_L = {r['logical_error_rate']:.2e} "
-                  f"(suppression: {r['suppression_factor']:.2e})")
-        print()
-    
-    print("=" * 70)
-    print("APPLICATION 3: Code Selection for n=15 qubits, k≥1")
-    print("=" * 70)
-    print()
-    
-    candidates = code_selection(15, 1, min_distance=3)
-    print(f"  {'Parameters':>12} {'d':>4} {'t':>4} {'Packing':>10} {'Perfect':>8} {'MDS':>6}")
-    for c in candidates:
-        print(f"  [[{c['n']},{c['k']},{c['d']}]] {c['d']:>4} {c['correction_radius']:>4} "
-              f"{c['packing_ratio']:>10.4f} {'★' if c['is_perfect'] else '':>8} "
-              f"{'★' if c['is_mds'] else '':>6}")
-    
-    print()
-    print("=" * 70)
-    print("APPLICATION 4: Topological Memory Scaling")
-    print("=" * 70)
-    print()
-    
-    targets = [1e-6, 1e-10, 1e-15, 1e-20]
-    for target in targets:
-        result = topological_memory_scaling(target, 0.001)
-        if result["feasible"]:
-            print(f"  Target p_L = {target:.0e}: L = {result['L_min']}, "
-                  f"n = {result['physical_qubits']:>6}, "
-                  f"actual p_L ≈ {result['estimated_logical_error']:.1e}, "
-                  f"overhead = {result['overhead_ratio']:.0f}x")
-    
-    print()
-    print("All applications completed.")
 
 
-#!/usr/bin/env python3
 """
-Quantum Stabilizer Code Bounds — Interactive Demonstrations
+Quantum MacWilliams Identity: Demonstration and Verification
 
-Demonstrates the key theorems from the formal verification:
-1. Quantum Hamming bound computation
-2. Perfect code classification
-3. Toric code parameter analysis
-4. Singleton bound verification
+This script:
+1. Computes Krawtchouk polynomials and verifies their properties
+2. Demonstrates the quantum MacWilliams transform and its inverse
+3. Plots Krawtchouk matrices, weight polytopes, and tropical transforms
+4. Visualizes the Bravyi-Terhal bound in (k, d, n)-space for D=1,2,3
+
+Requirements: numpy, matplotlib
 """
 
-import math
-from typing import List, Tuple
+import numpy as np
+from math import comb
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
 
 
-def hamming_sum(n: int, t: int) -> int:
-    """Compute the Hamming packing sum: Σ_{i=0}^{t} 3^i * C(n,i).
-    
-    This counts the number of n-qubit Pauli errors of weight ≤ t.
-    Each qubit position can have one of 3 non-identity Pauli operators
-    (X, Y, or Z), and there are C(n,i) ways to choose i positions.
-    """
-    return sum(3**i * math.comb(n, i) for i in range(t + 1))
+# ─── Core Functions ───
+
+def krawtchouk(n, j, x):
+    """Krawtchouk polynomial K_j(x; n) for binary codes."""
+    return sum((-1)**l * comb(x, l) * comb(n - x, j - l) for l in range(j + 1))
 
 
-def syndrome_size(n: int, k: int) -> int:
-    """Syndrome space cardinality: 2^(n-k)."""
-    return 2 ** (n - k)
+def krawtchouk_matrix(n):
+    """Full (n+1)×(n+1) Krawtchouk matrix."""
+    return np.array([[krawtchouk(n, j, i) for i in range(n + 1)]
+                     for j in range(n + 1)], dtype=float)
 
 
-def hamming_ratio(n: int, k: int, d: int) -> float:
-    """Packing efficiency: how much of syndrome space is used."""
-    t = (d - 1) // 2
-    return hamming_sum(n, t) / syndrome_size(n, k)
+def macwilliams_transform(n, k, A):
+    """Quantum MacWilliams transform: B = K · A / 2^(n-k)."""
+    K = krawtchouk_matrix(n)
+    return K @ A / (2 ** (n - k))
 
 
-# =============================================================
-# Demo 1: Quantum Hamming Bound for Known Codes
-# =============================================================
-print("=" * 65)
-print("DEMO 1: Quantum Hamming Bound for Known Codes")
-print("=" * 65)
-print()
+def inverse_macwilliams(n, k, B):
+    """Inverse MacWilliams transform: A = K · B / 2^(n+k)."""
+    K = krawtchouk_matrix(n)
+    # K^{-1} = K · diag(1/C(n,j)) / 2^n, but simpler: A = K·B / 2^n (since K²=2^n D)
+    binomials = np.array([comb(n, j) for j in range(n + 1)], dtype=float)
+    return K @ (B / binomials) / (2 ** n) * binomials
 
-codes = [
-    ("Five-qubit [[5,1,3]]", 5, 1, 3),
-    ("Steane [[7,1,3]]", 7, 1, 3),
-    ("Shor [[9,1,3]]", 9, 1, 3),
-    ("[[15,1,3]]", 15, 1, 3),
-    ("[[23,1,7]]", 23, 1, 7),
+
+# ─── Part 1: Krawtchouk Polynomial Verification ───
+
+print("=" * 70)
+print("KRAWTCHOUK POLYNOMIAL PROPERTIES")
+print("=" * 70)
+
+# Property 1: K_0(x; n) = 1
+print("\n1. K_0(x; n) = 1 for all x:")
+for n in [5, 7, 10]:
+    vals = [krawtchouk(n, 0, x) for x in range(n + 1)]
+    ok = all(v == 1 for v in vals)
+    print(f"   n={n}: {vals[:6]}... {'✓' if ok else '✗'}")
+
+# Property 2: K_j(0; n) = C(n, j)
+print("\n2. K_j(0; n) = C(n, j):")
+for n in [5, 7]:
+    for j in range(n + 1):
+        val = krawtchouk(n, j, 0)
+        expected = comb(n, j)
+        ok = val == expected
+        if not ok:
+            print(f"   ✗ K_{j}(0; {n}) = {val} ≠ C({n},{j}) = {expected}")
+    else:
+        print(f"   n={n}: all match ✓")
+
+# Property 3: K_1(x; n) = n - 2x
+print("\n3. K_1(x; n) = n - 2x:")
+for n in [5, 7, 10]:
+    ok = all(krawtchouk(n, 1, x) == n - 2*x for x in range(n + 1))
+    print(f"   n={n}: {'✓' if ok else '✗'}")
+
+# Property 4: K_j(n; n) = (-1)^j C(n, j)
+print("\n4. K_j(n; n) = (-1)^j C(n, j):")
+for n in [5, 7]:
+    ok = all(krawtchouk(n, j, n) == ((-1)**j) * comb(n, j) for j in range(n + 1))
+    print(f"   n={n}: {'✓' if ok else '✗'}")
+
+# Property 5: Orthogonality K · K^T = 2^n · diag(C(n,j))
+print("\n5. Krawtchouk matrix orthogonality:")
+for n in [5, 7, 10]:
+    K = krawtchouk_matrix(n)
+    diag = np.array([2**n * comb(n, j) for j in range(n + 1)])
+    product = K @ K.T
+    expected = np.diag(diag)
+    ok = np.allclose(product, expected, atol=1e-8)
+    print(f"   n={n}: K·K^T = 2^n · diag(C(n,j)) {'✓' if ok else '✗'}")
+
+
+# ─── Part 2: MacWilliams Transform Verification ───
+
+print(f"\n{'=' * 70}")
+print("QUANTUM MACWILLIAMS TRANSFORM — ROUND-TRIP VERIFICATION")
+print("=" * 70)
+
+for n in range(2, 11):
+    K = krawtchouk_matrix(n)
+    binomials = np.array([comb(n, j) for j in range(n + 1)], dtype=float)
+
+    # K^2 = 2^n · diag(C(n,j))
+    K2 = K @ K
+    expected_diag = 2**n * binomials
+    ok = np.allclose(np.diag(K2), expected_diag, atol=1e-8)
+    offdiag_ok = np.allclose(K2 - np.diag(np.diag(K2)), 0, atol=1e-8)
+    print(f"  n={n:2d}: K² = 2^n·diag(C(n,j)) {'✓' if ok and offdiag_ok else '✗'}")
+
+
+# ─── Part 3: Weight Enumerator Examples ───
+
+print(f"\n{'=' * 70}")
+print("QUANTUM WEIGHT ENUMERATOR EXAMPLES")
+print("=" * 70)
+
+# Create consistent weight enumerators by defining A and computing B
+examples = [
+    {"name": "Trivial code [[3,1,1]]", "n": 3, "k": 1, "d": 1,
+     "A": np.array([1, 0, 3, 4], dtype=float)},  # Σ = 8 = 2^3 ✓
+    {"name": "Repetition-like [[4,0,2]]", "n": 4, "k": 0, "d": 2,
+     "A": np.array([1, 0, 6, 0, 9], dtype=float)},  # Σ = 16 = 2^4 ✓
+    {"name": "Example [[6,2,2]]", "n": 6, "k": 2, "d": 2,
+     "A": np.array([1, 0, 10, 20, 15, 12, 6], dtype=float)},  # Σ = 64 = 2^6 ✓
 ]
 
-print(f"{'Code':<25} {'Hamming Sum':>12} {'Syndrome':>10} {'Ratio':>8} {'Perfect?':>10}")
-print("-" * 65)
+for ex in examples:
+    n, k, d = ex["n"], ex["k"], ex["d"]
+    A = ex["A"]
+    B = macwilliams_transform(n, k, A)
 
-for name, n, k, d in codes:
-    t = (d - 1) // 2
-    hs = hamming_sum(n, t)
-    ss = syndrome_size(n, k)
-    ratio = hs / ss
-    perfect = "YES ★" if hs == ss else "no"
-    print(f"{name:<25} {hs:>12,} {ss:>10,} {ratio:>8.4f} {perfect:>10}")
+    print(f"\n{ex['name']}:")
+    print(f"  A = {A}  (sum = {np.sum(A):.0f}, expected 2^{n} = {2**n})")
+    print(f"  B = {np.round(B, 4)}")
+    print(f"  B₀ = {B[0]:.4f} (expected 2^{k} = {2**k})")
+    print(f"  B₀ check: {'✓' if abs(B[0] - 2**k) < 1e-10 else '✗'}")
 
-print()
-print("The five-qubit code is perfect: it exactly saturates the bound.")
-print("Other codes leave syndrome space 'unused' (degenerate decoding possible).")
+    # Singleton bound
+    singleton_ok = 2 * d + k <= n + 2
+    print(f"  Singleton (2d+k ≤ n+2): {2*d+k} ≤ {n+2} {'✓' if singleton_ok else '✗'}")
 
-# =============================================================
-# Demo 2: Perfect Code Classification (d = 3)
-# =============================================================
-print()
-print("=" * 65)
-print("DEMO 2: Perfect Code Classification (d = 3, single-error)")
-print("=" * 65)
-print()
 
-print("Searching for solutions of 1 + 3n = 2^(n-k) with k ≥ 1:")
-print()
-solutions = []
-for m in range(1, 40):
-    val = 2**m
-    if (val - 1) % 3 == 0:
-        n = (val - 1) // 3
-        k = n - m
-        if k >= 1 and k <= n:
-            solutions.append((n, k, m))
-            print(f"  n = {n:>4}, k = {k:>4}, n-k = {m:>3}, "
-                  f"verify: 1 + 3·{n} = {1 + 3*n} = 2^{m} ✓")
+# ─── Part 4: Krawtchouk Matrix Heatmaps ───
 
-print()
-print(f"Found {len(solutions)} solutions.")
-print()
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+for idx, n in enumerate([5, 7, 10]):
+    K = krawtchouk_matrix(n)
+    ax = axes[idx]
+    vmax = np.max(np.abs(K))
+    im = ax.imshow(K, cmap='RdBu_r', aspect='auto', vmin=-vmax, vmax=vmax)
+    ax.set_title(f'Krawtchouk Matrix (n={n})', fontsize=12)
+    ax.set_xlabel('Column i (evaluation point)')
+    ax.set_ylabel('Row j (polynomial index)')
+    plt.colorbar(im, ax=ax, shrink=0.8)
 
-# Check MDS property: 2d + k = n + 2 with d = 3
-print("Checking MDS condition (2·3 + k = n + 2):")
-for n, k, m in solutions:
-    is_mds = (6 + k == n + 2)
-    print(f"  [[{n},{k},3]]: 6 + {k} = {6+k}, n + 2 = {n+2} → "
-          f"{'MDS ★' if is_mds else 'not MDS'}")
+plt.suptitle('Krawtchouk Matrices — Character Tables of Hamming Association Schemes',
+             fontsize=13, y=1.02)
+plt.tight_layout()
+plt.savefig('krawtchouk_matrices.png', dpi=150, bbox_inches='tight')
+print(f"\n✓ Saved krawtchouk_matrices.png")
+plt.close()
 
-print()
-print("RESULT: [[5,1,3]] is the UNIQUE MDS perfect code at distance 3.")
 
-# =============================================================
-# Demo 3: Toric Code Parameters
-# =============================================================
-print()
-print("=" * 65)
-print("DEMO 3: Toric Code Family [[2L², 2, L]]")
-print("=" * 65)
-print()
+# ─── Part 5: Bravyi-Terhal Bound Visualization ───
 
-print(f"{'L':>4} {'n = 2L²':>8} {'k':>4} {'d = L':>6} {'Rate k/n':>10} "
-      f"{'Singleton':>11} {'kd² = n':>8} {'d²/n':>6}")
-print("-" * 65)
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-for L in range(2, 11):
-    n = 2 * L**2
-    k = 2
-    d = L
-    rate = k / n
-    singleton_ok = 2*d + k <= n + 2
-    kd2 = k * d**2
-    d2_over_n = d**2 / n
-    print(f"{L:>4} {n:>8} {k:>4} {d:>6} {rate:>10.4f} "
-          f"{'✓ ' + str(2*d+k) + '≤' + str(n+2):>11} "
-          f"{'✓' if kd2 == n else '✗':>8} {d2_over_n:>6.2f}")
+for idx, D in enumerate([1, 2, 3]):
+    ax = axes[idx]
+    n_max = 200
+    ns = np.arange(1, n_max + 1, dtype=float)
 
-print()
-print("Key observations:")
-print("  • kd² = n exactly (BPT bound saturated)")
-print("  • d² = n/2, so distance scales as √(n/2)")
-print("  • Rate k/n → 0 as L → ∞ (topological overhead)")
-print("  • Singleton bound always satisfied: 2L + 2 ≤ 2L² + 2")
+    for d, color, ls in [(2, 'blue', '-'), (4, 'red', '-'),
+                         (8, 'green', '-'), (16, 'purple', '--')]:
+        # BT bound: k ≤ c · n / d^(2D/(D+1))
+        exponent = 2 * D / (D + 1)
+        k_max = ns / (d ** exponent)
+        k_max = np.clip(k_max, 0, ns)
+        ax.plot(ns, k_max, color=color, linewidth=2, linestyle=ls,
+                label=f'd={d}')
 
-# =============================================================
-# Demo 4: Hamming Bound Tightness Analysis
-# =============================================================
-print()
-print("=" * 65)
-print("DEMO 4: Hamming Bound Tightness — How Close to Perfect?")
-print("=" * 65)
-print()
+    # Mark toric code points (D=2 only)
+    if D == 2:
+        for L in [2, 3, 4, 5, 6, 8, 10]:
+            n_tc = 2 * L**2
+            k_tc = 2
+            if n_tc <= n_max:
+                ax.scatter([n_tc], [k_tc], c='black', s=80, zorder=10,
+                           marker='*')
+                if L <= 5:
+                    ax.annotate(f'Toric L={L}', (n_tc, k_tc),
+                                textcoords="offset points", xytext=(5, 5),
+                                fontsize=7)
 
-print(f"{'Code':>18} {'Sum/2^(n-k)':>14} {'Unused fraction':>18}")
+    ax.set_xlabel('n (physical qubits)', fontsize=11)
+    ax.set_ylabel('k (logical qubits)', fontsize=11)
+    exp_str = f'{2*D}/{D+1}'
+    ax.set_title(f'D={D}: k·d^({exp_str}) ≤ n', fontsize=12)
+    ax.legend(fontsize=9)
+    ax.set_xlim(0, n_max)
+    ax.set_ylim(0, 40)
+
+plt.suptitle('Bravyi-Terhal Bound: Maximum Logical Qubits vs Physical Qubits',
+             fontsize=13)
+plt.tight_layout()
+plt.savefig('bravyi_terhal_bounds.png', dpi=150, bbox_inches='tight')
+print(f"✓ Saved bravyi_terhal_bounds.png")
+plt.close()
+
+
+# ─── Part 6: Tropical Weight Profiles ───
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+A_examples = [
+    ("n=5, sample code", 5, np.array([1, 0, 3, 0, 12, 16], dtype=float)),
+    ("n=7, sample code", 7, np.array([1, 0, 0, 7, 21, 35, 35, 29], dtype=float)),
+    ("n=10, sample code", 10, np.array([1, 0, 0, 10, 45, 120, 210, 252, 210, 120, 56], dtype=float)),
+]
+
+for idx, (name, n, A) in enumerate(A_examples):
+    ax = axes[idx]
+    k = int(round(np.log2(np.sum(A)))) - n + n  # just display
+
+    B = macwilliams_transform(n, 0, A)  # k=0 for simplicity
+
+    js = np.arange(n + 1)
+
+    # Tropical profiles
+    trop_A = np.where(A > 0, -np.log(A), np.nan)
+    trop_B = np.where(np.abs(B) > 1e-10, -np.log(np.abs(B)), np.nan)
+
+    mask_A = ~np.isnan(trop_A)
+    mask_B = ~np.isnan(trop_B)
+
+    ax.scatter(js[mask_A], trop_A[mask_A], c='steelblue', s=60,
+               zorder=5, label='trop(A)', marker='o')
+    ax.scatter(js[mask_B], trop_B[mask_B], c='coral', s=60,
+               zorder=5, label='trop(B)', marker='s')
+
+    if np.any(mask_A):
+        ax.plot(js[mask_A], trop_A[mask_A], 'b-', alpha=0.3)
+    if np.any(mask_B):
+        ax.plot(js[mask_B], trop_B[mask_B], 'r-', alpha=0.3)
+
+    ax.set_title(f'Tropical Profile: {name}', fontsize=11)
+    ax.set_xlabel('Weight j')
+    ax.set_ylabel('-log(|value|)')
+    ax.legend(fontsize=8)
+
+plt.suptitle('Tropical Weight Profiles: Newton Polytope Vertices', fontsize=13)
+plt.tight_layout()
+plt.savefig('tropical_profiles.png', dpi=150, bbox_inches='tight')
+print(f"✓ Saved tropical_profiles.png")
+plt.close()
+
+
+# ─── Part 7: Hamming and Singleton Bound Table ───
+
+print(f"\n{'=' * 70}")
+print("CODE PARAMETER BOUNDS TABLE")
+print("=" * 70)
+print(f"{'n':>4} {'d':>4} {'k_Sing':>8} {'k_Ham':>8} {'t':>4} {'HammSum':>10} {'2^(n-k)':>10}")
 print("-" * 55)
 
-for n in range(5, 26, 2):
-    k = 1
-    d = 3
-    t = 1
-    hs = hamming_sum(n, t)
-    ss = syndrome_size(n, k)
-    ratio = hs / ss
-    unused = 1 - ratio
-    bar = "█" * int(ratio * 30) + "░" * int(unused * 30)
-    print(f"  [[{n},{k},{d}]] {ratio:>12.6f} {unused:>16.4%}  {bar}")
-
-print()
-print("As n grows, the packing becomes exponentially loose.")
-print("This is why degenerate codes can outperform the Hamming bound.")
-
-# =============================================================
-# Demo 5: Singleton Bound Landscape
-# =============================================================
-print()
-print("=" * 65)
-print("DEMO 5: Quantum Singleton Bound — Parameter Space")
-print("=" * 65)
-print()
-
-print("For d = 3: k ≤ n - 4 (equivalently, 2·3 + k ≤ n + 2)")
-print("MDS codes achieve equality: k = n - 4")
-print()
-
-print(f"{'n':>4} {'k_max (Singleton)':>18} {'Hamming feasible?':>18}")
-print("-" * 45)
-
-for n in range(5, 21):
-    k_max = n - 4  # Singleton bound for d = 3
-    t = 1
-    # Check Hamming: 1 + 3n ≤ 2^(n-k_max) = 2^4 = 16
-    hamming_ok = (1 + 3 * n <= 2 ** (n - k_max))
-    # Actual max k from Hamming
-    best_k = -1
-    for k_try in range(k_max, 0, -1):
-        if hamming_sum(n, t) <= syndrome_size(n, k_try):
-            best_k = k_try
-            break
-    print(f"{n:>4} {k_max:>18} {'✓ (k_H = ' + str(best_k) + ')' if best_k > 0 else '✗':>18}")
+for n in range(3, 16):
+    for d in [3, 5, 7]:
+        if 2 * d > n + 2:
+            continue
+        k_sing = n - 2 * d + 2
+        t = (d - 1) // 2
+        hamming_sum = sum(3**j * comb(n, j) for j in range(t + 1))
+        # Find max k s.t. hamming_sum ≤ 2^(n-k)
+        k_ham = n
+        while k_ham > 0 and hamming_sum > 2**(n - k_ham):
+            k_ham -= 1
+        k_best = min(k_sing, k_ham)
+        print(f"{n:4d} {d:4d} {k_sing:8d} {k_ham:8d} {t:4d} {hamming_sum:10d} {2**(n-k_best):10d}")
 
 
-if __name__ == "__main__":
-    print()
-    print("All demonstrations completed successfully.")
+print(f"\n{'=' * 70}")
+print("ALL DEMONSTRATIONS COMPLETE")
+print("=" * 70)
+
+
+"""Generate PACKAGE.json by reading all deliverable files."""
+import json
+import os
+
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+# Read all content
+article = read_file('ARTICLE.md')
+research_paper = read_file('RESEARCH_PAPER.md')
+future_directions = read_file('FUTURE_DIRECTIONS.md')
+demo_code = read_file('demo.py')
+algorithms_code = read_file('algorithms.py')
+applications_code = read_file('applications.py')
+viz_krawtchouk = read_file('visualize_krawtchouk.py')
+interactive_html = read_file('interactive_krawtchouk.html')
+
+lean_krawtchouk = read_file('Physics/QuantumMacWilliams/Krawtchouk.lean')
+lean_weight = read_file('Physics/QuantumMacWilliams/WeightEnumerator.lean')
+lean_proofs = lean_krawtchouk + "\n\n-- ═══════════════════════════════════════\n-- WeightEnumerator.lean\n-- ═══════════════════════════════════════\n\n" + lean_weight
+
+package = {
+    "title": "Quantum MacWilliams Identities and the Bravyi-Terhal Bound",
+    "domain": "Quantum Information Theory / Algebraic Combinatorics",
+    "article": article,
+    "research_paper": research_paper,
+    "future_directions": future_directions,
+    "demos": [
+        {
+            "name": "Quantum MacWilliams Identity Demo",
+            "code": demo_code
+        },
+        {
+            "name": "Applications: Code Optimization and Toric Code Analysis",
+            "code": applications_code
+        }
+    ],
+    "algorithms": [
+        {
+            "name": "Krawtchouk Polynomial Evaluation",
+            "pseudocode": "Input: n, j, x\\nOutput: K_j(x; n)\\n\\nsum ← 0\\nfor l = 0 to j:\\n    sum ← sum + (-1)^l × C(x,l) × C(n-x, j-l)\\nreturn sum\\n\\nTime: O(j), Space: O(1)",
+            "code": algorithms_code
+        }
+    ],
+    "visualizations": [
+        {
+            "name": "Krawtchouk Polynomial Landscape",
+            "code": viz_krawtchouk,
+            "description": "Visualizes Krawtchouk polynomials K_j(x; n) as line plots, eigenvalue bars, heatmap, and 3D surface. Shows the character table structure of the Hamming association scheme."
+        }
+    ],
+    "interactive_demos": [
+        {
+            "name": "Interactive Krawtchouk Explorer",
+            "html": interactive_html,
+            "description": "Interactive exploration of Krawtchouk polynomials K_j(x; n) with sliders for n and j. Displays polynomial values, verified identities (K_0 = 1, K_1 = n-2x, K_j(0) = C(n,j)), and orthogonality checks."
+        }
+    ],
+    "lean_proofs": lean_proofs
+}
+
+with open('PACKAGE.json', 'w') as f:
+    json.dump(package, f, indent=2, ensure_ascii=False)
+
+print("✓ Generated PACKAGE.json")
+print(f"  Size: {os.path.getsize('PACKAGE.json') / 1024:.1f} KB")
+
+
+"""
+Visualization: Krawtchouk Polynomial Landscapes
+
+Visualizes the Krawtchouk polynomials K_j(x; n) as both 2D line plots
+and a 3D surface, revealing their role as eigenfunctions of the Hamming
+distance operator and their oscillatory orthogonality structure.
+"""
+
+import numpy as np
+from math import comb
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+
+def krawtchouk(n, j, x):
+    return sum((-1)**l * comb(x, l) * comb(n - x, j - l) for l in range(j + 1))
+
+
+n = 10
+fig = plt.figure(figsize=(16, 10))
+
+# Top row: line plots for individual polynomials
+ax1 = fig.add_subplot(2, 2, 1)
+xs = np.arange(n + 1)
+for j in range(min(6, n + 1)):
+    vals = [krawtchouk(n, j, x) for x in range(n + 1)]
+    ax1.plot(xs, vals, 'o-', linewidth=2, markersize=5, label=f'K_{j}(x; {n})')
+ax1.axhline(y=0, color='black', linewidth=0.5)
+ax1.set_xlabel('x', fontsize=12)
+ax1.set_ylabel(f'K_j(x; {n})', fontsize=12)
+ax1.set_title(f'Krawtchouk Polynomials (n={n})', fontsize=13)
+ax1.legend(fontsize=9)
+ax1.grid(True, alpha=0.3)
+
+# Top right: eigenvalue plot K_1(j; n) = n - 2j
+ax2 = fig.add_subplot(2, 2, 2)
+js = np.arange(n + 1)
+eigenvalues = [n - 2*j for j in range(n + 1)]
+ax2.bar(js, eigenvalues, color='steelblue', alpha=0.7)
+ax2.axhline(y=0, color='black', linewidth=0.5)
+ax2.set_xlabel('Eigenspace index j', fontsize=12)
+ax2.set_ylabel('Eigenvalue K_1(j; n) = n - 2j', fontsize=12)
+ax2.set_title(f'Hamming Distance Eigenvalues (n={n})', fontsize=13)
+ax2.grid(True, alpha=0.3)
+
+# Bottom left: heatmap
+ax3 = fig.add_subplot(2, 2, 3)
+K = np.array([[krawtchouk(n, j, i) for i in range(n + 1)] for j in range(n + 1)], dtype=float)
+vmax = np.max(np.abs(K))
+im = ax3.imshow(K, cmap='RdBu_r', aspect='auto', vmin=-vmax, vmax=vmax,
+                interpolation='nearest')
+ax3.set_xlabel('x (evaluation point)', fontsize=12)
+ax3.set_ylabel('j (polynomial index)', fontsize=12)
+ax3.set_title(f'Krawtchouk Matrix K_j(x; {n})', fontsize=13)
+plt.colorbar(im, ax=ax3, shrink=0.8)
+
+# Bottom right: 3D surface
+ax4 = fig.add_subplot(2, 2, 4, projection='3d')
+J, X = np.meshgrid(np.arange(n + 1), np.arange(n + 1))
+Z = np.array([[krawtchouk(n, j, x) for j in range(n + 1)] for x in range(n + 1)])
+ax4.plot_surface(X, J, Z, cmap='viridis', alpha=0.8, edgecolor='none')
+ax4.set_xlabel('x')
+ax4.set_ylabel('j')
+ax4.set_zlabel('K_j(x; n)')
+ax4.set_title(f'Krawtchouk Surface (n={n})', fontsize=13)
+
+plt.suptitle('Krawtchouk Polynomials: The Character Table of the Hamming Scheme',
+             fontsize=14, y=1.02)
+plt.tight_layout()
+plt.savefig('krawtchouk_landscape.png', dpi=150, bbox_inches='tight')
+print("✓ Saved krawtchouk_landscape.png")
