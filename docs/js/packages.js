@@ -212,18 +212,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const outputContainer = document.createElement('div');
             outputContainer.className = 'gallery-img-container';
             outputContainer.style.cssText = 'min-height: 100px; display: flex; align-items: center; justify-content: center; background: var(--bg-secondary, #1e1e2e); border-radius: 8px; margin-top: 8px;';
-            outputContainer.innerHTML = '<div class="viz-loading">Loading visualization...</div>';
+            outputContainer.innerHTML = '<div class="viz-placeholder">Click Generate to create visualization</div>';
 
             genBtn.addEventListener('click', () => {
                 if (window.runVisualization) {
                     window.runVisualization(editor.value, outputContainer, genBtn);
                 }
             });
-
-            // Auto-run visualization on page load
-            if (window.runVisualization) {
-                window.runVisualization(item.code || '', outputContainer, genBtn);
-            }
 
             card.appendChild(header);
             card.appendChild(desc);

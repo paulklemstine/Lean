@@ -437,7 +437,7 @@ print("VIZIMG:" + img_data)
         } finally {
             if (buttonEl) {
                 buttonEl.disabled = false;
-                buttonEl.textContent = 'Regenerate';
+                buttonEl.textContent = 'Generate';
             }
         }
     };
