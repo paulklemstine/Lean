@@ -632,6 +632,20 @@ DELIVERABLE 4 — Python Code: Demos, Algorithms
   Include docstrings, type hints, and example usage.
 - **applications.py** — Code showing real-world applications of the results.
   Show the math working.
+- **Visualization scripts** — Produce up to 3 self-contained Python scripts
+  that visually illustrate the core mathematical concepts discovered. Use
+  matplotlib for static plots (heatmaps, curves, surfaces) or plotly for
+  interactive charts. Available libraries: numpy, matplotlib, plotly.
+  If using matplotlib, the script must call plt.savefig() — the system
+  captures the output as a PNG. If using plotly, assign the figure to a
+  variable named `fig` — the system captures fig.to_html(). Each script
+  must include a comment header explaining what it visualizes and why.
+- **Interactive HTML demos** — Produce up to 3 self-contained HTML snippets
+  (with inline CSS/JS, no external dependencies) that demonstrate the
+  mathematical concepts interactively — sliders, animations, dynamic SVG,
+  or canvas drawing. Each demo must be a complete <div> fragment that
+  works when inserted into a page. No <html>, <head>, or <body> tags —
+  just the content div with its inline styles and scripts.
 
 ────────────────────────────────────────────────────────────────────────────
 DELIVERABLE 5 — FUTURE_DIRECTIONS.md  (MANDATORY — drives next cycle)
@@ -663,6 +677,8 @@ Requirements:
     "future_directions": "Markdown content...",
     "demos": [ {{ "name": "...", "code": "# Must be 100% self-contained. Do not import local files like 'algorithms'" }} ],
     "algorithms": [ {{ "name": "...", "pseudocode": "...", "code": "executable Python implementation" }} ],
+    "visualizations": [ {{ "name": "...", "code": "# matplotlib or plotly script, self-contained", "description": "What this visualizes" }} ],
+    "interactive_demos": [ {{ "name": "...", "html": "<div>...</div>", "description": "What this demonstrates" }} ],
     "lean_proofs": "Raw lean code..."
   }}
 • **String Encoding**: Ensure all Markdown and code is properly JSON-escaped (e.g. `\n` for newlines).
@@ -2465,6 +2481,23 @@ Research mode: {concept.research_mode}
                     pkg["source_exp_ids"] = fd_mgr.get_source_exp_ids_for(job.job_id)
             except Exception:
                 pass
+
+        # Write visualization scripts to visualizations/ dir
+        visualizations = pkg.get("visualizations", [])
+        if visualizations:
+            viz_dir = self.catalog_root / "Applications" / "Packages" / "visualizations"
+            viz_dir.mkdir(parents=True, exist_ok=True)
+            pkg_slug = re.sub(r'[^a-z0-9]', '_', pkg.get("title", "pkg").lower())[:40]
+            for viz in visualizations:
+                if viz.get("code"):
+                    safe_name = re.sub(r'[^a-z0-9_]', '_', viz.get("name", "viz").lower())[:30]
+                    viz_path = viz_dir / f"{pkg_slug}_{safe_name}.py"
+                    try:
+                        viz_path.write_text(viz["code"], encoding="utf-8")
+                        viz["code_file"] = f"visualizations/{pkg_slug}_{safe_name}.py"
+                        print(f"[Enrich] Wrote visualization script: {viz_path.name}")
+                    except Exception as e:
+                        print(f"[Enrich] Warning: failed to write viz script {safe_name}: {e}")
 
         return json.dumps(pkg, ensure_ascii=False)
 

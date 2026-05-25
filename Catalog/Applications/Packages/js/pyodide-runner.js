@@ -295,4 +295,123 @@ document.addEventListener('DOMContentLoaded', () => {
             container.innerHTML = '<p style="color:var(--text-muted)">No interactive demos provided.</p>';
         }
     };
+
+    // --- Visualization Execution ---
+    // Runs a Python visualization script (matplotlib or plotly) and renders the output inline.
+    // Auto-detects which library the script uses and captures the output accordingly.
+    window.runVisualization = async function(code, outputContainer, buttonEl) {
+        if (!window.Aether.pyodideInstance) {
+            outputContainer.innerHTML = '<p style="color:var(--text-muted)">Pyodide is still loading. Please wait...</p>';
+            return;
+        }
+
+        const isPlotly = /plotly|go\.Figure|go\.Scatter|go\.Bar|go\.Heatmap|go\.Surface|go\.Contour|px\./.test(code);
+        const isMatplotlib = /matplotlib|plt\./.test(code);
+
+        buttonEl.disabled = true;
+        buttonEl.textContent = 'Generating...';
+        outputContainer.innerHTML = '<div class="viz-loading">Preparing environment...</div>';
+
+        let stdout = "";
+        window.Aether.pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
+        window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
+
+        try {
+            // Load required packages
+            if (isPlotly) {
+                await window.Aether.pyodideInstance.runPythonAsync(`
+                    import micropip
+                    await micropip.install("plotly")
+                    await micropip.install("numpy")
+                `);
+            }
+            if (isMatplotlib || !isPlotly) {
+                await window.Aether.pyodideInstance.runPythonAsync(`
+                    import micropip
+                    await micropip.install("matplotlib")
+                    await micropip.install("numpy")
+                `);
+            }
+
+            outputContainer.innerHTML = '<div class="viz-loading">Running visualization...</div>';
+
+            if (isPlotly) {
+                // Plotly path: capture fig.to_html()
+                const wrappedCode = `
+import plotly.io as pio
+import plotly.graph_objects as go
+
+${code}
+
+# Capture the last plotly figure
+_viz_figs_ = [obj for obj in globals().values() if isinstance(obj, go.Figure)]
+if _viz_figs_:
+    fig = _viz_figs_[-1]
+    _html_out = pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
+    print("VIZHTML:" + _html_out)
+else:
+    print("VIZERROR:No plotly Figure object found. Assign your figure to a variable named 'fig'.")
+`;
+                await window.Aether.pyodideInstance.runPythonAsync(wrappedCode);
+            } else {
+                // Matplotlib path: capture plt.savefig() as base64 PNG
+                const wrappedCode = `
+import matplotlib
+matplotlib.use('AGG')
+import matplotlib.pyplot as plt
+import io
+import base64
+
+${code}
+
+# Capture the current figure
+buf = io.BytesIO()
+plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
+buf.seek(0)
+img_data = base64.b64encode(buf.read()).decode('utf-8')
+plt.close('all')
+print("VIZIMG:" + img_data)
+`;
+                await window.Aether.pyodideInstance.runPythonAsync(wrappedCode);
+            }
+
+            // Parse output for VIZIMG: or VIZHTML: markers
+            if (stdout.includes('VIZIMG:')) {
+                const imgData = stdout.substring(stdout.indexOf('VIZIMG:') + 7).trim();
+                const img = document.createElement('img');
+                img.src = 'data:image/png;base64,' + imgData;
+                img.style.maxWidth = '100%';
+                img.style.borderRadius = '8px';
+                img.style.cursor = 'pointer';
+                img.title = 'Click to view full size';
+                img.addEventListener('click', () => {
+                    if (window.openLightbox) {
+                        window.Aether.currentVizIndex = 0;
+                        window.Aether.currentPackage = window.Aether.currentPackage || {};
+                        window.Aether.currentPackage._vizImages = window.Aether.currentPackage._vizImages || [{src: img.src, name: 'Visualization'}];
+                        window.openLightbox(0);
+                    }
+                });
+                outputContainer.innerHTML = '';
+                outputContainer.appendChild(img);
+            } else if (stdout.includes('VIZHTML:')) {
+                const htmlData = stdout.substring(stdout.indexOf('VIZHTML:') + 8);
+                // Remove any non-HTML lines before the plotly div
+                const plotlyStart = htmlData.indexOf('<div');
+                const cleanHtml = plotlyStart >= 0 ? htmlData.substring(plotlyStart) : htmlData;
+                outputContainer.innerHTML = cleanHtml;
+            } else if (stdout.includes('VIZERROR:')) {
+                const errMsg = stdout.substring(stdout.indexOf('VIZERROR:') + 10).split('\n')[0];
+                outputContainer.innerHTML = `<div class="code-output error">${errMsg}</div>`;
+            } else {
+                // Fallback: show text output
+                outputContainer.innerHTML = `<pre class="code-output">${stdout || 'Done. (No visualization output)'}</pre>`;
+            }
+        } catch (err) {
+            outputContainer.innerHTML = `<pre class="code-output error">${stdout}\n${err.toString()}</pre>`;
+        } finally {
+            buttonEl.disabled = false;
+            buttonEl.textContent = 'Regenerate';
+        }
+    };
 });
