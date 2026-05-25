@@ -1,0 +1,1 @@
+../../Pythagorean/DiagonalObstruction.lean

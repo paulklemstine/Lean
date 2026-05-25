@@ -1,0 +1,1 @@
+../../Pythagorean/BerggrenNWGenerator.lean

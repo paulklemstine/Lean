@@ -539,5 +539,7 @@
   "bcea68ad": "direction_3_sparse_matrix_structure_preservation.json",
   "75d10c50": "birch_and_swinnerton_dyer_conjecture.json",
   "92e3853a": "symmetric_group_generation_probability.json",
-  "561cc547": "tropical_satake_isomorphism_for_gl_n.json"
+  "561cc547": "tropical_satake_isomorphism_for_gl_n.json",
+  "e97c0f01": "direction_5_generalization_to_higher_degree_diagon.json",
+  "d78e63d5": "direction_3_compositional_witness_synthesis_algori.json"
 }

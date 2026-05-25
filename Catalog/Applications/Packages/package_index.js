@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean Number Theory",
     "date": "2026-05-25T13:51:35Z",
     "exp_id": "d78e63d5",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7458845146055211,
+    "quality": "substantial"
   },
   {
     "filename": "direction_5_generalization_to_higher_degree_diagon.json",
@@ -65,8 +65,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7458845146055211,
+      "quality": "substantial"
     }
   ],
   "edges": [],

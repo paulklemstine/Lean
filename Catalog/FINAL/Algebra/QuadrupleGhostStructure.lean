@@ -1,0 +1,1 @@
+../../Algebra/QuadrupleGhostStructure.lean
