@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_3_sparse_matrix_structure_preservation.json",
+    "title": "Row-Sparsity Budgets for Tensor Rewrite Systems",
+    "domain": "Sparse Linear Algebra / Symbolic Computation",
+    "date": "2026-05-25T03:07:10Z",
+    "exp_id": "bcea68ad",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_4_parametric_families_and_algebraic_curv.json",
     "title": "Parametric Families on Cubic Surfaces: Constructible Arithmetic of Three-Cube Representations",
     "domain": "Number Theory / Arithmetic Geometry",
     "date": "2026-05-25T03:06:21Z",
     "exp_id": "40a05224",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6889964000000002,
+    "quality": "partial"
   },
   {
     "filename": "direction_2_tropical_kernel_dimension_formula.json",
@@ -172,6 +181,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Type Theory / Computational Complexity"
   },
+  "direction_3_sparse_matrix_structure_preservation.json": {
+    "title": "Row-Sparsity Budgets for Tensor Rewrite Systems",
+    "exp_id": "bcea68ad",
+    "source_exp_ids": [
+      "c1bdccd8"
+    ],
+    "domain": "Sparse Linear Algebra / Symbolic Computation"
+  },
   "direction_4_parametric_families_and_algebraic_curv.json": {
     "title": "Parametric Families on Cubic Surfaces: Constructible Arithmetic of Three-Cube Representations",
     "exp_id": "40a05224",
@@ -257,7 +274,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -268,7 +285,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.6423696551724138,
       "quality": "partial"
     },
@@ -279,7 +296,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 101,
+      "hue": 272,
       "priority_score": 0.5431629411764707,
       "quality": "partial"
     },
@@ -290,7 +307,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.49450347826086954,
       "quality": "partial"
     },
@@ -312,7 +329,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.5684834461538462,
       "quality": "partial"
     },
@@ -323,7 +340,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T00:26:30Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7077656000000001,
       "quality": "substantial"
     },
@@ -334,7 +351,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 90,
+      "hue": 280,
       "priority_score": 0.7156088,
       "quality": "substantial"
     },
@@ -345,7 +362,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 90,
+      "hue": 134,
       "priority_score": 0.707316371361133,
       "quality": "substantial"
     },
@@ -356,7 +373,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7307101408450705,
       "quality": "substantial"
     },
@@ -367,7 +384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T02:10:29Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7655020869565218,
       "quality": "substantial"
     },
@@ -378,7 +395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T02:11:07Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.657708624390244,
       "quality": "partial"
     },
@@ -389,7 +406,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T03:05:32Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.6969741764705883,
       "quality": "partial"
     },
@@ -400,6 +417,17 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T03:06:21Z",
+      "hue": 90,
+      "priority_score": 0.6889964000000002,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_3_sparse_matrix_structure_preservation",
+      "title": "Row-Sparsity Budgets for Tensor Rewrite Systems",
+      "domain": "Sparse Linear Algebra / Symbolic Computation",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-25T03:07:10Z",
       "hue": 95,
       "priority_score": null,
       "quality": "unrated"
@@ -409,6 +437,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "direction_5_complexity_of_lorentzian_recognition",
       "target": "direction_3_completeness_of_recursive_spectral_cer",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_tensor_sorted_extension_for_scientific",
+      "target": "direction_3_sparse_matrix_structure_preservation",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -446,6 +481,12 @@ window.PACKAGE_GRAPH = {
       "domain_b": "Geometry",
       "package_count": 2,
       "strength": 0.7
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Computation",
+      "package_count": 1,
+      "strength": 0.5
     },
     {
       "domain_a": "Geometry",
@@ -839,25 +880,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "c1bdccd8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:54:40.987422+00:00"
-  },
-  {
-    "id": "fd_0810",
-    "title": "Direction 4: Parametric Families and Algebraic Curves on Cubic Surfaces",
-    "description": "**Conjecture:** The parametric family $k = -3ab(a+b)$ (from `sum_three_cubes_neg_sum`) covers a positive density of admissible integers. More precisely, $|\\{k \\in [1,N] : k = 3ab(a+b) \\text{ for some } a,b \\in \\mathbb{Z}\\}| \\gg N^{2/3}$.\n\n**Test:** Enumerate all values of $-3ab(a+b)$ for $|a|, |b| \\leq 1000$ and measure the density of covered integers in $[1, 10^6]$. Compare with the predicted $N^{2/3}$ growth.\n\n**Impact:** Parametric families correspond to **algebraic curves** on the cubic surface. Understanding which curves pass through integer points, and how densely they cover the integers, connects Diophantine approximation to the geometry of rational curves on cubic surfaces.\n\n**The key insight is** that each parametric identity for sums of three cubes corresponds to a rational curve on $X_k$ parametrized over $\\mathbb{Z}$, and the union of all such curves determines a \"constructively representable\" subset whose density is a geometric invariant.\n\n**Why now?** The formal proof of `sumThreeCubesRep_neg_iff` and the identity $a^3 + b^3 + (-a-b)^3 = -3ab(a+b)$ provide the first verified parametric family, which can be used as a template for formalizing others.\n\n**Catalog References:** `sumThreeCubesRep_neg_iff` (Algebra/SumThreeCubes/Symmetry.lean), `sum_three_cubes_neg_sum` (Catalog/Algebra/LocalGlobal.lean)\n\n**Proof Strategy:** Enumerate known parametric families, compute their images, and prove density bounds using sieve methods.\n\n**Domain Bridges:** Algebraic geometry (rational curves on surfaces), sieve theory, additive combinatorics\n\n**Lineage:** Extends sign symmetry to full parametric family analysis\n\n**Ambition:** Solid extension \u2014 combines known identities with density estimation\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "40a05224",
-    "timestamp": "2026-05-25T00:26:38.290698+00:00"
   },
   {
     "id": "fd_0819",
@@ -1477,6 +1499,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:05:45.192441+00:00"
+  },
+  {
+    "id": "fd_0847",
+    "title": "Arithmetic Phase Transition in Mod-p Topological Signatures of Chaotic Algebraic",
+    "description": "Conjecture: There exists a smooth projective variety X defined over Q and an algebraic self-map f: X -> X such that, for a density-positive set of primes p, the Vietoris-Rips persistence landscapes built from the finite orbit cloud of f on X(F_p) split into exactly two asymptotic universality classes distinguished by the Frobenius conjugacy class of p in a fixed finite Galois extension L/Q. More precisely, after rescaling by |X(F_p)|, the persistence landscape of the orbit cloud converges along primes in class C1 to a limit Lambda_1 and along primes in class C2 to a different limit Lambda_2 with Lambda_1 != Lambda_2. Test: Choose explicit candidates (e.g. endomorphisms on abelian surfaces, K3 reductions, or polynomial automorphisms compactified over Q), compute orbit clouds over many primes, build persistence landscapes, and statistically test whether primes partitioned by Frobenius class exhibit two stable non-equal limiting distributions; the conjecture is refuted if no such separation persists under growing p and orbit length, or if the observed classes do not align with any finite Galois splitting law. Impact: This would reveal a new bridge between arithmetic dynamics, Galois theory, and topological data analysis, showing that hidden number-theoretic symmetries can control emergent topological phases of finite-field dynamical systems.",
+    "domains": [
+      "Arithmetic Dynamics",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:06:34.986047+00:00"
   },
   {
     "id": "fd_0830",

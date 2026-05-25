@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_5_complexity_of_lorentzian_recognition",
@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_3_extension_to_product_and_sum_types",
@@ -25,7 +25,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 101
+      "hue": 272
     },
     {
       "id": "direction_2_fractional_predictor_refinement",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_1_coalgebraic_temporal_adjunction_for_in",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "sums_of_three_cubes",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T00:26:30Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_2_tensor_sorted_extension_for_scientific",
@@ -70,7 +70,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "direction_1_global_tightness_conjecture",
@@ -79,7 +79,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 90
+      "hue": 134
     },
     {
       "id": "direction_1_concrete_first_order_term_algebra_with",
@@ -88,7 +88,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_3_completeness_of_recursive_spectral_cer",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T02:10:29Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_4_efficient_sampling_from_lorentzian_cer",
@@ -106,7 +106,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T02:11:07Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "direction_2_tropical_kernel_dimension_formula",
@@ -115,7 +115,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T03:05:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_4_parametric_families_and_algebraic_curv",
@@ -124,6 +124,15 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T03:06:21Z",
+      "hue": 90
+    },
+    {
+      "id": "direction_3_sparse_matrix_structure_preservation",
+      "title": "Row-Sparsity Budgets for Tensor Rewrite Systems",
+      "domain": "Sparse Linear Algebra / Symbolic Computation",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-25T03:07:10Z",
       "hue": 95
     }
   ],
@@ -131,6 +140,13 @@
     {
       "source": "direction_5_complexity_of_lorentzian_recognition",
       "target": "direction_3_completeness_of_recursive_spectral_cer",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_tensor_sorted_extension_for_scientific",
+      "target": "direction_3_sparse_matrix_structure_preservation",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -168,6 +184,12 @@
       "domain_b": "Geometry",
       "package_count": 2,
       "strength": 0.7
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Computation",
+      "package_count": 1,
+      "strength": 0.5
     },
     {
       "domain_a": "Geometry",
