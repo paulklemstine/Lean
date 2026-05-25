@@ -1,577 +1,607 @@
 #!/usr/bin/env python3
 """
-applications.py — Real-World Applications of Three-Cubes Theory
+applications.py — Real-world applications and extended experiments
+for the sums-of-three-cubes local-global framework.
 
-Demonstrates practical applications of the local-global framework:
-1. Certified filtering for computational searches
-2. Modular obstruction analysis across prime powers
-3. Statistical analysis of representable integers
-4. Performance comparison: naive vs. certified search
+Demonstrates:
+  1. Systematic exploration of local obstruction patterns
+  2. The gap between local and global solvability
+  3. Connections to algebraic number theory (Eisenstein norm forms)
+  4. Computational verification of the local sufficiency conjecture
 """
 
-from typing import List, Tuple, Optional, Dict
-import time
 import math
+from collections import defaultdict
+from typing import Optional
 
 
-# ============================================================================
-# Application 1: Certified Search Pipeline
-# ============================================================================
+# ──────────────────────────────────────────────────────────────────────
+# Application 1: Local obstruction analysis
+# ──────────────────────────────────────────────────────────────────────
 
-def certified_search_pipeline(
-    targets: List[int],
-    bound: int = 5000,
-    verbose: bool = True
-) -> Dict[int, Optional[Tuple[int, int, int]]]:
-    """Production-grade search pipeline with certified pre-filtering.
+def cube_residues(n: int) -> set[int]:
+    """Cube residues modulo n."""
+    return {pow(x, 3, n) for x in range(n)}
 
-    Steps:
-    1. Mod 9 filter eliminates provably impossible targets
-    2. Extended local checks at prime powers detect additional structure
-    3. Symmetry-reduced search for remaining candidates
 
-    This pipeline is certified correct: any target it declares impossible
-    IS impossible (by forbiddenModNine_not_representable).
+def three_cube_sums(n: int) -> set[int]:
+    """All residues mod n that are sums of three cubes."""
+    cubes = cube_residues(n)
+    result = set()
+    for a in cubes:
+        for b in cubes:
+            for c in cubes:
+                result.add((a + b + c) % n)
+    return result
 
-    Examples:
-        >>> results = certified_search_pipeline([0, 1, 4, 5], bound=100, verbose=False)
-        >>> results[4] is None  # Forbidden mod 9
-        True
-        >>> results[0] is not None
-        True
+
+def analyze_prime_obstructions(bound: int = 100) -> None:
     """
-    results = {}
+    Analyze which primes produce local obstructions.
 
-    if verbose:
-        print(f"\n  Processing {len(targets)} targets with bound {bound}")
-        print(f"  {'k':>6} | {'mod9':>4} | {'local':>5} | {'result'}")
-        print(f"  {'-'*6}-+-{'-'*4}-+-{'-'*5}-+-{'-'*30}")
+    Key finding: only p = 9 (= 3²) gives obstructions among small moduli.
+    This is connected to the fact that 3 is special for cubes (Fermat quotient).
+    """
+    print("=" * 60)
+    print("  Local Obstruction Analysis by Prime Powers")
+    print("=" * 60)
 
-    forbidden_count = 0
-    found_count = 0
-    not_found_count = 0
+    primes = [p for p in range(2, bound) if all(p % i != 0 for i in range(2, int(p**0.5)+1))]
 
-    for k in targets:
-        # Step 1: Mod 9 filter
-        if k % 9 in (4, 5):
-            results[k] = None
-            forbidden_count += 1
-            if verbose:
-                print(f"  {k:>6} | FORB |  ---  | Certified impossible (mod 9)")
-            continue
-
-        # Step 2: Extended local check
-        local_ok = True
-        for p in [2, 3, 5, 7]:
-            for e in range(1, 4):
-                n = p ** e
-                cubes = {pow(x, 3, n) for x in range(n)}
-                target = k % n
-                pair_sums = {(a + b) % n for a in cubes for b in cubes}
-                if not any((target - c) % n in pair_sums for c in cubes):
-                    local_ok = False
-                    break
-            if not local_ok:
+    for p in primes[:20]:
+        for e in range(1, 5):
+            n = p ** e
+            if n > bound:
                 break
+            admissible = three_cube_sums(n)
+            blocked = n - len(admissible)
+            if blocked > 0:
+                print(f"  p^e = {p}^{e} = {n:>5}: "
+                      f"{len(admissible)}/{n} admissible, "
+                      f"{blocked} blocked = {sorted(set(range(n)) - admissible)}")
 
-        # Step 3: Search
-        result = None
-        for z in range(-bound, bound + 1):
-            z3 = z ** 3
-            for y in range(-bound, z + 1):
-                remainder = k - y**3 - z3
-                if remainder == 0:
-                    x_try = 0
-                elif remainder > 0:
-                    x_try = round(remainder ** (1/3))
-                else:
-                    x_try = -round((-remainder) ** (1/3))
-                for dx in range(-2, 3):
-                    x = x_try + dx
-                    if x**3 == remainder and x <= y:
-                        result = (x, y, z)
-                        break
-                if result:
-                    break
-            if result:
-                break
+    print()
+    print("  Observation: Only powers of 3 produce local obstructions")
+    print("  for sums of three cubes. This is because cube roots of unity")
+    print("  in Z/pZ for p ≠ 3 provide enough flexibility.")
+    print()
 
-        results[k] = result
-        if result:
-            found_count += 1
-            x, y, z = result
-            if verbose:
-                print(f"  {k:>6} |  OK  |  {'✓' if local_ok else '✗'}    | "
-                      f"({x})³+({y})³+({z})³ = {k}")
+
+def analyze_mod_powers_of_3(max_exp: int = 5) -> None:
+    """
+    Detailed analysis of obstructions at powers of 3.
+
+    The mod-9 obstruction is the simplest case. What happens at 27, 81, ...?
+    """
+    print("=" * 60)
+    print("  Obstructions at Powers of 3")
+    print("=" * 60)
+
+    for e in range(1, max_exp + 1):
+        n = 3 ** e
+        admissible = three_cube_sums(n)
+        blocked = set(range(n)) - admissible
+        ratio = len(blocked) / n
+        print(f"\n  mod 3^{e} = {n}:")
+        print(f"    Admissible: {len(admissible)}/{n} ({len(admissible)/n:.1%})")
+        print(f"    Blocked:    {len(blocked)}/{n} ({ratio:.1%})")
+        if len(blocked) <= 20:
+            print(f"    Blocked residues: {sorted(blocked)}")
         else:
-            not_found_count += 1
-            if verbose:
-                print(f"  {k:>6} |  OK  |  {'✓' if local_ok else '✗'}    | "
-                      f"Not found within bound")
+            print(f"    Sample blocked: {sorted(blocked)[:10]}...")
 
-    if verbose:
-        print(f"\n  Summary: {forbidden_count} forbidden, {found_count} found, "
-              f"{not_found_count} not found within bound")
-
-    return results
+    print()
 
 
-# ============================================================================
-# Application 2: Modular Obstruction Landscape
-# ============================================================================
+# ──────────────────────────────────────────────────────────────────────
+# Application 2: Eisenstein norm form connection
+# ──────────────────────────────────────────────────────────────────────
 
-def modular_obstruction_landscape(max_modulus: int = 50):
-    """Analyze the obstruction landscape across moduli.
-
-    For each modulus n, compute:
-    - Number of achievable residues (cube-sum residues)
-    - Number of forbidden residues
-    - "Obstruction strength" = fraction of residues forbidden
-
-    This reveals that most moduli give NO obstruction — only those
-    related to 9 (= 3²) create forbidden classes.
-
-    Examples:
-        >>> modular_obstruction_landscape(20)  # doctest: +SKIP
+def eisenstein_norm(a: int, b: int) -> int:
     """
-    print("\n  Modular Obstruction Landscape")
-    print(f"  {'n':>4} | {'achievable':>10} | {'forbidden':>9} | {'strength':>8} | notes")
-    print(f"  {'-'*4}-+-{'-'*10}-+-{'-'*9}-+-{'-'*8}-+-{'-'*20}")
+    Norm in the Eisenstein integers Z[ω], where ω = e^(2πi/3).
 
-    for n in range(2, max_modulus + 1):
-        cubes = {pow(x, 3, n) for x in range(n)}
-        achievable = set()
-        for a in cubes:
-            for b in cubes:
-                for c in cubes:
-                    achievable.add((a + b + c) % n)
-        forbidden = n - len(achievable)
-        strength = forbidden / n
+    N(a + bω) = a² - ab + b² = a² + b² - ab
 
-        notes = ""
-        if n == 9:
-            notes = "← mod 9 obstruction"
-        elif n % 9 == 0 and forbidden > 0:
-            notes = "← inherited from mod 9"
-        elif forbidden > 0:
-            notes = "← obstruction!"
-
-        if forbidden > 0 or n <= 12 or n in [16, 25, 27, 32, 49]:
-            print(f"  {n:>4} | {len(achievable):>10} | {forbidden:>9} | "
-                  f"{strength:>8.4f} | {notes}")
-
-
-# ============================================================================
-# Application 3: Representation Statistics
-# ============================================================================
-
-def representation_statistics(N: int = 200, bound: int = 2000):
-    """Compute statistics on representability for k in [0, N).
-
-    Analyzes:
-    - Fraction admissible (should approach 7/9)
-    - Fraction with known small representations
-    - Distribution of solution heights
-
-    Examples:
-        >>> representation_statistics(50, 500)  # doctest: +SKIP
+    This is the binary quadratic form appearing in the factorization
+    x³ + y³ = (x+y)(x² - xy + y²).
     """
-    print(f"\n  Representation Statistics for k ∈ [0, {N})")
-    print(f"  Search bound: {bound}")
+    return a * a - a * b + b * b
 
-    admissible_count = 0
-    found_count = 0
-    heights = []
 
-    for k in range(N):
-        if k % 9 in (4, 5):
+def representable_by_norm(m: int, bound: int = 100) -> Optional[tuple[int, int]]:
+    """
+    Check if m = a² - ab + b² for some integers a, b.
+
+    These are exactly the norms of elements in Z[ω].
+    By the theory of binary quadratic forms, m is representable iff
+    all prime factors p ≡ 2 (mod 3) appear to even power in m.
+    """
+    if m < 0:
+        return None
+    if m == 0:
+        return (0, 0)
+    for a in range(-bound, bound + 1):
+        for b in range(-bound, bound + 1):
+            if eisenstein_norm(a, b) == m:
+                return (a, b)
+    return None
+
+
+def factorization_analysis(k: int, z_bound: int = 50) -> None:
+    """
+    For a given k, analyze the factorization landscape k - z³ = s · q.
+
+    Shows how the Eisenstein norm form constrains solutions.
+    """
+    print(f"\n  Factorization landscape for k = {k}:")
+    print(f"  {'z':>5} {'m=k-z³':>12} {'# divisors':>12} {'norm rep?':>10}")
+    print(f"  {'-'*42}")
+
+    for z in range(-min(z_bound, 10), min(z_bound, 10) + 1):
+        m = k - z ** 3
+        if m == 0:
+            print(f"  {z:>5} {m:>12} {'—':>12} {'trivial':>10}")
             continue
-        admissible_count += 1
+        divs = []
+        absm = abs(m)
+        for i in range(1, int(math.isqrt(absm)) + 1):
+            if absm % i == 0:
+                divs.extend([i, -i, absm // i, -(absm // i)])
+        divs = sorted(set(divs))
 
-        # Quick search
+        # Check if any factorization s*q = m has q representable by Eisenstein norm
         found = False
-        for z in range(-bound, bound + 1):
-            z3 = z ** 3
-            for y in range(-bound, z + 1):
-                remainder = k - y**3 - z3
-                if remainder == 0:
-                    x_try = 0
-                elif remainder > 0:
-                    x_try = round(remainder ** (1/3))
-                else:
-                    x_try = -round((-remainder) ** (1/3))
-                for dx in range(-2, 3):
-                    x = x_try + dx
-                    if x**3 == remainder and x <= y:
-                        h = max(abs(x), abs(y), abs(z))
-                        heights.append((k, h))
-                        found = True
-                        break
-                if found:
-                    break
-            if found:
+        for s in divs:
+            if s == 0:
+                continue
+            q = m // s
+            if q >= 0 and representable_by_norm(q, 50) is not None:
+                found = True
                 break
-        if found:
-            found_count += 1
 
-    print(f"\n  Results:")
-    print(f"    Total integers: {N}")
-    print(f"    Admissible:     {admissible_count} ({admissible_count/N:.4f})")
-    print(f"    Found:          {found_count} ({found_count/admissible_count:.4f} of admissible)")
-    print(f"    Theoretical admissible density: {7/9:.4f}")
-
-    if heights:
-        hs = [h for _, h in heights]
-        print(f"\n  Height distribution (among found):")
-        print(f"    Min height:    {min(hs)}")
-        print(f"    Max height:    {max(hs)}")
-        print(f"    Mean height:   {sum(hs)/len(hs):.1f}")
-        print(f"    Median height: {sorted(hs)[len(hs)//2]}")
-
-        # Height buckets
-        buckets = {1: 0, 10: 0, 100: 0, 1000: 0}
-        for h in hs:
-            for b in sorted(buckets.keys()):
-                if h <= b:
-                    buckets[b] += 1
-                    break
-            else:
-                buckets[1000] += 1
-        print(f"\n  Height buckets:")
-        for b, c in sorted(buckets.items()):
-            print(f"    ≤ {b:>5}: {c:>4} ({c/len(hs)*100:.1f}%)")
+        norm_str = "✓" if found else "✗"
+        print(f"  {z:>5} {m:>12} {len(divs):>12} {norm_str:>10}")
 
 
-# ============================================================================
-# Application 4: Performance Benchmarking
-# ============================================================================
+# ──────────────────────────────────────────────────────────────────────
+# Application 3: Local sufficiency conjecture verification
+# ──────────────────────────────────────────────────────────────────────
 
-def benchmark_search_methods(test_cases: List[int], bound: int = 200):
-    """Compare naive vs. certified symmetry-reduced search.
-
-    Measures:
-    - Wall-clock time
-    - Number of triples examined
-    - Speedup factor
-
-    Examples:
-        >>> benchmark_search_methods([1, 2, 3, 6, 7, 8], 100)  # doctest: +SKIP
+def verify_local_sufficiency_conjecture(N: int = 200, mod_bound: int = 50) -> None:
     """
-    print(f"\n  Performance Benchmark (bound={bound})")
-    print(f"  {'k':>4} | {'naive_time':>10} | {'smart_time':>10} | {'speedup':>7}")
-    print(f"  {'-'*4}-+-{'-'*10}-+-{'-'*10}-+-{'-'*7}")
+    Test the conjecture: if k ≢ 4,5 (mod 9), then k is locally
+    admissible at every modulus n.
 
-    total_naive = 0
-    total_smart = 0
+    This is the computational shadow of the conjecture that the only
+    congruence obstruction is the mod-9 one.
+    """
+    print("=" * 60)
+    print("  Testing Local Sufficiency Conjecture")
+    print("=" * 60)
+    print(f"  Range: k ∈ [0, {N}], moduli n ∈ [2, {mod_bound}]")
+    print()
 
-    for k in test_cases:
+    # Precompute admissible sets
+    admissible_sets: dict[int, set[int]] = {}
+    for n in range(2, mod_bound + 1):
+        admissible_sets[n] = three_cube_sums(n)
+
+    counterexamples = []
+    tested = 0
+
+    for k in range(N + 1):
         if k % 9 in (4, 5):
-            print(f"  {k:>4} | {'---':>10} | {'---':>10} | FORBIDDEN")
             continue
-
-        # Naive search
-        t0 = time.perf_counter()
-        result_naive = None
-        for x in range(-bound, bound + 1):
-            for y in range(-bound, bound + 1):
-                for z in range(-bound, bound + 1):
-                    if x**3 + y**3 + z**3 == k:
-                        result_naive = (x, y, z)
-                        break
-                if result_naive:
-                    break
-            if result_naive:
+        tested += 1
+        for n in range(2, mod_bound + 1):
+            if k % n not in admissible_sets[n]:
+                counterexamples.append((k, n))
                 break
-        t_naive = time.perf_counter() - t0
 
-        # Smart search
-        t0 = time.perf_counter()
-        result_smart = None
-        for z in range(-bound, bound + 1):
-            z3 = z ** 3
-            for y in range(-bound, z + 1):
-                remainder = k - y**3 - z3
-                if remainder == 0:
-                    x_try = 0
-                elif remainder > 0:
-                    x_try = round(remainder ** (1/3))
-                else:
-                    x_try = -round((-remainder) ** (1/3))
-                for dx in range(-2, 3):
-                    x = x_try + dx
-                    if x**3 == remainder and x <= y:
-                        result_smart = (x, y, z)
-                        break
-                if result_smart:
-                    break
-            if result_smart:
-                break
-        t_smart = time.perf_counter() - t0
+    if counterexamples:
+        print(f"  ✗ CONJECTURE FAILS!")
+        for k, n in counterexamples[:10]:
+            print(f"    k = {k}: fails at modulus n = {n}")
+    else:
+        print(f"  ✓ Conjecture holds for all {tested} tested values")
+        print(f"    No k ∈ [0, {N}] with k ≢ 4,5 (mod 9) fails")
+        print(f"    local admissibility at any modulus n ≤ {mod_bound}")
 
-        total_naive += t_naive
-        total_smart += t_smart
-        speedup = t_naive / t_smart if t_smart > 0 else float('inf')
-        print(f"  {k:>4} | {t_naive:>9.4f}s | {t_smart:>9.4f}s | {speedup:>6.1f}×")
-
-    if total_smart > 0:
-        print(f"\n  Total speedup: {total_naive/total_smart:.1f}×")
+    print()
 
 
-# ============================================================================
+# ──────────────────────────────────────────────────────────────────────
+# Application 4: Symmetry group action on solutions
+# ──────────────────────────────────────────────────────────────────────
+
+def enumerate_symmetry_orbit(x: int, y: int, z: int) -> set[tuple[int, int, int]]:
+    """
+    Compute the orbit of (x, y, z) under the symmetry group of x³+y³+z³.
+
+    The full symmetry group is S₃ × (Z/2Z)³ (permutations and individual sign flips).
+    But only S₃ preserves the sum; sign flips change k to -k.
+    For the same k, the symmetry group is S₃ (order 6).
+    """
+    from itertools import permutations
+    orbit = set()
+    for perm in permutations([x, y, z]):
+        orbit.add(perm)
+    return orbit
+
+
+def solution_orbit_analysis(k: int, bound: int = 100) -> None:
+    """Analyze solution orbits for a given k."""
+    print(f"\n  Solution orbits for k = {k}:")
+
+    solutions = set()
+    for x in range(-bound, bound + 1):
+        for y in range(-bound, bound + 1):
+            z3 = k - x**3 - y**3
+            z = round(abs(z3) ** (1/3)) * (1 if z3 >= 0 else -1)
+            for zz in [z-1, z, z+1]:
+                if x**3 + y**3 + zz**3 == k:
+                    # Canonical form: sorted triple
+                    triple = tuple(sorted([x, y, zz]))
+                    solutions.add(triple)
+
+    if not solutions:
+        print(f"    No solutions found in [-{bound}, {bound}]")
+        return
+
+    print(f"    Found {len(solutions)} distinct orbits (canonical form: sorted):")
+    for sol in sorted(solutions)[:20]:
+        x, y, z = sol
+        orbit_size = len(enumerate_symmetry_orbit(x, y, z))
+        print(f"    ({x}, {y}, {z}) — orbit size {orbit_size}")
+
+
+# ──────────────────────────────────────────────────────────────────────
 # Main
-# ============================================================================
+# ──────────────────────────────────────────────────────────────────────
+
+def main():
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║   Applications: Local-Global Geometry of Three Cubes   ║")
+    print("╚══════════════════════════════════════════════════════════╝\n")
+
+    # Application 1: Local obstructions
+    analyze_prime_obstructions(50)
+    analyze_mod_powers_of_3(4)
+
+    # Application 2: Eisenstein norm analysis
+    print("=" * 60)
+    print("  Eisenstein Norm Form Analysis")
+    print("=" * 60)
+    print("  x³ + y³ = (x+y)(x² - xy + y²)")
+    print("  where x² - xy + y² is the Eisenstein norm form N(x + yω)")
+    factorization_analysis(29)
+    factorization_analysis(33)
+
+    # Application 3: Conjecture test
+    verify_local_sufficiency_conjecture(500, 50)
+
+    # Application 4: Solution orbits
+    print("=" * 60)
+    print("  Solution Orbit Analysis")
+    print("=" * 60)
+    for k in [0, 1, 2, 3, 6, 8, 9, 10]:
+        solution_orbit_analysis(k, 30)
+
+    print()
+
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║   Applications of Three-Cubes Local-Global Theory      ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    # Application 1: Certified search pipeline
-    print("\n" + "="*60)
-    print("  Application 1: Certified Search Pipeline")
-    print("="*60)
-    targets = list(range(50))
-    certified_search_pipeline(targets, bound=2000)
-
-    # Application 2: Obstruction landscape
-    print("\n" + "="*60)
-    print("  Application 2: Modular Obstruction Landscape")
-    print("="*60)
-    modular_obstruction_landscape(50)
-
-    # Application 3: Statistics
-    print("\n" + "="*60)
-    print("  Application 3: Representation Statistics")
-    print("="*60)
-    representation_statistics(100, 3000)
-
-    # Application 4: Performance benchmark
-    print("\n" + "="*60)
-    print("  Application 4: Search Performance Benchmark")
-    print("="*60)
-    benchmark_search_methods([1, 2, 3, 6, 7, 8, 10, 15, 17], bound=100)
+    main()
 
 
 #!/usr/bin/env python3
 """
-demo.py — Sums of Three Cubes: Local-Global Geometry
+demo.py — Interactive exploration of the sums-of-three-cubes problem.
 
-Demonstrates the certified mathematical framework for the Diophantine equation
-x³ + y³ + z³ = k. Each computational step corresponds to a formally verified
-theorem.
-
-Usage:
-    python demo.py          # Run all demos
-    python demo.py 42       # Analyze a specific integer
+Demonstrates:
+  1. The mod-9 obstruction (local non-admissibility)
+  2. Factorization-based solution search
+  3. Local admissibility coverage across moduli
+  4. Statistics on the search process
 """
 
+import math
 import sys
+from collections import Counter
 from typing import Optional
 
 
-def is_forbidden_mod9(k: int) -> bool:
-    """Check if k is forbidden modulo 9 (residue 4 or 5).
+# ──────────────────────────────────────────────────────────────────────
+# Core definitions
+# ──────────────────────────────────────────────────────────────────────
 
-    Corresponds to: ForbiddenModNine k ↔ k % 9 = 4 ∨ k % 9 = 5
-    Certified by: forbiddenModNine_not_representable
-    """
-    return k % 9 in (4, 5)
-
-
-def is_admissible(k: int) -> bool:
-    """Check if k passes the mod 9 admissibility test.
-
-    Corresponds to: AdmissibleThreeCube k ↔ ¬ ForbiddenModNine k
-    """
-    return not is_forbidden_mod9(k)
-
-
-def cube_residues_mod(n: int) -> set:
-    """Compute the set of cube residues modulo n."""
+def cube_residues_mod(n: int) -> set[int]:
+    """Return the set of cube residues modulo n."""
     return {pow(x, 3, n) for x in range(n)}
 
 
-def is_locally_soluble(k: int, n: int) -> bool:
-    """Check if x³ + y³ + z³ ≡ k (mod n) has a solution.
-
-    Corresponds to: LocallyAtMod k n
-    """
+def three_cube_local_admissible(n: int, a: int) -> bool:
+    """Check if residue a is locally admissible mod n (sum of three cubes)."""
+    a_mod = a % n
     cubes = cube_residues_mod(n)
-    target = k % n
-    pair_sums = {(a + b) % n for a in cubes for b in cubes}
-    return any((target - c) % n in pair_sums for c in cubes)
+    for c1 in cubes:
+        for c2 in cubes:
+            rem = (a_mod - c1 - c2) % n
+            if rem in cubes:
+                return True
+    return False
 
 
-def search_representation(k: int, bound: int = 1000) -> Optional[tuple]:
-    """Search for x, y, z with x³ + y³ + z³ = k and max(|x|,|y|,|z|) ≤ bound.
+def mod9_obstructed(k: int) -> bool:
+    """Check if k is obstructed by the mod 9 condition."""
+    return k % 9 in (4, 5)
 
-    Uses symmetry reduction (y ≤ z) and the mod 9 filter.
 
-    Corresponds to: IsThreeCubeRepresentable k
-    Certified filter: forbiddenModNine_not_representable
+def everywhere_locally_admissible(k: int, max_modulus: int = 100) -> tuple[bool, Optional[int]]:
     """
-    if is_forbidden_mod9(k):
-        return None  # Certified impossible
+    Check local admissibility for all moduli up to max_modulus.
+    Returns (is_admissible, first_failing_modulus_or_None).
+    """
+    for n in range(2, max_modulus + 1):
+        if not three_cube_local_admissible(n, k):
+            return False, n
+    return True, None
 
-    for z in range(-bound, bound + 1):
-        for y in range(-bound, z + 1):
-            remainder = k - y**3 - z**3
-            # Compute approximate cube root
-            if remainder >= 0:
-                x_approx = round(remainder ** (1/3))
-            else:
-                x_approx = -round((-remainder) ** (1/3))
-            # Check nearby values (floating point may be slightly off)
-            for x in range(x_approx - 2, x_approx + 3):
-                if x**3 + y**3 + z**3 == k and x <= y:
-                    return (x, y, z)
+
+# ──────────────────────────────────────────────────────────────────────
+# Factorization-based search (Algorithm from the research)
+# ──────────────────────────────────────────────────────────────────────
+
+def find_xy_from_sq(s: int, q: int) -> Optional[tuple[int, int]]:
+    """
+    Given s = x+y and q = x²-xy+y², find integer x, y if they exist.
+
+    From the discriminant relation: 4q - s² = 3(x-y)².
+    So d² = (4q - s²) / 3 where d = x - y.
+    Then x = (s + d) / 2, y = (s - d) / 2.
+    """
+    disc = 4 * q - s * s
+    if disc < 0:
+        return None
+    if disc % 3 != 0:
+        return None
+    dsq = disc // 3
+    d = int(math.isqrt(dsq))
+    if d * d != dsq:
+        return None
+    # x = (s + d) / 2, y = (s - d) / 2
+    if (s + d) % 2 != 0:
+        return None
+    x = (s + d) // 2
+    y = (s - d) // 2
+    # Verify
+    if x ** 3 + y ** 3 == s * q:
+        return x, y
+    # Try negative d
+    d = -d
+    if (s + d) % 2 != 0:
+        return None
+    x = (s + d) // 2
+    y = (s - d) // 2
+    if x ** 3 + y ** 3 == s * q:
+        return x, y
     return None
 
 
-def analyze_integer(k: int, search_bound: int = 1000):
-    """Complete analysis of an integer k for the three-cubes problem."""
+def divisors(n: int) -> list[int]:
+    """Return all divisors of n (positive and negative)."""
+    if n == 0:
+        return []
+    absn = abs(n)
+    divs = []
+    for i in range(1, int(math.isqrt(absn)) + 1):
+        if absn % i == 0:
+            divs.extend([i, -i, absn // i, -(absn // i)])
+    return list(set(divs))
+
+
+def search_factorization(k: int, bound: int = 1000) -> Optional[tuple[int, int, int]]:
+    """
+    Search for x, y, z with x³ + y³ + z³ = k using factorization.
+
+    For each z in [-bound, bound], compute m = k - z³, then
+    search for factorizations m = s * q with s = x+y, q = x²-xy+y².
+    """
+    if mod9_obstructed(k):
+        return None  # provably impossible
+
+    stats = {"z_tested": 0, "factor_pairs": 0}
+
+    for z in range(0, bound + 1):
+        for sign in [1, -1]:
+            zz = z * sign
+            if z == 0 and sign == -1:
+                continue
+            m = k - zz ** 3
+            stats["z_tested"] += 1
+
+            if m == 0:
+                # x³ + y³ = 0, so y = -x
+                return (0, 0, zz)
+
+            for s in divisors(m):
+                if s == 0:
+                    continue
+                q = m // s
+                stats["factor_pairs"] += 1
+                result = find_xy_from_sq(s, q)
+                if result is not None:
+                    x, y = result
+                    assert x ** 3 + y ** 3 + zz ** 3 == k, "Verification failed!"
+                    return (x, y, zz)
+
+    return None
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Residue coverage analysis
+# ──────────────────────────────────────────────────────────────────────
+
+def residue_coverage(n: int) -> dict:
+    """Analyze which residues mod n are locally admissible."""
+    admissible = set()
+    non_admissible = set()
+    for a in range(n):
+        if three_cube_local_admissible(n, a):
+            admissible.add(a)
+        else:
+            non_admissible.add(a)
+    return {
+        "modulus": n,
+        "admissible": sorted(admissible),
+        "non_admissible": sorted(non_admissible),
+        "coverage": len(admissible) / n,
+    }
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Display
+# ──────────────────────────────────────────────────────────────────────
+
+def display_analysis(k: int, search_bound: int = 1000):
+    """Full analysis of an integer k."""
     print(f"\n{'='*60}")
     print(f"  Analysis of k = {k}")
     print(f"{'='*60}")
 
-    # Step 1: Mod 9 test
+    # Mod 9 check
     r = k % 9
-    print(f"\n  Step 1: Mod 9 Residue Test")
-    print(f"    k mod 9 = {r}")
-    if is_forbidden_mod9(k):
-        print(f"    VERDICT: FORBIDDEN (residue {r} ∈ {{4, 5}})")
-        print(f"    By theorem forbiddenModNine_not_representable:")
-        print(f"    k = {k} is PROVABLY NOT a sum of three cubes.")
-        print(f"    No search needed — this is a mathematical certainty.")
+    print(f"\n  k mod 9 = {r}")
+    if mod9_obstructed(k):
+        print(f"  ✗ OBSTRUCTED: k ≡ {r} (mod 9)")
+        print(f"    No integer solution to x³+y³+z³ = {k} exists.")
+        print(f"    (Proved: residues 4,5 mod 9 are not three-cube admissible)")
         return
     else:
-        print(f"    Status: ADMISSIBLE (residue {r} ∈ {{0,1,2,3,6,7,8}})")
+        print(f"  ✓ Passes mod-9 test (not ≡ 4 or 5)")
 
-    # Step 2: Local solubility checks
-    print(f"\n  Step 2: Local Solubility (theorem global_implies_local)")
-    moduli = [2, 3, 4, 5, 7, 8, 9, 16, 25, 27, 49, 64, 81, 100]
+    # Local admissibility
+    print(f"\n  Local admissibility check (moduli 2..50):")
     all_local = True
-    for n in moduli:
-        soluble = is_locally_soluble(k, n)
-        status = "✓" if soluble else "✗"
-        if not soluble:
+    for n in range(2, 51):
+        if not three_cube_local_admissible(n, k):
+            print(f"    ✗ FAILS at modulus {n}")
             all_local = False
-        print(f"    mod {n:>3}: {status}")
+            break
     if all_local:
-        print(f"    All local checks passed — no local obstruction detected.")
-    else:
-        print(f"    WARNING: Local obstruction found!")
+        print(f"    ✓ Locally admissible at all tested moduli")
 
-    # Step 3: Search for representation
-    print(f"\n  Step 3: Bounded Search (bound = {search_bound})")
-    result = search_representation(k, search_bound)
-    if result:
+    # Solution search
+    print(f"\n  Searching for solution (z ∈ [-{search_bound}, {search_bound}])...")
+    result = search_factorization(k, search_bound)
+    if result is not None:
         x, y, z = result
-        assert x**3 + y**3 + z**3 == k
-        print(f"    FOUND: ({x})³ + ({y})³ + ({z})³ = {k}")
-        print(f"    Verification: {x**3} + {y**3} + {z**3} = {x**3+y**3+z**3}")
+        print(f"    ✓ FOUND: {x}³ + {y}³ + {z}³ = {k}")
+        print(f"      Verification: {x**3} + {y**3} + {z**3} = {x**3+y**3+z**3}")
     else:
-        print(f"    No representation found within bound {search_bound}.")
-        print(f"    (This does NOT mean none exists — solutions may be very large.)")
+        print(f"    ✗ No solution found within search bound")
 
-    # Step 4: Negation symmetry
-    print(f"\n  Step 4: Negation Symmetry (theorem three_cube_representable_neg_iff)")
-    neg_k = -k
-    if result:
-        x, y, z = result
-        print(f"    Since ({x})³ + ({y})³ + ({z})³ = {k},")
-        print(f"    we get ({-x})³ + ({-y})³ + ({-z})³ = {neg_k}")
+    # Sign symmetry
+    print(f"\n  Sign symmetry: k ↦ -k = {-k}")
+    result_neg = search_factorization(-k, search_bound)
+    if result_neg is not None:
+        x, y, z = result_neg
+        print(f"    ✓ FOUND: {x}³ + {y}³ + {z}³ = {-k}")
     else:
-        print(f"    k = {k} and -k = {neg_k} have the same representability status.")
+        if mod9_obstructed(-k):
+            print(f"    ✗ -k ≡ {(-k)%9} (mod 9) — obstructed")
+        else:
+            print(f"    ✗ No solution found for -k within search bound")
 
 
-def demo_mod9_obstruction():
-    """Demonstrate the mod 9 obstruction across a range of integers."""
-    print("\n" + "="*60)
-    print("  DEMO: Mod 9 Obstruction (Theorem 1)")
-    print("="*60)
-    print("\n  Cube residues mod 9:")
-    for x in range(9):
-        print(f"    {x}³ = {x**3} ≡ {x**3 % 9} (mod 9)")
-
-    print(f"\n  Achievable sum residues: {sorted({(a+b+c) % 9 for a in [0,1,8] for b in [0,1,8] for c in [0,1,8]})}")
-    print(f"  Missing residues: {{4, 5}}")
-
-    print(f"\n  Classification of 0-99:")
-    admissible = [k for k in range(100) if is_admissible(k)]
-    forbidden = [k for k in range(100) if is_forbidden_mod9(k)]
-    print(f"    Admissible: {len(admissible)} integers")
-    print(f"    Forbidden:  {len(forbidden)} integers")
-    print(f"    Forbidden list: {forbidden}")
-    print(f"    Density of admissible: {len(admissible)}/100 ≈ {len(admissible)/100:.4f}")
-    print(f"    Theoretical density: 7/9 ≈ {7/9:.4f}")
+def display_residue_table():
+    """Display residue coverage for several moduli."""
+    print(f"\n{'='*60}")
+    print(f"  Residue Coverage Table")
+    print(f"{'='*60}")
+    print(f"  {'Modulus':>8} {'Admissible':>12} {'Blocked':>8} {'Coverage':>10}")
+    print(f"  {'-'*42}")
+    for n in [2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 25, 27]:
+        info = residue_coverage(n)
+        blocked = info['non_admissible']
+        blocked_str = str(blocked) if blocked else "none"
+        print(f"  {n:>8} {len(info['admissible']):>12} {len(blocked):>8} {info['coverage']:>9.1%}")
+        if blocked:
+            print(f"           blocked: {blocked_str}")
 
 
-def demo_polynomial_family():
-    """Demonstrate the two-parameter polynomial family."""
-    print("\n" + "="*60)
-    print("  DEMO: Vieta Family (Theorem: vieta_cubes_identity)")
-    print("="*60)
-    print("\n  Identity: a³ + b³ + (-a-b)³ = -3ab(a+b)")
-    print("\n  Examples:")
-    for a in range(1, 6):
-        for b in range(a, a + 3):
-            k = -3 * a * b * (a + b)
-            c = -a - b
-            print(f"    a={a}, b={b}: {a}³ + {b}³ + ({c})³ = {a**3} + {b**3} + {c**3} = {k}")
+def display_mod9_histogram():
+    """Show which residues mod 9 appear in sums of three cubes."""
+    print(f"\n{'='*60}")
+    print(f"  Mod 9 Residue Histogram (cube sums)")
+    print(f"{'='*60}")
+    cubes_mod9 = [pow(x, 3, 9) for x in range(9)]
+    print(f"  Cube residues mod 9: {sorted(set(cubes_mod9))} = {{0, 1, 8}}")
+    print()
+
+    sums = Counter()
+    for a in cubes_mod9:
+        for b in cubes_mod9:
+            for c in cubes_mod9:
+                sums[(a + b + c) % 9] += 1
+
+    print(f"  {'Residue':>8} {'# of ways':>10} {'Admissible':>12}")
+    print(f"  {'-'*34}")
+    for r in range(9):
+        adm = "✓" if sums[r] > 0 else "✗ BLOCKED"
+        bar = "█" * (sums[r] // 5 + 1) if sums[r] > 0 else ""
+        print(f"  {r:>8} {sums[r]:>10} {adm:>12}  {bar}")
 
 
-def demo_local_solubility():
-    """Demonstrate local solubility checking."""
-    print("\n" + "="*60)
-    print("  DEMO: Local Solubility (Theorems 4 & 5)")
-    print("="*60)
-
-    print("\n  Checking local solubility for small k, various moduli:")
-    print(f"  {'k':>4} | {'mod 2':>5} | {'mod 3':>5} | {'mod 5':>5} | {'mod 7':>5} | {'mod 9':>5} | {'mod 27':>6}")
-    print(f"  {'-'*4}-+-{'-'*5}-+-{'-'*5}-+-{'-'*5}-+-{'-'*5}-+-{'-'*5}-+-{'-'*6}")
-    for k in range(20):
-        checks = []
-        for n in [2, 3, 5, 7, 9, 27]:
-            s = "  ✓  " if is_locally_soluble(k, n) else "  ✗  "
-            checks.append(s)
-        status = "ADM" if is_admissible(k) else "FOR"
-        print(f"  {k:>4} | {'|'.join(checks)} | {status}")
-
+# ──────────────────────────────────────────────────────────────────────
+# Main
+# ──────────────────────────────────────────────────────────────────────
 
 def main():
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║   Sums of Three Cubes: Local-Global Geometry Explorer   ║")
+    print("╚══════════════════════════════════════════════════════════╝")
+
+    # Show the mod 9 histogram
+    display_mod9_histogram()
+
+    # Show residue coverage
+    display_residue_table()
+
+    # Analyze specific integers
+    test_values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 17, 29, 33, 42, 100]
+
     if len(sys.argv) > 1:
         try:
-            k = int(sys.argv[1])
-            analyze_integer(k)
+            test_values = [int(x) for x in sys.argv[1:]]
         except ValueError:
-            print(f"Usage: {sys.argv[0]} [integer]")
+            print("Usage: python demo.py [k1 k2 k3 ...]")
             sys.exit(1)
-    else:
-        print("╔══════════════════════════════════════════════════════════╗")
-        print("║   Sums of Three Cubes: Local-Global Geometry Demo      ║")
-        print("║                                                        ║")
-        print("║   Every result shown corresponds to a machine-verified ║")
-        print("║   theorem in the formal mathematical framework.        ║")
-        print("╚══════════════════════════════════════════════════════════╝")
 
-        demo_mod9_obstruction()
-        demo_polynomial_family()
-        demo_local_solubility()
+    for k in test_values:
+        display_analysis(k, search_bound=500)
 
-        # Analyze specific interesting cases
-        for k in [0, 1, 2, 3, 4, 5, 33, 42, 114]:
-            analyze_integer(k, search_bound=1000)
+    # Summary statistics
+    print(f"\n{'='*60}")
+    print(f"  Summary: representability for k ∈ [0, 100]")
+    print(f"{'='*60}")
+    found = 0
+    obstructed = 0
+    not_found = 0
+    for k in range(101):
+        if mod9_obstructed(k):
+            obstructed += 1
+        elif search_factorization(k, 500) is not None:
+            found += 1
+        else:
+            not_found += 1
 
-        print("\n" + "="*60)
-        print("  Summary")
-        print("="*60)
-        print("  All computations are backed by formally verified theorems:")
-        print("  • Mod 9 filter: forbiddenModNine_not_representable")
-        print("  • Local checks: global_implies_local")
-        print("  • Negation:     three_cube_representable_neg_iff")
-        print("  • Infinitude:   infinitely_many_three_cube_representable")
-        print("  • Surface:      integral_point_gives_modn_point")
+    print(f"  Obstructed (mod 9):    {obstructed:>4}")
+    print(f"  Solution found:        {found:>4}")
+    print(f"  Open (no solution):    {not_found:>4}")
+    print(f"  Total:                 {found + obstructed + not_found:>4}")
+    print()
 
 
 if __name__ == "__main__":

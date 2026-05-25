@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "sums_of_three_cubes.json",
+    "title": "Sums of Three Cubes: A Formal Local-Global Framework",
+    "domain": "Algebra / Arithmetic Geometry",
+    "date": "2026-05-25T00:26:30Z",
+    "exp_id": "34c2669a",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "eml_algebraic_independence_transcendence_results.json",
     "title": "EML Algebraic Independence and Certified Transcendence Proxies",
     "domain": "Transcendence Theory / Algebraic Independence",
     "date": "2026-05-25T00:25:53Z",
     "exp_id": "5eb5bdbc",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.5684834461538462,
+    "quality": "partial"
   },
   {
     "filename": "direction_1_coalgebraic_temporal_adjunction_for_in.json",
@@ -60,6 +69,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "sums_of_three_cubes.json": {
+    "title": "Sums of Three Cubes: A Formal Local-Global Framework",
+    "exp_id": "34c2669a",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra / Arithmetic Geometry"
+  },
   "direction_4_primewise_decomposition_and_improved_c.json": {
     "title": "Primewise Torsion Persistence Stability: Arithmetic Decomposition of Topological Invariants",
     "exp_id": "2d14ce54",
@@ -121,7 +138,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -132,7 +149,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.6423696551724138,
       "quality": "partial"
     },
@@ -143,7 +160,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.5431629411764707,
       "quality": "partial"
     },
@@ -154,7 +171,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.49450347826086954,
       "quality": "partial"
     },
@@ -176,7 +193,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 92,
+      "hue": 95,
+      "priority_score": 0.5684834461538462,
+      "quality": "partial"
+    },
+    {
+      "id": "sums_of_three_cubes",
+      "title": "Sums of Three Cubes: A Formal Local-Global Framework",
+      "domain": "Algebra / Arithmetic Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-25T00:26:30Z",
+      "hue": 270,
       "priority_score": null,
       "quality": "unrated"
     }
@@ -188,6 +216,12 @@ window.PACKAGE_GRAPH = {
       "domain_b": "Logic",
       "package_count": 2,
       "strength": 0.7
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Geometry",
+      "package_count": 1,
+      "strength": 0.5
     }
   ]
 };
@@ -625,22 +659,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.870982+00:00"
   },
   {
-    "id": "seed_088",
-    "title": "EML Algebraic Independence: Transcendence Results",
-    "description": "The Schanuel conjecture predicts deep algebraic independence results for exp and log. Specialize this to EML values. Conjecture: For algebraic numbers a_1,...,a_n linearly independent over Q, the numbers exp(a_1)*log(1+a_1), ..., exp(a_n)*log(1+a_n) are algebraically independent over Q. This is a specialization of Schanuel's conjecture to the EML operator. The n=1 case reduces to showing that exp(a)*log(1+a) is transcendental for algebraic a != 0, which follows from the Lindemann-Weierstrass theorem (exp(a) is transcendental for algebraic a != 0) combined with the Gelfond-Schneider theorem. The n=2 case requires showing that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients, which is open. The EML specialization has the advantage that the multiplicative structure of exp(a)*log(b) constrains the possible algebraic relations more tightly than the general Schanuel conjecture. Test: prove the n=1 case using Lindemann-Weierstrass and Gelfond-Schneider. For n=2, show that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients. Impact: connects EML to the deepest open problems in transcendental number theory, with implications for the theory of periods and special values of L-functions.",
-    "domains": [
-      "EML",
-      "NumberTheory",
-      "Algebra"
-    ],
-    "priority_score": 0.85,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "5eb5bdbc",
-    "timestamp": "2026-05-24T22:37:54.986795+00:00"
-  },
-  {
     "id": "seed_092",
     "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres",
     "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
@@ -941,6 +959,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:25:26.921712+00:00"
+  },
+  {
+    "id": "fd_0806",
+    "title": "Tropical Shadow of p-adic Persistent Homology",
+    "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
+    "domains": [
+      "Topological Data Analysis",
+      "Tropical Geometry"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:26:01.272574+00:00"
   },
   {
     "id": "fd_0784",

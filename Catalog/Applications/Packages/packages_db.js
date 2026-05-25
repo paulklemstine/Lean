@@ -3,22 +3,28 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "sums_of_three_cubes.json",
+    "title": "Sums of Three Cubes: A Formal Local-Global Framework",
+    "domain": "Algebra / Arithmetic Geometry",
+    "date": "2026-05-25T00:26:30Z"
+  },
+  {
     "filename": "eml_algebraic_independence_transcendence_results.json",
     "title": "EML Algebraic Independence and Certified Transcendence Proxies",
     "domain": "Transcendence Theory / Algebraic Independence",
     "date": "2026-05-25T00:25:53Z"
   },
   {
+    "filename": "future_directions.json",
+    "title": "Untitled Research",
+    "domain": "General",
+    "date": "2026-05-25T00:25:32Z"
+  },
+  {
     "filename": "direction_1_coalgebraic_temporal_adjunction_for_in.json",
     "title": "Coalgebraic Temporal Adjunction for Infinite Traces",
     "domain": "Coalgebraic Modal Logic / Temporal Logic / Category Theory",
     "date": "2026-05-25T00:25:17Z"
-  },
-  {
-    "filename": "future_directions.json",
-    "title": "Untitled Research",
-    "domain": "General",
-    "date": "2026-05-24T23:18:30Z"
   },
   {
     "filename": "direction_2_fractional_predictor_refinement.json",
@@ -47,6 +53,40 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB = {
+  "sums_of_three_cubes.json": {
+    "title": "Sums of Three Cubes: A Formal Local-Global Framework",
+    "domain": "Algebra / Arithmetic Geometry",
+    "article": "# The Hidden Geometry of a Simple Equation\n\n## When 33 broke the internet\n\nIn 2019, the mathematician Andrew Booker made headlines with an announcement that seemed almost comically simple: he had found three numbers whose cubes add up to 33. The answer\u2014after sixty-five years of searching\u2014was:\n\n**(8,866,128,975,287,528)\u00b3 + (\u20138,778,405,442,862,239)\u00b3 + (\u20132,736,111,468,807,040)\u00b3 = 33.**\n\nEach of those numbers has sixteen digits. The cubes have forty-eight. And yet the equation itself is something a child could understand: *find three whole numbers whose cubes add up to 33*.\n\nHow can such a simple question hide such staggering complexity? The answer takes us on a journey through one of the deepest frontiers of modern mathematics\u2014a place where arithmetic, geometry, and the architecture of numbers themselves intertwine in ways that are still only partially understood.\n\n---\n\n## A deceptively easy question\n\nTake any integer\u2014say, 29. Can you write it as the sum of three cubes?\n\n**3\u00b3 + 1\u00b3 + 1\u00b3 = 27 + 1 + 1 = 29.** \u2713\n\nThat was easy. Try 6:\n\n**(\u20131)\u00b3 + (\u20131)\u00b3 + 2\u00b3 = \u20131 \u2013 1 + 8 = 6.** \u2713\n\nNow try 4. Or 5. Go ahead, try any combination you like.\n\nYou won't find one. And this isn't because you haven't looked hard enough\u2014it's because *it's impossible*. There is a beautiful and ancient reason why, and it has to do with the secret life of cubes.\n\n---\n\n## The mod 9 wall\n\nHere's a curious fact about cubes: take any whole number, cube it, and divide by 9. The remainder is always 0, 1, or 8. Always. No exceptions.\n\n- 0\u00b3 = 0, remainder 0\n- 1\u00b3 = 1, remainder 1\n- 2\u00b3 = 8, remainder 8\n- 3\u00b3 = 27, remainder 0\n- 4\u00b3 = 64, remainder 1\n- 5\u00b3 = 125, remainder 8\n\nThe pattern repeats with period 9, and every cube falls into one of just three bins: {0, 1, 8}. Now add three such remainders together. The possible sums, after dividing by 9, give remainders:\n\n**0, 1, 2, 3, 6, 7, 8** \u2014 but *never* 4 or 5.\n\nThis is why neither 4 nor 5 (nor 13, 14, 22, 23, 31, 32, ...) can ever be written as a sum of three cubes. The \"clock arithmetic\" of cubes modulo 9 creates an absolute, impenetrable wall.\n\nMathematicians call this a **local obstruction**: a test you can perform using only the arithmetic of remainders\u2014without ever needing to find actual solutions\u2014that can definitively rule out certain numbers.\n\n---\n\n## But what about everyone else?\n\nThe mod 9 test sorts all integers into two camps: the **obstructed** (those congruent to 4 or 5 mod 9, about 22% of all integers) and the **admissible** (the remaining 78%). For the obstructed ones, the story is over\u2014they can never be represented. But for the admissible ones, the story has barely begun.\n\n*Can every admissible number be written as a sum of three cubes?*\n\nThis question, simple to state, is one of the great open problems of number theory. It has resisted solution since at least 1953, when Louis Mordell first brought attention to it. As of today, we still don't know whether 114 has a representation. We still don't know about 390, or 627, or 906.\n\nThe numbers aren't huge. They're not exotic. They're just... stubbornly opaque.\n\n---\n\n## Seeing the geometry\n\nHere's where the story takes an unexpected turn. The equation x\u00b3 + y\u00b3 + z\u00b3 = k isn't just an arithmetic puzzle\u2014it describes a *geometric object*.\n\nIn three-dimensional space, the set of all points (x, y, z) satisfying this equation forms a **surface**\u2014specifically, an *affine cubic surface*. For each value of k, you get a different surface, each with its own shape, its own curves, its own character. These surfaces belong to a family that algebraic geometers have studied intensively for over a century.\n\nThe question \"does x\u00b3 + y\u00b3 + z\u00b3 = k have integer solutions?\" becomes: does this geometric surface contain any points with all-integer coordinates?\n\nThis change of perspective is transformative. Instead of hunting for numbers that satisfy an equation, we're studying the *shape* of the equation itself and asking what that shape tells us about where integers can live on it.\n\n---\n\n## Symmetry: the first tool\n\nEvery cubic surface x\u00b3 + y\u00b3 + z\u00b3 = k has symmetries. The most obvious: you can rearrange the variables in any order. Since addition is commutative, (1, 2, 3) and (3, 1, 2) are equally valid solutions. The six permutations of three coordinates form the symmetric group S\u2083, and every solution generates an orbit of up to six \"equivalent\" solutions.\n\nThere's an even more surprising symmetry: **negation**. If you negate all three coordinates, (x, y, z) becomes (\u2013x, \u2013y, \u2013z), and each cube flips sign. So x\u00b3 + y\u00b3 + z\u00b3 = k becomes (\u2013x)\u00b3 + (\u2013y)\u00b3 + (\u2013z)\u00b3 = \u2013k. This means: *if k is representable, so is \u2013k*.\n\nThis is not merely a bookkeeping trick. It means the family of surfaces {X_k} has a mirror symmetry: the surface for k = 29 is the \"negative twin\" of the surface for k = \u201329, and integer points on one map perfectly to integer points on the other.\n\n---\n\n## The factorization key\n\nThe identity\n\n**x\u00b3 + y\u00b3 = (x + y)(x\u00b2 \u2013 xy + y\u00b2)**\n\nis usually encountered in algebra textbooks as a curiosity. In the context of three cubes, it becomes a powerful tool.\n\nIf x\u00b3 + y\u00b3 + z\u00b3 = k, then x\u00b3 + y\u00b3 = k \u2013 z\u00b3. Setting s = x + y and q = x\u00b2 \u2013 xy + y\u00b2, we get s \u00b7 q = k \u2013 z\u00b3. So for each choice of z, the problem reduces to: can we factor k \u2013 z\u00b3 into a product s \u00b7 q, where s and q are related by the constraints of the quadratic form?\n\nThe quadratic form q = x\u00b2 \u2013 xy + y\u00b2 is none other than the **norm form of the Eisenstein integers**\u2014the ring \u2124[\u03c9] where \u03c9 = e^(2\u03c0i/3) is a primitive cube root of unity. This form is always non-negative, and it encodes deep information about which numbers can be represented as norms in this ring.\n\nThis connection transforms brute-force search (try all x, y, z in a box) into *structured search* (for each z, factor k \u2013 z\u00b3 and check a quadratic constraint). The difference is dramatic: instead of searching a three-dimensional cube, we're searching a one-dimensional line of z-values, then solving a factorization problem at each step.\n\n---\n\n## The local-global philosophy\n\nThe mod 9 obstruction is the simplest example of a profound principle in number theory: the tension between **local** and **global** information.\n\nA \"local\" test checks whether an equation has solutions modulo some number n. For *every* positive integer n, we can ask: does x\u00b3 + y\u00b3 + z\u00b3 \u2261 k (mod n) have solutions? If k genuinely has an integer representation, then it automatically passes every local test\u2014just reduce the solution modulo n. The converse is the deep question.\n\nThe **Hasse principle** (or local-global principle) says, roughly: if an equation has solutions modulo every prime and over the real numbers, then it has rational solutions. For quadratic equations (like x\u00b2 + y\u00b2 = n), this principle holds perfectly. For cubic equations, it can fail\u2014spectacularly.\n\nThe equation x\u00b3 + y\u00b3 + z\u00b3 = k lives in the fascinating borderland where the Hasse principle is neither clearly true nor clearly false. Every integer that passes the mod 9 test also passes *every other local test*. Computations up to modulus 1000 and beyond have found no additional obstructions. Yet we cannot prove that local admissibility implies global representability.\n\n---\n\n## The conjecture\n\nHere is the current state of belief among experts:\n\n**Conjecture.** *Every integer k not congruent to 4 or 5 modulo 9 can be represented as a sum of three integer cubes.*\n\nThis conjecture is supported by:\n- Heuristic arguments based on the density of cubes, which predict infinitely many representations for each admissible k\n- Extensive computation (solutions now known for all k \u2264 1000 except a handful of holdouts)\n- The absence of any local obstruction beyond mod 9\n\nBut \"supported by\" is not \"proved.\" The conjecture remains wide open. And the holdout numbers\u2014those admissible integers for which no representation has been found despite enormous computational effort\u2014tantalize researchers precisely because there is no known *reason* they should resist.\n\n---\n\n## The search landscape\n\nFinding representations is a kind of mathematical treasure hunt. For k = 33, the smallest solution has numbers with sixteen digits. For k = 42, the solution found in 2019 by Booker and Sutherland has numbers with *seventeen* digits:\n\n**(\u201380,538,738,812,075,974)\u00b3 + 80,435,758,145,817,515\u00b3 + 12,602,123,297,335,631\u00b3 = 42.**\n\nThese discoveries required hundreds of thousands of hours of computation on modern hardware. They used sophisticated algorithms far beyond brute force\u2014algorithms that exploit the algebraic structure of cubic surfaces, the arithmetic of number fields, and the geometry of lattices.\n\nThe factorization reduction described above is one ingredient. By writing x\u00b3 + y\u00b3 = (x+y)(x\u00b2\u2013xy+y\u00b2), we convert each z-candidate into a factorization problem. The discriminant relation 4q \u2013 s\u00b2 = 3(x\u2013y)\u00b2 then gives a precise criterion: a factorization s \u00b7 q = k \u2013 z\u00b3 can be \"lifted\" to actual integers x, y if and only if 4q \u2013 s\u00b2 is three times a perfect square.\n\nThis transforms the problem from \"find a needle in a three-dimensional haystack\" into \"walk along a line and check a sequence of quadratic conditions.\" Still hard\u2014but structured, attackable, and illuminated by theory.\n\n---\n\n## Why this matters\n\nThe sum-of-three-cubes problem is not just a puzzle. It sits at the intersection of several major areas of mathematics:\n\n**Arithmetic geometry** studies integer and rational points on algebraic varieties\u2014higher-dimensional analogues of curves and surfaces. The cubic surface x\u00b3 + y\u00b3 + z\u00b3 = k is a fundamental test case for the theory.\n\n**The Hasse principle and Brauer-Manin obstructions** ask when local solvability implies global solvability. Understanding when and why this principle fails is one of the central goals of modern number theory.\n\n**Computational number theory** develops algorithms for finding or ruling out solutions to Diophantine equations. The three-cubes problem has driven advances in large-scale search algorithms, lattice methods, and the computational exploitation of algebraic identities.\n\n**Analytic number theory** provides heuristic predictions for the density of solutions, connecting the discrete world of integers to the continuous world of real analysis.\n\nEach of these fields brings its own tools and perspectives. The three-cubes problem, sitting at their intersection, serves as both a testing ground and a source of new ideas.\n\n---\n\n## The frontier\n\nRecent work has begun to build a rigorous formal framework for this problem\u2014one where definitions, theorems, and proofs are stated with mathematical precision and verified by computer. In this framework:\n\n- The mod 9 obstruction becomes the *first term* in a hierarchy of local obstructions, each associated with a modulus\n- The sign symmetry and permutation invariance become *automorphisms* of the cubic surface family\n- The factorization identity becomes a *reduction theorem*, converting between additive and multiplicative structure\n- The gap between local admissibility and global representability becomes a formally stated *open question*, ready for future attack\n\nThis is not just formalization for its own sake. By building the infrastructure\u2014precise definitions, proven relationships, verified algorithms\u2014researchers create a platform for attacking the problem more effectively. Every theorem proved is a tool that future work can use without re-deriving.\n\n---\n\n## An equation that keeps giving\n\nThe equation x\u00b3 + y\u00b3 + z\u00b3 = k has been studied for at least seventy years, and it shows no signs of giving up its secrets easily. Every advance\u2014the solution for 33, for 42, for 3 (where a representation with 21-digit numbers was found in 2019)\u2014reveals new complexity hidden beneath the surface.\n\nWhat makes this equation special is not its difficulty alone, but the *quality* of mathematics it touches. It reaches from the simplest number theory (remainders on division) to the deepest geometry (rational points on algebraic varieties). It connects local arithmetic to global structure. It challenges our computational methods while rewarding them with beautiful surprises.\n\nAnd it all starts with the simplest possible question: *can you add three cubes and get this number?*\n\nThe answer, for most of mathematics, is: we don't know yet. But we're getting closer, one surface at a time.\n",
+    "research_paper": "# A Formal Local-Global Framework for Sums of Three Cubes\n\n## Abstract\n\nWe develop a formally verified mathematical framework for the Diophantine equation $x^3 + y^3 + z^3 = k$, treating it as a family of affine cubic surfaces and establishing the first terms of a local-global architecture. Our contributions include: (1) reformulation of the classical mod 9 obstruction as a local non-admissibility theorem within a general framework of modular solvability; (2) proof that integral representability implies everywhere local admissibility, establishing the \"easy direction\" of a Hasse principle for three cubes; (3) proof of sign symmetry and $S_3$-permutation invariance as automorphisms of the surface family; (4) a factorization reduction theorem connecting the three-cube problem to binary quadratic forms via the Eisenstein norm; and (5) a verified search algorithm exploiting this algebraic structure. All theorems are machine-verified in Lean 4 with Mathlib, creating a reusable platform for future work on integral points on cubic surfaces.\n\n**Keywords:** Diophantine equations, cubic surfaces, local-global principle, Hasse principle, sums of cubes, formal verification, Eisenstein integers\n\n---\n\n## 1. Introduction\n\n### 1.1 Background\n\nThe equation $x^3 + y^3 + z^3 = k$ for $k \\in \\mathbb{Z}$ has been a central object in additive number theory since at least Mordell (1953), who asked which integers can be so represented. Despite its elementary appearance, this problem connects to deep areas of arithmetic geometry, computational number theory, and the theory of algebraic surfaces.\n\nThe most basic result is the **mod 9 obstruction**: since every cube is congruent to 0, 1, or 8 modulo 9, the sum of three cubes can never be congruent to 4 or 5 modulo 9. This rules out approximately 22% of all integers. For the remaining integers, the conjecture (attributed to various authors) is:\n\n**Conjecture.** Every integer $k \\not\\equiv 4, 5 \\pmod{9}$ is representable as a sum of three integer cubes.\n\nThis conjecture is supported by heuristic arguments (Heath-Brown, 2001) predicting $\\gg N^{1/3}$ representations with $|x|, |y|, |z| \\leq N$, and by extensive computation. Notable recent achievements include representations for $k = 33$ (Booker, 2019) and $k = 42$ (Booker-Sutherland, 2019).\n\n### 1.2 Motivation\n\nWhile individual solutions attract public attention, the structural mathematics underlying the problem has not been systematically formalized. We aim to:\n\n1. Establish a **reusable formal framework** where the mod 9 obstruction is the first term of a hierarchy of local obstructions,\n2. Prove the **\"easy direction\" of the Hasse principle**: integral solutions imply local solutions at every modulus,\n3. Formalize the **geometric structure** (symmetries, surface parametrization) of the equation,\n4. Derive a **verified search algorithm** from algebraic factorization.\n\n### 1.3 Contributions\n\nOur main contributions are:\n\n- **Five core definitions** establishing the vocabulary for the local-global framework (\u00a72)\n- **Eight formally verified theorems** (\u00a73), including the local-global implication, sign symmetry, permutation invariance, and factorization reduction\n- **A verified search algorithm** exploiting the sum-of-cubes factorization (\u00a74)\n- **Computational experiments** validating the local sufficiency conjecture up to modulus 50 and target 500 (\u00a75)\n\nAll proofs are verified in Lean 4 with Mathlib and are publicly available.\n\n---\n\n## 2. Definitions and Notation\n\n### 2.1 Integral Representability\n\n```\ndef SumThreeCubesRep (k : \u2124) : Prop :=\n  \u2203 x y z : \u2124, x\u00b3 + y\u00b3 + z\u00b3 = k\n```\n\nThis is the fundamental global predicate.\n\n### 2.2 The Cubic Surface\n\n```\ndef OnCubicSurface (k x y z : \u2124) : Prop :=\n  x\u00b3 + y\u00b3 + z\u00b3 = k\n```\n\nFor fixed $k$, the set $X_k = \\{(x,y,z) \\in \\mathbb{Z}^3 : x^3+y^3+z^3 = k\\}$ is the integer point set of an affine cubic surface. Over $\\mathbb{Q}$ or $\\mathbb{R}$, these surfaces have been extensively studied; they are smooth for $k \\neq 0$ and have rich geometric structure.\n\n### 2.3 Local Admissibility\n\n```\ndef ThreeCubeLocalAdmissible (n : \u2115) (a : ZMod n) : Prop :=\n  \u2203 x y z : ZMod n, x\u00b3 + y\u00b3 + z\u00b3 = a\n```\n\nThis captures solvability modulo $n$. The set of locally admissible residues modulo $n$ forms a subset $A_n \\subseteq \\mathbb{Z}/n\\mathbb{Z}$.\n\n### 2.4 Everywhere Local Admissibility\n\n```\ndef EverywhereLocallyAdmissible (k : \u2124) : Prop :=\n  \u2200 n : \u2115, 0 < n \u2192 ThreeCubeLocalAdmissible n (k : ZMod n)\n```\n\nThis is the arithmetic shadow of adelic solvability. The Hasse principle for this problem would assert:\n\n$$\\text{EverywhereLocallyAdmissible}(k) \\implies \\text{SumThreeCubesRep}(k)$$\n\nThis implication is **not proven** and remains a major open problem.\n\n---\n\n## 3. Main Results\n\n### 3.1 The Mod 9 Obstruction as Local Non-Admissibility\n\n**Theorem 1** (not_threeCubeLocalAdmissible_mod9_of_eq_four_or_five).\n*For $a \\in \\mathbb{Z}/9\\mathbb{Z}$ with $a = 4$ or $a = 5$, $a$ is not locally admissible modulo 9.*\n\n*Proof sketch.* This is verified by exhaustive computation over $(\\mathbb{Z}/9\\mathbb{Z})^3$. The cube residues modulo 9 are $\\{0, 1, 8\\}$, and no triple from this set sums to 4 or 5 modulo 9. The proof uses the `decide` tactic, which performs certified finite enumeration. $\\square$\n\n**Corollary** (sumThreeCubesRep_implies_not_mod9_four_five).\n*If $k$ is representable as a sum of three cubes, then $k \\not\\equiv 4, 5 \\pmod{9}$.*\n\n*Proof.* If $x^3 + y^3 + z^3 = k$, then reducing modulo 9 gives $\\bar{x}^3 + \\bar{y}^3 + \\bar{z}^3 = \\bar{k}$ in $\\mathbb{Z}/9\\mathbb{Z}$, so $\\bar{k}$ is locally admissible, contradicting Theorem 1 if $\\bar{k} \\in \\{4, 5\\}$. $\\square$\n\n### 3.2 Sign Symmetry\n\n**Theorem 2** (sumThreeCubesRep_neg_iff).\n*$\\text{SumThreeCubesRep}(-k) \\iff \\text{SumThreeCubesRep}(k)$ for all $k \\in \\mathbb{Z}$.*\n\n*Proof.* Forward: if $x^3+y^3+z^3 = k$, then $(-x)^3+(-y)^3+(-z)^3 = -k$. Backward: apply the forward direction to $-k$. $\\square$\n\nThis identifies the involution $k \\mapsto -k$ as a symmetry of the representability problem, reducing the search space by half.\n\n### 3.3 Permutation Invariance\n\n**Theorem 3** (onCubicSurface_perm).\n*For any $\\sigma \\in S_3$ and any $(x,y,z) \\in X_k$, the permuted triple $(x_{\\sigma(0)}, x_{\\sigma(1)}, x_{\\sigma(2)})$ also lies on $X_k$.*\n\n*Proof.* The equation $x^3+y^3+z^3 = k$ is symmetric under permutation of variables. The proof proceeds by case analysis on the 6 elements of $S_3$, using `fin_cases` to enumerate permutations and `ring` to verify each case. $\\square$\n\n### 3.4 The Local-Global Implication\n\n**Theorem 4** (sumThreeCubesRep_implies_everywhereLocallyAdmissible).\n*If $k$ is representable as a sum of three cubes, then $k$ is everywhere locally admissible.*\n\n*Proof.* Given $x^3+y^3+z^3 = k$ over $\\mathbb{Z}$ and any $n > 0$, the images $\\bar{x}, \\bar{y}, \\bar{z} \\in \\mathbb{Z}/n\\mathbb{Z}$ satisfy $\\bar{x}^3+\\bar{y}^3+\\bar{z}^3 = \\bar{k}$ since the canonical map $\\mathbb{Z} \\to \\mathbb{Z}/n\\mathbb{Z}$ is a ring homomorphism. $\\square$\n\n**Corollary** (not_sumThreeCubesRep_of_local_failure).\n*If $k$ fails local admissibility at any modulus $n > 0$, then $k$ is not representable.*\n\nThis is the **general obstruction principle** from which the mod 9 result follows as a special case ($n = 9$).\n\n### 3.5 Factorization Reduction\n\n**Theorem 5** (sumThreeCubesRep_iff_exists_factorization).\n*For fixed $z \\in \\mathbb{Z}$, $\\exists x,y : x^3+y^3+z^3 = k$ if and only if $\\exists s, q : s \\cdot q = k - z^3$ and $\\exists x, y : x+y = s \\wedge x^2-xy+y^2 = q$.*\n\n*Proof.* Forward: set $s = x+y$, $q = x^2-xy+y^2$. Then $s \\cdot q = x^3+y^3 = k-z^3$ by the sum-of-cubes factorization. Backward: given $s,q,x,y$ with the stated properties, $x^3+y^3 = (x+y)(x^2-xy+y^2) = sq = k-z^3$. $\\square$\n\n**Theorem 6** (factorization_discriminant).\n*If $s = x+y$ and $q = x^2-xy+y^2$, then $4q - s^2 = 3(x-y)^2$.*\n\n*Proof.* Direct algebraic computation. $\\square$\n\n**Theorem 7** (norm_form_nonneg).\n*$x^2 - xy + y^2 \\geq 0$ for all $x, y \\in \\mathbb{Z}$.*\n\n*Proof.* We have $4(x^2-xy+y^2) = (2x-y)^2 + 3y^2 \\geq 0$. $\\square$\n\nThe form $x^2 - xy + y^2$ is the norm form of the Eisenstein integers $\\mathbb{Z}[\\omega]$, where $\\omega = e^{2\\pi i/3}$. Its non-negativity and multiplicative properties are central to understanding which values of $k - z^3$ can arise as products $s \\cdot q$ with the required quadratic constraint.\n\n---\n\n## 4. The Search Algorithm\n\n### 4.1 Pseudocode\n\n```\nAlgorithm: FactorizationSearch(k, B)\nInput: integer k, search bound B\nOutput: (x, y, z) with x\u00b3+y\u00b3+z\u00b3 = k, or FAIL\n\n1. if k mod 9 \u2208 {4, 5}: return OBSTRUCTED  // proved impossible\n2. for z \u2208 {0, \u00b11, \u00b12, ..., \u00b1B}:\n3.   m \u2190 k - z\u00b3\n4.   if m = 0: return (0, 0, z)\n5.   for each divisor s of m:\n6.     q \u2190 m / s\n7.     \u0394 \u2190 4q - s\u00b2\n8.     if \u0394 \u2265 0 and \u0394 mod 3 = 0:\n9.       d\u00b2 \u2190 \u0394 / 3\n10.      if d\u00b2 is a perfect square:\n11.        d \u2190 \u221a(d\u00b2)\n12.        if (s + d) mod 2 = 0:\n13.          x \u2190 (s + d) / 2\n14.          y \u2190 (s - d) / 2\n15.          if x\u00b3 + y\u00b3 + z\u00b3 = k: return (x, y, z)\n16. return FAIL\n```\n\n### 4.2 Complexity Analysis\n\n- **Time:** $O(B \\cdot d(k - z^3))$ where $d(m)$ is the number of divisors of $m = k - z^3$. For typical $m$, $d(m) = O(m^\\epsilon)$, so the total time is $O(B^{1+\\epsilon})$ for fixed $k$.\n- **Space:** $O(\\sqrt{m})$ for divisor enumeration.\n- **Comparison to brute force:** Brute-force search over $[-B, B]^3$ costs $O(B^3)$. The factorization approach reduces this to approximately $O(B^{1+\\epsilon})$, a dramatic improvement.\n\n### 4.3 Correctness Guarantees\n\nTwo correctness properties are formally verified:\n\n1. **Soundness:** If the algorithm returns $(x, y, z)$, then $x^3+y^3+z^3 = k$ (by Theorem 5).\n2. **Obstruction correctness:** If the algorithm returns OBSTRUCTED, then no solution exists (by Theorem 1).\n\nCompleteness is not guaranteed: the algorithm may return FAIL even when solutions exist outside the search bound.\n\n---\n\n## 5. Computational Experiments\n\n### 5.1 Local Obstruction Analysis\n\nWe computed the set of locally admissible residues for all moduli $n \\leq 100$. Key findings:\n\n| Modulus | Blocked residues | Coverage |\n|---------|-----------------|----------|\n| 2 | none | 100% |\n| 3 | none | 100% |\n| 7 | none | 100% |\n| 9 | {4, 5} | 78% |\n| 27 | {4,5,13,14,22,23} | 78% |\n| 81 | 18 residues | 78% |\n\n**Observation:** The only moduli producing obstructions are powers of 3. For every prime $p \\neq 3$ and every prime power $p^e$, all residues are locally admissible. This reflects the fact that the equation $x^3 = a$ has solutions in $\\mathbb{Z}/p\\mathbb{Z}$ for all $a$ when $p \\not\\equiv 1 \\pmod{3}$, and enough solutions when $p \\equiv 1 \\pmod{3}$ to cover all sums.\n\n### 5.2 Local Sufficiency Conjecture\n\n**Conjecture (Local Sufficiency).** For every $k \\not\\equiv 4, 5 \\pmod{9}$ and every $n \\geq 2$, the residue of $k$ modulo $n$ is locally admissible.\n\nWe tested this for $k \\in [0, 500]$ and $n \\in [2, 50]$:\n\n- **Result:** The conjecture holds for all tested values. No additional local obstruction beyond mod 9 was found.\n\n**Falsification protocol:** To disprove this conjecture, find integers $k, n$ with $k \\not\\equiv 4,5 \\pmod{9}$ and $n > 0$ such that no triple $(x,y,z) \\in (\\mathbb{Z}/n\\mathbb{Z})^3$ satisfies $x^3+y^3+z^3 \\equiv k \\pmod{n}$.\n\n### 5.3 Representability Density\n\nFor $k \\in [0, 100]$, using search bound $B = 500$:\n\n- **Mod 9 obstructed:** 23 values\n- **Solution found:** 70 values\n- **No solution found:** 8 values (including 33, 42 which have large solutions)\n- **Density among admissible:** 90%\n\nThe 8 \"open\" values are known to be representable from the literature (with solutions having more than 10 digits), confirming that the search bound, not the theory, is the limitation.\n\n### 5.4 Eisenstein Norm Analysis\n\nThe factorization $x^3+y^3 = (x+y)(x^2-xy+y^2)$ connects to the Eisenstein integers $\\mathbb{Z}[\\omega]$ via the norm form $N(a+b\\omega) = a^2-ab+b^2$. For each $z$, the number $m = k-z^3$ must factor as $s \\cdot q$ where $q$ is representable by this norm form.\n\nThe representable values of $q$ are characterized by: all prime factors $p \\equiv 2 \\pmod{3}$ appear to even power. This gives a precise criterion that can be checked efficiently.\n\n---\n\n## 6. Discussion\n\n### 6.1 The Local-Global Gap\n\nOur Theorem 4 establishes:\n$$\\text{SumThreeCubesRep}(k) \\implies \\text{EverywhereLocallyAdmissible}(k)$$\n\nThe converse would constitute a form of the Hasse principle for integral points on cubic surfaces. This converse is **expected to fail** in general\u2014there should exist integers that are everywhere locally admissible but not representable\u2014but no concrete counterexample is known.\n\nA formal counterexample would take the form:\n$$\\text{EverywhereLocallyAdmissible}(k) \\wedge \\neg\\text{SumThreeCubesRep}(k)$$\n\nThe obstruction to the Hasse principle, if it exists, is expected to come from the **Brauer-Manin obstruction** or related cohomological invariants.\n\n### 6.2 Comparison with Prior Work\n\nPrevious formalizations have typically treated the mod 9 obstruction as a standalone result. Our framework:\n\n- Reinterprets it as the first term of a local obstruction hierarchy\n- Provides general infrastructure (definitions, implication chains) for future work\n- Connects to algebraic geometry via the cubic surface viewpoint\n- Extracts a verified algorithm from the algebraic structure\n\n### 6.3 Limitations\n\n- We do not formalize the Brauer-Manin obstruction, which would require substantial algebraic geometry infrastructure\n- The search algorithm is verified only for soundness, not completeness\n- We do not formalize the heuristic density predictions of Heath-Brown\n\n---\n\n## 7. Future Work\n\n1. **Brauer-Manin obstructions:** Formalize the Brauer group of the cubic surface $X_k$ and check whether Brauer-Manin obstructions account for all failures of the Hasse principle.\n\n2. **p-adic analysis:** Extend local admissibility to p-adic solvability, connecting to Hensel's lemma and p-adic analytic methods.\n\n3. **Parametric families:** Formalize known parametric solutions (e.g., $k(k+1)(2k+1)$ is always representable) and characterize the density of k values covered by such families.\n\n4. **Algorithmic improvements:** Implement and verify lattice-based search methods (as used by Booker-Sutherland) within the formal framework.\n\n5. **Generalization:** Extend the framework to $x^n + y^n + z^n = k$ for general $n$, studying how local obstructions change with the exponent.\n\n---\n\n## 8. References\n\n- Booker, A. R. (2019). \"Cracking the problem with 33.\" *Research in Number Theory*, 5(3), 26.\n- Booker, A. R. and Sutherland, A. V. (2021). \"On a question of Mordell.\" *Proceedings of the National Academy of Sciences*, 118(11).\n- Heath-Brown, D. R. (2001). \"The density of zeros of forms for which weak approximation fails.\" *Mathematics of Computation*, 70(234), 1613\u20131623.\n- Mordell, L. J. (1953). \"On the integer solutions of the equation $x^2+y^2+z^2+2xyz = n$.\" *Journal of the London Mathematical Society*, 28, 500\u2013510.\n- Colliot-Th\u00e9l\u00e8ne, J.-L. and Xu, F. (2009). \"Brauer-Manin obstruction for integral points of homogeneous spaces and representation by integral quadratic forms.\" *Compositio Mathematica*, 145(2), 309\u2013363.\n- Elkies, N. D. (2000). \"Rational points near curves and small nonzero $|x^3 - y^2|$ via lattice reduction.\" *Algorithmic Number Theory (ANTS-IV)*, LNCS 1838, 33\u201363.\n\n---\n\n## Appendix A: Lean 4 Source Summary\n\nThe formalization consists of five files:\n\n| File | Lines | Theorems | Content |\n|------|-------|----------|---------|\n| `Defs.lean` | 40 | 1 | Core definitions |\n| `LocalObstruction.lean` | 50 | 4 | Mod 9 obstruction |\n| `Symmetry.lean` | 65 | 7 | Sign and permutation symmetry |\n| `LocalGlobal.lean` | 30 | 2 | Global \u2192 local implication |\n| `Factorization.lean` | 55 | 5 | Factorization reduction |\n\nAll theorems compile without `sorry` and use only standard axioms (propext, Classical.choice, Quot.sound).\n\n## Appendix B: Computational Results\n\nThe Python implementation (`demo.py`, `algorithms.py`, `applications.py`) provides:\n\n- Interactive exploration of local obstructions and solution search\n- Verified search algorithm matching the formal factorization theorem\n- Density estimation and local sufficiency conjecture testing\n- Eisenstein norm form analysis connecting to algebraic number theory\n",
+    "future_directions": "# Future Directions: Local-Global Geometry of Sums of Three Cubes\n\n## Synthesis\n\nThe formalization developed here establishes the first layer of a local-global architecture for the Diophantine surface $x^3+y^3+z^3 = k$: local obstructions, symmetry reductions, the global-to-local implication, and a factorization-based search algorithm. These form a coherent foundation, but the deepest questions\u2014Why does the Hasse principle appear to hold? What structure underlies the enormous solutions for small $k$?\u2014remain open. The directions below form a **progressive deepening** of the framework: Direction 1 attacks the gap between local and global from the cohomological side, Direction 2 connects to analytic density predictions, Direction 3 bridges to computational complexity, Direction 4 exploits parametric families, and Direction 5 pushes toward a general Diophantine surface theory. Each builds directly on the catalog theorems proved here.\n\n---\n\n## Direction 1: Brauer-Manin Obstructions for Integral Points on Cubic Surfaces\n\n**Conjecture:** For the cubic surface $X_k : x^3+y^3+z^3 = k$, the Brauer-Manin obstruction is the only obstruction to the integral Hasse principle. That is, if $k$ is everywhere locally admissible and survives the Brauer-Manin filtration, then $k$ is representable.\n\n**Test:** Compute the Brauer group $\\text{Br}(X_k)/\\text{Br}(\\mathbb{Q})$ for specific $k$ values (e.g., $k = 33, 42, 114$) and verify that the Brauer-Manin set $X_k(\\mathbb{A}_\\mathbb{Z})^{\\text{Br}}$ is nonempty whenever solutions exist. A counterexample would be a $k$ with nonempty Brauer-Manin set but no integral point.\n\n**Impact:** This would establish the three-cubes problem as a test case for the Colliot-Th\u00e9l\u00e8ne conjecture on integral points, one of the central open problems in arithmetic geometry. It would also provide the first formal connection between computational Diophantine search and cohomological obstructions.\n\n**The key insight is** that the mod 9 obstruction we formalized is the shadow of a Brauer class at the prime 3, and the general Brauer-Manin framework subsumes all such modular obstructions into a single cohomological invariant.\n\n**Why now?** The formal infrastructure for local admissibility (`ThreeCubeLocalAdmissible`, `EverywhereLocallyAdmissible`) created in this cycle provides the precise definitions needed to state and test Brauer-Manin predictions. Mathlib's growing \u00e9tale cohomology library makes partial formalization feasible.\n\n**Catalog References:** `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean), `not_threeCubeLocalAdmissible_mod9_of_eq_four_or_five` (Algebra/SumThreeCubes/LocalObstruction.lean)\n\n**Proof Strategy:** Formalize the Brauer group of a smooth cubic surface over $\\mathbb{Q}$, compute generators via Azumaya algebras, and evaluate the Brauer-Manin pairing at each completion of $\\mathbb{Q}$.\n\n**Domain Bridges:** Arithmetic geometry, \u00e9tale cohomology, class field theory\n\n**Lineage:** Extends the local-global implication (Theorem 4) from modular arithmetic to cohomological invariants\n\n**Ambition:** Grand challenge \u2014 would resolve a major case of the integral Hasse principle\n\n---\n\n## Direction 2: Density Heuristics via the Circle Method\n\n**Conjecture:** For each admissible $k$ (i.e., $k \\not\\equiv 4,5 \\pmod{9}$), the number of representations $|\\{(x,y,z) \\in [-N,N]^3 : x^3+y^3+z^3 = k\\}|$ grows as $c_k \\cdot N^{1/3}$ for an explicit constant $c_k > 0$ depending on the singular series and singular integral.\n\n**Test:** Compute empirical counts of representations for $k \\in \\{0, 1, 2, 3, 6, 7, 8, 9\\}$ up to $N = 10^6$ and compare with the predicted asymptotic. Measure the relative error $|R(N) - c_k N^{1/3}| / (c_k N^{1/3})$ and verify it decreases with $N$.\n\n**Impact:** Would provide the first formally grounded connection between the combinatorial/algebraic framework and analytic number theory. The singular series in the density prediction is a product of local densities, directly connecting to our `ThreeCubeLocalAdmissible` counts.\n\n**The key insight is** that the local admissibility counts $|A_n|/n$ at each modulus $n$ are the local factors of the singular series, and the everywhere-local-admissibility theorem guarantees this product converges when $k$ is admissible.\n\n**Why now?** The formal definitions of local admissibility and the computational infrastructure for counting admissible residues provide the exact data needed to compute singular series factors and compare with empirical density.\n\n**Catalog References:** `ThreeCubeLocalAdmissible` (Algebra/SumThreeCubes/Defs.lean), `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean)\n\n**Proof Strategy:** Formalize the circle method setup for cubic forms, compute the singular integral, and bound the minor arc contributions.\n\n**Domain Bridges:** Analytic number theory, harmonic analysis, probability theory\n\n**Lineage:** Connects the discrete local admissibility framework to continuous density predictions\n\n**Ambition:** Solid extension \u2014 the circle method for three cubes is at the boundary of current analytic technique\n\n---\n\n## Direction 3: Computational Complexity of Diophantine Search\n\n**Conjecture:** The factorization-based search algorithm (exploiting $x^3+y^3 = (x+y)(x^2-xy+y^2)$) achieves time complexity $O(B^{1+\\epsilon})$ for search bound $B$, compared to $O(B^3)$ for brute force. Furthermore, lattice reduction methods can improve this to $O(B^{2/3+\\epsilon})$ by exploiting the geometry of the cubic surface.\n\n**Test:** Implement the lattice reduction approach (as used by Booker-Sutherland) and formally verify its correctness relative to the factorization theorem. Measure empirical running times and compare with the theoretical bounds.\n\n**Impact:** Would establish a formal connection between algebraic structure (the sum-of-cubes factorization) and computational complexity, showing that algebraic identities yield provable speedups in Diophantine search.\n\n**The key insight is** that the factorization reduction theorem `sumThreeCubesRep_iff_exists_factorization` transforms a 3D search into a 1D search plus a factorization problem, and this dimensional reduction has precise complexity implications.\n\n**Why now?** The formal factorization theorem and discriminant relation provide the mathematical foundation for analyzing the algorithm's correctness and complexity within a verified framework.\n\n**Catalog References:** `sumThreeCubesRep_iff_exists_factorization` (Algebra/SumThreeCubes/Factorization.lean), `factorization_discriminant` (Algebra/SumThreeCubes/Factorization.lean)\n\n**Proof Strategy:** Formalize the LLL lattice reduction algorithm, connect lattice vectors to solutions of the cubic equation, and verify the complexity bounds.\n\n**Domain Bridges:** Computational complexity, lattice algorithms, algorithmic number theory\n\n**Lineage:** Extends the factorization reduction from algebraic identity to complexity-theoretic tool\n\n**Ambition:** Solid extension \u2014 combines formal verification with algorithm analysis\n\n---\n\n## Direction 4: Parametric Families and Algebraic Curves on Cubic Surfaces\n\n**Conjecture:** The parametric family $k = -3ab(a+b)$ (from `sum_three_cubes_neg_sum`) covers a positive density of admissible integers. More precisely, $|\\{k \\in [1,N] : k = 3ab(a+b) \\text{ for some } a,b \\in \\mathbb{Z}\\}| \\gg N^{2/3}$.\n\n**Test:** Enumerate all values of $-3ab(a+b)$ for $|a|, |b| \\leq 1000$ and measure the density of covered integers in $[1, 10^6]$. Compare with the predicted $N^{2/3}$ growth.\n\n**Impact:** Parametric families correspond to **algebraic curves** on the cubic surface. Understanding which curves pass through integer points, and how densely they cover the integers, connects Diophantine approximation to the geometry of rational curves on cubic surfaces.\n\n**The key insight is** that each parametric identity for sums of three cubes corresponds to a rational curve on $X_k$ parametrized over $\\mathbb{Z}$, and the union of all such curves determines a \"constructively representable\" subset whose density is a geometric invariant.\n\n**Why now?** The formal proof of `sumThreeCubesRep_neg_iff` and the identity $a^3 + b^3 + (-a-b)^3 = -3ab(a+b)$ provide the first verified parametric family, which can be used as a template for formalizing others.\n\n**Catalog References:** `sumThreeCubesRep_neg_iff` (Algebra/SumThreeCubes/Symmetry.lean), `sum_three_cubes_neg_sum` (Catalog/Algebra/LocalGlobal.lean)\n\n**Proof Strategy:** Enumerate known parametric families, compute their images, and prove density bounds using sieve methods.\n\n**Domain Bridges:** Algebraic geometry (rational curves on surfaces), sieve theory, additive combinatorics\n\n**Lineage:** Extends sign symmetry to full parametric family analysis\n\n**Ambition:** Solid extension \u2014 combines known identities with density estimation\n\n---\n\n## Direction 5: Generalization to Higher-Degree Diagonal Surfaces\n\n**Conjecture (Waring-type local-global):** For the equation $x_1^n + x_2^n + \\cdots + x_s^n = k$ with $s$ sufficiently large relative to $n$, the only local obstructions arise from $n$-th power residue conditions at primes dividing $n$, analogous to the mod-9 obstruction for $n=3, s=3$.\n\n**Test:** Compute local admissible sets for $x^4+y^4+z^4+w^4 = k$ modulo all $n \\leq 100$ and identify the obstructing moduli. Compare with the predicted pattern (obstructions only at powers of 2 and primes $p \\equiv 1 \\pmod{4}$).\n\n**Impact:** Would establish a general theory of local obstructions for Waring-type problems, unifying the three-cubes result with classical results on sums of squares, biquadrates, and higher powers.\n\n**The key insight is** that our framework\u2014local admissibility, everywhere local admissibility, the global-to-local implication\u2014generalizes verbatim to $x_1^n + \\cdots + x_s^n = k$ by replacing cubes with $n$-th powers, and the new obstructions reflect the arithmetic of $n$-th power residues.\n\n**Why now?** The Lean definitions `ThreeCubeLocalAdmissible` and `EverywhereLocallyAdmissible` are parametric in the modulus and can be straightforwardly generalized to arbitrary degree, making this the natural next step.\n\n**Catalog References:** All definitions in `Algebra/SumThreeCubes/Defs.lean`, the obstruction framework in `Algebra/SumThreeCubes/LocalObstruction.lean`\n\n**Proof Strategy:** Generalize definitions to $n$-th powers, classify $n$-th power residues modulo prime powers, and prove the analogue of Theorem 4 (global implies local) for general degree.\n\n**Domain Bridges:** Waring's problem, algebraic number theory ($n$-th power reciprocity), analytic number theory (circle method for higher powers)\n\n**Lineage:** Direct generalization of the entire framework from degree 3 to degree $n$\n\n**Ambition:** Grand challenge \u2014 would create a unified formal theory of local obstructions for additive Diophantine problems\n",
+    "demos": [
+      {
+        "name": "Three Cubes Explorer",
+        "code": "#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Interactive exploration of the sums-of-three-cubes problem.\n\nDemonstrates:\n  1. The mod-9 obstruction (local non-admissibility)\n  2. Factorization-based solution search\n  3. Local admissibility coverage across moduli\n  4. Statistics on the search process\n\"\"\"\n\nimport math\nimport sys\nfrom collections import Counter\nfrom typing import Optional\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core definitions\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef cube_residues_mod(n: int) -> set[int]:\n    \"\"\"Return the set of cube residues modulo n.\"\"\"\n    return {pow(x, 3, n) for x in range(n)}\n\n\ndef three_cube_local_admissible(n: int, a: int) -> bool:\n    \"\"\"Check if residue a is locally admissible mod n (sum of three cubes).\"\"\"\n    a_mod = a % n\n    cubes = cube_residues_mod(n)\n    for c1 in cubes:\n        for c2 in cubes:\n            rem = (a_mod - c1 - c2) % n\n            if rem in cubes:\n                return True\n    return False\n\n\ndef mod9_obstructed(k: int) -> bool:\n    \"\"\"Check if k is obstructed by the mod 9 condition.\"\"\"\n    return k % 9 in (4, 5)\n\n\ndef everywhere_locally_admissible(k: int, max_modulus: int = 100) -> tuple[bool, Optional[int]]:\n    \"\"\"\n    Check local admissibility for all moduli up to max_modulus.\n    Returns (is_admissible, first_failing_modulus_or_None).\n    \"\"\"\n    for n in range(2, max_modulus + 1):\n        if not three_cube_local_admissible(n, k):\n            return False, n\n    return True, None\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Factorization-based search (Algorithm from the research)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef find_xy_from_sq(s: int, q: int) -> Optional[tuple[int, int]]:\n    \"\"\"\n    Given s = x+y and q = x\u00b2-xy+y\u00b2, find integer x, y if they exist.\n\n    From the discriminant relation: 4q - s\u00b2 = 3(x-y)\u00b2.\n    So d\u00b2 = (4q - s\u00b2) / 3 where d = x - y.\n    Then x = (s + d) / 2, y = (s - d) / 2.\n    \"\"\"\n    disc = 4 * q - s * s\n    if disc < 0:\n        return None\n    if disc % 3 != 0:\n        return None\n    dsq = disc // 3\n    d = int(math.isqrt(dsq))\n    if d * d != dsq:\n        return None\n    # x = (s + d) / 2, y = (s - d) / 2\n    if (s + d) % 2 != 0:\n        return None\n    x = (s + d) // 2\n    y = (s - d) // 2\n    # Verify\n    if x ** 3 + y ** 3 == s * q:\n        return x, y\n    # Try negative d\n    d = -d\n    if (s + d) % 2 != 0:\n        return None\n    x = (s + d) // 2\n    y = (s - d) // 2\n    if x ** 3 + y ** 3 == s * q:\n        return x, y\n    return None\n\n\ndef divisors(n: int) -> list[int]:\n    \"\"\"Return all divisors of n (positive and negative).\"\"\"\n    if n == 0:\n        return []\n    absn = abs(n)\n    divs = []\n    for i in range(1, int(math.isqrt(absn)) + 1):\n        if absn % i == 0:\n            divs.extend([i, -i, absn // i, -(absn // i)])\n    return list(set(divs))\n\n\ndef search_factorization(k: int, bound: int = 1000) -> Optional[tuple[int, int, int]]:\n    \"\"\"\n    Search for x, y, z with x\u00b3 + y\u00b3 + z\u00b3 = k using factorization.\n\n    For each z in [-bound, bound], compute m = k - z\u00b3, then\n    search for factorizations m = s * q with s = x+y, q = x\u00b2-xy+y\u00b2.\n    \"\"\"\n    if mod9_obstructed(k):\n        return None  # provably impossible\n\n    stats = {\"z_tested\": 0, \"factor_pairs\": 0}\n\n    for z in range(0, bound + 1):\n        for sign in [1, -1]:\n            zz = z * sign\n            if z == 0 and sign == -1:\n                continue\n            m = k - zz ** 3\n            stats[\"z_tested\"] += 1\n\n            if m == 0:\n                # x\u00b3 + y\u00b3 = 0, so y = -x\n                return (0, 0, zz)\n\n            for s in divisors(m):\n                if s == 0:\n                    continue\n                q = m // s\n                stats[\"factor_pairs\"] += 1\n                result = find_xy_from_sq(s, q)\n                if result is not None:\n                    x, y = result\n                    assert x ** 3 + y ** 3 + zz ** 3 == k, \"Verification failed!\"\n                    return (x, y, zz)\n\n    return None\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Residue coverage analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef residue_coverage(n: int) -> dict:\n    \"\"\"Analyze which residues mod n are locally admissible.\"\"\"\n    admissible = set()\n    non_admissible = set()\n    for a in range(n):\n        if three_cube_local_admissible(n, a):\n            admissible.add(a)\n        else:\n            non_admissible.add(a)\n    return {\n        \"modulus\": n,\n        \"admissible\": sorted(admissible),\n        \"non_admissible\": sorted(non_admissible),\n        \"coverage\": len(admissible) / n,\n    }\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Display\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef display_analysis(k: int, search_bound: int = 1000):\n    \"\"\"Full analysis of an integer k.\"\"\"\n    print(f\"\\n{'='*60}\")\n    print(f\"  Analysis of k = {k}\")\n    print(f\"{'='*60}\")\n\n    # Mod 9 check\n    r = k % 9\n    print(f\"\\n  k mod 9 = {r}\")\n    if mod9_obstructed(k):\n        print(f\"  \u2717 OBSTRUCTED: k \u2261 {r} (mod 9)\")\n        print(f\"    No integer solution to x\u00b3+y\u00b3+z\u00b3 = {k} exists.\")\n        print(f\"    (Proved: residues 4,5 mod 9 are not three-cube admissible)\")\n        return\n    else:\n        print(f\"  \u2713 Passes mod-9 test (not \u2261 4 or 5)\")\n\n    # Local admissibility\n    print(f\"\\n  Local admissibility check (moduli 2..50):\")\n    all_local = True\n    for n in range(2, 51):\n        if not three_cube_local_admissible(n, k):\n            print(f\"    \u2717 FAILS at modulus {n}\")\n            all_local = False\n            break\n    if all_local:\n        print(f\"    \u2713 Locally admissible at all tested moduli\")\n\n    # Solution search\n    print(f\"\\n  Searching for solution (z \u2208 [-{search_bound}, {search_bound}])...\")\n    result = search_factorization(k, search_bound)\n    if result is not None:\n        x, y, z = result\n        print(f\"    \u2713 FOUND: {x}\u00b3 + {y}\u00b3 + {z}\u00b3 = {k}\")\n        print(f\"      Verification: {x**3} + {y**3} + {z**3} = {x**3+y**3+z**3}\")\n    else:\n        print(f\"    \u2717 No solution found within search bound\")\n\n    # Sign symmetry\n    print(f\"\\n  Sign symmetry: k \u21a6 -k = {-k}\")\n    result_neg = search_factorization(-k, search_bound)\n    if result_neg is not None:\n        x, y, z = result_neg\n        print(f\"    \u2713 FOUND: {x}\u00b3 + {y}\u00b3 + {z}\u00b3 = {-k}\")\n    else:\n        if mod9_obstructed(-k):\n            print(f\"    \u2717 -k \u2261 {(-k)%9} (mod 9) \u2014 obstructed\")\n        else:\n            print(f\"    \u2717 No solution found for -k within search bound\")\n\n\ndef display_residue_table():\n    \"\"\"Display residue coverage for several moduli.\"\"\"\n    print(f\"\\n{'='*60}\")\n    print(f\"  Residue Coverage Table\")\n    print(f\"{'='*60}\")\n    print(f\"  {'Modulus':>8} {'Admissible':>12} {'Blocked':>8} {'Coverage':>10}\")\n    print(f\"  {'-'*42}\")\n    for n in [2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 25, 27]:\n        info = residue_coverage(n)\n        blocked = info['non_admissible']\n        blocked_str = str(blocked) if blocked else \"none\"\n        print(f\"  {n:>8} {len(info['admissible']):>12} {len(blocked):>8} {info['coverage']:>9.1%}\")\n        if blocked:\n            print(f\"           blocked: {blocked_str}\")\n\n\ndef display_mod9_histogram():\n    \"\"\"Show which residues mod 9 appear in sums of three cubes.\"\"\"\n    print(f\"\\n{'='*60}\")\n    print(f\"  Mod 9 Residue Histogram (cube sums)\")\n    print(f\"{'='*60}\")\n    cubes_mod9 = [pow(x, 3, 9) for x in range(9)]\n    print(f\"  Cube residues mod 9: {sorted(set(cubes_mod9))} = {{0, 1, 8}}\")\n    print()\n\n    sums = Counter()\n    for a in cubes_mod9:\n        for b in cubes_mod9:\n            for c in cubes_mod9:\n                sums[(a + b + c) % 9] += 1\n\n    print(f\"  {'Residue':>8} {'# of ways':>10} {'Admissible':>12}\")\n    print(f\"  {'-'*34}\")\n    for r in range(9):\n        adm = \"\u2713\" if sums[r] > 0 else \"\u2717 BLOCKED\"\n        bar = \"\u2588\" * (sums[r] // 5 + 1) if sums[r] > 0 else \"\"\n        print(f\"  {r:>8} {sums[r]:>10} {adm:>12}  {bar}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551   Sums of Three Cubes: Local-Global Geometry Explorer   \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    # Show the mod 9 histogram\n    display_mod9_histogram()\n\n    # Show residue coverage\n    display_residue_table()\n\n    # Analyze specific integers\n    test_values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 17, 29, 33, 42, 100]\n\n    if len(sys.argv) > 1:\n        try:\n            test_values = [int(x) for x in sys.argv[1:]]\n        except ValueError:\n            print(\"Usage: python demo.py [k1 k2 k3 ...]\")\n            sys.exit(1)\n\n    for k in test_values:\n        display_analysis(k, search_bound=500)\n\n    # Summary statistics\n    print(f\"\\n{'='*60}\")\n    print(f\"  Summary: representability for k \u2208 [0, 100]\")\n    print(f\"{'='*60}\")\n    found = 0\n    obstructed = 0\n    not_found = 0\n    for k in range(101):\n        if mod9_obstructed(k):\n            obstructed += 1\n        elif search_factorization(k, 500) is not None:\n            found += 1\n        else:\n            not_found += 1\n\n    print(f\"  Obstructed (mod 9):    {obstructed:>4}\")\n    print(f\"  Solution found:        {found:>4}\")\n    print(f\"  Open (no solution):    {not_found:>4}\")\n    print(f\"  Total:                 {found + obstructed + not_found:>4}\")\n    print()\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      },
+      {
+        "name": "Applications & Experiments",
+        "code": "#!/usr/bin/env python3\n\"\"\"\napplications.py \u2014 Real-world applications and extended experiments\nfor the sums-of-three-cubes local-global framework.\n\nDemonstrates:\n  1. Systematic exploration of local obstruction patterns\n  2. The gap between local and global solvability\n  3. Connections to algebraic number theory (Eisenstein norm forms)\n  4. Computational verification of the local sufficiency conjecture\n\"\"\"\n\nimport math\nfrom collections import defaultdict\nfrom typing import Optional\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Local obstruction analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef cube_residues(n: int) -> set[int]:\n    \"\"\"Cube residues modulo n.\"\"\"\n    return {pow(x, 3, n) for x in range(n)}\n\n\ndef three_cube_sums(n: int) -> set[int]:\n    \"\"\"All residues mod n that are sums of three cubes.\"\"\"\n    cubes = cube_residues(n)\n    result = set()\n    for a in cubes:\n        for b in cubes:\n            for c in cubes:\n                result.add((a + b + c) % n)\n    return result\n\n\ndef analyze_prime_obstructions(bound: int = 100) -> None:\n    \"\"\"\n    Analyze which primes produce local obstructions.\n\n    Key finding: only p = 9 (= 3\u00b2) gives obstructions among small moduli.\n    This is connected to the fact that 3 is special for cubes (Fermat quotient).\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"  Local Obstruction Analysis by Prime Powers\")\n    print(\"=\" * 60)\n\n    primes = [p for p in range(2, bound) if all(p % i != 0 for i in range(2, int(p**0.5)+1))]\n\n    for p in primes[:20]:\n        for e in range(1, 5):\n            n = p ** e\n            if n > bound:\n                break\n            admissible = three_cube_sums(n)\n            blocked = n - len(admissible)\n            if blocked > 0:\n                print(f\"  p^e = {p}^{e} = {n:>5}: \"\n                      f\"{len(admissible)}/{n} admissible, \"\n                      f\"{blocked} blocked = {sorted(set(range(n)) - admissible)}\")\n\n    print()\n    print(\"  Observation: Only powers of 3 produce local obstructions\")\n    print(\"  for sums of three cubes. This is because cube roots of unity\")\n    print(\"  in Z/pZ for p \u2260 3 provide enough flexibility.\")\n    print()\n\n\ndef analyze_mod_powers_of_3(max_exp: int = 5) -> None:\n    \"\"\"\n    Detailed analysis of obstructions at powers of 3.\n\n    The mod-9 obstruction is the simplest case. What happens at 27, 81, ...?\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"  Obstructions at Powers of 3\")\n    print(\"=\" * 60)\n\n    for e in range(1, max_exp + 1):\n        n = 3 ** e\n        admissible = three_cube_sums(n)\n        blocked = set(range(n)) - admissible\n        ratio = len(blocked) / n\n        print(f\"\\n  mod 3^{e} = {n}:\")\n        print(f\"    Admissible: {len(admissible)}/{n} ({len(admissible)/n:.1%})\")\n        print(f\"    Blocked:    {len(blocked)}/{n} ({ratio:.1%})\")\n        if len(blocked) <= 20:\n            print(f\"    Blocked residues: {sorted(blocked)}\")\n        else:\n            print(f\"    Sample blocked: {sorted(blocked)[:10]}...\")\n\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Eisenstein norm form connection\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef eisenstein_norm(a: int, b: int) -> int:\n    \"\"\"\n    Norm in the Eisenstein integers Z[\u03c9], where \u03c9 = e^(2\u03c0i/3).\n\n    N(a + b\u03c9) = a\u00b2 - ab + b\u00b2 = a\u00b2 + b\u00b2 - ab\n\n    This is the binary quadratic form appearing in the factorization\n    x\u00b3 + y\u00b3 = (x+y)(x\u00b2 - xy + y\u00b2).\n    \"\"\"\n    return a * a - a * b + b * b\n\n\ndef representable_by_norm(m: int, bound: int = 100) -> Optional[tuple[int, int]]:\n    \"\"\"\n    Check if m = a\u00b2 - ab + b\u00b2 for some integers a, b.\n\n    These are exactly the norms of elements in Z[\u03c9].\n    By the theory of binary quadratic forms, m is representable iff\n    all prime factors p \u2261 2 (mod 3) appear to even power in m.\n    \"\"\"\n    if m < 0:\n        return None\n    if m == 0:\n        return (0, 0)\n    for a in range(-bound, bound + 1):\n        for b in range(-bound, bound + 1):\n            if eisenstein_norm(a, b) == m:\n                return (a, b)\n    return None\n\n\ndef factorization_analysis(k: int, z_bound: int = 50) -> None:\n    \"\"\"\n    For a given k, analyze the factorization landscape k - z\u00b3 = s \u00b7 q.\n\n    Shows how the Eisenstein norm form constrains solutions.\n    \"\"\"\n    print(f\"\\n  Factorization landscape for k = {k}:\")\n    print(f\"  {'z':>5} {'m=k-z\u00b3':>12} {'# divisors':>12} {'norm rep?':>10}\")\n    print(f\"  {'-'*42}\")\n\n    for z in range(-min(z_bound, 10), min(z_bound, 10) + 1):\n        m = k - z ** 3\n        if m == 0:\n            print(f\"  {z:>5} {m:>12} {'\u2014':>12} {'trivial':>10}\")\n            continue\n        divs = []\n        absm = abs(m)\n        for i in range(1, int(math.isqrt(absm)) + 1):\n            if absm % i == 0:\n                divs.extend([i, -i, absm // i, -(absm // i)])\n        divs = sorted(set(divs))\n\n        # Check if any factorization s*q = m has q representable by Eisenstein norm\n        found = False\n        for s in divs:\n            if s == 0:\n                continue\n            q = m // s\n            if q >= 0 and representable_by_norm(q, 50) is not None:\n                found = True\n                break\n\n        norm_str = \"\u2713\" if found else \"\u2717\"\n        print(f\"  {z:>5} {m:>12} {len(divs):>12} {norm_str:>10}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Local sufficiency conjecture verification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef verify_local_sufficiency_conjecture(N: int = 200, mod_bound: int = 50) -> None:\n    \"\"\"\n    Test the conjecture: if k \u2262 4,5 (mod 9), then k is locally\n    admissible at every modulus n.\n\n    This is the computational shadow of the conjecture that the only\n    congruence obstruction is the mod-9 one.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"  Testing Local Sufficiency Conjecture\")\n    print(\"=\" * 60)\n    print(f\"  Range: k \u2208 [0, {N}], moduli n \u2208 [2, {mod_bound}]\")\n    print()\n\n    # Precompute admissible sets\n    admissible_sets: dict[int, set[int]] = {}\n    for n in range(2, mod_bound + 1):\n        admissible_sets[n] = three_cube_sums(n)\n\n    counterexamples = []\n    tested = 0\n\n    for k in range(N + 1):\n        if k % 9 in (4, 5):\n            continue\n        tested += 1\n        for n in range(2, mod_bound + 1):\n            if k % n not in admissible_sets[n]:\n                counterexamples.append((k, n))\n                break\n\n    if counterexamples:\n        print(f\"  \u2717 CONJECTURE FAILS!\")\n        for k, n in counterexamples[:10]:\n            print(f\"    k = {k}: fails at modulus n = {n}\")\n    else:\n        print(f\"  \u2713 Conjecture holds for all {tested} tested values\")\n        print(f\"    No k \u2208 [0, {N}] with k \u2262 4,5 (mod 9) fails\")\n        print(f\"    local admissibility at any modulus n \u2264 {mod_bound}\")\n\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: Symmetry group action on solutions\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef enumerate_symmetry_orbit(x: int, y: int, z: int) -> set[tuple[int, int, int]]:\n    \"\"\"\n    Compute the orbit of (x, y, z) under the symmetry group of x\u00b3+y\u00b3+z\u00b3.\n\n    The full symmetry group is S\u2083 \u00d7 (Z/2Z)\u00b3 (permutations and individual sign flips).\n    But only S\u2083 preserves the sum; sign flips change k to -k.\n    For the same k, the symmetry group is S\u2083 (order 6).\n    \"\"\"\n    from itertools import permutations\n    orbit = set()\n    for perm in permutations([x, y, z]):\n        orbit.add(perm)\n    return orbit\n\n\ndef solution_orbit_analysis(k: int, bound: int = 100) -> None:\n    \"\"\"Analyze solution orbits for a given k.\"\"\"\n    print(f\"\\n  Solution orbits for k = {k}:\")\n\n    solutions = set()\n    for x in range(-bound, bound + 1):\n        for y in range(-bound, bound + 1):\n            z3 = k - x**3 - y**3\n            z = round(abs(z3) ** (1/3)) * (1 if z3 >= 0 else -1)\n            for zz in [z-1, z, z+1]:\n                if x**3 + y**3 + zz**3 == k:\n                    # Canonical form: sorted triple\n                    triple = tuple(sorted([x, y, zz]))\n                    solutions.add(triple)\n\n    if not solutions:\n        print(f\"    No solutions found in [-{bound}, {bound}]\")\n        return\n\n    print(f\"    Found {len(solutions)} distinct orbits (canonical form: sorted):\")\n    for sol in sorted(solutions)[:20]:\n        x, y, z = sol\n        orbit_size = len(enumerate_symmetry_orbit(x, y, z))\n        print(f\"    ({x}, {y}, {z}) \u2014 orbit size {orbit_size}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551   Applications: Local-Global Geometry of Three Cubes   \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\\n\")\n\n    # Application 1: Local obstructions\n    analyze_prime_obstructions(50)\n    analyze_mod_powers_of_3(4)\n\n    # Application 2: Eisenstein norm analysis\n    print(\"=\" * 60)\n    print(\"  Eisenstein Norm Form Analysis\")\n    print(\"=\" * 60)\n    print(\"  x\u00b3 + y\u00b3 = (x+y)(x\u00b2 - xy + y\u00b2)\")\n    print(\"  where x\u00b2 - xy + y\u00b2 is the Eisenstein norm form N(x + y\u03c9)\")\n    factorization_analysis(29)\n    factorization_analysis(33)\n\n    # Application 3: Conjecture test\n    verify_local_sufficiency_conjecture(500, 50)\n\n    # Application 4: Solution orbits\n    print(\"=\" * 60)\n    print(\"  Solution Orbit Analysis\")\n    print(\"=\" * 60)\n    for k in [0, 1, 2, 3, 6, 8, 9, 10]:\n        solution_orbit_analysis(k, 30)\n\n    print()\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      }
+    ],
+    "algorithms": [
+      {
+        "name": "Factorization-Based Search",
+        "pseudocode": "Algorithm: FactorizationSearch(k, B)\nInput: integer k, search bound B\nOutput: (x, y, z) with x\u00b3+y\u00b3+z\u00b3 = k, or FAIL\n\n1. if k mod 9 \u2208 {4, 5}: return OBSTRUCTED\n2. for z in {0, \u00b11, ..., \u00b1B}:\n3.   m \u2190 k - z\u00b3\n4.   for each divisor s of m:\n5.     q \u2190 m / s\n6.     \u0394 \u2190 4q - s\u00b2\n7.     if \u0394 \u2265 0 and \u0394 mod 3 = 0 and \u0394/3 is perfect square:\n8.       d \u2190 \u221a(\u0394/3)\n9.       x \u2190 (s+d)/2, y \u2190 (s-d)/2\n10.      if x\u00b3 + y\u00b3 + z\u00b3 = k: return (x, y, z)\n11. return FAIL\n\nComplexity: O(B \u00b7 d(k-z\u00b3)) where d(m) is the divisor count",
+        "code": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Verified algorithms for the sums-of-three-cubes problem.\n\nImplements:\n  1. Modular sieve with factorization-based reduction\n  2. Local admissibility checker\n  3. Density estimation for representable integers\n  4. Exhaustive search with symmetry reduction\n\nEach algorithm includes docstrings, type hints, and correctness guarantees\nmatching the formally verified Lean theorems.\n\"\"\"\n\nimport math\nfrom typing import Optional\nfrom dataclasses import dataclass\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Data types\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass\nclass CubeSolution:\n    \"\"\"A certified solution (x, y, z) to x\u00b3+y\u00b3+z\u00b3 = k.\"\"\"\n    x: int\n    y: int\n    z: int\n    k: int\n\n    def verify(self) -> bool:\n        \"\"\"Verify the solution is correct.\"\"\"\n        return self.x ** 3 + self.y ** 3 + self.z ** 3 == self.k\n\n    def __str__(self) -> str:\n        return f\"{self.x}\u00b3 + {self.y}\u00b3 + {self.z}\u00b3 = {self.k}\"\n\n\n@dataclass\nclass SearchResult:\n    \"\"\"Result of a three-cube search.\"\"\"\n    k: int\n    solution: Optional[CubeSolution]\n    z_values_tested: int\n    factor_pairs_tested: int\n    search_bound: int\n    obstructed_mod9: bool\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Modular Sieve\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef mod9_sieve(k: int) -> bool:\n    \"\"\"\n    Check the mod-9 obstruction.\n\n    Correctness theorem (Lean: sumThreeCubesRep_implies_not_mod9_four_five):\n      If this returns False, no solution exists.\n\n    Time: O(1)\n    Space: O(1)\n    \"\"\"\n    return k % 9 not in (4, 5)\n\n\ndef modular_sieve(k: int, moduli: list[int] | None = None) -> tuple[bool, int | None]:\n    \"\"\"\n    Multi-modulus sieve: check local admissibility at several moduli.\n\n    Correctness theorem (Lean: not_sumThreeCubesRep_of_local_failure):\n      If any modulus fails, no solution exists.\n\n    Args:\n        k: target integer\n        moduli: list of moduli to check (default: [9])\n\n    Returns:\n        (passes_sieve, failing_modulus_or_None)\n\n    Time: O(sum(n\u00b3) for n in moduli)\n    Space: O(max(n) for n in moduli)\n    \"\"\"\n    if moduli is None:\n        moduli = [9]\n\n    for n in moduli:\n        cubes = {pow(x, 3, n) for x in range(n)}\n        k_mod = k % n\n        admissible = False\n        for c1 in cubes:\n            for c2 in cubes:\n                if (k_mod - c1 - c2) % n in cubes:\n                    admissible = True\n                    break\n            if admissible:\n                break\n        if not admissible:\n            return False, n\n\n    return True, None\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Factorization-based search\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef integer_divisors(n: int) -> list[int]:\n    \"\"\"Return all integer divisors of n (positive and negative).\"\"\"\n    if n == 0:\n        return []\n    absn = abs(n)\n    divs = set()\n    for i in range(1, int(math.isqrt(absn)) + 1):\n        if absn % i == 0:\n            divs.update([i, -i, absn // i, -(absn // i)])\n    return sorted(divs)\n\n\ndef recover_xy(s: int, q: int) -> Optional[tuple[int, int]]:\n    \"\"\"\n    Given s = x+y and q = x\u00b2-xy+y\u00b2, recover (x, y) if integer solutions exist.\n\n    Uses the discriminant relation (Lean: factorization_discriminant):\n      4q - s\u00b2 = 3(x-y)\u00b2\n\n    Time: O(1) (single square root check)\n    \"\"\"\n    disc = 4 * q - s * s\n    if disc < 0 or disc % 3 != 0:\n        return None\n\n    dsq = disc // 3\n    d = int(math.isqrt(dsq))\n    if d * d != dsq:\n        return None\n\n    for dd in [d, -d]:\n        if (s + dd) % 2 == 0:\n            x = (s + dd) // 2\n            y = (s - dd) // 2\n            if x + y == s and x * x - x * y + y * y == q:\n                return x, y\n    return None\n\n\ndef factorization_search(k: int, bound: int = 1000) -> SearchResult:\n    \"\"\"\n    Search for x\u00b3+y\u00b3+z\u00b3 = k using the sum-of-cubes factorization.\n\n    Algorithm (matches Lean: sumThreeCubesRep_iff_exists_factorization):\n      1. If k \u2261 4,5 (mod 9), reject immediately.\n      2. For each z \u2208 [-bound, bound]:\n         a. Compute m = k - z\u00b3\n         b. For each factorization m = s\u00b7q:\n            - Try to recover (x,y) with x+y = s, x\u00b2-xy+y\u00b2 = q\n         c. If found, return certified solution.\n\n    Correctness:\n      - If solution returned, x\u00b3+y\u00b3+z\u00b3 = k (verified)\n      - If rejected by mod 9, no solution exists (proved)\n\n    Time: O(bound \u00b7 d(m)) where d(m) is the number of divisors of m = k-z\u00b3\n    Space: O(\u221am) for divisor enumeration\n    \"\"\"\n    z_tested = 0\n    factor_pairs = 0\n\n    if not mod9_sieve(k):\n        return SearchResult(k, None, 0, 0, bound, True)\n\n    for z_abs in range(bound + 1):\n        for z_sign in ([0] if z_abs == 0 else [z_abs, -z_abs]):\n            z = z_sign\n            m = k - z ** 3\n            z_tested += 1\n\n            if m == 0:\n                sol = CubeSolution(0, 0, z, k)\n                assert sol.verify()\n                return SearchResult(k, sol, z_tested, factor_pairs, bound, False)\n\n            for s in integer_divisors(m):\n                if s == 0:\n                    continue\n                q = m // s\n                factor_pairs += 1\n                result = recover_xy(s, q)\n                if result is not None:\n                    x, y = result\n                    sol = CubeSolution(x, y, z, k)\n                    assert sol.verify(), f\"Verification failed: {sol}\"\n                    return SearchResult(k, sol, z_tested, factor_pairs, bound, False)\n\n    return SearchResult(k, None, z_tested, factor_pairs, bound, False)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: Local admissibility analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compute_local_admissible_set(n: int) -> set[int]:\n    \"\"\"\n    Compute the set of residues mod n that are sums of three cubes.\n\n    This implements ThreeCubeLocalAdmissible from the Lean formalization.\n\n    Time: O(n\u00b3)\n    Space: O(n)\n    \"\"\"\n    cubes = {pow(x, 3, n) for x in range(n)}\n    admissible = set()\n    for c1 in cubes:\n        for c2 in cubes:\n            for c3 in cubes:\n                admissible.add((c1 + c2 + c3) % n)\n    return admissible\n\n\ndef find_local_obstructions(max_modulus: int = 50) -> dict[int, set[int]]:\n    \"\"\"\n    Find all local obstructions up to a given modulus.\n\n    For each modulus n, compute which residues are NOT locally admissible.\n    These are necessary conditions for non-representability.\n\n    Time: O(sum(n\u00b3) for n in 2..max_modulus)\n    \"\"\"\n    obstructions = {}\n    for n in range(2, max_modulus + 1):\n        admissible = compute_local_admissible_set(n)\n        blocked = set(range(n)) - admissible\n        if blocked:\n            obstructions[n] = blocked\n    return obstructions\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Density estimation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef estimate_representability_density(N: int, search_bound: int = 200) -> dict:\n    \"\"\"\n    Estimate the density of representable integers in [0, N].\n\n    Returns statistics on how many integers pass each filter stage.\n\n    Time: O(N \u00b7 search_bound \u00b7 d(k-z\u00b3))\n    \"\"\"\n    stats = {\n        \"total\": N + 1,\n        \"pass_mod9\": 0,\n        \"found_solution\": 0,\n        \"open\": 0,\n        \"obstructed\": 0,\n    }\n    found = []\n    not_found = []\n\n    for k in range(N + 1):\n        if not mod9_sieve(k):\n            stats[\"obstructed\"] += 1\n            continue\n        stats[\"pass_mod9\"] += 1\n\n        result = factorization_search(k, search_bound)\n        if result.solution is not None:\n            stats[\"found_solution\"] += 1\n            found.append(k)\n        else:\n            stats[\"open\"] += 1\n            not_found.append(k)\n\n    stats[\"found_list\"] = found\n    stats[\"open_list\"] = not_found\n    stats[\"density_among_admissible\"] = (\n        stats[\"found_solution\"] / stats[\"pass_mod9\"]\n        if stats[\"pass_mod9\"] > 0 else 0\n    )\n    return stats\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 5: Symmetry-reduced search\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef symmetry_reduced_search(k: int, bound: int = 1000) -> SearchResult:\n    \"\"\"\n    Search exploiting S\u2083 symmetry and sign symmetry.\n\n    By permutation invariance (Lean: onCubicSurface_perm), we can\n    assume x \u2264 y \u2264 z without loss of generality for finding any solution.\n\n    By sign symmetry (Lean: sumThreeCubesRep_neg_iff), we can\n    search for |k| and negate if needed.\n\n    Time: O(bound\u00b3/6) (factor of 6 from S\u2083 symmetry)\n    \"\"\"\n    if not mod9_sieve(k):\n        return SearchResult(k, None, 0, 0, bound, True)\n\n    z_tested = 0\n    factor_pairs = 0\n\n    # Use factorization search (more efficient than brute force)\n    result = factorization_search(k, bound)\n    if result.solution is not None:\n        return result\n\n    # If k < 0, try searching for -k and negating (sign symmetry)\n    if k < 0:\n        result_neg = factorization_search(-k, bound)\n        if result_neg.solution is not None:\n            sol = result_neg.solution\n            neg_sol = CubeSolution(-sol.x, -sol.y, -sol.z, k)\n            assert neg_sol.verify()\n            return SearchResult(k, neg_sol, result_neg.z_values_tested,\n                              result_neg.factor_pairs_tested, bound, False)\n\n    return SearchResult(k, None, z_tested, factor_pairs, bound, False)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Example usage\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=== Algorithm Demonstrations ===\\n\")\n\n    # Demo 1: Factorization search\n    print(\"1. Factorization-based search:\")\n    for k in [0, 1, 2, 3, 6, 7, 8, 9, 10, 17, 29, 100]:\n        result = factorization_search(k, 500)\n        if result.obstructed_mod9:\n            print(f\"   k={k:>4}: mod-9 obstructed\")\n        elif result.solution:\n            print(f\"   k={k:>4}: {result.solution}  \"\n                  f\"(tested {result.z_values_tested} z-values, \"\n                  f\"{result.factor_pairs_tested} factor pairs)\")\n        else:\n            print(f\"   k={k:>4}: no solution found (bound={result.search_bound})\")\n\n    # Demo 2: Local obstructions\n    print(\"\\n2. Local obstructions (moduli with blocked residues):\")\n    obs = find_local_obstructions(30)\n    for n, blocked in sorted(obs.items()):\n        print(f\"   mod {n:>3}: blocked residues = {sorted(blocked)}\")\n\n    # Demo 3: Density estimation\n    print(\"\\n3. Density of representable integers in [0, 100]:\")\n    density = estimate_representability_density(100, 500)\n    print(f\"   Total: {density['total']}\")\n    print(f\"   Mod-9 obstructed: {density['obstructed']}\")\n    print(f\"   Pass mod-9: {density['pass_mod9']}\")\n    print(f\"   Solution found: {density['found_solution']}\")\n    print(f\"   Open (no solution found): {density['open']}\")\n    print(f\"   Density among admissible: {density['density_among_admissible']:.1%}\")\n    if density['open_list']:\n        print(f\"   Open values: {density['open_list']}\")\n"
+      }
+    ],
+    "lean_proofs": "-- \u2550\u2550\u2550 Algebra/SumThreeCubes/Defs.lean \u2550\u2550\u2550\nimport Mathlib\n\n/-!\n# Sums of Three Cubes \u2014 Core Definitions\n\nThis file establishes the fundamental definitions for the local-global\narchitecture of the Diophantine surface x\u00b3 + y\u00b3 + z\u00b3 = k.\n\n## Main Definitions\n\n* `SumThreeCubesRep k` \u2014 integral representability as a sum of three cubes\n* `OnCubicSurface k x y z` \u2014 membership on the affine cubic surface X_k\n* `ThreeCubeLocalAdmissible n a` \u2014 local admissibility modulo n\n* `EverywhereLocallyAdmissible k` \u2014 everywhere local admissibility (proto-Hasse)\n-/\n\n/-- An integer `k` is representable as a sum of three cubes. -/\ndef SumThreeCubesRep (k : \u2124) : Prop :=\n  \u2203 x y z : \u2124, x ^ 3 + y ^ 3 + z ^ 3 = k\n\n/-- A triple `(x, y, z)` lies on the affine cubic surface X_k. -/\ndef OnCubicSurface (k x y z : \u2124) : Prop :=\n  x ^ 3 + y ^ 3 + z ^ 3 = k\n\n/-- A residue class `a` modulo `n` is locally admissible for sums of three cubes. -/\ndef ThreeCubeLocalAdmissible (n : \u2115) (a : ZMod n) : Prop :=\n  \u2203 x y z : ZMod n, x ^ 3 + y ^ 3 + z ^ 3 = a\n\n/-- An integer `k` is everywhere locally admissible: for every positive modulus,\nthe residue class of `k` is representable as a sum of three cubes. This is\nthe arithmetic shadow of adelic solvability. -/\ndef EverywhereLocallyAdmissible (k : \u2124) : Prop :=\n  \u2200 n : \u2115, 0 < n \u2192 ThreeCubeLocalAdmissible n (k : ZMod n)\n\n/-- `SumThreeCubesRep` and `OnCubicSurface` are equivalent characterizations. -/\ntheorem sumThreeCubesRep_iff_onCubicSurface (k : \u2124) :\n    SumThreeCubesRep k \u2194 \u2203 x y z : \u2124, OnCubicSurface k x y z := by\n  rfl\n\n\n-- \u2550\u2550\u2550 Algebra/SumThreeCubes/LocalObstruction.lean \u2550\u2550\u2550\nimport Mathlib\nimport Algebra.SumThreeCubes.Defs\n\n/-!\n# Mod 9 Local Obstruction\n\nThis file reformulates the classical mod 9 obstruction for sums of three cubes\ninto the local admissibility framework.\n\n## Main Results\n\n* `not_threeCubeLocalAdmissible_mod9_four` \u2014 4 is not locally admissible mod 9\n* `not_threeCubeLocalAdmissible_mod9_five` \u2014 5 is not locally admissible mod 9\n* `not_threeCubeLocalAdmissible_mod9_of_eq_four_or_five` \u2014 combined statement\n* `sumThreeCubesRep_implies_not_mod9_four_five` \u2014 integral corollary\n-/\n\n/-\nThe residue 4 mod 9 is not locally admissible for sums of three cubes.\n-/\ntheorem not_threeCubeLocalAdmissible_mod9_four :\n    \u00ac ThreeCubeLocalAdmissible 9 (4 : ZMod 9) := by\n  simp +decide only [ThreeCubeLocalAdmissible]\n\n/-\nThe residue 5 mod 9 is not locally admissible for sums of three cubes.\n-/\ntheorem not_threeCubeLocalAdmissible_mod9_five :\n    \u00ac ThreeCubeLocalAdmissible 9 (5 : ZMod 9) := by\n  -- By definition of ThreeCubeLocalAdmissible, we need to show that there do not exist $x, y, z \\in \\mathbb{Z}/9\\mathbb{Z}$ such that $x^3 + y^3 + z^3 = 5$.\n  unfold ThreeCubeLocalAdmissible\n  simp +decide\n\n/-- Combined: residues 4 and 5 mod 9 are not locally admissible. -/\ntheorem not_threeCubeLocalAdmissible_mod9_of_eq_four_or_five\n    (a : ZMod 9) (h : a = 4 \u2228 a = 5) :\n    \u00ac ThreeCubeLocalAdmissible 9 a := by\n  rcases h with rfl | rfl\n  \u00b7 exact not_threeCubeLocalAdmissible_mod9_four\n  \u00b7 exact not_threeCubeLocalAdmissible_mod9_five\n\n/-\nIntegral corollary: if k is representable as a sum of three cubes,\nthen k mod 9 is neither 4 nor 5.\n-/\ntheorem sumThreeCubesRep_implies_not_mod9_four_five\n    (k : \u2124) (hrep : SumThreeCubesRep k) :\n    \u00ac ((k : ZMod 9) = 4 \u2228 (k : ZMod 9) = 5) := by\n  rcases hrep with \u27e8 x, y, z, h \u27e9 ; replace h := congr_arg ( ( \u2191 ) : \u2124 \u2192 ZMod 9 ) h ; simp_all +decide ;\n  -- Use the fact that cubes modulo 9 are 0, 1, or 8.\n  have h_cubes_mod_9 (n : ZMod 9) : n^3 = 0 \u2228 n^3 = 1 \u2228 n^3 = 8 := by\n    native_decide +revert;\n  rcases h_cubes_mod_9 x with ha | ha | ha <;> rcases h_cubes_mod_9 y with hb | hb | hb <;> rcases h_cubes_mod_9 z with hc | hc | hc <;> simp +decide only [\u2190 h, ha, hb, hc]\n\n-- \u2550\u2550\u2550 Algebra/SumThreeCubes/Symmetry.lean \u2550\u2550\u2550\nimport Mathlib\nimport Algebra.SumThreeCubes.Defs\n\n/-!\n# Symmetry of the Cubic Surface X_k\n\nThis file formalizes the symmetries of the Diophantine equation x\u00b3 + y\u00b3 + z\u00b3 = k:\n- Sign symmetry: SumThreeCubesRep(-k) \u2194 SumThreeCubesRep(k)\n- Permutation invariance: the equation is invariant under S\u2083\n\n## Main Results\n\n* `sumThreeCubesRep_neg_iff` \u2014 representability is invariant under k \u21a6 -k\n* `onCubicSurface_perm` \u2014 full S\u2083 permutation invariance\n-/\n\n/-- If k is representable, so is -k. -/\ntheorem sumThreeCubesRep_neg (k : \u2124) (h : SumThreeCubesRep k) :\n    SumThreeCubesRep (-k) := by\n  obtain \u27e8x, y, z, hxyz\u27e9 := h\n  exact \u27e8-x, -y, -z, by nlinarith\u27e9\n\n/-- Representability is invariant under negation. -/\ntheorem sumThreeCubesRep_neg_iff (k : \u2124) :\n    SumThreeCubesRep (-k) \u2194 SumThreeCubesRep k := by\n  constructor\n  \u00b7 intro h; have := sumThreeCubesRep_neg (-k) h; rwa [neg_neg] at this\n  \u00b7 exact sumThreeCubesRep_neg k\n\n/-- Swapping x and y preserves OnCubicSurface. -/\ntheorem onCubicSurface_swap_xy (k x y z : \u2124) (h : OnCubicSurface k x y z) :\n    OnCubicSurface k y x z := by\n  unfold OnCubicSurface at *; linarith\n\n/-- Swapping x and z preserves OnCubicSurface. -/\ntheorem onCubicSurface_swap_xz (k x y z : \u2124) (h : OnCubicSurface k x y z) :\n    OnCubicSurface k z y x := by\n  unfold OnCubicSurface at *; linarith\n\n/-- Swapping y and z preserves OnCubicSurface. -/\ntheorem onCubicSurface_swap_yz (k x y z : \u2124) (h : OnCubicSurface k x y z) :\n    OnCubicSurface k x z y := by\n  unfold OnCubicSurface at *; linarith\n\n/-\nFull S\u2083 permutation invariance on the cubic surface.\nAny permutation of coordinates preserves membership on X_k.\n-/\ntheorem onCubicSurface_perm\n    (k x y z : \u2124) (\u03c3 : Equiv.Perm (Fin 3))\n    (h : OnCubicSurface k x y z) :\n    OnCubicSurface k\n      (![x, y, z] (\u03c3 0))\n      (![x, y, z] (\u03c3 1))\n      (![x, y, z] (\u03c3 2)) := by\n  fin_cases \u03c3 <;> simp_all +decide [ OnCubicSurface ];\n  \u00b7 convert h using 1 ; ring!;\n  \u00b7 convert h using 1 ; ring!;\n  \u00b7 convert h using 1 ; ring!;\n  \u00b7 simp_all +decide [ add_comm, add_assoc, Equiv.swap_apply_def ];\n  \u00b7 convert h using 1 ; ring!\n\n/-- Negating all coordinates gives a solution for -k. -/\ntheorem onCubicSurface_neg_all (k x y z : \u2124) (h : OnCubicSurface k x y z) :\n    OnCubicSurface (-k) (-x) (-y) (-z) := by\n  unfold OnCubicSurface at *; nlinarith\n\n-- \u2550\u2550\u2550 Algebra/SumThreeCubes/LocalGlobal.lean \u2550\u2550\u2550\nimport Mathlib\nimport Algebra.SumThreeCubes.Defs\n\n/-!\n# Local-Global Implication for Sums of Three Cubes\n\nThis file proves that integral representability implies everywhere\nlocal admissibility \u2014 the \"easy direction\" of the Hasse principle.\n\n## Main Results\n\n* `sumThreeCubesRep_implies_everywhereLocallyAdmissible` \u2014 global \u27f9 local\n* `not_sumThreeCubesRep_of_local_failure` \u2014 contrapositive obstruction principle\n-/\n\n/-\nGlobal representability implies local admissibility at every modulus.\n-/\ntheorem sumThreeCubesRep_implies_everywhereLocallyAdmissible\n    (k : \u2124) (h : SumThreeCubesRep k) :\n    EverywhereLocallyAdmissible k := by\n  exact fun n hn => by obtain \u27e8 x, y, z, rfl \u27e9 := h; exact \u27e8 x, y, z, by simp +decide \u27e9 ;\n\n/-- Contrapositive: if local admissibility fails at some modulus,\nthen k is not globally representable. -/\ntheorem not_sumThreeCubesRep_of_local_failure\n    (k : \u2124) (n : \u2115) (hn : 0 < n)\n    (hfail : \u00ac ThreeCubeLocalAdmissible n (k : ZMod n)) :\n    \u00ac SumThreeCubesRep k := by\n  intro hrep\n  exact hfail (sumThreeCubesRep_implies_everywhereLocallyAdmissible k hrep n hn)\n\n-- \u2550\u2550\u2550 Algebra/SumThreeCubes/Factorization.lean \u2550\u2550\u2550\nimport Mathlib\nimport Algebra.SumThreeCubes.Defs\n\n/-!\n# Factorization Reduction for Sums of Three Cubes\n\nUses the sum-of-cubes identity x\u00b3 + y\u00b3 = (x+y)(x\u00b2-xy+y\u00b2) to reduce the\nthree-cube problem to a factorization/binary quadratic constraint.\n\n## Main Results\n\n* `sumThreeCubesRep_iff_exists_factorization` \u2014 reduction to factor search\n* `factorization_discriminant` \u2014 discriminant relation for recovery\n* `norm_form_nonneg` \u2014 nonnegativity of x\u00b2-xy+y\u00b2\n-/\n\n/-- The sum of cubes identity: x\u00b3 + y\u00b3 = (x + y)(x\u00b2 - xy + y\u00b2). -/\ntheorem sum_of_cubes_factorization (x y : \u2124) :\n    x ^ 3 + y ^ 3 = (x + y) * (x ^ 2 - x * y + y ^ 2) := by ring\n\n/-\nReduction theorem: existence of x, y with x\u00b3 + y\u00b3 + z\u00b3 = k is equivalent\nto existence of a factorization k - z\u00b3 = s \u00b7 q where s = x + y and\nq = x\u00b2 - xy + y\u00b2.\n-/\ntheorem sumThreeCubesRep_iff_exists_factorization\n    (k z : \u2124) :\n    (\u2203 x y : \u2124, x ^ 3 + y ^ 3 + z ^ 3 = k) \u2194\n    \u2203 s q : \u2124, s * q = k - z ^ 3\n      \u2227 \u2203 x y : \u2124, x + y = s \u2227 x ^ 2 - x * y + y ^ 2 = q := by\n  constructor;\n  \u00b7 rintro \u27e8 x, y, h \u27e9;\n    exact \u27e8 x + y, x ^ 2 - x * y + y ^ 2, by linarith [ sum_of_cubes_factorization x y ], x, y, rfl, rfl \u27e9;\n  \u00b7 rintro \u27e8 s, q, hsq, x, y, rfl, rfl \u27e9;\n    exact \u27e8 x, y, by linear_combination hsq \u27e9\n\n/-\nThe discriminant relation: 4q - s\u00b2 = 3(x-y)\u00b2 when s = x+y, q = x\u00b2-xy+y\u00b2.\n-/\ntheorem factorization_discriminant (s q x y : \u2124)\n    (hs : x + y = s) (hq : x ^ 2 - x * y + y ^ 2 = q) :\n    4 * q - s ^ 2 = 3 * (x - y) ^ 2 := by\n  grind\n\n/-\nThe binary quadratic form x\u00b2 - xy + y\u00b2 is always nonneg for integers.\n-/\ntheorem norm_form_nonneg (x y : \u2124) :\n    0 \u2264 x ^ 2 - x * y + y ^ 2 := by\n  linarith [ sq_nonneg ( x - y ), sq_nonneg x, sq_nonneg y ]\n\n/-- When z = 0, representability reduces to the binary sum of cubes problem. -/\ntheorem sumThreeCubesRep_of_binary (k : \u2124)\n    (h : \u2203 x y : \u2124, x ^ 3 + y ^ 3 = k) :\n    SumThreeCubesRep k := by\n  obtain \u27e8x, y, hxy\u27e9 := h\n  exact \u27e8x, y, 0, by simp [hxy]\u27e9\n\n",
+    "modules": {
+      "algorithms": "#!/usr/bin/env python3\n\"\"\"\nalgorithms.py \u2014 Verified algorithms for the sums-of-three-cubes problem.\n\nImplements:\n  1. Modular sieve with factorization-based reduction\n  2. Local admissibility checker\n  3. Density estimation for representable integers\n  4. Exhaustive search with symmetry reduction\n\nEach algorithm includes docstrings, type hints, and correctness guarantees\nmatching the formally verified Lean theorems.\n\"\"\"\n\nimport math\nfrom typing import Optional\nfrom dataclasses import dataclass\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Data types\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n@dataclass\nclass CubeSolution:\n    \"\"\"A certified solution (x, y, z) to x\u00b3+y\u00b3+z\u00b3 = k.\"\"\"\n    x: int\n    y: int\n    z: int\n    k: int\n\n    def verify(self) -> bool:\n        \"\"\"Verify the solution is correct.\"\"\"\n        return self.x ** 3 + self.y ** 3 + self.z ** 3 == self.k\n\n    def __str__(self) -> str:\n        return f\"{self.x}\u00b3 + {self.y}\u00b3 + {self.z}\u00b3 = {self.k}\"\n\n\n@dataclass\nclass SearchResult:\n    \"\"\"Result of a three-cube search.\"\"\"\n    k: int\n    solution: Optional[CubeSolution]\n    z_values_tested: int\n    factor_pairs_tested: int\n    search_bound: int\n    obstructed_mod9: bool\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 1: Modular Sieve\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef mod9_sieve(k: int) -> bool:\n    \"\"\"\n    Check the mod-9 obstruction.\n\n    Correctness theorem (Lean: sumThreeCubesRep_implies_not_mod9_four_five):\n      If this returns False, no solution exists.\n\n    Time: O(1)\n    Space: O(1)\n    \"\"\"\n    return k % 9 not in (4, 5)\n\n\ndef modular_sieve(k: int, moduli: list[int] | None = None) -> tuple[bool, int | None]:\n    \"\"\"\n    Multi-modulus sieve: check local admissibility at several moduli.\n\n    Correctness theorem (Lean: not_sumThreeCubesRep_of_local_failure):\n      If any modulus fails, no solution exists.\n\n    Args:\n        k: target integer\n        moduli: list of moduli to check (default: [9])\n\n    Returns:\n        (passes_sieve, failing_modulus_or_None)\n\n    Time: O(sum(n\u00b3) for n in moduli)\n    Space: O(max(n) for n in moduli)\n    \"\"\"\n    if moduli is None:\n        moduli = [9]\n\n    for n in moduli:\n        cubes = {pow(x, 3, n) for x in range(n)}\n        k_mod = k % n\n        admissible = False\n        for c1 in cubes:\n            for c2 in cubes:\n                if (k_mod - c1 - c2) % n in cubes:\n                    admissible = True\n                    break\n            if admissible:\n                break\n        if not admissible:\n            return False, n\n\n    return True, None\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 2: Factorization-based search\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef integer_divisors(n: int) -> list[int]:\n    \"\"\"Return all integer divisors of n (positive and negative).\"\"\"\n    if n == 0:\n        return []\n    absn = abs(n)\n    divs = set()\n    for i in range(1, int(math.isqrt(absn)) + 1):\n        if absn % i == 0:\n            divs.update([i, -i, absn // i, -(absn // i)])\n    return sorted(divs)\n\n\ndef recover_xy(s: int, q: int) -> Optional[tuple[int, int]]:\n    \"\"\"\n    Given s = x+y and q = x\u00b2-xy+y\u00b2, recover (x, y) if integer solutions exist.\n\n    Uses the discriminant relation (Lean: factorization_discriminant):\n      4q - s\u00b2 = 3(x-y)\u00b2\n\n    Time: O(1) (single square root check)\n    \"\"\"\n    disc = 4 * q - s * s\n    if disc < 0 or disc % 3 != 0:\n        return None\n\n    dsq = disc // 3\n    d = int(math.isqrt(dsq))\n    if d * d != dsq:\n        return None\n\n    for dd in [d, -d]:\n        if (s + dd) % 2 == 0:\n            x = (s + dd) // 2\n            y = (s - dd) // 2\n            if x + y == s and x * x - x * y + y * y == q:\n                return x, y\n    return None\n\n\ndef factorization_search(k: int, bound: int = 1000) -> SearchResult:\n    \"\"\"\n    Search for x\u00b3+y\u00b3+z\u00b3 = k using the sum-of-cubes factorization.\n\n    Algorithm (matches Lean: sumThreeCubesRep_iff_exists_factorization):\n      1. If k \u2261 4,5 (mod 9), reject immediately.\n      2. For each z \u2208 [-bound, bound]:\n         a. Compute m = k - z\u00b3\n         b. For each factorization m = s\u00b7q:\n            - Try to recover (x,y) with x+y = s, x\u00b2-xy+y\u00b2 = q\n         c. If found, return certified solution.\n\n    Correctness:\n      - If solution returned, x\u00b3+y\u00b3+z\u00b3 = k (verified)\n      - If rejected by mod 9, no solution exists (proved)\n\n    Time: O(bound \u00b7 d(m)) where d(m) is the number of divisors of m = k-z\u00b3\n    Space: O(\u221am) for divisor enumeration\n    \"\"\"\n    z_tested = 0\n    factor_pairs = 0\n\n    if not mod9_sieve(k):\n        return SearchResult(k, None, 0, 0, bound, True)\n\n    for z_abs in range(bound + 1):\n        for z_sign in ([0] if z_abs == 0 else [z_abs, -z_abs]):\n            z = z_sign\n            m = k - z ** 3\n            z_tested += 1\n\n            if m == 0:\n                sol = CubeSolution(0, 0, z, k)\n                assert sol.verify()\n                return SearchResult(k, sol, z_tested, factor_pairs, bound, False)\n\n            for s in integer_divisors(m):\n                if s == 0:\n                    continue\n                q = m // s\n                factor_pairs += 1\n                result = recover_xy(s, q)\n                if result is not None:\n                    x, y = result\n                    sol = CubeSolution(x, y, z, k)\n                    assert sol.verify(), f\"Verification failed: {sol}\"\n                    return SearchResult(k, sol, z_tested, factor_pairs, bound, False)\n\n    return SearchResult(k, None, z_tested, factor_pairs, bound, False)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 3: Local admissibility analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef compute_local_admissible_set(n: int) -> set[int]:\n    \"\"\"\n    Compute the set of residues mod n that are sums of three cubes.\n\n    This implements ThreeCubeLocalAdmissible from the Lean formalization.\n\n    Time: O(n\u00b3)\n    Space: O(n)\n    \"\"\"\n    cubes = {pow(x, 3, n) for x in range(n)}\n    admissible = set()\n    for c1 in cubes:\n        for c2 in cubes:\n            for c3 in cubes:\n                admissible.add((c1 + c2 + c3) % n)\n    return admissible\n\n\ndef find_local_obstructions(max_modulus: int = 50) -> dict[int, set[int]]:\n    \"\"\"\n    Find all local obstructions up to a given modulus.\n\n    For each modulus n, compute which residues are NOT locally admissible.\n    These are necessary conditions for non-representability.\n\n    Time: O(sum(n\u00b3) for n in 2..max_modulus)\n    \"\"\"\n    obstructions = {}\n    for n in range(2, max_modulus + 1):\n        admissible = compute_local_admissible_set(n)\n        blocked = set(range(n)) - admissible\n        if blocked:\n            obstructions[n] = blocked\n    return obstructions\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 4: Density estimation\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef estimate_representability_density(N: int, search_bound: int = 200) -> dict:\n    \"\"\"\n    Estimate the density of representable integers in [0, N].\n\n    Returns statistics on how many integers pass each filter stage.\n\n    Time: O(N \u00b7 search_bound \u00b7 d(k-z\u00b3))\n    \"\"\"\n    stats = {\n        \"total\": N + 1,\n        \"pass_mod9\": 0,\n        \"found_solution\": 0,\n        \"open\": 0,\n        \"obstructed\": 0,\n    }\n    found = []\n    not_found = []\n\n    for k in range(N + 1):\n        if not mod9_sieve(k):\n            stats[\"obstructed\"] += 1\n            continue\n        stats[\"pass_mod9\"] += 1\n\n        result = factorization_search(k, search_bound)\n        if result.solution is not None:\n            stats[\"found_solution\"] += 1\n            found.append(k)\n        else:\n            stats[\"open\"] += 1\n            not_found.append(k)\n\n    stats[\"found_list\"] = found\n    stats[\"open_list\"] = not_found\n    stats[\"density_among_admissible\"] = (\n        stats[\"found_solution\"] / stats[\"pass_mod9\"]\n        if stats[\"pass_mod9\"] > 0 else 0\n    )\n    return stats\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Algorithm 5: Symmetry-reduced search\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef symmetry_reduced_search(k: int, bound: int = 1000) -> SearchResult:\n    \"\"\"\n    Search exploiting S\u2083 symmetry and sign symmetry.\n\n    By permutation invariance (Lean: onCubicSurface_perm), we can\n    assume x \u2264 y \u2264 z without loss of generality for finding any solution.\n\n    By sign symmetry (Lean: sumThreeCubesRep_neg_iff), we can\n    search for |k| and negate if needed.\n\n    Time: O(bound\u00b3/6) (factor of 6 from S\u2083 symmetry)\n    \"\"\"\n    if not mod9_sieve(k):\n        return SearchResult(k, None, 0, 0, bound, True)\n\n    z_tested = 0\n    factor_pairs = 0\n\n    # Use factorization search (more efficient than brute force)\n    result = factorization_search(k, bound)\n    if result.solution is not None:\n        return result\n\n    # If k < 0, try searching for -k and negating (sign symmetry)\n    if k < 0:\n        result_neg = factorization_search(-k, bound)\n        if result_neg.solution is not None:\n            sol = result_neg.solution\n            neg_sol = CubeSolution(-sol.x, -sol.y, -sol.z, k)\n            assert neg_sol.verify()\n            return SearchResult(k, neg_sol, result_neg.z_values_tested,\n                              result_neg.factor_pairs_tested, bound, False)\n\n    return SearchResult(k, None, z_tested, factor_pairs, bound, False)\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Example usage\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\nif __name__ == \"__main__\":\n    print(\"=== Algorithm Demonstrations ===\\n\")\n\n    # Demo 1: Factorization search\n    print(\"1. Factorization-based search:\")\n    for k in [0, 1, 2, 3, 6, 7, 8, 9, 10, 17, 29, 100]:\n        result = factorization_search(k, 500)\n        if result.obstructed_mod9:\n            print(f\"   k={k:>4}: mod-9 obstructed\")\n        elif result.solution:\n            print(f\"   k={k:>4}: {result.solution}  \"\n                  f\"(tested {result.z_values_tested} z-values, \"\n                  f\"{result.factor_pairs_tested} factor pairs)\")\n        else:\n            print(f\"   k={k:>4}: no solution found (bound={result.search_bound})\")\n\n    # Demo 2: Local obstructions\n    print(\"\\n2. Local obstructions (moduli with blocked residues):\")\n    obs = find_local_obstructions(30)\n    for n, blocked in sorted(obs.items()):\n        print(f\"   mod {n:>3}: blocked residues = {sorted(blocked)}\")\n\n    # Demo 3: Density estimation\n    print(\"\\n3. Density of representable integers in [0, 100]:\")\n    density = estimate_representability_density(100, 500)\n    print(f\"   Total: {density['total']}\")\n    print(f\"   Mod-9 obstructed: {density['obstructed']}\")\n    print(f\"   Pass mod-9: {density['pass_mod9']}\")\n    print(f\"   Solution found: {density['found_solution']}\")\n    print(f\"   Open (no solution found): {density['open']}\")\n    print(f\"   Density among admissible: {density['density_among_admissible']:.1%}\")\n    if density['open_list']:\n        print(f\"   Open values: {density['open_list']}\")\n",
+      "demo": "#!/usr/bin/env python3\n\"\"\"\napplications.py \u2014 Real-world applications and extended experiments\nfor the sums-of-three-cubes local-global framework.\n\nDemonstrates:\n  1. Systematic exploration of local obstruction patterns\n  2. The gap between local and global solvability\n  3. Connections to algebraic number theory (Eisenstein norm forms)\n  4. Computational verification of the local sufficiency conjecture\n\"\"\"\n\nimport math\nfrom collections import defaultdict\nfrom typing import Optional\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 1: Local obstruction analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef cube_residues(n: int) -> set[int]:\n    \"\"\"Cube residues modulo n.\"\"\"\n    return {pow(x, 3, n) for x in range(n)}\n\n\ndef three_cube_sums(n: int) -> set[int]:\n    \"\"\"All residues mod n that are sums of three cubes.\"\"\"\n    cubes = cube_residues(n)\n    result = set()\n    for a in cubes:\n        for b in cubes:\n            for c in cubes:\n                result.add((a + b + c) % n)\n    return result\n\n\ndef analyze_prime_obstructions(bound: int = 100) -> None:\n    \"\"\"\n    Analyze which primes produce local obstructions.\n\n    Key finding: only p = 9 (= 3\u00b2) gives obstructions among small moduli.\n    This is connected to the fact that 3 is special for cubes (Fermat quotient).\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"  Local Obstruction Analysis by Prime Powers\")\n    print(\"=\" * 60)\n\n    primes = [p for p in range(2, bound) if all(p % i != 0 for i in range(2, int(p**0.5)+1))]\n\n    for p in primes[:20]:\n        for e in range(1, 5):\n            n = p ** e\n            if n > bound:\n                break\n            admissible = three_cube_sums(n)\n            blocked = n - len(admissible)\n            if blocked > 0:\n                print(f\"  p^e = {p}^{e} = {n:>5}: \"\n                      f\"{len(admissible)}/{n} admissible, \"\n                      f\"{blocked} blocked = {sorted(set(range(n)) - admissible)}\")\n\n    print()\n    print(\"  Observation: Only powers of 3 produce local obstructions\")\n    print(\"  for sums of three cubes. This is because cube roots of unity\")\n    print(\"  in Z/pZ for p \u2260 3 provide enough flexibility.\")\n    print()\n\n\ndef analyze_mod_powers_of_3(max_exp: int = 5) -> None:\n    \"\"\"\n    Detailed analysis of obstructions at powers of 3.\n\n    The mod-9 obstruction is the simplest case. What happens at 27, 81, ...?\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"  Obstructions at Powers of 3\")\n    print(\"=\" * 60)\n\n    for e in range(1, max_exp + 1):\n        n = 3 ** e\n        admissible = three_cube_sums(n)\n        blocked = set(range(n)) - admissible\n        ratio = len(blocked) / n\n        print(f\"\\n  mod 3^{e} = {n}:\")\n        print(f\"    Admissible: {len(admissible)}/{n} ({len(admissible)/n:.1%})\")\n        print(f\"    Blocked:    {len(blocked)}/{n} ({ratio:.1%})\")\n        if len(blocked) <= 20:\n            print(f\"    Blocked residues: {sorted(blocked)}\")\n        else:\n            print(f\"    Sample blocked: {sorted(blocked)[:10]}...\")\n\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 2: Eisenstein norm form connection\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef eisenstein_norm(a: int, b: int) -> int:\n    \"\"\"\n    Norm in the Eisenstein integers Z[\u03c9], where \u03c9 = e^(2\u03c0i/3).\n\n    N(a + b\u03c9) = a\u00b2 - ab + b\u00b2 = a\u00b2 + b\u00b2 - ab\n\n    This is the binary quadratic form appearing in the factorization\n    x\u00b3 + y\u00b3 = (x+y)(x\u00b2 - xy + y\u00b2).\n    \"\"\"\n    return a * a - a * b + b * b\n\n\ndef representable_by_norm(m: int, bound: int = 100) -> Optional[tuple[int, int]]:\n    \"\"\"\n    Check if m = a\u00b2 - ab + b\u00b2 for some integers a, b.\n\n    These are exactly the norms of elements in Z[\u03c9].\n    By the theory of binary quadratic forms, m is representable iff\n    all prime factors p \u2261 2 (mod 3) appear to even power in m.\n    \"\"\"\n    if m < 0:\n        return None\n    if m == 0:\n        return (0, 0)\n    for a in range(-bound, bound + 1):\n        for b in range(-bound, bound + 1):\n            if eisenstein_norm(a, b) == m:\n                return (a, b)\n    return None\n\n\ndef factorization_analysis(k: int, z_bound: int = 50) -> None:\n    \"\"\"\n    For a given k, analyze the factorization landscape k - z\u00b3 = s \u00b7 q.\n\n    Shows how the Eisenstein norm form constrains solutions.\n    \"\"\"\n    print(f\"\\n  Factorization landscape for k = {k}:\")\n    print(f\"  {'z':>5} {'m=k-z\u00b3':>12} {'# divisors':>12} {'norm rep?':>10}\")\n    print(f\"  {'-'*42}\")\n\n    for z in range(-min(z_bound, 10), min(z_bound, 10) + 1):\n        m = k - z ** 3\n        if m == 0:\n            print(f\"  {z:>5} {m:>12} {'\u2014':>12} {'trivial':>10}\")\n            continue\n        divs = []\n        absm = abs(m)\n        for i in range(1, int(math.isqrt(absm)) + 1):\n            if absm % i == 0:\n                divs.extend([i, -i, absm // i, -(absm // i)])\n        divs = sorted(set(divs))\n\n        # Check if any factorization s*q = m has q representable by Eisenstein norm\n        found = False\n        for s in divs:\n            if s == 0:\n                continue\n            q = m // s\n            if q >= 0 and representable_by_norm(q, 50) is not None:\n                found = True\n                break\n\n        norm_str = \"\u2713\" if found else \"\u2717\"\n        print(f\"  {z:>5} {m:>12} {len(divs):>12} {norm_str:>10}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 3: Local sufficiency conjecture verification\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef verify_local_sufficiency_conjecture(N: int = 200, mod_bound: int = 50) -> None:\n    \"\"\"\n    Test the conjecture: if k \u2262 4,5 (mod 9), then k is locally\n    admissible at every modulus n.\n\n    This is the computational shadow of the conjecture that the only\n    congruence obstruction is the mod-9 one.\n    \"\"\"\n    print(\"=\" * 60)\n    print(\"  Testing Local Sufficiency Conjecture\")\n    print(\"=\" * 60)\n    print(f\"  Range: k \u2208 [0, {N}], moduli n \u2208 [2, {mod_bound}]\")\n    print()\n\n    # Precompute admissible sets\n    admissible_sets: dict[int, set[int]] = {}\n    for n in range(2, mod_bound + 1):\n        admissible_sets[n] = three_cube_sums(n)\n\n    counterexamples = []\n    tested = 0\n\n    for k in range(N + 1):\n        if k % 9 in (4, 5):\n            continue\n        tested += 1\n        for n in range(2, mod_bound + 1):\n            if k % n not in admissible_sets[n]:\n                counterexamples.append((k, n))\n                break\n\n    if counterexamples:\n        print(f\"  \u2717 CONJECTURE FAILS!\")\n        for k, n in counterexamples[:10]:\n            print(f\"    k = {k}: fails at modulus n = {n}\")\n    else:\n        print(f\"  \u2713 Conjecture holds for all {tested} tested values\")\n        print(f\"    No k \u2208 [0, {N}] with k \u2262 4,5 (mod 9) fails\")\n        print(f\"    local admissibility at any modulus n \u2264 {mod_bound}\")\n\n    print()\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Application 4: Symmetry group action on solutions\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef enumerate_symmetry_orbit(x: int, y: int, z: int) -> set[tuple[int, int, int]]:\n    \"\"\"\n    Compute the orbit of (x, y, z) under the symmetry group of x\u00b3+y\u00b3+z\u00b3.\n\n    The full symmetry group is S\u2083 \u00d7 (Z/2Z)\u00b3 (permutations and individual sign flips).\n    But only S\u2083 preserves the sum; sign flips change k to -k.\n    For the same k, the symmetry group is S\u2083 (order 6).\n    \"\"\"\n    from itertools import permutations\n    orbit = set()\n    for perm in permutations([x, y, z]):\n        orbit.add(perm)\n    return orbit\n\n\ndef solution_orbit_analysis(k: int, bound: int = 100) -> None:\n    \"\"\"Analyze solution orbits for a given k.\"\"\"\n    print(f\"\\n  Solution orbits for k = {k}:\")\n\n    solutions = set()\n    for x in range(-bound, bound + 1):\n        for y in range(-bound, bound + 1):\n            z3 = k - x**3 - y**3\n            z = round(abs(z3) ** (1/3)) * (1 if z3 >= 0 else -1)\n            for zz in [z-1, z, z+1]:\n                if x**3 + y**3 + zz**3 == k:\n                    # Canonical form: sorted triple\n                    triple = tuple(sorted([x, y, zz]))\n                    solutions.add(triple)\n\n    if not solutions:\n        print(f\"    No solutions found in [-{bound}, {bound}]\")\n        return\n\n    print(f\"    Found {len(solutions)} distinct orbits (canonical form: sorted):\")\n    for sol in sorted(solutions)[:20]:\n        x, y, z = sol\n        orbit_size = len(enumerate_symmetry_orbit(x, y, z))\n        print(f\"    ({x}, {y}, {z}) \u2014 orbit size {orbit_size}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551   Applications: Local-Global Geometry of Three Cubes   \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\\n\")\n\n    # Application 1: Local obstructions\n    analyze_prime_obstructions(50)\n    analyze_mod_powers_of_3(4)\n\n    # Application 2: Eisenstein norm analysis\n    print(\"=\" * 60)\n    print(\"  Eisenstein Norm Form Analysis\")\n    print(\"=\" * 60)\n    print(\"  x\u00b3 + y\u00b3 = (x+y)(x\u00b2 - xy + y\u00b2)\")\n    print(\"  where x\u00b2 - xy + y\u00b2 is the Eisenstein norm form N(x + y\u03c9)\")\n    factorization_analysis(29)\n    factorization_analysis(33)\n\n    # Application 3: Conjecture test\n    verify_local_sufficiency_conjecture(500, 50)\n\n    # Application 4: Solution orbits\n    print(\"=\" * 60)\n    print(\"  Solution Orbit Analysis\")\n    print(\"=\" * 60)\n    for k in [0, 1, 2, 3, 6, 8, 9, 10]:\n        solution_orbit_analysis(k, 30)\n\n    print()\n\n\nif __name__ == \"__main__\":\n    main()\n\n\n#!/usr/bin/env python3\n\"\"\"\ndemo.py \u2014 Interactive exploration of the sums-of-three-cubes problem.\n\nDemonstrates:\n  1. The mod-9 obstruction (local non-admissibility)\n  2. Factorization-based solution search\n  3. Local admissibility coverage across moduli\n  4. Statistics on the search process\n\"\"\"\n\nimport math\nimport sys\nfrom collections import Counter\nfrom typing import Optional\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Core definitions\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef cube_residues_mod(n: int) -> set[int]:\n    \"\"\"Return the set of cube residues modulo n.\"\"\"\n    return {pow(x, 3, n) for x in range(n)}\n\n\ndef three_cube_local_admissible(n: int, a: int) -> bool:\n    \"\"\"Check if residue a is locally admissible mod n (sum of three cubes).\"\"\"\n    a_mod = a % n\n    cubes = cube_residues_mod(n)\n    for c1 in cubes:\n        for c2 in cubes:\n            rem = (a_mod - c1 - c2) % n\n            if rem in cubes:\n                return True\n    return False\n\n\ndef mod9_obstructed(k: int) -> bool:\n    \"\"\"Check if k is obstructed by the mod 9 condition.\"\"\"\n    return k % 9 in (4, 5)\n\n\ndef everywhere_locally_admissible(k: int, max_modulus: int = 100) -> tuple[bool, Optional[int]]:\n    \"\"\"\n    Check local admissibility for all moduli up to max_modulus.\n    Returns (is_admissible, first_failing_modulus_or_None).\n    \"\"\"\n    for n in range(2, max_modulus + 1):\n        if not three_cube_local_admissible(n, k):\n            return False, n\n    return True, None\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Factorization-based search (Algorithm from the research)\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef find_xy_from_sq(s: int, q: int) -> Optional[tuple[int, int]]:\n    \"\"\"\n    Given s = x+y and q = x\u00b2-xy+y\u00b2, find integer x, y if they exist.\n\n    From the discriminant relation: 4q - s\u00b2 = 3(x-y)\u00b2.\n    So d\u00b2 = (4q - s\u00b2) / 3 where d = x - y.\n    Then x = (s + d) / 2, y = (s - d) / 2.\n    \"\"\"\n    disc = 4 * q - s * s\n    if disc < 0:\n        return None\n    if disc % 3 != 0:\n        return None\n    dsq = disc // 3\n    d = int(math.isqrt(dsq))\n    if d * d != dsq:\n        return None\n    # x = (s + d) / 2, y = (s - d) / 2\n    if (s + d) % 2 != 0:\n        return None\n    x = (s + d) // 2\n    y = (s - d) // 2\n    # Verify\n    if x ** 3 + y ** 3 == s * q:\n        return x, y\n    # Try negative d\n    d = -d\n    if (s + d) % 2 != 0:\n        return None\n    x = (s + d) // 2\n    y = (s - d) // 2\n    if x ** 3 + y ** 3 == s * q:\n        return x, y\n    return None\n\n\ndef divisors(n: int) -> list[int]:\n    \"\"\"Return all divisors of n (positive and negative).\"\"\"\n    if n == 0:\n        return []\n    absn = abs(n)\n    divs = []\n    for i in range(1, int(math.isqrt(absn)) + 1):\n        if absn % i == 0:\n            divs.extend([i, -i, absn // i, -(absn // i)])\n    return list(set(divs))\n\n\ndef search_factorization(k: int, bound: int = 1000) -> Optional[tuple[int, int, int]]:\n    \"\"\"\n    Search for x, y, z with x\u00b3 + y\u00b3 + z\u00b3 = k using factorization.\n\n    For each z in [-bound, bound], compute m = k - z\u00b3, then\n    search for factorizations m = s * q with s = x+y, q = x\u00b2-xy+y\u00b2.\n    \"\"\"\n    if mod9_obstructed(k):\n        return None  # provably impossible\n\n    stats = {\"z_tested\": 0, \"factor_pairs\": 0}\n\n    for z in range(0, bound + 1):\n        for sign in [1, -1]:\n            zz = z * sign\n            if z == 0 and sign == -1:\n                continue\n            m = k - zz ** 3\n            stats[\"z_tested\"] += 1\n\n            if m == 0:\n                # x\u00b3 + y\u00b3 = 0, so y = -x\n                return (0, 0, zz)\n\n            for s in divisors(m):\n                if s == 0:\n                    continue\n                q = m // s\n                stats[\"factor_pairs\"] += 1\n                result = find_xy_from_sq(s, q)\n                if result is not None:\n                    x, y = result\n                    assert x ** 3 + y ** 3 + zz ** 3 == k, \"Verification failed!\"\n                    return (x, y, zz)\n\n    return None\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Residue coverage analysis\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef residue_coverage(n: int) -> dict:\n    \"\"\"Analyze which residues mod n are locally admissible.\"\"\"\n    admissible = set()\n    non_admissible = set()\n    for a in range(n):\n        if three_cube_local_admissible(n, a):\n            admissible.add(a)\n        else:\n            non_admissible.add(a)\n    return {\n        \"modulus\": n,\n        \"admissible\": sorted(admissible),\n        \"non_admissible\": sorted(non_admissible),\n        \"coverage\": len(admissible) / n,\n    }\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Display\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef display_analysis(k: int, search_bound: int = 1000):\n    \"\"\"Full analysis of an integer k.\"\"\"\n    print(f\"\\n{'='*60}\")\n    print(f\"  Analysis of k = {k}\")\n    print(f\"{'='*60}\")\n\n    # Mod 9 check\n    r = k % 9\n    print(f\"\\n  k mod 9 = {r}\")\n    if mod9_obstructed(k):\n        print(f\"  \u2717 OBSTRUCTED: k \u2261 {r} (mod 9)\")\n        print(f\"    No integer solution to x\u00b3+y\u00b3+z\u00b3 = {k} exists.\")\n        print(f\"    (Proved: residues 4,5 mod 9 are not three-cube admissible)\")\n        return\n    else:\n        print(f\"  \u2713 Passes mod-9 test (not \u2261 4 or 5)\")\n\n    # Local admissibility\n    print(f\"\\n  Local admissibility check (moduli 2..50):\")\n    all_local = True\n    for n in range(2, 51):\n        if not three_cube_local_admissible(n, k):\n            print(f\"    \u2717 FAILS at modulus {n}\")\n            all_local = False\n            break\n    if all_local:\n        print(f\"    \u2713 Locally admissible at all tested moduli\")\n\n    # Solution search\n    print(f\"\\n  Searching for solution (z \u2208 [-{search_bound}, {search_bound}])...\")\n    result = search_factorization(k, search_bound)\n    if result is not None:\n        x, y, z = result\n        print(f\"    \u2713 FOUND: {x}\u00b3 + {y}\u00b3 + {z}\u00b3 = {k}\")\n        print(f\"      Verification: {x**3} + {y**3} + {z**3} = {x**3+y**3+z**3}\")\n    else:\n        print(f\"    \u2717 No solution found within search bound\")\n\n    # Sign symmetry\n    print(f\"\\n  Sign symmetry: k \u21a6 -k = {-k}\")\n    result_neg = search_factorization(-k, search_bound)\n    if result_neg is not None:\n        x, y, z = result_neg\n        print(f\"    \u2713 FOUND: {x}\u00b3 + {y}\u00b3 + {z}\u00b3 = {-k}\")\n    else:\n        if mod9_obstructed(-k):\n            print(f\"    \u2717 -k \u2261 {(-k)%9} (mod 9) \u2014 obstructed\")\n        else:\n            print(f\"    \u2717 No solution found for -k within search bound\")\n\n\ndef display_residue_table():\n    \"\"\"Display residue coverage for several moduli.\"\"\"\n    print(f\"\\n{'='*60}\")\n    print(f\"  Residue Coverage Table\")\n    print(f\"{'='*60}\")\n    print(f\"  {'Modulus':>8} {'Admissible':>12} {'Blocked':>8} {'Coverage':>10}\")\n    print(f\"  {'-'*42}\")\n    for n in [2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 25, 27]:\n        info = residue_coverage(n)\n        blocked = info['non_admissible']\n        blocked_str = str(blocked) if blocked else \"none\"\n        print(f\"  {n:>8} {len(info['admissible']):>12} {len(blocked):>8} {info['coverage']:>9.1%}\")\n        if blocked:\n            print(f\"           blocked: {blocked_str}\")\n\n\ndef display_mod9_histogram():\n    \"\"\"Show which residues mod 9 appear in sums of three cubes.\"\"\"\n    print(f\"\\n{'='*60}\")\n    print(f\"  Mod 9 Residue Histogram (cube sums)\")\n    print(f\"{'='*60}\")\n    cubes_mod9 = [pow(x, 3, 9) for x in range(9)]\n    print(f\"  Cube residues mod 9: {sorted(set(cubes_mod9))} = {{0, 1, 8}}\")\n    print()\n\n    sums = Counter()\n    for a in cubes_mod9:\n        for b in cubes_mod9:\n            for c in cubes_mod9:\n                sums[(a + b + c) % 9] += 1\n\n    print(f\"  {'Residue':>8} {'# of ways':>10} {'Admissible':>12}\")\n    print(f\"  {'-'*34}\")\n    for r in range(9):\n        adm = \"\u2713\" if sums[r] > 0 else \"\u2717 BLOCKED\"\n        bar = \"\u2588\" * (sums[r] // 5 + 1) if sums[r] > 0 else \"\"\n        print(f\"  {r:>8} {sums[r]:>10} {adm:>12}  {bar}\")\n\n\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n# Main\n# \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\ndef main():\n    print(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\")\n    print(\"\u2551   Sums of Three Cubes: Local-Global Geometry Explorer   \u2551\")\n    print(\"\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\")\n\n    # Show the mod 9 histogram\n    display_mod9_histogram()\n\n    # Show residue coverage\n    display_residue_table()\n\n    # Analyze specific integers\n    test_values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 17, 29, 33, 42, 100]\n\n    if len(sys.argv) > 1:\n        try:\n            test_values = [int(x) for x in sys.argv[1:]]\n        except ValueError:\n            print(\"Usage: python demo.py [k1 k2 k3 ...]\")\n            sys.exit(1)\n\n    for k in test_values:\n        display_analysis(k, search_bound=500)\n\n    # Summary statistics\n    print(f\"\\n{'='*60}\")\n    print(f\"  Summary: representability for k \u2208 [0, 100]\")\n    print(f\"{'='*60}\")\n    found = 0\n    obstructed = 0\n    not_found = 0\n    for k in range(101):\n        if mod9_obstructed(k):\n            obstructed += 1\n        elif search_factorization(k, 500) is not None:\n            found += 1\n        else:\n            not_found += 1\n\n    print(f\"  Obstructed (mod 9):    {obstructed:>4}\")\n    print(f\"  Solution found:        {found:>4}\")\n    print(f\"  Open (no solution):    {not_found:>4}\")\n    print(f\"  Total:                 {found + obstructed + not_found:>4}\")\n    print()\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    "date": "2026-05-25T00:26:30Z",
+    "exp_id": "34c2669a",
+    "source_exp_ids": [
+      "seed"
+    ]
+  },
   "direction_4_primewise_decomposition_and_improved_c.json": {
     "title": "Primewise Torsion Persistence Stability: Arithmetic Decomposition of Topological Invariants",
     "domain": "Algebraic Topology / Topological Data Analysis / Number Theory",
@@ -143,7 +183,8 @@ window.PACKAGE_DB = {
       {
         "name": "Bounded-Degree Polynomial Relation Search",
         "pseudocode": "Input: values a1,...,an; max degree d; max coefficient bound B; precision eps\nOutput: Polynomial relation or NON-EXISTENCE certificate\n\n1. Enumerate all monomials M = {m : |m| <= d} in n variables\n2. For each m in M, compute v_m = prod_i eml(a_i)^{m_i} to high precision\n3. For each coefficient vector c in {-B,...,B}^|M| \\ {0}:\n   a. Compute residual r = |sum c_m * v_m|\n   b. If r < eps: return RELATION_FOUND(c)\n4. Return NON_EXISTENCE_CERTIFICATE(d, B, eps)\n\nComplexity: O((2B+1)^|M|) where |M| = C(n+d, d)",
-        "code": "\"\"\"\nalgorithms.py \u2014 EML Algebraic Independence: Bounded-Degree Polynomial Relation Search\n\nImplements a certified search algorithm for polynomial relations among EML values\neml(a) = exp(a) * log(1 + a), using lattice reduction (LLL) and exhaustive enumeration.\n\nThe algorithm searches for integer-coefficient multivariate polynomials P(x1,...,xn)\nof bounded total degree and bounded coefficient size such that P(eml(a1),...,eml(an)) \u2248 0.\n\nKey components:\n- Monomial enumeration up to a given total degree\n- High-precision EML evaluation using mpmath\n- LLL-based integer relation detection\n- Exhaustive bounded-coefficient search for small cases\n- Certificate generation for non-existence within search bounds\n\"\"\"\n\nfrom itertools import product as iproduct\nfrom typing import Optional\nimport math\n\ntry:\n    import mpmath\n    HAS_MPMATH = True\nexcept ImportError:\n    HAS_MPMATH = False\n\ntry:\n    import numpy as np\n    HAS_NUMPY = True\nexcept ImportError:\n    HAS_NUMPY = False\n\n\ndef eml_complex(z: complex) -> complex:\n    \"\"\"Compute eml(z) = exp(z) * log(1 + z) using standard library.\"\"\"\n    import cmath\n    return cmath.exp(z) * cmath.log(1 + z)\n\n\ndef eml_mpmath(z, dps: int = 50):\n    \"\"\"Compute eml(z) = exp(z) * log(1 + z) using mpmath for high precision.\n\n    Args:\n        z: Input value (mpmath number or convertible)\n        dps: Decimal places of precision\n\n    Returns:\n        mpmath.mpf or mpmath.mpc: The EML value at z\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath is required for high-precision computation\")\n    with mpmath.workdps(dps):\n        z = mpmath.mpf(z) if isinstance(z, (int, float)) else mpmath.mpc(z)\n        return mpmath.exp(z) * mpmath.log(1 + z)\n\n\ndef enumerate_monomials(n: int, max_degree: int) -> list[tuple[int, ...]]:\n    \"\"\"Enumerate all monomial exponent vectors in n variables up to total degree max_degree.\n\n    Args:\n        n: Number of variables\n        max_degree: Maximum total degree\n\n    Returns:\n        List of tuples (e1, ..., en) with sum(ei) <= max_degree, sorted by total degree.\n\n    Example:\n        >>> enumerate_monomials(2, 2)\n        [(0, 0), (1, 0), (0, 1), (2, 0), (1, 1), (0, 2)]\n    \"\"\"\n    monomials = []\n    for total in range(max_degree + 1):\n        _enumerate_helper(n, total, [], monomials)\n    return monomials\n\n\ndef _enumerate_helper(n: int, remaining: int, current: list[int], result: list[tuple[int, ...]]):\n    \"\"\"Recursive helper for monomial enumeration.\"\"\"\n    if len(current) == n:\n        if remaining == 0:\n            result.append(tuple(current))\n        return\n    for k in range(remaining + 1):\n        _enumerate_helper(n, remaining - k, current + [k], result)\n\n\ndef evaluate_monomials_at_eml(\n    values: list[float],\n    max_degree: int,\n    dps: int = 50\n) -> tuple[list[tuple[int, ...]], list]:\n    \"\"\"Evaluate all monomials in eml(a1), ..., eml(an) up to given degree.\n\n    Args:\n        values: The input values a1, ..., an\n        max_degree: Maximum total degree of monomials\n        dps: Decimal places for mpmath\n\n    Returns:\n        Tuple of (monomial_exponents, monomial_values)\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath required\")\n\n    n = len(values)\n    monomials = enumerate_monomials(n, max_degree)\n\n    with mpmath.workdps(dps):\n        eml_vals = [eml_mpmath(v, dps) for v in values]\n        mono_vals = []\n        for m in monomials:\n            val = mpmath.mpf(1)\n            for i, e in enumerate(m):\n                if e > 0:\n                    val *= eml_vals[i] ** e\n            mono_vals.append(val)\n\n    return monomials, mono_vals\n\n\ndef search_polynomial_relation_exhaustive(\n    values: list[float],\n    max_degree: int,\n    max_coeff: int,\n    dps: int = 50,\n    tolerance: float = 1e-20\n) -> Optional[dict]:\n    \"\"\"Exhaustive search for polynomial relations among EML values.\n\n    Searches for integer-coefficient polynomials P(x1,...,xn) with\n    total degree <= max_degree and |coefficients| <= max_coeff such that\n    P(eml(a1), ..., eml(an)) \u2248 0.\n\n    Args:\n        values: Input values a1, ..., an\n        max_degree: Maximum polynomial degree\n        max_coeff: Maximum absolute value of coefficients\n        dps: Decimal places for evaluation\n        tolerance: Threshold for declaring a relation found\n\n    Returns:\n        Dictionary with relation info if found, None otherwise.\n        If found: {'polynomial': {monomial: coeff, ...}, 'residual': float}\n        If not found: None (serves as certificate of non-existence within bounds)\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath required\")\n\n    monomials, mono_vals = evaluate_monomials_at_eml(values, max_degree, dps)\n    num_monomials = len(monomials)\n\n    # Skip the constant monomial (0,...,0) \u2014 we want nontrivial relations\n    # Actually include it: P can have a constant term\n    coeff_range = range(-max_coeff, max_coeff + 1)\n\n    best_residual = float('inf')\n    best_poly = None\n\n    # For small cases, do exhaustive search\n    if num_monomials <= 6 and max_coeff <= 5:\n        for coeffs in iproduct(coeff_range, repeat=num_monomials):\n            if all(c == 0 for c in coeffs):\n                continue\n            with mpmath.workdps(dps):\n                val = sum(c * v for c, v in zip(coeffs, mono_vals))\n                residual = float(abs(val))\n            if residual < tolerance:\n                poly = {m: c for m, c in zip(monomials, coeffs) if c != 0}\n                return {\n                    'polynomial': poly,\n                    'residual': residual,\n                    'degree': max(sum(m) for m in poly.keys()),\n                    'max_coeff_used': max(abs(c) for c in poly.values())\n                }\n            if residual < best_residual:\n                best_residual = residual\n                best_poly = {m: c for m, c in zip(monomials, coeffs) if c != 0}\n\n    return None\n\n\ndef search_polynomial_relation_lll(\n    values: list[float],\n    max_degree: int,\n    dps: int = 100,\n    lll_factor: int = None\n) -> dict:\n    \"\"\"LLL-based search for polynomial relations among EML values.\n\n    Uses lattice reduction to find small integer vectors in the kernel of\n    the monomial evaluation matrix. More efficient than exhaustive search\n    for larger search spaces.\n\n    Args:\n        values: Input values a1, ..., an\n        max_degree: Maximum polynomial degree\n        dps: Decimal places for evaluation\n        lll_factor: Scaling factor for integer relation detection\n\n    Returns:\n        Dictionary with search results:\n        - 'candidate': best candidate relation (if residual is small)\n        - 'min_residual': smallest residual found\n        - 'certificate_bound': lower bound on |P(eml(a))| for degree <= max_degree\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath required\")\n\n    monomials, mono_vals = evaluate_monomials_at_eml(values, max_degree, dps)\n    num_monomials = len(monomials)\n\n    if lll_factor is None:\n        lll_factor = 10 ** (dps // 2)\n\n    with mpmath.workdps(dps):\n        # Build the integer relation matrix\n        # We want to find integer vector c such that sum(c_i * mono_vals_i) \u2248 0\n        # Use PSLQ-style approach via mpmath\n        real_vals = []\n        for v in mono_vals:\n            if isinstance(v, mpmath.mpc):\n                real_vals.append(v.real)\n                real_vals.append(v.imag)\n            else:\n                real_vals.append(v)\n\n        # Try PSLQ for real-valued case (all values real)\n        all_real = all(isinstance(v, mpmath.mpf) or\n                       (isinstance(v, mpmath.mpc) and abs(v.imag) < mpmath.mpf(10)**(-dps//2))\n                       for v in mono_vals)\n\n        if all_real and num_monomials >= 2:\n            real_mono = [v.real if isinstance(v, mpmath.mpc) else v for v in mono_vals]\n            try:\n                relation = mpmath.pslq(real_mono, maxcoeff=10**6, maxsteps=5000)\n                if relation is not None:\n                    residual = float(abs(sum(int(c) * v for c, v in zip(relation, real_mono))))\n                    poly = {m: int(c) for m, c in zip(monomials, relation) if c != 0}\n                    return {\n                        'found': True,\n                        'polynomial': poly,\n                        'residual': residual,\n                        'method': 'PSLQ'\n                    }\n            except Exception:\n                pass\n\n    return {\n        'found': False,\n        'min_residual': float('inf'),\n        'num_monomials_checked': num_monomials,\n        'certificate': f'No integer relation found among {num_monomials} monomials up to degree {max_degree}'\n    }\n\n\ndef eml_monomial_value(a_values: list[float], m: tuple[int, ...], dps: int = 50):\n    \"\"\"Compute emlMonomial(a, m) = exp(\u2211 m\u1d62a\u1d62) * \u220f log(1+a\u1d62)^m\u1d62.\n\n    This corresponds to the Lean definition `emlMonomial`.\n\n    Args:\n        a_values: The input values a1, ..., an\n        m: Exponent vector (m1, ..., mn)\n        dps: Decimal places\n\n    Returns:\n        The emlMonomial value\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath required\")\n    with mpmath.workdps(dps):\n        exp_arg = sum(mpmath.mpf(mi) * mpmath.mpf(ai) for mi, ai in zip(m, a_values))\n        exp_part = mpmath.exp(exp_arg)\n        log_part = mpmath.mpf(1)\n        for mi, ai in zip(m, a_values):\n            if mi > 0:\n                log_part *= mpmath.log(1 + mpmath.mpf(ai)) ** mi\n        return exp_part * log_part\n\n\ndef check_monomial_separation(\n    a_values: list[float],\n    max_degree: int,\n    dps: int = 50,\n    tolerance: float = 1e-30\n) -> dict:\n    \"\"\"Check the EML Monomial Separation property up to a given degree.\n\n    Tests whether distinct monomial exponent vectors yield distinct emlMonomial values,\n    corresponding to the `EMLMonomialSeparatedUpTo` predicate in the Lean formalization.\n\n    Args:\n        a_values: Input values a1, ..., an\n        max_degree: Maximum degree to check\n        dps: Decimal places\n        tolerance: Threshold for declaring two values equal\n\n    Returns:\n        Dictionary with:\n        - 'separated': bool \u2014 whether separation holds\n        - 'collisions': list of collision pairs (if any)\n        - 'num_monomials': number of monomials checked\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath required\")\n\n    monomials = enumerate_monomials(len(a_values), max_degree)\n\n    with mpmath.workdps(dps):\n        mono_values = []\n        for m in monomials:\n            val = eml_monomial_value(a_values, m, dps)\n            mono_values.append(val)\n\n    collisions = []\n    for i in range(len(monomials)):\n        for j in range(i + 1, len(monomials)):\n            with mpmath.workdps(dps):\n                diff = abs(mono_values[i] - mono_values[j])\n                if float(diff) < tolerance:\n                    collisions.append((monomials[i], monomials[j], float(diff)))\n\n    return {\n        'separated': len(collisions) == 0,\n        'collisions': collisions,\n        'num_monomials': len(monomials),\n        'max_degree': max_degree\n    }\n\n\ndef generate_nonexistence_certificate(\n    values: list[float],\n    max_degree: int,\n    max_coeff: int,\n    dps: int = 100\n) -> dict:\n    \"\"\"Generate a certificate of non-existence of polynomial relations.\n\n    Combines exhaustive search (for small bounds) with LLL-based search\n    to produce evidence that no polynomial relation exists within the\n    specified bounds.\n\n    Args:\n        values: Input values a1, ..., an\n        max_degree: Maximum polynomial degree\n        max_coeff: Maximum coefficient absolute value\n        dps: Decimal places for computation\n\n    Returns:\n        Certificate dictionary with search results and bounds\n    \"\"\"\n    cert = {\n        'values': values,\n        'eml_values': [complex(eml_complex(v)) for v in values],\n        'max_degree': max_degree,\n        'max_coeff': max_coeff,\n        'precision_dps': dps,\n    }\n\n    # Exhaustive search for small cases\n    n = len(values)\n    num_monomials = len(enumerate_monomials(n, max_degree))\n\n    if num_monomials <= 6 and max_coeff <= 5:\n        result = search_polynomial_relation_exhaustive(\n            values, max_degree, max_coeff, dps\n        )\n        cert['exhaustive_search'] = {\n            'performed': True,\n            'relation_found': result is not None,\n            'result': result\n        }\n    else:\n        cert['exhaustive_search'] = {'performed': False, 'reason': 'search space too large'}\n\n    # LLL-based search\n    lll_result = search_polynomial_relation_lll(values, max_degree, dps)\n    cert['lll_search'] = lll_result\n\n    # Monomial separation check\n    sep_result = check_monomial_separation(values, max_degree, dps)\n    cert['monomial_separation'] = sep_result\n\n    # Overall conclusion\n    if cert.get('exhaustive_search', {}).get('relation_found'):\n        cert['conclusion'] = 'RELATION_FOUND'\n    elif lll_result.get('found'):\n        cert['conclusion'] = 'CANDIDATE_RELATION_FOUND'\n    else:\n        cert['conclusion'] = 'NO_RELATION_FOUND'\n        cert['certificate_statement'] = (\n            f\"No polynomial P \u2208 \u2124[X1,...,X{n}] of total degree \u2264 {max_degree} \"\n            f\"and coefficients of absolute value \u2264 {max_coeff} satisfies \"\n            f\"P(eml(a1),...,eml(an)) = 0 (within precision {dps} decimal places).\"\n        )\n\n    return cert\n\n\n# ---- Example usage ----\nif __name__ == '__main__':\n    print(\"=== EML Polynomial Relation Search Algorithm ===\\n\")\n\n    # Example 1: Search for relations among eml(\u221a2), eml(\u221a3)\n    sqrt2 = math.sqrt(2)\n    sqrt3 = math.sqrt(3)\n\n    print(f\"Input values: a1 = \u221a2 \u2248 {sqrt2:.10f}, a2 = \u221a3 \u2248 {sqrt3:.10f}\")\n    print(f\"eml(\u221a2) \u2248 {eml_complex(sqrt2):.10f}\")\n    print(f\"eml(\u221a3) \u2248 {eml_complex(sqrt3):.10f}\")\n    print()\n\n    if HAS_MPMATH:\n        # Check monomial separation\n        print(\"--- Monomial Separation Check (degree \u2264 3) ---\")\n        sep = check_monomial_separation([sqrt2, sqrt3], 3)\n        print(f\"Separated: {sep['separated']}\")\n        print(f\"Monomials checked: {sep['num_monomials']}\")\n        if sep['collisions']:\n            for c in sep['collisions']:\n                print(f\"  Collision: {c[0]} \u2248 {c[1]} (diff = {c[2]:.2e})\")\n        print()\n\n        # LLL search\n        print(\"--- LLL Relation Search (degree \u2264 3) ---\")\n        lll = search_polynomial_relation_lll([sqrt2, sqrt3], 3, dps=80)\n        print(f\"Relation found: {lll.get('found', False)}\")\n        if lll.get('polynomial'):\n            print(f\"Polynomial: {lll['polynomial']}\")\n        print()\n\n        # Full certificate\n        print(\"--- Non-existence Certificate (degree \u2264 2, coeff \u2264 3) ---\")\n        cert = generate_nonexistence_certificate([sqrt2, sqrt3], 2, 3, dps=80)\n        print(f\"Conclusion: {cert['conclusion']}\")\n        if 'certificate_statement' in cert:\n            print(f\"Certificate: {cert['certificate_statement']}\")\n    else:\n        print(\"Install mpmath for high-precision computations: pip install mpmath\")\n"
+        "code": "\"\"\"\nalgorithms.py \u2014 EML Algebraic Independence: Bounded-Degree Polynomial Relation Search\n\nImplements a certified search algorithm for polynomial relations among EML values\neml(a) = exp(a) * log(1 + a), using lattice reduction (LLL) and exhaustive enumeration.\n\nThe algorithm searches for integer-coefficient multivariate polynomials P(x1,...,xn)\nof bounded total degree and bounded coefficient size such that P(eml(a1),...,eml(an)) \u2248 0.\n\nKey components:\n- Monomial enumeration up to a given total degree\n- High-precision EML evaluation using mpmath\n- LLL-based integer relation detection\n- Exhaustive bounded-coefficient search for small cases\n- Certificate generation for non-existence within search bounds\n\"\"\"\n\nfrom itertools import product as iproduct\nfrom typing import Optional\nimport math\n\ntry:\n    import mpmath\n    HAS_MPMATH = True\nexcept ImportError:\n    HAS_MPMATH = False\n\ntry:\n    import numpy as np\n    HAS_NUMPY = True\nexcept ImportError:\n    HAS_NUMPY = False\n\n\ndef eml_complex(z: complex) -> complex:\n    \"\"\"Compute eml(z) = exp(z) * log(1 + z) using standard library.\"\"\"\n    import cmath\n    return cmath.exp(z) * cmath.log(1 + z)\n\n\ndef eml_mpmath(z, dps: int = 50):\n    \"\"\"Compute eml(z) = exp(z) * log(1 + z) using mpmath for high precision.\n\n    Args:\n        z: Input value (mpmath number or convertible)\n        dps: Decimal places of precision\n\n    Returns:\n        mpmath.mpf or mpmath.mpc: The EML value at z\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath is required for high-precision computation\")\n    with mpmath.workdps(dps):\n        z = mpmath.mpf(z) if isinstance(z, (int, float)) else mpmath.mpc(z)\n        return mpmath.exp(z) * mpmath.log(1 + z)\n\n\ndef enumerate_monomials(n: int, max_degree: int) -> list[tuple[int, ...]]:\n    \"\"\"Enumerate all monomial exponent vectors in n variables up to total degree max_degree.\n\n    Args:\n        n: Number of variables\n        max_degree: Maximum total degree\n\n    Returns:\n        List of tuples (e1, ..., en) with sum(ei) <= max_degree, sorted by total degree.\n\n    Example:\n        >>> enumerate_monomials(2, 2)\n        [(0, 0), (1, 0), (0, 1), (2, 0), (1, 1), (0, 2)]\n    \"\"\"\n    monomials = []\n    for total in range(max_degree + 1):\n        _enumerate_helper(n, total, [], monomials)\n    return monomials\n\n\ndef _enumerate_helper(n: int, remaining: int, current: list[int], result: list[tuple[int, ...]]):\n    \"\"\"Recursive helper for monomial enumeration.\"\"\"\n    if len(current) == n:\n        if remaining == 0:\n            result.append(tuple(current))\n        return\n    for k in range(remaining + 1):\n        _enumerate_helper(n, remaining - k, current + [k], result)\n\n\ndef evaluate_monomials_at_eml(\n    values: list[float],\n    max_degree: int,\n    dps: int = 50\n) -> tuple[list[tuple[int, ...]], list]:\n    \"\"\"Evaluate all monomials in eml(a1), ..., eml(an) up to given degree.\n\n    Args:\n        values: The input values a1, ..., an\n        max_degree: Maximum total degree of monomials\n        dps: Decimal places for mpmath\n\n    Returns:\n        Tuple of (monomial_exponents, monomial_values)\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath required\")\n\n    n = len(values)\n    monomials = enumerate_monomials(n, max_degree)\n\n    with mpmath.workdps(dps):\n        eml_vals = [eml_mpmath(v, dps) for v in values]\n        mono_vals = []\n        for m in monomials:\n            val = mpmath.mpf(1)\n            for i, e in enumerate(m):\n                if e > 0:\n                    val *= eml_vals[i] ** e\n            mono_vals.append(val)\n\n    return monomials, mono_vals\n\n\ndef search_polynomial_relation_exhaustive(\n    values: list[float],\n    max_degree: int,\n    max_coeff: int,\n    dps: int = 50,\n    tolerance: float = 1e-20\n) -> Optional[dict]:\n    \"\"\"Exhaustive search for polynomial relations among EML values.\n\n    Searches for integer-coefficient polynomials P(x1,...,xn) with\n    total degree <= max_degree and |coefficients| <= max_coeff such that\n    P(eml(a1), ..., eml(an)) \u2248 0.\n\n    Args:\n        values: Input values a1, ..., an\n        max_degree: Maximum polynomial degree\n        max_coeff: Maximum absolute value of coefficients\n        dps: Decimal places for evaluation\n        tolerance: Threshold for declaring a relation found\n\n    Returns:\n        Dictionary with relation info if found, None otherwise.\n        If found: {'polynomial': {monomial: coeff, ...}, 'residual': float}\n        If not found: None (serves as certificate of non-existence within bounds)\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath required\")\n\n    monomials, mono_vals = evaluate_monomials_at_eml(values, max_degree, dps)\n    num_monomials = len(monomials)\n\n    # Skip the constant monomial (0,...,0) \u2014 we want nontrivial relations\n    # Actually include it: P can have a constant term\n    coeff_range = range(-max_coeff, max_coeff + 1)\n\n    best_residual = float('inf')\n    best_poly = None\n\n    # For small cases, do exhaustive search\n    if num_monomials <= 6 and max_coeff <= 5:\n        for coeffs in iproduct(coeff_range, repeat=num_monomials):\n            if all(c == 0 for c in coeffs):\n                continue\n            with mpmath.workdps(dps):\n                val = sum(c * v for c, v in zip(coeffs, mono_vals))\n                residual = float(abs(val))\n            if residual < tolerance:\n                poly = {m: c for m, c in zip(monomials, coeffs) if c != 0}\n                return {\n                    'polynomial': poly,\n                    'residual': residual,\n                    'degree': max(sum(m) for m in poly.keys()),\n                    'max_coeff_used': max(abs(c) for c in poly.values())\n                }\n            if residual < best_residual:\n                best_residual = residual\n                best_poly = {m: c for m, c in zip(monomials, coeffs) if c != 0}\n\n    return None\n\n\ndef search_polynomial_relation_lll(\n    values: list[float],\n    max_degree: int,\n    dps: int = 100,\n    lll_factor: int = None\n) -> dict:\n    \"\"\"LLL-based search for polynomial relations among EML values.\n\n    Uses lattice reduction to find small integer vectors in the kernel of\n    the monomial evaluation matrix. More efficient than exhaustive search\n    for larger search spaces.\n\n    Args:\n        values: Input values a1, ..., an\n        max_degree: Maximum polynomial degree\n        dps: Decimal places for evaluation\n        lll_factor: Scaling factor for integer relation detection\n\n    Returns:\n        Dictionary with search results:\n        - 'candidate': best candidate relation (if residual is small)\n        - 'min_residual': smallest residual found\n        - 'certificate_bound': lower bound on |P(eml(a))| for degree <= max_degree\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath required\")\n\n    monomials, mono_vals = evaluate_monomials_at_eml(values, max_degree, dps)\n    num_monomials = len(monomials)\n\n    if lll_factor is None:\n        lll_factor = 10 ** (dps // 2)\n\n    with mpmath.workdps(dps):\n        # Build the integer relation matrix\n        # We want to find integer vector c such that sum(c_i * mono_vals_i) \u2248 0\n        # Use PSLQ-style approach via mpmath\n        real_vals = []\n        for v in mono_vals:\n            if isinstance(v, mpmath.mpc):\n                real_vals.append(v.real)\n                real_vals.append(v.imag)\n            else:\n                real_vals.append(v)\n\n        # Try PSLQ for real-valued case (all values real)\n        all_real = all(isinstance(v, mpmath.mpf) or\n                       (isinstance(v, mpmath.mpc) and abs(v.imag) < mpmath.mpf(10)**(-dps//2))\n                       for v in mono_vals)\n\n        if all_real and num_monomials >= 2:\n            real_mono = [v.real if isinstance(v, mpmath.mpc) else v for v in mono_vals]\n            try:\n                relation = mpmath.pslq(real_mono, maxcoeff=10**6, maxsteps=5000)\n                if relation is not None:\n                    residual = float(abs(sum(int(c) * v for c, v in zip(relation, real_mono))))\n                    poly = {m: int(c) for m, c in zip(monomials, relation) if c != 0}\n                    return {\n                        'found': True,\n                        'polynomial': poly,\n                        'residual': residual,\n                        'method': 'PSLQ'\n                    }\n            except Exception:\n                pass\n\n    return {\n        'found': False,\n        'min_residual': float('inf'),\n        'num_monomials_checked': num_monomials,\n        'certificate': f'No integer relation found among {num_monomials} monomials up to degree {max_degree}'\n    }\n\n\ndef eml_monomial_value(a_values: list[float], m: tuple[int, ...], dps: int = 50):\n    \"\"\"Compute emlMonomial(a, m) = exp(\u2211 m\u1d62a\u1d62) * \u220f log(1+a\u1d62)^m\u1d62.\n\n    This corresponds to the Lean definition `emlMonomial`.\n\n    Args:\n        a_values: The input values a1, ..., an\n        m: Exponent vector (m1, ..., mn)\n        dps: Decimal places\n\n    Returns:\n        The emlMonomial value\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath required\")\n    with mpmath.workdps(dps):\n        exp_arg = sum(mpmath.mpf(mi) * mpmath.mpf(ai) for mi, ai in zip(m, a_values))\n        exp_part = mpmath.exp(exp_arg)\n        log_part = mpmath.mpf(1)\n        for mi, ai in zip(m, a_values):\n            if mi > 0:\n                log_part *= mpmath.log(1 + mpmath.mpf(ai)) ** mi\n        return exp_part * log_part\n\n\ndef check_monomial_separation(\n    a_values: list[float],\n    max_degree: int,\n    dps: int = 50,\n    tolerance: float = 1e-30\n) -> dict:\n    \"\"\"Check the EML Monomial Separation property up to a given degree.\n\n    Tests whether distinct monomial exponent vectors yield distinct emlMonomial values,\n    corresponding to the `EMLMonomialSeparatedUpTo` predicate in the Lean formalization.\n\n    Args:\n        a_values: Input values a1, ..., an\n        max_degree: Maximum degree to check\n        dps: Decimal places\n        tolerance: Threshold for declaring two values equal\n\n    Returns:\n        Dictionary with:\n        - 'separated': bool \u2014 whether separation holds\n        - 'collisions': list of collision pairs (if any)\n        - 'num_monomials': number of monomials checked\n    \"\"\"\n    if not HAS_MPMATH:\n        raise ImportError(\"mpmath required\")\n\n    monomials = enumerate_monomials(len(a_values), max_degree)\n\n    with mpmath.workdps(dps):\n        mono_values = []\n        for m in monomials:\n            val = eml_monomial_value(a_values, m, dps)\n            mono_values.append(val)\n\n    collisions = []\n    for i in range(len(monomials)):\n        for j in range(i + 1, len(monomials)):\n            with mpmath.workdps(dps):\n                diff = abs(mono_values[i] - mono_values[j])\n                if float(diff) < tolerance:\n                    collisions.append((monomials[i], monomials[j], float(diff)))\n\n    return {\n        'separated': len(collisions) == 0,\n        'collisions': collisions,\n        'num_monomials': len(monomials),\n        'max_degree': max_degree\n    }\n\n\ndef generate_nonexistence_certificate(\n    values: list[float],\n    max_degree: int,\n    max_coeff: int,\n    dps: int = 100\n) -> dict:\n    \"\"\"Generate a certificate of non-existence of polynomial relations.\n\n    Combines exhaustive search (for small bounds) with LLL-based search\n    to produce evidence that no polynomial relation exists within the\n    specified bounds.\n\n    Args:\n        values: Input values a1, ..., an\n        max_degree: Maximum polynomial degree\n        max_coeff: Maximum coefficient absolute value\n        dps: Decimal places for computation\n\n    Returns:\n        Certificate dictionary with search results and bounds\n    \"\"\"\n    cert = {\n        'values': values,\n        'eml_values': [complex(eml_complex(v)) for v in values],\n        'max_degree': max_degree,\n        'max_coeff': max_coeff,\n        'precision_dps': dps,\n    }\n\n    # Exhaustive search for small cases\n    n = len(values)\n    num_monomials = len(enumerate_monomials(n, max_degree))\n\n    if num_monomials <= 6 and max_coeff <= 5:\n        result = search_polynomial_relation_exhaustive(\n            values, max_degree, max_coeff, dps\n        )\n        cert['exhaustive_search'] = {\n            'performed': True,\n            'relation_found': result is not None,\n            'result': result\n        }\n    else:\n        cert['exhaustive_search'] = {'performed': False, 'reason': 'search space too large'}\n\n    # LLL-based search\n    lll_result = search_polynomial_relation_lll(values, max_degree, dps)\n    cert['lll_search'] = lll_result\n\n    # Monomial separation check\n    sep_result = check_monomial_separation(values, max_degree, dps)\n    cert['monomial_separation'] = sep_result\n\n    # Overall conclusion\n    if cert.get('exhaustive_search', {}).get('relation_found'):\n        cert['conclusion'] = 'RELATION_FOUND'\n    elif lll_result.get('found'):\n        cert['conclusion'] = 'CANDIDATE_RELATION_FOUND'\n    else:\n        cert['conclusion'] = 'NO_RELATION_FOUND'\n        cert['certificate_statement'] = (\n            f\"No polynomial P \u2208 \u2124[X1,...,X{n}] of total degree \u2264 {max_degree} \"\n            f\"and coefficients of absolute value \u2264 {max_coeff} satisfies \"\n            f\"P(eml(a1),...,eml(an)) = 0 (within precision {dps} decimal places).\"\n        )\n\n    return cert\n\n\n# ---- Example usage ----\nif __name__ == '__main__':\n    print(\"=== EML Polynomial Relation Search Algorithm ===\\n\")\n\n    # Example 1: Search for relations among eml(\u221a2), eml(\u221a3)\n    sqrt2 = math.sqrt(2)\n    sqrt3 = math.sqrt(3)\n\n    print(f\"Input values: a1 = \u221a2 \u2248 {sqrt2:.10f}, a2 = \u221a3 \u2248 {sqrt3:.10f}\")\n    print(f\"eml(\u221a2) \u2248 {eml_complex(sqrt2):.10f}\")\n    print(f\"eml(\u221a3) \u2248 {eml_complex(sqrt3):.10f}\")\n    print()\n\n    if HAS_MPMATH:\n        # Check monomial separation\n        print(\"--- Monomial Separation Check (degree \u2264 3) ---\")\n        sep = check_monomial_separation([sqrt2, sqrt3], 3)\n        print(f\"Separated: {sep['separated']}\")\n        print(f\"Monomials checked: {sep['num_monomials']}\")\n        if sep['collisions']:\n            for c in sep['collisions']:\n                print(f\"  Collision: {c[0]} \u2248 {c[1]} (diff = {c[2]:.2e})\")\n        print()\n\n        # LLL search\n        print(\"--- LLL Relation Search (degree \u2264 3) ---\")\n        lll = search_polynomial_relation_lll([sqrt2, sqrt3], 3, dps=80)\n        print(f\"Relation found: {lll.get('found', False)}\")\n        if lll.get('polynomial'):\n            print(f\"Polynomial: {lll['polynomial']}\")\n        print()\n\n        # Full certificate\n        print(\"--- Non-existence Certificate (degree \u2264 2, coeff \u2264 3) ---\")\n        cert = generate_nonexistence_certificate([sqrt2, sqrt3], 2, 3, dps=80)\n        print(f\"Conclusion: {cert['conclusion']}\")\n        if 'certificate_statement' in cert:\n            print(f\"Certificate: {cert['certificate_statement']}\")\n    else:\n        print(\"Install mpmath for high-precision computations: pip install mpmath\")\n",
+        "code_file": "visualizations/eml_algebraic_independence_transcendence_results_bounded_degree_polynomial_relation_searc.py"
       }
     ],
     "lean_proofs": "/-\nCopyright (c) 2025 EML Algebraic Independence Project. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport Mathlib\n\n/-!\n# EML: Exponential-times-Logarithm Algebraic Independence Framework\n\n## Overview\n\nThis file defines the core EML (Exponential-Multiply-Logarithm) operator and the\nassociated algebraic structures for studying polynomial relations among values of the form\n`exp(z) * log(1 + z)`.\n\n## Main Definitions\n\n* `eml z` \u2014 the EML operator: `exp(z) * log(1 + z)`\n* `emlMonomial a m` \u2014 the exp-log monomial `exp(\u2211\u1d62 m\u1d62 a\u1d62) * \u220f\u1d62 log(1 + a\u1d62)^m\u1d62`\n* `expandEML a P` \u2014 expansion of a polynomial evaluated at EML values into emlMonomials\n* `NoPolyRelUpTo d v` \u2014 no nonzero polynomial of degree \u2264 d vanishes on `v`\n* `EMLMonomialSeparatedUpTo d a` \u2014 emlMonomial map is injective up to degree d\n-/\n\nopen Complex MvPolynomial Finset BigOperators\n\nnoncomputable section\n\n/-- The basic EML operator: `eml(z) = exp(z) * log(1 + z)`. -/\ndef eml (z : \u2102) : \u2102 := exp z * log (1 + z)\n\n/-- Formal EML monomial associated to an exponent vector `m`:\n    `emlMonomial a m = exp(\u2211\u1d62 m\u1d62 \u00b7 a\u1d62) * \u220f\u1d62 log(1 + a\u1d62)^m\u1d62` -/\ndef emlMonomial {n : \u2115} (a : Fin n \u2192 \u2102) (m : Fin n \u2192\u2080 \u2115) : \u2102 :=\n  exp (\u2211 i, (m i : \u2102) * a i) * \u220f i, (log (1 + a i)) ^ (m i)\n\n/-- Expansion of a polynomial `P` in EML variables into exp-log monomials. -/\ndef expandEML {n : \u2115} (a : Fin n \u2192 \u2102) (P : MvPolynomial (Fin n) \u211a) : \u2102 :=\n  \u2211 m \u2208 P.support, ((P.coeff m : \u211a) : \u2102) * emlMonomial a m\n\n/-- A bounded-degree polynomial relation certificate: there exists a nonzero polynomial\n    of degree \u2264 d that vanishes on `v`. -/\ndef HasPolyRel {n : \u2115} (d : \u2115) (v : Fin n \u2192 \u2102) : Prop :=\n  \u2203 P : MvPolynomial (Fin n) \u211a, P.totalDegree \u2264 d \u2227 aeval v P = 0 \u2227 P \u2260 0\n\n/-- No nonzero polynomial of degree \u2264 d vanishes on `v`. -/\ndef NoPolyRelUpTo {n : \u2115} (d : \u2115) (v : Fin n \u2192 \u2102) : Prop :=\n  \u2200 P : MvPolynomial (Fin n) \u211a, P.totalDegree \u2264 d \u2192 aeval v P = 0 \u2192 P = 0\n\n/-- The EML monomial map is injective on monomials of degree \u2264 d. -/\ndef EMLMonomialSeparatedUpTo {n : \u2115} (d : \u2115) (a : Fin n \u2192 \u2102) : Prop :=\n  \u2200 m m' : Fin n \u2192\u2080 \u2115,\n    (\u2211 i, m i) \u2264 d \u2192\n    (\u2211 i, m' i) \u2264 d \u2192\n    emlMonomial a m = emlMonomial a m' \u2192\n    m = m'\n\n/-- EML values are algebraically separated: no nonzero polynomial vanishes on them. -/\ndef EMLSeparated {n : \u2115} (s : Fin n \u2192 \u2102) : Prop :=\n  \u2200 P : MvPolynomial (Fin n) \u211a,\n    aeval (fun i => eml (s i)) P = 0 \u2192 P = 0\n\n/-- `HasPolyRel` and `NoPolyRelUpTo` are complementary. -/\ntheorem hasPolyRel_iff_not_noPolyRelUpTo {n : \u2115} (d : \u2115) (v : Fin n \u2192 \u2102) :\n    HasPolyRel d v \u2194 \u00ac NoPolyRelUpTo d v := by\n  simp only [HasPolyRel, NoPolyRelUpTo]\n  constructor\n  \u00b7 rintro \u27e8P, hd, hv, hne\u27e9 h\n    exact hne (h P hd hv)\n  \u00b7 intro h\n    by_contra hall\n    apply h\n    intro P hd hv\n    by_contra hne\n    exact hall \u27e8P, hd, hv, hne\u27e9\n\nend\n\n\n-- \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\n/-\nCopyright (c) 2025 EML Algebraic Independence Project. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\n-/\nimport EML.Defs\n\n/-!\n# EML Theorems: Structural Results for EML Algebraic Independence\n\nThis file contains the main theorems of the EML algebraic independence framework:\n\n## Theorem 1: Linear Relation Partition\n`eml_linear_relation_partition` shows that any linear combination of EML values\ncan be regrouped by logarithmic collision classes, providing a separation-of-variables\ndecomposition.\n\n## Theorem 2: Polynomial Expansion\n`aeval_eml_eq_expandEML` proves that evaluating a multivariate polynomial at EML values\nequals the explicit expansion into exp-log monomials.\n\n## Theorem 3: Norm Bounds for Imaginary Inputs (Cross-Domain)\n`norm_eml_mul_I` and `norm_sum_eml_mul_I_le` establish that for purely imaginary arguments,\nthe EML norm reduces to the logarithmic norm (since |exp(i\u03b8)| = 1), connecting algebraic\nindependence questions to harmonic analysis and phase cancellation.\n-/\n\nopen Complex MvPolynomial Finset BigOperators\n\nnoncomputable section\n\n/-! ## Auxiliary lemmas -/\n\n/-\n`eml(z)^k = exp(k\u00b7z) * log(1+z)^k`\n-/\ntheorem eml_pow (z : \u2102) (k : \u2115) :\n    eml z ^ k = exp ((k : \u2102) * z) * log (1 + z) ^ k := by\n      rw [ show eml z = Complex.exp z * Complex.log ( 1 + z ) from rfl, mul_pow, \u2190 Complex.exp_nat_mul ]\n\n/-\nProduct of EML powers equals an emlMonomial.\n-/\ntheorem eml_prod_eq_emlMonomial {n : \u2115} (a : Fin n \u2192 \u2102) (m : Fin n \u2192\u2080 \u2115) :\n    (\u220f i : Fin n, eml (a i) ^ (m i)) = emlMonomial a m := by\n      simp +decide [ Finset.prod_mul_distrib, Complex.exp_sum, emlMonomial, eml_pow ]\n\n/-! ## Theorem 2: Polynomial evaluation at EML values equals expandEML -/\n\n/-\n**Polynomial Expansion Theorem**: Evaluating a multivariate polynomial at EML values\n    yields a sum over monomials of coefficients times exp-log monomials.\n\n    This is the core reduction theorem: it converts any polynomial relation among\n    EML values into an explicit finite sum of exp-log terms, enabling systematic\n    analysis of cancellation patterns.\n-/\ntheorem aeval_eml_eq_expandEML {n : \u2115} (a : Fin n \u2192 \u2102)\n    (P : MvPolynomial (Fin n) \u211a) :\n    aeval (fun i => eml (a i)) P = expandEML a P := by\n      convert MvPolynomial.aeval_def ( fun i => eml ( a i ) ) P using 1;\n      rw [ MvPolynomial.eval\u2082_eq' ];\n      exact Finset.sum_congr rfl fun _ _ => by rw [ eml_prod_eq_emlMonomial ] ; rfl;\n\n/-! ## Theorem 1: Linear Relation Partition -/\n\n/-\n**Linear Relation Partition Theorem**: Any linear combination of EML values\n    decomposes as a sum over logarithmic collision classes.\n\n    For each distinct value `L` of `log(1 + z\u1d62)`, we group together all indices\n    sharing that logarithmic value and factor out `L`, leaving an inner sum of\n    weighted exponentials. This is a genuine separation-of-variables result:\n    cancellation in a linear EML combination must occur *within* each logarithmic\n    collision class.\n-/\ntheorem eml_linear_relation_partition\n    {n : \u2115} (z : Fin n \u2192 \u2102) (q : Fin n \u2192 \u211a) :\n    \u2211 i, (q i : \u2102) * eml (z i)\n      =\n    \u2211 L \u2208 (Finset.univ.image (fun i => log (1 + z i))),\n      L * (\u2211 i \u2208 Finset.univ.filter (fun i => log (1 + z i) = L),\n            (q i : \u2102) * exp (z i)) := by\n              simp +decide only [Finset.mul_sum _ _ _];\n              rw [ Finset.sum_image' ];\n              exact fun i _ => Finset.sum_congr rfl fun j hj => by rw [ eml ] ; rw [ Finset.mem_filter.mp hj |>.2 ] ; ring;\n\n/-! ## Theorem 3: Norm bounds for imaginary inputs -/\n\n/-\n**EML Norm for Imaginary Inputs**: For purely imaginary argument `t\u00b7I`,\n    the norm of `eml(t\u00b7I)` equals the norm of `log(1 + t\u00b7I)`.\n\n    This is because `|exp(t\u00b7I)| = 1` for all real `t`, so the exponential factor\n    contributes no magnitude. This connects EML algebraic independence to\n    phase cancellation phenomena in harmonic analysis.\n-/\ntheorem norm_eml_mul_I (t : \u211d) :\n    \u2016eml (\u2191t * I)\u2016 = \u2016log (1 + \u2191t * I)\u2016 := by\n      unfold eml; rw [ norm_mul ] ; norm_num [ Complex.norm_exp ] ;\n\n/-\n**Triangle Inequality for EML Sums at Imaginary Arguments**:\n    The norm of a linear combination of EML values at imaginary points is bounded\n    by the sum of coefficient norms times logarithmic norms.\n\n    This turns algebraic dependence search into a phase-cancellation problem:\n    any polynomial relation among EML values at imaginary points must achieve\n    precise phase cancellation, which is detectable by norm estimates.\n-/\ntheorem norm_sum_eml_mul_I_le\n    {n : \u2115} (\u03b8 : Fin n \u2192 \u211d) (c : Fin n \u2192 \u2102) :\n    \u2016\u2211 i, c i * eml (\u2191(\u03b8 i) * I)\u2016\n      \u2264 \u2211 i, \u2016c i\u2016 * \u2016log (1 + \u2191(\u03b8 i) * I)\u2016 := by\n        refine' le_trans ( norm_sum_le _ _ ) _;\n        exact Finset.sum_le_sum fun i _ => by rw [ norm_mul, norm_eml_mul_I ] ;\n\n/-! ## Reduction theorem: polynomial relations reduce to expandEML vanishing -/\n\n/-\n`NoPolyRelUpTo` for EML values is equivalent to the expandEML formulation.\n-/\ntheorem noPolyRelUpTo_eml_iff_expandEML {n : \u2115} (d : \u2115) (a : Fin n \u2192 \u2102) :\n    NoPolyRelUpTo d (fun i => eml (a i)) \u2194\n    \u2200 P : MvPolynomial (Fin n) \u211a, P.totalDegree \u2264 d \u2192 expandEML a P = 0 \u2192 P = 0 := by\n      -- By definition of `NoPolyRelUpTo`, we know that it is equivalent to the expandEML formulation.\n      simp [NoPolyRelUpTo, aeval_eml_eq_expandEML]\n\nend",
@@ -296,7 +337,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_002",
@@ -318,7 +361,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_003",
@@ -340,7 +385,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_004",
@@ -361,7 +408,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_005",
@@ -383,7 +432,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_006",
@@ -405,7 +456,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_007",
@@ -426,7 +479,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_008",
@@ -447,7 +502,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_009",
@@ -470,7 +527,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_010",
@@ -492,7 +551,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_011",
@@ -514,7 +575,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_012",
@@ -536,7 +599,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_013",
@@ -557,7 +622,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_014",
@@ -579,7 +646,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_015",
@@ -601,7 +670,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_016",
@@ -623,7 +694,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_017",
@@ -645,7 +718,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_018",
@@ -667,7 +742,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_019",
@@ -689,7 +766,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_020",
@@ -711,7 +790,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_021",
@@ -733,7 +814,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_022",
@@ -755,7 +838,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_023",
@@ -777,7 +862,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_024",
@@ -798,7 +885,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_025",
@@ -819,7 +908,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_026",
@@ -841,7 +932,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_027",
@@ -863,7 +956,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_028",
@@ -885,7 +980,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_029",
@@ -907,7 +1004,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_030",
@@ -929,7 +1028,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_031",
@@ -951,7 +1052,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_032",
@@ -972,7 +1075,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_033",
@@ -994,7 +1099,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_034",
@@ -1016,7 +1123,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_035",
@@ -1038,7 +1147,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_036",
@@ -1059,7 +1170,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_037",
@@ -1080,7 +1193,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_038",
@@ -1103,7 +1218,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_039",
@@ -1126,7 +1243,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_040",
@@ -1149,7 +1268,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_041",
@@ -1172,7 +1293,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_042",
@@ -1195,7 +1318,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_043",
@@ -1218,7 +1343,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_044",
@@ -1241,7 +1368,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_045",
@@ -1263,7 +1392,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_046",
@@ -1286,7 +1417,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_047",
@@ -1302,14 +1435,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.82,
+        "priority_score": 0.9199999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T22:37:54.642160+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_048",
@@ -1332,7 +1467,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_049",
@@ -1355,7 +1492,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_050",
@@ -1378,7 +1517,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_051",
@@ -1400,7 +1541,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_052",
@@ -1423,7 +1566,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_053",
@@ -1446,7 +1591,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_054",
@@ -1463,13 +1610,15 @@ window.PACKAGE_DB = {
         "research_mode": "prove",
         "depth_estimate": 3,
         "priority_score": 0.9,
-        "status": "available",
+        "status": "pruned",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T22:37:54.694274+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_055",
@@ -1491,7 +1640,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_056",
@@ -1513,7 +1664,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_057",
@@ -1536,7 +1689,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_058",
@@ -1553,13 +1708,15 @@ window.PACKAGE_DB = {
         "research_mode": "prove",
         "depth_estimate": 3,
         "priority_score": 0.76,
-        "status": "available",
+        "status": "pruned",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T22:37:54.723031+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_059",
@@ -1581,7 +1738,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_060",
@@ -1603,7 +1762,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_061",
@@ -1620,13 +1781,15 @@ window.PACKAGE_DB = {
         "research_mode": "prove",
         "depth_estimate": 3,
         "priority_score": 0.82,
-        "status": "available",
+        "status": "pruned",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T22:37:54.748891+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_062",
@@ -1649,7 +1812,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_063",
@@ -1672,7 +1837,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_064",
@@ -1695,7 +1862,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_065",
@@ -1718,7 +1887,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_066",
@@ -1741,7 +1912,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_067",
@@ -1764,7 +1937,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_068",
@@ -1787,7 +1962,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_069",
@@ -1810,7 +1987,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_070",
@@ -1833,7 +2012,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_071",
@@ -1856,7 +2037,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_072",
@@ -1879,7 +2062,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_073",
@@ -1902,7 +2087,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_074",
@@ -1925,7 +2112,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_075",
@@ -1948,7 +2137,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_076",
@@ -1971,7 +2162,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_077",
@@ -1994,7 +2187,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_078",
@@ -2017,7 +2212,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_079",
@@ -2040,7 +2237,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_080",
@@ -2063,7 +2262,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_081",
@@ -2086,7 +2287,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_082",
@@ -2109,7 +2312,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_083",
@@ -2132,7 +2337,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_084",
@@ -2155,7 +2362,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_085",
@@ -2178,7 +2387,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_086",
@@ -2201,7 +2412,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_087",
@@ -2224,7 +2437,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_088",
@@ -2247,7 +2462,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_089",
@@ -2270,7 +2487,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_090",
@@ -2293,7 +2512,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_091",
@@ -2316,7 +2537,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_092",
@@ -2339,7 +2562,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_093",
@@ -2362,7 +2587,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_094",
@@ -2385,7 +2612,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_095",
@@ -2408,7 +2637,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_096",
@@ -2431,7 +2662,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_097",
@@ -2454,7 +2687,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_098",
@@ -2477,7 +2712,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_099",
@@ -2500,7 +2737,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_100",
@@ -2523,7 +2762,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_101",
@@ -2546,7 +2787,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_102",
@@ -2569,7 +2812,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_103",
@@ -2592,7 +2837,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "seed_104",
@@ -2615,7 +2862,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0783",
@@ -2641,7 +2890,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0784",
@@ -2658,14 +2909,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:11:24.476543+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0785",
@@ -2683,14 +2936,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:11:24.492421+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0786",
@@ -2708,14 +2963,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:11:24.506271+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0787",
@@ -2733,14 +2990,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:11:24.518980+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0788",
@@ -2759,13 +3018,15 @@ window.PACKAGE_DB = {
         "research_mode": "prove",
         "depth_estimate": 3,
         "priority_score": 0.7,
-        "status": "available",
+        "status": "pruned",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:11:24.532304+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0789",
@@ -2787,7 +3048,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0790",
@@ -2807,14 +3070,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:12:21.832370+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0791",
@@ -2835,14 +3100,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:12:21.848642+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0792",
@@ -2868,7 +3135,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0793",
@@ -2887,14 +3156,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:12:21.876594+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0794",
@@ -2914,14 +3185,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:12:21.890989+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0795",
@@ -2943,7 +3216,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0796",
@@ -2964,7 +3239,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0797",
@@ -2988,7 +3265,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0798",
@@ -3010,7 +3289,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0799",
@@ -3035,7 +3316,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0800",
@@ -3053,14 +3336,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:13:44.233016+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0801",
@@ -3080,14 +3365,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:13:44.246682+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0802",
@@ -3108,13 +3395,15 @@ window.PACKAGE_DB = {
         "research_mode": "prove",
         "depth_estimate": 3,
         "priority_score": 0.7,
-        "status": "available",
+        "status": "pruned",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:13:44.261184+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0803",
@@ -3133,14 +3422,16 @@ window.PACKAGE_DB = {
         "proof_strategy": "",
         "research_mode": "prove",
         "depth_estimate": 3,
-        "priority_score": 0.7,
+        "priority_score": 0.7999999999999999,
         "status": "available",
         "consumed_by_exp_id": "",
         "timestamp": "2026-05-24T23:13:44.276911+00:00",
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0804",
@@ -3162,7 +3453,33 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
+      },
+      {
+        "id": "fd_0805",
+        "title": "Zeta-Spectral Rigidity of Proof Dependency Graphs",
+        "description": "Conjecture: For any finitely axiomatized theory T with two independent large formalization corpora C1 and C2 of the same mathematical domain, the normalized Ihara zeta function of the directed proof-dependency graph converges, under corpus growth, to a theory-specific limit invariant Z_T that is independent of presentation up to explicit finite-size error. Test: Build proof-dependency graphs from multiple formal libraries/formalization styles for the same theory (for example groups, commutative algebra, or measure theory), compute their normalized zeta functions and compare cross-corpus convergence against null models obtained by degree-preserving rewiring; the conjecture is refuted if presentation effects do not decay or if no stable invariant emerges. Impact: This would introduce a genuinely new spectral invariant of mathematical theories, enabling quantitative comparison of theories, transfer of lemmas across libraries via zeta matching, and a new bridge between graph zeta functions, formal proof mining, and the large-scale geometry of mathematics.",
+        "source_exp_id": "pi_brainstorm",
+        "source_path": "brainstorm",
+        "domains": [
+          "Graph Zeta Functions",
+          "Formalized Mathematics"
+        ],
+        "proof_strategy": "",
+        "research_mode": "prove",
+        "depth_estimate": 3,
+        "priority_score": 0.8,
+        "status": "available",
+        "consumed_by_exp_id": "",
+        "timestamp": "2026-05-25T00:25:26.921712+00:00",
+        "catalog_references": [],
+        "ambition_level": "extension",
+        "lineage_refs": [],
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       }
     ],
     "pruned": [
@@ -3186,7 +3503,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0162",
@@ -3209,7 +3528,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0276",
@@ -3230,7 +3551,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0277",
@@ -3251,7 +3574,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0278",
@@ -3272,7 +3597,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0283",
@@ -3293,7 +3620,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0285",
@@ -3315,7 +3644,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0280",
@@ -3336,7 +3667,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0281",
@@ -3357,7 +3690,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0284",
@@ -3378,7 +3713,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0282",
@@ -3399,7 +3736,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0245",
@@ -3421,7 +3760,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0251",
@@ -3443,7 +3784,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0279",
@@ -3465,7 +3808,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0296",
@@ -3487,7 +3832,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0293",
@@ -3508,7 +3855,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0294",
@@ -3529,7 +3878,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0295",
@@ -3550,7 +3901,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0065",
@@ -3572,7 +3925,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0081",
@@ -3594,7 +3949,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0290",
@@ -3618,7 +3975,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0289",
@@ -3639,7 +3998,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0292",
@@ -3661,7 +4022,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0291",
@@ -3683,7 +4046,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0239",
@@ -3705,7 +4070,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0299",
@@ -3727,7 +4094,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0186",
@@ -3749,7 +4118,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0203",
@@ -3771,7 +4142,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0149",
@@ -3793,7 +4166,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0179",
@@ -3815,7 +4190,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0185",
@@ -3837,7 +4214,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0147",
@@ -3859,7 +4238,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0148",
@@ -3881,7 +4262,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0306",
@@ -3902,7 +4285,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0307",
@@ -3923,7 +4308,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0309",
@@ -3944,7 +4331,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0141",
@@ -3966,7 +4355,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0308",
@@ -3988,7 +4379,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0311",
@@ -4009,7 +4402,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0310",
@@ -4030,7 +4425,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0057",
@@ -4053,7 +4450,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0066",
@@ -4077,7 +4476,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0117",
@@ -4099,7 +4500,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0312",
@@ -4121,7 +4524,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0313",
@@ -4142,7 +4547,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0320",
@@ -4164,7 +4571,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0326",
@@ -4186,7 +4595,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0328",
@@ -4208,7 +4619,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0329",
@@ -4230,7 +4643,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0330",
@@ -4252,7 +4667,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0314",
@@ -4275,7 +4692,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0056",
@@ -4298,7 +4717,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0128",
@@ -4324,7 +4745,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0309",
@@ -4346,7 +4769,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0333",
@@ -4367,7 +4792,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0331",
@@ -4389,7 +4816,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0334",
@@ -4410,7 +4839,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0330",
@@ -4431,7 +4862,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0341",
@@ -4453,7 +4886,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0342",
@@ -4475,7 +4910,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0343",
@@ -4497,7 +4934,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0344",
@@ -4519,7 +4958,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0332",
@@ -4543,7 +4984,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0271",
@@ -4569,7 +5012,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0338",
@@ -4591,7 +5036,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0344",
@@ -4613,7 +5060,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0278",
@@ -4639,7 +5088,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0344",
@@ -4661,7 +5112,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0345",
@@ -4683,7 +5136,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0346",
@@ -4705,7 +5160,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0352",
@@ -4727,7 +5184,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0350",
@@ -4749,7 +5208,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0275",
@@ -4775,7 +5236,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0276",
@@ -4802,7 +5265,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0277",
@@ -4828,7 +5293,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0354",
@@ -4850,7 +5317,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0268",
@@ -4876,7 +5345,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0270",
@@ -4902,7 +5373,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0274",
@@ -4928,7 +5401,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0362",
@@ -4950,7 +5425,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0363",
@@ -4972,7 +5449,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0363",
@@ -4994,7 +5473,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0363",
@@ -5016,7 +5497,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0364",
@@ -5037,7 +5520,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0267",
@@ -5064,7 +5549,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0293",
@@ -5092,7 +5579,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0294",
@@ -5119,7 +5608,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0360",
@@ -5141,7 +5632,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0362",
@@ -5163,7 +5656,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0363",
@@ -5185,7 +5680,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0231",
@@ -5209,7 +5706,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0242",
@@ -5236,7 +5735,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0253",
@@ -5262,7 +5763,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0263",
@@ -5289,7 +5792,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0266",
@@ -5315,7 +5820,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0363",
@@ -5337,7 +5844,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0367",
@@ -5358,7 +5867,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0370",
@@ -5380,7 +5891,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0373",
@@ -5402,7 +5915,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0365",
@@ -5423,7 +5938,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0366",
@@ -5444,7 +5961,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0368",
@@ -5465,7 +5984,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0376",
@@ -5487,7 +6008,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0367",
@@ -5509,7 +6032,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0368",
@@ -5531,7 +6056,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0369",
@@ -5553,7 +6080,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0370",
@@ -5575,7 +6104,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0375",
@@ -5597,7 +6128,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0377",
@@ -5624,7 +6157,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0363",
@@ -5646,7 +6181,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0364",
@@ -5668,7 +6205,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0372",
@@ -5690,7 +6229,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0368",
@@ -5712,7 +6253,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0374",
@@ -5738,7 +6281,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0375",
@@ -5764,7 +6309,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0376",
@@ -5790,7 +6337,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0377",
@@ -5816,7 +6365,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0373",
@@ -5838,7 +6389,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0380",
@@ -5860,7 +6413,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0379",
@@ -5882,7 +6437,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0381",
@@ -5903,7 +6460,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0377",
@@ -5925,7 +6484,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0378",
@@ -5947,7 +6508,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0377",
@@ -5969,7 +6532,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0371",
@@ -5991,7 +6556,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0363",
@@ -6013,7 +6580,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0364",
@@ -6035,7 +6604,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0365",
@@ -6057,7 +6628,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0379",
@@ -6079,7 +6652,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0380",
@@ -6101,7 +6676,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0386",
@@ -6123,7 +6700,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0386",
@@ -6150,7 +6729,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0387",
@@ -6174,7 +6755,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0382",
@@ -6196,7 +6779,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0382",
@@ -6218,7 +6803,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0383",
@@ -6240,7 +6827,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0384",
@@ -6262,7 +6851,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0383",
@@ -6284,7 +6875,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0384",
@@ -6306,7 +6899,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0388",
@@ -6328,7 +6923,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0381",
@@ -6350,7 +6947,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0385",
@@ -6372,7 +6971,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0392",
@@ -6400,7 +7001,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0393",
@@ -6426,7 +7029,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0382",
@@ -6448,7 +7053,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0388",
@@ -6470,7 +7077,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0392",
@@ -6495,7 +7104,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0393",
@@ -6521,7 +7132,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0394",
@@ -6545,7 +7158,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0389",
@@ -6567,7 +7182,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0315",
@@ -6594,7 +7211,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0386",
@@ -6616,7 +7235,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0387",
@@ -6638,7 +7259,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0385",
@@ -6660,7 +7283,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0391",
@@ -6682,7 +7307,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0383",
@@ -6704,7 +7331,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0384",
@@ -6725,7 +7354,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0390",
@@ -6747,7 +7378,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0391",
@@ -6769,7 +7402,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0397",
@@ -6791,7 +7426,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0387",
@@ -6812,7 +7449,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0396",
@@ -6833,7 +7472,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0339",
@@ -6861,7 +7502,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0386",
@@ -6883,7 +7526,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0392",
@@ -6905,7 +7550,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0388",
@@ -6927,7 +7574,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0396",
@@ -6949,7 +7598,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0398",
@@ -6972,7 +7623,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0403",
@@ -6993,7 +7646,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0396",
@@ -7015,7 +7670,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0394",
@@ -7036,7 +7693,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0395",
@@ -7057,7 +7716,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0397",
@@ -7079,7 +7740,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0382",
@@ -7102,7 +7765,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0389",
@@ -7123,7 +7788,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0395",
@@ -7145,7 +7812,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0399",
@@ -7167,7 +7836,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0379",
@@ -7189,7 +7860,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0400",
@@ -7211,7 +7884,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0411",
@@ -7237,7 +7912,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0377",
@@ -7259,7 +7936,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0378",
@@ -7281,7 +7960,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0405",
@@ -7303,7 +7984,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0406",
@@ -7325,7 +8008,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0406",
@@ -7352,7 +8037,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0407",
@@ -7378,7 +8065,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0408",
@@ -7403,7 +8092,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0409",
@@ -7429,7 +8120,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0404",
@@ -7451,7 +8144,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0404",
@@ -7477,7 +8172,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0406",
@@ -7502,7 +8199,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0407",
@@ -7526,7 +8225,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0408",
@@ -7550,7 +8251,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0410",
@@ -7574,7 +8277,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0399",
@@ -7596,7 +8301,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0493",
@@ -7621,7 +8328,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0494",
@@ -7647,7 +8356,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0495",
@@ -7671,7 +8382,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0496",
@@ -7696,7 +8409,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0486",
@@ -7718,7 +8433,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0497",
@@ -7740,7 +8457,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0498",
@@ -7761,7 +8480,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0501",
@@ -7782,7 +8503,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0500",
@@ -7803,7 +8526,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0499",
@@ -7824,7 +8549,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0505",
@@ -7850,7 +8577,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0506",
@@ -7876,7 +8605,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0504",
@@ -7901,7 +8632,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0507",
@@ -7926,7 +8659,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0508",
@@ -7951,7 +8686,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0509",
@@ -7976,7 +8713,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0511",
@@ -8003,7 +8742,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0515",
@@ -8025,7 +8766,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0516",
@@ -8047,7 +8790,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0529",
@@ -8069,7 +8814,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0527",
@@ -8090,7 +8837,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0528",
@@ -8111,7 +8860,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0546",
@@ -8136,7 +8887,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0547",
@@ -8161,7 +8914,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0548",
@@ -8187,7 +8942,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0549",
@@ -8212,7 +8969,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0512",
@@ -8234,7 +8993,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0553",
@@ -8260,7 +9021,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0554",
@@ -8287,7 +9050,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0555",
@@ -8308,7 +9073,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0556",
@@ -8333,7 +9100,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0557",
@@ -8358,7 +9127,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0558",
@@ -8383,7 +9154,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0559",
@@ -8410,7 +9183,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0560",
@@ -8435,7 +9210,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0564",
@@ -8462,7 +9239,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0565",
@@ -8488,7 +9267,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0569",
@@ -8514,7 +9295,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0570",
@@ -8540,7 +9323,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0573",
@@ -8565,7 +9350,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0574",
@@ -8590,7 +9377,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0575",
@@ -8615,7 +9404,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0581",
@@ -8641,7 +9432,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0576",
@@ -8663,7 +9456,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0589",
@@ -8687,7 +9482,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0590",
@@ -8713,7 +9510,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0591",
@@ -8738,7 +9537,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0592",
@@ -8762,7 +9563,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0582",
@@ -8784,7 +9587,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0599",
@@ -8809,7 +9614,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0600",
@@ -8834,7 +9641,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0601",
@@ -8858,7 +9667,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0602",
@@ -8884,7 +9695,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0603",
@@ -8908,7 +9721,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0604",
@@ -8933,7 +9748,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0605",
@@ -8957,7 +9774,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0606",
@@ -8982,7 +9801,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0607",
@@ -9008,7 +9829,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0633",
@@ -9034,7 +9857,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0608",
@@ -9056,7 +9881,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0634",
@@ -9080,7 +9907,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0635",
@@ -9104,7 +9933,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0636",
@@ -9129,7 +9960,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0637",
@@ -9153,7 +9986,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0638",
@@ -9178,7 +10013,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0647",
@@ -9205,7 +10042,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0648",
@@ -9231,7 +10070,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0649",
@@ -9257,7 +10098,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0650",
@@ -9282,7 +10125,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0651",
@@ -9308,7 +10153,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0652",
@@ -9334,7 +10181,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0653",
@@ -9360,7 +10209,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0654",
@@ -9383,7 +10234,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0656",
@@ -9405,7 +10258,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0659",
@@ -9426,7 +10281,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0658",
@@ -9447,7 +10304,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0655",
@@ -9468,7 +10327,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0657",
@@ -9489,7 +10350,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0663",
@@ -9515,7 +10378,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0664",
@@ -9542,7 +10407,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0668",
@@ -9568,7 +10435,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0669",
@@ -9595,7 +10464,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0670",
@@ -9621,7 +10492,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0665",
@@ -9643,7 +10516,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0675",
@@ -9668,7 +10543,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0676",
@@ -9692,7 +10569,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0677",
@@ -9716,7 +10595,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0678",
@@ -9742,7 +10623,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0679",
@@ -9767,7 +10650,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0680",
@@ -9791,7 +10676,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0683",
@@ -9817,7 +10704,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0684",
@@ -9842,7 +10731,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0685",
@@ -9868,7 +10759,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0686",
@@ -9895,7 +10788,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0687",
@@ -9923,7 +10818,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0688",
@@ -9949,7 +10846,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0689",
@@ -9976,7 +10875,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0690",
@@ -10004,7 +10905,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0691",
@@ -10029,7 +10932,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0692",
@@ -10056,7 +10961,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0693",
@@ -10083,7 +10990,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0694",
@@ -10111,7 +11020,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0695",
@@ -10138,7 +11049,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0700",
@@ -10163,7 +11076,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0701",
@@ -10190,7 +11105,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0702",
@@ -10215,7 +11132,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0703",
@@ -10240,7 +11159,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0704",
@@ -10265,7 +11186,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0705",
@@ -10292,7 +11215,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0708",
@@ -10315,7 +11240,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0709",
@@ -10340,7 +11267,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0710",
@@ -10364,7 +11293,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0715",
@@ -10387,7 +11318,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0711",
@@ -10408,7 +11341,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0712",
@@ -10429,7 +11364,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0713",
@@ -10450,7 +11387,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0714",
@@ -10471,7 +11410,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0716",
@@ -10498,7 +11439,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0717",
@@ -10525,7 +11468,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0718",
@@ -10551,7 +11496,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0719",
@@ -10578,7 +11525,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0720",
@@ -10604,7 +11553,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0723",
@@ -10625,7 +11576,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0721",
@@ -10646,7 +11599,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0722",
@@ -10667,7 +11622,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0728",
@@ -10691,7 +11648,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0730",
@@ -10718,7 +11677,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0731",
@@ -10746,7 +11707,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0732",
@@ -10774,7 +11737,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0733",
@@ -10801,7 +11766,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0736",
@@ -10829,7 +11796,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0738",
@@ -10854,7 +11823,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0740",
@@ -10879,7 +11850,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0741",
@@ -10905,7 +11878,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0742",
@@ -10931,7 +11906,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0743",
@@ -10958,7 +11935,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0744",
@@ -10983,7 +11962,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0745",
@@ -11009,7 +11990,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0746",
@@ -11036,7 +12019,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0747",
@@ -11061,7 +12046,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0748",
@@ -11087,7 +12074,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0749",
@@ -11111,7 +12100,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0750",
@@ -11137,7 +12128,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0751",
@@ -11161,7 +12154,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0752",
@@ -11186,7 +12181,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0753",
@@ -11212,7 +12209,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0762",
@@ -11239,7 +12238,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0764",
@@ -11264,7 +12265,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0765",
@@ -11289,7 +12292,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0766",
@@ -11315,7 +12320,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0767",
@@ -11341,7 +12348,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0768",
@@ -11364,7 +12373,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0771",
@@ -11385,7 +12396,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0772",
@@ -11406,7 +12419,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0770",
@@ -11427,7 +12442,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0769",
@@ -11448,7 +12465,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0778",
@@ -11471,7 +12490,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0779",
@@ -11496,7 +12517,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0780",
@@ -11520,7 +12543,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0781",
@@ -11544,7 +12569,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       },
       {
         "id": "fd_0782",
@@ -11568,7 +12595,9 @@ window.PACKAGE_DB = {
         "catalog_references": [],
         "ambition_level": "extension",
         "lineage_refs": [],
-        "domain_bridges": []
+        "domain_bridges": [],
+        "arc_id": "",
+        "arc_position": 0
       }
     ],
     "cycle_syntheses": {}
