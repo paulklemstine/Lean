@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "yang_mills_mass_gap.json",
+    "title": "Yang-Mills Mass Gap: Lattice-to-Continuum Spectral Architecture",
+    "domain": "Mathematical Physics / Quantum Field Theory",
+    "date": "2026-05-25T15:29:18Z",
+    "exp_id": "6a88b92d",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_1_brauer_manin_obstructions_for_integral.json",
     "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
     "domain": "Arithmetic Geometry / Number Theory",
@@ -75,6 +84,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Pythagorean Number Theory"
   },
+  "yang_mills_mass_gap.json": {
+    "title": "Yang-Mills Mass Gap: Lattice-to-Continuum Spectral Architecture",
+    "exp_id": "6a88b92d",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Mathematical Physics / Quantum Field Theory"
+  },
   "direction_5_chip_firing_correspondence.json": {
     "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
     "exp_id": "97def267",
@@ -126,7 +143,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 271,
+      "hue": 275,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -137,7 +154,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -148,9 +165,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 91,
+      "hue": 95,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
+    },
+    {
+      "id": "yang_mills_mass_gap",
+      "title": "Yang-Mills Mass Gap: Lattice-to-Continuum Spectral Architecture",
+      "domain": "Mathematical Physics / Quantum Field Theory",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-25T15:29:18Z",
+      "hue": 272,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],
