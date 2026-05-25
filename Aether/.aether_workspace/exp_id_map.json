@@ -533,5 +533,10 @@
   "21d0ab18": "direction_1_global_tightness_conjecture.json",
   "8e448ab4": "direction_1_concrete_first_order_term_algebra_with.json",
   "83d44e07": "direction_3_completeness_of_recursive_spectral_cer.json",
-  "1f8fa3a8": "direction_4_efficient_sampling_from_lorentzian_cer.json"
+  "1f8fa3a8": "direction_4_efficient_sampling_from_lorentzian_cer.json",
+  "fd2f08b2": "direction_2_tropical_kernel_dimension_formula.json",
+  "40a05224": "direction_4_parametric_families_and_algebraic_curv.json",
+  "bcea68ad": "direction_3_sparse_matrix_structure_preservation.json",
+  "75d10c50": "birch_and_swinnerton_dyer_conjecture.json",
+  "92e3853a": "symmetric_group_generation_probability.json"
 }
