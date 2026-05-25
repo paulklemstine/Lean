@@ -231,10 +231,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54bded48",
     "timestamp": "2026-05-24T23:13:44.233016+00:00"
   },
   {
@@ -426,25 +426,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "92e3853a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:08:48.881853+00:00"
-  },
-  {
-    "id": "fd_0853",
-    "title": "Direction 2: Random Cayley Expanders and Spectral Gaps",
-    "description": "**Conjecture:** For $n \\geq 5$ and uniformly random $\\sigma, \\tau \\in S_n$ conditioned on $\\langle \\sigma, \\tau \\rangle = S_n$, the spectral gap of the Cayley graph $\\text{Cay}(S_n, \\{\\sigma^{\\pm 1}, \\tau^{\\pm 1}\\})$ satisfies $\\lambda_1 \\geq c$ for an absolute constant $c > 0$ independent of $n$, with high probability.\n\n**Test:** Compute the spectral gap of random 4-regular Cayley graphs on $S_n$ for $n = 5, 6, 7, 8$ and verify that the minimum observed gap exceeds 0.01. Compare with the Alon-Boppana bound.\n\n**Impact:** Would establish that random generators not only generate $S_n$ but produce *expander* Cayley graphs \u2014 optimal communication networks over the symmetric group.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `pairActsTransitively_of_full_cycle_and_mixing`, `card_closure_dvd_of_transitive`.\n\n**Proof Strategy:** Use the transitivity theorem as a base case (connectivity). For the spectral gap, formalize the trace method: bound $\\text{tr}(A^{2k})$ where $A$ is the adjacency matrix, using moment computations that reduce to counting closed walks in the Cayley graph. Leverage the mixing condition to show rapid decay of return probabilities.\n\n**Domain Bridges:** Spectral graph theory, statistical physics (rapid mixing of Markov chains), computer science (derandomization via expanders).\n\n**Lineage:** The transitivity theorem proves *connectivity* of the Cayley graph; the spectral gap quantifies *how connected* it is.\n\n**Ambition:** Grand challenge \u2014 connecting algebraic generation to spectral theory requires significant new formal infrastructure.\n\n**The key insight is** that the mixing condition in our transitivity theorem is a discrete analogue of ergodicity, and ergodic systems have spectral gaps \u2014 this formal analogy should become a theorem.\n\n**Why now?** Recent Mathlib additions in spectral theory and linear algebra are making matrix eigenvalue bounds increasingly formalizable, and the generation probability framework provides the algebraic foundation.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "92e3853a",
-    "consumed_by_exp_id": "8778f4a5",
-    "timestamp": "2026-05-25T03:08:48.902211+00:00"
   },
   {
     "id": "fd_0858",
@@ -878,24 +859,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:03.370751+00:00"
   },
   {
-    "id": "fd_0925",
-    "title": "Direction 5: Certificates and Product Growth",
-    "description": "**Conjecture**: If $(g, h)$ is a certified pair in $\\text{GL}_n(\\mathbb{F}_q)$ and $A = \\{g, g^{-1}, h, h^{-1}\\}$, then the triple product $|A \\cdot A \\cdot A| \\geq |A|^{1+\\epsilon}$ for some $\\epsilon > 0$ depending only on $n$. That is, certified pairs exhibit product growth, linking certificate theory to the Helfgott\u2013Breuillard\u2013Green\u2013Tao program.\n\n**Test**: Compute $|A^k|$ for $k = 1, 2, 3, 4$ for certified pairs in $\\text{GL}_2(\\mathbb{F}_q)$ with $q \\in \\{5, 7, 11\\}$. Plot the growth rate $|A^k|^{1/k}$ and test for polynomial growth vs. rapid saturation.\n\n**Impact**: Would connect certificate-expansion theory to additive combinatorics, potentially providing new proofs of product theorems from algebraic data rather than combinatorial arguments.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the right_mul_closed_eq_univ lemma is a form of \"product saturation\"), `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility prevents containment in proper subgroups).\n\n**Proof Strategy**: The key insight is that irreducibility of the characteristic polynomial of $g$ prevents $\\langle g \\rangle$ from being contained in any proper algebraic subgroup of $\\text{GL}_n$, which by the Helfgott\u2013Pyber escape-from-subvarieties lemma forces rapid growth in the early stages of product expansion.\n\n**Why now?** The certificate framework provides a clean set of algebraic hypotheses under which product growth can be tested and potentially proved.\n\n**Domain Bridges**: Additive combinatorics, algebraic geometry (escape from subvarieties), model theory (stable group theory).\n\n**Lineage**: Bridges the certificate framework to the Bourgain\u2013Gamburd\u2013Helfgott program.\n\n**Ambition**: Grand challenge \u2014 would unify two major approaches to expansion in finite groups.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "edab5f0b",
-    "timestamp": "2026-05-25T18:40:03.396854+00:00"
-  },
-  {
     "id": "fd_0927",
     "title": "Direction 1: Lorentzian Equivalence via Hessian Descent",
     "description": "**Conjecture**: For homogeneous polynomials with positive coefficients, recursive Lorentzianity (in the sense of `IsRecursivelyLorentzian` from `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`) is equivalent to k-fold directional log-concavity of the coefficient function for all k \u2264 degree, together with the support exchange property.\n\n**The key insight is** that the Hessian signature condition (at most one positive eigenvalue) for degree-2 derivative leaves is exactly the mixed directional log-concavity inequality applied to the coefficients of those leaves, and the recursive descent through partial derivatives mirrors the k-fold ratio transform hierarchy.\n\n**Test**: Implement the forward direction for degree \u2264 6: given a recursively Lorentzian polynomial, verify computationally that all coefficient-level mixed and axis inequalities hold. Search for a counterexample to the converse among polynomials with positive coefficients and exchange-closed support that fail the Hessian condition. A single explicit counterexample (n \u2264 5, d \u2264 6) would refute the conjecture.\n\n**Impact**: If true, this provides an elementary characterization of Lorentzian polynomials, replacing the spectral machinery of Hessian eigenvalue analysis with simple product inequalities on coefficients. This would make Lorentzianity checkable in O(n\u00b2 \u00b7 |support|) time rather than requiring eigenvalue computation.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (specifically `IsRecursivelyLorentzian`, `recursivelyLorentzian_iff_brandenHuh`, `recursive_certificate_sound`); `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave`, `kFoldLogConcave_mono`).\n\n**Proof Strategy**: Prove the forward direction by induction on degree. For degree 2, the mixed inequality IS the Hessian condition. For degree d, use `pderiv_coeff_nonneg` to show that partial derivatives preserve coefficient nonnegativity, and show that mixed DLC of the original polynomial implies mixed DLC of its partial derivatives (via a coefficient extraction argument). The converse would require showing that coefficient-level inequalities plus exchange imply the global Hessian condition, likely via the reversed Cauchy-Schwarz (`lorentzian_reversed_cauchy_schwarz`).\n\n**Domain Bridges**: Algebraic geometry (Lorentzian polynomials) \u2194 Discrete combinatorics (exchange properties) \u2194 Linear algebra (Hessian spectra).\n\n**Lineage**: Extends `recursivelyLorentzian_iff_brandenHuh` and connects to `support_rectangle_closure`.\n\n**Ambition**: Grand challenge \u2014 would fundamentally simplify the theory of Lorentzian polynomials.\n\n---",
@@ -1271,10 +1234,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "354ccda2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d3113deb",
     "timestamp": "2026-05-25T21:49:45.104432+00:00"
   },
   {
@@ -1338,24 +1301,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:49:45.182975+00:00"
   },
   {
-    "id": "fd_0952",
-    "title": "Direction 4: Information-Theoretic Bounds on Tropical Barcode Stability",
-    "description": "**Conjecture:** The tropical barcode distance between random filtrations on a fixed graph G is, up to constants, equal to the mutual information between the filtration and the barcode, divided by the graph's entropy rate. Formally: d_T(TPB(G,f), TPB(G,g)) \u2248 I(f; TPB(G,f)) \u00b7 FiltrationSupDist(f,g) / H(G), where H(G) is the entropy of the degree sequence.\n\n**The key insight is** that the degree-weighted event profile is essentially a sufficient statistic for the filtration, and the stability constant (D+1) reflects the information capacity of a degree-D vertex.\n\n**Why now?** Recent advances in information-theoretic persistence (Bubenik, Vergne) have made the connection between persistence and entropy precise for classical barcodes. The tropical setting, with its natural connection to min-plus entropy and max-plus probability, is ripe for an analogous development.\n\n**Test:** Compute mutual information between filtration and barcode for G(n, c/n) with n = 100, c \u2208 {3, 5, 10}. Compare I(f; TPB(G,f)) / H(G) with the empirical stability ratio. Plot the relationship across 500 random graph instances.\n\n**Impact:** Would provide a principled, information-theoretic explanation for why the degree bound is the natural stability constant. Could lead to optimal data compression for tropical barcodes.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, certified_stability_bound)\n\n**Proof Strategy:** Model the filtration as a random process and the barcode as its image under a deterministic function. Apply the data processing inequality to bound the mutual information. Connect the channel capacity to the maximum degree via the capacity of a discrete memoryless channel with D+1 outputs.\n\n**Domain Bridges:** Information theory, entropy, data processing inequality, rate-distortion theory\n\n**Lineage:** Bridges from tropical persistence (Direction 1 foundation) to information theory\n\n**Ambition:** Solid extension \u2014 draws on mature information-theoretic tools\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "834b245c",
-    "consumed_by_exp_id": "7e5283ed",
-    "timestamp": "2026-05-25T21:13:42.045646+00:00"
-  },
-  {
     "id": "fd_0960",
     "title": "Direction 1: Full k-WL Separation via Non-Uniform CFI Weights",
     "description": "**Conjecture:** For every fixed k \u2208 \u2115, there exist edge-weighted graphs G\u2081, G\u2082 such that k-WL(G\u2081) = k-WL(G\u2082) but TMS(G\u2081) \u2260 TMS(G\u2082). Specifically, the Cai-F\u00fcrer-Immerman graph pairs built from n-cycles with n > k, equipped with non-uniform gadget weights w_gadget = 1/(2i+1) for gadget i, achieve TMS separation through differing H\u2081 barcode lengths.\n\n**Test:** (1) Implement CFI construction with non-uniform weights for k = 2, 3, 4. (2) Verify k-WL equivalence using the pebble game. (3) Compute TMS and check that exactly one H\u2081 barcode endpoint differs. (4) Falsified if all weight assignments yield identical TMS for any k.\n\n**Impact:** Would establish TMS as the first single, efficiently computable graph invariant that provably exceeds the entire WL hierarchy for weighted graphs. This would be a landmark result in descriptive complexity theory.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `tms_strictly_expressive_over_WL1` (1-WL case)\n- `Pythagorean/TropicalMorse/Theorems.lean`: `spectral_gap_contrapositive` (separation mechanism)\n- `Pythagorean/TropicalMorse/Defs.lean`: `TMSpectrum`, `WL1Equiv`\n\n**Proof Strategy:** Extend the formal framework to include k-WL equivalence (defined as the k-variable counting logic equivalence). Use the CFI symmetry lemma: CFI pairs are k-WL equivalent for k < dim(base graph). Then show that non-uniform weights break the parity symmetry in the weight filtration, producing a critical value gap in the H\u2081 barcode at the \"parity cycle\" threshold.\n\n**Domain Bridges:** Descriptive complexity \u2194 Tropical geometry \u2194 Finite model theory\n\n**Lineage:** Builds on Cai-F\u00fcrer-Immerman (1992) + our strict expressiveness theorem\n\n**Ambition:** Grand challenge \u2014 would resolve a major open question in GNN expressiveness theory\n\n---",
@@ -1369,7 +1314,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "db7ef9c7",
@@ -1389,7 +1334,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "db7ef9c7",
@@ -1409,7 +1354,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "db7ef9c7",
@@ -1429,7 +1374,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "db7ef9c7",
@@ -1450,12 +1395,134 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "db7ef9c7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:51:37.228515+00:00"
+  },
+  {
+    "id": "fd_0952",
+    "title": "Direction 4: Information-Theoretic Bounds on Tropical Barcode Stability",
+    "description": "**Conjecture:** The tropical barcode distance between random filtrations on a fixed graph G is, up to constants, equal to the mutual information between the filtration and the barcode, divided by the graph's entropy rate. Formally: d_T(TPB(G,f), TPB(G,g)) \u2248 I(f; TPB(G,f)) \u00b7 FiltrationSupDist(f,g) / H(G), where H(G) is the entropy of the degree sequence.\n\n**The key insight is** that the degree-weighted event profile is essentially a sufficient statistic for the filtration, and the stability constant (D+1) reflects the information capacity of a degree-D vertex.\n\n**Why now?** Recent advances in information-theoretic persistence (Bubenik, Vergne) have made the connection between persistence and entropy precise for classical barcodes. The tropical setting, with its natural connection to min-plus entropy and max-plus probability, is ripe for an analogous development.\n\n**Test:** Compute mutual information between filtration and barcode for G(n, c/n) with n = 100, c \u2208 {3, 5, 10}. Compare I(f; TPB(G,f)) / H(G) with the empirical stability ratio. Plot the relationship across 500 random graph instances.\n\n**Impact:** Would provide a principled, information-theoretic explanation for why the degree bound is the natural stability constant. Could lead to optimal data compression for tropical barcodes.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, certified_stability_bound)\n\n**Proof Strategy:** Model the filtration as a random process and the barcode as its image under a deterministic function. Apply the data processing inequality to bound the mutual information. Connect the channel capacity to the maximum degree via the capacity of a discrete memoryless channel with D+1 outputs.\n\n**Domain Bridges:** Information theory, entropy, data processing inequality, rate-distortion theory\n\n**Lineage:** Bridges from tropical persistence (Direction 1 foundation) to information theory\n\n**Ambition:** Solid extension \u2014 draws on mature information-theoretic tools\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "834b245c",
+    "consumed_by_exp_id": "7e5283ed",
+    "timestamp": "2026-05-25T21:13:42.045646+00:00"
+  },
+  {
+    "id": "fd_0965",
+    "title": "Direction 1: Tight Lorentzian Stability Radii for Matroid Families",
+    "description": "**Conjecture:** For the uniform matroid $U_{r,n}$, the exact Lorentzian stability radius (maximum coefficient perturbation preserving Lorentzianity of the generating polynomial) is $\\Theta(\\binom{n}{r}^{-1} \\cdot \\lambda_{\\min}^{\\text{gap}})$, where $\\lambda_{\\min}^{\\text{gap}}$ is the minimum normalized Hessian eigengap across all quadratic leaves.\n\n**Test:** Compute the exact stability radius for $U_{r,n}$ with $n \\leq 15$ by binary search over perturbation magnitudes, checking Lorentzianity via eigenvalue computation on all $\\binom{n}{2}$ quadratic leaves. Compare to the predicted formula. Discrepancies of more than 10% in the ratio would refute the conjecture.\n\n**Impact:** Tight stability radii would replace the conservative factor-of-2 bound in `certifyNoisySLC` with optimal constants, potentially doubling the effective robustness radius for practical applications.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `residual_gap_of_perturbation`); `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem `lorentzian_stability_radius_exists`).\n\n**Proof Strategy:** For the upper bound, construct explicit perturbation families that destroy Lorentzianity at the predicted threshold. For the lower bound, use the Hessian eigenvalue structure of the elementary symmetric polynomial to compute the exact quadratic form bound implied by coefficient perturbation.\n\n**Domain Bridges:** Combinatorial optimization (matroid intersection algorithms), algebraic combinatorics (Schur positivity and symmetric function theory).\n\n**Lineage:** Direct extension of `residual_gap_of_perturbation` from this cycle. The uniform matroid case is the canonical test bed.\n\n**Ambition:** Solid extension \u2014 this is a concrete computation grounded in existing theory, but the exact formula would be new and useful.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2953ee13",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:25:38.908872+00:00"
+  },
+  {
+    "id": "fd_0966",
+    "title": "Direction 2: Noise-Stability Universality and the Algorithmic Phase Diagram",
+    "description": "**Conjecture (Grand Challenge):** For all multiaffine homogeneous strongly log-concave distributions, the maximum admissible coefficient perturbation preserving polynomial-time mixing (i.e., spectral gap $\\geq 1/\\text{poly}(n)$) is asymptotically equivalent, up to universal constants, to the Lorentzian stability radius.\n\n**The key insight is** that if this conjecture holds, algebraic geometry (Hodge theory, Lorentzian signature) and algorithmic complexity (mixing time of Markov chains) are measuring the *same* underlying quantity through different lenses. The Lorentzian stability radius, which is defined purely in terms of polynomial geometry, would be a universal predictor of algorithmic robustness.\n\n**Why now?** The formal pipeline established in this cycle \u2014 Lorentzian gap \u2192 residual gap \u2192 spectral gap \u2192 mixing time \u2014 provides the first complete certified path from algebraic structure to algorithmic bounds. Verifying universality requires computing both quantities for diverse distribution families, which is now possible with the certified tools.\n\n**Test:** For each of 5 distribution families (uniform matroid, partition matroid, graphic matroid, determinantal process, strongly Rayleigh), compute (a) the Lorentzian stability radius by eigenvalue analysis and (b) the empirical mixing-time phase boundary by running Glauber dynamics with increasing perturbation until mixing slows exponentially. Plot the ratio; universality predicts it converges to a constant.\n\n**Impact:** If confirmed, this establishes a new paradigm: algebraic geometry as algorithm design. If refuted, the counterexample family would reveal what additional structure beyond Lorentzianity governs algorithmic tractability.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (all main theorems); `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem `reversed_cauchy_schwarz_of_gapped`).\n\n**Proof Strategy:** Forward direction (algebraic radius \u2264 algorithmic radius) follows from the existing pipeline. Reverse direction requires showing that distributions near the Lorentzian boundary exhibit bottlenecks in the state graph \u2014 likely via a conductance argument using the vanishing of the Rayleigh-type inequality at the boundary.\n\n**Domain Bridges:** Computational complexity (hardness of approximate counting near phase transitions), statistical physics (universality classes in critical phenomena).\n\n**Lineage:** Builds on the dimension-free mixing conjecture from this cycle. Extends to a universal claim.\n\n**Ambition:** Grand challenge \u2014 this would unify two major research programs (algebraic combinatorics and Markov chain mixing theory).\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2953ee13",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:25:38.941205+00:00"
+  },
+  {
+    "id": "fd_0967",
+    "title": "Direction 3: Information-Theoretic Monotonicity for Robustly Lorentzian Measures",
+    "description": "**Conjecture:** For a robustly Lorentzian distribution $\\mu$ on subsets of $[n]$ with spectral gap $\\varepsilon$, and any coordinate projection $\\pi : [n] \\to [n-1]$ (deleting one element), the entropy of the pushed-forward marginal satisfies:\n$$H(\\pi_*\\mu) \\geq H(\\mu) - \\log(1/\\varepsilon) + O(1)$$\nMoreover, the mutual information between any pair of coordinates $i, j$ is bounded by $O(1/\\varepsilon)$.\n\n**The key insight is** that the Lorentzian gap controls information-theoretic quantities \u2014 entropy, mutual information, data processing \u2014 in the same way that spectral gap controls mixing. This would create a formal dictionary between algebraic geometry and information theory.\n\n**Why now?** The robust Rayleigh inequality (Theorem 2) provides quantitative control on pairwise correlations, which is the starting point for entropy bounds via Shearer's lemma and the entropy chain rule. The formalized infrastructure for quadratic form bounds enables a clean inductive argument.\n\n**Test:** For uniform matroid distributions with varying gap, compute the exact entropy of coordinate marginals and compare to the predicted bound. Verify the mutual information scaling by computing pairwise correlations.\n\n**Impact:** Establishes a new bridge between discrete Hodge theory and information theory. Would provide data-processing inequalities for Lorentzian distributions, with applications to privacy (differential privacy for strongly log-concave mechanisms) and communication complexity.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `robust_quadform_negativity`).\n\n**Proof Strategy:** Use the quantitative Rayleigh inequality to bound the conditional variance of each coordinate given the others. Apply the entropy-variance inequality (Efron-Stein type) to convert to entropy bounds. The induction is on the number of coordinates being projected out.\n\n**Domain Bridges:** Information theory (channel capacity, data processing inequality), quantum information (entanglement entropy of free-fermionic systems), differential privacy (sensitivity of log-concave mechanisms).\n\n**Lineage:** Extension of the Rayleigh-type inequality from this cycle into the information-theoretic domain.\n\n**Ambition:** Grand challenge \u2014 this bridges algebraic geometry to information theory in a way that has not been formalized before.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2953ee13",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:25:38.967457+00:00"
+  },
+  {
+    "id": "fd_0968",
+    "title": "Direction 4: Robust Log-Concavity for Quantum Many-Body Ground States",
+    "description": "**Conjecture:** For a class of quantum spin systems whose ground-state marginals (on computational basis measurements) correspond to strongly log-concave distributions, the Lorentzian gap of the marginal generating polynomial is bounded below by the spectral gap of the parent Hamiltonian, up to polynomial factors.\n\n**The key insight is** that quantum spectral gaps (energy gaps above the ground state) and classical spectral gaps (mixing rates of Glauber dynamics on measurement outcomes) are related through the Lorentzian structure of the ground-state wavefunction. If the ground state's measurement distribution is Lorentzian, the quantum gap controls the classical gap.\n\n**Why now?** Free-fermionic systems and matchgate circuits produce distributions that are known to be strongly log-concave (their generating polynomials are determinantal, hence Lorentzian). The robustness results from this cycle enable extension to *perturbed* quantum systems \u2014 systems that are approximately free-fermionic.\n\n**Test:** Simulate ground states of the 1D transverse-field Ising model (a well-understood system with an exact solution via Jordan-Wigner transformation). Compute the Lorentzian gap of the measurement distribution as a function of the transverse field strength and compare to the known quantum spectral gap.\n\n**Impact:** Would provide the first formal connection between Lorentzian polynomials and quantum many-body physics. Could enable certified classical simulation of measurement distributions for quantum systems near free-fermionic points.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `gibbs_pointwise_ratio_bound` for the perturbation framework).\n\n**Proof Strategy:** For free-fermionic systems, the generating polynomial is a determinant of a matrix of single-particle amplitudes. Use the known relationship between the many-body spectral gap and the single-particle gap to bound the Hessian eigengap of the determinantal polynomial.\n\n**Domain Bridges:** Quantum computing (certifiable classical simulation), condensed matter physics (gapped phases and topological order), quantum chemistry (fermionic Gaussian states).\n\n**Lineage:** Extends the Gibbs perturbation bridge from this cycle to the quantum setting, where the \"energy function\" is a Hamiltonian.\n\n**Ambition:** Grand challenge \u2014 connects two major theoretical frameworks (Lorentzian polynomials and quantum many-body theory) that have developed independently.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2953ee13",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:25:38.995692+00:00"
+  },
+  {
+    "id": "fd_0969",
+    "title": "Direction 5: Continuous Extension via Discretization with Certified Error Bounds",
+    "description": "**Conjecture:** For log-concave measures $\\mu$ on $\\mathbb{R}^n$ (satisfying an isoperimetric inequality with constant $\\psi$), a discretization on a grid of spacing $h$ produces a discrete distribution whose Lorentzian stability radius is at least $\\Omega(\\psi \\cdot h)$, with mixing time of the discrete Glauber chain bounded by $O(n \\log(1/\\eta) / (\\psi - O(h)))$.\n\n**The key insight is** that the isoperimetric constant of a continuous log-concave measure is the analogue of the Lorentzian gap in the discrete setting. Discretization introduces a perturbation proportional to the grid spacing, and the robustness transfer principle should absorb this perturbation.\n\n**Why now?** The iterated perturbation theorem (Theorem 4) handles accumulated noise from multiple sources, and discretization error is naturally decomposed into per-cell contributions. The formalized infrastructure for quadratic form bounds on sums of perturbations enables a clean treatment.\n\n**Test:** For the standard Gaussian on $\\mathbb{R}^2$, discretize on grids of varying spacing $h$ and measure: (a) the coefficient distance between the discretized distribution and the exact discretized distribution; (b) the mixing time of Glauber dynamics on the discretized support; (c) the predicted bound from the robustness theory. Verify convergence as $h \\to 0$.\n\n**Impact:** Extends the entire Lorentzian robustness framework to continuous distributions, vastly expanding its applicability. Would provide the first certified discretization error bounds for MCMC algorithms on log-concave distributions.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `iterated_perturbation_gap`).\n\n**Proof Strategy:** Model discretization as a coefficient perturbation of the exact discrete distribution. Bound the perturbation using the Lipschitz constant of the continuous density (controlled by the isoperimetric constant). Apply the iterated perturbation theorem with $k$ = number of grid cells and $\\delta$ = per-cell discretization error.\n\n**Domain Bridges:** Numerical analysis (discretization theory), optimization (sampling from log-concave distributions), Bayesian statistics (MCMC convergence certificates).\n\n**Lineage:** Direct extension of the iterated perturbation stability from this cycle to the continuous setting via discretization.\n\n**Ambition:** Solid extension with high practical impact \u2014 discretization is the universal bottleneck for applying discrete theory to continuous problems.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2953ee13",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:25:39.023118+00:00"
   },
   {
     "id": "seed_005",
@@ -1578,6 +1645,103 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
+  },
+  {
+    "id": "fd_0970",
+    "title": "Direction 1: Canonical Path Poincar\u00e9 Inequality for Cayley Graphs",
+    "description": "**Conjecture:** For any finite group G with canonical path data (gens, paths, L, \u03ba), the variance of any function f: G \u2192 \u211d is bounded by:\n\nVar(f) \u2264 (\u03ba \u00b7 L / |S|) \u00b7 E_S(f)\n\nwhere \u03ba is the edge congestion, L is the max path length, and |S| is the generator set size.\n\n**Test:** Formalize the full canonical path method in the proof system. Verify the bound computationally for S_5 with bubble-sort canonical paths, where \u03ba and L can be computed exactly.\n\n**Impact:** This would give the first formally verified quantitative spectral gap lower bound for Cayley graphs, converting combinatorial path data into a certified expansion certificate. It would make the spectral gap computable from algebraic data alone.\n\n**The key insight is** that the canonical path method of Jerrum\u2013Sinclair, when specialized to Cayley graphs, reduces the spectral gap problem to a counting problem: bound the maximum load on any directed edge. For Cayley graphs, the translation-invariance of the group action should make this counting tractable.\n\n**Why now?** The infrastructure built in this cycle \u2014 Dirichlet energy, variance, Cauchy\u2013Schwarz for finsets, the L\u00b2 contraction \u2014 provides exactly the analytic substrate needed. The missing piece is the telescoping inequality along canonical paths and the congestion counting argument, both of which are combinatorial and amenable to formal proof.\n\n**Catalog References:** `Pythagorean/CayleyExpander/Defs.lean` (CanonicalPathData structure), `Pythagorean/CayleyExpander/SpectralGap.lean` (variance and energy machinery).\n\n**Proof Strategy:** Telescope f(y) - f(x) along the canonical path from x to y. Apply Cauchy\u2013Schwarz to bound (f(y)-f(x))\u00b2 by L \u00b7 \u03a3_{edges on path} (gradient)\u00b2. Sum over all (x,y) pairs and use congestion bound to control the total.\n\n**Domain Bridges:** Markov chain mixing times (probability), network routing (CS), statistical mechanics relaxation (physics).\n\n**Lineage:** Extends Theorems 2 and 3 of this cycle from qualitative (zero-energy \u2194 constant) to quantitative (gap \u2265 explicit bound).\n\n**Ambition:** Solid extension \u2014 builds directly on catalog infrastructure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8778f4a5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:58:43.475104+00:00"
+  },
+  {
+    "id": "fd_0971",
+    "title": "Direction 2: Moment Method Attack on the Random Cayley Expander Conjecture",
+    "description": "**Conjecture:** For random \u03c3, \u03c4 \u2208 S_n conditioned on \u27e8\u03c3,\u03c4\u27e9 = S_n, the quantity\n\n(1/n!) \u00b7 tr(A^(2k)) - 1\n\nis O(1) for fixed k as n \u2192 \u221e, where A is the normalized adjacency matrix of Cay(S_n, {\u03c3\u00b11, \u03c4\u00b11}).\n\n**Test:** Compute tr(A^(2k)) for k = 2, 3, 4 across 100+ random generating pairs for n = 5, 6, 7, 8 and verify uniform boundedness. Then formalize the combinatorial identity linking tr(A^(2k)) to the count of closed walks of length 2k in the Cayley graph, expressible as a sum over word representations.\n\n**Impact:** The moment method is the primary technique for proving spectral gap bounds in random matrix theory. A formalized version for Cayley graphs would open a path to the full Random Cayley Expander Conjecture.\n\n**The key insight is** that tr(A^(2k)) counts the number of elements g \u2208 G representable as a product s\u2081s\u2082...s_{2k} with each s\u1d62 \u2208 S and the product equal to the identity. For random generators of S_n, this count can be analyzed using the cycle structure of permutations and the representation theory of S_n.\n\n**Why now?** The representation theory of S_n is well-developed in Mathlib (Young tableaux, characters), and the combinatorial closed-walk counting can be bootstrapped from the word-reachability theorem proved in this cycle.\n\n**Catalog References:** `Pythagorean/CayleyExpander/Connectivity.lean` (word_in_generators_of_mem_closure), `Algebra/SymmGroupGen/Basic.lean` (symmetric group structure).\n\n**Proof Strategy:** Express tr(A^(2k)) as \u03a3_{\u03c7 irreducible} dim(\u03c7) \u00b7 (\u03a3_{s\u2208S} \u03c7(s)/d)^{2k}. Use representation-theoretic bounds on character sums for random elements of S_n.\n\n**Domain Bridges:** Random matrix theory (mathematics), quantum information theory (physics), representation theory (algebra).\n\n**Lineage:** Extends the trace-method computational experiments of this cycle into a formal asymptotic framework.\n\n**Ambition:** Grand challenge \u2014 this direction, if successful, would essentially prove the Random Cayley Expander Conjecture.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8778f4a5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:58:43.501683+00:00"
+  },
+  {
+    "id": "fd_0972",
+    "title": "Direction 3: Spectral Expansion for Matrix Groups and Arithmetic Quotients",
+    "description": "**Conjecture:** For G = SL_2(F_p) with p prime and generators \u03c3, \u03c4 chosen uniformly conditioned on generation, the spectral gap of Cay(G, {\u03c3\u00b11, \u03c4\u00b11}) is \u03a9(1) with high probability.\n\n**Test:** Implement the construction for SL_2(F_p) for small primes p = 5, 7, 11, 13. Compute spectral gaps and compare with the Ramanujan bound 2\u221a(q-1)/q for q-regular graphs.\n\n**Impact:** This would connect the Cayley expander framework to the Langlands program and property (\u03c4) for arithmetic groups, opening formal verification to one of the deepest areas of modern mathematics.\n\n**The key insight is** that the spectral theory of matrix groups over finite fields is intimately connected to automorphic forms and L-functions. The Ramanujan conjecture for GL_2, proved by Deligne, gives optimal spectral gap bounds for certain Cayley graphs of SL_2(F_p) \u2014 the Ramanujan graphs of Lubotzky\u2013Phillips\u2013Sarnak.\n\n**Why now?** The framework of CayleySpectralData and the zero-energy rigidity theorem extend verbatim to any finite group. The key new ingredient is the representation theory of SL_2(F_p), which is classical and could be formalized incrementally.\n\n**Catalog References:** `Pythagorean/CayleyExpander/Defs.lean` (CayleySpectralData \u2014 works for any finite group), `Pythagorean/CayleyExpander/Connectivity.lean` (all theorems are polymorphic in G).\n\n**Proof Strategy:** Use the Bourgain\u2013Gamburd expansion machine (sum-product theorem \u2192 growth \u2192 spectral gap) adapted to the formal setting.\n\n**Domain Bridges:** Number theory (Ramanujan conjecture), Langlands program (automorphic forms), quantum computing (SL_2 gates).\n\n**Lineage:** Extends the S_n specialization (Theorem 4) to matrix groups, the natural next family.\n\n**Ambition:** Grand challenge \u2014 would represent a major advance in formal arithmetic.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8778f4a5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:58:43.526680+00:00"
+  },
+  {
+    "id": "fd_0973",
+    "title": "Direction 4: Certified Mixing Time Bounds and Cutoff Phenomena",
+    "description": "**Conjecture:** For the Cayley graph of S_n with standard generators (adjacent transposition + long cycle), the mixing time in total variation satisfies:\n\nt_mix(\u03b5) = \u0398(n\u00b2 log n)\n\nand the random walk exhibits a cutoff: the total variation distance transitions from near 1 to near 0 in a window of width O(n\u00b2).\n\n**Test:** Compute the exact total variation distance d(t) = \u2016P^t(e, \u00b7) - \u03c0\u2016_TV for n = 5, 6, 7 and verify the cutoff profile. Formalize the upper bound t_mix \u2264 C \u00b7 n\u00b2 \u00b7 log(n!) / gap using the spectral gap.\n\n**Impact:** Cutoff is one of the most striking phenomena in probability theory \u2014 the abrupt transition from \"far from mixed\" to \"well mixed.\" A formally verified cutoff theorem would connect the spectral gap infrastructure to concrete probabilistic guarantees.\n\n**The key insight is** that the spectral gap gives mixing time bounds via the relation t_mix \u2264 (1/gap) \u00b7 log(|G|/\u03b5), but the actual mixing time can be much smaller due to the contribution of the full spectrum, not just the gap.\n\n**Why now?** The L\u00b2 contraction theorem (Theorem 3) provides the foundational inequality. The variance decomposition and mean-zero projection machinery enable tracking the distance to equilibrium across iterations.\n\n**Catalog References:** `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction, variance), `Pythagorean/CayleyExpander/SymmetricGroup.lean` (S_n generators).\n\n**Proof Strategy:** Upper bound: use spectral gap with L\u00b2\u2192L\u00b9 comparison. Lower bound: use Wilson's method (distinguish random walk distribution from uniform using a test function based on number of fixed points).\n\n**Domain Bridges:** Probability theory (Markov chains), statistical physics (relaxation), card shuffling (combinatorics), MCMC algorithms (statistics/ML).\n\n**Lineage:** Extends the L\u00b2 contraction theorem to total variation mixing guarantees.\n\n**Ambition:** Solid extension \u2014 the spectral gap infrastructure makes upper bounds tractable; cutoff requires additional representation-theoretic input.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8778f4a5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:58:43.552516+00:00"
+  },
+  {
+    "id": "fd_0974",
+    "title": "Direction 5: Expander-Based Derandomization in Certified Computation",
+    "description": "**Conjecture:** For any Boolean function f: S_n \u2192 {0,1} with E[f] \u2265 2/3, a random walk of length O(log(1/\u03b5)/gap) on a Cayley expander of S_n produces k samples such that the majority vote has error probability \u2264 \u03b5, using only O(n log n + k log(degree)) random bits.\n\n**Test:** Implement the Ajtai\u2013Koml\u00f3s\u2013Szemer\u00e9di expander walk sampler for Cay(S_5, {\u03c3\u00b11, \u03c4\u00b11}) and verify the error amplification bound empirically for random Boolean functions with various biases.\n\n**Impact:** This would bridge formal spectral theory to the foundations of derandomization in theoretical computer science, providing certified guarantees for algorithms that use random bits efficiently.\n\n**The key insight is** that correlated samples from an expander walk are \"almost as good as\" independent samples for amplifying success probability, and the spectral gap quantifies the word \"almost.\" This transforms the spectral gap from a graph-theoretic invariant into a computational resource.\n\n**Why now?** The averaging operator machinery, L\u00b2 contraction, and mean-zero analysis from this cycle provide exactly the tools needed to state and prove the expander walk lemma. The key missing piece is the large deviation bound for correlated samples, which can be derived from the L\u00b2 contraction by a Markov inequality argument.\n\n**Catalog References:** `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction, averaging operator), `Algebra/ExpanderWalk/Core.lean` (existing expander walk infrastructure).\n\n**Proof Strategy:** Apply the L\u00b2 contraction theorem k times to bound the variance of the empirical mean. Use Chebyshev's inequality to convert variance bounds to probability bounds. The spectral gap enters through the correlation decay between walk positions.\n\n**Domain Bridges:** Complexity theory (BPP vs P), algorithm design (derandomization), cryptography (pseudorandom generators), quantum computing (quantum walks).\n\n**Lineage:** Connects the Cayley graph spectral framework to the existing ExpanderWalk infrastructure in the Algebra catalog.\n\n**Ambition:** Solid extension with grand challenge elements \u2014 the basic lemma is provable, but optimal bounds require spectral concentration inequalities.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8778f4a5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:58:43.577519+00:00"
   },
   {
     "id": "seed_013",
@@ -2022,56 +2186,31 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:03.321531+00:00"
   },
   {
-    "id": "fd_0965",
-    "title": "Direction 1: Tight Lorentzian Stability Radii for Matroid Families",
-    "description": "**Conjecture:** For the uniform matroid $U_{r,n}$, the exact Lorentzian stability radius (maximum coefficient perturbation preserving Lorentzianity of the generating polynomial) is $\\Theta(\\binom{n}{r}^{-1} \\cdot \\lambda_{\\min}^{\\text{gap}})$, where $\\lambda_{\\min}^{\\text{gap}}$ is the minimum normalized Hessian eigengap across all quadratic leaves.\n\n**Test:** Compute the exact stability radius for $U_{r,n}$ with $n \\leq 15$ by binary search over perturbation magnitudes, checking Lorentzianity via eigenvalue computation on all $\\binom{n}{2}$ quadratic leaves. Compare to the predicted formula. Discrepancies of more than 10% in the ratio would refute the conjecture.\n\n**Impact:** Tight stability radii would replace the conservative factor-of-2 bound in `certifyNoisySLC` with optimal constants, potentially doubling the effective robustness radius for practical applications.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `residual_gap_of_perturbation`); `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem `lorentzian_stability_radius_exists`).\n\n**Proof Strategy:** For the upper bound, construct explicit perturbation families that destroy Lorentzianity at the predicted threshold. For the lower bound, use the Hessian eigenvalue structure of the elementary symmetric polynomial to compute the exact quadratic form bound implied by coefficient perturbation.\n\n**Domain Bridges:** Combinatorial optimization (matroid intersection algorithms), algebraic combinatorics (Schur positivity and symmetric function theory).\n\n**Lineage:** Direct extension of `residual_gap_of_perturbation` from this cycle. The uniform matroid case is the canonical test bed.\n\n**Ambition:** Solid extension \u2014 this is a concrete computation grounded in existing theory, but the exact formula would be new and useful.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:25:38.908872+00:00"
-  },
-  {
-    "id": "fd_0966",
-    "title": "Direction 2: Noise-Stability Universality and the Algorithmic Phase Diagram",
-    "description": "**Conjecture (Grand Challenge):** For all multiaffine homogeneous strongly log-concave distributions, the maximum admissible coefficient perturbation preserving polynomial-time mixing (i.e., spectral gap $\\geq 1/\\text{poly}(n)$) is asymptotically equivalent, up to universal constants, to the Lorentzian stability radius.\n\n**The key insight is** that if this conjecture holds, algebraic geometry (Hodge theory, Lorentzian signature) and algorithmic complexity (mixing time of Markov chains) are measuring the *same* underlying quantity through different lenses. The Lorentzian stability radius, which is defined purely in terms of polynomial geometry, would be a universal predictor of algorithmic robustness.\n\n**Why now?** The formal pipeline established in this cycle \u2014 Lorentzian gap \u2192 residual gap \u2192 spectral gap \u2192 mixing time \u2014 provides the first complete certified path from algebraic structure to algorithmic bounds. Verifying universality requires computing both quantities for diverse distribution families, which is now possible with the certified tools.\n\n**Test:** For each of 5 distribution families (uniform matroid, partition matroid, graphic matroid, determinantal process, strongly Rayleigh), compute (a) the Lorentzian stability radius by eigenvalue analysis and (b) the empirical mixing-time phase boundary by running Glauber dynamics with increasing perturbation until mixing slows exponentially. Plot the ratio; universality predicts it converges to a constant.\n\n**Impact:** If confirmed, this establishes a new paradigm: algebraic geometry as algorithm design. If refuted, the counterexample family would reveal what additional structure beyond Lorentzianity governs algorithmic tractability.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (all main theorems); `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem `reversed_cauchy_schwarz_of_gapped`).\n\n**Proof Strategy:** Forward direction (algebraic radius \u2264 algorithmic radius) follows from the existing pipeline. Reverse direction requires showing that distributions near the Lorentzian boundary exhibit bottlenecks in the state graph \u2014 likely via a conductance argument using the vanishing of the Rayleigh-type inequality at the boundary.\n\n**Domain Bridges:** Computational complexity (hardness of approximate counting near phase transitions), statistical physics (universality classes in critical phenomena).\n\n**Lineage:** Builds on the dimension-free mixing conjecture from this cycle. Extends to a universal claim.\n\n**Ambition:** Grand challenge \u2014 this would unify two major research programs (algebraic combinatorics and Markov chain mixing theory).\n\n---",
+    "id": "fd_0975",
+    "title": "Direction 1: Quantitative Growth Bounds for Matrix Groups",
+    "description": "**Conjecture:** For every $n \\geq 2$, there exist universal constants $\\varepsilon_n > 0$ and $C_n \\geq 1$ such that for every prime power $q$ and every certified pair $(g, h)$ generating $\\mathrm{GL}(n, \\mathbb{F}_q)$, with $A = \\{1, g, g^{-1}, h, h^{-1}\\}$, either $A^3 = G$ or $|A^3| \\geq C_n |A|^{1+\\varepsilon_n}$.\n\n**Test:** Enumerate certified pairs in $\\mathrm{GL}(2, \\mathbb{F}_q)$ for $q = 5, 7, 11, 13, 17$ and compute the minimum value of $\\log|A^3|/\\log|A|$ across all non-saturated triples. If this minimum is bounded away from 1 uniformly in $q$, the conjecture is supported.\n\n**The key insight is** that the Strict Growth Theorem guarantees $|A^{k+1}| > |A^k|$ but says nothing about the growth rate. The gap between qualitative growth (our theorem) and quantitative growth (Helfgott's $|A^3| \\geq |A|^{1+\\delta}$) is where the deep structure theory of finite simple groups enters. By formalizing intermediate results \u2014 such as the escape-from-subvarieties lemma of Helfgott \u2014 one can incrementally close this gap.\n\n**Why now?** Our formal infrastructure (product powers, Cayley balls, generation certificates) is exactly the scaffolding needed to state and pursue quantitative bounds. The Strict Growth Theorem provides the base case, and Mathlib's developing theory of finite fields and linear algebra provides the algebraic tools.\n\n**Impact:** A formally verified quantitative growth bound, even for $n = 2$, would be a landmark in formal mathematics \u2014 the first machine-checked result in the Helfgott program.\n\n**Catalog References:** `Catalog/Pythagorean/CertificateExpanders.lean` (spectral certificate structure), `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility certificates).\n\n**Proof Strategy:** Formalize Helfgott's escape-from-subvarieties lemma for $\\mathrm{SL}(2, \\mathbb{F}_p)$: if $A$ generates and $|A^3| < |A|^{1+\\varepsilon}$, then $A$ is approximately contained in a proper algebraic subvariety, which contradicts generation. The key lemma is that the trace map $\\text{tr}: \\mathrm{SL}(2) \\to \\mathbb{F}_p$ cannot concentrate on few values for generating sets.\n\n**Domain Bridges:** Algebraic geometry (subvarieties of $\\mathrm{GL}_n$), additive combinatorics (sum-product estimates in finite fields).\n\n**Lineage:** Extends `strict_growth_of_generating` and `certified_pair_growth` from the current cycle.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 full quantitative growth bounds would require formalizing substantial finite group theory.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
-      "Computation",
       "Physics",
       "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
+      "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2953ee13",
+    "source_exp_id": "edab5f0b",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:25:38.941205+00:00"
+    "timestamp": "2026-05-25T22:59:06.817075+00:00"
   },
   {
-    "id": "fd_0967",
-    "title": "Direction 3: Information-Theoretic Monotonicity for Robustly Lorentzian Measures",
-    "description": "**Conjecture:** For a robustly Lorentzian distribution $\\mu$ on subsets of $[n]$ with spectral gap $\\varepsilon$, and any coordinate projection $\\pi : [n] \\to [n-1]$ (deleting one element), the entropy of the pushed-forward marginal satisfies:\n$$H(\\pi_*\\mu) \\geq H(\\mu) - \\log(1/\\varepsilon) + O(1)$$\nMoreover, the mutual information between any pair of coordinates $i, j$ is bounded by $O(1/\\varepsilon)$.\n\n**The key insight is** that the Lorentzian gap controls information-theoretic quantities \u2014 entropy, mutual information, data processing \u2014 in the same way that spectral gap controls mixing. This would create a formal dictionary between algebraic geometry and information theory.\n\n**Why now?** The robust Rayleigh inequality (Theorem 2) provides quantitative control on pairwise correlations, which is the starting point for entropy bounds via Shearer's lemma and the entropy chain rule. The formalized infrastructure for quadratic form bounds enables a clean inductive argument.\n\n**Test:** For uniform matroid distributions with varying gap, compute the exact entropy of coordinate marginals and compare to the predicted bound. Verify the mutual information scaling by computing pairwise correlations.\n\n**Impact:** Establishes a new bridge between discrete Hodge theory and information theory. Would provide data-processing inequalities for Lorentzian distributions, with applications to privacy (differential privacy for strongly log-concave mechanisms) and communication complexity.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `robust_quadform_negativity`).\n\n**Proof Strategy:** Use the quantitative Rayleigh inequality to bound the conditional variance of each coordinate given the others. Apply the entropy-variance inequality (Efron-Stein type) to convert to entropy bounds. The induction is on the number of coordinates being projected out.\n\n**Domain Bridges:** Information theory (channel capacity, data processing inequality), quantum information (entanglement entropy of free-fermionic systems), differential privacy (sensitivity of log-concave mechanisms).\n\n**Lineage:** Extension of the Rayleigh-type inequality from this cycle into the information-theoretic domain.\n\n**Ambition:** Grand challenge \u2014 this bridges algebraic geometry to information theory in a way that has not been formalized before.\n\n---",
+    "id": "fd_0976",
+    "title": "Direction 2: Spectral Gap from Product Growth",
+    "description": "**Conjecture:** There exists a formal derivation showing that strict Cayley ball growth implies a positive spectral gap for the Cayley graph adjacency operator. Specifically, if the Cayley ball of radius $k$ satisfies $|B_{k+1}| \\geq (1 + \\delta)|B_k|$ for some $\\delta > 0$ and all $B_k \\neq G$, then the spectral gap $\\lambda_1 - \\lambda_2$ of the normalized adjacency matrix is at least $f(\\delta, |A|)$ for an explicit function $f$.\n\n**Test:** For certified pairs in $\\mathrm{GL}(2, \\mathbb{F}_5)$, compute both the Cayley ball growth rates and the spectral gap of the adjacency matrix numerically. Plot the correlation between growth rate and spectral gap across 100 certified pairs.\n\n**The key insight is** that product growth and spectral expansion are two faces of the same phenomenon. The Expander Mixing Lemma shows that spectral gap controls edge distribution; conversely, the Cheeger inequality shows that expansion controls spectral gap. Our Cayley Ball Strict Growth theorem provides the expansion side; connecting it to spectral gap would complete the bridge.\n\n**Why now?** The `CertificateExpanders.lean` file already defines the averaging operator and proves self-adjointness. The missing link is connecting product growth (proved in this cycle) to the spectral analysis (developed in the catalog). The Cayley ball formulation makes this connection natural: ball growth is graph expansion, which is spectral gap.\n\n**Impact:** A formal spectral-gap theorem from certificate data would unify the algebraic (generation) and analytic (spectral) approaches to expansion.\n\n**Catalog References:** `Catalog/Pythagorean/CertificateExpanders.lean` (averaging operator, self-adjointness, harmonic maximum principle, strict contraction).\n\n**Proof Strategy:** Use the Cheeger inequality: $h(G) \\leq \\sqrt{2(1 - \\lambda_2)}$ where $h$ is the edge expansion constant. Show that Cayley ball growth implies edge expansion $h \\geq \\delta/(1+\\delta)$. Then derive $\\lambda_2 \\leq 1 - h^2/2$.\n\n**Domain Bridges:** Spectral graph theory, Markov chain mixing, random matrix theory.\n\n**Lineage:** Extends `cayley_ball_strict_growth` and `cayley_diameter_bound` from the current cycle, connects to `strict_contraction_of_generates` from the catalog.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 the Cheeger inequality is well-understood; the challenge is formalization.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
       "Computation",
       "Physics",
       "Bridges",
@@ -2080,39 +2219,55 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2953ee13",
+    "source_exp_id": "edab5f0b",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:25:38.967457+00:00"
+    "timestamp": "2026-05-25T22:59:06.846580+00:00"
   },
   {
-    "id": "fd_0968",
-    "title": "Direction 4: Robust Log-Concavity for Quantum Many-Body Ground States",
-    "description": "**Conjecture:** For a class of quantum spin systems whose ground-state marginals (on computational basis measurements) correspond to strongly log-concave distributions, the Lorentzian gap of the marginal generating polynomial is bounded below by the spectral gap of the parent Hamiltonian, up to polynomial factors.\n\n**The key insight is** that quantum spectral gaps (energy gaps above the ground state) and classical spectral gaps (mixing rates of Glauber dynamics on measurement outcomes) are related through the Lorentzian structure of the ground-state wavefunction. If the ground state's measurement distribution is Lorentzian, the quantum gap controls the classical gap.\n\n**Why now?** Free-fermionic systems and matchgate circuits produce distributions that are known to be strongly log-concave (their generating polynomials are determinantal, hence Lorentzian). The robustness results from this cycle enable extension to *perturbed* quantum systems \u2014 systems that are approximately free-fermionic.\n\n**Test:** Simulate ground states of the 1D transverse-field Ising model (a well-understood system with an exact solution via Jordan-Wigner transformation). Compute the Lorentzian gap of the measurement distribution as a function of the transverse field strength and compare to the known quantum spectral gap.\n\n**Impact:** Would provide the first formal connection between Lorentzian polynomials and quantum many-body physics. Could enable certified classical simulation of measurement distributions for quantum systems near free-fermionic points.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `gibbs_pointwise_ratio_bound` for the perturbation framework).\n\n**Proof Strategy:** For free-fermionic systems, the generating polynomial is a determinant of a matrix of single-particle amplitudes. Use the known relationship between the many-body spectral gap and the single-particle gap to bound the Hessian eigengap of the determinantal polynomial.\n\n**Domain Bridges:** Quantum computing (certifiable classical simulation), condensed matter physics (gapped phases and topological order), quantum chemistry (fermionic Gaussian states).\n\n**Lineage:** Extends the Gibbs perturbation bridge from this cycle to the quantum setting, where the \"energy function\" is a Hamiltonian.\n\n**Ambition:** Grand challenge \u2014 connects two major theoretical frameworks (Lorentzian polynomials and quantum many-body theory) that have developed independently.\n\n---",
+    "id": "fd_0977",
+    "title": "Direction 3: Model Theory of Approximate Subgroups",
+    "description": "**Conjecture:** The Strict Growth Theorem can be reinterpreted as a model-theoretic dichotomy: a definable subset $A$ of a finite group $G$ either (a) is contained in a coset of a proper definable subgroup, or (b) satisfies strict growth $|A^{k+1}| > |A^k|$ at every step. This dichotomy should be formalizable in the language of definable sets over pseudofinite fields.\n\n**Test:** Formalize the notion of a \"definable approximate subgroup\" in Lean and prove the dichotomy for definable subsets of $\\mathrm{GL}(2, \\mathbb{F}_q)$.\n\n**The key insight is** that the Breuillard\u2013Green\u2013Tao classification of approximate groups has a model-theoretic kernel: approximate subgroups in connected groups are close to cosets of definable subgroups. Our Strict Growth Theorem is the simplest instance of this dichotomy (the \"non-approximate-subgroup\" case). Formalizing the model-theoretic framework would make the general theory accessible to formal verification.\n\n**Why now?** Hrushovski's work (2012) showed that model theory provides the natural language for approximate group theory. With Lean's type theory and Mathlib's algebraic infrastructure, formalizing definable sets and the compactness arguments that drive the BGT theory is becoming feasible.\n\n**Impact:** A formal model-theoretic framework for approximate groups would bridge formal verification to one of the most active areas of combinatorial group theory.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility and generation certificates provide the \"definable generation\" data).\n\n**Proof Strategy:** Define \"definable subsets\" of $G$ as images of polynomial maps $\\mathbb{F}_q^m \\to G$. Show that the Strict Growth Theorem applies to definable generating sets. Use ultraproduct arguments (formalized in Lean) to transfer to pseudofinite fields.\n\n**Domain Bridges:** Model theory (ultraproducts, definable sets), algebraic geometry (Zariski topology on $\\mathrm{GL}_n$), logic (compactness, transfer).\n\n**Lineage:** Extends `right_mul_stable_eq_univ` (the core algebraic engine) to a model-theoretic context.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 requires substantial model-theoretic infrastructure not yet in Mathlib.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
-      "Computation",
-      "Physics",
       "Bridges",
-      "MachineLearning",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2953ee13",
+    "source_exp_id": "edab5f0b",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:25:38.995692+00:00"
+    "timestamp": "2026-05-25T22:59:06.879782+00:00"
   },
   {
-    "id": "fd_0969",
-    "title": "Direction 5: Continuous Extension via Discretization with Certified Error Bounds",
-    "description": "**Conjecture:** For log-concave measures $\\mu$ on $\\mathbb{R}^n$ (satisfying an isoperimetric inequality with constant $\\psi$), a discretization on a grid of spacing $h$ produces a discrete distribution whose Lorentzian stability radius is at least $\\Omega(\\psi \\cdot h)$, with mixing time of the discrete Glauber chain bounded by $O(n \\log(1/\\eta) / (\\psi - O(h)))$.\n\n**The key insight is** that the isoperimetric constant of a continuous log-concave measure is the analogue of the Lorentzian gap in the discrete setting. Discretization introduces a perturbation proportional to the grid spacing, and the robustness transfer principle should absorb this perturbation.\n\n**Why now?** The iterated perturbation theorem (Theorem 4) handles accumulated noise from multiple sources, and discretization error is naturally decomposed into per-cell contributions. The formalized infrastructure for quadratic form bounds on sums of perturbations enables a clean treatment.\n\n**Test:** For the standard Gaussian on $\\mathbb{R}^2$, discretize on grids of varying spacing $h$ and measure: (a) the coefficient distance between the discretized distribution and the exact discretized distribution; (b) the mixing time of Glauber dynamics on the discretized support; (c) the predicted bound from the robustness theory. Verify convergence as $h \\to 0$.\n\n**Impact:** Extends the entire Lorentzian robustness framework to continuous distributions, vastly expanding its applicability. Would provide the first certified discretization error bounds for MCMC algorithms on log-concave distributions.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `iterated_perturbation_gap`).\n\n**Proof Strategy:** Model discretization as a coefficient perturbation of the exact discrete distribution. Bound the perturbation using the Lipschitz constant of the continuous density (controlled by the isoperimetric constant). Apply the iterated perturbation theorem with $k$ = number of grid cells and $\\delta$ = per-cell discretization error.\n\n**Domain Bridges:** Numerical analysis (discretization theory), optimization (sampling from log-concave distributions), Bayesian statistics (MCMC convergence certificates).\n\n**Lineage:** Direct extension of the iterated perturbation stability from this cycle to the continuous setting via discretization.\n\n**Ambition:** Solid extension with high practical impact \u2014 discretization is the universal bottleneck for applying discrete theory to continuous problems.",
+    "id": "fd_0978",
+    "title": "Direction 4: Complexity of Certificate Verification",
+    "description": "**Conjecture:** Verifying that a pair $(g, h)$ generates $\\mathrm{GL}(n, \\mathbb{F}_q)$ can be done in polynomial time in $n$ and $\\log q$, using the irreducibility certificate from `MatrixGroupGeneration.lean`. Specifically, checking that the characteristic polynomials of $g$, $h$, and $gh$ are irreducible and satisfy a non-degeneracy condition suffices for generation.\n\n**Test:** Implement the certificate verification algorithm and benchmark it against BFS-based generation testing for $\\mathrm{GL}(2, \\mathbb{F}_q)$ with $q$ up to 1000. Measure speedup.\n\n**The key insight is** that the catalog's irreducibility certificates (`LinearGenerationCertificate`) provide a compact algebraic witness for generation that avoids the exponential cost of enumerating the generated subgroup. If such certificates can be verified in polynomial time and are sufficient for generation, they transform the generation problem from a group-theoretic question to a polynomial algebra question.\n\n**Why now?** The `MatrixGroupGeneration.lean` file proves that irreducible characteristic polynomials force irreducible action, which prevents containment in proper subgroups. The remaining step is to formalize that avoiding all maximal subgroups of $\\mathrm{GL}(n, \\mathbb{F}_q)$ is sufficient for generation, and that this can be checked via characteristic polynomial conditions.\n\n**Impact:** A polynomial-time certified generation test would have applications in cryptography (verifying pseudorandom generators), computational group theory (constructive recognition algorithms), and network design (certified expander construction).\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility certificates, invariant subspace theorem), `Catalog/Pythagorean/CertificateExpanders.lean` (certificate-to-expansion pipeline).\n\n**Proof Strategy:** Formalize Aschbacher's theorem classifying maximal subgroups of $\\mathrm{GL}(n, \\mathbb{F}_q)$ for $n = 2$. Show that each class of maximal subgroups is characterized by a polynomial condition on the generators. Combine to get a polynomial-time generation test.\n\n**Domain Bridges:** Computational complexity (P vs NP for group-theoretic problems), computational algebra (polynomial factorization), cryptography (pseudorandom generators).\n\n**Lineage:** Extends `ProductGrowthCertificate.ofPair` from the current cycle, which constructs certificates from generation hypotheses.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 the classification of maximal subgroups of $\\mathrm{GL}(2)$ is classical and tractable.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "edab5f0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:59:06.907485+00:00"
+  },
+  {
+    "id": "fd_0979",
+    "title": "Direction 5: Formal BGT Structure Theorem",
+    "description": "**Conjecture:** The full Breuillard\u2013Green\u2013Tao classification of approximate subgroups in finite simple groups of Lie type can be formalized in Lean 4, building on the certificate-to-growth infrastructure developed in this cycle.\n\n**Test:** Formalize the statement of the BGT theorem for $\\mathrm{SL}(2, \\mathbb{F}_p)$: every $K$-approximate subgroup $A$ (i.e., $|A^3| \\leq K|A|$) is contained in a set of the form $xH$ where $H$ is a subgroup and $|xH| \\leq f(K)|A|$. Then prove the theorem for $K$ close to 1 using the Strict Growth Theorem.\n\n**The key insight is** that the Strict Growth Theorem already proves the $K = 1$ case: if $|A^3| = |A|$ (so $K = 1$) and $A$ generates $G$ and $1 \\in A$, then $A = G$ (since $A = A^2 = A^3 = \\cdots = G$ by strict growth). The BGT theorem generalizes this to $K > 1$, showing that approximate closure under tripling forces algebraic structure. Our formal infrastructure provides the foundation for this generalization.\n\n**Why now?** The formal proof of the Core Stability Theorem demonstrates that the key technique \u2014 using finite injectivity to establish group-like properties of finite sets \u2014 is formalizable. The BGT proof uses similar techniques at a higher level of abstraction, combined with the classification of finite simple groups. While the full classification is out of reach, the $\\mathrm{SL}(2)$ case is tractable and would demonstrate the approach.\n\n**Impact:** A formally verified BGT theorem, even in the $\\mathrm{SL}(2)$ case, would be a major achievement in formal combinatorics and would validate the certificate-to-growth paradigm at the deepest level.\n\n**Catalog References:** `Pythagorean/CertificateProductGrowth.lean` (all theorems from the current cycle), `Catalog/Pythagorean/CertificateExpanders.lean` (spectral machinery), `Catalog/Algebra/MatrixGroupGeneration.lean` (matrix group structure).\n\n**Proof Strategy:** Following Helfgott (2008) for $\\mathrm{SL}(2, \\mathbb{F}_p)$: (1) Use the trace map to reduce to a sum-product problem in $\\mathbb{F}_p$. (2) Apply sum-product estimates (Bourgain\u2013Katz\u2013Tao) to show that the trace of $A$ cannot concentrate. (3) Use non-concentration to derive growth via escape from subvarieties. Each step can be decomposed into lemmas amenable to formal verification.\n\n**Domain Bridges:** Additive combinatorics (sum-product estimates), algebraic geometry (subvarieties), representation theory (trace maps), classification of finite simple groups.\n\n**Lineage:** Culmination of the certificate-to-growth program initiated in this cycle.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 paradigm-shifting if achieved, requiring formalization of deep results across multiple mathematical domains.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
       "Physics",
       "Bridges",
       "MachineLearning",
@@ -2121,9 +2276,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2953ee13",
+    "source_exp_id": "edab5f0b",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:25:39.023118+00:00"
+    "timestamp": "2026-05-25T22:59:06.937020+00:00"
   },
   {
     "id": "seed_032",

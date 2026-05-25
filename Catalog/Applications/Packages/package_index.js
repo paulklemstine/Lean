@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Algebraic Combinatorics",
     "date": "2026-05-25T22:59:02Z",
     "exp_id": "edab5f0b",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7849381886792453,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_random_cayley_expanders_and_spectral_g.json",
@@ -1045,8 +1045,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-25T22:59:02Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7849381886792453,
+      "quality": "substantial"
     }
   ],
   "edges": [
