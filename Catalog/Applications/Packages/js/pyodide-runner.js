@@ -374,8 +374,31 @@ print("VIZIMG:" + img_data)
 
             outputContainer.innerHTML = '<div class="viz-loading">Running visualization...</div>';
 
-            // Run the pre-built wrapped code
-            await window.Aether.pyodideInstance.runPythonAsync(fullCode);
+            // Run the wrapped code, retrying on missing module errors
+            let attempts = 0;
+            while (attempts < 3) {
+                try {
+                    await window.Aether.pyodideInstance.runPythonAsync(fullCode);
+                    break;
+                } catch (runErr) {
+                    const match = runErr.toString().match(/ModuleNotFoundError.*module '(\w+)'/);
+                    if (match && attempts < 2) {
+                        const modName = match[1];
+                        console.log(`Auto-loading missing module: ${modName}`);
+                        outputContainer.innerHTML = `<div class="viz-loading">Loading ${modName}...</div>`;
+                        try {
+                            await window.Aether.pyodideInstance.loadPackage(modName);
+                        } catch {
+                            try {
+                                await window.Aether.pyodideInstance.runPythonAsync(`import micropip; await micropip.install("${modName}")`);
+                            } catch {}
+                        }
+                        attempts++;
+                    } else {
+                        throw runErr;
+                    }
+                }
+            }
 
             // Parse output for VIZIMG: or VIZHTML: markers
             if (stdout.includes('VIZIMG:')) {

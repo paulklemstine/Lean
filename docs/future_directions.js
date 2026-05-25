@@ -63,21 +63,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.403036+00:00"
   },
   {
-    "id": "seed_030",
-    "title": "Invariant Subspace Problem",
-    "description": "Prove or disprove that every bounded linear operator on a separable Hilbert space has a non-trivial closed invariant subspace. Formalize known results for compact operators and normal operators.",
-    "domains": [
-      "Analysis",
-      "Algebra"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.513281+00:00"
-  },
-  {
     "id": "seed_031",
     "title": "Frankl's Union-Closed Conjecture",
     "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
@@ -284,26 +269,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
-    "id": "fd_0794",
-    "title": "Direction 5: Numerical Stability of Lorentzian Recognition",
-    "description": "**Conjecture.** There exists \u03b5\u2080 > 0 depending only on d such that if all quadratic leaves of a degree-d polynomial f satisfy the spectral condition with margin \u03b5\u2080 (i.e., the second-largest eigenvalue of each Hessian is at most \u2212\u03b5\u2080 \u00b7 \u2016H\u2016), then f is Lorentzian even under O(\u03b5\u2080\u00b2)-perturbations of the coefficients.\n\n**Test.** Perturb the coefficients of known Lorentzian polynomials (elementary symmetric polynomials, matroid basis polynomials) by random noise of varying magnitude, and check how the eigenvalue gap of the quadratic leaves degrades. A disproof would exhibit a Lorentzian polynomial whose Lorentzianity is destroyed by arbitrarily small perturbations.\n\n**Impact.** This would make Lorentzian recognition practical with floating-point arithmetic, enabling deployment in machine learning and optimization pipelines where exact computation is infeasible.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `HasAtMostOnePositiveEigenvalue`, `lorentzian_signature_tangent_neg_semidef` (the tangent-space theorem suggests spectral gaps persist under perturbation).\n\n**Proof Strategy.** Use the tangent-space negativity theorem to establish that the spectral gap of the Hessian is lower-semicontinuous in the coefficients. The key inequality is: if Q(x) > 0 and the second eigenvalue of H has magnitude \u03b4, then tangent-space negativity holds with margin \u03b4 \u00b7 \u2016x\u2016\u00b2 / \u2016Hx\u2016.\n\n**Domain Bridges.** Numerical linear algebra \u2192 optimization \u2192 engineering applications (robust ML, robust control).\n\n**Lineage.** Extends `lorentzian_signature_tangent_neg_semidef` to a quantitative/robust setting.\n\n**Ambition.** Solid extension. The qualitative result (openness of Lorentzianity) is known; the quantitative bound is new.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "33261812",
-    "consumed_by_exp_id": "2493279d",
-    "timestamp": "2026-05-24T23:12:21.890989+00:00"
-  },
-  {
     "id": "fd_0800",
     "title": "Direction 2: Heterogeneity\u2013Gap Conjecture",
     "description": "**Conjecture:** For every \u03b5 > 0, there exists \u03b4 > 0 such that for all hypergraphs H on n \u2265 10 vertices with edge heterogeneity \u03c3\u00b2(H) > \u03b4, we have \u03c4(H) \u2212 \u2308\u03c4*(H)\u2309 \u2265 1. In other words, sufficiently heterogeneous hypergraphs always have a positive integrality gap beyond the ceiling rounding gap.\n\n**Test:** Generate 10,000 random hypergraphs on n = 15 vertices with edges of sizes {2, 3, 4, 5} at varying proportions. For each, compute \u03c3\u00b2, \u03c4, \u03c4*, and \u03c4 \u2212 \u2308\u03c4*\u2309. Plot the gap vs \u03c3\u00b2 and identify the critical threshold \u03b4*. Attempt to disprove by finding hypergraphs with \u03c3\u00b2 > 2 and \u03c4 = \u2308\u03c4*\u2309.\n\n**Impact:** If true, this would establish edge-size heterogeneity as a sufficient condition for integrality gap positivity, providing a simple structural certificate that LP relaxation is strictly better than integer programming for a given instance. This has direct implications for algorithm selection in practice.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `edgeHeterogeneity`, `IsHeterogeneous`, `heterogeneity_zero_of_uniform`.\n\n**Proof Strategy:** For the forward direction, construct explicit fractional transversals that exploit heterogeneity to achieve sub-integer values. For necessity, construct uniform hypergraphs where \u03c4 = \u2308\u03c4*\u2309. The probabilistic method may yield existence proofs for extreme heterogeneity.\n\n**Domain Bridges:** Connects to information theory (entropy of edge-size distribution), statistical mechanics (disorder parameter), and algebraic combinatorics (chromatic polynomials).\n\n**Lineage:** Builds on `heterogeneity_zero_of_uniform` and `integrality_gap_upper`.\n\n**Ambition:** Grand challenge \u2014 this would be a new structural result in combinatorial optimization with no direct precedent.\n\n---",
@@ -395,43 +360,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "c1bdccd8",
     "consumed_by_exp_id": "d8aa38e8",
     "timestamp": "2026-05-25T00:54:40.973612+00:00"
-  },
-  {
-    "id": "fd_0817",
-    "title": "Direction 5: Certified Finite Element Assembly Pipeline",
-    "description": "**Conjecture:** The tensor-sorted rewrite system, combined with the energy invariance theorem, provides a formally verified preprocessing step for finite element assembly: if element stiffness matrices `K\u2081, ..., K\u2098` are assembled into a global stiffness matrix `K = \u2211 K\u1d62` and the displacement is decomposed as `u = \u2211 u\u2c7c`, then the total strain energy `E(K, u)` can be decomposed into element contributions plus coupling terms, and this decomposition is preserved by normalization.\n\n**Test:** Implement a 2D triangular mesh FEM with 100 elements. Build the symbolic energy expression `\u27e8u, K\u00b7u\u27e9` where `K = K\u2081 + ... + K\u2081\u2080\u2080`. Normalize the expression and verify: (a) the numerical energy matches direct computation to 10 decimal places, (b) the normalized form exposes element-wise energies, (c) the wall-clock time for symbolic normalization is within 10\u00d7 of direct numerical evaluation for meshes up to 1000 elements. Failure of (a) refutes soundness; failure of (c) indicates practical infeasibility.\n\n**Impact:** Finite element analysis is the backbone of computational engineering. A formally verified pipeline from symbolic assembly to numerical evaluation would provide unprecedented confidence in structural analysis codes used for safety-critical applications (bridges, aircraft, nuclear reactors).\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `energy_add`, `energy_invariant_of_rewrites`, `tensorRewrites_sound_*`.\n\n**Proof Strategy:** The energy expansion theorem (Theorem 4) already handles the case of two terms. Prove the multi-term generalization by induction on the number of summands. The coupling-term structure follows from the symmetric specialization (Theorem 5) when stiffness matrices are symmetric.\n\n**Domain Bridges:** Formal verification \u2192 structural engineering \u2192 computational mechanics \u2192 safety-critical systems.\n\n**Lineage:** Direct application of Theorems 3, 4, and 5 to a concrete engineering domain.\n\n**Ambition:** Medium-high \u2014 the formal mathematics is already present; the challenge is scaling the symbolic system to realistic problem sizes and connecting to existing FEM codes.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:54:40.987422+00:00"
-  },
-  {
-    "id": "fd_0819",
-    "title": "Direction 1: General Recursive Witness Construction",
-    "description": "**Conjecture:** For every inhabited simple type *A*, there exists a closed term *t : A* and depth *d* such that `canonicalQuotientSize(d, t) = typeStateBound(A)`.\n\n**Test:** Implement an exhaustive search over closed terms up to size 20 for all inhabited types up to depth 4. For each type, verify whether any term achieves the type state bound. A single type where no term achieves the bound (up to large search depth) would falsify the conjecture.\n\n**Impact:** This would establish the first exact higher-order Myhill-Nerode theorem, transforming typeStateBound from a combinatorial estimate into a canonical semantic invariant.\n\n**Catalog References:**\n- `Catalog/Pythagorean/GlobalTightness.lean` \u2014 `global_tightness` (sorry), `global_tightness_base` (proved), `global_tightness_BB` (proved)\n- `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity`\n\n**Proof Strategy:** Structural induction on the type. Base case: proved (depth 0). Arrow case *A \u2192 B*: given witness terms for types *A* and *B*, construct a term of type *A \u2192 B* that uses all witnesses as \"test inputs\" to create a large reduction diamond. The key lemma: if *S_A* and *S_B* are pairwise-separated reachable families at types *A* and *B*, then a suitable composition produces a family of size \u2265 |S_A| \u00d7 |S_B| at type *A \u2192 B*.\n\n**Domain Bridges:** Automata theory (minimal DFA characterization), descriptive complexity (type \u2194 resource correspondence), combinatorics (extremal \u03bb-term families).\n\n**Lineage:** Extends Myhill-Nerode (1958) and Statman's type-complexity results (1979).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Field-opening if proved.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "21d0ab18",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:55:13.970837+00:00"
   },
   {
     "id": "fd_0822",
@@ -685,24 +613,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:08:48.902211+00:00"
   },
   {
-    "id": "fd_0856",
-    "title": "Direction 5: Phase Transitions in Generation Probability for Random Subgroup Families",
-    "description": "**Conjecture:** For the wreath product $S_k \\wr S_m$ (with $n = km$), the generation probability exhibits a *phase transition* as the ratio $k/m$ varies: when $k \\gg m$, $P \\approx 1 - 1/k$, resembling the symmetric group; when $m \\gg k$, $P$ decreases due to abundant imprimitive subgroups preserving block structures.\n\n**Test:** Compute generation probabilities for $S_k \\wr S_m$ for $km \\leq 12$ using GAP. Plot $P$ as a function of $k/m$ and identify the transition region.\n\n**Impact:** Would reveal that generation probability is not a monotone function of group size but depends sensitively on the group's *structural complexity* (number and type of maximal subgroups), connecting to statistical physics notions of phase transitions.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `nongeneratingPairProbability_le_maximal_subgroup_sum` (applied with imprimitive subgroups as the covering family).\n\n**Proof Strategy:** Enumerate the maximal subgroups of $S_k \\wr S_m$ using the O'Nan-Scott classification. Apply the subgroup sieve with this enumeration. The phase transition arises because the number of maximal imprimitive subgroups (block system stabilizers) grows faster than the index of each decreases.\n\n**Domain Bridges:** Statistical physics (phase transitions, percolation), random matrix theory (similar phase transitions in eigenvalue statistics), combinatorics (Latin squares, block designs).\n\n**Lineage:** The subgroup sieve is the formal tool; the wreath product provides the parametric family exhibiting the phase transition.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the O'Nan-Scott classification and imprimitive subgroup enumeration, which is substantial new infrastructure.\n\n**The key insight is** that the subgroup sieve bound is tight enough to detect phase transitions: when the sum $\\sum (|H|/|G|)^2$ crosses 1, it signals a qualitative change in generation behavior, analogous to a percolation threshold.\n\n**Why now?** The subgroup sieve is formalized and ready to be applied to parametric families. Computational experiments can guide the formalization by identifying the critical ratio before formal proof.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "92e3853a",
-    "consumed_by_exp_id": "cf039036",
-    "timestamp": "2026-05-25T03:08:48.964845+00:00"
-  },
-  {
     "id": "fd_0858",
     "title": "Direction 1: Lorentzian-to-Coefficient Bridge via Bivariate Specialization",
     "description": "**Conjecture**: For every homogeneous polynomial $P$ of degree $d$ with nonnegative coefficients and recursive Lorentzian depth $k$ (as defined by `IsRecursivelyLorentzian` in `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`), every bivariate specialization $P(x, y) = \\sum a_m x^m y^{d-m}$ with $a_m > 0$ yields a coefficient sequence that is $\\min(k, d-2)$-fold log-concave in the sense of `KFoldLogConcave` (from `Catalog/Pythagorean/HigherOrderLogConcavity.lean`).\n\n**Test**: Extract bivariate specialization coefficients from explicit Lorentzian polynomials (products of linear forms, matroid basis generating polynomials for uniform matroids, Kirchhoff polynomials of small graphs). Compute iterated ratio sequences and verify log-concavity at each depth. A single family with Lorentzian depth $k \\geq 2$ whose coefficient sequence fails 2-fold log-concavity disproves the conjecture.\n\n**Impact**: This would be the flagship theorem connecting algebraic geometry (Hessian spectral signatures) to discrete analysis (ratio sequence concavity). It would turn the abstract recognition algorithm in `LorentzianRecognitionComplete.lean` into a concrete inequality machine for coefficient sequences.\n\n**The key insight is** that the Lorentzian Hessian condition at each differentiation level translates, via the reversed Cauchy\u2013Schwarz inequality (already formalized as `lorentzian_reversed_cauchy_schwarz`), into a ratio-sequence inequality that propagates one level of the k-fold hierarchy.\n\n**Why now?** The existing Catalog contains both the recursive Lorentzian predicate and the k-fold log-concavity definitions. The reversed Cauchy\u2013Schwarz theorem provides the exact algebraic bridge needed. What remains is to formalize the coefficient extraction from bivariate specialization and verify the inequality chain at each recursive level.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (IsRecursivelyLorentzian, lorentzian_reversed_cauchy_schwarz), `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (KFoldLogConcave, KFoldLogConcave.ratio)\n\n**Proof Strategy**: Define `coeffOfBivariateHomogeneous` as the coefficient extractor. For degree-2, the reversed Cauchy\u2013Schwarz directly gives log-concavity. Induct on Lorentzian depth: each differentiation step reduces degree by 1 and Lorentzian depth by 1, while the coefficient sequence's ratio inherits the Lorentzian inequality from the derivative polynomial.\n\n**Domain Bridges**: Algebraic geometry \u2192 discrete combinatorics \u2192 sampling algorithms\n\n**Lineage**: Extends `recursivelyLorentzian_iff_brandenHuh` and `lorentzian_reversed_cauchy_schwarz`\n\n**Ambition**: Grand challenge \u2014 would establish a new theorem class connecting two major theories.\n\n---",
@@ -778,67 +688,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "56c2f88c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T14:24:15.354053+00:00"
-  },
-  {
-    "id": "fd_0862",
-    "title": "Direction 5: Complete Classification of Combinatorial Sequences by Depth",
-    "description": "**Conjecture**: Every \"naturally occurring\" combinatorial sequence (binomial coefficients, Stirling numbers, Bell numbers, Catalan numbers, partition numbers, matroid basis counts) has a well-defined and computable k-fold log-concavity depth on its positive support, and this depth is determined by the algebraic structure of the generating polynomial.\n\n**Test**: Compute k-fold depth for:\n- Stirling numbers of the second kind $S(n, k)$ for fixed $n$ (rows of the Stirling triangle)\n- Bell number prefixes\n- Catalan number prefixes\n- Integer partition counts $p(n)$ for $n = 0, \\ldots, N$\n- Matroid basis counts for uniform, paving, and graphic matroids\n\nTabulate depths and identify patterns.\n\n**Impact**: This would create a new \"periodic table\" of combinatorial sequences, classified not just by growth rate or unimodality but by the depth of their structural regularity.\n\n**The key insight is** that the k-fold depth is a computationally accessible invariant that captures information invisible to traditional analyses. Different combinatorial families may cluster at characteristic depths, revealing hidden structural relationships.\n\n**Why now?** The `kfold_depth` algorithm is implemented and tested. The computational infrastructure exists to systematically survey all families in the OEIS or similar databases. The formal theory provides the mathematical framework to interpret the results.\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (KFoldLogConcave, IterRatio), `Catalog/Pythagorean/CertificateSampling.lean` (binomial_log_concave)\n\n**Proof Strategy**: For each family, identify the generating polynomial (if it exists) and determine its Lorentzian depth. Use Direction 1's bridge theorem (once established) to predict the k-fold depth. Verify computationally and prove the depth bound formally for key families.\n\n**Domain Bridges**: Enumerative combinatorics \u2192 algebraic geometry \u2192 computational complexity\n\n**Lineage**: Extends `geometric_kFoldLogConcave` and builds on the depth computation infrastructure\n\n**Ambition**: Grand challenge \u2014 would create an entirely new classification system for combinatorial objects.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T14:24:15.372699+00:00"
-  },
-  {
-    "id": "fd_0863",
-    "title": "Direction 1: Formal Baker-Norine Riemann-Roch Theorem",
-    "description": "**Conjecture**: The full Baker-Norine Riemann-Roch theorem for graphs \u2014 $r(D) - r(K - D) = \\deg(D) - g + 1$ \u2014 can be formalized in Lean 4 using the verified Laplacian infrastructure from `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean` and `Catalog/Pythagorean/TropicalBridge/Theorems.lean`, by building the rank function $r(D)$ and the canonical divisor $K$ on top of the existing `GraphDivisor` and `linearEquiv` definitions.\n\n**Test**: \n1. Define the rank function $r(D) = \\max\\{k : \\forall E \\geq 0, \\deg(E) = k \\implies D - E \\sim E' \\geq 0 \\text{ for some } E'\\}$\n2. Define the canonical divisor $K(v) = \\deg(v) - 2$\n3. Prove $r(D) - r(K - D) = \\deg(D) - g + 1$ by formalizing Dhar's burning algorithm for q-reduced divisor computation\n4. Falsification: find any graph and divisor where the formula fails (impossible if correct, but the formalization itself certifies this)\n\n**Impact**: First complete formal verification of the Baker-Norine theorem. Would be a landmark result for formalized combinatorics, comparable in significance to the formal proof of the four-color theorem.\n\n**Catalog References**: \n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `linearEquiv_degree_invariant`, `principalDivisor_degree_zero`\n- `Catalog/Pythagorean/TropicalBridge/Theorems.lean`: `rootedSubsetDivisor_total`, `graphLaplacian_row_sum_zero`\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `firingIndependentOn`\n\n**Proof Strategy**: \n1. Formalize Dhar's burning algorithm as a certified computation\n2. Prove existence and uniqueness of q-reduced representatives using `chipFire_degree_preserved`\n3. Define rank via the effective divisor lattice\n4. Prove RR by induction on degree, using the lattice structure\n\n**Domain Bridges**: Algebraic geometry (Riemann-Roch on curves) \u2194 Combinatorics (chip-firing) \u2194 Formal methods (machine verification)\n\n**Lineage**: Extends `chipFire_degree_preserved`, `linearEquiv_degree_invariant` from this work\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2606 \u2014 Substantial formalization effort but mathematically well-understood; the main challenge is infrastructure, not insight.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "97def267",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T14:24:37.080917+00:00"
-  },
-  {
-    "id": "fd_0864",
-    "title": "Direction 2: Certified Jacobian Group Computation via Tropical Determinant",
-    "description": "**Conjecture**: For any connected graph $G$ with base vertex $q$, the order of the Jacobian group equals the tropical permanent (min-plus permanent) of the reduced Laplacian: $|\\text{Jac}(G)| = \\text{trop-det}(L^{(q)})$, where the tropical determinant coincides with the classical determinant for M-matrices (matrices with nonpositive off-diagonal entries and positive row sums).\n\n**Test**:\n1. Implement certified Smith Normal Form computation in Lean 4\n2. Compute $|\\text{Jac}(G)|$ via SNF for all connected graphs on \u2264 10 vertices\n3. Compare with the tropical permanent computation\n4. Falsification: find a graph where the tropical permanent differs from $\\det(L^{(q)})$ (this would disprove the M-matrix tropical determinant conjecture)\n\n**Impact**: Would provide a purely tropical algorithm for Jacobian computation, potentially faster than SNF for sparse graphs. Connects tropical linear algebra to Kirchhoff's theorem in a new way.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `laplacianPrincipalMinor`\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `graphLap_diagonal_eq_degree`, `graphLap_off_diagonal_nonpos`\n\n**Proof Strategy**: Use the fact that the graph Laplacian's reduced form is an M-matrix, for which the tropical permanent (computed via optimal assignment) equals the classical determinant. The key lemma is that the Laplacian's off-diagonal nonpositivity (`graphLap_off_diagonal_nonpos`) ensures the M-matrix property.\n\n**Domain Bridges**: Tropical geometry (tropical determinant) \u2194 Algebraic graph theory (Kirchhoff's theorem) \u2194 Optimization (assignment problem)\n\n**Lineage**: Builds on `graphLap_off_diagonal_nonpos`, `graphLap_diagonal_eq_degree`\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The M-matrix result is known; the novelty is the formal verification and tropical algorithmic pathway.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "97def267",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T14:24:37.100737+00:00"
   },
   {
     "id": "fd_0865",
@@ -1021,24 +870,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T15:29:44.862008+00:00"
   },
   {
-    "id": "fd_0876",
-    "title": "Direction 4: Coding Theory \u2014 Optimal Cyclic Codes from Singer Orbits",
-    "description": "**Conjecture:** For every irreducible polynomial f of degree n over F_q, the orbit of e\u2081 under the companion matrix of f generates an [n, n, 1] code (trivially), but the orbit modulo a suitable equivalence relation generates codes with optimal or near-optimal minimum distance.\n\nMore precisely: define the \"Singer code\" C(f, k) as the linear code generated by any k consecutive orbit vectors {A^i v, A^{i+1} v, ..., A^{i+k-1} v}. Then C(f, k) is an [n, k] code whose minimum distance satisfies d \u2265 n - k + 1 (the Singleton bound) when f has certain structural properties.\n\n**Test:** For all irreducible polynomials of degree 4 over F_2 (there are 3), compute the minimum distance of C(f, k) for k = 1, 2, 3 and compare with the Singleton bound. If any code exceeds the bound, there is a bug; if all achieve it, the conjecture holds for these parameters.\n\n**Impact:** Would establish a new connection between Singer cycles and algebraic coding theory, potentially yielding new constructions of MDS codes and near-MDS codes with algebraic structure.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (Theorem 2: `span_orbit_eq_top_of_irreducible`).\n\n**Proof Strategy:** The orbit spanning theorem guarantees that n consecutive orbit vectors span F_q^n. The distance properties depend on the specific polynomial f and its relationship to Reed-Solomon and BCH codes. The companion matrix orbit is closely related to the cyclic structure exploited by BCH codes.\n\n**Domain Bridges:** Error-correcting codes; information theory; distributed storage (regenerating codes); quantum error correction.\n\n**Lineage:** Direct application of Theorem 2 to coding theory.\n\n**Ambition:** Solid extension for the basic construction; grand challenge for optimal distance results.\n\n**The key insight is** that the orbit spanning theorem (Theorem 2) provides the algebraic backbone for cyclic code constructions, and the irreducibility certificate guarantees maximum rate.\n\n**Why now?** Modern coding theory increasingly relies on algebraic constructions with formal guarantees. The orbit spanning theorem provides exactly the kind of structural result needed.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T15:29:44.883156+00:00"
-  },
-  {
     "id": "fd_0877",
     "title": "Direction 5: Expander Graphs from Certificate Pairs",
     "description": "**Conjecture:** For q prime and n \u2265 2, the Cayley graph of GL_n(F_q) with generators {g, g\u207b\u00b9, h, h\u207b\u00b9} where g is a Singer certificate and h has primitive determinant is an \u03b5-expander with \u03b5 \u2264 C/q for an absolute constant C.\n\n**Test:** For GL_2(F_3) and GL_2(F_5), compute the spectral gap of the Cayley graph with certified generators. If the spectral gap is < 0.01, the conjecture is too optimistic.\n\n**Impact:** Would provide a new, algebraically motivated construction of expander graphs with applications to derandomization, network design, and error amplification. The construction is explicit and efficiently computable via the certificate test.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (Theorem 1, generation framework); `Algebra/SymmetricGroupGeneration/Core.lean` (analogous expander results for S_n).\n\n**Proof Strategy:** The Alon-Roichman theorem gives expander properties for random Cayley graphs. The certificate framework strengthens this by showing that certified elements are \"generic enough\" to produce expansion. The key technical input is the Aldous-Diaconis bound on mixing times via representation theory.\n\n**Domain Bridges:** Spectral graph theory; derandomization (pseudorandom generators from expanders); network science (robust network topologies); quantum computing (quantum expanders for error correction).\n\n**Lineage:** Combines the certificate framework with spectral graph theory.\n\n**Ambition:** Grand challenge \u2014 requires deep results from both group theory and spectral theory.\n\n**The key insight is** that the \"no invariant subspace\" property of certified elements translates into the \"no small eigenvalue\" property needed for expansion, via the representation-theoretic characterization of the spectral gap.\n\n**Why now?** Expander graph constructions from groups are well-studied, but the connection to generation certificates is new. The certificate framework provides a natural bridge.",
@@ -1058,6 +889,65 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T15:29:44.902335+00:00"
   },
   {
+    "id": "fd_0878",
+    "title": "Direction 1: Tropical Eigenvalue Theory and the Corrected Hodge Isomorphism",
+    "description": "**Conjecture:** For any connected graph G with classical first Betti number \u03b2\u2081, the tropical eigenspace E_0(L) = {x \u2208 (WithTop \u2115)^n : L \u2297 x = x} has a \"tropical dimension\" (number of generators over the tropical semiring) equal to \u03b2\u2081 + 1. The +1 accounts for the constant vector (the tropical analogue of the kernel of the classical Laplacian).\n\n**Test:** Compute E_0(L) for all connected graphs on n \u2264 7 vertices. Verify that the number of minimal generators of the tropical convex hull of E_0(L) equals \u03b2\u2081 + 1. A single counterexample disproves the conjecture.\n\n**Impact:** This would provide the \"correct\" tropical Hodge isomorphism, replacing the trivial kernel ker_trop(L) = {\u22a4} with a richer eigenspace that genuinely reflects topology. It would complete the tropical Hodge program initiated in this work.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalKernel_eq_top`, `tropicalLaplacian`\n\n**Proof Strategy:** Define the tropical eigenspace as {x : \u2200i, min_j(L_{ij} + x_j) = x_i}. Show that cycle vectors (indicator functions of fundamental cycles, with appropriate tropical values) satisfy this equation. Use the structure theorem for tropical convex sets (Develin-Sturmfels) to count generators.\n\n**Domain Bridges:** Tropical spectral theory \u2194 Classical spectral graph theory \u2194 Random walks on graphs\n\n**Lineage:** Extends `tropicalKernel_eq_top` from this work; builds on Akian-Gaubert-Guterman tropical spectral theory.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish tropical Hodge theory as a self-consistent framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.073627+00:00"
+  },
+  {
+    "id": "fd_0879",
+    "title": "Direction 2: Higher-Dimensional Tropical Homology via Simplicial Complexes",
+    "description": "**Conjecture:** For any finite simplicial complex K of dimension d, the tropical chain complex C_d \u2192 C_{d-1} \u2192 \u00b7\u00b7\u00b7 \u2192 C_0 (with boundary maps defined via min-plus incidence matrices) satisfies \u2202_{k-1} \u2218 \u2202_k = \u22a4-map (the tropical analogue of \u2202\u00b2 = 0). The resulting tropical Betti numbers \u03b2_k^trop satisfy \u03b2_k^trop \u2265 \u03b2_k^classical for all k.\n\n**Test:** Implement the tropical chain complex for the following simplicial complexes: triangulated torus (\u03b2\u2081 = 2, \u03b2\u2082 = 1), triangulated Klein bottle (\u03b2\u2081 = 1, \u03b2\u2082 = 0), and the M\u00f6bius strip (\u03b2\u2081 = 1, \u03b2\u2082 = 0). Verify the Betti number inequality.\n\n**Impact:** Extending tropical homology to higher dimensions would enable analysis of higher-order network structures (simplicial neural networks, higher-order topological data analysis).\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBoundary`, `tropicalBoundary_top`, `tropicalBoundary_preserves_inf`\n\n**Proof Strategy:** Define the higher boundary maps using incidence matrices of simplicial complexes with appropriate signs encoded tropically. The chain complex property \u2202\u00b2 = \u22a4 should follow from the cancellation of pairs in the tropical sum. Use the existing sub-additivity theorem as a template.\n\n**Domain Bridges:** Tropical geometry \u2194 Topological data analysis \u2194 Simplicial neural networks\n\n**Lineage:** Direct extension of the graph-level results in this work to simplicial complexes.\n\n**Ambition:** Solid extension \u2014 the graph case is established; the simplicial extension is natural.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.093108+00:00"
+  },
+  {
+    "id": "fd_0881",
+    "title": "Direction 4: Tropical Sheaf Cohomology and the Chip-Firing Connection",
+    "description": "**Conjecture:** The Jacobian group Jac(G) of a graph G (the cokernel of the integer Laplacian, equivalently the group of chip-firing equivalence classes) embeds into the \"tropical Picard group\" Pic^trop(G), defined as the quotient of the tropical eigenspace E_0(L) by the image of the tropical boundary map. The order |Jac(G)| equals the number of spanning trees of G (Kirchhoff's theorem), and Pic^trop(G) has a natural tropical semimodule structure whose \"rank\" equals \u03b2\u2081.\n\n**Test:** For all graphs on n \u2264 6, compute:\n1. |Jac(G)| via the Matrix-Tree theorem (determinant of any cofactor of L)\n2. The number of spanning trees (should equal |Jac(G)|)\n3. The tropical Picard group Pic^trop(G) and verify the embedding\n\n**Impact:** This would connect tropical Hodge theory to the Baker-Norine program (Riemann-Roch for graphs) and the theory of divisors on tropical curves. It would also connect to algebraic geometry via the tropicalization of the Picard variety.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `rootedSubsetDivisor`\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalLaplacian`, `tropicalKernelSet`\n- `Pythagorean/TropicalBridge/DefectTheory.lean`: `structuralDefect`\n\n**Proof Strategy:** Define Pic^trop(G) using the tropical eigenspace from Direction 1. Construct the embedding Jac(G) \u2192 Pic^trop(G) by mapping each chip configuration to its tropical valuation. Use the structure theory of tropical modules.\n\n**Domain Bridges:** Tropical geometry \u2194 Algebraic geometry (Picard varieties) \u2194 Number theory (Jacobians)\n\n**Lineage:** Builds on Baker-Norine (2007) and the defect theory in `DefectTheory.lean`.\n\n**Ambition:** Grand challenge \u2014 connecting tropical Hodge theory to chip-firing would unify two major strands of combinatorial algebraic geometry.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.131066+00:00"
+  },
+  {
     "id": "fd_0869",
     "title": "Direction 2: Character Expansion and Strong Coupling Mass Gap",
     "description": "**Conjecture:** For any compact simple Lie group G and sufficiently small coupling \u03b2, the mass gap of the lattice Yang-Mills transfer matrix equals:\n\n$$\\Delta(\\beta) = -\\ln\\left(\\frac{\\beta \\cdot \\dim(\\rho_{\\text{fund}})}{|G|}\\right) + O(\\beta^2)$$\n\nwhere \u03c1_fund is the fundamental representation.\n\n**Test:** Verify this formula numerically for SU(2) (|G| computed via Haar measure normalization, dim(fund) = 2) at \u03b2 = 0.1, 0.2, ..., 1.0 by comparing with exact diagonalization of the transfer matrix on a 2\u00d72 lattice.\n\n**Impact:** Would provide the first rigorous mass gap result for non-abelian gauge theories in any dimension, extending Borgs-Seiler from abelian to non-abelian.\n\n**Catalog References:**\n- `Physics/YangMillsMassGap.lean`: `casimir_spectral_gap`, `mass_gap_lower_bound_certifies`\n- `Physics/SpectralGap.lean`: `gauge_energy_minimizer_yields_mass_gap`\n\n**Proof Strategy:** (A) Expand exp(-\u03b2\u00b7S) in characters using Peter-Weyl. (B) Show the transfer matrix kernel is dominated by the trivial character at strong coupling. (C) Bound the contribution of non-trivial representations using Casimir eigenvalue bounds (`casimir_spectral_gap`). (D) Apply `spectral_gap_perturbation_stability` to control error terms.\n\n**Domain Bridges:** Gauge theory \u2192 Representation theory (Peter-Weyl theorem) \u2192 Combinatorics (cluster expansion)\n\n**Lineage:** Builds directly on `casimir_spectral_gap` and `rep_theoretic_gap_bound`.\n\n**Ambition:** Solid extension \u2014 uses established techniques (cluster expansion) with our certified infrastructure.\n\n---",
@@ -1075,6 +965,104 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "6a88b92d",
     "consumed_by_exp_id": "a9352256",
     "timestamp": "2026-05-25T15:29:21.834825+00:00"
+  },
+  {
+    "id": "fd_0883",
+    "title": "Direction 1: Submodular Objectives and the Curvature-Gap Conjecture",
+    "description": "**Conjecture:** For a hypergraph H with max edge size d and a monotone submodular function f : 2^V \u2192 \u211d\u22650 with curvature \u03ba \u2208 [0,1], the threshold-rounded set S satisfies f(S) \u2264 d/(1-\u03ba) \u00b7 f_multilinear(x), where f_multilinear is the multilinear extension evaluated at the fractional solution x.\n\n**Test:** Implement random monotone submodular functions as weighted coverage functions on random hypergraphs with n=20. Compute the multilinear extension via sampling (1000 samples), apply threshold rounding, and measure the ratio f(S)/f_multilinear(x). Sweep curvature by varying the overlap structure of coverage sets. A single instance with ratio exceeding d/(1-\u03ba)+\u03b5 disproves the conjecture.\n\n**Impact:** This would extend the cost-agnostic rounding principle from linear to submodular objectives \u2014 the natural next level of expressiveness in optimization. Submodular functions model diminishing returns, which appear in welfare economics, sensor placement, and influence maximization.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`, `threshold_simultaneous_multiobjective_bound`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `threshold_isTransversal`, `threshold_card_bound`\n\n**Proof Strategy:** Decompose the multilinear extension as a convex combination of linear functions (this is known). Apply the existing weighted bound to each linear component, then aggregate. The curvature parameter \u03ba controls the gap between f(S) and the aggregated bound via Vondr\u00e1k's framework.\n\n**Domain Bridges:** Machine learning (feature selection), influence maximization in social networks, welfare economics (diminishing marginal returns)\n\n**Lineage:** Direct extension of Theorem 1 (weighted rounding) and Theorem 4 (simultaneous multi-objective) via the multilinear extension framework of C\u0103linescu et al. (2011).\n\n**Ambition:** Grand challenge \u2014 this would create the first certified rounding theory for nonlinear multi-criteria optimization in a combinatorial setting.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:39:08.850911+00:00"
+  },
+  {
+    "id": "fd_0884",
+    "title": "Direction 2: Hypergraph Transversals as Tropical Convex Optimization",
+    "description": "**Conjecture:** The set of feasible fractional transversals, when viewed through the tropical (min-plus) lens, has a *tropical convex hull* whose vertices correspond to basic feasible solutions of the covering LP, and threshold rounding is a tropical projection operator.\n\n**Test:** For small hypergraphs (n \u2264 8), enumerate all basic feasible solutions of the covering LP. Compute the tropical convex hull using established algorithms (Develin-Sturmfels). Check whether threshold rounding at 1/d maps each point to a tropically extremal integral solution. Falsifiable by finding a rounded point that is not tropically extremal.\n\n**Impact:** This would reveal the *geometric reason* behind the effectiveness of threshold rounding \u2014 it's not just a convenient algebraic trick but a reflection of tropical convex structure. This could lead to improved rounding schemes for specific hypergraph families where the tropical geometry is better behaved.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `threshold_set`, `weighted_threshold_cost_bound`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`\n\n**Proof Strategy:** Formalize tropical semiring operations (min, +) in Lean. Define tropical convexity for the covering polytope. Show that the threshold operator is a tropical retraction \u2014 a map that preserves tropical convex combinations. Use the tropical Carath\u00e9odory theorem to bound the number of support vertices.\n\n**Domain Bridges:** Tropical geometry, discrete convex analysis (Murota), phylogenetics (tropical tree space), algebraic statistics\n\n**Lineage:** Inspired by the Develin-Sturmfels theory of tropical convexity and the observation that the covering LP has a natural tropical interpretation.\n\n**Ambition:** Grand challenge \u2014 would establish the first formal connection between LP rounding theory and tropical convex geometry.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:39:08.874172+00:00"
+  },
+  {
+    "id": "fd_0885",
+    "title": "Direction 3: Compositional Rounding Certificates for Modular Hypergraphs",
+    "description": "**Conjecture:** If a hypergraph H decomposes as H = H\u2081 \u222a H\u2082 with V(H\u2081) \u2229 V(H\u2082) = V\u2080 (a shared boundary), and x\u2081, x\u2082 are feasible fractional transversals of H\u2081, H\u2082 agreeing on V\u2080, then the threshold roundings S\u2081, S\u2082 can be combined into a transversal S of H with cost(S) \u2264 max(d\u2081, d\u2082) \u00b7 (cost(x\u2081) + cost(x\u2082)), where d\u1d62 = max edge size of H\u1d62.\n\n**Test:** Generate pairs of random hypergraphs sharing 3-5 boundary vertices. Solve separate LPs, round separately, combine, and check both coverage and cost bound. A violation disproves the conjecture; consistent success over 1000 trials provides evidence.\n\n**Impact:** This would enable *modular certification*: verify rounding guarantees for subsystems independently, then compose. Essential for large-scale infrastructure design where the full system LP is intractable.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`, `threshold_set_isTransversal`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`\n\n**Proof Strategy:** The key step is showing that the boundary agreement condition ensures S\u2081 \u222a S\u2082 covers all edges, including those in H\u2081 \u2229 H\u2082. Use the separate weighted bounds for H\u2081 and H\u2082, then aggregate costs. The challenge is handling edges that cross the boundary.\n\n**Domain Bridges:** Software verification (compositional reasoning), distributed systems (partition-based optimization), VLSI design (hierarchical placement)\n\n**Lineage:** Extends the weighted rounding bound to decomposable structures, inspired by compositional verification in software engineering and tree decompositions in algorithmic graph theory.\n\n**Ambition:** Solid extension \u2014 directly builds on Theorem 1 with a clear combinatorial generalization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:39:08.895642+00:00"
+  },
+  {
+    "id": "fd_0886",
+    "title": "Direction 4: Statistical Physics of Random Transversals and Phase Transitions",
+    "description": "**Conjecture:** For random d-uniform hypergraphs on n vertices with m = c\u00b7n edges (c > 0 constant), the ratio \u03c4*(H)/n undergoes a phase transition at c = c*(d), and the integrality gap \u03c4(H)/\u03c4*(H) concentrates around a value strictly less than d for c above the transition, approaching d only at the critical density.\n\n**Test:** For d=3 and n=100, sweep c from 0.1 to 5.0. For each c, generate 100 random instances, solve the LP and find integral optima (or bound via rounding), and compute the empirical integrality gap distribution. Plot mean and variance of the gap as a function of c. A phase transition appears as a sharp change in the gap curve.\n\n**Impact:** Would establish the first rigorous connection between random hypergraph transversal theory and statistical physics phase transitions. The gap behavior at criticality could reveal universality classes for covering problems.\n\n**Catalog References:**\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`, `uniform_integrality_gap`\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`\n\n**Proof Strategy:** Use the second moment method to show concentration of \u03c4*/n. Apply the cavity method (heuristically) to predict the phase transition threshold c*(d). Formalize the upper bound d\u00b7\u03c4* and show it is not tight in the random setting by constructing a better rounding scheme that exploits randomness.\n\n**Domain Bridges:** Statistical physics (replica method, spin glasses), random constraint satisfaction, coding theory (LDPC codes as hypergraph covers)\n\n**Lineage:** Connects the deterministic integrality gap bound to the probabilistic theory of random CSPs, where phase transitions in satisfiability and covering have been predicted by physics but rarely proved.\n\n**Ambition:** Grand challenge \u2014 would bridge formal combinatorics and statistical physics via the integrality gap.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:39:08.918006+00:00"
+  },
+  {
+    "id": "fd_0887",
+    "title": "Direction 5: Mechanism Design with Certified Multi-Criteria Approximation",
+    "description": "**Conjecture:** There exists a truthful mechanism for hypergraph covering games where agents (vertices) report private costs, and the mechanism selects a transversal with simultaneously d-approximate welfare for every linear combination of agent costs \u2014 achieving certified multi-criteria incentive compatibility.\n\n**Test:** Implement a VCG-style mechanism using the weighted LP as the allocation rule and threshold rounding for the integral output. Verify truthfulness by checking that no agent can decrease their payment by misreporting, over 1000 random instances with strategic deviations. A single profitable deviation disproves truthfulness.\n\n**Impact:** Would provide the first *certified multi-criteria mechanism* for covering games. Current mechanism design focuses on single-objective approximation; simultaneous multi-objective guarantees are new.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `threshold_simultaneous_multiobjective_bound`, `scalarized_minimizer_is_pareto`\n\n**Proof Strategy:** Use the LP-based mechanism framework of Lavi-Swamy (2011). The key is showing that the threshold rounding operator, applied to the VCG allocation, preserves incentive compatibility while simultaneously controlling multiple cost objectives. The simultaneous bound (Theorem 4) provides the welfare guarantee; truthfulness follows from the LP structure.\n\n**Domain Bridges:** Algorithmic game theory, auction design, public goods provision, healthcare resource allocation\n\n**Lineage:** Extends the scalarization-Pareto theorem (Theorem 3) to strategic settings, bridging multi-objective optimization with mechanism design.\n\n**Ambition:** Solid extension \u2014 combines well-understood mechanism design techniques with the new multi-objective rounding results.\n\n---\n\n*The key insight connecting all five directions is that threshold rounding is not merely an algorithm but a structural operator on the covering polytope, and its properties \u2014 cost-agnosticism, Pareto preservation, pointwise domination \u2014 are geometric facts that transfer across domains.*\n\n*Why now? The formal verification of the weighted and multi-objective rounding bounds provides a machine-checked foundation on which these extensions can be built with confidence. Each direction can be tested computationally, stated formally, and \u2014 if true \u2014 proved with the same methodology.*",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b9d16ed0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:39:08.941019+00:00"
   },
   {
     "id": "seed_026",
@@ -1181,14 +1169,51 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:06:34.986047+00:00"
   },
   {
-    "id": "fd_0878",
-    "title": "Direction 1: Tropical Eigenvalue Theory and the Corrected Hodge Isomorphism",
-    "description": "**Conjecture:** For any connected graph G with classical first Betti number \u03b2\u2081, the tropical eigenspace E_0(L) = {x \u2208 (WithTop \u2115)^n : L \u2297 x = x} has a \"tropical dimension\" (number of generators over the tropical semiring) equal to \u03b2\u2081 + 1. The +1 accounts for the constant vector (the tropical analogue of the kernel of the classical Laplacian).\n\n**Test:** Compute E_0(L) for all connected graphs on n \u2264 7 vertices. Verify that the number of minimal generators of the tropical convex hull of E_0(L) equals \u03b2\u2081 + 1. A single counterexample disproves the conjecture.\n\n**Impact:** This would provide the \"correct\" tropical Hodge isomorphism, replacing the trivial kernel ker_trop(L) = {\u22a4} with a richer eigenspace that genuinely reflects topology. It would complete the tropical Hodge program initiated in this work.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalKernel_eq_top`, `tropicalLaplacian`\n\n**Proof Strategy:** Define the tropical eigenspace as {x : \u2200i, min_j(L_{ij} + x_j) = x_i}. Show that cycle vectors (indicator functions of fundamental cycles, with appropriate tropical values) satisfy this equation. Use the structure theorem for tropical convex sets (Develin-Sturmfels) to count generators.\n\n**Domain Bridges:** Tropical spectral theory \u2194 Classical spectral graph theory \u2194 Random walks on graphs\n\n**Lineage:** Extends `tropicalKernel_eq_top` from this work; builds on Akian-Gaubert-Guterman tropical spectral theory.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish tropical Hodge theory as a self-consistent framework.\n\n---",
+    "id": "fd_0888",
+    "title": "Direction 1: Sharp Constants in the Dimension-Degree Stability Law",
+    "description": "**Conjecture:** For every (n, d), the optimal constant C(n,d) such that entry-wise perturbation \u2264 C(n,d)\u00b7\u03b5 preserves Lorentzianity satisfies C(n,d) = \u0398(1/n) \u2014 linear in 1/n rather than the 1/n\u00b2 from our entry-based bound.\n\n**Test:** Compute C(n,d) numerically for e_k(x\u2081,...,x\u2099) with n \u2264 20, k \u2264 10 via binary search on the destruction threshold. If C(n,d) \u00b7 n is approximately constant across n, the conjecture is supported. A counterexample where C(n,d) \u00b7 n \u2192 0 would disprove it.\n\n**Impact:** Sharp constants would close the 4\u20135\u00d7 conservatism gap we observe empirically, making the certificate practically tight. This would make certified Lorentzian recognition competitive with uncertified numerical methods.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `quadFormBound_of_entry_bound`, `dimension_degree_stability_law_instance`\n\n**Proof Strategy:** Replace the entry-based AM-GM bound with a tighter analysis using Schur complements or matrix concentration inequalities. The key is showing that random symmetric perturbations with independent entries have spectral radius O(\u221an \u00b7 max_entry) rather than O(n \u00b7 max_entry).\n\n**Domain Bridges:** Numerical linear algebra (spectral radius of random matrices), high-dimensional probability (matrix Chernoff bounds)\n\n**Lineage:** Directly extends Theorem 4.4 of the current work.\n\n**Ambition:** Solid extension \u2014 would complete the quantitative picture opened by the perturbation theorem. \u2605\u2605\u2605\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2493279d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:31.150620+00:00"
+  },
+  {
+    "id": "fd_0889",
+    "title": "Direction 2: Lorentzian Condition Numbers and Smoothed Analysis",
+    "description": "**Conjecture:** Under smoothed analysis (Gaussian perturbation of coefficients with variance \u03c3\u00b2), the probability that a degree-d polynomial near the Lorentzian boundary is misclassified decays as exp(\u2212\u03a9(\u03b5\u00b2/(n\u03c3\u00b2))), where \u03b5 is the spectral gap.\n\n**Test:** For polynomials with spectral gap \u03b5 close to 0, sample Gaussian perturbations at various \u03c3 and measure misclassification rate. Fit the exponential decay model. If the rate does not depend on \u03b5\u00b2/\u03c3\u00b2 but on a different quantity, the conjecture fails.\n\n**Impact:** Would establish Lorentzian recognition as numerically well-conditioned in the smoothed analysis sense, even for polynomials near the boundary. This is the strongest possible statement about practical reliability.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `HasGappedSignature`, `LorentzianConditionNumber`\n\n**Proof Strategy:** Use the perturbation theorem to reduce to bounding P[\u2016E\u2016_op > \u03b5] for Gaussian Wigner matrices E. Known tail bounds for the largest eigenvalue of GOE give the desired exponential decay.\n\n**Domain Bridges:** Smoothed analysis (Spielman\u2013Teng program), random matrix theory, computational complexity\n\n**Lineage:** Extends the condition number concept from numerical linear algebra to algebraic combinatorics.\n\n**Ambition:** Grand challenge \u2014 would merge Lorentzian polynomial theory with the Spielman\u2013Teng paradigm. \u2605\u2605\u2605\u2605\u2605\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2493279d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:31.171940+00:00"
+  },
+  {
+    "id": "fd_0890",
+    "title": "Direction 3: Tropical Shadows of Lorentzian Stability",
+    "description": "**Conjecture:** The tropicalization of the Lorentzian stability radius (infimum of coefficient perturbations destroying Lorentzianity) equals the minimum tropical spectral gap across tropical quadratic leaves.\n\n**Test:** Compute tropical quadratic leaves for small examples (complete graphs, uniform matroids). Compare the tropical spectral gap to the log of the exact stability radius. If they differ by more than O(log n), the conjecture fails.\n\n**Impact:** Would provide a purely combinatorial proxy for the numerical stability radius, computable in polynomial time without eigenvalue decomposition. This could enable Lorentzian certification for polynomials with millions of variables.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `UniformSpectralMargin`; `Catalog/Tropical/` \u2014 various tropical geometry files\n\n**Proof Strategy:** Use the Maslov dequantization: take the limit of log(stability_radius(t\u1d45 \u00b7 f)) / log(t) as t \u2192 \u221e. Show this limit equals the tropical spectral gap via the tropical eigenvalue theory of Akian, Gaubert, and Guterman.\n\n**Domain Bridges:** Tropical geometry, max-plus algebra, combinatorial optimization\n\n**Lineage:** Builds on both the stability theory (this work) and tropical Lorentzian theory.\n\n**Ambition:** Grand challenge \u2014 would create a new bridge between numerical stability and tropical geometry. \u2605\u2605\u2605\u2605\u2605\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
-      "Computation",
       "Tropical",
       "Physics",
       "Bridges",
@@ -1197,18 +1222,36 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "1a0c77c0",
+    "source_exp_id": "2493279d",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:05:45.073627+00:00"
+    "timestamp": "2026-05-25T17:14:31.193329+00:00"
   },
   {
-    "id": "fd_0879",
-    "title": "Direction 2: Higher-Dimensional Tropical Homology via Simplicial Complexes",
-    "description": "**Conjecture:** For any finite simplicial complex K of dimension d, the tropical chain complex C_d \u2192 C_{d-1} \u2192 \u00b7\u00b7\u00b7 \u2192 C_0 (with boundary maps defined via min-plus incidence matrices) satisfies \u2202_{k-1} \u2218 \u2202_k = \u22a4-map (the tropical analogue of \u2202\u00b2 = 0). The resulting tropical Betti numbers \u03b2_k^trop satisfy \u03b2_k^trop \u2265 \u03b2_k^classical for all k.\n\n**Test:** Implement the tropical chain complex for the following simplicial complexes: triangulated torus (\u03b2\u2081 = 2, \u03b2\u2082 = 1), triangulated Klein bottle (\u03b2\u2081 = 1, \u03b2\u2082 = 0), and the M\u00f6bius strip (\u03b2\u2081 = 1, \u03b2\u2082 = 0). Verify the Betti number inequality.\n\n**Impact:** Extending tropical homology to higher dimensions would enable analysis of higher-order network structures (simplicial neural networks, higher-order topological data analysis).\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBoundary`, `tropicalBoundary_top`, `tropicalBoundary_preserves_inf`\n\n**Proof Strategy:** Define the higher boundary maps using incidence matrices of simplicial complexes with appropriate signs encoded tropically. The chain complex property \u2202\u00b2 = \u22a4 should follow from the cancellation of pairs in the tropical sum. Use the existing sub-additivity theorem as a template.\n\n**Domain Bridges:** Tropical geometry \u2194 Topological data analysis \u2194 Simplicial neural networks\n\n**Lineage:** Direct extension of the graph-level results in this work to simplicial complexes.\n\n**Ambition:** Solid extension \u2014 the graph case is established; the simplicial extension is natural.\n\n---",
+    "id": "fd_0891",
+    "title": "Direction 4: Certified Hyperbolicity via Lorentzian Leaf Margins",
+    "description": "**Conjecture:** A homogeneous polynomial p is hyperbolic with respect to direction e if and only if every quadratic leaf of p (relative to e) has gapped Lorentzian signature, and the minimum gap provides a certified hyperbolicity margin.\n\n**Test:** For known hyperbolic polynomials (determinant, elementary symmetric), compute quadratic leaf gaps relative to different directions e. Verify that the gap is positive exactly when p is hyperbolic w.r.t. e. Test non-hyperbolic polynomials to confirm the gap is zero or the signature fails.\n\n**Impact:** Would extend our stability theory from Lorentzian polynomials to the broader class of hyperbolic polynomials, which arise in optimization (hyperbolic programming), PDEs (hyperbolic operators), and control theory.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `HasGappedSignature`, `lorentzian_stable_under_leaf_perturbation`\n\n**Proof Strategy:** Use the Helton\u2013Vinnikov theorem (every hyperbolic polynomial is a determinant of a linear matrix pencil) to reduce to spectral analysis of the pencil. The gap translates to the minimum eigenvalue gap of the pencil restricted to the hyperbolicity cone.\n\n**Domain Bridges:** Hyperbolic programming, semidefinite optimization, PDE theory, robust control\n\n**Lineage:** Extends the Lorentzian framework to encompass G\u00e5rding's hyperbolicity theory.\n\n**Ambition:** Solid extension with grand-challenge potential if the characterization is complete. \u2605\u2605\u2605\u2605\n\n---",
     "domains": [
       "Pythagorean",
-      "Geometry",
-      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2493279d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:31.214977+00:00"
+  },
+  {
+    "id": "fd_0892",
+    "title": "Direction 5: Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
+    "description": "**Conjecture:** If a probability distribution \u03bc on {0,1}\u207f has a strongly log-concave generating polynomial (Lorentzian with spectral gap \u03b5), then any distribution \u03bd whose generating polynomial has coefficient-wise distance < C\u00b7\u03b5 from \u03bc's is also strongly log-concave, with explicit mixing time bounds for Markov chains on \u03bd's support.\n\n**Test:** Sample from distributions near the uniform matroid measure. Compute the generating polynomial's spectral gap. Verify that the mixing time of the natural random walk scales as predicted by the gap. If mixing time depends on a different quantity, refine the conjecture.\n\n**Impact:** Would provide the first certified mixing time bounds for sampling algorithms operating on approximately log-concave distributions \u2014 a central problem in machine learning and statistical physics.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`, `reversed_cauchy_schwarz_of_gapped`\n\n**Proof Strategy:** Use the stability radius to show the perturbed distribution has a Lorentzian generating polynomial. Then apply Anari\u2013Oveis Gharan\u2013Vinzant's framework linking Lorentzianity to modified log-Sobolev inequalities, which control mixing times.\n\n**Domain Bridges:** Markov chain Monte Carlo, statistical physics (Glauber dynamics), machine learning (sampling from energy-based models)\n\n**Lineage:** Connects the perturbation theorem to the probabilistic applications of Lorentzian polynomials.\n\n**Ambition:** Solid extension \u2014 the pieces exist but assembling them requires careful analysis. \u2605\u2605\u2605\u2605",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
       "Bridges",
       "MachineLearning",
       "Logic"
@@ -1216,48 +1259,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "1a0c77c0",
+    "source_exp_id": "2493279d",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:05:45.093108+00:00"
-  },
-  {
-    "id": "fd_0880",
-    "title": "Direction 3: Efficient Algorithms for Tropical Betti Numbers of Large Networks",
-    "description": "**Conjecture:** The tropical Betti number \u03b2\u2081 of a graph can be computed in O(|E| \u03b1(|V|)) time using a tropical variant of the union-find algorithm, where \u03b1 is the inverse Ackermann function. Furthermore, the tropical incidence factorization can be verified in O(|E| \u00b7 max_deg) time rather than the naive O(|V|\u00b2 \u00b7 |E|).\n\n**Test:** Implement the optimized algorithms and benchmark on random Erd\u0151s-R\u00e9nyi graphs G(n, p) for n = 10\u00b3, 10\u2074, 10\u2075 with p = c/n for c \u2208 {1.5, 2, 3, 5}. Measure wall-clock time and verify correctness against the naive implementation.\n\n**Impact:** Making tropical homological computations practical for large-scale networks (social networks, biological networks, internet topology) would bridge tropical algebra to data science.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBetti'`, `tropicalMinPlusMul`\n\n**Proof Strategy:** For \u03b2\u2081: during union-find, count the number of edges that close a cycle (creating a back-edge). Each back-edge contributes +1 to \u03b2\u2081. For factorization: instead of computing the full matrix product, check each off-diagonal entry (i,j) by iterating over the min(deg(i), deg(j)) common edges.\n\n**Domain Bridges:** Algorithmic graph theory \u2194 Network science \u2194 Computational topology\n\n**Lineage:** Builds on the `cycle_rank` algorithm in `algorithms.py`.\n\n**Ambition:** Solid extension \u2014 the algorithms are straightforward given the theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a0c77c0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:05:45.111821+00:00"
-  },
-  {
-    "id": "fd_0881",
-    "title": "Direction 4: Tropical Sheaf Cohomology and the Chip-Firing Connection",
-    "description": "**Conjecture:** The Jacobian group Jac(G) of a graph G (the cokernel of the integer Laplacian, equivalently the group of chip-firing equivalence classes) embeds into the \"tropical Picard group\" Pic^trop(G), defined as the quotient of the tropical eigenspace E_0(L) by the image of the tropical boundary map. The order |Jac(G)| equals the number of spanning trees of G (Kirchhoff's theorem), and Pic^trop(G) has a natural tropical semimodule structure whose \"rank\" equals \u03b2\u2081.\n\n**Test:** For all graphs on n \u2264 6, compute:\n1. |Jac(G)| via the Matrix-Tree theorem (determinant of any cofactor of L)\n2. The number of spanning trees (should equal |Jac(G)|)\n3. The tropical Picard group Pic^trop(G) and verify the embedding\n\n**Impact:** This would connect tropical Hodge theory to the Baker-Norine program (Riemann-Roch for graphs) and the theory of divisors on tropical curves. It would also connect to algebraic geometry via the tropicalization of the Picard variety.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `rootedSubsetDivisor`\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalLaplacian`, `tropicalKernelSet`\n- `Pythagorean/TropicalBridge/DefectTheory.lean`: `structuralDefect`\n\n**Proof Strategy:** Define Pic^trop(G) using the tropical eigenspace from Direction 1. Construct the embedding Jac(G) \u2192 Pic^trop(G) by mapping each chip configuration to its tropical valuation. Use the structure theory of tropical modules.\n\n**Domain Bridges:** Tropical geometry \u2194 Algebraic geometry (Picard varieties) \u2194 Number theory (Jacobians)\n\n**Lineage:** Builds on Baker-Norine (2007) and the defect theory in `DefectTheory.lean`.\n\n**Ambition:** Grand challenge \u2014 connecting tropical Hodge theory to chip-firing would unify two major strands of combinatorial algebraic geometry.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1a0c77c0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:05:45.131066+00:00"
+    "timestamp": "2026-05-25T17:14:31.235341+00:00"
   },
   {
     "id": "seed_013",
@@ -1572,6 +1576,36 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:08:57.522301+00:00"
   },
   {
+    "id": "fd_0893",
+    "title": "Persistence Rigidity for Isospectral but Non-Isometric Arithmetic Manifolds",
+    "description": "Conjecture: There exists a canonical filtered simplicial complex construction K(X;N) attached to a compact arithmetic manifold X (built from Hecke correspondences, short closed geodesics, or low-lying automorphic data up to cutoff N) such that for every Sunada-isospectral non-isometric pair X,Y, the ordinary Laplace spectrum of X and Y agrees but the persistence landscapes of K(X;N) and K(Y;N) differ for infinitely many N; moreover, for genuinely isometric pairs they agree for all N. Test: Implement one explicit canonical construction on known isospectral/non-isometric examples and compute persistent homology across increasing cutoffs N; the conjecture is supported if barcode statistics separate all tested non-isometric pairs and refuted by a pair with matching persistence for all tested canonical constructions/cutoffs. Impact: This would produce a new topological invariant stronger than raw spectrum, linking spectral geometry, arithmetic manifolds, and TDA, and could open a route to 'hearing' hidden arithmetic/geometric structure beyond classical isospectrality.",
+    "domains": [
+      "Spectral Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:39.331865+00:00"
+  },
+  {
+    "id": "fd_0899",
+    "title": "Arithmetic Noise Stability Threshold for Prime-Labeled Simplicial Complexes",
+    "description": "Conjecture: Let X be a smooth projective variety over Q with good reduction outside a finite set, and for each good prime p let K_p(X) be a canonically defined finite simplicial complex built from the Frobenius action on etale cohomology modulo p together with a filtration by Frobenius slope or valuation. Then there exists a universal noise-stability threshold function T_X(epsilon) such that if one perturbs the local Frobenius data independently on a set of primes of upper density less than epsilon, the resulting family {K'_p(X)} has the same asymptotic barcode law as {K_p(X)} for all filtration scales above T_X(epsilon); but if X and Y are not potentially derived-equivalent, then for some epsilon > 0 no such common threshold exists for the mixed family alternating between X and Y on a density-epsilon set of primes. Test: Define an explicit canonical complex from point-count/Frobenius data for concrete classes such as elliptic curves, K3 surfaces, or abelian varieties; compute persistence summaries across primes; inject controlled random and adversarial perturbations on a sparse set of primes; verify whether barcode statistics remain stable below the predicted density threshold, and whether mismatched varieties exhibit a detectable instability gap. Refutation occurs if sparse perturbations destroy asymptotic persistence laws generically, or if non-equivalent varieties remain indistinguishable under all such density-sparse prime corruptions. Impact: This would introduce a mathematically precise notion of error-correcting arithmetic topology, showing that deep geometric/arithmetic structure can be recovered robustly from incomplete or corrupted prime data, with consequences for anabelian-style reconstruction, arithmetic statistics, and certified inference from noisy zeta data.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:15:12.531139+00:00"
+  },
+  {
     "id": "fd_0866",
     "title": "Direction 4: Tropical Persistent Homology for Network Data Analysis",
     "description": "**Conjecture**: For a filtration of graphs $G_1 \\subseteq G_2 \\subseteq \\cdots \\subseteq G_k$ arising from a point cloud (via Vietoris-Rips or similar construction), the sequence of tropical kernel dimensions $\\dim(\\ker_{\\text{trop}}(L_{G_i}))$ produces a \"tropical barcode\" that is stable under small perturbations of the input data, with stability constant equal to the minimum Fiedler eigenvalue across the filtration.\n\n**Test**:\n1. Generate 100 random point clouds in $\\mathbb{R}^d$ for $d \\in \\{2, 3, 5\\}$\n2. Compute tropical barcodes via the cycle rank sequence\n3. Compute classical persistent homology barcodes via standard algorithms\n4. Compare stability constants: measure the bottleneck distance between barcodes under perturbation\n5. Falsification: find a point cloud where the tropical barcode is strictly less stable than the classical barcode (would bound the stability constant)\n\n**Impact**: Could provide a faster alternative to standard persistent homology computation for topological data analysis. Tropical operations (min, plus) are simpler than field arithmetic, potentially enabling hardware acceleration.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `genus_nonneg_of_connected`\n- `Catalog/Pythagorean/AdelicPersistentHomology.lean`: persistent homology infrastructure (if available)\n\n**Proof Strategy**: Use the interlacing theorem for graph Laplacian eigenvalues to bound how the tropical kernel dimension changes when edges are added. The genus changes by exactly 1 when a non-tree edge is added, giving a Lipschitz bound on the barcode.\n\n**Domain Bridges**: Topological data analysis (persistent homology, barcodes) \u2194 Tropical geometry (tropical kernel dimension) \u2194 Spectral graph theory (eigenvalue interlacing)\n\n**Lineage**: Extends `genus_nonneg_of_connected`, connects to TDA\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The cycle rank interpretation is standard; the novelty is the stability analysis and tropical algorithmic framework.\n\n---",
@@ -1613,102 +1647,101 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T16:05:45.151288+00:00"
   },
   {
-    "id": "fd_0883",
-    "title": "Direction 1: Submodular Objectives and the Curvature-Gap Conjecture",
-    "description": "**Conjecture:** For a hypergraph H with max edge size d and a monotone submodular function f : 2^V \u2192 \u211d\u22650 with curvature \u03ba \u2208 [0,1], the threshold-rounded set S satisfies f(S) \u2264 d/(1-\u03ba) \u00b7 f_multilinear(x), where f_multilinear is the multilinear extension evaluated at the fractional solution x.\n\n**Test:** Implement random monotone submodular functions as weighted coverage functions on random hypergraphs with n=20. Compute the multilinear extension via sampling (1000 samples), apply threshold rounding, and measure the ratio f(S)/f_multilinear(x). Sweep curvature by varying the overlap structure of coverage sets. A single instance with ratio exceeding d/(1-\u03ba)+\u03b5 disproves the conjecture.\n\n**Impact:** This would extend the cost-agnostic rounding principle from linear to submodular objectives \u2014 the natural next level of expressiveness in optimization. Submodular functions model diminishing returns, which appear in welfare economics, sensor placement, and influence maximization.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`, `threshold_simultaneous_multiobjective_bound`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `threshold_isTransversal`, `threshold_card_bound`\n\n**Proof Strategy:** Decompose the multilinear extension as a convex combination of linear functions (this is known). Apply the existing weighted bound to each linear component, then aggregate. The curvature parameter \u03ba controls the gap between f(S) and the aggregated bound via Vondr\u00e1k's framework.\n\n**Domain Bridges:** Machine learning (feature selection), influence maximization in social networks, welfare economics (diminishing marginal returns)\n\n**Lineage:** Direct extension of Theorem 1 (weighted rounding) and Theorem 4 (simultaneous multi-objective) via the multilinear extension framework of C\u0103linescu et al. (2011).\n\n**Ambition:** Grand challenge \u2014 this would create the first certified rounding theory for nonlinear multi-criteria optimization in a combinatorial setting.\n\n---",
+    "id": "fd_0894",
+    "title": "Direction 1: Full Wreath Product Phase Transition",
+    "description": "**Conjecture:** For the wreath product $W_{k,m} = S_k \\wr S_m$ in product action, the generation probability undergoes a sharp phase transition at a critical ratio $\\rho^* = k^*/m^*$ determined by the full maximal subgroup pressure (not just coordinate defects). Specifically, the non-coordinate-defect subgroups of $W_{k,m}$ (arising from the semidirect action of $S_m$ on $S_k^m$) contribute a pressure term that is sublinear in $m$, so that the phase transition location is shifted but not qualitatively changed from the base-group prediction.\n\n**Test:** For $km \\leq 12$, enumerate all maximal subgroups of $W_{k,m}$ using GAP and compute the full pressure. Compare with the coordinate-defect pressure $m \\cdot p(S_k)$. If the full pressure exceeds the coordinate-defect pressure by a multiplicative constant, the phase transition is merely shifted; if it changes the growth rate in $m$, the conjecture needs revision.\n\n**Impact:** Resolves the central motivating problem and establishes the first rigorous phase transition theorem for random generation in a structured permutation group family.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure definition, product factorization, block-defect formula)\n\n**Proof Strategy:** Classify maximal subgroups of $S_k \\wr S_m$ using O'Nan\u2013Scott theory. Separate into three types: (a) base-group coordinate defects (already handled), (b) \"diagonal\" subgroups from $S_m$-action, (c) \"twisted\" subgroups. Bound the pressure from types (b) and (c) using index estimates from the O'Nan\u2013Scott classification.\n\n**Domain Bridges:** Permutation group theory, O'Nan\u2013Scott classification, computational group theory.\n\n**Lineage:** Direct extension of Theorems 4 and 6 in the current work.\n\n**Ambition:** Grand challenge \u2014 would constitute a major advance in probabilistic group theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf039036",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:59.768954+00:00"
+  },
+  {
+    "id": "fd_0895",
+    "title": "Direction 2: Universality of Phase Transition Critical Exponents",
+    "description": "**Conjecture:** The phase transition in generation probability exhibits universality: for any infinite family of finite groups $\\{G_n\\}$ with a natural parameterization of the subgroup family, the generation probability near the critical point satisfies\n$$P_{\\text{gen}}(G_n) \\sim A \\cdot |\\Phi(G_n)|^\\beta + \\text{lower order}$$\nwhere $\\beta$ is a universal critical exponent depending only on broad structural features (e.g., the rank of the group, whether it is a direct product or semidirect product).\n\n**The key insight is** that the multiplicative structure of the pressure (product factorization, free energy additivity) suggests that subgroup thermodynamics may satisfy a form of the central limit theorem, with fluctuations governed by universal distributions.\n\n**Why now?** The formal verification of product factorization and free energy additivity provides the mathematical infrastructure needed to rigorously state and test universality hypotheses.\n\n**Test:** Compute the generation probability and pressure for families $S_k^m$, $\\text{GL}_n(\\mathbb{F}_q)$, and $\\text{PSL}_2(p)$ near their respective phase transitions. Fit the critical exponent $\\beta$ and compare across families.\n\n**Impact:** Would establish a deep connection between finite group theory and the theory of critical phenomena, potentially importable techniques from renormalization group theory.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure bounds), `Algebra/SymmGroupGen/Basic.lean` (symmetric group generation)\n\n**Proof Strategy:** Establish a central limit theorem for the pressure contributions from independent subgroup families. Use the product factorization theorem as the independence condition. Apply Berry\u2013Esseen-type bounds for the convergence rate.\n\n**Domain Bridges:** Statistical mechanics (universality, critical exponents), probability theory (CLT, large deviations), random matrix theory.\n\n**Lineage:** Extends Direction 1 to a general framework.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf039036",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:59.791092+00:00"
+  },
+  {
+    "id": "fd_0896",
+    "title": "Direction 3: Pressure Theory for Almost Simple Groups",
+    "description": "**Conjecture:** For a finite almost simple group $G$ with socle $S$, the pressure from the maximal subgroup family satisfies\n$$\\mathrm{pressure}(G, \\mathcal{M}) = O(|G|^{-\\epsilon})$$\nfor some $\\epsilon > 0$ depending on the type of $S$ (alternating, classical, exceptional, sporadic). This gives $P_{\\text{gen}} \\to 1$ as $|G| \\to \\infty$, recovering the Liebeck\u2013Shalev theorem with explicit rates.\n\n**The key insight is** that the pressure framework provides a systematic way to organize the contribution of each maximal subgroup type (geometric vs. non-geometric in the Aschbacher classification), with the dominant contribution coming from the geometric subgroups of smallest index.\n\n**Why now?** The entropy-energy bounds (Theorems 2\u20133) provide a framework to compute pressure without enumerating all maximal subgroups\u2014bounding the count and minimum index suffices.\n\n**Test:** Compute exact pressure for $\\text{PSL}_2(p)$ for primes $p \\leq 100$ and verify the conjectured decay rate. The maximal subgroups of $\\text{PSL}_2(p)$ are well-known.\n\n**Impact:** Would give the best known explicit bounds on generation probability for classical groups, with direct applications to cryptographic group selection.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (entropy-energy bounds)\n\n**Proof Strategy:** Use the Aschbacher classification of maximal subgroups of classical groups. For each class, bound the number of subgroups (entropy) and the minimum index (energy). Apply the upper bound theorem: pressure \u2264 |F| / D\u00b2.\n\n**Domain Bridges:** Finite simple group theory, Aschbacher classification, cryptography.\n\n**Lineage:** Applies the general pressure theory to the most important group families.\n\n**Ambition:** Solid extension \u2014 builds directly on established techniques.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b9d16ed0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:39:08.850911+00:00"
-  },
-  {
-    "id": "fd_0884",
-    "title": "Direction 2: Hypergraph Transversals as Tropical Convex Optimization",
-    "description": "**Conjecture:** The set of feasible fractional transversals, when viewed through the tropical (min-plus) lens, has a *tropical convex hull* whose vertices correspond to basic feasible solutions of the covering LP, and threshold rounding is a tropical projection operator.\n\n**Test:** For small hypergraphs (n \u2264 8), enumerate all basic feasible solutions of the covering LP. Compute the tropical convex hull using established algorithms (Develin-Sturmfels). Check whether threshold rounding at 1/d maps each point to a tropically extremal integral solution. Falsifiable by finding a rounded point that is not tropically extremal.\n\n**Impact:** This would reveal the *geometric reason* behind the effectiveness of threshold rounding \u2014 it's not just a convenient algebraic trick but a reflection of tropical convex structure. This could lead to improved rounding schemes for specific hypergraph families where the tropical geometry is better behaved.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `threshold_set`, `weighted_threshold_cost_bound`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`\n\n**Proof Strategy:** Formalize tropical semiring operations (min, +) in Lean. Define tropical convexity for the covering polytope. Show that the threshold operator is a tropical retraction \u2014 a map that preserves tropical convex combinations. Use the tropical Carath\u00e9odory theorem to bound the number of support vertices.\n\n**Domain Bridges:** Tropical geometry, discrete convex analysis (Murota), phylogenetics (tropical tree space), algebraic statistics\n\n**Lineage:** Inspired by the Develin-Sturmfels theory of tropical convexity and the observation that the covering LP has a natural tropical interpretation.\n\n**Ambition:** Grand challenge \u2014 would establish the first formal connection between LP rounding theory and tropical convex geometry.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
+      "Physics",
+      "Cryptography",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b9d16ed0",
+    "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:39:08.874172+00:00"
+    "timestamp": "2026-05-25T17:14:59.812468+00:00"
   },
   {
-    "id": "fd_0885",
-    "title": "Direction 3: Compositional Rounding Certificates for Modular Hypergraphs",
-    "description": "**Conjecture:** If a hypergraph H decomposes as H = H\u2081 \u222a H\u2082 with V(H\u2081) \u2229 V(H\u2082) = V\u2080 (a shared boundary), and x\u2081, x\u2082 are feasible fractional transversals of H\u2081, H\u2082 agreeing on V\u2080, then the threshold roundings S\u2081, S\u2082 can be combined into a transversal S of H with cost(S) \u2264 max(d\u2081, d\u2082) \u00b7 (cost(x\u2081) + cost(x\u2082)), where d\u1d62 = max edge size of H\u1d62.\n\n**Test:** Generate pairs of random hypergraphs sharing 3-5 boundary vertices. Solve separate LPs, round separately, combine, and check both coverage and cost bound. A violation disproves the conjecture; consistent success over 1000 trials provides evidence.\n\n**Impact:** This would enable *modular certification*: verify rounding guarantees for subsystems independently, then compose. Essential for large-scale infrastructure design where the full system LP is intractable.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`, `threshold_set_isTransversal`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`\n\n**Proof Strategy:** The key step is showing that the boundary agreement condition ensures S\u2081 \u222a S\u2082 covers all edges, including those in H\u2081 \u2229 H\u2082. Use the separate weighted bounds for H\u2081 and H\u2082, then aggregate costs. The challenge is handling edges that cross the boundary.\n\n**Domain Bridges:** Software verification (compositional reasoning), distributed systems (partition-based optimization), VLSI design (hierarchical placement)\n\n**Lineage:** Extends the weighted rounding bound to decomposable structures, inspired by compositional verification in software engineering and tree decompositions in algorithmic graph theory.\n\n**Ambition:** Solid extension \u2014 directly builds on Theorem 1 with a clear combinatorial generalization.\n\n---",
+    "id": "fd_0897",
+    "title": "Direction 4: Large Deviation Principles for Generation",
+    "description": "**Conjecture:** The number of nongenerating pairs in $G^2$ satisfies a large deviation principle with rate function given by the Legendre transform of the log-pressure:\n$$\\Lambda^*(\\alpha) = \\sup_t \\{t\\alpha - \\log Z(t)\\}$$\nwhere $Z(t) = \\sum_H [G:H]^{-2t}$ is the pressure at \"inverse temperature\" $t$.\n\n**The key insight is** that the pressure at different \"temperatures\" $t$ (i.e., with exponent $-2t$ instead of $-2$) forms a family of partition functions whose Legendre transform controls the probability of atypical generation behavior.\n\n**Why now?** The product factorization theorem shows that pressure has the multiplicative structure needed for the G\u00e4rtner\u2013Ellis theorem, which gives large deviation principles from the log-moment generating function.\n\n**Test:** For $S_k^m$ with $m \\to \\infty$, compute $Z(t) = m \\cdot \\sum_M [S_k:M]^{-2t}$ for varying $t$ and verify the predicted rate function against Monte Carlo simulations.\n\n**Impact:** Would establish a complete probabilistic theory of random generation, going beyond first-moment bounds to exponential concentration.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (product factorization, free energy additivity)\n\n**Proof Strategy:** Define the generalized pressure $Z(t)$ and verify multiplicativity for product families. Apply the G\u00e4rtner\u2013Ellis theorem to the sequence of block-defect pressures. Verify the hypotheses (existence of the limit, differentiability of the log-moment generating function).\n\n**Domain Bridges:** Large deviation theory, probability theory, statistical mechanics (generalized ensembles).\n\n**Lineage:** Direct analytic extension of the free energy framework.\n\n**Ambition:** Solid extension with significant theoretical depth.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
+      "Physics",
       "Bridges",
-      "MachineLearning",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b9d16ed0",
+    "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:39:08.895642+00:00"
+    "timestamp": "2026-05-25T17:14:59.835069+00:00"
   },
   {
-    "id": "fd_0886",
-    "title": "Direction 4: Statistical Physics of Random Transversals and Phase Transitions",
-    "description": "**Conjecture:** For random d-uniform hypergraphs on n vertices with m = c\u00b7n edges (c > 0 constant), the ratio \u03c4*(H)/n undergoes a phase transition at c = c*(d), and the integrality gap \u03c4(H)/\u03c4*(H) concentrates around a value strictly less than d for c above the transition, approaching d only at the critical density.\n\n**Test:** For d=3 and n=100, sweep c from 0.1 to 5.0. For each c, generate 100 random instances, solve the LP and find integral optima (or bound via rounding), and compute the empirical integrality gap distribution. Plot mean and variance of the gap as a function of c. A phase transition appears as a sharp change in the gap curve.\n\n**Impact:** Would establish the first rigorous connection between random hypergraph transversal theory and statistical physics phase transitions. The gap behavior at criticality could reveal universality classes for covering problems.\n\n**Catalog References:**\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`, `uniform_integrality_gap`\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`\n\n**Proof Strategy:** Use the second moment method to show concentration of \u03c4*/n. Apply the cavity method (heuristically) to predict the phase transition threshold c*(d). Formalize the upper bound d\u00b7\u03c4* and show it is not tight in the random setting by constructing a better rounding scheme that exploits randomness.\n\n**Domain Bridges:** Statistical physics (replica method, spin glasses), random constraint satisfaction, coding theory (LDPC codes as hypergraph covers)\n\n**Lineage:** Connects the deterministic integrality gap bound to the probabilistic theory of random CSPs, where phase transitions in satisfiability and covering have been predicted by physics but rarely proved.\n\n**Ambition:** Grand challenge \u2014 would bridge formal combinatorics and statistical physics via the integrality gap.\n\n---",
+    "id": "fd_0898",
+    "title": "Direction 5: Subgroup Coverings as Error-Correcting Codes",
+    "description": "**Conjecture:** The optimal subgroup covering family (minimizing pressure subject to covering all nongenerating pairs) corresponds to a code in a natural metric space on the subgroup lattice, and the minimum achievable pressure is related to the covering radius of this code.\n\n**The key insight is** that the pressure is an expected collision rate, analogous to the weight enumerator of a code. Minimizing pressure while maintaining coverage is the subgroup-lattice analogue of designing an efficient error-correcting code.\n\n**Why now?** The entropy-energy bounds establish that pressure is controlled by two parameters (count and index range) that are directly analogous to code parameters (length and minimum distance). The product factorization provides a product code construction.\n\n**Test:** For $S_n$ with $n \\leq 10$, enumerate all covering families (collections of maximal subgroups whose union contains all nongenerating pairs) and compute the minimum-pressure covering. Compare with the pressure from the full maximal subgroup family.\n\n**Impact:** Opens a new connection between group theory and coding theory, potentially yielding new efficient constructions for both subgroup coverings and codes.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (sieve inequality, entropy-energy bounds)\n\n**Proof Strategy:** Define a metric on the subgroup lattice using index ratios. Formulate the covering problem as a set cover with weighted costs. Apply known bounds from combinatorial optimization (greedy algorithm guarantees, LP relaxation bounds). Use product factorization for constructing product codes.\n\n**Domain Bridges:** Coding theory, combinatorial optimization, lattice theory.\n\n**Lineage:** Novel cross-domain bridge from the sieve inequality.\n\n**Ambition:** Solid extension with potential for surprising applications.",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
       "Computation",
+      "Physics",
+      "Cryptography",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b9d16ed0",
+    "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:39:08.918006+00:00"
-  },
-  {
-    "id": "fd_0887",
-    "title": "Direction 5: Mechanism Design with Certified Multi-Criteria Approximation",
-    "description": "**Conjecture:** There exists a truthful mechanism for hypergraph covering games where agents (vertices) report private costs, and the mechanism selects a transversal with simultaneously d-approximate welfare for every linear combination of agent costs \u2014 achieving certified multi-criteria incentive compatibility.\n\n**Test:** Implement a VCG-style mechanism using the weighted LP as the allocation rule and threshold rounding for the integral output. Verify truthfulness by checking that no agent can decrease their payment by misreporting, over 1000 random instances with strategic deviations. A single profitable deviation disproves truthfulness.\n\n**Impact:** Would provide the first *certified multi-criteria mechanism* for covering games. Current mechanism design focuses on single-objective approximation; simultaneous multi-objective guarantees are new.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `threshold_simultaneous_multiobjective_bound`, `scalarized_minimizer_is_pareto`\n\n**Proof Strategy:** Use the LP-based mechanism framework of Lavi-Swamy (2011). The key is showing that the threshold rounding operator, applied to the VCG allocation, preserves incentive compatibility while simultaneously controlling multiple cost objectives. The simultaneous bound (Theorem 4) provides the welfare guarantee; truthfulness follows from the LP structure.\n\n**Domain Bridges:** Algorithmic game theory, auction design, public goods provision, healthcare resource allocation\n\n**Lineage:** Extends the scalarization-Pareto theorem (Theorem 3) to strategic settings, bridging multi-objective optimization with mechanism design.\n\n**Ambition:** Solid extension \u2014 combines well-understood mechanism design techniques with the new multi-objective rounding results.\n\n---\n\n*The key insight connecting all five directions is that threshold rounding is not merely an algorithm but a structural operator on the covering polytope, and its properties \u2014 cost-agnosticism, Pareto preservation, pointwise domination \u2014 are geometric facts that transfer across domains.*\n\n*Why now? The formal verification of the weighted and multi-objective rounding bounds provides a machine-checked foundation on which these extensions can be built with confidence. Each direction can be tested computationally, stated formally, and \u2014 if true \u2014 proved with the same methodology.*",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b9d16ed0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:39:08.941019+00:00"
+    "timestamp": "2026-05-25T17:14:59.855193+00:00"
   },
   {
     "id": "seed_032",

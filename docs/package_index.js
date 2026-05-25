@@ -4,6 +4,33 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_2_character_expansion_and_strong_couplin.json",
+    "title": "Character Expansion Mass Gap: Representation-Theoretic Spectral Asymptotics in Lattice Yang-Mills Theory",
+    "domain": "Mathematical Physics / Representation Theory / Spectral Analysis",
+    "date": "2026-05-25T17:15:32Z",
+    "exp_id": "a9352256",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
+    "filename": "direction_5_phase_transitions_in_generation_probab.json",
+    "title": "Subgroup Thermodynamics: Phase Transitions in Random Generation via Pair Pressure",
+    "domain": "Algebra / Probabilistic Group Theory / Statistical Mechanics",
+    "date": "2026-05-25T17:14:56Z",
+    "exp_id": "cf039036",
+    "quality_score": 0.7307286403906522,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_5_numerical_stability_of_lorentzian_reco.json",
+    "title": "Numerical Stability of Lorentzian Recognition: Quantitative Spectral Margins and Certified Perturbation Bounds",
+    "domain": "Pythagorean / Lorentzian Polynomial Theory",
+    "date": "2026-05-25T17:14:28Z",
+    "exp_id": "2493279d",
+    "quality_score": 0.7094771428571429,
+    "quality": "substantial"
+  },
+  {
     "filename": "direction_5_weighted_and_multi_objective_extension.json",
     "title": "Weighted and Multi-Objective Hypergraph Transversals: Certified LP Rounding for Multi-Criteria Optimization",
     "domain": "Combinatorial Optimization / Polyhedral Combinatorics",
@@ -105,6 +132,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "direction_5_phase_transitions_in_generation_probab.json": {
+    "title": "Subgroup Thermodynamics: Phase Transitions in Random Generation via Pair Pressure",
+    "exp_id": "cf039036",
+    "source_exp_ids": [
+      "92e3853a"
+    ],
+    "domain": "Algebra / Probabilistic Group Theory / Statistical Mechanics"
+  },
   "direction_5_generalization_to_higher_degree_diagon.json": {
     "title": "A Uniform Local Obstruction Calculus for Diagonal Hypersurfaces",
     "exp_id": "e97c0f01",
@@ -169,6 +204,22 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebraic Combinatorics / Discrete Convexity"
   },
+  "direction_5_numerical_stability_of_lorentzian_reco.json": {
+    "title": "Numerical Stability of Lorentzian Recognition: Quantitative Spectral Margins and Certified Perturbation Bounds",
+    "exp_id": "2493279d",
+    "source_exp_ids": [
+      "33261812"
+    ],
+    "domain": "Pythagorean / Lorentzian Polynomial Theory"
+  },
+  "direction_2_character_expansion_and_strong_couplin.json": {
+    "title": "Character Expansion Mass Gap: Representation-Theoretic Spectral Asymptotics in Lattice Yang-Mills Theory",
+    "exp_id": "a9352256",
+    "source_exp_ids": [
+      "6a88b92d"
+    ],
+    "domain": "Mathematical Physics / Representation Theory / Spectral Analysis"
+  },
   "direction_3_concentration_of__on_random_hypergraph.json": {
     "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
     "exp_id": "7817bcef",
@@ -206,7 +257,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -217,7 +268,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 101,
+      "hue": 95,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -228,7 +279,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -239,7 +290,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 92,
+      "hue": 95,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -272,7 +323,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -283,7 +334,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -294,7 +345,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7475694375378231,
       "quality": "substantial"
     },
@@ -305,7 +356,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.7452328425357874,
       "quality": "substantial"
     },
@@ -316,12 +367,53 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7379731931205967,
       "quality": "substantial"
+    },
+    {
+      "id": "direction_5_numerical_stability_of_lorentzian_reco",
+      "title": "Numerical Stability of Lorentzian Recognition: Quantitative Spectral Margins and Certified Perturbation Bounds",
+      "domain": "Pythagorean / Lorentzian Polynomial Theory",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T17:14:28Z",
+      "hue": 90,
+      "priority_score": 0.7094771428571429,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_phase_transitions_in_generation_probab",
+      "title": "Subgroup Thermodynamics: Phase Transitions in Random Generation via Pair Pressure",
+      "domain": "Algebra / Probabilistic Group Theory / Statistical Mechanics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T17:14:56Z",
+      "hue": 270,
+      "priority_score": 0.7307286403906522,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_character_expansion_and_strong_couplin",
+      "title": "Character Expansion Mass Gap: Representation-Theoretic Spectral Asymptotics in Lattice Yang-Mills Theory",
+      "domain": "Mathematical Physics / Representation Theory / Spectral Analysis",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-25T17:15:32Z",
+      "hue": 270,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
-  "edges": [],
+  "edges": [
+    {
+      "source": "yang_mills_mass_gap",
+      "target": "direction_2_character_expansion_and_strong_couplin",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    }
+  ],
   "domain_bridges": [
     {
       "domain_a": "Algebra",

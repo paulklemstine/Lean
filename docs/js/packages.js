@@ -252,6 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
         items.forEach((item, idx) => {
             const card = document.createElement('div');
             card.className = 'code-card';
+            card.style.cssText = 'margin-bottom: 12px;';
 
             const header = document.createElement('div');
             header.className = 'code-header';
@@ -260,26 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title.className = 'code-title';
             title.textContent = item.name || `Interactive Demo ${idx + 1}`;
 
-            const toggleBtn = document.createElement('button');
-            toggleBtn.className = 'source-toggle';
-            toggleBtn.textContent = 'Show Source';
-            toggleBtn.addEventListener('click', () => {
-                const source = card.querySelector('.interactive-demo-source');
-                if (source.style.display === 'none') {
-                    source.style.display = '';
-                    toggleBtn.textContent = 'Hide Source';
-                } else {
-                    source.style.display = 'none';
-                    toggleBtn.textContent = 'Show Source';
-                }
-            });
-
             header.appendChild(title);
-            header.appendChild(toggleBtn);
-
-            const desc = document.createElement('p');
-            desc.textContent = item.description || '';
-            desc.style.cssText = 'margin: 4px 0 8px; color: var(--text-muted); font-size: 0.9em;';
 
             const iframe = document.createElement('iframe');
             iframe.className = 'interactive-demo-frame';
@@ -305,16 +287,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            const source = document.createElement('pre');
-            source.className = 'source-code collapsed';
-            source.style.display = 'none';
-            source.style.cssText = 'max-height: 300px; overflow: auto; background: var(--bg-secondary, #1e1e2e); color: #e0e0e0; padding: 12px; border-radius: 8px; font-size: 0.85em; margin-top: 8px;';
-            source.textContent = item.html || '';
-
             card.appendChild(header);
-            card.appendChild(desc);
             card.appendChild(iframe);
-            card.appendChild(source);
             container.appendChild(card);
         });
     }
