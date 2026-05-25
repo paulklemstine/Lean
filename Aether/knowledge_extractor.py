@@ -2167,11 +2167,12 @@ Research mode: {concept.research_mode}
         fd_manager._save()
         print(f"[Arc] Propagated arc {arc_id}: position {next_pos}/3 for {title} (priority={position_priorities[next_pos]})")
 
-    def _prune_catalog(self) -> None:
-        """Immortalize best theorems into FINAL/, remove junk from the Catalog.
+    def _prune_catalog(self, batch_size: int = 10) -> None:
+        """Incrementally prune the Catalog — one batch per tick.
 
-        Scans .lean files, auto-immortalizes clear winners, sends gray-area
-        files to Pi-Agent for review, and removes junk.
+        Auto-immortalizes clear winners, auto-removes clear junk,
+        then sends one batch of gray-area files to PI-Agent for review.
+        Moves removed files to Catalog/old/ instead of deleting.
         """
         catalog_root = self.catalog_root
         final_dir = catalog_root / "FINAL"
@@ -2233,16 +2234,20 @@ Research mode: {concept.research_mode}
             print(f"[Prune] Auto-immortalized {auto_immortalized} high-quality files")
 
         # Auto-remove clear junk: trivial-only, very short, or sorry-containing
+        # Move to Catalog/old/ instead of deleting
+        old_dir = catalog_root / "old"
         auto_removed = 0
         for c in candidates:
             if c["sorries"] or (c["lines"] < 15 and c["trivial_only"]) or (c["theorems"] == 0 and c["lines"] < 30):
                 try:
-                    c["abs_path"].unlink(missing_ok=True)
+                    dest = old_dir / c["path"]
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.move(str(c["abs_path"]), str(dest))
                     auto_removed += 1
                 except Exception:
                     pass
         if auto_removed:
-            print(f"[Prune] Auto-removed {auto_removed} junk files")
+            print(f"[Prune] Auto-removed {auto_removed} junk files (moved to old/)")
 
         # Gray area: send to Pi-Agent for review
         gray_area = [c for c in candidates
@@ -2253,8 +2258,8 @@ Research mode: {concept.research_mode}
             self._rebuild_final_main(final_dir)
             return
 
-        # Send batches of up to 30 to Pi-Agent
-        batch = gray_area[:30]
+        # Send one batch of gray-area files to Pi-Agent
+        batch = gray_area[:batch_size]
         summaries = []
         for c in batch:
             tag = "deep" if c["deep_proof"] else ("trivial" if c["trivial_only"] else "mixed")
@@ -2307,7 +2312,9 @@ Research mode: {concept.research_mode}
             c = next((c for c in batch if c["path"] == path_str), None)
             if c:
                 try:
-                    c["abs_path"].unlink(missing_ok=True)
+                    dest = old_dir / c["path"]
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.move(str(c["abs_path"]), str(dest))
                     llm_removed += 1
                 except Exception:
                     pass
