@@ -26,10 +26,10 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e79eba9b",
     "timestamp": "2026-05-24T22:37:54.308847+00:00"
   },
   {
@@ -346,24 +346,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T23:13:44.276911+00:00"
   },
   {
-    "id": "fd_0807",
-    "title": "Direction 1: Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
-    "description": "**Conjecture:** For the cubic surface $X_k : x^3+y^3+z^3 = k$, the Brauer-Manin obstruction is the only obstruction to the integral Hasse principle. That is, if $k$ is everywhere locally admissible and survives the Brauer-Manin filtration, then $k$ is representable.\n\n**Test:** Compute the Brauer group $\\text{Br}(X_k)/\\text{Br}(\\mathbb{Q})$ for specific $k$ values (e.g., $k = 33, 42, 114$) and verify that the Brauer-Manin set $X_k(\\mathbb{A}_\\mathbb{Z})^{\\text{Br}}$ is nonempty whenever solutions exist. A counterexample would be a $k$ with nonempty Brauer-Manin set but no integral point.\n\n**Impact:** This would establish the three-cubes problem as a test case for the Colliot-Th\u00e9l\u00e8ne conjecture on integral points, one of the central open problems in arithmetic geometry. It would also provide the first formal connection between computational Diophantine search and cohomological obstructions.\n\n**The key insight is** that the mod 9 obstruction we formalized is the shadow of a Brauer class at the prime 3, and the general Brauer-Manin framework subsumes all such modular obstructions into a single cohomological invariant.\n\n**Why now?** The formal infrastructure for local admissibility (`ThreeCubeLocalAdmissible`, `EverywhereLocallyAdmissible`) created in this cycle provides the precise definitions needed to state and test Brauer-Manin predictions. Mathlib's growing \u00e9tale cohomology library makes partial formalization feasible.\n\n**Catalog References:** `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean), `not_threeCubeLocalAdmissible_mod9_of_eq_four_or_five` (Algebra/SumThreeCubes/LocalObstruction.lean)\n\n**Proof Strategy:** Formalize the Brauer group of a smooth cubic surface over $\\mathbb{Q}$, compute generators via Azumaya algebras, and evaluate the Brauer-Manin pairing at each completion of $\\mathbb{Q}$.\n\n**Domain Bridges:** Arithmetic geometry, \u00e9tale cohomology, class field theory\n\n**Lineage:** Extends the local-global implication (Theorem 4) from modular arithmetic to cohomological invariants\n\n**Ambition:** Grand challenge \u2014 would resolve a major case of the integral Hasse principle\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "3265971b",
-    "timestamp": "2026-05-25T00:26:36.179554+00:00"
-  },
-  {
     "id": "fd_0808",
     "title": "Direction 2: Density Heuristics via the Circle Method",
     "description": "**Conjecture:** For each admissible $k$ (i.e., $k \\not\\equiv 4,5 \\pmod{9}$), the number of representations $|\\{(x,y,z) \\in [-N,N]^3 : x^3+y^3+z^3 = k\\}|$ grows as $c_k \\cdot N^{1/3}$ for an explicit constant $c_k > 0$ depending on the singular series and singular integral.\n\n**Test:** Compute empirical counts of representations for $k \\in \\{0, 1, 2, 3, 6, 7, 8, 9\\}$ up to $N = 10^6$ and compare with the predicted asymptotic. Measure the relative error $|R(N) - c_k N^{1/3}| / (c_k N^{1/3})$ and verify it decreases with $N$.\n\n**Impact:** Would provide the first formally grounded connection between the combinatorial/algebraic framework and analytic number theory. The singular series in the density prediction is a product of local densities, directly connecting to our `ThreeCubeLocalAdmissible` counts.\n\n**The key insight is** that the local admissibility counts $|A_n|/n$ at each modulus $n$ are the local factors of the singular series, and the everywhere-local-admissibility theorem guarantees this product converges when $k$ is admissible.\n\n**Why now?** The formal definitions of local admissibility and the computational infrastructure for counting admissible residues provide the exact data needed to compute singular series factors and compare with empirical density.\n\n**Catalog References:** `ThreeCubeLocalAdmissible` (Algebra/SumThreeCubes/Defs.lean), `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean)\n\n**Proof Strategy:** Formalize the circle method setup for cubic forms, compute the singular integral, and bound the minor arc contributions.\n\n**Domain Bridges:** Analytic number theory, harmonic analysis, probability theory\n\n**Lineage:** Connects the discrete local admissibility framework to continuous density predictions\n\n**Ambition:** Solid extension \u2014 the circle method for three cubes is at the boundary of current analytic technique\n\n---",
@@ -571,6 +553,85 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T02:10:32.381941+00:00"
   },
   {
+    "id": "fd_0837",
+    "title": "Direction 3: Quantum Ground-State Preparation via Lorentzian Certificates",
+    "description": "**Conjecture:** For a stoquastic Hamiltonian H whose ground-state amplitudes are the coefficients of a Lorentzian polynomial, the certificate tree provides an efficient quantum circuit for ground-state preparation, with depth O(n^(d\u22122) \u00b7 log n) and gate count O(n^d).\n\n**Test:** Implement the certificate-to-circuit compilation for (a) the transverse-field Ising model on small lattices (n \u2264 12), (b) the XX model, and (c) Rokhsar-Kivelson Hamiltonians. Simulate the circuit on a quantum emulator and compare fidelity vs. depth with Variational Quantum Eigensolver (VQE) and Quantum Approximate Optimization Algorithm (QAOA).\n\n**Impact:** Would establish that Lorentzian certificates are universal ground-state preparation recipes for stoquastic Hamiltonians, bridging algebraic combinatorics to quantum computing.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificate_sampling_efficiency`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `RecursiveLorentzianCertificate`\n\n**Proof Strategy:** Map each certificate node to a quantum gate sequence: the Lorentzian signature (one positive eigenvalue) means the Hessian can be decomposed as a rank-1 projector minus a positive semidefinite term. This decomposition defines a quantum channel whose fixed point is the target amplitude distribution. The recursive structure gives a depth-d\u22122 circuit that converges to the ground state.\n\n**Domain Bridges:** Quantum computing (Hamiltonian simulation), condensed matter physics (stoquastic models), classical simulation (sign-problem-free systems)\n\n**Lineage:** Builds on `certificate_depth_eq` and `RecursiveLorentzianCertificate` from the recognition catalog\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects algebraic combinatorics to quantum algorithms in a fundamentally new way.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.221031+00:00"
+  },
+  {
+    "id": "fd_0838",
+    "title": "Direction 4: Tropical Mixing Without Spectral Intermediate",
+    "description": "**Conjecture:** The tropical diameter of the Newton subdivision of a Lorentzian polynomial *directly* controls the mixing time, without passing through the spectral gap: \u03c4_mix \u2264 O(trop_diam \u00b7 n \u00b7 log n), where trop_diam \u2264 O(d \u00b7 n) for degree-d polynomials.\n\n**Test:** For randomly generated Lorentzian polynomials (degree 3\u20135, variables 3\u201310), compute both the tropical diameter and the actual mixing time (from eigenvalue computation). Plot \u03c4_mix vs. trop_diam. If the relationship is linear (not quadratic), the direct bound holds.\n\n**Impact:** Would bypass the spectral gap entirely, providing a geometric understanding of mixing that connects to the rapidly developing field of tropical geometry.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `tropical_diameter_le_dn`, `certificate_mixing_time_bound`\n\n**Proof Strategy:** Use the canonical paths method directly with paths defined by the tropical subdivision. Each path follows the ridge between tropical cells, and its congestion is bounded by the cell volumes (which are controlled by the mixed volumes of the Newton polytope). The Lorentzian condition ensures these volumes satisfy a Brunn-Minkowski-type inequality that bounds congestion.\n\n**Domain Bridges:** Tropical geometry (Newton polytopes, subdivisions), combinatorial geometry (Brunn-Minkowski theory), algebraic statistics (toric models)\n\n**Lineage:** Extends `tropical_diameter_le_dn` with a direct mixing argument\n\n**Ambition:** Solid extension \u2014 the canonical paths framework is well-established, and tropical geometry provides the right language.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.243679+00:00"
+  },
+  {
+    "id": "fd_0839",
+    "title": "Direction 5: Dynamic Lorentzian Certificates and Online Sampling",
+    "description": "**Conjecture:** When a Lorentzian polynomial f changes by a rank-1 update (adding a single monomial term), the certificate tree can be updated in O(n^(d\u22123) \u00b7 n\u00b2) time \u2014 a factor of n cheaper than rebuilding from scratch \u2014 and the Markov chain can be \"warm-started\" with mixing time O(n \u00b7 log n) from the previous stationary distribution.\n\n**Test:** Implement dynamic certificate maintenance for the generating polynomial of a matroid as elements are added/deleted. Measure (a) certificate update time vs. rebuild time, (b) warm-start mixing time vs. cold-start mixing time, for graphic matroids of growing graphs (n = 10, 20, 50, 100 vertices, adding one edge at a time).\n\n**Impact:** Would make certificate-guided sampling practical for streaming and online settings, where the underlying polynomial evolves over time.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificateDepth`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `pderiv_isHomogeneous_degree_pred`\n\n**Proof Strategy:** A rank-1 update to f changes only O(n^(d\u22123)) leaves of the certificate tree (those whose multiindex overlaps the updated monomial). Recompute eigenvalues only at affected leaves. For warm-starting, bound the total variation distance between old and new stationary distributions using the \u2113\u2081 change in coefficients, then apply the mixing time bound with this as the initial distance.\n\n**Domain Bridges:** Online algorithms (streaming computation), dynamic graph algorithms, stochastic optimization (follow-the-regularized-leader)\n\n**Lineage:** Extends `certificate_verification_complexity` to the dynamic setting\n\n**Ambition:** Solid extension \u2014 the key ideas (lazy updates, warm starts) are well-known in MCMC; the novelty is combining them with certificate structure.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.263299+00:00"
+  },
+  {
+    "id": "fd_0840",
+    "title": "Direction 1: Basis Uniqueness up to Tropical Projective Equivalence",
+    "description": "**Conjecture**: For each connected graph G, basepoint q, and subset S \u2286 V \\ {q}, the cycle-component generating family of the tropical kernel of L_S is unique up to tropical scaling (adding constants to individual generators) and permutation, whenever G[S] has a pairwise edge-disjoint cycle basis and distinct q-visible components.\n\n**Test**: Exhaustive search over all connected graphs on n \u2264 7 vertices. For each (G, q, S), compute all minimal tropical generating families of ker_trop(L_S) and compare equivalence classes. Verify that the number of equivalence classes is exactly 1 when the edge-disjointness condition holds, and characterize the failure cases.\n\n**Impact**: Establishes canonical generators for tropical kernels, enabling effective computation and comparison across graph families. Would be the tropical analogue of the uniqueness of the Smith normal form.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernel, componentIndicator), `Pythagorean/TropicalBridge/TropicalHodge.lean` (componentIndicator_mem_tropicalKernel, tropicalKernel_leaf_eq).\n\n**Proof Strategy**: Use the separation properties of cycle generators (support on cycle vertices) and component generators (support on component vertices) to show that any alternative generating family must be related by tropical scaling. The key tool is the leaf propagation lemma, which forces values along tree edges.\n\n**Domain Bridges**: Tropical linear algebra \u2194 matroid theory (the cycle matroid determines uniqueness), algebraic combinatorics \u2194 graph theory.\n\n**Lineage**: Extends the structural kernel theorems in `TropicalHodge.lean` from existence to uniqueness.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 technically challenging but conceptually clear)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.257371+00:00"
+  },
+  {
     "id": "fd_0841",
     "title": "Direction 2: Filtration Persistence Formula",
     "description": "**Conjecture**: For an increasing filtration S\u2080 \u2286 S\u2081 \u2286 ... \u2286 S_m \u2286 V \\ {q}, the sequence of tropical kernel dimensions dim_trop(ker_trop(L_{S_k})) satisfies:\n\n  dim(S_{k+1}) - dim(S_k) = (number of new cycles born) + (number of new q-visible components born) - (number of component merges destroying q-invisible components)\n\nMoreover, the \"barcode\" of tropical kernel dimensions is completely determined by the births and deaths of cycles and q-visible components in the filtration.\n\n**Test**: Enumerate all increasing filtrations on connected graphs with n \u2264 6 vertices. For each filtration, compute the dimension sequence and compare to the predicted birth/death events. Verify the persistence formula matches in all cases.\n\n**Impact**: Creates a new invariant \u2014 the **tropical persistence barcode** \u2014 that combines topological persistence (like standard persistent homology) with algebraic structure (tropical linear algebra). This could provide strictly finer invariants than classical persistent homology for weighted networks.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedCycleRank, qVisibleComponentCount), `Pythagorean/TropicalBridge/UniversalDefect.lean` (universalDefect_eq).\n\n**Proof Strategy**: Induction on filtration length. At each step, adding a vertex v to S either:\n(a) connects to an existing component (no new cycle, no new component),\n(b) forms a bridge to q (new q-visible component),\n(c) closes a cycle (new cycle mode), or\n(d) merges two components.\nTrack each case and verify the dimension change formula.\n\n**Domain Bridges**: Tropical algebra \u2194 topological data analysis, computational topology \u2194 network science.\n\n**Lineage**: Directly extends the dimension formula to parameterized families, building on `inducedCycleRank_eq_zero_of_forest` for the tree base case.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new persistent tropical homology theory)\n\n---",
@@ -610,50 +671,28 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:05:35.300943+00:00"
   },
   {
-    "id": "fd_0837",
-    "title": "Direction 3: Quantum Ground-State Preparation via Lorentzian Certificates",
-    "description": "**Conjecture:** For a stoquastic Hamiltonian H whose ground-state amplitudes are the coefficients of a Lorentzian polynomial, the certificate tree provides an efficient quantum circuit for ground-state preparation, with depth O(n^(d\u22122) \u00b7 log n) and gate count O(n^d).\n\n**Test:** Implement the certificate-to-circuit compilation for (a) the transverse-field Ising model on small lattices (n \u2264 12), (b) the XX model, and (c) Rokhsar-Kivelson Hamiltonians. Simulate the circuit on a quantum emulator and compare fidelity vs. depth with Variational Quantum Eigensolver (VQE) and Quantum Approximate Optimization Algorithm (QAOA).\n\n**Impact:** Would establish that Lorentzian certificates are universal ground-state preparation recipes for stoquastic Hamiltonians, bridging algebraic combinatorics to quantum computing.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificate_sampling_efficiency`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `RecursiveLorentzianCertificate`\n\n**Proof Strategy:** Map each certificate node to a quantum gate sequence: the Lorentzian signature (one positive eigenvalue) means the Hessian can be decomposed as a rank-1 projector minus a positive semidefinite term. This decomposition defines a quantum channel whose fixed point is the target amplitude distribution. The recursive structure gives a depth-d\u22122 circuit that converges to the ground state.\n\n**Domain Bridges:** Quantum computing (Hamiltonian simulation), condensed matter physics (stoquastic models), classical simulation (sign-problem-free systems)\n\n**Lineage:** Builds on `certificate_depth_eq` and `RecursiveLorentzianCertificate` from the recognition catalog\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects algebraic combinatorics to quantum algorithms in a fundamentally new way.\n\n---",
+    "id": "fd_0852",
+    "title": "Direction 1: Sharp Dixon Asymptotics via M\u00f6bius Inversion",
+    "description": "**Conjecture:** The exact number of generating pairs in $S_n$ can be expressed via M\u00f6bius inversion on the subgroup lattice:\n$$|\\{(\\sigma, \\tau) : \\langle \\sigma, \\tau \\rangle = S_n\\}| = \\sum_{H \\leq S_n} \\mu(H, S_n) \\cdot |H|^2$$\nand the leading terms of the asymptotic expansion satisfy $P_n = 1 - 1/n - 1/n^2 - 4/n^3 - 23/n^4 - O(1/n^5)$.\n\n**Test:** Verify the M\u00f6bius inversion formula computationally for $n \\leq 7$ using GAP, then formalize the first two terms of the asymptotic expansion in Lean by bounding contributions from subgroups of index $> n$.\n\n**Impact:** This would yield the first machine-verified sharp asymptotic for a generation probability, going far beyond the $O(1/n)$ bound from the point-stabilizer sieve.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `nongeneratingPairProbability_le_maximal_subgroup_sum`, `generatingPairProbability_eq_card_ratio`.\n\n**Proof Strategy:** Define the M\u00f6bius function on the subgroup lattice of $S_n$ using `Finpartition` or direct recursion. Formalize the inclusion-exclusion identity $\\sum_{H \\leq G} \\mu(H, G) = \\delta_{H,G}$. Then express the generating pair count as a M\u00f6bius sum and bound tail terms using subgroup index estimates.\n\n**Domain Bridges:** Analytic combinatorics (singularity analysis of generating functions), number theory (M\u00f6bius inversion analogues).\n\n**Lineage:** Direct extension of the subgroup sieve inequality proved in this cycle.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the subgroup lattice M\u00f6bius function and sharp subgroup counting bounds for $S_n$.\n\n**The key insight is** that the M\u00f6bius function on the subgroup lattice encodes *exactly* how much each subgroup contributes to the generation count, turning the subgroup sieve from an inequality into an identity.\n\n**Why now?** The subgroup sieve framework is now formalized, providing the \"\u2264\" half. The M\u00f6bius inversion provides the \"=\" half, and Mathlib's growing lattice theory API makes the combinatorial prerequisites increasingly accessible.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
-      "Physics",
       "Cryptography",
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
+    "source_exp_id": "92e3853a",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:11:10.221031+00:00"
+    "timestamp": "2026-05-25T03:08:48.881853+00:00"
   },
   {
-    "id": "fd_0838",
-    "title": "Direction 4: Tropical Mixing Without Spectral Intermediate",
-    "description": "**Conjecture:** The tropical diameter of the Newton subdivision of a Lorentzian polynomial *directly* controls the mixing time, without passing through the spectral gap: \u03c4_mix \u2264 O(trop_diam \u00b7 n \u00b7 log n), where trop_diam \u2264 O(d \u00b7 n) for degree-d polynomials.\n\n**Test:** For randomly generated Lorentzian polynomials (degree 3\u20135, variables 3\u201310), compute both the tropical diameter and the actual mixing time (from eigenvalue computation). Plot \u03c4_mix vs. trop_diam. If the relationship is linear (not quadratic), the direct bound holds.\n\n**Impact:** Would bypass the spectral gap entirely, providing a geometric understanding of mixing that connects to the rapidly developing field of tropical geometry.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `tropical_diameter_le_dn`, `certificate_mixing_time_bound`\n\n**Proof Strategy:** Use the canonical paths method directly with paths defined by the tropical subdivision. Each path follows the ridge between tropical cells, and its congestion is bounded by the cell volumes (which are controlled by the mixed volumes of the Newton polytope). The Lorentzian condition ensures these volumes satisfy a Brunn-Minkowski-type inequality that bounds congestion.\n\n**Domain Bridges:** Tropical geometry (Newton polytopes, subdivisions), combinatorial geometry (Brunn-Minkowski theory), algebraic statistics (toric models)\n\n**Lineage:** Extends `tropical_diameter_le_dn` with a direct mixing argument\n\n**Ambition:** Solid extension \u2014 the canonical paths framework is well-established, and tropical geometry provides the right language.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:11:10.243679+00:00"
-  },
-  {
-    "id": "fd_0839",
-    "title": "Direction 5: Dynamic Lorentzian Certificates and Online Sampling",
-    "description": "**Conjecture:** When a Lorentzian polynomial f changes by a rank-1 update (adding a single monomial term), the certificate tree can be updated in O(n^(d\u22123) \u00b7 n\u00b2) time \u2014 a factor of n cheaper than rebuilding from scratch \u2014 and the Markov chain can be \"warm-started\" with mixing time O(n \u00b7 log n) from the previous stationary distribution.\n\n**Test:** Implement dynamic certificate maintenance for the generating polynomial of a matroid as elements are added/deleted. Measure (a) certificate update time vs. rebuild time, (b) warm-start mixing time vs. cold-start mixing time, for graphic matroids of growing graphs (n = 10, 20, 50, 100 vertices, adding one edge at a time).\n\n**Impact:** Would make certificate-guided sampling practical for streaming and online settings, where the underlying polynomial evolves over time.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificateDepth`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `pderiv_isHomogeneous_degree_pred`\n\n**Proof Strategy:** A rank-1 update to f changes only O(n^(d\u22123)) leaves of the certificate tree (those whose multiindex overlaps the updated monomial). Recompute eigenvalues only at affected leaves. For warm-starting, bound the total variation distance between old and new stationary distributions using the \u2113\u2081 change in coefficients, then apply the mixing time bound with this as the initial distance.\n\n**Domain Bridges:** Online algorithms (streaming computation), dynamic graph algorithms, stochastic optimization (follow-the-regularized-leader)\n\n**Lineage:** Extends `certificate_verification_complexity` to the dynamic setting\n\n**Ambition:** Solid extension \u2014 the key ideas (lazy updates, warm starts) are well-known in MCMC; the novelty is combining them with certificate structure.",
+    "id": "fd_0853",
+    "title": "Direction 2: Random Cayley Expanders and Spectral Gaps",
+    "description": "**Conjecture:** For $n \\geq 5$ and uniformly random $\\sigma, \\tau \\in S_n$ conditioned on $\\langle \\sigma, \\tau \\rangle = S_n$, the spectral gap of the Cayley graph $\\text{Cay}(S_n, \\{\\sigma^{\\pm 1}, \\tau^{\\pm 1}\\})$ satisfies $\\lambda_1 \\geq c$ for an absolute constant $c > 0$ independent of $n$, with high probability.\n\n**Test:** Compute the spectral gap of random 4-regular Cayley graphs on $S_n$ for $n = 5, 6, 7, 8$ and verify that the minimum observed gap exceeds 0.01. Compare with the Alon-Boppana bound.\n\n**Impact:** Would establish that random generators not only generate $S_n$ but produce *expander* Cayley graphs \u2014 optimal communication networks over the symmetric group.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `pairActsTransitively_of_full_cycle_and_mixing`, `card_closure_dvd_of_transitive`.\n\n**Proof Strategy:** Use the transitivity theorem as a base case (connectivity). For the spectral gap, formalize the trace method: bound $\\text{tr}(A^{2k})$ where $A$ is the adjacency matrix, using moment computations that reduce to counting closed walks in the Cayley graph. Leverage the mixing condition to show rapid decay of return probabilities.\n\n**Domain Bridges:** Spectral graph theory, statistical physics (rapid mixing of Markov chains), computer science (derandomization via expanders).\n\n**Lineage:** The transitivity theorem proves *connectivity* of the Cayley graph; the spectral gap quantifies *how connected* it is.\n\n**Ambition:** Grand challenge \u2014 connecting algebraic generation to spectral theory requires significant new formal infrastructure.\n\n**The key insight is** that the mixing condition in our transitivity theorem is a discrete analogue of ergodicity, and ergodic systems have spectral gaps \u2014 this formal analogy should become a theorem.\n\n**Why now?** Recent Mathlib additions in spectral theory and linear algebra are making matrix eigenvalue bounds increasingly formalizable, and the generation probability framework provides the algebraic foundation.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -662,31 +701,30 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
+    "source_exp_id": "92e3853a",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:11:10.263299+00:00"
+    "timestamp": "2026-05-25T03:08:48.902211+00:00"
   },
   {
-    "id": "fd_0840",
-    "title": "Direction 1: Basis Uniqueness up to Tropical Projective Equivalence",
-    "description": "**Conjecture**: For each connected graph G, basepoint q, and subset S \u2286 V \\ {q}, the cycle-component generating family of the tropical kernel of L_S is unique up to tropical scaling (adding constants to individual generators) and permutation, whenever G[S] has a pairwise edge-disjoint cycle basis and distinct q-visible components.\n\n**Test**: Exhaustive search over all connected graphs on n \u2264 7 vertices. For each (G, q, S), compute all minimal tropical generating families of ker_trop(L_S) and compare equivalence classes. Verify that the number of equivalence classes is exactly 1 when the edge-disjointness condition holds, and characterize the failure cases.\n\n**Impact**: Establishes canonical generators for tropical kernels, enabling effective computation and comparison across graph families. Would be the tropical analogue of the uniqueness of the Smith normal form.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernel, componentIndicator), `Pythagorean/TropicalBridge/TropicalHodge.lean` (componentIndicator_mem_tropicalKernel, tropicalKernel_leaf_eq).\n\n**Proof Strategy**: Use the separation properties of cycle generators (support on cycle vertices) and component generators (support on component vertices) to show that any alternative generating family must be related by tropical scaling. The key tool is the leaf propagation lemma, which forces values along tree edges.\n\n**Domain Bridges**: Tropical linear algebra \u2194 matroid theory (the cycle matroid determines uniqueness), algebraic combinatorics \u2194 graph theory.\n\n**Lineage**: Extends the structural kernel theorems in `TropicalHodge.lean` from existence to uniqueness.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 technically challenging but conceptually clear)\n\n---",
+    "id": "fd_0856",
+    "title": "Direction 5: Phase Transitions in Generation Probability for Random Subgroup Families",
+    "description": "**Conjecture:** For the wreath product $S_k \\wr S_m$ (with $n = km$), the generation probability exhibits a *phase transition* as the ratio $k/m$ varies: when $k \\gg m$, $P \\approx 1 - 1/k$, resembling the symmetric group; when $m \\gg k$, $P$ decreases due to abundant imprimitive subgroups preserving block structures.\n\n**Test:** Compute generation probabilities for $S_k \\wr S_m$ for $km \\leq 12$ using GAP. Plot $P$ as a function of $k/m$ and identify the transition region.\n\n**Impact:** Would reveal that generation probability is not a monotone function of group size but depends sensitively on the group's *structural complexity* (number and type of maximal subgroups), connecting to statistical physics notions of phase transitions.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `nongeneratingPairProbability_le_maximal_subgroup_sum` (applied with imprimitive subgroups as the covering family).\n\n**Proof Strategy:** Enumerate the maximal subgroups of $S_k \\wr S_m$ using the O'Nan-Scott classification. Apply the subgroup sieve with this enumeration. The phase transition arises because the number of maximal imprimitive subgroups (block system stabilizers) grows faster than the index of each decreases.\n\n**Domain Bridges:** Statistical physics (phase transitions, percolation), random matrix theory (similar phase transitions in eigenvalue statistics), combinatorics (Latin squares, block designs).\n\n**Lineage:** The subgroup sieve is the formal tool; the wreath product provides the parametric family exhibiting the phase transition.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the O'Nan-Scott classification and imprimitive subgroup enumeration, which is substantial new infrastructure.\n\n**The key insight is** that the subgroup sieve bound is tight enough to detect phase transitions: when the sum $\\sum (|H|/|G|)^2$ crosses 1, it signals a qualitative change in generation behavior, analogous to a percolation threshold.\n\n**Why now?** The subgroup sieve is formalized and ready to be applied to parametric families. Computational experiments can guide the formalization by identifying the critical ratio before formal proof.",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
-      "Tropical",
+      "Computation",
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
+    "priority_score": 1.0,
+    "status": "in_progress",
     "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.257371+00:00"
+    "source_exp_id": "92e3853a",
+    "consumed_by_exp_id": "cf039036",
+    "timestamp": "2026-05-25T03:08:48.964845+00:00"
   },
   {
     "id": "fd_0843",
@@ -706,26 +744,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "fd2f08b2",
     "consumed_by_exp_id": "1a0c77c0",
     "timestamp": "2026-05-25T03:05:35.321656+00:00"
-  },
-  {
-    "id": "fd_0844",
-    "title": "Direction 5: Chip-Firing Correspondence",
-    "description": "**Conjecture**: Tropical kernel generators of L_S correspond to equivalence classes of \"balanced\" divisor deformations supported on S in the sense of Baker-Norine chip-firing theory. Specifically:\n\n  ker_trop(L_S) \u2245 { D \u2208 Div\u2070(G) : supp(D) \u2286 S, D is q-reduced and balanced }\n\nwhere \"balanced\" means every vertex fires at most to neighbors achieving the same potential, and the quotient is by tropical scaling.\n\n**Test**: For all connected graphs on n \u2264 6, compute:\n(a) The tropical kernel dimension via the formula,\n(b) The number of independent balanced q-reduced divisors supported on S.\nCompare dimensions and identify the explicit bijection between kernel generators and divisor classes.\n\n**Impact**: Connects tropical graph Hodge theory to one of the most active areas of combinatorial algebraic geometry. The Baker-Norine theorem gives a Riemann-Roch theorem for graphs; this conjecture would provide the Hodge-theoretic complement. Could lead to new algorithms for computing the Jacobian group of a graph.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernelProp \u2014 the balanced condition), `Pythagorean/TropicalBridge/TropicalHodge.lean` (tropicalKernel_leaf_eq \u2014 propagation along edges mirrors chip-firing).\n\n**Proof Strategy**: The leaf propagation lemma (`tropicalKernel_leaf_eq`) already shows that kernel vectors satisfy v(i) = v(j) along tree edges, which is exactly the condition for a divisor to be q-reduced on trees. Extend this to graphs with cycles by showing that the cycle generators correspond to the \"circuit divisors\" in chip-firing theory. The q-visible component generators correspond to \"lending\" operations from q to components.\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic geometry (divisor theory), combinatorics \u2194 number theory (arithmetic geometry of curves).\n\n**Lineage**: Extends `tropicalKernel_leaf_eq` and `tropicalKernel_edge_constant` to the full chip-firing dictionary.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 bridges two deep theories)",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "97def267",
-    "timestamp": "2026-05-25T03:05:35.340182+00:00"
   },
   {
     "id": "seed_026",
@@ -882,50 +900,13 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T02:11:10.182188+00:00"
   },
   {
-    "id": "fd_0836",
-    "title": "Direction 2: Higher-Order Log-Concavity and Partition Functions",
-    "description": "**Conjecture:** For a k-fold Lorentzian polynomial (one whose k-th derivatives are all Lorentzian), the coefficient sequence satisfies k-fold log-concavity: the k-th finite difference of log(a\u2098) is nonpositive. This implies mixing time bounds of O(n^(2/k) \u00b7 log n) for the associated Markov chain.\n\n**Test:** Verify k-fold log-concavity for the generating polynomials of (a) complete bipartite graph spanning trees, (b) matroid basis counts for paving matroids, (c) partition functions of the Ising model on small lattices. Compute whether the mixing time improvement from k-fold LC matches the O(n^(2/k)) prediction.\n\n**Impact:** Would provide a hierarchy of increasingly efficient samplers indexed by the \"depth of Lorentzianness,\" with applications to statistical physics partition functions.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `LogConcaveSeq`, `binomial_log_concave`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `IsRecursivelyLorentzian`\n\n**Proof Strategy:** Define k-fold log-concavity inductively: 1-fold = standard log-concavity; (k+1)-fold = the sequence of ratios a\u2098\u208a\u2081/a\u2098 is k-fold log-concave. Use the recursive Lorentzian certificate (depth d\u22122) to establish (d\u22122)-fold log-concavity. Apply modified log-Sobolev inequalities that exploit higher-order concavity.\n\n**Domain Bridges:** Statistical physics (partition functions), information theory (entropy inequalities), operator theory (complete positivity)\n\n**Lineage:** Extends `logConcaveSeq_mul` and `binomial_ratio_le_one` to higher orders\n\n**Ambition:** Grand challenge \u2014 k-fold log-concavity for partition functions would resolve open problems in statistical physics.\n\n---",
+    "id": "fd_0858",
+    "title": "Direction 1: Lorentzian-to-Coefficient Bridge via Bivariate Specialization",
+    "description": "**Conjecture**: For every homogeneous polynomial $P$ of degree $d$ with nonnegative coefficients and recursive Lorentzian depth $k$ (as defined by `IsRecursivelyLorentzian` in `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`), every bivariate specialization $P(x, y) = \\sum a_m x^m y^{d-m}$ with $a_m > 0$ yields a coefficient sequence that is $\\min(k, d-2)$-fold log-concave in the sense of `KFoldLogConcave` (from `Catalog/Pythagorean/HigherOrderLogConcavity.lean`).\n\n**Test**: Extract bivariate specialization coefficients from explicit Lorentzian polynomials (products of linear forms, matroid basis generating polynomials for uniform matroids, Kirchhoff polynomials of small graphs). Compute iterated ratio sequences and verify log-concavity at each depth. A single family with Lorentzian depth $k \\geq 2$ whose coefficient sequence fails 2-fold log-concavity disproves the conjecture.\n\n**Impact**: This would be the flagship theorem connecting algebraic geometry (Hessian spectral signatures) to discrete analysis (ratio sequence concavity). It would turn the abstract recognition algorithm in `LorentzianRecognitionComplete.lean` into a concrete inequality machine for coefficient sequences.\n\n**The key insight is** that the Lorentzian Hessian condition at each differentiation level translates, via the reversed Cauchy\u2013Schwarz inequality (already formalized as `lorentzian_reversed_cauchy_schwarz`), into a ratio-sequence inequality that propagates one level of the k-fold hierarchy.\n\n**Why now?** The existing Catalog contains both the recursive Lorentzian predicate and the k-fold log-concavity definitions. The reversed Cauchy\u2013Schwarz theorem provides the exact algebraic bridge needed. What remains is to formalize the coefficient extraction from bivariate specialization and verify the inequality chain at each recursive level.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (IsRecursivelyLorentzian, lorentzian_reversed_cauchy_schwarz), `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (KFoldLogConcave, KFoldLogConcave.ratio)\n\n**Proof Strategy**: Define `coeffOfBivariateHomogeneous` as the coefficient extractor. For degree-2, the reversed Cauchy\u2013Schwarz directly gives log-concavity. Induct on Lorentzian depth: each differentiation step reduces degree by 1 and Lorentzian depth by 1, while the coefficient sequence's ratio inherits the Lorentzian inequality from the derivative polynomial.\n\n**Domain Bridges**: Algebraic geometry \u2192 discrete combinatorics \u2192 sampling algorithms\n\n**Lineage**: Extends `recursivelyLorentzian_iff_brandenHuh` and `lorentzian_reversed_cauchy_schwarz`\n\n**Ambition**: Grand challenge \u2014 would establish a new theorem class connecting two major theories.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "56c2f88c",
-    "timestamp": "2026-05-25T02:11:10.200317+00:00"
-  },
-  {
-    "id": "fd_0852",
-    "title": "Direction 1: Sharp Dixon Asymptotics via M\u00f6bius Inversion",
-    "description": "**Conjecture:** The exact number of generating pairs in $S_n$ can be expressed via M\u00f6bius inversion on the subgroup lattice:\n$$|\\{(\\sigma, \\tau) : \\langle \\sigma, \\tau \\rangle = S_n\\}| = \\sum_{H \\leq S_n} \\mu(H, S_n) \\cdot |H|^2$$\nand the leading terms of the asymptotic expansion satisfy $P_n = 1 - 1/n - 1/n^2 - 4/n^3 - 23/n^4 - O(1/n^5)$.\n\n**Test:** Verify the M\u00f6bius inversion formula computationally for $n \\leq 7$ using GAP, then formalize the first two terms of the asymptotic expansion in Lean by bounding contributions from subgroups of index $> n$.\n\n**Impact:** This would yield the first machine-verified sharp asymptotic for a generation probability, going far beyond the $O(1/n)$ bound from the point-stabilizer sieve.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `nongeneratingPairProbability_le_maximal_subgroup_sum`, `generatingPairProbability_eq_card_ratio`.\n\n**Proof Strategy:** Define the M\u00f6bius function on the subgroup lattice of $S_n$ using `Finpartition` or direct recursion. Formalize the inclusion-exclusion identity $\\sum_{H \\leq G} \\mu(H, G) = \\delta_{H,G}$. Then express the generating pair count as a M\u00f6bius sum and bound tail terms using subgroup index estimates.\n\n**Domain Bridges:** Analytic combinatorics (singularity analysis of generating functions), number theory (M\u00f6bius inversion analogues).\n\n**Lineage:** Direct extension of the subgroup sieve inequality proved in this cycle.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the subgroup lattice M\u00f6bius function and sharp subgroup counting bounds for $S_n$.\n\n**The key insight is** that the M\u00f6bius function on the subgroup lattice encodes *exactly* how much each subgroup contributes to the generation count, turning the subgroup sieve from an inequality into an identity.\n\n**Why now?** The subgroup sieve framework is now formalized, providing the \"\u2264\" half. The M\u00f6bius inversion provides the \"=\" half, and Mathlib's growing lattice theory API makes the combinatorial prerequisites increasingly accessible.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "92e3853a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:08:48.881853+00:00"
-  },
-  {
-    "id": "fd_0853",
-    "title": "Direction 2: Random Cayley Expanders and Spectral Gaps",
-    "description": "**Conjecture:** For $n \\geq 5$ and uniformly random $\\sigma, \\tau \\in S_n$ conditioned on $\\langle \\sigma, \\tau \\rangle = S_n$, the spectral gap of the Cayley graph $\\text{Cay}(S_n, \\{\\sigma^{\\pm 1}, \\tau^{\\pm 1}\\})$ satisfies $\\lambda_1 \\geq c$ for an absolute constant $c > 0$ independent of $n$, with high probability.\n\n**Test:** Compute the spectral gap of random 4-regular Cayley graphs on $S_n$ for $n = 5, 6, 7, 8$ and verify that the minimum observed gap exceeds 0.01. Compare with the Alon-Boppana bound.\n\n**Impact:** Would establish that random generators not only generate $S_n$ but produce *expander* Cayley graphs \u2014 optimal communication networks over the symmetric group.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `pairActsTransitively_of_full_cycle_and_mixing`, `card_closure_dvd_of_transitive`.\n\n**Proof Strategy:** Use the transitivity theorem as a base case (connectivity). For the spectral gap, formalize the trace method: bound $\\text{tr}(A^{2k})$ where $A$ is the adjacency matrix, using moment computations that reduce to counting closed walks in the Cayley graph. Leverage the mixing condition to show rapid decay of return probabilities.\n\n**Domain Bridges:** Spectral graph theory, statistical physics (rapid mixing of Markov chains), computer science (derandomization via expanders).\n\n**Lineage:** The transitivity theorem proves *connectivity* of the Cayley graph; the spectral gap quantifies *how connected* it is.\n\n**Ambition:** Grand challenge \u2014 connecting algebraic generation to spectral theory requires significant new formal infrastructure.\n\n**The key insight is** that the mixing condition in our transitivity theorem is a discrete analogue of ergodicity, and ergodic systems have spectral gaps \u2014 this formal analogy should become a theorem.\n\n**Why now?** Recent Mathlib additions in spectral theory and linear algebra are making matrix eigenvalue bounds increasingly formalizable, and the generation probability framework provides the algebraic foundation.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
+      "Geometry",
       "Computation",
       "Physics",
       "Bridges",
@@ -934,27 +915,86 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "92e3853a",
+    "source_exp_id": "56c2f88c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:08:48.902211+00:00"
+    "timestamp": "2026-05-25T14:24:15.293101+00:00"
   },
   {
-    "id": "fd_0856",
-    "title": "Direction 5: Phase Transitions in Generation Probability for Random Subgroup Families",
-    "description": "**Conjecture:** For the wreath product $S_k \\wr S_m$ (with $n = km$), the generation probability exhibits a *phase transition* as the ratio $k/m$ varies: when $k \\gg m$, $P \\approx 1 - 1/k$, resembling the symmetric group; when $m \\gg k$, $P$ decreases due to abundant imprimitive subgroups preserving block structures.\n\n**Test:** Compute generation probabilities for $S_k \\wr S_m$ for $km \\leq 12$ using GAP. Plot $P$ as a function of $k/m$ and identify the transition region.\n\n**Impact:** Would reveal that generation probability is not a monotone function of group size but depends sensitively on the group's *structural complexity* (number and type of maximal subgroups), connecting to statistical physics notions of phase transitions.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `nongeneratingPairProbability_le_maximal_subgroup_sum` (applied with imprimitive subgroups as the covering family).\n\n**Proof Strategy:** Enumerate the maximal subgroups of $S_k \\wr S_m$ using the O'Nan-Scott classification. Apply the subgroup sieve with this enumeration. The phase transition arises because the number of maximal imprimitive subgroups (block system stabilizers) grows faster than the index of each decreases.\n\n**Domain Bridges:** Statistical physics (phase transitions, percolation), random matrix theory (similar phase transitions in eigenvalue statistics), combinatorics (Latin squares, block designs).\n\n**Lineage:** The subgroup sieve is the formal tool; the wreath product provides the parametric family exhibiting the phase transition.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the O'Nan-Scott classification and imprimitive subgroup enumeration, which is substantial new infrastructure.\n\n**The key insight is** that the subgroup sieve bound is tight enough to detect phase transitions: when the sum $\\sum (|H|/|G|)^2$ crosses 1, it signals a qualitative change in generation behavior, analogous to a percolation threshold.\n\n**Why now?** The subgroup sieve is formalized and ready to be applied to parametric families. Computational experiments can guide the formalization by identifying the critical ratio before formal proof.",
+    "id": "fd_0859",
+    "title": "Direction 2: Mixing Time Bounds from Concavity Depth",
+    "description": "**Conjecture**: For a probability distribution $\\pi$ on $\\{0, \\ldots, n\\}$ with k-fold log-concave weights ($k \\geq 1$), the spectral gap of the nearest-neighbor random walk satisfies $\\gamma \\geq c / n^{2/k}$ for an absolute constant $c > 0$, yielding mixing time $O(n^{2/k} \\log n)$.\n\n**Test**: For each $k = 1, 2, 3$, construct explicit k-fold log-concave distributions on $\\{0, \\ldots, n\\}$ for $n = 10, 20, 50, 100$. Compute the spectral gap of the tridiagonal transition matrix numerically. Plot $\\gamma \\cdot n^{2/k}$ and verify it is bounded below by a positive constant.\n\n**Impact**: This would provide the first quantitative link between concavity depth and algorithmic efficiency, turning k-fold log-concavity from a structural invariant into a computational resource.\n\n**The key insight is** that each layer of ratio-sequence log-concavity provides an additional functional inequality (a discrete Brascamp\u2013Lieb or modified log-Sobolev inequality) that accelerates the spectral decay by a polynomial factor.\n\n**Why now?** The spectral gap lower bound for ordinary log-concave distributions ($k = 1$) is already formalized in `Catalog/Pythagorean/CertificateSampling.lean` as `spectral_gap_log_concave_lower_bound`. Extending from $k = 1$ to general $k$ requires adapting the Markov chain comparison technique with the additional structural input from higher-order concavity.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateSampling.lean` (spectral_gap_log_concave_lower_bound, mixing_time_from_gap), `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (KFoldLogConcave, KFoldLogConcave.iterRatio_logConcave)\n\n**Proof Strategy**: Use the tower theorem to extract log-concavity at each ratio level. Each level provides an inequality that can be converted to a modified log-Sobolev inequality with improved constant. Chain these inequalities via tensorization to get the improved spectral gap.\n\n**Domain Bridges**: Discrete probability \u2192 Markov chain theory \u2192 statistical physics (mixing of Glauber dynamics)\n\n**Lineage**: Extends `spectral_gap_log_concave_lower_bound` and `certificate_sampling_efficiency`\n\n**Ambition**: Solid extension \u2014 builds directly on existing infrastructure with clear methodology.\n\n---",
     "domains": [
       "Pythagorean",
-      "Algebra",
       "Computation",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "92e3853a",
+    "source_exp_id": "56c2f88c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:08:48.964845+00:00"
+    "timestamp": "2026-05-25T14:24:15.314374+00:00"
+  },
+  {
+    "id": "fd_0860",
+    "title": "Direction 3: Multivariate k-Fold Log-Concavity and M-Convexity",
+    "description": "**Conjecture**: There exists a natural multivariate generalization of k-fold log-concavity, defined via directional ratio operators, that coincides with the recursive Lorentzian condition for homogeneous polynomials and extends the M-convexity framework of Murota's discrete convex analysis.\n\n**Test**: Define the directional ratio operator $R_i(f)(x) = f(x + e_i) / f(x)$ for functions $f : \\mathbb{Z}^n \\to \\mathbb{R}_{>0}$ and check whether iterated directional log-concavity (along all coordinate directions) characterizes the support exchange property formalized in `SupportSatisfiesExchange`.\n\n**Impact**: This would extend the hierarchy from sequences to multivariate functions, enabling applications to multivariate partition functions, matroid valuations, and optimal transport on discrete spaces.\n\n**The key insight is** that the univariate ratio sequence $a(n+1)/a(n)$ is the one-dimensional case of a directional ratio operator, and M-convexity (the matroid exchange property) is the multivariate analogue of log-concavity. The depth hierarchy should extend to \"k-fold M-convexity.\"\n\n**Why now?** The `SupportSatisfiesExchange` predicate is already defined and connected to Lorentzian polynomials in `LorentzianRecognitionComplete.lean`. The univariate k-fold theory provides the template for the multivariate extension.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange, IsRecursivelyLorentzian), `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (KFoldLogConcave, RatioSeq)\n\n**Proof Strategy**: Define directional ratio operators and iterated directional log-concavity. Show that for polynomials, this recovers the Hessian condition at each level. Use the multivariate Alexandrov\u2013Fenchel inequality as the base case.\n\n**Domain Bridges**: Discrete convex analysis \u2192 matroid theory \u2192 combinatorial optimization\n\n**Lineage**: Extends both `KFoldLogConcave` and `SupportSatisfiesExchange`\n\n**Ambition**: Grand challenge \u2014 would create a new chapter of discrete convex analysis.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56c2f88c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T14:24:15.334479+00:00"
+  },
+  {
+    "id": "fd_0861",
+    "title": "Direction 4: Entropy Curvature and Information-Theoretic Depth",
+    "description": "**Conjecture**: For a positive sequence $a$ normalized to a probability distribution $\\pi$, the k-fold log-concavity of $a$ implies that the discrete entropy functional $H(\\pi) = -\\sum \\pi_i \\log \\pi_i$ satisfies a $(k-1)$-th order curvature bound: the $(k-1)$-th iterated finite difference of $\\log(\\pi_i)$ has controlled sign.\n\n**Test**: For binomial distributions ($k = 1$) and geometric distributions ($k = \\infty$), compute iterated finite differences of $\\log(\\pi_i)$ and verify the sign pattern. For the geometric case, all iterated finite differences should vanish (corresponding to infinite depth).\n\n**Impact**: This would connect the k-fold hierarchy to information-theoretic quantities, enabling applications to channel capacity, data compression, and entropy-based learning theory.\n\n**The key insight is** that log-concavity is equivalent to the condition $\\Delta^2 \\log a_n \\leq 0$ (concavity of the log), and k-fold log-concavity corresponds to an alternating-sign condition on higher-order finite differences of $\\log a_n$ \u2014 the discrete analogue of higher-order curvature.\n\n**Why now?** The formalization of `LogConcaveN` and its equivalence to ratio sequence monotonicity provides the bridge between the concavity inequality and the finite-difference formulation. The existing `Real.log` infrastructure in Mathlib supports the finite-difference calculations.\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (LogConcaveN, KFoldLogConcave, RatioSeq), `Catalog/Pythagorean/CertificateSampling.lean` (ProbDist)\n\n**Proof Strategy**: Show that $\\text{LogConcaveN}(a)$ is equivalent to $\\Delta(\\log \\circ a)$ being nonincreasing, where $\\Delta f(n) = f(n+1) - f(n)$. Then k-fold log-concavity translates to iterated $\\Delta$ conditions on $\\log \\circ a$. Use the chain rule for finite differences to relate these to entropy curvature bounds.\n\n**Domain Bridges**: Discrete analysis \u2192 information theory \u2192 statistical learning theory\n\n**Lineage**: New direction building on `LogConcaveN` and `KFoldLogConcave`\n\n**Ambition**: Solid extension \u2014 natural and well-motivated with clear methodology.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56c2f88c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T14:24:15.354053+00:00"
+  },
+  {
+    "id": "fd_0862",
+    "title": "Direction 5: Complete Classification of Combinatorial Sequences by Depth",
+    "description": "**Conjecture**: Every \"naturally occurring\" combinatorial sequence (binomial coefficients, Stirling numbers, Bell numbers, Catalan numbers, partition numbers, matroid basis counts) has a well-defined and computable k-fold log-concavity depth on its positive support, and this depth is determined by the algebraic structure of the generating polynomial.\n\n**Test**: Compute k-fold depth for:\n- Stirling numbers of the second kind $S(n, k)$ for fixed $n$ (rows of the Stirling triangle)\n- Bell number prefixes\n- Catalan number prefixes\n- Integer partition counts $p(n)$ for $n = 0, \\ldots, N$\n- Matroid basis counts for uniform, paving, and graphic matroids\n\nTabulate depths and identify patterns.\n\n**Impact**: This would create a new \"periodic table\" of combinatorial sequences, classified not just by growth rate or unimodality but by the depth of their structural regularity.\n\n**The key insight is** that the k-fold depth is a computationally accessible invariant that captures information invisible to traditional analyses. Different combinatorial families may cluster at characteristic depths, revealing hidden structural relationships.\n\n**Why now?** The `kfold_depth` algorithm is implemented and tested. The computational infrastructure exists to systematically survey all families in the OEIS or similar databases. The formal theory provides the mathematical framework to interpret the results.\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (KFoldLogConcave, IterRatio), `Catalog/Pythagorean/CertificateSampling.lean` (binomial_log_concave)\n\n**Proof Strategy**: For each family, identify the generating polynomial (if it exists) and determine its Lorentzian depth. Use Direction 1's bridge theorem (once established) to predict the k-fold depth. Verify computationally and prove the depth bound formally for key families.\n\n**Domain Bridges**: Enumerative combinatorics \u2192 algebraic geometry \u2192 computational complexity\n\n**Lineage**: Extends `geometric_kFoldLogConcave` and builds on the depth computation infrastructure\n\n**Ambition**: Grand challenge \u2014 would create an entirely new classification system for combinatorial objects.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56c2f88c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T14:24:15.372699+00:00"
   },
   {
     "id": "seed_013",
@@ -1287,6 +1327,109 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "92e3853a",
     "consumed_by_exp_id": "44ebbbfd",
     "timestamp": "2026-05-25T03:08:48.922109+00:00"
+  },
+  {
+    "id": "fd_0863",
+    "title": "Direction 1: Formal Baker-Norine Riemann-Roch Theorem",
+    "description": "**Conjecture**: The full Baker-Norine Riemann-Roch theorem for graphs \u2014 $r(D) - r(K - D) = \\deg(D) - g + 1$ \u2014 can be formalized in Lean 4 using the verified Laplacian infrastructure from `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean` and `Catalog/Pythagorean/TropicalBridge/Theorems.lean`, by building the rank function $r(D)$ and the canonical divisor $K$ on top of the existing `GraphDivisor` and `linearEquiv` definitions.\n\n**Test**: \n1. Define the rank function $r(D) = \\max\\{k : \\forall E \\geq 0, \\deg(E) = k \\implies D - E \\sim E' \\geq 0 \\text{ for some } E'\\}$\n2. Define the canonical divisor $K(v) = \\deg(v) - 2$\n3. Prove $r(D) - r(K - D) = \\deg(D) - g + 1$ by formalizing Dhar's burning algorithm for q-reduced divisor computation\n4. Falsification: find any graph and divisor where the formula fails (impossible if correct, but the formalization itself certifies this)\n\n**Impact**: First complete formal verification of the Baker-Norine theorem. Would be a landmark result for formalized combinatorics, comparable in significance to the formal proof of the four-color theorem.\n\n**Catalog References**: \n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `linearEquiv_degree_invariant`, `principalDivisor_degree_zero`\n- `Catalog/Pythagorean/TropicalBridge/Theorems.lean`: `rootedSubsetDivisor_total`, `graphLaplacian_row_sum_zero`\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `firingIndependentOn`\n\n**Proof Strategy**: \n1. Formalize Dhar's burning algorithm as a certified computation\n2. Prove existence and uniqueness of q-reduced representatives using `chipFire_degree_preserved`\n3. Define rank via the effective divisor lattice\n4. Prove RR by induction on degree, using the lattice structure\n\n**Domain Bridges**: Algebraic geometry (Riemann-Roch on curves) \u2194 Combinatorics (chip-firing) \u2194 Formal methods (machine verification)\n\n**Lineage**: Extends `chipFire_degree_preserved`, `linearEquiv_degree_invariant` from this work\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2606 \u2014 Substantial formalization effort but mathematically well-understood; the main challenge is infrastructure, not insight.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97def267",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T14:24:37.080917+00:00"
+  },
+  {
+    "id": "fd_0864",
+    "title": "Direction 2: Certified Jacobian Group Computation via Tropical Determinant",
+    "description": "**Conjecture**: For any connected graph $G$ with base vertex $q$, the order of the Jacobian group equals the tropical permanent (min-plus permanent) of the reduced Laplacian: $|\\text{Jac}(G)| = \\text{trop-det}(L^{(q)})$, where the tropical determinant coincides with the classical determinant for M-matrices (matrices with nonpositive off-diagonal entries and positive row sums).\n\n**Test**:\n1. Implement certified Smith Normal Form computation in Lean 4\n2. Compute $|\\text{Jac}(G)|$ via SNF for all connected graphs on \u2264 10 vertices\n3. Compare with the tropical permanent computation\n4. Falsification: find a graph where the tropical permanent differs from $\\det(L^{(q)})$ (this would disprove the M-matrix tropical determinant conjecture)\n\n**Impact**: Would provide a purely tropical algorithm for Jacobian computation, potentially faster than SNF for sparse graphs. Connects tropical linear algebra to Kirchhoff's theorem in a new way.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `laplacianPrincipalMinor`\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `graphLap_diagonal_eq_degree`, `graphLap_off_diagonal_nonpos`\n\n**Proof Strategy**: Use the fact that the graph Laplacian's reduced form is an M-matrix, for which the tropical permanent (computed via optimal assignment) equals the classical determinant. The key lemma is that the Laplacian's off-diagonal nonpositivity (`graphLap_off_diagonal_nonpos`) ensures the M-matrix property.\n\n**Domain Bridges**: Tropical geometry (tropical determinant) \u2194 Algebraic graph theory (Kirchhoff's theorem) \u2194 Optimization (assignment problem)\n\n**Lineage**: Builds on `graphLap_off_diagonal_nonpos`, `graphLap_diagonal_eq_degree`\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The M-matrix result is known; the novelty is the formal verification and tropical algorithmic pathway.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97def267",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T14:24:37.100737+00:00"
+  },
+  {
+    "id": "fd_0865",
+    "title": "Direction 3: Abelian Sandpile Criticality via Laplacian Energy Minimization",
+    "description": "**Conjecture**: The critical configurations of the abelian sandpile model on a graph $G$ are exactly the energy-minimizing representatives within each linear equivalence class, where energy is the Laplacian quadratic form $E(D) = \\sum_{v,w} D(v) L^+(v,w) D(w)$ (with $L^+$ the Moore-Penrose pseudoinverse). Moreover, the number of critical configurations equals $\\det(L^{(q)})$, which equals the Jacobian order.\n\n**Test**:\n1. Implement the energy functional and verify that q-reduced divisors minimize it within each equivalence class, for all connected graphs on \u2264 7 vertices\n2. Count critical configurations via the burning algorithm and verify equality with $\\det(L^{(q)})$\n3. Measure the spectral gap of the chip-firing Markov chain and verify it equals the Fiedler eigenvalue of the Laplacian\n4. Falsification: find a graph where a q-reduced divisor is NOT the energy minimizer (would contradict the potential theory)\n\n**Impact**: Provides a rigorous energy-theoretic foundation for self-organized criticality. The connection between chip-firing dynamics and Laplacian spectral theory could explain why sandpile models exhibit power-law avalanche distributions.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `chipFire_degree_preserved`, `principalDivisor_degree_zero`\n- `Catalog/Pythagorean/ResistanceDefect/Defs.lean`: resistance distance definitions (if available)\n\n**Proof Strategy**: Show that the Laplacian pseudoinverse energy is a convex function on each linear equivalence class, with the q-reduced divisor as the unique minimizer. Use `chipFire_degree_preserved` to show that chip-firing preserves the constraint set, and the positive semidefiniteness of $L$ to show convexity.\n\n**Domain Bridges**: Statistical mechanics (self-organized criticality, Bak-Tang-Wiesenfeld) \u2194 Spectral graph theory (Fiedler eigenvalue) \u2194 Chip-firing (q-reduced divisors)\n\n**Lineage**: Extends `chipFire_degree_preserved`, connects to sandpile physics\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2606 \u2014 Mathematically novel connection between energy minimization and q-reduction; computational verification is straightforward but the formal proof requires developing pseudoinverse theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97def267",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T14:24:37.121580+00:00"
+  },
+  {
+    "id": "fd_0866",
+    "title": "Direction 4: Tropical Persistent Homology for Network Data Analysis",
+    "description": "**Conjecture**: For a filtration of graphs $G_1 \\subseteq G_2 \\subseteq \\cdots \\subseteq G_k$ arising from a point cloud (via Vietoris-Rips or similar construction), the sequence of tropical kernel dimensions $\\dim(\\ker_{\\text{trop}}(L_{G_i}))$ produces a \"tropical barcode\" that is stable under small perturbations of the input data, with stability constant equal to the minimum Fiedler eigenvalue across the filtration.\n\n**Test**:\n1. Generate 100 random point clouds in $\\mathbb{R}^d$ for $d \\in \\{2, 3, 5\\}$\n2. Compute tropical barcodes via the cycle rank sequence\n3. Compute classical persistent homology barcodes via standard algorithms\n4. Compare stability constants: measure the bottleneck distance between barcodes under perturbation\n5. Falsification: find a point cloud where the tropical barcode is strictly less stable than the classical barcode (would bound the stability constant)\n\n**Impact**: Could provide a faster alternative to standard persistent homology computation for topological data analysis. Tropical operations (min, plus) are simpler than field arithmetic, potentially enabling hardware acceleration.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `genus_nonneg_of_connected`\n- `Catalog/Pythagorean/AdelicPersistentHomology.lean`: persistent homology infrastructure (if available)\n\n**Proof Strategy**: Use the interlacing theorem for graph Laplacian eigenvalues to bound how the tropical kernel dimension changes when edges are added. The genus changes by exactly 1 when a non-tree edge is added, giving a Lipschitz bound on the barcode.\n\n**Domain Bridges**: Topological data analysis (persistent homology, barcodes) \u2194 Tropical geometry (tropical kernel dimension) \u2194 Spectral graph theory (eigenvalue interlacing)\n\n**Lineage**: Extends `genus_nonneg_of_connected`, connects to TDA\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The cycle rank interpretation is standard; the novelty is the stability analysis and tropical algorithmic framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "97def267",
+    "consumed_by_exp_id": "325d9cdd",
+    "timestamp": "2026-05-25T14:24:37.143822+00:00"
+  },
+  {
+    "id": "fd_0867",
+    "title": "Direction 5 (Grand Challenge): Complete Tropical Hodge Theory for Graphs",
+    "description": "**Conjecture**: There exists a complete tropical Hodge decomposition for graphs: for any connected graph $G$ of genus $g$, the space of integer-valued functions on edges decomposes as:\n\n$$C^1(G, \\mathbb{Z}) = \\text{im}(d_0) \\oplus \\ker(d_0^T) \\cong \\text{im}(L) \\oplus H^1_{\\text{trop}}(G)$$\n\nwhere $H^1_{\\text{trop}}(G) \\cong \\mathbb{Z}^g$ is the tropical first cohomology group, and this decomposition is compatible with the Baker-Norine theory in the sense that the tropical Hodge numbers satisfy $h^{0,0} = h^{1,1} = 1$, $h^{0,1} = h^{1,0} = g$, mirroring the Hodge diamond of a smooth curve.\n\n**Test**:\n1. Formalize the edge space $C^1(G, \\mathbb{Z})$ and the coboundary operator $d_0$\n2. Prove the decomposition using the rank-nullity theorem applied to $d_0$ and $d_0^T$\n3. Verify that $h^{0,1} = g$ by computing the cycle space dimension\n4. Define the tropical cup product on $H^1_{\\text{trop}}$ and verify the Hodge-Riemann bilinear relations\n5. Falsification: find a graph where the tropical Hodge numbers do not satisfy the expected symmetries\n\n**Impact**: Would establish tropical Hodge theory for graphs as a complete, rigorous mathematical theory with machine-verified foundations. This is the \"Weil conjectures moment\" for combinatorial Hodge theory \u2014 a discrete analogue of one of the deepest structures in algebraic geometry.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: all theorems\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean`: all definitions\n\n**Proof Strategy**: \n1. Build on the Laplacian kernel analysis from Direction 1\n2. Define the edge Laplacian $L_1 = d_0^T d_0$ and prove the Hodge decomposition via spectral theory\n3. The tropical cup product is the min-plus analogue of the wedge product\n4. Verify Hodge-Riemann via the Cauchy-Binet formula\n\n**Domain Bridges**: Algebraic geometry (Hodge theory, Hodge diamond) \u2194 Tropical geometry (tropical cohomology) \u2194 Combinatorial topology (simplicial cohomology) \u2194 Formal verification (Lean 4)\n\n**Lineage**: Ultimate extension of the entire chip-firing correspondence program\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 \u2014 Grand challenge requiring substantial new mathematical and formal infrastructure. The tropical cup product and Hodge-Riemann relations for graphs are at the frontier of current research.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97def267",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T14:24:37.164817+00:00"
   },
   {
     "id": "seed_032",

@@ -7,7 +7,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "direction_3_compositional_witness_synthesis_algori",
@@ -16,9 +16,55 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
+      "hue": 90
+    },
+    {
+      "id": "direction_2_higher_order_log_concavity_and_partiti",
+      "title": "Higher-Order Log-Concavity: A Recursive Hierarchy for Discrete Sequences",
+      "domain": "Algebraic Combinatorics / Discrete Convexity",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T14:24:11Z",
       "hue": 271
+    },
+    {
+      "id": "direction_5_chip_firing_correspondence",
+      "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
+      "domain": "Tropical Geometry / Combinatorial Algebraic Geometry",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T14:24:33Z",
+      "hue": 91
+    },
+    {
+      "id": "direction_1_brauer_manin_obstructions_for_integral",
+      "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
+      "domain": "Arithmetic Geometry / Number Theory",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-25T14:24:55Z",
+      "hue": 91
     }
   ],
   "edges": [],
-  "domain_bridges": []
+  "domain_bridges": [
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Geometry",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    }
+  ]
 }

@@ -541,5 +541,8 @@
   "92e3853a": "symmetric_group_generation_probability.json",
   "561cc547": "tropical_satake_isomorphism_for_gl_n.json",
   "e97c0f01": "direction_5_generalization_to_higher_degree_diagon.json",
-  "d78e63d5": "direction_3_compositional_witness_synthesis_algori.json"
+  "d78e63d5": "direction_3_compositional_witness_synthesis_algori.json",
+  "56c2f88c": "direction_2_higher_order_log_concavity_and_partiti.json",
+  "97def267": "direction_5_chip_firing_correspondence.json",
+  "3265971b": "direction_1_brauer_manin_obstructions_for_integral.json"
 }

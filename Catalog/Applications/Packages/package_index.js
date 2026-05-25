@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Geometry / Number Theory",
     "date": "2026-05-25T14:24:55Z",
     "exp_id": "3265971b",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6946936070455108,
+    "quality": "partial"
   },
   {
     "filename": "direction_5_chip_firing_correspondence.json",
@@ -149,8 +149,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6946936070455108,
+      "quality": "partial"
     }
   ],
   "edges": [],
