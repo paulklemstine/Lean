@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_5_weighted_and_multi_objective_extension.json",
+    "title": "Weighted and Multi-Objective Hypergraph Transversals: Certified LP Rounding for Multi-Criteria Optimization",
+    "domain": "Combinatorial Optimization / Polyhedral Combinatorics",
+    "date": "2026-05-25T16:39:05Z",
+    "exp_id": "b9d16ed0",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_4_relative_tropical_hodge_theorem.json",
     "title": "Tropical Hodge Theory for Graphs: Kernel Characterization, Incidence Factorization, and Betti Numbers",
     "domain": "Tropical Algebra / Graph Theory / Algebraic Topology",
@@ -104,6 +113,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Number Theory / Arithmetic Geometry"
   },
+  "direction_5_weighted_and_multi_objective_extension.json": {
+    "title": "Weighted and Multi-Objective Hypergraph Transversals: Certified LP Rounding for Multi-Criteria Optimization",
+    "exp_id": "b9d16ed0",
+    "source_exp_ids": [
+      "f6e7fe77"
+    ],
+    "domain": "Combinatorial Optimization / Polyhedral Combinatorics"
+  },
   "direction_1_brauer_manin_obstructions_for_integral.json": {
     "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
     "exp_id": "3265971b",
@@ -189,7 +206,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -200,7 +217,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 91,
+      "hue": 101,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -211,7 +228,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -222,7 +239,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -233,7 +250,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -244,7 +261,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.7554863879178124,
       "quality": "substantial"
     },
@@ -255,7 +272,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -266,7 +283,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -277,7 +294,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 95,
+      "hue": 91,
       "priority_score": 0.7475694375378231,
       "quality": "substantial"
     },
@@ -288,9 +305,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.7452328425357874,
       "quality": "substantial"
+    },
+    {
+      "id": "direction_5_weighted_and_multi_objective_extension",
+      "title": "Weighted and Multi-Objective Hypergraph Transversals: Certified LP Rounding for Multi-Criteria Optimization",
+      "domain": "Combinatorial Optimization / Polyhedral Combinatorics",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T16:39:05Z",
+      "hue": 270,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],

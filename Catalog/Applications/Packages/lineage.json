@@ -7,7 +7,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_3_compositional_witness_synthesis_algori",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 91
+      "hue": 101
     },
     {
       "id": "direction_2_higher_order_log_concavity_and_partiti",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_5_chip_firing_correspondence",
@@ -34,7 +34,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_1_brauer_manin_obstructions_for_integral",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "yang_mills_mass_gap",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "direction_3_generation_certificates_for_matrix_gro",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_3_concentration_of__on_random_hypergraph",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_1_tight_spectral_gap_via_lorentzian_stru",
@@ -79,7 +79,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "direction_4_relative_tropical_hodge_theorem",
@@ -88,7 +88,16 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 91
+      "hue": 272
+    },
+    {
+      "id": "direction_5_weighted_and_multi_objective_extension",
+      "title": "Weighted and Multi-Objective Hypergraph Transversals: Certified LP Rounding for Multi-Criteria Optimization",
+      "domain": "Combinatorial Optimization / Polyhedral Combinatorics",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T16:39:05Z",
+      "hue": 270
     }
   ],
   "edges": [],
