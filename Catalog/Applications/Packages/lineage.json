@@ -16,7 +16,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_3_extension_to_product_and_sum_types",
@@ -25,7 +25,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "direction_2_fractional_predictor_refinement",
@@ -43,7 +43,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "eml_algebraic_independence_transcendence_results",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "sums_of_three_cubes",
@@ -70,7 +70,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 95
+      "hue": 92
+    },
+    {
+      "id": "direction_1_global_tightness_conjecture",
+      "title": "Exact Higher-Order State Complexity: A Myhill-Nerode Theorem for Simply Typed Lambda Calculus",
+      "domain": "Pythagorean",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T00:55:11Z",
+      "hue": 271
     }
   ],
   "edges": [],
