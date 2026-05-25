@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_5_numerical_stability_of_lorentzian_reco.json",
+    "title": "Numerical Stability of Lorentzian Recognition: Quantitative Spectral Margins and Certified Perturbation Bounds",
+    "domain": "Pythagorean / Lorentzian Polynomial Theory",
+    "date": "2026-05-25T17:14:28Z",
+    "exp_id": "2493279d",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_5_weighted_and_multi_objective_extension.json",
     "title": "Weighted and Multi-Objective Hypergraph Transversals: Certified LP Rounding for Multi-Criteria Optimization",
     "domain": "Combinatorial Optimization / Polyhedral Combinatorics",
@@ -169,6 +178,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebraic Combinatorics / Discrete Convexity"
   },
+  "direction_5_numerical_stability_of_lorentzian_reco.json": {
+    "title": "Numerical Stability of Lorentzian Recognition: Quantitative Spectral Margins and Certified Perturbation Bounds",
+    "exp_id": "2493279d",
+    "source_exp_ids": [
+      "33261812"
+    ],
+    "domain": "Pythagorean / Lorentzian Polynomial Theory"
+  },
   "direction_3_concentration_of__on_random_hypergraph.json": {
     "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
     "exp_id": "7817bcef",
@@ -206,7 +223,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 91,
+      "hue": 275,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -217,7 +234,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 101,
+      "hue": 270,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -228,7 +245,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -239,7 +256,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -250,7 +267,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 270,
+      "hue": 100,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -261,7 +278,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7554863879178124,
       "quality": "substantial"
     },
@@ -283,7 +300,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -305,7 +322,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7452328425357874,
       "quality": "substantial"
     },
@@ -316,9 +333,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 270,
+      "hue": 359,
       "priority_score": 0.7379731931205967,
       "quality": "substantial"
+    },
+    {
+      "id": "direction_5_numerical_stability_of_lorentzian_reco",
+      "title": "Numerical Stability of Lorentzian Recognition: Quantitative Spectral Margins and Certified Perturbation Bounds",
+      "domain": "Pythagorean / Lorentzian Polynomial Theory",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T17:14:28Z",
+      "hue": 271,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],

@@ -7,7 +7,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "direction_3_compositional_witness_synthesis_algori",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 101
+      "hue": 270
     },
     {
       "id": "direction_2_higher_order_log_concavity_and_partiti",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_5_chip_firing_correspondence",
@@ -34,7 +34,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "direction_1_brauer_manin_obstructions_for_integral",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "yang_mills_mass_gap",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_3_generation_certificates_for_matrix_gro",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "direction_1_tight_spectral_gap_via_lorentzian_stru",
@@ -88,7 +88,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_5_weighted_and_multi_objective_extension",
@@ -97,7 +97,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 270
+      "hue": 359
+    },
+    {
+      "id": "direction_5_numerical_stability_of_lorentzian_reco",
+      "title": "Numerical Stability of Lorentzian Recognition: Quantitative Spectral Margins and Certified Perturbation Bounds",
+      "domain": "Pythagorean / Lorentzian Polynomial Theory",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T17:14:28Z",
+      "hue": 271
     }
   ],
   "edges": [],
