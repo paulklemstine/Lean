@@ -392,8 +392,17 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
+# Override plt.savefig to be a no-op so visualization scripts that call
+# plt.savefig(filename) don't try to write to the virtual filesystem
+_orig_savefig = plt.savefig
+def _viz_savefig(*args, **kwargs):
+    pass
+plt.savefig = _viz_savefig
+
 ${processedCode}
 
+# Restore and capture via buffer
+plt.savefig = _orig_savefig
 buf = io.BytesIO()
 plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
 buf.seek(0)
