@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_1_concrete_first_order_term_algebra_with.json",
+    "title": "Certified Knuth-Bendix Completion: Concrete-to-Abstract Simulation for First-Order Term Algebra",
+    "domain": "Term Rewriting Systems / Universal Algebra",
+    "date": "2026-05-25T01:35:33Z",
+    "exp_id": "8e448ab4",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_1_global_tightness_conjecture.json",
     "title": "Exact Higher-Order State Complexity: A Myhill-Nerode Theorem for Simply Typed Lambda Calculus",
     "domain": "Pythagorean",
@@ -151,6 +160,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Many-Sorted Rewriting / Linear Algebra / Scientific Computing"
   },
+  "direction_1_concrete_first_order_term_algebra_with.json": {
+    "title": "Certified Knuth-Bendix Completion: Concrete-to-Abstract Simulation for First-Order Term Algebra",
+    "exp_id": "8e448ab4",
+    "source_exp_ids": [
+      "43aa1bfc"
+    ],
+    "domain": "Term Rewriting Systems / Universal Algebra"
+  },
   "direction_1_global_tightness_conjecture.json": {
     "title": "Exact Higher-Order State Complexity: A Myhill-Nerode Theorem for Simply Typed Lambda Calculus",
     "exp_id": "21d0ab18",
@@ -172,7 +189,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -183,7 +200,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.6423696551724138,
       "quality": "partial"
     },
@@ -194,7 +211,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.5431629411764707,
       "quality": "partial"
     },
@@ -205,7 +222,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.49450347826086954,
       "quality": "partial"
     },
@@ -227,7 +244,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.5684834461538462,
       "quality": "partial"
     },
@@ -249,7 +266,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 92,
+      "hue": 272,
       "priority_score": 0.7156088,
       "quality": "substantial"
     },
@@ -263,6 +280,17 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "priority_score": 0.707316371361133,
       "quality": "substantial"
+    },
+    {
+      "id": "direction_1_concrete_first_order_term_algebra_with",
+      "title": "Certified Knuth-Bendix Completion: Concrete-to-Abstract Simulation for First-Order Term Algebra",
+      "domain": "Term Rewriting Systems / Universal Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T01:35:33Z",
+      "hue": 92,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],
