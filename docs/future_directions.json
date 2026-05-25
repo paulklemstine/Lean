@@ -13,14 +13,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.95,
+      "priority_score": 1.0,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.294221+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_002",
@@ -42,7 +44,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_003",
@@ -57,14 +61,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.88,
+      "priority_score": 0.98,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.308847+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_004",
@@ -85,7 +91,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_005",
@@ -107,7 +115,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_006",
@@ -129,7 +139,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_007",
@@ -150,7 +162,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_008",
@@ -171,7 +185,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_009",
@@ -187,14 +203,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.78,
+      "priority_score": 0.88,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.351682+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_010",
@@ -216,7 +234,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_011",
@@ -238,7 +258,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_012",
@@ -254,13 +276,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.83,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "34c2669a",
       "timestamp": "2026-05-24T22:37:54.373036+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_013",
@@ -281,7 +305,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_014",
@@ -296,14 +322,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.94,
+      "priority_score": 1.0,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.387127+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_015",
@@ -325,7 +353,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_016",
@@ -347,7 +377,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_017",
@@ -362,14 +394,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.94,
+      "priority_score": 1.0,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.411437+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_018",
@@ -391,7 +425,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_019",
@@ -413,7 +449,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_020",
@@ -435,7 +473,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_021",
@@ -457,7 +497,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_022",
@@ -479,7 +521,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_023",
@@ -501,7 +545,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_024",
@@ -522,7 +568,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_025",
@@ -543,7 +591,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_026",
@@ -558,14 +608,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.79,
+      "priority_score": 0.89,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.484135+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_027",
@@ -587,7 +639,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_028",
@@ -609,7 +663,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_029",
@@ -625,13 +681,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.506101+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_030",
@@ -646,14 +704,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.84,
+      "priority_score": 0.94,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.513281+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_031",
@@ -668,14 +728,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.8,
+      "priority_score": 0.9,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.520566+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_032",
@@ -696,7 +758,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_033",
@@ -718,7 +782,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_034",
@@ -733,14 +799,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.83,
+      "priority_score": 0.9299999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.544197+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_035",
@@ -762,7 +830,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_036",
@@ -783,7 +853,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_037",
@@ -804,7 +876,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_038",
@@ -820,14 +894,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.92,
+      "priority_score": 1.0,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.574939+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_039",
@@ -843,14 +919,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.87,
+      "priority_score": 0.97,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.583311+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_040",
@@ -866,14 +944,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.86,
+      "priority_score": 0.96,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.591547+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_041",
@@ -896,7 +976,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_042",
@@ -919,7 +1001,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_043",
@@ -942,7 +1026,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_044",
@@ -965,7 +1051,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_045",
@@ -987,7 +1075,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_046",
@@ -1010,7 +1100,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_047",
@@ -1026,14 +1118,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.82,
-      "status": "available",
+      "priority_score": 1.0,
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.642160+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_048",
@@ -1056,7 +1150,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_049",
@@ -1072,14 +1168,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.84,
+      "priority_score": 0.94,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.657271+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_050",
@@ -1102,7 +1200,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_051",
@@ -1124,7 +1224,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_052",
@@ -1147,7 +1249,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_053",
@@ -1170,7 +1274,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_054",
@@ -1187,13 +1293,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.694274+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_055",
@@ -1215,7 +1323,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_056",
@@ -1237,7 +1347,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_057",
@@ -1260,7 +1372,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_058",
@@ -1277,13 +1391,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.76,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.723031+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_059",
@@ -1305,7 +1421,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_060",
@@ -1327,7 +1445,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_061",
@@ -1344,13 +1464,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.748891+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_062",
@@ -1373,7 +1495,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_063",
@@ -1390,13 +1514,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.84,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.764550+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_064",
@@ -1419,7 +1545,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_065",
@@ -1442,7 +1570,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_066",
@@ -1465,7 +1595,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_067",
@@ -1488,7 +1620,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_068",
@@ -1511,7 +1645,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_069",
@@ -1528,13 +1664,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.817888+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_070",
@@ -1551,13 +1689,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.827715+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_071",
@@ -1580,7 +1720,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_072",
@@ -1603,7 +1745,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_073",
@@ -1626,7 +1770,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_074",
@@ -1649,7 +1795,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_075",
@@ -1666,13 +1814,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.870982+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_076",
@@ -1695,7 +1845,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_077",
@@ -1718,7 +1870,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_078",
@@ -1741,7 +1895,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_079",
@@ -1764,7 +1920,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_080",
@@ -1787,7 +1945,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_081",
@@ -1810,7 +1970,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_082",
@@ -1833,7 +1995,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_083",
@@ -1856,7 +2020,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_084",
@@ -1873,13 +2039,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.953715+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_085",
@@ -1902,7 +2070,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_086",
@@ -1919,13 +2089,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.969692+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_087",
@@ -1942,13 +2114,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.86,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.978415+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_088",
@@ -1965,13 +2139,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.85,
-      "status": "in_progress",
+      "status": "completed",
       "consumed_by_exp_id": "5eb5bdbc",
       "timestamp": "2026-05-24T22:37:54.986795+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_089",
@@ -1987,14 +2163,16 @@
       "proof_strategy": "Define a stereographic sheaf as a sheaf on S^n whose restriction to each chart of the stereographic atlas satisfies a compatibility condition: the transition functions are Mobius transformations. Prove that the category of stereographic sheaves on S^n is equivalent to the category of locally constant sheaves on RP^n (real projective n-space). The key step: the stereographic cover has two charts, so Cech cohomology reduces to computing the gluing datum. Test: compute H^1(S^2, Z) for the constant sheaf Z and verify it equals H^1(RP^2, Z) = Z/2Z.",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.88,
-      "status": "available",
+      "priority_score": 0.98,
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.996007+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_090",
@@ -2017,7 +2195,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_091",
@@ -2034,13 +2214,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.87,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:55.015985+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_092",
@@ -2063,7 +2245,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_093",
@@ -2080,13 +2264,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.84,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:55.036319+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_094",
@@ -2109,7 +2295,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_095",
@@ -2132,7 +2320,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_096",
@@ -2155,7 +2345,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_097",
@@ -2178,7 +2370,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_098",
@@ -2201,7 +2395,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_099",
@@ -2224,7 +2420,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_100",
@@ -2247,7 +2445,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_101",
@@ -2270,7 +2470,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_102",
@@ -2293,7 +2495,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_103",
@@ -2316,7 +2520,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_104",
@@ -2339,7 +2545,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0783",
@@ -2365,7 +2573,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0784",
@@ -2382,14 +2592,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.8999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:24.476543+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0785",
@@ -2407,14 +2619,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.9999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:24.492421+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0786",
@@ -2432,14 +2646,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.9999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:24.506271+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0787",
@@ -2457,14 +2673,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.8999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:24.518980+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0788",
@@ -2483,13 +2701,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:24.532304+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0789",
@@ -2505,13 +2725,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:47.101012+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0790",
@@ -2531,14 +2753,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.9999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:12:21.832370+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0791",
@@ -2559,14 +2783,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.9999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:12:21.848642+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0792",
@@ -2592,7 +2818,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0793",
@@ -2611,14 +2839,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.9999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:12:21.876594+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0794",
@@ -2638,14 +2868,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.9999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:12:21.890989+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0795",
@@ -2667,7 +2899,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0796",
@@ -2688,7 +2922,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0797",
@@ -2712,7 +2948,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0798",
@@ -2728,13 +2966,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:13:13.815028+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0799",
@@ -2759,7 +2999,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0800",
@@ -2777,14 +3019,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.9999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:13:44.233016+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0801",
@@ -2804,14 +3048,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.9999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:13:44.246682+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0802",
@@ -2832,13 +3078,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:13:44.261184+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0803",
@@ -2857,14 +3105,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.9999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:13:44.276911+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0804",
@@ -2880,13 +3130,389 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.8,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:13:53.546170+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0805",
+      "title": "Zeta-Spectral Rigidity of Proof Dependency Graphs",
+      "description": "Conjecture: For any finitely axiomatized theory T with two independent large formalization corpora C1 and C2 of the same mathematical domain, the normalized Ihara zeta function of the directed proof-dependency graph converges, under corpus growth, to a theory-specific limit invariant Z_T that is independent of presentation up to explicit finite-size error. Test: Build proof-dependency graphs from multiple formal libraries/formalization styles for the same theory (for example groups, commutative algebra, or measure theory), compute their normalized zeta functions and compare cross-corpus convergence against null models obtained by degree-preserving rewiring; the conjecture is refuted if presentation effects do not decay or if no stable invariant emerges. Impact: This would introduce a genuinely new spectral invariant of mathematical theories, enabling quantitative comparison of theories, transfer of lemmas across libraries via zeta matching, and a new bridge between graph zeta functions, formal proof mining, and the large-scale geometry of mathematics.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Graph Zeta Functions",
+        "Formalized Mathematics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:25:26.921712+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0806",
+      "title": "Tropical Shadow of p-adic Persistent Homology",
+      "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Topological Data Analysis",
+        "Tropical Geometry"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:26:01.272574+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0807",
+      "title": "Direction 1: Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
+      "description": "**Conjecture:** For the cubic surface $X_k : x^3+y^3+z^3 = k$, the Brauer-Manin obstruction is the only obstruction to the integral Hasse principle. That is, if $k$ is everywhere locally admissible and survives the Brauer-Manin filtration, then $k$ is representable.\n\n**Test:** Compute the Brauer group $\\text{Br}(X_k)/\\text{Br}(\\mathbb{Q})$ for specific $k$ values (e.g., $k = 33, 42, 114$) and verify that the Brauer-Manin set $X_k(\\mathbb{A}_\\mathbb{Z})^{\\text{Br}}$ is nonempty whenever solutions exist. A counterexample would be a $k$ with nonempty Brauer-Manin set but no integral point.\n\n**Impact:** This would establish the three-cubes problem as a test case for the Colliot-Thélène conjecture on integral points, one of the central open problems in arithmetic geometry. It would also provide the first formal connection between computational Diophantine search and cohomological obstructions.\n\n**The key insight is** that the mod 9 obstruction we formalized is the shadow of a Brauer class at the prime 3, and the general Brauer-Manin framework subsumes all such modular obstructions into a single cohomological invariant.\n\n**Why now?** The formal infrastructure for local admissibility (`ThreeCubeLocalAdmissible`, `EverywhereLocallyAdmissible`) created in this cycle provides the precise definitions needed to state and test Brauer-Manin predictions. Mathlib's growing étale cohomology library makes partial formalization feasible.\n\n**Catalog References:** `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean), `not_threeCubeLocalAdmissible_mod9_of_eq_four_or_five` (Algebra/SumThreeCubes/LocalObstruction.lean)\n\n**Proof Strategy:** Formalize the Brauer group of a smooth cubic surface over $\\mathbb{Q}$, compute generators via Azumaya algebras, and evaluate the Brauer-Manin pairing at each completion of $\\mathbb{Q}$.\n\n**Domain Bridges:** Arithmetic geometry, étale cohomology, class field theory\n\n**Lineage:** Extends the local-global implication (Theorem 4) from modular arithmetic to cohomological invariants\n\n**Ambition:** Grand challenge — would resolve a major case of the integral Hasse principle\n\n---",
+      "source_exp_id": "34c2669a",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/34c2669a",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Geometry",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8999999999999999,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:26:36.179554+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0808",
+      "title": "Direction 2: Density Heuristics via the Circle Method",
+      "description": "**Conjecture:** For each admissible $k$ (i.e., $k \\not\\equiv 4,5 \\pmod{9}$), the number of representations $|\\{(x,y,z) \\in [-N,N]^3 : x^3+y^3+z^3 = k\\}|$ grows as $c_k \\cdot N^{1/3}$ for an explicit constant $c_k > 0$ depending on the singular series and singular integral.\n\n**Test:** Compute empirical counts of representations for $k \\in \\{0, 1, 2, 3, 6, 7, 8, 9\\}$ up to $N = 10^6$ and compare with the predicted asymptotic. Measure the relative error $|R(N) - c_k N^{1/3}| / (c_k N^{1/3})$ and verify it decreases with $N$.\n\n**Impact:** Would provide the first formally grounded connection between the combinatorial/algebraic framework and analytic number theory. The singular series in the density prediction is a product of local densities, directly connecting to our `ThreeCubeLocalAdmissible` counts.\n\n**The key insight is** that the local admissibility counts $|A_n|/n$ at each modulus $n$ are the local factors of the singular series, and the everywhere-local-admissibility theorem guarantees this product converges when $k$ is admissible.\n\n**Why now?** The formal definitions of local admissibility and the computational infrastructure for counting admissible residues provide the exact data needed to compute singular series factors and compare with empirical density.\n\n**Catalog References:** `ThreeCubeLocalAdmissible` (Algebra/SumThreeCubes/Defs.lean), `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean)\n\n**Proof Strategy:** Formalize the circle method setup for cubic forms, compute the singular integral, and bound the minor arc contributions.\n\n**Domain Bridges:** Analytic number theory, harmonic analysis, probability theory\n\n**Lineage:** Connects the discrete local admissibility framework to continuous density predictions\n\n**Ambition:** Solid extension — the circle method for three cubes is at the boundary of current analytic technique\n\n---",
+      "source_exp_id": "34c2669a",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/34c2669a",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Computation",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8999999999999999,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:26:36.199585+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0809",
+      "title": "Direction 3: Computational Complexity of Diophantine Search",
+      "description": "**Conjecture:** The factorization-based search algorithm (exploiting $x^3+y^3 = (x+y)(x^2-xy+y^2)$) achieves time complexity $O(B^{1+\\epsilon})$ for search bound $B$, compared to $O(B^3)$ for brute force. Furthermore, lattice reduction methods can improve this to $O(B^{2/3+\\epsilon})$ by exploiting the geometry of the cubic surface.\n\n**Test:** Implement the lattice reduction approach (as used by Booker-Sutherland) and formally verify its correctness relative to the factorization theorem. Measure empirical running times and compare with the theoretical bounds.\n\n**Impact:** Would establish a formal connection between algebraic structure (the sum-of-cubes factorization) and computational complexity, showing that algebraic identities yield provable speedups in Diophantine search.\n\n**The key insight is** that the factorization reduction theorem `sumThreeCubesRep_iff_exists_factorization` transforms a 3D search into a 1D search plus a factorization problem, and this dimensional reduction has precise complexity implications.\n\n**Why now?** The formal factorization theorem and discriminant relation provide the mathematical foundation for analyzing the algorithm's correctness and complexity within a verified framework.\n\n**Catalog References:** `sumThreeCubesRep_iff_exists_factorization` (Algebra/SumThreeCubes/Factorization.lean), `factorization_discriminant` (Algebra/SumThreeCubes/Factorization.lean)\n\n**Proof Strategy:** Formalize the LLL lattice reduction algorithm, connect lattice vectors to solutions of the cubic equation, and verify the complexity bounds.\n\n**Domain Bridges:** Computational complexity, lattice algorithms, algorithmic number theory\n\n**Lineage:** Extends the factorization reduction from algebraic identity to complexity-theoretic tool\n\n**Ambition:** Solid extension — combines formal verification with algorithm analysis\n\n---",
+      "source_exp_id": "34c2669a",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/34c2669a",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Geometry",
+        "Computation",
+        "Cryptography",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7,
+      "status": "pruned",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:26:36.559728+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0810",
+      "title": "Direction 4: Parametric Families and Algebraic Curves on Cubic Surfaces",
+      "description": "**Conjecture:** The parametric family $k = -3ab(a+b)$ (from `sum_three_cubes_neg_sum`) covers a positive density of admissible integers. More precisely, $|\\{k \\in [1,N] : k = 3ab(a+b) \\text{ for some } a,b \\in \\mathbb{Z}\\}| \\gg N^{2/3}$.\n\n**Test:** Enumerate all values of $-3ab(a+b)$ for $|a|, |b| \\leq 1000$ and measure the density of covered integers in $[1, 10^6]$. Compare with the predicted $N^{2/3}$ growth.\n\n**Impact:** Parametric families correspond to **algebraic curves** on the cubic surface. Understanding which curves pass through integer points, and how densely they cover the integers, connects Diophantine approximation to the geometry of rational curves on cubic surfaces.\n\n**The key insight is** that each parametric identity for sums of three cubes corresponds to a rational curve on $X_k$ parametrized over $\\mathbb{Z}$, and the union of all such curves determines a \"constructively representable\" subset whose density is a geometric invariant.\n\n**Why now?** The formal proof of `sumThreeCubesRep_neg_iff` and the identity $a^3 + b^3 + (-a-b)^3 = -3ab(a+b)$ provide the first verified parametric family, which can be used as a template for formalizing others.\n\n**Catalog References:** `sumThreeCubesRep_neg_iff` (Algebra/SumThreeCubes/Symmetry.lean), `sum_three_cubes_neg_sum` (Catalog/Algebra/LocalGlobal.lean)\n\n**Proof Strategy:** Enumerate known parametric families, compute their images, and prove density bounds using sieve methods.\n\n**Domain Bridges:** Algebraic geometry (rational curves on surfaces), sieve theory, additive combinatorics\n\n**Lineage:** Extends sign symmetry to full parametric family analysis\n\n**Ambition:** Solid extension — combines known identities with density estimation\n\n---",
+      "source_exp_id": "34c2669a",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/34c2669a",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Geometry",
+        "Bridges",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8999999999999999,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:26:38.290698+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0811",
+      "title": "Direction 5: Generalization to Higher-Degree Diagonal Surfaces",
+      "description": "**Conjecture (Waring-type local-global):** For the equation $x_1^n + x_2^n + \\cdots + x_s^n = k$ with $s$ sufficiently large relative to $n$, the only local obstructions arise from $n$-th power residue conditions at primes dividing $n$, analogous to the mod-9 obstruction for $n=3, s=3$.\n\n**Test:** Compute local admissible sets for $x^4+y^4+z^4+w^4 = k$ modulo all $n \\leq 100$ and identify the obstructing moduli. Compare with the predicted pattern (obstructions only at powers of 2 and primes $p \\equiv 1 \\pmod{4}$).\n\n**Impact:** Would establish a general theory of local obstructions for Waring-type problems, unifying the three-cubes result with classical results on sums of squares, biquadrates, and higher powers.\n\n**The key insight is** that our framework—local admissibility, everywhere local admissibility, the global-to-local implication—generalizes verbatim to $x_1^n + \\cdots + x_s^n = k$ by replacing cubes with $n$-th powers, and the new obstructions reflect the arithmetic of $n$-th power residues.\n\n**Why now?** The Lean definitions `ThreeCubeLocalAdmissible` and `EverywhereLocallyAdmissible` are parametric in the modulus and can be straightforwardly generalized to arbitrary degree, making this the natural next step.\n\n**Catalog References:** All definitions in `Algebra/SumThreeCubes/Defs.lean`, the obstruction framework in `Algebra/SumThreeCubes/LocalObstruction.lean`\n\n**Proof Strategy:** Generalize definitions to $n$-th powers, classify $n$-th power residues modulo prime powers, and prove the analogue of Theorem 4 (global implies local) for general degree.\n\n**Domain Bridges:** Waring's problem, algebraic number theory ($n$-th power reciprocity), analytic number theory (circle method for higher powers)\n\n**Lineage:** Direct generalization of the entire framework from degree 3 to degree $n$\n\n**Ambition:** Grand challenge — would create a unified formal theory of local obstructions for additive Diophantine problems",
+      "source_exp_id": "34c2669a",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/34c2669a",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Geometry",
+        "Bridges",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8999999999999999,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:26:39.059352+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0812",
+      "title": "Prime-Indexed Spectral Shadows of Modular Forms in Persistent Homology",
+      "description": "Conjecture: There exists a natural family of filtered simplicial complexes K_N attached to arithmetic data up to cutoff N (for example complexes built from divisibility, residue-class, or Hecke-neighbor relations on integers) such that for some fixed homological degree d, the primewise torsion barcode statistics of H_d(K_N; Z) converge, after explicit normalization in N and p, to the Hecke eigenvalue distribution of a non-CM modular form f. More precisely, the generating function of p-torsion birth/death multiplicities agrees asymptotically with a polynomial statistic of the coefficients a_p(f) on a positive-density set of primes. Test: Construct several canonical arithmetic filtrations, compute primewise persistent homology for large N, and compare normalized torsion summaries against databases of modular forms; confirmation requires statistically significant agreement for one filtration/form pair beyond random and null arithmetic models, while refutation occurs if no canonical construction exhibits nontrivial correlation after normalization and model selection penalties. Impact: This would create a new bridge between topological data analysis and automorphic arithmetic, potentially yielding a geometric-topological probe of L-functions and modular symmetry hidden in combinatorial integer structures.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Topology",
+        "Topological Data Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:26:47.015579+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0813",
+      "title": "Direction 1: Confluence and Unique Normal Forms",
+      "description": "**Conjecture:** The 8-rule distributivity fragment defined in `TensorSortedRewrite.lean` is confluent modulo associativity-commutativity of scalar addition, i.e., any two reduction sequences from the same term yield syntactically equal normal forms up to AC-equivalence of `scalAdd`.\n\n**Test:** Enumerate all tensor terms of depth ≤ 5 with 3 scalar, 3 vector, and 2 matrix variables. For each term, compute all possible reduction sequences (using breadth-first enumeration of rule applications). Check that all terminal forms are AC-equivalent. A single counterexample — two irreducible forms that differ by more than scalar-addition reordering — refutes the conjecture. Run over ℚ for exact arithmetic.\n\n**Impact:** Confluence implies that normalization is deterministic up to AC, which is essential for using the rewrite system as a certified decision procedure. Without confluence, different simplification strategies could produce different \"simplified\" forms, undermining trust in automated preprocessing.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` — `TensorRewrite`, `normStep`, `normStep_sound_*`.\n\n**Proof Strategy:** Define a weight function that strictly decreases under each oriented rule (the current `tensorWeight` increases, but a redex-counting measure should decrease). Prove local confluence by showing all critical pairs are joinable. Apply Newman's lemma (termination + local confluence → confluence).\n\n**Domain Bridges:** Term rewriting theory → optimization preprocessing → compiler correctness for scientific code.\n\n**Lineage:** Extends Theorem 1 (one-step soundness) and Theorem 6 (normStep soundness) toward a complete decision procedure.\n\n**Ambition:** Medium — requires careful critical pair analysis but builds on well-understood rewriting theory.\n\n---",
+      "source_exp_id": "c1bdccd8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c1bdccd8",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7999999999999999,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:54:40.932722+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0814",
+      "title": "Direction 2: Complex Inner Product Spaces and Quantum Observables",
+      "description": "**Conjecture:** The tensor-sorted rewrite system extends to complex scalars `ℂ` with a sesquilinear pairing `⟨v, w⟩ = ∑ᵢ conj(vᵢ) · wᵢ`, and all 8 rewrite rules remain sound under this interpretation. Furthermore, the energy invariance theorem (Theorem 3) generalizes to Hermitian-matrix expectation values `⟨ψ| H |ψ⟩`, preserving the real-valuedness of observables.\n\n**Test:** Implement the complex evaluator over `ℂⁿ` with `n ∈ {2, 4, 8}`. Generate 10,000 random Hermitian matrices and complex vectors. For each, normalize the expression `⟨ψ, H·ψ⟩` and verify: (a) the numerical value is preserved to machine precision, (b) the result is real-valued (imaginary part < 10⁻¹²). A single complex-valued result from a Hermitian observable refutes the real-valuedness claim.\n\n**Impact:** This bridges the tensor rewrite system to finite-dimensional quantum mechanics, where `⟨ψ| H |ψ⟩` is the fundamental observable. Certified simplification of quantum expectation values would have applications in quantum chemistry (Hartree-Fock energy expressions), quantum information (entanglement witnesses), and quantum computing (circuit optimization for variational quantum eigensolvers).\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` — `energy`, `energy_add`, `energy_add_of_symmetric`, `dotProd_comm_of_symmetric`.\n\n**Proof Strategy:** Replace `CommRing R` with `StarRing ℂ` (or `RCLike`). Replace `dotProd` with the sesquilinear form. Modify `dotProd_smul_left` to use `starRingEnd` (conjugation). The key challenge is that `⟨a•v, w⟩ = conj(a) · ⟨v, w⟩`, not `a · ⟨v, w⟩`. This requires modifying the `dot_smulVec_left` rewrite rule to track conjugation.\n\n**Domain Bridges:** Linear algebra → quantum mechanics → quantum computing → quantum chemistry.\n\n**Lineage:** Direct extension of Theorems 3-5 to the complex/Hermitian setting.\n\n**Ambition:** Grand challenge — requires significant new infrastructure (star-rings, sesquilinearity) and breaks the symmetry of the current rewrite rules.\n\n---",
+      "source_exp_id": "c1bdccd8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c1bdccd8",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Computation",
+        "Physics",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7999999999999999,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:54:40.947177+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0815",
+      "title": "Direction 3: Sparse Matrix Structure Preservation",
+      "description": "**Conjecture:** For sparse matrices (with at most `s` nonzero entries per row, where `s ≪ n`), the normalized form produced by the distributivity rewrite system preserves sparsity structure: if all matrix variables in a term are `s`-sparse, then the semantic matrix produced by evaluating any intermediate or final term has at most `s` nonzero entries per row.\n\n**Test:** Generate 5,000 random sparse matrices (CSR format) with `n = 100`, `s = 5`. Build random tensor terms of depth 4. Normalize and evaluate, checking the sparsity pattern of all intermediate matrix results. A single dense intermediate matrix refutes the conjecture. Compute the sparsity ratio (nnz/n²) before and after normalization.\n\n**Impact:** Sparsity preservation is critical for scalability. Finite element stiffness matrices, graph Laplacians, and many physics operators are sparse. If normalization destroys sparsity, the certified simplification becomes computationally useless for large problems. Proving sparsity preservation would make the rewrite system practical for real-world scientific computing.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` — `TensorRewrite`, `evalMat`, `evalVec`.\n\n**Proof Strategy:** Add a `Sparse` predicate on matrix terms and prove that each rewrite rule preserves it. The key insight: distributivity rules never multiply matrices together (no `matMul` in the current fragment), so sparsity of individual matrices is preserved through addition and scalar multiplication.\n\n**Domain Bridges:** Numerical linear algebra → finite elements → graph algorithms → scientific computing at scale.\n\n**Lineage:** Extends Theorem 1 with structural properties beyond semantic equality.\n\n**Ambition:** Medium — the current fragment avoids matrix-matrix multiplication, which is the main source of fill-in.\n\n---",
+      "source_exp_id": "c1bdccd8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c1bdccd8",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Computation",
+        "Bridges",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7999999999999999,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:54:40.959769+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0816",
+      "title": "Direction 4: Higher-Order Tensor Calculus with Einstein Summation",
+      "description": "**Conjecture:** The three-sorted calculus extends to an `n`-sorted system with sorts `Tensor(k)` for `k = 0, 1, 2, ...` (where `k` is the tensor order), equipped with contraction operations that generalize dot product and matrix-vector multiplication. The distributivity rewrite rules generalize to a universal schema: contraction distributes over addition at each pair of orders.\n\n**Test:** Implement a 4-sorted system (orders 0-3) and verify soundness for all pairwise contraction rules (6 pairs) on 1,000 random terms each. Check that the energy identity `E(T, v) = contract(v, contract(T, v))` holds for order-2 tensors `T` and order-1 vectors `v`, and that analogous identities hold for higher-order contractions. A single semantic mismatch refutes the extension.\n\n**Impact:** Real-world tensor computations (general relativity, continuum mechanics, machine learning) involve tensors of order 3 and above. Einstein summation notation is the lingua franca of theoretical physics. A formally verified rewrite system for Einstein summation would be a breakthrough in certified scientific computing, enabling symbolic optimization of tensor network contractions, finite element assembly kernels, and deep learning tensor operations.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` — `TensorSort`, `TensorTerm`, `TensorRewrite`.\n\n**Proof Strategy:** Parameterize `TensorSort` by `ℕ` (tensor order). Define contraction as a binary operation `contract : Tensor(j+k) → Tensor(k) → Tensor(j)`. Prove distributivity of contraction over addition by induction on tensor order, using the current matrix-vector case as the base.\n\n**Domain Bridges:** Tensor algebra → differential geometry → general relativity → machine learning → finite elements.\n\n**Lineage:** Extends the entire framework from 3 sorts to infinitely many.\n\n**Ambition:** Grand challenge — requires a fundamentally new inductive structure for sorts and terms, plus careful handling of index types.\n\n---",
+      "source_exp_id": "c1bdccd8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c1bdccd8",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Geometry",
+        "Computation",
+        "Physics",
+        "Bridges",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7999999999999999,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:54:40.973612+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0817",
+      "title": "Direction 5: Certified Finite Element Assembly Pipeline",
+      "description": "**Conjecture:** The tensor-sorted rewrite system, combined with the energy invariance theorem, provides a formally verified preprocessing step for finite element assembly: if element stiffness matrices `K₁, ..., Kₘ` are assembled into a global stiffness matrix `K = ∑ Kᵢ` and the displacement is decomposed as `u = ∑ uⱼ`, then the total strain energy `E(K, u)` can be decomposed into element contributions plus coupling terms, and this decomposition is preserved by normalization.\n\n**Test:** Implement a 2D triangular mesh FEM with 100 elements. Build the symbolic energy expression `⟨u, K·u⟩` where `K = K₁ + ... + K₁₀₀`. Normalize the expression and verify: (a) the numerical energy matches direct computation to 10 decimal places, (b) the normalized form exposes element-wise energies, (c) the wall-clock time for symbolic normalization is within 10× of direct numerical evaluation for meshes up to 1000 elements. Failure of (a) refutes soundness; failure of (c) indicates practical infeasibility.\n\n**Impact:** Finite element analysis is the backbone of computational engineering. A formally verified pipeline from symbolic assembly to numerical evaluation would provide unprecedented confidence in structural analysis codes used for safety-critical applications (bridges, aircraft, nuclear reactors).\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` — `energy_add`, `energy_invariant_of_rewrites`, `tensorRewrites_sound_*`.\n\n**Proof Strategy:** The energy expansion theorem (Theorem 4) already handles the case of two terms. Prove the multi-term generalization by induction on the number of summands. The coupling-term structure follows from the symmetric specialization (Theorem 5) when stiffness matrices are symmetric.\n\n**Domain Bridges:** Formal verification → structural engineering → computational mechanics → safety-critical systems.\n\n**Lineage:** Direct application of Theorems 3, 4, and 5 to a concrete engineering domain.\n\n**Ambition:** Medium-high — the formal mathematics is already present; the challenge is scaling the symbolic system to realistic problem sizes and connecting to existing FEM codes.",
+      "source_exp_id": "c1bdccd8",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/c1bdccd8",
+      "domains": [
+        "Pythagorean",
+        "Algebra",
+        "Physics",
+        "Bridges",
+        "MachineLearning",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.7999999999999999,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:54:40.987422+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0818",
+      "title": "Derived Equivalence Rigidity from Persistence of Point Counts",
+      "description": "Conjecture: Let X and Y be smooth projective varieties over a number field K. Suppose that for a density-1 set of good primes p of K, the multisets of Frobenius eigenvalues on all l-adic cohomology groups of X and Y agree up to a degree-preserving persistent matching induced by variation over finite field extensions F_{p^r}; equivalently, their point-count generating functions produce isomorphic persistence modules in r for every cohomological degree. Then X and Y are derived equivalent, and in the Calabi-Yau case their numerical Gromov-Witten potentials agree. Test: Compute the persistence modules coming from #(X(F_{p^r})) and #(Y(F_{p^r})) for known pairs of derived-equivalent and non-derived-equivalent varieties (abelian varieties, K3 surfaces, Calabi-Yau hypersurfaces, toric mirrors) and check whether the proposed invariant separates the latter while identifying the former. A single counterexample pair with matching persistence data but provably non-derived-equivalent refutes the conjecture. Impact: This would create a new arithmetic-topological criterion for detecting derived equivalence and potentially connect point counts, motives, mirror symmetry, and persistent homology in a computable way.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Arithmetic Geometry",
+        "Topological Data Analysis"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:54:49.105761+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     }
   ],
   "pruned": [
@@ -2910,7 +3536,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0162",
@@ -2933,7 +3561,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0276",
@@ -2954,7 +3584,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0277",
@@ -2975,7 +3607,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0278",
@@ -2996,7 +3630,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0283",
@@ -3017,7 +3653,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0285",
@@ -3039,7 +3677,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0280",
@@ -3060,7 +3700,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0281",
@@ -3081,7 +3723,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0284",
@@ -3102,7 +3746,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0282",
@@ -3123,7 +3769,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0245",
@@ -3145,7 +3793,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0251",
@@ -3167,7 +3817,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0279",
@@ -3189,7 +3841,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0296",
@@ -3211,7 +3865,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0293",
@@ -3232,7 +3888,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0294",
@@ -3253,7 +3911,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0295",
@@ -3274,7 +3934,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0065",
@@ -3296,7 +3958,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0081",
@@ -3318,7 +3982,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0290",
@@ -3342,7 +4008,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0289",
@@ -3363,7 +4031,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0292",
@@ -3385,7 +4055,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0291",
@@ -3407,7 +4079,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0239",
@@ -3429,7 +4103,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0299",
@@ -3451,7 +4127,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0186",
@@ -3473,7 +4151,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0203",
@@ -3495,7 +4175,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0149",
@@ -3517,7 +4199,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0179",
@@ -3539,7 +4223,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0185",
@@ -3561,7 +4247,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0147",
@@ -3583,7 +4271,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0148",
@@ -3605,7 +4295,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0306",
@@ -3626,7 +4318,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0307",
@@ -3647,7 +4341,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0309",
@@ -3668,7 +4364,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0141",
@@ -3690,7 +4388,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0308",
@@ -3712,7 +4412,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0311",
@@ -3733,7 +4435,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0310",
@@ -3754,7 +4458,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0057",
@@ -3777,7 +4483,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0066",
@@ -3801,7 +4509,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0117",
@@ -3823,7 +4533,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0312",
@@ -3845,7 +4557,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0313",
@@ -3866,7 +4580,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0320",
@@ -3888,7 +4604,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0326",
@@ -3910,7 +4628,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0328",
@@ -3932,7 +4652,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0329",
@@ -3954,7 +4676,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0330",
@@ -3976,7 +4700,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0314",
@@ -3999,7 +4725,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0056",
@@ -4022,7 +4750,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0128",
@@ -4048,7 +4778,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0309",
@@ -4070,7 +4802,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0333",
@@ -4091,7 +4825,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0331",
@@ -4113,7 +4849,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0334",
@@ -4134,7 +4872,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0330",
@@ -4155,7 +4895,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0341",
@@ -4177,7 +4919,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0342",
@@ -4199,7 +4943,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0343",
@@ -4221,7 +4967,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0344",
@@ -4243,7 +4991,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0332",
@@ -4267,7 +5017,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0271",
@@ -4293,7 +5045,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0338",
@@ -4315,7 +5069,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0344",
@@ -4337,7 +5093,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0278",
@@ -4363,7 +5121,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0344",
@@ -4385,7 +5145,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0345",
@@ -4407,7 +5169,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0346",
@@ -4429,7 +5193,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0352",
@@ -4451,7 +5217,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0350",
@@ -4473,7 +5241,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0275",
@@ -4499,7 +5269,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0276",
@@ -4526,7 +5298,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0277",
@@ -4552,7 +5326,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0354",
@@ -4574,7 +5350,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0268",
@@ -4600,7 +5378,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0270",
@@ -4626,7 +5406,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0274",
@@ -4652,7 +5434,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0362",
@@ -4674,7 +5458,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -4696,7 +5482,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -4718,7 +5506,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -4740,7 +5530,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0364",
@@ -4761,7 +5553,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0267",
@@ -4788,7 +5582,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0293",
@@ -4816,7 +5612,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0294",
@@ -4843,7 +5641,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0360",
@@ -4865,7 +5665,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0362",
@@ -4887,7 +5689,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -4909,7 +5713,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0231",
@@ -4933,7 +5739,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0242",
@@ -4960,7 +5768,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0253",
@@ -4986,7 +5796,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0263",
@@ -5013,7 +5825,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0266",
@@ -5039,7 +5853,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -5061,7 +5877,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0367",
@@ -5082,7 +5900,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0370",
@@ -5104,7 +5924,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0373",
@@ -5126,7 +5948,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0365",
@@ -5147,7 +5971,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0366",
@@ -5168,7 +5994,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0368",
@@ -5189,7 +6017,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0376",
@@ -5211,7 +6041,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0367",
@@ -5233,7 +6065,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0368",
@@ -5255,7 +6089,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0369",
@@ -5277,7 +6113,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0370",
@@ -5299,7 +6137,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0375",
@@ -5321,7 +6161,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0377",
@@ -5348,7 +6190,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -5370,7 +6214,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0364",
@@ -5392,7 +6238,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0372",
@@ -5414,7 +6262,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0368",
@@ -5436,7 +6286,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0374",
@@ -5462,7 +6314,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0375",
@@ -5488,7 +6342,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0376",
@@ -5514,7 +6370,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0377",
@@ -5540,7 +6398,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0373",
@@ -5562,7 +6422,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0380",
@@ -5584,7 +6446,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0379",
@@ -5606,7 +6470,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0381",
@@ -5627,7 +6493,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0377",
@@ -5649,7 +6517,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0378",
@@ -5671,7 +6541,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0377",
@@ -5693,7 +6565,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0371",
@@ -5715,7 +6589,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -5737,7 +6613,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0364",
@@ -5759,7 +6637,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0365",
@@ -5781,7 +6661,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0379",
@@ -5803,7 +6685,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0380",
@@ -5825,7 +6709,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0386",
@@ -5847,7 +6733,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0386",
@@ -5874,7 +6762,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0387",
@@ -5898,7 +6788,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0382",
@@ -5920,7 +6812,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0382",
@@ -5942,7 +6836,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0383",
@@ -5964,7 +6860,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0384",
@@ -5986,7 +6884,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0383",
@@ -6008,7 +6908,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0384",
@@ -6030,7 +6932,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0388",
@@ -6052,7 +6956,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0381",
@@ -6074,7 +6980,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0385",
@@ -6096,7 +7004,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0392",
@@ -6124,7 +7034,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0393",
@@ -6150,7 +7062,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0382",
@@ -6172,7 +7086,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0388",
@@ -6194,7 +7110,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0392",
@@ -6219,7 +7137,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0393",
@@ -6245,7 +7165,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0394",
@@ -6269,7 +7191,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0389",
@@ -6291,7 +7215,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0315",
@@ -6318,7 +7244,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0386",
@@ -6340,7 +7268,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0387",
@@ -6362,7 +7292,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0385",
@@ -6384,7 +7316,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0391",
@@ -6406,7 +7340,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0383",
@@ -6428,7 +7364,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0384",
@@ -6449,7 +7387,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0390",
@@ -6471,7 +7411,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0391",
@@ -6493,7 +7435,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0397",
@@ -6515,7 +7459,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0387",
@@ -6536,7 +7482,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0396",
@@ -6557,7 +7505,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0339",
@@ -6585,7 +7535,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0386",
@@ -6607,7 +7559,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0392",
@@ -6629,7 +7583,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0388",
@@ -6651,7 +7607,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0396",
@@ -6673,7 +7631,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0398",
@@ -6696,7 +7656,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0403",
@@ -6717,7 +7679,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0396",
@@ -6739,7 +7703,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0394",
@@ -6760,7 +7726,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0395",
@@ -6781,7 +7749,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0397",
@@ -6803,7 +7773,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0382",
@@ -6826,7 +7798,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0389",
@@ -6847,7 +7821,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0395",
@@ -6869,7 +7845,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0399",
@@ -6891,7 +7869,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0379",
@@ -6913,7 +7893,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0400",
@@ -6935,7 +7917,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0411",
@@ -6961,7 +7945,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0377",
@@ -6983,7 +7969,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0378",
@@ -7005,7 +7993,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0405",
@@ -7027,7 +8017,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0406",
@@ -7049,7 +8041,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0406",
@@ -7076,7 +8070,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0407",
@@ -7102,7 +8098,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0408",
@@ -7127,7 +8125,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0409",
@@ -7153,7 +8153,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0404",
@@ -7175,7 +8177,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0404",
@@ -7201,7 +8205,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0406",
@@ -7226,7 +8232,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0407",
@@ -7250,7 +8258,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0408",
@@ -7274,7 +8284,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0410",
@@ -7298,7 +8310,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0399",
@@ -7320,7 +8334,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0493",
@@ -7345,7 +8361,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0494",
@@ -7371,7 +8389,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0495",
@@ -7395,7 +8415,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0496",
@@ -7420,7 +8442,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0486",
@@ -7442,7 +8466,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0497",
@@ -7464,7 +8490,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0498",
@@ -7485,7 +8513,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0501",
@@ -7506,7 +8536,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0500",
@@ -7527,7 +8559,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0499",
@@ -7548,7 +8582,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0505",
@@ -7574,7 +8610,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0506",
@@ -7600,7 +8638,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0504",
@@ -7625,7 +8665,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0507",
@@ -7650,7 +8692,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0508",
@@ -7675,7 +8719,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0509",
@@ -7700,7 +8746,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0511",
@@ -7727,7 +8775,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0515",
@@ -7749,7 +8799,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0516",
@@ -7771,7 +8823,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0529",
@@ -7793,7 +8847,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0527",
@@ -7814,7 +8870,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0528",
@@ -7835,7 +8893,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0546",
@@ -7860,7 +8920,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0547",
@@ -7885,7 +8947,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0548",
@@ -7911,7 +8975,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0549",
@@ -7936,7 +9002,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0512",
@@ -7958,7 +9026,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0553",
@@ -7984,7 +9054,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0554",
@@ -8011,7 +9083,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0555",
@@ -8032,7 +9106,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0556",
@@ -8057,7 +9133,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0557",
@@ -8082,7 +9160,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0558",
@@ -8107,7 +9187,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0559",
@@ -8134,7 +9216,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0560",
@@ -8159,7 +9243,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0564",
@@ -8186,7 +9272,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0565",
@@ -8212,7 +9300,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0569",
@@ -8238,7 +9328,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0570",
@@ -8264,7 +9356,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0573",
@@ -8289,7 +9383,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0574",
@@ -8314,7 +9410,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0575",
@@ -8339,7 +9437,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0581",
@@ -8365,7 +9465,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0576",
@@ -8387,7 +9489,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0589",
@@ -8411,7 +9515,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0590",
@@ -8437,7 +9543,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0591",
@@ -8462,7 +9570,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0592",
@@ -8486,7 +9596,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0582",
@@ -8508,7 +9620,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0599",
@@ -8533,7 +9647,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0600",
@@ -8558,7 +9674,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0601",
@@ -8582,7 +9700,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0602",
@@ -8608,7 +9728,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0603",
@@ -8632,7 +9754,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0604",
@@ -8657,7 +9781,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0605",
@@ -8681,7 +9807,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0606",
@@ -8706,7 +9834,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0607",
@@ -8732,7 +9862,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0633",
@@ -8758,7 +9890,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0608",
@@ -8780,7 +9914,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0634",
@@ -8804,7 +9940,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0635",
@@ -8828,7 +9966,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0636",
@@ -8853,7 +9993,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0637",
@@ -8877,7 +10019,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0638",
@@ -8902,7 +10046,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0647",
@@ -8929,7 +10075,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0648",
@@ -8955,7 +10103,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0649",
@@ -8981,7 +10131,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0650",
@@ -9006,7 +10158,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0651",
@@ -9032,7 +10186,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0652",
@@ -9058,7 +10214,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0653",
@@ -9084,7 +10242,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0654",
@@ -9107,7 +10267,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0656",
@@ -9129,7 +10291,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0659",
@@ -9150,7 +10314,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0658",
@@ -9171,7 +10337,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0655",
@@ -9192,7 +10360,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0657",
@@ -9213,7 +10383,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0663",
@@ -9239,7 +10411,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0664",
@@ -9266,7 +10440,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0668",
@@ -9292,7 +10468,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0669",
@@ -9319,7 +10497,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0670",
@@ -9345,7 +10525,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0665",
@@ -9367,7 +10549,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0675",
@@ -9392,7 +10576,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0676",
@@ -9416,7 +10602,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0677",
@@ -9440,7 +10628,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0678",
@@ -9466,7 +10656,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0679",
@@ -9491,7 +10683,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0680",
@@ -9515,7 +10709,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0683",
@@ -9541,7 +10737,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0684",
@@ -9566,7 +10764,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0685",
@@ -9592,7 +10792,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0686",
@@ -9619,7 +10821,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0687",
@@ -9647,7 +10851,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0688",
@@ -9673,7 +10879,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0689",
@@ -9700,7 +10908,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0690",
@@ -9728,7 +10938,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0691",
@@ -9753,7 +10965,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0692",
@@ -9780,7 +10994,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0693",
@@ -9807,7 +11023,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0694",
@@ -9835,7 +11053,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0695",
@@ -9862,7 +11082,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0700",
@@ -9887,7 +11109,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0701",
@@ -9914,7 +11138,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0702",
@@ -9939,7 +11165,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0703",
@@ -9964,7 +11192,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0704",
@@ -9989,7 +11219,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0705",
@@ -10016,7 +11248,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0708",
@@ -10039,7 +11273,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0709",
@@ -10064,7 +11300,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0710",
@@ -10088,7 +11326,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0715",
@@ -10111,7 +11351,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0711",
@@ -10132,7 +11374,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0712",
@@ -10153,7 +11397,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0713",
@@ -10174,7 +11420,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0714",
@@ -10195,7 +11443,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0716",
@@ -10222,7 +11472,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0717",
@@ -10249,7 +11501,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0718",
@@ -10275,7 +11529,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0719",
@@ -10302,7 +11558,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0720",
@@ -10328,7 +11586,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0723",
@@ -10349,7 +11609,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0721",
@@ -10370,7 +11632,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0722",
@@ -10391,7 +11655,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0728",
@@ -10415,7 +11681,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0730",
@@ -10442,7 +11710,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0731",
@@ -10470,7 +11740,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0732",
@@ -10498,7 +11770,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0733",
@@ -10525,7 +11799,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0736",
@@ -10553,7 +11829,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0738",
@@ -10578,7 +11856,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0740",
@@ -10603,7 +11883,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0741",
@@ -10629,7 +11911,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0742",
@@ -10655,7 +11939,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0743",
@@ -10682,7 +11968,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0744",
@@ -10707,7 +11995,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0745",
@@ -10733,7 +12023,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0746",
@@ -10760,7 +12052,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0747",
@@ -10785,7 +12079,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0748",
@@ -10811,7 +12107,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0749",
@@ -10835,7 +12133,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0750",
@@ -10861,7 +12161,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0751",
@@ -10885,7 +12187,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0752",
@@ -10910,7 +12214,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0753",
@@ -10936,7 +12242,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0762",
@@ -10963,7 +12271,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0764",
@@ -10988,7 +12298,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0765",
@@ -11013,7 +12325,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0766",
@@ -11039,7 +12353,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0767",
@@ -11065,7 +12381,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0768",
@@ -11088,7 +12406,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0771",
@@ -11109,7 +12429,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0772",
@@ -11130,7 +12452,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0770",
@@ -11151,7 +12475,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0769",
@@ -11172,7 +12498,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0778",
@@ -11195,7 +12523,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0779",
@@ -11220,7 +12550,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0780",
@@ -11244,7 +12576,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0781",
@@ -11268,7 +12602,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0782",
@@ -11292,7 +12628,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     }
   ],
   "cycle_syntheses": {}
