@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_4_parametric_families_and_algebraic_curv.json",
+    "title": "Parametric Families on Cubic Surfaces: Constructible Arithmetic of Three-Cube Representations",
+    "domain": "Number Theory / Arithmetic Geometry",
+    "date": "2026-05-25T03:06:21Z",
+    "exp_id": "40a05224",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_2_tropical_kernel_dimension_formula.json",
     "title": "Tropical Graph Hodge Theory: A Kernel Dimension Formula",
     "domain": "Tropical Linear Algebra / Combinatorial Hodge Theory",
     "date": "2026-05-25T03:05:32Z",
     "exp_id": "fd2f08b2",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6969741764705883,
+    "quality": "partial"
   },
   {
     "filename": "direction_4_efficient_sampling_from_lorentzian_cer.json",
@@ -163,6 +172,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Type Theory / Computational Complexity"
   },
+  "direction_4_parametric_families_and_algebraic_curv.json": {
+    "title": "Parametric Families on Cubic Surfaces: Constructible Arithmetic of Three-Cube Representations",
+    "exp_id": "40a05224",
+    "source_exp_ids": [
+      "34c2669a"
+    ],
+    "domain": "Number Theory / Arithmetic Geometry"
+  },
   "direction_3_completeness_of_recursive_spectral_cer.json": {
     "title": "Completeness of Recursive Spectral Certificates for Lorentzian Polynomials",
     "exp_id": "83d44e07",
@@ -251,7 +268,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.6423696551724138,
       "quality": "partial"
     },
@@ -262,7 +279,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 90,
+      "hue": 101,
       "priority_score": 0.5431629411764707,
       "quality": "partial"
     },
@@ -284,7 +301,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7684672566371681,
       "quality": "substantial"
     },
@@ -295,7 +312,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.5684834461538462,
       "quality": "partial"
     },
@@ -306,7 +323,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T00:26:30Z",
-      "hue": 275,
+      "hue": 90,
       "priority_score": 0.7077656000000001,
       "quality": "substantial"
     },
@@ -317,7 +334,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7156088,
       "quality": "substantial"
     },
@@ -328,7 +345,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.707316371361133,
       "quality": "substantial"
     },
@@ -339,7 +356,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
-      "hue": 275,
+      "hue": 272,
       "priority_score": 0.7307101408450705,
       "quality": "substantial"
     },
@@ -350,7 +367,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T02:10:29Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.7655020869565218,
       "quality": "substantial"
     },
@@ -358,10 +375,10 @@ window.PACKAGE_GRAPH = {
       "id": "direction_4_efficient_sampling_from_lorentzian_cer",
       "title": "Efficient Sampling from Lorentzian Certificates: Spectral Gap, Log-Concavity, and Tropical Diameter",
       "domain": "Algebraic Combinatorics / Probability Theory / Tropical Geometry",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
+      "primary_domain": "Tropical",
+      "shape": "star",
       "date": "2026-05-25T02:11:07Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.657708624390244,
       "quality": "partial"
     },
@@ -372,7 +389,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T03:05:32Z",
-      "hue": 271,
+      "hue": 90,
+      "priority_score": 0.6969741764705883,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_4_parametric_families_and_algebraic_curv",
+      "title": "Parametric Families on Cubic Surfaces: Constructible Arithmetic of Three-Cube Representations",
+      "domain": "Number Theory / Arithmetic Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-25T03:06:21Z",
+      "hue": 95,
       "priority_score": null,
       "quality": "unrated"
     }
@@ -388,6 +416,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "direction_5_complexity_of_lorentzian_recognition",
       "target": "direction_4_efficient_sampling_from_lorentzian_cer",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "sums_of_three_cubes",
+      "target": "direction_4_parametric_families_and_algebraic_curv",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -1098,78 +1133,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:54:40.959769+00:00"
   },
   {
-    "id": "fd_0825",
-    "title": "Direction 1: Certified Unification with Most General Unifier Theorem",
-    "description": "**Conjecture:** For first-order terms over a finite signature with an occurs-check, the Robinson unification algorithm computes a most general unifier (MGU) whenever one exists, and correctly reports failure otherwise. Furthermore, for linear patterns, the matching algorithm produces the unique (up to irrelevant bindings) substitution.\n\n**Test:** Implement bounded-depth term generation over a signature with 2 binary and 2 nullary symbols. For all term pairs (s, t) up to depth 5:\n1. If `unify(s, t) = Some \u03c3`, verify `s[\u03c3] = t[\u03c3]` and that for any other unifier \u03c4, there exists \u03c1 with `\u03c4 = \u03c1 \u2218 \u03c3`.\n2. If `unify(s, t) = None`, exhaustively search for unifiers among all substitutions mapping variables to terms of bounded depth and verify none exist.\n\n**Impact:** A certified unifier is the missing piece for certified logic programming (Prolog), type inference, and critical pair computation. It would elevate the framework from certified rewriting to a certified symbolic algebra kernel.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (matching, `subst_comp`), `Bridges/KnuthBendixCompletion.lean` (abstract completion)\n\n**Proof Strategy:** Define unification by well-founded recursion on the sum of term sizes. The occurs-check provides the termination measure. Prove soundness by showing `s[\u03c3] = t[\u03c3]`, and completeness by induction on unification failure cases. The MGU property follows from the substitution composition theorem `subst_comp`.\n\n**Domain Bridges:** Logic programming, type inference, theorem proving\n\n**Lineage:** Extends `match_sound` to the full unification case\n\n**Ambition:** Grand challenge \u2014 certified unification is a 50-year-old open verification target\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T01:35:36.554806+00:00"
-  },
-  {
-    "id": "fd_0826",
-    "title": "Direction 2: Certified Reduction Orders (LPO, KBO)",
-    "description": "**Conjecture:** The Lexicographic Path Order (LPO) and Knuth-Bendix Order (KBO) are well-founded on finite-signature first-order terms, and orientation by these orders preserves the equational theory. Specifically: if `s >_LPO t` and `s \u2261_E t`, then orienting `s \u2192 t` preserves `\u2261_E`.\n\n**Test:** \n1. Generate 10,000 random term pairs over a signature with 3 symbols of arities 0, 1, 2. Verify that LPO/KBO comparison terminates and is transitive.\n2. For each orientable equation in the free group, commutative monoid, and Boolean ring presentations, verify that orientation by LPO/KBO yields a terminating rule set (check by bounded normalization of 1000 random terms).\n\n**Impact:** Automatic orientation is the key missing component for a fully automatic certified completion engine. Without certified orders, the user must manually specify rule orientation.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (rewriting, `rewrites_closed_under_subst`), `Pythagorean/ConvergentRewriteSystems.lean` (`Terminating`, `Convergent`)\n\n**Proof Strategy:** Define LPO by well-founded recursion using Dershowitz's multiset ordering. Prove well-foundedness by embedding into a well-founded order on multisets of terms. For KBO, use the weight-based argument with Kruskal's tree theorem.\n\n**Domain Bridges:** Automated deduction, termination analysis, ordinal arithmetic\n\n**Lineage:** Builds on `concrete_orient_preserves_equational_theory`\n\n**Ambition:** Solid extension \u2014 well-studied but not yet formalized in this framework\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T01:35:36.575867+00:00"
-  },
-  {
-    "id": "fd_0827",
-    "title": "Direction 3: Fair Completion and Completeness",
-    "description": "**Conjecture:** Every fair concrete completion derivation that saturates all critical pairs and yields a terminating system produces a confluent (hence convergent) system. Formally: if the derivation is fair (every persistent critical pair is eventually considered) and the final rule set is terminating, then it is confluent.\n\n**Test:** Run the completion engine on 50 algebraic presentations from the TPDB (Termination Problem Data Base):\n1. For each presentation, track the set of unprocessed critical pairs at each step.\n2. Verify that under a round-robin fairness strategy, all critical pairs are eventually processed.\n3. For presentations where completion terminates, verify local confluence by checking all critical pairs of the final system.\n4. Compare against existing KB implementations (Waldmeister, Maude) for correctness.\n\n**Impact:** Completeness is the theoretical guarantee that makes completion a decision procedure. Without it, the algorithm is sound but might miss necessary rules.\n\n**Catalog References:** `Bridges/KnuthBendixCompletion.lean` (`newman_lemma`, `kb_completion_correct`), `Pythagorean/ConcreteTermAlgebra.lean` (`concrete_completion_preserves_equational_theory`)\n\n**Proof Strategy:** Use Newman's lemma (already proved in the abstract framework) as the bridge: terminating + locally confluent = confluent. Show that fairness ensures local confluence by guaranteeing all critical pairs are joinable. The key lemma: every critical pair of the final system was either (a) produced and joined, or (b) subsumed by simplification.\n\n**Domain Bridges:** Automated theorem proving, decision procedures, computational algebra\n\n**Lineage:** Directly extends `kb_completion_correct` from the abstract to the concrete level\n\n**Ambition:** Grand challenge \u2014 fairness proofs are notoriously subtle\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T01:35:36.595672+00:00"
-  },
-  {
-    "id": "fd_0828",
-    "title": "Direction 4: Tree Automata and Pattern Language Characterization",
-    "description": "**Conjecture:** For every linear pattern `p` (each variable occurs at most once), the set `L(p) = {t | \u2203\u03c3. p[\u03c3] = t}` is recognized by a deterministic bottom-up tree automaton constructible from `p` in O(|p|) time. Furthermore, for non-linear patterns, `L(p)` is recognizable by a non-deterministic tree automaton with equality constraints.\n\n**Test:**\n1. For 100 random linear patterns of depth \u2264 4 over a binary/nullary signature, construct the tree automaton and verify acceptance agrees with `match` on all terms of depth \u2264 6.\n2. For 50 non-linear patterns (with repeated variables), test whether the proposed constrained automaton correctly separates matching from non-matching terms on 10,000 random target terms.\n3. Measure the size of the constructed automaton relative to the pattern size.\n\n**Impact:** Connecting matching to tree automata theory would enable optimized multi-pattern matching (matching against many patterns simultaneously), which is crucial for efficient rewriting engines and compiler optimization passes.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (`patternLanguage`, `match_term`, `pattern_in_own_language`)\n\n**Proof Strategy:** For linear patterns, construct the automaton by structural induction on the pattern. Variables become accepting states for any subtree. Function symbols become transition rules. Non-linearity requires equality tests between subtrees, handled by product constructions.\n\n**Domain Bridges:** Formal languages, compiler optimization, XML/JSON schema validation\n\n**Lineage:** Extends `patternLanguage` definition and `pattern_in_own_language`\n\n**Ambition:** Solid extension \u2014 tree automata theory is well-developed but rarely connected to formal verification\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T01:35:36.615271+00:00"
-  },
-  {
     "id": "fd_0829",
     "title": "Direction 5: Higher-Order Completion and Lambda-Calculus Integration",
     "description": "**Conjecture:** The substitution functoriality theorem (`subst_comp`) and context closure theorems generalize to simply-typed lambda calculus with beta-reduction, enabling a higher-order completion procedure where beta-reduction steps are interleaved with equational rewriting steps, preserving the generated higher-order equational theory.\n\n**Test:**\n1. Define a simply-typed term algebra extending FOTerm with lambda abstraction and application.\n2. Implement higher-order matching (matching modulo beta-eta) and test on 500 term pairs.\n3. Attempt completion on simple higher-order equational theories (e.g., `map f (map g xs) = map (f \u2218 g) xs`) and check if the resulting rules are confluent modulo beta.\n4. Compare with Nipkow's higher-order completion results.\n\n**Impact:** Higher-order completion would bridge term rewriting to type theory and functional programming, enabling certified optimization of higher-order programs and certified simplification in dependent type theory proof assistants.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (`subst_comp`, `subst_comp3`, `rewrites_closed_under_subst_and_context`)\n\n**Proof Strategy:** The key challenge is that beta-reduction is not first-order rewriting \u2014 it involves variable binding. Use de Bruijn indices or locally nameless representation to make substitution explicit. Then show that the first-order closure theorems lift to the higher-order setting with appropriate modifications for alpha-equivalence.\n\n**Domain Bridges:** Type theory, functional programming, proof automation, category theory\n\n**Lineage:** Grand generalization of the substitution category structure in `subst_comp3`\n\n**Ambition:** Grand challenge \u2014 higher-order completion is an active research area with many open problems",
@@ -1501,6 +1464,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:55:20.483190+00:00"
   },
   {
+    "id": "fd_0845",
+    "title": "Arithmetic Monodromy Reconstruction from Primewise Persistent Homology",
+    "description": "Conjecture: There exists a canonical construction sending a smooth projective variety X over a number field to a family of filtered complexes C_p(X) for good primes p such that the collection of prime-indexed persistence barcodes determines the semisimplified Frobenius characteristic polynomials on \u00e9tale cohomology in each degree for a density-1 set of primes. Equivalently, if X and Y have identical barcode data for all sufficiently large good primes under this construction, then their local zeta functions agree for a density-1 set of primes. Test: Implement the construction for explicit families (elliptic curves, K3 surfaces, low-genus curves, toric hypersurfaces), compute barcode invariants prime-by-prime, and check whether non-isogenous/non-derived-equivalent examples can be separated exactly when their Frobenius polynomials differ. A refutation would be a pair with distinct local zeta data but indistinguishable persistence outputs. Impact: This would create a new topological-computational interface for recovering arithmetic Galois data from geometric filtrations, potentially yielding machine-discoverable arithmetic invariants and a new bridge between TDA, arithmetic geometry, and the Langlands viewpoint.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:45.192441+00:00"
+  },
+  {
     "id": "fd_0830",
     "title": "Direction 1: M-Convexity Closure Under Differentiation",
     "description": "**Conjecture**: The support exchange property (M-convexity) is preserved by partial differentiation. That is, if $p$ is a homogeneous polynomial with nonneg coefficients whose support satisfies the matroid exchange axiom, then the support of $\\partial p / \\partial x_i$ also satisfies the exchange axiom.\n\nFormally:\n```\ntheorem SupportSatisfiesExchange.pderiv\n    {n : \u2115} {p : MvPolynomial (Fin n) \u211d} {i : Fin n} :\n    SupportSatisfiesExchange p \u2192\n    SupportSatisfiesExchange (MvPolynomial.pderiv i p)\n```\n\n**Test**: Exhaustively verify for all M-convex supports of degree \u2264 6 in \u2264 5 variables that the derivative support remains M-convex. A single counterexample disproves the conjecture; conversely, verified examples up to this bound provide strong evidence.\n\n**Impact**: This would complete the formal bridge between Lorentzian polynomial theory and matroid/discrete convex analysis, showing that the entire derivative hierarchy preserves the combinatorial structure of the support. It would also provide a new proof technique for M-convexity results in matroid theory.\n\n**The key insight is** that M-convexity of support is the combinatorial shadow of Lorentzianity, and the differentiation operation on polynomials corresponds to contraction in matroid theory. Proving this formally would establish a new certified interface between algebraic combinatorics and discrete convex analysis.\n\n**Why now?** The formal definitions of both SupportSatisfiesExchange and partial differentiation are now in the catalog, and the Br\u00e4nd\u00e9n\u2013Huh theory provides the mathematical framework. The exhaustive computational verification is newly feasible with the recognition algorithm.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `SupportSatisfiesExchange`, `pderiv_coeff_nonneg`\n\n**Proof Strategy**: Induction on degree. The base case (degree 2) reduces to checking that 2\u00d72 exchange axiom is preserved. The inductive step uses the multilinearity of the derivative and the exchange axiom structure.\n\n**Domain Bridges**: Matroid theory, discrete convex analysis, Hodge theory\n\n**Lineage**: Extends `recursive_complete_of_exchange` and `pderiv_coeff_nonneg`\n\n**Ambition**: Solid extension \u2014 this is a known consequence of Br\u00e4nd\u00e9n\u2013Huh theory but has not been formally verified\n\n---",
@@ -1558,24 +1536,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "83d44e07",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:10:32.381941+00:00"
-  },
-  {
-    "id": "fd_0833",
-    "title": "Direction 4: Mason's Conjecture via Lorentzian Polynomials",
-    "description": "**Conjecture**: For any matroid $M$ on ground set $[n]$, the sequence $f_0, f_1, \\ldots, f_r$ of numbers of independent sets of each size is ultra-log-concave: $\\frac{f_k^2}{\\binom{n}{k}^2} \\ge \\frac{f_{k-1}}{\\binom{n}{k-1}} \\cdot \\frac{f_{k+1}}{\\binom{n}{k+1}}$.\n\nThis is Mason's conjecture (now a theorem by Anari\u2013Liu\u2013Oveis Gharan\u2013Vinzant and Br\u00e4nd\u00e9n\u2013Huh), but a formal verification is still open.\n\nFormally:\n```\ntheorem mason_conjecture_formal\n    {n r : \u2115} (M : Matroid (Fin n)) (k : \u2115) (hk : 1 \u2264 k) (hkr : k < r) :\n    (independentSetsOfSize M k)^2 * Nat.choose n (k-1) * Nat.choose n (k+1) \u2265\n    (independentSetsOfSize M (k-1)) * (independentSetsOfSize M (k+1)) * (Nat.choose n k)^2\n```\n\n**Test**: Verify computationally for all matroids on \u2264 8 elements. Any counterexample would disprove the theorem (which is known to be true, so none should exist).\n\n**Impact**: Formal verification of Mason's conjecture would be a landmark result in formalized mathematics \u2014 one of the most celebrated recent theorems in combinatorics, proved using the full power of Lorentzian polynomial theory.\n\n**The key insight is** that the independent set generating polynomial of a matroid is Lorentzian (Br\u00e4nd\u00e9n\u2013Huh), and ultra-log-concavity follows from the reversed Cauchy\u2013Schwarz inequality applied to specializations.\n\n**Why now?** The reversed Cauchy\u2013Schwarz inequality is now formally verified (`lorentzian_reversed_cauchy_schwarz`), and the recursive spectral certificate provides the connection to Lorentzianity. The remaining work is formalizing the matroid-to-polynomial bridge.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `lorentzian_reversed_cauchy_schwarz`, `IsBrandenHuhLorentzian`\n\n**Proof Strategy**: (1) Define the independent set polynomial. (2) Show it is Lorentzian via the basis generating polynomial and deletion-contraction. (3) Apply reversed Cauchy\u2013Schwarz to a 2-variable specialization. (4) Extract ultra-log-concavity.\n\n**Domain Bridges**: Matroid theory, combinatorics, Hodge theory\n\n**Lineage**: Extends `lorentzian_reversed_cauchy_schwarz` and `recursivelyLorentzian_iff_brandenHuh`\n\n**Ambition**: Grand challenge \u2014 formalizing a major theorem of 21st-century combinatorics\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "83d44e07",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:10:32.402888+00:00"
   },
   {
     "id": "fd_0834",
@@ -1753,5 +1713,102 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1f8fa3a8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:11:10.263299+00:00"
+  },
+  {
+    "id": "fd_0840",
+    "title": "Direction 1: Basis Uniqueness up to Tropical Projective Equivalence",
+    "description": "**Conjecture**: For each connected graph G, basepoint q, and subset S \u2286 V \\ {q}, the cycle-component generating family of the tropical kernel of L_S is unique up to tropical scaling (adding constants to individual generators) and permutation, whenever G[S] has a pairwise edge-disjoint cycle basis and distinct q-visible components.\n\n**Test**: Exhaustive search over all connected graphs on n \u2264 7 vertices. For each (G, q, S), compute all minimal tropical generating families of ker_trop(L_S) and compare equivalence classes. Verify that the number of equivalence classes is exactly 1 when the edge-disjointness condition holds, and characterize the failure cases.\n\n**Impact**: Establishes canonical generators for tropical kernels, enabling effective computation and comparison across graph families. Would be the tropical analogue of the uniqueness of the Smith normal form.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernel, componentIndicator), `Pythagorean/TropicalBridge/TropicalHodge.lean` (componentIndicator_mem_tropicalKernel, tropicalKernel_leaf_eq).\n\n**Proof Strategy**: Use the separation properties of cycle generators (support on cycle vertices) and component generators (support on component vertices) to show that any alternative generating family must be related by tropical scaling. The key tool is the leaf propagation lemma, which forces values along tree edges.\n\n**Domain Bridges**: Tropical linear algebra \u2194 matroid theory (the cycle matroid determines uniqueness), algebraic combinatorics \u2194 graph theory.\n\n**Lineage**: Extends the structural kernel theorems in `TropicalHodge.lean` from existence to uniqueness.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 technically challenging but conceptually clear)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.257371+00:00"
+  },
+  {
+    "id": "fd_0841",
+    "title": "Direction 2: Filtration Persistence Formula",
+    "description": "**Conjecture**: For an increasing filtration S\u2080 \u2286 S\u2081 \u2286 ... \u2286 S_m \u2286 V \\ {q}, the sequence of tropical kernel dimensions dim_trop(ker_trop(L_{S_k})) satisfies:\n\n  dim(S_{k+1}) - dim(S_k) = (number of new cycles born) + (number of new q-visible components born) - (number of component merges destroying q-invisible components)\n\nMoreover, the \"barcode\" of tropical kernel dimensions is completely determined by the births and deaths of cycles and q-visible components in the filtration.\n\n**Test**: Enumerate all increasing filtrations on connected graphs with n \u2264 6 vertices. For each filtration, compute the dimension sequence and compare to the predicted birth/death events. Verify the persistence formula matches in all cases.\n\n**Impact**: Creates a new invariant \u2014 the **tropical persistence barcode** \u2014 that combines topological persistence (like standard persistent homology) with algebraic structure (tropical linear algebra). This could provide strictly finer invariants than classical persistent homology for weighted networks.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedCycleRank, qVisibleComponentCount), `Pythagorean/TropicalBridge/UniversalDefect.lean` (universalDefect_eq).\n\n**Proof Strategy**: Induction on filtration length. At each step, adding a vertex v to S either:\n(a) connects to an existing component (no new cycle, no new component),\n(b) forms a bridge to q (new q-visible component),\n(c) closes a cycle (new cycle mode), or\n(d) merges two components.\nTrack each case and verify the dimension change formula.\n\n**Domain Bridges**: Tropical algebra \u2194 topological data analysis, computational topology \u2194 network science.\n\n**Lineage**: Directly extends the dimension formula to parameterized families, building on `inducedCycleRank_eq_zero_of_forest` for the tree base case.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new persistent tropical homology theory)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.277308+00:00"
+  },
+  {
+    "id": "fd_0842",
+    "title": "Direction 3: Weighted Extension",
+    "description": "**Conjecture**: For weighted graphs with edge weights w : E \u2192 \u2124 (or more generally w : E \u2192 \u211d), the tropical kernel dimension formula generalizes to:\n\n  dim_trop(ker_trop(L_S^w)) = \u03b2\u2081^w(G[S]) + \u03ba^w(G,q,S)\n\nwhere \u03b2\u2081^w counts the number of \"weight-compatible\" independent cycles (cycles where the minimum-weight edge is achieved at least twice) and \u03ba^w counts q-visible components whose connection to q has \"generic\" weight.\n\nFor generic weights (no weight coincidences), \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula. For degenerate weights, the dimension can increase due to additional coincidences.\n\n**Test**: Sample 10000 weighted graphs on n \u2264 6 vertices with weights drawn from {1, 2, ..., 10}. For each, compute the tropical kernel dimension by direct enumeration and compare to the predicted \u03b2\u2081^w + \u03ba^w. Identify the precise weight-degeneracy conditions that cause the formula to differ from the unweighted case.\n\n**Impact**: Extends tropical graph Hodge theory to the setting relevant for applications (communication networks, transportation networks, molecular graphs all have weighted edges). Would connect to tropical geometry's theory of valuated matroids.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (TropicalVal, tropMul), `Pythagorean/TropicalBridge/TropicalHodge.lean` (cycleIndicator, componentIndicator).\n\n**Proof Strategy**: Modify the cycle and component indicator constructions to account for edge weights. The key insight is that the tropical kernel condition becomes weight-dependent: for row i, the minimum of w(i,j) + v(j) over neighbors j must be achieved twice. Weight-compatible cycles are those where the indicator vector, adjusted by cumulative weights, still satisfies this condition.\n\n**Domain Bridges**: Tropical geometry \u2194 optimization (weighted matching), network science \u2194 statistical physics (Boltzmann weights).\n\n**Lineage**: Generalizes `componentIndicator_mem_tropicalKernel` from unit weights to arbitrary weights.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 natural generalization with clear proof path)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.300943+00:00"
+  },
+  {
+    "id": "fd_0843",
+    "title": "Direction 4: Relative Tropical Hodge Theorem",
+    "description": "**Conjecture**: The tropical kernel of L_S is naturally isomorphic (as a tropical semi-module) to a relative tropical homology group:\n\n  ker_trop(L_S) \u2245 H\u2081^trop(G[S \u222a {q}], {q})\n\nwhere H\u2081^trop denotes the first tropical homology of the pair (G[S \u222a {q}], {q}), defined via a tropical chain complex using the incidence matrix of the graph.\n\n**Test**: Define the tropical chain complex C\u2080 \u2192 C\u2081 for the graph G[S \u222a {q}] with boundary map given by the incidence matrix. Compute H\u2081^trop(G[S \u222a {q}], {q}) = ker(\u2202\u2081^trop) / im(\u2202\u2080^trop) for all connected graphs on n \u2264 6. Verify isomorphism with the tropical kernel of L_S.\n\n**Impact**: This would be the foundational theorem connecting tropical linear algebra to tropical homology theory. It would justify calling the dimension formula a \"Hodge theorem\" by providing the precise homological interpretation. Opens the door to higher-dimensional tropical Hodge theory on simplicial complexes.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedSubgraph, tropicalKernel), `Pythagorean/TropicalBridge/TropicalHodge.lean` (structural theorems).\n\n**Proof Strategy**: Factor the Laplacian as L = \u2202\u1d40\u2202 (incidence factorization) in the tropical setting. Show that the tropical kernel of L_S corresponds to tropical 1-cycles that are boundaries from the q-side, i.e., relative 1-cycles. The cycle generators correspond to absolute 1-cycles (homology of G[S]), while the component generators correspond to relative 0-boundaries (paths from q to components).\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic topology (simplicial homology), combinatorics \u2194 algebraic geometry (tropical varieties).\n\n**Lineage**: Provides the theoretical foundation for all other directions, upgrading the dimension formula from a counting theorem to a structural isomorphism.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 would establish tropical Hodge theory as a subject)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.321656+00:00"
+  },
+  {
+    "id": "fd_0844",
+    "title": "Direction 5: Chip-Firing Correspondence",
+    "description": "**Conjecture**: Tropical kernel generators of L_S correspond to equivalence classes of \"balanced\" divisor deformations supported on S in the sense of Baker-Norine chip-firing theory. Specifically:\n\n  ker_trop(L_S) \u2245 { D \u2208 Div\u2070(G) : supp(D) \u2286 S, D is q-reduced and balanced }\n\nwhere \"balanced\" means every vertex fires at most to neighbors achieving the same potential, and the quotient is by tropical scaling.\n\n**Test**: For all connected graphs on n \u2264 6, compute:\n(a) The tropical kernel dimension via the formula,\n(b) The number of independent balanced q-reduced divisors supported on S.\nCompare dimensions and identify the explicit bijection between kernel generators and divisor classes.\n\n**Impact**: Connects tropical graph Hodge theory to one of the most active areas of combinatorial algebraic geometry. The Baker-Norine theorem gives a Riemann-Roch theorem for graphs; this conjecture would provide the Hodge-theoretic complement. Could lead to new algorithms for computing the Jacobian group of a graph.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernelProp \u2014 the balanced condition), `Pythagorean/TropicalBridge/TropicalHodge.lean` (tropicalKernel_leaf_eq \u2014 propagation along edges mirrors chip-firing).\n\n**Proof Strategy**: The leaf propagation lemma (`tropicalKernel_leaf_eq`) already shows that kernel vectors satisfy v(i) = v(j) along tree edges, which is exactly the condition for a divisor to be q-reduced on trees. Extend this to graphs with cycles by showing that the cycle generators correspond to the \"circuit divisors\" in chip-firing theory. The q-visible component generators correspond to \"lending\" operations from q to components.\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic geometry (divisor theory), combinatorics \u2194 number theory (arithmetic geometry of curves).\n\n**Lineage**: Extends `tropicalKernel_leaf_eq` and `tropicalKernel_edge_constant` to the full chip-firing dictionary.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 bridges two deep theories)",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.340182+00:00"
   }
 ];
