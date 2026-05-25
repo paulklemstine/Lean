@@ -2,273 +2,45 @@
 // Lightweight index for sidebar, graph, and lineage links.
 // Full package data is loaded on-demand from individual .json files.
 
-window.PACKAGE_INDEX = [];
+window.PACKAGE_INDEX = [
+  {
+    "filename": "direction_5_generalization_to_higher_degree_diagon.json",
+    "title": "A Uniform Local Obstruction Calculus for Diagonal Hypersurfaces",
+    "domain": "Number Theory / Arithmetic Geometry",
+    "date": "2026-05-25T13:51:09Z",
+    "exp_id": "e97c0f01",
+    "quality_score": null,
+    "quality": "unrated"
+  }
+];
 
-window.PACKAGE_DB_INDEX = {};
+window.PACKAGE_DB_INDEX = {
+  "direction_5_generalization_to_higher_degree_diagon.json": {
+    "title": "A Uniform Local Obstruction Calculus for Diagonal Hypersurfaces",
+    "exp_id": "e97c0f01",
+    "source_exp_ids": [
+      "34c2669a"
+    ],
+    "domain": "Number Theory / Arithmetic Geometry"
+  }
+};
 
 
 // Knowledge Graph Data (auto-generated from lineage.json)
 window.PACKAGE_GRAPH = {
   "nodes": [
     {
-      "id": "direction_4_primewise_decomposition_and_improved_c",
-      "title": "Primewise Torsion Persistence Stability: Arithmetic Decomposition of Topological Invariants",
-      "domain": "Algebraic Topology / Topological Data Analysis / Number Theory",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
-      "date": "2026-05-24T23:11:21Z",
-      "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_5_complexity_of_lorentzian_recognition",
-      "title": "Complexity of Lorentzian Recognition: Recursive Spectral Certificates and Fixed-Parameter Tractability",
-      "domain": "Algebraic Combinatorics / Complexity Theory",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-24T23:12:19Z",
-      "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_3_extension_to_product_and_sum_types",
-      "title": "The Growth Regime Trichotomy: How Type Constructors Generate Computational Complexity Classes",
-      "domain": "Type Theory / Computational Complexity",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-05-24T23:13:01Z",
-      "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_2_fractional_predictor_refinement",
-      "title": "Fractional Transversal Refinement: LP-Dual Threshold Prediction and Integrality Gap Dynamics",
-      "domain": "Combinatorial Optimization / Hypergraph Theory",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-05-24T23:13:42Z",
-      "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_1_coalgebraic_temporal_adjunction_for_in",
-      "title": "Coalgebraic Temporal Adjunction for Infinite Traces",
-      "domain": "Coalgebraic Modal Logic / Temporal Logic / Category Theory",
-      "primary_domain": "Logic",
-      "shape": "star_of_david",
-      "date": "2026-05-25T00:25:17Z",
-      "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "eml_algebraic_independence_transcendence_results",
-      "title": "EML Algebraic Independence and Certified Transcendence Proxies",
-      "domain": "Transcendence Theory / Algebraic Independence",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-25T00:25:53Z",
-      "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "sums_of_three_cubes",
-      "title": "Sums of Three Cubes: A Formal Local-Global Framework",
-      "domain": "Algebra / Arithmetic Geometry",
-      "primary_domain": "Geometry",
-      "shape": "hexagonal_prism",
-      "date": "2026-05-25T00:26:30Z",
-      "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_2_tensor_sorted_extension_for_scientific",
-      "title": "Tensor-Sorted Rewrite Systems: Certified Symbolic Simplification Preserving Bilinear Energy",
-      "domain": "Many-Sorted Rewriting / Linear Algebra / Scientific Computing",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-25T00:54:38Z",
-      "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_1_global_tightness_conjecture",
-      "title": "Exact Higher-Order State Complexity: A Myhill-Nerode Theorem for Simply Typed Lambda Calculus",
-      "domain": "Pythagorean",
-      "primary_domain": "Pythagorean",
-      "shape": "triangular_prism",
-      "date": "2026-05-25T00:55:11Z",
-      "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_1_concrete_first_order_term_algebra_with",
-      "title": "Certified Knuth-Bendix Completion: Concrete-to-Abstract Simulation for First-Order Term Algebra",
-      "domain": "Term Rewriting Systems / Universal Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-25T01:35:33Z",
-      "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_3_completeness_of_recursive_spectral_cer",
-      "title": "Completeness of Recursive Spectral Certificates for Lorentzian Polynomials",
-      "domain": "Algebraic Combinatorics / Spectral Linear Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-25T02:10:29Z",
-      "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_4_efficient_sampling_from_lorentzian_cer",
-      "title": "Efficient Sampling from Lorentzian Certificates: Spectral Gap, Log-Concavity, and Tropical Diameter",
-      "domain": "Algebraic Combinatorics / Probability Theory / Tropical Geometry",
-      "primary_domain": "Tropical",
-      "shape": "star",
-      "date": "2026-05-25T02:11:07Z",
-      "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_2_tropical_kernel_dimension_formula",
-      "title": "Tropical Graph Hodge Theory: A Kernel Dimension Formula",
-      "domain": "Tropical Linear Algebra / Combinatorial Hodge Theory",
-      "primary_domain": "Tropical",
-      "shape": "star",
-      "date": "2026-05-25T03:05:32Z",
-      "hue": 101,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_4_parametric_families_and_algebraic_curv",
-      "title": "Parametric Families on Cubic Surfaces: Constructible Arithmetic of Three-Cube Representations",
+      "id": "direction_5_generalization_to_higher_degree_diagon",
+      "title": "A Uniform Local Obstruction Calculus for Diagonal Hypersurfaces",
       "domain": "Number Theory / Arithmetic Geometry",
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
-      "date": "2026-05-25T03:06:21Z",
-      "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "direction_3_sparse_matrix_structure_preservation",
-      "title": "Row-Sparsity Budgets for Tensor Rewrite Systems",
-      "domain": "Sparse Linear Algebra / Symbolic Computation",
-      "primary_domain": "Computation",
-      "shape": "cube",
-      "date": "2026-05-25T03:07:10Z",
-      "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "birch_and_swinnerton_dyer_conjecture",
-      "title": "Tropical-Analytic Duality for Elliptic L-Functions",
-      "domain": "Algebra / Arithmetic Geometry / Tropical Geometry",
-      "primary_domain": "Tropical",
-      "shape": "star",
-      "date": "2026-05-25T03:07:59Z",
-      "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "symmetric_group_generation_probability",
-      "title": "Generation Probability of the Symmetric Group",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-05-25T03:08:46Z",
-      "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
-    },
-    {
-      "id": "tropical_satake_isomorphism_for_gl_n",
-      "title": "Tropical Satake Isomorphism for GL_n: A Rank-Uniform Framework",
-      "domain": "Tropical Geometry / Representation Theory",
-      "primary_domain": "Tropical",
-      "shape": "star",
-      "date": "2026-05-25T08:04:16Z",
-      "hue": 272,
+      "date": "2026-05-25T13:51:09Z",
+      "hue": 271,
       "priority_score": null,
       "quality": "unrated"
     }
   ],
-  "edges": [
-    {
-      "source": "direction_5_complexity_of_lorentzian_recognition",
-      "target": "direction_3_completeness_of_recursive_spectral_cer",
-      "strength": 1.0,
-      "label": "inspired by",
-      "type": "provenance"
-    },
-    {
-      "source": "direction_2_tensor_sorted_extension_for_scientific",
-      "target": "direction_3_sparse_matrix_structure_preservation",
-      "strength": 1.0,
-      "label": "inspired by",
-      "type": "provenance"
-    },
-    {
-      "source": "direction_5_complexity_of_lorentzian_recognition",
-      "target": "direction_4_efficient_sampling_from_lorentzian_cer",
-      "strength": 1.0,
-      "label": "inspired by",
-      "type": "provenance"
-    },
-    {
-      "source": "sums_of_three_cubes",
-      "target": "direction_4_parametric_families_and_algebraic_curv",
-      "strength": 1.0,
-      "label": "inspired by",
-      "type": "provenance"
-    }
-  ],
-  "domain_bridges": [
-    {
-      "domain_a": "Algebra",
-      "domain_b": "Geometry",
-      "package_count": 3,
-      "strength": 0.9000000000000001
-    },
-    {
-      "domain_a": "Algebra",
-      "domain_b": "Tropical",
-      "package_count": 3,
-      "strength": 0.9000000000000001
-    },
-    {
-      "domain_a": "Geometry",
-      "domain_b": "Tropical",
-      "package_count": 3,
-      "strength": 0.9000000000000001
-    },
-    {
-      "domain_a": "Algebra",
-      "domain_b": "Logic",
-      "package_count": 2,
-      "strength": 0.7
-    },
-    {
-      "domain_a": "Algebra",
-      "domain_b": "Computation",
-      "package_count": 1,
-      "strength": 0.5
-    }
-  ]
+  "edges": [],
+  "domain_bridges": []
 };
