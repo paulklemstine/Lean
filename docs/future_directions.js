@@ -18,21 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.294221+00:00"
   },
   {
-    "id": "seed_003",
-    "title": "Hadamard Matrix Conjecture",
-    "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
-    "domains": [
-      "Algebra",
-      "Combinatorics"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "e79eba9b",
-    "timestamp": "2026-05-24T22:37:54.308847+00:00"
-  },
-  {
     "id": "seed_014",
     "title": "Hodge Conjecture",
     "description": "Prove that every Hodge class on a non-singular projective algebraic variety is a rational linear combination of classes of algebraic cycles. Formalize the Hodge decomposition and explore the conjecture for specific varieties like abelian varieties and K3 surfaces.",
@@ -61,6 +46,21 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.403036+00:00"
+  },
+  {
+    "id": "seed_026",
+    "title": "Lehmer's Mahler Measure Problem",
+    "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.484135+00:00"
   },
   {
     "id": "seed_031",
@@ -575,6 +575,21 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:05:35.300943+00:00"
   },
   {
+    "id": "fd_0847",
+    "title": "Arithmetic Phase Transition in Mod-p Topological Signatures of Chaotic Algebraic",
+    "description": "Conjecture: There exists a smooth projective variety X defined over Q and an algebraic self-map f: X -> X such that, for a density-positive set of primes p, the Vietoris-Rips persistence landscapes built from the finite orbit cloud of f on X(F_p) split into exactly two asymptotic universality classes distinguished by the Frobenius conjugacy class of p in a fixed finite Galois extension L/Q. More precisely, after rescaling by |X(F_p)|, the persistence landscape of the orbit cloud converges along primes in class C1 to a limit Lambda_1 and along primes in class C2 to a different limit Lambda_2 with Lambda_1 != Lambda_2. Test: Choose explicit candidates (e.g. endomorphisms on abelian surfaces, K3 reductions, or polynomial automorphisms compactified over Q), compute orbit clouds over many primes, build persistence landscapes, and statistically test whether primes partitioned by Frobenius class exhibit two stable non-equal limiting distributions; the conjecture is refuted if no such separation persists under growing p and orbit length, or if the observed classes do not align with any finite Galois splitting law. Impact: This would reveal a new bridge between arithmetic dynamics, Galois theory, and topological data analysis, showing that hidden number-theoretic symmetries can control emergent topological phases of finite-field dynamical systems.",
+    "domains": [
+      "Arithmetic Dynamics",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:06:34.986047+00:00"
+  },
+  {
     "id": "fd_0852",
     "title": "Direction 1: Sharp Dixon Asymptotics via M\u00f6bius Inversion",
     "description": "**Conjecture:** The exact number of generating pairs in $S_n$ can be expressed via M\u00f6bius inversion on the subgroup lattice:\n$$|\\{(\\sigma, \\tau) : \\langle \\sigma, \\tau \\rangle = S_n\\}| = \\sum_{H \\leq S_n} \\mu(H, S_n) \\cdot |H|^2$$\nand the leading terms of the asymptotic expansion satisfy $P_n = 1 - 1/n - 1/n^2 - 4/n^3 - 23/n^4 - O(1/n^5)$.\n\n**Test:** Verify the M\u00f6bius inversion formula computationally for $n \\leq 7$ using GAP, then formalize the first two terms of the asymptotic expansion in Lean by bounding contributions from subgroups of index $> n$.\n\n**Impact:** This would yield the first machine-verified sharp asymptotic for a generation probability, going far beyond the $O(1/n)$ bound from the point-stabilizer sieve.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `nongeneratingPairProbability_le_maximal_subgroup_sum`, `generatingPairProbability_eq_card_ratio`.\n\n**Proof Strategy:** Define the M\u00f6bius function on the subgroup lattice of $S_n$ using `Finpartition` or direct recursion. Formalize the inclusion-exclusion identity $\\sum_{H \\leq G} \\mu(H, G) = \\delta_{H,G}$. Then express the generating pair count as a M\u00f6bius sum and bound tail terms using subgroup index estimates.\n\n**Domain Bridges:** Analytic combinatorics (singularity analysis of generating functions), number theory (M\u00f6bius inversion analogues).\n\n**Lineage:** Direct extension of the subgroup sieve inequality proved in this cycle.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the subgroup lattice M\u00f6bius function and sharp subgroup counting bounds for $S_n$.\n\n**The key insight is** that the M\u00f6bius function on the subgroup lattice encodes *exactly* how much each subgroup contributes to the generation count, turning the subgroup sieve from an inequality into an identity.\n\n**Why now?** The subgroup sieve framework is now formalized, providing the \"\u2264\" half. The M\u00f6bius inversion provides the \"=\" half, and Mathlib's growing lattice theory API makes the combinatorial prerequisites increasingly accessible.\n\n---",
@@ -644,10 +659,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e278652",
     "timestamp": "2026-05-25T14:24:15.314374+00:00"
   },
   {
@@ -1057,7 +1072,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
@@ -1076,7 +1091,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
@@ -1096,12 +1111,32 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T17:14:31.193329+00:00"
+  },
+  {
+    "id": "fd_0892",
+    "title": "Direction 5: Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
+    "description": "**Conjecture:** If a probability distribution \u03bc on {0,1}\u207f has a strongly log-concave generating polynomial (Lorentzian with spectral gap \u03b5), then any distribution \u03bd whose generating polynomial has coefficient-wise distance < C\u00b7\u03b5 from \u03bc's is also strongly log-concave, with explicit mixing time bounds for Markov chains on \u03bd's support.\n\n**Test:** Sample from distributions near the uniform matroid measure. Compute the generating polynomial's spectral gap. Verify that the mixing time of the natural random walk scales as predicted by the gap. If mixing time depends on a different quantity, refine the conjecture.\n\n**Impact:** Would provide the first certified mixing time bounds for sampling algorithms operating on approximately log-concave distributions \u2014 a central problem in machine learning and statistical physics.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`, `reversed_cauchy_schwarz_of_gapped`\n\n**Proof Strategy:** Use the stability radius to show the perturbed distribution has a Lorentzian generating polynomial. Then apply Anari\u2013Oveis Gharan\u2013Vinzant's framework linking Lorentzianity to modified log-Sobolev inequalities, which control mixing times.\n\n**Domain Bridges:** Markov chain Monte Carlo, statistical physics (Glauber dynamics), machine learning (sampling from energy-based models)\n\n**Lineage:** Connects the perturbation theorem to the probabilistic applications of Lorentzian polynomials.\n\n**Ambition:** Solid extension \u2014 the pieces exist but assembling them requires careful analysis. \u2605\u2605\u2605\u2605",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2493279d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:31.235341+00:00"
   },
   {
     "id": "fd_0891",
@@ -1121,39 +1156,101 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:14:31.214977+00:00"
   },
   {
-    "id": "fd_0892",
-    "title": "Direction 5: Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
-    "description": "**Conjecture:** If a probability distribution \u03bc on {0,1}\u207f has a strongly log-concave generating polynomial (Lorentzian with spectral gap \u03b5), then any distribution \u03bd whose generating polynomial has coefficient-wise distance < C\u00b7\u03b5 from \u03bc's is also strongly log-concave, with explicit mixing time bounds for Markov chains on \u03bd's support.\n\n**Test:** Sample from distributions near the uniform matroid measure. Compute the generating polynomial's spectral gap. Verify that the mixing time of the natural random walk scales as predicted by the gap. If mixing time depends on a different quantity, refine the conjecture.\n\n**Impact:** Would provide the first certified mixing time bounds for sampling algorithms operating on approximately log-concave distributions \u2014 a central problem in machine learning and statistical physics.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`, `reversed_cauchy_schwarz_of_gapped`\n\n**Proof Strategy:** Use the stability radius to show the perturbed distribution has a Lorentzian generating polynomial. Then apply Anari\u2013Oveis Gharan\u2013Vinzant's framework linking Lorentzianity to modified log-Sobolev inequalities, which control mixing times.\n\n**Domain Bridges:** Markov chain Monte Carlo, statistical physics (Glauber dynamics), machine learning (sampling from energy-based models)\n\n**Lineage:** Connects the perturbation theorem to the probabilistic applications of Lorentzian polynomials.\n\n**Ambition:** Solid extension \u2014 the pieces exist but assembling them requires careful analysis. \u2605\u2605\u2605\u2605",
+    "id": "fd_0894",
+    "title": "Direction 1: Full Wreath Product Phase Transition",
+    "description": "**Conjecture:** For the wreath product $W_{k,m} = S_k \\wr S_m$ in product action, the generation probability undergoes a sharp phase transition at a critical ratio $\\rho^* = k^*/m^*$ determined by the full maximal subgroup pressure (not just coordinate defects). Specifically, the non-coordinate-defect subgroups of $W_{k,m}$ (arising from the semidirect action of $S_m$ on $S_k^m$) contribute a pressure term that is sublinear in $m$, so that the phase transition location is shifted but not qualitatively changed from the base-group prediction.\n\n**Test:** For $km \\leq 12$, enumerate all maximal subgroups of $W_{k,m}$ using GAP and compute the full pressure. Compare with the coordinate-defect pressure $m \\cdot p(S_k)$. If the full pressure exceeds the coordinate-defect pressure by a multiplicative constant, the phase transition is merely shifted; if it changes the growth rate in $m$, the conjecture needs revision.\n\n**Impact:** Resolves the central motivating problem and establishes the first rigorous phase transition theorem for random generation in a structured permutation group family.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure definition, product factorization, block-defect formula)\n\n**Proof Strategy:** Classify maximal subgroups of $S_k \\wr S_m$ using O'Nan\u2013Scott theory. Separate into three types: (a) base-group coordinate defects (already handled), (b) \"diagonal\" subgroups from $S_m$-action, (c) \"twisted\" subgroups. Bound the pressure from types (b) and (c) using index estimates from the O'Nan\u2013Scott classification.\n\n**Domain Bridges:** Permutation group theory, O'Nan\u2013Scott classification, computational group theory.\n\n**Lineage:** Direct extension of Theorems 4 and 6 in the current work.\n\n**Ambition:** Grand challenge \u2014 would constitute a major advance in probabilistic group theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf039036",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:59.768954+00:00"
+  },
+  {
+    "id": "fd_0895",
+    "title": "Direction 2: Universality of Phase Transition Critical Exponents",
+    "description": "**Conjecture:** The phase transition in generation probability exhibits universality: for any infinite family of finite groups $\\{G_n\\}$ with a natural parameterization of the subgroup family, the generation probability near the critical point satisfies\n$$P_{\\text{gen}}(G_n) \\sim A \\cdot |\\Phi(G_n)|^\\beta + \\text{lower order}$$\nwhere $\\beta$ is a universal critical exponent depending only on broad structural features (e.g., the rank of the group, whether it is a direct product or semidirect product).\n\n**The key insight is** that the multiplicative structure of the pressure (product factorization, free energy additivity) suggests that subgroup thermodynamics may satisfy a form of the central limit theorem, with fluctuations governed by universal distributions.\n\n**Why now?** The formal verification of product factorization and free energy additivity provides the mathematical infrastructure needed to rigorously state and test universality hypotheses.\n\n**Test:** Compute the generation probability and pressure for families $S_k^m$, $\\text{GL}_n(\\mathbb{F}_q)$, and $\\text{PSL}_2(p)$ near their respective phase transitions. Fit the critical exponent $\\beta$ and compare across families.\n\n**Impact:** Would establish a deep connection between finite group theory and the theory of critical phenomena, potentially importable techniques from renormalization group theory.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure bounds), `Algebra/SymmGroupGen/Basic.lean` (symmetric group generation)\n\n**Proof Strategy:** Establish a central limit theorem for the pressure contributions from independent subgroup families. Use the product factorization theorem as the independence condition. Apply Berry\u2013Esseen-type bounds for the convergence rate.\n\n**Domain Bridges:** Statistical mechanics (universality, critical exponents), probability theory (CLT, large deviations), random matrix theory.\n\n**Lineage:** Extends Direction 1 to a general framework.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
       "Physics",
       "Bridges",
-      "MachineLearning",
       "Logic"
     ],
     "priority_score": 0.9999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2493279d",
+    "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:31.235341+00:00"
+    "timestamp": "2026-05-25T17:14:59.791092+00:00"
   },
   {
-    "id": "seed_026",
-    "title": "Lehmer's Mahler Measure Problem",
-    "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
+    "id": "fd_0896",
+    "title": "Direction 3: Pressure Theory for Almost Simple Groups",
+    "description": "**Conjecture:** For a finite almost simple group $G$ with socle $S$, the pressure from the maximal subgroup family satisfies\n$$\\mathrm{pressure}(G, \\mathcal{M}) = O(|G|^{-\\epsilon})$$\nfor some $\\epsilon > 0$ depending on the type of $S$ (alternating, classical, exceptional, sporadic). This gives $P_{\\text{gen}} \\to 1$ as $|G| \\to \\infty$, recovering the Liebeck\u2013Shalev theorem with explicit rates.\n\n**The key insight is** that the pressure framework provides a systematic way to organize the contribution of each maximal subgroup type (geometric vs. non-geometric in the Aschbacher classification), with the dominant contribution coming from the geometric subgroups of smallest index.\n\n**Why now?** The entropy-energy bounds (Theorems 2\u20133) provide a framework to compute pressure without enumerating all maximal subgroups\u2014bounding the count and minimum index suffices.\n\n**Test:** Compute exact pressure for $\\text{PSL}_2(p)$ for primes $p \\leq 100$ and verify the conjectured decay rate. The maximal subgroups of $\\text{PSL}_2(p)$ are well-known.\n\n**Impact:** Would give the best known explicit bounds on generation probability for classical groups, with direct applications to cryptographic group selection.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (entropy-energy bounds)\n\n**Proof Strategy:** Use the Aschbacher classification of maximal subgroups of classical groups. For each class, bound the number of subgroups (entropy) and the minimum index (energy). Apply the upper bound theorem: pressure \u2264 |F| / D\u00b2.\n\n**Domain Bridges:** Finite simple group theory, Aschbacher classification, cryptography.\n\n**Lineage:** Applies the general pressure theory to the most important group families.\n\n**Ambition:** Solid extension \u2014 builds directly on established techniques.\n\n---",
     "domains": [
-      "NumberTheory",
-      "Algebra"
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
     ],
-    "priority_score": 0.99,
+    "priority_score": 0.9999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "seed",
+    "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.484135+00:00"
+    "timestamp": "2026-05-25T17:14:59.812468+00:00"
+  },
+  {
+    "id": "fd_0897",
+    "title": "Direction 4: Large Deviation Principles for Generation",
+    "description": "**Conjecture:** The number of nongenerating pairs in $G^2$ satisfies a large deviation principle with rate function given by the Legendre transform of the log-pressure:\n$$\\Lambda^*(\\alpha) = \\sup_t \\{t\\alpha - \\log Z(t)\\}$$\nwhere $Z(t) = \\sum_H [G:H]^{-2t}$ is the pressure at \"inverse temperature\" $t$.\n\n**The key insight is** that the pressure at different \"temperatures\" $t$ (i.e., with exponent $-2t$ instead of $-2$) forms a family of partition functions whose Legendre transform controls the probability of atypical generation behavior.\n\n**Why now?** The product factorization theorem shows that pressure has the multiplicative structure needed for the G\u00e4rtner\u2013Ellis theorem, which gives large deviation principles from the log-moment generating function.\n\n**Test:** For $S_k^m$ with $m \\to \\infty$, compute $Z(t) = m \\cdot \\sum_M [S_k:M]^{-2t}$ for varying $t$ and verify the predicted rate function against Monte Carlo simulations.\n\n**Impact:** Would establish a complete probabilistic theory of random generation, going beyond first-moment bounds to exponential concentration.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (product factorization, free energy additivity)\n\n**Proof Strategy:** Define the generalized pressure $Z(t)$ and verify multiplicativity for product families. Apply the G\u00e4rtner\u2013Ellis theorem to the sequence of block-defect pressures. Verify the hypotheses (existence of the limit, differentiability of the log-moment generating function).\n\n**Domain Bridges:** Large deviation theory, probability theory, statistical mechanics (generalized ensembles).\n\n**Lineage:** Direct analytic extension of the free energy framework.\n\n**Ambition:** Solid extension with significant theoretical depth.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf039036",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:59.835069+00:00"
+  },
+  {
+    "id": "fd_0898",
+    "title": "Direction 5: Subgroup Coverings as Error-Correcting Codes",
+    "description": "**Conjecture:** The optimal subgroup covering family (minimizing pressure subject to covering all nongenerating pairs) corresponds to a code in a natural metric space on the subgroup lattice, and the minimum achievable pressure is related to the covering radius of this code.\n\n**The key insight is** that the pressure is an expected collision rate, analogous to the weight enumerator of a code. Minimizing pressure while maintaining coverage is the subgroup-lattice analogue of designing an efficient error-correcting code.\n\n**Why now?** The entropy-energy bounds establish that pressure is controlled by two parameters (count and index range) that are directly analogous to code parameters (length and minimum distance). The product factorization provides a product code construction.\n\n**Test:** For $S_n$ with $n \\leq 10$, enumerate all covering families (collections of maximal subgroups whose union contains all nongenerating pairs) and compute the minimum-pressure covering. Compare with the pressure from the full maximal subgroup family.\n\n**Impact:** Opens a new connection between group theory and coding theory, potentially yielding new efficient constructions for both subgroup coverings and codes.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (sieve inequality, entropy-energy bounds)\n\n**Proof Strategy:** Define a metric on the subgroup lattice using index ratios. Formulate the covering problem as a set cover with weighted costs. Apply known bounds from combinatorial optimization (greedy algorithm guarantees, LP relaxation bounds). Use product factorization for constructing product codes.\n\n**Domain Bridges:** Coding theory, combinatorial optimization, lattice theory.\n\n**Lineage:** Novel cross-domain bridge from the sieve inequality.\n\n**Ambition:** Solid extension with potential for surprising applications.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "cf039036",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:14:59.855193+00:00"
   },
   {
     "id": "seed_005",
@@ -1228,118 +1325,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:26:01.272574+00:00"
-  },
-  {
-    "id": "fd_0847",
-    "title": "Arithmetic Phase Transition in Mod-p Topological Signatures of Chaotic Algebraic",
-    "description": "Conjecture: There exists a smooth projective variety X defined over Q and an algebraic self-map f: X -> X such that, for a density-positive set of primes p, the Vietoris-Rips persistence landscapes built from the finite orbit cloud of f on X(F_p) split into exactly two asymptotic universality classes distinguished by the Frobenius conjugacy class of p in a fixed finite Galois extension L/Q. More precisely, after rescaling by |X(F_p)|, the persistence landscape of the orbit cloud converges along primes in class C1 to a limit Lambda_1 and along primes in class C2 to a different limit Lambda_2 with Lambda_1 != Lambda_2. Test: Choose explicit candidates (e.g. endomorphisms on abelian surfaces, K3 reductions, or polynomial automorphisms compactified over Q), compute orbit clouds over many primes, build persistence landscapes, and statistically test whether primes partitioned by Frobenius class exhibit two stable non-equal limiting distributions; the conjecture is refuted if no such separation persists under growing p and orbit length, or if the observed classes do not align with any finite Galois splitting law. Impact: This would reveal a new bridge between arithmetic dynamics, Galois theory, and topological data analysis, showing that hidden number-theoretic symmetries can control emergent topological phases of finite-field dynamical systems.",
-    "domains": [
-      "Arithmetic Dynamics",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.9,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:06:34.986047+00:00"
-  },
-  {
-    "id": "fd_0894",
-    "title": "Direction 1: Full Wreath Product Phase Transition",
-    "description": "**Conjecture:** For the wreath product $W_{k,m} = S_k \\wr S_m$ in product action, the generation probability undergoes a sharp phase transition at a critical ratio $\\rho^* = k^*/m^*$ determined by the full maximal subgroup pressure (not just coordinate defects). Specifically, the non-coordinate-defect subgroups of $W_{k,m}$ (arising from the semidirect action of $S_m$ on $S_k^m$) contribute a pressure term that is sublinear in $m$, so that the phase transition location is shifted but not qualitatively changed from the base-group prediction.\n\n**Test:** For $km \\leq 12$, enumerate all maximal subgroups of $W_{k,m}$ using GAP and compute the full pressure. Compare with the coordinate-defect pressure $m \\cdot p(S_k)$. If the full pressure exceeds the coordinate-defect pressure by a multiplicative constant, the phase transition is merely shifted; if it changes the growth rate in $m$, the conjecture needs revision.\n\n**Impact:** Resolves the central motivating problem and establishes the first rigorous phase transition theorem for random generation in a structured permutation group family.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure definition, product factorization, block-defect formula)\n\n**Proof Strategy:** Classify maximal subgroups of $S_k \\wr S_m$ using O'Nan\u2013Scott theory. Separate into three types: (a) base-group coordinate defects (already handled), (b) \"diagonal\" subgroups from $S_m$-action, (c) \"twisted\" subgroups. Bound the pressure from types (b) and (c) using index estimates from the O'Nan\u2013Scott classification.\n\n**Domain Bridges:** Permutation group theory, O'Nan\u2013Scott classification, computational group theory.\n\n**Lineage:** Direct extension of Theorems 4 and 6 in the current work.\n\n**Ambition:** Grand challenge \u2014 would constitute a major advance in probabilistic group theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.768954+00:00"
-  },
-  {
-    "id": "fd_0895",
-    "title": "Direction 2: Universality of Phase Transition Critical Exponents",
-    "description": "**Conjecture:** The phase transition in generation probability exhibits universality: for any infinite family of finite groups $\\{G_n\\}$ with a natural parameterization of the subgroup family, the generation probability near the critical point satisfies\n$$P_{\\text{gen}}(G_n) \\sim A \\cdot |\\Phi(G_n)|^\\beta + \\text{lower order}$$\nwhere $\\beta$ is a universal critical exponent depending only on broad structural features (e.g., the rank of the group, whether it is a direct product or semidirect product).\n\n**The key insight is** that the multiplicative structure of the pressure (product factorization, free energy additivity) suggests that subgroup thermodynamics may satisfy a form of the central limit theorem, with fluctuations governed by universal distributions.\n\n**Why now?** The formal verification of product factorization and free energy additivity provides the mathematical infrastructure needed to rigorously state and test universality hypotheses.\n\n**Test:** Compute the generation probability and pressure for families $S_k^m$, $\\text{GL}_n(\\mathbb{F}_q)$, and $\\text{PSL}_2(p)$ near their respective phase transitions. Fit the critical exponent $\\beta$ and compare across families.\n\n**Impact:** Would establish a deep connection between finite group theory and the theory of critical phenomena, potentially importable techniques from renormalization group theory.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (pressure bounds), `Algebra/SymmGroupGen/Basic.lean` (symmetric group generation)\n\n**Proof Strategy:** Establish a central limit theorem for the pressure contributions from independent subgroup families. Use the product factorization theorem as the independence condition. Apply Berry\u2013Esseen-type bounds for the convergence rate.\n\n**Domain Bridges:** Statistical mechanics (universality, critical exponents), probability theory (CLT, large deviations), random matrix theory.\n\n**Lineage:** Extends Direction 1 to a general framework.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.791092+00:00"
-  },
-  {
-    "id": "fd_0896",
-    "title": "Direction 3: Pressure Theory for Almost Simple Groups",
-    "description": "**Conjecture:** For a finite almost simple group $G$ with socle $S$, the pressure from the maximal subgroup family satisfies\n$$\\mathrm{pressure}(G, \\mathcal{M}) = O(|G|^{-\\epsilon})$$\nfor some $\\epsilon > 0$ depending on the type of $S$ (alternating, classical, exceptional, sporadic). This gives $P_{\\text{gen}} \\to 1$ as $|G| \\to \\infty$, recovering the Liebeck\u2013Shalev theorem with explicit rates.\n\n**The key insight is** that the pressure framework provides a systematic way to organize the contribution of each maximal subgroup type (geometric vs. non-geometric in the Aschbacher classification), with the dominant contribution coming from the geometric subgroups of smallest index.\n\n**Why now?** The entropy-energy bounds (Theorems 2\u20133) provide a framework to compute pressure without enumerating all maximal subgroups\u2014bounding the count and minimum index suffices.\n\n**Test:** Compute exact pressure for $\\text{PSL}_2(p)$ for primes $p \\leq 100$ and verify the conjectured decay rate. The maximal subgroups of $\\text{PSL}_2(p)$ are well-known.\n\n**Impact:** Would give the best known explicit bounds on generation probability for classical groups, with direct applications to cryptographic group selection.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (entropy-energy bounds)\n\n**Proof Strategy:** Use the Aschbacher classification of maximal subgroups of classical groups. For each class, bound the number of subgroups (entropy) and the minimum index (energy). Apply the upper bound theorem: pressure \u2264 |F| / D\u00b2.\n\n**Domain Bridges:** Finite simple group theory, Aschbacher classification, cryptography.\n\n**Lineage:** Applies the general pressure theory to the most important group families.\n\n**Ambition:** Solid extension \u2014 builds directly on established techniques.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.812468+00:00"
-  },
-  {
-    "id": "fd_0897",
-    "title": "Direction 4: Large Deviation Principles for Generation",
-    "description": "**Conjecture:** The number of nongenerating pairs in $G^2$ satisfies a large deviation principle with rate function given by the Legendre transform of the log-pressure:\n$$\\Lambda^*(\\alpha) = \\sup_t \\{t\\alpha - \\log Z(t)\\}$$\nwhere $Z(t) = \\sum_H [G:H]^{-2t}$ is the pressure at \"inverse temperature\" $t$.\n\n**The key insight is** that the pressure at different \"temperatures\" $t$ (i.e., with exponent $-2t$ instead of $-2$) forms a family of partition functions whose Legendre transform controls the probability of atypical generation behavior.\n\n**Why now?** The product factorization theorem shows that pressure has the multiplicative structure needed for the G\u00e4rtner\u2013Ellis theorem, which gives large deviation principles from the log-moment generating function.\n\n**Test:** For $S_k^m$ with $m \\to \\infty$, compute $Z(t) = m \\cdot \\sum_M [S_k:M]^{-2t}$ for varying $t$ and verify the predicted rate function against Monte Carlo simulations.\n\n**Impact:** Would establish a complete probabilistic theory of random generation, going beyond first-moment bounds to exponential concentration.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (product factorization, free energy additivity)\n\n**Proof Strategy:** Define the generalized pressure $Z(t)$ and verify multiplicativity for product families. Apply the G\u00e4rtner\u2013Ellis theorem to the sequence of block-defect pressures. Verify the hypotheses (existence of the limit, differentiability of the log-moment generating function).\n\n**Domain Bridges:** Large deviation theory, probability theory, statistical mechanics (generalized ensembles).\n\n**Lineage:** Direct analytic extension of the free energy framework.\n\n**Ambition:** Solid extension with significant theoretical depth.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.835069+00:00"
-  },
-  {
-    "id": "fd_0898",
-    "title": "Direction 5: Subgroup Coverings as Error-Correcting Codes",
-    "description": "**Conjecture:** The optimal subgroup covering family (minimizing pressure subject to covering all nongenerating pairs) corresponds to a code in a natural metric space on the subgroup lattice, and the minimum achievable pressure is related to the covering radius of this code.\n\n**The key insight is** that the pressure is an expected collision rate, analogous to the weight enumerator of a code. Minimizing pressure while maintaining coverage is the subgroup-lattice analogue of designing an efficient error-correcting code.\n\n**Why now?** The entropy-energy bounds establish that pressure is controlled by two parameters (count and index range) that are directly analogous to code parameters (length and minimum distance). The product factorization provides a product code construction.\n\n**Test:** For $S_n$ with $n \\leq 10$, enumerate all covering families (collections of maximal subgroups whose union contains all nongenerating pairs) and compute the minimum-pressure covering. Compare with the pressure from the full maximal subgroup family.\n\n**Impact:** Opens a new connection between group theory and coding theory, potentially yielding new efficient constructions for both subgroup coverings and codes.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (sieve inequality, entropy-energy bounds)\n\n**Proof Strategy:** Define a metric on the subgroup lattice using index ratios. Formulate the covering problem as a set cover with weighted costs. Apply known bounds from combinatorial optimization (greedy algorithm guarantees, LP relaxation bounds). Use product factorization for constructing product codes.\n\n**Domain Bridges:** Coding theory, combinatorial optimization, lattice theory.\n\n**Lineage:** Novel cross-domain bridge from the sieve inequality.\n\n**Ambition:** Solid extension with potential for surprising applications.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.855193+00:00"
   },
   {
     "id": "seed_013",
