@@ -4,6 +4,42 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "langlands_program_functoriality.json",
+    "title": "Langlands Functoriality: Local Euler Data and Symmetric Power Transfer",
+    "domain": "Algebra / Number Theory",
+    "date": "2026-05-25T20:35:56Z",
+    "exp_id": "7e4a0191",
+    "quality_score": 0.7224016949152543,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_3_weighted_extension.json",
+    "title": "Weighted Tropical Graph Hodge Theory",
+    "domain": "Tropical Geometry / Graph Theory / Combinatorial Optimization",
+    "date": "2026-05-25T20:35:34Z",
+    "exp_id": "e8f8d5e4",
+    "quality_score": 0.7266461478599222,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_1_submodular_objectives_and_the_curvatur.json",
+    "title": "Curvature-Gap Theorem: Submodular Objectives and Threshold Rounding",
+    "domain": "Submodular Optimization / Hypergraph Theory",
+    "date": "2026-05-25T20:35:13Z",
+    "exp_id": "1e2eba72",
+    "quality_score": 0.7238752112676057,
+    "quality": "substantial"
+  },
+  {
+    "filename": "quantum_error_correction_bounds.json",
+    "title": "Quantum MacWilliams Identities and the Bravyi-Terhal Bound",
+    "domain": "Quantum Information Theory / Algebraic Combinatorics",
+    "date": "2026-05-25T20:34:49Z",
+    "exp_id": "b633df37",
+    "quality_score": 0.7132103632664923,
+    "quality": "substantial"
+  },
+  {
     "filename": "direction_3_compositional_rounding_certificates_fo.json",
     "title": "Compositional Rounding Certificates for Modular Hypergraphs",
     "domain": "Combinatorial Optimization / Hypergraph Theory",
@@ -230,6 +266,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Tropical Geometry / Combinatorial Optimization"
   },
+  "direction_3_weighted_extension.json": {
+    "title": "Weighted Tropical Graph Hodge Theory",
+    "exp_id": "e8f8d5e4",
+    "source_exp_ids": [
+      "fd2f08b2"
+    ],
+    "domain": "Tropical Geometry / Graph Theory / Combinatorial Optimization"
+  },
   "direction_5_phase_transitions_in_generation_probab.json": {
     "title": "Subgroup Thermodynamics: Phase Transitions in Random Generation via Pair Pressure",
     "exp_id": "cf039036",
@@ -342,6 +386,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Tropical Geometry / Combinatorial Algebraic Geometry"
   },
+  "quantum_error_correction_bounds.json": {
+    "title": "Quantum MacWilliams Identities and the Bravyi-Terhal Bound",
+    "exp_id": "b633df37",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Quantum Information Theory / Algebraic Combinatorics"
+  },
   "direction_5_higher_order_completion_and_lambda_cal.json": {
     "title": "Higher-Order Completion and Lambda-Calculus Integration",
     "exp_id": "2933a8cf",
@@ -365,6 +417,14 @@ window.PACKAGE_DB_INDEX = {
       "33261812"
     ],
     "domain": "Pythagorean / Lorentzian Polynomial Theory"
+  },
+  "langlands_program_functoriality.json": {
+    "title": "Langlands Functoriality: Local Euler Data and Symmetric Power Transfer",
+    "exp_id": "7e4a0191",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra / Number Theory"
   },
   "direction_2_character_expansion_and_strong_couplin.json": {
     "title": "Character Expansion Mass Gap: Representation-Theoretic Spectral Asymptotics in Lattice Yang-Mills Theory",
@@ -398,6 +458,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Tropical Algebra / Graph Theory / Algebraic Topology"
   },
+  "direction_1_submodular_objectives_and_the_curvatur.json": {
+    "title": "Curvature-Gap Theorem: Submodular Objectives and Threshold Rounding",
+    "exp_id": "1e2eba72",
+    "source_exp_ids": [
+      "b9d16ed0"
+    ],
+    "domain": "Submodular Optimization / Hypergraph Theory"
+  },
   "direction_5_tropical_morse_theory_for_network_phas.json": {
     "title": "Tropical Morse Theory for Network Phase Transitions",
     "exp_id": "88770e41",
@@ -427,7 +495,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 90,
+      "hue": 95,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -438,7 +506,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -449,7 +517,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 101,
+      "hue": 271,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -460,7 +528,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -471,7 +539,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -482,7 +550,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7554863879178124,
       "quality": "substantial"
     },
@@ -493,7 +561,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -504,7 +572,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -515,7 +583,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7475694375378231,
       "quality": "substantial"
     },
@@ -526,7 +594,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 112,
+      "hue": 90,
       "priority_score": 0.7452328425357874,
       "quality": "substantial"
     },
@@ -537,7 +605,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7379731931205967,
       "quality": "substantial"
     },
@@ -548,7 +616,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T17:14:28Z",
-      "hue": 90,
+      "hue": 275,
       "priority_score": 0.7094771428571429,
       "quality": "substantial"
     },
@@ -559,7 +627,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:14:56Z",
-      "hue": 95,
+      "hue": 270,
       "priority_score": 0.7307286403906522,
       "quality": "substantial"
     },
@@ -570,7 +638,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7426729134392938,
       "quality": "substantial"
     },
@@ -581,7 +649,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:49:47Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.718787256166983,
       "quality": "substantial"
     },
@@ -592,7 +660,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T17:57:55Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.7485430061705161,
       "quality": "substantial"
     },
@@ -614,7 +682,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T18:03:18Z",
-      "hue": 90,
+      "hue": 95,
       "priority_score": 0.7496613212625398,
       "quality": "substantial"
     },
@@ -636,7 +704,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:39:59Z",
-      "hue": 92,
+      "hue": 280,
       "priority_score": 0.7061918953063686,
       "quality": "substantial"
     },
@@ -647,7 +715,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T18:40:46Z",
-      "hue": 275,
+      "hue": 272,
       "priority_score": 0.6968374111334675,
       "quality": "partial"
     },
@@ -658,7 +726,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T19:29:15Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7239525714285715,
       "quality": "substantial"
     },
@@ -669,7 +737,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:01:45Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7661817738359202,
       "quality": "substantial"
     },
@@ -680,12 +748,63 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:02:12Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7190936000000001,
+      "quality": "substantial"
+    },
+    {
+      "id": "quantum_error_correction_bounds",
+      "title": "Quantum MacWilliams Identities and the Bravyi-Terhal Bound",
+      "domain": "Quantum Information Theory / Algebraic Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T20:34:49Z",
+      "hue": 90,
+      "priority_score": 0.7132103632664923,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_submodular_objectives_and_the_curvatur",
+      "title": "Curvature-Gap Theorem: Submodular Objectives and Threshold Rounding",
+      "domain": "Submodular Optimization / Hypergraph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T20:35:13Z",
+      "hue": 272,
+      "priority_score": 0.7238752112676057,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_weighted_extension",
+      "title": "Weighted Tropical Graph Hodge Theory",
+      "domain": "Tropical Geometry / Graph Theory / Combinatorial Optimization",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-25T20:35:34Z",
+      "hue": 272,
+      "priority_score": 0.7266461478599222,
+      "quality": "substantial"
+    },
+    {
+      "id": "langlands_program_functoriality",
+      "title": "Langlands Functoriality: Local Euler Data and Symmetric Power Transfer",
+      "domain": "Algebra / Number Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T20:35:56Z",
+      "hue": 271,
+      "priority_score": 0.7224016949152543,
       "quality": "substantial"
     }
   ],
   "edges": [
+    {
+      "source": "direction_5_weighted_and_multi_objective_extension",
+      "target": "direction_1_submodular_objectives_and_the_curvatur",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
     {
       "source": "yang_mills_mass_gap",
       "target": "direction_2_character_expansion_and_strong_couplin",
@@ -738,13 +857,13 @@ window.PACKAGE_GRAPH = {
   ],
   "domain_bridges": [
     {
-      "domain_a": "Algebra",
+      "domain_a": "Geometry",
       "domain_b": "Tropical",
-      "package_count": 3,
-      "strength": 0.9000000000000001
+      "package_count": 4,
+      "strength": 1.0
     },
     {
-      "domain_a": "Geometry",
+      "domain_a": "Algebra",
       "domain_b": "Tropical",
       "package_count": 3,
       "strength": 0.9000000000000001

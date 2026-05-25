@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1542 of the highest-quality
+A curated collection of 1555 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1542
+Total files: 1555
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -219,6 +219,7 @@ import FINAL.Bridges.Bridge
 import FINAL.Bridges.ByzantineCertificate
 import FINAL.Bridges.CanonicalPathBisimulation
 import FINAL.Bridges.CartesianFootprintBound
+import FINAL.Bridges.CategoricalBridges
 import FINAL.Bridges.CategoricalTropicalUltrametric
 import FINAL.Bridges.CategorifiedShannonTheory
 import FINAL.Bridges.CausalClosure
@@ -345,8 +346,10 @@ import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LipschitzMarginCell
 import FINAL.Bridges.LocalCyclePressure
 import FINAL.Bridges.LocalityCorrelation
+import FINAL.Bridges.LocalizationGeneralization
 import FINAL.Bridges.LogDerivLevel
 import FINAL.Bridges.LogSumExpVariational
+import FINAL.Bridges.Logic
 import FINAL.Bridges.LongestCommonValuedPrefix
 import FINAL.Bridges.LorentzianNewton
 import FINAL.Bridges.LorentzianRecognition
@@ -362,6 +365,7 @@ import FINAL.Bridges.Minimality
 import FINAL.Bridges.ModularScatteringDuality
 import FINAL.Bridges.MoonshineCodingTheory
 import FINAL.Bridges.MorseInequalities
+import FINAL.Bridges.MultiClassCertificationBridge
 import FINAL.Bridges.Network
 import FINAL.Bridges.NeuralBirkhoffDecomposition
 import FINAL.Bridges.NeuralProofMining
@@ -375,6 +379,7 @@ import FINAL.Bridges.OperadicRealizationDuality
 import FINAL.Bridges.OperadicSemiringSemantics
 import FINAL.Bridges.OperadicTropicalization
 import FINAL.Bridges.OperadicUltrametricCompression
+import FINAL.Bridges.Optimization
 import FINAL.Bridges.OracleCobhamInvariance
 import FINAL.Bridges.OracleTraceUltrametricEntropy
 import FINAL.Bridges.OrderedAdditiveAggregation
@@ -432,11 +437,13 @@ import FINAL.Bridges.SpectralApplications
 import FINAL.Bridges.SpectralCrypto
 import FINAL.Bridges.SpectralProofSpace
 import FINAL.Bridges.SpectralRealization
+import FINAL.Bridges.SpectralReciprocity
 import FINAL.Bridges.StabilizerGaloisConcatenation
 import FINAL.Bridges.StoneChuClosureDuality
 import FINAL.Bridges.StoneDualityMLAdvanced
 import FINAL.Bridges.StoneDualityMLCore
 import FINAL.Bridges.StoneWeierstrassTropicalPolytope
+import FINAL.Bridges.SubmodularCurvature
 import FINAL.Bridges.SumcheckSoundness
 import FINAL.Bridges.SunflowerPruning
 import FINAL.Bridges.Support
@@ -522,6 +529,7 @@ import FINAL.Bridges.TropicalRadonDuality
 import FINAL.Bridges.TropicalRadonGraphDuality
 import FINAL.Bridges.TropicalRateDistortion
 import FINAL.Bridges.TropicalRateDistortionExact
+import FINAL.Bridges.TropicalReLUDepthSeparation
 import FINAL.Bridges.TropicalResiduationRealization
 import FINAL.Bridges.TropicalResiduationTrapdoorDuality
 import FINAL.Bridges.TropicalSatake
@@ -580,6 +588,7 @@ import FINAL.Bridges.VoiceLeadingRateDistortion
 import FINAL.Bridges.VoiceLeadingSorted
 import FINAL.Bridges.VoiceLeadingTransport
 import FINAL.Bridges.WeightAlgebra
+import FINAL.Bridges.WeightedTropicalHodge
 import FINAL.Bridges.WeightedVariance
 import FINAL.Bridges.algebra_physics_bridge_theorem
 import FINAL.Computation.AffineDistortionComplexity
@@ -1096,6 +1105,7 @@ import FINAL.Physics.TropicalMirrorSymmetry
 import FINAL.Physics.TropicalTDuality
 import FINAL.Physics.TropicalVacuumEnergy
 import FINAL.Physics.VonNeumannEntropy
+import FINAL.Physics.WeightEnumerator
 import FINAL.Physics.YangMillsMassGap
 import FINAL.Pythagorean.AbelianizationTorsion
 import FINAL.Pythagorean.AdelicPersistentHomology
@@ -1416,6 +1426,7 @@ import FINAL.Tropical.NegligibleClosure
 import FINAL.Tropical.NerodeDecidability
 import FINAL.Tropical.NewResearch
 import FINAL.Tropical.NormalForm
+import FINAL.Tropical.Numerology
 import FINAL.Tropical.OmegaMetaOracle
 import FINAL.Tropical.OracleApplicationsFrontier
 import FINAL.Tropical.OrbitComplexity
@@ -1442,6 +1453,7 @@ import FINAL.Tropical.QuantumTropicalComputing
 import FINAL.Tropical.QuantumTropicalFunctor
 import FINAL.Tropical.RankGrowth
 import FINAL.Tropical.RankOneFactorization
+import FINAL.Tropical.Reflection
 import FINAL.Tropical.ReflectionTactic
 import FINAL.Tropical.Representation
 import FINAL.Tropical.SATBTropicalDP
@@ -1491,6 +1503,7 @@ import FINAL.Tropical.TropicalEntropyCompact
 import FINAL.Tropical.TropicalFFN
 import FINAL.Tropical.TropicalFactoring
 import FINAL.Tropical.TropicalFano
+import FINAL.Tropical.TropicalFormula
 import FINAL.Tropical.TropicalFrontierResearch
 import FINAL.Tropical.TropicalFrontiers
 import FINAL.Tropical.TropicalFutureDirections

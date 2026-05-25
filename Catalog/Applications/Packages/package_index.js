@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra / Number Theory",
     "date": "2026-05-25T20:35:56Z",
     "exp_id": "7e4a0191",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7224016949152543,
+    "quality": "substantial"
   },
   {
     "filename": "direction_3_weighted_extension.json",
@@ -793,8 +793,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-25T20:35:56Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7224016949152543,
+      "quality": "substantial"
     }
   ],
   "edges": [

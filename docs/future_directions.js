@@ -93,38 +93,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.544197+00:00"
   },
   {
-    "id": "seed_038",
-    "title": "Langlands Program: Functoriality",
-    "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
-    "domains": [
-      "Algebra",
-      "NumberTheory",
-      "Bridges"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "7e4a0191",
-    "timestamp": "2026-05-24T22:37:54.574939+00:00"
-  },
-  {
-    "id": "seed_039",
-    "title": "Quantum Error Correction Bounds",
-    "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
-    "domains": [
-      "Physics",
-      "Computation",
-      "Algebra"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "b633df37",
-    "timestamp": "2026-05-24T22:37:54.583311+00:00"
-  },
-  {
     "id": "seed_040",
     "title": "Homotopy Type Theory Foundations",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
@@ -497,26 +465,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:05:35.257371+00:00"
   },
   {
-    "id": "fd_0842",
-    "title": "Direction 3: Weighted Extension",
-    "description": "**Conjecture**: For weighted graphs with edge weights w : E \u2192 \u2124 (or more generally w : E \u2192 \u211d), the tropical kernel dimension formula generalizes to:\n\n  dim_trop(ker_trop(L_S^w)) = \u03b2\u2081^w(G[S]) + \u03ba^w(G,q,S)\n\nwhere \u03b2\u2081^w counts the number of \"weight-compatible\" independent cycles (cycles where the minimum-weight edge is achieved at least twice) and \u03ba^w counts q-visible components whose connection to q has \"generic\" weight.\n\nFor generic weights (no weight coincidences), \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula. For degenerate weights, the dimension can increase due to additional coincidences.\n\n**Test**: Sample 10000 weighted graphs on n \u2264 6 vertices with weights drawn from {1, 2, ..., 10}. For each, compute the tropical kernel dimension by direct enumeration and compare to the predicted \u03b2\u2081^w + \u03ba^w. Identify the precise weight-degeneracy conditions that cause the formula to differ from the unweighted case.\n\n**Impact**: Extends tropical graph Hodge theory to the setting relevant for applications (communication networks, transportation networks, molecular graphs all have weighted edges). Would connect to tropical geometry's theory of valuated matroids.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (TropicalVal, tropMul), `Pythagorean/TropicalBridge/TropicalHodge.lean` (cycleIndicator, componentIndicator).\n\n**Proof Strategy**: Modify the cycle and component indicator constructions to account for edge weights. The key insight is that the tropical kernel condition becomes weight-dependent: for row i, the minimum of w(i,j) + v(j) over neighbors j must be achieved twice. Weight-compatible cycles are those where the indicator vector, adjusted by cumulative weights, still satisfies this condition.\n\n**Domain Bridges**: Tropical geometry \u2194 optimization (weighted matching), network science \u2194 statistical physics (Boltzmann weights).\n\n**Lineage**: Generalizes `componentIndicator_mem_tropicalKernel` from unit weights to arbitrary weights.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 natural generalization with clear proof path)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "e8f8d5e4",
-    "timestamp": "2026-05-25T03:05:35.300943+00:00"
-  },
-  {
     "id": "fd_0852",
     "title": "Direction 1: Sharp Dixon Asymptotics via M\u00f6bius Inversion",
     "description": "**Conjecture:** The exact number of generating pairs in $S_n$ can be expressed via M\u00f6bius inversion on the subgroup lattice:\n$$|\\{(\\sigma, \\tau) : \\langle \\sigma, \\tau \\rangle = S_n\\}| = \\sum_{H \\leq S_n} \\mu(H, S_n) \\cdot |H|^2$$\nand the leading terms of the asymptotic expansion satisfy $P_n = 1 - 1/n - 1/n^2 - 4/n^3 - 23/n^4 - O(1/n^5)$.\n\n**Test:** Verify the M\u00f6bius inversion formula computationally for $n \\leq 7$ using GAP, then formalize the first two terms of the asymptotic expansion in Lean by bounding contributions from subgroups of index $> n$.\n\n**Impact:** This would yield the first machine-verified sharp asymptotic for a generation probability, going far beyond the $O(1/n)$ bound from the point-stabilizer sieve.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `nongeneratingPairProbability_le_maximal_subgroup_sum`, `generatingPairProbability_eq_card_ratio`.\n\n**Proof Strategy:** Define the M\u00f6bius function on the subgroup lattice of $S_n$ using `Finpartition` or direct recursion. Formalize the inclusion-exclusion identity $\\sum_{H \\leq G} \\mu(H, G) = \\delta_{H,G}$. Then express the generating pair count as a M\u00f6bius sum and bound tail terms using subgroup index estimates.\n\n**Domain Bridges:** Analytic combinatorics (singularity analysis of generating functions), number theory (M\u00f6bius inversion analogues).\n\n**Lineage:** Direct extension of the subgroup sieve inequality proved in this cycle.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the subgroup lattice M\u00f6bius function and sharp subgroup counting bounds for $S_n$.\n\n**The key insight is** that the M\u00f6bius function on the subgroup lattice encodes *exactly* how much each subgroup contributes to the generation count, turning the subgroup sieve from an inequality into an identity.\n\n**Why now?** The subgroup sieve framework is now formalized, providing the \"\u2264\" half. The M\u00f6bius inversion provides the \"=\" half, and Mathlib's growing lattice theory API makes the combinatorial prerequisites increasingly accessible.\n\n---",
@@ -548,10 +496,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "92e3853a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8778f4a5",
     "timestamp": "2026-05-25T03:08:48.902211+00:00"
   },
   {
@@ -704,10 +652,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb4b8f41",
     "timestamp": "2026-05-25T15:29:44.816206+00:00"
   },
   {
@@ -750,26 +698,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "44ebbbfd",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T15:29:44.862008+00:00"
-  },
-  {
-    "id": "fd_0883",
-    "title": "Direction 1: Submodular Objectives and the Curvature-Gap Conjecture",
-    "description": "**Conjecture:** For a hypergraph H with max edge size d and a monotone submodular function f : 2^V \u2192 \u211d\u22650 with curvature \u03ba \u2208 [0,1], the threshold-rounded set S satisfies f(S) \u2264 d/(1-\u03ba) \u00b7 f_multilinear(x), where f_multilinear is the multilinear extension evaluated at the fractional solution x.\n\n**Test:** Implement random monotone submodular functions as weighted coverage functions on random hypergraphs with n=20. Compute the multilinear extension via sampling (1000 samples), apply threshold rounding, and measure the ratio f(S)/f_multilinear(x). Sweep curvature by varying the overlap structure of coverage sets. A single instance with ratio exceeding d/(1-\u03ba)+\u03b5 disproves the conjecture.\n\n**Impact:** This would extend the cost-agnostic rounding principle from linear to submodular objectives \u2014 the natural next level of expressiveness in optimization. Submodular functions model diminishing returns, which appear in welfare economics, sensor placement, and influence maximization.\n\n**Catalog References:**\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`, `threshold_simultaneous_multiobjective_bound`\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `threshold_isTransversal`, `threshold_card_bound`\n\n**Proof Strategy:** Decompose the multilinear extension as a convex combination of linear functions (this is known). Apply the existing weighted bound to each linear component, then aggregate. The curvature parameter \u03ba controls the gap between f(S) and the aggregated bound via Vondr\u00e1k's framework.\n\n**Domain Bridges:** Machine learning (feature selection), influence maximization in social networks, welfare economics (diminishing marginal returns)\n\n**Lineage:** Direct extension of Theorem 1 (weighted rounding) and Theorem 4 (simultaneous multi-objective) via the multilinear extension framework of C\u0103linescu et al. (2011).\n\n**Ambition:** Grand challenge \u2014 this would create the first certified rounding theory for nonlinear multi-criteria optimization in a combinatorial setting.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "b9d16ed0",
-    "consumed_by_exp_id": "1e2eba72",
-    "timestamp": "2026-05-25T16:39:08.850911+00:00"
   },
   {
     "id": "fd_0886",
@@ -916,10 +844,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "354ccda2",
     "timestamp": "2026-05-25T17:14:59.791092+00:00"
   },
   {
@@ -1076,10 +1004,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db7ef9c7",
     "timestamp": "2026-05-25T18:39:32.551338+00:00"
   },
   {
@@ -1171,7 +1099,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
@@ -1191,7 +1119,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
@@ -1210,7 +1138,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
@@ -1230,7 +1158,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
@@ -1250,12 +1178,100 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T19:29:18.016009+00:00"
+  },
+  {
+    "id": "fd_0932",
+    "title": "Direction 1: Intrinsically Typed Higher-Order Rewriting with \u03b2\u03b7-Completion",
+    "description": "**Conjecture:** For the simply-typed \u03bb-calculus with \u03b2\u03b7-reduction, substitution functoriality and rewrite closure extend to the \u03b2\u03b7 setting, and the generated equational theory descends cleanly to \u03b2\u03b7-equivalence classes. Concretely: if `HOEqGen(E, t, u)` and `t ~\u03b2\u03b7 t'`, `u ~\u03b2\u03b7 u'`, then `HOEqGen(E, t', u')` in a theory with \u03b2\u03b7-rules included.\n\n**Test:** Formalize intrinsically typed terms (indexed by context and type) using de Bruijn indices. Prove `subst_comp` and `hoRewrites_closed_under_subst` for typed terms. Then add \u03b7-contraction (`lam(app(rename(\u00b7+1, f), var 0)) \u2192 f`) and verify the \u03b7-commutation lemma: `eta_closed_under_subst`. Check computationally on typed terms up to size 12 that \u03b2\u03b7-normalization commutes with rewriting for orthogonal rule sets.\n\n**Impact:** Intrinsically typed terms would eliminate ill-scoped terms by construction, making the formalization stronger and aligning with the Fiore-Plotkin-Turi framework for abstract syntax. \u03b2\u03b7-completion is strictly more powerful than \u03b2-completion and is required for extensional reasoning about functional programs.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (subst_comp, beta_closed_under_subst, liftSubst_compSubst); `Pythagorean/ConcreteTermAlgebra.lean` (FOTerm.subst_comp as the first-order prototype).\n\n**Proof Strategy:** Start with the Autosubst-style approach: define a universe of types, index terms by `(Ctx, Ty)`, and derive the substitution lemmas mechanically. The \u03b7 case requires proving `subst(lam(app(rename(\u00b7+1, f), var 0)), \u03c3) = subst(f, \u03c3)` when f has appropriate type, which reduces to showing `liftSubst(\u03c3)(1) = rename(\u00b7+1)(\u03c3(0))` \u2014 a definitional equality.\n\n**Domain Bridges:** Type theory (intrinsic typing), categorical semantics (presheaves over contexts), proof automation (extensional simplification).\n\n**Lineage:** Direct extension of the current work's substitution calculus.\n\n**Ambition:** Solid extension \u2014 builds directly on verified infrastructure with clear proof path.\n\n**\"The key insight is...\"** that \u03b7-contraction is the *semantic* counterpart of \u03b2-reduction \u2014 where \u03b2 says \"functions compute,\" \u03b7 says \"things that compute like functions *are* functions\" \u2014 and the substitution calculus we have already verified handles both uniformly once the commutation lemma is established.\n\n**\"Why now?\"** The substitution infrastructure (11 lemmas from `liftRen_id` through `subst_comp`) is now verified and battle-tested. Extending to \u03b7 requires exactly one new commutation lemma and one new lifting property, both following the established pattern.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2933a8cf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:01:51.820906+00:00"
+  },
+  {
+    "id": "fd_0933",
+    "title": "Direction 2: Higher-Order Critical Pairs and Knuth-Bendix Completion Modulo \u03b2",
+    "description": "**Conjecture:** For finite, left-linear, simply-typed higher-order rewrite systems with no critical pairs up to \u03b2-normalized matching on terms of size \u2264 N, the generated \u03b2-aware one-step relation is locally confluent on all closed terms of size \u2264 N. Moreover, a decidable criterion for the absence of critical pairs exists for the class of higher-order pattern rewrite systems (in the sense of Miller).\n\n**Test:** Implement higher-order unification for Miller patterns. Enumerate all overlaps between pairs of rules in a given system. For each overlap, compute the critical pair and attempt to join it. Test on benchmark systems: map fusion, fold/build fusion, CPS transformation rules. Report the first system size at which a non-joinable critical pair appears (if any).\n\n**Impact:** A working higher-order Knuth-Bendix procedure would be a major advance in automated reasoning, enabling certified completion for equational theories of functional programs. Even a bounded version with correctness guarantees would be immediately useful.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (HoRewrite, hoRewrites_closed_under_subst \u2014 the closure property is essential for the completion step); `Pythagorean/ConcreteTermAlgebra.lean` (concrete_completion_correct \u2014 the first-order completion correctness theorem that we aim to lift).\n\n**Proof Strategy:** Define `CriticalPair(E)` as the set of pairs `(s, t)` arising from non-trivial overlaps of rules in E. Prove: if `CriticalPair(E)` is empty (up to \u03b2), then `HoRewrite(E)` is locally confluent. The proof uses `hoRewrites_closed_under_subst` to show that overlapping reductions can be completed. For the algorithmic part, implement Miller's higher-order pattern unification and verify it against the matching function.\n\n**Domain Bridges:** Automated theorem proving (completion procedures), unification theory (higher-order unification), compiler optimization (certified rule derivation).\n\n**Lineage:** Lifts the first-order completion correctness theorem to higher order.\n\n**Ambition:** Grand challenge \u2014 higher-order completion modulo \u03b2 is a known open problem in its full generality.\n\n**\"The key insight is...\"** that the closure theorems we have verified (`hoRewrites_closed_under_subst`, `hoRewrites_closed_under_context`) are exactly the properties needed to make the Knuth-Bendix completion step valid at higher order \u2014 the rest is \"just\" unification and critical pair analysis.\n\n**\"Why now?\"** The formal infrastructure for higher-order rewrite closure is now in place. The bottleneck has shifted from *closure properties* (solved) to *unification and overlap detection* (tractable with Miller patterns).\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2933a8cf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:01:51.853060+00:00"
+  },
+  {
+    "id": "fd_0934",
+    "title": "Direction 3: Certified Stream Fusion via Higher-Order Completion",
+    "description": "**Conjecture:** The stream fusion transformation (converting recursive list operations to stream operations and then to tight loops) can be expressed as a finite set of higher-order rewrite rules, and the resulting system is confluent modulo \u03b2 on well-typed terms. The \u03b2-normal form of any term in the generated theory corresponds to the fused program.\n\n**Test:** Encode the GHC stream fusion rules (stream/unstream, map/stream, filter/stream, foldr/build) as higher-order equations. Apply bounded completion. Check that all critical pairs join. Benchmark the resulting rewriting system against GHC's actual fusion behavior on 20 benchmark programs from the nofib suite.\n\n**Impact:** Stream fusion is one of the most important optimizations in Haskell, but its correctness has never been formally established at the equational level. A certified higher-order rewriting approach would provide the first machine-checked correctness proof for a production compiler optimization.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (mapFusionEq, map_fusion_in_theory \u2014 the map fusion example demonstrates the approach); `Pythagorean/ConcreteTermAlgebra.lean` (rewrites_closed_under_subst_and_context \u2014 the closure property that makes rule application correct).\n\n**Proof Strategy:** Define stream type as `Stream a = \u2203s. (s \u2192 Step a s, s)` in the STLC (using existential encoding). Express stream fusion as rewrite rules. Use `hoRewrites_closed_under_subst` to verify that rule application is sound. Apply `subst_comp` to verify that composed transformations equal single-pass transformations.\n\n**Domain Bridges:** Compiler optimization (GHC), functional programming (deforestation), performance engineering.\n\n**Lineage:** Extends the map fusion example to a full optimization framework.\n\n**Ambition:** Solid extension with high practical impact.\n\n**\"The key insight is...\"** that stream fusion is not just a *specific* optimization but an *equational theory* \u2014 a set of higher-order equations whose closure under substitution and contexts (exactly what we've verified) generates all valid fusion transformations.\n\n**\"Why now?\"** Map fusion is already formalized as a higher-order equation in our framework. Stream fusion is a systematic generalization requiring the same infrastructure at larger scale.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2933a8cf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:01:51.882080+00:00"
+  },
+  {
+    "id": "fd_0935",
+    "title": "Direction 4: Normalization-Guided Proof Automation via Higher-Order Rewriting",
+    "description": "**Conjecture:** A simplification procedure based on higher-order completion modulo \u03b2 can decide equality in the equational theory of simply-typed combinatory algebra (S, K, I combinators with their defining equations) by normalizing both sides and comparing normal forms. This procedure, when integrated as a tactic, can automate proofs that currently require manual `simp` lemma engineering.\n\n**Test:** Implement a `ho_simp` tactic that: (1) takes a set of higher-order equations, (2) computes their completion (bounded), (3) normalizes both sides of the goal using the completed system, (4) checks syntactic equality of normal forms. Test on 50 equational goals involving function composition, map/filter laws, and monad laws. Compare proof length against `simp` with manually curated lemma sets.\n\n**Impact:** Current proof automation in type-theoretic proof assistants relies heavily on manually curated `simp` sets. A completion-based approach would automatically derive the needed simplification rules from equational axioms, reducing the human effort in proof engineering.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (HOEqGen_closed_under_subst \u2014 the generated theory respects substitution, which is essential for tactic soundness; leftmostReduce_sound \u2014 verified reduction is the computational backbone).\n\n**Proof Strategy:** The soundness theorem for the tactic follows from `HOEqGen_closed_under_subst`: if both sides normalize to the same term under a completed system derived from the equational axioms, they are in the generated equational theory. The main challenge is ensuring that the completion process terminates and produces a confluent system for the given axioms.\n\n**Domain Bridges:** Proof automation (tactic development), type theory (equational reasoning), software verification.\n\n**Lineage:** Applies the verified rewriting infrastructure as a proof automation tool.\n\n**Ambition:** Solid extension with immediate applicability.\n\n**\"The key insight is...\"** that completion doesn't just *simplify* expressions \u2014 it *decides* equational theories. A completed higher-order rewriting system is a decision procedure for its equational theory, and the closure theorems we've verified guarantee that this decision procedure is sound.\n\n**\"Why now?\"** The formal connection between rewriting and equational theory (HOEqGen and its closure under substitution) is now verified, providing the soundness foundation for a tactic.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2933a8cf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:01:51.907267+00:00"
+  },
+  {
+    "id": "fd_0936",
+    "title": "Direction 5: Operadic Rewriting and Homotopical Completion",
+    "description": "**Conjecture:** The substitution category formalized in our work (with `compSubst_assoc`, identity laws, and the presheaf-like action of terms) is the underlying category of a *colored operad* whose algebras are exactly the models of the STLC. Higher-order completion modulo \u03b2 can be interpreted as a homotopical completion in the sense of operadic Koszul duality: the completed rewriting system computes a cofibrant replacement of the operad.\n\n**Test:** Formalize the operad structure: define the composition operation on substitutions, verify the interchange law, and construct the corresponding operad. Then show that the critical pair computation of Direction 2 corresponds to computing the operadic Koszulity condition. Test on the associativity operad (whose Koszul dual is well-known) as a sanity check.\n\n**Impact:** This would connect higher-order rewriting to the rapidly growing field of homotopical algebra and operadic methods. It would provide a new perspective on completion as a *homological* computation, potentially yielding new termination criteria and complexity bounds for higher-order completion.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (compSubst_assoc, compSubst_idSubst_left, compSubst_idSubst_right \u2014 the categorical structure of substitutions is the starting point for the operadic construction).\n\n**Proof Strategy:** Define an operad `O` with colors `\u2115` (arities), operations `O(n\u2081,...,n\u2096; m) = Subst(n\u2081+...+n\u2096, m)`, and composition given by `compSubst`. Verify the operad axioms from the categorical properties already proved. Then define rewriting rules as generators of an operadic ideal, and show that completion computes the operadic Gr\u00f6bner basis.\n\n**Domain Bridges:** Homotopical algebra (operads, Koszul duality), algebraic topology (cofibrant replacements), homological algebra (resolutions).\n\n**Lineage:** Reinterprets the substitution category as operadic structure.\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects rewriting theory to homotopical algebra.\n\n**\"The key insight is...\"** that substitution composition is not just a *convenience* but an *operadic structure* \u2014 the multi-sorted composition operation of an operad whose algebras are exactly the models of the type theory. Completion, viewed through this lens, is computing a resolution of the operad.\n\n**\"Why now?\"** The categorical properties of substitution (associativity, identity, functoriality) are now formally verified, providing the raw material for an operadic construction. Recent advances in homotopical algebra (Loday-Vallette, Dotsenko-Khoroshkin) provide the theoretical tools for operadic completion.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2933a8cf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:01:51.933532+00:00"
   },
   {
     "id": "seed_005",
@@ -1332,92 +1348,131 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:26:01.272574+00:00"
   },
   {
-    "id": "fd_0932",
-    "title": "Direction 1: Intrinsically Typed Higher-Order Rewriting with \u03b2\u03b7-Completion",
-    "description": "**Conjecture:** For the simply-typed \u03bb-calculus with \u03b2\u03b7-reduction, substitution functoriality and rewrite closure extend to the \u03b2\u03b7 setting, and the generated equational theory descends cleanly to \u03b2\u03b7-equivalence classes. Concretely: if `HOEqGen(E, t, u)` and `t ~\u03b2\u03b7 t'`, `u ~\u03b2\u03b7 u'`, then `HOEqGen(E, t', u')` in a theory with \u03b2\u03b7-rules included.\n\n**Test:** Formalize intrinsically typed terms (indexed by context and type) using de Bruijn indices. Prove `subst_comp` and `hoRewrites_closed_under_subst` for typed terms. Then add \u03b7-contraction (`lam(app(rename(\u00b7+1, f), var 0)) \u2192 f`) and verify the \u03b7-commutation lemma: `eta_closed_under_subst`. Check computationally on typed terms up to size 12 that \u03b2\u03b7-normalization commutes with rewriting for orthogonal rule sets.\n\n**Impact:** Intrinsically typed terms would eliminate ill-scoped terms by construction, making the formalization stronger and aligning with the Fiore-Plotkin-Turi framework for abstract syntax. \u03b2\u03b7-completion is strictly more powerful than \u03b2-completion and is required for extensional reasoning about functional programs.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (subst_comp, beta_closed_under_subst, liftSubst_compSubst); `Pythagorean/ConcreteTermAlgebra.lean` (FOTerm.subst_comp as the first-order prototype).\n\n**Proof Strategy:** Start with the Autosubst-style approach: define a universe of types, index terms by `(Ctx, Ty)`, and derive the substitution lemmas mechanically. The \u03b7 case requires proving `subst(lam(app(rename(\u00b7+1, f), var 0)), \u03c3) = subst(f, \u03c3)` when f has appropriate type, which reduces to showing `liftSubst(\u03c3)(1) = rename(\u00b7+1)(\u03c3(0))` \u2014 a definitional equality.\n\n**Domain Bridges:** Type theory (intrinsic typing), categorical semantics (presheaves over contexts), proof automation (extensional simplification).\n\n**Lineage:** Direct extension of the current work's substitution calculus.\n\n**Ambition:** Solid extension \u2014 builds directly on verified infrastructure with clear proof path.\n\n**\"The key insight is...\"** that \u03b7-contraction is the *semantic* counterpart of \u03b2-reduction \u2014 where \u03b2 says \"functions compute,\" \u03b7 says \"things that compute like functions *are* functions\" \u2014 and the substitution calculus we have already verified handles both uniformly once the commutation lemma is established.\n\n**\"Why now?\"** The substitution infrastructure (11 lemmas from `liftRen_id` through `subst_comp`) is now verified and battle-tested. Extending to \u03b7 requires exactly one new commutation lemma and one new lifting property, both following the established pattern.\n\n---",
+    "id": "fd_0907",
+    "title": "Spectral Sequence Stability via Persistent Homology Barcodes",
+    "description": "Conjecture: For first-quadrant homological spectral sequences E\u2081 \u21d2 H, if two spectral sequences have E\u2081 pages that are \u03b5-interleaved as bigraded persistence modules (with respect to the total-degree filtration), then their 'limit barcodes' \u2014 which record elements surviving to E\u221e as infinite bars and elements killed by d_r as finite bars of length r \u2014 are C\u00b7\u03b5-interleaved for a constant C depending only on the spectral sequence length (max page index). Test: For the Serre spectral sequences of the Hopf fibration S\u00b9\u2192S\u00b3\u2192S\u00b2 and its small perturbations (e.g., replacing S\u00b3 with a lens space L(3,1)), compute the E\u2081 interleaving distance and verify that the limit barcodes satisfy the conjectured stability bound. Secondary test on pairs of Adams spectral sequences for related spectra. Impact: This would establish the first stability theorem for spectral sequences, making differential computations robust under perturbation \u2014 with transformative applications to stable homotopy theory (Adams SS), symplectic topology (Eilenberg-Moore SS), and algebraic geometry (Leray SS for morphisms of varieties).",
+    "domains": [
+      "Algebraic Topology",
+      "Topological Data Analysis",
+      "Spectral Sequences"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T17:59:02.941963+00:00"
+  },
+  {
+    "id": "fd_0908",
+    "title": "p-adic Universality of Chip-Firing Critical Groups Under Graph Lifts",
+    "description": "Conjecture: For every finite connected base graph G and every prime p not dividing |Jac(G)|, the sequence of p-primary critical groups of random n-sheeted lifts G_n has a universal limiting distribution, depending only on the first Betti number of G and not on finer combinatorics of G. More precisely, after normalizing by the deterministic free rank contribution, the Sylow-p subgroup of Jac(G_n) converges in law as n -> infinity to a Cohen-Lenstra-type distribution determined solely by b1(G). Test: Generate random lifts of several non-isomorphic base graphs with the same first Betti number, compute Jac(G_n), extract Sylow-p parts for increasing n, and compare empirical distributions across bases and against the predicted universal law; any persistent dependence on the detailed base graph refutes the conjecture. Impact: This would reveal a new universality class linking tropical geometry, random covering theory, sandpile groups, and arithmetic heuristics, and could provide a graph-theoretic laboratory for Cohen-Lenstra phenomena.",
+    "domains": [
+      "Algebraic Combinatorics",
+      "Probability",
+      "Arithmetic Geometry",
+      "Tropical Geometry"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:03:02.506322+00:00"
+  },
+  {
+    "id": "fd_0926",
+    "title": "Prime-Local Torsion Predicts Rational Homotopy Collapse",
+    "description": "Conjecture: There exists a universal function B(d) such that for any finite simply connected CW complex X of dimension d, if for every prime p the p-primary barcode of the filtered loop-space chain complex C_*(\u03a9X; Z) has all intervals of length at most B(d), then the Sullivan minimal model of X is formal and the rational homotopy spectral sequence of \u03a9X collapses at E2. Test: Compute primewise persistent torsion barcodes for explicit non-formal spaces (for example symplectic but non-Kahler manifolds, moment-angle complexes, and wedges with attached cells) and check whether long p-primary intervals always appear; confirm on formal spaces (compact Kahler manifolds, spheres, projective spaces) that bounded intervals suffice. A single non-formal counterexample with uniformly bounded primewise torsion persistence refutes the conjecture. Impact: This would create a new bridge from computable finite-prime topological signatures to deep rational homotopy structure, giving an algorithmic detector for formality and spectral sequence collapse.",
+    "domains": [
+      "Algebraic Topology",
+      "Persistent Homology"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:40:12.492126+00:00"
+  },
+  {
+    "id": "fd_0937",
+    "title": "Direction 1: Exact Weighted Tropical Dimension Formula",
+    "description": "**Conjecture:** For any finite weighted graph G with basepoint q and vertex subset S, the weighted tropical kernel dimension satisfies\n\n  dim_trop(G, q, S) = \u03b2\u2081^w(G, S) + \u03ba^w(G, q, S)\n\nwhere \u03b2\u2081^w counts \"weight-compatible independent cycles\" and \u03ba^w counts \"weight-degenerate q-visible components.\" Under generic weights, \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula.\n\n**The key insight is** that the weighted first Betti number \u03b2\u2081^w is not merely the cycle rank of the underlying graph but the cycle rank of the *weight-degeneracy subgraph* \u2014 the subgraph restricted to edges participating in local weight ties. This refined invariant interpolates between \u03b2\u2081 (when all weights are equal) and 0 (when weights are generic).\n\n**Why now?** The nine verified theorems (especially Theorems 3.4 and 3.9, relating genericity and degeneracy to kernel membership) provide the boundary cases. Computational experiments on small graphs (n \u2264 6) can now systematically test the formula and identify the correct definition of \u03b2\u2081^w by exhaustive comparison.\n\n**Test:** Enumerate all weighted graphs on 4-5 vertices with weights in {1,...,5}. For each, compute the kernel dimension by brute force and compare with \u03b2\u2081^w + \u03ba^w for candidate definitions of \u03b2\u2081^w. The conjecture is falsifiable if any graph violates the equality.\n\n**Impact:** An exact dimension formula would be the weighted tropical analogue of the Baker-Norine Riemann-Roch theorem, opening the door to tropical divisor theory with valuations.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorems 3.4, 3.9), `Pythagorean/TropicalBridge/WeightedDefect.lean` (structural defect formula).\n\n**Proof Strategy:** Define \u03b2\u2081^w via the weight-degeneracy subgraph. Prove lower bound by explicit cycle/component constructions (extending Theorems 3.5-3.6). Prove upper bound by showing every kernel vector decomposes as a sum of cycle and component contributions.\n\n**Domain Bridges:** Tropical algebraic geometry (tropical linear spaces), matroid theory (circuit rank).\n\n**Lineage:** Extends Baker-Norine [2007], Develin-Santos-Sturmfels [2005].\n\n**Ambition:** Grand challenge \u2014 would unify tropical divisor theory with weighted optimization.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2933a8cf",
+    "source_exp_id": "e8f8d5e4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:01:51.820906+00:00"
+    "timestamp": "2026-05-25T20:35:38.438401+00:00"
   },
   {
-    "id": "fd_0933",
-    "title": "Direction 2: Higher-Order Critical Pairs and Knuth-Bendix Completion Modulo \u03b2",
-    "description": "**Conjecture:** For finite, left-linear, simply-typed higher-order rewrite systems with no critical pairs up to \u03b2-normalized matching on terms of size \u2264 N, the generated \u03b2-aware one-step relation is locally confluent on all closed terms of size \u2264 N. Moreover, a decidable criterion for the absence of critical pairs exists for the class of higher-order pattern rewrite systems (in the sense of Miller).\n\n**Test:** Implement higher-order unification for Miller patterns. Enumerate all overlaps between pairs of rules in a given system. For each overlap, compute the critical pair and attempt to join it. Test on benchmark systems: map fusion, fold/build fusion, CPS transformation rules. Report the first system size at which a non-joinable critical pair appears (if any).\n\n**Impact:** A working higher-order Knuth-Bendix procedure would be a major advance in automated reasoning, enabling certified completion for equational theories of functional programs. Even a bounded version with correctness guarantees would be immediately useful.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (HoRewrite, hoRewrites_closed_under_subst \u2014 the closure property is essential for the completion step); `Pythagorean/ConcreteTermAlgebra.lean` (concrete_completion_correct \u2014 the first-order completion correctness theorem that we aim to lift).\n\n**Proof Strategy:** Define `CriticalPair(E)` as the set of pairs `(s, t)` arising from non-trivial overlaps of rules in E. Prove: if `CriticalPair(E)` is empty (up to \u03b2), then `HoRewrite(E)` is locally confluent. The proof uses `hoRewrites_closed_under_subst` to show that overlapping reductions can be completed. For the algorithmic part, implement Miller's higher-order pattern unification and verify it against the matching function.\n\n**Domain Bridges:** Automated theorem proving (completion procedures), unification theory (higher-order unification), compiler optimization (certified rule derivation).\n\n**Lineage:** Lifts the first-order completion correctness theorem to higher order.\n\n**Ambition:** Grand challenge \u2014 higher-order completion modulo \u03b2 is a known open problem in its full generality.\n\n**\"The key insight is...\"** that the closure theorems we have verified (`hoRewrites_closed_under_subst`, `hoRewrites_closed_under_context`) are exactly the properties needed to make the Knuth-Bendix completion step valid at higher order \u2014 the rest is \"just\" unification and critical pair analysis.\n\n**\"Why now?\"** The formal infrastructure for higher-order rewrite closure is now in place. The bottleneck has shifted from *closure properties* (solved) to *unification and overlap detection* (tractable with Miller patterns).\n\n---",
+    "id": "fd_0938",
+    "title": "Direction 2: Valuated Matroid Equivalence",
+    "description": "**Conjecture:** The weighted tropical kernel on S is isomorphic (as a tropical linear space) to the tropical linear space of a valuated graphic matroid M(G) restricted to S-indexed constraints. The weight function w defines the valuation on circuits.\n\n**The key insight is** that the tropical balance condition at each vertex defines a tropical hyperplane in the space of potentials, and the intersection of these hyperplanes is a tropical linear space whose combinatorial type is determined by the valuated matroid of the graph.\n\n**Why now?** The Dress-Wenzel theory of valuated matroids has matured significantly, with recent algorithmic advances in tropical linear algebra. The explicit cycle balance identity (Theorem 3.1) provides the concrete bridge: the valuation of a circuit is the alternating sum of edge weights around the cycle.\n\n**Test:** For the complete graph K\u2084 with various weight functions, compute the tropical linear space of the valuated graphic matroid and compare with the weighted tropical kernel. Agreement would confirm the equivalence.\n\n**Impact:** Would place weighted tropical graph Hodge theory within the established framework of tropical linear spaces, enabling the use of powerful tools from tropical intersection theory.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorem 3.1, cycle balance transport).\n\n**Proof Strategy:** Construct the valuated matroid from the weighted graph. Show the tropical Pl\u00fccker relations correspond to the balance conditions. Use the Dress-Wenzel axioms to verify the matroid structure.\n\n**Domain Bridges:** Tropical algebraic geometry, matroid theory, polyhedral combinatorics.\n\n**Lineage:** Extends Dress-Wenzel [1992], Murota [2003].\n\n**Ambition:** Grand challenge \u2014 would establish a foundational bridge between discrete Hodge theory and tropical linear algebra.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e8f8d5e4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:35:38.468806+00:00"
+  },
+  {
+    "id": "fd_0939",
+    "title": "Direction 3: Algorithmic Tropical Kernel Computation",
+    "description": "**Conjecture:** The weighted tropical kernel dimension can be computed in polynomial time O(|V|\u00b3 \u0394) for graphs with maximum degree \u0394, by reduction to a system of tropical linear inequalities.\n\n**The key insight is** that the tropical balance condition at each vertex is a tropical linear constraint, and the tropical kernel is the solution set of a tropical linear system. Tropical linear programming (Butkovi\u010d, Gaubert) provides polynomial-time algorithms for such systems.\n\n**Why now?** Tropical linear algebra has recently developed efficient algorithms for feasibility of tropical linear systems. The explicit structure of the weighted graph Laplacian (sparse, structured coefficients) should enable specialized algorithms faster than general-purpose tropical LP.\n\n**Test:** Implement a tropical LP-based kernel dimension algorithm and compare runtime/output with brute-force enumeration on graphs with n = 5-10. Polynomial scaling would confirm the conjecture.\n\n**Impact:** Would make weighted tropical Hodge theory computationally practical for real-world networks (power grids, routing networks) with thousands of vertices.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Definition 2.3, balance condition structure).\n\n**Proof Strategy:** Formulate balance conditions as tropical linear inequalities. Apply tropical Cramer's rule or tropical LP algorithms. Exploit graph sparsity for speedup.\n\n**Domain Bridges:** Combinatorial optimization, tropical linear programming, network algorithms.\n\n**Lineage:** Extends Butkovi\u010d [2010], Gaubert-Katz [2007].\n\n**Ambition:** Solid extension \u2014 would bridge theory to practice.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
+      "Tropical",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2933a8cf",
+    "source_exp_id": "e8f8d5e4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:01:51.853060+00:00"
+    "timestamp": "2026-05-25T20:35:38.492371+00:00"
   },
   {
-    "id": "fd_0934",
-    "title": "Direction 3: Certified Stream Fusion via Higher-Order Completion",
-    "description": "**Conjecture:** The stream fusion transformation (converting recursive list operations to stream operations and then to tight loops) can be expressed as a finite set of higher-order rewrite rules, and the resulting system is confluent modulo \u03b2 on well-typed terms. The \u03b2-normal form of any term in the generated theory corresponds to the fused program.\n\n**Test:** Encode the GHC stream fusion rules (stream/unstream, map/stream, filter/stream, foldr/build) as higher-order equations. Apply bounded completion. Check that all critical pairs join. Benchmark the resulting rewriting system against GHC's actual fusion behavior on 20 benchmark programs from the nofib suite.\n\n**Impact:** Stream fusion is one of the most important optimizations in Haskell, but its correctness has never been formally established at the equational level. A certified higher-order rewriting approach would provide the first machine-checked correctness proof for a production compiler optimization.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (mapFusionEq, map_fusion_in_theory \u2014 the map fusion example demonstrates the approach); `Pythagorean/ConcreteTermAlgebra.lean` (rewrites_closed_under_subst_and_context \u2014 the closure property that makes rule application correct).\n\n**Proof Strategy:** Define stream type as `Stream a = \u2203s. (s \u2192 Step a s, s)` in the STLC (using existential encoding). Express stream fusion as rewrite rules. Use `hoRewrites_closed_under_subst` to verify that rule application is sound. Apply `subst_comp` to verify that composed transformations equal single-pass transformations.\n\n**Domain Bridges:** Compiler optimization (GHC), functional programming (deforestation), performance engineering.\n\n**Lineage:** Extends the map fusion example to a full optimization framework.\n\n**Ambition:** Solid extension with high practical impact.\n\n**\"The key insight is...\"** that stream fusion is not just a *specific* optimization but an *equational theory* \u2014 a set of higher-order equations whose closure under substitution and contexts (exactly what we've verified) generates all valid fusion transformations.\n\n**\"Why now?\"** Map fusion is already formalized as a higher-order equation in our framework. Stream fusion is a systematic generalization requiring the same infrastructure at larger scale.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:01:51.882080+00:00"
-  },
-  {
-    "id": "fd_0935",
-    "title": "Direction 4: Normalization-Guided Proof Automation via Higher-Order Rewriting",
-    "description": "**Conjecture:** A simplification procedure based on higher-order completion modulo \u03b2 can decide equality in the equational theory of simply-typed combinatory algebra (S, K, I combinators with their defining equations) by normalizing both sides and comparing normal forms. This procedure, when integrated as a tactic, can automate proofs that currently require manual `simp` lemma engineering.\n\n**Test:** Implement a `ho_simp` tactic that: (1) takes a set of higher-order equations, (2) computes their completion (bounded), (3) normalizes both sides of the goal using the completed system, (4) checks syntactic equality of normal forms. Test on 50 equational goals involving function composition, map/filter laws, and monad laws. Compare proof length against `simp` with manually curated lemma sets.\n\n**Impact:** Current proof automation in type-theoretic proof assistants relies heavily on manually curated `simp` sets. A completion-based approach would automatically derive the needed simplification rules from equational axioms, reducing the human effort in proof engineering.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (HOEqGen_closed_under_subst \u2014 the generated theory respects substitution, which is essential for tactic soundness; leftmostReduce_sound \u2014 verified reduction is the computational backbone).\n\n**Proof Strategy:** The soundness theorem for the tactic follows from `HOEqGen_closed_under_subst`: if both sides normalize to the same term under a completed system derived from the equational axioms, they are in the generated equational theory. The main challenge is ensuring that the completion process terminates and produces a confluent system for the given axioms.\n\n**Domain Bridges:** Proof automation (tactic development), type theory (equational reasoning), software verification.\n\n**Lineage:** Applies the verified rewriting infrastructure as a proof automation tool.\n\n**Ambition:** Solid extension with immediate applicability.\n\n**\"The key insight is...\"** that completion doesn't just *simplify* expressions \u2014 it *decides* equational theories. A completed higher-order rewriting system is a decision procedure for its equational theory, and the closure theorems we've verified guarantee that this decision procedure is sound.\n\n**\"Why now?\"** The formal connection between rewriting and equational theory (HOEqGen and its closure under substitution) is now verified, providing the soundness foundation for a tactic.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:01:51.907267+00:00"
-  },
-  {
-    "id": "fd_0936",
-    "title": "Direction 5: Operadic Rewriting and Homotopical Completion",
-    "description": "**Conjecture:** The substitution category formalized in our work (with `compSubst_assoc`, identity laws, and the presheaf-like action of terms) is the underlying category of a *colored operad* whose algebras are exactly the models of the STLC. Higher-order completion modulo \u03b2 can be interpreted as a homotopical completion in the sense of operadic Koszul duality: the completed rewriting system computes a cofibrant replacement of the operad.\n\n**Test:** Formalize the operad structure: define the composition operation on substitutions, verify the interchange law, and construct the corresponding operad. Then show that the critical pair computation of Direction 2 corresponds to computing the operadic Koszulity condition. Test on the associativity operad (whose Koszul dual is well-known) as a sanity check.\n\n**Impact:** This would connect higher-order rewriting to the rapidly growing field of homotopical algebra and operadic methods. It would provide a new perspective on completion as a *homological* computation, potentially yielding new termination criteria and complexity bounds for higher-order completion.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (compSubst_assoc, compSubst_idSubst_left, compSubst_idSubst_right \u2014 the categorical structure of substitutions is the starting point for the operadic construction).\n\n**Proof Strategy:** Define an operad `O` with colors `\u2115` (arities), operations `O(n\u2081,...,n\u2096; m) = Subst(n\u2081+...+n\u2096, m)`, and composition given by `compSubst`. Verify the operad axioms from the categorical properties already proved. Then define rewriting rules as generators of an operadic ideal, and show that completion computes the operadic Gr\u00f6bner basis.\n\n**Domain Bridges:** Homotopical algebra (operads, Koszul duality), algebraic topology (cofibrant replacements), homological algebra (resolutions).\n\n**Lineage:** Reinterprets the substitution category as operadic structure.\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects rewriting theory to homotopical algebra.\n\n**\"The key insight is...\"** that substitution composition is not just a *convenience* but an *operadic structure* \u2014 the multi-sorted composition operation of an operad whose algebras are exactly the models of the type theory. Completion, viewed through this lens, is computing a resolution of the operad.\n\n**\"Why now?\"** The categorical properties of substitution (associativity, identity, functoriality) are now formally verified, providing the raw material for an operadic construction. Recent advances in homotopical algebra (Loday-Vallette, Dotsenko-Khoroshkin) provide the theoretical tools for operadic completion.",
+    "id": "fd_0940",
+    "title": "Direction 4: Energy Landscape Metastability Detection",
+    "description": "**Conjecture:** For molecular energy landscapes modeled as weighted graphs, the weighted tropical kernel dimension at a vertex subset S equals the number of independent metastable degeneracies \u2014 configurations where multiple transition pathways have equal activation energy.\n\n**The key insight is** that tropical balance (minimum attained twice) is exactly the condition for metastability: a state where two escape routes have identical barrier heights, making the system poised between transitions. The kernel dimension counts independent such degeneracies.\n\n**Why now?** Molecular dynamics simulations routinely produce energy landscape graphs, but lack principled tools for detecting and counting metastable degeneracies. The tropical framework provides an algebraic characterization that can be computed directly from the landscape graph.\n\n**Test:** Apply the weighted tropical kernel algorithm to energy landscape graphs extracted from molecular dynamics simulations of small peptides. Compare detected metastable degeneracies with known folding intermediates.\n\n**Impact:** Would provide a new computational tool for identifying transition states in protein folding, materials science, and chemical kinetics.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorem 3.9, zero kernel under degeneracy).\n\n**Proof Strategy:** Model energy landscapes as weighted graphs. Show tropical balance \u2194 metastable degeneracy. Prove dimension = independent degeneracy count under appropriate non-degeneracy conditions.\n\n**Domain Bridges:** Statistical physics, computational chemistry, molecular dynamics.\n\n**Lineage:** Extends Frauenfelder [1991], Wales [2003].\n\n**Ambition:** Solid extension with high applied impact.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
+      "Tropical",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "2933a8cf",
+    "source_exp_id": "e8f8d5e4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:01:51.933532+00:00"
+    "timestamp": "2026-05-25T20:35:38.515830+00:00"
   },
   {
     "id": "seed_013",
@@ -1747,39 +1802,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:15:46.019869+00:00"
   },
   {
-    "id": "fd_0907",
-    "title": "Spectral Sequence Stability via Persistent Homology Barcodes",
-    "description": "Conjecture: For first-quadrant homological spectral sequences E\u2081 \u21d2 H, if two spectral sequences have E\u2081 pages that are \u03b5-interleaved as bigraded persistence modules (with respect to the total-degree filtration), then their 'limit barcodes' \u2014 which record elements surviving to E\u221e as infinite bars and elements killed by d_r as finite bars of length r \u2014 are C\u00b7\u03b5-interleaved for a constant C depending only on the spectral sequence length (max page index). Test: For the Serre spectral sequences of the Hopf fibration S\u00b9\u2192S\u00b3\u2192S\u00b2 and its small perturbations (e.g., replacing S\u00b3 with a lens space L(3,1)), compute the E\u2081 interleaving distance and verify that the limit barcodes satisfy the conjectured stability bound. Secondary test on pairs of Adams spectral sequences for related spectra. Impact: This would establish the first stability theorem for spectral sequences, making differential computations robust under perturbation \u2014 with transformative applications to stable homotopy theory (Adams SS), symplectic topology (Eilenberg-Moore SS), and algebraic geometry (Leray SS for morphisms of varieties).",
-    "domains": [
-      "Algebraic Topology",
-      "Topological Data Analysis",
-      "Spectral Sequences"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:59:02.941963+00:00"
-  },
-  {
-    "id": "fd_0908",
-    "title": "p-adic Universality of Chip-Firing Critical Groups Under Graph Lifts",
-    "description": "Conjecture: For every finite connected base graph G and every prime p not dividing |Jac(G)|, the sequence of p-primary critical groups of random n-sheeted lifts G_n has a universal limiting distribution, depending only on the first Betti number of G and not on finer combinatorics of G. More precisely, after normalizing by the deterministic free rank contribution, the Sylow-p subgroup of Jac(G_n) converges in law as n -> infinity to a Cohen-Lenstra-type distribution determined solely by b1(G). Test: Generate random lifts of several non-isomorphic base graphs with the same first Betti number, compute Jac(G_n), extract Sylow-p parts for increasing n, and compare empirical distributions across bases and against the predicted universal law; any persistent dependence on the detailed base graph refutes the conjecture. Impact: This would reveal a new universality class linking tropical geometry, random covering theory, sandpile groups, and arithmetic heuristics, and could provide a graph-theoretic laboratory for Cohen-Lenstra phenomena.",
-    "domains": [
-      "Algebraic Combinatorics",
-      "Probability",
-      "Arithmetic Geometry",
-      "Tropical Geometry"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:03:02.506322+00:00"
-  },
-  {
     "id": "fd_0914",
     "title": "Adelic Synchronization Threshold for Primewise Persistent Homology",
     "description": "Conjecture: There exists an explicit arithmetic family of filtered chain complexes C(X) over Z, naturally attached to smooth projective varieties X/Q, for which the collection of primewise persistence diagrams {D_p(X)} exhibits a sharp synchronization law: if X and Y have isomorphic semisimplified l-adic Galois representations in one fixed cohomological degree, then for a density-1 set of primes p their normalized primewise persistence landscapes agree up to o(1); conversely, if the normalized landscapes agree on a density-1 set of primes, then the Frobenius trace distributions in that degree must agree. Test: Construct C_p(X) from point-count/Frobenius data for explicit families (elliptic curves, K3 surfaces, Calabi-Yau hypersurfaces), compute persistence landscapes across many good primes, and check whether density-1 agreement matches equality of Frobenius trace statistics and whether known non-isogenous examples fail synchronization on positive-density prime sets. Impact: This would turn persistent homology into a new adelic probe of arithmetic equivalence, potentially yielding computable topological fingerprints of Galois representations and a bridge between TDA and arithmetic geometry.",
@@ -1808,21 +1830,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:42.310379+00:00"
-  },
-  {
-    "id": "fd_0926",
-    "title": "Prime-Local Torsion Predicts Rational Homotopy Collapse",
-    "description": "Conjecture: There exists a universal function B(d) such that for any finite simply connected CW complex X of dimension d, if for every prime p the p-primary barcode of the filtered loop-space chain complex C_*(\u03a9X; Z) has all intervals of length at most B(d), then the Sullivan minimal model of X is formal and the rational homotopy spectral sequence of \u03a9X collapses at E2. Test: Compute primewise persistent torsion barcodes for explicit non-formal spaces (for example symplectic but non-Kahler manifolds, moment-angle complexes, and wedges with attached cells) and check whether long p-primary intervals always appear; confirm on formal spaces (compact Kahler manifolds, spheres, projective spaces) that bounded intervals suffice. A single non-formal counterexample with uniformly bounded primewise torsion persistence refutes the conjecture. Impact: This would create a new bridge from computable finite-prime topological signatures to deep rational homotopy structure, giving an algorithmic detector for formality and spectral sequence collapse.",
-    "domains": [
-      "Algebraic Topology",
-      "Persistent Homology"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
     "id": "fd_0866",
@@ -1863,6 +1870,24 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "ad66d851",
     "consumed_by_exp_id": "dc67a2b9",
     "timestamp": "2026-05-25T18:40:03.321531+00:00"
+  },
+  {
+    "id": "fd_0941",
+    "title": "Direction 5: Tropical Resilience Index for Infrastructure Networks",
+    "description": "**Conjecture:** The weighted tropical kernel dimension serves as a quantitative resilience index for infrastructure networks: dim_trop \u2265 k if and only if the network can withstand k simultaneous single-link failures without losing optimal routing capability for any node in S.\n\n**The key insight is** that each independent kernel direction corresponds to a \"degree of routing freedom\" \u2014 a way to reroute traffic optimally when a link fails. The tropical balance condition ensures that alternative routes are equally optimal, not merely feasible.\n\n**Why now?** Critical infrastructure networks (power grids, communication networks, water systems) face increasing threats from climate events and cyberattacks. Current resilience metrics (graph connectivity, min-cut) capture topological redundancy but not cost-weighted routing redundancy. The tropical framework fills this gap.\n\n**Test:** Analyze the IEEE 30-bus power system test case as a weighted graph. Compute the tropical kernel dimension and compare with known resilience assessments. Verify that dimension drops predict failure-prone configurations.\n\n**Impact:** Would provide network operators with a computationally tractable, mathematically rigorous resilience metric that accounts for edge costs.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorem 3.7, cross-domain identity connecting SP degeneracy and weight degeneracy).\n\n**Proof Strategy:** Formalize the connection between kernel directions and link-failure tolerance. Prove the equivalence between k-failure resilience and dim_trop \u2265 k using the structure of balanced potentials.\n\n**Domain Bridges:** Network science, infrastructure resilience, operations research.\n\n**Lineage:** Extends Sterbenz et al. [2010], Albert et al. [2004].\n\n**Ambition:** Solid extension with direct practical application.",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e8f8d5e4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T20:35:38.539952+00:00"
   },
   {
     "id": "seed_032",
