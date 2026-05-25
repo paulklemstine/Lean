@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxNext = document.getElementById('lightbox-next');
 
     window.openLightbox = function(index) {
-        if (!window.Aether.currentPackage || !(window.Aether.currentPackage.visualizations || window.Aether.currentPackage._vizImages)) return;
+        if (!window.Aether.currentPackage || !(window.Aether.currentPackage._vizImages || window.Aether.currentPackage.visualizations)) return;
         window.Aether.currentVizIndex = index;
         window.updateLightbox();
         lightbox.classList.remove('hidden');
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.updateLightbox = function() {
         const pkg = window.Aether.currentPackage;
         if (!pkg) return;
-        // Support both static visualizations and dynamically generated _vizImages
-        const vizList = pkg.visualizations || pkg._vizImages;
+        // Prefer _vizImages (has actual rendered image data) over visualizations (code definitions)
+        const vizList = pkg._vizImages || pkg.visualizations;
         if (!vizList) return;
         const viz = vizList[window.Aether.currentVizIndex];
         let imgContent = '';
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function nextLightbox() {
         if (!window.Aether.currentPackage) return;
-        const vizList = window.Aether.currentPackage.visualizations || window.Aether.currentPackage._vizImages;
+        const vizList = window.Aether.currentPackage._vizImages || window.Aether.currentPackage.visualizations;
         if (!vizList) return;
         window.Aether.currentVizIndex = (window.Aether.currentVizIndex + 1) % vizList.length;
         window.updateLightbox();
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function prevLightbox() {
         if (!window.Aether.currentPackage) return;
-        const vizList = window.Aether.currentPackage.visualizations || window.Aether.currentPackage._vizImages;
+        const vizList = window.Aether.currentPackage._vizImages || window.Aether.currentPackage.visualizations;
         if (!vizList) return;
         const len = vizList.length;
         window.Aether.currentVizIndex = (window.Aether.currentVizIndex - 1 + len) % len;

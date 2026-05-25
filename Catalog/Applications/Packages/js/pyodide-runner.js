@@ -409,12 +409,18 @@ print("VIZIMG:" + img_data)
                 img.title = 'Click to view full size';
                 img.addEventListener('click', () => {
                     if (window.openLightbox) {
-                        window.Aether.currentVizIndex = 0;
-                        window.Aether.currentPackage = window.Aether.currentPackage || {};
-                        window.Aether.currentPackage._vizImages = window.Aether.currentPackage._vizImages || [];
-                        // Use 'data' format matching lightbox's updateLightbox expectations
-                        window.Aether.currentPackage._vizImages[0] = {data: img.src, name: 'Visualization'};
-                        window.openLightbox(0);
+                        const pkg = window.Aether.currentPackage || {};
+                        // Build _vizImages from all generated images currently on the page
+                        const allImgs = document.querySelectorAll('.gallery-img-container img');
+                        pkg._vizImages = Array.from(allImgs).map((i, idx) => ({
+                            data: i.src,
+                            name: i.closest('.viz-container')?.querySelector('.code-title')?.textContent || `Visualization ${idx + 1}`
+                        }));
+                        window.Aether.currentPackage = pkg;
+                        // Find this image's index
+                        const myIndex = pkg._vizImages.findIndex(v => v.data === img.src);
+                        window.Aether.currentVizIndex = myIndex >= 0 ? myIndex : 0;
+                        window.openLightbox(window.Aether.currentVizIndex);
                     }
                 });
                 outputContainer.innerHTML = '';

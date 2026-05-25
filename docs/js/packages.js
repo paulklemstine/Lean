@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check cache first
         if (window.Aether.packageCache[filename]) {
             const data = window.Aether.packageCache[filename];
-            window.Aether.currentPackage = data;
+            window.Aether.currentPackage = data; delete data._vizImages;
             renderPackage(data, filename);
             welcomeScreen.classList.add('hidden');
             packageView.classList.remove('hidden');
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             const data = await resp.json();
             window.Aether.packageCache[filename] = data;
-            window.Aether.currentPackage = data;
+            window.Aether.currentPackage = data; delete data._vizImages;
             renderPackage(data, filename);
 
             renderMathInElement(document.getElementById('package-view'), {
