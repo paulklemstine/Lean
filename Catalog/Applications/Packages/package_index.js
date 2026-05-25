@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Lorentzian Polynomials / Robust Sampling Theory",
     "date": "2026-05-25T22:25:35Z",
     "exp_id": "2953ee13",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7277750000000001,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_sharp_valuation_sensitive_stability_bo.json",
@@ -989,8 +989,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-25T22:25:35Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7277750000000001,
+      "quality": "substantial"
     }
   ],
   "edges": [

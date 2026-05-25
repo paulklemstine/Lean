@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1569 of the highest-quality
+A curated collection of 1588 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1569
+Total files: 1588
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -220,6 +220,7 @@ import FINAL.Bridges.BreakthroughDirections
 import FINAL.Bridges.Bridge
 import FINAL.Bridges.ByzantineCertificate
 import FINAL.Bridges.CanonicalPathBisimulation
+import FINAL.Bridges.Caratheodory
 import FINAL.Bridges.CartesianFootprintBound
 import FINAL.Bridges.CategoricalBridges
 import FINAL.Bridges.CategoricalTropicalUltrametric
@@ -261,6 +262,7 @@ import FINAL.Bridges.ClosureStoneSpectrumDuality
 import FINAL.Bridges.ClosureThermodynamicComputationDuality
 import FINAL.Bridges.ClosureVCDuality
 import FINAL.Bridges.CoalgebraicNeuralMyhillNerode
+import FINAL.Bridges.CodingTheoryBridge
 import FINAL.Bridges.CoeffExtraction
 import FINAL.Bridges.Completeness
 import FINAL.Bridges.ComposableTransfer
@@ -340,6 +342,7 @@ import FINAL.Bridges.IdempotentRenormalizationDuality
 import FINAL.Bridges.IdempotentThermodynamicRealization
 import FINAL.Bridges.IncrementalDAG
 import FINAL.Bridges.Instances
+import FINAL.Bridges.InvariantProduct
 import FINAL.Bridges.InvertedTreeAdvanced
 import FINAL.Bridges.IrreducibleTransfer
 import FINAL.Bridges.KTheoryNeuralAdvanced
@@ -429,10 +432,12 @@ import FINAL.Bridges.RGArchitectureDynamics
 import FINAL.Bridges.RateDistortion
 import FINAL.Bridges.RenormalizationUniversality
 import FINAL.Bridges.Representation
+import FINAL.Bridges.ResNetTropicalCertified
 import FINAL.Bridges.ResidualRobustness
 import FINAL.Bridges.ReversibleFixedPointDuality
 import FINAL.Bridges.RigidFoldability
 import FINAL.Bridges.RingTheoreticLearning
+import FINAL.Bridges.RobustLorentzianSampling
 import FINAL.Bridges.RuelleTransferSemantics
 import FINAL.Bridges.SatakeEMLBridge
 import FINAL.Bridges.Search
@@ -497,6 +502,7 @@ import FINAL.Bridges.TropicalChoquetClosureDuality
 import FINAL.Bridges.TropicalChoquetRadonTrapdoorDuality
 import FINAL.Bridges.TropicalChoquetVoronoiDuality
 import FINAL.Bridges.TropicalClauseSpace
+import FINAL.Bridges.TropicalCongruenceNullstellensatz
 import FINAL.Bridges.TropicalCryptoMLBridge
 import FINAL.Bridges.TropicalCryptographyBreakthrough
 import FINAL.Bridges.TropicalCryptographyBridge
@@ -699,24 +705,32 @@ import FINAL.Cryptography.CutCryptography
 import FINAL.Cryptography.DiophantineCryptoCore
 import FINAL.Cryptography.Divisibility
 import FINAL.Cryptography.FOTransform
+import FINAL.Cryptography.FactorQuadruples
 import FINAL.Cryptography.FiniteStoneClosure
 import FINAL.Cryptography.Foundation
 import FINAL.Cryptography.Freeness
 import FINAL.Cryptography.GeometricCryptanalysis
+import FINAL.Cryptography.GroupLaw
 import FINAL.Cryptography.HTLCLightning
 import FINAL.Cryptography.HybridTelescope
 import FINAL.Cryptography.KyberCompress
 import FINAL.Cryptography.LeftoverHash
 import FINAL.Cryptography.MLLFormula
+import FINAL.Cryptography.MasterFormula
 import FINAL.Cryptography.MinDistance
 import FINAL.Cryptography.MinimumDistance
 import FINAL.Cryptography.NoetherianCertification
 import FINAL.Cryptography.OneWay
+import FINAL.Cryptography.PadicCryptoHardness
 import FINAL.Cryptography.PostIdempotentCrypto
 import FINAL.Cryptography.PythagoreanLatticeReduction
 import FINAL.Cryptography.SPBQuantumCrypto
+import FINAL.Cryptography.ScalarMul
 import FINAL.Cryptography.SchnorrProtocol
+import FINAL.Cryptography.SearchDecision
 import FINAL.Cryptography.Security
+import FINAL.Cryptography.SemiconjTransfer
+import FINAL.Cryptography.ShorECDSA
 import FINAL.Cryptography.TVDContraction
 import FINAL.Cryptography.Theorems
 import FINAL.Cryptography.TropicalCryptoBridge
@@ -738,6 +752,7 @@ import FINAL.Cryptography.TropicalQuadraticSieveExact
 import FINAL.Cryptography.TropicalRSA
 import FINAL.Cryptography.TropicalSmoothnessScore
 import FINAL.Cryptography.TropicalZKCommitments
+import FINAL.Cryptography.TropicalZeroKnowledge
 import FINAL.EML.ANRApproximation
 import FINAL.EML.AdvancedTheorems
 import FINAL.EML.AdvancedTheory
@@ -1094,10 +1109,12 @@ import FINAL.Physics.ClassicalQuantumAction
 import FINAL.Physics.CohomologicalContextuality
 import FINAL.Physics.Core
 import FINAL.Physics.DiscreteNoetherConverse
+import FINAL.Physics.DiscreteNoetherShadow
 import FINAL.Physics.Entanglement
 import FINAL.Physics.Foundations
 import FINAL.Physics.HolevoCapacity
 import FINAL.Physics.IdempotentQuantum
+import FINAL.Physics.Landauer
 import FINAL.Physics.LongTimeMetastability
 import FINAL.Physics.LorentzBerggrenThermodynamic
 import FINAL.Physics.MoonshotQuantum
@@ -1115,6 +1132,7 @@ import FINAL.Physics.ToricCode
 import FINAL.Physics.TropicalBarrier
 import FINAL.Physics.TropicalDiffusion
 import FINAL.Physics.TropicalDiffusionRegularity
+import FINAL.Physics.TropicalLanglands
 import FINAL.Physics.TropicalMirrorSymmetry
 import FINAL.Physics.TropicalTDuality
 import FINAL.Physics.TropicalVacuumEnergy
@@ -1255,6 +1273,7 @@ import FINAL.Pythagorean.OpenQuestions
 import FINAL.Pythagorean.OrbitClassification
 import FINAL.Pythagorean.OrbitOrderDuality
 import FINAL.Pythagorean.PF2Theorems
+import FINAL.Pythagorean.PadicControlledStability
 import FINAL.Pythagorean.PadicOrbitalValuation
 import FINAL.Pythagorean.PersistenceZetaMultiplicativity
 import FINAL.Pythagorean.PhaseAwareLemmaSynthesis

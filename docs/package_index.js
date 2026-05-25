@@ -4,6 +4,24 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_5_stability_of_strongly_log_concave_dist.json",
+    "title": "Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
+    "domain": "Lorentzian Polynomials / Robust Sampling Theory",
+    "date": "2026-05-25T22:25:35Z",
+    "exp_id": "2953ee13",
+    "quality_score": 0.7277750000000001,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_1_sharp_valuation_sensitive_stability_bo.json",
+    "title": "P-adic Controlled Persistence Stability: Valuation-Sensitive Interleaving Theory",
+    "domain": "Arithmetic Topological Data Analysis",
+    "date": "2026-05-25T22:25:13Z",
+    "exp_id": "1b3fdf32",
+    "quality_score": 0.7444580722891567,
+    "quality": "substantial"
+  },
+  {
     "filename": "direction_5_tropical_morse_theory_as_a_topological.json",
     "title": "Tropical Morse Theory as a Topological Feature for Graph Neural Networks",
     "domain": "Tropical Geometry / Topological Data Analysis / Graph Neural Networks",
@@ -455,6 +473,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebra / Finite Group Theory"
   },
+  "direction_5_stability_of_strongly_log_concave_dist.json": {
+    "title": "Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
+    "exp_id": "2953ee13",
+    "source_exp_ids": [
+      "2493279d"
+    ],
+    "domain": "Lorentzian Polynomials / Robust Sampling Theory"
+  },
   "direction_5_chip_firing_correspondence.json": {
     "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
     "exp_id": "97def267",
@@ -478,6 +504,14 @@ window.PACKAGE_DB_INDEX = {
       "8e448ab4"
     ],
     "domain": "Rewriting Theory / Lambda Calculus / Certified Program Transformation"
+  },
+  "direction_1_sharp_valuation_sensitive_stability_bo.json": {
+    "title": "P-adic Controlled Persistence Stability: Valuation-Sensitive Interleaving Theory",
+    "exp_id": "1b3fdf32",
+    "source_exp_ids": [
+      "2d14ce54"
+    ],
+    "domain": "Arithmetic Topological Data Analysis"
   },
   "direction_2_higher_order_log_concavity_and_partiti.json": {
     "title": "Higher-Order Log-Concavity: A Recursive Hierarchy for Discrete Sequences",
@@ -580,7 +614,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -591,7 +625,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -602,7 +636,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -613,7 +647,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -635,7 +669,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7554863879178124,
       "quality": "substantial"
     },
@@ -646,7 +680,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 100,
+      "hue": 270,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -657,7 +691,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 275,
+      "hue": 270,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -679,7 +713,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 270,
+      "hue": 134,
       "priority_score": 0.7452328425357874,
       "quality": "substantial"
     },
@@ -690,7 +724,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7379731931205967,
       "quality": "substantial"
     },
@@ -723,7 +757,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7426729134392938,
       "quality": "substantial"
     },
@@ -745,7 +779,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T17:57:55Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7485430061705161,
       "quality": "substantial"
     },
@@ -756,7 +790,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:02:50Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7448372075471699,
       "quality": "substantial"
     },
@@ -767,7 +801,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T18:03:18Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7496613212625398,
       "quality": "substantial"
     },
@@ -789,7 +823,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:39:59Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7061918953063686,
       "quality": "substantial"
     },
@@ -811,7 +845,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T19:29:15Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7239525714285715,
       "quality": "substantial"
     },
@@ -822,7 +856,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:01:45Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7661817738359202,
       "quality": "substantial"
     },
@@ -833,7 +867,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:02:12Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7190936000000001,
       "quality": "substantial"
     },
@@ -844,7 +878,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:34:49Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7132103632664923,
       "quality": "substantial"
     },
@@ -855,7 +889,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:35:13Z",
-      "hue": 275,
+      "hue": 101,
       "priority_score": 0.7238752112676057,
       "quality": "substantial"
     },
@@ -866,7 +900,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T20:35:34Z",
-      "hue": 292,
+      "hue": 90,
       "priority_score": 0.7266461478599222,
       "quality": "substantial"
     },
@@ -877,7 +911,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:35:56Z",
-      "hue": 359,
+      "hue": 271,
       "priority_score": 0.7224016949152543,
       "quality": "substantial"
     },
@@ -888,7 +922,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T21:12:32Z",
-      "hue": 271,
+      "hue": 91,
       "priority_score": 0.7286,
       "quality": "substantial"
     },
@@ -910,7 +944,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T21:13:36Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7197528467153285,
       "quality": "substantial"
     },
@@ -921,7 +955,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T21:49:23Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.7272178424657534,
       "quality": "substantial"
     },
@@ -932,8 +966,30 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T21:51:06Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7304195636363637,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_sharp_valuation_sensitive_stability_bo",
+      "title": "P-adic Controlled Persistence Stability: Valuation-Sensitive Interleaving Theory",
+      "domain": "Arithmetic Topological Data Analysis",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T22:25:13Z",
+      "hue": 270,
+      "priority_score": 0.7444580722891567,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_stability_of_strongly_log_concave_dist",
+      "title": "Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
+      "domain": "Lorentzian Polynomials / Robust Sampling Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T22:25:35Z",
+      "hue": 271,
+      "priority_score": 0.7277750000000001,
       "quality": "substantial"
     }
   ],
@@ -1004,6 +1060,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "direction_5_weighted_and_multi_objective_extension",
       "target": "direction_5_mechanism_design_with_certified_multi_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_numerical_stability_of_lorentzian_reco",
+      "target": "direction_5_stability_of_strongly_log_concave_dist",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
