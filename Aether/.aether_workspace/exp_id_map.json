@@ -531,5 +531,7 @@
   "34c2669a": "sums_of_three_cubes.json",
   "c1bdccd8": "direction_2_tensor_sorted_extension_for_scientific.json",
   "21d0ab18": "direction_1_global_tightness_conjecture.json",
-  "8e448ab4": "direction_1_concrete_first_order_term_algebra_with.json"
+  "8e448ab4": "direction_1_concrete_first_order_term_algebra_with.json",
+  "83d44e07": "direction_3_completeness_of_recursive_spectral_cer.json",
+  "1f8fa3a8": "direction_4_efficient_sampling_from_lorentzian_cer.json"
 }

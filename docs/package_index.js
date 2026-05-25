@@ -4,6 +4,24 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_4_efficient_sampling_from_lorentzian_cer.json",
+    "title": "Efficient Sampling from Lorentzian Certificates: Spectral Gap, Log-Concavity, and Tropical Diameter",
+    "domain": "Algebraic Combinatorics / Probability Theory / Tropical Geometry",
+    "date": "2026-05-25T02:11:07Z",
+    "exp_id": "1f8fa3a8",
+    "quality_score": 0.657708624390244,
+    "quality": "partial"
+  },
+  {
+    "filename": "direction_3_completeness_of_recursive_spectral_cer.json",
+    "title": "Completeness of Recursive Spectral Certificates for Lorentzian Polynomials",
+    "domain": "Algebraic Combinatorics / Spectral Linear Algebra",
+    "date": "2026-05-25T02:10:29Z",
+    "exp_id": "83d44e07",
+    "quality_score": 0.7655020869565218,
+    "quality": "substantial"
+  },
+  {
     "filename": "direction_1_concrete_first_order_term_algebra_with.json",
     "title": "Certified Knuth-Bendix Completion: Concrete-to-Abstract Simulation for First-Order Term Algebra",
     "domain": "Term Rewriting Systems / Universal Algebra",
@@ -136,6 +154,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Type Theory / Computational Complexity"
   },
+  "direction_3_completeness_of_recursive_spectral_cer.json": {
+    "title": "Completeness of Recursive Spectral Certificates for Lorentzian Polynomials",
+    "exp_id": "83d44e07",
+    "source_exp_ids": [
+      "33261812"
+    ],
+    "domain": "Algebraic Combinatorics / Spectral Linear Algebra"
+  },
   "direction_5_complexity_of_lorentzian_recognition.json": {
     "title": "Complexity of Lorentzian Recognition: Recursive Spectral Certificates and Fixed-Parameter Tractability",
     "exp_id": "33261812",
@@ -143,6 +169,14 @@ window.PACKAGE_DB_INDEX = {
       "a9d54ec0"
     ],
     "domain": "Algebraic Combinatorics / Complexity Theory"
+  },
+  "direction_4_efficient_sampling_from_lorentzian_cer.json": {
+    "title": "Efficient Sampling from Lorentzian Certificates: Spectral Gap, Log-Concavity, and Tropical Diameter",
+    "exp_id": "1f8fa3a8",
+    "source_exp_ids": [
+      "33261812"
+    ],
+    "domain": "Algebraic Combinatorics / Probability Theory / Tropical Geometry"
   },
   "direction_2_fractional_predictor_refinement.json": {
     "title": "Fractional Transversal Refinement: LP-Dual Threshold Prediction and Integrality Gap Dynamics",
@@ -189,7 +223,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -222,7 +256,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.49450347826086954,
       "quality": "partial"
     },
@@ -244,7 +278,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.5684834461538462,
       "quality": "partial"
     },
@@ -266,7 +300,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 272,
+      "hue": 92,
       "priority_score": 0.7156088,
       "quality": "substantial"
     },
@@ -277,7 +311,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.707316371361133,
       "quality": "substantial"
     },
@@ -288,12 +322,49 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
-      "hue": 92,
+      "hue": 272,
       "priority_score": 0.7307101408450705,
       "quality": "substantial"
+    },
+    {
+      "id": "direction_3_completeness_of_recursive_spectral_cer",
+      "title": "Completeness of Recursive Spectral Certificates for Lorentzian Polynomials",
+      "domain": "Algebraic Combinatorics / Spectral Linear Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T02:10:29Z",
+      "hue": 270,
+      "priority_score": 0.7655020869565218,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_efficient_sampling_from_lorentzian_cer",
+      "title": "Efficient Sampling from Lorentzian Certificates: Spectral Gap, Log-Concavity, and Tropical Diameter",
+      "domain": "Algebraic Combinatorics / Probability Theory / Tropical Geometry",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T02:11:07Z",
+      "hue": 92,
+      "priority_score": 0.657708624390244,
+      "quality": "partial"
     }
   ],
-  "edges": [],
+  "edges": [
+    {
+      "source": "direction_5_complexity_of_lorentzian_recognition",
+      "target": "direction_3_completeness_of_recursive_spectral_cer",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_complexity_of_lorentzian_recognition",
+      "target": "direction_4_efficient_sampling_from_lorentzian_cer",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    }
+  ],
   "domain_bridges": [
     {
       "domain_a": "Algebra",
@@ -304,6 +375,18 @@ window.PACKAGE_GRAPH = {
     {
       "domain_a": "Algebra",
       "domain_b": "Geometry",
+      "package_count": 2,
+      "strength": 0.7
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Tropical",
       "package_count": 1,
       "strength": 0.5
     }
@@ -487,25 +570,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
-    "id": "fd_0793",
-    "title": "Direction 4: Efficient Sampling from Lorentzian Certificates",
-    "description": "**Conjecture.** Given a degree-d Lorentzian polynomial f in n variables, one can sample from the probability distribution proportional to the coefficients of f in expected time O(n^{d+1} \u00b7 log n), using the recursive certificate structure as a guide.\n\n**Test.** Implement a certificate-guided sampling algorithm for matroid basis generating polynomials and compare runtime and mixing time to state-of-the-art methods (e.g., basis exchange walks). A disproof would show that certificate-guided sampling has provably worse mixing time than exchange walks for some matroid family.\n\n**Impact.** This would create the first direct algorithmic application of Lorentzian certificates, connecting the complexity theory of recognition to the complexity of sampling.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `IsRecursivelyLorentzian`, `lorentzian_reversed_cauchy_schwarz` (the reversed Cauchy\u2013Schwarz provides the key mixing-time bound).\n\n**Proof Strategy.** Use the reversed Cauchy\u2013Schwarz inequality to bound the spectral gap of a Markov chain defined by the derivative tree. At each internal node of the certificate tree, use the Lorentzian signature to construct a log-concave conditional distribution, then sample via rejection sampling with bounded rejection probability.\n\n**Domain Bridges.** Algorithmic combinatorics \u2192 statistical physics \u2192 probability (Markov chain mixing).\n\n**Lineage.** Extends `lorentzian_reversed_cauchy_schwarz` from a structural result to an algorithmic tool.\n\n**Ambition.** Grand challenge. Connecting certificate structure to sampling efficiency would be a significant advance.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "33261812",
-    "consumed_by_exp_id": "1f8fa3a8",
-    "timestamp": "2026-05-24T23:12:21.876594+00:00"
-  },
-  {
     "id": "fd_0794",
     "title": "Direction 5: Numerical Stability of Lorentzian Recognition",
     "description": "**Conjecture.** There exists \u03b5\u2080 > 0 depending only on d such that if all quadratic leaves of a degree-d polynomial f satisfy the spectral condition with margin \u03b5\u2080 (i.e., the second-largest eigenvalue of each Hessian is at most \u2212\u03b5\u2080 \u00b7 \u2016H\u2016), then f is Lorentzian even under O(\u03b5\u2080\u00b2)-perturbations of the coefficients.\n\n**Test.** Perturb the coefficients of known Lorentzian polynomials (elementary symmetric polynomials, matroid basis polynomials) by random noise of varying magnitude, and check how the eigenvalue gap of the quadratic leaves degrades. A disproof would exhibit a Lorentzian polynomial whose Lorentzianity is destroyed by arbitrarily small perturbations.\n\n**Impact.** This would make Lorentzian recognition practical with floating-point arithmetic, enabling deployment in machine learning and optimization pipelines where exact computation is infeasible.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `HasAtMostOnePositiveEigenvalue`, `lorentzian_signature_tangent_neg_semidef` (the tangent-space theorem suggests spectral gaps persist under perturbation).\n\n**Proof Strategy.** Use the tangent-space negativity theorem to establish that the spectral gap of the Hessian is lower-semicontinuous in the coefficients. The key inequality is: if Q(x) > 0 and the second eigenvalue of H has magnitude \u03b4, then tangent-space negativity holds with margin \u03b4 \u00b7 \u2016x\u2016\u00b2 / \u2016Hx\u2016.\n\n**Domain Bridges.** Numerical linear algebra \u2192 optimization \u2192 engineering applications (robust ML, robust control).\n\n**Lineage.** Extends `lorentzian_signature_tangent_neg_semidef` to a quantitative/robust setting.\n\n**Ambition.** Solid extension. The qualitative result (openness of Lorentzianity) is known; the quantitative bound is new.",
@@ -638,25 +702,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:26:39.059352+00:00"
   },
   {
-    "id": "fd_0810",
-    "title": "Direction 4: Parametric Families and Algebraic Curves on Cubic Surfaces",
-    "description": "**Conjecture:** The parametric family $k = -3ab(a+b)$ (from `sum_three_cubes_neg_sum`) covers a positive density of admissible integers. More precisely, $|\\{k \\in [1,N] : k = 3ab(a+b) \\text{ for some } a,b \\in \\mathbb{Z}\\}| \\gg N^{2/3}$.\n\n**Test:** Enumerate all values of $-3ab(a+b)$ for $|a|, |b| \\leq 1000$ and measure the density of covered integers in $[1, 10^6]$. Compare with the predicted $N^{2/3}$ growth.\n\n**Impact:** Parametric families correspond to **algebraic curves** on the cubic surface. Understanding which curves pass through integer points, and how densely they cover the integers, connects Diophantine approximation to the geometry of rational curves on cubic surfaces.\n\n**The key insight is** that each parametric identity for sums of three cubes corresponds to a rational curve on $X_k$ parametrized over $\\mathbb{Z}$, and the union of all such curves determines a \"constructively representable\" subset whose density is a geometric invariant.\n\n**Why now?** The formal proof of `sumThreeCubesRep_neg_iff` and the identity $a^3 + b^3 + (-a-b)^3 = -3ab(a+b)$ provide the first verified parametric family, which can be used as a template for formalizing others.\n\n**Catalog References:** `sumThreeCubesRep_neg_iff` (Algebra/SumThreeCubes/Symmetry.lean), `sum_three_cubes_neg_sum` (Catalog/Algebra/LocalGlobal.lean)\n\n**Proof Strategy:** Enumerate known parametric families, compute their images, and prove density bounds using sieve methods.\n\n**Domain Bridges:** Algebraic geometry (rational curves on surfaces), sieve theory, additive combinatorics\n\n**Lineage:** Extends sign symmetry to full parametric family analysis\n\n**Ambition:** Solid extension \u2014 combines known identities with density estimation\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "40a05224",
-    "timestamp": "2026-05-25T00:26:38.290698+00:00"
-  },
-  {
     "id": "fd_0813",
     "title": "Direction 1: Confluence and Unique Normal Forms",
     "description": "**Conjecture:** The 8-rule distributivity fragment defined in `TensorSortedRewrite.lean` is confluent modulo associativity-commutativity of scalar addition, i.e., any two reduction sequences from the same term yield syntactically equal normal forms up to AC-equivalence of `scalAdd`.\n\n**Test:** Enumerate all tensor terms of depth \u2264 5 with 3 scalar, 3 vector, and 2 matrix variables. For each term, compute all possible reduction sequences (using breadth-first enumeration of rule applications). Check that all terminal forms are AC-equivalent. A single counterexample \u2014 two irreducible forms that differ by more than scalar-addition reordering \u2014 refutes the conjecture. Run over \u211a for exact arithmetic.\n\n**Impact:** Confluence implies that normalization is deterministic up to AC, which is essential for using the rewrite system as a certified decision procedure. Without confluence, different simplification strategies could produce different \"simplified\" forms, undermining trust in automated preprocessing.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `TensorRewrite`, `normStep`, `normStep_sound_*`.\n\n**Proof Strategy:** Define a weight function that strictly decreases under each oriented rule (the current `tensorWeight` increases, but a redex-counting measure should decrease). Prove local confluence by showing all critical pairs are joinable. Apply Newman's lemma (termination + local confluence \u2192 confluence).\n\n**Domain Bridges:** Term rewriting theory \u2192 optimization preprocessing \u2192 compiler correctness for scientific code.\n\n**Lineage:** Extends Theorem 1 (one-step soundness) and Theorem 6 (normStep soundness) toward a complete decision procedure.\n\n**Ambition:** Medium \u2014 requires careful critical pair analysis but builds on well-understood rewriting theory.\n\n---",
@@ -666,7 +711,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
@@ -685,7 +730,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
@@ -706,7 +751,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
@@ -725,12 +770,104 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:54:40.987422+00:00"
+  },
+  {
+    "id": "fd_0810",
+    "title": "Direction 4: Parametric Families and Algebraic Curves on Cubic Surfaces",
+    "description": "**Conjecture:** The parametric family $k = -3ab(a+b)$ (from `sum_three_cubes_neg_sum`) covers a positive density of admissible integers. More precisely, $|\\{k \\in [1,N] : k = 3ab(a+b) \\text{ for some } a,b \\in \\mathbb{Z}\\}| \\gg N^{2/3}$.\n\n**Test:** Enumerate all values of $-3ab(a+b)$ for $|a|, |b| \\leq 1000$ and measure the density of covered integers in $[1, 10^6]$. Compare with the predicted $N^{2/3}$ growth.\n\n**Impact:** Parametric families correspond to **algebraic curves** on the cubic surface. Understanding which curves pass through integer points, and how densely they cover the integers, connects Diophantine approximation to the geometry of rational curves on cubic surfaces.\n\n**The key insight is** that each parametric identity for sums of three cubes corresponds to a rational curve on $X_k$ parametrized over $\\mathbb{Z}$, and the union of all such curves determines a \"constructively representable\" subset whose density is a geometric invariant.\n\n**Why now?** The formal proof of `sumThreeCubesRep_neg_iff` and the identity $a^3 + b^3 + (-a-b)^3 = -3ab(a+b)$ provide the first verified parametric family, which can be used as a template for formalizing others.\n\n**Catalog References:** `sumThreeCubesRep_neg_iff` (Algebra/SumThreeCubes/Symmetry.lean), `sum_three_cubes_neg_sum` (Catalog/Algebra/LocalGlobal.lean)\n\n**Proof Strategy:** Enumerate known parametric families, compute their images, and prove density bounds using sieve methods.\n\n**Domain Bridges:** Algebraic geometry (rational curves on surfaces), sieve theory, additive combinatorics\n\n**Lineage:** Extends sign symmetry to full parametric family analysis\n\n**Ambition:** Solid extension \u2014 combines known identities with density estimation\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "34c2669a",
+    "consumed_by_exp_id": "40a05224",
+    "timestamp": "2026-05-25T00:26:38.290698+00:00"
+  },
+  {
+    "id": "fd_0819",
+    "title": "Direction 1: General Recursive Witness Construction",
+    "description": "**Conjecture:** For every inhabited simple type *A*, there exists a closed term *t : A* and depth *d* such that `canonicalQuotientSize(d, t) = typeStateBound(A)`.\n\n**Test:** Implement an exhaustive search over closed terms up to size 20 for all inhabited types up to depth 4. For each type, verify whether any term achieves the type state bound. A single type where no term achieves the bound (up to large search depth) would falsify the conjecture.\n\n**Impact:** This would establish the first exact higher-order Myhill-Nerode theorem, transforming typeStateBound from a combinatorial estimate into a canonical semantic invariant.\n\n**Catalog References:**\n- `Catalog/Pythagorean/GlobalTightness.lean` \u2014 `global_tightness` (sorry), `global_tightness_base` (proved), `global_tightness_BB` (proved)\n- `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity`\n\n**Proof Strategy:** Structural induction on the type. Base case: proved (depth 0). Arrow case *A \u2192 B*: given witness terms for types *A* and *B*, construct a term of type *A \u2192 B* that uses all witnesses as \"test inputs\" to create a large reduction diamond. The key lemma: if *S_A* and *S_B* are pairwise-separated reachable families at types *A* and *B*, then a suitable composition produces a family of size \u2265 |S_A| \u00d7 |S_B| at type *A \u2192 B*.\n\n**Domain Bridges:** Automata theory (minimal DFA characterization), descriptive complexity (type \u2194 resource correspondence), combinatorics (extremal \u03bb-term families).\n\n**Lineage:** Extends Myhill-Nerode (1958) and Statman's type-complexity results (1979).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Field-opening if proved.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d0ab18",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:55:13.970837+00:00"
+  },
+  {
+    "id": "fd_0820",
+    "title": "Direction 2: Eventual Saturation Theorem",
+    "description": "**Conjecture:** For every inhabited simple type *A*, there exists a closed term *t : A* and a threshold *d\u2080* such that for all *d \u2265 d\u2080*, `canonicalQuotientSize(d, t) = typeStateBound(A)`.\n\n**Test:** For the witness w\u2080 at type o \u2192 o, verify computationally that `canonicalQuotientSize(d, w\u2080) = 4` for all d \u2265 2 (up to d = 100). Extend to witnesses at higher types. A term where the quotient size fluctuates (increases past the bound and then decreases) would falsify eventual saturation (though not the weaker one-shot conjecture).\n\n**Impact:** Would show that the exact complexity is not depth-fragile \u2014 it's a stable, robust property. This is the difference between a point measurement and a thermodynamic equilibrium.\n\n**Catalog References:**\n- `Catalog/Pythagorean/GlobalTightness.lean` \u2014 `EventuallySaturatesTypeBound` (definition), `w\u2080_stateSet_eq` (proves saturation at d \u2265 2 for w\u2080)\n\n**Proof Strategy:** For strongly normalizing terms (all well-typed STLC terms), the bounded state set eventually stabilizes (new terms stop being reachable). Once stabilized at or above the type state bound, the upper bound from typeStateBound squeezes to equality. The key technical lemma: every well-typed term has a finite number of \u03b2-reducts (by strong normalization).\n\n**Domain Bridges:** Statistical physics (phase transitions, saturation phenomena), dynamical systems (fixed points of iterative processes).\n\n**Lineage:** Builds on strong normalization for STLC (Tait 1967, Girard 1972).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Strong extension of Direction 1.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d0ab18",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:55:13.987111+00:00"
+  },
+  {
+    "id": "fd_0821",
+    "title": "Direction 3: Compositional Witness Synthesis Algorithm",
+    "description": "**Conjecture:** There exists a polynomial-time algorithm that, given an inhabited simple type *A* (represented as a tree), outputs a closed term *t : A* and depth *d* such that `canonicalQuotientSize(d, t) = typeStateBound(A)`. The term size is bounded by O(typeStateBound(A)^k) for some universal constant k.\n\n**Test:** Implement the algorithm for all inhabited types up to depth 5 (exhausting types with up to ~50 nodes). Compare synthesized witnesses against exhaustive search. Measure the ratio of synthesized term size to typeStateBound.\n\n**Impact:** Would provide a constructive, efficient procedure for generating maximal-complexity programs \u2014 turning the existence theorem into an algorithm.\n\n**Catalog References:**\n- `Catalog/Pythagorean/GlobalTightness.lean` \u2014 `synthesize_witness_base_arrow` (Python implementation for o \u2192 o)\n\n**Proof Strategy:** Define the algorithm by structural recursion on types, mirroring the proof of Direction 1. For the arrow case, compose subwitnesses using a canonical \"fan-out\" pattern that creates product-sized reduction diamonds.\n\n**Domain Bridges:** Program synthesis, automated testing (generating worst-case inputs), compiler benchmarking.\n\n**Lineage:** Extends exhaustive enumeration methods in lambda calculus combinatorics (Grygiel-Lescanne 2013).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Solid algorithmic extension.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d0ab18",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:55:14.002937+00:00"
+  },
+  {
+    "id": "fd_0822",
+    "title": "Direction 4: Extension to System F (Polymorphic Lambda Calculus)",
+    "description": "**Conjecture:** For System F (polymorphic lambda calculus), there exists a type complexity invariant analogous to typeStateBound that exactly characterizes the maximal bounded behavioral complexity of closed terms, with the invariant depending on the type and the instantiation.\n\n**Test:** Define a candidate invariant for simple System F types (e.g., \u2200\u03b1. \u03b1 \u2192 \u03b1, Church numerals \u2200\u03b1. (\u03b1 \u2192 \u03b1) \u2192 \u03b1 \u2192 \u03b1). Compute bounded state sets for small terms of these types. Check whether any numerical pattern emerges that could serve as the polymorphic type state bound.\n\n**Impact:** Would extend the entire theory to the dominant type system of functional programming, covering Haskell, ML, and dependently typed languages.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity` (the STLC case)\n\n**Proof Strategy:** Polymorphic types introduce quantifier complexity. The key challenge: \u2200\u03b1.\u03c4 has no fixed typeStateBound because \u03b1 can be instantiated at different types. One approach: define the bound as a supremum over instantiations. Another: define it relative to a fixed universe of types.\n\n**Domain Bridges:** Polymorphism in programming languages, parametricity (Reynolds 1983), categorical semantics.\n\n**Lineage:** Extends Statman's undecidability results for System F (1979) and Girard's normalization (1972).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Grand challenge, paradigm-shifting.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d0ab18",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:55:14.021207+00:00"
   },
   {
     "id": "seed_003",
@@ -849,10 +986,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.94,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "df37da21",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.657271+00:00"
   },
   {
@@ -933,9 +1070,9 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:54:40.959769+00:00"
   },
   {
-    "id": "fd_0819",
-    "title": "Direction 1: General Recursive Witness Construction",
-    "description": "**Conjecture:** For every inhabited simple type *A*, there exists a closed term *t : A* and depth *d* such that `canonicalQuotientSize(d, t) = typeStateBound(A)`.\n\n**Test:** Implement an exhaustive search over closed terms up to size 20 for all inhabited types up to depth 4. For each type, verify whether any term achieves the type state bound. A single type where no term achieves the bound (up to large search depth) would falsify the conjecture.\n\n**Impact:** This would establish the first exact higher-order Myhill-Nerode theorem, transforming typeStateBound from a combinatorial estimate into a canonical semantic invariant.\n\n**Catalog References:**\n- `Catalog/Pythagorean/GlobalTightness.lean` \u2014 `global_tightness` (sorry), `global_tightness_base` (proved), `global_tightness_BB` (proved)\n- `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity`\n\n**Proof Strategy:** Structural induction on the type. Base case: proved (depth 0). Arrow case *A \u2192 B*: given witness terms for types *A* and *B*, construct a term of type *A \u2192 B* that uses all witnesses as \"test inputs\" to create a large reduction diamond. The key lemma: if *S_A* and *S_B* are pairwise-separated reachable families at types *A* and *B*, then a suitable composition produces a family of size \u2265 |S_A| \u00d7 |S_B| at type *A \u2192 B*.\n\n**Domain Bridges:** Automata theory (minimal DFA characterization), descriptive complexity (type \u2194 resource correspondence), combinatorics (extremal \u03bb-term families).\n\n**Lineage:** Extends Myhill-Nerode (1958) and Statman's type-complexity results (1979).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Field-opening if proved.\n\n---",
+    "id": "fd_0825",
+    "title": "Direction 1: Certified Unification with Most General Unifier Theorem",
+    "description": "**Conjecture:** For first-order terms over a finite signature with an occurs-check, the Robinson unification algorithm computes a most general unifier (MGU) whenever one exists, and correctly reports failure otherwise. Furthermore, for linear patterns, the matching algorithm produces the unique (up to irrelevant bindings) substitution.\n\n**Test:** Implement bounded-depth term generation over a signature with 2 binary and 2 nullary symbols. For all term pairs (s, t) up to depth 5:\n1. If `unify(s, t) = Some \u03c3`, verify `s[\u03c3] = t[\u03c3]` and that for any other unifier \u03c4, there exists \u03c1 with `\u03c4 = \u03c1 \u2218 \u03c3`.\n2. If `unify(s, t) = None`, exhaustively search for unifiers among all substitutions mapping variables to terms of bounded depth and verify none exist.\n\n**Impact:** A certified unifier is the missing piece for certified logic programming (Prolog), type inference, and critical pair computation. It would elevate the framework from certified rewriting to a certified symbolic algebra kernel.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (matching, `subst_comp`), `Bridges/KnuthBendixCompletion.lean` (abstract completion)\n\n**Proof Strategy:** Define unification by well-founded recursion on the sum of term sizes. The occurs-check provides the termination measure. Prove soundness by showing `s[\u03c3] = t[\u03c3]`, and completeness by induction on unification failure cases. The MGU property follows from the substitution composition theorem `subst_comp`.\n\n**Domain Bridges:** Logic programming, type inference, theorem proving\n\n**Lineage:** Extends `match_sound` to the full unification case\n\n**Ambition:** Grand challenge \u2014 certified unification is a 50-year-old open verification target\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -946,33 +1083,32 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "21d0ab18",
+    "source_exp_id": "8e448ab4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:55:13.970837+00:00"
+    "timestamp": "2026-05-25T01:35:36.554806+00:00"
   },
   {
-    "id": "fd_0820",
-    "title": "Direction 2: Eventual Saturation Theorem",
-    "description": "**Conjecture:** For every inhabited simple type *A*, there exists a closed term *t : A* and a threshold *d\u2080* such that for all *d \u2265 d\u2080*, `canonicalQuotientSize(d, t) = typeStateBound(A)`.\n\n**Test:** For the witness w\u2080 at type o \u2192 o, verify computationally that `canonicalQuotientSize(d, w\u2080) = 4` for all d \u2265 2 (up to d = 100). Extend to witnesses at higher types. A term where the quotient size fluctuates (increases past the bound and then decreases) would falsify eventual saturation (though not the weaker one-shot conjecture).\n\n**Impact:** Would show that the exact complexity is not depth-fragile \u2014 it's a stable, robust property. This is the difference between a point measurement and a thermodynamic equilibrium.\n\n**Catalog References:**\n- `Catalog/Pythagorean/GlobalTightness.lean` \u2014 `EventuallySaturatesTypeBound` (definition), `w\u2080_stateSet_eq` (proves saturation at d \u2265 2 for w\u2080)\n\n**Proof Strategy:** For strongly normalizing terms (all well-typed STLC terms), the bounded state set eventually stabilizes (new terms stop being reachable). Once stabilized at or above the type state bound, the upper bound from typeStateBound squeezes to equality. The key technical lemma: every well-typed term has a finite number of \u03b2-reducts (by strong normalization).\n\n**Domain Bridges:** Statistical physics (phase transitions, saturation phenomena), dynamical systems (fixed points of iterative processes).\n\n**Lineage:** Builds on strong normalization for STLC (Tait 1967, Girard 1972).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Strong extension of Direction 1.\n\n---",
+    "id": "fd_0826",
+    "title": "Direction 2: Certified Reduction Orders (LPO, KBO)",
+    "description": "**Conjecture:** The Lexicographic Path Order (LPO) and Knuth-Bendix Order (KBO) are well-founded on finite-signature first-order terms, and orientation by these orders preserves the equational theory. Specifically: if `s >_LPO t` and `s \u2261_E t`, then orienting `s \u2192 t` preserves `\u2261_E`.\n\n**Test:** \n1. Generate 10,000 random term pairs over a signature with 3 symbols of arities 0, 1, 2. Verify that LPO/KBO comparison terminates and is transitive.\n2. For each orientable equation in the free group, commutative monoid, and Boolean ring presentations, verify that orientation by LPO/KBO yields a terminating rule set (check by bounded normalization of 1000 random terms).\n\n**Impact:** Automatic orientation is the key missing component for a fully automatic certified completion engine. Without certified orders, the user must manually specify rule orientation.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (rewriting, `rewrites_closed_under_subst`), `Pythagorean/ConvergentRewriteSystems.lean` (`Terminating`, `Convergent`)\n\n**Proof Strategy:** Define LPO by well-founded recursion using Dershowitz's multiset ordering. Prove well-foundedness by embedding into a well-founded order on multisets of terms. For KBO, use the weight-based argument with Kruskal's tree theorem.\n\n**Domain Bridges:** Automated deduction, termination analysis, ordinal arithmetic\n\n**Lineage:** Builds on `concrete_orient_preserves_equational_theory`\n\n**Ambition:** Solid extension \u2014 well-studied but not yet formalized in this framework\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
-      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
-    "source_exp_id": "21d0ab18",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:55:13.987111+00:00"
+    "source_exp_id": "8e448ab4",
+    "consumed_by_exp_id": "96985e53",
+    "timestamp": "2026-05-25T01:35:36.575867+00:00"
   },
   {
-    "id": "fd_0821",
-    "title": "Direction 3: Compositional Witness Synthesis Algorithm",
-    "description": "**Conjecture:** There exists a polynomial-time algorithm that, given an inhabited simple type *A* (represented as a tree), outputs a closed term *t : A* and depth *d* such that `canonicalQuotientSize(d, t) = typeStateBound(A)`. The term size is bounded by O(typeStateBound(A)^k) for some universal constant k.\n\n**Test:** Implement the algorithm for all inhabited types up to depth 5 (exhausting types with up to ~50 nodes). Compare synthesized witnesses against exhaustive search. Measure the ratio of synthesized term size to typeStateBound.\n\n**Impact:** Would provide a constructive, efficient procedure for generating maximal-complexity programs \u2014 turning the existence theorem into an algorithm.\n\n**Catalog References:**\n- `Catalog/Pythagorean/GlobalTightness.lean` \u2014 `synthesize_witness_base_arrow` (Python implementation for o \u2192 o)\n\n**Proof Strategy:** Define the algorithm by structural recursion on types, mirroring the proof of Direction 1. For the arrow case, compose subwitnesses using a canonical \"fan-out\" pattern that creates product-sized reduction diamonds.\n\n**Domain Bridges:** Program synthesis, automated testing (generating worst-case inputs), compiler benchmarking.\n\n**Lineage:** Extends exhaustive enumeration methods in lambda calculus combinatorics (Grygiel-Lescanne 2013).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Solid algorithmic extension.\n\n---",
+    "id": "fd_0827",
+    "title": "Direction 3: Fair Completion and Completeness",
+    "description": "**Conjecture:** Every fair concrete completion derivation that saturates all critical pairs and yields a terminating system produces a confluent (hence convergent) system. Formally: if the derivation is fair (every persistent critical pair is eventually considered) and the final rule set is terminating, then it is confluent.\n\n**Test:** Run the completion engine on 50 algebraic presentations from the TPDB (Termination Problem Data Base):\n1. For each presentation, track the set of unprocessed critical pairs at each step.\n2. Verify that under a round-robin fairness strategy, all critical pairs are eventually processed.\n3. For presentations where completion terminates, verify local confluence by checking all critical pairs of the final system.\n4. Compare against existing KB implementations (Waldmeister, Maude) for correctness.\n\n**Impact:** Completeness is the theoretical guarantee that makes completion a decision procedure. Without it, the algorithm is sound but might miss necessary rules.\n\n**Catalog References:** `Bridges/KnuthBendixCompletion.lean` (`newman_lemma`, `kb_completion_correct`), `Pythagorean/ConcreteTermAlgebra.lean` (`concrete_completion_preserves_equational_theory`)\n\n**Proof Strategy:** Use Newman's lemma (already proved in the abstract framework) as the bridge: terminating + locally confluent = confluent. Show that fairness ensures local confluence by guaranteeing all critical pairs are joinable. The key lemma: every critical pair of the final system was either (a) produced and joined, or (b) subsumed by simplification.\n\n**Domain Bridges:** Automated theorem proving, decision procedures, computational algebra\n\n**Lineage:** Directly extends `kb_completion_correct` from the abstract to the concrete level\n\n**Ambition:** Grand challenge \u2014 fairness proofs are notoriously subtle\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -983,14 +1119,14 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "21d0ab18",
+    "source_exp_id": "8e448ab4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:55:14.002937+00:00"
+    "timestamp": "2026-05-25T01:35:36.595672+00:00"
   },
   {
-    "id": "fd_0822",
-    "title": "Direction 4: Extension to System F (Polymorphic Lambda Calculus)",
-    "description": "**Conjecture:** For System F (polymorphic lambda calculus), there exists a type complexity invariant analogous to typeStateBound that exactly characterizes the maximal bounded behavioral complexity of closed terms, with the invariant depending on the type and the instantiation.\n\n**Test:** Define a candidate invariant for simple System F types (e.g., \u2200\u03b1. \u03b1 \u2192 \u03b1, Church numerals \u2200\u03b1. (\u03b1 \u2192 \u03b1) \u2192 \u03b1 \u2192 \u03b1). Compute bounded state sets for small terms of these types. Check whether any numerical pattern emerges that could serve as the polymorphic type state bound.\n\n**Impact:** Would extend the entire theory to the dominant type system of functional programming, covering Haskell, ML, and dependently typed languages.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity` (the STLC case)\n\n**Proof Strategy:** Polymorphic types introduce quantifier complexity. The key challenge: \u2200\u03b1.\u03c4 has no fixed typeStateBound because \u03b1 can be instantiated at different types. One approach: define the bound as a supremum over instantiations. Another: define it relative to a fixed universe of types.\n\n**Domain Bridges:** Polymorphism in programming languages, parametricity (Reynolds 1983), categorical semantics.\n\n**Lineage:** Extends Statman's undecidability results for System F (1979) and Girard's normalization (1972).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Grand challenge, paradigm-shifting.\n\n---",
+    "id": "fd_0828",
+    "title": "Direction 4: Tree Automata and Pattern Language Characterization",
+    "description": "**Conjecture:** For every linear pattern `p` (each variable occurs at most once), the set `L(p) = {t | \u2203\u03c3. p[\u03c3] = t}` is recognized by a deterministic bottom-up tree automaton constructible from `p` in O(|p|) time. Furthermore, for non-linear patterns, `L(p)` is recognizable by a non-deterministic tree automaton with equality constraints.\n\n**Test:**\n1. For 100 random linear patterns of depth \u2264 4 over a binary/nullary signature, construct the tree automaton and verify acceptance agrees with `match` on all terms of depth \u2264 6.\n2. For 50 non-linear patterns (with repeated variables), test whether the proposed constrained automaton correctly separates matching from non-matching terms on 10,000 random target terms.\n3. Measure the size of the constructed automaton relative to the pattern size.\n\n**Impact:** Connecting matching to tree automata theory would enable optimized multi-pattern matching (matching against many patterns simultaneously), which is crucial for efficient rewriting engines and compiler optimization passes.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (`patternLanguage`, `match_term`, `pattern_in_own_language`)\n\n**Proof Strategy:** For linear patterns, construct the automaton by structural induction on the pattern. Variables become accepting states for any subtree. Function symbols become transition rules. Non-linearity requires equality tests between subtrees, handled by product constructions.\n\n**Domain Bridges:** Formal languages, compiler optimization, XML/JSON schema validation\n\n**Lineage:** Extends `patternLanguage` definition and `pattern_in_own_language`\n\n**Ambition:** Solid extension \u2014 tree automata theory is well-developed but rarely connected to formal verification\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1001,9 +1137,27 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "21d0ab18",
+    "source_exp_id": "8e448ab4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:55:14.021207+00:00"
+    "timestamp": "2026-05-25T01:35:36.615271+00:00"
+  },
+  {
+    "id": "fd_0829",
+    "title": "Direction 5: Higher-Order Completion and Lambda-Calculus Integration",
+    "description": "**Conjecture:** The substitution functoriality theorem (`subst_comp`) and context closure theorems generalize to simply-typed lambda calculus with beta-reduction, enabling a higher-order completion procedure where beta-reduction steps are interleaved with equational rewriting steps, preserving the generated higher-order equational theory.\n\n**Test:**\n1. Define a simply-typed term algebra extending FOTerm with lambda abstraction and application.\n2. Implement higher-order matching (matching modulo beta-eta) and test on 500 term pairs.\n3. Attempt completion on simple higher-order equational theories (e.g., `map f (map g xs) = map (f \u2218 g) xs`) and check if the resulting rules are confluent modulo beta.\n4. Compare with Nipkow's higher-order completion results.\n\n**Impact:** Higher-order completion would bridge term rewriting to type theory and functional programming, enabling certified optimization of higher-order programs and certified simplification in dependent type theory proof assistants.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (`subst_comp`, `subst_comp3`, `rewrites_closed_under_subst_and_context`)\n\n**Proof Strategy:** The key challenge is that beta-reduction is not first-order rewriting \u2014 it involves variable binding. Use de Bruijn indices or locally nameless representation to make substitution explicit. Then show that the first-order closure theorems lift to the higher-order setting with appropriate modifications for alpha-equivalence.\n\n**Domain Bridges:** Type theory, functional programming, proof automation, category theory\n\n**Lineage:** Grand generalization of the substitution category structure in `subst_comp3`\n\n**Ambition:** Grand challenge \u2014 higher-order completion is an active research area with many open problems",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8e448ab4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T01:35:36.634466+00:00"
   },
   {
     "id": "seed_026",
@@ -1319,84 +1473,34 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:55:20.483190+00:00"
   },
   {
-    "id": "fd_0825",
-    "title": "Direction 1: Certified Unification with Most General Unifier Theorem",
-    "description": "**Conjecture:** For first-order terms over a finite signature with an occurs-check, the Robinson unification algorithm computes a most general unifier (MGU) whenever one exists, and correctly reports failure otherwise. Furthermore, for linear patterns, the matching algorithm produces the unique (up to irrelevant bindings) substitution.\n\n**Test:** Implement bounded-depth term generation over a signature with 2 binary and 2 nullary symbols. For all term pairs (s, t) up to depth 5:\n1. If `unify(s, t) = Some \u03c3`, verify `s[\u03c3] = t[\u03c3]` and that for any other unifier \u03c4, there exists \u03c1 with `\u03c4 = \u03c1 \u2218 \u03c3`.\n2. If `unify(s, t) = None`, exhaustively search for unifiers among all substitutions mapping variables to terms of bounded depth and verify none exist.\n\n**Impact:** A certified unifier is the missing piece for certified logic programming (Prolog), type inference, and critical pair computation. It would elevate the framework from certified rewriting to a certified symbolic algebra kernel.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (matching, `subst_comp`), `Bridges/KnuthBendixCompletion.lean` (abstract completion)\n\n**Proof Strategy:** Define unification by well-founded recursion on the sum of term sizes. The occurs-check provides the termination measure. Prove soundness by showing `s[\u03c3] = t[\u03c3]`, and completeness by induction on unification failure cases. The MGU property follows from the substitution composition theorem `subst_comp`.\n\n**Domain Bridges:** Logic programming, type inference, theorem proving\n\n**Lineage:** Extends `match_sound` to the full unification case\n\n**Ambition:** Grand challenge \u2014 certified unification is a 50-year-old open verification target\n\n---",
+    "id": "fd_0830",
+    "title": "Direction 1: M-Convexity Closure Under Differentiation",
+    "description": "**Conjecture**: The support exchange property (M-convexity) is preserved by partial differentiation. That is, if $p$ is a homogeneous polynomial with nonneg coefficients whose support satisfies the matroid exchange axiom, then the support of $\\partial p / \\partial x_i$ also satisfies the exchange axiom.\n\nFormally:\n```\ntheorem SupportSatisfiesExchange.pderiv\n    {n : \u2115} {p : MvPolynomial (Fin n) \u211d} {i : Fin n} :\n    SupportSatisfiesExchange p \u2192\n    SupportSatisfiesExchange (MvPolynomial.pderiv i p)\n```\n\n**Test**: Exhaustively verify for all M-convex supports of degree \u2264 6 in \u2264 5 variables that the derivative support remains M-convex. A single counterexample disproves the conjecture; conversely, verified examples up to this bound provide strong evidence.\n\n**Impact**: This would complete the formal bridge between Lorentzian polynomial theory and matroid/discrete convex analysis, showing that the entire derivative hierarchy preserves the combinatorial structure of the support. It would also provide a new proof technique for M-convexity results in matroid theory.\n\n**The key insight is** that M-convexity of support is the combinatorial shadow of Lorentzianity, and the differentiation operation on polynomials corresponds to contraction in matroid theory. Proving this formally would establish a new certified interface between algebraic combinatorics and discrete convex analysis.\n\n**Why now?** The formal definitions of both SupportSatisfiesExchange and partial differentiation are now in the catalog, and the Br\u00e4nd\u00e9n\u2013Huh theory provides the mathematical framework. The exhaustive computational verification is newly feasible with the recognition algorithm.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `SupportSatisfiesExchange`, `pderiv_coeff_nonneg`\n\n**Proof Strategy**: Induction on degree. The base case (degree 2) reduces to checking that 2\u00d72 exchange axiom is preserved. The inductive step uses the multilinearity of the derivative and the exchange axiom structure.\n\n**Domain Bridges**: Matroid theory, discrete convex analysis, Hodge theory\n\n**Lineage**: Extends `recursive_complete_of_exchange` and `pderiv_coeff_nonneg`\n\n**Ambition**: Solid extension \u2014 this is a known consequence of Br\u00e4nd\u00e9n\u2013Huh theory but has not been formally verified\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Geometry",
       "Computation",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
+    "source_exp_id": "83d44e07",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T01:35:36.554806+00:00"
+    "timestamp": "2026-05-25T02:10:32.344475+00:00"
   },
   {
-    "id": "fd_0826",
-    "title": "Direction 2: Certified Reduction Orders (LPO, KBO)",
-    "description": "**Conjecture:** The Lexicographic Path Order (LPO) and Knuth-Bendix Order (KBO) are well-founded on finite-signature first-order terms, and orientation by these orders preserves the equational theory. Specifically: if `s >_LPO t` and `s \u2261_E t`, then orienting `s \u2192 t` preserves `\u2261_E`.\n\n**Test:** \n1. Generate 10,000 random term pairs over a signature with 3 symbols of arities 0, 1, 2. Verify that LPO/KBO comparison terminates and is transitive.\n2. For each orientable equation in the free group, commutative monoid, and Boolean ring presentations, verify that orientation by LPO/KBO yields a terminating rule set (check by bounded normalization of 1000 random terms).\n\n**Impact:** Automatic orientation is the key missing component for a fully automatic certified completion engine. Without certified orders, the user must manually specify rule orientation.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (rewriting, `rewrites_closed_under_subst`), `Pythagorean/ConvergentRewriteSystems.lean` (`Terminating`, `Convergent`)\n\n**Proof Strategy:** Define LPO by well-founded recursion using Dershowitz's multiset ordering. Prove well-foundedness by embedding into a well-founded order on multisets of terms. For KBO, use the weight-based argument with Kruskal's tree theorem.\n\n**Domain Bridges:** Automated deduction, termination analysis, ordinal arithmetic\n\n**Lineage:** Builds on `concrete_orient_preserves_equational_theory`\n\n**Ambition:** Solid extension \u2014 well-studied but not yet formalized in this framework\n\n---",
+    "id": "fd_0831",
+    "title": "Direction 2: Lorentzian Polynomials in Statistical Physics and Probability",
+    "description": "**Conjecture**: The partition function of any determinantal point process (DPP), when restricted to its homogeneous components, yields Lorentzian polynomials. This implies that all marginal inclusion probabilities satisfy the negative dependence inequality $\\Pr[i \\in S \\text{ and } j \\in S] \\le \\Pr[i \\in S] \\cdot \\Pr[j \\in S]$.\n\nFormally:\n```\ntheorem dpp_partition_function_lorentzian\n    {n : \u2115} (K : Matrix (Fin n) (Fin n) \u211d) (hK : K.PosSemidef) (d : \u2115) :\n    IsBrandenHuhLorentzian d (homogeneousComponent d (dppPartitionFunction K))\n```\n\n**Test**: For random PSD matrices $K$ of size $n \\le 8$, compute the partition function, extract homogeneous components, and verify Lorentzianity via the spectral recognizer. Compare marginal correlations against the negative dependence bound.\n\n**Impact**: This would provide the first formally verified proof of negative dependence for DPPs, a fundamental result in probability and statistical physics. It would connect Lorentzian polynomial theory to random matrix theory, repulsive particle systems, and machine learning (DPPs are widely used for diverse subset selection).\n\n**The key insight is** that the partition function $\\det(I + \\text{diag}(x) \\cdot K)$ for PSD $K$ is a product of linear forms in the eigenvalue basis, making it manifestly Lorentzian. The formal challenge is connecting this spectral decomposition to the polynomial coefficient structure.\n\n**Why now?** DPPs are experiencing a surge of interest in machine learning and spatial statistics. Formally verified negative dependence guarantees would be valuable for certified randomized algorithms.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `IsBrandenHuhLorentzian`, `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy**: Decompose $\\det(I + DK)$ in the eigenbasis of $K$. Each factor is a positive linear form, so the product is Lorentzian by the closure property. Transfer back to the standard basis.\n\n**Domain Bridges**: Probability theory, statistical physics, machine learning, random matrix theory\n\n**Lineage**: Extends `lorentzian_reversed_cauchy_schwarz` and `spectralRecognizer_sound`\n\n**Ambition**: Grand challenge \u2014 connecting algebraic combinatorics to probability theory at the formal level\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T01:35:36.575867+00:00"
-  },
-  {
-    "id": "fd_0827",
-    "title": "Direction 3: Fair Completion and Completeness",
-    "description": "**Conjecture:** Every fair concrete completion derivation that saturates all critical pairs and yields a terminating system produces a confluent (hence convergent) system. Formally: if the derivation is fair (every persistent critical pair is eventually considered) and the final rule set is terminating, then it is confluent.\n\n**Test:** Run the completion engine on 50 algebraic presentations from the TPDB (Termination Problem Data Base):\n1. For each presentation, track the set of unprocessed critical pairs at each step.\n2. Verify that under a round-robin fairness strategy, all critical pairs are eventually processed.\n3. For presentations where completion terminates, verify local confluence by checking all critical pairs of the final system.\n4. Compare against existing KB implementations (Waldmeister, Maude) for correctness.\n\n**Impact:** Completeness is the theoretical guarantee that makes completion a decision procedure. Without it, the algorithm is sound but might miss necessary rules.\n\n**Catalog References:** `Bridges/KnuthBendixCompletion.lean` (`newman_lemma`, `kb_completion_correct`), `Pythagorean/ConcreteTermAlgebra.lean` (`concrete_completion_preserves_equational_theory`)\n\n**Proof Strategy:** Use Newman's lemma (already proved in the abstract framework) as the bridge: terminating + locally confluent = confluent. Show that fairness ensures local confluence by guaranteeing all critical pairs are joinable. The key lemma: every critical pair of the final system was either (a) produced and joined, or (b) subsumed by simplification.\n\n**Domain Bridges:** Automated theorem proving, decision procedures, computational algebra\n\n**Lineage:** Directly extends `kb_completion_correct` from the abstract to the concrete level\n\n**Ambition:** Grand challenge \u2014 fairness proofs are notoriously subtle\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T01:35:36.595672+00:00"
-  },
-  {
-    "id": "fd_0828",
-    "title": "Direction 4: Tree Automata and Pattern Language Characterization",
-    "description": "**Conjecture:** For every linear pattern `p` (each variable occurs at most once), the set `L(p) = {t | \u2203\u03c3. p[\u03c3] = t}` is recognized by a deterministic bottom-up tree automaton constructible from `p` in O(|p|) time. Furthermore, for non-linear patterns, `L(p)` is recognizable by a non-deterministic tree automaton with equality constraints.\n\n**Test:**\n1. For 100 random linear patterns of depth \u2264 4 over a binary/nullary signature, construct the tree automaton and verify acceptance agrees with `match` on all terms of depth \u2264 6.\n2. For 50 non-linear patterns (with repeated variables), test whether the proposed constrained automaton correctly separates matching from non-matching terms on 10,000 random target terms.\n3. Measure the size of the constructed automaton relative to the pattern size.\n\n**Impact:** Connecting matching to tree automata theory would enable optimized multi-pattern matching (matching against many patterns simultaneously), which is crucial for efficient rewriting engines and compiler optimization passes.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (`patternLanguage`, `match_term`, `pattern_in_own_language`)\n\n**Proof Strategy:** For linear patterns, construct the automaton by structural induction on the pattern. Variables become accepting states for any subtree. Function symbols become transition rules. Non-linearity requires equality tests between subtrees, handled by product constructions.\n\n**Domain Bridges:** Formal languages, compiler optimization, XML/JSON schema validation\n\n**Lineage:** Extends `patternLanguage` definition and `pattern_in_own_language`\n\n**Ambition:** Solid extension \u2014 tree automata theory is well-developed but rarely connected to formal verification\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T01:35:36.615271+00:00"
-  },
-  {
-    "id": "fd_0829",
-    "title": "Direction 5: Higher-Order Completion and Lambda-Calculus Integration",
-    "description": "**Conjecture:** The substitution functoriality theorem (`subst_comp`) and context closure theorems generalize to simply-typed lambda calculus with beta-reduction, enabling a higher-order completion procedure where beta-reduction steps are interleaved with equational rewriting steps, preserving the generated higher-order equational theory.\n\n**Test:**\n1. Define a simply-typed term algebra extending FOTerm with lambda abstraction and application.\n2. Implement higher-order matching (matching modulo beta-eta) and test on 500 term pairs.\n3. Attempt completion on simple higher-order equational theories (e.g., `map f (map g xs) = map (f \u2218 g) xs`) and check if the resulting rules are confluent modulo beta.\n4. Compare with Nipkow's higher-order completion results.\n\n**Impact:** Higher-order completion would bridge term rewriting to type theory and functional programming, enabling certified optimization of higher-order programs and certified simplification in dependent type theory proof assistants.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (`subst_comp`, `subst_comp3`, `rewrites_closed_under_subst_and_context`)\n\n**Proof Strategy:** The key challenge is that beta-reduction is not first-order rewriting \u2014 it involves variable binding. Use de Bruijn indices or locally nameless representation to make substitution explicit. Then show that the first-order closure theorems lift to the higher-order setting with appropriate modifications for alpha-equivalence.\n\n**Domain Bridges:** Type theory, functional programming, proof automation, category theory\n\n**Lineage:** Grand generalization of the substitution category structure in `subst_comp3`\n\n**Ambition:** Grand challenge \u2014 higher-order completion is an active research area with many open problems",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
+      "Physics",
       "Bridges",
       "MachineLearning",
       "Logic"
@@ -1404,9 +1508,66 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
+    "source_exp_id": "83d44e07",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T01:35:36.634466+00:00"
+    "timestamp": "2026-05-25T02:10:32.364163+00:00"
+  },
+  {
+    "id": "fd_0832",
+    "title": "Direction 3: Certified Exact Arithmetic for Spectral Recognition",
+    "description": "**Conjecture**: For polynomials with rational coefficients, the Lorentzian signature condition can be verified in exact arithmetic using the Sylvester criterion (signs of leading principal minors of the Hessian shifted by a rank-1 perturbation), avoiding all floating-point issues.\n\nFormally:\n```\ntheorem rational_spectral_recognizer_decidable\n    {n : \u2115} (d : \u2115) (p : MvPolynomial (Fin n) \u211a) :\n    Decidable (IsRecursivelyLorentzian d (p.map (algebraMap \u211a \u211d)))\n```\n\n**Test**: Implement the rational Sylvester criterion and compare against floating-point eigenvalue computation for all polynomials with coefficients in {0,1,2,3} of degree \u2264 4 in \u2264 4 variables. Any disagreement indicates a numerical stability issue.\n\n**Impact**: This would make Lorentzian recognition fully certified \u2014 not just mathematically sound, but computationally exact. It would enable trusted automated verification of log-concavity conjectures in combinatorics.\n\n**The key insight is** that the \"at most one positive eigenvalue\" condition for a symmetric matrix can be reformulated as: the matrix $H - \\epsilon \\cdot vv^T$ is negative semidefinite for some small $\\epsilon > 0$ and direction $v$. This can be checked via the Sylvester criterion using only determinants (exact rational arithmetic).\n\n**Why now?** The spectral recognizer algorithm is now formally verified for soundness and completeness. The remaining gap is computational \u2014 bridging from real-number eigenvalue conditions to decidable rational-arithmetic checks.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `spectralRecognizerProp`, `HasAtMostOnePositiveEigenvalue`\n\n**Proof Strategy**: Reformulate the eigenvalue condition in terms of the characteristic polynomial. Use Sturm's theorem or Descartes' rule of signs to count positive roots of the characteristic polynomial in exact rational arithmetic.\n\n**Domain Bridges**: Numerical linear algebra, certified computation, computer algebra\n\n**Lineage**: Extends `spectralRecognizer_correct` and `quadratic_leaf_count_le`\n\n**Ambition**: Solid extension \u2014 decidability results for eigenvalue conditions are classical, but formal verification is novel\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "83d44e07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:10:32.381941+00:00"
+  },
+  {
+    "id": "fd_0833",
+    "title": "Direction 4: Mason's Conjecture via Lorentzian Polynomials",
+    "description": "**Conjecture**: For any matroid $M$ on ground set $[n]$, the sequence $f_0, f_1, \\ldots, f_r$ of numbers of independent sets of each size is ultra-log-concave: $\\frac{f_k^2}{\\binom{n}{k}^2} \\ge \\frac{f_{k-1}}{\\binom{n}{k-1}} \\cdot \\frac{f_{k+1}}{\\binom{n}{k+1}}$.\n\nThis is Mason's conjecture (now a theorem by Anari\u2013Liu\u2013Oveis Gharan\u2013Vinzant and Br\u00e4nd\u00e9n\u2013Huh), but a formal verification is still open.\n\nFormally:\n```\ntheorem mason_conjecture_formal\n    {n r : \u2115} (M : Matroid (Fin n)) (k : \u2115) (hk : 1 \u2264 k) (hkr : k < r) :\n    (independentSetsOfSize M k)^2 * Nat.choose n (k-1) * Nat.choose n (k+1) \u2265\n    (independentSetsOfSize M (k-1)) * (independentSetsOfSize M (k+1)) * (Nat.choose n k)^2\n```\n\n**Test**: Verify computationally for all matroids on \u2264 8 elements. Any counterexample would disprove the theorem (which is known to be true, so none should exist).\n\n**Impact**: Formal verification of Mason's conjecture would be a landmark result in formalized mathematics \u2014 one of the most celebrated recent theorems in combinatorics, proved using the full power of Lorentzian polynomial theory.\n\n**The key insight is** that the independent set generating polynomial of a matroid is Lorentzian (Br\u00e4nd\u00e9n\u2013Huh), and ultra-log-concavity follows from the reversed Cauchy\u2013Schwarz inequality applied to specializations.\n\n**Why now?** The reversed Cauchy\u2013Schwarz inequality is now formally verified (`lorentzian_reversed_cauchy_schwarz`), and the recursive spectral certificate provides the connection to Lorentzianity. The remaining work is formalizing the matroid-to-polynomial bridge.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `lorentzian_reversed_cauchy_schwarz`, `IsBrandenHuhLorentzian`\n\n**Proof Strategy**: (1) Define the independent set polynomial. (2) Show it is Lorentzian via the basis generating polynomial and deletion-contraction. (3) Apply reversed Cauchy\u2013Schwarz to a 2-variable specialization. (4) Extract ultra-log-concavity.\n\n**Domain Bridges**: Matroid theory, combinatorics, Hodge theory\n\n**Lineage**: Extends `lorentzian_reversed_cauchy_schwarz` and `recursivelyLorentzian_iff_brandenHuh`\n\n**Ambition**: Grand challenge \u2014 formalizing a major theorem of 21st-century combinatorics\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "83d44e07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:10:32.402888+00:00"
+  },
+  {
+    "id": "fd_0834",
+    "title": "Direction 5: Lorentzian Certificates for Convex Optimization",
+    "description": "**Conjecture**: For any homogeneous Lorentzian polynomial $p$ of degree $d$, the function $x \\mapsto p(x)^{1/d}$ is concave on the cone $\\{x \\in \\mathbb{R}_{\\ge 0}^n : p(x) > 0\\}$. This concavity certificate can be verified in polynomial time (for fixed $d$) using the recursive spectral certificate.\n\nFormally:\n```\ntheorem lorentzian_root_concave\n    {n d : \u2115} {p : MvPolynomial (Fin n) \u211d}\n    (hL : IsRecursivelyLorentzian d p) (hd : 0 < d)\n    (x y : Fin n \u2192 \u211d) (hx : \u2200 i, 0 \u2264 x i) (hy : \u2200 i, 0 \u2264 y i)\n    (hpx : eval x p > 0) (hpy : eval y p > 0) (t : \u211d) (ht : 0 \u2264 t) (ht1 : t \u2264 1) :\n    eval (t \u2022 x + (1 - t) \u2022 y) p ^ (1 / d : \u211d) \u2265\n    t * (eval x p) ^ (1 / d : \u211d) + (1 - t) * (eval y p) ^ (1 / d : \u211d)\n```\n\n**Test**: Numerically verify concavity of $p^{1/d}$ on random points in the positive cone for all Lorentzian polynomials in the test suite. Any convexity violation would be a counterexample.\n\n**Impact**: This would provide certified concavity guarantees for optimization, connecting Lorentzian polynomial theory to barrier methods, self-concordant functions, and interior-point algorithms. It could enable new polynomial-time algorithms for optimization over Lorentzian-definable sets.\n\n**The key insight is** that the tangent-space negativity theorem (already proven) is the infinitesimal version of this concavity statement. The global concavity follows by integration along geodesics in the positive cone, using the reversed Cauchy\u2013Schwarz as the key inequality.\n\n**Why now?** The tangent-space negativity theorem is now formally verified, providing the key local ingredient. The global-from-local argument is well-understood analytically and should be formalizable with existing Mathlib calculus infrastructure.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `lorentzian_signature_tangent_neg_semidef`, `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy**: (1) Prove that the Hessian of $\\log p$ is negative semidefinite on the tangent space (follows from tangent-space negativity). (2) Conclude $\\log p$ is concave. (3) Exponentiate and use the AM-GM inequality to get $p^{1/d}$ concavity.\n\n**Domain Bridges**: Convex optimization, interior-point methods, self-concordant barriers, computational geometry\n\n**Lineage**: Extends `lorentzian_signature_tangent_neg_semidef`\n\n**Ambition**: Solid extension with high practical impact \u2014 bridges pure algebraic combinatorics to applied optimization",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "83d44e07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:10:32.428154+00:00"
   },
   {
     "id": "seed_052",
@@ -1467,9 +1628,89 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
   },
   {
-    "id": "fd_0792",
-    "title": "Direction 3: Completeness of Recursive Spectral Certificates",
-    "description": "**Conjecture.** The recursive spectral predicate (all quadratic leaves have Lorentzian Hessian signature) is equivalent to the Br\u00e4nd\u00e9n\u2013Huh definition of Lorentzianity for homogeneous polynomials with nonneg coefficients.\n\n**Test.** Verify computationally for all homogeneous polynomials of degree \u2264 5 in \u2264 4 variables that the recursive predicate matches the full Br\u00e4nd\u00e9n\u2013Huh definition (which additionally requires the polynomial to be a limit of products of linear forms with nonneg coefficients). A disproof would exhibit a polynomial that satisfies the recursive predicate but is not Lorentzian in the full sense.\n\n**Impact.** A positive resolution would show that our certified algorithm is not just sound but complete: it exactly characterizes Lorentzianity. This would be the first formal completeness result for any recursive characterization of Lorentzianity.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `IsRecursivelyLorentzian`, `RecursiveLorentzianCertificate`, `recursive_certificate_sound`.\n\n**Proof Strategy.** For one direction (recursive \u27f9 Lorentzian), use the characterization theorem of Br\u00e4nd\u00e9n\u2013Huh: a homogeneous polynomial with nonneg coefficients, support satisfying the exchange property, and Hessian signature condition on all quadratic leaves is Lorentzian. The converse (Lorentzian \u27f9 recursive) follows from closure of Lorentzianity under partial differentiation.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 spectral linear algebra.\n\n**Lineage.** Direct continuation of `recursive_certificate_sound` (soundness).\n\n**Ambition.** Solid extension. The key obstacle is formalizing enough of the Br\u00e4nd\u00e9n\u2013Huh theory in Lean.\n\n---",
+    "id": "fd_0835",
+    "title": "Direction 1: Tight Spectral Gap via Lorentzian Structure",
+    "description": "**Conjecture:** For a degree-d recursively Lorentzian polynomial in n variables, the certificate-guided Markov chain has spectral gap at least \u03a9(1/(d\u00b7n)), improving the current bound of \u03a9(1/n\u00b2).\n\n**Test:** Compute spectral gaps for binomial, Poisson, and hypergeometric distributions (all Lorentzian) for n = 5, 10, 20, 50, 100 and fit the scaling exponent. If the gap scales as \u0398(1/n^\u03b1) with \u03b1 < 1.5, the conjecture is plausible; if \u03b1 \u2248 2, the current bound is tight.\n\n**Impact:** An \u03a9(1/(d\u00b7n)) gap would reduce mixing time from O(n\u00b2 \u00b7 d \u00b7 log n) to O(n \u00b7 d\u00b2 \u00b7 log n), a quadratic speedup that makes certificate-guided sampling practical for large-scale problems.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `spectral_gap_log_concave_lower_bound`, `logConcaveSeq_mul`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy:** Use the reversed Cauchy\u2013Schwarz inequality directly (not just log-concavity) to bound the Dirichlet form. At each certificate node, the reversed CS gives B(e\u2096, e\u2096\u208a\u2081)\u00b2 \u2265 Q(e\u2096)\u00b7Q(e\u2096\u208a\u2081), which provides a *tighter* bound on off-diagonal transition probabilities than the generic log-concavity argument. Induct on certificate depth, using the derivative-descent structure to decompose the Dirichlet form into per-level contributions.\n\n**Domain Bridges:** Probability theory (Markov chain mixing), functional analysis (Poincar\u00e9 inequalities), combinatorial optimization (MCMC convergence)\n\n**Lineage:** Extends `spectral_gap_log_concave_lower_bound` using `lorentzian_reversed_cauchy_schwarz`\n\n**Ambition:** Solid extension \u2014 the techniques are within reach of current methods, and computational evidence strongly supports the conjecture.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.182188+00:00"
+  },
+  {
+    "id": "fd_0836",
+    "title": "Direction 2: Higher-Order Log-Concavity and Partition Functions",
+    "description": "**Conjecture:** For a k-fold Lorentzian polynomial (one whose k-th derivatives are all Lorentzian), the coefficient sequence satisfies k-fold log-concavity: the k-th finite difference of log(a\u2098) is nonpositive. This implies mixing time bounds of O(n^(2/k) \u00b7 log n) for the associated Markov chain.\n\n**Test:** Verify k-fold log-concavity for the generating polynomials of (a) complete bipartite graph spanning trees, (b) matroid basis counts for paving matroids, (c) partition functions of the Ising model on small lattices. Compute whether the mixing time improvement from k-fold LC matches the O(n^(2/k)) prediction.\n\n**Impact:** Would provide a hierarchy of increasingly efficient samplers indexed by the \"depth of Lorentzianness,\" with applications to statistical physics partition functions.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `LogConcaveSeq`, `binomial_log_concave`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `IsRecursivelyLorentzian`\n\n**Proof Strategy:** Define k-fold log-concavity inductively: 1-fold = standard log-concavity; (k+1)-fold = the sequence of ratios a\u2098\u208a\u2081/a\u2098 is k-fold log-concave. Use the recursive Lorentzian certificate (depth d\u22122) to establish (d\u22122)-fold log-concavity. Apply modified log-Sobolev inequalities that exploit higher-order concavity.\n\n**Domain Bridges:** Statistical physics (partition functions), information theory (entropy inequalities), operator theory (complete positivity)\n\n**Lineage:** Extends `logConcaveSeq_mul` and `binomial_ratio_le_one` to higher orders\n\n**Ambition:** Grand challenge \u2014 k-fold log-concavity for partition functions would resolve open problems in statistical physics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.200317+00:00"
+  },
+  {
+    "id": "fd_0837",
+    "title": "Direction 3: Quantum Ground-State Preparation via Lorentzian Certificates",
+    "description": "**Conjecture:** For a stoquastic Hamiltonian H whose ground-state amplitudes are the coefficients of a Lorentzian polynomial, the certificate tree provides an efficient quantum circuit for ground-state preparation, with depth O(n^(d\u22122) \u00b7 log n) and gate count O(n^d).\n\n**Test:** Implement the certificate-to-circuit compilation for (a) the transverse-field Ising model on small lattices (n \u2264 12), (b) the XX model, and (c) Rokhsar-Kivelson Hamiltonians. Simulate the circuit on a quantum emulator and compare fidelity vs. depth with Variational Quantum Eigensolver (VQE) and Quantum Approximate Optimization Algorithm (QAOA).\n\n**Impact:** Would establish that Lorentzian certificates are universal ground-state preparation recipes for stoquastic Hamiltonians, bridging algebraic combinatorics to quantum computing.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificate_sampling_efficiency`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `RecursiveLorentzianCertificate`\n\n**Proof Strategy:** Map each certificate node to a quantum gate sequence: the Lorentzian signature (one positive eigenvalue) means the Hessian can be decomposed as a rank-1 projector minus a positive semidefinite term. This decomposition defines a quantum channel whose fixed point is the target amplitude distribution. The recursive structure gives a depth-d\u22122 circuit that converges to the ground state.\n\n**Domain Bridges:** Quantum computing (Hamiltonian simulation), condensed matter physics (stoquastic models), classical simulation (sign-problem-free systems)\n\n**Lineage:** Builds on `certificate_depth_eq` and `RecursiveLorentzianCertificate` from the recognition catalog\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects algebraic combinatorics to quantum algorithms in a fundamentally new way.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.221031+00:00"
+  },
+  {
+    "id": "fd_0838",
+    "title": "Direction 4: Tropical Mixing Without Spectral Intermediate",
+    "description": "**Conjecture:** The tropical diameter of the Newton subdivision of a Lorentzian polynomial *directly* controls the mixing time, without passing through the spectral gap: \u03c4_mix \u2264 O(trop_diam \u00b7 n \u00b7 log n), where trop_diam \u2264 O(d \u00b7 n) for degree-d polynomials.\n\n**Test:** For randomly generated Lorentzian polynomials (degree 3\u20135, variables 3\u201310), compute both the tropical diameter and the actual mixing time (from eigenvalue computation). Plot \u03c4_mix vs. trop_diam. If the relationship is linear (not quadratic), the direct bound holds.\n\n**Impact:** Would bypass the spectral gap entirely, providing a geometric understanding of mixing that connects to the rapidly developing field of tropical geometry.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `tropical_diameter_le_dn`, `certificate_mixing_time_bound`\n\n**Proof Strategy:** Use the canonical paths method directly with paths defined by the tropical subdivision. Each path follows the ridge between tropical cells, and its congestion is bounded by the cell volumes (which are controlled by the mixed volumes of the Newton polytope). The Lorentzian condition ensures these volumes satisfy a Brunn-Minkowski-type inequality that bounds congestion.\n\n**Domain Bridges:** Tropical geometry (Newton polytopes, subdivisions), combinatorial geometry (Brunn-Minkowski theory), algebraic statistics (toric models)\n\n**Lineage:** Extends `tropical_diameter_le_dn` with a direct mixing argument\n\n**Ambition:** Solid extension \u2014 the canonical paths framework is well-established, and tropical geometry provides the right language.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.243679+00:00"
+  },
+  {
+    "id": "fd_0839",
+    "title": "Direction 5: Dynamic Lorentzian Certificates and Online Sampling",
+    "description": "**Conjecture:** When a Lorentzian polynomial f changes by a rank-1 update (adding a single monomial term), the certificate tree can be updated in O(n^(d\u22123) \u00b7 n\u00b2) time \u2014 a factor of n cheaper than rebuilding from scratch \u2014 and the Markov chain can be \"warm-started\" with mixing time O(n \u00b7 log n) from the previous stationary distribution.\n\n**Test:** Implement dynamic certificate maintenance for the generating polynomial of a matroid as elements are added/deleted. Measure (a) certificate update time vs. rebuild time, (b) warm-start mixing time vs. cold-start mixing time, for graphic matroids of growing graphs (n = 10, 20, 50, 100 vertices, adding one edge at a time).\n\n**Impact:** Would make certificate-guided sampling practical for streaming and online settings, where the underlying polynomial evolves over time.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificateDepth`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `pderiv_isHomogeneous_degree_pred`\n\n**Proof Strategy:** A rank-1 update to f changes only O(n^(d\u22123)) leaves of the certificate tree (those whose multiindex overlaps the updated monomial). Recompute eigenvalues only at affected leaves. For warm-starting, bound the total variation distance between old and new stationary distributions using the \u2113\u2081 change in coefficients, then apply the mixing time bound with this as the initial distance.\n\n**Domain Bridges:** Online algorithms (streaming computation), dynamic graph algorithms, stochastic optimization (follow-the-regularized-leader)\n\n**Lineage:** Extends `certificate_verification_complexity` to the dynamic setting\n\n**Ambition:** Solid extension \u2014 the key ideas (lazy updates, warm starts) are well-known in MCMC; the novelty is combining them with certificate structure.",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1479,10 +1720,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "33261812",
-    "consumed_by_exp_id": "83d44e07",
-    "timestamp": "2026-05-24T23:12:21.863215+00:00"
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.263299+00:00"
   }
 ];

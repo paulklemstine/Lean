@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_5_complexity_of_lorentzian_recognition",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "direction_1_coalgebraic_temporal_adjunction_for_in",
@@ -52,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "sums_of_three_cubes",
@@ -70,7 +70,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "direction_1_global_tightness_conjecture",
@@ -79,7 +79,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_1_concrete_first_order_term_algebra_with",
@@ -88,10 +88,43 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
+      "hue": 272
+    },
+    {
+      "id": "direction_3_completeness_of_recursive_spectral_cer",
+      "title": "Completeness of Recursive Spectral Certificates for Lorentzian Polynomials",
+      "domain": "Algebraic Combinatorics / Spectral Linear Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T02:10:29Z",
+      "hue": 270
+    },
+    {
+      "id": "direction_4_efficient_sampling_from_lorentzian_cer",
+      "title": "Efficient Sampling from Lorentzian Certificates: Spectral Gap, Log-Concavity, and Tropical Diameter",
+      "domain": "Algebraic Combinatorics / Probability Theory / Tropical Geometry",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T02:11:07Z",
       "hue": 92
     }
   ],
-  "edges": [],
+  "edges": [
+    {
+      "source": "direction_5_complexity_of_lorentzian_recognition",
+      "target": "direction_3_completeness_of_recursive_spectral_cer",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_complexity_of_lorentzian_recognition",
+      "target": "direction_4_efficient_sampling_from_lorentzian_cer",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    }
+  ],
   "domain_bridges": [
     {
       "domain_a": "Algebra",
@@ -102,6 +135,18 @@
     {
       "domain_a": "Algebra",
       "domain_b": "Geometry",
+      "package_count": 2,
+      "strength": 0.7
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Tropical",
       "package_count": 1,
       "strength": 0.5
     }

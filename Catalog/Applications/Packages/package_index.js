@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Probability Theory / Tropical Geometry",
     "date": "2026-05-25T02:11:07Z",
     "exp_id": "1f8fa3a8",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.657708624390244,
+    "quality": "partial"
   },
   {
     "filename": "direction_3_completeness_of_recursive_spectral_cer.json",
@@ -345,8 +345,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-25T02:11:07Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.657708624390244,
+      "quality": "partial"
     }
   ],
   "edges": [
@@ -568,25 +568,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "33261812",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
-  },
-  {
-    "id": "fd_0793",
-    "title": "Direction 4: Efficient Sampling from Lorentzian Certificates",
-    "description": "**Conjecture.** Given a degree-d Lorentzian polynomial f in n variables, one can sample from the probability distribution proportional to the coefficients of f in expected time O(n^{d+1} \u00b7 log n), using the recursive certificate structure as a guide.\n\n**Test.** Implement a certificate-guided sampling algorithm for matroid basis generating polynomials and compare runtime and mixing time to state-of-the-art methods (e.g., basis exchange walks). A disproof would show that certificate-guided sampling has provably worse mixing time than exchange walks for some matroid family.\n\n**Impact.** This would create the first direct algorithmic application of Lorentzian certificates, connecting the complexity theory of recognition to the complexity of sampling.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `IsRecursivelyLorentzian`, `lorentzian_reversed_cauchy_schwarz` (the reversed Cauchy\u2013Schwarz provides the key mixing-time bound).\n\n**Proof Strategy.** Use the reversed Cauchy\u2013Schwarz inequality to bound the spectral gap of a Markov chain defined by the derivative tree. At each internal node of the certificate tree, use the Lorentzian signature to construct a log-concave conditional distribution, then sample via rejection sampling with bounded rejection probability.\n\n**Domain Bridges.** Algorithmic combinatorics \u2192 statistical physics \u2192 probability (Markov chain mixing).\n\n**Lineage.** Extends `lorentzian_reversed_cauchy_schwarz` from a structural result to an algorithmic tool.\n\n**Ambition.** Grand challenge. Connecting certificate structure to sampling efficiency would be a significant advance.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "33261812",
-    "consumed_by_exp_id": "1f8fa3a8",
-    "timestamp": "2026-05-24T23:12:21.876594+00:00"
   },
   {
     "id": "fd_0794",
@@ -1118,10 +1099,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8e448ab4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "96985e53",
     "timestamp": "2026-05-25T01:35:36.575867+00:00"
   },
   {
@@ -1645,5 +1626,104 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
+  },
+  {
+    "id": "fd_0835",
+    "title": "Direction 1: Tight Spectral Gap via Lorentzian Structure",
+    "description": "**Conjecture:** For a degree-d recursively Lorentzian polynomial in n variables, the certificate-guided Markov chain has spectral gap at least \u03a9(1/(d\u00b7n)), improving the current bound of \u03a9(1/n\u00b2).\n\n**Test:** Compute spectral gaps for binomial, Poisson, and hypergeometric distributions (all Lorentzian) for n = 5, 10, 20, 50, 100 and fit the scaling exponent. If the gap scales as \u0398(1/n^\u03b1) with \u03b1 < 1.5, the conjecture is plausible; if \u03b1 \u2248 2, the current bound is tight.\n\n**Impact:** An \u03a9(1/(d\u00b7n)) gap would reduce mixing time from O(n\u00b2 \u00b7 d \u00b7 log n) to O(n \u00b7 d\u00b2 \u00b7 log n), a quadratic speedup that makes certificate-guided sampling practical for large-scale problems.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `spectral_gap_log_concave_lower_bound`, `logConcaveSeq_mul`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy:** Use the reversed Cauchy\u2013Schwarz inequality directly (not just log-concavity) to bound the Dirichlet form. At each certificate node, the reversed CS gives B(e\u2096, e\u2096\u208a\u2081)\u00b2 \u2265 Q(e\u2096)\u00b7Q(e\u2096\u208a\u2081), which provides a *tighter* bound on off-diagonal transition probabilities than the generic log-concavity argument. Induct on certificate depth, using the derivative-descent structure to decompose the Dirichlet form into per-level contributions.\n\n**Domain Bridges:** Probability theory (Markov chain mixing), functional analysis (Poincar\u00e9 inequalities), combinatorial optimization (MCMC convergence)\n\n**Lineage:** Extends `spectral_gap_log_concave_lower_bound` using `lorentzian_reversed_cauchy_schwarz`\n\n**Ambition:** Solid extension \u2014 the techniques are within reach of current methods, and computational evidence strongly supports the conjecture.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.182188+00:00"
+  },
+  {
+    "id": "fd_0836",
+    "title": "Direction 2: Higher-Order Log-Concavity and Partition Functions",
+    "description": "**Conjecture:** For a k-fold Lorentzian polynomial (one whose k-th derivatives are all Lorentzian), the coefficient sequence satisfies k-fold log-concavity: the k-th finite difference of log(a\u2098) is nonpositive. This implies mixing time bounds of O(n^(2/k) \u00b7 log n) for the associated Markov chain.\n\n**Test:** Verify k-fold log-concavity for the generating polynomials of (a) complete bipartite graph spanning trees, (b) matroid basis counts for paving matroids, (c) partition functions of the Ising model on small lattices. Compute whether the mixing time improvement from k-fold LC matches the O(n^(2/k)) prediction.\n\n**Impact:** Would provide a hierarchy of increasingly efficient samplers indexed by the \"depth of Lorentzianness,\" with applications to statistical physics partition functions.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `LogConcaveSeq`, `binomial_log_concave`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `IsRecursivelyLorentzian`\n\n**Proof Strategy:** Define k-fold log-concavity inductively: 1-fold = standard log-concavity; (k+1)-fold = the sequence of ratios a\u2098\u208a\u2081/a\u2098 is k-fold log-concave. Use the recursive Lorentzian certificate (depth d\u22122) to establish (d\u22122)-fold log-concavity. Apply modified log-Sobolev inequalities that exploit higher-order concavity.\n\n**Domain Bridges:** Statistical physics (partition functions), information theory (entropy inequalities), operator theory (complete positivity)\n\n**Lineage:** Extends `logConcaveSeq_mul` and `binomial_ratio_le_one` to higher orders\n\n**Ambition:** Grand challenge \u2014 k-fold log-concavity for partition functions would resolve open problems in statistical physics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.200317+00:00"
+  },
+  {
+    "id": "fd_0837",
+    "title": "Direction 3: Quantum Ground-State Preparation via Lorentzian Certificates",
+    "description": "**Conjecture:** For a stoquastic Hamiltonian H whose ground-state amplitudes are the coefficients of a Lorentzian polynomial, the certificate tree provides an efficient quantum circuit for ground-state preparation, with depth O(n^(d\u22122) \u00b7 log n) and gate count O(n^d).\n\n**Test:** Implement the certificate-to-circuit compilation for (a) the transverse-field Ising model on small lattices (n \u2264 12), (b) the XX model, and (c) Rokhsar-Kivelson Hamiltonians. Simulate the circuit on a quantum emulator and compare fidelity vs. depth with Variational Quantum Eigensolver (VQE) and Quantum Approximate Optimization Algorithm (QAOA).\n\n**Impact:** Would establish that Lorentzian certificates are universal ground-state preparation recipes for stoquastic Hamiltonians, bridging algebraic combinatorics to quantum computing.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificate_sampling_efficiency`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `RecursiveLorentzianCertificate`\n\n**Proof Strategy:** Map each certificate node to a quantum gate sequence: the Lorentzian signature (one positive eigenvalue) means the Hessian can be decomposed as a rank-1 projector minus a positive semidefinite term. This decomposition defines a quantum channel whose fixed point is the target amplitude distribution. The recursive structure gives a depth-d\u22122 circuit that converges to the ground state.\n\n**Domain Bridges:** Quantum computing (Hamiltonian simulation), condensed matter physics (stoquastic models), classical simulation (sign-problem-free systems)\n\n**Lineage:** Builds on `certificate_depth_eq` and `RecursiveLorentzianCertificate` from the recognition catalog\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects algebraic combinatorics to quantum algorithms in a fundamentally new way.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.221031+00:00"
+  },
+  {
+    "id": "fd_0838",
+    "title": "Direction 4: Tropical Mixing Without Spectral Intermediate",
+    "description": "**Conjecture:** The tropical diameter of the Newton subdivision of a Lorentzian polynomial *directly* controls the mixing time, without passing through the spectral gap: \u03c4_mix \u2264 O(trop_diam \u00b7 n \u00b7 log n), where trop_diam \u2264 O(d \u00b7 n) for degree-d polynomials.\n\n**Test:** For randomly generated Lorentzian polynomials (degree 3\u20135, variables 3\u201310), compute both the tropical diameter and the actual mixing time (from eigenvalue computation). Plot \u03c4_mix vs. trop_diam. If the relationship is linear (not quadratic), the direct bound holds.\n\n**Impact:** Would bypass the spectral gap entirely, providing a geometric understanding of mixing that connects to the rapidly developing field of tropical geometry.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `tropical_diameter_le_dn`, `certificate_mixing_time_bound`\n\n**Proof Strategy:** Use the canonical paths method directly with paths defined by the tropical subdivision. Each path follows the ridge between tropical cells, and its congestion is bounded by the cell volumes (which are controlled by the mixed volumes of the Newton polytope). The Lorentzian condition ensures these volumes satisfy a Brunn-Minkowski-type inequality that bounds congestion.\n\n**Domain Bridges:** Tropical geometry (Newton polytopes, subdivisions), combinatorial geometry (Brunn-Minkowski theory), algebraic statistics (toric models)\n\n**Lineage:** Extends `tropical_diameter_le_dn` with a direct mixing argument\n\n**Ambition:** Solid extension \u2014 the canonical paths framework is well-established, and tropical geometry provides the right language.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.243679+00:00"
+  },
+  {
+    "id": "fd_0839",
+    "title": "Direction 5: Dynamic Lorentzian Certificates and Online Sampling",
+    "description": "**Conjecture:** When a Lorentzian polynomial f changes by a rank-1 update (adding a single monomial term), the certificate tree can be updated in O(n^(d\u22123) \u00b7 n\u00b2) time \u2014 a factor of n cheaper than rebuilding from scratch \u2014 and the Markov chain can be \"warm-started\" with mixing time O(n \u00b7 log n) from the previous stationary distribution.\n\n**Test:** Implement dynamic certificate maintenance for the generating polynomial of a matroid as elements are added/deleted. Measure (a) certificate update time vs. rebuild time, (b) warm-start mixing time vs. cold-start mixing time, for graphic matroids of growing graphs (n = 10, 20, 50, 100 vertices, adding one edge at a time).\n\n**Impact:** Would make certificate-guided sampling practical for streaming and online settings, where the underlying polynomial evolves over time.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificateDepth`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `pderiv_isHomogeneous_degree_pred`\n\n**Proof Strategy:** A rank-1 update to f changes only O(n^(d\u22123)) leaves of the certificate tree (those whose multiindex overlaps the updated monomial). Recompute eigenvalues only at affected leaves. For warm-starting, bound the total variation distance between old and new stationary distributions using the \u2113\u2081 change in coefficients, then apply the mixing time bound with this as the initial distance.\n\n**Domain Bridges:** Online algorithms (streaming computation), dynamic graph algorithms, stochastic optimization (follow-the-regularized-leader)\n\n**Lineage:** Extends `certificate_verification_complexity` to the dynamic setting\n\n**Ambition:** Solid extension \u2014 the key ideas (lazy updates, warm starts) are well-known in MCMC; the novelty is combining them with certificate structure.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.263299+00:00"
   }
 ];
