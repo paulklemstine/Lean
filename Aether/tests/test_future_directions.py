@@ -281,6 +281,59 @@ class TestCompletingDirections:
         assert d.consumed_by_exp_id == ""
 
 
+class TestStaleDirectionRecovery:
+    def test_recover_stale_directions(self, fd_manager):
+        from datetime import datetime, timezone, timedelta
+        old_dir = FutureDirection(
+            id="stale_001", title="Stale Direction",
+            description="A direction stuck in_progress from a crashed tick.",
+            source_exp_id="seed", source_path="seed:test",
+            priority_score=0.8,
+            timestamp=(datetime.now(timezone.utc) - timedelta(hours=48)).isoformat(),
+        )
+        fresh_dir = FutureDirection(
+            id="fresh_001", title="Fresh Direction",
+            description="A direction recently marked in_progress.",
+            source_exp_id="seed", source_path="seed:test",
+            priority_score=0.9,
+            timestamp=(datetime.now(timezone.utc) - timedelta(minutes=5)).isoformat(),
+        )
+        available_dir = FutureDirection(
+            id="avail_001", title="Available Direction",
+            description="A direction still available.",
+            source_exp_id="seed", source_path="seed:test",
+            priority_score=0.7,
+        )
+        fd_manager.add_direction(old_dir)
+        fd_manager.add_direction(fresh_dir)
+        fd_manager.add_direction(available_dir)
+        # Mark old and fresh as in_progress
+        fd_manager.mark_direction_consumed("stale_001", "exp_old")
+        fd_manager.mark_direction_consumed("fresh_001", "exp_fresh")
+
+        recovered = fd_manager.recover_stale_directions(max_age_hours=24)
+        assert recovered == 1  # Only the 48h-old one
+        assert fd_manager._directions[0].status == "available"  # old_dir recovered
+        assert fd_manager._directions[0].consumed_by_exp_id == ""
+        assert fd_manager._directions[1].status == "in_progress"  # fresh_dir untouched
+        assert fd_manager._directions[2].status == "available"  # available_dir untouched
+
+    def test_recover_no_timestamp_resets_too(self, fd_manager):
+        no_ts = FutureDirection(
+            id="nots_001", title="No Timestamp Direction",
+            description="A direction with no timestamp stuck in_progress.",
+            source_exp_id="seed", source_path="seed:test",
+            priority_score=0.8,
+        )
+        fd_manager.add_direction(no_ts)
+        fd_manager.mark_direction_consumed("nots_001", "exp_x")
+        # Manually clear timestamp to simulate missing field
+        fd_manager._directions[0].timestamp = ""
+        recovered = fd_manager.recover_stale_directions()
+        assert recovered == 1
+        assert fd_manager._directions[0].status == "available"
+
+
 # ── Test: Provenance Chain ──
 
 class TestProvenanceChain:

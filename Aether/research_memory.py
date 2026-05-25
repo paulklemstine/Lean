@@ -783,6 +783,27 @@ class FutureDirectionsManager:
                 d.status = "available"
                 d.consumed_by_exp_id = ""
 
+    def recover_stale_directions(self, max_age_hours: int = 24) -> int:
+        """Reset in_progress directions older than max_age_hours back to available."""
+        from datetime import datetime, timezone, timedelta
+        cutoff = datetime.now(timezone.utc) - timedelta(hours=max_age_hours)
+        recovered = 0
+        for d in self._directions:
+            if d.status == "in_progress":
+                try:
+                    ts = datetime.fromisoformat(d.timestamp)
+                    if ts < cutoff:
+                        d.status = "available"
+                        d.consumed_by_exp_id = ""
+                        recovered += 1
+                except (AttributeError, ValueError):
+                    d.status = "available"
+                    d.consumed_by_exp_id = ""
+                    recovered += 1
+        if recovered:
+            self._save()
+        return recovered
+
     def adjust_direction_quality_feedback(
         self, domain: str, quality_score: float, proof_quality: str
     ) -> None:

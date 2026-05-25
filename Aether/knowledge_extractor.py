@@ -745,15 +745,26 @@ Research mode: {concept.research_mode}
 
         return dir_path
 
-    async def _dispatch_to_aristotle(self, job: ResearchJob) -> str:
-        """Dispatch the job to Aristotle and return project_id."""
+    async def _dispatch_to_aristotle(self, job: ResearchJob, max_retries: int = 2) -> str:
+        """Dispatch the job to Aristotle with retry on transient failures."""
         from aristotlelib import Project
 
-        project = await Project.create_from_directory(
-            prompt=job.prompt,
-            project_dir=str(job.project_dir),
-        )
-        return project.project_id
+        last_error = None
+        for attempt in range(max_retries + 1):
+            try:
+                project = await Project.create_from_directory(
+                    prompt=job.prompt,
+                    project_dir=str(job.project_dir),
+                )
+                return project.project_id
+            except Exception as e:
+                last_error = e
+                if attempt < max_retries:
+                    wait = 5 * (attempt + 1)
+                    print(f"[Dispatch] Attempt {attempt+1}/{max_retries+1} failed: {e}, retrying in {wait}s...")
+                    await asyncio.sleep(wait)
+
+        raise last_error
 
     # ==================================================================
     # Phase 3: AWAIT — Poll Aristotle for completion

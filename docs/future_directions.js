@@ -394,10 +394,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "f2dbfba5",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:26:39.059352+00:00"
   },
   {

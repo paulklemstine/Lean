@@ -78,6 +78,12 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int) -> None:
 
     # 1. Poll inflight jobs
     extractor._load_inflight()
+
+    # Recover stale in_progress directions (e.g., from crashed ticks)
+    recovered = extractor.fd_manager.recover_stale_directions()
+    if recovered:
+        print(f"[Tick] Recovered {recovered} stale direction(s)")
+
     inflight_count = len(extractor.inflight)
     print(f"[Tick] {inflight_count} inflight jobs")
 
@@ -140,11 +146,11 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int) -> None:
                     extractor.inflight[job.project_id] = job
                     print(f"[Tick] Dispatched {job.project_id[:8]}: {job.concept.title[:60]}")
                 else:
-                    print(f"[Tick] Dispatch failed for {job.concept.title[:60]}")
-                    break
+                    extractor._release_direction(job)
+                    print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
             except Exception as e:
-                print(f"[Tick] Dispatch error: {e}")
-                break
+                extractor._release_direction(job)
+                print(f"[Tick] Dispatch error: {e}, direction released")
         extractor._save_inflight()
     else:
         print(f"[Tick] No dispatch slots ({current_inflight}/{max_inflight} inflight)")
