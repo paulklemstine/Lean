@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_2_tropical_kernel_dimension_formula.json",
+    "title": "Tropical Graph Hodge Theory: A Kernel Dimension Formula",
+    "domain": "Tropical Linear Algebra / Combinatorial Hodge Theory",
+    "date": "2026-05-25T03:05:32Z",
+    "exp_id": "fd2f08b2",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_4_efficient_sampling_from_lorentzian_cer.json",
     "title": "Efficient Sampling from Lorentzian Certificates: Spectral Gap, Log-Concavity, and Tropical Diameter",
     "domain": "Algebraic Combinatorics / Probability Theory / Tropical Geometry",
@@ -186,6 +195,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Combinatorial Optimization / Hypergraph Theory"
   },
+  "direction_2_tropical_kernel_dimension_formula.json": {
+    "title": "Tropical Graph Hodge Theory: A Kernel Dimension Formula",
+    "exp_id": "fd2f08b2",
+    "source_exp_ids": [
+      "14718e14"
+    ],
+    "domain": "Tropical Linear Algebra / Combinatorial Hodge Theory"
+  },
   "direction_2_tensor_sorted_extension_for_scientific.json": {
     "title": "Tensor-Sorted Rewrite Systems: Certified Symbolic Simplification Preserving Bilinear Energy",
     "exp_id": "c1bdccd8",
@@ -223,7 +240,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -234,7 +251,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 90,
+      "hue": 91,
       "priority_score": 0.6423696551724138,
       "quality": "partial"
     },
@@ -245,7 +262,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.5431629411764707,
       "quality": "partial"
     },
@@ -256,7 +273,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.49450347826086954,
       "quality": "partial"
     },
@@ -267,7 +284,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7684672566371681,
       "quality": "substantial"
     },
@@ -278,7 +295,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.5684834461538462,
       "quality": "partial"
     },
@@ -289,7 +306,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T00:26:30Z",
-      "hue": 90,
+      "hue": 275,
       "priority_score": 0.7077656000000001,
       "quality": "substantial"
     },
@@ -300,7 +317,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.7156088,
       "quality": "substantial"
     },
@@ -311,7 +328,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.707316371361133,
       "quality": "substantial"
     },
@@ -322,7 +339,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T01:35:33Z",
-      "hue": 272,
+      "hue": 275,
       "priority_score": 0.7307101408450705,
       "quality": "substantial"
     },
@@ -333,7 +350,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T02:10:29Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.7655020869565218,
       "quality": "substantial"
     },
@@ -341,12 +358,23 @@ window.PACKAGE_GRAPH = {
       "id": "direction_4_efficient_sampling_from_lorentzian_cer",
       "title": "Efficient Sampling from Lorentzian Certificates: Spectral Gap, Log-Concavity, and Tropical Diameter",
       "domain": "Algebraic Combinatorics / Probability Theory / Tropical Geometry",
-      "primary_domain": "Tropical",
-      "shape": "star",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
       "date": "2026-05-25T02:11:07Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.657708624390244,
       "quality": "partial"
+    },
+    {
+      "id": "direction_2_tropical_kernel_dimension_formula",
+      "title": "Tropical Graph Hodge Theory: A Kernel Dimension Formula",
+      "domain": "Tropical Linear Algebra / Combinatorial Hodge Theory",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T03:05:32Z",
+      "hue": 271,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [
@@ -374,15 +402,15 @@ window.PACKAGE_GRAPH = {
     },
     {
       "domain_a": "Algebra",
-      "domain_b": "Geometry",
+      "domain_b": "Tropical",
       "package_count": 2,
       "strength": 0.7
     },
     {
       "domain_a": "Algebra",
-      "domain_b": "Tropical",
-      "package_count": 1,
-      "strength": 0.5
+      "domain_b": "Geometry",
+      "package_count": 2,
+      "strength": 0.7
     },
     {
       "domain_a": "Geometry",
