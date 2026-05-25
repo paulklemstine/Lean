@@ -110,11 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
             paperDiv.innerHTML = '<p style="color:var(--text-muted)">No research paper provided.</p>';
         }
 
-        // Visualizations (generated images from Python scripts)
-        renderVisualizations('content-visualizations', data.visualizations);
-
         // Interactive HTML demos
         renderInteractiveHTMLDemos('content-interactive-demos', data.interactive_demos);
+
+        // Visualizations (generated images from Python scripts)
+        renderVisualizations('content-visualizations', data.visualizations);
 
         // Algorithms (pseudocode) rendered above demos in the Interactive tab
         renderCodeBlocks('content-algorithms', data.algorithms, 'pseudocode');
