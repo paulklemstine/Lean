@@ -640,6 +640,10 @@ DELIVERABLE 4 — Python Code: Demos, Algorithms
   captures the output as a PNG. If using plotly, assign the figure to a
   variable named `fig` — the system captures fig.to_html(). Each script
   must include a comment header explaining what it visualizes and why.
+  **CRITICAL: Each visualization script MUST be a single, fully self-contained
+  file. Do NOT import from any local modules (algorithms.py, demo.py, etc.).
+  Instead, inline all needed functions and classes directly in the script.
+  The browser runtime (Pyodide) has no access to local .py files.**
 - **Interactive HTML demos** — Produce up to 3 self-contained HTML snippets
   (with inline CSS/JS, no external dependencies) that demonstrate the
   mathematical concepts interactively — sliders, animations, dynamic SVG,
@@ -677,7 +681,7 @@ Requirements:
     "future_directions": "Markdown content...",
     "demos": [ {{ "name": "...", "code": "# Must be 100% self-contained. Do not import local files like 'algorithms'" }} ],
     "algorithms": [ {{ "name": "...", "pseudocode": "...", "code": "executable Python implementation" }} ],
-    "visualizations": [ {{ "name": "...", "code": "# matplotlib or plotly script, self-contained", "description": "What this visualizes" }} ],
+    "visualizations": [ {{ "name": "...", "code": "# Must be 100% self-contained. Do not import local files. Inline all needed functions directly.", "description": "What this visualizes" }} ],
     "interactive_demos": [ {{ "name": "...", "html": "<div>...</div>", "description": "What this demonstrates" }} ],
     "lean_proofs": "Raw lean code..."
   }}

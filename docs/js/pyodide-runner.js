@@ -332,6 +332,40 @@ document.addEventListener('DOMContentLoaded', () => {
         window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
 
         try {
+            // Handle local module imports (algorithms, demo, etc.) by inlining their code
+            let processedCode = code;
+            const localModuleRe = /^(from|import)\s+(algorithms|demo)\b/m;
+            if (localModuleRe.test(processedCode)) {
+                const moduleCode = buildLocalModuleCode(processedCode, window.Aether.currentPackage);
+                const localMods = ['algorithms', 'demo'];
+                const lines = processedCode.split('\n');
+                const filtered = [];
+                let inLocalImport = false;
+                for (const line of lines) {
+                    if (inLocalImport) {
+                        if (line.includes(')')) {
+                            inLocalImport = false;
+                        }
+                        continue;
+                    }
+                    const trimmed = line.trim();
+                    let skip = false;
+                    for (const mod of localMods) {
+                        if (trimmed.startsWith('from ' + mod + ' import ') || trimmed.startsWith('import ' + mod)) {
+                            skip = true;
+                            if (trimmed.includes('(') && !trimmed.includes(')')) {
+                                inLocalImport = true;
+                            }
+                            break;
+                        }
+                    }
+                    if (!skip) {
+                        filtered.push(line);
+                    }
+                }
+                processedCode = moduleCode + '\n' + filtered.join('\n');
+            }
+
             // Auto-detect and load all packages from the code imports
             // Build the full wrapped code first so loadPackagesFromImports can scan it
             let fullCode;
@@ -340,7 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
 import plotly.io as pio
 import plotly.graph_objects as go
 
-${code}
+${processedCode}
 
 _viz_figs_ = [obj for obj in globals().values() if isinstance(obj, go.Figure)]
 if _viz_figs_:
@@ -358,7 +392,7 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
-${code}
+${processedCode}
 
 buf = io.BytesIO()
 plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
