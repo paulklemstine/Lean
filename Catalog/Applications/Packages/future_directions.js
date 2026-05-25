@@ -394,10 +394,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2dbfba5",
     "timestamp": "2026-05-25T00:26:39.059352+00:00"
   },
   {
@@ -694,10 +694,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 0.99,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "ee9415a3",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.484135+00:00"
   },
   {
