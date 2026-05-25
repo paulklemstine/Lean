@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_5_chip_firing_correspondence.json",
+    "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
+    "domain": "Tropical Geometry / Combinatorial Algebraic Geometry",
+    "date": "2026-05-25T14:24:33Z",
+    "exp_id": "97def267",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_2_higher_order_log_concavity_and_partiti.json",
     "title": "Higher-Order Log-Concavity: A Recursive Hierarchy for Discrete Sequences",
     "domain": "Algebraic Combinatorics / Discrete Convexity",
     "date": "2026-05-25T14:24:11Z",
     "exp_id": "56c2f88c",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.747059509202454,
+    "quality": "substantial"
   },
   {
     "filename": "direction_3_compositional_witness_synthesis_algori.json",
@@ -49,6 +58,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Pythagorean Number Theory"
   },
+  "direction_5_chip_firing_correspondence.json": {
+    "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
+    "exp_id": "97def267",
+    "source_exp_ids": [
+      "fd2f08b2"
+    ],
+    "domain": "Tropical Geometry / Combinatorial Algebraic Geometry"
+  },
   "direction_2_higher_order_log_concavity_and_partiti.json": {
     "title": "Higher-Order Log-Concavity: A Recursive Hierarchy for Discrete Sequences",
     "exp_id": "56c2f88c",
@@ -70,7 +87,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 270,
+      "hue": 314,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -81,7 +98,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 292,
+      "hue": 271,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -92,11 +109,41 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 271,
+      "hue": 92,
+      "priority_score": 0.747059509202454,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_chip_firing_correspondence",
+      "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
+      "domain": "Tropical Geometry / Combinatorial Algebraic Geometry",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T14:24:33Z",
+      "hue": 112,
       "priority_score": null,
       "quality": "unrated"
     }
   ],
   "edges": [],
-  "domain_bridges": []
+  "domain_bridges": [
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Geometry",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    }
+  ]
 };
