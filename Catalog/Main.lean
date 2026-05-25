@@ -1201,6 +1201,7 @@ import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.KnuthBendixCompletion
 import FINAL.Pythagorean.LagrangeFourSquare
 import FINAL.Pythagorean.LorentzianRecognitionComplete
+import FINAL.Pythagorean.LorentzianSpectralGap
 import FINAL.Pythagorean.MConvexBridge
 import FINAL.Pythagorean.MConvexOptimization
 import FINAL.Pythagorean.ManySortedConvergentRewriteOptimizer
@@ -1361,7 +1362,6 @@ import FINAL.Tropical.GaugeInvariance
 import FINAL.Tropical.GumbelFoundations
 import FINAL.Tropical.HardnessAmplification
 import FINAL.Tropical.HashInversion
-import FINAL.Tropical.HigherRank
 import FINAL.Tropical.HodgeCorrespondence
 import FINAL.Tropical.HorizonStability
 import FINAL.Tropical.HybridArgument

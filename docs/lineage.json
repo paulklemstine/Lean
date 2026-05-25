@@ -7,7 +7,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "direction_3_compositional_witness_synthesis_algori",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "direction_2_higher_order_log_concavity_and_partiti",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "direction_5_chip_firing_correspondence",
@@ -43,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "yang_mills_mass_gap",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_3_generation_certificates_for_matrix_gro",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "direction_3_concentration_of__on_random_hypergraph",
@@ -70,20 +70,38 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 89
+      "hue": 91
+    },
+    {
+      "id": "direction_1_tight_spectral_gap_via_lorentzian_stru",
+      "title": "Tight Spectral Gap via Lorentzian Structure",
+      "domain": "Pythagorean — Lorentzian Polynomials and Markov Chain Mixing",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T16:05:19Z",
+      "hue": 95
+    },
+    {
+      "id": "direction_4_relative_tropical_hodge_theorem",
+      "title": "Tropical Hodge Theory for Graphs: Kernel Characterization, Incidence Factorization, and Betti Numbers",
+      "domain": "Tropical Algebra / Graph Theory / Algebraic Topology",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T16:05:40Z",
+      "hue": 91
     }
   ],
   "edges": [],
   "domain_bridges": [
     {
       "domain_a": "Algebra",
-      "domain_b": "Geometry",
-      "package_count": 1,
-      "strength": 0.5
+      "domain_b": "Tropical",
+      "package_count": 2,
+      "strength": 0.7
     },
     {
       "domain_a": "Algebra",
-      "domain_b": "Tropical",
+      "domain_b": "Geometry",
       "package_count": 1,
       "strength": 0.5
     },

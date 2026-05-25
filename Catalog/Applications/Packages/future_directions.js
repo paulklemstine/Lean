@@ -819,6 +819,47 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T14:24:15.372699+00:00"
   },
   {
+    "id": "fd_0863",
+    "title": "Direction 1: Formal Baker-Norine Riemann-Roch Theorem",
+    "description": "**Conjecture**: The full Baker-Norine Riemann-Roch theorem for graphs \u2014 $r(D) - r(K - D) = \\deg(D) - g + 1$ \u2014 can be formalized in Lean 4 using the verified Laplacian infrastructure from `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean` and `Catalog/Pythagorean/TropicalBridge/Theorems.lean`, by building the rank function $r(D)$ and the canonical divisor $K$ on top of the existing `GraphDivisor` and `linearEquiv` definitions.\n\n**Test**: \n1. Define the rank function $r(D) = \\max\\{k : \\forall E \\geq 0, \\deg(E) = k \\implies D - E \\sim E' \\geq 0 \\text{ for some } E'\\}$\n2. Define the canonical divisor $K(v) = \\deg(v) - 2$\n3. Prove $r(D) - r(K - D) = \\deg(D) - g + 1$ by formalizing Dhar's burning algorithm for q-reduced divisor computation\n4. Falsification: find any graph and divisor where the formula fails (impossible if correct, but the formalization itself certifies this)\n\n**Impact**: First complete formal verification of the Baker-Norine theorem. Would be a landmark result for formalized combinatorics, comparable in significance to the formal proof of the four-color theorem.\n\n**Catalog References**: \n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `linearEquiv_degree_invariant`, `principalDivisor_degree_zero`\n- `Catalog/Pythagorean/TropicalBridge/Theorems.lean`: `rootedSubsetDivisor_total`, `graphLaplacian_row_sum_zero`\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `firingIndependentOn`\n\n**Proof Strategy**: \n1. Formalize Dhar's burning algorithm as a certified computation\n2. Prove existence and uniqueness of q-reduced representatives using `chipFire_degree_preserved`\n3. Define rank via the effective divisor lattice\n4. Prove RR by induction on degree, using the lattice structure\n\n**Domain Bridges**: Algebraic geometry (Riemann-Roch on curves) \u2194 Combinatorics (chip-firing) \u2194 Formal methods (machine verification)\n\n**Lineage**: Extends `chipFire_degree_preserved`, `linearEquiv_degree_invariant` from this work\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2606 \u2014 Substantial formalization effort but mathematically well-understood; the main challenge is infrastructure, not insight.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97def267",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T14:24:37.080917+00:00"
+  },
+  {
+    "id": "fd_0864",
+    "title": "Direction 2: Certified Jacobian Group Computation via Tropical Determinant",
+    "description": "**Conjecture**: For any connected graph $G$ with base vertex $q$, the order of the Jacobian group equals the tropical permanent (min-plus permanent) of the reduced Laplacian: $|\\text{Jac}(G)| = \\text{trop-det}(L^{(q)})$, where the tropical determinant coincides with the classical determinant for M-matrices (matrices with nonpositive off-diagonal entries and positive row sums).\n\n**Test**:\n1. Implement certified Smith Normal Form computation in Lean 4\n2. Compute $|\\text{Jac}(G)|$ via SNF for all connected graphs on \u2264 10 vertices\n3. Compare with the tropical permanent computation\n4. Falsification: find a graph where the tropical permanent differs from $\\det(L^{(q)})$ (this would disprove the M-matrix tropical determinant conjecture)\n\n**Impact**: Would provide a purely tropical algorithm for Jacobian computation, potentially faster than SNF for sparse graphs. Connects tropical linear algebra to Kirchhoff's theorem in a new way.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `laplacianPrincipalMinor`\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `graphLap_diagonal_eq_degree`, `graphLap_off_diagonal_nonpos`\n\n**Proof Strategy**: Use the fact that the graph Laplacian's reduced form is an M-matrix, for which the tropical permanent (computed via optimal assignment) equals the classical determinant. The key lemma is that the Laplacian's off-diagonal nonpositivity (`graphLap_off_diagonal_nonpos`) ensures the M-matrix property.\n\n**Domain Bridges**: Tropical geometry (tropical determinant) \u2194 Algebraic graph theory (Kirchhoff's theorem) \u2194 Optimization (assignment problem)\n\n**Lineage**: Builds on `graphLap_off_diagonal_nonpos`, `graphLap_diagonal_eq_degree`\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The M-matrix result is known; the novelty is the formal verification and tropical algorithmic pathway.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "97def267",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T14:24:37.100737+00:00"
+  },
+  {
     "id": "fd_0865",
     "title": "Direction 3: Abelian Sandpile Criticality via Laplacian Energy Minimization",
     "description": "**Conjecture**: The critical configurations of the abelian sandpile model on a graph $G$ are exactly the energy-minimizing representatives within each linear equivalence class, where energy is the Laplacian quadratic form $E(D) = \\sum_{v,w} D(v) L^+(v,w) D(w)$ (with $L^+$ the Moore-Penrose pseudoinverse). Moreover, the number of critical configurations equals $\\det(L^{(q)})$, which equals the Jacobian order.\n\n**Test**:\n1. Implement the energy functional and verify that q-reduced divisors minimize it within each equivalence class, for all connected graphs on \u2264 7 vertices\n2. Count critical configurations via the burning algorithm and verify equality with $\\det(L^{(q)})$\n3. Measure the spectral gap of the chip-firing Markov chain and verify it equals the Fiedler eigenvalue of the Laplacian\n4. Falsification: find a graph where a q-reduced divisor is NOT the energy minimizer (would contradict the potential theory)\n\n**Impact**: Provides a rigorous energy-theoretic foundation for self-organized criticality. The connection between chip-firing dynamics and Laplacian spectral theory could explain why sandpile models exhibit power-law avalanche distributions.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `chipFire_degree_preserved`, `principalDivisor_degree_zero`\n- `Catalog/Pythagorean/ResistanceDefect/Defs.lean`: resistance distance definitions (if available)\n\n**Proof Strategy**: Show that the Laplacian pseudoinverse energy is a convex function on each linear equivalence class, with the q-reduced divisor as the unique minimizer. Use `chipFire_degree_preserved` to show that chip-firing preserves the constraint set, and the positive semidefiniteness of $L$ to show convexity.\n\n**Domain Bridges**: Statistical mechanics (self-organized criticality, Bak-Tang-Wiesenfeld) \u2194 Spectral graph theory (Fiedler eigenvalue) \u2194 Chip-firing (q-reduced divisors)\n\n**Lineage**: Extends `chipFire_degree_preserved`, connects to sandpile physics\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2606 \u2014 Mathematically novel connection between energy minimization and q-reduction; computational verification is straightforward but the formal proof requires developing pseudoinverse theory.\n\n---",
@@ -860,66 +901,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T14:24:37.164817+00:00"
   },
   {
-    "id": "fd_0843",
-    "title": "Direction 4: Relative Tropical Hodge Theorem",
-    "description": "**Conjecture**: The tropical kernel of L_S is naturally isomorphic (as a tropical semi-module) to a relative tropical homology group:\n\n  ker_trop(L_S) \u2245 H\u2081^trop(G[S \u222a {q}], {q})\n\nwhere H\u2081^trop denotes the first tropical homology of the pair (G[S \u222a {q}], {q}), defined via a tropical chain complex using the incidence matrix of the graph.\n\n**Test**: Define the tropical chain complex C\u2080 \u2192 C\u2081 for the graph G[S \u222a {q}] with boundary map given by the incidence matrix. Compute H\u2081^trop(G[S \u222a {q}], {q}) = ker(\u2202\u2081^trop) / im(\u2202\u2080^trop) for all connected graphs on n \u2264 6. Verify isomorphism with the tropical kernel of L_S.\n\n**Impact**: This would be the foundational theorem connecting tropical linear algebra to tropical homology theory. It would justify calling the dimension formula a \"Hodge theorem\" by providing the precise homological interpretation. Opens the door to higher-dimensional tropical Hodge theory on simplicial complexes.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedSubgraph, tropicalKernel), `Pythagorean/TropicalBridge/TropicalHodge.lean` (structural theorems).\n\n**Proof Strategy**: Factor the Laplacian as L = \u2202\u1d40\u2202 (incidence factorization) in the tropical setting. Show that the tropical kernel of L_S corresponds to tropical 1-cycles that are boundaries from the q-side, i.e., relative 1-cycles. The cycle generators correspond to absolute 1-cycles (homology of G[S]), while the component generators correspond to relative 0-boundaries (paths from q to components).\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic topology (simplicial homology), combinatorics \u2194 algebraic geometry (tropical varieties).\n\n**Lineage**: Provides the theoretical foundation for all other directions, upgrading the dimension formula from a counting theorem to a structural isomorphism.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 would establish tropical Hodge theory as a subject)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "1a0c77c0",
-    "timestamp": "2026-05-25T03:05:35.321656+00:00"
-  },
-  {
-    "id": "fd_0863",
-    "title": "Direction 1: Formal Baker-Norine Riemann-Roch Theorem",
-    "description": "**Conjecture**: The full Baker-Norine Riemann-Roch theorem for graphs \u2014 $r(D) - r(K - D) = \\deg(D) - g + 1$ \u2014 can be formalized in Lean 4 using the verified Laplacian infrastructure from `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean` and `Catalog/Pythagorean/TropicalBridge/Theorems.lean`, by building the rank function $r(D)$ and the canonical divisor $K$ on top of the existing `GraphDivisor` and `linearEquiv` definitions.\n\n**Test**: \n1. Define the rank function $r(D) = \\max\\{k : \\forall E \\geq 0, \\deg(E) = k \\implies D - E \\sim E' \\geq 0 \\text{ for some } E'\\}$\n2. Define the canonical divisor $K(v) = \\deg(v) - 2$\n3. Prove $r(D) - r(K - D) = \\deg(D) - g + 1$ by formalizing Dhar's burning algorithm for q-reduced divisor computation\n4. Falsification: find any graph and divisor where the formula fails (impossible if correct, but the formalization itself certifies this)\n\n**Impact**: First complete formal verification of the Baker-Norine theorem. Would be a landmark result for formalized combinatorics, comparable in significance to the formal proof of the four-color theorem.\n\n**Catalog References**: \n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `linearEquiv_degree_invariant`, `principalDivisor_degree_zero`\n- `Catalog/Pythagorean/TropicalBridge/Theorems.lean`: `rootedSubsetDivisor_total`, `graphLaplacian_row_sum_zero`\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `firingIndependentOn`\n\n**Proof Strategy**: \n1. Formalize Dhar's burning algorithm as a certified computation\n2. Prove existence and uniqueness of q-reduced representatives using `chipFire_degree_preserved`\n3. Define rank via the effective divisor lattice\n4. Prove RR by induction on degree, using the lattice structure\n\n**Domain Bridges**: Algebraic geometry (Riemann-Roch on curves) \u2194 Combinatorics (chip-firing) \u2194 Formal methods (machine verification)\n\n**Lineage**: Extends `chipFire_degree_preserved`, `linearEquiv_degree_invariant` from this work\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2606 \u2014 Substantial formalization effort but mathematically well-understood; the main challenge is infrastructure, not insight.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "97def267",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T14:24:37.080917+00:00"
-  },
-  {
-    "id": "fd_0864",
-    "title": "Direction 2: Certified Jacobian Group Computation via Tropical Determinant",
-    "description": "**Conjecture**: For any connected graph $G$ with base vertex $q$, the order of the Jacobian group equals the tropical permanent (min-plus permanent) of the reduced Laplacian: $|\\text{Jac}(G)| = \\text{trop-det}(L^{(q)})$, where the tropical determinant coincides with the classical determinant for M-matrices (matrices with nonpositive off-diagonal entries and positive row sums).\n\n**Test**:\n1. Implement certified Smith Normal Form computation in Lean 4\n2. Compute $|\\text{Jac}(G)|$ via SNF for all connected graphs on \u2264 10 vertices\n3. Compare with the tropical permanent computation\n4. Falsification: find a graph where the tropical permanent differs from $\\det(L^{(q)})$ (this would disprove the M-matrix tropical determinant conjecture)\n\n**Impact**: Would provide a purely tropical algorithm for Jacobian computation, potentially faster than SNF for sparse graphs. Connects tropical linear algebra to Kirchhoff's theorem in a new way.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `laplacianPrincipalMinor`\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `graphLap_diagonal_eq_degree`, `graphLap_off_diagonal_nonpos`\n\n**Proof Strategy**: Use the fact that the graph Laplacian's reduced form is an M-matrix, for which the tropical permanent (computed via optimal assignment) equals the classical determinant. The key lemma is that the Laplacian's off-diagonal nonpositivity (`graphLap_off_diagonal_nonpos`) ensures the M-matrix property.\n\n**Domain Bridges**: Tropical geometry (tropical determinant) \u2194 Algebraic graph theory (Kirchhoff's theorem) \u2194 Optimization (assignment problem)\n\n**Lineage**: Builds on `graphLap_off_diagonal_nonpos`, `graphLap_diagonal_eq_degree`\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The M-matrix result is known; the novelty is the formal verification and tropical algorithmic pathway.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "97def267",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T14:24:37.100737+00:00"
-  },
-  {
     "id": "fd_0868",
     "title": "Direction 1: Reflection Positivity and Perron-Frobenius for the Transfer Matrix",
     "description": "**Conjecture:** The Wilson action on a time-reflected lattice satisfies Osterwalder-Schrader reflection positivity, implying the transfer matrix T is a positive compact operator on L\u00b2(G^(L^(d-1))). By the Perron-Frobenius theorem for positive operators, the largest eigenvalue of T is simple and isolated, yielding a spectral gap.\n\n**Test:** Formalize reflection positivity for the Wilson action on a 2D lattice with gauge group SU(2). Construct the transfer matrix explicitly for L = 2 (a 2\u00d72 spatial lattice) and verify computationally that it has a unique largest eigenvalue with gap \u0394 > 0 for \u03b2 \u2208 [0.1, 5.0].\n\n**Impact:** This would establish the mass gap for finite-volume lattice Yang-Mills theory with any compact gauge group, reducing the Millennium Prize Problem to the continuum limit (a question about uniformity and convergence).\n\n**Catalog References:**\n- `Physics/YangMillsMassGap.lean`: `HasSpectralGap`, `spectral_gap_of_positive_excitations`\n- `Physics/SpectralGap.lean`: `finite_yang_mills_mass_gap_of_sorted`\n\n**Proof Strategy:** (A) Define the reflection operator \u0398 on the lattice Hilbert space. (B) Prove \u0398-positivity of the Wilson action using the convexity of the exponential function and gauge invariance. (C) Apply abstract Perron-Frobenius (available in Mathlib for finite-dimensional operators, needs extension to compact operators). (D) Use `spectral_gap_eq_first_excitation` to certify the resulting gap.\n\n**Domain Bridges:** Quantum field theory \u2192 Functional analysis (compact operator theory) \u2192 Probability theory (reflection positivity is a form of FKG inequality)\n\n**Lineage:** Extends `spectral_gap_eq_first_excitation` and `gap_monotone_coupling` to infinite-dimensional transfer matrices.\n\n**Ambition:** Grand challenge \u2014 would constitute a major step toward the Millennium Prize.\n\n---",
@@ -933,31 +914,12 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "6a88b92d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T15:29:21.811130+00:00"
-  },
-  {
-    "id": "fd_0869",
-    "title": "Direction 2: Character Expansion and Strong Coupling Mass Gap",
-    "description": "**Conjecture:** For any compact simple Lie group G and sufficiently small coupling \u03b2, the mass gap of the lattice Yang-Mills transfer matrix equals:\n\n$$\\Delta(\\beta) = -\\ln\\left(\\frac{\\beta \\cdot \\dim(\\rho_{\\text{fund}})}{|G|}\\right) + O(\\beta^2)$$\n\nwhere \u03c1_fund is the fundamental representation.\n\n**Test:** Verify this formula numerically for SU(2) (|G| computed via Haar measure normalization, dim(fund) = 2) at \u03b2 = 0.1, 0.2, ..., 1.0 by comparing with exact diagonalization of the transfer matrix on a 2\u00d72 lattice.\n\n**Impact:** Would provide the first rigorous mass gap result for non-abelian gauge theories in any dimension, extending Borgs-Seiler from abelian to non-abelian.\n\n**Catalog References:**\n- `Physics/YangMillsMassGap.lean`: `casimir_spectral_gap`, `mass_gap_lower_bound_certifies`\n- `Physics/SpectralGap.lean`: `gauge_energy_minimizer_yields_mass_gap`\n\n**Proof Strategy:** (A) Expand exp(-\u03b2\u00b7S) in characters using Peter-Weyl. (B) Show the transfer matrix kernel is dominated by the trivial character at strong coupling. (C) Bound the contribution of non-trivial representations using Casimir eigenvalue bounds (`casimir_spectral_gap`). (D) Apply `spectral_gap_perturbation_stability` to control error terms.\n\n**Domain Bridges:** Gauge theory \u2192 Representation theory (Peter-Weyl theorem) \u2192 Combinatorics (cluster expansion)\n\n**Lineage:** Builds directly on `casimir_spectral_gap` and `rep_theoretic_gap_bound`.\n\n**Ambition:** Solid extension \u2014 uses established techniques (cluster expansion) with our certified infrastructure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6a88b92d",
-    "consumed_by_exp_id": "a9352256",
-    "timestamp": "2026-05-25T15:29:21.834825+00:00"
   },
   {
     "id": "fd_0870",
@@ -972,7 +934,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "6a88b92d",
@@ -991,7 +953,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "6a88b92d",
@@ -1011,12 +973,127 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "6a88b92d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T15:29:21.893190+00:00"
+  },
+  {
+    "id": "fd_0873",
+    "title": "Direction 1: Certificate Density Asymptotics via the Prime Polynomial Theorem",
+    "description": "**Conjecture:** For fixed prime power q and n \u2192 \u221e, the certificate density in GL_n(F_q) satisfies \u03b4_n(q) = 1/n + O(q^{-n/2}/n), matching the density of irreducible monic polynomials of degree n over F_q.\n\n**Test:** Compute certificate densities for GL_n(F_q) with n = 2, 3, 4, 5, 6 and q = 2, 3, 4, 5, 7 using sampling (for larger groups) and exact enumeration (for small ones). Fit the data to \u03b4_n(q) = c/n + d/n\u00b2 and extract the constants. If c deviates significantly from 1, the conjecture fails.\n\n**Impact:** This would establish the first quantitative certificate-density theorem for matrix groups, providing the key input for generation probability lower bounds. It would also connect the certificate framework to analytic number theory over function fields.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (Theorem 4: `generation_lower_bound_of_certificate_system`), `Algebra/SymmGroupGen/Basic.lean` (analogous density bounds for S_n).\n\n**Proof Strategy:** Adapt the prime polynomial theorem (Gauss's formula: the number of monic irreducible polynomials of degree n over F_q equals (1/n) \u03a3_{d|n} \u03bc(n/d) q^d) to count characteristic polynomials rather than arbitrary polynomials. The main technical challenge is showing that the map from GL_n(F_q) to monic degree-n polynomials via the characteristic polynomial has approximately uniform fibers.\n\n**Domain Bridges:** Analytic number theory over function fields; random matrix theory (the characteristic polynomial of a random matrix over F_q has an approximately uniform distribution over monic polynomials).\n\n**Lineage:** Builds directly on Theorem 4 and the computational experiments in `demo.py`.\n\n**Ambition:** Solid extension. The conjecture is strongly supported by data and the proof strategy is well-understood, though executing it formally may require substantial infrastructure.\n\n**The key insight is** that the characteristic polynomial map from GL_n(F_q) to the space of monic degree-n polynomials with nonzero constant term is \"close to uniform,\" so the density of irreducible characteristic polynomials closely tracks the density of irreducible polynomials.\n\n**Why now?** Mathlib's recent development of polynomial irreducibility theory and finite field arithmetic provides the formal tools needed for the first time.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "44ebbbfd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T15:29:44.816206+00:00"
+  },
+  {
+    "id": "fd_0874",
+    "title": "Direction 2: Extension to SL_n, Sp_{2n}, and Orthogonal Groups",
+    "description": "**Conjecture:** For each family of classical groups G_n(F_q) (SL_n, Sp_{2n}, O_n^\u00b1, U_n), there exists a certificate predicate C_n with density \u0398(1/n) such that certified elements are sufficient for generation with probability 1 - O(1/q).\n\n**Test:** For each family at small parameters (n = 2, 3; q = 2, 3, 5):\n- Define the appropriate certificate (e.g., for SL_n: irreducible charpoly with det = 1; for Sp_{2n}: irreducible charpoly that is self-reciprocal).\n- Enumerate group elements and compute certificate density.\n- Test generation by certified pairs.\n- If any family has density o(1/n), the conjecture fails for that family.\n\n**Impact:** Would provide the first unified certificate framework across all classical groups, enabling certified random generation algorithms for the most important families of finite groups in algebra, physics, and computer science.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (all theorems), `Algebra/SymmetricGroupGeneration/Core.lean`.\n\n**Proof Strategy:** For SL_n: restrict to matrices with determinant 1 and irreducible charpoly. The irreducible action theorem (Theorem 1) applies unchanged. The density question reduces to counting irreducible polynomials with prescribed constant term.\n\nFor Sp_{2n}: the certificate should involve the characteristic polynomial being irreducible and self-reciprocal (palindromic). The invariant subspace theorem needs to be strengthened to account for the symplectic form.\n\n**Domain Bridges:** Symplectic geometry (Hamiltonian dynamics); quantum information (random Clifford circuits use Sp_{2n}(F_2)); algebraic topology (monodromy groups in Lefschetz theory).\n\n**Lineage:** Direct generalization of the current GL_n framework.\n\n**Ambition:** Grand challenge for the full conjecture; solid extension for SL_n alone.\n\n**The key insight is** that the certificate architecture is group-independent \u2014 only the certificate predicate and the density estimate change from one classical group to another. The abstract `GenerationCertificateSystem` structure already anticipates this.\n\n**Why now?** The current work establishes the architectural pattern; extending to SL_n is a natural first step that could be completed in a single research cycle.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "44ebbbfd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T15:29:44.838185+00:00"
+  },
+  {
+    "id": "fd_0875",
+    "title": "Direction 3: Black-Box Group Recognition via Characteristic Polynomial Certificates",
+    "description": "**Conjecture:** There exists a polynomial-time black-box algorithm that, given oracle access to a group G isomorphic to some GL_n(F_q) (with n, q unknown), determines n and q with probability \u2265 1 - \u03b5 using O(log(1/\u03b5)) random elements and characteristic polynomial computations.\n\n**Test:** Implement the following algorithm and test on GL_n(F_q) for n = 2, ..., 6 and q = 2, 3, 5, 7:\n1. Draw random elements g\u2081, ..., g_k.\n2. Compute characteristic polynomials of g_i.\n3. Find the degree n as the polynomial degree.\n4. Estimate q from the coefficient distribution.\n5. Verify by testing irreducibility rates against the prime polynomial theorem.\n\nIf the algorithm fails to identify n, q correctly for > 10% of trials with k = 20, the conjecture is too optimistic.\n\n**Impact:** Would provide a rigorous foundation for black-box group algorithms used in computational algebra systems like GAP and Magma. Current algorithms are heuristic; this would be the first formally certified version.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (certificate testing infrastructure).\n\n**Proof Strategy:** The degree of the characteristic polynomial immediately reveals n. The field size q can be recovered from the distribution of roots: the fraction of charpoly values that are split (all roots in F_q) versus irreducible follows a q-dependent distribution.\n\n**Domain Bridges:** Computational algebra (GAP, Magma implementations); cryptography (group-based cryptosystems require group identification); machine learning (learning group structure from samples).\n\n**Lineage:** Applies the certificate testing algorithm (`is_singer_certificate_candidate`) to the recognition problem.\n\n**Ambition:** Grand challenge \u2014 requires both theoretical analysis and robust implementation.\n\n**The key insight is** that the characteristic polynomial of a random matrix encodes enough information about the underlying group to identify it, and the certificate framework provides the theoretical basis for extracting this information.\n\n**Why now?** Black-box group algorithms are increasingly important in computational algebra, but lack formal correctness guarantees. The certificate framework provides the right abstraction level.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "44ebbbfd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T15:29:44.862008+00:00"
+  },
+  {
+    "id": "fd_0876",
+    "title": "Direction 4: Coding Theory \u2014 Optimal Cyclic Codes from Singer Orbits",
+    "description": "**Conjecture:** For every irreducible polynomial f of degree n over F_q, the orbit of e\u2081 under the companion matrix of f generates an [n, n, 1] code (trivially), but the orbit modulo a suitable equivalence relation generates codes with optimal or near-optimal minimum distance.\n\nMore precisely: define the \"Singer code\" C(f, k) as the linear code generated by any k consecutive orbit vectors {A^i v, A^{i+1} v, ..., A^{i+k-1} v}. Then C(f, k) is an [n, k] code whose minimum distance satisfies d \u2265 n - k + 1 (the Singleton bound) when f has certain structural properties.\n\n**Test:** For all irreducible polynomials of degree 4 over F_2 (there are 3), compute the minimum distance of C(f, k) for k = 1, 2, 3 and compare with the Singleton bound. If any code exceeds the bound, there is a bug; if all achieve it, the conjecture holds for these parameters.\n\n**Impact:** Would establish a new connection between Singer cycles and algebraic coding theory, potentially yielding new constructions of MDS codes and near-MDS codes with algebraic structure.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (Theorem 2: `span_orbit_eq_top_of_irreducible`).\n\n**Proof Strategy:** The orbit spanning theorem guarantees that n consecutive orbit vectors span F_q^n. The distance properties depend on the specific polynomial f and its relationship to Reed-Solomon and BCH codes. The companion matrix orbit is closely related to the cyclic structure exploited by BCH codes.\n\n**Domain Bridges:** Error-correcting codes; information theory; distributed storage (regenerating codes); quantum error correction.\n\n**Lineage:** Direct application of Theorem 2 to coding theory.\n\n**Ambition:** Solid extension for the basic construction; grand challenge for optimal distance results.\n\n**The key insight is** that the orbit spanning theorem (Theorem 2) provides the algebraic backbone for cyclic code constructions, and the irreducibility certificate guarantees maximum rate.\n\n**Why now?** Modern coding theory increasingly relies on algebraic constructions with formal guarantees. The orbit spanning theorem provides exactly the kind of structural result needed.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "44ebbbfd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T15:29:44.883156+00:00"
+  },
+  {
+    "id": "fd_0877",
+    "title": "Direction 5: Expander Graphs from Certificate Pairs",
+    "description": "**Conjecture:** For q prime and n \u2265 2, the Cayley graph of GL_n(F_q) with generators {g, g\u207b\u00b9, h, h\u207b\u00b9} where g is a Singer certificate and h has primitive determinant is an \u03b5-expander with \u03b5 \u2264 C/q for an absolute constant C.\n\n**Test:** For GL_2(F_3) and GL_2(F_5), compute the spectral gap of the Cayley graph with certified generators. If the spectral gap is < 0.01, the conjecture is too optimistic.\n\n**Impact:** Would provide a new, algebraically motivated construction of expander graphs with applications to derandomization, network design, and error amplification. The construction is explicit and efficiently computable via the certificate test.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (Theorem 1, generation framework); `Algebra/SymmetricGroupGeneration/Core.lean` (analogous expander results for S_n).\n\n**Proof Strategy:** The Alon-Roichman theorem gives expander properties for random Cayley graphs. The certificate framework strengthens this by showing that certified elements are \"generic enough\" to produce expansion. The key technical input is the Aldous-Diaconis bound on mixing times via representation theory.\n\n**Domain Bridges:** Spectral graph theory; derandomization (pseudorandom generators from expanders); network science (robust network topologies); quantum computing (quantum expanders for error correction).\n\n**Lineage:** Combines the certificate framework with spectral graph theory.\n\n**Ambition:** Grand challenge \u2014 requires deep results from both group theory and spectral theory.\n\n**The key insight is** that the \"no invariant subspace\" property of certified elements translates into the \"no small eigenvalue\" property needed for expansion, via the representation-theoretic characterization of the spectral gap.\n\n**Why now?** Expander graph constructions from groups are well-studied, but the connection to generation certificates is new. The certificate framework provides a natural bridge.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "44ebbbfd",
+    "consumed_by_exp_id": "ad66d851",
+    "timestamp": "2026-05-25T15:29:44.902335+00:00"
+  },
+  {
+    "id": "fd_0869",
+    "title": "Direction 2: Character Expansion and Strong Coupling Mass Gap",
+    "description": "**Conjecture:** For any compact simple Lie group G and sufficiently small coupling \u03b2, the mass gap of the lattice Yang-Mills transfer matrix equals:\n\n$$\\Delta(\\beta) = -\\ln\\left(\\frac{\\beta \\cdot \\dim(\\rho_{\\text{fund}})}{|G|}\\right) + O(\\beta^2)$$\n\nwhere \u03c1_fund is the fundamental representation.\n\n**Test:** Verify this formula numerically for SU(2) (|G| computed via Haar measure normalization, dim(fund) = 2) at \u03b2 = 0.1, 0.2, ..., 1.0 by comparing with exact diagonalization of the transfer matrix on a 2\u00d72 lattice.\n\n**Impact:** Would provide the first rigorous mass gap result for non-abelian gauge theories in any dimension, extending Borgs-Seiler from abelian to non-abelian.\n\n**Catalog References:**\n- `Physics/YangMillsMassGap.lean`: `casimir_spectral_gap`, `mass_gap_lower_bound_certifies`\n- `Physics/SpectralGap.lean`: `gauge_energy_minimizer_yields_mass_gap`\n\n**Proof Strategy:** (A) Expand exp(-\u03b2\u00b7S) in characters using Peter-Weyl. (B) Show the transfer matrix kernel is dominated by the trivial character at strong coupling. (C) Bound the contribution of non-trivial representations using Casimir eigenvalue bounds (`casimir_spectral_gap`). (D) Apply `spectral_gap_perturbation_stability` to control error terms.\n\n**Domain Bridges:** Gauge theory \u2192 Representation theory (Peter-Weyl theorem) \u2192 Combinatorics (cluster expansion)\n\n**Lineage:** Builds directly on `casimir_spectral_gap` and `rep_theoretic_gap_bound`.\n\n**Ambition:** Solid extension \u2014 uses established techniques (cluster expansion) with our certified infrastructure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "6a88b92d",
+    "consumed_by_exp_id": "a9352256",
+    "timestamp": "2026-05-25T15:29:21.834825+00:00"
   },
   {
     "id": "seed_026",
@@ -1121,122 +1198,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:06:34.986047+00:00"
-  },
-  {
-    "id": "fd_0835",
-    "title": "Direction 1: Tight Spectral Gap via Lorentzian Structure",
-    "description": "**Conjecture:** For a degree-d recursively Lorentzian polynomial in n variables, the certificate-guided Markov chain has spectral gap at least \u03a9(1/(d\u00b7n)), improving the current bound of \u03a9(1/n\u00b2).\n\n**Test:** Compute spectral gaps for binomial, Poisson, and hypergeometric distributions (all Lorentzian) for n = 5, 10, 20, 50, 100 and fit the scaling exponent. If the gap scales as \u0398(1/n^\u03b1) with \u03b1 < 1.5, the conjecture is plausible; if \u03b1 \u2248 2, the current bound is tight.\n\n**Impact:** An \u03a9(1/(d\u00b7n)) gap would reduce mixing time from O(n\u00b2 \u00b7 d \u00b7 log n) to O(n \u00b7 d\u00b2 \u00b7 log n), a quadratic speedup that makes certificate-guided sampling practical for large-scale problems.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `spectral_gap_log_concave_lower_bound`, `logConcaveSeq_mul`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy:** Use the reversed Cauchy\u2013Schwarz inequality directly (not just log-concavity) to bound the Dirichlet form. At each certificate node, the reversed CS gives B(e\u2096, e\u2096\u208a\u2081)\u00b2 \u2265 Q(e\u2096)\u00b7Q(e\u2096\u208a\u2081), which provides a *tighter* bound on off-diagonal transition probabilities than the generic log-concavity argument. Induct on certificate depth, using the derivative-descent structure to decompose the Dirichlet form into per-level contributions.\n\n**Domain Bridges:** Probability theory (Markov chain mixing), functional analysis (Poincar\u00e9 inequalities), combinatorial optimization (MCMC convergence)\n\n**Lineage:** Extends `spectral_gap_log_concave_lower_bound` using `lorentzian_reversed_cauchy_schwarz`\n\n**Ambition:** Solid extension \u2014 the techniques are within reach of current methods, and computational evidence strongly supports the conjecture.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "a6eebf63",
-    "timestamp": "2026-05-25T02:11:10.182188+00:00"
-  },
-  {
-    "id": "fd_0873",
-    "title": "Direction 1: Certificate Density Asymptotics via the Prime Polynomial Theorem",
-    "description": "**Conjecture:** For fixed prime power q and n \u2192 \u221e, the certificate density in GL_n(F_q) satisfies \u03b4_n(q) = 1/n + O(q^{-n/2}/n), matching the density of irreducible monic polynomials of degree n over F_q.\n\n**Test:** Compute certificate densities for GL_n(F_q) with n = 2, 3, 4, 5, 6 and q = 2, 3, 4, 5, 7 using sampling (for larger groups) and exact enumeration (for small ones). Fit the data to \u03b4_n(q) = c/n + d/n\u00b2 and extract the constants. If c deviates significantly from 1, the conjecture fails.\n\n**Impact:** This would establish the first quantitative certificate-density theorem for matrix groups, providing the key input for generation probability lower bounds. It would also connect the certificate framework to analytic number theory over function fields.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (Theorem 4: `generation_lower_bound_of_certificate_system`), `Algebra/SymmGroupGen/Basic.lean` (analogous density bounds for S_n).\n\n**Proof Strategy:** Adapt the prime polynomial theorem (Gauss's formula: the number of monic irreducible polynomials of degree n over F_q equals (1/n) \u03a3_{d|n} \u03bc(n/d) q^d) to count characteristic polynomials rather than arbitrary polynomials. The main technical challenge is showing that the map from GL_n(F_q) to monic degree-n polynomials via the characteristic polynomial has approximately uniform fibers.\n\n**Domain Bridges:** Analytic number theory over function fields; random matrix theory (the characteristic polynomial of a random matrix over F_q has an approximately uniform distribution over monic polynomials).\n\n**Lineage:** Builds directly on Theorem 4 and the computational experiments in `demo.py`.\n\n**Ambition:** Solid extension. The conjecture is strongly supported by data and the proof strategy is well-understood, though executing it formally may require substantial infrastructure.\n\n**The key insight is** that the characteristic polynomial map from GL_n(F_q) to the space of monic degree-n polynomials with nonzero constant term is \"close to uniform,\" so the density of irreducible characteristic polynomials closely tracks the density of irreducible polynomials.\n\n**Why now?** Mathlib's recent development of polynomial irreducibility theory and finite field arithmetic provides the formal tools needed for the first time.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T15:29:44.816206+00:00"
-  },
-  {
-    "id": "fd_0874",
-    "title": "Direction 2: Extension to SL_n, Sp_{2n}, and Orthogonal Groups",
-    "description": "**Conjecture:** For each family of classical groups G_n(F_q) (SL_n, Sp_{2n}, O_n^\u00b1, U_n), there exists a certificate predicate C_n with density \u0398(1/n) such that certified elements are sufficient for generation with probability 1 - O(1/q).\n\n**Test:** For each family at small parameters (n = 2, 3; q = 2, 3, 5):\n- Define the appropriate certificate (e.g., for SL_n: irreducible charpoly with det = 1; for Sp_{2n}: irreducible charpoly that is self-reciprocal).\n- Enumerate group elements and compute certificate density.\n- Test generation by certified pairs.\n- If any family has density o(1/n), the conjecture fails for that family.\n\n**Impact:** Would provide the first unified certificate framework across all classical groups, enabling certified random generation algorithms for the most important families of finite groups in algebra, physics, and computer science.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (all theorems), `Algebra/SymmetricGroupGeneration/Core.lean`.\n\n**Proof Strategy:** For SL_n: restrict to matrices with determinant 1 and irreducible charpoly. The irreducible action theorem (Theorem 1) applies unchanged. The density question reduces to counting irreducible polynomials with prescribed constant term.\n\nFor Sp_{2n}: the certificate should involve the characteristic polynomial being irreducible and self-reciprocal (palindromic). The invariant subspace theorem needs to be strengthened to account for the symplectic form.\n\n**Domain Bridges:** Symplectic geometry (Hamiltonian dynamics); quantum information (random Clifford circuits use Sp_{2n}(F_2)); algebraic topology (monodromy groups in Lefschetz theory).\n\n**Lineage:** Direct generalization of the current GL_n framework.\n\n**Ambition:** Grand challenge for the full conjecture; solid extension for SL_n alone.\n\n**The key insight is** that the certificate architecture is group-independent \u2014 only the certificate predicate and the density estimate change from one classical group to another. The abstract `GenerationCertificateSystem` structure already anticipates this.\n\n**Why now?** The current work establishes the architectural pattern; extending to SL_n is a natural first step that could be completed in a single research cycle.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T15:29:44.838185+00:00"
-  },
-  {
-    "id": "fd_0875",
-    "title": "Direction 3: Black-Box Group Recognition via Characteristic Polynomial Certificates",
-    "description": "**Conjecture:** There exists a polynomial-time black-box algorithm that, given oracle access to a group G isomorphic to some GL_n(F_q) (with n, q unknown), determines n and q with probability \u2265 1 - \u03b5 using O(log(1/\u03b5)) random elements and characteristic polynomial computations.\n\n**Test:** Implement the following algorithm and test on GL_n(F_q) for n = 2, ..., 6 and q = 2, 3, 5, 7:\n1. Draw random elements g\u2081, ..., g_k.\n2. Compute characteristic polynomials of g_i.\n3. Find the degree n as the polynomial degree.\n4. Estimate q from the coefficient distribution.\n5. Verify by testing irreducibility rates against the prime polynomial theorem.\n\nIf the algorithm fails to identify n, q correctly for > 10% of trials with k = 20, the conjecture is too optimistic.\n\n**Impact:** Would provide a rigorous foundation for black-box group algorithms used in computational algebra systems like GAP and Magma. Current algorithms are heuristic; this would be the first formally certified version.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (certificate testing infrastructure).\n\n**Proof Strategy:** The degree of the characteristic polynomial immediately reveals n. The field size q can be recovered from the distribution of roots: the fraction of charpoly values that are split (all roots in F_q) versus irreducible follows a q-dependent distribution.\n\n**Domain Bridges:** Computational algebra (GAP, Magma implementations); cryptography (group-based cryptosystems require group identification); machine learning (learning group structure from samples).\n\n**Lineage:** Applies the certificate testing algorithm (`is_singer_certificate_candidate`) to the recognition problem.\n\n**Ambition:** Grand challenge \u2014 requires both theoretical analysis and robust implementation.\n\n**The key insight is** that the characteristic polynomial of a random matrix encodes enough information about the underlying group to identify it, and the certificate framework provides the theoretical basis for extracting this information.\n\n**Why now?** Black-box group algorithms are increasingly important in computational algebra, but lack formal correctness guarantees. The certificate framework provides the right abstraction level.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T15:29:44.862008+00:00"
-  },
-  {
-    "id": "fd_0876",
-    "title": "Direction 4: Coding Theory \u2014 Optimal Cyclic Codes from Singer Orbits",
-    "description": "**Conjecture:** For every irreducible polynomial f of degree n over F_q, the orbit of e\u2081 under the companion matrix of f generates an [n, n, 1] code (trivially), but the orbit modulo a suitable equivalence relation generates codes with optimal or near-optimal minimum distance.\n\nMore precisely: define the \"Singer code\" C(f, k) as the linear code generated by any k consecutive orbit vectors {A^i v, A^{i+1} v, ..., A^{i+k-1} v}. Then C(f, k) is an [n, k] code whose minimum distance satisfies d \u2265 n - k + 1 (the Singleton bound) when f has certain structural properties.\n\n**Test:** For all irreducible polynomials of degree 4 over F_2 (there are 3), compute the minimum distance of C(f, k) for k = 1, 2, 3 and compare with the Singleton bound. If any code exceeds the bound, there is a bug; if all achieve it, the conjecture holds for these parameters.\n\n**Impact:** Would establish a new connection between Singer cycles and algebraic coding theory, potentially yielding new constructions of MDS codes and near-MDS codes with algebraic structure.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (Theorem 2: `span_orbit_eq_top_of_irreducible`).\n\n**Proof Strategy:** The orbit spanning theorem guarantees that n consecutive orbit vectors span F_q^n. The distance properties depend on the specific polynomial f and its relationship to Reed-Solomon and BCH codes. The companion matrix orbit is closely related to the cyclic structure exploited by BCH codes.\n\n**Domain Bridges:** Error-correcting codes; information theory; distributed storage (regenerating codes); quantum error correction.\n\n**Lineage:** Direct application of Theorem 2 to coding theory.\n\n**Ambition:** Solid extension for the basic construction; grand challenge for optimal distance results.\n\n**The key insight is** that the orbit spanning theorem (Theorem 2) provides the algebraic backbone for cyclic code constructions, and the irreducibility certificate guarantees maximum rate.\n\n**Why now?** Modern coding theory increasingly relies on algebraic constructions with formal guarantees. The orbit spanning theorem provides exactly the kind of structural result needed.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T15:29:44.883156+00:00"
-  },
-  {
-    "id": "fd_0877",
-    "title": "Direction 5: Expander Graphs from Certificate Pairs",
-    "description": "**Conjecture:** For q prime and n \u2265 2, the Cayley graph of GL_n(F_q) with generators {g, g\u207b\u00b9, h, h\u207b\u00b9} where g is a Singer certificate and h has primitive determinant is an \u03b5-expander with \u03b5 \u2264 C/q for an absolute constant C.\n\n**Test:** For GL_2(F_3) and GL_2(F_5), compute the spectral gap of the Cayley graph with certified generators. If the spectral gap is < 0.01, the conjecture is too optimistic.\n\n**Impact:** Would provide a new, algebraically motivated construction of expander graphs with applications to derandomization, network design, and error amplification. The construction is explicit and efficiently computable via the certificate test.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (Theorem 1, generation framework); `Algebra/SymmetricGroupGeneration/Core.lean` (analogous expander results for S_n).\n\n**Proof Strategy:** The Alon-Roichman theorem gives expander properties for random Cayley graphs. The certificate framework strengthens this by showing that certified elements are \"generic enough\" to produce expansion. The key technical input is the Aldous-Diaconis bound on mixing times via representation theory.\n\n**Domain Bridges:** Spectral graph theory; derandomization (pseudorandom generators from expanders); network science (robust network topologies); quantum computing (quantum expanders for error correction).\n\n**Lineage:** Combines the certificate framework with spectral graph theory.\n\n**Ambition:** Grand challenge \u2014 requires deep results from both group theory and spectral theory.\n\n**The key insight is** that the \"no invariant subspace\" property of certified elements translates into the \"no small eigenvalue\" property needed for expansion, via the representation-theoretic characterization of the spectral gap.\n\n**Why now?** Expander graph constructions from groups are well-studied, but the connection to generation certificates is new. The certificate framework provides a natural bridge.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T15:29:44.902335+00:00"
   },
   {
     "id": "seed_013",
@@ -1570,6 +1531,105 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "97def267",
     "consumed_by_exp_id": "325d9cdd",
     "timestamp": "2026-05-25T14:24:37.143822+00:00"
+  },
+  {
+    "id": "fd_0878",
+    "title": "Direction 1: Tropical Eigenvalue Theory and the Corrected Hodge Isomorphism",
+    "description": "**Conjecture:** For any connected graph G with classical first Betti number \u03b2\u2081, the tropical eigenspace E_0(L) = {x \u2208 (WithTop \u2115)^n : L \u2297 x = x} has a \"tropical dimension\" (number of generators over the tropical semiring) equal to \u03b2\u2081 + 1. The +1 accounts for the constant vector (the tropical analogue of the kernel of the classical Laplacian).\n\n**Test:** Compute E_0(L) for all connected graphs on n \u2264 7 vertices. Verify that the number of minimal generators of the tropical convex hull of E_0(L) equals \u03b2\u2081 + 1. A single counterexample disproves the conjecture.\n\n**Impact:** This would provide the \"correct\" tropical Hodge isomorphism, replacing the trivial kernel ker_trop(L) = {\u22a4} with a richer eigenspace that genuinely reflects topology. It would complete the tropical Hodge program initiated in this work.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalKernel_eq_top`, `tropicalLaplacian`\n\n**Proof Strategy:** Define the tropical eigenspace as {x : \u2200i, min_j(L_{ij} + x_j) = x_i}. Show that cycle vectors (indicator functions of fundamental cycles, with appropriate tropical values) satisfy this equation. Use the structure theorem for tropical convex sets (Develin-Sturmfels) to count generators.\n\n**Domain Bridges:** Tropical spectral theory \u2194 Classical spectral graph theory \u2194 Random walks on graphs\n\n**Lineage:** Extends `tropicalKernel_eq_top` from this work; builds on Akian-Gaubert-Guterman tropical spectral theory.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish tropical Hodge theory as a self-consistent framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.073627+00:00"
+  },
+  {
+    "id": "fd_0879",
+    "title": "Direction 2: Higher-Dimensional Tropical Homology via Simplicial Complexes",
+    "description": "**Conjecture:** For any finite simplicial complex K of dimension d, the tropical chain complex C_d \u2192 C_{d-1} \u2192 \u00b7\u00b7\u00b7 \u2192 C_0 (with boundary maps defined via min-plus incidence matrices) satisfies \u2202_{k-1} \u2218 \u2202_k = \u22a4-map (the tropical analogue of \u2202\u00b2 = 0). The resulting tropical Betti numbers \u03b2_k^trop satisfy \u03b2_k^trop \u2265 \u03b2_k^classical for all k.\n\n**Test:** Implement the tropical chain complex for the following simplicial complexes: triangulated torus (\u03b2\u2081 = 2, \u03b2\u2082 = 1), triangulated Klein bottle (\u03b2\u2081 = 1, \u03b2\u2082 = 0), and the M\u00f6bius strip (\u03b2\u2081 = 1, \u03b2\u2082 = 0). Verify the Betti number inequality.\n\n**Impact:** Extending tropical homology to higher dimensions would enable analysis of higher-order network structures (simplicial neural networks, higher-order topological data analysis).\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBoundary`, `tropicalBoundary_top`, `tropicalBoundary_preserves_inf`\n\n**Proof Strategy:** Define the higher boundary maps using incidence matrices of simplicial complexes with appropriate signs encoded tropically. The chain complex property \u2202\u00b2 = \u22a4 should follow from the cancellation of pairs in the tropical sum. Use the existing sub-additivity theorem as a template.\n\n**Domain Bridges:** Tropical geometry \u2194 Topological data analysis \u2194 Simplicial neural networks\n\n**Lineage:** Direct extension of the graph-level results in this work to simplicial complexes.\n\n**Ambition:** Solid extension \u2014 the graph case is established; the simplicial extension is natural.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.093108+00:00"
+  },
+  {
+    "id": "fd_0880",
+    "title": "Direction 3: Efficient Algorithms for Tropical Betti Numbers of Large Networks",
+    "description": "**Conjecture:** The tropical Betti number \u03b2\u2081 of a graph can be computed in O(|E| \u03b1(|V|)) time using a tropical variant of the union-find algorithm, where \u03b1 is the inverse Ackermann function. Furthermore, the tropical incidence factorization can be verified in O(|E| \u00b7 max_deg) time rather than the naive O(|V|\u00b2 \u00b7 |E|).\n\n**Test:** Implement the optimized algorithms and benchmark on random Erd\u0151s-R\u00e9nyi graphs G(n, p) for n = 10\u00b3, 10\u2074, 10\u2075 with p = c/n for c \u2208 {1.5, 2, 3, 5}. Measure wall-clock time and verify correctness against the naive implementation.\n\n**Impact:** Making tropical homological computations practical for large-scale networks (social networks, biological networks, internet topology) would bridge tropical algebra to data science.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBetti'`, `tropicalMinPlusMul`\n\n**Proof Strategy:** For \u03b2\u2081: during union-find, count the number of edges that close a cycle (creating a back-edge). Each back-edge contributes +1 to \u03b2\u2081. For factorization: instead of computing the full matrix product, check each off-diagonal entry (i,j) by iterating over the min(deg(i), deg(j)) common edges.\n\n**Domain Bridges:** Algorithmic graph theory \u2194 Network science \u2194 Computational topology\n\n**Lineage:** Builds on the `cycle_rank` algorithm in `algorithms.py`.\n\n**Ambition:** Solid extension \u2014 the algorithms are straightforward given the theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.111821+00:00"
+  },
+  {
+    "id": "fd_0881",
+    "title": "Direction 4: Tropical Sheaf Cohomology and the Chip-Firing Connection",
+    "description": "**Conjecture:** The Jacobian group Jac(G) of a graph G (the cokernel of the integer Laplacian, equivalently the group of chip-firing equivalence classes) embeds into the \"tropical Picard group\" Pic^trop(G), defined as the quotient of the tropical eigenspace E_0(L) by the image of the tropical boundary map. The order |Jac(G)| equals the number of spanning trees of G (Kirchhoff's theorem), and Pic^trop(G) has a natural tropical semimodule structure whose \"rank\" equals \u03b2\u2081.\n\n**Test:** For all graphs on n \u2264 6, compute:\n1. |Jac(G)| via the Matrix-Tree theorem (determinant of any cofactor of L)\n2. The number of spanning trees (should equal |Jac(G)|)\n3. The tropical Picard group Pic^trop(G) and verify the embedding\n\n**Impact:** This would connect tropical Hodge theory to the Baker-Norine program (Riemann-Roch for graphs) and the theory of divisors on tropical curves. It would also connect to algebraic geometry via the tropicalization of the Picard variety.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/Defs.lean`: `graphLaplacian`, `rootedSubsetDivisor`\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalLaplacian`, `tropicalKernelSet`\n- `Pythagorean/TropicalBridge/DefectTheory.lean`: `structuralDefect`\n\n**Proof Strategy:** Define Pic^trop(G) using the tropical eigenspace from Direction 1. Construct the embedding Jac(G) \u2192 Pic^trop(G) by mapping each chip configuration to its tropical valuation. Use the structure theory of tropical modules.\n\n**Domain Bridges:** Tropical geometry \u2194 Algebraic geometry (Picard varieties) \u2194 Number theory (Jacobians)\n\n**Lineage:** Builds on Baker-Norine (2007) and the defect theory in `DefectTheory.lean`.\n\n**Ambition:** Grand challenge \u2014 connecting tropical Hodge theory to chip-firing would unify two major strands of combinatorial algebraic geometry.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T16:05:45.131066+00:00"
+  },
+  {
+    "id": "fd_0882",
+    "title": "Direction 5: Tropical Morse Theory for Network Phase Transitions",
+    "description": "**Conjecture:** For a weighted graph G with edge weights w: E \u2192 \u211d\u208a, define the tropical filtration G_t = {e \u2208 E : w(e) \u2264 t}. The tropical Betti numbers \u03b2_k^trop(G_t) as functions of t satisfy a tropical Morse inequality: the number of \"tropical critical values\" (values of t where \u03b2\u2081 changes) equals \u03b2\u2081(G), and each critical value corresponds to either a cycle creation (\u03b2\u2081 increases by 1) or a component merger (\u03b2\u2080 decreases by 1).\n\n**Test:** For weighted random graphs G(n, p) with uniform edge weights, compute the filtration G_t for t \u2208 [0, 1] and track \u03b2\u2080(G_t) and \u03b2\u2081(G_t). Verify that:\n1. \u03b2\u2081 increases by exactly 1 at each critical value where a cycle closes.\n2. The total number of critical values equals \u03b2\u2081(G) + (c \u2212 1) where c is the initial number of components.\n3. The persistence diagram (birth-death pairs) matches the classical persistence diagram.\n\n**Impact:** This would connect tropical homology to topological data analysis (persistent homology) and provide a tropical framework for studying network phase transitions. It bridges to statistical mechanics via the analogy between filtration threshold and temperature.\n\n**Catalog References:**\n- `Pythagorean/TropicalBridge/TropicalHomology.lean`: `tropicalBetti'`, `tropicalBoundary`\n- `Pythagorean/TropicalBridge/WeightedDefect.lean`: weighted graph infrastructure\n\n**Proof Strategy:** The Morse inequality follows from the observation that each edge addition either closes a cycle or connects components. The tropical structure gives the exact correspondence. The persistence pairing follows from the standard theory of filtered chain complexes applied to the tropical setting.\n\n**Domain Bridges:** Tropical geometry \u2194 Topological data analysis \u2194 Statistical mechanics (phase transitions) \u2194 Symplectic geometry (Morse theory)\n\n**Lineage:** Extends the filtration idea from persistent homology to the tropical setting; builds on the Betti number machinery.\n\n**Ambition:** Grand challenge \u2014 connecting tropical homology to persistent homology would create a new computational tool for data science with tropical algebraic foundations.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "1a0c77c0",
+    "consumed_by_exp_id": "88770e41",
+    "timestamp": "2026-05-25T16:05:45.151288+00:00"
   },
   {
     "id": "seed_032",

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Algebra / Graph Theory / Algebraic Topology",
     "date": "2026-05-25T16:05:40Z",
     "exp_id": "1a0c77c0",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7452328425357874,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_tight_spectral_gap_via_lorentzian_stru.json",
@@ -289,8 +289,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7452328425357874,
+      "quality": "substantial"
     }
   ],
   "edges": [],
