@@ -28,7 +28,7 @@ REPO_ROOT = Path(__file__).parent.parent
 PACKAGES_DIR = REPO_ROOT / "Catalog" / "Applications" / "Packages"
 
 TICK_COUNTER_PATH = Path(__file__).parent / ".aether_workspace" / "tick_counter.json"
-MAX_TICKS_PER_HOUR = 2
+MAX_TICKS_PER_HOUR = 6
 
 
 def check_tick_rate_limit() -> bool:
