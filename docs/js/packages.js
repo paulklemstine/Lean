@@ -110,6 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
             paperDiv.innerHTML = '<p style="color:var(--text-muted)">No research paper provided.</p>';
         }
 
+        // Visualizations (generated images from Python scripts)
+        renderVisualizations('content-visualizations', data.visualizations);
+
+        // Interactive HTML demos
+        renderInteractiveHTMLDemos('content-interactive-demos', data.interactive_demos);
+
         // Algorithms (pseudocode) rendered above demos in the Interactive tab
         renderCodeBlocks('content-algorithms', data.algorithms, 'pseudocode');
         if (window.renderInteractiveDemos) {
@@ -132,6 +138,162 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Scroll to top
         document.getElementById('main-content').scrollTop = 0;
+    }
+
+    function renderVisualizations(containerId, items) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+
+        if (!items || items.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+        container.style.display = '';
+
+        const sectionTitle = document.createElement('h3');
+        sectionTitle.className = 'section-title';
+        sectionTitle.textContent = 'Visualizations';
+        sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed);';
+        container.appendChild(sectionTitle);
+
+        items.forEach((item, idx) => {
+            const card = document.createElement('div');
+            card.className = 'viz-container';
+
+            const header = document.createElement('div');
+            header.className = 'code-header';
+
+            const title = document.createElement('span');
+            title.className = 'code-title';
+            title.textContent = item.name || `Visualization ${idx + 1}`;
+
+            const btnGroup = document.createElement('div');
+            btnGroup.style.cssText = 'display: flex; gap: 8px; align-items: center;';
+
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'source-toggle';
+            toggleBtn.textContent = 'Show Source';
+            toggleBtn.addEventListener('click', () => {
+                const editor = card.querySelector('.code-editor');
+                if (editor.style.display === 'none') {
+                    editor.style.display = '';
+                    toggleBtn.textContent = 'Hide Source';
+                } else {
+                    editor.style.display = 'none';
+                    toggleBtn.textContent = 'Show Source';
+                }
+            });
+
+            const genBtn = document.createElement('button');
+            genBtn.className = 'run-btn viz-generate-btn';
+            if (!window.Aether.pyodideInstance) {
+                genBtn.disabled = true;
+                genBtn.textContent = 'Loading Engine...';
+            } else {
+                genBtn.textContent = 'Generate';
+            }
+
+            btnGroup.appendChild(toggleBtn);
+            btnGroup.appendChild(genBtn);
+            header.appendChild(title);
+            header.appendChild(btnGroup);
+
+            const desc = document.createElement('p');
+            desc.className = 'viz-description';
+            desc.textContent = item.description || '';
+            desc.style.cssText = 'margin: 4px 0 8px; color: var(--text-muted); font-size: 0.9em;';
+
+            const editor = document.createElement('textarea');
+            editor.className = 'code-editor';
+            editor.spellcheck = false;
+            editor.value = item.code || '';
+            editor.style.display = 'none'; // Hidden by default
+
+            const outputContainer = document.createElement('div');
+            outputContainer.className = 'gallery-img-container';
+            outputContainer.style.cssText = 'min-height: 100px; display: flex; align-items: center; justify-content: center; background: var(--bg-secondary, #1e1e2e); border-radius: 8px; margin-top: 8px;';
+            outputContainer.innerHTML = '<span style="color:var(--text-muted)">Click "Generate" to render this visualization</span>';
+
+            genBtn.addEventListener('click', () => {
+                if (window.runVisualization) {
+                    window.runVisualization(editor.value, outputContainer, genBtn);
+                }
+            });
+
+            card.appendChild(header);
+            card.appendChild(desc);
+            card.appendChild(editor);
+            card.appendChild(outputContainer);
+            container.appendChild(card);
+        });
+    }
+
+    function renderInteractiveHTMLDemos(containerId, items) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+
+        if (!items || items.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+        container.style.display = '';
+
+        const sectionTitle = document.createElement('h3');
+        sectionTitle.className = 'section-title';
+        sectionTitle.textContent = 'Interactive Demonstrations';
+        sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed);';
+        container.appendChild(sectionTitle);
+
+        items.forEach((item, idx) => {
+            const card = document.createElement('div');
+            card.className = 'code-card';
+
+            const header = document.createElement('div');
+            header.className = 'code-header';
+
+            const title = document.createElement('span');
+            title.className = 'code-title';
+            title.textContent = item.name || `Interactive Demo ${idx + 1}`;
+
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'source-toggle';
+            toggleBtn.textContent = 'Show Source';
+            toggleBtn.addEventListener('click', () => {
+                const source = card.querySelector('.interactive-demo-source');
+                if (source.style.display === 'none') {
+                    source.style.display = '';
+                    toggleBtn.textContent = 'Hide Source';
+                } else {
+                    source.style.display = 'none';
+                    toggleBtn.textContent = 'Show Source';
+                }
+            });
+
+            header.appendChild(title);
+            header.appendChild(toggleBtn);
+
+            const desc = document.createElement('p');
+            desc.textContent = item.description || '';
+            desc.style.cssText = 'margin: 4px 0 8px; color: var(--text-muted); font-size: 0.9em;';
+
+            const iframe = document.createElement('iframe');
+            iframe.className = 'interactive-demo-frame';
+            iframe.sandbox = 'allow-scripts allow-same-origin';
+            iframe.srcdoc = item.html || '<p>No content</p>';
+            iframe.style.cssText = 'width: 100%; height: 400px; border: 1px solid var(--border-color, #333); border-radius: 12px; overflow: hidden;';
+
+            const source = document.createElement('pre');
+            source.className = 'source-code collapsed';
+            source.style.display = 'none';
+            source.style.cssText = 'max-height: 300px; overflow: auto; background: var(--bg-secondary, #1e1e2e); color: #e0e0e0; padding: 12px; border-radius: 8px; font-size: 0.85em; margin-top: 8px;';
+            source.textContent = item.html || '';
+
+            card.appendChild(header);
+            card.appendChild(desc);
+            card.appendChild(iframe);
+            card.appendChild(source);
+            container.appendChild(card);
+        });
     }
 
     function renderCodeBlocks(containerId, items, codeField) {

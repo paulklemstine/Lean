@@ -188,6 +188,7 @@ def update_index():
         # Extract visualizations into real files, replace data with file paths
         if data.get("visualizations"):
             for i, viz in enumerate(data["visualizations"]):
+                # Handle inline image data (base64/SVG)
                 viz_data = viz.get("data", "")
                 if viz_data:
                     rel_path = extract_visualization(
@@ -197,6 +198,16 @@ def update_index():
                         viz["file"] = rel_path
                         del viz["data"]
                         total_viz_extracted += 1
+
+                # Handle Python visualization scripts (code field)
+                viz_code = viz.get("code", "")
+                if viz_code and not viz.get("code_file"):
+                    safe_name = sanitize_filename(viz.get("name", ""), 30) or f"viz_{i}"
+                    viz_filename = f"{pkg_slug}_{safe_name}.py"
+                    viz_path = os.path.join(viz_dir, viz_filename)
+                    with open(viz_path, 'w', encoding='utf-8') as vf:
+                        vf.write(viz_code)
+                    viz["code_file"] = f"visualizations/{viz_filename}"
 
         # Also extract algorithms code into separate files if present
         if data.get("algorithms"):

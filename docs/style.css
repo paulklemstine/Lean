@@ -1025,6 +1025,77 @@ body.light-theme .gallery-img-container {
     color: #fca5a5 !important;
 }
 
+/* Visualization containers */
+.viz-container {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+.viz-container:hover {
+    border-color: var(--accent-color, #7c3aed);
+}
+
+.viz-description {
+    margin: 4px 0 8px;
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+
+.viz-generate-btn {
+    background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%) !important;
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+    transition: all 0.3s ease;
+}
+
+.viz-generate-btn:hover:not(:disabled) {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+    transform: translateY(-1px);
+}
+
+.viz-loading {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 24px;
+    font-style: italic;
+}
+
+.source-toggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: all 0.2s ease;
+}
+
+.source-toggle:hover {
+    color: var(--text-main);
+    border-color: var(--accent-color, #7c3aed);
+}
+
+/* Interactive HTML demo frames */
+.interactive-demo-frame {
+    width: 100%;
+    height: 400px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+}
+
+.section-title {
+    margin-bottom: 16px;
+    color: var(--accent-color, #7c3aed);
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
 /* KaTeX tweaks for light/dark mode */
 .katex {
     color: var(--text-main);
