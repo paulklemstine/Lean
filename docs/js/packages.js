@@ -268,15 +268,19 @@ document.addEventListener('DOMContentLoaded', () => {
             iframe.srcdoc = htmlContent.includes('<head>')
                 ? htmlContent.replace('<head>', '<head>' + noScrollbarStyle)
                 : noScrollbarStyle + htmlContent;
-            iframe.style.cssText = 'width: 100%; min-height: 400px; border: none; border-radius: 12px; overflow: hidden;';
-            // Auto-resize iframe to fit content, no scrollbars
+            iframe.style.cssText = 'width: 100%; min-height: 400px; border: none; border-radius: 12px;';
+            // Auto-resize iframe to fit content dynamically
             iframe.addEventListener('load', () => {
                 try {
                     const doc = iframe.contentDocument || iframe.contentWindow.document;
-                    const height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
-                    if (height > 50) {
-                        iframe.style.height = height + 'px';
-                    }
+                    const resize = () => {
+                        const height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
+                        if (height > 50) iframe.style.height = height + 'px';
+                    };
+                    resize();
+                    // Watch for dynamic content changes
+                    new ResizeObserver(resize).observe(doc.body);
+                    new MutationObserver(resize).observe(doc.body, { childList: true, subtree: true, attributes: true });
                 } catch (e) {
                     // Cross-origin — leave at min-height
                 }
