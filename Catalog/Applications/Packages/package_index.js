@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_1_coalgebraic_temporal_adjunction_for_in.json",
+    "title": "Coalgebraic Temporal Adjunction for Infinite Traces",
+    "domain": "Coalgebraic Modal Logic / Temporal Logic / Category Theory",
+    "date": "2026-05-25T00:25:17Z",
+    "exp_id": "06588409",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_2_fractional_predictor_refinement.json",
     "title": "Fractional Transversal Refinement: LP-Dual Threshold Prediction and Integrality Gap Dynamics",
     "domain": "Combinatorial Optimization / Hypergraph Theory",
@@ -50,6 +59,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebraic Topology / Topological Data Analysis / Number Theory"
   },
+  "direction_1_coalgebraic_temporal_adjunction_for_in.json": {
+    "title": "Coalgebraic Temporal Adjunction for Infinite Traces",
+    "exp_id": "06588409",
+    "source_exp_ids": [
+      "0195dcfa"
+    ],
+    "domain": "Coalgebraic Modal Logic / Temporal Logic / Category Theory"
+  },
   "direction_3_extension_to_product_and_sum_types.json": {
     "title": "The Growth Regime Trichotomy: How Type Constructors Generate Computational Complexity Classes",
     "exp_id": "fee94b6c",
@@ -87,7 +104,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -109,7 +126,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.5431629411764707,
       "quality": "partial"
     },
@@ -120,9 +137,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.49450347826086954,
       "quality": "partial"
+    },
+    {
+      "id": "direction_1_coalgebraic_temporal_adjunction_for_in",
+      "title": "Coalgebraic Temporal Adjunction for Infinite Traces",
+      "domain": "Coalgebraic Modal Logic / Temporal Logic / Category Theory",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T00:25:17Z",
+      "hue": 270,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],
@@ -130,8 +158,8 @@ window.PACKAGE_GRAPH = {
     {
       "domain_a": "Algebra",
       "domain_b": "Logic",
-      "package_count": 1,
-      "strength": 0.5
+      "package_count": 2,
+      "strength": 0.7
     }
   ]
 };

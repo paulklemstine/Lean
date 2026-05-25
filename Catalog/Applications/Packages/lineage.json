@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_5_complexity_of_lorentzian_recognition",
@@ -25,7 +25,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_2_fractional_predictor_refinement",
@@ -34,7 +34,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 271
+      "hue": 272
+    },
+    {
+      "id": "direction_1_coalgebraic_temporal_adjunction_for_in",
+      "title": "Coalgebraic Temporal Adjunction for Infinite Traces",
+      "domain": "Coalgebraic Modal Logic / Temporal Logic / Category Theory",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T00:25:17Z",
+      "hue": 270
     }
   ],
   "edges": [],
@@ -42,8 +51,8 @@
     {
       "domain_a": "Algebra",
       "domain_b": "Logic",
-      "package_count": 1,
-      "strength": 0.5
+      "package_count": 2,
+      "strength": 0.7
     }
   ]
 }
