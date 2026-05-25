@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1493 of the highest-quality
+A curated collection of 1497 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1493
+Total files: 1497
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -94,6 +94,7 @@ import FINAL.Algebra.LightDarkPrimes
 import FINAL.Algebra.Lorentz
 import FINAL.Algebra.MassEnergyDuality
 import FINAL.Algebra.MatrixEncoding
+import FINAL.Algebra.MatrixGroupGeneration
 import FINAL.Algebra.MetaOracleCore
 import FINAL.Algebra.MetaOracleNextSteps
 import FINAL.Algebra.MetaOraclePythagoreanDeep
@@ -1090,6 +1091,7 @@ import FINAL.Physics.TropicalMirrorSymmetry
 import FINAL.Physics.TropicalTDuality
 import FINAL.Physics.TropicalVacuumEnergy
 import FINAL.Physics.VonNeumannEntropy
+import FINAL.Physics.YangMillsMassGap
 import FINAL.Pythagorean.AbelianizationTorsion
 import FINAL.Pythagorean.AdelicPersistentHomology
 import FINAL.Pythagorean.AdvancedFactoringResearch
@@ -1182,6 +1184,7 @@ import FINAL.Pythagorean.Extraction
 import FINAL.Pythagorean.FiltrationObstruction
 import FINAL.Pythagorean.FiveDirections
 import FINAL.Pythagorean.Foundations
+import FINAL.Pythagorean.FracTransversalConcentration
 import FINAL.Pythagorean.GeodesicInvariants
 import FINAL.Pythagorean.GrowthRegimeTrichotomy
 import FINAL.Pythagorean.HardnessLocalization
@@ -1358,6 +1361,7 @@ import FINAL.Tropical.GaugeInvariance
 import FINAL.Tropical.GumbelFoundations
 import FINAL.Tropical.HardnessAmplification
 import FINAL.Tropical.HashInversion
+import FINAL.Tropical.HigherRank
 import FINAL.Tropical.HodgeCorrespondence
 import FINAL.Tropical.HorizonStability
 import FINAL.Tropical.HybridArgument

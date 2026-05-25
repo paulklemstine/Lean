@@ -4,6 +4,33 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_3_concentration_of__on_random_hypergraph.json",
+    "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
+    "domain": "Combinatorial Optimization / Probability Theory",
+    "date": "2026-05-25T15:30:03Z",
+    "exp_id": "7817bcef",
+    "quality_score": 0.7284316923076923,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_3_generation_certificates_for_matrix_gro.json",
+    "title": "Generation Certificates for Matrix Groups",
+    "domain": "Algebra / Finite Group Theory",
+    "date": "2026-05-25T15:29:41Z",
+    "exp_id": "44ebbbfd",
+    "quality_score": 0.7535092285678423,
+    "quality": "substantial"
+  },
+  {
+    "filename": "yang_mills_mass_gap.json",
+    "title": "Yang-Mills Mass Gap: Lattice-to-Continuum Spectral Architecture",
+    "domain": "Mathematical Physics / Quantum Field Theory",
+    "date": "2026-05-25T15:29:18Z",
+    "exp_id": "6a88b92d",
+    "quality_score": 0.7554863879178124,
+    "quality": "substantial"
+  },
+  {
     "filename": "direction_1_brauer_manin_obstructions_for_integral.json",
     "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
     "domain": "Arithmetic Geometry / Number Theory",
@@ -75,6 +102,22 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Pythagorean Number Theory"
   },
+  "yang_mills_mass_gap.json": {
+    "title": "Yang-Mills Mass Gap: Lattice-to-Continuum Spectral Architecture",
+    "exp_id": "6a88b92d",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Mathematical Physics / Quantum Field Theory"
+  },
+  "direction_3_generation_certificates_for_matrix_gro.json": {
+    "title": "Generation Certificates for Matrix Groups",
+    "exp_id": "44ebbbfd",
+    "source_exp_ids": [
+      "92e3853a"
+    ],
+    "domain": "Algebra / Finite Group Theory"
+  },
   "direction_5_chip_firing_correspondence.json": {
     "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
     "exp_id": "97def267",
@@ -90,6 +133,14 @@ window.PACKAGE_DB_INDEX = {
       "1f8fa3a8"
     ],
     "domain": "Algebraic Combinatorics / Discrete Convexity"
+  },
+  "direction_3_concentration_of__on_random_hypergraph.json": {
+    "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
+    "exp_id": "7817bcef",
+    "source_exp_ids": [
+      "f6e7fe77"
+    ],
+    "domain": "Combinatorial Optimization / Probability Theory"
   }
 };
 
@@ -104,7 +155,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 91,
+      "hue": 95,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -115,7 +166,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 90,
+      "hue": 100,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -126,7 +177,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -137,7 +188,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -148,9 +199,42 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
+    },
+    {
+      "id": "yang_mills_mass_gap",
+      "title": "Yang-Mills Mass Gap: Lattice-to-Continuum Spectral Architecture",
+      "domain": "Mathematical Physics / Quantum Field Theory",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-25T15:29:18Z",
+      "hue": 90,
+      "priority_score": 0.7554863879178124,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_generation_certificates_for_matrix_gro",
+      "title": "Generation Certificates for Matrix Groups",
+      "domain": "Algebra / Finite Group Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T15:29:41Z",
+      "hue": 91,
+      "priority_score": 0.7535092285678423,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_concentration_of__on_random_hypergraph",
+      "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
+      "domain": "Combinatorial Optimization / Probability Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T15:30:03Z",
+      "hue": 89,
+      "priority_score": 0.7284316923076923,
+      "quality": "substantial"
     }
   ],
   "edges": [],
