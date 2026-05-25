@@ -904,7 +904,7 @@ def fig_lfsr_sequence():
         new_bit = (state[0] + state[1]) % 2
         state = state[1:] + [new_bit]
     
-    fig, axes = plt.subplots(2, 1, figsize=(12, 6), height_ratios=[1, 1.5])
+    fig, axes = plt.subplots(2, 1, figsize=(12, 6), gridspec_kw={'height_ratios': [1, 1.5]})
     
     # Top: bit sequence
     ax1 = axes[0]

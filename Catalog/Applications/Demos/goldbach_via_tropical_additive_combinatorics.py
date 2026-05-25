@@ -561,7 +561,7 @@ def fig_tropical_cost():
     limit = 50
     is_p = sieve(limit)
 
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 6), height_ratios=[1, 1])
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 6), gridspec_kw={'height_ratios': [1, 1]})
 
     # Hard cost
     xs = list(range(2, limit + 1))

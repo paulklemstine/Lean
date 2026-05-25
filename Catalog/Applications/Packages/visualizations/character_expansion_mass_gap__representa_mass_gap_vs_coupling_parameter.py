@@ -42,7 +42,7 @@ gaps_pred = [predictor(b) for b in betas]
 gaps_lower = [lower_bound(b) for b in betas]
 residuals = [exact_gap(b) - predictor(b) for b in betas]
 
-fig, axes = plt.subplots(2, 1, figsize=(10, 8), height_ratios=[3, 1])
+fig, axes = plt.subplots(2, 1, figsize=(10, 8), gridspec_kw={'height_ratios': [3, 1]})
 
 # Main plot
 ax1 = axes[0]

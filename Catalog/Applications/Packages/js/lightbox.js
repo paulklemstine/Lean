@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxNext = document.getElementById('lightbox-next');
 
     window.openLightbox = function(index) {
-        if (!window.Aether.currentPackage || !window.Aether.currentPackage.visualizations) return;
+        if (!window.Aether.currentPackage || !(window.Aether.currentPackage.visualizations || window.Aether.currentPackage._vizImages)) return;
         window.Aether.currentVizIndex = index;
         window.updateLightbox();
         lightbox.classList.remove('hidden');
@@ -22,8 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.updateLightbox = function() {
         const pkg = window.Aether.currentPackage;
-        if (!pkg || !pkg.visualizations) return;
-        const viz = pkg.visualizations[window.Aether.currentVizIndex];
+        if (!pkg) return;
+        // Support both static visualizations and dynamically generated _vizImages
+        const vizList = pkg.visualizations || pkg._vizImages;
+        if (!vizList) return;
+        const viz = vizList[window.Aether.currentVizIndex];
         let imgContent = '';
         if (viz.file) {
             const isSvg = viz.file.endsWith('.svg');
@@ -40,20 +43,24 @@ document.addEventListener('DOMContentLoaded', () => {
         lightboxImg.innerHTML = imgContent;
         lightboxCaption.textContent = viz.name || 'Visualization';
 
-        const multiple = pkg.visualizations.length > 1;
+        const multiple = vizList.length > 1;
         lightboxPrev.style.display = multiple ? 'block' : 'none';
         lightboxNext.style.display = multiple ? 'block' : 'none';
     };
 
     function nextLightbox() {
-        if (!window.Aether.currentPackage || !window.Aether.currentPackage.visualizations) return;
-        window.Aether.currentVizIndex = (window.Aether.currentVizIndex + 1) % window.Aether.currentPackage.visualizations.length;
+        if (!window.Aether.currentPackage) return;
+        const vizList = window.Aether.currentPackage.visualizations || window.Aether.currentPackage._vizImages;
+        if (!vizList) return;
+        window.Aether.currentVizIndex = (window.Aether.currentVizIndex + 1) % vizList.length;
         window.updateLightbox();
     }
 
     function prevLightbox() {
-        if (!window.Aether.currentPackage || !window.Aether.currentPackage.visualizations) return;
-        const len = window.Aether.currentPackage.visualizations.length;
+        if (!window.Aether.currentPackage) return;
+        const vizList = window.Aether.currentPackage.visualizations || window.Aether.currentPackage._vizImages;
+        if (!vizList) return;
+        const len = vizList.length;
         window.Aether.currentVizIndex = (window.Aether.currentVizIndex - 1 + len) % len;
         window.updateLightbox();
     }

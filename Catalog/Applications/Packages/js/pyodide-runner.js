@@ -411,7 +411,9 @@ print("VIZIMG:" + img_data)
                     if (window.openLightbox) {
                         window.Aether.currentVizIndex = 0;
                         window.Aether.currentPackage = window.Aether.currentPackage || {};
-                        window.Aether.currentPackage._vizImages = window.Aether.currentPackage._vizImages || [{src: img.src, name: 'Visualization'}];
+                        window.Aether.currentPackage._vizImages = window.Aether.currentPackage._vizImages || [];
+                        // Use 'data' format matching lightbox's updateLightbox expectations
+                        window.Aether.currentPackage._vizImages[0] = {data: img.src, name: 'Visualization'};
                         window.openLightbox(0);
                     }
                 });

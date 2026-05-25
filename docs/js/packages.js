@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
             iframe.scrolling = 'no';
             // Inject no-scrollbar style into the HTML
             const htmlContent = item.html || '<p>No content</p>';
-            const noScrollbarStyle = '<style>html,body{margin:0;padding:0;overflow:hidden;width:100%;height:auto;}*{box-sizing:border-box;}</style>';
+            const noScrollbarStyle = '<style>html,body{margin:0;padding:0;width:100%;height:auto;}*{box-sizing:border-box;}body::-webkit-scrollbar{display:none;}body{scrollbar-width:none;}</style>';
             iframe.srcdoc = htmlContent.includes('<head>')
                 ? htmlContent.replace('<head>', '<head>' + noScrollbarStyle)
                 : noScrollbarStyle + htmlContent;
