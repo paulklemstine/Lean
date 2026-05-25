@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Discrete Convex Analysis / Lorentzian Polynomials",
     "date": "2026-05-25T19:29:15Z",
     "exp_id": "a1f92284",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7239525714285715,
+    "quality": "substantial"
   },
   {
     "filename": "direction_5_mechanism_design_with_certified_multi_.json",
@@ -625,8 +625,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-25T19:29:15Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7239525714285715,
+      "quality": "substantial"
     }
   ],
   "edges": [

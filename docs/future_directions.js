@@ -102,10 +102,10 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e4a0191",
     "timestamp": "2026-05-24T22:37:54.574939+00:00"
   },
   {
@@ -611,26 +611,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T14:24:15.314374+00:00"
   },
   {
-    "id": "fd_0860",
-    "title": "Direction 3: Multivariate k-Fold Log-Concavity and M-Convexity",
-    "description": "**Conjecture**: There exists a natural multivariate generalization of k-fold log-concavity, defined via directional ratio operators, that coincides with the recursive Lorentzian condition for homogeneous polynomials and extends the M-convexity framework of Murota's discrete convex analysis.\n\n**Test**: Define the directional ratio operator $R_i(f)(x) = f(x + e_i) / f(x)$ for functions $f : \\mathbb{Z}^n \\to \\mathbb{R}_{>0}$ and check whether iterated directional log-concavity (along all coordinate directions) characterizes the support exchange property formalized in `SupportSatisfiesExchange`.\n\n**Impact**: This would extend the hierarchy from sequences to multivariate functions, enabling applications to multivariate partition functions, matroid valuations, and optimal transport on discrete spaces.\n\n**The key insight is** that the univariate ratio sequence $a(n+1)/a(n)$ is the one-dimensional case of a directional ratio operator, and M-convexity (the matroid exchange property) is the multivariate analogue of log-concavity. The depth hierarchy should extend to \"k-fold M-convexity.\"\n\n**Why now?** The `SupportSatisfiesExchange` predicate is already defined and connected to Lorentzian polynomials in `LorentzianRecognitionComplete.lean`. The univariate k-fold theory provides the template for the multivariate extension.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange, IsRecursivelyLorentzian), `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (KFoldLogConcave, RatioSeq)\n\n**Proof Strategy**: Define directional ratio operators and iterated directional log-concavity. Show that for polynomials, this recovers the Hessian condition at each level. Use the multivariate Alexandrov\u2013Fenchel inequality as the base case.\n\n**Domain Bridges**: Discrete convex analysis \u2192 matroid theory \u2192 combinatorial optimization\n\n**Lineage**: Extends both `KFoldLogConcave` and `SupportSatisfiesExchange`\n\n**Ambition**: Grand challenge \u2014 would create a new chapter of discrete convex analysis.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "a1f92284",
-    "timestamp": "2026-05-25T14:24:15.334479+00:00"
-  },
-  {
     "id": "fd_0861",
     "title": "Direction 4: Entropy Curvature and Information-Theoretic Depth",
     "description": "**Conjecture**: For a positive sequence $a$ normalized to a probability distribution $\\pi$, the k-fold log-concavity of $a$ implies that the discrete entropy functional $H(\\pi) = -\\sum \\pi_i \\log \\pi_i$ satisfies a $(k-1)$-th order curvature bound: the $(k-1)$-th iterated finite difference of $\\log(\\pi_i)$ has controlled sign.\n\n**Test**: For binomial distributions ($k = 1$) and geometric distributions ($k = \\infty$), compute iterated finite differences of $\\log(\\pi_i)$ and verify the sign pattern. For the geometric case, all iterated finite differences should vanish (corresponding to infinite depth).\n\n**Impact**: This would connect the k-fold hierarchy to information-theoretic quantities, enabling applications to channel capacity, data compression, and entropy-based learning theory.\n\n**The key insight is** that log-concavity is equivalent to the condition $\\Delta^2 \\log a_n \\leq 0$ (concavity of the log), and k-fold log-concavity corresponds to an alternating-sign condition on higher-order finite differences of $\\log a_n$ \u2014 the discrete analogue of higher-order curvature.\n\n**Why now?** The formalization of `LogConcaveN` and its equivalence to ratio sequence monotonicity provides the bridge between the concavity inequality and the finite-difference formulation. The existing `Real.log` infrastructure in Mathlib supports the finite-difference calculations.\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (LogConcaveN, KFoldLogConcave, RatioSeq), `Catalog/Pythagorean/CertificateSampling.lean` (ProbDist)\n\n**Proof Strategy**: Show that $\\text{LogConcaveN}(a)$ is equivalent to $\\Delta(\\log \\circ a)$ being nonincreasing, where $\\Delta f(n) = f(n+1) - f(n)$. Then k-fold log-concavity translates to iterated $\\Delta$ conditions on $\\log \\circ a$. Use the chain rule for finite differences to relate these to entropy curvature bounds.\n\n**Domain Bridges**: Discrete analysis \u2192 information theory \u2192 statistical learning theory\n\n**Lineage**: New direction building on `LogConcaveN` and `KFoldLogConcave`\n\n**Ambition**: Solid extension \u2014 natural and well-motivated with clear methodology.\n\n---",
@@ -1060,6 +1040,86 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:58:10.295979+00:00"
   },
   {
+    "id": "fd_0915",
+    "title": "Direction 1: Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
+    "description": "**Conjecture:** For a weighted simplicial complex K with a filtration by weight threshold, the degree-d tropical Morse data (counting birth and death events of d-dimensional cycles) recovers the degree-d persistent homology barcode. Specifically, critical events in degree d are classified as births (increasing \u03b2d) or deaths (decreasing \u03b2d\u22121 under the pairing), and the tropical persistent rank equals the classical one in every degree.\n\n**Test:** Formalize the edge insertion dichotomy for 2-dimensional faces added to a simplicial complex, showing that adding a triangle either kills a 1-cycle (death event) or creates a 2-cycle (birth event). Verify computationally on random 2-complexes with up to 100 vertices. Disprove by exhibiting a filtration step where the Betti number change pattern violates the simple dichotomy (which would occur when the boundary of the new simplex interacts nontrivially with existing homology).\n\n**Impact:** Would unify tropical geometry with the full persistent homology pipeline, giving tropical interpretations of all barcode features in all dimensions. This would be the first tropical Morse theory for simplicial complexes, extending classical discrete Morse theory (Forman) with filtration data.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `betti_update_dichotomy`, `tropical_persistence_eq_classical`\n- `Catalog/Pythagorean/TropicalBridge/WeightedDefect.lean` \u2014 `wdCycleRank`, `wdComponentCount`\n\n**Proof Strategy:** Extend the inductive proof of `filtration_betti1_eq_cycleCount` from graphs to simplicial complexes. The key difficulty is that adding a d-simplex can create new d-cycles AND kill (d\u22121)-cycles simultaneously (unlike the graph case where these are always separate). Handle this via the algebraic structure of the boundary operator: decompose the change in homology using the long exact sequence of the pair (K_{i+1}, K_i).\n\n**Domain Bridges:** Topological data analysis \u2192 tropical geometry \u2192 algebraic topology \u2192 computational geometry\n\n**Lineage:** Extends Theorem 3.1 (edge insertion dichotomy) to arbitrary simplicial dimension.\n\n**Ambition:** Grand challenge \u2014 would fundamentally expand the scope of tropical persistence from networks to high-dimensional data analysis.\n\n**The key insight is** that the edge insertion dichotomy generalizes to higher dimensions if and only if one can decompose the boundary map of each new simplex into a \"killing\" part and a \"creating\" part, which the long exact sequence of relative homology provides canonically.\n\n**Why now?** The graph-level theory is now fully verified, providing the base case and proof template. Mathlib's growing simplicial complex infrastructure makes higher-dimensional formalization increasingly feasible.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88770e41",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:39:32.434172+00:00"
+  },
+  {
+    "id": "fd_0916",
+    "title": "Direction 2: Concentration and Universality of Tropical Critical Distributions",
+    "description": "**Conjecture:** For G(n, p) with i.i.d. continuous edge weights on [0,1], the empirical cycle-birth measure \u03bc_G = (1/\u03b2\u2081) \u03a3 \u03b4_{t_i} converges in probability to a deterministic measure \u03bc_p as n \u2192 \u221e. Moreover, the limiting measure \u03bc_p has a density that exhibits a phase transition at p_c = 1/n, with qualitatively different behavior in subcritical and supercritical regimes.\n\n**Test:** (1) Simulate G(n, p=0.15) for n = 50, 100, 200, 500, 1000. Compute the Kolmogorov-Smirnov distance between empirical cycle-birth CDFs across independent trials. If concentration holds, KS distances should decrease as O(n^{-1/2}). (2) For the supercritical regime, fit the limiting density and test universality by varying the weight distribution (uniform, exponential, normal). Reject if the limiting density depends on the weight distribution beyond simple scaling.\n\n**Impact:** Would establish the first universality result connecting tropical geometry to random graph theory, analogous to the Wigner semicircle law in random matrix theory. Would make tropical Morse theory relevant to network science by providing theoretical predictions for real-world weighted networks.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `filtration_betti1_eq_cycleCount`, `filtration_rank_eq_mergeCount`\n\n**Proof Strategy:** Use the Azuma-Hoeffding inequality or McDiarmid's bounded differences inequality to show concentration of the cycle count process. The key step is bounding the effect of changing a single edge weight on the total cycle count, which changes by at most 1 (Lipschitz condition from the dichotomy theorem). For the limiting measure, use the relationship between cycle events and the structure of the giant component in G(n,p).\n\n**Domain Bridges:** Tropical geometry \u2192 probability theory \u2192 random graphs \u2192 statistical mechanics\n\n**Lineage:** Builds on the computational experiments in Section 5.4 of the research paper.\n\n**Ambition:** Grand challenge \u2014 proving universality of tropical critical distributions would be a major result in probabilistic combinatorics.\n\n**The key insight is** that the edge insertion dichotomy (Theorem 3.1) implies that the cycle count function is 1-Lipschitz in each edge weight, which is exactly the condition needed for concentration inequalities.\n\n**Why now?** The exact relationship between cycle events and connectivity (verified in this work) provides the first rigorous handle for probabilistic analysis. Previous approaches lacked the combinatorial precision to apply concentration tools.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88770e41",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:39:32.465513+00:00"
+  },
+  {
+    "id": "fd_0918",
+    "title": "Direction 4: Tropical Persistence Stability and Network Robustness",
+    "description": "**Conjecture:** The tropical Morse data satisfies a stability theorem: if two weight functions w and w' on the same graph satisfy ||w \u2212 w'||_\u221e \u2264 \u03b5, then the corresponding tropical persistence barcodes differ by at most \u03b5 in the bottleneck distance. Consequently, small measurement errors in edge weights produce bounded changes in the topological phase transition spectrum.\n\n**Test:** (1) Perturb edge weights by Gaussian noise with increasing variance and measure the bottleneck distance between original and perturbed barcodes. Verify that the distance grows linearly with perturbation magnitude. (2) Formalize the stability inequality in Lean 4 for graph filtrations, using the tropical-classical persistence equivalence to transfer the classical stability theorem. (3) Reject if there exist graphs where infinitesimal weight perturbation causes unbounded barcode changes (which would indicate ill-conditioning).\n\n**Impact:** Essential for applications. Without stability, the tropical Morse data would be useless for noisy real-world data. A verified stability theorem would make the framework applicable to experimental networks where edge weights are measured with uncertainty.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `tropical_persistence_eq_classical`\n\n**Proof Strategy:** Via the tropical-classical persistence equivalence (Theorem 3.12), transfer the Bottleneck Stability Theorem for classical persistence (Cohen-Steiner, Edelsbrunner, Harer 2007) to the tropical setting. The key is showing that the tropical persistent rank function is 1-Lipschitz in the sup-norm of weight perturbations.\n\n**Domain Bridges:** Tropical geometry \u2192 topological data analysis \u2192 signal processing \u2192 network science\n\n**Lineage:** Direct consequence of `tropical_persistence_eq_classical` combined with classical stability results.\n\n**Ambition:** Solid extension \u2014 the strategy (transfer via equivalence) is clear, but the formalization requires importing or reproving the classical stability theorem.\n\n**The key insight is** that the tropical-classical persistence equivalence turns stability from a tropical-geometric problem into a classical persistence problem, where stability theorems are already known.\n\n**Why now?** The verified equivalence theorem makes the transfer strategy rigorous. Without it, one would need to prove stability directly in the tropical setting, which lacks established tools.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88770e41",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:39:32.525739+00:00"
+  },
+  {
+    "id": "fd_0919",
+    "title": "Direction 5: Tropical Morse Theory as a Topological Feature for Graph Neural Networks",
+    "description": "**Conjecture:** The tropical Morse spectrum (the sequence of critical values and event types) is a strictly more expressive graph feature than the Weisfeiler-Leman color refinement algorithm for weighted graphs. Specifically, there exist pairs of weighted graphs that are WL-equivalent but distinguished by their tropical Morse data.\n\n**Test:** (1) Generate pairs of WL-equivalent weighted graphs using known constructions (e.g., Cai-F\u00fcrer-Immerman graphs with weights). (2) Compute tropical Morse spectra for both graphs. (3) Check if the spectra differ. If they consistently differ, this proves strictly greater expressive power. (4) Implement a graph neural network layer that uses tropical Morse features and benchmark on graph classification tasks (MUTAG, PTC, PROTEINS datasets).\n\n**Impact:** Would provide a theoretically grounded, efficiently computable topological feature for graph machine learning that provably captures structural information missed by message-passing architectures. The O(|E| log |E|) computation time makes it practical as a preprocessing step.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `computeFiltration`, `critical_iff_topology_jump`\n\n**Proof Strategy:** The tropical Morse spectrum encodes the complete persistent homology of the weight filtration, which is known to be more expressive than WL for certain graph families. The key is constructing explicit counterexamples: WL-equivalent graphs whose weight filtrations produce different barcodes.\n\n**Domain Bridges:** Tropical geometry \u2192 machine learning \u2192 graph neural networks \u2192 computational biology\n\n**Lineage:** Uses the verified algorithm `computeFiltration` as a feature extractor.\n\n**Ambition:** Grand challenge \u2014 bridging formal mathematics and machine learning, with potential for practical impact in drug discovery and materials science.\n\n**The key insight is** that the tropical Morse filtration captures global topological information (homology, persistence) that is provably invisible to local message-passing architectures, giving it a fundamental expressiveness advantage.\n\n**Why now?** Graph neural networks are the dominant paradigm for graph learning, but their expressiveness limitations (bounded by WL hierarchy) are well-documented. The verified tropical Morse algorithm provides an efficient, provably correct topological feature that complements existing approaches.",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "88770e41",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:39:32.551338+00:00"
+  },
+  {
     "id": "seed_005",
     "title": "P vs NP Problem",
     "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
@@ -1134,84 +1194,81 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:26:01.272574+00:00"
   },
   {
-    "id": "fd_0915",
-    "title": "Direction 1: Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
-    "description": "**Conjecture:** For a weighted simplicial complex K with a filtration by weight threshold, the degree-d tropical Morse data (counting birth and death events of d-dimensional cycles) recovers the degree-d persistent homology barcode. Specifically, critical events in degree d are classified as births (increasing \u03b2d) or deaths (decreasing \u03b2d\u22121 under the pairing), and the tropical persistent rank equals the classical one in every degree.\n\n**Test:** Formalize the edge insertion dichotomy for 2-dimensional faces added to a simplicial complex, showing that adding a triangle either kills a 1-cycle (death event) or creates a 2-cycle (birth event). Verify computationally on random 2-complexes with up to 100 vertices. Disprove by exhibiting a filtration step where the Betti number change pattern violates the simple dichotomy (which would occur when the boundary of the new simplex interacts nontrivially with existing homology).\n\n**Impact:** Would unify tropical geometry with the full persistent homology pipeline, giving tropical interpretations of all barcode features in all dimensions. This would be the first tropical Morse theory for simplicial complexes, extending classical discrete Morse theory (Forman) with filtration data.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `betti_update_dichotomy`, `tropical_persistence_eq_classical`\n- `Catalog/Pythagorean/TropicalBridge/WeightedDefect.lean` \u2014 `wdCycleRank`, `wdComponentCount`\n\n**Proof Strategy:** Extend the inductive proof of `filtration_betti1_eq_cycleCount` from graphs to simplicial complexes. The key difficulty is that adding a d-simplex can create new d-cycles AND kill (d\u22121)-cycles simultaneously (unlike the graph case where these are always separate). Handle this via the algebraic structure of the boundary operator: decompose the change in homology using the long exact sequence of the pair (K_{i+1}, K_i).\n\n**Domain Bridges:** Topological data analysis \u2192 tropical geometry \u2192 algebraic topology \u2192 computational geometry\n\n**Lineage:** Extends Theorem 3.1 (edge insertion dichotomy) to arbitrary simplicial dimension.\n\n**Ambition:** Grand challenge \u2014 would fundamentally expand the scope of tropical persistence from networks to high-dimensional data analysis.\n\n**The key insight is** that the edge insertion dichotomy generalizes to higher dimensions if and only if one can decompose the boundary map of each new simplex into a \"killing\" part and a \"creating\" part, which the long exact sequence of relative homology provides canonically.\n\n**Why now?** The graph-level theory is now fully verified, providing the base case and proof template. Mathlib's growing simplicial complex infrastructure makes higher-dimensional formalization increasingly feasible.\n\n---",
+    "id": "fd_0921",
+    "title": "Direction 1: Uniform Spectral Gap Bound for GL\u2082(\ud835\udd3d_q)",
+    "description": "**Conjecture**: For every prime $q \\geq 5$ and every certified pair $(g, h)$ in $\\text{GL}_2(\\mathbb{F}_q)$ (Singer-like $g$, primitive determinant $h$, generating pair), the spectral gap of $\\text{Cay}(\\text{GL}_2(\\mathbb{F}_q), \\{g, g^{-1}, h, h^{-1}\\})$ satisfies $\\gamma \\geq C/q$ for an absolute constant $C > 0$.\n\n**Test**: Compute spectral gaps for all certified pairs in $\\text{GL}_2(\\mathbb{F}_q)$ for $q \\in \\{5, 7, 11, 13\\}$. If $\\min_{\\text{pairs}} q \\cdot \\gamma$ is bounded below by a positive constant, the conjecture gains credibility. If some pair has $q \\cdot \\gamma < 0.1$, the conjecture needs revision.\n\n**Impact**: A proven uniform bound would yield the first family of explicit 4-regular expanders with certified algebraic witnesses, usable for derandomization and network design without numerical eigenvalue computation.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (harmonic_meanzero_eq_zero, certified_pair_harmonic_trivial), `Catalog/Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy**: Decompose the regular representation of $\\text{GL}_2(\\mathbb{F}_q)$ into irreducible representations. For each nontrivial irrep $\\rho$, bound $\\|\\frac{1}{4}\\sum_{s \\in S} \\rho(s)\\|$ using the Singer-like property of $g$ (which forces $\\rho(g)$ to have no invariant vectors in nontrivial reps of the natural module) and the primitivity of $\\det(h)$ (which ensures $\\rho$ doesn't factor through the determinant). The key insight is that Singer-like elements act without fixed points on the projective line, giving explicit contraction for the principal series representations.\n\n**Domain Bridges**: Spectral graph theory, number theory (Weil-type character sum bounds), representation theory of reductive groups.\n\n**Lineage**: Extends the qualitative spectral gap (Theorem 6.1 in the research paper) to quantitative bounds.\n\n**Ambition**: Grand challenge \u2014 would unify Bourgain\u2013Gamburd-type expansion with explicit algebraic certification.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
-      "Tropical",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "88770e41",
+    "source_exp_id": "ad66d851",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:39:32.434172+00:00"
+    "timestamp": "2026-05-25T18:40:03.296660+00:00"
   },
   {
-    "id": "fd_0916",
-    "title": "Direction 2: Concentration and Universality of Tropical Critical Distributions",
-    "description": "**Conjecture:** For G(n, p) with i.i.d. continuous edge weights on [0,1], the empirical cycle-birth measure \u03bc_G = (1/\u03b2\u2081) \u03a3 \u03b4_{t_i} converges in probability to a deterministic measure \u03bc_p as n \u2192 \u221e. Moreover, the limiting measure \u03bc_p has a density that exhibits a phase transition at p_c = 1/n, with qualitatively different behavior in subcritical and supercritical regimes.\n\n**Test:** (1) Simulate G(n, p=0.15) for n = 50, 100, 200, 500, 1000. Compute the Kolmogorov-Smirnov distance between empirical cycle-birth CDFs across independent trials. If concentration holds, KS distances should decrease as O(n^{-1/2}). (2) For the supercritical regime, fit the limiting density and test universality by varying the weight distribution (uniform, exponential, normal). Reject if the limiting density depends on the weight distribution beyond simple scaling.\n\n**Impact:** Would establish the first universality result connecting tropical geometry to random graph theory, analogous to the Wigner semicircle law in random matrix theory. Would make tropical Morse theory relevant to network science by providing theoretical predictions for real-world weighted networks.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `filtration_betti1_eq_cycleCount`, `filtration_rank_eq_mergeCount`\n\n**Proof Strategy:** Use the Azuma-Hoeffding inequality or McDiarmid's bounded differences inequality to show concentration of the cycle count process. The key step is bounding the effect of changing a single edge weight on the total cycle count, which changes by at most 1 (Lipschitz condition from the dichotomy theorem). For the limiting measure, use the relationship between cycle events and the structure of the giant component in G(n,p).\n\n**Domain Bridges:** Tropical geometry \u2192 probability theory \u2192 random graphs \u2192 statistical mechanics\n\n**Lineage:** Builds on the computational experiments in Section 5.4 of the research paper.\n\n**Ambition:** Grand challenge \u2014 proving universality of tropical critical distributions would be a major result in probabilistic combinatorics.\n\n**The key insight is** that the edge insertion dichotomy (Theorem 3.1) implies that the cycle count function is 1-Lipschitz in each edge weight, which is exactly the condition needed for concentration inequalities.\n\n**Why now?** The exact relationship between cycle events and connectivity (verified in this work) provides the first rigorous handle for probabilistic analysis. Previous approaches lacked the combinatorial precision to apply concentration tools.\n\n---",
+    "id": "fd_0923",
+    "title": "Direction 3: Certified Expanders for Classical Groups",
+    "description": "**Conjecture**: For each classical group family ($\\text{Sp}_{2n}(\\mathbb{F}_q)$, $\\text{SO}_n(\\mathbb{F}_q)$, $\\text{SU}_n(\\mathbb{F}_{q^2})$), there exist certificate conditions (analogues of Singer-like and primitive-determinant) that guarantee generation and spectral expansion of the resulting Cayley graphs.\n\n**Test**: For $\\text{Sp}_4(\\mathbb{F}_3)$ and $\\text{SO}_3(\\mathbb{F}_5)$, enumerate certified pairs, build Cayley graphs, and compute spectral gaps. Compare with the GL\u2082 family.\n\n**Impact**: Would provide explicit expanders from every major family of finite groups of Lie type, dramatically expanding the toolkit for network design and coding theory.\n\n**Catalog References**: `Catalog/Algebra/MatrixGroupGeneration.lean` (the invariant subspace theorem applies to any finite field and module).\n\n**Proof Strategy**: The key insight is that Singer-like elements exist in all classical groups (as regular semisimple elements whose centralizer is a maximal torus), and the primitivity condition generalizes to the center of the group. The maximum principle proof transfers verbatim; only the generation step needs group-specific arguments.\n\n**Why now?** The formal infrastructure for the maximum principle and stability lemma is now in place and works for any finite group.\n\n**Domain Bridges**: Finite group theory, algebraic geometry (Deligne\u2013Lusztig theory), coding theory.\n\n**Lineage**: Direct extension of the GL\u2082 theory to other Lie-type groups.\n\n**Ambition**: Solid extension \u2014 builds directly on established methods.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
-      "Computation",
-      "Tropical",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "88770e41",
+    "source_exp_id": "ad66d851",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:39:32.465513+00:00"
+    "timestamp": "2026-05-25T18:40:03.345424+00:00"
   },
   {
-    "id": "fd_0918",
-    "title": "Direction 4: Tropical Persistence Stability and Network Robustness",
-    "description": "**Conjecture:** The tropical Morse data satisfies a stability theorem: if two weight functions w and w' on the same graph satisfy ||w \u2212 w'||_\u221e \u2264 \u03b5, then the corresponding tropical persistence barcodes differ by at most \u03b5 in the bottleneck distance. Consequently, small measurement errors in edge weights produce bounded changes in the topological phase transition spectrum.\n\n**Test:** (1) Perturb edge weights by Gaussian noise with increasing variance and measure the bottleneck distance between original and perturbed barcodes. Verify that the distance grows linearly with perturbation magnitude. (2) Formalize the stability inequality in Lean 4 for graph filtrations, using the tropical-classical persistence equivalence to transfer the classical stability theorem. (3) Reject if there exist graphs where infinitesimal weight perturbation causes unbounded barcode changes (which would indicate ill-conditioning).\n\n**Impact:** Essential for applications. Without stability, the tropical Morse data would be useless for noisy real-world data. A verified stability theorem would make the framework applicable to experimental networks where edge weights are measured with uncertainty.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `tropical_persistence_eq_classical`\n\n**Proof Strategy:** Via the tropical-classical persistence equivalence (Theorem 3.12), transfer the Bottleneck Stability Theorem for classical persistence (Cohen-Steiner, Edelsbrunner, Harer 2007) to the tropical setting. The key is showing that the tropical persistent rank function is 1-Lipschitz in the sup-norm of weight perturbations.\n\n**Domain Bridges:** Tropical geometry \u2192 topological data analysis \u2192 signal processing \u2192 network science\n\n**Lineage:** Direct consequence of `tropical_persistence_eq_classical` combined with classical stability results.\n\n**Ambition:** Solid extension \u2014 the strategy (transfer via equivalence) is clear, but the formalization requires importing or reproving the classical stability theorem.\n\n**The key insight is** that the tropical-classical persistence equivalence turns stability from a tropical-geometric problem into a classical persistence problem, where stability theorems are already known.\n\n**Why now?** The verified equivalence theorem makes the transfer strategy rigorous. Without it, one would need to prove stability directly in the tropical setting, which lacks established tools.\n\n---",
+    "id": "fd_0924",
+    "title": "Direction 4: Algorithmic Spectral Certification",
+    "description": "**Conjecture**: There exists a polynomial-time algorithm that, given a pair of matrices $(g, h) \\in \\text{GL}_n(\\mathbb{F}_q)$, either certifies that the spectral gap of $\\text{Cay}(\\text{GL}_n(\\mathbb{F}_q), \\{g, g^{-1}, h, h^{-1}\\})$ is at least $\\epsilon$, or reports \"unable to certify\" \u2014 with the guarantee that certified pairs are always genuine expanders.\n\n**Test**: Implement the algorithm for $n = 2$, $q \\in \\{3, 5, 7, 11\\}$. Measure the fraction of generating pairs that pass certification. Compare the certified gap lower bound with the true gap computed by eigenvalue decomposition.\n\n**Impact**: Would make expander verification practical for large groups where eigenvalue computation is infeasible. Applications to network verification, cryptographic protocol validation, and error-correcting code certification.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the full pipeline from certificate verification to spectral gap).\n\n**Proof Strategy**: The key insight is that checking the Singer-like condition (irreducible charpoly) and primitive determinant is polynomial, and the generation check can be replaced by a probabilistic membership test using the product replacement algorithm. The gap lower bound comes from representation-theoretic estimates that depend only on the certificate data, not on eigenvalue computation.\n\n**Why now?** The formal verification provides a trusted specification against which algorithmic implementations can be validated.\n\n**Domain Bridges**: Computational group theory, algorithm design, complexity theory, network verification.\n\n**Lineage**: Algorithmic counterpart to the theoretical certificate framework.\n\n**Ambition**: Solid extension \u2014 directly applicable engineering.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad66d851",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T18:40:03.370751+00:00"
+  },
+  {
+    "id": "fd_0925",
+    "title": "Direction 5: Certificates and Product Growth",
+    "description": "**Conjecture**: If $(g, h)$ is a certified pair in $\\text{GL}_n(\\mathbb{F}_q)$ and $A = \\{g, g^{-1}, h, h^{-1}\\}$, then the triple product $|A \\cdot A \\cdot A| \\geq |A|^{1+\\epsilon}$ for some $\\epsilon > 0$ depending only on $n$. That is, certified pairs exhibit product growth, linking certificate theory to the Helfgott\u2013Breuillard\u2013Green\u2013Tao program.\n\n**Test**: Compute $|A^k|$ for $k = 1, 2, 3, 4$ for certified pairs in $\\text{GL}_2(\\mathbb{F}_q)$ with $q \\in \\{5, 7, 11\\}$. Plot the growth rate $|A^k|^{1/k}$ and test for polynomial growth vs. rapid saturation.\n\n**Impact**: Would connect certificate-expansion theory to additive combinatorics, potentially providing new proofs of product theorems from algebraic data rather than combinatorial arguments.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the right_mul_closed_eq_univ lemma is a form of \"product saturation\"), `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility prevents containment in proper subgroups).\n\n**Proof Strategy**: The key insight is that irreducibility of the characteristic polynomial of $g$ prevents $\\langle g \\rangle$ from being contained in any proper algebraic subgroup of $\\text{GL}_n$, which by the Helfgott\u2013Pyber escape-from-subvarieties lemma forces rapid growth in the early stages of product expansion.\n\n**Why now?** The certificate framework provides a clean set of algebraic hypotheses under which product growth can be tested and potentially proved.\n\n**Domain Bridges**: Additive combinatorics, algebraic geometry (escape from subvarieties), model theory (stable group theory).\n\n**Lineage**: Bridges the certificate framework to the Bourgain\u2013Gamburd\u2013Helfgott program.\n\n**Ambition**: Grand challenge \u2014 would unify two major approaches to expansion in finite groups.",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
-      "Tropical",
       "Bridges",
-      "MachineLearning",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "88770e41",
+    "source_exp_id": "ad66d851",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:39:32.525739+00:00"
-  },
-  {
-    "id": "fd_0919",
-    "title": "Direction 5: Tropical Morse Theory as a Topological Feature for Graph Neural Networks",
-    "description": "**Conjecture:** The tropical Morse spectrum (the sequence of critical values and event types) is a strictly more expressive graph feature than the Weisfeiler-Leman color refinement algorithm for weighted graphs. Specifically, there exist pairs of weighted graphs that are WL-equivalent but distinguished by their tropical Morse data.\n\n**Test:** (1) Generate pairs of WL-equivalent weighted graphs using known constructions (e.g., Cai-F\u00fcrer-Immerman graphs with weights). (2) Compute tropical Morse spectra for both graphs. (3) Check if the spectra differ. If they consistently differ, this proves strictly greater expressive power. (4) Implement a graph neural network layer that uses tropical Morse features and benchmark on graph classification tasks (MUTAG, PTC, PROTEINS datasets).\n\n**Impact:** Would provide a theoretically grounded, efficiently computable topological feature for graph machine learning that provably captures structural information missed by message-passing architectures. The O(|E| log |E|) computation time makes it practical as a preprocessing step.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `computeFiltration`, `critical_iff_topology_jump`\n\n**Proof Strategy:** The tropical Morse spectrum encodes the complete persistent homology of the weight filtration, which is known to be more expressive than WL for certain graph families. The key is constructing explicit counterexamples: WL-equivalent graphs whose weight filtrations produce different barcodes.\n\n**Domain Bridges:** Tropical geometry \u2192 machine learning \u2192 graph neural networks \u2192 computational biology\n\n**Lineage:** Uses the verified algorithm `computeFiltration` as a feature extractor.\n\n**Ambition:** Grand challenge \u2014 bridging formal mathematics and machine learning, with potential for practical impact in drug discovery and materials science.\n\n**The key insight is** that the tropical Morse filtration captures global topological information (homology, persistence) that is provably invisible to local message-passing architectures, giving it a fundamental expressiveness advantage.\n\n**Why now?** Graph neural networks are the dominant paradigm for graph learning, but their expressiveness limitations (bounded by WL hierarchy) are well-documented. The verified tropical Morse algorithm provides an efficient, provably correct topological feature that complements existing approaches.",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:39:32.551338+00:00"
+    "timestamp": "2026-05-25T18:40:03.396854+00:00"
   },
   {
     "id": "seed_013",
@@ -1640,26 +1697,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T14:24:37.143822+00:00"
   },
   {
-    "id": "fd_0921",
-    "title": "Direction 1: Uniform Spectral Gap Bound for GL\u2082(\ud835\udd3d_q)",
-    "description": "**Conjecture**: For every prime $q \\geq 5$ and every certified pair $(g, h)$ in $\\text{GL}_2(\\mathbb{F}_q)$ (Singer-like $g$, primitive determinant $h$, generating pair), the spectral gap of $\\text{Cay}(\\text{GL}_2(\\mathbb{F}_q), \\{g, g^{-1}, h, h^{-1}\\})$ satisfies $\\gamma \\geq C/q$ for an absolute constant $C > 0$.\n\n**Test**: Compute spectral gaps for all certified pairs in $\\text{GL}_2(\\mathbb{F}_q)$ for $q \\in \\{5, 7, 11, 13\\}$. If $\\min_{\\text{pairs}} q \\cdot \\gamma$ is bounded below by a positive constant, the conjecture gains credibility. If some pair has $q \\cdot \\gamma < 0.1$, the conjecture needs revision.\n\n**Impact**: A proven uniform bound would yield the first family of explicit 4-regular expanders with certified algebraic witnesses, usable for derandomization and network design without numerical eigenvalue computation.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (harmonic_meanzero_eq_zero, certified_pair_harmonic_trivial), `Catalog/Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy**: Decompose the regular representation of $\\text{GL}_2(\\mathbb{F}_q)$ into irreducible representations. For each nontrivial irrep $\\rho$, bound $\\|\\frac{1}{4}\\sum_{s \\in S} \\rho(s)\\|$ using the Singer-like property of $g$ (which forces $\\rho(g)$ to have no invariant vectors in nontrivial reps of the natural module) and the primitivity of $\\det(h)$ (which ensures $\\rho$ doesn't factor through the determinant). The key insight is that Singer-like elements act without fixed points on the projective line, giving explicit contraction for the principal series representations.\n\n**Domain Bridges**: Spectral graph theory, number theory (Weil-type character sum bounds), representation theory of reductive groups.\n\n**Lineage**: Extends the qualitative spectral gap (Theorem 6.1 in the research paper) to quantitative bounds.\n\n**Ambition**: Grand challenge \u2014 would unify Bourgain\u2013Gamburd-type expansion with explicit algebraic certification.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:40:03.296660+00:00"
-  },
-  {
     "id": "fd_0922",
     "title": "Direction 2: Certificate-Based Quantum Expanders",
     "description": "**Conjecture**: For certified pairs $(U, V)$ of unitary matrices in $\\text{SU}(n)$ satisfying quantum analogues of the Singer-like and primitive-determinant conditions, the quantum channel $\\Phi(\\rho) = \\frac{1}{4}(U\\rho U^* + U^*\\rho U + V\\rho V^* + V^*\\rho V)$ has spectral gap $\\gamma > 0$ on traceless Hermitian matrices.\n\n**Test**: Implement the quantum channel for $n = 2$ and random certified unitaries. Compute the spectral gap numerically. Compare with the classical Cayley graph spectral gap for the same generator type.\n\n**Impact**: Quantum expanders are needed for quantum error correction, quantum communication complexity, and quantum pseudorandomness. A certificate-based construction would bypass the probabilistic existence proofs currently used.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the averaging operator framework generalizes to quantum channels via the same maximum principle structure).\n\n**Proof Strategy**: The key insight is that the maximum principle for harmonic functions generalizes to the quantum setting: if $\\Phi(\\rho) = \\rho$ for a traceless Hermitian $\\rho$, then the maximum eigenvalue of $\\rho$ propagates to all \"neighbors\" in the quantum Cayley graph. The Singer-like condition on $U$ ensures no nontrivial invariant subspace, preventing fixed points.\n\n**Domain Bridges**: Quantum information theory, operator algebras, random matrix theory.\n\n**Lineage**: Direct quantum analogue of the classical certificate-expansion pipeline.\n\n**Ambition**: Grand challenge \u2014 would open certificate-expansion theory to quantum computation.\n\n---",
@@ -1679,9 +1716,9 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:03.321531+00:00"
   },
   {
-    "id": "fd_0923",
-    "title": "Direction 3: Certified Expanders for Classical Groups",
-    "description": "**Conjecture**: For each classical group family ($\\text{Sp}_{2n}(\\mathbb{F}_q)$, $\\text{SO}_n(\\mathbb{F}_q)$, $\\text{SU}_n(\\mathbb{F}_{q^2})$), there exist certificate conditions (analogues of Singer-like and primitive-determinant) that guarantee generation and spectral expansion of the resulting Cayley graphs.\n\n**Test**: For $\\text{Sp}_4(\\mathbb{F}_3)$ and $\\text{SO}_3(\\mathbb{F}_5)$, enumerate certified pairs, build Cayley graphs, and compute spectral gaps. Compare with the GL\u2082 family.\n\n**Impact**: Would provide explicit expanders from every major family of finite groups of Lie type, dramatically expanding the toolkit for network design and coding theory.\n\n**Catalog References**: `Catalog/Algebra/MatrixGroupGeneration.lean` (the invariant subspace theorem applies to any finite field and module).\n\n**Proof Strategy**: The key insight is that Singer-like elements exist in all classical groups (as regular semisimple elements whose centralizer is a maximal torus), and the primitivity condition generalizes to the center of the group. The maximum principle proof transfers verbatim; only the generation step needs group-specific arguments.\n\n**Why now?** The formal infrastructure for the maximum principle and stability lemma is now in place and works for any finite group.\n\n**Domain Bridges**: Finite group theory, algebraic geometry (Deligne\u2013Lusztig theory), coding theory.\n\n**Lineage**: Direct extension of the GL\u2082 theory to other Lie-type groups.\n\n**Ambition**: Solid extension \u2014 builds directly on established methods.\n\n---",
+    "id": "fd_0927",
+    "title": "Direction 1: Lorentzian Equivalence via Hessian Descent",
+    "description": "**Conjecture**: For homogeneous polynomials with positive coefficients, recursive Lorentzianity (in the sense of `IsRecursivelyLorentzian` from `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`) is equivalent to k-fold directional log-concavity of the coefficient function for all k \u2264 degree, together with the support exchange property.\n\n**The key insight is** that the Hessian signature condition (at most one positive eigenvalue) for degree-2 derivative leaves is exactly the mixed directional log-concavity inequality applied to the coefficients of those leaves, and the recursive descent through partial derivatives mirrors the k-fold ratio transform hierarchy.\n\n**Test**: Implement the forward direction for degree \u2264 6: given a recursively Lorentzian polynomial, verify computationally that all coefficient-level mixed and axis inequalities hold. Search for a counterexample to the converse among polynomials with positive coefficients and exchange-closed support that fail the Hessian condition. A single explicit counterexample (n \u2264 5, d \u2264 6) would refute the conjecture.\n\n**Impact**: If true, this provides an elementary characterization of Lorentzian polynomials, replacing the spectral machinery of Hessian eigenvalue analysis with simple product inequalities on coefficients. This would make Lorentzianity checkable in O(n\u00b2 \u00b7 |support|) time rather than requiring eigenvalue computation.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (specifically `IsRecursivelyLorentzian`, `recursivelyLorentzian_iff_brandenHuh`, `recursive_certificate_sound`); `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave`, `kFoldLogConcave_mono`).\n\n**Proof Strategy**: Prove the forward direction by induction on degree. For degree 2, the mixed inequality IS the Hessian condition. For degree d, use `pderiv_coeff_nonneg` to show that partial derivatives preserve coefficient nonnegativity, and show that mixed DLC of the original polynomial implies mixed DLC of its partial derivatives (via a coefficient extraction argument). The converse would require showing that coefficient-level inequalities plus exchange imply the global Hessian condition, likely via the reversed Cauchy-Schwarz (`lorentzian_reversed_cauchy_schwarz`).\n\n**Domain Bridges**: Algebraic geometry (Lorentzian polynomials) \u2194 Discrete combinatorics (exchange properties) \u2194 Linear algebra (Hessian spectra).\n\n**Lineage**: Extends `recursivelyLorentzian_iff_brandenHuh` and connects to `support_rectangle_closure`.\n\n**Ambition**: Grand challenge \u2014 would fundamentally simplify the theory of Lorentzian polynomials.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1693,47 +1730,88 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "ad66d851",
+    "source_exp_id": "a1f92284",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:40:03.345424+00:00"
+    "timestamp": "2026-05-25T19:29:17.881900+00:00"
   },
   {
-    "id": "fd_0924",
-    "title": "Direction 4: Algorithmic Spectral Certification",
-    "description": "**Conjecture**: There exists a polynomial-time algorithm that, given a pair of matrices $(g, h) \\in \\text{GL}_n(\\mathbb{F}_q)$, either certifies that the spectral gap of $\\text{Cay}(\\text{GL}_n(\\mathbb{F}_q), \\{g, g^{-1}, h, h^{-1}\\})$ is at least $\\epsilon$, or reports \"unable to certify\" \u2014 with the guarantee that certified pairs are always genuine expanders.\n\n**Test**: Implement the algorithm for $n = 2$, $q \\in \\{3, 5, 7, 11\\}$. Measure the fraction of generating pairs that pass certification. Compare the certified gap lower bound with the true gap computed by eigenvalue decomposition.\n\n**Impact**: Would make expander verification practical for large groups where eigenvalue computation is infeasible. Applications to network verification, cryptographic protocol validation, and error-correcting code certification.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the full pipeline from certificate verification to spectral gap).\n\n**Proof Strategy**: The key insight is that checking the Singer-like condition (irreducible charpoly) and primitive determinant is polynomial, and the generation check can be replaced by a probabilistic membership test using the product replacement algorithm. The gap lower bound comes from representation-theoretic estimates that depend only on the certificate data, not on eigenvalue computation.\n\n**Why now?** The formal verification provides a trusted specification against which algorithmic implementations can be validated.\n\n**Domain Bridges**: Computational group theory, algorithm design, complexity theory, network verification.\n\n**Lineage**: Algorithmic counterpart to the theoretical certificate framework.\n\n**Ambition**: Solid extension \u2014 directly applicable engineering.\n\n---",
+    "id": "fd_0928",
+    "title": "Direction 2: Valuated Matroid Theory via k-Fold Log-Concavity",
+    "description": "**Conjecture**: The k-fold directional log-concavity hierarchy provides a graded refinement of Murota's M-convexity. Specifically, for a function f on a fixed degree slice with exchange-closed support, the depth k at which f ceases to be k-fold directionally log-concave measures the \"Lorentzian depth\" of the underlying valuated matroid.\n\n**The key insight is** that the ratio transform R\u1d62f(m) = f(m+e\u1d62)/f(m) is the discrete analog of the logarithmic derivative, and applying it repeatedly extracts finer and finer curvature information from the valuation. The k-fold hierarchy thus provides an intrinsic notion of \"smoothness depth\" for valuated matroids, analogous to the differentiability class C^k for continuous functions.\n\n**Why now?** The product stability theorem (`mixedLogConcave_mul`, `directionalLogConcave_mul`) shows that the k-fold classes form multiplicative monoids. Combined with the tropical bridge (`negLog_supermodular_of_mixed`), this means k-fold directional log-concavity defines a hierarchy of tropical convexity classes that is preserved under the tropical product. No such hierarchy existed in Murota's theory.\n\n**Test**: Compute the k-fold depth of specific valuated matroids: uniform matroid valuations, graphical matroid valuations (with edge weights), and the Grassmannian valuations from algebraic geometry. Identify the first example where k-fold depth is finite but greater than 1. If all naturally occurring valuated matroids have infinite depth, this would suggest a deep structural theorem.\n\n**Impact**: Would create a new invariant for valuated matroids, potentially distinguishing matroids that are indistinguishable by existing invariants (basis exchange graph structure, Tutte polynomial, etc.).\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave`, `KFoldLogConcave.ratio`, `kFoldLogConcave_mono`); `Pythagorean/MultivariateLogConcavity.lean` (`KFoldDirectionalLogConcave`, `kfold_mono`, `directionalLogConcave_mul`).\n\n**Proof Strategy**: Define the Lorentzian depth as sup{k : KFoldDirectionalLogConcave k f}. Use the product stability theorem to show this is sub-additive under tropical convolution. Prove that exponential-type functions have infinite depth (already partially established by `exp_type_mixed_logconcave`). Show that graphic matroid valuations have depth at least d-2 using the connection to Kirchhoff's matrix tree theorem.\n\n**Domain Bridges**: Combinatorial optimization (valuated matroids, M-convexity) \u2194 Analysis (smoothness hierarchies) \u2194 Algebraic geometry (Grassmannian, tropical flag varieties).\n\n**Lineage**: Extends `kfold_mono` and `exp_type_mixed_logconcave`.\n\n**Ambition**: Solid extension with grand-challenge potential.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a1f92284",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T19:29:17.914245+00:00"
+  },
+  {
+    "id": "fd_0929",
+    "title": "Direction 3: Negative Dependence and Rapid Mixing via Directional Log-Concavity",
+    "description": "**Conjecture**: For a probability distribution \u03bc on {0,1}\u207f whose generating polynomial satisfies k-fold directional log-concavity (k \u2265 2), the Glauber dynamics Markov chain mixes in time O(n log n), with the mixing time constant depending on k.\n\n**The key insight is** that mixed directional log-concavity is exactly the condition of pairwise negative dependence (the FKG inequality reversed), and the higher-order conditions in the k-fold hierarchy provide increasingly strong spectral gap bounds. The k = 2 condition should imply a spectral gap of \u03a9(1/n), which by standard Markov chain theory gives O(n log n) mixing.\n\n**Why now?** Anari\u2013Liu\u2013Oveis Gharan\u2013Vinzant (2019) proved rapid mixing for distributions associated with log-concave polynomials, but their proof goes through the complete homogeneous polynomial machinery. Our direct coefficient-level approach via mixed DLC could yield a simpler proof with explicit constants.\n\n**Test**: Simulate Glauber dynamics for canonical partition functions of fermionic systems (tested in `applications.py`) and measure empirical mixing times. Compare mixing time against the k-fold depth of the generating polynomial. If there is a clear correlation (higher k \u2192 faster mixing), this provides strong evidence for the conjecture.\n\n**Impact**: Would provide the first direct link between the k-fold hierarchy and algorithmic efficiency, with applications to approximate counting, sampling, and statistical inference.\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave.mul`, `partitionFunctionCoeff_kFoldLogConcave_of_factorization`); `Pythagorean/MultivariateLogConcavity.lean` (`mixedLogConcave_mul`, `support_rectangle_closure`).\n\n**Proof Strategy**: Use the factored function theorem (`factored_mixed_logconcave`) to reduce to independent site distributions. Show that the product stability of mixed DLC (`mixedLogConcave_mul`) preserves the spectral gap bound under composition. Derive the mixing time bound from the spectral gap using the log-Sobolev inequality approach of Diaconis\u2013Saloff-Coste.\n\n**Domain Bridges**: Probability theory (mixing times, spectral gaps) \u2194 Statistical physics (Glauber dynamics, phase transitions) \u2194 Computer science (approximate counting, FPRAS).\n\n**Lineage**: Extends `mixedLogConcave_mul` and `factored_mixed_logconcave`.\n\n**Ambition**: Solid extension with immediate algorithmic impact.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
       "Physics",
-      "Cryptography",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "ad66d851",
+    "source_exp_id": "a1f92284",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:40:03.370751+00:00"
+    "timestamp": "2026-05-25T19:29:17.948753+00:00"
   },
   {
-    "id": "fd_0925",
-    "title": "Direction 5: Certificates and Product Growth",
-    "description": "**Conjecture**: If $(g, h)$ is a certified pair in $\\text{GL}_n(\\mathbb{F}_q)$ and $A = \\{g, g^{-1}, h, h^{-1}\\}$, then the triple product $|A \\cdot A \\cdot A| \\geq |A|^{1+\\epsilon}$ for some $\\epsilon > 0$ depending only on $n$. That is, certified pairs exhibit product growth, linking certificate theory to the Helfgott\u2013Breuillard\u2013Green\u2013Tao program.\n\n**Test**: Compute $|A^k|$ for $k = 1, 2, 3, 4$ for certified pairs in $\\text{GL}_2(\\mathbb{F}_q)$ with $q \\in \\{5, 7, 11\\}$. Plot the growth rate $|A^k|^{1/k}$ and test for polynomial growth vs. rapid saturation.\n\n**Impact**: Would connect certificate-expansion theory to additive combinatorics, potentially providing new proofs of product theorems from algebraic data rather than combinatorial arguments.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the right_mul_closed_eq_univ lemma is a form of \"product saturation\"), `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility prevents containment in proper subgroups).\n\n**Proof Strategy**: The key insight is that irreducibility of the characteristic polynomial of $g$ prevents $\\langle g \\rangle$ from being contained in any proper algebraic subgroup of $\\text{GL}_n$, which by the Helfgott\u2013Pyber escape-from-subvarieties lemma forces rapid growth in the early stages of product expansion.\n\n**Why now?** The certificate framework provides a clean set of algebraic hypotheses under which product growth can be tested and potentially proved.\n\n**Domain Bridges**: Additive combinatorics, algebraic geometry (escape from subvarieties), model theory (stable group theory).\n\n**Lineage**: Bridges the certificate framework to the Bourgain\u2013Gamburd\u2013Helfgott program.\n\n**Ambition**: Grand challenge \u2014 would unify two major approaches to expansion in finite groups.",
+    "id": "fd_0930",
+    "title": "Direction 4: Tropical Hodge Theory via Supermodularity Hierarchies",
+    "description": "**Conjecture**: The supermodularity hierarchy induced by the tropical bridge (\u2212log of k-fold directional log-concavity) defines a tropical analog of the Hodge filtration on the cohomology of toric varieties. Specifically, the depth k at which \u2212log f ceases to satisfy the iterated supermodularity conditions corresponds to the weight filtration level in tropical Hodge theory.\n\n**The key insight is** that the tropical bridge theorem (`negLog_supermodular_of_mixed` and `exp_neg_supermodular_mixed`) establishes a perfect correspondence between multiplicative log-concavity and additive supermodularity. Iterating this correspondence through the k-fold hierarchy creates a tower of tropical convexity conditions that mirror the Lefschetz decomposition in Hodge theory.\n\n**Why now?** The recent proof of the Hodge-Riemann relations for matroids by Adiprasito\u2013Huh\u2013Katz used the hard Lefschetz property, which in the tropical setting corresponds to a specific supermodularity condition on tropical intersection numbers. Our hierarchy provides a natural graded refinement of this single condition.\n\n**Test**: Compute the tropical supermodularity depth for the tropical Grassmannians Gr(2,n) for n = 4,...,8. Compare with the known Hodge numbers of the corresponding toric varieties. If the depths match, this provides evidence for the correspondence.\n\n**Impact**: Would create the first computational approach to tropical Hodge theory, potentially enabling machine verification of Hodge-theoretic results that are currently proved only by deep analytic methods.\n\n**Catalog References**: `Pythagorean/MultivariateLogConcavity.lean` (`negLog_supermodular_of_mixed`, `exp_neg_supermodular_mixed`, `DiscreteSupermodular`); `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (`IsBrandenHuhLorentzian`, `QuadraticHasLorentzianSignature`).\n\n**Proof Strategy**: Define the tropical Lefschetz operator as the tropicalization of the algebraic Lefschetz operator. Show that the hard Lefschetz property for a Lorentzian polynomial tropicalizes to the supermodularity of \u2212log(coefficient function). Use the k-fold hierarchy to define tropical Hodge numbers. Verify the tropical Hodge-Riemann bilinear relations at each level of the hierarchy.\n\n**Domain Bridges**: Tropical geometry \u2194 Algebraic geometry (Hodge theory) \u2194 Combinatorics (matroid Chow rings).\n\n**Lineage**: Extends `negLog_supermodular_of_mixed` and connects to `lorentzian_reversed_cauchy_schwarz`.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if realized.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
+      "Tropical",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "ad66d851",
+    "source_exp_id": "a1f92284",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:40:03.396854+00:00"
+    "timestamp": "2026-05-25T19:29:17.982054+00:00"
+  },
+  {
+    "id": "fd_0931",
+    "title": "Direction 5: M-Convex Optimization via Directional Log-Concavity Certificates",
+    "description": "**Conjecture**: For optimization problems on M-convex sets (base polyhedra of matroids, integral polymatroids), a directional log-concavity certificate for the objective function guarantees polynomial-time solvability via a simple exchange algorithm, with the convergence rate controlled by the k-fold depth.\n\n**The key insight is** that the rectangle closure theorem (`support_rectangle_closure`) provides a \"local-to-global\" principle: if the objective function satisfies mixed DLC, then any local improvement via coordinate exchange leads to a global improvement. Combined with the exchange property of the feasible set, this means the exchange algorithm cannot cycle and must converge to the optimum.\n\n**Why now?** Murota's discrete convex analysis provides polynomial-time algorithms for M-convex function minimization, but the algorithms require full M-convexity. Our graded hierarchy via k-fold depth suggests that partial log-concavity (depth k < d) may already suffice for efficient optimization, with the convergence rate degrading gracefully as k decreases.\n\n**Test**: Implement the exchange algorithm for weighted matroid intersection with various objective functions. Measure the number of exchange steps as a function of (n, d, k) where k is the k-fold depth. If the step count scales as O(n^{d-k}), this confirms the graded convergence theory.\n\n**Impact**: Would extend the reach of efficient discrete optimization algorithms to a broader class of objective functions, with certificates that are easier to verify than full M-convexity.\n\n**Catalog References**: `Pythagorean/MultivariateLogConcavity.lean` (`support_rectangle_closure`, `kfold_mono`, `CoeffDirectionalLogConcave`); `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (`SupportSatisfiesExchange`).\n\n**Proof Strategy**: Define a potential function \u03a6 = \u2212\u2211 log f(m\u209c) along the exchange algorithm trajectory. Show that each exchange step decreases \u03a6 by at least a quantity controlled by the k-fold depth. Use the product stability theorem to bound the total number of steps. Formalize the convergence proof and verify soundness of the exchange algorithm against the `SupportSatisfiesExchange` predicate.\n\n**Domain Bridges**: Combinatorial optimization (matroid intersection, submodular maximization) \u2194 Algorithm design (exchange algorithms, local search) \u2194 Economics (mechanism design, auction theory).\n\n**Lineage**: Extends `support_rectangle_closure` and connects to `SupportSatisfiesExchange`.\n\n**Ambition**: Solid extension with direct practical applications.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a1f92284",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T19:29:18.016009+00:00"
   },
   {
     "id": "seed_032",
