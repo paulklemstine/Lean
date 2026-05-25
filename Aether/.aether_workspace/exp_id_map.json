@@ -576,5 +576,7 @@
   "1b3fdf32": "direction_1_sharp_valuation_sensitive_stability_bo.json",
   "2953ee13": "direction_5_stability_of_strongly_log_concave_dist.json",
   "8778f4a5": "direction_2_random_cayley_expanders_and_spectral_g.json",
-  "edab5f0b": "direction_5_certificates_and_product_growth.json"
+  "edab5f0b": "direction_5_certificates_and_product_growth.json",
+  "243a6673": "direction_1_m_convexity_closure_under_differentiat.json",
+  "7e5283ed": "direction_4_information_theoretic_bounds_on_tropic.json"
 }

@@ -231,10 +231,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "54bded48",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:13:44.233016+00:00"
   },
   {
@@ -289,26 +289,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "21d0ab18",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:55:14.021207+00:00"
-  },
-  {
-    "id": "fd_0830",
-    "title": "Direction 1: M-Convexity Closure Under Differentiation",
-    "description": "**Conjecture**: The support exchange property (M-convexity) is preserved by partial differentiation. That is, if $p$ is a homogeneous polynomial with nonneg coefficients whose support satisfies the matroid exchange axiom, then the support of $\\partial p / \\partial x_i$ also satisfies the exchange axiom.\n\nFormally:\n```\ntheorem SupportSatisfiesExchange.pderiv\n    {n : \u2115} {p : MvPolynomial (Fin n) \u211d} {i : Fin n} :\n    SupportSatisfiesExchange p \u2192\n    SupportSatisfiesExchange (MvPolynomial.pderiv i p)\n```\n\n**Test**: Exhaustively verify for all M-convex supports of degree \u2264 6 in \u2264 5 variables that the derivative support remains M-convex. A single counterexample disproves the conjecture; conversely, verified examples up to this bound provide strong evidence.\n\n**Impact**: This would complete the formal bridge between Lorentzian polynomial theory and matroid/discrete convex analysis, showing that the entire derivative hierarchy preserves the combinatorial structure of the support. It would also provide a new proof technique for M-convexity results in matroid theory.\n\n**The key insight is** that M-convexity of support is the combinatorial shadow of Lorentzianity, and the differentiation operation on polynomials corresponds to contraction in matroid theory. Proving this formally would establish a new certified interface between algebraic combinatorics and discrete convex analysis.\n\n**Why now?** The formal definitions of both SupportSatisfiesExchange and partial differentiation are now in the catalog, and the Br\u00e4nd\u00e9n\u2013Huh theory provides the mathematical framework. The exhaustive computational verification is newly feasible with the recognition algorithm.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `SupportSatisfiesExchange`, `pderiv_coeff_nonneg`\n\n**Proof Strategy**: Induction on degree. The base case (degree 2) reduces to checking that 2\u00d72 exchange axiom is preserved. The inductive step uses the multilinearity of the derivative and the exchange axiom structure.\n\n**Domain Bridges**: Matroid theory, discrete convex analysis, Hodge theory\n\n**Lineage**: Extends `recursive_complete_of_exchange` and `pderiv_coeff_nonneg`\n\n**Ambition**: Solid extension \u2014 this is a known consequence of Br\u00e4nd\u00e9n\u2013Huh theory but has not been formally verified\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "83d44e07",
-    "consumed_by_exp_id": "243a6673",
-    "timestamp": "2026-05-25T02:10:32.344475+00:00"
   },
   {
     "id": "fd_0831",
@@ -1294,10 +1274,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "354ccda2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bfa066a8",
     "timestamp": "2026-05-25T21:49:45.182975+00:00"
   },
   {
@@ -1403,24 +1383,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:51:37.228515+00:00"
   },
   {
-    "id": "fd_0952",
-    "title": "Direction 4: Information-Theoretic Bounds on Tropical Barcode Stability",
-    "description": "**Conjecture:** The tropical barcode distance between random filtrations on a fixed graph G is, up to constants, equal to the mutual information between the filtration and the barcode, divided by the graph's entropy rate. Formally: d_T(TPB(G,f), TPB(G,g)) \u2248 I(f; TPB(G,f)) \u00b7 FiltrationSupDist(f,g) / H(G), where H(G) is the entropy of the degree sequence.\n\n**The key insight is** that the degree-weighted event profile is essentially a sufficient statistic for the filtration, and the stability constant (D+1) reflects the information capacity of a degree-D vertex.\n\n**Why now?** Recent advances in information-theoretic persistence (Bubenik, Vergne) have made the connection between persistence and entropy precise for classical barcodes. The tropical setting, with its natural connection to min-plus entropy and max-plus probability, is ripe for an analogous development.\n\n**Test:** Compute mutual information between filtration and barcode for G(n, c/n) with n = 100, c \u2208 {3, 5, 10}. Compare I(f; TPB(G,f)) / H(G) with the empirical stability ratio. Plot the relationship across 500 random graph instances.\n\n**Impact:** Would provide a principled, information-theoretic explanation for why the degree bound is the natural stability constant. Could lead to optimal data compression for tropical barcodes.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, certified_stability_bound)\n\n**Proof Strategy:** Model the filtration as a random process and the barcode as its image under a deterministic function. Apply the data processing inequality to bound the mutual information. Connect the channel capacity to the maximum degree via the capacity of a discrete memoryless channel with D+1 outputs.\n\n**Domain Bridges:** Information theory, entropy, data processing inequality, rate-distortion theory\n\n**Lineage:** Bridges from tropical persistence (Direction 1 foundation) to information theory\n\n**Ambition:** Solid extension \u2014 draws on mature information-theoretic tools\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "834b245c",
-    "consumed_by_exp_id": "7e5283ed",
-    "timestamp": "2026-05-25T21:13:42.045646+00:00"
-  },
-  {
     "id": "fd_0965",
     "title": "Direction 1: Tight Lorentzian Stability Radii for Matroid Families",
     "description": "**Conjecture:** For the uniform matroid $U_{r,n}$, the exact Lorentzian stability radius (maximum coefficient perturbation preserving Lorentzianity of the generating polynomial) is $\\Theta(\\binom{n}{r}^{-1} \\cdot \\lambda_{\\min}^{\\text{gap}})$, where $\\lambda_{\\min}^{\\text{gap}}$ is the minimum normalized Hessian eigengap across all quadratic leaves.\n\n**Test:** Compute the exact stability radius for $U_{r,n}$ with $n \\leq 15$ by binary search over perturbation magnitudes, checking Lorentzianity via eigenvalue computation on all $\\binom{n}{2}$ quadratic leaves. Compare to the predicted formula. Discrepancies of more than 10% in the ratio would refute the conjecture.\n\n**Impact:** Tight stability radii would replace the conservative factor-of-2 bound in `certifyNoisySLC` with optimal constants, potentially doubling the effective robustness radius for practical applications.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `residual_gap_of_perturbation`); `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem `lorentzian_stability_radius_exists`).\n\n**Proof Strategy:** For the upper bound, construct explicit perturbation families that destroy Lorentzianity at the predicted threshold. For the lower bound, use the Hessian eigenvalue structure of the elementary symmetric polynomial to compute the exact quadratic form bound implied by coefficient perturbation.\n\n**Domain Bridges:** Combinatorial optimization (matroid intersection algorithms), algebraic combinatorics (Schur positivity and symmetric function theory).\n\n**Lineage:** Direct extension of `residual_gap_of_perturbation` from this cycle. The uniform matroid case is the canonical test bed.\n\n**Ambition:** Solid extension \u2014 this is a concrete computation grounded in existing theory, but the exact formula would be new and useful.\n\n---",
@@ -1434,7 +1396,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
@@ -1456,11 +1418,11 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
+    "priority_score": 1.0,
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5e0902bf",
     "timestamp": "2026-05-25T22:25:38.941205+00:00"
   },
   {
@@ -1476,7 +1438,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
@@ -1497,7 +1459,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
@@ -1517,12 +1479,204 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:39.023118+00:00"
+  },
+  {
+    "id": "fd_0970",
+    "title": "Direction 1: Canonical Path Poincar\u00e9 Inequality for Cayley Graphs",
+    "description": "**Conjecture:** For any finite group G with canonical path data (gens, paths, L, \u03ba), the variance of any function f: G \u2192 \u211d is bounded by:\n\nVar(f) \u2264 (\u03ba \u00b7 L / |S|) \u00b7 E_S(f)\n\nwhere \u03ba is the edge congestion, L is the max path length, and |S| is the generator set size.\n\n**Test:** Formalize the full canonical path method in the proof system. Verify the bound computationally for S_5 with bubble-sort canonical paths, where \u03ba and L can be computed exactly.\n\n**Impact:** This would give the first formally verified quantitative spectral gap lower bound for Cayley graphs, converting combinatorial path data into a certified expansion certificate. It would make the spectral gap computable from algebraic data alone.\n\n**The key insight is** that the canonical path method of Jerrum\u2013Sinclair, when specialized to Cayley graphs, reduces the spectral gap problem to a counting problem: bound the maximum load on any directed edge. For Cayley graphs, the translation-invariance of the group action should make this counting tractable.\n\n**Why now?** The infrastructure built in this cycle \u2014 Dirichlet energy, variance, Cauchy\u2013Schwarz for finsets, the L\u00b2 contraction \u2014 provides exactly the analytic substrate needed. The missing piece is the telescoping inequality along canonical paths and the congestion counting argument, both of which are combinatorial and amenable to formal proof.\n\n**Catalog References:** `Pythagorean/CayleyExpander/Defs.lean` (CanonicalPathData structure), `Pythagorean/CayleyExpander/SpectralGap.lean` (variance and energy machinery).\n\n**Proof Strategy:** Telescope f(y) - f(x) along the canonical path from x to y. Apply Cauchy\u2013Schwarz to bound (f(y)-f(x))\u00b2 by L \u00b7 \u03a3_{edges on path} (gradient)\u00b2. Sum over all (x,y) pairs and use congestion bound to control the total.\n\n**Domain Bridges:** Markov chain mixing times (probability), network routing (CS), statistical mechanics relaxation (physics).\n\n**Lineage:** Extends Theorems 2 and 3 of this cycle from qualitative (zero-energy \u2194 constant) to quantitative (gap \u2265 explicit bound).\n\n**Ambition:** Solid extension \u2014 builds directly on catalog infrastructure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8778f4a5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:58:43.475104+00:00"
+  },
+  {
+    "id": "fd_0971",
+    "title": "Direction 2: Moment Method Attack on the Random Cayley Expander Conjecture",
+    "description": "**Conjecture:** For random \u03c3, \u03c4 \u2208 S_n conditioned on \u27e8\u03c3,\u03c4\u27e9 = S_n, the quantity\n\n(1/n!) \u00b7 tr(A^(2k)) - 1\n\nis O(1) for fixed k as n \u2192 \u221e, where A is the normalized adjacency matrix of Cay(S_n, {\u03c3\u00b11, \u03c4\u00b11}).\n\n**Test:** Compute tr(A^(2k)) for k = 2, 3, 4 across 100+ random generating pairs for n = 5, 6, 7, 8 and verify uniform boundedness. Then formalize the combinatorial identity linking tr(A^(2k)) to the count of closed walks of length 2k in the Cayley graph, expressible as a sum over word representations.\n\n**Impact:** The moment method is the primary technique for proving spectral gap bounds in random matrix theory. A formalized version for Cayley graphs would open a path to the full Random Cayley Expander Conjecture.\n\n**The key insight is** that tr(A^(2k)) counts the number of elements g \u2208 G representable as a product s\u2081s\u2082...s_{2k} with each s\u1d62 \u2208 S and the product equal to the identity. For random generators of S_n, this count can be analyzed using the cycle structure of permutations and the representation theory of S_n.\n\n**Why now?** The representation theory of S_n is well-developed in Mathlib (Young tableaux, characters), and the combinatorial closed-walk counting can be bootstrapped from the word-reachability theorem proved in this cycle.\n\n**Catalog References:** `Pythagorean/CayleyExpander/Connectivity.lean` (word_in_generators_of_mem_closure), `Algebra/SymmGroupGen/Basic.lean` (symmetric group structure).\n\n**Proof Strategy:** Express tr(A^(2k)) as \u03a3_{\u03c7 irreducible} dim(\u03c7) \u00b7 (\u03a3_{s\u2208S} \u03c7(s)/d)^{2k}. Use representation-theoretic bounds on character sums for random elements of S_n.\n\n**Domain Bridges:** Random matrix theory (mathematics), quantum information theory (physics), representation theory (algebra).\n\n**Lineage:** Extends the trace-method computational experiments of this cycle into a formal asymptotic framework.\n\n**Ambition:** Grand challenge \u2014 this direction, if successful, would essentially prove the Random Cayley Expander Conjecture.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8778f4a5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:58:43.501683+00:00"
+  },
+  {
+    "id": "fd_0972",
+    "title": "Direction 3: Spectral Expansion for Matrix Groups and Arithmetic Quotients",
+    "description": "**Conjecture:** For G = SL_2(F_p) with p prime and generators \u03c3, \u03c4 chosen uniformly conditioned on generation, the spectral gap of Cay(G, {\u03c3\u00b11, \u03c4\u00b11}) is \u03a9(1) with high probability.\n\n**Test:** Implement the construction for SL_2(F_p) for small primes p = 5, 7, 11, 13. Compute spectral gaps and compare with the Ramanujan bound 2\u221a(q-1)/q for q-regular graphs.\n\n**Impact:** This would connect the Cayley expander framework to the Langlands program and property (\u03c4) for arithmetic groups, opening formal verification to one of the deepest areas of modern mathematics.\n\n**The key insight is** that the spectral theory of matrix groups over finite fields is intimately connected to automorphic forms and L-functions. The Ramanujan conjecture for GL_2, proved by Deligne, gives optimal spectral gap bounds for certain Cayley graphs of SL_2(F_p) \u2014 the Ramanujan graphs of Lubotzky\u2013Phillips\u2013Sarnak.\n\n**Why now?** The framework of CayleySpectralData and the zero-energy rigidity theorem extend verbatim to any finite group. The key new ingredient is the representation theory of SL_2(F_p), which is classical and could be formalized incrementally.\n\n**Catalog References:** `Pythagorean/CayleyExpander/Defs.lean` (CayleySpectralData \u2014 works for any finite group), `Pythagorean/CayleyExpander/Connectivity.lean` (all theorems are polymorphic in G).\n\n**Proof Strategy:** Use the Bourgain\u2013Gamburd expansion machine (sum-product theorem \u2192 growth \u2192 spectral gap) adapted to the formal setting.\n\n**Domain Bridges:** Number theory (Ramanujan conjecture), Langlands program (automorphic forms), quantum computing (SL_2 gates).\n\n**Lineage:** Extends the S_n specialization (Theorem 4) to matrix groups, the natural next family.\n\n**Ambition:** Grand challenge \u2014 would represent a major advance in formal arithmetic.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8778f4a5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:58:43.526680+00:00"
+  },
+  {
+    "id": "fd_0973",
+    "title": "Direction 4: Certified Mixing Time Bounds and Cutoff Phenomena",
+    "description": "**Conjecture:** For the Cayley graph of S_n with standard generators (adjacent transposition + long cycle), the mixing time in total variation satisfies:\n\nt_mix(\u03b5) = \u0398(n\u00b2 log n)\n\nand the random walk exhibits a cutoff: the total variation distance transitions from near 1 to near 0 in a window of width O(n\u00b2).\n\n**Test:** Compute the exact total variation distance d(t) = \u2016P^t(e, \u00b7) - \u03c0\u2016_TV for n = 5, 6, 7 and verify the cutoff profile. Formalize the upper bound t_mix \u2264 C \u00b7 n\u00b2 \u00b7 log(n!) / gap using the spectral gap.\n\n**Impact:** Cutoff is one of the most striking phenomena in probability theory \u2014 the abrupt transition from \"far from mixed\" to \"well mixed.\" A formally verified cutoff theorem would connect the spectral gap infrastructure to concrete probabilistic guarantees.\n\n**The key insight is** that the spectral gap gives mixing time bounds via the relation t_mix \u2264 (1/gap) \u00b7 log(|G|/\u03b5), but the actual mixing time can be much smaller due to the contribution of the full spectrum, not just the gap.\n\n**Why now?** The L\u00b2 contraction theorem (Theorem 3) provides the foundational inequality. The variance decomposition and mean-zero projection machinery enable tracking the distance to equilibrium across iterations.\n\n**Catalog References:** `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction, variance), `Pythagorean/CayleyExpander/SymmetricGroup.lean` (S_n generators).\n\n**Proof Strategy:** Upper bound: use spectral gap with L\u00b2\u2192L\u00b9 comparison. Lower bound: use Wilson's method (distinguish random walk distribution from uniform using a test function based on number of fixed points).\n\n**Domain Bridges:** Probability theory (Markov chains), statistical physics (relaxation), card shuffling (combinatorics), MCMC algorithms (statistics/ML).\n\n**Lineage:** Extends the L\u00b2 contraction theorem to total variation mixing guarantees.\n\n**Ambition:** Solid extension \u2014 the spectral gap infrastructure makes upper bounds tractable; cutoff requires additional representation-theoretic input.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8778f4a5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:58:43.552516+00:00"
+  },
+  {
+    "id": "fd_0974",
+    "title": "Direction 5: Expander-Based Derandomization in Certified Computation",
+    "description": "**Conjecture:** For any Boolean function f: S_n \u2192 {0,1} with E[f] \u2265 2/3, a random walk of length O(log(1/\u03b5)/gap) on a Cayley expander of S_n produces k samples such that the majority vote has error probability \u2264 \u03b5, using only O(n log n + k log(degree)) random bits.\n\n**Test:** Implement the Ajtai\u2013Koml\u00f3s\u2013Szemer\u00e9di expander walk sampler for Cay(S_5, {\u03c3\u00b11, \u03c4\u00b11}) and verify the error amplification bound empirically for random Boolean functions with various biases.\n\n**Impact:** This would bridge formal spectral theory to the foundations of derandomization in theoretical computer science, providing certified guarantees for algorithms that use random bits efficiently.\n\n**The key insight is** that correlated samples from an expander walk are \"almost as good as\" independent samples for amplifying success probability, and the spectral gap quantifies the word \"almost.\" This transforms the spectral gap from a graph-theoretic invariant into a computational resource.\n\n**Why now?** The averaging operator machinery, L\u00b2 contraction, and mean-zero analysis from this cycle provide exactly the tools needed to state and prove the expander walk lemma. The key missing piece is the large deviation bound for correlated samples, which can be derived from the L\u00b2 contraction by a Markov inequality argument.\n\n**Catalog References:** `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction, averaging operator), `Algebra/ExpanderWalk/Core.lean` (existing expander walk infrastructure).\n\n**Proof Strategy:** Apply the L\u00b2 contraction theorem k times to bound the variance of the empirical mean. Use Chebyshev's inequality to convert variance bounds to probability bounds. The spectral gap enters through the correlation decay between walk positions.\n\n**Domain Bridges:** Complexity theory (BPP vs P), algorithm design (derandomization), cryptography (pseudorandom generators), quantum computing (quantum walks).\n\n**Lineage:** Connects the Cayley graph spectral framework to the existing ExpanderWalk infrastructure in the Algebra catalog.\n\n**Ambition:** Solid extension with grand challenge elements \u2014 the basic lemma is provable, but optimal bounds require spectral concentration inequalities.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8778f4a5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:58:43.577519+00:00"
+  },
+  {
+    "id": "fd_0975",
+    "title": "Direction 1: Quantitative Growth Bounds for Matrix Groups",
+    "description": "**Conjecture:** For every $n \\geq 2$, there exist universal constants $\\varepsilon_n > 0$ and $C_n \\geq 1$ such that for every prime power $q$ and every certified pair $(g, h)$ generating $\\mathrm{GL}(n, \\mathbb{F}_q)$, with $A = \\{1, g, g^{-1}, h, h^{-1}\\}$, either $A^3 = G$ or $|A^3| \\geq C_n |A|^{1+\\varepsilon_n}$.\n\n**Test:** Enumerate certified pairs in $\\mathrm{GL}(2, \\mathbb{F}_q)$ for $q = 5, 7, 11, 13, 17$ and compute the minimum value of $\\log|A^3|/\\log|A|$ across all non-saturated triples. If this minimum is bounded away from 1 uniformly in $q$, the conjecture is supported.\n\n**The key insight is** that the Strict Growth Theorem guarantees $|A^{k+1}| > |A^k|$ but says nothing about the growth rate. The gap between qualitative growth (our theorem) and quantitative growth (Helfgott's $|A^3| \\geq |A|^{1+\\delta}$) is where the deep structure theory of finite simple groups enters. By formalizing intermediate results \u2014 such as the escape-from-subvarieties lemma of Helfgott \u2014 one can incrementally close this gap.\n\n**Why now?** Our formal infrastructure (product powers, Cayley balls, generation certificates) is exactly the scaffolding needed to state and pursue quantitative bounds. The Strict Growth Theorem provides the base case, and Mathlib's developing theory of finite fields and linear algebra provides the algebraic tools.\n\n**Impact:** A formally verified quantitative growth bound, even for $n = 2$, would be a landmark in formal mathematics \u2014 the first machine-checked result in the Helfgott program.\n\n**Catalog References:** `Catalog/Pythagorean/CertificateExpanders.lean` (spectral certificate structure), `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility certificates).\n\n**Proof Strategy:** Formalize Helfgott's escape-from-subvarieties lemma for $\\mathrm{SL}(2, \\mathbb{F}_p)$: if $A$ generates and $|A^3| < |A|^{1+\\varepsilon}$, then $A$ is approximately contained in a proper algebraic subvariety, which contradicts generation. The key lemma is that the trace map $\\text{tr}: \\mathrm{SL}(2) \\to \\mathbb{F}_p$ cannot concentrate on few values for generating sets.\n\n**Domain Bridges:** Algebraic geometry (subvarieties of $\\mathrm{GL}_n$), additive combinatorics (sum-product estimates in finite fields).\n\n**Lineage:** Extends `strict_growth_of_generating` and `certified_pair_growth` from the current cycle.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 full quantitative growth bounds would require formalizing substantial finite group theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "edab5f0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:59:06.817075+00:00"
+  },
+  {
+    "id": "fd_0976",
+    "title": "Direction 2: Spectral Gap from Product Growth",
+    "description": "**Conjecture:** There exists a formal derivation showing that strict Cayley ball growth implies a positive spectral gap for the Cayley graph adjacency operator. Specifically, if the Cayley ball of radius $k$ satisfies $|B_{k+1}| \\geq (1 + \\delta)|B_k|$ for some $\\delta > 0$ and all $B_k \\neq G$, then the spectral gap $\\lambda_1 - \\lambda_2$ of the normalized adjacency matrix is at least $f(\\delta, |A|)$ for an explicit function $f$.\n\n**Test:** For certified pairs in $\\mathrm{GL}(2, \\mathbb{F}_5)$, compute both the Cayley ball growth rates and the spectral gap of the adjacency matrix numerically. Plot the correlation between growth rate and spectral gap across 100 certified pairs.\n\n**The key insight is** that product growth and spectral expansion are two faces of the same phenomenon. The Expander Mixing Lemma shows that spectral gap controls edge distribution; conversely, the Cheeger inequality shows that expansion controls spectral gap. Our Cayley Ball Strict Growth theorem provides the expansion side; connecting it to spectral gap would complete the bridge.\n\n**Why now?** The `CertificateExpanders.lean` file already defines the averaging operator and proves self-adjointness. The missing link is connecting product growth (proved in this cycle) to the spectral analysis (developed in the catalog). The Cayley ball formulation makes this connection natural: ball growth is graph expansion, which is spectral gap.\n\n**Impact:** A formal spectral-gap theorem from certificate data would unify the algebraic (generation) and analytic (spectral) approaches to expansion.\n\n**Catalog References:** `Catalog/Pythagorean/CertificateExpanders.lean` (averaging operator, self-adjointness, harmonic maximum principle, strict contraction).\n\n**Proof Strategy:** Use the Cheeger inequality: $h(G) \\leq \\sqrt{2(1 - \\lambda_2)}$ where $h$ is the edge expansion constant. Show that Cayley ball growth implies edge expansion $h \\geq \\delta/(1+\\delta)$. Then derive $\\lambda_2 \\leq 1 - h^2/2$.\n\n**Domain Bridges:** Spectral graph theory, Markov chain mixing, random matrix theory.\n\n**Lineage:** Extends `cayley_ball_strict_growth` and `cayley_diameter_bound` from the current cycle, connects to `strict_contraction_of_generates` from the catalog.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 the Cheeger inequality is well-understood; the challenge is formalization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "edab5f0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:59:06.846580+00:00"
+  },
+  {
+    "id": "fd_0977",
+    "title": "Direction 3: Model Theory of Approximate Subgroups",
+    "description": "**Conjecture:** The Strict Growth Theorem can be reinterpreted as a model-theoretic dichotomy: a definable subset $A$ of a finite group $G$ either (a) is contained in a coset of a proper definable subgroup, or (b) satisfies strict growth $|A^{k+1}| > |A^k|$ at every step. This dichotomy should be formalizable in the language of definable sets over pseudofinite fields.\n\n**Test:** Formalize the notion of a \"definable approximate subgroup\" in Lean and prove the dichotomy for definable subsets of $\\mathrm{GL}(2, \\mathbb{F}_q)$.\n\n**The key insight is** that the Breuillard\u2013Green\u2013Tao classification of approximate groups has a model-theoretic kernel: approximate subgroups in connected groups are close to cosets of definable subgroups. Our Strict Growth Theorem is the simplest instance of this dichotomy (the \"non-approximate-subgroup\" case). Formalizing the model-theoretic framework would make the general theory accessible to formal verification.\n\n**Why now?** Hrushovski's work (2012) showed that model theory provides the natural language for approximate group theory. With Lean's type theory and Mathlib's algebraic infrastructure, formalizing definable sets and the compactness arguments that drive the BGT theory is becoming feasible.\n\n**Impact:** A formal model-theoretic framework for approximate groups would bridge formal verification to one of the most active areas of combinatorial group theory.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility and generation certificates provide the \"definable generation\" data).\n\n**Proof Strategy:** Define \"definable subsets\" of $G$ as images of polynomial maps $\\mathbb{F}_q^m \\to G$. Show that the Strict Growth Theorem applies to definable generating sets. Use ultraproduct arguments (formalized in Lean) to transfer to pseudofinite fields.\n\n**Domain Bridges:** Model theory (ultraproducts, definable sets), algebraic geometry (Zariski topology on $\\mathrm{GL}_n$), logic (compactness, transfer).\n\n**Lineage:** Extends `right_mul_stable_eq_univ` (the core algebraic engine) to a model-theoretic context.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 requires substantial model-theoretic infrastructure not yet in Mathlib.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "edab5f0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:59:06.879782+00:00"
+  },
+  {
+    "id": "fd_0978",
+    "title": "Direction 4: Complexity of Certificate Verification",
+    "description": "**Conjecture:** Verifying that a pair $(g, h)$ generates $\\mathrm{GL}(n, \\mathbb{F}_q)$ can be done in polynomial time in $n$ and $\\log q$, using the irreducibility certificate from `MatrixGroupGeneration.lean`. Specifically, checking that the characteristic polynomials of $g$, $h$, and $gh$ are irreducible and satisfy a non-degeneracy condition suffices for generation.\n\n**Test:** Implement the certificate verification algorithm and benchmark it against BFS-based generation testing for $\\mathrm{GL}(2, \\mathbb{F}_q)$ with $q$ up to 1000. Measure speedup.\n\n**The key insight is** that the catalog's irreducibility certificates (`LinearGenerationCertificate`) provide a compact algebraic witness for generation that avoids the exponential cost of enumerating the generated subgroup. If such certificates can be verified in polynomial time and are sufficient for generation, they transform the generation problem from a group-theoretic question to a polynomial algebra question.\n\n**Why now?** The `MatrixGroupGeneration.lean` file proves that irreducible characteristic polynomials force irreducible action, which prevents containment in proper subgroups. The remaining step is to formalize that avoiding all maximal subgroups of $\\mathrm{GL}(n, \\mathbb{F}_q)$ is sufficient for generation, and that this can be checked via characteristic polynomial conditions.\n\n**Impact:** A polynomial-time certified generation test would have applications in cryptography (verifying pseudorandom generators), computational group theory (constructive recognition algorithms), and network design (certified expander construction).\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility certificates, invariant subspace theorem), `Catalog/Pythagorean/CertificateExpanders.lean` (certificate-to-expansion pipeline).\n\n**Proof Strategy:** Formalize Aschbacher's theorem classifying maximal subgroups of $\\mathrm{GL}(n, \\mathbb{F}_q)$ for $n = 2$. Show that each class of maximal subgroups is characterized by a polynomial condition on the generators. Combine to get a polynomial-time generation test.\n\n**Domain Bridges:** Computational complexity (P vs NP for group-theoretic problems), computational algebra (polynomial factorization), cryptography (pseudorandom generators).\n\n**Lineage:** Extends `ProductGrowthCertificate.ofPair` from the current cycle, which constructs certificates from generation hypotheses.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 the classification of maximal subgroups of $\\mathrm{GL}(2)$ is classical and tractable.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "edab5f0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:59:06.907485+00:00"
+  },
+  {
+    "id": "fd_0979",
+    "title": "Direction 5: Formal BGT Structure Theorem",
+    "description": "**Conjecture:** The full Breuillard\u2013Green\u2013Tao classification of approximate subgroups in finite simple groups of Lie type can be formalized in Lean 4, building on the certificate-to-growth infrastructure developed in this cycle.\n\n**Test:** Formalize the statement of the BGT theorem for $\\mathrm{SL}(2, \\mathbb{F}_p)$: every $K$-approximate subgroup $A$ (i.e., $|A^3| \\leq K|A|$) is contained in a set of the form $xH$ where $H$ is a subgroup and $|xH| \\leq f(K)|A|$. Then prove the theorem for $K$ close to 1 using the Strict Growth Theorem.\n\n**The key insight is** that the Strict Growth Theorem already proves the $K = 1$ case: if $|A^3| = |A|$ (so $K = 1$) and $A$ generates $G$ and $1 \\in A$, then $A = G$ (since $A = A^2 = A^3 = \\cdots = G$ by strict growth). The BGT theorem generalizes this to $K > 1$, showing that approximate closure under tripling forces algebraic structure. Our formal infrastructure provides the foundation for this generalization.\n\n**Why now?** The formal proof of the Core Stability Theorem demonstrates that the key technique \u2014 using finite injectivity to establish group-like properties of finite sets \u2014 is formalizable. The BGT proof uses similar techniques at a higher level of abstraction, combined with the classification of finite simple groups. While the full classification is out of reach, the $\\mathrm{SL}(2)$ case is tractable and would demonstrate the approach.\n\n**Impact:** A formally verified BGT theorem, even in the $\\mathrm{SL}(2)$ case, would be a major achievement in formal combinatorics and would validate the certificate-to-growth paradigm at the deepest level.\n\n**Catalog References:** `Pythagorean/CertificateProductGrowth.lean` (all theorems from the current cycle), `Catalog/Pythagorean/CertificateExpanders.lean` (spectral machinery), `Catalog/Algebra/MatrixGroupGeneration.lean` (matrix group structure).\n\n**Proof Strategy:** Following Helfgott (2008) for $\\mathrm{SL}(2, \\mathbb{F}_p)$: (1) Use the trace map to reduce to a sum-product problem in $\\mathbb{F}_p$. (2) Apply sum-product estimates (Bourgain\u2013Katz\u2013Tao) to show that the trace of $A$ cannot concentrate. (3) Use non-concentration to derive growth via escape from subvarieties. Each step can be decomposed into lemmas amenable to formal verification.\n\n**Domain Bridges:** Additive combinatorics (sum-product estimates), algebraic geometry (subvarieties), representation theory (trace maps), classification of finite simple groups.\n\n**Lineage:** Culmination of the certificate-to-growth program initiated in this cycle.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 paradigm-shifting if achieved, requiring formalization of deep results across multiple mathematical domains.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "edab5f0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T22:59:06.937020+00:00"
   },
   {
     "id": "seed_005",
@@ -1647,14 +1801,13 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
-    "id": "fd_0970",
-    "title": "Direction 1: Canonical Path Poincar\u00e9 Inequality for Cayley Graphs",
-    "description": "**Conjecture:** For any finite group G with canonical path data (gens, paths, L, \u03ba), the variance of any function f: G \u2192 \u211d is bounded by:\n\nVar(f) \u2264 (\u03ba \u00b7 L / |S|) \u00b7 E_S(f)\n\nwhere \u03ba is the edge congestion, L is the max path length, and |S| is the generator set size.\n\n**Test:** Formalize the full canonical path method in the proof system. Verify the bound computationally for S_5 with bubble-sort canonical paths, where \u03ba and L can be computed exactly.\n\n**Impact:** This would give the first formally verified quantitative spectral gap lower bound for Cayley graphs, converting combinatorial path data into a certified expansion certificate. It would make the spectral gap computable from algebraic data alone.\n\n**The key insight is** that the canonical path method of Jerrum\u2013Sinclair, when specialized to Cayley graphs, reduces the spectral gap problem to a counting problem: bound the maximum load on any directed edge. For Cayley graphs, the translation-invariance of the group action should make this counting tractable.\n\n**Why now?** The infrastructure built in this cycle \u2014 Dirichlet energy, variance, Cauchy\u2013Schwarz for finsets, the L\u00b2 contraction \u2014 provides exactly the analytic substrate needed. The missing piece is the telescoping inequality along canonical paths and the congestion counting argument, both of which are combinatorial and amenable to formal proof.\n\n**Catalog References:** `Pythagorean/CayleyExpander/Defs.lean` (CanonicalPathData structure), `Pythagorean/CayleyExpander/SpectralGap.lean` (variance and energy machinery).\n\n**Proof Strategy:** Telescope f(y) - f(x) along the canonical path from x to y. Apply Cauchy\u2013Schwarz to bound (f(y)-f(x))\u00b2 by L \u00b7 \u03a3_{edges on path} (gradient)\u00b2. Sum over all (x,y) pairs and use congestion bound to control the total.\n\n**Domain Bridges:** Markov chain mixing times (probability), network routing (CS), statistical mechanics relaxation (physics).\n\n**Lineage:** Extends Theorems 2 and 3 of this cycle from qualitative (zero-energy \u2194 constant) to quantitative (gap \u2265 explicit bound).\n\n**Ambition:** Solid extension \u2014 builds directly on catalog infrastructure.\n\n---",
+    "id": "fd_0980",
+    "title": "Direction 1: Deletion-Contraction Duality for Polynomial Supports",
+    "description": "**Conjecture:** Define *support deletion* as D_i(S) := {m \u2208 S : m_i = 0} (the restriction to vectors with zero i-th coordinate). If S satisfies the exchange property, then D_i(S) satisfies the exchange property, and there is a formal deletion-contraction recurrence for a support-level Tutte polynomial that encodes the contraction hierarchy.\n\n**Test:** Formalize support deletion in Lean. Check the exchange property computationally for all deletions of M-convex subsets of the degree-\u22646 simplex on \u22645 variables. Formalize the Tutte-type recurrence and verify it for uniform matroids and graphic matroids.\n\n**Impact:** This would complete the matroid-theoretic toolkit at the support level, enabling inductive proofs via deletion-contraction for any polynomial invariant that factors through the support. Combined with the contraction theorem, it would give a full minor theory for M-convex polynomial supports.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (contraction theorem), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (exchange definition).\n\n**Proof Strategy:** Direct case analysis, analogous to the contraction proof. For deletion, the key is that removing vectors with m_i = 0 preserves exchange because the exchange witnesses either both have m_i = 0 (and hence remain) or the situation reduces to a previously handled case.\n\n**Domain Bridges:** Matroid theory \u2194 algebraic combinatorics \u2194 knot theory (via Tutte\u2013Jones connections).\n\n**Lineage:** Extends the contraction theorem to a full minor framework.\n\n**Ambition:** Solid extension \u2014 the conjecture is very likely true and fills an obvious gap.\n\n**The key insight is** that deletion corresponds to evaluation (setting x\u1d62 = 0) while contraction corresponds to differentiation, and both preserve the matroidal skeleton.\n\n**Why now?** The contraction half is formally proved. The deletion half should follow by similar techniques, and together they would complete the combinatorial dictionary.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
-      "Computation",
       "Physics",
       "Bridges",
       "Logic"
@@ -1662,18 +1815,18 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "8778f4a5",
+    "source_exp_id": "243a6673",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:58:43.475104+00:00"
+    "timestamp": "2026-05-25T23:33:15.512838+00:00"
   },
   {
-    "id": "fd_0971",
-    "title": "Direction 2: Moment Method Attack on the Random Cayley Expander Conjecture",
-    "description": "**Conjecture:** For random \u03c3, \u03c4 \u2208 S_n conditioned on \u27e8\u03c3,\u03c4\u27e9 = S_n, the quantity\n\n(1/n!) \u00b7 tr(A^(2k)) - 1\n\nis O(1) for fixed k as n \u2192 \u221e, where A is the normalized adjacency matrix of Cay(S_n, {\u03c3\u00b11, \u03c4\u00b11}).\n\n**Test:** Compute tr(A^(2k)) for k = 2, 3, 4 across 100+ random generating pairs for n = 5, 6, 7, 8 and verify uniform boundedness. Then formalize the combinatorial identity linking tr(A^(2k)) to the count of closed walks of length 2k in the Cayley graph, expressible as a sum over word representations.\n\n**Impact:** The moment method is the primary technique for proving spectral gap bounds in random matrix theory. A formalized version for Cayley graphs would open a path to the full Random Cayley Expander Conjecture.\n\n**The key insight is** that tr(A^(2k)) counts the number of elements g \u2208 G representable as a product s\u2081s\u2082...s_{2k} with each s\u1d62 \u2208 S and the product equal to the identity. For random generators of S_n, this count can be analyzed using the cycle structure of permutations and the representation theory of S_n.\n\n**Why now?** The representation theory of S_n is well-developed in Mathlib (Young tableaux, characters), and the combinatorial closed-walk counting can be bootstrapped from the word-reachability theorem proved in this cycle.\n\n**Catalog References:** `Pythagorean/CayleyExpander/Connectivity.lean` (word_in_generators_of_mem_closure), `Algebra/SymmGroupGen/Basic.lean` (symmetric group structure).\n\n**Proof Strategy:** Express tr(A^(2k)) as \u03a3_{\u03c7 irreducible} dim(\u03c7) \u00b7 (\u03a3_{s\u2208S} \u03c7(s)/d)^{2k}. Use representation-theoretic bounds on character sums for random elements of S_n.\n\n**Domain Bridges:** Random matrix theory (mathematics), quantum information theory (physics), representation theory (algebra).\n\n**Lineage:** Extends the trace-method computational experiments of this cycle into a formal asymptotic framework.\n\n**Ambition:** Grand challenge \u2014 this direction, if successful, would essentially prove the Random Cayley Expander Conjecture.\n\n---",
+    "id": "fd_0981",
+    "title": "Direction 2: Valuated M-Convexity and Coefficient Transport",
+    "description": "**Conjecture:** Define a *valuated exchange property* that tracks not just support membership but coefficient values: for \u03b1, \u03b2 \u2208 supp(p) with \u03b1\u1d62 > \u03b2\u1d62, the exchange witness j satisfies a quantitative bound relating the coefficients of the four involved monomials. This valuated exchange should be preserved under differentiation (with appropriate rescaling).\n\n**Test:** Formalize a valuated exchange predicate. Test it on the basis-generating polynomials of uniform matroids with explicit coefficient weights. Prove or disprove preservation for the simplest nontrivial case (n=3, d=2).\n\n**Impact:** This would bridge from combinatorial support (boolean membership) to analytic coefficient behavior (quantitative inequalities), connecting the support-level theorem to log-concavity and ultra-log-concavity of coefficients along rays.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (coeff_pderiv_eq), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signature).\n\n**Proof Strategy:** Use the coefficient formula [\u2202p/\u2202x\u1d62]_m = (m\u1d62+1)\u00b7[p]_{m+e\u1d62} to transport coefficient inequalities. The (m\u1d62+1) factor creates a predictable rescaling that should preserve the valuated exchange up to this factor.\n\n**Domain Bridges:** Discrete convex analysis (Murota's valuated matroids) \u2194 algebraic geometry (intersection theory) \u2194 combinatorial optimization (submodular function minimization).\n\n**Lineage:** Deepens the contraction theorem from topology (support) to geometry (valuated support).\n\n**Ambition:** Solid extension \u2014 the coefficient formula makes the rescaling explicit.\n\n**The key insight is** that the coefficient of the derivative at m is a simple multiplicative transform of the coefficient at m+e\u1d62, so quantitative exchange bounds should transport with controlled distortion.\n\n**Why now?** The coefficient formula is formally proved, and the qualitative (support-level) result is established. The quantitative upgrade is the natural next step.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Computation",
+      "Geometry",
       "Physics",
       "Bridges",
       "Logic"
@@ -1681,57 +1834,39 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "8778f4a5",
+    "source_exp_id": "243a6673",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:58:43.501683+00:00"
+    "timestamp": "2026-05-25T23:33:15.543578+00:00"
   },
   {
-    "id": "fd_0972",
-    "title": "Direction 3: Spectral Expansion for Matrix Groups and Arithmetic Quotients",
-    "description": "**Conjecture:** For G = SL_2(F_p) with p prime and generators \u03c3, \u03c4 chosen uniformly conditioned on generation, the spectral gap of Cay(G, {\u03c3\u00b11, \u03c4\u00b11}) is \u03a9(1) with high probability.\n\n**Test:** Implement the construction for SL_2(F_p) for small primes p = 5, 7, 11, 13. Compute spectral gaps and compare with the Ramanujan bound 2\u221a(q-1)/q for q-regular graphs.\n\n**Impact:** This would connect the Cayley expander framework to the Langlands program and property (\u03c4) for arithmetic groups, opening formal verification to one of the deepest areas of modern mathematics.\n\n**The key insight is** that the spectral theory of matrix groups over finite fields is intimately connected to automorphic forms and L-functions. The Ramanujan conjecture for GL_2, proved by Deligne, gives optimal spectral gap bounds for certain Cayley graphs of SL_2(F_p) \u2014 the Ramanujan graphs of Lubotzky\u2013Phillips\u2013Sarnak.\n\n**Why now?** The framework of CayleySpectralData and the zero-energy rigidity theorem extend verbatim to any finite group. The key new ingredient is the representation theory of SL_2(F_p), which is classical and could be formalized incrementally.\n\n**Catalog References:** `Pythagorean/CayleyExpander/Defs.lean` (CayleySpectralData \u2014 works for any finite group), `Pythagorean/CayleyExpander/Connectivity.lean` (all theorems are polymorphic in G).\n\n**Proof Strategy:** Use the Bourgain\u2013Gamburd expansion machine (sum-product theorem \u2192 growth \u2192 spectral gap) adapted to the formal setting.\n\n**Domain Bridges:** Number theory (Ramanujan conjecture), Langlands program (automorphic forms), quantum computing (SL_2 gates).\n\n**Lineage:** Extends the S_n specialization (Theorem 4) to matrix groups, the natural next family.\n\n**Ambition:** Grand challenge \u2014 would represent a major advance in formal arithmetic.\n\n---",
+    "id": "fd_0982",
+    "title": "Direction 3: Hodge-Theoretic Interpretation of Exchange Depth",
+    "description": "**Conjecture:** The *exchange depth* of a polynomial p \u2014 the maximum total order of mixed differentiation that preserves nonempty M-convex support \u2014 equals the minimum over all coordinates of min_{m \u2208 supp(p)} m_i, which is the \"inner radius\" of the Newton polytope. Furthermore, this quantity has a Hodge-theoretic interpretation as the dimension of a certain positive cone in the cohomology of the associated toric variety.\n\n**Test:** Compute exchange depth for all homogeneous supports of degree \u2264 8 on \u2264 4 variables. Compare with the inner radius. Formalize the inner radius computation in Lean and prove the equality for the full simplex (where both equal d/n rounded down).\n\n**Impact:** This would connect the combinatorial derivative hierarchy to the geometry of Newton polytopes and the algebra of toric varieties, opening a route to machine-verified Hodge-theoretic inequalities.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (exchangeWidth, mixedPDeriv), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Hessian signature).\n\n**Proof Strategy:** For the full simplex, the inner radius is \u230ad/n\u230b and the exchange depth is exactly d (every contraction reduces degree by 1 until the support is a single point). For general M-convex sets, the conjecture may need refinement. Start with a computational census and refine the conjecture based on data.\n\n**Domain Bridges:** Algebraic combinatorics \u2194 algebraic geometry (toric varieties) \u2194 Hodge theory (mixed Hodge structures).\n\n**Lineage:** Extends exchange width monotonicity to a structural invariant with geometric meaning.\n\n**Ambition:** Grand challenge \u2014 the Hodge interpretation is speculative and would require significant new formal infrastructure.\n\n**The key insight is** that exchange depth measures the \"thickness\" of the M-convex set in a direction that corresponds to the depth of the derivative tower, and this thickness should be computable from the Newton polytope alone.\n\n**Why now?** The exchange width machinery is formalized and the monotonicity theorem is proved. The geometric interpretation is the natural question to ask next.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Computation",
+      "Geometry",
       "Physics",
       "Bridges",
-      "Logic"
+      "Logic",
+      "Speculative"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "8778f4a5",
+    "source_exp_id": "243a6673",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:58:43.526680+00:00"
+    "timestamp": "2026-05-25T23:33:15.575441+00:00"
   },
   {
-    "id": "fd_0973",
-    "title": "Direction 4: Certified Mixing Time Bounds and Cutoff Phenomena",
-    "description": "**Conjecture:** For the Cayley graph of S_n with standard generators (adjacent transposition + long cycle), the mixing time in total variation satisfies:\n\nt_mix(\u03b5) = \u0398(n\u00b2 log n)\n\nand the random walk exhibits a cutoff: the total variation distance transitions from near 1 to near 0 in a window of width O(n\u00b2).\n\n**Test:** Compute the exact total variation distance d(t) = \u2016P^t(e, \u00b7) - \u03c0\u2016_TV for n = 5, 6, 7 and verify the cutoff profile. Formalize the upper bound t_mix \u2264 C \u00b7 n\u00b2 \u00b7 log(n!) / gap using the spectral gap.\n\n**Impact:** Cutoff is one of the most striking phenomena in probability theory \u2014 the abrupt transition from \"far from mixed\" to \"well mixed.\" A formally verified cutoff theorem would connect the spectral gap infrastructure to concrete probabilistic guarantees.\n\n**The key insight is** that the spectral gap gives mixing time bounds via the relation t_mix \u2264 (1/gap) \u00b7 log(|G|/\u03b5), but the actual mixing time can be much smaller due to the contribution of the full spectrum, not just the gap.\n\n**Why now?** The L\u00b2 contraction theorem (Theorem 3) provides the foundational inequality. The variance decomposition and mean-zero projection machinery enable tracking the distance to equilibrium across iterations.\n\n**Catalog References:** `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction, variance), `Pythagorean/CayleyExpander/SymmetricGroup.lean` (S_n generators).\n\n**Proof Strategy:** Upper bound: use spectral gap with L\u00b2\u2192L\u00b9 comparison. Lower bound: use Wilson's method (distinguish random walk distribution from uniform using a test function based on number of fixed points).\n\n**Domain Bridges:** Probability theory (Markov chains), statistical physics (relaxation), card shuffling (combinatorics), MCMC algorithms (statistics/ML).\n\n**Lineage:** Extends the L\u00b2 contraction theorem to total variation mixing guarantees.\n\n**Ambition:** Solid extension \u2014 the spectral gap infrastructure makes upper bounds tractable; cutoff requires additional representation-theoretic input.\n\n---",
+    "id": "fd_0983",
+    "title": "Direction 4: Tropical Contraction and Support Truncation",
+    "description": "**Conjecture:** Under tropicalization (replacing + with max and \u00d7 with +), the contraction operation on polynomial supports corresponds to a *tropical truncation* of the Newton polytope: the operation that removes a face of the polytope and re-indexes the remaining lattice points. This tropical truncation preserves the \"tropical M-convexity\" (the tropical analog of the exchange property).\n\n**Test:** Implement tropical polynomial operations in Python. Compute tropical supports for degree-\u22645 polynomials in \u22644 variables. Verify that tropical contraction = support contraction for these cases. Formalize the tropical exchange property and prove it coincides with the classical one for integer-valued tropical polynomials.\n\n**Impact:** This would connect the derivative/contraction theorem to tropical geometry, the fastest-growing interface between combinatorics and algebraic geometry. It would position the M-convexity closure result as a shadow of a deeper tropical-geometric principle.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (SupportContraction), `Catalog/Tropical/` (tropical geometry files if present).\n\n**Proof Strategy:** Establish a formal tropicalization functor that sends MvPolynomial \u211d to tropical polynomials, and show it commutes with contraction. The M-convexity preservation would then follow from the classical result.\n\n**Domain Bridges:** Discrete convex analysis \u2194 tropical geometry \u2194 algebraic geometry (Berkovich spaces, non-Archimedean geometry).\n\n**Lineage:** Extends the contraction theorem to the tropical world.\n\n**Ambition:** Grand challenge \u2014 tropical formalization in Lean is still nascent.\n\n**The key insight is** that support sets are Newton polytopes, contraction acts on lattice points, and tropical geometry provides the natural language for operations on Newton polytopes.\n\n**Why now?** Tropical geometry has reached maturity as a mathematical theory, and its connections to M-convexity via valuated matroids are well-established informally. Formalization would be pioneering.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:58:43.552516+00:00"
-  },
-  {
-    "id": "fd_0974",
-    "title": "Direction 5: Expander-Based Derandomization in Certified Computation",
-    "description": "**Conjecture:** For any Boolean function f: S_n \u2192 {0,1} with E[f] \u2265 2/3, a random walk of length O(log(1/\u03b5)/gap) on a Cayley expander of S_n produces k samples such that the majority vote has error probability \u2264 \u03b5, using only O(n log n + k log(degree)) random bits.\n\n**Test:** Implement the Ajtai\u2013Koml\u00f3s\u2013Szemer\u00e9di expander walk sampler for Cay(S_5, {\u03c3\u00b11, \u03c4\u00b11}) and verify the error amplification bound empirically for random Boolean functions with various biases.\n\n**Impact:** This would bridge formal spectral theory to the foundations of derandomization in theoretical computer science, providing certified guarantees for algorithms that use random bits efficiently.\n\n**The key insight is** that correlated samples from an expander walk are \"almost as good as\" independent samples for amplifying success probability, and the spectral gap quantifies the word \"almost.\" This transforms the spectral gap from a graph-theoretic invariant into a computational resource.\n\n**Why now?** The averaging operator machinery, L\u00b2 contraction, and mean-zero analysis from this cycle provide exactly the tools needed to state and prove the expander walk lemma. The key missing piece is the large deviation bound for correlated samples, which can be derived from the L\u00b2 contraction by a Markov inequality argument.\n\n**Catalog References:** `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction, averaging operator), `Algebra/ExpanderWalk/Core.lean` (existing expander walk infrastructure).\n\n**Proof Strategy:** Apply the L\u00b2 contraction theorem k times to bound the variance of the empirical mean. Use Chebyshev's inequality to convert variance bounds to probability bounds. The spectral gap enters through the correlation decay between walk positions.\n\n**Domain Bridges:** Complexity theory (BPP vs P), algorithm design (derandomization), cryptography (pseudorandom generators), quantum computing (quantum walks).\n\n**Lineage:** Connects the Cayley graph spectral framework to the existing ExpanderWalk infrastructure in the Algebra catalog.\n\n**Ambition:** Solid extension with grand challenge elements \u2014 the basic lemma is provable, but optimal bounds require spectral concentration inequalities.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
+      "Geometry",
+      "Tropical",
       "Cryptography",
       "Bridges",
       "Logic"
@@ -1739,9 +1874,30 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "8778f4a5",
+    "source_exp_id": "243a6673",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:58:43.577519+00:00"
+    "timestamp": "2026-05-25T23:33:15.605805+00:00"
+  },
+  {
+    "id": "fd_0984",
+    "title": "Direction 5: Negative Dependence Preservation Under Conditioning",
+    "description": "**Conjecture:** If a probability distribution \u03bc on {0,1}\u207f is *strongly Rayleigh* (its generating polynomial is stable), then for any element i, the conditional distribution \u03bc(\u00b7|i \u2208 S) is again strongly Rayleigh. At the support level, this reduces to our contraction theorem. At the coefficient level, it requires preserving the stability (zero-free half-plane) property, which should follow from the Borcea-Br\u00e4nd\u00e9n theory.\n\n**Test:** For determinantal point processes (DPPs) with kernel matrices of rank \u2264 5 on \u2264 8 elements, compute the generating polynomial, verify stability, differentiate, and verify stability again. Formalize the connection between conditioning and differentiation for DPPs.\n\n**Impact:** This would provide a formal bridge from algebraic combinatorics to statistical physics and machine learning (DPPs are widely used for diversity-promoting sampling). It would certify that the negative dependence properties that make DPPs useful survive conditioning \u2014 a fact used informally in every DPP application.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (pderiv closure), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian/stable connection).\n\n**Proof Strategy:** Use the Borcea-Br\u00e4nd\u00e9n characterization: a polynomial is stable iff it has nonneg coefficients and its support satisfies exchange (for homogeneous polynomials, this is equivalent to Lorentzianity). Differentiation preserves nonnegativity (proved) and exchange (proved), hence stability.\n\n**Domain Bridges:** Combinatorics (matroid theory) \u2194 probability (DPPs, negative dependence) \u2194 statistical physics (partition functions) \u2194 machine learning (diversity sampling).\n\n**Lineage:** Applies the contraction theorem to the most impactful application domain.\n\n**Ambition:** Solid extension with grand-challenge framing \u2014 the individual steps are provable, but the full formalization of the stable polynomial \u2194 negative dependence connection would be a major formal verification milestone.\n\n**The key insight is** that differentiation = conditioning at the algebraic level, and our contraction theorem provides the combinatorial layer of the preservation argument. The analytic layer (coefficient positivity) is already proved.\n\n**Why now?** DPPs are increasingly important in machine learning, and practitioners rely on negative dependence preservation without formal guarantees. A machine-checked proof would provide certifiable guarantees for algorithmic applications.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "243a6673",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T23:33:15.642033+00:00"
   },
   {
     "id": "seed_013",
@@ -2186,32 +2342,15 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:03.321531+00:00"
   },
   {
-    "id": "fd_0975",
-    "title": "Direction 1: Quantitative Growth Bounds for Matrix Groups",
-    "description": "**Conjecture:** For every $n \\geq 2$, there exist universal constants $\\varepsilon_n > 0$ and $C_n \\geq 1$ such that for every prime power $q$ and every certified pair $(g, h)$ generating $\\mathrm{GL}(n, \\mathbb{F}_q)$, with $A = \\{1, g, g^{-1}, h, h^{-1}\\}$, either $A^3 = G$ or $|A^3| \\geq C_n |A|^{1+\\varepsilon_n}$.\n\n**Test:** Enumerate certified pairs in $\\mathrm{GL}(2, \\mathbb{F}_q)$ for $q = 5, 7, 11, 13, 17$ and compute the minimum value of $\\log|A^3|/\\log|A|$ across all non-saturated triples. If this minimum is bounded away from 1 uniformly in $q$, the conjecture is supported.\n\n**The key insight is** that the Strict Growth Theorem guarantees $|A^{k+1}| > |A^k|$ but says nothing about the growth rate. The gap between qualitative growth (our theorem) and quantitative growth (Helfgott's $|A^3| \\geq |A|^{1+\\delta}$) is where the deep structure theory of finite simple groups enters. By formalizing intermediate results \u2014 such as the escape-from-subvarieties lemma of Helfgott \u2014 one can incrementally close this gap.\n\n**Why now?** Our formal infrastructure (product powers, Cayley balls, generation certificates) is exactly the scaffolding needed to state and pursue quantitative bounds. The Strict Growth Theorem provides the base case, and Mathlib's developing theory of finite fields and linear algebra provides the algebraic tools.\n\n**Impact:** A formally verified quantitative growth bound, even for $n = 2$, would be a landmark in formal mathematics \u2014 the first machine-checked result in the Helfgott program.\n\n**Catalog References:** `Catalog/Pythagorean/CertificateExpanders.lean` (spectral certificate structure), `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility certificates).\n\n**Proof Strategy:** Formalize Helfgott's escape-from-subvarieties lemma for $\\mathrm{SL}(2, \\mathbb{F}_p)$: if $A$ generates and $|A^3| < |A|^{1+\\varepsilon}$, then $A$ is approximately contained in a proper algebraic subvariety, which contradicts generation. The key lemma is that the trace map $\\text{tr}: \\mathrm{SL}(2) \\to \\mathbb{F}_p$ cannot concentrate on few values for generating sets.\n\n**Domain Bridges:** Algebraic geometry (subvarieties of $\\mathrm{GL}_n$), additive combinatorics (sum-product estimates in finite fields).\n\n**Lineage:** Extends `strict_growth_of_generating` and `certified_pair_growth` from the current cycle.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 full quantitative growth bounds would require formalizing substantial finite group theory.\n\n---",
+    "id": "fd_0985",
+    "title": "Direction 1: Spectral-Tropical Entropy Bridge",
+    "description": "**Conjecture:** For any connected graph $G$ with maximum degree $\\Delta$ and largest adjacency eigenvalue $\\lambda_1$:\n$$H(G) \\geq \\log(\\lambda_1 / \\Delta)$$\nwhere $H(G)$ is the graph degree entropy.\n\n**The key insight is...** The degree entropy captures how uniformly the graph distributes topological information capacity, while $\\lambda_1 / \\Delta$ measures how close the graph is to being regular (by the Perron-Frobenius theorem, $\\lambda_1 / \\Delta \\leq 1$ with equality iff $G$ is regular). The conjecture asserts that irregular graphs have lower degree entropy, bounded below by the spectral irregularity measure. This would connect three domains: tropical algebra (stability), information theory (entropy), and spectral theory (eigenvalues).\n\n**Why now?** The formal verification of degree entropy non-negativity (Theorem 7.1 in our work) provides the foundation. Mathlib now contains the spectral theory of finite graphs (adjacency matrix eigenvalues) and the Perron-Frobenius theorem, making a formal proof feasible. The Alon-Boppana bound $\\lambda_1 \\geq 2\\sqrt{\\Delta - 1} - o(1)$ would give explicit lower bounds.\n\n**Test:** Compute $H(G)$ and $\\log(\\lambda_1/\\Delta)$ for 1000 random graphs with $n = 50$ vertices and edge probability $p \\in \\{0.1, 0.3, 0.5\\}$. Verify the inequality holds in all cases.\n\n**Impact:** Establishes a spectral floor on tropical information content, enabling stability bounds derived purely from eigenvalue data.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalBridge/Stability.lean` (degree bounds), `Catalog/Pythagorean/TropicalBridge/TropicalInformationTheory.lean` (degree entropy).\n\n**Proof Strategy:** Use the concavity of log and the relationship $\\sum p_v = 1$, $\\sum p_v \\cdot \\deg(v) = \\text{avg\\_degree}$. Apply Jensen's inequality to bound the entropy from below. Connect to $\\lambda_1$ via the Rayleigh quotient characterization.\n\n**Domain Bridges:** Spectral graph theory \u2194 Information theory \u2194 Tropical geometry.\n\n**Lineage:** Extends `degree_entropy_nonneg` and `capacity_gap_formula`.\n\n**Ambition:** Solid extension (3/5). Builds directly on established catalog theorems with clear proof strategy.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:59:06.817075+00:00"
-  },
-  {
-    "id": "fd_0976",
-    "title": "Direction 2: Spectral Gap from Product Growth",
-    "description": "**Conjecture:** There exists a formal derivation showing that strict Cayley ball growth implies a positive spectral gap for the Cayley graph adjacency operator. Specifically, if the Cayley ball of radius $k$ satisfies $|B_{k+1}| \\geq (1 + \\delta)|B_k|$ for some $\\delta > 0$ and all $B_k \\neq G$, then the spectral gap $\\lambda_1 - \\lambda_2$ of the normalized adjacency matrix is at least $f(\\delta, |A|)$ for an explicit function $f$.\n\n**Test:** For certified pairs in $\\mathrm{GL}(2, \\mathbb{F}_5)$, compute both the Cayley ball growth rates and the spectral gap of the adjacency matrix numerically. Plot the correlation between growth rate and spectral gap across 100 certified pairs.\n\n**The key insight is** that product growth and spectral expansion are two faces of the same phenomenon. The Expander Mixing Lemma shows that spectral gap controls edge distribution; conversely, the Cheeger inequality shows that expansion controls spectral gap. Our Cayley Ball Strict Growth theorem provides the expansion side; connecting it to spectral gap would complete the bridge.\n\n**Why now?** The `CertificateExpanders.lean` file already defines the averaging operator and proves self-adjointness. The missing link is connecting product growth (proved in this cycle) to the spectral analysis (developed in the catalog). The Cayley ball formulation makes this connection natural: ball growth is graph expansion, which is spectral gap.\n\n**Impact:** A formal spectral-gap theorem from certificate data would unify the algebraic (generation) and analytic (spectral) approaches to expansion.\n\n**Catalog References:** `Catalog/Pythagorean/CertificateExpanders.lean` (averaging operator, self-adjointness, harmonic maximum principle, strict contraction).\n\n**Proof Strategy:** Use the Cheeger inequality: $h(G) \\leq \\sqrt{2(1 - \\lambda_2)}$ where $h$ is the edge expansion constant. Show that Cayley ball growth implies edge expansion $h \\geq \\delta/(1+\\delta)$. Then derive $\\lambda_2 \\leq 1 - h^2/2$.\n\n**Domain Bridges:** Spectral graph theory, Markov chain mixing, random matrix theory.\n\n**Lineage:** Extends `cayley_ball_strict_growth` and `cayley_diameter_bound` from the current cycle, connects to `strict_contraction_of_generates` from the catalog.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 the Cheeger inequality is well-understood; the challenge is formalization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
       "Computation",
+      "Tropical",
       "Physics",
       "Bridges",
       "Logic"
@@ -2219,66 +2358,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "edab5f0b",
+    "source_exp_id": "7e5283ed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:59:06.846580+00:00"
-  },
-  {
-    "id": "fd_0977",
-    "title": "Direction 3: Model Theory of Approximate Subgroups",
-    "description": "**Conjecture:** The Strict Growth Theorem can be reinterpreted as a model-theoretic dichotomy: a definable subset $A$ of a finite group $G$ either (a) is contained in a coset of a proper definable subgroup, or (b) satisfies strict growth $|A^{k+1}| > |A^k|$ at every step. This dichotomy should be formalizable in the language of definable sets over pseudofinite fields.\n\n**Test:** Formalize the notion of a \"definable approximate subgroup\" in Lean and prove the dichotomy for definable subsets of $\\mathrm{GL}(2, \\mathbb{F}_q)$.\n\n**The key insight is** that the Breuillard\u2013Green\u2013Tao classification of approximate groups has a model-theoretic kernel: approximate subgroups in connected groups are close to cosets of definable subgroups. Our Strict Growth Theorem is the simplest instance of this dichotomy (the \"non-approximate-subgroup\" case). Formalizing the model-theoretic framework would make the general theory accessible to formal verification.\n\n**Why now?** Hrushovski's work (2012) showed that model theory provides the natural language for approximate group theory. With Lean's type theory and Mathlib's algebraic infrastructure, formalizing definable sets and the compactness arguments that drive the BGT theory is becoming feasible.\n\n**Impact:** A formal model-theoretic framework for approximate groups would bridge formal verification to one of the most active areas of combinatorial group theory.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility and generation certificates provide the \"definable generation\" data).\n\n**Proof Strategy:** Define \"definable subsets\" of $G$ as images of polynomial maps $\\mathbb{F}_q^m \\to G$. Show that the Strict Growth Theorem applies to definable generating sets. Use ultraproduct arguments (formalized in Lean) to transfer to pseudofinite fields.\n\n**Domain Bridges:** Model theory (ultraproducts, definable sets), algebraic geometry (Zariski topology on $\\mathrm{GL}_n$), logic (compactness, transfer).\n\n**Lineage:** Extends `right_mul_stable_eq_univ` (the core algebraic engine) to a model-theoretic context.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 requires substantial model-theoretic infrastructure not yet in Mathlib.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:59:06.879782+00:00"
-  },
-  {
-    "id": "fd_0978",
-    "title": "Direction 4: Complexity of Certificate Verification",
-    "description": "**Conjecture:** Verifying that a pair $(g, h)$ generates $\\mathrm{GL}(n, \\mathbb{F}_q)$ can be done in polynomial time in $n$ and $\\log q$, using the irreducibility certificate from `MatrixGroupGeneration.lean`. Specifically, checking that the characteristic polynomials of $g$, $h$, and $gh$ are irreducible and satisfy a non-degeneracy condition suffices for generation.\n\n**Test:** Implement the certificate verification algorithm and benchmark it against BFS-based generation testing for $\\mathrm{GL}(2, \\mathbb{F}_q)$ with $q$ up to 1000. Measure speedup.\n\n**The key insight is** that the catalog's irreducibility certificates (`LinearGenerationCertificate`) provide a compact algebraic witness for generation that avoids the exponential cost of enumerating the generated subgroup. If such certificates can be verified in polynomial time and are sufficient for generation, they transform the generation problem from a group-theoretic question to a polynomial algebra question.\n\n**Why now?** The `MatrixGroupGeneration.lean` file proves that irreducible characteristic polynomials force irreducible action, which prevents containment in proper subgroups. The remaining step is to formalize that avoiding all maximal subgroups of $\\mathrm{GL}(n, \\mathbb{F}_q)$ is sufficient for generation, and that this can be checked via characteristic polynomial conditions.\n\n**Impact:** A polynomial-time certified generation test would have applications in cryptography (verifying pseudorandom generators), computational group theory (constructive recognition algorithms), and network design (certified expander construction).\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility certificates, invariant subspace theorem), `Catalog/Pythagorean/CertificateExpanders.lean` (certificate-to-expansion pipeline).\n\n**Proof Strategy:** Formalize Aschbacher's theorem classifying maximal subgroups of $\\mathrm{GL}(n, \\mathbb{F}_q)$ for $n = 2$. Show that each class of maximal subgroups is characterized by a polynomial condition on the generators. Combine to get a polynomial-time generation test.\n\n**Domain Bridges:** Computational complexity (P vs NP for group-theoretic problems), computational algebra (polynomial factorization), cryptography (pseudorandom generators).\n\n**Lineage:** Extends `ProductGrowthCertificate.ofPair` from the current cycle, which constructs certificates from generation hypotheses.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 the classification of maximal subgroups of $\\mathrm{GL}(2)$ is classical and tractable.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:59:06.907485+00:00"
-  },
-  {
-    "id": "fd_0979",
-    "title": "Direction 5: Formal BGT Structure Theorem",
-    "description": "**Conjecture:** The full Breuillard\u2013Green\u2013Tao classification of approximate subgroups in finite simple groups of Lie type can be formalized in Lean 4, building on the certificate-to-growth infrastructure developed in this cycle.\n\n**Test:** Formalize the statement of the BGT theorem for $\\mathrm{SL}(2, \\mathbb{F}_p)$: every $K$-approximate subgroup $A$ (i.e., $|A^3| \\leq K|A|$) is contained in a set of the form $xH$ where $H$ is a subgroup and $|xH| \\leq f(K)|A|$. Then prove the theorem for $K$ close to 1 using the Strict Growth Theorem.\n\n**The key insight is** that the Strict Growth Theorem already proves the $K = 1$ case: if $|A^3| = |A|$ (so $K = 1$) and $A$ generates $G$ and $1 \\in A$, then $A = G$ (since $A = A^2 = A^3 = \\cdots = G$ by strict growth). The BGT theorem generalizes this to $K > 1$, showing that approximate closure under tripling forces algebraic structure. Our formal infrastructure provides the foundation for this generalization.\n\n**Why now?** The formal proof of the Core Stability Theorem demonstrates that the key technique \u2014 using finite injectivity to establish group-like properties of finite sets \u2014 is formalizable. The BGT proof uses similar techniques at a higher level of abstraction, combined with the classification of finite simple groups. While the full classification is out of reach, the $\\mathrm{SL}(2)$ case is tractable and would demonstrate the approach.\n\n**Impact:** A formally verified BGT theorem, even in the $\\mathrm{SL}(2)$ case, would be a major achievement in formal combinatorics and would validate the certificate-to-growth paradigm at the deepest level.\n\n**Catalog References:** `Pythagorean/CertificateProductGrowth.lean` (all theorems from the current cycle), `Catalog/Pythagorean/CertificateExpanders.lean` (spectral machinery), `Catalog/Algebra/MatrixGroupGeneration.lean` (matrix group structure).\n\n**Proof Strategy:** Following Helfgott (2008) for $\\mathrm{SL}(2, \\mathbb{F}_p)$: (1) Use the trace map to reduce to a sum-product problem in $\\mathbb{F}_p$. (2) Apply sum-product estimates (Bourgain\u2013Katz\u2013Tao) to show that the trace of $A$ cannot concentrate. (3) Use non-concentration to derive growth via escape from subvarieties. Each step can be decomposed into lemmas amenable to formal verification.\n\n**Domain Bridges:** Additive combinatorics (sum-product estimates), algebraic geometry (subvarieties), representation theory (trace maps), classification of finite simple groups.\n\n**Lineage:** Culmination of the certificate-to-growth program initiated in this cycle.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 paradigm-shifting if achieved, requiring formalization of deep results across multiple mathematical domains.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:59:06.937020+00:00"
+    "timestamp": "2026-05-25T23:33:37.973936+00:00"
   },
   {
     "id": "seed_032",
