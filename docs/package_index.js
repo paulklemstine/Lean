@@ -1042,10 +1042,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "21d0ab18",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f0c9762",
     "timestamp": "2026-05-25T00:55:13.970837+00:00"
   },
   {
@@ -1377,10 +1377,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "36c508b0",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:05:35.257371+00:00"
   },
   {
