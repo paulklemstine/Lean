@@ -20,7 +20,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_002",
@@ -42,7 +44,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_003",
@@ -64,7 +68,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_004",
@@ -85,7 +91,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_005",
@@ -107,7 +115,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_006",
@@ -129,7 +139,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_007",
@@ -150,7 +162,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_008",
@@ -171,7 +185,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_009",
@@ -194,7 +210,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_010",
@@ -216,7 +234,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_011",
@@ -238,7 +258,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_012",
@@ -260,7 +282,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_013",
@@ -281,7 +305,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_014",
@@ -303,7 +329,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_015",
@@ -325,7 +353,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_016",
@@ -347,7 +377,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_017",
@@ -369,7 +401,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_018",
@@ -391,7 +425,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_019",
@@ -413,7 +449,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_020",
@@ -435,7 +473,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_021",
@@ -457,7 +497,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_022",
@@ -479,7 +521,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_023",
@@ -501,7 +545,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_024",
@@ -522,7 +568,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_025",
@@ -543,7 +591,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_026",
@@ -565,7 +615,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_027",
@@ -587,7 +639,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_028",
@@ -609,7 +663,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_029",
@@ -631,7 +687,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_030",
@@ -653,7 +711,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_031",
@@ -675,7 +735,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_032",
@@ -696,7 +758,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_033",
@@ -718,7 +782,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_034",
@@ -740,7 +806,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_035",
@@ -762,7 +830,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_036",
@@ -783,7 +853,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_037",
@@ -804,7 +876,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_038",
@@ -827,7 +901,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_039",
@@ -850,7 +926,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_040",
@@ -873,7 +951,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_041",
@@ -896,7 +976,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_042",
@@ -919,7 +1001,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_043",
@@ -942,7 +1026,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_044",
@@ -965,7 +1051,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_045",
@@ -987,7 +1075,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_046",
@@ -1010,7 +1100,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_047",
@@ -1026,14 +1118,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.82,
+      "priority_score": 0.9199999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.642160+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_048",
@@ -1056,7 +1150,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_049",
@@ -1079,7 +1175,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_050",
@@ -1102,7 +1200,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_051",
@@ -1124,7 +1224,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_052",
@@ -1147,7 +1249,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_053",
@@ -1170,7 +1274,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_054",
@@ -1187,13 +1293,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.9,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.694274+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_055",
@@ -1215,7 +1323,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_056",
@@ -1237,7 +1347,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_057",
@@ -1260,7 +1372,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_058",
@@ -1277,13 +1391,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.76,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.723031+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_059",
@@ -1305,7 +1421,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_060",
@@ -1327,7 +1445,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_061",
@@ -1344,13 +1464,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.82,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T22:37:54.748891+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_062",
@@ -1373,7 +1495,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_063",
@@ -1396,7 +1520,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_064",
@@ -1419,7 +1545,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_065",
@@ -1442,7 +1570,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_066",
@@ -1465,7 +1595,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_067",
@@ -1488,7 +1620,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_068",
@@ -1511,7 +1645,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_069",
@@ -1534,7 +1670,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_070",
@@ -1557,7 +1695,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_071",
@@ -1580,7 +1720,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_072",
@@ -1603,7 +1745,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_073",
@@ -1626,7 +1770,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_074",
@@ -1649,7 +1795,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_075",
@@ -1672,7 +1820,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_076",
@@ -1695,7 +1845,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_077",
@@ -1718,7 +1870,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_078",
@@ -1741,7 +1895,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_079",
@@ -1764,7 +1920,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_080",
@@ -1787,7 +1945,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_081",
@@ -1810,7 +1970,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_082",
@@ -1833,7 +1995,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_083",
@@ -1856,7 +2020,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_084",
@@ -1879,7 +2045,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_085",
@@ -1902,7 +2070,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_086",
@@ -1925,7 +2095,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_087",
@@ -1948,7 +2120,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_088",
@@ -1971,7 +2145,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_089",
@@ -1994,7 +2170,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_090",
@@ -2017,7 +2195,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_091",
@@ -2040,7 +2220,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_092",
@@ -2063,7 +2245,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_093",
@@ -2086,7 +2270,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_094",
@@ -2109,7 +2295,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_095",
@@ -2132,7 +2320,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_096",
@@ -2155,7 +2345,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_097",
@@ -2178,7 +2370,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_098",
@@ -2201,7 +2395,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_099",
@@ -2224,7 +2420,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_100",
@@ -2247,7 +2445,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_101",
@@ -2270,7 +2470,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_102",
@@ -2293,7 +2495,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_103",
@@ -2316,7 +2520,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "seed_104",
@@ -2339,7 +2545,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0783",
@@ -2365,7 +2573,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0784",
@@ -2382,14 +2592,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:24.476543+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0785",
@@ -2407,14 +2619,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:24.492421+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0786",
@@ -2432,14 +2646,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:24.506271+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0787",
@@ -2457,14 +2673,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:24.518980+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0788",
@@ -2483,13 +2701,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:11:24.532304+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0789",
@@ -2511,7 +2731,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0790",
@@ -2531,14 +2753,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:12:21.832370+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0791",
@@ -2559,14 +2783,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:12:21.848642+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0792",
@@ -2592,7 +2818,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0793",
@@ -2611,14 +2839,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:12:21.876594+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0794",
@@ -2638,14 +2868,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:12:21.890989+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0795",
@@ -2667,7 +2899,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0796",
@@ -2688,7 +2922,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0797",
@@ -2712,7 +2948,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0798",
@@ -2734,7 +2972,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0799",
@@ -2759,7 +2999,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0800",
@@ -2777,14 +3019,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:13:44.233016+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0801",
@@ -2804,14 +3048,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:13:44.246682+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0802",
@@ -2832,13 +3078,15 @@
       "research_mode": "prove",
       "depth_estimate": 3,
       "priority_score": 0.7,
-      "status": "available",
+      "status": "pruned",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:13:44.261184+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0803",
@@ -2857,14 +3105,16 @@
       "proof_strategy": "",
       "research_mode": "prove",
       "depth_estimate": 3,
-      "priority_score": 0.7,
+      "priority_score": 0.7999999999999999,
       "status": "available",
       "consumed_by_exp_id": "",
       "timestamp": "2026-05-24T23:13:44.276911+00:00",
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0804",
@@ -2886,7 +3136,33 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
+    },
+    {
+      "id": "fd_0805",
+      "title": "Zeta-Spectral Rigidity of Proof Dependency Graphs",
+      "description": "Conjecture: For any finitely axiomatized theory T with two independent large formalization corpora C1 and C2 of the same mathematical domain, the normalized Ihara zeta function of the directed proof-dependency graph converges, under corpus growth, to a theory-specific limit invariant Z_T that is independent of presentation up to explicit finite-size error. Test: Build proof-dependency graphs from multiple formal libraries/formalization styles for the same theory (for example groups, commutative algebra, or measure theory), compute their normalized zeta functions and compare cross-corpus convergence against null models obtained by degree-preserving rewiring; the conjecture is refuted if presentation effects do not decay or if no stable invariant emerges. Impact: This would introduce a genuinely new spectral invariant of mathematical theories, enabling quantitative comparison of theories, transfer of lemmas across libraries via zeta matching, and a new bridge between graph zeta functions, formal proof mining, and the large-scale geometry of mathematics.",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "domains": [
+        "Graph Zeta Functions",
+        "Formalized Mathematics"
+      ],
+      "proof_strategy": "",
+      "research_mode": "prove",
+      "depth_estimate": 3,
+      "priority_score": 0.8,
+      "status": "available",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-05-25T00:25:26.921712+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     }
   ],
   "pruned": [
@@ -2910,7 +3186,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0162",
@@ -2933,7 +3211,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0276",
@@ -2954,7 +3234,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0277",
@@ -2975,7 +3257,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0278",
@@ -2996,7 +3280,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0283",
@@ -3017,7 +3303,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0285",
@@ -3039,7 +3327,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0280",
@@ -3060,7 +3350,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0281",
@@ -3081,7 +3373,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0284",
@@ -3102,7 +3396,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0282",
@@ -3123,7 +3419,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0245",
@@ -3145,7 +3443,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0251",
@@ -3167,7 +3467,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0279",
@@ -3189,7 +3491,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0296",
@@ -3211,7 +3515,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0293",
@@ -3232,7 +3538,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0294",
@@ -3253,7 +3561,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0295",
@@ -3274,7 +3584,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0065",
@@ -3296,7 +3608,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0081",
@@ -3318,7 +3632,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0290",
@@ -3342,7 +3658,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0289",
@@ -3363,7 +3681,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0292",
@@ -3385,7 +3705,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0291",
@@ -3407,7 +3729,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0239",
@@ -3429,7 +3753,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0299",
@@ -3451,7 +3777,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0186",
@@ -3473,7 +3801,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0203",
@@ -3495,7 +3825,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0149",
@@ -3517,7 +3849,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0179",
@@ -3539,7 +3873,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0185",
@@ -3561,7 +3897,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0147",
@@ -3583,7 +3921,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0148",
@@ -3605,7 +3945,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0306",
@@ -3626,7 +3968,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0307",
@@ -3647,7 +3991,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0309",
@@ -3668,7 +4014,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0141",
@@ -3690,7 +4038,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0308",
@@ -3712,7 +4062,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0311",
@@ -3733,7 +4085,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0310",
@@ -3754,7 +4108,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0057",
@@ -3777,7 +4133,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0066",
@@ -3801,7 +4159,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0117",
@@ -3823,7 +4183,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0312",
@@ -3845,7 +4207,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0313",
@@ -3866,7 +4230,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0320",
@@ -3888,7 +4254,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0326",
@@ -3910,7 +4278,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0328",
@@ -3932,7 +4302,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0329",
@@ -3954,7 +4326,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0330",
@@ -3976,7 +4350,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0314",
@@ -3999,7 +4375,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0056",
@@ -4022,7 +4400,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0128",
@@ -4048,7 +4428,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0309",
@@ -4070,7 +4452,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0333",
@@ -4091,7 +4475,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0331",
@@ -4113,7 +4499,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0334",
@@ -4134,7 +4522,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0330",
@@ -4155,7 +4545,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0341",
@@ -4177,7 +4569,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0342",
@@ -4199,7 +4593,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0343",
@@ -4221,7 +4617,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0344",
@@ -4243,7 +4641,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0332",
@@ -4267,7 +4667,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0271",
@@ -4293,7 +4695,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0338",
@@ -4315,7 +4719,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0344",
@@ -4337,7 +4743,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0278",
@@ -4363,7 +4771,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0344",
@@ -4385,7 +4795,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0345",
@@ -4407,7 +4819,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0346",
@@ -4429,7 +4843,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0352",
@@ -4451,7 +4867,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0350",
@@ -4473,7 +4891,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0275",
@@ -4499,7 +4919,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0276",
@@ -4526,7 +4948,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0277",
@@ -4552,7 +4976,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0354",
@@ -4574,7 +5000,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0268",
@@ -4600,7 +5028,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0270",
@@ -4626,7 +5056,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0274",
@@ -4652,7 +5084,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0362",
@@ -4674,7 +5108,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -4696,7 +5132,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -4718,7 +5156,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -4740,7 +5180,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0364",
@@ -4761,7 +5203,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0267",
@@ -4788,7 +5232,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0293",
@@ -4816,7 +5262,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0294",
@@ -4843,7 +5291,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0360",
@@ -4865,7 +5315,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0362",
@@ -4887,7 +5339,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -4909,7 +5363,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0231",
@@ -4933,7 +5389,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0242",
@@ -4960,7 +5418,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0253",
@@ -4986,7 +5446,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0263",
@@ -5013,7 +5475,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0266",
@@ -5039,7 +5503,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -5061,7 +5527,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0367",
@@ -5082,7 +5550,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0370",
@@ -5104,7 +5574,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0373",
@@ -5126,7 +5598,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0365",
@@ -5147,7 +5621,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0366",
@@ -5168,7 +5644,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0368",
@@ -5189,7 +5667,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0376",
@@ -5211,7 +5691,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0367",
@@ -5233,7 +5715,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0368",
@@ -5255,7 +5739,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0369",
@@ -5277,7 +5763,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0370",
@@ -5299,7 +5787,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0375",
@@ -5321,7 +5811,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0377",
@@ -5348,7 +5840,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -5370,7 +5864,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0364",
@@ -5392,7 +5888,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0372",
@@ -5414,7 +5912,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0368",
@@ -5436,7 +5936,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0374",
@@ -5462,7 +5964,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0375",
@@ -5488,7 +5992,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0376",
@@ -5514,7 +6020,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0377",
@@ -5540,7 +6048,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0373",
@@ -5562,7 +6072,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0380",
@@ -5584,7 +6096,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0379",
@@ -5606,7 +6120,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0381",
@@ -5627,7 +6143,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0377",
@@ -5649,7 +6167,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0378",
@@ -5671,7 +6191,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0377",
@@ -5693,7 +6215,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0371",
@@ -5715,7 +6239,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0363",
@@ -5737,7 +6263,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0364",
@@ -5759,7 +6287,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0365",
@@ -5781,7 +6311,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0379",
@@ -5803,7 +6335,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0380",
@@ -5825,7 +6359,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0386",
@@ -5847,7 +6383,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0386",
@@ -5874,7 +6412,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0387",
@@ -5898,7 +6438,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0382",
@@ -5920,7 +6462,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0382",
@@ -5942,7 +6486,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0383",
@@ -5964,7 +6510,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0384",
@@ -5986,7 +6534,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0383",
@@ -6008,7 +6558,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0384",
@@ -6030,7 +6582,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0388",
@@ -6052,7 +6606,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0381",
@@ -6074,7 +6630,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0385",
@@ -6096,7 +6654,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0392",
@@ -6124,7 +6684,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0393",
@@ -6150,7 +6712,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0382",
@@ -6172,7 +6736,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0388",
@@ -6194,7 +6760,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0392",
@@ -6219,7 +6787,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0393",
@@ -6245,7 +6815,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0394",
@@ -6269,7 +6841,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0389",
@@ -6291,7 +6865,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0315",
@@ -6318,7 +6894,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0386",
@@ -6340,7 +6918,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0387",
@@ -6362,7 +6942,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0385",
@@ -6384,7 +6966,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0391",
@@ -6406,7 +6990,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0383",
@@ -6428,7 +7014,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0384",
@@ -6449,7 +7037,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0390",
@@ -6471,7 +7061,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0391",
@@ -6493,7 +7085,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0397",
@@ -6515,7 +7109,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0387",
@@ -6536,7 +7132,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0396",
@@ -6557,7 +7155,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0339",
@@ -6585,7 +7185,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0386",
@@ -6607,7 +7209,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0392",
@@ -6629,7 +7233,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0388",
@@ -6651,7 +7257,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0396",
@@ -6673,7 +7281,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0398",
@@ -6696,7 +7306,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0403",
@@ -6717,7 +7329,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0396",
@@ -6739,7 +7353,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0394",
@@ -6760,7 +7376,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0395",
@@ -6781,7 +7399,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0397",
@@ -6803,7 +7423,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0382",
@@ -6826,7 +7448,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0389",
@@ -6847,7 +7471,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0395",
@@ -6869,7 +7495,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0399",
@@ -6891,7 +7519,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0379",
@@ -6913,7 +7543,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0400",
@@ -6935,7 +7567,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0411",
@@ -6961,7 +7595,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0377",
@@ -6983,7 +7619,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0378",
@@ -7005,7 +7643,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0405",
@@ -7027,7 +7667,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0406",
@@ -7049,7 +7691,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0406",
@@ -7076,7 +7720,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0407",
@@ -7102,7 +7748,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0408",
@@ -7127,7 +7775,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0409",
@@ -7153,7 +7803,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0404",
@@ -7175,7 +7827,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0404",
@@ -7201,7 +7855,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0406",
@@ -7226,7 +7882,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0407",
@@ -7250,7 +7908,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0408",
@@ -7274,7 +7934,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0410",
@@ -7298,7 +7960,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0399",
@@ -7320,7 +7984,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0493",
@@ -7345,7 +8011,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0494",
@@ -7371,7 +8039,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0495",
@@ -7395,7 +8065,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0496",
@@ -7420,7 +8092,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0486",
@@ -7442,7 +8116,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0497",
@@ -7464,7 +8140,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0498",
@@ -7485,7 +8163,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0501",
@@ -7506,7 +8186,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0500",
@@ -7527,7 +8209,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0499",
@@ -7548,7 +8232,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0505",
@@ -7574,7 +8260,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0506",
@@ -7600,7 +8288,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0504",
@@ -7625,7 +8315,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0507",
@@ -7650,7 +8342,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0508",
@@ -7675,7 +8369,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0509",
@@ -7700,7 +8396,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0511",
@@ -7727,7 +8425,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0515",
@@ -7749,7 +8449,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0516",
@@ -7771,7 +8473,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0529",
@@ -7793,7 +8497,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0527",
@@ -7814,7 +8520,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0528",
@@ -7835,7 +8543,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0546",
@@ -7860,7 +8570,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0547",
@@ -7885,7 +8597,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0548",
@@ -7911,7 +8625,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0549",
@@ -7936,7 +8652,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0512",
@@ -7958,7 +8676,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0553",
@@ -7984,7 +8704,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0554",
@@ -8011,7 +8733,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0555",
@@ -8032,7 +8756,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0556",
@@ -8057,7 +8783,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0557",
@@ -8082,7 +8810,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0558",
@@ -8107,7 +8837,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0559",
@@ -8134,7 +8866,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0560",
@@ -8159,7 +8893,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0564",
@@ -8186,7 +8922,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0565",
@@ -8212,7 +8950,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0569",
@@ -8238,7 +8978,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0570",
@@ -8264,7 +9006,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0573",
@@ -8289,7 +9033,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0574",
@@ -8314,7 +9060,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0575",
@@ -8339,7 +9087,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0581",
@@ -8365,7 +9115,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0576",
@@ -8387,7 +9139,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0589",
@@ -8411,7 +9165,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0590",
@@ -8437,7 +9193,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0591",
@@ -8462,7 +9220,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0592",
@@ -8486,7 +9246,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0582",
@@ -8508,7 +9270,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0599",
@@ -8533,7 +9297,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0600",
@@ -8558,7 +9324,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0601",
@@ -8582,7 +9350,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0602",
@@ -8608,7 +9378,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0603",
@@ -8632,7 +9404,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0604",
@@ -8657,7 +9431,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0605",
@@ -8681,7 +9457,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0606",
@@ -8706,7 +9484,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0607",
@@ -8732,7 +9512,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0633",
@@ -8758,7 +9540,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0608",
@@ -8780,7 +9564,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0634",
@@ -8804,7 +9590,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0635",
@@ -8828,7 +9616,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0636",
@@ -8853,7 +9643,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0637",
@@ -8877,7 +9669,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0638",
@@ -8902,7 +9696,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0647",
@@ -8929,7 +9725,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0648",
@@ -8955,7 +9753,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0649",
@@ -8981,7 +9781,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0650",
@@ -9006,7 +9808,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0651",
@@ -9032,7 +9836,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0652",
@@ -9058,7 +9864,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0653",
@@ -9084,7 +9892,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0654",
@@ -9107,7 +9917,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0656",
@@ -9129,7 +9941,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0659",
@@ -9150,7 +9964,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0658",
@@ -9171,7 +9987,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0655",
@@ -9192,7 +10010,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0657",
@@ -9213,7 +10033,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0663",
@@ -9239,7 +10061,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0664",
@@ -9266,7 +10090,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0668",
@@ -9292,7 +10118,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0669",
@@ -9319,7 +10147,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0670",
@@ -9345,7 +10175,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0665",
@@ -9367,7 +10199,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0675",
@@ -9392,7 +10226,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0676",
@@ -9416,7 +10252,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0677",
@@ -9440,7 +10278,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0678",
@@ -9466,7 +10306,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0679",
@@ -9491,7 +10333,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0680",
@@ -9515,7 +10359,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0683",
@@ -9541,7 +10387,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0684",
@@ -9566,7 +10414,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0685",
@@ -9592,7 +10442,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0686",
@@ -9619,7 +10471,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0687",
@@ -9647,7 +10501,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0688",
@@ -9673,7 +10529,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0689",
@@ -9700,7 +10558,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0690",
@@ -9728,7 +10588,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0691",
@@ -9753,7 +10615,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0692",
@@ -9780,7 +10644,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0693",
@@ -9807,7 +10673,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0694",
@@ -9835,7 +10703,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0695",
@@ -9862,7 +10732,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0700",
@@ -9887,7 +10759,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0701",
@@ -9914,7 +10788,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0702",
@@ -9939,7 +10815,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0703",
@@ -9964,7 +10842,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0704",
@@ -9989,7 +10869,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0705",
@@ -10016,7 +10898,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0708",
@@ -10039,7 +10923,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0709",
@@ -10064,7 +10950,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0710",
@@ -10088,7 +10976,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0715",
@@ -10111,7 +11001,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0711",
@@ -10132,7 +11024,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0712",
@@ -10153,7 +11047,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0713",
@@ -10174,7 +11070,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0714",
@@ -10195,7 +11093,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0716",
@@ -10222,7 +11122,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0717",
@@ -10249,7 +11151,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0718",
@@ -10275,7 +11179,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0719",
@@ -10302,7 +11208,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0720",
@@ -10328,7 +11236,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0723",
@@ -10349,7 +11259,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0721",
@@ -10370,7 +11282,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0722",
@@ -10391,7 +11305,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0728",
@@ -10415,7 +11331,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0730",
@@ -10442,7 +11360,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0731",
@@ -10470,7 +11390,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0732",
@@ -10498,7 +11420,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0733",
@@ -10525,7 +11449,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0736",
@@ -10553,7 +11479,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0738",
@@ -10578,7 +11506,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0740",
@@ -10603,7 +11533,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0741",
@@ -10629,7 +11561,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0742",
@@ -10655,7 +11589,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0743",
@@ -10682,7 +11618,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0744",
@@ -10707,7 +11645,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0745",
@@ -10733,7 +11673,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0746",
@@ -10760,7 +11702,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0747",
@@ -10785,7 +11729,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0748",
@@ -10811,7 +11757,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0749",
@@ -10835,7 +11783,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0750",
@@ -10861,7 +11811,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0751",
@@ -10885,7 +11837,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0752",
@@ -10910,7 +11864,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0753",
@@ -10936,7 +11892,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0762",
@@ -10963,7 +11921,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0764",
@@ -10988,7 +11948,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0765",
@@ -11013,7 +11975,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0766",
@@ -11039,7 +12003,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0767",
@@ -11065,7 +12031,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0768",
@@ -11088,7 +12056,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0771",
@@ -11109,7 +12079,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0772",
@@ -11130,7 +12102,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0770",
@@ -11151,7 +12125,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0769",
@@ -11172,7 +12148,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0778",
@@ -11195,7 +12173,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0779",
@@ -11220,7 +12200,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0780",
@@ -11244,7 +12226,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0781",
@@ -11268,7 +12252,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     },
     {
       "id": "fd_0782",
@@ -11292,7 +12278,9 @@
       "catalog_references": [],
       "ambition_level": "extension",
       "lineage_refs": [],
-      "domain_bridges": []
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0
     }
   ],
   "cycle_syntheses": {}

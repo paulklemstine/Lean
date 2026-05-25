@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "eml_algebraic_independence_transcendence_results.json",
+    "title": "EML Algebraic Independence and Certified Transcendence Proxies",
+    "domain": "Transcendence Theory / Algebraic Independence",
+    "date": "2026-05-25T00:25:53Z",
+    "exp_id": "5eb5bdbc",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_1_coalgebraic_temporal_adjunction_for_in.json",
     "title": "Coalgebraic Temporal Adjunction for Infinite Traces",
     "domain": "Coalgebraic Modal Logic / Temporal Logic / Category Theory",
     "date": "2026-05-25T00:25:17Z",
     "exp_id": "06588409",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7684672566371681,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_fractional_predictor_refinement.json",
@@ -67,6 +76,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Coalgebraic Modal Logic / Temporal Logic / Category Theory"
   },
+  "eml_algebraic_independence_transcendence_results.json": {
+    "title": "EML Algebraic Independence and Certified Transcendence Proxies",
+    "exp_id": "5eb5bdbc",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Transcendence Theory / Algebraic Independence"
+  },
   "direction_3_extension_to_product_and_sum_types.json": {
     "title": "The Growth Regime Trichotomy: How Type Constructors Generate Computational Complexity Classes",
     "exp_id": "fee94b6c",
@@ -104,7 +121,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -137,7 +154,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.49450347826086954,
       "quality": "partial"
     },
@@ -148,7 +165,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 270,
+      "hue": 91,
+      "priority_score": 0.7684672566371681,
+      "quality": "substantial"
+    },
+    {
+      "id": "eml_algebraic_independence_transcendence_results",
+      "title": "EML Algebraic Independence and Certified Transcendence Proxies",
+      "domain": "Transcendence Theory / Algebraic Independence",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T00:25:53Z",
+      "hue": 92,
       "priority_score": null,
       "quality": "unrated"
     }
@@ -303,6 +331,22 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.574939+00:00"
   },
   {
+    "id": "seed_047",
+    "title": "Pythagorean Triple Group Structure",
+    "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "NumberTheory"
+    ],
+    "priority_score": 0.9199999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T22:37:54.642160+00:00"
+  },
+  {
     "id": "seed_029",
     "title": "ABC Conjecture Formalization",
     "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
@@ -316,22 +360,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.506101+00:00"
-  },
-  {
-    "id": "seed_054",
-    "title": "Proof Strategy Mining from Deep Mathematics",
-    "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
-    "domains": [
-      "Logic",
-      "Algebra",
-      "Bridges"
-    ],
-    "priority_score": 0.9,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.694274+00:00"
   },
   {
     "id": "seed_084",
@@ -795,22 +823,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.559748+00:00"
   },
   {
-    "id": "seed_047",
-    "title": "Pythagorean Triple Group Structure",
-    "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "NumberTheory"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.642160+00:00"
-  },
-  {
     "id": "seed_051",
     "title": "Tropical Intersection Theory",
     "description": "Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical B\u00e9zout theorem with explicit bounds.",
@@ -824,22 +836,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.672853+00:00"
-  },
-  {
-    "id": "seed_061",
-    "title": "Non-Archimedean Probability via Surreal Numbers",
-    "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
-    "domains": [
-      "Analysis",
-      "Speculative",
-      "Bridges"
-    ],
-    "priority_score": 0.82,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.748891+00:00"
   },
   {
     "id": "seed_011",
@@ -932,6 +928,229 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T23:13:53.546170+00:00"
   },
   {
+    "id": "fd_0805",
+    "title": "Zeta-Spectral Rigidity of Proof Dependency Graphs",
+    "description": "Conjecture: For any finitely axiomatized theory T with two independent large formalization corpora C1 and C2 of the same mathematical domain, the normalized Ihara zeta function of the directed proof-dependency graph converges, under corpus growth, to a theory-specific limit invariant Z_T that is independent of presentation up to explicit finite-size error. Test: Build proof-dependency graphs from multiple formal libraries/formalization styles for the same theory (for example groups, commutative algebra, or measure theory), compute their normalized zeta functions and compare cross-corpus convergence against null models obtained by degree-preserving rewiring; the conjecture is refuted if presentation effects do not decay or if no stable invariant emerges. Impact: This would introduce a genuinely new spectral invariant of mathematical theories, enabling quantitative comparison of theories, transfer of lemmas across libraries via zeta matching, and a new bridge between graph zeta functions, formal proof mining, and the large-scale geometry of mathematics.",
+    "domains": [
+      "Graph Zeta Functions",
+      "Formalized Mathematics"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T00:25:26.921712+00:00"
+  },
+  {
+    "id": "fd_0784",
+    "title": "Direction 1: Sharp Valuation-Sensitive Stability Bound",
+    "description": "**Conjecture**: For filtrations whose interleaving maps have p-adic divisibility controlled by \u03bd = v_p(\u03b4), the primewise stability modulus satisfies\n\n```\n\u03b5_p \u2264 \u03b4 / p^\u03bd\n```\n\nwhere \u03bd is the p-adic valuation of the interleaving defect.\n\n**Test**: Construct explicit filtrations over Z/p^k Z for k = 1, 2, 3 with interleaving maps whose matrix entries are divisible by p^\u03bd. Compute the actual primewise shift and compare against \u03b4/p^\u03bd. The conjecture predicts a monotone decrease; a single counterexample falsifies it.\n\n**Impact**: This would establish that p-adic arithmetic directly controls topological stability \u2014 a bridge between valuation theory and TDA that has no precedent.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `primeShiftBound_improved`, `primeShiftBound_improved_strict`\n\n**Proof Strategy**: Define a \"p-controlled interleaving\" structure where forward/backward maps factor through p^\u03bd-multiplication. Transport the existing stability proof through this factorization, extracting the improved constant at each step. The key technical lemma: if the interleaving map sends x to p^\u03bd \u00b7 f(x) for injective f, then the induced birth shift is bounded by \u03b4/p^\u03bd rather than \u03b4.\n\n**Domain Bridges**: p-adic analysis, arithmetic geometry, Iwasawa theory\n\n**Lineage**: Extends `pTorsionBirthSet_deltaClose` and `primeShiftBound_improved_strict`\n\n**Ambition**: Grand challenge \u2014 this would be the first theorem importing valuation theory into persistence stability\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.476543+00:00"
+  },
+  {
+    "id": "fd_0785",
+    "title": "Direction 2: Functorial Localization of Persistence Modules",
+    "description": "**Conjecture**: There exists a functor L_p from the category of \u2124-persistence modules to \u2124_(p)-persistence modules (localization at p) such that:\n\n1. L_p preserves interleavings (with the same parameter \u03b4)\n2. PTorsionBirthSet(p, F) = TorsionBirthSet(L_p(F))\n3. L_p transforms interleavings into potentially tighter interleavings when the interleaving maps have p-local structure\n\n**Test**: Implement L_p for finite persistence modules represented as sequences of finitely generated abelian groups. Verify properties (1)-(2) on 100 random examples. Search for examples where (3) gives strictly improved \u03b4.\n\n**Impact**: This would make primewise stability a corollary of ordinary stability applied to a localized module \u2014 conceptually clean and opening the door to all localization techniques from commutative algebra.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `pTorsionBirthSet_eq_torsionBirthSet`, `pTorsionBirthSet_deltaClose`\n\n**Proof Strategy**: Define L_p as the tensor product with \u2124_(p). Show that \u2124_(p) is flat over \u2124, so tensoring preserves exact sequences and injective maps. The interleaving maps descend to L_p since tensor product is functorial. The key: show that PTorsionBirthSet equals the torsion birth set of the localized module.\n\n**Domain Bridges**: Commutative algebra, algebraic topology, derived categories\n\n**Lineage**: Extends `prime_channel_independence` and `torsion_detector_factorizes_over_primes`\n\n**Ambition**: Solid extension \u2014 builds systematic algebraic infrastructure\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.492421+00:00"
+  },
+  {
+    "id": "fd_0786",
+    "title": "Direction 3: Primewise Birth Spectra Distinguish Filtrations",
+    "description": "**Conjecture** (Hypothesis D): There exist filtrations F, G with TorsionBirthSet(F) = TorsionBirthSet(G) (as global sets) but PTorsionBirthSet(p, F) \u2260 PTorsionBirthSet(p, G) for some prime p.\n\n**Test**: Exhaustive search over filtered abelian groups with at most 4 levels and torsion orders dividing 30. For each pair with matching global birth, check if primewise births differ. The conjecture predicts at least one distinguishing example.\n\n**Impact**: Proves the primewise invariant is strictly finer than the global one \u2014 the prime decomposition has real information content beyond relabeling.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `mem_globalTorsionBirthSet_implies_exists_prime`\n\n**Proof Strategy**: Construct F with Z/2Z at level 1 and Z/6Z at level 3; construct G with Z/3Z at level 1 and Z/6Z at level 3. Both have global torsion birth at level 1, but F has 2-torsion birth at 1 and 3-torsion birth at 3, while G has 3-torsion birth at 1 and 2-torsion birth at 3. Formalize this in Lean.\n\n**Domain Bridges**: Algebraic topology, data science, topological signal processing\n\n**Lineage**: Direct test of the theory's discriminating power\n\n**Ambition**: Solid extension \u2014 concrete and falsifiable\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.506271+00:00"
+  },
+  {
+    "id": "fd_0787",
+    "title": "Direction 4: Global Stability as Max Envelope",
+    "description": "**Conjecture** (Hypothesis C): For finite-type filtrations with finitely many active primes,\n\n```\noptimal_global_shift(F, G) = sup_p optimal_prime_shift(p, F, G)\n```\n\nwhere the supremum is over all primes p.\n\n**Test**: Compute both sides on 1000 random filtration pairs with torsion orders in {2, 3, 5, 6, 10, 15, 30}. The conjecture predicts exact equality. A single instance of strict inequality (global < max primewise, or global > max primewise) would falsify it.\n\n**Impact**: Confirms that the primewise decomposition is a complete refinement \u2014 no information is lost, and the global bound is exactly the worst-case prime channel.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `global_stability_from_primewise`\n\n**Proof Strategy**: The inequality global \u2264 sup_p is immediate from `global_stability_from_primewise`. The reverse requires showing that the global birth distance equals the maximum primewise birth distance. This follows from the decomposition theorem: the global birth is at the minimum of all prime births, and the Hausdorff distance between minima is bounded by the max of individual distances.\n\n**Domain Bridges**: Metric geometry, minimax theory\n\n**Lineage**: Extends `global_stability_from_primewise` and `globalTorsionBirthSet_deltaClose`\n\n**Ambition**: Solid extension \u2014 proves completeness of the decomposition\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2d14ce54",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:11:24.518980+00:00"
+  },
+  {
+    "id": "fd_0790",
+    "title": "Direction 1: Hardness of Unrestricted-Degree Lorentzian Recognition",
+    "description": "**Conjecture.** When the degree d is part of the input (not fixed), deciding whether a homogeneous polynomial with nonneg integer coefficients is Lorentzian is coNP-hard.\n\n**Test.** Reduce a known coNP-hard problem \u2014 such as verifying that a symmetric matrix has no positive eigenvalue (which is coNP-complete for matrices given in factored form) \u2014 to Lorentzian recognition. Construct explicit polynomial families where any recursive certificate must examine at least n^{\u03a9(d)} quadratic leaves. A disproof would exhibit a polynomial-time algorithm for unrestricted-degree recognition.\n\n**Impact.** This would be the first formal hardness result for any Hodge-theoretic positivity predicate, creating a new complexity class boundary. It would definitively separate \"fixed-degree tractable\" from \"unrestricted-degree hard\" and motivate the development of approximation algorithms.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `card_multiindex_le_pow`, `quadratic_leaf_count_le` (upper bounds that the hardness would complement).\n\n**Proof Strategy.** Encode 3-SAT unsatisfiability as a Lorentzian recognition instance. Given a 3-SAT formula \u03c6 on m clauses, construct a degree-(m+2) polynomial P_\u03c6 in n variables such that P_\u03c6 is Lorentzian iff \u03c6 is unsatisfiable. The construction uses the clause-variable incidence structure to define derivative branches that are Lorentzian iff the clause is satisfied.\n\n**Domain Bridges.** Computational complexity \u2192 algebraic combinatorics. Connects the Cook\u2013Levin theory of NP-completeness to Hodge-theoretic positivity.\n\n**Lineage.** Builds on `quadratic_leaf_count_le` (polynomial upper bound) to show the bound is tight in degree.\n\n**Ambition.** Grand challenge. A positive resolution would be a landmark in algebraic complexity theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33261812",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:12:21.832370+00:00"
+  },
+  {
+    "id": "fd_0791",
+    "title": "Direction 2: Sparse-Support Certificate Compression",
+    "description": "**Conjecture.** For matroid basis generating polynomials of rank r on ground set [n], the number of nonzero quadratic leaves is O(n^2 \u00b7 r^{d-4}) rather than n^{d-2}, where d is the degree.\n\n**Test.** Compute derivative leaves for uniform matroids U_{r,n}, graphic matroids of sparse graphs, and transversal matroids. Count the number of nonzero quadratic leaves and compare to the worst-case bound n^{d-2}. A disproof would exhibit a matroid family where the nonzero leaf count matches the worst case.\n\n**Impact.** This would make Lorentzian recognition practical for partition-function polynomials arising in combinatorial optimization and statistical physics, where support is typically sparse relative to the ambient monomial space.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `multiIndexSet`, `numberOfQuadraticLeaves`; `Speculative/AutoResearch/LorentzianMConvex.lean`: `NewtonSupport`, `IsMConvexExchangeNat`.\n\n**Proof Strategy.** Use the M-convex exchange property of the Newton support (from the existing catalog) to show that many derivative branches have zero coefficient. The exchange property constrains which multiindices can appear in the support of iterated derivatives, dramatically pruning the recursion tree.\n\n**Domain Bridges.** Matroid theory \u2192 algorithmic complexity \u2192 statistical physics (partition functions of matroids).\n\n**Lineage.** Builds on the M-convex support theorem in `LorentzianMConvex.lean` and the leaf-counting bound in this cycle.\n\n**Ambition.** Solid extension. The uniform matroid case should be provable; general matroids require new structural lemmas.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33261812",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:12:21.848642+00:00"
+  },
+  {
+    "id": "fd_0793",
+    "title": "Direction 4: Efficient Sampling from Lorentzian Certificates",
+    "description": "**Conjecture.** Given a degree-d Lorentzian polynomial f in n variables, one can sample from the probability distribution proportional to the coefficients of f in expected time O(n^{d+1} \u00b7 log n), using the recursive certificate structure as a guide.\n\n**Test.** Implement a certificate-guided sampling algorithm for matroid basis generating polynomials and compare runtime and mixing time to state-of-the-art methods (e.g., basis exchange walks). A disproof would show that certificate-guided sampling has provably worse mixing time than exchange walks for some matroid family.\n\n**Impact.** This would create the first direct algorithmic application of Lorentzian certificates, connecting the complexity theory of recognition to the complexity of sampling.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `IsRecursivelyLorentzian`, `lorentzian_reversed_cauchy_schwarz` (the reversed Cauchy\u2013Schwarz provides the key mixing-time bound).\n\n**Proof Strategy.** Use the reversed Cauchy\u2013Schwarz inequality to bound the spectral gap of a Markov chain defined by the derivative tree. At each internal node of the certificate tree, use the Lorentzian signature to construct a log-concave conditional distribution, then sample via rejection sampling with bounded rejection probability.\n\n**Domain Bridges.** Algorithmic combinatorics \u2192 statistical physics \u2192 probability (Markov chain mixing).\n\n**Lineage.** Extends `lorentzian_reversed_cauchy_schwarz` from a structural result to an algorithmic tool.\n\n**Ambition.** Grand challenge. Connecting certificate structure to sampling efficiency would be a significant advance.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33261812",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:12:21.876594+00:00"
+  },
+  {
+    "id": "fd_0794",
+    "title": "Direction 5: Numerical Stability of Lorentzian Recognition",
+    "description": "**Conjecture.** There exists \u03b5\u2080 > 0 depending only on d such that if all quadratic leaves of a degree-d polynomial f satisfy the spectral condition with margin \u03b5\u2080 (i.e., the second-largest eigenvalue of each Hessian is at most \u2212\u03b5\u2080 \u00b7 \u2016H\u2016), then f is Lorentzian even under O(\u03b5\u2080\u00b2)-perturbations of the coefficients.\n\n**Test.** Perturb the coefficients of known Lorentzian polynomials (elementary symmetric polynomials, matroid basis polynomials) by random noise of varying magnitude, and check how the eigenvalue gap of the quadratic leaves degrades. A disproof would exhibit a Lorentzian polynomial whose Lorentzianity is destroyed by arbitrarily small perturbations.\n\n**Impact.** This would make Lorentzian recognition practical with floating-point arithmetic, enabling deployment in machine learning and optimization pipelines where exact computation is infeasible.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `HasAtMostOnePositiveEigenvalue`, `lorentzian_signature_tangent_neg_semidef` (the tangent-space theorem suggests spectral gaps persist under perturbation).\n\n**Proof Strategy.** Use the tangent-space negativity theorem to establish that the spectral gap of the Hessian is lower-semicontinuous in the coefficients. The key inequality is: if Q(x) > 0 and the second eigenvalue of H has magnitude \u03b4, then tangent-space negativity holds with margin \u03b4 \u00b7 \u2016x\u2016\u00b2 / \u2016Hx\u2016.\n\n**Domain Bridges.** Numerical linear algebra \u2192 optimization \u2192 engineering applications (robust ML, robust control).\n\n**Lineage.** Extends `lorentzian_signature_tangent_neg_semidef` to a quantitative/robust setting.\n\n**Ambition.** Solid extension. The qualitative result (openness of Lorentzianity) is known; the quantitative bound is new.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "33261812",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:12:21.890989+00:00"
+  },
+  {
+    "id": "fd_0800",
+    "title": "Direction 2: Heterogeneity\u2013Gap Conjecture",
+    "description": "**Conjecture:** For every \u03b5 > 0, there exists \u03b4 > 0 such that for all hypergraphs H on n \u2265 10 vertices with edge heterogeneity \u03c3\u00b2(H) > \u03b4, we have \u03c4(H) \u2212 \u2308\u03c4*(H)\u2309 \u2265 1. In other words, sufficiently heterogeneous hypergraphs always have a positive integrality gap beyond the ceiling rounding gap.\n\n**Test:** Generate 10,000 random hypergraphs on n = 15 vertices with edges of sizes {2, 3, 4, 5} at varying proportions. For each, compute \u03c3\u00b2, \u03c4, \u03c4*, and \u03c4 \u2212 \u2308\u03c4*\u2309. Plot the gap vs \u03c3\u00b2 and identify the critical threshold \u03b4*. Attempt to disprove by finding hypergraphs with \u03c3\u00b2 > 2 and \u03c4 = \u2308\u03c4*\u2309.\n\n**Impact:** If true, this would establish edge-size heterogeneity as a sufficient condition for integrality gap positivity, providing a simple structural certificate that LP relaxation is strictly better than integer programming for a given instance. This has direct implications for algorithm selection in practice.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `edgeHeterogeneity`, `IsHeterogeneous`, `heterogeneity_zero_of_uniform`.\n\n**Proof Strategy:** For the forward direction, construct explicit fractional transversals that exploit heterogeneity to achieve sub-integer values. For necessity, construct uniform hypergraphs where \u03c4 = \u2308\u03c4*\u2309. The probabilistic method may yield existence proofs for extreme heterogeneity.\n\n**Domain Bridges:** Connects to information theory (entropy of edge-size distribution), statistical mechanics (disorder parameter), and algebraic combinatorics (chromatic polynomials).\n\n**Lineage:** Builds on `heterogeneity_zero_of_uniform` and `integrality_gap_upper`.\n\n**Ambition:** Grand challenge \u2014 this would be a new structural result in combinatorial optimization with no direct precedent.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6e7fe77",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:13:44.233016+00:00"
+  },
+  {
+    "id": "fd_0801",
+    "title": "Direction 3: Concentration of \u03c4* on Random Hypergraphs",
+    "description": "**Conjecture:** For the Erd\u0151s\u2013R\u00e9nyi random k-uniform hypergraph H(n, p) with p = c/n^{k-1}, the fractional transversal number satisfies Var[\u03c4*(H)] = O(1) as n \u2192 \u221e, while Var[\u03c4(H)] = \u03a9(log n). The fractional predictor |V| \u2212 \u2308\u03c4*\u2309 has strictly smaller variance than the integer predictor |V| \u2212 \u03c4.\n\n**Test:** Generate 1,000 random 3-uniform hypergraphs on n \u2208 {20, 50, 100, 200} vertices at density p = 2/n\u00b2. Compute sample variances of \u03c4* and \u03c4. Verify that Var[\u03c4*] grows sub-logarithmically while Var[\u03c4] grows logarithmically. Plot variance ratio Var[\u03c4*]/Var[\u03c4] vs n.\n\n**Impact:** This would rigorously establish the \"smoothing effect\" of fractional relaxation \u2014 that convex relaxations produce more concentrated (lower-variance) estimators of combinatorial thresholds. This has profound implications for phase transition prediction in random CSPs: it would prove that LP-based predictors are statistically superior to integer-based predictors.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `indicator_isFracTransversal` (\u03c4* \u2264 \u03c4), `weak_duality`.\n\n**Proof Strategy:** For the upper bound on Var[\u03c4*], use the Lipschitz property of LP optima: adding/removing one edge changes \u03c4* by at most 1, so the Azuma\u2013Hoeffding inequality gives exponential concentration. For the lower bound on Var[\u03c4], exhibit specific configurations where \u03c4 jumps by \u2265 1 with probability \u0398(1/\u221an).\n\n**Domain Bridges:** Connects to probability theory (concentration inequalities), statistical physics (self-averaging), and random matrix theory (spectral gaps of constraint matrices).\n\n**Lineage:** Extends the deterministic bound \u03c4* \u2264 \u03c4 to a probabilistic separation of their fluctuations.\n\n**Ambition:** Grand challenge \u2014 proving concentration inequalities for LP optima on random combinatorial structures is at the frontier of probabilistic combinatorics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6e7fe77",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:13:44.246682+00:00"
+  },
+  {
+    "id": "fd_0803",
+    "title": "Direction 5: Weighted and Multi-Objective Extensions",
+    "description": "**Conjecture:** For weighted hypergraphs where vertex v has cost w(v) > 0 and edge e has demand d(e) > 0, the weighted integrality gap satisfies \u03c4_w(H) \u2264 d_max \u00b7 \u03c4*_w(H), where the threshold rounding uses threshold 1/(d_max \u00b7 max_e d(e)). For multi-objective transversal problems with k objectives, the Pareto front of fractional solutions has at most O(n^{k-1}) vertices, each roundable with gap bound d_max.\n\n**Test:** Implement weighted LP transversal computation and threshold rounding for random weighted hypergraphs on n = 20 vertices with random costs w(v) ~ Uniform[1, 10] and demands d(e) ~ Uniform[1, 3]. Verify the gap bound holds in 1,000 trials. For the multi-objective case, compute Pareto fronts for 2-objective problems and verify the vertex count bound.\n\n**Impact:** Weighted extensions are essential for practical applications (facility location, network design) where resources have different costs. The multi-objective extension would connect transversal theory to multi-criteria optimization, a field with growing practical importance.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `integrality_gap_upper`, `threshold_isTransversal`, `threshold_card_bound`.\n\n**Proof Strategy:** Generalize the threshold rounding argument: for weighted problems, use threshold w(v) \u00b7 x(v) \u2265 1/d_max. The size bound becomes \u03a3_{v\u2208S} w(v) \u2264 d_max \u00b7 \u03a3_v w(v) \u00b7 x(v). For multi-objective, use the theory of parametric LP to bound the number of breakpoints.\n\n**Domain Bridges:** Connects to operations research (facility location), algorithmic game theory (cost sharing), and welfare economics (Pareto efficiency).\n\n**Lineage:** Direct generalization of `integrality_gap_upper` to weighted settings.\n\n**Ambition:** Solid extension \u2014 the weighted case follows the same proof structure, while the multi-objective case introduces genuinely new complexity.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f6e7fe77",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-24T23:13:44.276911+00:00"
+  },
+  {
     "id": "seed_026",
     "title": "Lehmer's Mahler Measure Problem",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
@@ -993,22 +1212,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
   },
   {
-    "id": "seed_058",
-    "title": "Alien Mathematics: Non-Standard Arithmetic",
-    "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
-    "domains": [
-      "Speculative",
-      "Logic",
-      "Algebra"
-    ],
-    "priority_score": 0.76,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T22:37:54.723031+00:00"
-  },
-  {
     "id": "seed_007",
     "title": "196-Algorithm Non-Termination",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
@@ -1037,136 +1240,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
   },
   {
-    "id": "fd_0784",
-    "title": "Direction 1: Sharp Valuation-Sensitive Stability Bound",
-    "description": "**Conjecture**: For filtrations whose interleaving maps have p-adic divisibility controlled by \u03bd = v_p(\u03b4), the primewise stability modulus satisfies\n\n```\n\u03b5_p \u2264 \u03b4 / p^\u03bd\n```\n\nwhere \u03bd is the p-adic valuation of the interleaving defect.\n\n**Test**: Construct explicit filtrations over Z/p^k Z for k = 1, 2, 3 with interleaving maps whose matrix entries are divisible by p^\u03bd. Compute the actual primewise shift and compare against \u03b4/p^\u03bd. The conjecture predicts a monotone decrease; a single counterexample falsifies it.\n\n**Impact**: This would establish that p-adic arithmetic directly controls topological stability \u2014 a bridge between valuation theory and TDA that has no precedent.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `primeShiftBound_improved`, `primeShiftBound_improved_strict`\n\n**Proof Strategy**: Define a \"p-controlled interleaving\" structure where forward/backward maps factor through p^\u03bd-multiplication. Transport the existing stability proof through this factorization, extracting the improved constant at each step. The key technical lemma: if the interleaving map sends x to p^\u03bd \u00b7 f(x) for injective f, then the induced birth shift is bounded by \u03b4/p^\u03bd rather than \u03b4.\n\n**Domain Bridges**: p-adic analysis, arithmetic geometry, Iwasawa theory\n\n**Lineage**: Extends `pTorsionBirthSet_deltaClose` and `primeShiftBound_improved_strict`\n\n**Ambition**: Grand challenge \u2014 this would be the first theorem importing valuation theory into persistence stability\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:11:24.476543+00:00"
-  },
-  {
-    "id": "fd_0785",
-    "title": "Direction 2: Functorial Localization of Persistence Modules",
-    "description": "**Conjecture**: There exists a functor L_p from the category of \u2124-persistence modules to \u2124_(p)-persistence modules (localization at p) such that:\n\n1. L_p preserves interleavings (with the same parameter \u03b4)\n2. PTorsionBirthSet(p, F) = TorsionBirthSet(L_p(F))\n3. L_p transforms interleavings into potentially tighter interleavings when the interleaving maps have p-local structure\n\n**Test**: Implement L_p for finite persistence modules represented as sequences of finitely generated abelian groups. Verify properties (1)-(2) on 100 random examples. Search for examples where (3) gives strictly improved \u03b4.\n\n**Impact**: This would make primewise stability a corollary of ordinary stability applied to a localized module \u2014 conceptually clean and opening the door to all localization techniques from commutative algebra.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `pTorsionBirthSet_eq_torsionBirthSet`, `pTorsionBirthSet_deltaClose`\n\n**Proof Strategy**: Define L_p as the tensor product with \u2124_(p). Show that \u2124_(p) is flat over \u2124, so tensoring preserves exact sequences and injective maps. The interleaving maps descend to L_p since tensor product is functorial. The key: show that PTorsionBirthSet equals the torsion birth set of the localized module.\n\n**Domain Bridges**: Commutative algebra, algebraic topology, derived categories\n\n**Lineage**: Extends `prime_channel_independence` and `torsion_detector_factorizes_over_primes`\n\n**Ambition**: Solid extension \u2014 builds systematic algebraic infrastructure\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:11:24.492421+00:00"
-  },
-  {
-    "id": "fd_0786",
-    "title": "Direction 3: Primewise Birth Spectra Distinguish Filtrations",
-    "description": "**Conjecture** (Hypothesis D): There exist filtrations F, G with TorsionBirthSet(F) = TorsionBirthSet(G) (as global sets) but PTorsionBirthSet(p, F) \u2260 PTorsionBirthSet(p, G) for some prime p.\n\n**Test**: Exhaustive search over filtered abelian groups with at most 4 levels and torsion orders dividing 30. For each pair with matching global birth, check if primewise births differ. The conjecture predicts at least one distinguishing example.\n\n**Impact**: Proves the primewise invariant is strictly finer than the global one \u2014 the prime decomposition has real information content beyond relabeling.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `mem_globalTorsionBirthSet_implies_exists_prime`\n\n**Proof Strategy**: Construct F with Z/2Z at level 1 and Z/6Z at level 3; construct G with Z/3Z at level 1 and Z/6Z at level 3. Both have global torsion birth at level 1, but F has 2-torsion birth at 1 and 3-torsion birth at 3, while G has 3-torsion birth at 1 and 2-torsion birth at 3. Formalize this in Lean.\n\n**Domain Bridges**: Algebraic topology, data science, topological signal processing\n\n**Lineage**: Direct test of the theory's discriminating power\n\n**Ambition**: Solid extension \u2014 concrete and falsifiable\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:11:24.506271+00:00"
-  },
-  {
-    "id": "fd_0787",
-    "title": "Direction 4: Global Stability as Max Envelope",
-    "description": "**Conjecture** (Hypothesis C): For finite-type filtrations with finitely many active primes,\n\n```\noptimal_global_shift(F, G) = sup_p optimal_prime_shift(p, F, G)\n```\n\nwhere the supremum is over all primes p.\n\n**Test**: Compute both sides on 1000 random filtration pairs with torsion orders in {2, 3, 5, 6, 10, 15, 30}. The conjecture predicts exact equality. A single instance of strict inequality (global < max primewise, or global > max primewise) would falsify it.\n\n**Impact**: Confirms that the primewise decomposition is a complete refinement \u2014 no information is lost, and the global bound is exactly the worst-case prime channel.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `global_stability_from_primewise`\n\n**Proof Strategy**: The inequality global \u2264 sup_p is immediate from `global_stability_from_primewise`. The reverse requires showing that the global birth distance equals the maximum primewise birth distance. This follows from the decomposition theorem: the global birth is at the minimum of all prime births, and the Hausdorff distance between minima is bounded by the max of individual distances.\n\n**Domain Bridges**: Metric geometry, minimax theory\n\n**Lineage**: Extends `global_stability_from_primewise` and `globalTorsionBirthSet_deltaClose`\n\n**Ambition**: Solid extension \u2014 proves completeness of the decomposition\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:11:24.518980+00:00"
-  },
-  {
-    "id": "fd_0788",
-    "title": "Direction 5: Primewise Entropy and Data Processing Inequality",
-    "description": "**Conjecture** (Hypothesis E): Define the primewise birth entropy as\n\n```\nH_p(F) = -\u03a3_i (count of p-torsion births at level i / total) * log(...)\n```\n\n(using a suitable normalization over a family of filtrations). Then applying a prime-selective functor cannot increase H_p \u2014 i.e., the primewise entropy satisfies a data processing inequality.\n\n**Test**: Define empirical birth entropy for finite filtration families. Compute before and after applying a prime-selective simplification (e.g., killing q-torsion for q \u2260 p). Check whether H_p decreases or stays constant. The conjecture predicts H_p never increases; a single increase falsifies it.\n\n**Impact**: Connects persistence theory to information theory via the arithmetic channel model. Would establish that primewise torsion is not just algebraically natural but information-theoretically optimal.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `torsion_detector_factorizes_over_primes`, `prime_channel_independence`\n\n**Proof Strategy**: Model the prime-selective functor as a deterministic channel in the sense of information theory. Use the standard data processing inequality for deterministic maps. The key: show that the prime-selective functor is a retraction (left inverse of inclusion), hence post-processing, hence cannot increase mutual information.\n\n**Domain Bridges**: Information theory, statistical mechanics, topological data analysis\n\n**Lineage**: Grand challenge extending the cross-domain signal processing interpretation\n\n**Ambition**: Grand challenge \u2014 merges information theory with arithmetic topology",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:11:24.532304+00:00"
-  },
-  {
-    "id": "fd_0790",
-    "title": "Direction 1: Hardness of Unrestricted-Degree Lorentzian Recognition",
-    "description": "**Conjecture.** When the degree d is part of the input (not fixed), deciding whether a homogeneous polynomial with nonneg integer coefficients is Lorentzian is coNP-hard.\n\n**Test.** Reduce a known coNP-hard problem \u2014 such as verifying that a symmetric matrix has no positive eigenvalue (which is coNP-complete for matrices given in factored form) \u2014 to Lorentzian recognition. Construct explicit polynomial families where any recursive certificate must examine at least n^{\u03a9(d)} quadratic leaves. A disproof would exhibit a polynomial-time algorithm for unrestricted-degree recognition.\n\n**Impact.** This would be the first formal hardness result for any Hodge-theoretic positivity predicate, creating a new complexity class boundary. It would definitively separate \"fixed-degree tractable\" from \"unrestricted-degree hard\" and motivate the development of approximation algorithms.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `card_multiindex_le_pow`, `quadratic_leaf_count_le` (upper bounds that the hardness would complement).\n\n**Proof Strategy.** Encode 3-SAT unsatisfiability as a Lorentzian recognition instance. Given a 3-SAT formula \u03c6 on m clauses, construct a degree-(m+2) polynomial P_\u03c6 in n variables such that P_\u03c6 is Lorentzian iff \u03c6 is unsatisfiable. The construction uses the clause-variable incidence structure to define derivative branches that are Lorentzian iff the clause is satisfied.\n\n**Domain Bridges.** Computational complexity \u2192 algebraic combinatorics. Connects the Cook\u2013Levin theory of NP-completeness to Hodge-theoretic positivity.\n\n**Lineage.** Builds on `quadratic_leaf_count_le` (polynomial upper bound) to show the bound is tight in degree.\n\n**Ambition.** Grand challenge. A positive resolution would be a landmark in algebraic complexity theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:12:21.832370+00:00"
-  },
-  {
-    "id": "fd_0791",
-    "title": "Direction 2: Sparse-Support Certificate Compression",
-    "description": "**Conjecture.** For matroid basis generating polynomials of rank r on ground set [n], the number of nonzero quadratic leaves is O(n^2 \u00b7 r^{d-4}) rather than n^{d-2}, where d is the degree.\n\n**Test.** Compute derivative leaves for uniform matroids U_{r,n}, graphic matroids of sparse graphs, and transversal matroids. Count the number of nonzero quadratic leaves and compare to the worst-case bound n^{d-2}. A disproof would exhibit a matroid family where the nonzero leaf count matches the worst case.\n\n**Impact.** This would make Lorentzian recognition practical for partition-function polynomials arising in combinatorial optimization and statistical physics, where support is typically sparse relative to the ambient monomial space.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `multiIndexSet`, `numberOfQuadraticLeaves`; `Speculative/AutoResearch/LorentzianMConvex.lean`: `NewtonSupport`, `IsMConvexExchangeNat`.\n\n**Proof Strategy.** Use the M-convex exchange property of the Newton support (from the existing catalog) to show that many derivative branches have zero coefficient. The exchange property constrains which multiindices can appear in the support of iterated derivatives, dramatically pruning the recursion tree.\n\n**Domain Bridges.** Matroid theory \u2192 algorithmic complexity \u2192 statistical physics (partition functions of matroids).\n\n**Lineage.** Builds on the M-convex support theorem in `LorentzianMConvex.lean` and the leaf-counting bound in this cycle.\n\n**Ambition.** Solid extension. The uniform matroid case should be provable; general matroids require new structural lemmas.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:12:21.848642+00:00"
-  },
-  {
     "id": "fd_0792",
     "title": "Direction 3: Completeness of Recursive Spectral Certificates",
     "description": "**Conjecture.** The recursive spectral predicate (all quadratic leaves have Lorentzian Hessian signature) is equivalent to the Br\u00e4nd\u00e9n\u2013Huh definition of Lorentzianity for homogeneous polynomials with nonneg coefficients.\n\n**Test.** Verify computationally for all homogeneous polynomials of degree \u2264 5 in \u2264 4 variables that the recursive predicate matches the full Br\u00e4nd\u00e9n\u2013Huh definition (which additionally requires the polynomial to be a limit of products of linear forms with nonneg coefficients). A disproof would exhibit a polynomial that satisfies the recursive predicate but is not Lorentzian in the full sense.\n\n**Impact.** A positive resolution would show that our certified algorithm is not just sound but complete: it exactly characterizes Lorentzianity. This would be the first formal completeness result for any recursive characterization of Lorentzianity.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `IsRecursivelyLorentzian`, `RecursiveLorentzianCertificate`, `recursive_certificate_sound`.\n\n**Proof Strategy.** For one direction (recursive \u27f9 Lorentzian), use the characterization theorem of Br\u00e4nd\u00e9n\u2013Huh: a homogeneous polynomial with nonneg coefficients, support satisfying the exchange property, and Hessian signature condition on all quadratic leaves is Lorentzian. The converse (Lorentzian \u27f9 recursive) follows from closure of Lorentzianity under partial differentiation.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 spectral linear algebra.\n\n**Lineage.** Direct continuation of `recursive_certificate_sound` (soundness).\n\n**Ambition.** Solid extension. The key obstacle is formalizing enough of the Br\u00e4nd\u00e9n\u2013Huh theory in Lean.\n\n---",
@@ -1184,121 +1257,5 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "33261812",
     "consumed_by_exp_id": "83d44e07",
     "timestamp": "2026-05-24T23:12:21.863215+00:00"
-  },
-  {
-    "id": "fd_0793",
-    "title": "Direction 4: Efficient Sampling from Lorentzian Certificates",
-    "description": "**Conjecture.** Given a degree-d Lorentzian polynomial f in n variables, one can sample from the probability distribution proportional to the coefficients of f in expected time O(n^{d+1} \u00b7 log n), using the recursive certificate structure as a guide.\n\n**Test.** Implement a certificate-guided sampling algorithm for matroid basis generating polynomials and compare runtime and mixing time to state-of-the-art methods (e.g., basis exchange walks). A disproof would show that certificate-guided sampling has provably worse mixing time than exchange walks for some matroid family.\n\n**Impact.** This would create the first direct algorithmic application of Lorentzian certificates, connecting the complexity theory of recognition to the complexity of sampling.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `IsRecursivelyLorentzian`, `lorentzian_reversed_cauchy_schwarz` (the reversed Cauchy\u2013Schwarz provides the key mixing-time bound).\n\n**Proof Strategy.** Use the reversed Cauchy\u2013Schwarz inequality to bound the spectral gap of a Markov chain defined by the derivative tree. At each internal node of the certificate tree, use the Lorentzian signature to construct a log-concave conditional distribution, then sample via rejection sampling with bounded rejection probability.\n\n**Domain Bridges.** Algorithmic combinatorics \u2192 statistical physics \u2192 probability (Markov chain mixing).\n\n**Lineage.** Extends `lorentzian_reversed_cauchy_schwarz` from a structural result to an algorithmic tool.\n\n**Ambition.** Grand challenge. Connecting certificate structure to sampling efficiency would be a significant advance.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:12:21.876594+00:00"
-  },
-  {
-    "id": "fd_0794",
-    "title": "Direction 5: Numerical Stability of Lorentzian Recognition",
-    "description": "**Conjecture.** There exists \u03b5\u2080 > 0 depending only on d such that if all quadratic leaves of a degree-d polynomial f satisfy the spectral condition with margin \u03b5\u2080 (i.e., the second-largest eigenvalue of each Hessian is at most \u2212\u03b5\u2080 \u00b7 \u2016H\u2016), then f is Lorentzian even under O(\u03b5\u2080\u00b2)-perturbations of the coefficients.\n\n**Test.** Perturb the coefficients of known Lorentzian polynomials (elementary symmetric polynomials, matroid basis polynomials) by random noise of varying magnitude, and check how the eigenvalue gap of the quadratic leaves degrades. A disproof would exhibit a Lorentzian polynomial whose Lorentzianity is destroyed by arbitrarily small perturbations.\n\n**Impact.** This would make Lorentzian recognition practical with floating-point arithmetic, enabling deployment in machine learning and optimization pipelines where exact computation is infeasible.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `HasAtMostOnePositiveEigenvalue`, `lorentzian_signature_tangent_neg_semidef` (the tangent-space theorem suggests spectral gaps persist under perturbation).\n\n**Proof Strategy.** Use the tangent-space negativity theorem to establish that the spectral gap of the Hessian is lower-semicontinuous in the coefficients. The key inequality is: if Q(x) > 0 and the second eigenvalue of H has magnitude \u03b4, then tangent-space negativity holds with margin \u03b4 \u00b7 \u2016x\u2016\u00b2 / \u2016Hx\u2016.\n\n**Domain Bridges.** Numerical linear algebra \u2192 optimization \u2192 engineering applications (robust ML, robust control).\n\n**Lineage.** Extends `lorentzian_signature_tangent_neg_semidef` to a quantitative/robust setting.\n\n**Ambition.** Solid extension. The qualitative result (openness of Lorentzianity) is known; the quantitative bound is new.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:12:21.890989+00:00"
-  },
-  {
-    "id": "fd_0800",
-    "title": "Direction 2: Heterogeneity\u2013Gap Conjecture",
-    "description": "**Conjecture:** For every \u03b5 > 0, there exists \u03b4 > 0 such that for all hypergraphs H on n \u2265 10 vertices with edge heterogeneity \u03c3\u00b2(H) > \u03b4, we have \u03c4(H) \u2212 \u2308\u03c4*(H)\u2309 \u2265 1. In other words, sufficiently heterogeneous hypergraphs always have a positive integrality gap beyond the ceiling rounding gap.\n\n**Test:** Generate 10,000 random hypergraphs on n = 15 vertices with edges of sizes {2, 3, 4, 5} at varying proportions. For each, compute \u03c3\u00b2, \u03c4, \u03c4*, and \u03c4 \u2212 \u2308\u03c4*\u2309. Plot the gap vs \u03c3\u00b2 and identify the critical threshold \u03b4*. Attempt to disprove by finding hypergraphs with \u03c3\u00b2 > 2 and \u03c4 = \u2308\u03c4*\u2309.\n\n**Impact:** If true, this would establish edge-size heterogeneity as a sufficient condition for integrality gap positivity, providing a simple structural certificate that LP relaxation is strictly better than integer programming for a given instance. This has direct implications for algorithm selection in practice.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `edgeHeterogeneity`, `IsHeterogeneous`, `heterogeneity_zero_of_uniform`.\n\n**Proof Strategy:** For the forward direction, construct explicit fractional transversals that exploit heterogeneity to achieve sub-integer values. For necessity, construct uniform hypergraphs where \u03c4 = \u2308\u03c4*\u2309. The probabilistic method may yield existence proofs for extreme heterogeneity.\n\n**Domain Bridges:** Connects to information theory (entropy of edge-size distribution), statistical mechanics (disorder parameter), and algebraic combinatorics (chromatic polynomials).\n\n**Lineage:** Builds on `heterogeneity_zero_of_uniform` and `integrality_gap_upper`.\n\n**Ambition:** Grand challenge \u2014 this would be a new structural result in combinatorial optimization with no direct precedent.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:13:44.233016+00:00"
-  },
-  {
-    "id": "fd_0801",
-    "title": "Direction 3: Concentration of \u03c4* on Random Hypergraphs",
-    "description": "**Conjecture:** For the Erd\u0151s\u2013R\u00e9nyi random k-uniform hypergraph H(n, p) with p = c/n^{k-1}, the fractional transversal number satisfies Var[\u03c4*(H)] = O(1) as n \u2192 \u221e, while Var[\u03c4(H)] = \u03a9(log n). The fractional predictor |V| \u2212 \u2308\u03c4*\u2309 has strictly smaller variance than the integer predictor |V| \u2212 \u03c4.\n\n**Test:** Generate 1,000 random 3-uniform hypergraphs on n \u2208 {20, 50, 100, 200} vertices at density p = 2/n\u00b2. Compute sample variances of \u03c4* and \u03c4. Verify that Var[\u03c4*] grows sub-logarithmically while Var[\u03c4] grows logarithmically. Plot variance ratio Var[\u03c4*]/Var[\u03c4] vs n.\n\n**Impact:** This would rigorously establish the \"smoothing effect\" of fractional relaxation \u2014 that convex relaxations produce more concentrated (lower-variance) estimators of combinatorial thresholds. This has profound implications for phase transition prediction in random CSPs: it would prove that LP-based predictors are statistically superior to integer-based predictors.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `indicator_isFracTransversal` (\u03c4* \u2264 \u03c4), `weak_duality`.\n\n**Proof Strategy:** For the upper bound on Var[\u03c4*], use the Lipschitz property of LP optima: adding/removing one edge changes \u03c4* by at most 1, so the Azuma\u2013Hoeffding inequality gives exponential concentration. For the lower bound on Var[\u03c4], exhibit specific configurations where \u03c4 jumps by \u2265 1 with probability \u0398(1/\u221an).\n\n**Domain Bridges:** Connects to probability theory (concentration inequalities), statistical physics (self-averaging), and random matrix theory (spectral gaps of constraint matrices).\n\n**Lineage:** Extends the deterministic bound \u03c4* \u2264 \u03c4 to a probabilistic separation of their fluctuations.\n\n**Ambition:** Grand challenge \u2014 proving concentration inequalities for LP optima on random combinatorial structures is at the frontier of probabilistic combinatorics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:13:44.246682+00:00"
-  },
-  {
-    "id": "fd_0802",
-    "title": "Direction 4: Tropical Transversal Geometry",
-    "description": "**Conjecture:** The fractional transversal polytope P_\u03c4(H) = {x \u2208 \u211d^V_\u22650 : \u03a3_{v\u2208e} x(v) \u2265 1, \u2200 e \u2208 E} has a natural tropicalization T_\u03c4(H) in the tropical semiring (\u211d \u222a {\u221e}, min, +). The tropical transversal number \u2014 the tropical minimum of the tropical linear form \u2014 equals the integer transversal number \u03c4(H), establishing \u03c4 as the \"tropical shadow\" of \u03c4*.\n\n**Test:** Compute the tropicalization of P_\u03c4(H) for small hypergraphs (n \u2264 8) using polymake or TOPCOM. Verify that the tropical optimum coincides with \u03c4(H) in all cases. Check whether the tropical variety of the transversal polytope has a fan structure related to the hypertree decomposition of H.\n\n**Impact:** This would establish a direct geometric bridge between fractional (classical) and integer (tropical) transversal theory, potentially yielding new algorithms for computing \u03c4 via tropical methods and new structural insights via tropical intersection theory.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 full development; potential connection to `Tropical/` catalog files.\n\n**Proof Strategy:** Use the correspondence between classical linear programs and their tropicalizations established by Develin and Sturmfels [2004]. Show that the transversal LP tropicalizes to an integer program whose optimum is \u03c4(H).\n\n**Domain Bridges:** Connects to algebraic geometry (tropical varieties), polyhedral combinatorics (normal fans), and phylogenetics (tree metrics).\n\n**Lineage:** Novel direction extending the classical/fractional framework to tropical algebra.\n\n**Ambition:** Grand challenge \u2014 tropical optimization for combinatorial problems is largely unexplored.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:13:44.261184+00:00"
-  },
-  {
-    "id": "fd_0803",
-    "title": "Direction 5: Weighted and Multi-Objective Extensions",
-    "description": "**Conjecture:** For weighted hypergraphs where vertex v has cost w(v) > 0 and edge e has demand d(e) > 0, the weighted integrality gap satisfies \u03c4_w(H) \u2264 d_max \u00b7 \u03c4*_w(H), where the threshold rounding uses threshold 1/(d_max \u00b7 max_e d(e)). For multi-objective transversal problems with k objectives, the Pareto front of fractional solutions has at most O(n^{k-1}) vertices, each roundable with gap bound d_max.\n\n**Test:** Implement weighted LP transversal computation and threshold rounding for random weighted hypergraphs on n = 20 vertices with random costs w(v) ~ Uniform[1, 10] and demands d(e) ~ Uniform[1, 3]. Verify the gap bound holds in 1,000 trials. For the multi-objective case, compute Pareto fronts for 2-objective problems and verify the vertex count bound.\n\n**Impact:** Weighted extensions are essential for practical applications (facility location, network design) where resources have different costs. The multi-objective extension would connect transversal theory to multi-criteria optimization, a field with growing practical importance.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `integrality_gap_upper`, `threshold_isTransversal`, `threshold_card_bound`.\n\n**Proof Strategy:** Generalize the threshold rounding argument: for weighted problems, use threshold w(v) \u00b7 x(v) \u2265 1/d_max. The size bound becomes \u03a3_{v\u2208S} w(v) \u2264 d_max \u00b7 \u03a3_v w(v) \u00b7 x(v). For multi-objective, use the theory of parametric LP to bound the number of breakpoints.\n\n**Domain Bridges:** Connects to operations research (facility location), algorithmic game theory (cost sharing), and welfare economics (Pareto efficiency).\n\n**Lineage:** Direct generalization of `integrality_gap_upper` to weighted settings.\n\n**Ambition:** Solid extension \u2014 the weighted case follows the same proof structure, while the multi-objective case introduces genuinely new complexity.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:13:44.276911+00:00"
   }
 ];

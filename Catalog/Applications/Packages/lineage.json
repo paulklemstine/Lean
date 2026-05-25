@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_5_complexity_of_lorentzian_recognition",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "direction_1_coalgebraic_temporal_adjunction_for_in",
@@ -43,7 +43,16 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 270
+      "hue": 91
+    },
+    {
+      "id": "eml_algebraic_independence_transcendence_results",
+      "title": "EML Algebraic Independence and Certified Transcendence Proxies",
+      "domain": "Transcendence Theory / Algebraic Independence",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T00:25:53Z",
+      "hue": 92
     }
   ],
   "edges": [],
