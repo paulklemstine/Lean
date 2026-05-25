@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "ac9bf9e1",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.583311+00:00"
   },
   {
@@ -357,10 +357,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3265971b",
     "timestamp": "2026-05-25T00:26:36.179554+00:00"
   },
   {
@@ -394,10 +394,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e97c0f01",
     "timestamp": "2026-05-25T00:26:39.059352+00:00"
   },
   {
@@ -470,10 +470,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "b77fbdd8",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:54:40.987422+00:00"
   },
   {
@@ -506,10 +506,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "21d0ab18",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d78e63d5",
     "timestamp": "2026-05-25T00:55:14.002937+00:00"
   },
   {
@@ -659,10 +659,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.9999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1a0c77c0",
     "timestamp": "2026-05-25T03:05:35.321656+00:00"
   },
   {
@@ -679,10 +679,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.9999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97def267",
     "timestamp": "2026-05-25T03:05:35.340182+00:00"
   },
   {
@@ -768,10 +768,10 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "priority_score": 0.93,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a88b92d",
     "timestamp": "2026-05-24T22:37:54.395345+00:00"
   },
   {
@@ -833,10 +833,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a6eebf63",
     "timestamp": "2026-05-25T02:11:10.182188+00:00"
   },
   {
@@ -852,10 +852,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56c2f88c",
     "timestamp": "2026-05-25T02:11:10.200317+00:00"
   },
   {
@@ -1301,10 +1301,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "92e3853a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "44ebbbfd",
     "timestamp": "2026-05-25T03:08:48.922109+00:00"
   },
   {
@@ -1319,10 +1319,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "92e3853a",
-    "consumed_by_exp_id": "2e92a0fb",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:08:48.964845+00:00"
   },
   {
