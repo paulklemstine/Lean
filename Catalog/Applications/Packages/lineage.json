@@ -7,6 +7,15 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
+      "hue": 92
+    },
+    {
+      "id": "direction_3_compositional_witness_synthesis_algori",
+      "title": "Compositional Witness Synthesis for Pythagorean Triples",
+      "domain": "Pythagorean Number Theory",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T13:51:35Z",
       "hue": 271
     }
   ],
