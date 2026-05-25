@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_2_higher_order_log_concavity_and_partiti.json",
+    "title": "Higher-Order Log-Concavity: A Recursive Hierarchy for Discrete Sequences",
+    "domain": "Algebraic Combinatorics / Discrete Convexity",
+    "date": "2026-05-25T14:24:11Z",
+    "exp_id": "56c2f88c",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_3_compositional_witness_synthesis_algori.json",
     "title": "Compositional Witness Synthesis for Pythagorean Triples",
     "domain": "Pythagorean Number Theory",
@@ -39,6 +48,14 @@ window.PACKAGE_DB_INDEX = {
       "21d0ab18"
     ],
     "domain": "Pythagorean Number Theory"
+  },
+  "direction_2_higher_order_log_concavity_and_partiti.json": {
+    "title": "Higher-Order Log-Concavity: A Recursive Hierarchy for Discrete Sequences",
+    "exp_id": "56c2f88c",
+    "source_exp_ids": [
+      "1f8fa3a8"
+    ],
+    "domain": "Algebraic Combinatorics / Discrete Convexity"
   }
 };
 
@@ -53,7 +70,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -64,9 +81,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 271,
+      "hue": 292,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
+    },
+    {
+      "id": "direction_2_higher_order_log_concavity_and_partiti",
+      "title": "Higher-Order Log-Concavity: A Recursive Hierarchy for Discrete Sequences",
+      "domain": "Algebraic Combinatorics / Discrete Convexity",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T14:24:11Z",
+      "hue": 271,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [],
