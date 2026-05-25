@@ -4,6 +4,15 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_2_universality_of_phase_transition_criti.json",
+    "title": "Universality of Critical Exponents in Subgroup Thermodynamics",
+    "domain": "Algebraic Statistical Mechanics / Finite Group Theory",
+    "date": "2026-05-25T21:49:23Z",
+    "exp_id": "354ccda2",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_1_stability_theory_for_tropical_persiste.json",
     "title": "Stability Theory for Tropical Persistence Barcodes",
     "domain": "Tropical Geometry / Topological Data Analysis / Graph Theory",
@@ -485,6 +494,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Mathematical Physics / Representation Theory / Spectral Analysis"
   },
+  "direction_2_universality_of_phase_transition_criti.json": {
+    "title": "Universality of Critical Exponents in Subgroup Thermodynamics",
+    "exp_id": "354ccda2",
+    "source_exp_ids": [
+      "cf039036"
+    ],
+    "domain": "Algebraic Statistical Mechanics / Finite Group Theory"
+  },
   "direction_3_concentration_of__on_random_hypergraph.json": {
     "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
     "exp_id": "7817bcef",
@@ -546,7 +563,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 95,
+      "hue": 272,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -557,7 +574,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -568,7 +585,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -590,7 +607,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -601,7 +618,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7554863879178124,
       "quality": "substantial"
     },
@@ -612,7 +629,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 280,
+      "hue": 271,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -623,7 +640,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 90,
+      "hue": 134,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -634,7 +651,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7475694375378231,
       "quality": "substantial"
     },
@@ -645,7 +662,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7452328425357874,
       "quality": "substantial"
     },
@@ -656,7 +673,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7379731931205967,
       "quality": "substantial"
     },
@@ -667,7 +684,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T17:14:28Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7094771428571429,
       "quality": "substantial"
     },
@@ -678,7 +695,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:14:56Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7307286403906522,
       "quality": "substantial"
     },
@@ -700,7 +717,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:49:47Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.718787256166983,
       "quality": "substantial"
     },
@@ -711,7 +728,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T17:57:55Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7485430061705161,
       "quality": "substantial"
     },
@@ -722,7 +739,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:02:50Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7448372075471699,
       "quality": "substantial"
     },
@@ -733,7 +750,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T18:03:18Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7496613212625398,
       "quality": "substantial"
     },
@@ -744,7 +761,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T18:39:27Z",
-      "hue": 271,
+      "hue": 95,
       "priority_score": 0.7633440525911624,
       "quality": "substantial"
     },
@@ -766,7 +783,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T18:40:46Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.6968374111334675,
       "quality": "partial"
     },
@@ -777,7 +794,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T19:29:15Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7239525714285715,
       "quality": "substantial"
     },
@@ -788,7 +805,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:01:45Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7661817738359202,
       "quality": "substantial"
     },
@@ -799,7 +816,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:02:12Z",
-      "hue": 89,
+      "hue": 271,
       "priority_score": 0.7190936000000001,
       "quality": "substantial"
     },
@@ -810,7 +827,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:34:49Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7132103632664923,
       "quality": "substantial"
     },
@@ -821,7 +838,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:35:13Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7238752112676057,
       "quality": "substantial"
     },
@@ -832,7 +849,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T20:35:34Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7266461478599222,
       "quality": "substantial"
     },
@@ -843,7 +860,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:35:56Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7224016949152543,
       "quality": "substantial"
     },
@@ -854,7 +871,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T21:12:32Z",
-      "hue": 280,
+      "hue": 271,
       "priority_score": 0.7286,
       "quality": "substantial"
     },
@@ -865,7 +882,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T21:13:06Z",
-      "hue": 90,
+      "hue": 275,
       "priority_score": 0.7215128,
       "quality": "substantial"
     },
@@ -876,9 +893,20 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T21:13:36Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7197528467153285,
       "quality": "substantial"
+    },
+    {
+      "id": "direction_2_universality_of_phase_transition_criti",
+      "title": "Universality of Critical Exponents in Subgroup Thermodynamics",
+      "domain": "Algebraic Statistical Mechanics / Finite Group Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T21:49:23Z",
+      "hue": 271,
+      "priority_score": null,
+      "quality": "unrated"
     }
   ],
   "edges": [
@@ -913,6 +941,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "direction_2_higher_order_log_concavity_and_partiti",
       "target": "direction_2_mixing_time_bounds_from_concavity_dept",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_phase_transitions_in_generation_probab",
+      "target": "direction_2_universality_of_phase_transition_criti",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
