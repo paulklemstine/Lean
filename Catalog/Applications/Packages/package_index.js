@@ -4,13 +4,22 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "birch_and_swinnerton_dyer_conjecture.json",
+    "title": "Tropical-Analytic Duality for Elliptic L-Functions",
+    "domain": "Algebra / Arithmetic Geometry / Tropical Geometry",
+    "date": "2026-05-25T03:07:59Z",
+    "exp_id": "75d10c50",
+    "quality_score": null,
+    "quality": "unrated"
+  },
+  {
     "filename": "direction_3_sparse_matrix_structure_preservation.json",
     "title": "Row-Sparsity Budgets for Tensor Rewrite Systems",
     "domain": "Sparse Linear Algebra / Symbolic Computation",
     "date": "2026-05-25T03:07:10Z",
     "exp_id": "bcea68ad",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7516518344827586,
+    "quality": "substantial"
   },
   {
     "filename": "direction_4_parametric_families_and_algebraic_curv.json",
@@ -245,6 +254,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Many-Sorted Rewriting / Linear Algebra / Scientific Computing"
   },
+  "birch_and_swinnerton_dyer_conjecture.json": {
+    "title": "Tropical-Analytic Duality for Elliptic L-Functions",
+    "exp_id": "75d10c50",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra / Arithmetic Geometry / Tropical Geometry"
+  },
   "direction_1_concrete_first_order_term_algebra_with.json": {
     "title": "Certified Knuth-Bendix Completion: Concrete-to-Abstract Simulation for First-Order Term Algebra",
     "exp_id": "8e448ab4",
@@ -274,7 +291,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-24T23:11:21Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.5216596518375242,
       "quality": "partial"
     },
@@ -285,7 +302,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-24T23:12:19Z",
-      "hue": 90,
+      "hue": 179,
       "priority_score": 0.6423696551724138,
       "quality": "partial"
     },
@@ -296,7 +313,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-24T23:13:01Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.5431629411764707,
       "quality": "partial"
     },
@@ -307,7 +324,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-24T23:13:42Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.49450347826086954,
       "quality": "partial"
     },
@@ -318,7 +335,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T00:25:17Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7684672566371681,
       "quality": "substantial"
     },
@@ -329,7 +346,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:25:53Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.5684834461538462,
       "quality": "partial"
     },
@@ -351,7 +368,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T00:54:38Z",
-      "hue": 280,
+      "hue": 95,
       "priority_score": 0.7156088,
       "quality": "substantial"
     },
@@ -362,7 +379,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T00:55:11Z",
-      "hue": 134,
+      "hue": 100,
       "priority_score": 0.707316371361133,
       "quality": "substantial"
     },
@@ -384,7 +401,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T02:10:29Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7655020869565218,
       "quality": "substantial"
     },
@@ -395,7 +412,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T02:11:07Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.657708624390244,
       "quality": "partial"
     },
@@ -406,7 +423,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T03:05:32Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.6969741764705883,
       "quality": "partial"
     },
@@ -417,7 +434,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T03:06:21Z",
-      "hue": 90,
+      "hue": 89,
       "priority_score": 0.6889964000000002,
       "quality": "partial"
     },
@@ -428,7 +445,18 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-25T03:07:10Z",
-      "hue": 95,
+      "hue": 92,
+      "priority_score": 0.7516518344827586,
+      "quality": "substantial"
+    },
+    {
+      "id": "birch_and_swinnerton_dyer_conjecture",
+      "title": "Tropical-Analytic Duality for Elliptic L-Functions",
+      "domain": "Algebra / Arithmetic Geometry / Tropical Geometry",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T03:07:59Z",
+      "hue": 272,
       "priority_score": null,
       "quality": "unrated"
     }
@@ -466,31 +494,31 @@ window.PACKAGE_GRAPH = {
   "domain_bridges": [
     {
       "domain_a": "Algebra",
+      "domain_b": "Geometry",
+      "package_count": 3,
+      "strength": 0.9000000000000001
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Tropical",
+      "package_count": 3,
+      "strength": 0.9000000000000001
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Tropical",
+      "package_count": 2,
+      "strength": 0.7
+    },
+    {
+      "domain_a": "Algebra",
       "domain_b": "Logic",
       "package_count": 2,
       "strength": 0.7
     },
     {
       "domain_a": "Algebra",
-      "domain_b": "Tropical",
-      "package_count": 2,
-      "strength": 0.7
-    },
-    {
-      "domain_a": "Algebra",
-      "domain_b": "Geometry",
-      "package_count": 2,
-      "strength": 0.7
-    },
-    {
-      "domain_a": "Algebra",
       "domain_b": "Computation",
-      "package_count": 1,
-      "strength": 0.5
-    },
-    {
-      "domain_a": "Geometry",
-      "domain_b": "Tropical",
       "package_count": 1,
       "strength": 0.5
     }
@@ -892,7 +920,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "21d0ab18",
@@ -911,7 +939,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "21d0ab18",
@@ -929,7 +957,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "21d0ab18",
@@ -947,12 +975,30 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "21d0ab18",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:55:14.021207+00:00"
+  },
+  {
+    "id": "fd_0829",
+    "title": "Direction 5: Higher-Order Completion and Lambda-Calculus Integration",
+    "description": "**Conjecture:** The substitution functoriality theorem (`subst_comp`) and context closure theorems generalize to simply-typed lambda calculus with beta-reduction, enabling a higher-order completion procedure where beta-reduction steps are interleaved with equational rewriting steps, preserving the generated higher-order equational theory.\n\n**Test:**\n1. Define a simply-typed term algebra extending FOTerm with lambda abstraction and application.\n2. Implement higher-order matching (matching modulo beta-eta) and test on 500 term pairs.\n3. Attempt completion on simple higher-order equational theories (e.g., `map f (map g xs) = map (f \u2218 g) xs`) and check if the resulting rules are confluent modulo beta.\n4. Compare with Nipkow's higher-order completion results.\n\n**Impact:** Higher-order completion would bridge term rewriting to type theory and functional programming, enabling certified optimization of higher-order programs and certified simplification in dependent type theory proof assistants.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (`subst_comp`, `subst_comp3`, `rewrites_closed_under_subst_and_context`)\n\n**Proof Strategy:** The key challenge is that beta-reduction is not first-order rewriting \u2014 it involves variable binding. Use de Bruijn indices or locally nameless representation to make substitution explicit. Then show that the first-order closure theorems lift to the higher-order setting with appropriate modifications for alpha-equivalence.\n\n**Domain Bridges:** Type theory, functional programming, proof automation, category theory\n\n**Lineage:** Grand generalization of the substitution category structure in `subst_comp3`\n\n**Ambition:** Grand challenge \u2014 higher-order completion is an active research area with many open problems",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8e448ab4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T01:35:36.634466+00:00"
   },
   {
     "id": "seed_003",
@@ -1137,30 +1183,34 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.520566+00:00"
   },
   {
-    "id": "fd_0815",
-    "title": "Direction 3: Sparse Matrix Structure Preservation",
-    "description": "**Conjecture:** For sparse matrices (with at most `s` nonzero entries per row, where `s \u226a n`), the normalized form produced by the distributivity rewrite system preserves sparsity structure: if all matrix variables in a term are `s`-sparse, then the semantic matrix produced by evaluating any intermediate or final term has at most `s` nonzero entries per row.\n\n**Test:** Generate 5,000 random sparse matrices (CSR format) with `n = 100`, `s = 5`. Build random tensor terms of depth 4. Normalize and evaluate, checking the sparsity pattern of all intermediate matrix results. A single dense intermediate matrix refutes the conjecture. Compute the sparsity ratio (nnz/n\u00b2) before and after normalization.\n\n**Impact:** Sparsity preservation is critical for scalability. Finite element stiffness matrices, graph Laplacians, and many physics operators are sparse. If normalization destroys sparsity, the certified simplification becomes computationally useless for large problems. Proving sparsity preservation would make the rewrite system practical for real-world scientific computing.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `TensorRewrite`, `evalMat`, `evalVec`.\n\n**Proof Strategy:** Add a `Sparse` predicate on matrix terms and prove that each rewrite rule preserves it. The key insight: distributivity rules never multiply matrices together (no `matMul` in the current fragment), so sparsity of individual matrices is preserved through addition and scalar multiplication.\n\n**Domain Bridges:** Numerical linear algebra \u2192 finite elements \u2192 graph algorithms \u2192 scientific computing at scale.\n\n**Lineage:** Extends Theorem 1 with structural properties beyond semantic equality.\n\n**Ambition:** Medium \u2014 the current fragment avoids matrix-matrix multiplication, which is the main source of fill-in.\n\n---",
+    "id": "fd_0830",
+    "title": "Direction 1: M-Convexity Closure Under Differentiation",
+    "description": "**Conjecture**: The support exchange property (M-convexity) is preserved by partial differentiation. That is, if $p$ is a homogeneous polynomial with nonneg coefficients whose support satisfies the matroid exchange axiom, then the support of $\\partial p / \\partial x_i$ also satisfies the exchange axiom.\n\nFormally:\n```\ntheorem SupportSatisfiesExchange.pderiv\n    {n : \u2115} {p : MvPolynomial (Fin n) \u211d} {i : Fin n} :\n    SupportSatisfiesExchange p \u2192\n    SupportSatisfiesExchange (MvPolynomial.pderiv i p)\n```\n\n**Test**: Exhaustively verify for all M-convex supports of degree \u2264 6 in \u2264 5 variables that the derivative support remains M-convex. A single counterexample disproves the conjecture; conversely, verified examples up to this bound provide strong evidence.\n\n**Impact**: This would complete the formal bridge between Lorentzian polynomial theory and matroid/discrete convex analysis, showing that the entire derivative hierarchy preserves the combinatorial structure of the support. It would also provide a new proof technique for M-convexity results in matroid theory.\n\n**The key insight is** that M-convexity of support is the combinatorial shadow of Lorentzianity, and the differentiation operation on polynomials corresponds to contraction in matroid theory. Proving this formally would establish a new certified interface between algebraic combinatorics and discrete convex analysis.\n\n**Why now?** The formal definitions of both SupportSatisfiesExchange and partial differentiation are now in the catalog, and the Br\u00e4nd\u00e9n\u2013Huh theory provides the mathematical framework. The exhaustive computational verification is newly feasible with the recognition algorithm.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `SupportSatisfiesExchange`, `pderiv_coeff_nonneg`\n\n**Proof Strategy**: Induction on degree. The base case (degree 2) reduces to checking that 2\u00d72 exchange axiom is preserved. The inductive step uses the multilinearity of the derivative and the exchange axiom structure.\n\n**Domain Bridges**: Matroid theory, discrete convex analysis, Hodge theory\n\n**Lineage**: Extends `recursive_complete_of_exchange` and `pderiv_coeff_nonneg`\n\n**Ambition**: Solid extension \u2014 this is a known consequence of Br\u00e4nd\u00e9n\u2013Huh theory but has not been formally verified\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Geometry",
       "Computation",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "bcea68ad",
-    "timestamp": "2026-05-25T00:54:40.959769+00:00"
+    "source_exp_id": "83d44e07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:10:32.344475+00:00"
   },
   {
-    "id": "fd_0829",
-    "title": "Direction 5: Higher-Order Completion and Lambda-Calculus Integration",
-    "description": "**Conjecture:** The substitution functoriality theorem (`subst_comp`) and context closure theorems generalize to simply-typed lambda calculus with beta-reduction, enabling a higher-order completion procedure where beta-reduction steps are interleaved with equational rewriting steps, preserving the generated higher-order equational theory.\n\n**Test:**\n1. Define a simply-typed term algebra extending FOTerm with lambda abstraction and application.\n2. Implement higher-order matching (matching modulo beta-eta) and test on 500 term pairs.\n3. Attempt completion on simple higher-order equational theories (e.g., `map f (map g xs) = map (f \u2218 g) xs`) and check if the resulting rules are confluent modulo beta.\n4. Compare with Nipkow's higher-order completion results.\n\n**Impact:** Higher-order completion would bridge term rewriting to type theory and functional programming, enabling certified optimization of higher-order programs and certified simplification in dependent type theory proof assistants.\n\n**Catalog References:** `Pythagorean/ConcreteTermAlgebra.lean` (`subst_comp`, `subst_comp3`, `rewrites_closed_under_subst_and_context`)\n\n**Proof Strategy:** The key challenge is that beta-reduction is not first-order rewriting \u2014 it involves variable binding. Use de Bruijn indices or locally nameless representation to make substitution explicit. Then show that the first-order closure theorems lift to the higher-order setting with appropriate modifications for alpha-equivalence.\n\n**Domain Bridges:** Type theory, functional programming, proof automation, category theory\n\n**Lineage:** Grand generalization of the substitution category structure in `subst_comp3`\n\n**Ambition:** Grand challenge \u2014 higher-order completion is an active research area with many open problems",
+    "id": "fd_0831",
+    "title": "Direction 2: Lorentzian Polynomials in Statistical Physics and Probability",
+    "description": "**Conjecture**: The partition function of any determinantal point process (DPP), when restricted to its homogeneous components, yields Lorentzian polynomials. This implies that all marginal inclusion probabilities satisfy the negative dependence inequality $\\Pr[i \\in S \\text{ and } j \\in S] \\le \\Pr[i \\in S] \\cdot \\Pr[j \\in S]$.\n\nFormally:\n```\ntheorem dpp_partition_function_lorentzian\n    {n : \u2115} (K : Matrix (Fin n) (Fin n) \u211d) (hK : K.PosSemidef) (d : \u2115) :\n    IsBrandenHuhLorentzian d (homogeneousComponent d (dppPartitionFunction K))\n```\n\n**Test**: For random PSD matrices $K$ of size $n \\le 8$, compute the partition function, extract homogeneous components, and verify Lorentzianity via the spectral recognizer. Compare marginal correlations against the negative dependence bound.\n\n**Impact**: This would provide the first formally verified proof of negative dependence for DPPs, a fundamental result in probability and statistical physics. It would connect Lorentzian polynomial theory to random matrix theory, repulsive particle systems, and machine learning (DPPs are widely used for diverse subset selection).\n\n**The key insight is** that the partition function $\\det(I + \\text{diag}(x) \\cdot K)$ for PSD $K$ is a product of linear forms in the eigenvalue basis, making it manifestly Lorentzian. The formal challenge is connecting this spectral decomposition to the polynomial coefficient structure.\n\n**Why now?** DPPs are experiencing a surge of interest in machine learning and spatial statistics. Formally verified negative dependence guarantees would be valuable for certified randomized algorithms.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `IsBrandenHuhLorentzian`, `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy**: Decompose $\\det(I + DK)$ in the eigenbasis of $K$. Each factor is a positive linear form, so the product is Lorentzian by the closure property. Transfer back to the standard basis.\n\n**Domain Bridges**: Probability theory, statistical physics, machine learning, random matrix theory\n\n**Lineage**: Extends `lorentzian_reversed_cauchy_schwarz` and `spectralRecognizer_sound`\n\n**Ambition**: Grand challenge \u2014 connecting algebraic combinatorics to probability theory at the formal level\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Computation",
+      "Physics",
       "Bridges",
       "MachineLearning",
       "Logic"
@@ -1168,9 +1218,48 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "8e448ab4",
+    "source_exp_id": "83d44e07",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T01:35:36.634466+00:00"
+    "timestamp": "2026-05-25T02:10:32.364163+00:00"
+  },
+  {
+    "id": "fd_0832",
+    "title": "Direction 3: Certified Exact Arithmetic for Spectral Recognition",
+    "description": "**Conjecture**: For polynomials with rational coefficients, the Lorentzian signature condition can be verified in exact arithmetic using the Sylvester criterion (signs of leading principal minors of the Hessian shifted by a rank-1 perturbation), avoiding all floating-point issues.\n\nFormally:\n```\ntheorem rational_spectral_recognizer_decidable\n    {n : \u2115} (d : \u2115) (p : MvPolynomial (Fin n) \u211a) :\n    Decidable (IsRecursivelyLorentzian d (p.map (algebraMap \u211a \u211d)))\n```\n\n**Test**: Implement the rational Sylvester criterion and compare against floating-point eigenvalue computation for all polynomials with coefficients in {0,1,2,3} of degree \u2264 4 in \u2264 4 variables. Any disagreement indicates a numerical stability issue.\n\n**Impact**: This would make Lorentzian recognition fully certified \u2014 not just mathematically sound, but computationally exact. It would enable trusted automated verification of log-concavity conjectures in combinatorics.\n\n**The key insight is** that the \"at most one positive eigenvalue\" condition for a symmetric matrix can be reformulated as: the matrix $H - \\epsilon \\cdot vv^T$ is negative semidefinite for some small $\\epsilon > 0$ and direction $v$. This can be checked via the Sylvester criterion using only determinants (exact rational arithmetic).\n\n**Why now?** The spectral recognizer algorithm is now formally verified for soundness and completeness. The remaining gap is computational \u2014 bridging from real-number eigenvalue conditions to decidable rational-arithmetic checks.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `spectralRecognizerProp`, `HasAtMostOnePositiveEigenvalue`\n\n**Proof Strategy**: Reformulate the eigenvalue condition in terms of the characteristic polynomial. Use Sturm's theorem or Descartes' rule of signs to count positive roots of the characteristic polynomial in exact rational arithmetic.\n\n**Domain Bridges**: Numerical linear algebra, certified computation, computer algebra\n\n**Lineage**: Extends `spectralRecognizer_correct` and `quadratic_leaf_count_le`\n\n**Ambition**: Solid extension \u2014 decidability results for eigenvalue conditions are classical, but formal verification is novel\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "83d44e07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:10:32.381941+00:00"
+  },
+  {
+    "id": "fd_0834",
+    "title": "Direction 5: Lorentzian Certificates for Convex Optimization",
+    "description": "**Conjecture**: For any homogeneous Lorentzian polynomial $p$ of degree $d$, the function $x \\mapsto p(x)^{1/d}$ is concave on the cone $\\{x \\in \\mathbb{R}_{\\ge 0}^n : p(x) > 0\\}$. This concavity certificate can be verified in polynomial time (for fixed $d$) using the recursive spectral certificate.\n\nFormally:\n```\ntheorem lorentzian_root_concave\n    {n d : \u2115} {p : MvPolynomial (Fin n) \u211d}\n    (hL : IsRecursivelyLorentzian d p) (hd : 0 < d)\n    (x y : Fin n \u2192 \u211d) (hx : \u2200 i, 0 \u2264 x i) (hy : \u2200 i, 0 \u2264 y i)\n    (hpx : eval x p > 0) (hpy : eval y p > 0) (t : \u211d) (ht : 0 \u2264 t) (ht1 : t \u2264 1) :\n    eval (t \u2022 x + (1 - t) \u2022 y) p ^ (1 / d : \u211d) \u2265\n    t * (eval x p) ^ (1 / d : \u211d) + (1 - t) * (eval y p) ^ (1 / d : \u211d)\n```\n\n**Test**: Numerically verify concavity of $p^{1/d}$ on random points in the positive cone for all Lorentzian polynomials in the test suite. Any convexity violation would be a counterexample.\n\n**Impact**: This would provide certified concavity guarantees for optimization, connecting Lorentzian polynomial theory to barrier methods, self-concordant functions, and interior-point algorithms. It could enable new polynomial-time algorithms for optimization over Lorentzian-definable sets.\n\n**The key insight is** that the tangent-space negativity theorem (already proven) is the infinitesimal version of this concavity statement. The global concavity follows by integration along geodesics in the positive cone, using the reversed Cauchy\u2013Schwarz as the key inequality.\n\n**Why now?** The tangent-space negativity theorem is now formally verified, providing the key local ingredient. The global-from-local argument is well-understood analytically and should be formalizable with existing Mathlib calculus infrastructure.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `lorentzian_signature_tangent_neg_semidef`, `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy**: (1) Prove that the Hessian of $\\log p$ is negative semidefinite on the tangent space (follows from tangent-space negativity). (2) Conclude $\\log p$ is concave. (3) Exponentiate and use the AM-GM inequality to get $p^{1/d}$ concavity.\n\n**Domain Bridges**: Convex optimization, interior-point methods, self-concordant barriers, computational geometry\n\n**Lineage**: Extends `lorentzian_signature_tangent_neg_semidef`\n\n**Ambition**: Solid extension with high practical impact \u2014 bridges pure algebraic combinatorics to applied optimization",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "83d44e07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:10:32.428154+00:00"
   },
   {
     "id": "seed_026",
@@ -1516,9 +1605,24 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:06:34.986047+00:00"
   },
   {
-    "id": "fd_0830",
-    "title": "Direction 1: M-Convexity Closure Under Differentiation",
-    "description": "**Conjecture**: The support exchange property (M-convexity) is preserved by partial differentiation. That is, if $p$ is a homogeneous polynomial with nonneg coefficients whose support satisfies the matroid exchange axiom, then the support of $\\partial p / \\partial x_i$ also satisfies the exchange axiom.\n\nFormally:\n```\ntheorem SupportSatisfiesExchange.pderiv\n    {n : \u2115} {p : MvPolynomial (Fin n) \u211d} {i : Fin n} :\n    SupportSatisfiesExchange p \u2192\n    SupportSatisfiesExchange (MvPolynomial.pderiv i p)\n```\n\n**Test**: Exhaustively verify for all M-convex supports of degree \u2264 6 in \u2264 5 variables that the derivative support remains M-convex. A single counterexample disproves the conjecture; conversely, verified examples up to this bound provide strong evidence.\n\n**Impact**: This would complete the formal bridge between Lorentzian polynomial theory and matroid/discrete convex analysis, showing that the entire derivative hierarchy preserves the combinatorial structure of the support. It would also provide a new proof technique for M-convexity results in matroid theory.\n\n**The key insight is** that M-convexity of support is the combinatorial shadow of Lorentzianity, and the differentiation operation on polynomials corresponds to contraction in matroid theory. Proving this formally would establish a new certified interface between algebraic combinatorics and discrete convex analysis.\n\n**Why now?** The formal definitions of both SupportSatisfiesExchange and partial differentiation are now in the catalog, and the Br\u00e4nd\u00e9n\u2013Huh theory provides the mathematical framework. The exhaustive computational verification is newly feasible with the recognition algorithm.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `SupportSatisfiesExchange`, `pderiv_coeff_nonneg`\n\n**Proof Strategy**: Induction on degree. The base case (degree 2) reduces to checking that 2\u00d72 exchange axiom is preserved. The inductive step uses the multilinearity of the derivative and the exchange axiom structure.\n\n**Domain Bridges**: Matroid theory, discrete convex analysis, Hodge theory\n\n**Lineage**: Extends `recursive_complete_of_exchange` and `pderiv_coeff_nonneg`\n\n**Ambition**: Solid extension \u2014 this is a known consequence of Br\u00e4nd\u00e9n\u2013Huh theory but has not been formally verified\n\n---",
+    "id": "fd_0849",
+    "title": "Prime-Variation Detection of Sato\u2013Tate Drift via Persistent Homology",
+    "description": "Conjecture: Let E/Q be an elliptic curve without complex multiplication, and for each prime p of good reduction let a_p be its Frobenius trace. Build a filtered complex K_X from the point cloud {(p/X, a_p/(2\\sqrt{p})) : p \\le X} using a canonical metric and Vietoris\u2013Rips filtration. Then the persistence landscape of K_X converges, as X -> \\infty, to a universal limit determined only by the Sato\u2013Tate measure; moreover, if one replaces E by a CM elliptic curve or by an isogeny-non-equivalent non-CM curve with an exceptional low-lying zero bias in its L-function, the limiting landscape differs in a statistically detectable way. Test: Compute landscapes for large X across many non-CM curves, CM curves, and families with different analytic ranks; confirm universality within the non-CM class and refute by finding stable curve-dependent deviations, or confirm distinction by a reproducible classifier separating CM/non-CM or rank-biased families from persistence data alone. Impact: This would create a new topological statistic for arithmetic distributions, linking persistent homology to Frobenius statistics, Sato\u2013Tate theory, and L-function phenomenology.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:07:22.429094+00:00"
+  },
+  {
+    "id": "fd_0835",
+    "title": "Direction 1: Tight Spectral Gap via Lorentzian Structure",
+    "description": "**Conjecture:** For a degree-d recursively Lorentzian polynomial in n variables, the certificate-guided Markov chain has spectral gap at least \u03a9(1/(d\u00b7n)), improving the current bound of \u03a9(1/n\u00b2).\n\n**Test:** Compute spectral gaps for binomial, Poisson, and hypergeometric distributions (all Lorentzian) for n = 5, 10, 20, 50, 100 and fit the scaling exponent. If the gap scales as \u0398(1/n^\u03b1) with \u03b1 < 1.5, the conjecture is plausible; if \u03b1 \u2248 2, the current bound is tight.\n\n**Impact:** An \u03a9(1/(d\u00b7n)) gap would reduce mixing time from O(n\u00b2 \u00b7 d \u00b7 log n) to O(n \u00b7 d\u00b2 \u00b7 log n), a quadratic speedup that makes certificate-guided sampling practical for large-scale problems.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `spectral_gap_log_concave_lower_bound`, `logConcaveSeq_mul`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy:** Use the reversed Cauchy\u2013Schwarz inequality directly (not just log-concavity) to bound the Dirichlet form. At each certificate node, the reversed CS gives B(e\u2096, e\u2096\u208a\u2081)\u00b2 \u2265 Q(e\u2096)\u00b7Q(e\u2096\u208a\u2081), which provides a *tighter* bound on off-diagonal transition probabilities than the generic log-concavity argument. Induct on certificate depth, using the derivative-descent structure to decompose the Dirichlet form into per-level contributions.\n\n**Domain Bridges:** Probability theory (Markov chain mixing), functional analysis (Poincar\u00e9 inequalities), combinatorial optimization (MCMC convergence)\n\n**Lineage:** Extends `spectral_gap_log_concave_lower_bound` using `lorentzian_reversed_cauchy_schwarz`\n\n**Ambition:** Solid extension \u2014 the techniques are within reach of current methods, and computational evidence strongly supports the conjecture.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1531,19 +1635,136 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "83d44e07",
+    "source_exp_id": "1f8fa3a8",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:10:32.344475+00:00"
+    "timestamp": "2026-05-25T02:11:10.182188+00:00"
   },
   {
-    "id": "fd_0831",
-    "title": "Direction 2: Lorentzian Polynomials in Statistical Physics and Probability",
-    "description": "**Conjecture**: The partition function of any determinantal point process (DPP), when restricted to its homogeneous components, yields Lorentzian polynomials. This implies that all marginal inclusion probabilities satisfy the negative dependence inequality $\\Pr[i \\in S \\text{ and } j \\in S] \\le \\Pr[i \\in S] \\cdot \\Pr[j \\in S]$.\n\nFormally:\n```\ntheorem dpp_partition_function_lorentzian\n    {n : \u2115} (K : Matrix (Fin n) (Fin n) \u211d) (hK : K.PosSemidef) (d : \u2115) :\n    IsBrandenHuhLorentzian d (homogeneousComponent d (dppPartitionFunction K))\n```\n\n**Test**: For random PSD matrices $K$ of size $n \\le 8$, compute the partition function, extract homogeneous components, and verify Lorentzianity via the spectral recognizer. Compare marginal correlations against the negative dependence bound.\n\n**Impact**: This would provide the first formally verified proof of negative dependence for DPPs, a fundamental result in probability and statistical physics. It would connect Lorentzian polynomial theory to random matrix theory, repulsive particle systems, and machine learning (DPPs are widely used for diverse subset selection).\n\n**The key insight is** that the partition function $\\det(I + \\text{diag}(x) \\cdot K)$ for PSD $K$ is a product of linear forms in the eigenvalue basis, making it manifestly Lorentzian. The formal challenge is connecting this spectral decomposition to the polynomial coefficient structure.\n\n**Why now?** DPPs are experiencing a surge of interest in machine learning and spatial statistics. Formally verified negative dependence guarantees would be valuable for certified randomized algorithms.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `IsBrandenHuhLorentzian`, `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy**: Decompose $\\det(I + DK)$ in the eigenbasis of $K$. Each factor is a positive linear form, so the product is Lorentzian by the closure property. Transfer back to the standard basis.\n\n**Domain Bridges**: Probability theory, statistical physics, machine learning, random matrix theory\n\n**Lineage**: Extends `lorentzian_reversed_cauchy_schwarz` and `spectralRecognizer_sound`\n\n**Ambition**: Grand challenge \u2014 connecting algebraic combinatorics to probability theory at the formal level\n\n---",
+    "id": "fd_0836",
+    "title": "Direction 2: Higher-Order Log-Concavity and Partition Functions",
+    "description": "**Conjecture:** For a k-fold Lorentzian polynomial (one whose k-th derivatives are all Lorentzian), the coefficient sequence satisfies k-fold log-concavity: the k-th finite difference of log(a\u2098) is nonpositive. This implies mixing time bounds of O(n^(2/k) \u00b7 log n) for the associated Markov chain.\n\n**Test:** Verify k-fold log-concavity for the generating polynomials of (a) complete bipartite graph spanning trees, (b) matroid basis counts for paving matroids, (c) partition functions of the Ising model on small lattices. Compute whether the mixing time improvement from k-fold LC matches the O(n^(2/k)) prediction.\n\n**Impact:** Would provide a hierarchy of increasingly efficient samplers indexed by the \"depth of Lorentzianness,\" with applications to statistical physics partition functions.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `LogConcaveSeq`, `binomial_log_concave`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `IsRecursivelyLorentzian`\n\n**Proof Strategy:** Define k-fold log-concavity inductively: 1-fold = standard log-concavity; (k+1)-fold = the sequence of ratios a\u2098\u208a\u2081/a\u2098 is k-fold log-concave. Use the recursive Lorentzian certificate (depth d\u22122) to establish (d\u22122)-fold log-concavity. Apply modified log-Sobolev inequalities that exploit higher-order concavity.\n\n**Domain Bridges:** Statistical physics (partition functions), information theory (entropy inequalities), operator theory (complete positivity)\n\n**Lineage:** Extends `logConcaveSeq_mul` and `binomial_ratio_le_one` to higher orders\n\n**Ambition:** Grand challenge \u2014 k-fold log-concavity for partition functions would resolve open problems in statistical physics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.200317+00:00"
+  },
+  {
+    "id": "fd_0837",
+    "title": "Direction 3: Quantum Ground-State Preparation via Lorentzian Certificates",
+    "description": "**Conjecture:** For a stoquastic Hamiltonian H whose ground-state amplitudes are the coefficients of a Lorentzian polynomial, the certificate tree provides an efficient quantum circuit for ground-state preparation, with depth O(n^(d\u22122) \u00b7 log n) and gate count O(n^d).\n\n**Test:** Implement the certificate-to-circuit compilation for (a) the transverse-field Ising model on small lattices (n \u2264 12), (b) the XX model, and (c) Rokhsar-Kivelson Hamiltonians. Simulate the circuit on a quantum emulator and compare fidelity vs. depth with Variational Quantum Eigensolver (VQE) and Quantum Approximate Optimization Algorithm (QAOA).\n\n**Impact:** Would establish that Lorentzian certificates are universal ground-state preparation recipes for stoquastic Hamiltonians, bridging algebraic combinatorics to quantum computing.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificate_sampling_efficiency`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `RecursiveLorentzianCertificate`\n\n**Proof Strategy:** Map each certificate node to a quantum gate sequence: the Lorentzian signature (one positive eigenvalue) means the Hessian can be decomposed as a rank-1 projector minus a positive semidefinite term. This decomposition defines a quantum channel whose fixed point is the target amplitude distribution. The recursive structure gives a depth-d\u22122 circuit that converges to the ground state.\n\n**Domain Bridges:** Quantum computing (Hamiltonian simulation), condensed matter physics (stoquastic models), classical simulation (sign-problem-free systems)\n\n**Lineage:** Builds on `certificate_depth_eq` and `RecursiveLorentzianCertificate` from the recognition catalog\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects algebraic combinatorics to quantum algorithms in a fundamentally new way.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
       "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.221031+00:00"
+  },
+  {
+    "id": "fd_0838",
+    "title": "Direction 4: Tropical Mixing Without Spectral Intermediate",
+    "description": "**Conjecture:** The tropical diameter of the Newton subdivision of a Lorentzian polynomial *directly* controls the mixing time, without passing through the spectral gap: \u03c4_mix \u2264 O(trop_diam \u00b7 n \u00b7 log n), where trop_diam \u2264 O(d \u00b7 n) for degree-d polynomials.\n\n**Test:** For randomly generated Lorentzian polynomials (degree 3\u20135, variables 3\u201310), compute both the tropical diameter and the actual mixing time (from eigenvalue computation). Plot \u03c4_mix vs. trop_diam. If the relationship is linear (not quadratic), the direct bound holds.\n\n**Impact:** Would bypass the spectral gap entirely, providing a geometric understanding of mixing that connects to the rapidly developing field of tropical geometry.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `tropical_diameter_le_dn`, `certificate_mixing_time_bound`\n\n**Proof Strategy:** Use the canonical paths method directly with paths defined by the tropical subdivision. Each path follows the ridge between tropical cells, and its congestion is bounded by the cell volumes (which are controlled by the mixed volumes of the Newton polytope). The Lorentzian condition ensures these volumes satisfy a Brunn-Minkowski-type inequality that bounds congestion.\n\n**Domain Bridges:** Tropical geometry (Newton polytopes, subdivisions), combinatorial geometry (Brunn-Minkowski theory), algebraic statistics (toric models)\n\n**Lineage:** Extends `tropical_diameter_le_dn` with a direct mixing argument\n\n**Ambition:** Solid extension \u2014 the canonical paths framework is well-established, and tropical geometry provides the right language.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.243679+00:00"
+  },
+  {
+    "id": "fd_0839",
+    "title": "Direction 5: Dynamic Lorentzian Certificates and Online Sampling",
+    "description": "**Conjecture:** When a Lorentzian polynomial f changes by a rank-1 update (adding a single monomial term), the certificate tree can be updated in O(n^(d\u22123) \u00b7 n\u00b2) time \u2014 a factor of n cheaper than rebuilding from scratch \u2014 and the Markov chain can be \"warm-started\" with mixing time O(n \u00b7 log n) from the previous stationary distribution.\n\n**Test:** Implement dynamic certificate maintenance for the generating polynomial of a matroid as elements are added/deleted. Measure (a) certificate update time vs. rebuild time, (b) warm-start mixing time vs. cold-start mixing time, for graphic matroids of growing graphs (n = 10, 20, 50, 100 vertices, adding one edge at a time).\n\n**Impact:** Would make certificate-guided sampling practical for streaming and online settings, where the underlying polynomial evolves over time.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificateDepth`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `pderiv_isHomogeneous_degree_pred`\n\n**Proof Strategy:** A rank-1 update to f changes only O(n^(d\u22123)) leaves of the certificate tree (those whose multiindex overlaps the updated monomial). Recompute eigenvalues only at affected leaves. For warm-starting, bound the total variation distance between old and new stationary distributions using the \u2113\u2081 change in coefficients, then apply the mixing time bound with this as the initial distance.\n\n**Domain Bridges:** Online algorithms (streaming computation), dynamic graph algorithms, stochastic optimization (follow-the-regularized-leader)\n\n**Lineage:** Extends `certificate_verification_complexity` to the dynamic setting\n\n**Ambition:** Solid extension \u2014 the key ideas (lazy updates, warm starts) are well-known in MCMC; the novelty is combining them with certificate structure.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "1f8fa3a8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T02:11:10.263299+00:00"
+  },
+  {
+    "id": "fd_0840",
+    "title": "Direction 1: Basis Uniqueness up to Tropical Projective Equivalence",
+    "description": "**Conjecture**: For each connected graph G, basepoint q, and subset S \u2286 V \\ {q}, the cycle-component generating family of the tropical kernel of L_S is unique up to tropical scaling (adding constants to individual generators) and permutation, whenever G[S] has a pairwise edge-disjoint cycle basis and distinct q-visible components.\n\n**Test**: Exhaustive search over all connected graphs on n \u2264 7 vertices. For each (G, q, S), compute all minimal tropical generating families of ker_trop(L_S) and compare equivalence classes. Verify that the number of equivalence classes is exactly 1 when the edge-disjointness condition holds, and characterize the failure cases.\n\n**Impact**: Establishes canonical generators for tropical kernels, enabling effective computation and comparison across graph families. Would be the tropical analogue of the uniqueness of the Smith normal form.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernel, componentIndicator), `Pythagorean/TropicalBridge/TropicalHodge.lean` (componentIndicator_mem_tropicalKernel, tropicalKernel_leaf_eq).\n\n**Proof Strategy**: Use the separation properties of cycle generators (support on cycle vertices) and component generators (support on component vertices) to show that any alternative generating family must be related by tropical scaling. The key tool is the leaf propagation lemma, which forces values along tree edges.\n\n**Domain Bridges**: Tropical linear algebra \u2194 matroid theory (the cycle matroid determines uniqueness), algebraic combinatorics \u2194 graph theory.\n\n**Lineage**: Extends the structural kernel theorems in `TropicalHodge.lean` from existence to uniqueness.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 technically challenging but conceptually clear)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.257371+00:00"
+  },
+  {
+    "id": "fd_0841",
+    "title": "Direction 2: Filtration Persistence Formula",
+    "description": "**Conjecture**: For an increasing filtration S\u2080 \u2286 S\u2081 \u2286 ... \u2286 S_m \u2286 V \\ {q}, the sequence of tropical kernel dimensions dim_trop(ker_trop(L_{S_k})) satisfies:\n\n  dim(S_{k+1}) - dim(S_k) = (number of new cycles born) + (number of new q-visible components born) - (number of component merges destroying q-invisible components)\n\nMoreover, the \"barcode\" of tropical kernel dimensions is completely determined by the births and deaths of cycles and q-visible components in the filtration.\n\n**Test**: Enumerate all increasing filtrations on connected graphs with n \u2264 6 vertices. For each filtration, compute the dimension sequence and compare to the predicted birth/death events. Verify the persistence formula matches in all cases.\n\n**Impact**: Creates a new invariant \u2014 the **tropical persistence barcode** \u2014 that combines topological persistence (like standard persistent homology) with algebraic structure (tropical linear algebra). This could provide strictly finer invariants than classical persistent homology for weighted networks.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedCycleRank, qVisibleComponentCount), `Pythagorean/TropicalBridge/UniversalDefect.lean` (universalDefect_eq).\n\n**Proof Strategy**: Induction on filtration length. At each step, adding a vertex v to S either:\n(a) connects to an existing component (no new cycle, no new component),\n(b) forms a bridge to q (new q-visible component),\n(c) closes a cycle (new cycle mode), or\n(d) merges two components.\nTrack each case and verify the dimension change formula.\n\n**Domain Bridges**: Tropical algebra \u2194 topological data analysis, computational topology \u2194 network science.\n\n**Lineage**: Directly extends the dimension formula to parameterized families, building on `inducedCycleRank_eq_zero_of_forest` for the tree base case.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new persistent tropical homology theory)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fd2f08b2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T03:05:35.277308+00:00"
+  },
+  {
+    "id": "fd_0842",
+    "title": "Direction 3: Weighted Extension",
+    "description": "**Conjecture**: For weighted graphs with edge weights w : E \u2192 \u2124 (or more generally w : E \u2192 \u211d), the tropical kernel dimension formula generalizes to:\n\n  dim_trop(ker_trop(L_S^w)) = \u03b2\u2081^w(G[S]) + \u03ba^w(G,q,S)\n\nwhere \u03b2\u2081^w counts the number of \"weight-compatible\" independent cycles (cycles where the minimum-weight edge is achieved at least twice) and \u03ba^w counts q-visible components whose connection to q has \"generic\" weight.\n\nFor generic weights (no weight coincidences), \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula. For degenerate weights, the dimension can increase due to additional coincidences.\n\n**Test**: Sample 10000 weighted graphs on n \u2264 6 vertices with weights drawn from {1, 2, ..., 10}. For each, compute the tropical kernel dimension by direct enumeration and compare to the predicted \u03b2\u2081^w + \u03ba^w. Identify the precise weight-degeneracy conditions that cause the formula to differ from the unweighted case.\n\n**Impact**: Extends tropical graph Hodge theory to the setting relevant for applications (communication networks, transportation networks, molecular graphs all have weighted edges). Would connect to tropical geometry's theory of valuated matroids.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (TropicalVal, tropMul), `Pythagorean/TropicalBridge/TropicalHodge.lean` (cycleIndicator, componentIndicator).\n\n**Proof Strategy**: Modify the cycle and component indicator constructions to account for edge weights. The key insight is that the tropical kernel condition becomes weight-dependent: for row i, the minimum of w(i,j) + v(j) over neighbors j must be achieved twice. Weight-compatible cycles are those where the indicator vector, adjusted by cumulative weights, still satisfies this condition.\n\n**Domain Bridges**: Tropical geometry \u2194 optimization (weighted matching), network science \u2194 statistical physics (Boltzmann weights).\n\n**Lineage**: Generalizes `componentIndicator_mem_tropicalKernel` from unit weights to arbitrary weights.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 natural generalization with clear proof path)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
       "Bridges",
       "MachineLearning",
       "Logic"
@@ -1551,48 +1772,48 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "83d44e07",
+    "source_exp_id": "fd2f08b2",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:10:32.364163+00:00"
+    "timestamp": "2026-05-25T03:05:35.300943+00:00"
   },
   {
-    "id": "fd_0832",
-    "title": "Direction 3: Certified Exact Arithmetic for Spectral Recognition",
-    "description": "**Conjecture**: For polynomials with rational coefficients, the Lorentzian signature condition can be verified in exact arithmetic using the Sylvester criterion (signs of leading principal minors of the Hessian shifted by a rank-1 perturbation), avoiding all floating-point issues.\n\nFormally:\n```\ntheorem rational_spectral_recognizer_decidable\n    {n : \u2115} (d : \u2115) (p : MvPolynomial (Fin n) \u211a) :\n    Decidable (IsRecursivelyLorentzian d (p.map (algebraMap \u211a \u211d)))\n```\n\n**Test**: Implement the rational Sylvester criterion and compare against floating-point eigenvalue computation for all polynomials with coefficients in {0,1,2,3} of degree \u2264 4 in \u2264 4 variables. Any disagreement indicates a numerical stability issue.\n\n**Impact**: This would make Lorentzian recognition fully certified \u2014 not just mathematically sound, but computationally exact. It would enable trusted automated verification of log-concavity conjectures in combinatorics.\n\n**The key insight is** that the \"at most one positive eigenvalue\" condition for a symmetric matrix can be reformulated as: the matrix $H - \\epsilon \\cdot vv^T$ is negative semidefinite for some small $\\epsilon > 0$ and direction $v$. This can be checked via the Sylvester criterion using only determinants (exact rational arithmetic).\n\n**Why now?** The spectral recognizer algorithm is now formally verified for soundness and completeness. The remaining gap is computational \u2014 bridging from real-number eigenvalue conditions to decidable rational-arithmetic checks.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `spectralRecognizerProp`, `HasAtMostOnePositiveEigenvalue`\n\n**Proof Strategy**: Reformulate the eigenvalue condition in terms of the characteristic polynomial. Use Sturm's theorem or Descartes' rule of signs to count positive roots of the characteristic polynomial in exact rational arithmetic.\n\n**Domain Bridges**: Numerical linear algebra, certified computation, computer algebra\n\n**Lineage**: Extends `spectralRecognizer_correct` and `quadratic_leaf_count_le`\n\n**Ambition**: Solid extension \u2014 decidability results for eigenvalue conditions are classical, but formal verification is novel\n\n---",
+    "id": "fd_0843",
+    "title": "Direction 4: Relative Tropical Hodge Theorem",
+    "description": "**Conjecture**: The tropical kernel of L_S is naturally isomorphic (as a tropical semi-module) to a relative tropical homology group:\n\n  ker_trop(L_S) \u2245 H\u2081^trop(G[S \u222a {q}], {q})\n\nwhere H\u2081^trop denotes the first tropical homology of the pair (G[S \u222a {q}], {q}), defined via a tropical chain complex using the incidence matrix of the graph.\n\n**Test**: Define the tropical chain complex C\u2080 \u2192 C\u2081 for the graph G[S \u222a {q}] with boundary map given by the incidence matrix. Compute H\u2081^trop(G[S \u222a {q}], {q}) = ker(\u2202\u2081^trop) / im(\u2202\u2080^trop) for all connected graphs on n \u2264 6. Verify isomorphism with the tropical kernel of L_S.\n\n**Impact**: This would be the foundational theorem connecting tropical linear algebra to tropical homology theory. It would justify calling the dimension formula a \"Hodge theorem\" by providing the precise homological interpretation. Opens the door to higher-dimensional tropical Hodge theory on simplicial complexes.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedSubgraph, tropicalKernel), `Pythagorean/TropicalBridge/TropicalHodge.lean` (structural theorems).\n\n**Proof Strategy**: Factor the Laplacian as L = \u2202\u1d40\u2202 (incidence factorization) in the tropical setting. Show that the tropical kernel of L_S corresponds to tropical 1-cycles that are boundaries from the q-side, i.e., relative 1-cycles. The cycle generators correspond to absolute 1-cycles (homology of G[S]), while the component generators correspond to relative 0-boundaries (paths from q to components).\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic topology (simplicial homology), combinatorics \u2194 algebraic geometry (tropical varieties).\n\n**Lineage**: Provides the theoretical foundation for all other directions, upgrading the dimension formula from a counting theorem to a structural isomorphism.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 would establish tropical Hodge theory as a subject)\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Computation",
-      "Physics",
+      "Geometry",
+      "Tropical",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "83d44e07",
+    "source_exp_id": "fd2f08b2",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:10:32.381941+00:00"
+    "timestamp": "2026-05-25T03:05:35.321656+00:00"
   },
   {
-    "id": "fd_0834",
-    "title": "Direction 5: Lorentzian Certificates for Convex Optimization",
-    "description": "**Conjecture**: For any homogeneous Lorentzian polynomial $p$ of degree $d$, the function $x \\mapsto p(x)^{1/d}$ is concave on the cone $\\{x \\in \\mathbb{R}_{\\ge 0}^n : p(x) > 0\\}$. This concavity certificate can be verified in polynomial time (for fixed $d$) using the recursive spectral certificate.\n\nFormally:\n```\ntheorem lorentzian_root_concave\n    {n d : \u2115} {p : MvPolynomial (Fin n) \u211d}\n    (hL : IsRecursivelyLorentzian d p) (hd : 0 < d)\n    (x y : Fin n \u2192 \u211d) (hx : \u2200 i, 0 \u2264 x i) (hy : \u2200 i, 0 \u2264 y i)\n    (hpx : eval x p > 0) (hpy : eval y p > 0) (t : \u211d) (ht : 0 \u2264 t) (ht1 : t \u2264 1) :\n    eval (t \u2022 x + (1 - t) \u2022 y) p ^ (1 / d : \u211d) \u2265\n    t * (eval x p) ^ (1 / d : \u211d) + (1 - t) * (eval y p) ^ (1 / d : \u211d)\n```\n\n**Test**: Numerically verify concavity of $p^{1/d}$ on random points in the positive cone for all Lorentzian polynomials in the test suite. Any convexity violation would be a counterexample.\n\n**Impact**: This would provide certified concavity guarantees for optimization, connecting Lorentzian polynomial theory to barrier methods, self-concordant functions, and interior-point algorithms. It could enable new polynomial-time algorithms for optimization over Lorentzian-definable sets.\n\n**The key insight is** that the tangent-space negativity theorem (already proven) is the infinitesimal version of this concavity statement. The global concavity follows by integration along geodesics in the positive cone, using the reversed Cauchy\u2013Schwarz as the key inequality.\n\n**Why now?** The tangent-space negativity theorem is now formally verified, providing the key local ingredient. The global-from-local argument is well-understood analytically and should be formalizable with existing Mathlib calculus infrastructure.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `lorentzian_signature_tangent_neg_semidef`, `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy**: (1) Prove that the Hessian of $\\log p$ is negative semidefinite on the tangent space (follows from tangent-space negativity). (2) Conclude $\\log p$ is concave. (3) Exponentiate and use the AM-GM inequality to get $p^{1/d}$ concavity.\n\n**Domain Bridges**: Convex optimization, interior-point methods, self-concordant barriers, computational geometry\n\n**Lineage**: Extends `lorentzian_signature_tangent_neg_semidef`\n\n**Ambition**: Solid extension with high practical impact \u2014 bridges pure algebraic combinatorics to applied optimization",
+    "id": "fd_0844",
+    "title": "Direction 5: Chip-Firing Correspondence",
+    "description": "**Conjecture**: Tropical kernel generators of L_S correspond to equivalence classes of \"balanced\" divisor deformations supported on S in the sense of Baker-Norine chip-firing theory. Specifically:\n\n  ker_trop(L_S) \u2245 { D \u2208 Div\u2070(G) : supp(D) \u2286 S, D is q-reduced and balanced }\n\nwhere \"balanced\" means every vertex fires at most to neighbors achieving the same potential, and the quotient is by tropical scaling.\n\n**Test**: For all connected graphs on n \u2264 6, compute:\n(a) The tropical kernel dimension via the formula,\n(b) The number of independent balanced q-reduced divisors supported on S.\nCompare dimensions and identify the explicit bijection between kernel generators and divisor classes.\n\n**Impact**: Connects tropical graph Hodge theory to one of the most active areas of combinatorial algebraic geometry. The Baker-Norine theorem gives a Riemann-Roch theorem for graphs; this conjecture would provide the Hodge-theoretic complement. Could lead to new algorithms for computing the Jacobian group of a graph.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernelProp \u2014 the balanced condition), `Pythagorean/TropicalBridge/TropicalHodge.lean` (tropicalKernel_leaf_eq \u2014 propagation along edges mirrors chip-firing).\n\n**Proof Strategy**: The leaf propagation lemma (`tropicalKernel_leaf_eq`) already shows that kernel vectors satisfy v(i) = v(j) along tree edges, which is exactly the condition for a divisor to be q-reduced on trees. Extend this to graphs with cycles by showing that the cycle generators correspond to the \"circuit divisors\" in chip-firing theory. The q-visible component generators correspond to \"lending\" operations from q to components.\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic geometry (divisor theory), combinatorics \u2194 number theory (arithmetic geometry of curves).\n\n**Lineage**: Extends `tropicalKernel_leaf_eq` and `tropicalKernel_edge_constant` to the full chip-firing dictionary.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 bridges two deep theories)",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
-      "Physics",
+      "Tropical",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "83d44e07",
+    "source_exp_id": "fd2f08b2",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:10:32.428154+00:00"
+    "timestamp": "2026-05-25T03:05:35.340182+00:00"
   },
   {
     "id": "seed_052",
@@ -1651,201 +1872,5 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
-  },
-  {
-    "id": "fd_0835",
-    "title": "Direction 1: Tight Spectral Gap via Lorentzian Structure",
-    "description": "**Conjecture:** For a degree-d recursively Lorentzian polynomial in n variables, the certificate-guided Markov chain has spectral gap at least \u03a9(1/(d\u00b7n)), improving the current bound of \u03a9(1/n\u00b2).\n\n**Test:** Compute spectral gaps for binomial, Poisson, and hypergeometric distributions (all Lorentzian) for n = 5, 10, 20, 50, 100 and fit the scaling exponent. If the gap scales as \u0398(1/n^\u03b1) with \u03b1 < 1.5, the conjecture is plausible; if \u03b1 \u2248 2, the current bound is tight.\n\n**Impact:** An \u03a9(1/(d\u00b7n)) gap would reduce mixing time from O(n\u00b2 \u00b7 d \u00b7 log n) to O(n \u00b7 d\u00b2 \u00b7 log n), a quadratic speedup that makes certificate-guided sampling practical for large-scale problems.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `spectral_gap_log_concave_lower_bound`, `logConcaveSeq_mul`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy:** Use the reversed Cauchy\u2013Schwarz inequality directly (not just log-concavity) to bound the Dirichlet form. At each certificate node, the reversed CS gives B(e\u2096, e\u2096\u208a\u2081)\u00b2 \u2265 Q(e\u2096)\u00b7Q(e\u2096\u208a\u2081), which provides a *tighter* bound on off-diagonal transition probabilities than the generic log-concavity argument. Induct on certificate depth, using the derivative-descent structure to decompose the Dirichlet form into per-level contributions.\n\n**Domain Bridges:** Probability theory (Markov chain mixing), functional analysis (Poincar\u00e9 inequalities), combinatorial optimization (MCMC convergence)\n\n**Lineage:** Extends `spectral_gap_log_concave_lower_bound` using `lorentzian_reversed_cauchy_schwarz`\n\n**Ambition:** Solid extension \u2014 the techniques are within reach of current methods, and computational evidence strongly supports the conjecture.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:11:10.182188+00:00"
-  },
-  {
-    "id": "fd_0836",
-    "title": "Direction 2: Higher-Order Log-Concavity and Partition Functions",
-    "description": "**Conjecture:** For a k-fold Lorentzian polynomial (one whose k-th derivatives are all Lorentzian), the coefficient sequence satisfies k-fold log-concavity: the k-th finite difference of log(a\u2098) is nonpositive. This implies mixing time bounds of O(n^(2/k) \u00b7 log n) for the associated Markov chain.\n\n**Test:** Verify k-fold log-concavity for the generating polynomials of (a) complete bipartite graph spanning trees, (b) matroid basis counts for paving matroids, (c) partition functions of the Ising model on small lattices. Compute whether the mixing time improvement from k-fold LC matches the O(n^(2/k)) prediction.\n\n**Impact:** Would provide a hierarchy of increasingly efficient samplers indexed by the \"depth of Lorentzianness,\" with applications to statistical physics partition functions.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `LogConcaveSeq`, `binomial_log_concave`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `IsRecursivelyLorentzian`\n\n**Proof Strategy:** Define k-fold log-concavity inductively: 1-fold = standard log-concavity; (k+1)-fold = the sequence of ratios a\u2098\u208a\u2081/a\u2098 is k-fold log-concave. Use the recursive Lorentzian certificate (depth d\u22122) to establish (d\u22122)-fold log-concavity. Apply modified log-Sobolev inequalities that exploit higher-order concavity.\n\n**Domain Bridges:** Statistical physics (partition functions), information theory (entropy inequalities), operator theory (complete positivity)\n\n**Lineage:** Extends `logConcaveSeq_mul` and `binomial_ratio_le_one` to higher orders\n\n**Ambition:** Grand challenge \u2014 k-fold log-concavity for partition functions would resolve open problems in statistical physics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:11:10.200317+00:00"
-  },
-  {
-    "id": "fd_0837",
-    "title": "Direction 3: Quantum Ground-State Preparation via Lorentzian Certificates",
-    "description": "**Conjecture:** For a stoquastic Hamiltonian H whose ground-state amplitudes are the coefficients of a Lorentzian polynomial, the certificate tree provides an efficient quantum circuit for ground-state preparation, with depth O(n^(d\u22122) \u00b7 log n) and gate count O(n^d).\n\n**Test:** Implement the certificate-to-circuit compilation for (a) the transverse-field Ising model on small lattices (n \u2264 12), (b) the XX model, and (c) Rokhsar-Kivelson Hamiltonians. Simulate the circuit on a quantum emulator and compare fidelity vs. depth with Variational Quantum Eigensolver (VQE) and Quantum Approximate Optimization Algorithm (QAOA).\n\n**Impact:** Would establish that Lorentzian certificates are universal ground-state preparation recipes for stoquastic Hamiltonians, bridging algebraic combinatorics to quantum computing.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificate_sampling_efficiency`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `RecursiveLorentzianCertificate`\n\n**Proof Strategy:** Map each certificate node to a quantum gate sequence: the Lorentzian signature (one positive eigenvalue) means the Hessian can be decomposed as a rank-1 projector minus a positive semidefinite term. This decomposition defines a quantum channel whose fixed point is the target amplitude distribution. The recursive structure gives a depth-d\u22122 circuit that converges to the ground state.\n\n**Domain Bridges:** Quantum computing (Hamiltonian simulation), condensed matter physics (stoquastic models), classical simulation (sign-problem-free systems)\n\n**Lineage:** Builds on `certificate_depth_eq` and `RecursiveLorentzianCertificate` from the recognition catalog\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects algebraic combinatorics to quantum algorithms in a fundamentally new way.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:11:10.221031+00:00"
-  },
-  {
-    "id": "fd_0838",
-    "title": "Direction 4: Tropical Mixing Without Spectral Intermediate",
-    "description": "**Conjecture:** The tropical diameter of the Newton subdivision of a Lorentzian polynomial *directly* controls the mixing time, without passing through the spectral gap: \u03c4_mix \u2264 O(trop_diam \u00b7 n \u00b7 log n), where trop_diam \u2264 O(d \u00b7 n) for degree-d polynomials.\n\n**Test:** For randomly generated Lorentzian polynomials (degree 3\u20135, variables 3\u201310), compute both the tropical diameter and the actual mixing time (from eigenvalue computation). Plot \u03c4_mix vs. trop_diam. If the relationship is linear (not quadratic), the direct bound holds.\n\n**Impact:** Would bypass the spectral gap entirely, providing a geometric understanding of mixing that connects to the rapidly developing field of tropical geometry.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `tropical_diameter_le_dn`, `certificate_mixing_time_bound`\n\n**Proof Strategy:** Use the canonical paths method directly with paths defined by the tropical subdivision. Each path follows the ridge between tropical cells, and its congestion is bounded by the cell volumes (which are controlled by the mixed volumes of the Newton polytope). The Lorentzian condition ensures these volumes satisfy a Brunn-Minkowski-type inequality that bounds congestion.\n\n**Domain Bridges:** Tropical geometry (Newton polytopes, subdivisions), combinatorial geometry (Brunn-Minkowski theory), algebraic statistics (toric models)\n\n**Lineage:** Extends `tropical_diameter_le_dn` with a direct mixing argument\n\n**Ambition:** Solid extension \u2014 the canonical paths framework is well-established, and tropical geometry provides the right language.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:11:10.243679+00:00"
-  },
-  {
-    "id": "fd_0839",
-    "title": "Direction 5: Dynamic Lorentzian Certificates and Online Sampling",
-    "description": "**Conjecture:** When a Lorentzian polynomial f changes by a rank-1 update (adding a single monomial term), the certificate tree can be updated in O(n^(d\u22123) \u00b7 n\u00b2) time \u2014 a factor of n cheaper than rebuilding from scratch \u2014 and the Markov chain can be \"warm-started\" with mixing time O(n \u00b7 log n) from the previous stationary distribution.\n\n**Test:** Implement dynamic certificate maintenance for the generating polynomial of a matroid as elements are added/deleted. Measure (a) certificate update time vs. rebuild time, (b) warm-start mixing time vs. cold-start mixing time, for graphic matroids of growing graphs (n = 10, 20, 50, 100 vertices, adding one edge at a time).\n\n**Impact:** Would make certificate-guided sampling practical for streaming and online settings, where the underlying polynomial evolves over time.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificateDepth`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `pderiv_isHomogeneous_degree_pred`\n\n**Proof Strategy:** A rank-1 update to f changes only O(n^(d\u22123)) leaves of the certificate tree (those whose multiindex overlaps the updated monomial). Recompute eigenvalues only at affected leaves. For warm-starting, bound the total variation distance between old and new stationary distributions using the \u2113\u2081 change in coefficients, then apply the mixing time bound with this as the initial distance.\n\n**Domain Bridges:** Online algorithms (streaming computation), dynamic graph algorithms, stochastic optimization (follow-the-regularized-leader)\n\n**Lineage:** Extends `certificate_verification_complexity` to the dynamic setting\n\n**Ambition:** Solid extension \u2014 the key ideas (lazy updates, warm starts) are well-known in MCMC; the novelty is combining them with certificate structure.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:11:10.263299+00:00"
-  },
-  {
-    "id": "fd_0840",
-    "title": "Direction 1: Basis Uniqueness up to Tropical Projective Equivalence",
-    "description": "**Conjecture**: For each connected graph G, basepoint q, and subset S \u2286 V \\ {q}, the cycle-component generating family of the tropical kernel of L_S is unique up to tropical scaling (adding constants to individual generators) and permutation, whenever G[S] has a pairwise edge-disjoint cycle basis and distinct q-visible components.\n\n**Test**: Exhaustive search over all connected graphs on n \u2264 7 vertices. For each (G, q, S), compute all minimal tropical generating families of ker_trop(L_S) and compare equivalence classes. Verify that the number of equivalence classes is exactly 1 when the edge-disjointness condition holds, and characterize the failure cases.\n\n**Impact**: Establishes canonical generators for tropical kernels, enabling effective computation and comparison across graph families. Would be the tropical analogue of the uniqueness of the Smith normal form.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernel, componentIndicator), `Pythagorean/TropicalBridge/TropicalHodge.lean` (componentIndicator_mem_tropicalKernel, tropicalKernel_leaf_eq).\n\n**Proof Strategy**: Use the separation properties of cycle generators (support on cycle vertices) and component generators (support on component vertices) to show that any alternative generating family must be related by tropical scaling. The key tool is the leaf propagation lemma, which forces values along tree edges.\n\n**Domain Bridges**: Tropical linear algebra \u2194 matroid theory (the cycle matroid determines uniqueness), algebraic combinatorics \u2194 graph theory.\n\n**Lineage**: Extends the structural kernel theorems in `TropicalHodge.lean` from existence to uniqueness.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 technically challenging but conceptually clear)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.257371+00:00"
-  },
-  {
-    "id": "fd_0841",
-    "title": "Direction 2: Filtration Persistence Formula",
-    "description": "**Conjecture**: For an increasing filtration S\u2080 \u2286 S\u2081 \u2286 ... \u2286 S_m \u2286 V \\ {q}, the sequence of tropical kernel dimensions dim_trop(ker_trop(L_{S_k})) satisfies:\n\n  dim(S_{k+1}) - dim(S_k) = (number of new cycles born) + (number of new q-visible components born) - (number of component merges destroying q-invisible components)\n\nMoreover, the \"barcode\" of tropical kernel dimensions is completely determined by the births and deaths of cycles and q-visible components in the filtration.\n\n**Test**: Enumerate all increasing filtrations on connected graphs with n \u2264 6 vertices. For each filtration, compute the dimension sequence and compare to the predicted birth/death events. Verify the persistence formula matches in all cases.\n\n**Impact**: Creates a new invariant \u2014 the **tropical persistence barcode** \u2014 that combines topological persistence (like standard persistent homology) with algebraic structure (tropical linear algebra). This could provide strictly finer invariants than classical persistent homology for weighted networks.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedCycleRank, qVisibleComponentCount), `Pythagorean/TropicalBridge/UniversalDefect.lean` (universalDefect_eq).\n\n**Proof Strategy**: Induction on filtration length. At each step, adding a vertex v to S either:\n(a) connects to an existing component (no new cycle, no new component),\n(b) forms a bridge to q (new q-visible component),\n(c) closes a cycle (new cycle mode), or\n(d) merges two components.\nTrack each case and verify the dimension change formula.\n\n**Domain Bridges**: Tropical algebra \u2194 topological data analysis, computational topology \u2194 network science.\n\n**Lineage**: Directly extends the dimension formula to parameterized families, building on `inducedCycleRank_eq_zero_of_forest` for the tree base case.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new persistent tropical homology theory)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.277308+00:00"
-  },
-  {
-    "id": "fd_0842",
-    "title": "Direction 3: Weighted Extension",
-    "description": "**Conjecture**: For weighted graphs with edge weights w : E \u2192 \u2124 (or more generally w : E \u2192 \u211d), the tropical kernel dimension formula generalizes to:\n\n  dim_trop(ker_trop(L_S^w)) = \u03b2\u2081^w(G[S]) + \u03ba^w(G,q,S)\n\nwhere \u03b2\u2081^w counts the number of \"weight-compatible\" independent cycles (cycles where the minimum-weight edge is achieved at least twice) and \u03ba^w counts q-visible components whose connection to q has \"generic\" weight.\n\nFor generic weights (no weight coincidences), \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula. For degenerate weights, the dimension can increase due to additional coincidences.\n\n**Test**: Sample 10000 weighted graphs on n \u2264 6 vertices with weights drawn from {1, 2, ..., 10}. For each, compute the tropical kernel dimension by direct enumeration and compare to the predicted \u03b2\u2081^w + \u03ba^w. Identify the precise weight-degeneracy conditions that cause the formula to differ from the unweighted case.\n\n**Impact**: Extends tropical graph Hodge theory to the setting relevant for applications (communication networks, transportation networks, molecular graphs all have weighted edges). Would connect to tropical geometry's theory of valuated matroids.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (TropicalVal, tropMul), `Pythagorean/TropicalBridge/TropicalHodge.lean` (cycleIndicator, componentIndicator).\n\n**Proof Strategy**: Modify the cycle and component indicator constructions to account for edge weights. The key insight is that the tropical kernel condition becomes weight-dependent: for row i, the minimum of w(i,j) + v(j) over neighbors j must be achieved twice. Weight-compatible cycles are those where the indicator vector, adjusted by cumulative weights, still satisfies this condition.\n\n**Domain Bridges**: Tropical geometry \u2194 optimization (weighted matching), network science \u2194 statistical physics (Boltzmann weights).\n\n**Lineage**: Generalizes `componentIndicator_mem_tropicalKernel` from unit weights to arbitrary weights.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 natural generalization with clear proof path)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.300943+00:00"
-  },
-  {
-    "id": "fd_0843",
-    "title": "Direction 4: Relative Tropical Hodge Theorem",
-    "description": "**Conjecture**: The tropical kernel of L_S is naturally isomorphic (as a tropical semi-module) to a relative tropical homology group:\n\n  ker_trop(L_S) \u2245 H\u2081^trop(G[S \u222a {q}], {q})\n\nwhere H\u2081^trop denotes the first tropical homology of the pair (G[S \u222a {q}], {q}), defined via a tropical chain complex using the incidence matrix of the graph.\n\n**Test**: Define the tropical chain complex C\u2080 \u2192 C\u2081 for the graph G[S \u222a {q}] with boundary map given by the incidence matrix. Compute H\u2081^trop(G[S \u222a {q}], {q}) = ker(\u2202\u2081^trop) / im(\u2202\u2080^trop) for all connected graphs on n \u2264 6. Verify isomorphism with the tropical kernel of L_S.\n\n**Impact**: This would be the foundational theorem connecting tropical linear algebra to tropical homology theory. It would justify calling the dimension formula a \"Hodge theorem\" by providing the precise homological interpretation. Opens the door to higher-dimensional tropical Hodge theory on simplicial complexes.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (inducedSubgraph, tropicalKernel), `Pythagorean/TropicalBridge/TropicalHodge.lean` (structural theorems).\n\n**Proof Strategy**: Factor the Laplacian as L = \u2202\u1d40\u2202 (incidence factorization) in the tropical setting. Show that the tropical kernel of L_S corresponds to tropical 1-cycles that are boundaries from the q-side, i.e., relative 1-cycles. The cycle generators correspond to absolute 1-cycles (homology of G[S]), while the component generators correspond to relative 0-boundaries (paths from q to components).\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic topology (simplicial homology), combinatorics \u2194 algebraic geometry (tropical varieties).\n\n**Lineage**: Provides the theoretical foundation for all other directions, upgrading the dimension formula from a counting theorem to a structural isomorphism.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 would establish tropical Hodge theory as a subject)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.321656+00:00"
-  },
-  {
-    "id": "fd_0844",
-    "title": "Direction 5: Chip-Firing Correspondence",
-    "description": "**Conjecture**: Tropical kernel generators of L_S correspond to equivalence classes of \"balanced\" divisor deformations supported on S in the sense of Baker-Norine chip-firing theory. Specifically:\n\n  ker_trop(L_S) \u2245 { D \u2208 Div\u2070(G) : supp(D) \u2286 S, D is q-reduced and balanced }\n\nwhere \"balanced\" means every vertex fires at most to neighbors achieving the same potential, and the quotient is by tropical scaling.\n\n**Test**: For all connected graphs on n \u2264 6, compute:\n(a) The tropical kernel dimension via the formula,\n(b) The number of independent balanced q-reduced divisors supported on S.\nCompare dimensions and identify the explicit bijection between kernel generators and divisor classes.\n\n**Impact**: Connects tropical graph Hodge theory to one of the most active areas of combinatorial algebraic geometry. The Baker-Norine theorem gives a Riemann-Roch theorem for graphs; this conjecture would provide the Hodge-theoretic complement. Could lead to new algorithms for computing the Jacobian group of a graph.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernelProp \u2014 the balanced condition), `Pythagorean/TropicalBridge/TropicalHodge.lean` (tropicalKernel_leaf_eq \u2014 propagation along edges mirrors chip-firing).\n\n**Proof Strategy**: The leaf propagation lemma (`tropicalKernel_leaf_eq`) already shows that kernel vectors satisfy v(i) = v(j) along tree edges, which is exactly the condition for a divisor to be q-reduced on trees. Extend this to graphs with cycles by showing that the cycle generators correspond to the \"circuit divisors\" in chip-firing theory. The q-visible component generators correspond to \"lending\" operations from q to components.\n\n**Domain Bridges**: Tropical algebra \u2194 algebraic geometry (divisor theory), combinatorics \u2194 number theory (arithmetic geometry of curves).\n\n**Lineage**: Extends `tropicalKernel_leaf_eq` and `tropicalKernel_edge_constant` to the full chip-firing dictionary.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 bridges two deep theories)",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.340182+00:00"
   }
 ];

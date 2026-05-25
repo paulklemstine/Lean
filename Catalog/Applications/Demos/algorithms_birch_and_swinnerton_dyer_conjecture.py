@@ -1,315 +1,351 @@
 #!/usr/bin/env python3
 """
-BSD Conjecture — Algorithms
+Algorithms for Tropical-Analytic Duality
 
-Implements the core computational algorithms for BSD data computation,
-local Euler factor extraction, and BSD formula verification.
+This module implements the core algorithms from the research paper:
+1. Tropical L-order computation
+2. Tropical regulator (assignment problem)
+3. Partition function and free energy
+4. Hungarian algorithm for optimal assignment
+5. Tropical BSD ratio computation
+
+All algorithms include docstrings, type hints, and complexity analysis.
 """
 
-from dataclasses import dataclass
-from math import sqrt, gcd, isclose, log
-from typing import List, Tuple, Optional
+import math
+from itertools import permutations
+from typing import List, Dict, Tuple, Optional
 
 
 # ============================================================
-# Algorithm 1: Frobenius Trace from Point Count
+# Algorithm 1: Tropical L-Order
 # ============================================================
 
-def frobenius_trace(p: int, point_count: int) -> int:
-    """Compute the Frobenius trace a_p from the point count #E(F_p).
+def tropical_l_order(coeffs: Dict[int, float], weights: Dict[int, float]) -> int:
+    """Compute the tropical order of vanishing at s=1.
 
-    Given a prime p and the number of F_p-rational points on an
-    elliptic curve E, compute the unique trace of Frobenius:
+    The tropical L-series evaluated at s=1 is:
+        L^trop(1) = min_{n in support} (coeff(n) + weight(n))
+
+    The tropical order is |active_set| - 1, where the active set
+    is the set of indices achieving the minimum.
+
+    Complexity: O(|support|) time, O(|support|) space.
+
+    Args:
+        coeffs: Maps support indices to coefficient values (p-adic valuations)
+        weights: Maps support indices to weight values (typically log(p))
+
+    Returns:
+        Tropical order of vanishing (non-negative integer)
+
+    Examples:
+        >>> tropical_l_order({2: 0, 3: 1, 5: 0}, {2: 0.7, 3: 1.1, 5: 1.6})
+        0
+        >>> tropical_l_order({2: 0, 3: 0}, {2: 0.7, 3: 1.1})
+        0
+    """
+    support = sorted(set(coeffs.keys()) & set(weights.keys()))
+    if not support:
+        return 0
+
+    values = {n: coeffs[n] + weights[n] for n in support}
+    min_val = min(values.values())
+    active_count = sum(1 for v in values.values() if abs(v - min_val) < 1e-10)
+
+    return active_count - 1
+
+
+# ============================================================
+# Algorithm 2: Tropical Regulator (Brute Force)
+# ============================================================
+
+def tropical_regulator_brute(R: List[List[float]]) -> float:
+    """Compute the tropical regulator by brute force enumeration.
+
+    TropReg(R) = min_{σ ∈ S_n} Σ_i R[i][σ(i)]
+
+    Complexity: O(n! · n) time, O(n) space.
+
+    Args:
+        R: n×n matrix (list of lists)
+
+    Returns:
+        Tropical regulator value
+
+    Examples:
+        >>> tropical_regulator_brute([[1, 2], [3, 0]])
+        1.0
+        >>> tropical_regulator_brute([[0, 0], [0, 0]])
+        0.0
+    """
+    n = len(R)
+    if n == 0:
+        return 0.0
+
+    return min(
+        sum(R[i][perm[i]] for i in range(n))
+        for perm in permutations(range(n))
+    )
+
+
+# ============================================================
+# Algorithm 3: Hungarian Algorithm for Optimal Assignment
+# ============================================================
+
+def hungarian_algorithm(cost: List[List[float]]) -> Tuple[float, List[int]]:
+    """Solve the assignment problem using the Hungarian algorithm.
+
+    Finds the permutation σ minimizing Σ_i cost[i][σ(i)].
+
+    Complexity: O(n³) time, O(n²) space.
+
+    Args:
+        cost: n×n cost matrix
+
+    Returns:
+        (optimal_cost, assignment) where assignment[i] = σ(i)
+
+    Examples:
+        >>> hungarian_algorithm([[1, 2], [3, 0]])
+        (1.0, [0, 1])
+    """
+    n = len(cost)
+    if n == 0:
+        return 0.0, []
+
+    # Pad to use 1-indexed arrays
+    INF = float('inf')
+    u = [0.0] * (n + 1)  # potential for rows
+    v = [0.0] * (n + 1)  # potential for columns
+    p = [0] * (n + 1)    # assignment: p[j] = i means column j assigned to row i
+    way = [0] * (n + 1)  # way[j] = previous column in augmenting path
+
+    for i in range(1, n + 1):
+        p[0] = i
+        j0 = 0
+        minv = [INF] * (n + 1)
+        used = [False] * (n + 1)
+
+        while True:
+            used[j0] = True
+            i0 = p[j0]
+            delta = INF
+            j1 = -1
+
+            for j in range(1, n + 1):
+                if not used[j]:
+                    cur = cost[i0 - 1][j - 1] - u[i0] - v[j]
+                    if cur < minv[j]:
+                        minv[j] = cur
+                        way[j] = j0
+                    if minv[j] < delta:
+                        delta = minv[j]
+                        j1 = j
+
+            for j in range(n + 1):
+                if used[j]:
+                    u[p[j]] += delta
+                    v[j] -= delta
+                else:
+                    minv[j] -= delta
+
+            j0 = j1
+            if p[j0] == 0:
+                break
+
+        while j0:
+            p[j0] = p[way[j0]]
+            j0 = way[j0]
+
+    assignment = [0] * n
+    for j in range(1, n + 1):
+        assignment[p[j] - 1] = j - 1
+
+    opt_cost = sum(cost[i][assignment[i]] for i in range(n))
+    return opt_cost, assignment
+
+
+def tropical_regulator(R: List[List[float]]) -> float:
+    """Compute the tropical regulator using the Hungarian algorithm.
+
+    Complexity: O(n³) time, O(n²) space.
+
+    Args:
+        R: n×n matrix
+
+    Returns:
+        Tropical regulator value
+    """
+    if not R:
+        return 0.0
+    cost, _ = hungarian_algorithm(R)
+    return cost
+
+
+# ============================================================
+# Algorithm 4: Partition Function
+# ============================================================
+
+def partition_function(R: List[List[float]], beta: float) -> float:
+    """Compute Z(β) = Σ_σ exp(-β · Σ_i R[i][σ(i)]).
+
+    For numerical stability, uses the log-sum-exp trick:
+    log Z = max_σ(-β·S(σ)) + log(Σ_σ exp(-β·S(σ) - max))
+
+    Complexity: O(n! · n) time for brute force.
+
+    Args:
+        R: n×n matrix
+        beta: Inverse temperature (can be any real number)
+
+    Returns:
+        Partition function value (always positive)
+    """
+    n = len(R)
+    if n == 0:
+        return 1.0
+
+    # Compute all costs
+    costs = [sum(R[i][perm[i]] for i in range(n)) for perm in permutations(range(n))]
+    exponents = [-beta * c for c in costs]
+
+    # Log-sum-exp for numerical stability
+    max_exp = max(exponents)
+    Z = math.exp(max_exp) * sum(math.exp(e - max_exp) for e in exponents)
+
+    return Z
+
+
+def free_energy(R: List[List[float]], beta: float) -> float:
+    """Compute F(β) = (-1/β) · log Z(β).
+
+    The free energy satisfies: F(β) ≤ TropReg(R) for all β > 0.
+    As β → ∞, F(β) → TropReg(R).
+
+    Complexity: Same as partition_function.
+
+    Args:
+        R: n×n matrix
+        beta: Inverse temperature (must be positive)
+
+    Returns:
+        Free energy value
+
+    Raises:
+        ValueError: If beta ≤ 0
+    """
+    if beta <= 0:
+        raise ValueError(f"beta must be positive, got {beta}")
+
+    Z = partition_function(R, beta)
+    return (-1.0 / beta) * math.log(Z)
+
+
+# ============================================================
+# Algorithm 5: Tropical BSD Ratio
+# ============================================================
+
+def tropical_bsd_defect(leading_coeff: float, regulator: float,
+                        sha_order: float, tamagawa: float,
+                        torsion: float, period: float) -> float:
+    """Compute the tropical BSD defect.
+
+    In the tropical (additive) setting, the BSD formula becomes:
+        leadingCoeff = period + regulator + sha + tamagawa - 2·torsion
+
+    The defect measures how far from this identity we are.
+
+    Complexity: O(1).
+
+    Args:
+        leading_coeff: Tropical leading coefficient of L
+        regulator: Tropical regulator
+        sha_order: log(|Sha|)
+        tamagawa: Tropical Tamagawa product (sum of log c_p)
+        torsion: log(|E_tors|)
+        period: log(Ω)
+
+    Returns:
+        BSD defect (zero if and only if BSD holds)
+    """
+    return leading_coeff - (period + regulator + sha_order + tamagawa - 2 * torsion)
+
+
+# ============================================================
+# Algorithm 6: Elliptic Curve Arithmetic
+# ============================================================
+
+def compute_ap_naive(a: int, b: int, p: int) -> int:
+    """Compute a_p for y² = x³ + ax + b over F_p by naive point counting.
+
+    Complexity: O(p) time.
+
+    Args:
+        a, b: Curve coefficients
+        p: Prime (must be ≥ 3)
+
+    Returns:
         a_p = p + 1 - #E(F_p)
-
-    This is the computational counterpart of the formal theorem
-    `frobenius_trace_unique_value`.
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-
-    Args:
-        p: A prime number (the characteristic).
-        point_count: The number of F_p-rational points #E(F_p).
-
-    Returns:
-        The Frobenius trace a_p.
-
-    Examples:
-        >>> frobenius_trace(5, 5)
-        1
-        >>> frobenius_trace(7, 9)
-        -1
-        >>> frobenius_trace(11, 11)
-        1
     """
-    return p + 1 - point_count
+    count = 1  # point at infinity
+    for x in range(p):
+        rhs = (x * x * x + a * x + b) % p
+        if rhs == 0:
+            count += 1
+        elif pow(rhs, (p - 1) // 2, p) == 1:
+            count += 2
+    return p + 1 - count
 
 
-def verify_hasse_bound(p: int, ap: int) -> bool:
-    """Verify that a Frobenius trace satisfies the Hasse bound |a_p| <= 2*sqrt(p).
+def p_adic_valuation(n: int, p: int) -> int:
+    """Compute v_p(n) for n ≠ 0. Returns 0 for n = 0.
 
-    Time complexity: O(1)
-    Space complexity: O(1)
-
-    Args:
-        p: A prime number.
-        ap: The Frobenius trace.
-
-    Returns:
-        True if |a_p| <= 2*sqrt(p).
-
-    Examples:
-        >>> verify_hasse_bound(5, 1)
-        True
-        >>> verify_hasse_bound(5, 10)
-        False
+    Complexity: O(log_p(n)).
     """
-    return ap * ap <= 4 * p
+    if n == 0:
+        return 0
+    n = abs(n)
+    v = 0
+    while n % p == 0:
+        v += 1
+        n //= p
+    return v
 
 
 # ============================================================
-# Algorithm 2: Local Euler Factor Computation
-# ============================================================
-
-def euler_factor_polynomial(p: int, ap: int) -> Tuple[int, int, int]:
-    """Compute the local Euler factor polynomial 1 - a_p T + p T^2.
-
-    For a good prime p, the local Euler factor in the L-function is:
-        L_p(s) = (1 - a_p p^{-s} + p^{1-2s})^{-1}
-
-    Equivalently, with T = p^{-s}:
-        L_p(T)^{-1} = 1 - a_p T + p T^2
-
-    Returns the coefficients (1, -a_p, p) of the polynomial.
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-
-    Args:
-        p: A prime number.
-        ap: The Frobenius trace.
-
-    Returns:
-        Tuple (c0, c1, c2) where the polynomial is c0 + c1*T + c2*T^2.
-    """
-    return (1, -ap, p)
-
-
-def euler_factor_at_one(p: int, ap: int) -> float:
-    """Evaluate the local Euler factor at s=1 (i.e., T = 1/p).
-
-    L_p(1)^{-1} = 1 - a_p/p + 1/p = (p + 1 - a_p) / p = #E(F_p) / p
-
-    Time complexity: O(1)
-
-    Args:
-        p: A prime number.
-        ap: The Frobenius trace.
-
-    Returns:
-        The value of the local Euler factor at s=1.
-    """
-    return p / (p + 1 - ap)
-
-
-# ============================================================
-# Algorithm 3: BSD Quotient Computation
-# ============================================================
-
-@dataclass
-class BSDInvariants:
-    """Complete BSD invariant package for numerical verification."""
-    rank: int
-    regulator: float
-    sha_order: int
-    tamagawa_product: int
-    torsion_order: int
-    real_period: float
-    leading_coeff: float
-
-    def algebraic_side(self) -> float:
-        """Compute Omega * R * |Sha| * prod(c_p) / |E(Q)_tors|^2.
-
-        Time complexity: O(1)
-        Space complexity: O(1)
-        """
-        numerator = (self.real_period * self.regulator *
-                     self.sha_order * self.tamagawa_product)
-        denominator = self.torsion_order ** 2
-        return numerator / denominator
-
-    def verify_bsd(self, tolerance: float = 1e-10) -> Tuple[bool, float]:
-        """Verify the BSD formula numerically.
-
-        Returns (passes, ratio) where ratio should be ~1.0 if BSD holds.
-
-        Time complexity: O(1)
-        Space complexity: O(1)
-
-        Args:
-            tolerance: Relative tolerance for the comparison.
-
-        Returns:
-            Tuple of (whether BSD holds within tolerance, the ratio L*/algebraic_side).
-        """
-        alg = self.algebraic_side()
-        if abs(alg) < 1e-300:
-            return (abs(self.leading_coeff) < 1e-300, float('inf'))
-        ratio = self.leading_coeff / alg
-        return (isclose(ratio, 1.0, rel_tol=tolerance), ratio)
-
-
-# ============================================================
-# Algorithm 4: Partial L-series from Point Counts
-# ============================================================
-
-def partial_l_product(point_counts: dict, s: float = 1.0) -> float:
-    """Compute a partial Euler product for L(E,s) from point count data.
-
-    L(E,s) = prod_{p good} (1 - a_p p^{-s} + p^{1-2s})^{-1}
-
-    This computes the product over the given good primes.
-
-    Time complexity: O(n) where n = len(point_counts)
-    Space complexity: O(1)
-
-    Args:
-        point_counts: Dict mapping prime p -> #E(F_p).
-        s: The value at which to evaluate (default: s=1).
-
-    Returns:
-        The partial Euler product.
-
-    Example:
-        >>> primes_data = {2: 5, 3: 5, 5: 5, 7: 9}
-        >>> partial_l_product(primes_data)  # Partial L(E,1)
-        1.44...
-    """
-    product = 1.0
-    for p, N in point_counts.items():
-        ap = frobenius_trace(p, N)
-        # L_p(s)^{-1} = 1 - a_p * p^{-s} + p^{1-2s}
-        T = p ** (-s)
-        inv_factor = 1 - ap * T + p * T * T
-        if abs(inv_factor) > 1e-15:
-            product /= inv_factor
-    return product
-
-
-# ============================================================
-# Algorithm 5: Isogeny Invariance Verification
-# ============================================================
-
-def verify_isogeny_bsd_relation(
-    B1: BSDInvariants, B2: BSDInvariants,
-    tolerance: float = 1e-10
-) -> dict:
-    """Verify the isogeny BSD relation between two curves.
-
-    Checks all four conditions of IsogenyBSDRel:
-    1. rank equality
-    2. analytic rank equality (via leading coeff comparison)
-    3. leading coefficient equality
-    4. BSD quotient equality
-
-    Time complexity: O(1)
-    Space complexity: O(1)
-
-    Args:
-        B1, B2: BSD invariant packages for two isogenous curves.
-        tolerance: Relative tolerance for float comparisons.
-
-    Returns:
-        Dictionary with verification results.
-    """
-    alg1 = B1.algebraic_side()
-    alg2 = B2.algebraic_side()
-
-    return {
-        "rank_equal": B1.rank == B2.rank,
-        "leading_coeff_equal": isclose(B1.leading_coeff, B2.leading_coeff,
-                                        rel_tol=tolerance),
-        "quotient_equal": isclose(alg1, alg2, rel_tol=tolerance),
-        "both_satisfy_bsd": B1.verify_bsd(tolerance)[0] and B2.verify_bsd(tolerance)[0],
-    }
-
-
-# ============================================================
-# Algorithm 6: Sieve for Good Primes
-# ============================================================
-
-def sieve_primes(limit: int) -> List[int]:
-    """Sieve of Eratosthenes up to limit.
-
-    Time complexity: O(n log log n) where n = limit
-    Space complexity: O(n)
-    """
-    if limit < 2:
-        return []
-    is_prime = [True] * (limit + 1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(limit**0.5) + 1):
-        if is_prime[i]:
-            for j in range(i*i, limit + 1, i):
-                is_prime[j] = False
-    return [i for i in range(2, limit + 1) if is_prime[i]]
-
-
-def good_primes(conductor: int, limit: int) -> List[int]:
-    """Return primes up to limit that don't divide the conductor (good primes).
-
-    Time complexity: O(limit * log log limit)
-    Space complexity: O(limit)
-    """
-    return [p for p in sieve_primes(limit) if conductor % p != 0]
-
-
-# ============================================================
-# Main: Run all algorithm examples
+# Example Usage
 # ============================================================
 
 if __name__ == "__main__":
-    print("BSD Algorithms — Example Usage")
-    print("=" * 50)
+    print("=== Tropical Regulator Examples ===")
 
-    # Frobenius traces
-    print("\n1. Frobenius traces for 11a1:")
-    for p, N in [(2, 5), (3, 5), (5, 5), (7, 9), (13, 10)]:
-        ap = frobenius_trace(p, N)
-        hasse_ok = verify_hasse_bound(p, ap)
-        print(f"   p={p:3d}, #E(F_p)={N:3d}, a_p={ap:4d}, "
-              f"Hasse: {hasse_ok}")
+    # Example 1: Identity matrix
+    I = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+    print(f"TropReg(I₃) = {tropical_regulator(I)}")  # Expected: 0 + 0 = 0... wait
 
-    # Euler factors
-    print("\n2. Local Euler factors at s=1:")
-    for p, N in [(2, 5), (3, 5), (5, 5), (7, 9)]:
-        ap = frobenius_trace(p, N)
-        lp = euler_factor_at_one(p, ap)
-        print(f"   L_{p}(1) = {lp:.6f}")
+    # Actually for identity matrix, TropReg = min over perms of sum of entries
+    # Identity perm: 1+1+1 = 3. Other perms pick up 0's.
+    # For I = diag(1,1,1), swap (0,1): 0+0+1=1. Hmm let me reconsider.
+    # I[0][1]=0, I[1][0]=0, I[2][2]=1. Sum = 0+0+1=1.
+    # Cycle (0,1,2): I[0][1]+I[1][2]+I[2][0] = 0+0+0 = 0
+    print(f"  (For the 3x3 identity matrix: min perm sum)")
 
-    # BSD verification for 11a1
-    print("\n3. BSD verification (11a1):")
-    B = BSDInvariants(
-        rank=0, regulator=1.0, sha_order=1,
-        tamagawa_product=5, torsion_order=5,
-        real_period=1.26920930427955,
-        leading_coeff=0.253841860855911
-    )
-    ok, ratio = B.verify_bsd()
-    print(f"   BSD holds: {ok}, ratio = {ratio:.15f}")
+    # Example 2: Constant matrix
+    C = [[2, 2], [2, 2]]
+    print(f"TropReg(2·J₂) = {tropical_regulator(C)}")  # Expected: 2*2 = 4
 
-    # Partial L-product
-    print("\n4. Partial L-product convergence:")
-    primes_11a1 = {
-        2: 5, 3: 5, 5: 5, 7: 9, 13: 10, 17: 20, 19: 20, 23: 25,
-        29: 30, 31: 25, 37: 30, 41: 50, 43: 45, 47: 40, 53: 60,
-    }
-    for n in [3, 5, 8, 10, 15]:
-        subset = dict(list(primes_11a1.items())[:n])
-        val = partial_l_product(subset)
-        print(f"   {n:2d} primes: L(E,1) ≈ {val:.6f}")
+    # Example 3: Hungarian algorithm test
+    cost_matrix = [[9, 2, 7, 8], [6, 4, 3, 7], [5, 8, 1, 8], [7, 6, 9, 4]]
+    opt, assign = hungarian_algorithm(cost_matrix)
+    print(f"\nHungarian algorithm on 4x4 matrix:")
+    print(f"  Optimal cost: {opt}")
+    print(f"  Assignment: {assign}")
 
-    print("\n5. Good primes for conductor 11:")
-    gp = good_primes(11, 50)
-    print(f"   {gp}")
+    # Example 4: Partition function convergence
+    R = [[1, 3], [2, 1]]
+    treg = tropical_regulator(R)
+    print(f"\nPartition function convergence (TropReg = {treg}):")
+    for beta in [0.1, 1.0, 10.0, 100.0]:
+        F = free_energy(R, beta)
+        print(f"  β={beta:6.1f}: F(β) = {F:.6f}")
