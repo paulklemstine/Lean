@@ -263,6 +263,17 @@ document.addEventListener('DOMContentLoaded', () => {
             content.style.cssText = 'width: 100%; border-radius: 12px;';
             content.innerHTML = item.html || '<p>No content</p>';
 
+            // innerHTML does not execute <script> tags — manually reinject them
+            content.querySelectorAll('script').forEach(oldScript => {
+                const newScript = document.createElement('script');
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                }
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+
             card.appendChild(header);
             card.appendChild(content);
             container.appendChild(card);
