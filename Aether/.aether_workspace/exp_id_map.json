@@ -557,5 +557,8 @@
   "e79eba9b": "hadamard_matrix_conjecture.json",
   "f0f7ec54": "direction_2_filtration_persistence_formula.json",
   "d8aa38e8": "direction_4_higher_order_tensor_calculus_with_eins.json",
-  "89ddcffd": "direction_2_hypergraph_transversals_as_tropical_co.json"
+  "89ddcffd": "direction_2_hypergraph_transversals_as_tropical_co.json",
+  "88770e41": "direction_5_tropical_morse_theory_for_network_phas.json",
+  "ad66d851": "direction_5_expander_graphs_from_certificate_pairs.json",
+  "da756381": "direction_5_mechanism_design_with_certified_multi_.json"
 }

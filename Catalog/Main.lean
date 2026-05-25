@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1504 of the highest-quality
+A curated collection of 1515 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1504
+Total files: 1515
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -501,6 +501,7 @@ import FINAL.Bridges.TropicalKAMRenormalization
 import FINAL.Bridges.TropicalKernelMeanDuality
 import FINAL.Bridges.TropicalLensBerggrenDuality
 import FINAL.Bridges.TropicalLensRigidityDuality
+import FINAL.Bridges.TropicalMorseGraphs
 import FINAL.Bridges.TropicalNerode
 import FINAL.Bridges.TropicalNeuralBridge
 import FINAL.Bridges.TropicalNeuralSheafSampling
@@ -1137,6 +1138,7 @@ import FINAL.Pythagorean.BoundedBetaDefs
 import FINAL.Pythagorean.BoundedBetaTheorems
 import FINAL.Pythagorean.CRTBottleneck
 import FINAL.Pythagorean.CategoricalDimension
+import FINAL.Pythagorean.CertificateExpanders
 import FINAL.Pythagorean.CertificatePhaseTransition
 import FINAL.Pythagorean.CertificatePosetWQO
 import FINAL.Pythagorean.CertificateSampling
@@ -1211,6 +1213,7 @@ import FINAL.Pythagorean.LorentzianSpectralGap
 import FINAL.Pythagorean.MConvexBridge
 import FINAL.Pythagorean.MConvexOptimization
 import FINAL.Pythagorean.ManySortedConvergentRewriteOptimizer
+import FINAL.Pythagorean.MechanismDesignMultiCriteria
 import FINAL.Pythagorean.ModularFormsAdvanced
 import FINAL.Pythagorean.MonadAlgebraNormalization
 import FINAL.Pythagorean.MonoidCategory
@@ -1370,10 +1373,12 @@ import FINAL.Tropical.GaugeInvariance
 import FINAL.Tropical.GumbelFoundations
 import FINAL.Tropical.HardnessAmplification
 import FINAL.Tropical.HashInversion
+import FINAL.Tropical.HigherRank
 import FINAL.Tropical.HodgeCorrespondence
 import FINAL.Tropical.HorizonStability
 import FINAL.Tropical.HybridArgument
 import FINAL.Tropical.Hyperbolicity
+import FINAL.Tropical.HyperplaneDistance
 import FINAL.Tropical.InformationTheory
 import FINAL.Tropical.KineticCertification
 import FINAL.Tropical.LegendreDuality
@@ -1387,6 +1392,7 @@ import FINAL.Tropical.MatrixFactorizationHardnessTransfer
 import FINAL.Tropical.MaxPlusAlgebra
 import FINAL.Tropical.MaxPlusLightCone
 import FINAL.Tropical.MetaOracleTropicalAlgebra
+import FINAL.Tropical.MinPlus
 import FINAL.Tropical.MinPlusAlgebra
 import FINAL.Tropical.MinPlusExpr
 import FINAL.Tropical.MinPlusRankOne
@@ -1396,6 +1402,7 @@ import FINAL.Tropical.MutualInformation
 import FINAL.Tropical.MyhillNerode
 import FINAL.Tropical.NNCompilationExtended
 import FINAL.Tropical.NerodeDecidability
+import FINAL.Tropical.NewResearch
 import FINAL.Tropical.NormalForm
 import FINAL.Tropical.OmegaMetaOracle
 import FINAL.Tropical.OracleApplicationsFrontier
@@ -1412,6 +1419,7 @@ import FINAL.Tropical.PrimePowerAmplification
 import FINAL.Tropical.Product
 import FINAL.Tropical.QaryDataProcessing
 import FINAL.Tropical.QarySourceCoding
+import FINAL.Tropical.QuantumLLMCompilation
 import FINAL.Tropical.QuantumTropicalComputation
 import FINAL.Tropical.QuantumTropicalComputing
 import FINAL.Tropical.RankGrowth
@@ -1427,6 +1435,7 @@ import FINAL.Tropical.SelfLearningOracle
 import FINAL.Tropical.SemiclassicalLimit
 import FINAL.Tropical.SeriesParallel
 import FINAL.Tropical.SieveEnergetics
+import FINAL.Tropical.SoftMaxConvergence
 import FINAL.Tropical.Softmin
 import FINAL.Tropical.Soundness
 import FINAL.Tropical.Spectral
@@ -1487,12 +1496,14 @@ import FINAL.Tropical.TropicalSelfReasoning
 import FINAL.Tropical.TropicalSieveTheory
 import FINAL.Tropical.TropicalStructure
 import FINAL.Tropical.TropicalTrapdoor
+import FINAL.Tropical.TropicalTrapdoorResearch
 import FINAL.Tropical.TropicalTrapdoorReversal
 import FINAL.Tropical.TropicalTypeTheory
 import FINAL.Tropical.TropicalUniversality
 import FINAL.Tropical.TropicalUpperHalfPlane
 import FINAL.Tropical.TropicalVerticalComposition
 import FINAL.Tropical.Tropical_Certified_Robustness_for_Multi_Class_ReLU_Networks
+import FINAL.Tropical.Tropical_Certified_Robustness_for_Residual_Neural_Networks_with_Skip_Connections
 import FINAL.Tropical.Tropical_Feynman_Calculus_via_Maslov_Dequantization_of_the_SPB_Classical_Action
 import FINAL.Tropical.Tropical_Hecke_Trace_Formula_for_GL₂
 import FINAL.Tropical.Union

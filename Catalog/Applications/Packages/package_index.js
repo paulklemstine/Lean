@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Mechanism Design / Multi-Objective Optimization / Combinatorial Algorithms",
     "date": "2026-05-25T18:40:46Z",
     "exp_id": "da756381",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6968374111334675,
+    "quality": "partial"
   },
   {
     "filename": "direction_5_expander_graphs_from_certificate_pairs.json",
@@ -597,8 +597,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-25T18:40:46Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6968374111334675,
+      "quality": "partial"
     }
   ],
   "edges": [
