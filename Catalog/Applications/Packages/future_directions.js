@@ -640,10 +640,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.9999999999999999,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "efbbd353",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:05:35.300943+00:00"
   },
   {
