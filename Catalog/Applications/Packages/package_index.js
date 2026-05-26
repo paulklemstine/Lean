@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Parameterized Complexity / Matroid Theory / Graph Theory",
     "date": "2026-05-26T18:22:23Z",
     "exp_id": "802479fb",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7315382132796782,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_lorentzian_polynomials_in_statistical_.json",
@@ -2837,8 +2837,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-26T18:22:23Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7315382132796782,
+      "quality": "substantial"
     }
   ],
   "edges": [

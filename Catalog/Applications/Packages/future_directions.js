@@ -1231,10 +1231,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "b0b26cee",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1e8732d",
     "timestamp": "2026-05-26T07:14:49.772033+00:00"
   },
   {
@@ -1437,25 +1437,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:05:51.445505+00:00"
   },
   {
-    "id": "fd_1135",
-    "title": "Direction 1: Bounded-Treewidth Polynomial Certificate Compilation",
-    "description": "**Conjecture:** For any graphic matroid of a graph $G$ with treewidth $k$, the deletion/contraction certificate can be compiled with size at most $p(|E(G)|, 2^k)$ for a universal polynomial $p$.\n\n**Test:** Implement the certificate compiler for random graphs of controlled treewidth (e.g., graphs constructed from tree decompositions with bag size $k$). Measure certificate size as a function of $|E|$ and $k$. Fit the scaling to $a \\cdot |E|^b \\cdot 2^{ck}$ and test whether $b$ and $c$ are bounded constants.\n\n**The key insight is** that deletion/contraction along a tree decomposition eliminates elements in a structured order, preventing the exponential branching that occurs for arbitrary element orderings. The treewidth bounds the maximum number of \"active\" elements at any point in the recursion.\n\n**Why now?** The formal verification of the deletion/contraction recurrence provides a certified foundation for analyzing compilation complexity. Tree decomposition algorithms are well-understood from parameterized complexity theory, and their combination with matroid recursion is a natural but unstudied problem.\n\n**Impact:** If confirmed, this would give polynomial-time exact quantum sampling for spanning trees of bounded-treewidth graphs \u2014 a class including series-parallel graphs, outerplanar graphs, and graphs arising in VLSI design and phylogenetics.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (partition function recurrence), `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (exchange certificate pipeline).\n\n**Proof Strategy:** Induction on tree decomposition bags. Show that contracting all vertices in a bag produces a matroid on the separator, with certificate size bounded by $2^k$ per bag times the number of bags.\n\n**Domain Bridges:** Parameterized complexity \u2194 quantum algorithms \u2194 matroid theory.\n\n**Lineage:** Extends Theorem 4.1 (partition function recurrence) to complexity analysis.\n\n**Ambition:** Solid extension \u2014 builds directly on established certificate structure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "72356358",
-    "consumed_by_exp_id": "802479fb",
-    "timestamp": "2026-05-26T13:07:38.657776+00:00"
-  },
-  {
     "id": "fd_1136",
     "title": "Direction 2: Gate-Level Quantum Circuit Synthesis from Certificates",
     "description": "**Conjecture:** The recursive certificate tree for a matroid of rank $r$ on $n$ elements can be converted into a quantum circuit of depth $O(n \\cdot r)$ using $O(n)$ ancilla qubits and controlled rotation gates, with amplitudes matching the certificate to machine precision.\n\n**Test:** Implement the certificate-to-circuit conversion for small matroids (rank 2\u20134, ground set size 4\u20138). Simulate the quantum circuit classically and verify that output probabilities match the exact weighted basis distribution to $< 10^{-10}$ total variation distance.\n\n**The key insight is** that each deletion/contraction branch in the certificate tree corresponds to a conditional rotation: given that the qubit for element $e$ is in state $|0\\rangle$ (deletion) or $|1\\rangle$ (contraction), apply rotations determined by the sub-certificate. The tree structure maps to a sequence of controlled-$R_y$ gates.\n\n**Why now?** Current quantum state preparation methods (e.g., amplitude encoding via QRAM, Grover-Rudolph) are general but not structure-aware. The matroid certificate provides domain-specific structure that can reduce circuit depth. Recent advances in mid-circuit measurement and feed-forward make tree-structured circuits physically realizable.\n\n**Impact:** A practical quantum circuit for sampling spanning trees would advance quantum network analysis, quantum Monte Carlo for graph problems, and quantum-enhanced optimization.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (certificate structure and amplitude spec).\n\n**Proof Strategy:** Inductive construction: at each element, a controlled rotation splits amplitude between deletion and contraction branches. Angle is $\\theta_e = \\arctan(\\sqrt{w(e) \\cdot Z_{M/e} / Z_{M \\setminus e}})$.\n\n**Domain Bridges:** Quantum circuit synthesis \u2194 matroid theory \u2194 combinatorial optimization.\n\n**Lineage:** Extends Theorem 4.2 (quantum sampler exactness) to physical implementation.\n\n**Ambition:** Grand challenge \u2014 requires bridging formal mathematics with quantum hardware constraints.\n\n---",
@@ -1625,7 +1606,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "5c8e335c",
@@ -1644,7 +1625,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "5c8e335c",
@@ -1664,7 +1645,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "5c8e335c",
@@ -1684,7 +1665,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "5c8e335c",
@@ -1703,7 +1684,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "5c8e335c",
@@ -1816,6 +1797,65 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
+  },
+  {
+    "id": "fd_1178",
+    "title": "Direction 1: Full Lorentzianity of DPP Homogeneous Components",
+    "description": "**Conjecture**: For any PSD matrix K and degree d \u2264 n, the degree-d homogeneous component of the DPP partition function is a Br\u00e4nd\u00e9n\u2013Huh Lorentzian polynomial.\n\n**Test**: For random PSD matrices K with n \u2264 10 and all d \u2264 n, compute the degree-d component, extract all (d\u22122)-fold directional derivatives, and verify that each resulting degree-2 polynomial has Hessian with at most one positive eigenvalue. A single failure disproves the conjecture.\n\n**Impact**: Full Lorentzianity would establish ultra log-concavity of the coefficient sequences and k-wise Rayleigh inequalities for DPPs, going far beyond pairwise negative dependence. It would provide a complete Hodge-theoretic explanation for fermionic repulsion.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (Br\u00e4nd\u00e9n\u2013Huh characterization, recursive spectral certificates), `Pythagorean/DPPLorentzian.lean` (DPP definitions and Fischer inequality).\n\n**Proof Strategy**: Strategy B (stability-first route). Prove real stability of dppPartitionFunction for PSD K using the classical result that det(A + diag(z)) is stable when A is PSD. Then invoke the Br\u00e4nd\u00e9n\u2013Huh theorem: stable homogeneous polynomials with nonneg coefficients are Lorentzian. This avoids direct Hessian computation.\n\n**Domain Bridges**: Algebraic combinatorics \u2194 Probability \u2194 Statistical physics.\n\n**Lineage**: Extends Theorems 3.1\u20133.4 of the current formalization.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Grand Challenge). Resolving this would be a significant formalization achievement, as even the informal proof requires substantial real-algebraic geometry.\n\n**The key insight is** that DPP partition functions are *real stable* (all roots lie in the open upper half-plane when viewed as multivariate polynomials), and the Br\u00e4nd\u00e9n\u2013Huh theorem provides a clean path from stability to Lorentzianity.\n\n**Why now?** The recursive spectral certificate for Lorentzianity is already formalized in `LorentzianRecognitionComplete.lean`, and the principal minor expansion is proved. The missing piece is the stability argument, which requires formalizing half-plane root containment for determinantal polynomials.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c89156c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:48:46.624125+00:00"
+  },
+  {
+    "id": "fd_1179",
+    "title": "Direction 2: Quantum Entanglement Entropy via DPP-Lorentzian Structure",
+    "description": "**Conjecture**: For a system of n free fermions with single-particle density matrix K (PSD, eigenvalues in [0,1]), the entanglement entropy of a subsystem A \u2286 [n] satisfies bounds derivable from the Lorentzian structure of the DPP partition function restricted to A.\n\n**Test**: For random fermionic states (PSD K with eigenvalues in [0,1]) and subsystems A of size |A| \u2264 8, compute the entanglement entropy S_A = \u2212\u03a3_k [\u03bb_k log \u03bb_k + (1\u2212\u03bb_k)log(1\u2212\u03bb_k)] (where \u03bb_k are eigenvalues of K_A) and compare with bounds derived from the Lorentzian coefficient inequalities of the degree-|A| homogeneous component.\n\n**Impact**: Would connect Lorentzian polynomial theory to quantum information theory, providing geometric constraints on entanglement structure. Could yield new area-law or volume-law bounds for free-fermion systems.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signatures), `Pythagorean/DPPLorentzian.lean` (spectral bridge theorem).\n\n**Proof Strategy**: Use the spectral decomposition K_A = U_A \u039b_A U_A^T. The entanglement entropy is a function of eigenvalues of K_A. The Lorentzian inequalities constrain the elementary symmetric functions of these eigenvalues (which are the homogeneous component sums), and Newton's inequalities relate these to individual eigenvalues.\n\n**Domain Bridges**: Quantum information \u2194 Algebraic combinatorics \u2194 Statistical mechanics.\n\n**Lineage**: Extends the spectral bridge (Theorem 3.4) into the quantum domain.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Grand Challenge / Paradigm-Shifting). If Lorentzian structure constrains entanglement, it would open an entirely new connection between Hodge theory and quantum information.\n\n**The key insight is** that the entanglement entropy of free fermions is entirely determined by the eigenvalues of the reduced density matrix K_A, and these eigenvalues are constrained by the same Lorentzian inequalities that govern the DPP partition function.\n\n**Why now?** Free-fermion entanglement is well-understood physically but lacks a connection to algebraic combinatorics. The DPP-Lorentzian bridge we've established is exactly the missing link.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c89156c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:48:46.660643+00:00"
+  },
+  {
+    "id": "fd_1180",
+    "title": "Direction 3: Matroid Hodge Theory and DPP Support Exchange",
+    "description": "**Conjecture**: The support of the DPP partition function (the collection of subsets S with det(K_S) > 0) satisfies the symmetric matroid exchange property, and this exchange property is formally equivalent to the Lorentzian support condition of Br\u00e4nd\u00e9n\u2013Huh.\n\n**Test**: For random PSD matrices K, compute the support set {S : det(K_S) > \u03b5} for small \u03b5 > 0. Verify the symmetric exchange property: for any S, T in the support with |S| = |T| and i \u2208 S \\ T, there exists j \u2208 T \\ S such that both (S \u2212 i + j) and (T + i \u2212 j) are in the support.\n\n**Impact**: Would formalize the connection between DPPs and matroid theory, showing that DPP supports are matroid bases. Combined with Lorentzianity, this would give a complete matroid-Hodge-theoretic characterization of DPP polynomials.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange definition), `Pythagorean/DPPLorentzian.lean` (DPP partition function).\n\n**Proof Strategy**: For PSD K of rank r, the support of det(K_S) for |S| = d \u2264 r consists of all d-element subsets whose rows in a Cholesky factor B (where K = B^T B) are linearly independent. This is exactly the collection of independent sets of the linear matroid of B, which satisfies the exchange property by definition.\n\n**Domain Bridges**: Matroid theory \u2194 Linear algebra \u2194 Probability.\n\n**Lineage**: Extends the principal minor nonnegativity theorem and connects to the existing SupportSatisfiesExchange definition.\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 (Solid Extension). The matroid structure is classical; the novelty is the formal verification and connection to Lorentzian certificates.\n\n**The key insight is** that the support of a DPP polynomial is a matroid, and matroids are exactly the combinatorial structures whose generating polynomials can be Lorentzian.\n\n**Why now?** The matroid exchange property is already defined in `LorentzianRecognitionComplete.lean` and the DPP definitions are in place. The missing formal connection is the Cholesky/rank factorization argument.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c89156c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:48:46.696888+00:00"
   },
   {
     "id": "seed_013",
@@ -2280,63 +2320,24 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T16:01:35.746391+00:00"
   },
   {
-    "id": "fd_1178",
-    "title": "Direction 1: Full Lorentzianity of DPP Homogeneous Components",
-    "description": "**Conjecture**: For any PSD matrix K and degree d \u2264 n, the degree-d homogeneous component of the DPP partition function is a Br\u00e4nd\u00e9n\u2013Huh Lorentzian polynomial.\n\n**Test**: For random PSD matrices K with n \u2264 10 and all d \u2264 n, compute the degree-d component, extract all (d\u22122)-fold directional derivatives, and verify that each resulting degree-2 polynomial has Hessian with at most one positive eigenvalue. A single failure disproves the conjecture.\n\n**Impact**: Full Lorentzianity would establish ultra log-concavity of the coefficient sequences and k-wise Rayleigh inequalities for DPPs, going far beyond pairwise negative dependence. It would provide a complete Hodge-theoretic explanation for fermionic repulsion.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (Br\u00e4nd\u00e9n\u2013Huh characterization, recursive spectral certificates), `Pythagorean/DPPLorentzian.lean` (DPP definitions and Fischer inequality).\n\n**Proof Strategy**: Strategy B (stability-first route). Prove real stability of dppPartitionFunction for PSD K using the classical result that det(A + diag(z)) is stable when A is PSD. Then invoke the Br\u00e4nd\u00e9n\u2013Huh theorem: stable homogeneous polynomials with nonneg coefficients are Lorentzian. This avoids direct Hessian computation.\n\n**Domain Bridges**: Algebraic combinatorics \u2194 Probability \u2194 Statistical physics.\n\n**Lineage**: Extends Theorems 3.1\u20133.4 of the current formalization.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Grand Challenge). Resolving this would be a significant formalization achievement, as even the informal proof requires substantial real-algebraic geometry.\n\n**The key insight is** that DPP partition functions are *real stable* (all roots lie in the open upper half-plane when viewed as multivariate polynomials), and the Br\u00e4nd\u00e9n\u2013Huh theorem provides a clean path from stability to Lorentzianity.\n\n**Why now?** The recursive spectral certificate for Lorentzianity is already formalized in `LorentzianRecognitionComplete.lean`, and the principal minor expansion is proved. The missing piece is the stability argument, which requires formalizing half-plane root containment for determinantal polynomials.\n\n---",
+    "id": "fd_1183",
+    "title": "Direction 1: Bell Number State Compression",
+    "description": "**Conjecture:** The FPT certificate bound can be tightened from $|E| \\cdot 2^{k^2+k}$ to $|E| \\cdot B_{k+1}^2$, where $B_n$ is the $n$-th Bell number.\n\n**Test:** Implement the state-compressed certificate compiler using partition refinement at each bag. For $k \\in \\{2,3,4,5\\}$ and random $k$-trees on $n \\in \\{50, 100, 500\\}$ vertices, measure the ratio of actual certificate size to $|E| \\cdot B_{k+1}^2$. If this ratio stays bounded by a constant, the conjecture is supported.\n\n**Impact:** Would reduce the certificate size by a factor of $2^{k^2+k} / B_{k+1}^2$, which is superexponential in $k$. For $k = 5$: from $\\sim 10^9$ to $\\sim 41,209$ \u2014 a 24,000\u00d7 improvement.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TreewidthCertificateDefs.lean` \u2014 `BagProfile` structure, `certBranchingBound`\n- `Catalog/Pythagorean/TreewidthCertificateTheorems.lean` \u2014 `fpt_cert_size_composition`, `maxActiveEdges_le_cert_exp`\n\n**Proof Strategy:** Define a `BellCompressedState` structure that represents bag states as set partitions rather than edge subsets. Show that deletion preserves the partition (splits a class into two) and contraction refines it (merges two classes). The number of distinct partition transitions at each bag is bounded by $B_{k+1}$ for deletions and $B_{k+1}$ for contractions, giving $B_{k+1}^2$ total states.\n\n**Domain Bridges:** Connects to enumerative combinatorics (Bell numbers, Stirling numbers), lattice theory (partition lattice structure), and coding theory (partition codes for efficient state representation).\n\n**Lineage:** Builds on `maxActiveEdges_eq_choose` and `fpt_cert_size_composition`.\n\n**Ambition:** \ud83d\udfe1 Solid extension \u2014 the Bell number bound is well-understood combinatorially, and the main challenge is the formal verification infrastructure.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
-      "Physics",
+      "Cryptography",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "c89156c3",
+    "source_exp_id": "802479fb",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T17:48:46.624125+00:00"
-  },
-  {
-    "id": "fd_1179",
-    "title": "Direction 2: Quantum Entanglement Entropy via DPP-Lorentzian Structure",
-    "description": "**Conjecture**: For a system of n free fermions with single-particle density matrix K (PSD, eigenvalues in [0,1]), the entanglement entropy of a subsystem A \u2286 [n] satisfies bounds derivable from the Lorentzian structure of the DPP partition function restricted to A.\n\n**Test**: For random fermionic states (PSD K with eigenvalues in [0,1]) and subsystems A of size |A| \u2264 8, compute the entanglement entropy S_A = \u2212\u03a3_k [\u03bb_k log \u03bb_k + (1\u2212\u03bb_k)log(1\u2212\u03bb_k)] (where \u03bb_k are eigenvalues of K_A) and compare with bounds derived from the Lorentzian coefficient inequalities of the degree-|A| homogeneous component.\n\n**Impact**: Would connect Lorentzian polynomial theory to quantum information theory, providing geometric constraints on entanglement structure. Could yield new area-law or volume-law bounds for free-fermion systems.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signatures), `Pythagorean/DPPLorentzian.lean` (spectral bridge theorem).\n\n**Proof Strategy**: Use the spectral decomposition K_A = U_A \u039b_A U_A^T. The entanglement entropy is a function of eigenvalues of K_A. The Lorentzian inequalities constrain the elementary symmetric functions of these eigenvalues (which are the homogeneous component sums), and Newton's inequalities relate these to individual eigenvalues.\n\n**Domain Bridges**: Quantum information \u2194 Algebraic combinatorics \u2194 Statistical mechanics.\n\n**Lineage**: Extends the spectral bridge (Theorem 3.4) into the quantum domain.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Grand Challenge / Paradigm-Shifting). If Lorentzian structure constrains entanglement, it would open an entirely new connection between Hodge theory and quantum information.\n\n**The key insight is** that the entanglement entropy of free fermions is entirely determined by the eigenvalues of the reduced density matrix K_A, and these eigenvalues are constrained by the same Lorentzian inequalities that govern the DPP partition function.\n\n**Why now?** Free-fermion entanglement is well-understood physically but lacks a connection to algebraic combinatorics. The DPP-Lorentzian bridge we've established is exactly the missing link.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c89156c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T17:48:46.660643+00:00"
-  },
-  {
-    "id": "fd_1180",
-    "title": "Direction 3: Matroid Hodge Theory and DPP Support Exchange",
-    "description": "**Conjecture**: The support of the DPP partition function (the collection of subsets S with det(K_S) > 0) satisfies the symmetric matroid exchange property, and this exchange property is formally equivalent to the Lorentzian support condition of Br\u00e4nd\u00e9n\u2013Huh.\n\n**Test**: For random PSD matrices K, compute the support set {S : det(K_S) > \u03b5} for small \u03b5 > 0. Verify the symmetric exchange property: for any S, T in the support with |S| = |T| and i \u2208 S \\ T, there exists j \u2208 T \\ S such that both (S \u2212 i + j) and (T + i \u2212 j) are in the support.\n\n**Impact**: Would formalize the connection between DPPs and matroid theory, showing that DPP supports are matroid bases. Combined with Lorentzianity, this would give a complete matroid-Hodge-theoretic characterization of DPP polynomials.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange definition), `Pythagorean/DPPLorentzian.lean` (DPP partition function).\n\n**Proof Strategy**: For PSD K of rank r, the support of det(K_S) for |S| = d \u2264 r consists of all d-element subsets whose rows in a Cholesky factor B (where K = B^T B) are linearly independent. This is exactly the collection of independent sets of the linear matroid of B, which satisfies the exchange property by definition.\n\n**Domain Bridges**: Matroid theory \u2194 Linear algebra \u2194 Probability.\n\n**Lineage**: Extends the principal minor nonnegativity theorem and connects to the existing SupportSatisfiesExchange definition.\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 (Solid Extension). The matroid structure is classical; the novelty is the formal verification and connection to Lorentzian certificates.\n\n**The key insight is** that the support of a DPP polynomial is a matroid, and matroids are exactly the combinatorial structures whose generating polynomials can be Lorentzian.\n\n**Why now?** The matroid exchange property is already defined in `LorentzianRecognitionComplete.lean` and the DPP definitions are in place. The missing formal connection is the Cholesky/rank factorization argument.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c89156c3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T17:48:46.696888+00:00"
+    "timestamp": "2026-05-26T18:22:28.461601+00:00"
   },
   {
     "id": "seed_032",
