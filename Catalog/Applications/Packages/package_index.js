@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Topology / Arithmetic Geometry",
     "date": "2026-05-26T14:17:26Z",
     "exp_id": "d4af762e",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7510426086956522,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_sharp_dixon_asymptotics_via_mbius_inve.json",
@@ -2585,8 +2585,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-26T14:17:26Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7510426086956522,
+      "quality": "substantial"
     }
   ],
   "edges": [

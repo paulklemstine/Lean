@@ -1,0 +1,1 @@
+../../Pythagorean/TropicalMorse/IntegerTrichotomy.lean
