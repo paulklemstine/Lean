@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1892 of the highest-quality
+A curated collection of 1896 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1892
+Total files: 1896
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -286,6 +286,7 @@ import FINAL.Bridges.ArithmeticOperadicStability
 import FINAL.Bridges.ArithmeticProfileAnalysis
 import FINAL.Bridges.ArithmeticVCDimension
 import FINAL.Bridges.ArrowDepthComplexity
+import FINAL.Bridges.AschbacherCertificates
 import FINAL.Bridges.Basic
 import FINAL.Bridges.BeatpathRobustness
 import FINAL.Bridges.BerggrenAutomatonRealization
@@ -687,6 +688,7 @@ import FINAL.Bridges.TropicalKernelRigidity
 import FINAL.Bridges.TropicalLensBerggrenDuality
 import FINAL.Bridges.TropicalLensRigidityDuality
 import FINAL.Bridges.TropicalMetamathematics
+import FINAL.Bridges.TropicalMixingDirect
 import FINAL.Bridges.TropicalMorseGraphs
 import FINAL.Bridges.TropicalNerode
 import FINAL.Bridges.TropicalNeuralBridge
@@ -1507,6 +1509,7 @@ import FINAL.Pythagorean.ExactWeightedTropicalDimension
 import FINAL.Pythagorean.ExchangeDescent
 import FINAL.Pythagorean.ExplicitMorseTheory
 import FINAL.Pythagorean.Extraction
+import FINAL.Pythagorean.FermionicPlucker
 import FINAL.Pythagorean.FiltrationObstruction
 import FINAL.Pythagorean.FiltrationPersistence
 import FINAL.Pythagorean.FiveDirections
@@ -1518,6 +1521,7 @@ import FINAL.Pythagorean.HardnessLocalization
 import FINAL.Pythagorean.HardnessLocalizationDuality
 import FINAL.Pythagorean.HarmonicMusicTheory
 import FINAL.Pythagorean.HennessyMilner
+import FINAL.Pythagorean.HeterogeneityGapConjecture
 import FINAL.Pythagorean.HigherDefectTheory
 import FINAL.Pythagorean.HigherDimGhost
 import FINAL.Pythagorean.HigherDimQuadruples

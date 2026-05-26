@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Markov Chain Mixing",
     "date": "2026-05-26T22:28:04Z",
     "exp_id": "93ec6871",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.710588,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_heterogeneitygap_conjecture.json",
@@ -3257,8 +3257,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-26T22:28:04Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.710588,
+      "quality": "substantial"
     }
   ],
   "edges": [
