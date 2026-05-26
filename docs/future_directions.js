@@ -819,26 +819,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T19:29:17.948753+00:00"
   },
   {
-    "id": "fd_0930",
-    "title": "Direction 4: Tropical Hodge Theory via Supermodularity Hierarchies",
-    "description": "**Conjecture**: The supermodularity hierarchy induced by the tropical bridge (\u2212log of k-fold directional log-concavity) defines a tropical analog of the Hodge filtration on the cohomology of toric varieties. Specifically, the depth k at which \u2212log f ceases to satisfy the iterated supermodularity conditions corresponds to the weight filtration level in tropical Hodge theory.\n\n**The key insight is** that the tropical bridge theorem (`negLog_supermodular_of_mixed` and `exp_neg_supermodular_mixed`) establishes a perfect correspondence between multiplicative log-concavity and additive supermodularity. Iterating this correspondence through the k-fold hierarchy creates a tower of tropical convexity conditions that mirror the Lefschetz decomposition in Hodge theory.\n\n**Why now?** The recent proof of the Hodge-Riemann relations for matroids by Adiprasito\u2013Huh\u2013Katz used the hard Lefschetz property, which in the tropical setting corresponds to a specific supermodularity condition on tropical intersection numbers. Our hierarchy provides a natural graded refinement of this single condition.\n\n**Test**: Compute the tropical supermodularity depth for the tropical Grassmannians Gr(2,n) for n = 4,...,8. Compare with the known Hodge numbers of the corresponding toric varieties. If the depths match, this provides evidence for the correspondence.\n\n**Impact**: Would create the first computational approach to tropical Hodge theory, potentially enabling machine verification of Hodge-theoretic results that are currently proved only by deep analytic methods.\n\n**Catalog References**: `Pythagorean/MultivariateLogConcavity.lean` (`negLog_supermodular_of_mixed`, `exp_neg_supermodular_mixed`, `DiscreteSupermodular`); `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (`IsBrandenHuhLorentzian`, `QuadraticHasLorentzianSignature`).\n\n**Proof Strategy**: Define the tropical Lefschetz operator as the tropicalization of the algebraic Lefschetz operator. Show that the hard Lefschetz property for a Lorentzian polynomial tropicalizes to the supermodularity of \u2212log(coefficient function). Use the k-fold hierarchy to define tropical Hodge numbers. Verify the tropical Hodge-Riemann bilinear relations at each level of the hierarchy.\n\n**Domain Bridges**: Tropical geometry \u2194 Algebraic geometry (Hodge theory) \u2194 Combinatorics (matroid Chow rings).\n\n**Lineage**: Extends `negLog_supermodular_of_mixed` and connects to `lorentzian_reversed_cauchy_schwarz`.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if realized.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "65ed3803",
-    "timestamp": "2026-05-25T19:29:17.982054+00:00"
-  },
-  {
     "id": "fd_0932",
     "title": "Direction 1: Intrinsically Typed Higher-Order Rewriting with \u03b2\u03b7-Completion",
     "description": "**Conjecture:** For the simply-typed \u03bb-calculus with \u03b2\u03b7-reduction, substitution functoriality and rewrite closure extend to the \u03b2\u03b7 setting, and the generated equational theory descends cleanly to \u03b2\u03b7-equivalence classes. Concretely: if `HOEqGen(E, t, u)` and `t ~\u03b2\u03b7 t'`, `u ~\u03b2\u03b7 u'`, then `HOEqGen(E, t', u')` in a theory with \u03b2\u03b7-rules included.\n\n**Test:** Formalize intrinsically typed terms (indexed by context and type) using de Bruijn indices. Prove `subst_comp` and `hoRewrites_closed_under_subst` for typed terms. Then add \u03b7-contraction (`lam(app(rename(\u00b7+1, f), var 0)) \u2192 f`) and verify the \u03b7-commutation lemma: `eta_closed_under_subst`. Check computationally on typed terms up to size 12 that \u03b2\u03b7-normalization commutes with rewriting for orthogonal rule sets.\n\n**Impact:** Intrinsically typed terms would eliminate ill-scoped terms by construction, making the formalization stronger and aligning with the Fiore-Plotkin-Turi framework for abstract syntax. \u03b2\u03b7-completion is strictly more powerful than \u03b2-completion and is required for extensional reasoning about functional programs.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (subst_comp, beta_closed_under_subst, liftSubst_compSubst); `Pythagorean/ConcreteTermAlgebra.lean` (FOTerm.subst_comp as the first-order prototype).\n\n**Proof Strategy:** Start with the Autosubst-style approach: define a universe of types, index terms by `(Ctx, Ty)`, and derive the substitution lemmas mechanically. The \u03b7 case requires proving `subst(lam(app(rename(\u00b7+1, f), var 0)), \u03c3) = subst(f, \u03c3)` when f has appropriate type, which reduces to showing `liftSubst(\u03c3)(1) = rename(\u00b7+1)(\u03c3(0))` \u2014 a definitional equality.\n\n**Domain Bridges:** Type theory (intrinsic typing), categorical semantics (presheaves over contexts), proof automation (extensional simplification).\n\n**Lineage:** Direct extension of the current work's substitution calculus.\n\n**Ambition:** Solid extension \u2014 builds directly on verified infrastructure with clear proof path.\n\n**\"The key insight is...\"** that \u03b7-contraction is the *semantic* counterpart of \u03b2-reduction \u2014 where \u03b2 says \"functions compute,\" \u03b7 says \"things that compute like functions *are* functions\" \u2014 and the substitution calculus we have already verified handles both uniformly once the commutation lemma is established.\n\n**\"Why now?\"** The substitution infrastructure (11 lemmas from `liftRen_id` through `subst_comp`) is now verified and battle-tested. Extending to \u03b7 requires exactly one new commutation lemma and one new lifting property, both following the established pattern.\n\n---",
@@ -944,10 +924,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e8f8d5e4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "017aafa5",
     "timestamp": "2026-05-25T20:35:38.515830+00:00"
   },
   {
@@ -1711,7 +1691,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a0951d1f",
@@ -1729,7 +1709,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a0951d1f",
@@ -1748,12 +1728,95 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a0951d1f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T06:04:06.590349+00:00"
+  },
+  {
+    "id": "fd_1081",
+    "title": "Direction 1: Weighted Distance Equality via Tropical Cycle Optimization",
+    "description": "**Conjecture:** For graph-derived CSS codes with arbitrary positive edge weights, the code distance equals the minimum total weight of a simple cycle in the interaction graph. Under an appropriate \"girth-adapted\" filtration (edges ordered by a cycle-aware criterion), the first cycle birth value equals this minimum cycle weight.\n\n**Test:** Construct random weighted graphs on 8\u201320 vertices with weights drawn from {1, 2, ..., 10}. Compute:\n- The minimum-weight simple cycle (by exhaustive search for small graphs).\n- The first cycle birth under Kruskal filtration.\n- The first cycle birth under a modified filtration that orders edges by their contribution to shortest cycles.\nIf the girth-adapted FCB equals the minimum cycle weight in >95% of cases, the conjecture is supported. If it fails, identify the structural obstruction.\n\n**Impact:** Would extend the exact distance theorem from unit weights to arbitrary weights, making the tropical approach directly applicable to quantum hardware with non-uniform coupling strengths.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/QuantumGraphCodes.lean`: `codeDistance_eq_firstCycleBirth_of_simpleCycle`\n- `Pythagorean/TropicalMorse/Theorems.lean`: `redundant_edges_eq_cycle_rank`\n\n**Proof Strategy:** Define a \"cycle-adapted\" weight ordering that processes edges in order of their minimum-cycle-weight contribution. Prove that under this ordering, the first cycle birth equals the minimum cycle weight. Use the monotonicity theorem to bootstrap from the unit-weight case.\n\n**Domain Bridges:** Tropical geometry \u2194 combinatorial optimization \u2194 quantum hardware design.\n\n**Lineage:** Direct extension of Theorem 3 (exact distance in simple-cycle regime).\n\n**Ambition:** Solid extension \u2014 requires new combinatorial arguments but builds directly on established foundations.\n\n**The key insight is** that the filtration ordering determines which cycle appears first, and an intelligently chosen ordering can make the first cycle birth coincide with the minimum-weight cycle.\n\n**Why now?** The monotonicity theorem provides the key tool: if we can show that the girth-adapted filtration maximizes the first cycle birth among all filtrations, the result follows.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0b26cee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T07:14:49.731669+00:00"
+  },
+  {
+    "id": "fd_1082",
+    "title": "Direction 2: Spectral Decoding via Tropical Morse Barcodes",
+    "description": "**Conjecture:** The full tropical Morse spectrum (not just the first cycle birth) encodes sufficient information to construct an efficient minimum-weight decoder for graph-CSS codes. Specifically, the barcode structure \u2014 the persistence intervals of cycle events \u2014 identifies likely error patterns and guides syndrome-based correction.\n\n**Test:** Implement a \"tropical decoder\" that uses the TMS barcode to weight the edges of the decoding graph. Compare decoder performance (logical error rate vs. physical error rate) against:\n- Minimum-weight perfect matching (MWPM) decoder.\n- Union-find decoder.\nTest on surface codes of sizes 3\u00d73, 5\u00d75, 7\u00d77 under depolarizing noise at rates p = 0.01, 0.05, 0.10. If the tropical decoder achieves comparable or better logical error rates, the conjecture is supported.\n\n**Impact:** Would provide a new class of decoders inspired by tropical geometry, potentially with better scaling or simpler implementation than existing approaches.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Defs.lean`: `TMSpectrum`, `tropicalMorseComplexity`\n- `Pythagorean/TropicalMorse/Theorems.lean`: `spectral_gap_distinguishes`\n\n**Proof Strategy:** Show that the barcode persistence intervals correspond to \"error vulnerability windows\" \u2014 ranges of error weights where specific logical operators become active. Use this to construct a weight function for the decoding graph that penalizes edges in high-vulnerability regions.\n\n**Domain Bridges:** Persistent homology \u2194 quantum error correction \u2194 algorithmic graph theory.\n\n**Lineage:** Extends the spectral classification theorem (Theorem 5) from static classification to dynamic error correction.\n\n**Ambition:** Grand challenge \u2014 connects two major research programs (persistent homology and quantum decoding) through a concrete algorithmic proposal.\n\n**The key insight is** that the tropical Morse barcode encodes not just the *number* of logical operators but their *weight hierarchy*, which is exactly the information a decoder needs to distinguish likely from unlikely errors.\n\n**Why now?** The TMS computation is O(E log E), making it feasible to run in real-time as a preprocessing step for decoding. Recent advances in barcode-guided algorithms in topological data analysis provide the technical toolkit.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0b26cee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T07:14:49.772033+00:00"
+  },
+  {
+    "id": "fd_1083",
+    "title": "Direction 3: Higher-Dimensional Tropical Morse Theory for Quantum LDPC Codes",
+    "description": "**Conjecture:** The tropical Morse theory framework extends to simplicial complexes of dimension \u2265 2, and the resulting higher-dimensional tropical Morse spectrum determines the parameters of CSS codes derived from chain complexes (including hypergraph product codes, fiber bundle codes, and balanced product codes).\n\n**Test:** Implement a simplicial tropical filtration for:\n- The 2D toric code (as a simplicial complex on the torus).\n- Hypergraph product codes HP(H\u2081, H\u2082) for random LDPC matrices H\u2081, H\u2082 of size 10\u00d720.\n- Balanced product codes for small group algebras.\nCompute \u03b2\u2081 and \u03b2\u2082 from the filtration and compare with known code parameters. If the higher-dimensional \u03b2 values correctly predict k and d bounds for \u226590% of test cases, the conjecture is supported.\n\n**Impact:** Would extend the tropical Morse framework to the most promising class of quantum codes for fault-tolerant computing (quantum LDPC codes), where asymptotically good parameters have been recently demonstrated.\n\n**Catalog References:**\n- `Bridges/Catalog/Pythagorean/TropicalMorse/HigherSimplicial.lean`: higher-dimensional extensions\n- `Pythagorean/TropicalMorse/QuantumGraphCodes.lean`: `filtration_exclusive_dichotomy`\n\n**Proof Strategy:** Define the higher-dimensional filtration as the sublevel set filtration of the weight function on the simplicial complex. The key technical challenge is proving the analogue of the exclusive dichotomy: each simplex addition changes exactly one Betti number. This follows from the long exact sequence in homology for the pair (K_\u2264t, K_\u2264t').\n\n**Domain Bridges:** Higher-dimensional tropical geometry \u2194 homological algebra \u2194 quantum LDPC codes \u2194 expander theory.\n\n**Lineage:** Natural generalization of all four main theorems to higher dimensions.\n\n**Ambition:** Grand challenge \u2014 requires substantial new mathematical development and connects to the frontier of quantum LDPC code theory.\n\n**The key insight is** that the exclusive dichotomy theorem (each edge addition changes exactly one Betti number) generalizes to simplices of all dimensions, and this generalization is exactly what's needed to extend the logical qubit and distance theorems.\n\n**Why now?** The recent breakthroughs in quantum LDPC codes (achieving constant rate and polynomial distance) create urgent demand for new analytical tools. Tropical Morse theory provides a natural framework that has been waiting for this application.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0b26cee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T07:14:49.805352+00:00"
+  },
+  {
+    "id": "fd_1084",
+    "title": "Direction 4: Statistical Mechanics of Decoding via Tropical Percolation",
+    "description": "**Conjecture:** The tropical Morse spectrum of a quantum code's interaction graph determines the critical error threshold for maximum-likelihood decoding, analogous to the bond percolation threshold in the random-bond Ising model. Specifically, the \"tropical percolation threshold\" \u2014 the weight at which half of all cycle events have occurred \u2014 predicts the threshold error rate within 10%.\n\n**Test:** For surface codes of sizes n = 5, 7, 9, 11:\n- Compute the tropical percolation threshold t_trop = median cycle birth value.\n- Run Monte Carlo simulations to estimate the ML decoding threshold p_c.\n- Compare t_trop / max_weight with p_c.\nIf the correlation is > 0.9 across all sizes, the conjecture is supported.\n\n**Impact:** Would provide a new analytical prediction for decoding thresholds, bypassing expensive Monte Carlo simulations and potentially explaining why certain code families have higher thresholds than others.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `percolation_transition_count`, `giant_component_threshold`\n\n**Proof Strategy:** The tropical filtration is formally isomorphic to the bond percolation process. The cycle events correspond to loop formations in percolation. Show that the density of cycle events near the percolation threshold controls the error-correction capacity, using duality between the Nishimori line and the tropical critical surface.\n\n**Domain Bridges:** Statistical mechanics \u2194 tropical geometry \u2194 quantum error correction \u2194 percolation theory.\n\n**Lineage:** Extends the percolation connection already established in `percolation_transition_count` to a quantitative prediction.\n\n**Ambition:** Grand challenge \u2014 connects three deep theories (statistical mechanics, tropical geometry, quantum error correction) through a falsifiable quantitative prediction.\n\n**The key insight is** that the tropical filtration is literally a percolation process, and the statistics of cycle events in the filtration directly control the code's error-correction capacity.\n\n**Why now?** Recent work on the statistical mechanics of quantum error correction (the random-bond Ising model approach) provides the theoretical context, and the tropical Morse computation provides the efficient computational tool.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0b26cee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T07:14:49.839089+00:00"
   },
   {
     "id": "seed_005",
@@ -1876,89 +1939,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1081",
-    "title": "Direction 1: Weighted Distance Equality via Tropical Cycle Optimization",
-    "description": "**Conjecture:** For graph-derived CSS codes with arbitrary positive edge weights, the code distance equals the minimum total weight of a simple cycle in the interaction graph. Under an appropriate \"girth-adapted\" filtration (edges ordered by a cycle-aware criterion), the first cycle birth value equals this minimum cycle weight.\n\n**Test:** Construct random weighted graphs on 8\u201320 vertices with weights drawn from {1, 2, ..., 10}. Compute:\n- The minimum-weight simple cycle (by exhaustive search for small graphs).\n- The first cycle birth under Kruskal filtration.\n- The first cycle birth under a modified filtration that orders edges by their contribution to shortest cycles.\nIf the girth-adapted FCB equals the minimum cycle weight in >95% of cases, the conjecture is supported. If it fails, identify the structural obstruction.\n\n**Impact:** Would extend the exact distance theorem from unit weights to arbitrary weights, making the tropical approach directly applicable to quantum hardware with non-uniform coupling strengths.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/QuantumGraphCodes.lean`: `codeDistance_eq_firstCycleBirth_of_simpleCycle`\n- `Pythagorean/TropicalMorse/Theorems.lean`: `redundant_edges_eq_cycle_rank`\n\n**Proof Strategy:** Define a \"cycle-adapted\" weight ordering that processes edges in order of their minimum-cycle-weight contribution. Prove that under this ordering, the first cycle birth equals the minimum cycle weight. Use the monotonicity theorem to bootstrap from the unit-weight case.\n\n**Domain Bridges:** Tropical geometry \u2194 combinatorial optimization \u2194 quantum hardware design.\n\n**Lineage:** Direct extension of Theorem 3 (exact distance in simple-cycle regime).\n\n**Ambition:** Solid extension \u2014 requires new combinatorial arguments but builds directly on established foundations.\n\n**The key insight is** that the filtration ordering determines which cycle appears first, and an intelligently chosen ordering can make the first cycle birth coincide with the minimum-weight cycle.\n\n**Why now?** The monotonicity theorem provides the key tool: if we can show that the girth-adapted filtration maximizes the first cycle birth among all filtrations, the result follows.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0b26cee",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T07:14:49.731669+00:00"
-  },
-  {
-    "id": "fd_1082",
-    "title": "Direction 2: Spectral Decoding via Tropical Morse Barcodes",
-    "description": "**Conjecture:** The full tropical Morse spectrum (not just the first cycle birth) encodes sufficient information to construct an efficient minimum-weight decoder for graph-CSS codes. Specifically, the barcode structure \u2014 the persistence intervals of cycle events \u2014 identifies likely error patterns and guides syndrome-based correction.\n\n**Test:** Implement a \"tropical decoder\" that uses the TMS barcode to weight the edges of the decoding graph. Compare decoder performance (logical error rate vs. physical error rate) against:\n- Minimum-weight perfect matching (MWPM) decoder.\n- Union-find decoder.\nTest on surface codes of sizes 3\u00d73, 5\u00d75, 7\u00d77 under depolarizing noise at rates p = 0.01, 0.05, 0.10. If the tropical decoder achieves comparable or better logical error rates, the conjecture is supported.\n\n**Impact:** Would provide a new class of decoders inspired by tropical geometry, potentially with better scaling or simpler implementation than existing approaches.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Defs.lean`: `TMSpectrum`, `tropicalMorseComplexity`\n- `Pythagorean/TropicalMorse/Theorems.lean`: `spectral_gap_distinguishes`\n\n**Proof Strategy:** Show that the barcode persistence intervals correspond to \"error vulnerability windows\" \u2014 ranges of error weights where specific logical operators become active. Use this to construct a weight function for the decoding graph that penalizes edges in high-vulnerability regions.\n\n**Domain Bridges:** Persistent homology \u2194 quantum error correction \u2194 algorithmic graph theory.\n\n**Lineage:** Extends the spectral classification theorem (Theorem 5) from static classification to dynamic error correction.\n\n**Ambition:** Grand challenge \u2014 connects two major research programs (persistent homology and quantum decoding) through a concrete algorithmic proposal.\n\n**The key insight is** that the tropical Morse barcode encodes not just the *number* of logical operators but their *weight hierarchy*, which is exactly the information a decoder needs to distinguish likely from unlikely errors.\n\n**Why now?** The TMS computation is O(E log E), making it feasible to run in real-time as a preprocessing step for decoding. Recent advances in barcode-guided algorithms in topological data analysis provide the technical toolkit.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0b26cee",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T07:14:49.772033+00:00"
-  },
-  {
-    "id": "fd_1083",
-    "title": "Direction 3: Higher-Dimensional Tropical Morse Theory for Quantum LDPC Codes",
-    "description": "**Conjecture:** The tropical Morse theory framework extends to simplicial complexes of dimension \u2265 2, and the resulting higher-dimensional tropical Morse spectrum determines the parameters of CSS codes derived from chain complexes (including hypergraph product codes, fiber bundle codes, and balanced product codes).\n\n**Test:** Implement a simplicial tropical filtration for:\n- The 2D toric code (as a simplicial complex on the torus).\n- Hypergraph product codes HP(H\u2081, H\u2082) for random LDPC matrices H\u2081, H\u2082 of size 10\u00d720.\n- Balanced product codes for small group algebras.\nCompute \u03b2\u2081 and \u03b2\u2082 from the filtration and compare with known code parameters. If the higher-dimensional \u03b2 values correctly predict k and d bounds for \u226590% of test cases, the conjecture is supported.\n\n**Impact:** Would extend the tropical Morse framework to the most promising class of quantum codes for fault-tolerant computing (quantum LDPC codes), where asymptotically good parameters have been recently demonstrated.\n\n**Catalog References:**\n- `Bridges/Catalog/Pythagorean/TropicalMorse/HigherSimplicial.lean`: higher-dimensional extensions\n- `Pythagorean/TropicalMorse/QuantumGraphCodes.lean`: `filtration_exclusive_dichotomy`\n\n**Proof Strategy:** Define the higher-dimensional filtration as the sublevel set filtration of the weight function on the simplicial complex. The key technical challenge is proving the analogue of the exclusive dichotomy: each simplex addition changes exactly one Betti number. This follows from the long exact sequence in homology for the pair (K_\u2264t, K_\u2264t').\n\n**Domain Bridges:** Higher-dimensional tropical geometry \u2194 homological algebra \u2194 quantum LDPC codes \u2194 expander theory.\n\n**Lineage:** Natural generalization of all four main theorems to higher dimensions.\n\n**Ambition:** Grand challenge \u2014 requires substantial new mathematical development and connects to the frontier of quantum LDPC code theory.\n\n**The key insight is** that the exclusive dichotomy theorem (each edge addition changes exactly one Betti number) generalizes to simplices of all dimensions, and this generalization is exactly what's needed to extend the logical qubit and distance theorems.\n\n**Why now?** The recent breakthroughs in quantum LDPC codes (achieving constant rate and polynomial distance) create urgent demand for new analytical tools. Tropical Morse theory provides a natural framework that has been waiting for this application.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0b26cee",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T07:14:49.805352+00:00"
-  },
-  {
-    "id": "fd_1084",
-    "title": "Direction 4: Statistical Mechanics of Decoding via Tropical Percolation",
-    "description": "**Conjecture:** The tropical Morse spectrum of a quantum code's interaction graph determines the critical error threshold for maximum-likelihood decoding, analogous to the bond percolation threshold in the random-bond Ising model. Specifically, the \"tropical percolation threshold\" \u2014 the weight at which half of all cycle events have occurred \u2014 predicts the threshold error rate within 10%.\n\n**Test:** For surface codes of sizes n = 5, 7, 9, 11:\n- Compute the tropical percolation threshold t_trop = median cycle birth value.\n- Run Monte Carlo simulations to estimate the ML decoding threshold p_c.\n- Compare t_trop / max_weight with p_c.\nIf the correlation is > 0.9 across all sizes, the conjecture is supported.\n\n**Impact:** Would provide a new analytical prediction for decoding thresholds, bypassing expensive Monte Carlo simulations and potentially explaining why certain code families have higher thresholds than others.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `percolation_transition_count`, `giant_component_threshold`\n\n**Proof Strategy:** The tropical filtration is formally isomorphic to the bond percolation process. The cycle events correspond to loop formations in percolation. Show that the density of cycle events near the percolation threshold controls the error-correction capacity, using duality between the Nishimori line and the tropical critical surface.\n\n**Domain Bridges:** Statistical mechanics \u2194 tropical geometry \u2194 quantum error correction \u2194 percolation theory.\n\n**Lineage:** Extends the percolation connection already established in `percolation_transition_count` to a quantitative prediction.\n\n**Ambition:** Grand challenge \u2014 connects three deep theories (statistical mechanics, tropical geometry, quantum error correction) through a falsifiable quantitative prediction.\n\n**The key insight is** that the tropical filtration is literally a percolation process, and the statistics of cycle events in the filtration directly control the code's error-correction capacity.\n\n**Why now?** Recent work on the statistical mechanics of quantum error correction (the random-bond Ising model approach) provides the theoretical context, and the tropical Morse computation provides the efficient computational tool.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b0b26cee",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T07:14:49.839089+00:00"
   },
   {
     "id": "seed_013",
