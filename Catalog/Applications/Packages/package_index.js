@@ -18,8 +18,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Combinatorial Optimization",
     "date": "2026-05-26T10:46:21Z",
     "exp_id": "16a503d2",
-    "quality_score": 0.7209036363636364,
-    "quality": "substantial"
+    "quality_score": null,
+    "quality": "unrated"
   },
   {
     "filename": "direction_1_higher_dimensional_tropical_morse_theo.json",
@@ -2294,8 +2294,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-26T10:46:21Z",
       "hue": 271,
-      "priority_score": 0.7209036363636364,
-      "quality": "substantial"
+      "priority_score": null,
+      "quality": "unrated"
     },
     {
       "id": "direction_1_overlap_class_conjecture__beyond_disjo",
