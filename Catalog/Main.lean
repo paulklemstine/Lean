@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1795 of the highest-quality
+A curated collection of 1807 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1795
+Total files: 1807
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -313,9 +313,11 @@ import FINAL.Bridges.CategorifiedShannonTheory
 import FINAL.Bridges.CausalClosure
 import FINAL.Bridges.CertifiedRadiusResiduated
 import FINAL.Bridges.ChainRule
+import FINAL.Bridges.Characters
 import FINAL.Bridges.ChronometricCore
 import FINAL.Bridges.ChronometricTrace
 import FINAL.Bridges.ChurchRosserDeBruijn
+import FINAL.Bridges.ClosureCapacityAttentionDuality
 import FINAL.Bridges.ClosureCapacitySecretSharingDuality
 import FINAL.Bridges.ClosureCircuitDuality
 import FINAL.Bridges.ClosureCosmologyDuality
@@ -445,6 +447,7 @@ import FINAL.Bridges.LargeDeviationPrinciple
 import FINAL.Bridges.LawvereCodingTheorem
 import FINAL.Bridges.LawvereEMLMetricSemantics
 import FINAL.Bridges.LawvereRateDistortionDuality
+import FINAL.Bridges.LawvereStoneAttentionDuality
 import FINAL.Bridges.LawvereThermodynamicGalois
 import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LipschitzMarginCell
@@ -525,8 +528,10 @@ import FINAL.Bridges.QuantumTropicalCore
 import FINAL.Bridges.QuantumTropicalUnification
 import FINAL.Bridges.RGArchitectureDynamics
 import FINAL.Bridges.RateDistortion
+import FINAL.Bridges.Reconstruction
 import FINAL.Bridges.RenormalizationUniversality
 import FINAL.Bridges.Representation
+import FINAL.Bridges.Representer
 import FINAL.Bridges.ResNetTropicalCertified
 import FINAL.Bridges.ResidualRobustness
 import FINAL.Bridges.ReversibleFixedPointDuality
@@ -619,6 +624,7 @@ import FINAL.Bridges.TropicalHankelRealizationDuality
 import FINAL.Bridges.TropicalHeckeCrystalDuality
 import FINAL.Bridges.TropicalHeckeRealizationDuality
 import FINAL.Bridges.TropicalHeightRigidity
+import FINAL.Bridges.TropicalInformationBottleneckDuality
 import FINAL.Bridges.TropicalInformationGeometry
 import FINAL.Bridges.TropicalInformationTheory
 import FINAL.Bridges.TropicalIsogenyRigidity
@@ -1574,6 +1580,7 @@ import FINAL.Tropical.BerggrenShellMesh
 import FINAL.Tropical.BerggrenTropicalBridge
 import FINAL.Tropical.Bernstein
 import FINAL.Tropical.Bezout
+import FINAL.Tropical.BlockGluing
 import FINAL.Tropical.BoundaryRigidity
 import FINAL.Tropical.BranchingPrograms
 import FINAL.Tropical.Bridge
@@ -1636,8 +1643,10 @@ import FINAL.Tropical.HorizonStability
 import FINAL.Tropical.HybridArgument
 import FINAL.Tropical.Hyperbolicity
 import FINAL.Tropical.HyperplaneDistance
+import FINAL.Tropical.Hypersurface
 import FINAL.Tropical.InformationTheory
 import FINAL.Tropical.KineticCertification
+import FINAL.Tropical.KleeneStarUpdate
 import FINAL.Tropical.LSEConvexity
 import FINAL.Tropical.LegendreDuality
 import FINAL.Tropical.Lipschitz
@@ -1731,14 +1740,17 @@ import FINAL.Tropical.TropicalACNormalization
 import FINAL.Tropical.TropicalAdditiveCombinatorics
 import FINAL.Tropical.TropicalAdvancedTheory
 import FINAL.Tropical.TropicalAgentEpsilon
+import FINAL.Tropical.TropicalBSDAbelianVariety
 import FINAL.Tropical.TropicalBarrier
 import FINAL.Tropical.TropicalCells
 import FINAL.Tropical.TropicalCompressionMonad
 import FINAL.Tropical.TropicalConformalExtension
 import FINAL.Tropical.TropicalCuspidalFactorization
+import FINAL.Tropical.TropicalCycleCorrespondence
 import FINAL.Tropical.TropicalDeepLearningFoundations
 import FINAL.Tropical.TropicalDeepResearch
 import FINAL.Tropical.TropicalDegreeRobustness
+import FINAL.Tropical.TropicalElGamal
 import FINAL.Tropical.TropicalEntropyCompact
 import FINAL.Tropical.TropicalFFN
 import FINAL.Tropical.TropicalFactoring
