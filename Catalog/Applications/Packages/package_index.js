@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean",
     "date": "2026-05-26T17:48:39Z",
     "exp_id": "c89156c3",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7205494191790919,
+    "quality": "substantial"
   },
   {
     "filename": "direction_3_hecke_operator_comparison_and_building.json",
@@ -2809,8 +2809,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-26T17:48:39Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7205494191790919,
+      "quality": "substantial"
     }
   ],
   "edges": [

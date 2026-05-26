@@ -409,10 +409,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b9d16ed0",
-    "consumed_by_exp_id": "befda33d",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T16:39:08.918006+00:00"
   },
   {
@@ -1587,10 +1587,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "bcd75759",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a93e0253",
     "timestamp": "2026-05-26T16:00:48.826734+00:00"
   },
   {
@@ -1611,6 +1611,104 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "bcd75759",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T16:00:48.872305+00:00"
+  },
+  {
+    "id": "fd_1173",
+    "title": "Direction 1: Comparison Theorems for Non-Group Markov Chains",
+    "description": "**Conjecture:** For any reversible Markov chain $P$ on state space $\\Omega$ that can be embedded into a Cayley graph $(G, S)$ via a measure-preserving map $\\phi : \\Omega \\to G$ with distortion $D$, the spectral gap of $P$ satisfies $\\lambda(P) \\geq \\lambda(G,S) / D^2$.\n\n**Test:** Formalize the Diaconis\u2013Saloff-Coste comparison theorem in Lean and instantiate it for the random walk on graph colorings (embedded into the symmetric group via the coloring-to-permutation map). Compute the distortion for the Petersen graph and verify the spectral gap bound numerically.\n\n**Impact:** This would extend the certified spectral gap framework far beyond Cayley graphs, covering most Markov chains used in practice\u2014including Glauber dynamics for spin systems, Metropolis\u2013Hastings chains, and random walk on expander graphs. It would make the canonical path formalization a universal tool rather than a group-specific one.\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (Poincar\u00e9 inequality), `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction), `Pythagorean/CayleyExpander/MixingTime.lean` (TV\u2013L\u00b2 comparison).\n\n**Proof Strategy:** Define a formal comparison framework: given two chains $P, Q$ on the same space with $P(x,y) \\leq C \\cdot Q(x,y)/\\pi_Q(y) \\cdot \\pi_P(y)$, prove $\\lambda(P) \\geq \\lambda(Q)/C$. Then specialize to Cayley graph embeddings.\n\n**Domain Bridges:** Probability theory (Markov chains), statistical physics (Glauber dynamics), algorithms (MCMC convergence).\n\n**Lineage:** Extends `variance_le_congestion_mul_energy` from Cayley graphs to general reversible chains.\n\n**Ambition:** Grand challenge \u2014 would unify spectral gap certification across all reversible Markov chains.\n\n**\"The key insight is...\"** that Cayley graph spectral gaps, once certified, can serve as *reference bounds* for arbitrary chains via the comparison theorem, converting one expensive certification into many cheap ones.\n\n**\"Why now?\"** The formal Poincar\u00e9 inequality provides the first machine-verified reference bound that a comparison theorem can leverage.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5c8e335c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:12:57.441382+00:00"
+  },
+  {
+    "id": "fd_1174",
+    "title": "Direction 2: Representation-Theoretic Sharpening for $S_n$",
+    "description": "**Conjecture:** For $S_n$ with adjacent transpositions and bubble-sort canonical paths, the congestion $\\kappa(S_n)$ satisfies $\\kappa(S_n) = \\Theta(n^a)$ where $8 \\leq a \\leq 9$, and the resulting spectral gap bound is $\\Omega(n!^2 / n^{a+3})$. More precisely, the exact spectral gap is $1 - \\cos(\\pi/n) \\sim \\pi^2/(2n^2)$, and the canonical path bound is weaker by a factor of $\\Theta(n^{a+1} / n!^2)$.\n\n**Test:** Compute exact congestion for $n = 6, 7$ (feasible with optimized code) and fit the growth exponent. Compare with the exact spectral gap from representation theory (known to be the eigenvalue of the $(n-1)$-dimensional standard representation on the adjacent transposition generators).\n\n**Impact:** Understanding the exact congestion growth would reveal whether bubble-sort routing is inherently suboptimal or whether the canonical path method itself has structural limitations for $S_n$. This could motivate the search for better canonical paths (e.g., using insertion sort, merge sort, or representation-guided routing).\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (congestion definition), `Catalog/Bridges/Catalog/Pythagorean/CayleyExpander/SymmetricGroup.lean` (S_n generators).\n\n**Proof Strategy:** Use the Murnaghan\u2013Nakayama rule to compute the exact spectrum of the adjacency matrix of $\\text{Cay}(S_n, \\text{adj.\\ transpositions})$. Compare with the canonical path lower bound.\n\n**Domain Bridges:** Representation theory of symmetric groups, algebraic combinatorics, random matrix theory.\n\n**Lineage:** Extends the computational case study in `CanonicalPaths.lean` with exact spectral analysis.\n\n**Ambition:** Solid extension \u2014 connects formal combinatorial bounds to exact algebraic results.\n\n**\"The key insight is...\"** that the gap between canonical path bounds and exact spectral gaps quantifies the *information loss* in the routing abstraction, revealing which structural features of the group the method fails to exploit.\n\n**\"Why now?\"** The exact congestion data for $S_3, S_4, S_5$ reveals unexpectedly fast growth, motivating representation-theoretic analysis.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5c8e335c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:12:57.478975+00:00"
+  },
+  {
+    "id": "fd_1175",
+    "title": "Direction 3: Algorithmic Discovery of Optimal Routing Certificates",
+    "description": "**Conjecture:** For any finite Cayley graph $(G, S)$, the minimum congestion over all canonical path systems is achieved by a path system that can be computed in polynomial time in $|G|$. Furthermore, this minimum congestion $\\kappa^*$ satisfies $\\kappa^* = \\Theta(|G|/\\lambda^*)$ where $\\lambda^*$ is the spectral gap.\n\n**Test:** Implement a linear programming relaxation for the minimum congestion problem: minimize $\\kappa$ subject to the constraint that for each pair $(x,y)$, there exists a path from $x$ to $y$ using generators in $S$, and each directed edge is used by at most $\\kappa$ paths. Solve for $S_3, S_4, S_5$ and compare with bubble-sort congestion.\n\n**Impact:** If optimal routing can be computed efficiently, this would create an automated certified expansion oracle: given a group and generators, output a machine-verified spectral gap bound. This would be transformative for applications in cryptography and MCMC.\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (congestion framework), `Pythagorean/CayleyExpander/Defs.lean` (canonical path data structure).\n\n**Proof Strategy:** Formulate routing as a multicommodity flow problem. Use the max-flow min-cut duality to relate optimal congestion to graph connectivity. Prove that the LP relaxation has an integral optimum for Cayley graphs (exploiting group symmetry).\n\n**Domain Bridges:** Optimization (multicommodity flow), computational complexity, network design.\n\n**Lineage:** Builds on the `CongestionBound` predicate in `CanonicalPaths.lean`.\n\n**Ambition:** Grand challenge \u2014 would make spectral gap certification fully algorithmic.\n\n**\"The key insight is...\"** that the canonical path congestion problem is a multicommodity flow problem on the Cayley graph, and group symmetry may reduce it to a flow problem on the quotient.\n\n**\"Why now?\"** The formal framework separates the analytic inequality (verified) from the congestion certificate (to be discovered), creating a clean interface for algorithmic optimization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5c8e335c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:12:57.516194+00:00"
+  },
+  {
+    "id": "fd_1176",
+    "title": "Direction 4: High-Dimensional Expansion via Canonical Cochains",
+    "description": "**Conjecture:** The canonical path method extends to simplicial complexes: for a $d$-dimensional simplicial complex $X$ with vertex set $V$, one can define \"canonical $k$-chains\" routing $k$-cycles to $k$-boundaries, with congestion controlling the $(k+1)$-th spectral gap of the Hodge Laplacian.\n\n**Test:** Define canonical 1-chains for the complete 2-complex on 5 vertices (the boundary of a 4-simplex). Compute congestion and compare with the known spectral gap of the Hodge Laplacian.\n\n**Impact:** High-dimensional expansion is a frontier topic with applications to locally testable codes, quantum LDPC codes, and topological data analysis. A canonical cochain method would provide the first combinatorial certification of high-dimensional spectral gaps.\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (1-dimensional case), `Pythagorean/CayleyExpander/Defs.lean` (Dirichlet energy definitions).\n\n**Proof Strategy:** Define a higher-dimensional Dirichlet energy for $k$-forms on a simplicial complex. Generalize the telescoping identity to $k$-chains. Prove a Cauchy\u2013Schwarz bound on cochain energy. Assemble into a Hodge-theoretic Poincar\u00e9 inequality.\n\n**Domain Bridges:** Algebraic topology (cohomology, Hodge theory), quantum error correction, extremal combinatorics.\n\n**Lineage:** Generalizes `variance_le_congestion_mul_energy` from 0-forms on graphs to $k$-forms on complexes.\n\n**Ambition:** Grand challenge \u2014 would open a new direction in formal high-dimensional combinatorics.\n\n**\"The key insight is...\"** that canonical paths are 1-dimensional chains solving a 0-dimensional routing problem, and the same structure exists in every dimension.\n\n**\"Why now?\"** The formal 1-dimensional framework provides a template for higher-dimensional generalization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5c8e335c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:12:57.552181+00:00"
+  },
+  {
+    "id": "fd_1177",
+    "title": "Direction 5: Effective Resistance and Electrical Flow Certificates",
+    "description": "**Conjecture:** The canonical path congestion $\\kappa$ is related to the effective resistance of the Cayley graph by $\\kappa \\geq |G| \\cdot \\max_{x,y} R_{\\text{eff}}(x,y)$, where $R_{\\text{eff}}$ is the effective resistance between vertices $x$ and $y$ in the electrical network interpretation of the graph.\n\n**Test:** Compute exact effective resistances for $\\text{Cay}(S_3, \\text{adj.\\ trans.})$, $\\text{Cay}(S_4, \\text{adj.\\ trans.})$, and compare with canonical path congestion. Verify the conjectured inequality numerically.\n\n**Impact:** This would connect the combinatorial canonical path method to the rich theory of electrical networks, effective resistance, and random walks. It could provide tighter bounds by using electrical flow theory (which finds optimal flows automatically).\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (congestion), `Pythagorean/CayleyExpander/SpectralGap.lean` (Dirichlet energy = dissipation).\n\n**Proof Strategy:** Interpret canonical paths as unit flows from $x$ to $y$. The energy of a flow bounds effective resistance from above (by Thomson's principle). The congestion of the canonical path system bounds the total energy of all flows. Combine to relate congestion to effective resistance.\n\n**Domain Bridges:** Electrical network theory, potential theory, random walk hitting times.\n\n**Lineage:** Extends the Dirichlet energy interpretation in `CanonicalPaths.lean` to the full electrical network framework.\n\n**Ambition:** Solid extension \u2014 connects two well-established theories in a formally verified way.\n\n**\"The key insight is...\"** that canonical paths define explicit current flows, and the congestion bound is a bound on the maximum current through any wire\u2014directly connecting to Thomson's principle.\n\n**\"Why now?\"** The formal Dirichlet energy framework provides the foundation for electrical network interpretations.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5c8e335c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:12:57.587340+00:00"
   },
   {
     "id": "seed_005",
@@ -1718,104 +1816,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1173",
-    "title": "Direction 1: Comparison Theorems for Non-Group Markov Chains",
-    "description": "**Conjecture:** For any reversible Markov chain $P$ on state space $\\Omega$ that can be embedded into a Cayley graph $(G, S)$ via a measure-preserving map $\\phi : \\Omega \\to G$ with distortion $D$, the spectral gap of $P$ satisfies $\\lambda(P) \\geq \\lambda(G,S) / D^2$.\n\n**Test:** Formalize the Diaconis\u2013Saloff-Coste comparison theorem in Lean and instantiate it for the random walk on graph colorings (embedded into the symmetric group via the coloring-to-permutation map). Compute the distortion for the Petersen graph and verify the spectral gap bound numerically.\n\n**Impact:** This would extend the certified spectral gap framework far beyond Cayley graphs, covering most Markov chains used in practice\u2014including Glauber dynamics for spin systems, Metropolis\u2013Hastings chains, and random walk on expander graphs. It would make the canonical path formalization a universal tool rather than a group-specific one.\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (Poincar\u00e9 inequality), `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction), `Pythagorean/CayleyExpander/MixingTime.lean` (TV\u2013L\u00b2 comparison).\n\n**Proof Strategy:** Define a formal comparison framework: given two chains $P, Q$ on the same space with $P(x,y) \\leq C \\cdot Q(x,y)/\\pi_Q(y) \\cdot \\pi_P(y)$, prove $\\lambda(P) \\geq \\lambda(Q)/C$. Then specialize to Cayley graph embeddings.\n\n**Domain Bridges:** Probability theory (Markov chains), statistical physics (Glauber dynamics), algorithms (MCMC convergence).\n\n**Lineage:** Extends `variance_le_congestion_mul_energy` from Cayley graphs to general reversible chains.\n\n**Ambition:** Grand challenge \u2014 would unify spectral gap certification across all reversible Markov chains.\n\n**\"The key insight is...\"** that Cayley graph spectral gaps, once certified, can serve as *reference bounds* for arbitrary chains via the comparison theorem, converting one expensive certification into many cheap ones.\n\n**\"Why now?\"** The formal Poincar\u00e9 inequality provides the first machine-verified reference bound that a comparison theorem can leverage.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c8e335c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T17:12:57.441382+00:00"
-  },
-  {
-    "id": "fd_1174",
-    "title": "Direction 2: Representation-Theoretic Sharpening for $S_n$",
-    "description": "**Conjecture:** For $S_n$ with adjacent transpositions and bubble-sort canonical paths, the congestion $\\kappa(S_n)$ satisfies $\\kappa(S_n) = \\Theta(n^a)$ where $8 \\leq a \\leq 9$, and the resulting spectral gap bound is $\\Omega(n!^2 / n^{a+3})$. More precisely, the exact spectral gap is $1 - \\cos(\\pi/n) \\sim \\pi^2/(2n^2)$, and the canonical path bound is weaker by a factor of $\\Theta(n^{a+1} / n!^2)$.\n\n**Test:** Compute exact congestion for $n = 6, 7$ (feasible with optimized code) and fit the growth exponent. Compare with the exact spectral gap from representation theory (known to be the eigenvalue of the $(n-1)$-dimensional standard representation on the adjacent transposition generators).\n\n**Impact:** Understanding the exact congestion growth would reveal whether bubble-sort routing is inherently suboptimal or whether the canonical path method itself has structural limitations for $S_n$. This could motivate the search for better canonical paths (e.g., using insertion sort, merge sort, or representation-guided routing).\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (congestion definition), `Catalog/Bridges/Catalog/Pythagorean/CayleyExpander/SymmetricGroup.lean` (S_n generators).\n\n**Proof Strategy:** Use the Murnaghan\u2013Nakayama rule to compute the exact spectrum of the adjacency matrix of $\\text{Cay}(S_n, \\text{adj.\\ transpositions})$. Compare with the canonical path lower bound.\n\n**Domain Bridges:** Representation theory of symmetric groups, algebraic combinatorics, random matrix theory.\n\n**Lineage:** Extends the computational case study in `CanonicalPaths.lean` with exact spectral analysis.\n\n**Ambition:** Solid extension \u2014 connects formal combinatorial bounds to exact algebraic results.\n\n**\"The key insight is...\"** that the gap between canonical path bounds and exact spectral gaps quantifies the *information loss* in the routing abstraction, revealing which structural features of the group the method fails to exploit.\n\n**\"Why now?\"** The exact congestion data for $S_3, S_4, S_5$ reveals unexpectedly fast growth, motivating representation-theoretic analysis.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c8e335c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T17:12:57.478975+00:00"
-  },
-  {
-    "id": "fd_1175",
-    "title": "Direction 3: Algorithmic Discovery of Optimal Routing Certificates",
-    "description": "**Conjecture:** For any finite Cayley graph $(G, S)$, the minimum congestion over all canonical path systems is achieved by a path system that can be computed in polynomial time in $|G|$. Furthermore, this minimum congestion $\\kappa^*$ satisfies $\\kappa^* = \\Theta(|G|/\\lambda^*)$ where $\\lambda^*$ is the spectral gap.\n\n**Test:** Implement a linear programming relaxation for the minimum congestion problem: minimize $\\kappa$ subject to the constraint that for each pair $(x,y)$, there exists a path from $x$ to $y$ using generators in $S$, and each directed edge is used by at most $\\kappa$ paths. Solve for $S_3, S_4, S_5$ and compare with bubble-sort congestion.\n\n**Impact:** If optimal routing can be computed efficiently, this would create an automated certified expansion oracle: given a group and generators, output a machine-verified spectral gap bound. This would be transformative for applications in cryptography and MCMC.\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (congestion framework), `Pythagorean/CayleyExpander/Defs.lean` (canonical path data structure).\n\n**Proof Strategy:** Formulate routing as a multicommodity flow problem. Use the max-flow min-cut duality to relate optimal congestion to graph connectivity. Prove that the LP relaxation has an integral optimum for Cayley graphs (exploiting group symmetry).\n\n**Domain Bridges:** Optimization (multicommodity flow), computational complexity, network design.\n\n**Lineage:** Builds on the `CongestionBound` predicate in `CanonicalPaths.lean`.\n\n**Ambition:** Grand challenge \u2014 would make spectral gap certification fully algorithmic.\n\n**\"The key insight is...\"** that the canonical path congestion problem is a multicommodity flow problem on the Cayley graph, and group symmetry may reduce it to a flow problem on the quotient.\n\n**\"Why now?\"** The formal framework separates the analytic inequality (verified) from the congestion certificate (to be discovered), creating a clean interface for algorithmic optimization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c8e335c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T17:12:57.516194+00:00"
-  },
-  {
-    "id": "fd_1176",
-    "title": "Direction 4: High-Dimensional Expansion via Canonical Cochains",
-    "description": "**Conjecture:** The canonical path method extends to simplicial complexes: for a $d$-dimensional simplicial complex $X$ with vertex set $V$, one can define \"canonical $k$-chains\" routing $k$-cycles to $k$-boundaries, with congestion controlling the $(k+1)$-th spectral gap of the Hodge Laplacian.\n\n**Test:** Define canonical 1-chains for the complete 2-complex on 5 vertices (the boundary of a 4-simplex). Compute congestion and compare with the known spectral gap of the Hodge Laplacian.\n\n**Impact:** High-dimensional expansion is a frontier topic with applications to locally testable codes, quantum LDPC codes, and topological data analysis. A canonical cochain method would provide the first combinatorial certification of high-dimensional spectral gaps.\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (1-dimensional case), `Pythagorean/CayleyExpander/Defs.lean` (Dirichlet energy definitions).\n\n**Proof Strategy:** Define a higher-dimensional Dirichlet energy for $k$-forms on a simplicial complex. Generalize the telescoping identity to $k$-chains. Prove a Cauchy\u2013Schwarz bound on cochain energy. Assemble into a Hodge-theoretic Poincar\u00e9 inequality.\n\n**Domain Bridges:** Algebraic topology (cohomology, Hodge theory), quantum error correction, extremal combinatorics.\n\n**Lineage:** Generalizes `variance_le_congestion_mul_energy` from 0-forms on graphs to $k$-forms on complexes.\n\n**Ambition:** Grand challenge \u2014 would open a new direction in formal high-dimensional combinatorics.\n\n**\"The key insight is...\"** that canonical paths are 1-dimensional chains solving a 0-dimensional routing problem, and the same structure exists in every dimension.\n\n**\"Why now?\"** The formal 1-dimensional framework provides a template for higher-dimensional generalization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c8e335c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T17:12:57.552181+00:00"
-  },
-  {
-    "id": "fd_1177",
-    "title": "Direction 5: Effective Resistance and Electrical Flow Certificates",
-    "description": "**Conjecture:** The canonical path congestion $\\kappa$ is related to the effective resistance of the Cayley graph by $\\kappa \\geq |G| \\cdot \\max_{x,y} R_{\\text{eff}}(x,y)$, where $R_{\\text{eff}}$ is the effective resistance between vertices $x$ and $y$ in the electrical network interpretation of the graph.\n\n**Test:** Compute exact effective resistances for $\\text{Cay}(S_3, \\text{adj.\\ trans.})$, $\\text{Cay}(S_4, \\text{adj.\\ trans.})$, and compare with canonical path congestion. Verify the conjectured inequality numerically.\n\n**Impact:** This would connect the combinatorial canonical path method to the rich theory of electrical networks, effective resistance, and random walks. It could provide tighter bounds by using electrical flow theory (which finds optimal flows automatically).\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (congestion), `Pythagorean/CayleyExpander/SpectralGap.lean` (Dirichlet energy = dissipation).\n\n**Proof Strategy:** Interpret canonical paths as unit flows from $x$ to $y$. The energy of a flow bounds effective resistance from above (by Thomson's principle). The congestion of the canonical path system bounds the total energy of all flows. Combine to relate congestion to effective resistance.\n\n**Domain Bridges:** Electrical network theory, potential theory, random walk hitting times.\n\n**Lineage:** Extends the Dirichlet energy interpretation in `CanonicalPaths.lean` to the full electrical network framework.\n\n**Ambition:** Solid extension \u2014 connects two well-established theories in a formally verified way.\n\n**\"The key insight is...\"** that canonical paths define explicit current flows, and the congestion bound is a bound on the maximum current through any wire\u2014directly connecting to Thomson's principle.\n\n**\"Why now?\"** The formal Dirichlet energy framework provides the foundation for electrical network interpretations.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c8e335c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T17:12:57.587340+00:00"
   },
   {
     "id": "seed_013",
@@ -2280,6 +2280,65 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T16:01:35.746391+00:00"
   },
   {
+    "id": "fd_1178",
+    "title": "Direction 1: Full Lorentzianity of DPP Homogeneous Components",
+    "description": "**Conjecture**: For any PSD matrix K and degree d \u2264 n, the degree-d homogeneous component of the DPP partition function is a Br\u00e4nd\u00e9n\u2013Huh Lorentzian polynomial.\n\n**Test**: For random PSD matrices K with n \u2264 10 and all d \u2264 n, compute the degree-d component, extract all (d\u22122)-fold directional derivatives, and verify that each resulting degree-2 polynomial has Hessian with at most one positive eigenvalue. A single failure disproves the conjecture.\n\n**Impact**: Full Lorentzianity would establish ultra log-concavity of the coefficient sequences and k-wise Rayleigh inequalities for DPPs, going far beyond pairwise negative dependence. It would provide a complete Hodge-theoretic explanation for fermionic repulsion.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (Br\u00e4nd\u00e9n\u2013Huh characterization, recursive spectral certificates), `Pythagorean/DPPLorentzian.lean` (DPP definitions and Fischer inequality).\n\n**Proof Strategy**: Strategy B (stability-first route). Prove real stability of dppPartitionFunction for PSD K using the classical result that det(A + diag(z)) is stable when A is PSD. Then invoke the Br\u00e4nd\u00e9n\u2013Huh theorem: stable homogeneous polynomials with nonneg coefficients are Lorentzian. This avoids direct Hessian computation.\n\n**Domain Bridges**: Algebraic combinatorics \u2194 Probability \u2194 Statistical physics.\n\n**Lineage**: Extends Theorems 3.1\u20133.4 of the current formalization.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Grand Challenge). Resolving this would be a significant formalization achievement, as even the informal proof requires substantial real-algebraic geometry.\n\n**The key insight is** that DPP partition functions are *real stable* (all roots lie in the open upper half-plane when viewed as multivariate polynomials), and the Br\u00e4nd\u00e9n\u2013Huh theorem provides a clean path from stability to Lorentzianity.\n\n**Why now?** The recursive spectral certificate for Lorentzianity is already formalized in `LorentzianRecognitionComplete.lean`, and the principal minor expansion is proved. The missing piece is the stability argument, which requires formalizing half-plane root containment for determinantal polynomials.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c89156c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:48:46.624125+00:00"
+  },
+  {
+    "id": "fd_1179",
+    "title": "Direction 2: Quantum Entanglement Entropy via DPP-Lorentzian Structure",
+    "description": "**Conjecture**: For a system of n free fermions with single-particle density matrix K (PSD, eigenvalues in [0,1]), the entanglement entropy of a subsystem A \u2286 [n] satisfies bounds derivable from the Lorentzian structure of the DPP partition function restricted to A.\n\n**Test**: For random fermionic states (PSD K with eigenvalues in [0,1]) and subsystems A of size |A| \u2264 8, compute the entanglement entropy S_A = \u2212\u03a3_k [\u03bb_k log \u03bb_k + (1\u2212\u03bb_k)log(1\u2212\u03bb_k)] (where \u03bb_k are eigenvalues of K_A) and compare with bounds derived from the Lorentzian coefficient inequalities of the degree-|A| homogeneous component.\n\n**Impact**: Would connect Lorentzian polynomial theory to quantum information theory, providing geometric constraints on entanglement structure. Could yield new area-law or volume-law bounds for free-fermion systems.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signatures), `Pythagorean/DPPLorentzian.lean` (spectral bridge theorem).\n\n**Proof Strategy**: Use the spectral decomposition K_A = U_A \u039b_A U_A^T. The entanglement entropy is a function of eigenvalues of K_A. The Lorentzian inequalities constrain the elementary symmetric functions of these eigenvalues (which are the homogeneous component sums), and Newton's inequalities relate these to individual eigenvalues.\n\n**Domain Bridges**: Quantum information \u2194 Algebraic combinatorics \u2194 Statistical mechanics.\n\n**Lineage**: Extends the spectral bridge (Theorem 3.4) into the quantum domain.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Grand Challenge / Paradigm-Shifting). If Lorentzian structure constrains entanglement, it would open an entirely new connection between Hodge theory and quantum information.\n\n**The key insight is** that the entanglement entropy of free fermions is entirely determined by the eigenvalues of the reduced density matrix K_A, and these eigenvalues are constrained by the same Lorentzian inequalities that govern the DPP partition function.\n\n**Why now?** Free-fermion entanglement is well-understood physically but lacks a connection to algebraic combinatorics. The DPP-Lorentzian bridge we've established is exactly the missing link.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c89156c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:48:46.660643+00:00"
+  },
+  {
+    "id": "fd_1180",
+    "title": "Direction 3: Matroid Hodge Theory and DPP Support Exchange",
+    "description": "**Conjecture**: The support of the DPP partition function (the collection of subsets S with det(K_S) > 0) satisfies the symmetric matroid exchange property, and this exchange property is formally equivalent to the Lorentzian support condition of Br\u00e4nd\u00e9n\u2013Huh.\n\n**Test**: For random PSD matrices K, compute the support set {S : det(K_S) > \u03b5} for small \u03b5 > 0. Verify the symmetric exchange property: for any S, T in the support with |S| = |T| and i \u2208 S \\ T, there exists j \u2208 T \\ S such that both (S \u2212 i + j) and (T + i \u2212 j) are in the support.\n\n**Impact**: Would formalize the connection between DPPs and matroid theory, showing that DPP supports are matroid bases. Combined with Lorentzianity, this would give a complete matroid-Hodge-theoretic characterization of DPP polynomials.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange definition), `Pythagorean/DPPLorentzian.lean` (DPP partition function).\n\n**Proof Strategy**: For PSD K of rank r, the support of det(K_S) for |S| = d \u2264 r consists of all d-element subsets whose rows in a Cholesky factor B (where K = B^T B) are linearly independent. This is exactly the collection of independent sets of the linear matroid of B, which satisfies the exchange property by definition.\n\n**Domain Bridges**: Matroid theory \u2194 Linear algebra \u2194 Probability.\n\n**Lineage**: Extends the principal minor nonnegativity theorem and connects to the existing SupportSatisfiesExchange definition.\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 (Solid Extension). The matroid structure is classical; the novelty is the formal verification and connection to Lorentzian certificates.\n\n**The key insight is** that the support of a DPP polynomial is a matroid, and matroids are exactly the combinatorial structures whose generating polynomials can be Lorentzian.\n\n**Why now?** The matroid exchange property is already defined in `LorentzianRecognitionComplete.lean` and the DPP definitions are in place. The missing formal connection is the Cholesky/rank factorization argument.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c89156c3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T17:48:46.696888+00:00"
+  },
+  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2292,20 +2351,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
-  },
-  {
-    "id": "fd_1172",
-    "title": "Catalog References:",
-    "description": "`LorentzianRecognitionComplete.lean` (recognition criterion), `LorentzianMinorClosure.lean` (decomposition)",
-    "domains": [
-      "Physics"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8e8af4e3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T16:36:52.315693+00:00"
   },
   {
     "id": "seed_007",
