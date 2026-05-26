@@ -698,10 +698,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "e8f8d5e4",
-    "consumed_by_exp_id": "16a503d2",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T20:35:38.492371+00:00"
   },
   {
