@@ -363,10 +363,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "357e082f",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:11:10.263299+00:00"
   },
   {
@@ -1522,25 +1522,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T22:59:06.937020+00:00"
   },
   {
-    "id": "fd_0980",
-    "title": "Direction 1: Deletion-Contraction Duality for Polynomial Supports",
-    "description": "**Conjecture:** Define *support deletion* as D_i(S) := {m \u2208 S : m_i = 0} (the restriction to vectors with zero i-th coordinate). If S satisfies the exchange property, then D_i(S) satisfies the exchange property, and there is a formal deletion-contraction recurrence for a support-level Tutte polynomial that encodes the contraction hierarchy.\n\n**Test:** Formalize support deletion in Lean. Check the exchange property computationally for all deletions of M-convex subsets of the degree-\u22646 simplex on \u22645 variables. Formalize the Tutte-type recurrence and verify it for uniform matroids and graphic matroids.\n\n**Impact:** This would complete the matroid-theoretic toolkit at the support level, enabling inductive proofs via deletion-contraction for any polynomial invariant that factors through the support. Combined with the contraction theorem, it would give a full minor theory for M-convex polynomial supports.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (contraction theorem), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (exchange definition).\n\n**Proof Strategy:** Direct case analysis, analogous to the contraction proof. For deletion, the key is that removing vectors with m_i = 0 preserves exchange because the exchange witnesses either both have m_i = 0 (and hence remain) or the situation reduces to a previously handled case.\n\n**Domain Bridges:** Matroid theory \u2194 algebraic combinatorics \u2194 knot theory (via Tutte\u2013Jones connections).\n\n**Lineage:** Extends the contraction theorem to a full minor framework.\n\n**Ambition:** Solid extension \u2014 the conjecture is very likely true and fills an obvious gap.\n\n**The key insight is** that deletion corresponds to evaluation (setting x\u1d62 = 0) while contraction corresponds to differentiation, and both preserve the matroidal skeleton.\n\n**Why now?** The contraction half is formally proved. The deletion half should follow by similar techniques, and together they would complete the combinatorial dictionary.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "abb48be4",
-    "timestamp": "2026-05-25T23:33:15.512838+00:00"
-  },
-  {
     "id": "fd_0981",
     "title": "Direction 2: Valuated M-Convexity and Coefficient Transport",
     "description": "**Conjecture:** Define a *valuated exchange property* that tracks not just support membership but coefficient values: for \u03b1, \u03b2 \u2208 supp(p) with \u03b1\u1d62 > \u03b2\u1d62, the exchange witness j satisfies a quantitative bound relating the coefficients of the four involved monomials. This valuated exchange should be preserved under differentiation (with appropriate rescaling).\n\n**Test:** Formalize a valuated exchange predicate. Test it on the basis-generating polynomials of uniform matroids with explicit coefficient weights. Prove or disprove preservation for the simplest nontrivial case (n=3, d=2).\n\n**Impact:** This would bridge from combinatorial support (boolean membership) to analytic coefficient behavior (quantitative inequalities), connecting the support-level theorem to log-concavity and ultra-log-concavity of coefficients along rays.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (coeff_pderiv_eq), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signature).\n\n**Proof Strategy:** Use the coefficient formula [\u2202p/\u2202x\u1d62]_m = (m\u1d62+1)\u00b7[p]_{m+e\u1d62} to transport coefficient inequalities. The (m\u1d62+1) factor creates a predictable rescaling that should preserve the valuated exchange up to this factor.\n\n**Domain Bridges:** Discrete convex analysis (Murota's valuated matroids) \u2194 algebraic geometry (intersection theory) \u2194 combinatorial optimization (submodular function minimization).\n\n**Lineage:** Deepens the contraction theorem from topology (support) to geometry (valuated support).\n\n**Ambition:** Solid extension \u2014 the coefficient formula makes the rescaling explicit.\n\n**The key insight is** that the coefficient of the derivative at m is a simple multiplicative transform of the coefficient at m+e\u1d62, so quantitative exchange bounds should transport with controlled distortion.\n\n**Why now?** The coefficient formula is formally proved, and the qualitative (support-level) result is established. The quantitative upgrade is the natural next step.\n\n---",
@@ -1731,10 +1712,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "eb4b8f41",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba580866",
     "timestamp": "2026-05-26T01:21:04.649417+00:00"
   },
   {
@@ -1770,7 +1751,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "5e0902bf",
@@ -1898,6 +1879,26 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
+  },
+  {
+    "id": "fd_1021",
+    "title": "Direction 2: Explicit Poincar\u00e9 Constant and Exponential Variance Decay",
+    "description": "**Conjecture**: For the $S_n$ walk with adjacent transpositions and long cycle, there exists $c > 0$ such that for all mean-zero $f : S_n \\to \\mathbb{R}$:\n$$\n\\text{Var}(f) \\leq \\frac{c \\cdot n^2}{|S|} \\cdot E_S(f)\n$$\nwhere $E_S(f)$ is the Dirichlet energy. Equivalently, the spectral gap satisfies $\\gamma \\geq |S|/(c \\cdot n^2)$.\n\n**Test**: Compute the exact spectral gap for $n = 3, \\ldots, 8$ and verify $\\gamma \\cdot n^2 / |S|$ converges to a constant. For $n = 3$: gap \u2248 0.5; for $n = 6$: gap \u2248 0.134. Check whether $\\gamma \\cdot n^2$ stabilizes.\n\n**Impact**: Would upgrade the variance decay theorem from $\\text{Var}(A^t f) \\leq \\text{Var}(f)$ to the exponential form $\\text{Var}(A^t f) \\leq (1 - c/n^2)^{2t} \\cdot \\text{Var}(f)$, giving explicit relaxation rates.\n\n**Catalog References**: `Pythagorean/CayleyExpander/Defs.lean` (Dirichlet energy, `CanonicalPathData`), `Pythagorean/CayleyExpander/SpectralGap.lean` (variance-energy relation, Poincar\u00e9 inequality).\n\n**Proof Strategy**: \n1. Construct explicit canonical paths in $\\text{Cay}(S_n, S)$ using the bubble sort + rotation algorithm.\n2. Bound the congestion: each edge carries at most $C \\cdot n^2 \\cdot (n-2)!$ paths.\n3. Apply the Poincar\u00e9 comparison: $\\gamma \\geq |S| / (\\text{congestion} \\cdot \\text{max\\_length})$.\n4. Formalize using `CanonicalPathData` and `explicitGapBound` from `Defs.lean`.\n\n**Domain Bridges**: Poincar\u00e9 inequality \u2192 functional inequalities \u2192 log-Sobolev \u2192 hypercontractivity \u2192 quantum information.\n\n**Lineage**: Builds directly on the catalog's `CanonicalPathData` structure and `explicitGapBound` definition.\n\n**Ambition**: Solid extension \u2014 achievable with existing infrastructure.\n\n**The key insight is** that the long cycle reduces canonical path lengths from $O(n^2)$ to $O(n)$ (sort first, then rotate), and the congestion is controlled by the symmetry of the group action.\n\n**Why now?** The `CanonicalPathData` structure is already defined in the catalog with all necessary fields (paths, length bounds, congestion bounds). Only the concrete instantiation for $S_n$ with the specific generators is needed.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4f520a5f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T01:57:00.404929+00:00"
   },
   {
     "id": "seed_013",
@@ -2323,14 +2324,32 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T01:57:00.371515+00:00"
   },
   {
-    "id": "fd_1021",
-    "title": "Direction 2: Explicit Poincar\u00e9 Constant and Exponential Variance Decay",
-    "description": "**Conjecture**: For the $S_n$ walk with adjacent transpositions and long cycle, there exists $c > 0$ such that for all mean-zero $f : S_n \\to \\mathbb{R}$:\n$$\n\\text{Var}(f) \\leq \\frac{c \\cdot n^2}{|S|} \\cdot E_S(f)\n$$\nwhere $E_S(f)$ is the Dirichlet energy. Equivalently, the spectral gap satisfies $\\gamma \\geq |S|/(c \\cdot n^2)$.\n\n**Test**: Compute the exact spectral gap for $n = 3, \\ldots, 8$ and verify $\\gamma \\cdot n^2 / |S|$ converges to a constant. For $n = 3$: gap \u2248 0.5; for $n = 6$: gap \u2248 0.134. Check whether $\\gamma \\cdot n^2$ stabilizes.\n\n**Impact**: Would upgrade the variance decay theorem from $\\text{Var}(A^t f) \\leq \\text{Var}(f)$ to the exponential form $\\text{Var}(A^t f) \\leq (1 - c/n^2)^{2t} \\cdot \\text{Var}(f)$, giving explicit relaxation rates.\n\n**Catalog References**: `Pythagorean/CayleyExpander/Defs.lean` (Dirichlet energy, `CanonicalPathData`), `Pythagorean/CayleyExpander/SpectralGap.lean` (variance-energy relation, Poincar\u00e9 inequality).\n\n**Proof Strategy**: \n1. Construct explicit canonical paths in $\\text{Cay}(S_n, S)$ using the bubble sort + rotation algorithm.\n2. Bound the congestion: each edge carries at most $C \\cdot n^2 \\cdot (n-2)!$ paths.\n3. Apply the Poincar\u00e9 comparison: $\\gamma \\geq |S| / (\\text{congestion} \\cdot \\text{max\\_length})$.\n4. Formalize using `CanonicalPathData` and `explicitGapBound` from `Defs.lean`.\n\n**Domain Bridges**: Poincar\u00e9 inequality \u2192 functional inequalities \u2192 log-Sobolev \u2192 hypercontractivity \u2192 quantum information.\n\n**Lineage**: Builds directly on the catalog's `CanonicalPathData` structure and `explicitGapBound` definition.\n\n**Ambition**: Solid extension \u2014 achievable with existing infrastructure.\n\n**The key insight is** that the long cycle reduces canonical path lengths from $O(n^2)$ to $O(n)$ (sort first, then rotate), and the congestion is controlled by the symmetry of the group action.\n\n**Why now?** The `CanonicalPathData` structure is already defined in the catalog with all necessary fields (paths, length bounds, congestion bounds). Only the concrete instantiation for $S_n$ with the specific generators is needed.\n\n---",
+    "id": "fd_1025",
+    "title": "Direction 1: Universal Support-Tutte Polynomial",
+    "description": "**Conjecture:** Any support invariant F satisfying (i) multiplicativity on disjoint-coordinate direct sums and (ii) a deletion\u2013contraction recurrence on M-convex supports factors uniquely through a universal support-Tutte polynomial T_S(x, y), i.e., F = \u03c6 \u2218 T_S for some ring homomorphism \u03c6.\n\n**The key insight is** that the deletion\u2013contraction recurrence on supports, combined with the loop/coloop trichotomy, generates a free algebraic structure indexed by \"support activities\" analogous to Tutte's internal/external activities. The universality would follow from showing that every M-convex support admits a canonical activity ordering.\n\n**Why now?** The minor closure theorems (Theorems 3.1\u20133.4 in `Catalog/Pythagorean/SupportMinorTheory.lean`) guarantee that the recurrence is well-defined on the class of M-convex supports. This was the missing structural prerequisite.\n\n**Test:** For all M-convex subsets of the degree-\u22645 simplex on 4 variables, compute the support-Tutte polynomial using two different coordinate orderings. If the values agree in all cases, universality is strongly supported. A single disagreement would disprove universality and redirect toward a weaker theory (e.g., universality only for matroid-induced supports).\n\n**Impact:** A universal support-Tutte polynomial would be a new algebraic invariant of M-convex sets, generalizing the classical Tutte polynomial and potentially capturing information invisible to matroid Tutte theory (e.g., degree information from non-{0,1} supports).\n\n**Catalog References:** `Catalog/Pythagorean/SupportMinorTheory.lean` (SupportTutteInvariant structure, minor_step_card_le).\n\n**Proof Strategy:** \n1. Define support activities via a total ordering on coordinates, analogous to Tutte (1954).\n2. Show the activity-based expansion agrees with the deletion\u2013contraction recurrence.\n3. Prove uniqueness by induction on support cardinality.\n\n**Domain Bridges:** Statistical physics (Potts model partition functions), knot theory (Jones polynomial via Tutte specialization).\n\n**Lineage:** Direct extension of Theorem 3.4 (exchange_of_minor) in the current catalog.\n\n**Ambition:** Grand challenge \u2014 would establish a new universal algebraic invariant.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "abb48be4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T02:33:38.976648+00:00"
+  },
+  {
+    "id": "fd_1026",
+    "title": "Direction 2: Lorentzian Minor Closure Conjecture",
+    "description": "**Conjecture:** If S is the support of a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh), then every minor of S is realizable as the support of a Lorentzian polynomial.\n\n**The key insight is** that Lorentzianity is a stronger condition than exchange (it additionally requires Hessian signature conditions on all degree-2 derivatives). The conjecture posits that this stronger condition is also minor-closed. If true, it would mean Lorentzian polynomials form a combinatorial species with both algebraic and geometric structure preserved under minors.\n\n**Why now?** We have proved that exchange (the combinatorial shadow of Lorentzianity) is minor-closed. The remaining question is whether the analytic/geometric conditions are also preserved. Computational evidence from `demo.py` shows no counterexample for degree \u2264 6 on \u2264 5 variables.\n\n**Test:** \n1. Enumerate all minors of supports of e_k(x_1,...,x_n) for n \u2264 7, k \u2264 4.\n2. For each minor, attempt to construct a Lorentzian polynomial with that support using the recognition criteria from `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`.\n3. Search for a counterexample: a minor support that satisfies exchange but admits no Lorentzian realization.\n\n**Impact:** Would establish Lorentzian polynomials as a minor-closed combinatorial species, enabling inductive classification programs and connecting Hodge theory to matroid-type decomposition.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange, IsBrandenHuhLorentzian), `Catalog/Pythagorean/SupportMinorTheory.lean` (exchange_of_minor).\n\n**Proof Strategy:** \n1. Show deletion preserves Lorentzianity by analyzing Hessian signature under variable restriction.\n2. Show contraction preserves Lorentzianity by analyzing the effect on quadratic forms.\n3. Use the recursive spectral certificate (recursivelyLorentzian_iff_brandenHuh) to reduce to checking degree-2 leaves.\n\n**Domain Bridges:** Algebraic geometry (Hodge index theorem), discrete convex analysis (M-convex optimization).\n\n**Lineage:** Builds on both the minor theory (this paper) and the Lorentzian recognition (LorentzianRecognitionComplete.lean).\n\n**Ambition:** Grand challenge \u2014 would unify Hodge theory with matroid minor theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
       "Physics",
       "Bridges",
       "Logic"
@@ -2338,9 +2357,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4f520a5f",
+    "source_exp_id": "abb48be4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T01:57:00.404929+00:00"
+    "timestamp": "2026-05-26T02:33:39.011759+00:00"
   },
   {
     "id": "seed_032",

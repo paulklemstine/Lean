@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1684 of the highest-quality
+A curated collection of 1693 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1684
+Total files: 1693
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -58,9 +58,11 @@ import FINAL.Algebra.Depth
 import FINAL.Algebra.Deriv
 import FINAL.Algebra.Derivability
 import FINAL.Algebra.Derivative
+import FINAL.Algebra.DescartesInvariance
 import FINAL.Algebra.DescentAlgebra
 import FINAL.Algebra.DifferenceSetSymmetry
 import FINAL.Algebra.Dim2
+import FINAL.Algebra.Distance
 import FINAL.Algebra.DruzkowskiTheory
 import FINAL.Algebra.ECDLP
 import FINAL.Algebra.EMLCongruenceHilbert
@@ -80,6 +82,7 @@ import FINAL.Algebra.FiniteDimensional
 import FINAL.Algebra.FluidGravity
 import FINAL.Algebra.Foundation
 import FINAL.Algebra.Foundations
+import FINAL.Algebra.Foundations_2
 import FINAL.Algebra.Freivalds
 import FINAL.Algebra.FreivaldsBridge
 import FINAL.Algebra.FreivaldsSchwartzZippel
@@ -114,6 +117,7 @@ import FINAL.Algebra.InvertedTreeV3Research
 import FINAL.Algebra.KaroubiIdempotent
 import FINAL.Algebra.KernelCardinality
 import FINAL.Algebra.Langlands
+import FINAL.Algebra.Lattice
 import FINAL.Algebra.LatticeTreeDuality
 import FINAL.Algebra.LightConeTheory
 import FINAL.Algebra.LightDarkPrimes
@@ -128,6 +132,7 @@ import FINAL.Algebra.MetaOracleCore
 import FINAL.Algebra.MetaOracleNextSteps
 import FINAL.Algebra.MetaOraclePythagoreanDeep
 import FINAL.Algebra.MirrorQuantum
+import FINAL.Algebra.MobiusTransport
 import FINAL.Algebra.Modular
 import FINAL.Algebra.MonomialObstruction
 import FINAL.Algebra.MontgomeryPairCorrelation
@@ -137,10 +142,12 @@ import FINAL.Algebra.NewExplorations
 import FINAL.Algebra.NewResults
 import FINAL.Algebra.NewtonIdempotent
 import FINAL.Algebra.NilpotenceTheory
+import FINAL.Algebra.Nilpotent
 import FINAL.Algebra.Normalization
 import FINAL.Algebra.NuclearAlgebra
 import FINAL.Algebra.NullstellensatzPIT
 import FINAL.Algebra.NumberLineOracle
+import FINAL.Algebra.Observable
 import FINAL.Algebra.OpenDirections
 import FINAL.Algebra.OpenQuestions
 import FINAL.Algebra.OpenQuestions_2
@@ -205,6 +212,7 @@ import FINAL.Algebra.StandardRep
 import FINAL.Algebra.StereographicBridge
 import FINAL.Algebra.StrangeLight
 import FINAL.Algebra.StrictUpperTriangular
+import FINAL.Algebra.Surface
 import FINAL.Algebra.Synthesis
 import FINAL.Algebra.Theorems
 import FINAL.Algebra.ThreeDreams
@@ -1403,6 +1411,7 @@ import FINAL.Pythagorean.StrongNormBisimulation
 import FINAL.Pythagorean.SubgroupPressureConcentration
 import FINAL.Pythagorean.SubstAlgebra
 import FINAL.Pythagorean.SunflowerPruning
+import FINAL.Pythagorean.SupportMinorTheory
 import FINAL.Pythagorean.TensorSortedRewrite
 import FINAL.Pythagorean.Theorems
 import FINAL.Pythagorean.TorsionBarcodeStability

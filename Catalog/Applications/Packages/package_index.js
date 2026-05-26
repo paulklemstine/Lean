@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Discrete Convex Analysis",
     "date": "2026-05-26T02:33:36Z",
     "exp_id": "abb48be4",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7277349606299213,
+    "quality": "substantial"
   },
   {
     "filename": "direction_5_operadic_rewriting_and_homotopical_com.json",
@@ -1437,8 +1437,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-26T02:33:36Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7277349606299213,
+      "quality": "substantial"
     }
   ],
   "edges": [
