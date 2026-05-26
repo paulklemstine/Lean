@@ -66,9 +66,9 @@
 
         if (graphNodes.length === 0) return;
 
-        // Assign package numbers based on date-desc order
+        // Assign package numbers based on date-asc order (oldest = 1)
         if (window.PACKAGE_INDEX) {
-            const byDate = [...window.PACKAGE_INDEX].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+            const byDate = [...window.PACKAGE_INDEX].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
             const numMap = {};
             byDate.forEach((pkg, i) => { numMap[pkg.filename.replace('.json', '')] = i + 1; });
             graphNodes.forEach(n => { n.pkgNum = numMap[n.id] || 0; });

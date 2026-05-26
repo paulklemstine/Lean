@@ -127,10 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Build a stable numbering map: assign numbers based on date-desc order of full PACKAGE_INDEX
+    // Build a stable numbering map: assign numbers based on date-asc order of full PACKAGE_INDEX
     const pkgNumberMap = {};
     if (window.Aether.packages) {
-        const byDate = [...window.Aether.packages].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+        const byDate = [...window.Aether.packages].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
         byDate.forEach((pkg, i) => { pkgNumberMap[pkg.filename] = i + 1; });
     }
 
