@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Persistence Theory / Topological Data Analysis",
     "date": "2026-05-26T04:17:54Z",
     "exp_id": "000321e6",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7313913151506497,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_spectral_tropical_stability__from_conj.json",
@@ -1661,8 +1661,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-26T04:17:54Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7313913151506497,
+      "quality": "substantial"
     }
   ],
   "edges": [

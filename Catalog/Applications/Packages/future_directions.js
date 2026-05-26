@@ -192,10 +192,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "fd24faba",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -213,10 +213,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "b24e9482",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -401,10 +401,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "92e3853a",
-    "consumed_by_exp_id": "49a54abb",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:08:48.881853+00:00"
   },
   {
@@ -851,10 +851,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65ed3803",
     "timestamp": "2026-05-25T19:29:17.982054+00:00"
   },
   {
@@ -1199,10 +1199,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "db7ef9c7",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5726bd2a",
     "timestamp": "2026-05-25T21:51:37.203392+00:00"
   },
   {
@@ -1579,27 +1579,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "abf333bc",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T00:07:30.309357+00:00"
-  },
-  {
-    "id": "fd_0995",
-    "title": "Direction 1: Spectral Tropical Stability \u2014 From Conjecture to Theorem",
-    "description": "**Conjecture:** For a Vietoris\u2013Rips filtration F from a finite point cloud, let \u03bb* = min_i \u03bb\u2082(F_i) be the minimum Fiedler eigenvalue across connected stages. Then for metric perturbations of size \u03b5:\n\n$$d_{tb}(F, \\tilde{F}; N) \\leq C \\cdot \\varepsilon / \\lambda_*$$\n\nfor a dimension-dependent constant C.\n\n**Test:** Generate families of point clouds with controlled algebraic connectivity (e.g., by varying cluster separation). Measure the empirical constant C(d,n) across dimensions d and point counts n. Check whether the 1/\u03bb* scaling holds, or whether a different power law (e.g., 1/\u03bb*^\u03b1) provides a better fit.\n\n**Impact:** A proven spectral stability bound would bridge tropical TDA to spectral graph theory, enabling practitioners to predict barcode stability from Laplacian eigenvalues without computing the barcode under perturbation. This would make the tropical barcode a certified invariant for robustness-critical applications.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean` (graphLap, genus_nonneg_of_connected); `Catalog/Pythagorean/TropicalPersistentHomology.lean` (tropNullity_stable_under_edgeSymmDiff, tropBarcodeDist_le_edgePerturbation).\n\n**Proof Strategy:** Bound the edge symmetric difference |E(F_i) \u0394 E(F\u0303_i)| in terms of \u03b5 and the geometry of the point cloud, then use Cheeger's inequality to relate \u03bb\u2082 to isoperimetric properties that control edge sensitivity.\n\n**Domain Bridges:** Spectral graph theory \u2194 TDA \u2194 metric geometry.\n\n**Lineage:** Extends tropNullity_stable_under_edgeSymmDiff with a spectral refinement.\n\n**Ambition:** Grand challenge \u2014 would unify spectral and topological persistence theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "325d9cdd",
-    "consumed_by_exp_id": "86601194",
-    "timestamp": "2026-05-26T00:40:25.919648+00:00"
   },
   {
     "id": "fd_1010",
