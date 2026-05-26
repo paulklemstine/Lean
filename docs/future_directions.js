@@ -494,25 +494,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:14:59.812468+00:00"
   },
   {
-    "id": "fd_0897",
-    "title": "Direction 4: Large Deviation Principles for Generation",
-    "description": "**Conjecture:** The number of nongenerating pairs in $G^2$ satisfies a large deviation principle with rate function given by the Legendre transform of the log-pressure:\n$$\\Lambda^*(\\alpha) = \\sup_t \\{t\\alpha - \\log Z(t)\\}$$\nwhere $Z(t) = \\sum_H [G:H]^{-2t}$ is the pressure at \"inverse temperature\" $t$.\n\n**The key insight is** that the pressure at different \"temperatures\" $t$ (i.e., with exponent $-2t$ instead of $-2$) forms a family of partition functions whose Legendre transform controls the probability of atypical generation behavior.\n\n**Why now?** The product factorization theorem shows that pressure has the multiplicative structure needed for the G\u00e4rtner\u2013Ellis theorem, which gives large deviation principles from the log-moment generating function.\n\n**Test:** For $S_k^m$ with $m \\to \\infty$, compute $Z(t) = m \\cdot \\sum_M [S_k:M]^{-2t}$ for varying $t$ and verify the predicted rate function against Monte Carlo simulations.\n\n**Impact:** Would establish a complete probabilistic theory of random generation, going beyond first-moment bounds to exponential concentration.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (product factorization, free energy additivity)\n\n**Proof Strategy:** Define the generalized pressure $Z(t)$ and verify multiplicativity for product families. Apply the G\u00e4rtner\u2013Ellis theorem to the sequence of block-defect pressures. Verify the hypotheses (existence of the limit, differentiability of the log-moment generating function).\n\n**Domain Bridges:** Large deviation theory, probability theory, statistical mechanics (generalized ensembles).\n\n**Lineage:** Direct analytic extension of the free energy framework.\n\n**Ambition:** Solid extension with significant theoretical depth.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "bcd75759",
-    "timestamp": "2026-05-25T17:14:59.835069+00:00"
-  },
-  {
     "id": "fd_0916",
     "title": "Direction 2: Concentration and Universality of Tropical Critical Distributions",
     "description": "**Conjecture:** For G(n, p) with i.i.d. continuous edge weights on [0,1], the empirical cycle-birth measure \u03bc_G = (1/\u03b2\u2081) \u03a3 \u03b4_{t_i} converges in probability to a deterministic measure \u03bc_p as n \u2192 \u221e. Moreover, the limiting measure \u03bc_p has a density that exhibits a phase transition at p_c = 1/n, with qualitatively different behavior in subcritical and supercritical regimes.\n\n**Test:** (1) Simulate G(n, p=0.15) for n = 50, 100, 200, 500, 1000. Compute the Kolmogorov-Smirnov distance between empirical cycle-birth CDFs across independent trials. If concentration holds, KS distances should decrease as O(n^{-1/2}). (2) For the supercritical regime, fit the limiting density and test universality by varying the weight distribution (uniform, exponential, normal). Reject if the limiting density depends on the weight distribution beyond simple scaling.\n\n**Impact:** Would establish the first universality result connecting tropical geometry to random graph theory, analogous to the Wigner semicircle law in random matrix theory. Would make tropical Morse theory relevant to network science by providing theoretical predictions for real-world weighted networks.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `filtration_betti1_eq_cycleCount`, `filtration_rank_eq_mergeCount`\n\n**Proof Strategy:** Use the Azuma-Hoeffding inequality or McDiarmid's bounded differences inequality to show concentration of the cycle count process. The key step is bounding the effect of changing a single edge weight on the total cycle count, which changes by at most 1 (Lipschitz condition from the dichotomy theorem). For the limiting measure, use the relationship between cycle events and the structure of the giant component in G(n,p).\n\n**Domain Bridges:** Tropical geometry \u2192 probability theory \u2192 random graphs \u2192 statistical mechanics\n\n**Lineage:** Builds on the computational experiments in Section 5.4 of the research paper.\n\n**Ambition:** Grand challenge \u2014 proving universality of tropical critical distributions would be a major result in probabilistic combinatorics.\n\n**The key insight is** that the edge insertion dichotomy (Theorem 3.1) implies that the cycle count function is 1-Lipschitz in each edge weight, which is exactly the condition needed for concentration inequalities.\n\n**Why now?** The exact relationship between cycle events and connectivity (verified in this work) provides the first rigorous handle for probabilistic analysis. Previous approaches lacked the combinatorial precision to apply concentration tools.\n\n---",
@@ -1368,10 +1349,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d9e69258",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ce7826a",
     "timestamp": "2026-05-26T08:24:14.577634+00:00"
   },
   {
@@ -1432,24 +1413,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T09:39:15.046719+00:00"
   },
   {
-    "id": "fd_1097",
-    "title": "Direction 2: Exceptional Groups and Character-Sheaf Certificates",
-    "description": "**Conjecture:** For the exceptional group G\u2082(\ud835\udd3d_q), there exist regular toral elements s with character-ratio bound |\u03c7(s)/\u03c7(1)| \u2264 C/q where C depends only on the root system, not on q. Combined with the transference theorem, this yields uniform G\u2082 expanders.\n\n**Test:** For G\u2082(\ud835\udd3d_q) with q = 3, 5, 7 (|G\u2082(\ud835\udd3d\u2083)| = 6,048), compute all irreducible character values on regular semisimple elements of each torus type. Verify that the maximum character ratio is bounded by C/q for some fixed C. Falsified if the ratio grows or oscillates with q.\n\n**Impact:** The first explicit expander construction for an exceptional group, opening a bridge between exceptional Lie theory and combinatorial expansion.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (character_ratio_to_spectral_gap, cheeger_from_spectral_gap).\n\n**Proof Strategy:** G\u2082 has only 5 conjugacy classes of maximal tori. Enumerate them, compute Deligne\u2013Lusztig characters via Green functions, and extract explicit character-ratio bounds. The transference theorem applies directly. **The key insight is** that the small number of torus types in exceptional groups makes explicit enumeration feasible, unlike classical groups where the number grows with rank.\n\n**Why now?** The transference framework absorbs any character-ratio bound, and G\u2082 character tables are explicitly known (Chang, Ree 1974). The bottleneck was never the character theory but the lack of a clean consumption mechanism.\n\n**Domain Bridges:** Exceptional symmetries arise in string theory (E\u2088), materials science (icosahedral symmetry via H\u2083 \u2282 E\u2088), and the Langlands program.\n\n**Lineage:** Parallel to Direction 1, but exploring width (different group families) rather than depth (higher rank).\n\n**Ambition:** Grand challenge \u2014 first formalized exceptional-group expanders.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "21d69cc6",
-    "consumed_by_exp_id": "50190731",
-    "timestamp": "2026-05-26T09:39:15.086140+00:00"
-  },
-  {
     "id": "fd_1098",
     "title": "Direction 3: Hecke Operator Comparison and Building Spectra",
     "description": "**Conjecture:** The spectral gap of the Cayley graph Cay(Sp\u2084(\ud835\udd3d_q), S) with toral generators is within a constant factor of the spectral gap of the Hecke operator on the spherical building of Sp\u2084(\ud835\udd3d_q), with the comparison constant depending only on the degree |S|.\n\n**Test:** For q = 3, 5, 7, compute both the Cayley graph spectral gap and the building Hecke operator spectral gap. Plot the ratio gap_Cayley / gap_Hecke as a function of q. Falsified if the ratio diverges or tends to zero.\n\n**Impact:** Would connect finite-group expansion to the rich theory of automorphic forms on buildings, potentially yielding a finite-field analogue of the Ramanujan conjecture for Sp\u2084.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (spectralGapBound, sp4_uniform_gap_family).\n\n**Proof Strategy:** Model the Cayley graph operator as a perturbation of the building Hecke operator. Use the Iwahori decomposition to decompose the regular representation into building representations. Bound the perturbation via the character-ratio certificate. **The key insight is** that the building decomposition separates the \"geometric\" contribution (controlled by the building spectrum) from the \"arithmetic\" contribution (controlled by character ratios), and the certificate bounds the latter.\n\n**Why now?** The Bruhat\u2013Tits building of Sp\u2084 is a 2-dimensional simplicial complex whose spectral theory is well-studied (Cartwright\u2013Steger). The transference framework provides the missing link between building spectra and Cayley graph spectra.\n\n**Domain Bridges:** Building spectra connect to automorphic representations (number theory), high-dimensional expanders (combinatorics), and topological data analysis (applied mathematics).\n\n**Lineage:** Extends the spectral gap framework from graphs to higher-dimensional simplicial complexes.\n\n**Ambition:** Solid extension \u2014 proven feasibility from existing building-spectrum literature.\n\n---",
@@ -1462,10 +1425,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "21d69cc6",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad3dfe1b",
     "timestamp": "2026-05-26T09:39:15.120527+00:00"
   },
   {
@@ -1648,64 +1611,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:07:38.816025+00:00"
   },
   {
-    "id": "fd_1141",
-    "title": "Direction 1: Dixon Asymptotics via O'Nan\u2013Scott Classification",
-    "description": "**Conjecture**: For all n \u2265 5, the generating pair probability P_n for S_n satisfies\n$$\\left|P_n - \\left(\\frac{3}{4} - \\frac{3}{2n}\\right)\\right| \\le \\frac{C}{n^2}$$\nfor an explicit constant C \u2264 10, where the 3/4 comes from the alternating group obstruction and the 3/(2n) from point stabilizers.\n\n**Test**: Compute exact P_n for n = 5, 6, 7 using GAP's subgroup lattice functions and compare the residual n\u00b2 \u00b7 |P_n \u2212 3/4 + 3/(2n)| against the conjectured bound. If the residual exceeds 10 for any n \u2264 7, the conjecture as stated is false.\n\n**Impact**: This would be the first formally verified sharp asymptotic for Dixon's theorem, going beyond the existing O(1/n) bounds. It would demonstrate that formal methods can produce not just verification but mathematical discovery.\n\n**Catalog References**: `Pythagorean/SubgroupMoebius.lean` (generatingPairCount_eq_moebius_sum, generatingPairProbability_eq_one_plus_proper), `Pythagorean/SubgroupMoebiusAsymp.lean` (generatingPairCount_moebius_decomposition, factorial_ratio_sq)\n\n**Proof Strategy**: (1) Formalize the O'Nan\u2013Scott theorem classifying maximal subgroups of S_n into intransitive, imprimitive, and primitive families. (2) Compute M\u00f6bius values for each family using the decomposition theorem. (3) Bound the primitive contribution using index estimates from the Classification of Finite Simple Groups. (4) Sum contributions from intransitive maximal subgroups (point stabilizers, 2-point stabilizers) explicitly.\n\n**Domain Bridges**: Analytic number theory (Euler product analogues for subgroup growth), computational group theory (GAP/Magma subgroup enumeration), permutation group theory (O'Nan\u2013Scott theorem)\n\n**Lineage**: Extends `generatingPairCount_moebius_decomposition` and `factorial_ratio_sq`\n\n**Ambition**: Grand challenge \u2014 requires formalizing significant finite group theory infrastructure\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4ae175a0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:43:58.448526+00:00"
-  },
-  {
-    "id": "fd_1142",
-    "title": "Direction 2: M\u00f6bius Inversion for k-Tuple Generation",
-    "description": "**Conjecture**: The M\u00f6bius inversion formula generalizes to k-tuples: for any finite group G and k \u2265 1,\n$$\\phi_k(G) = \\sum_{H \\le G} \\mu(H, G) \\cdot |H|^k$$\nwhere \u03c6_k(G) counts ordered k-tuples generating G. Moreover, for S_n and k = 3, the generating probability P_{n,3} satisfies P_{n,3} \u2192 1 as n \u2192 \u221e (not 3/4, since three random permutations almost surely include an odd one).\n\n**The key insight is** that the partition identity generalizes immediately: every k-tuple generates a unique subgroup, so |H|^k = \u03a3_{K \u2264 H} \u03c6_k(K). M\u00f6bius inversion gives the formula.\n\n**Why now?** The existing formalization of the k=2 case provides all the infrastructure (M\u00f6bius function, partition identity, summation exchange). The generalization to k > 2 requires only replacing |H|\u00b2 with |H|^k.\n\n**Test**: For k = 3 and n = 3, 4, compute \u03c6_3(S_n) both by brute force and via the M\u00f6bius formula. Verify agreement.\n\n**Impact**: Establishes the complete Hall Eulerian function framework in a formal setting.\n\n**Catalog References**: `Pythagorean/SubgroupMoebius.lean` (generatingPairCount_eq_moebius_sum, pairCount_eq_sum_generatingPairCountWithin)\n\n**Proof Strategy**: Generalize `generatingPairCountWithin` to k-tuples. The partition identity proof generalizes verbatim (replace G \u00d7 G with G^k). Apply the same M\u00f6bius inversion.\n\n**Domain Bridges**: Algebraic combinatorics (species theory for k-tuples), representation theory (character-theoretic formulas for \u03c6_k)\n\n**Lineage**: Direct generalization of `generatingPairCount_eq_moebius_sum`\n\n**Ambition**: Solid extension \u2014 straightforward generalization with significant payoff\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4ae175a0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:43:58.481343+00:00"
-  },
-  {
-    "id": "fd_1146",
-    "title": "Direction 1: Arithmetic Persistent Homology",
-    "description": "**Conjecture**: There exists a persistence module structure over \u2124, equipped with an \"arithmetic barcode\" consisting of (birth, death, torsion-label) triples, that strictly refines the field-coefficient barcode and is computable in polynomial time for bounded-dimension complexes.\n\n**Test**: Implement arithmetic persistence for 2-complexes arising from point cloud data (protein structures, molecular surfaces). Compare the discriminating power of arithmetic barcodes vs. standard barcodes on benchmark datasets (e.g., SHREC, ModelNet). A positive result: arithmetic barcodes distinguish pairs of shapes that standard barcodes cannot. A negative result: the torsion information adds no discriminating power for real-world data, falsifying practical relevance.\n\n**Impact**: This would create a new computational topology tool \u2014 \"persistent homology with arithmetic memory\" \u2014 that leverages the entire integer homology structure rather than discarding torsion. Applications in drug discovery, materials science, and computational biology would follow directly.\n\n**Catalog References**: `Pythagorean/TropicalMorse/IntegerTrichotomy.lean` (trichotomy theorem), `Pythagorean/TropicalMorse/Defs.lean` (tropical spectrum definitions).\n\n**Proof Strategy**: Model the filtered chain complex over \u2124, compute Smith normal forms at each filtration step, and track invariant factor changes using the trichotomy to label each event. The key technical challenge is defining a suitable notion of \"interval\" for torsion features, since torsion can be created in one step and modified (not destroyed) in later steps.\n\n**Domain Bridges**: Topological data analysis, computational biology, materials science.\n\n**Lineage**: Extends the classical persistent homology framework of Edelsbrunner-Letscher-Zomorodian by incorporating the torsion layer revealed by the trichotomy.\n\n**Ambition**: Grand challenge \u2014 creating a new computational paradigm.\n\n**The key insight is** that the trichotomy provides a natural event classifier for each step of the filtration, converting a global algebraic computation into a sequence of local arithmetic events that can be tracked and displayed as a barcode with richer labels.\n\n**Why now?** The trichotomy theorem provides the mathematical foundation (previously missing) for classifying filtration events over \u2124, and Smith normal form algorithms are now fast enough for moderate-size complexes thanks to advances in computational number theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d4af762e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T14:17:29.239586+00:00"
-  },
-  {
     "id": "fd_1151",
     "title": "Direction 1: Dynamic Spectral Gap Tracking for Online Mixing-Time Guarantees",
     "description": "**Conjecture:** For a sequence of rank-1 Lorentzian polynomial updates $f_t \\to f_{t+1} = f_t + c_t X^{\\alpha_t}$, the spectral gap $\\gamma_t$ of the natural basis-exchange Markov chain satisfies\n$$|\\gamma_{t+1} - \\gamma_t| \\leq C \\cdot \\frac{|\\text{Affected}(\\alpha_t, d-2)|}{\\text{Total leaves}} \\cdot \\|c_t\\|$$\nwhere $C$ depends only on the degree and conditioning of the quadratic leaves.\n\n**Test:** Compute spectral gaps explicitly for graphic matroid polynomials on graphs with 10\u201350 vertices under edge insertions. Measure whether the gap change is proportional to the affected leaf fraction. A single instance where the gap changes discontinuously at a non-affected leaf would falsify the conjecture.\n\n**Impact:** If true, this would enable fully online mixing-time certificates: after each update, the mixing time bound is adjusted by a local computation rather than a global spectral analysis. This would make streaming combinatorial sampling provably efficient.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` (spectral_gap_log_concave_lower_bound), `Pythagorean/DynamicLorentzianCertificates.lean` (iteratedMPderiv_rankOneUpdate_eq_of_not_le)\n\n**Proof Strategy:** Formalize the Weyl perturbation bound for Hessian eigenvalues under rank-1 coefficient updates. Show that only affected-leaf Hessians change, then bound the total spectral gap perturbation by summing Weyl bounds over affected leaves.\n\n**Domain Bridges:** Spectral graph theory, random matrix theory, Markov chain mixing\n\n**Lineage:** Extends the locality theorem from certificate *validity* to certificate *quality* (spectral gap).\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 requires deep integration of perturbation theory with Lorentzian structure.\n\n---",
@@ -1723,6 +1628,26 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "02e24032",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T14:50:50.001252+00:00"
+  },
+  {
+    "id": "fd_1160",
+    "title": "Direction 1: Sharp GOE Constants via Tracy-Widom Transfer",
+    "description": "**Conjecture**: For n\u00d7n Gaussian symmetric perturbations E with E_{ij} ~ N(0, \u03c3\u00b2/n), the misclassification probability satisfies\n\nP(misclassification) \u2264 exp(\u2212(\u03b5 \u2212 2\u03c3)\u00b2\u208a \u00b7 n / (C\u03c3\u00b2))\n\nwith an explicit constant C depending only on the normalization, and the transition occurs sharply at \u03b5 = 2\u03c3 (the edge of the Wigner semicircle).\n\n**Test**: Compare Monte Carlo failure rates against the predicted sharp threshold \u03b5 = 2\u03c3 for dimensions n = 10, 50, 200. The transition width should scale as n^{\u22122/3}, matching Tracy-Widom fluctuations.\n\n**Impact**: Transforms the abstract exponential tail bound into a quantitative engineering formula. For the first time, a practitioner could compute the exact number of bits of precision needed to certify Lorentzianity at a given confidence level.\n\n**Catalog References**: `Pythagorean/LorentzianSmoothedAnalysis.lean` (failure_event_subset_gap_event, smoothed_bound_monotone_in_gap), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (HasGappedSignature).\n\n**Proof Strategy**: \n1. Formalize the Wigner semicircle law for GOE matrices: the largest eigenvalue of E converges to 2\u03c3.\n2. Use Tracy-Widom tail bounds: P(\u03bb_max > 2\u03c3 + t\u03c3n^{\u22122/3}) \u2264 exp(\u2212ct^{3/2}).\n3. Compose with failure_event_subset_gap_event to get P(misclass) \u2264 P(\u2016E\u2016 > \u03b5).\n4. Substitute the Tracy-Widom tail at t = (\u03b5 \u2212 2\u03c3)n^{2/3}/\u03c3.\n\n**Domain Bridges**: Random matrix theory \u2192 algebraic combinatorics \u2192 numerical analysis.\n\n**Lineage**: Builds directly on Theorems 1 and 3 of this cycle.\n\n**Ambition**: Grand challenge \u2014 requires formalizing Tracy-Widom distribution or at least its tail bounds.\n\nThe key insight is that the Wigner semicircle edge at 2\u03c3 creates a sharp phase transition for Lorentzian stability, replacing the gradual exponential decay with a precise threshold.\n\nWhy now? The failure containment theorem (this cycle) provides the formal reduction; only the random matrix input is missing. Mathlib's growing spectral theory infrastructure makes formalization feasible within 1-2 cycles.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f52aba3c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T15:25:16.762042+00:00"
   },
   {
     "id": "seed_005",
@@ -1830,6 +1755,45 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
+  },
+  {
+    "id": "fd_1165",
+    "title": "Direction 1: Full G\u00e4rtner\u2013Ellis Large Deviation Principle for Generation Defect",
+    "description": "**Ambition:** grand_challenge\n\n**Conjecture:** For every nontrivial finite group $G$, the generation defect random variable on uniform pairs in $G^n$ satisfies a full large deviation principle with rate function $I_G(\\alpha) = \\sup_{t \\geq 0}\\{t\\alpha - \\Lambda_G(t)\\}$, where $\\Lambda_G(t) = \\lim_{n \\to \\infty} \\frac{1}{n} \\log Z_{G^n}(t)$.\n\n**The key insight is** that the log-convexity theorem (subgroupPressure_geometric_convex) establishes the differentiability structure of $\\Lambda_G$ needed for the G\u00e4rtner\u2013Ellis theorem, while the product factorization from the catalog gives the subadditivity needed for the limit to exist.\n\n**Why now?** The finite-level architecture is complete: nonnegativity, antitonicity, and log-convexity are formally verified. What remains is the passage from finite product inequalities to the asymptotic limit, which requires formalizing Fekete's subadditive lemma and the measure-theoretic LDP statement.\n\n**Test:** Monte Carlo on $(Z/6Z)^n$ for $n$ up to 50 should show empirical rate function convergence to the Legendre transform of numerically computed log-pressure.\n\n**Impact:** A formally verified LDP for group generation would be the first rigorous large deviation result in finite group theory, opening the door to sharp asymptotic analysis of generation probabilities for group families.\n\n**Catalog References:**\n- `Catalog/old/Pythagorean/SubgroupPressure.lean` \u2014 product factorization\n- `Pythagorean/LargeDeviationPressure.lean` \u2014 log-convexity and antitonicity\n\n**Proof Strategy:** (1) Prove log-pressure subadditivity for direct powers using product factorization. (2) Apply Fekete's lemma to establish $\\Lambda_G(t)$ exists. (3) Show $\\Lambda_G$ is differentiable on the interior (from log-convexity). (4) Invoke G\u00e4rtner\u2013Ellis.\n\n**Domain Bridges:** Probability theory (large deviations), statistical mechanics (thermodynamic limit), information theory (rate functions).\n\n**Lineage:** Extends `subgroupPressure_geometric_convex` and `subgroupPressure_antitone`.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bcd75759",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T16:00:48.826734+00:00"
+  },
+  {
+    "id": "fd_1166",
+    "title": "Direction 2: Maximal Subgroup Dominance and Pressure Truncation",
+    "description": "**Ambition:** solid_extension\n\n**Conjecture:** For finite simple groups $G$, the pressure restricted to maximal subgroups $Z_G^{\\max}(t) = \\sum_{M \\text{ maximal}} [G:M]^{-2t}$ satisfies $|\\log Z_G(t) - \\log Z_G^{\\max}(t)| \\to 0$ in suitable asymptotic regimes (rank $\\to \\infty$ or alternating degree $\\to \\infty$).\n\n**The key insight is** that non-maximal subgroups contribute exponentially smaller terms to the pressure (their indices are products of maximal indices), so truncation to maximal subgroups preserves the thermodynamic properties up to sub-leading corrections.\n\n**Why now?** The classification of maximal subgroups of finite simple groups (Aschbacher, Liebeck\u2013Seitz) provides explicit index data. The antitonicity theorem makes the dominance sharper at large $t$.\n\n**Test:** Compute full vs. maximal pressure for $A_n$ with $n = 5, 6, 7, 8$ and verify exponential convergence of the ratio.\n\n**Impact:** Reduces the computational complexity of pressure from exponential (all subgroups) to polynomial (maximal subgroups) for simple groups.\n\n**Catalog References:**\n- `Pythagorean/LargeDeviationPressure.lean` \u2014 pressure definition and antitonicity\n- `Catalog/old/Pythagorean/SubgroupPressure.lean` \u2014 pressure bounds\n\n**Proof Strategy:** Use the fact that every non-maximal subgroup $H$ is contained in some maximal $M$, so $[G:H] \\geq [G:M] \\cdot 2$. For $t > 0$, the contribution of $H$ is exponentially suppressed relative to $M$.\n\n**Domain Bridges:** Computational group theory (subgroup enumeration), complexity theory (polynomial vs. exponential algorithms).\n\n**Lineage:** Extends `subgroupPressure_antitone` and `Subgroup.index_ge_two_of_ne_top`.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bcd75759",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T16:00:48.872305+00:00"
   },
   {
     "id": "seed_013",
@@ -2234,21 +2198,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:06:00.281798+00:00"
   },
   {
-    "id": "fd_1132",
-    "title": "Arithmetic Universality in Prime-Indexed Persistence via Computable Turing Encod",
-    "description": "Conjecture: There exists an explicit polynomial-time construction that maps any Turing machine M and input x to a finite filtered chain complex C(M,x) over Z such that, for infinitely many primes p, a designated prime-local persistence observable O_p(C(M,x)) is nonzero if and only if M halts on x; moreover if M does not halt then O_p vanishes for all but finitely many p. Test: Build the construction for universal machine fragments and verify on broad families of halting/non-halting instances whether the predicted infinite-vs-finite prime support dichotomy holds; a single counterexample to the iff behavior refutes the conjecture. Impact: This would show primewise persistent homology can realize arithmetic undecidability phenomena, creating a rigorous bridge between topology, computation, and number-theoretic distribution patterns across primes.",
-    "domains": [
-      "Computability Theory",
-      "Persistent Homology"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:06:38.430181+00:00"
-  },
-  {
     "id": "fd_1134",
     "title": "Arithmetic Phase Retrieval from Primewise Torsion Resonances",
     "description": "Conjecture: There exists an explicit canonical construction X \\mapsto C_p(X) assigning to each smooth projective variety X over Q and each good prime p a filtered chain complex over F_p such that the two-point correlation function of barcode birth times across primes, after normalization by p^{i/2} in cohomological degree i, determines the semisimplified Frobenius eigenvalue multiset in degree i up to finitely many ambiguities. Test: Compute the construction for families with known Frobenius data (elliptic curves, K3 surfaces, low-dimensional hypersurfaces) and check whether non-isogenous/non-derived-equivalent examples can share the same normalized cross-prime barcode correlation statistics; a counterexample refutes the conjecture, while successful recovery on broad benchmark families supports it. Impact: This would turn persistent homology into a phase-retrieval mechanism for arithmetic geometry, giving a new topological route to reconstruct Galois data from compressed primewise signatures.",
@@ -2279,24 +2228,34 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:07:45.821446+00:00"
   },
   {
-    "id": "fd_1160",
-    "title": "Direction 1: Sharp GOE Constants via Tracy-Widom Transfer",
-    "description": "**Conjecture**: For n\u00d7n Gaussian symmetric perturbations E with E_{ij} ~ N(0, \u03c3\u00b2/n), the misclassification probability satisfies\n\nP(misclassification) \u2264 exp(\u2212(\u03b5 \u2212 2\u03c3)\u00b2\u208a \u00b7 n / (C\u03c3\u00b2))\n\nwith an explicit constant C depending only on the normalization, and the transition occurs sharply at \u03b5 = 2\u03c3 (the edge of the Wigner semicircle).\n\n**Test**: Compare Monte Carlo failure rates against the predicted sharp threshold \u03b5 = 2\u03c3 for dimensions n = 10, 50, 200. The transition width should scale as n^{\u22122/3}, matching Tracy-Widom fluctuations.\n\n**Impact**: Transforms the abstract exponential tail bound into a quantitative engineering formula. For the first time, a practitioner could compute the exact number of bits of precision needed to certify Lorentzianity at a given confidence level.\n\n**Catalog References**: `Pythagorean/LorentzianSmoothedAnalysis.lean` (failure_event_subset_gap_event, smoothed_bound_monotone_in_gap), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (HasGappedSignature).\n\n**Proof Strategy**: \n1. Formalize the Wigner semicircle law for GOE matrices: the largest eigenvalue of E converges to 2\u03c3.\n2. Use Tracy-Widom tail bounds: P(\u03bb_max > 2\u03c3 + t\u03c3n^{\u22122/3}) \u2264 exp(\u2212ct^{3/2}).\n3. Compose with failure_event_subset_gap_event to get P(misclass) \u2264 P(\u2016E\u2016 > \u03b5).\n4. Substitute the Tracy-Widom tail at t = (\u03b5 \u2212 2\u03c3)n^{2/3}/\u03c3.\n\n**Domain Bridges**: Random matrix theory \u2192 algebraic combinatorics \u2192 numerical analysis.\n\n**Lineage**: Builds directly on Theorems 1 and 3 of this cycle.\n\n**Ambition**: Grand challenge \u2014 requires formalizing Tracy-Widom distribution or at least its tail bounds.\n\nThe key insight is that the Wigner semicircle edge at 2\u03c3 creates a sharp phase transition for Lorentzian stability, replacing the gradual exponential decay with a precise threshold.\n\nWhy now? The failure containment theorem (this cycle) provides the formal reduction; only the random matrix input is missing. Mathlib's growing spectral theory infrastructure makes formalization feasible within 1-2 cycles.\n\n---",
+    "id": "fd_1170",
+    "title": "Universality of Smith Normal Form Fluctuations in Random Filtered Chain Complexe",
+    "description": "Conjecture: Let C be a random finite filtered chain complex over Z whose boundary matrices are sparse with i.i.d. integer entries from any mean-zero distribution with finite variance, conditioned on \u2202^2 = 0 by a local projection procedure. After centering by rank and rescaling filtration index, the joint distribution of p-adic valuation profiles of the invariant factors in the Smith normal forms converges, for every fixed homological degree and finite set of primes p, to a universal limit independent of the entry distribution. Test: Generate ensembles from distinct input laws (Bernoulli, discrete Gaussian, bounded uniform), compute Smith normal forms across filtration levels, and compare the empirical laws of invariant-factor valuation processes; confirmation is convergence to the same limit across laws, refutation is persistent distribution-dependent behavior. Impact: This would found a universality theory for torsion in arithmetic persistent homology, giving a statistical baseline for detecting genuinely arithmetic structure versus random noise.",
     "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
+      "Arithmetic Topology",
+      "Random Matrix Theory"
     ],
-    "priority_score": 0.7999999999999999,
+    "priority_score": 0.8,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f52aba3c",
+    "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T15:25:16.762042+00:00"
+    "timestamp": "2026-05-26T16:00:57.658670+00:00"
+  },
+  {
+    "id": "fd_1171",
+    "title": "Motivic Rigidity from Cross-Prime Persistence Concordance",
+    "description": "Conjecture: There exists a canonical construction assigning to each smooth projective variety X/Q a prime-indexed family of filtered chain complexes C_p(X) such that if two varieties X and Y have bottleneck-distance-zero agreement of their primewise persistence barcodes for a set of good primes of natural density 1 in every homological degree and filtration scale, then X and Y have isomorphic semisimplified l-adic Galois representations in all degrees (equivalently, the same local zeta factors outside a density-0 set of primes). Test: Build candidate constructions C_p(X) from reductions mod p and compare barcode concordance against known pairs of varieties: isogenous vs non-isogenous abelian varieties, derived-equivalent K3 surfaces, mirror pairs, and varieties with matching point counts in low degrees. The conjecture is refuted by a counterexample pair with density-1 barcode agreement but different Frobenius characteristic polynomials at infinitely many primes; it is supported if barcode agreement empirically tracks zeta-data rigidity across broad datasets. Impact: This would turn persistent homology into a compressed topological probe of arithmetic Galois data, potentially giving a new route to computationally recognizing motivic equivalence from finite combinatorial summaries.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T16:01:35.746391+00:00"
   },
   {
     "id": "seed_032",
