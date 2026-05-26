@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Probabilistic Group Theory / Large Deviations / Thermodynamic Formalism",
     "date": "2026-05-26T19:36:51Z",
     "exp_id": "a93e0253",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7302034482758621,
+    "quality": "substantial"
   },
   {
     "filename": "direction_4_statistical_physics_of_random_transver.json",
@@ -3033,8 +3033,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-26T19:36:51Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7302034482758621,
+      "quality": "substantial"
     }
   ],
   "edges": [

@@ -487,10 +487,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a875f3ce",
     "timestamp": "2026-05-25T17:14:59.812468+00:00"
   },
   {
@@ -775,10 +775,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "354ccda2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "550b5c8b",
     "timestamp": "2026-05-25T21:49:45.078780+00:00"
   },
   {
@@ -1080,25 +1080,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T02:33:38.976648+00:00"
   },
   {
-    "id": "fd_1050",
-    "title": "Direction 1: Log-Sobolev Inequality for the Hybrid Walk",
-    "description": "**Conjecture:** The modified log-Sobolev constant $\\rho_n$ of the adjacent-transposition-plus-cycle walk satisfies $\\rho_n \\geq c/n^2$ for a universal constant $c > 0$. This would immediately yield $t_{\\text{mix}} \\leq O(n^2 \\log \\log n!)$ = $O(n^2 \\log n)$, closing the gap between upper and lower bounds.\n\n**Test:** Compute the log-Sobolev constant numerically for $n = 3, 4, 5, 6$ via semidefinite programming (the constant equals the minimum of $\\mathcal{E}(f, \\log f) / \\text{Ent}(f^2)$ over nonzero test functions). If $\\rho_n \\cdot n^2$ stabilizes, the conjecture is confirmed.\n\n**Impact:** Would be the first log-Sobolev inequality for a hybrid-generator walk on $S_n$. This is stronger than the spectral gap and would give the sharp $O(n^2 \\log n)$ mixing time, confirming the cutoff conjecture up to constants.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (spectral gap bounds), `Pythagorean/CayleyExpander/HybridWalk.lean` (walk definitions).\n\n**Proof Strategy:** Use the comparison method: compare the log-Sobolev constant of the hybrid walk with that of the random transposition walk (known to be $\\Theta(1/n)$) via a canonical path argument with controlled entropy distortion.\n\n**Domain Bridges:** Functional analysis (log-Sobolev inequalities), information theory (entropy methods), quantum information (quantum log-Sobolev for permutation channels).\n\n**Lineage:** Extends Theorem A (spectral gap) to the stronger log-Sobolev regime.\n\n**Ambition:** \ud83d\udfe1 Grand Challenge \u2014 would resolve the central open problem.\n\n**\"The key insight is...\"** that log-Sobolev constants capture higher-order concentration beyond what spectral gaps provide, and the cycle generator's role in reducing entropy transport cost may be visible only at this level.\n\n**\"Why now?\"** The spectral gap infrastructure is now certified and the numerical tools to test the conjecture exist. Recent advances in log-Sobolev inequalities for permutation groups (Salez, 2023) provide new technical tools.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "48617359",
-    "consumed_by_exp_id": "ff6108f7",
-    "timestamp": "2026-05-26T04:51:55.380022+00:00"
-  },
-  {
     "id": "fd_1051",
     "title": "Direction 2: Universality of Hybrid Walks \u2014 General Local/Global Generators",
     "description": "**Conjecture:** For any finite group $G$ with a \"local\" symmetric generating set $S_L$ (spectral gap $\\gamma_L$) and a \"global\" symmetric generating set $S_G$ with $|S_G| = O(1)$, the spectral gap of the combined walk satisfies $\\gamma_{L \\cup G} = \\Theta(\\gamma_L)$ \u2014 i.e., a bounded number of global generators does not change the spectral gap order.\n\n**Test:** Verify computationally for:\n- $G = \\mathbb{Z}_n^2$ (2D lattice group), $S_L$ = nearest-neighbor generators, $S_G$ = one diagonal generator.\n- $G = S_n$, $S_L$ = adjacent transpositions, $S_G$ = star transpositions $(1, i)$.\n- $G = \\text{GL}_n(\\mathbb{F}_q)$, $S_L$ = elementary matrices, $S_G$ = one permutation matrix.\n\n**Impact:** Would establish a universal principle: **bounded-size global generators preserve the diffusive scale of local generators.** This unifies many known results and opens a new theory of Markov chain acceleration.\n\n**Catalog References:** `Pythagorean/CayleyExpander/HybridWalk.lean` (HybridPermutationWalk structure), `Bridges/Catalog/Pythagorean/CayleyExpander/Defs.lean` (CayleySpectralData, CanonicalPathData).\n\n**Proof Strategy:** Generalize the canonical path argument: show that global generators reduce path congestion but cannot reduce the number of local steps needed, preserving the spectral gap order.\n\n**Domain Bridges:** Geometric group theory (word metrics), algebraic graph theory (Cayley graph expansion), operator algebras (spectral transfer).\n\n**Lineage:** Direct generalization of Theorem A.\n\n**Ambition:** \ud83d\udfe2 Solid Extension \u2014 conceptually clear generalization with known proof template.\n\n**\"The key insight is...\"** that spectral gaps are controlled by bottlenecks, and global generators can widen bottlenecks but cannot eliminate the local structure that creates them.\n\n**\"Why now?\"** The formalized HybridPermutationWalk structure provides the right abstraction layer for general statements. Testing on multiple group families is now computationally feasible.\n\n---",
@@ -1309,10 +1290,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "79565d7a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc9f1755",
     "timestamp": "2026-05-26T11:21:55.320419+00:00"
   },
   {
@@ -1493,26 +1474,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "f52aba3c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T15:25:16.762042+00:00"
-  },
-  {
-    "id": "fd_1165",
-    "title": "Direction 1: Full G\u00e4rtner\u2013Ellis Large Deviation Principle for Generation Defect",
-    "description": "**Ambition:** grand_challenge\n\n**Conjecture:** For every nontrivial finite group $G$, the generation defect random variable on uniform pairs in $G^n$ satisfies a full large deviation principle with rate function $I_G(\\alpha) = \\sup_{t \\geq 0}\\{t\\alpha - \\Lambda_G(t)\\}$, where $\\Lambda_G(t) = \\lim_{n \\to \\infty} \\frac{1}{n} \\log Z_{G^n}(t)$.\n\n**The key insight is** that the log-convexity theorem (subgroupPressure_geometric_convex) establishes the differentiability structure of $\\Lambda_G$ needed for the G\u00e4rtner\u2013Ellis theorem, while the product factorization from the catalog gives the subadditivity needed for the limit to exist.\n\n**Why now?** The finite-level architecture is complete: nonnegativity, antitonicity, and log-convexity are formally verified. What remains is the passage from finite product inequalities to the asymptotic limit, which requires formalizing Fekete's subadditive lemma and the measure-theoretic LDP statement.\n\n**Test:** Monte Carlo on $(Z/6Z)^n$ for $n$ up to 50 should show empirical rate function convergence to the Legendre transform of numerically computed log-pressure.\n\n**Impact:** A formally verified LDP for group generation would be the first rigorous large deviation result in finite group theory, opening the door to sharp asymptotic analysis of generation probabilities for group families.\n\n**Catalog References:**\n- `Catalog/old/Pythagorean/SubgroupPressure.lean` \u2014 product factorization\n- `Pythagorean/LargeDeviationPressure.lean` \u2014 log-convexity and antitonicity\n\n**Proof Strategy:** (1) Prove log-pressure subadditivity for direct powers using product factorization. (2) Apply Fekete's lemma to establish $\\Lambda_G(t)$ exists. (3) Show $\\Lambda_G$ is differentiable on the interior (from log-convexity). (4) Invoke G\u00e4rtner\u2013Ellis.\n\n**Domain Bridges:** Probability theory (large deviations), statistical mechanics (thermodynamic limit), information theory (rate functions).\n\n**Lineage:** Extends `subgroupPressure_geometric_convex` and `subgroupPressure_antitone`.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "bcd75759",
-    "consumed_by_exp_id": "a93e0253",
-    "timestamp": "2026-05-26T16:00:48.826734+00:00"
   },
   {
     "id": "fd_1166",
@@ -1711,6 +1672,25 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T18:22:28.461601+00:00"
   },
   {
+    "id": "fd_1188",
+    "title": "Direction 1: Primewise Completeness for Derived Persistence Invariants",
+    "description": "**Conjecture:** The max-envelope inequality extends beyond torsion birth sets to derived invariants including persistence diagrams, Betti curves, and landscape functions, with the same L\u221e aggregation structure.\n\n**Test:** Formalize the persistence diagram for p-primary torsion modules over \u2124 and prove that the bottleneck distance between global torsion diagrams is bounded by the maximum of p-primary bottleneck distances. Construct explicit counterexamples to equality in the derived setting.\n\n**Impact:** Would unify the birth-set stability theory with the full algebraic stability theorem, providing a complete primewise decomposition of integer persistence.\n\n**Catalog References:** `Pythagorean/PrimewiseTorsionStability.lean` (primewise stability), `Pythagorean/MaxEnvelopeStability.lean` (max-envelope framework, `IsMaxEnvelope`, `finite_prime_envelope_suffices'`)\n\n**Proof Strategy:** Extend the min-max Lipschitz lemma (`natDist'_inf'_le_sup'_natDist'`) to bottleneck distances by proving that the matching between global diagrams decomposes into primewise matchings. Use the subsingleton property of birth sets as the base case.\n\n**Domain Bridges:** Connects to algebraic K-theory (derived torsion invariants), homological algebra (spectral sequences for prime decomposition).\n\n**Lineage:** Extends `finite_prime_envelope_suffices'` from birth sets to full diagram invariants.\n\n**Ambition:** Grand challenge \u2014 would require building significant new infrastructure for integer persistence diagrams.\n\n**The key insight is** that the algebraic stability theorem's proof structure already decomposes along prime channels; the challenge is formalizing the recombination step.\n\n**Why now?** The max-envelope framework provides the right abstraction (`IsMaxEnvelope`, `IsBoundedByMaxEnvelope`) to state and attack this problem. The formalized birth decomposition theorem gives the base case.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "34bffabf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T18:56:53.573835+00:00"
+  },
+  {
     "id": "seed_005",
     "title": "P vs NP Problem",
     "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
@@ -1816,25 +1796,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1188",
-    "title": "Direction 1: Primewise Completeness for Derived Persistence Invariants",
-    "description": "**Conjecture:** The max-envelope inequality extends beyond torsion birth sets to derived invariants including persistence diagrams, Betti curves, and landscape functions, with the same L\u221e aggregation structure.\n\n**Test:** Formalize the persistence diagram for p-primary torsion modules over \u2124 and prove that the bottleneck distance between global torsion diagrams is bounded by the maximum of p-primary bottleneck distances. Construct explicit counterexamples to equality in the derived setting.\n\n**Impact:** Would unify the birth-set stability theory with the full algebraic stability theorem, providing a complete primewise decomposition of integer persistence.\n\n**Catalog References:** `Pythagorean/PrimewiseTorsionStability.lean` (primewise stability), `Pythagorean/MaxEnvelopeStability.lean` (max-envelope framework, `IsMaxEnvelope`, `finite_prime_envelope_suffices'`)\n\n**Proof Strategy:** Extend the min-max Lipschitz lemma (`natDist'_inf'_le_sup'_natDist'`) to bottleneck distances by proving that the matching between global diagrams decomposes into primewise matchings. Use the subsingleton property of birth sets as the base case.\n\n**Domain Bridges:** Connects to algebraic K-theory (derived torsion invariants), homological algebra (spectral sequences for prime decomposition).\n\n**Lineage:** Extends `finite_prime_envelope_suffices'` from birth sets to full diagram invariants.\n\n**Ambition:** Grand challenge \u2014 would require building significant new infrastructure for integer persistence diagrams.\n\n**The key insight is** that the algebraic stability theorem's proof structure already decomposes along prime channels; the challenge is formalizing the recombination step.\n\n**Why now?** The max-envelope framework provides the right abstraction (`IsMaxEnvelope`, `IsBoundedByMaxEnvelope`) to state and attack this problem. The formalized birth decomposition theorem gives the base case.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "34bffabf",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T18:56:53.573835+00:00"
   },
   {
     "id": "seed_013",
