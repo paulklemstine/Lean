@@ -449,27 +449,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T14:24:37.121580+00:00"
   },
   {
-    "id": "fd_0868",
-    "title": "Direction 1: Reflection Positivity and Perron-Frobenius for the Transfer Matrix",
-    "description": "**Conjecture:** The Wilson action on a time-reflected lattice satisfies Osterwalder-Schrader reflection positivity, implying the transfer matrix T is a positive compact operator on L\u00b2(G^(L^(d-1))). By the Perron-Frobenius theorem for positive operators, the largest eigenvalue of T is simple and isolated, yielding a spectral gap.\n\n**Test:** Formalize reflection positivity for the Wilson action on a 2D lattice with gauge group SU(2). Construct the transfer matrix explicitly for L = 2 (a 2\u00d72 spatial lattice) and verify computationally that it has a unique largest eigenvalue with gap \u0394 > 0 for \u03b2 \u2208 [0.1, 5.0].\n\n**Impact:** This would establish the mass gap for finite-volume lattice Yang-Mills theory with any compact gauge group, reducing the Millennium Prize Problem to the continuum limit (a question about uniformity and convergence).\n\n**Catalog References:**\n- `Physics/YangMillsMassGap.lean`: `HasSpectralGap`, `spectral_gap_of_positive_excitations`\n- `Physics/SpectralGap.lean`: `finite_yang_mills_mass_gap_of_sorted`\n\n**Proof Strategy:** (A) Define the reflection operator \u0398 on the lattice Hilbert space. (B) Prove \u0398-positivity of the Wilson action using the convexity of the exponential function and gauge invariance. (C) Apply abstract Perron-Frobenius (available in Mathlib for finite-dimensional operators, needs extension to compact operators). (D) Use `spectral_gap_eq_first_excitation` to certify the resulting gap.\n\n**Domain Bridges:** Quantum field theory \u2192 Functional analysis (compact operator theory) \u2192 Probability theory (reflection positivity is a form of FKG inequality)\n\n**Lineage:** Extends `spectral_gap_eq_first_excitation` and `gap_monotone_coupling` to infinite-dimensional transfer matrices.\n\n**Ambition:** Grand challenge \u2014 would constitute a major step toward the Millennium Prize.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6a88b92d",
-    "consumed_by_exp_id": "a6efeb29",
-    "timestamp": "2026-05-25T15:29:21.811130+00:00"
-  },
-  {
     "id": "fd_0870",
     "title": "Direction 3: Topological Quantum Error Correction from Gauge Theory",
     "description": "**Conjecture:** The mass gap \u0394 of a lattice gauge theory with gauge group G determines the code distance d of the corresponding Kitaev quantum double model: d = \u03a9(\u0394 \u00b7 L) where L is the linear system size. The Dynkin diagram classification of G therefore classifies topological quantum codes.\n\n**Test:** For gauge groups \u2124\u2082 (toric code), S\u2083 (non-abelian), and SU(2) (continuous), compute the code distance of the quantum double on an L\u00d7L torus for L = 4, 8, 16 and verify the scaling d \u221d \u0394 \u00b7 L.\n\n**Impact:** Would provide a systematic framework for designing topological quantum memories with guaranteed protection times, directly applicable to quantum computing hardware.\n\n**Catalog References:**\n- `Physics/YangMillsMassGap.lean`: `total_plaquette_energy_gauge_invariant`, `plaquette_transport`\n- `Physics/ToricCode.lean`: `quantum_singleton_bound`\n\n**Proof Strategy:** (A) Construct the quantum double Hamiltonian H = -\u2211_v A_v - \u2211_p B_p from the lattice gauge field. (B) Show the spectral gap of H equals the mass gap of the gauge theory using `class_fn_gauge_invariant`. (C) Prove that the code distance satisfies d \u2265 \u0394 \u00b7 L using the exponential decay theorem (`spectral_gap_implies_correlation_decay`). (D) Use `plaquette_transport` to transfer results between isomorphic gauge groups.\n\n**Domain Bridges:** Gauge theory \u2192 Quantum error correction \u2192 Condensed matter physics (topological order)\n\n**Lineage:** Extends `plaquette_transport` (Dynkin invariance) to quantum codes.\n\n**Ambition:** Solid extension with high practical impact \u2014 directly connects to quantum computing.\n\n---",
@@ -866,10 +845,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e8f8d5e4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "16a503d2",
     "timestamp": "2026-05-25T20:35:38.492371+00:00"
   },
   {
@@ -1790,11 +1769,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
+    "priority_score": 1.0,
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "42d710f5",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db19bfd3",
     "timestamp": "2026-05-26T08:59:20.810965+00:00"
   },
   {
@@ -1810,7 +1789,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "42d710f5",
@@ -1938,27 +1917,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1087",
-    "title": "Direction 2: Uniform Spectral Gaps for Sp\u2084 via Deligne\u2013Lusztig Character Bounds",
-    "description": "**Conjecture:** There exists a universal constant \u03b5\u2080 > 0 such that for every odd prime power q, the group Sp\u2084(\ud835\udd3d_q) admits a certified pair with normalized spectral gap \u2265 \u03b5\u2080, and this gap can be explicitly bounded using character values on the Deligne\u2013Lusztig virtual representations associated to the maximal torus containing the regular toral generator.\n\n**Test:** For q = 3, 5, 7, 9, 11: (1) Enumerate certified pairs in Sp\u2084(\ud835\udd3d_q). (2) Compute spectral gaps. (3) Evaluate the Deligne\u2013Lusztig character sum formula and compare with the computed gap. The conjecture is falsified if the measured gaps decrease toward 0 as q grows, or if the character bound diverges from the computed gap.\n\n**Impact:** A uniform spectral gap for Sp\u2084 would be the first result extending the Ramanujan property beyond rank-1 groups (SL\u2082 / PGL\u2082) to rank-2 symplectic groups, with direct applications to codes over symplectic geometries and to higher-dimensional lattice-based cryptography.\n\n**Catalog References:** `Catalog/Algebra/ClassicalGroupExpanders.lean` (IsRegularToral, ClassicalGenCertificate, HasVertexExpansion), `Catalog/Algebra/MatrixGroupGeneration.lean` (all invariant-subspace theorems).\n\n**Proof Strategy:** (1) Formalize the Deligne\u2013Lusztig character formula for Sp\u2084 over \ud835\udd3d_q, at least for characters associated to maximal tori containing the regular toral element. (2) Bound the character ratio |\u03c7(s)|/\u03c7(1) using the geometric structure of the Deligne\u2013Lusztig variety. (3) Apply the Diaconis\u2013Shahshahani upper bound lemma: the total variation distance after k steps is bounded by \u2211_{\u03c1 nontrivial} dim(\u03c1) \u00b7 |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)|^{2k}. (4) Show the quasirandomness lower bound dim(\u03c1) \u2265 (q\u00b2\u22121)/2 kills all nontrivial contributions after O(log q) steps.\n\n**Domain Bridges:** Algebraic geometry (Deligne\u2013Lusztig theory) \u2194 finite group representation theory \u2194 spectral graph theory. The character bound connects geometric properties of algebraic varieties over finite fields to combinatorial expansion.\n\n**Lineage:** Directly extends the certificate architecture from the current project, deepening the \"representation-theoretic transfer\" layer with Deligne\u2013Lusztig technology.\n\n**Ambition:** Solid extension. The character formula for Sp\u2084 is known (due to Srinivasan and others), so the key work is formalization and explicit bound computation.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d9e69258",
-    "consumed_by_exp_id": "21d69cc6",
-    "timestamp": "2026-05-26T08:24:14.609677+00:00"
   },
   {
     "id": "seed_013",
@@ -2361,6 +2319,61 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:13:49.686566+00:00"
+  },
+  {
+    "id": "fd_1096",
+    "title": "Direction 1: General Symplectic Groups Sp\u2082\u2099(\ud835\udd3d_q)",
+    "description": "**Conjecture:** For every n \u2265 1, there exist constants C_n and \u03b5_n > 0 such that for all odd prime powers q, there exist certified generating pairs (s, t) in Sp\u2082\u2099(\ud835\udd3d_q) with regular toral s satisfying |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| \u2264 C_n/q for all nontrivial irreducibles \u03c1, yielding spectral gap \u2265 \u03b5_n.\n\n**Test:** Compute spectral gaps for Sp\u2086(\ud835\udd3d_q) (n=3) for q = 3, 5, 7 using the same torus-type strategy. Verify that the gaps remain bounded away from zero and that the character-ratio bound C\u2083/q fits the data with C\u2083 independent of q. The conjecture is falsified if the optimal C_n grows faster than polynomially in n, or if no single torus type works uniformly.\n\n**Impact:** This would establish the first systematic family of higher-rank expanders parametrized by both rank and field size, unifying scattered results into a single framework.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (DLCharacterBoundCertificate, uniform_gap_from_dl_certificate), `Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy:** Extend the DLCharacterBoundCertificate to carry a rank parameter n. Use Landazuri\u2013Seitz bounds for Sp\u2082\u2099 (minimum nontrivial irrep dim \u2265 (q^n \u2212 1)/(q \u2212 1) \u2212 1) and Deligne\u2013Lusztig character formulas for type C_n tori. The transference machinery (Theorems A and C) applies without modification.\n\n**Domain Bridges:** Higher-rank symplectic expanders connect to polar space codes (coding theory) and Siegel modular forms (number theory).\n\n**Lineage:** Direct extension of the Sp\u2084 transference framework.\n\n**Ambition:** Grand challenge \u2014 would resolve the higher-rank expansion problem for an entire infinite family.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d69cc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T09:39:15.046719+00:00"
+  },
+  {
+    "id": "fd_1097",
+    "title": "Direction 2: Exceptional Groups and Character-Sheaf Certificates",
+    "description": "**Conjecture:** For the exceptional group G\u2082(\ud835\udd3d_q), there exist regular toral elements s with character-ratio bound |\u03c7(s)/\u03c7(1)| \u2264 C/q where C depends only on the root system, not on q. Combined with the transference theorem, this yields uniform G\u2082 expanders.\n\n**Test:** For G\u2082(\ud835\udd3d_q) with q = 3, 5, 7 (|G\u2082(\ud835\udd3d\u2083)| = 6,048), compute all irreducible character values on regular semisimple elements of each torus type. Verify that the maximum character ratio is bounded by C/q for some fixed C. Falsified if the ratio grows or oscillates with q.\n\n**Impact:** The first explicit expander construction for an exceptional group, opening a bridge between exceptional Lie theory and combinatorial expansion.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (character_ratio_to_spectral_gap, cheeger_from_spectral_gap).\n\n**Proof Strategy:** G\u2082 has only 5 conjugacy classes of maximal tori. Enumerate them, compute Deligne\u2013Lusztig characters via Green functions, and extract explicit character-ratio bounds. The transference theorem applies directly. **The key insight is** that the small number of torus types in exceptional groups makes explicit enumeration feasible, unlike classical groups where the number grows with rank.\n\n**Why now?** The transference framework absorbs any character-ratio bound, and G\u2082 character tables are explicitly known (Chang, Ree 1974). The bottleneck was never the character theory but the lack of a clean consumption mechanism.\n\n**Domain Bridges:** Exceptional symmetries arise in string theory (E\u2088), materials science (icosahedral symmetry via H\u2083 \u2282 E\u2088), and the Langlands program.\n\n**Lineage:** Parallel to Direction 1, but exploring width (different group families) rather than depth (higher rank).\n\n**Ambition:** Grand challenge \u2014 first formalized exceptional-group expanders.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d69cc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T09:39:15.086140+00:00"
+  },
+  {
+    "id": "fd_1098",
+    "title": "Direction 3: Hecke Operator Comparison and Building Spectra",
+    "description": "**Conjecture:** The spectral gap of the Cayley graph Cay(Sp\u2084(\ud835\udd3d_q), S) with toral generators is within a constant factor of the spectral gap of the Hecke operator on the spherical building of Sp\u2084(\ud835\udd3d_q), with the comparison constant depending only on the degree |S|.\n\n**Test:** For q = 3, 5, 7, compute both the Cayley graph spectral gap and the building Hecke operator spectral gap. Plot the ratio gap_Cayley / gap_Hecke as a function of q. Falsified if the ratio diverges or tends to zero.\n\n**Impact:** Would connect finite-group expansion to the rich theory of automorphic forms on buildings, potentially yielding a finite-field analogue of the Ramanujan conjecture for Sp\u2084.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (spectralGapBound, sp4_uniform_gap_family).\n\n**Proof Strategy:** Model the Cayley graph operator as a perturbation of the building Hecke operator. Use the Iwahori decomposition to decompose the regular representation into building representations. Bound the perturbation via the character-ratio certificate. **The key insight is** that the building decomposition separates the \"geometric\" contribution (controlled by the building spectrum) from the \"arithmetic\" contribution (controlled by character ratios), and the certificate bounds the latter.\n\n**Why now?** The Bruhat\u2013Tits building of Sp\u2084 is a 2-dimensional simplicial complex whose spectral theory is well-studied (Cartwright\u2013Steger). The transference framework provides the missing link between building spectra and Cayley graph spectra.\n\n**Domain Bridges:** Building spectra connect to automorphic representations (number theory), high-dimensional expanders (combinatorics), and topological data analysis (applied mathematics).\n\n**Lineage:** Extends the spectral gap framework from graphs to higher-dimensional simplicial complexes.\n\n**Ambition:** Solid extension \u2014 proven feasibility from existing building-spectrum literature.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d69cc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T09:39:15.120527+00:00"
   },
   {
     "id": "seed_032",

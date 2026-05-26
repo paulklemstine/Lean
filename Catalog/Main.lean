@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1814 of the highest-quality
+A curated collection of 1816 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1814
+Total files: 1816
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -550,6 +550,7 @@ import FINAL.Bridges.SheafObstruction
 import FINAL.Bridges.SheafProofStateDuality
 import FINAL.Bridges.Skeleton
 import FINAL.Bridges.SourceCoding
+import FINAL.Bridges.Sp4SpectralGap
 import FINAL.Bridges.SparseMatrixStructure
 import FINAL.Bridges.Spectral
 import FINAL.Bridges.SpectralApplications
@@ -1504,6 +1505,7 @@ import FINAL.Pythagorean.QuotientClosure
 import FINAL.Pythagorean.QuotientSections
 import FINAL.Pythagorean.RankBoundedEML
 import FINAL.Pythagorean.RecursiveMajorityDepthRigidity
+import FINAL.Pythagorean.ReflectionPositivity
 import FINAL.Pythagorean.RootSeparatedDecomposition
 import FINAL.Pythagorean.STLCDefs
 import FINAL.Pythagorean.SandwichDefs

@@ -616,5 +616,7 @@
   "089dd341": "direction_1_full_k_wl_separation_via_non_uniform_c.json",
   "42d710f5": "direction_1_basis_uniqueness_up_to_tropical_projec.json",
   "6297694a": "direction_3_negative_dependence_and_rapid_mixing_v.json",
-  "017aafa5": "direction_4_energy_landscape_metastability_detecti.json"
+  "017aafa5": "direction_4_energy_landscape_metastability_detecti.json",
+  "a6efeb29": "direction_1_reflection_positivity_and_perron_frobe.json",
+  "21d69cc6": "direction_2_uniform_spectral_gaps_for_sp_via_delig.json"
 }

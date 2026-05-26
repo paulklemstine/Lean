@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Representation Theory",
     "date": "2026-05-26T09:39:04Z",
     "exp_id": "21d69cc6",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7304065660377359,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_reflection_positivity_and_perron_frobe.json",
@@ -2221,8 +2221,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-26T09:39:04Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7304065660377359,
+      "quality": "substantial"
     }
   ],
   "edges": [
