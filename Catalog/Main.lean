@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1875 of the highest-quality
+A curated collection of 1880 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1875
+Total files: 1880
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -46,6 +46,7 @@ import FINAL.Algebra.Conditional
 import FINAL.Algebra.Congruence
 import FINAL.Algebra.ConnesKreimerCoproduct
 import FINAL.Algebra.Constructions
+import FINAL.Algebra.Convergents
 import FINAL.Algebra.CoordinateRingDepth
 import FINAL.Algebra.Core
 import FINAL.Algebra.CosmicBootstrap
@@ -69,6 +70,7 @@ import FINAL.Algebra.Derivability
 import FINAL.Algebra.Derivative
 import FINAL.Algebra.DescartesInvariance
 import FINAL.Algebra.DescentAlgebra
+import FINAL.Algebra.Design
 import FINAL.Algebra.DifferenceSetSymmetry
 import FINAL.Algebra.Dim2
 import FINAL.Algebra.Distance
@@ -586,6 +588,7 @@ import FINAL.Bridges.SheafProofStateDuality
 import FINAL.Bridges.SimplicialMorse
 import FINAL.Bridges.Skeleton
 import FINAL.Bridges.SourceCoding
+import FINAL.Bridges.Sp4HeckeComparison
 import FINAL.Bridges.Sp4SpectralGap
 import FINAL.Bridges.SparseMatrixStructure
 import FINAL.Bridges.Spectral
@@ -1048,6 +1051,7 @@ import FINAL.Geometry.InverseStereoMobiusNext
 import FINAL.Geometry.InverseStereoResearch
 import FINAL.Geometry.InverseStereoSecp256k1
 import FINAL.Geometry.InverseStereoUniverse
+import FINAL.Geometry.Jones
 import FINAL.Geometry.KauffmanBracket
 import FINAL.Geometry.MonotoneSubseq
 import FINAL.Geometry.MultiHeadStereographic
@@ -1439,6 +1443,7 @@ import FINAL.Pythagorean.BerggrenWordCubeSpectral
 import FINAL.Pythagorean.BoundedBetaDefs
 import FINAL.Pythagorean.BoundedBetaTheorems
 import FINAL.Pythagorean.CRTBottleneck
+import FINAL.Pythagorean.CanonicalPaths
 import FINAL.Pythagorean.CatalogBridge
 import FINAL.Pythagorean.CategoricalDimension
 import FINAL.Pythagorean.CertificateComplexity

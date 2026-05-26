@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Spectral Graph Theory / Representation Theory / High-Dimensional Expansion",
     "date": "2026-05-26T17:13:23Z",
     "exp_id": "ad3dfe1b",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7713502400000001,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_canonical_path_poincar_inequality_for_.json",
@@ -2781,8 +2781,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-26T17:13:23Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7713502400000001,
+      "quality": "substantial"
     }
   ],
   "edges": [
