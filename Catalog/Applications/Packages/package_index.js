@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Persistence Theory / Topological Data Analysis",
     "date": "2026-05-26T16:37:14Z",
     "exp_id": "88f5188e",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7668083870967742,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_lorentzian_minor_closure_conjecture.json",
@@ -2725,8 +2725,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-26T16:37:14Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7668083870967742,
+      "quality": "substantial"
     }
   ],
   "edges": [

@@ -744,24 +744,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:13:09.706179+00:00"
   },
   {
-    "id": "fd_0950",
-    "title": "Direction 2: Tropical Interleaving Distance and Algebraic Stability",
-    "description": "**Conjecture:** There exists a categorical interleaving distance on the category of tropical persistence modules (parametrized by monotone functions \u211d \u2192 \u2124 with bounded local variation) such that (a) the interleaving distance is bounded above by the barcode distance, (b) the two distances are bi-Lipschitz equivalent for finite-type modules, and (c) the interleaving distance satisfies a universal property analogous to the Bubenik\u2013Scott framework for classical persistence.\n\n**Test:** Formalize the tropical persistence category in Lean 4. Verify the bi-Lipschitz equivalence computationally for graphs up to n = 50. Construct an explicit example showing the two distances are not equal (gap in the bi-Lipschitz constant).\n\n**Impact:** This would establish a complete algebraic stability theory for tropical persistence, paralleling the Chazal\u2013Cohen-Steiner\u2013Glisse\u2013Guibas\u2013Oudot framework [CCGGO09] for classical persistence. It would make tropical persistence amenable to the full toolkit of abstract persistence theory.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropical_event_profile_interleaved, tropicalBarcodeDist_nonneg, tropicalBarcodeDist_symm)\n\n**Proof Strategy:** Define the tropical persistence module as a functor from (\u211d, \u2264) to (\u2124-Mod, \u2264), where morphisms are order-preserving maps. The interleaving distance is the infimum \u03b4 such that the modules are \u03b4-shifted comparable. Use the monotonicity theorem (tropicalEventProfile_mono) as the starting point and extend to the full module structure.\n\n**Domain Bridges:** Category theory, homological algebra, abstract persistence theory\n\n**Lineage:** Extends Theorems 5.1\u20135.2 (interleaving) to a full categorical framework\n\n**Ambition:** Grand challenge \u2014 would unify tropical and classical persistence theory\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "834b245c",
-    "consumed_by_exp_id": "88f5188e",
-    "timestamp": "2026-05-25T21:13:41.991865+00:00"
-  },
-  {
     "id": "fd_0951",
     "title": "Direction 3: Sheaf-Theoretic Tropical Persistence",
     "description": "**Conjecture:** The tropical persistence barcode can be realized as the derived pushforward of a constructible sheaf on the real line, valued in the category of tropical semimodules. The stability theorem then follows from the properness of the pushforward and the continuity of the derived functor, providing a conceptual explanation for the degree-dependent constant.\n\n**Test:** Construct the sheaf explicitly for path graphs and cycle graphs. Verify that the stalk at each point t equals the tropical kernel dimension. Check that the derived pushforward reproduces the event profile.\n\n**Impact:** This would connect tropical persistence to the rapidly developing theory of persistent sheaves (Curry, Kashiwara\u2013Schapira), opening access to powerful tools from algebraic geometry and microlocal analysis. It would also suggest natural higher-dimensional generalizations.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, TPB), `Catalog/Pythagorean/TropicalBridge/FiltrationPersistence.lean` (TropicalFiltration)\n\n**Proof Strategy:** Define the sheaf F on \u211d with stalks F_t = tropical kernel of G[activeVertices(f,t)]. The restriction maps are the natural inclusions. Constructibility follows from the finite number of critical values (entrance times). The pushforward to a point gives the global sections, which encode the barcode.\n\n**Domain Bridges:** Sheaf theory, derived categories, algebraic geometry, microlocal analysis\n\n**Lineage:** Conceptual reformulation of the entire stability framework\n\n**Ambition:** Grand challenge \u2014 would place tropical persistence in the mainstream of modern geometry\n\n---",
@@ -1138,25 +1120,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T02:33:38.976648+00:00"
   },
   {
-    "id": "fd_1026",
-    "title": "Direction 2: Lorentzian Minor Closure Conjecture",
-    "description": "**Conjecture:** If S is the support of a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh), then every minor of S is realizable as the support of a Lorentzian polynomial.\n\n**The key insight is** that Lorentzianity is a stronger condition than exchange (it additionally requires Hessian signature conditions on all degree-2 derivatives). The conjecture posits that this stronger condition is also minor-closed. If true, it would mean Lorentzian polynomials form a combinatorial species with both algebraic and geometric structure preserved under minors.\n\n**Why now?** We have proved that exchange (the combinatorial shadow of Lorentzianity) is minor-closed. The remaining question is whether the analytic/geometric conditions are also preserved. Computational evidence from `demo.py` shows no counterexample for degree \u2264 6 on \u2264 5 variables.\n\n**Test:** \n1. Enumerate all minors of supports of e_k(x_1,...,x_n) for n \u2264 7, k \u2264 4.\n2. For each minor, attempt to construct a Lorentzian polynomial with that support using the recognition criteria from `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`.\n3. Search for a counterexample: a minor support that satisfies exchange but admits no Lorentzian realization.\n\n**Impact:** Would establish Lorentzian polynomials as a minor-closed combinatorial species, enabling inductive classification programs and connecting Hodge theory to matroid-type decomposition.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange, IsBrandenHuhLorentzian), `Catalog/Pythagorean/SupportMinorTheory.lean` (exchange_of_minor).\n\n**Proof Strategy:** \n1. Show deletion preserves Lorentzianity by analyzing Hessian signature under variable restriction.\n2. Show contraction preserves Lorentzianity by analyzing the effect on quadratic forms.\n3. Use the recursive spectral certificate (recursivelyLorentzian_iff_brandenHuh) to reduce to checking degree-2 leaves.\n\n**Domain Bridges:** Algebraic geometry (Hodge index theorem), discrete convex analysis (M-convex optimization).\n\n**Lineage:** Builds on both the minor theory (this paper) and the Lorentzian recognition (LorentzianRecognitionComplete.lean).\n\n**Ambition:** Grand challenge \u2014 would unify Hodge theory with matroid minor theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "abb48be4",
-    "consumed_by_exp_id": "8e8af4e3",
-    "timestamp": "2026-05-26T02:33:39.011759+00:00"
-  },
-  {
     "id": "fd_1050",
     "title": "Direction 1: Log-Sobolev Inequality for the Hybrid Walk",
     "description": "**Conjecture:** The modified log-Sobolev constant $\\rho_n$ of the adjacent-transposition-plus-cycle walk satisfies $\\rho_n \\geq c/n^2$ for a universal constant $c > 0$. This would immediately yield $t_{\\text{mix}} \\leq O(n^2 \\log \\log n!)$ = $O(n^2 \\log n)$, closing the gap between upper and lower bounds.\n\n**Test:** Compute the log-Sobolev constant numerically for $n = 3, 4, 5, 6$ via semidefinite programming (the constant equals the minimum of $\\mathcal{E}(f, \\log f) / \\text{Ent}(f^2)$ over nonzero test functions). If $\\rho_n \\cdot n^2$ stabilizes, the conjecture is confirmed.\n\n**Impact:** Would be the first log-Sobolev inequality for a hybrid-generator walk on $S_n$. This is stronger than the spectral gap and would give the sharp $O(n^2 \\log n)$ mixing time, confirming the cutoff conjecture up to constants.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (spectral gap bounds), `Pythagorean/CayleyExpander/HybridWalk.lean` (walk definitions).\n\n**Proof Strategy:** Use the comparison method: compare the log-Sobolev constant of the hybrid walk with that of the random transposition walk (known to be $\\Theta(1/n)$) via a canonical path argument with controlled entropy distortion.\n\n**Domain Bridges:** Functional analysis (log-Sobolev inequalities), information theory (entropy methods), quantum information (quantum log-Sobolev for permutation channels).\n\n**Lineage:** Extends Theorem A (spectral gap) to the stronger log-Sobolev regime.\n\n**Ambition:** \ud83d\udfe1 Grand Challenge \u2014 would resolve the central open problem.\n\n**\"The key insight is...\"** that log-Sobolev constants capture higher-order concentration beyond what spectral gaps provide, and the cycle generator's role in reducing entropy transport cost may be visible only at this level.\n\n**\"Why now?\"** The spectral gap infrastructure is now certified and the numerical tools to test the conjecture exist. Recent advances in log-Sobolev inequalities for permutation groups (Salez, 2023) provide new technical tools.\n\n---",
@@ -1525,10 +1488,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "72356358",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "802479fb",
     "timestamp": "2026-05-26T13:07:38.657776+00:00"
   },
   {
@@ -1585,10 +1548,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "72356358",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4c9b1112",
     "timestamp": "2026-05-26T13:07:38.776247+00:00"
   },
   {
@@ -1642,12 +1605,51 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f52aba3c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T15:25:16.762042+00:00"
+  },
+  {
+    "id": "fd_1165",
+    "title": "Direction 1: Full G\u00e4rtner\u2013Ellis Large Deviation Principle for Generation Defect",
+    "description": "**Ambition:** grand_challenge\n\n**Conjecture:** For every nontrivial finite group $G$, the generation defect random variable on uniform pairs in $G^n$ satisfies a full large deviation principle with rate function $I_G(\\alpha) = \\sup_{t \\geq 0}\\{t\\alpha - \\Lambda_G(t)\\}$, where $\\Lambda_G(t) = \\lim_{n \\to \\infty} \\frac{1}{n} \\log Z_{G^n}(t)$.\n\n**The key insight is** that the log-convexity theorem (subgroupPressure_geometric_convex) establishes the differentiability structure of $\\Lambda_G$ needed for the G\u00e4rtner\u2013Ellis theorem, while the product factorization from the catalog gives the subadditivity needed for the limit to exist.\n\n**Why now?** The finite-level architecture is complete: nonnegativity, antitonicity, and log-convexity are formally verified. What remains is the passage from finite product inequalities to the asymptotic limit, which requires formalizing Fekete's subadditive lemma and the measure-theoretic LDP statement.\n\n**Test:** Monte Carlo on $(Z/6Z)^n$ for $n$ up to 50 should show empirical rate function convergence to the Legendre transform of numerically computed log-pressure.\n\n**Impact:** A formally verified LDP for group generation would be the first rigorous large deviation result in finite group theory, opening the door to sharp asymptotic analysis of generation probabilities for group families.\n\n**Catalog References:**\n- `Catalog/old/Pythagorean/SubgroupPressure.lean` \u2014 product factorization\n- `Pythagorean/LargeDeviationPressure.lean` \u2014 log-convexity and antitonicity\n\n**Proof Strategy:** (1) Prove log-pressure subadditivity for direct powers using product factorization. (2) Apply Fekete's lemma to establish $\\Lambda_G(t)$ exists. (3) Show $\\Lambda_G$ is differentiable on the interior (from log-convexity). (4) Invoke G\u00e4rtner\u2013Ellis.\n\n**Domain Bridges:** Probability theory (large deviations), statistical mechanics (thermodynamic limit), information theory (rate functions).\n\n**Lineage:** Extends `subgroupPressure_geometric_convex` and `subgroupPressure_antitone`.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bcd75759",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T16:00:48.826734+00:00"
+  },
+  {
+    "id": "fd_1166",
+    "title": "Direction 2: Maximal Subgroup Dominance and Pressure Truncation",
+    "description": "**Ambition:** solid_extension\n\n**Conjecture:** For finite simple groups $G$, the pressure restricted to maximal subgroups $Z_G^{\\max}(t) = \\sum_{M \\text{ maximal}} [G:M]^{-2t}$ satisfies $|\\log Z_G(t) - \\log Z_G^{\\max}(t)| \\to 0$ in suitable asymptotic regimes (rank $\\to \\infty$ or alternating degree $\\to \\infty$).\n\n**The key insight is** that non-maximal subgroups contribute exponentially smaller terms to the pressure (their indices are products of maximal indices), so truncation to maximal subgroups preserves the thermodynamic properties up to sub-leading corrections.\n\n**Why now?** The classification of maximal subgroups of finite simple groups (Aschbacher, Liebeck\u2013Seitz) provides explicit index data. The antitonicity theorem makes the dominance sharper at large $t$.\n\n**Test:** Compute full vs. maximal pressure for $A_n$ with $n = 5, 6, 7, 8$ and verify exponential convergence of the ratio.\n\n**Impact:** Reduces the computational complexity of pressure from exponential (all subgroups) to polynomial (maximal subgroups) for simple groups.\n\n**Catalog References:**\n- `Pythagorean/LargeDeviationPressure.lean` \u2014 pressure definition and antitonicity\n- `Catalog/old/Pythagorean/SubgroupPressure.lean` \u2014 pressure bounds\n\n**Proof Strategy:** Use the fact that every non-maximal subgroup $H$ is contained in some maximal $M$, so $[G:H] \\geq [G:M] \\cdot 2$. For $t > 0$, the contribution of $H$ is exponentially suppressed relative to $M$.\n\n**Domain Bridges:** Computational group theory (subgroup enumeration), complexity theory (polynomial vs. exponential algorithms).\n\n**Lineage:** Extends `subgroupPressure_antitone` and `Subgroup.index_ge_two_of_ne_top`.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bcd75759",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T16:00:48.872305+00:00"
   },
   {
     "id": "seed_005",
@@ -1755,45 +1757,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1165",
-    "title": "Direction 1: Full G\u00e4rtner\u2013Ellis Large Deviation Principle for Generation Defect",
-    "description": "**Ambition:** grand_challenge\n\n**Conjecture:** For every nontrivial finite group $G$, the generation defect random variable on uniform pairs in $G^n$ satisfies a full large deviation principle with rate function $I_G(\\alpha) = \\sup_{t \\geq 0}\\{t\\alpha - \\Lambda_G(t)\\}$, where $\\Lambda_G(t) = \\lim_{n \\to \\infty} \\frac{1}{n} \\log Z_{G^n}(t)$.\n\n**The key insight is** that the log-convexity theorem (subgroupPressure_geometric_convex) establishes the differentiability structure of $\\Lambda_G$ needed for the G\u00e4rtner\u2013Ellis theorem, while the product factorization from the catalog gives the subadditivity needed for the limit to exist.\n\n**Why now?** The finite-level architecture is complete: nonnegativity, antitonicity, and log-convexity are formally verified. What remains is the passage from finite product inequalities to the asymptotic limit, which requires formalizing Fekete's subadditive lemma and the measure-theoretic LDP statement.\n\n**Test:** Monte Carlo on $(Z/6Z)^n$ for $n$ up to 50 should show empirical rate function convergence to the Legendre transform of numerically computed log-pressure.\n\n**Impact:** A formally verified LDP for group generation would be the first rigorous large deviation result in finite group theory, opening the door to sharp asymptotic analysis of generation probabilities for group families.\n\n**Catalog References:**\n- `Catalog/old/Pythagorean/SubgroupPressure.lean` \u2014 product factorization\n- `Pythagorean/LargeDeviationPressure.lean` \u2014 log-convexity and antitonicity\n\n**Proof Strategy:** (1) Prove log-pressure subadditivity for direct powers using product factorization. (2) Apply Fekete's lemma to establish $\\Lambda_G(t)$ exists. (3) Show $\\Lambda_G$ is differentiable on the interior (from log-convexity). (4) Invoke G\u00e4rtner\u2013Ellis.\n\n**Domain Bridges:** Probability theory (large deviations), statistical mechanics (thermodynamic limit), information theory (rate functions).\n\n**Lineage:** Extends `subgroupPressure_geometric_convex` and `subgroupPressure_antitone`.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bcd75759",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T16:00:48.826734+00:00"
-  },
-  {
-    "id": "fd_1166",
-    "title": "Direction 2: Maximal Subgroup Dominance and Pressure Truncation",
-    "description": "**Ambition:** solid_extension\n\n**Conjecture:** For finite simple groups $G$, the pressure restricted to maximal subgroups $Z_G^{\\max}(t) = \\sum_{M \\text{ maximal}} [G:M]^{-2t}$ satisfies $|\\log Z_G(t) - \\log Z_G^{\\max}(t)| \\to 0$ in suitable asymptotic regimes (rank $\\to \\infty$ or alternating degree $\\to \\infty$).\n\n**The key insight is** that non-maximal subgroups contribute exponentially smaller terms to the pressure (their indices are products of maximal indices), so truncation to maximal subgroups preserves the thermodynamic properties up to sub-leading corrections.\n\n**Why now?** The classification of maximal subgroups of finite simple groups (Aschbacher, Liebeck\u2013Seitz) provides explicit index data. The antitonicity theorem makes the dominance sharper at large $t$.\n\n**Test:** Compute full vs. maximal pressure for $A_n$ with $n = 5, 6, 7, 8$ and verify exponential convergence of the ratio.\n\n**Impact:** Reduces the computational complexity of pressure from exponential (all subgroups) to polynomial (maximal subgroups) for simple groups.\n\n**Catalog References:**\n- `Pythagorean/LargeDeviationPressure.lean` \u2014 pressure definition and antitonicity\n- `Catalog/old/Pythagorean/SubgroupPressure.lean` \u2014 pressure bounds\n\n**Proof Strategy:** Use the fact that every non-maximal subgroup $H$ is contained in some maximal $M$, so $[G:H] \\geq [G:M] \\cdot 2$. For $t > 0$, the contribution of $H$ is exponentially suppressed relative to $M$.\n\n**Domain Bridges:** Computational group theory (subgroup enumeration), complexity theory (polynomial vs. exponential algorithms).\n\n**Lineage:** Extends `subgroupPressure_antitone` and `Subgroup.index_ge_two_of_ne_top`.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bcd75759",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T16:00:48.872305+00:00"
   },
   {
     "id": "seed_013",
@@ -2270,6 +2233,20 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
+  },
+  {
+    "id": "fd_1172",
+    "title": "Catalog References:",
+    "description": "`LorentzianRecognitionComplete.lean` (recognition criterion), `LorentzianMinorClosure.lean` (decomposition)",
+    "domains": [
+      "Physics"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8e8af4e3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T16:36:52.315693+00:00"
   },
   {
     "id": "seed_007",

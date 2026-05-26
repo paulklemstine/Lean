@@ -59,8 +59,7 @@
                     x: 0, y: 0, vx: 0, vy: 0, targetX: 0, targetY: 0, radius: 18,
                     phase: rng() / 4294967296 * Math.PI * 2,
                     rotSpeed: 0.3 + (rng() / 4294967296) * 0.5,
-                    rotAngle: rng() / 4294967296 * Math.PI * 2,
-                    trail: [], radarPulse: null
+                    rotAngle: rng() / 4294967296 * Math.PI * 2
                 });
             });
         }
@@ -752,7 +751,6 @@
 
                 // Comet trail: ring buffer of last 20 positions
                 const v = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
-                if (!n.trail) n.trail = [];
                 if (v > 30.0) {
                     n.trail.push({ x: n.x, y: n.y });
                     if (n.trail.length > 20) n.trail.shift();
