@@ -136,10 +136,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "000321e6",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:11:24.492421+00:00"
   },
   {
@@ -192,10 +192,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd24faba",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -213,10 +213,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b24e9482",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -401,10 +401,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "92e3853a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49a54abb",
     "timestamp": "2026-05-25T03:08:48.881853+00:00"
   },
   {
@@ -507,27 +507,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "6a88b92d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T15:29:21.854833+00:00"
-  },
-  {
-    "id": "fd_0874",
-    "title": "Direction 2: Extension to SL_n, Sp_{2n}, and Orthogonal Groups",
-    "description": "**Conjecture:** For each family of classical groups G_n(F_q) (SL_n, Sp_{2n}, O_n^\u00b1, U_n), there exists a certificate predicate C_n with density \u0398(1/n) such that certified elements are sufficient for generation with probability 1 - O(1/q).\n\n**Test:** For each family at small parameters (n = 2, 3; q = 2, 3, 5):\n- Define the appropriate certificate (e.g., for SL_n: irreducible charpoly with det = 1; for Sp_{2n}: irreducible charpoly that is self-reciprocal).\n- Enumerate group elements and compute certificate density.\n- Test generation by certified pairs.\n- If any family has density o(1/n), the conjecture fails for that family.\n\n**Impact:** Would provide the first unified certificate framework across all classical groups, enabling certified random generation algorithms for the most important families of finite groups in algebra, physics, and computer science.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (all theorems), `Algebra/SymmetricGroupGeneration/Core.lean`.\n\n**Proof Strategy:** For SL_n: restrict to matrices with determinant 1 and irreducible charpoly. The irreducible action theorem (Theorem 1) applies unchanged. The density question reduces to counting irreducible polynomials with prescribed constant term.\n\nFor Sp_{2n}: the certificate should involve the characteristic polynomial being irreducible and self-reciprocal (palindromic). The invariant subspace theorem needs to be strengthened to account for the symplectic form.\n\n**Domain Bridges:** Symplectic geometry (Hamiltonian dynamics); quantum information (random Clifford circuits use Sp_{2n}(F_2)); algebraic topology (monodromy groups in Lefschetz theory).\n\n**Lineage:** Direct generalization of the current GL_n framework.\n\n**Ambition:** Grand challenge for the full conjecture; solid extension for SL_n alone.\n\n**The key insight is** that the certificate architecture is group-independent \u2014 only the certificate predicate and the density estimate change from one classical group to another. The abstract `GenerationCertificateSystem` structure already anticipates this.\n\n**Why now?** The current work establishes the architectural pattern; extending to SL_n is a natural first step that could be completed in a single research cycle.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "0eb55b27",
-    "timestamp": "2026-05-25T15:29:44.838185+00:00"
   },
   {
     "id": "fd_0886",
@@ -930,26 +909,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "2933a8cf",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T20:01:51.882080+00:00"
-  },
-  {
-    "id": "fd_0937",
-    "title": "Direction 1: Exact Weighted Tropical Dimension Formula",
-    "description": "**Conjecture:** For any finite weighted graph G with basepoint q and vertex subset S, the weighted tropical kernel dimension satisfies\n\n  dim_trop(G, q, S) = \u03b2\u2081^w(G, S) + \u03ba^w(G, q, S)\n\nwhere \u03b2\u2081^w counts \"weight-compatible independent cycles\" and \u03ba^w counts \"weight-degenerate q-visible components.\" Under generic weights, \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula.\n\n**The key insight is** that the weighted first Betti number \u03b2\u2081^w is not merely the cycle rank of the underlying graph but the cycle rank of the *weight-degeneracy subgraph* \u2014 the subgraph restricted to edges participating in local weight ties. This refined invariant interpolates between \u03b2\u2081 (when all weights are equal) and 0 (when weights are generic).\n\n**Why now?** The nine verified theorems (especially Theorems 3.4 and 3.9, relating genericity and degeneracy to kernel membership) provide the boundary cases. Computational experiments on small graphs (n \u2264 6) can now systematically test the formula and identify the correct definition of \u03b2\u2081^w by exhaustive comparison.\n\n**Test:** Enumerate all weighted graphs on 4-5 vertices with weights in {1,...,5}. For each, compute the kernel dimension by brute force and compare with \u03b2\u2081^w + \u03ba^w for candidate definitions of \u03b2\u2081^w. The conjecture is falsifiable if any graph violates the equality.\n\n**Impact:** An exact dimension formula would be the weighted tropical analogue of the Baker-Norine Riemann-Roch theorem, opening the door to tropical divisor theory with valuations.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorems 3.4, 3.9), `Pythagorean/TropicalBridge/WeightedDefect.lean` (structural defect formula).\n\n**Proof Strategy:** Define \u03b2\u2081^w via the weight-degeneracy subgraph. Prove lower bound by explicit cycle/component constructions (extending Theorems 3.5-3.6). Prove upper bound by showing every kernel vector decomposes as a sum of cycle and component contributions.\n\n**Domain Bridges:** Tropical algebraic geometry (tropical linear spaces), matroid theory (circuit rank).\n\n**Lineage:** Extends Baker-Norine [2007], Develin-Santos-Sturmfels [2005].\n\n**Ambition:** Grand challenge \u2014 would unify tropical divisor theory with weighted optimization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e8f8d5e4",
-    "consumed_by_exp_id": "e958dd48",
-    "timestamp": "2026-05-25T20:35:38.438401+00:00"
   },
   {
     "id": "fd_0938",
@@ -1419,10 +1378,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d18284a",
     "timestamp": "2026-05-25T22:59:06.817075+00:00"
   },
   {
@@ -1603,26 +1562,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T23:33:37.973936+00:00"
   },
   {
-    "id": "fd_0990",
-    "title": "Direction 1: Lorentzian Polynomial Certificates for Exchange Optimization",
-    "description": "**Conjecture:** If the generating polynomial of a matroid M, weighted by an objective function f, is Lorentzian in the sense of Br\u00e4nd\u00e9n\u2013Huh, then f satisfies the directional exchange certificate on the bases of M. More precisely, the Lorentzian condition on the polynomial \u2211_{B basis} f(B) \u00b7 x^B implies DLC for -f on bases(M).\n\n**Test:** For matroids of rank \u2264 5 on ground sets of size \u2264 10, compute the generating polynomial with objective weights, verify the Lorentzian condition (negative semidefiniteness of the Hessian on the positive orthant), and check whether DLC holds. The conjecture predicts 100% correlation.\n\n**Impact:** This would establish a direct pipeline: Lorentzian polynomial \u2192 DLC \u2192 certified optimization. It would mean that the deep algebraic-geometric results of Br\u00e4nd\u00e9n\u2013Huh (which prove Lorentzian structure for many combinatorial polynomials) automatically yield optimization algorithms with global optimality guarantees. This transforms pure mathematics into applied algorithms.\n\n**Catalog References:** `Catalog/Pythagorean/HigherOrderLogConcavity.lean` \u2014 `KFoldLogConcave`, `kFoldLogConcave_mono`\n\n**Proof Strategy:** Use the characterization of Lorentzian polynomials via the positive semidefiniteness of associated quadratic forms. Show that the Lorentzian condition along exchange directions (2D slices corresponding to pairs (i,j)) implies the discrete midpoint inequality that underlies DLC. The key lemma is that the Lorentzian Hessian condition, restricted to the line spanned by e_i - e_j, gives exactly the ratio monotonicity needed for improving exchanges.\n\n**Domain Bridges:** Algebraic geometry (Hodge theory, Lorentzian polynomials) \u2192 Discrete optimization \u2192 Matroid theory\n\n**Lineage:** Builds on Theorems 1, 3.6 (coeffDLC_induces_exchange_optimization), and the kFoldLogConcave hierarchy.\n\n**Ambition:** Grand challenge \u2014 would unify two major research programs (Hodge-theoretic combinatorics and discrete convex analysis) that have developed independently.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "ddebc997",
-    "timestamp": "2026-05-26T00:07:30.273038+00:00"
-  },
-  {
     "id": "fd_0991",
     "title": "Direction 2: Quantitative Exchange Descent Bounds via Certificate Depth",
     "description": "**Conjecture:** For a finite exchange family S \u2286 \u2124^d with diameter D and an objective f satisfying ExchangeDLC_k with k \u2265 1, the exchange descent algorithm terminates in at most C \u00b7 d^{d-k} \u00b7 D steps, where C is a universal constant. At maximum depth k = d, the bound reduces to O(D), matching the performance of augmenting-path algorithms on M-convex functions.\n\n**Test:** Generate random exchange families of varying dimension d \u2208 {4,...,12} and rank r. For each, construct objectives with controlled certificate depth (using sums of independent log-concave terms for high depth, perturbed quadratics for low depth). Measure step counts and fit the exponent as a function of (d - k).\n\n**Impact:** This would establish the first complexity-depth tradeoff in discrete optimization, creating a new axis for algorithm design: invest in proving deeper certificates to get faster algorithms. This is analogous to how smoothness parameters control convergence rates in continuous optimization.\n\n**Catalog References:** `Catalog/Pythagorean/HigherOrderLogConcavity.lean` \u2014 `KFoldLogConcave.iterRatio_kfold`, `kFoldLogConcave_mono`\n\n**Proof Strategy:** Define a potential function \u03a6_k(x) that combines the objective value with a k-dependent measure of \"distance to optimality\" in the exchange graph. Show that each descent step decreases \u03a6_k by at least \u03b4_k = \u03a9(d^{-(d-k)}), yielding the step bound. The potential should leverage the k-fold certificate to get tighter decrease estimates at higher depths.\n\n**Domain Bridges:** Computational complexity \u2192 Discrete optimization \u2192 Algebraic combinatorics\n\n**Lineage:** Extends exchangeDescent_length_bound (Theorem 3.4) and exchangeDLC_k_mono.\n\n**Ambition:** Solid extension \u2014 the O(|S|) bound is already proven; the goal is to tighten it using certificate depth.\n\n---",
@@ -1680,25 +1619,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T01:21:04.623072+00:00"
   },
   {
-    "id": "fd_1011",
-    "title": "Direction 2: Certificate Density for Symplectic and Orthogonal Groups",
-    "description": "**Conjecture:** For the symplectic group Sp_{2n}(\ud835\udd3d_q), the certificate density (proportion of elements with irreducible characteristic polynomial satisfying the symplectic symmetry constraint f(x) = x^{2n} f(1/x)) is asymptotically 1/(2n), with error O(q^{-n}).\n\n**Test:** Compute the certificate density for Sp_4(\ud835\udd3d_q) for q = 3, 5, 7 and compare with 1/4. The \"self-reciprocal irreducible\" count for degree 2n should be approximately q^n/(2n). If the actual count deviates from this by more than q^{n/2} for any tested case, the conjecture's error term needs revision.\n\n**Impact:** Extends the certificate framework from GL_n to all classical groups, providing generation probability bounds for the groups that appear in quantum error correction (Sp_{2n} stabilizes symplectic quantum codes).\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (generation framework), `Pythagorean/CertificateDensity.lean` (GL_n density)\n\n**Proof Strategy:** Count self-reciprocal irreducible polynomials using the map f(x) \u21a6 x^n f(x + 1/x), which reduces to counting irreducible polynomials of degree n. Apply the existing necklace formula to this reduced count. The orbit-stabilizer argument carries over with the centralizer now being a unitary group U_1(\ud835\udd3d_{q^n}).\n\n**Domain Bridges:** Algebra (classical groups) \u2194 Number Theory (self-reciprocal polynomials) \u2194 Quantum Computing (symplectic stabilizer codes)\n\n**Lineage:** Direct extension of the GL_n certificate density theorem.\n\n**Ambition:** Solid extension \u2014 fills an important gap for non-GL classical groups.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "eb4b8f41",
-    "consumed_by_exp_id": "ba580866",
-    "timestamp": "2026-05-26T01:21:04.649417+00:00"
-  },
-  {
     "id": "fd_1014",
     "title": "Direction 5: Tropical Certificate Density and Expander Graph Construction",
     "description": "**Conjecture:** The certificate density framework admits a tropical analogue, where the finite field \ud835\udd3d_q is replaced by the tropical semifield T = (\u211d \u222a {-\u221e}, max, +), and \"irreducible\" tropical characteristic polynomials correspond to indecomposable tropical matrices. The tropical certificate density converges to 1/n as the \"tropical q\" (a scaling parameter) tends to infinity, with the same M\u00f6bius-function error structure.\n\n**Test:** Compute the fraction of n\u00d7n tropical matrices (with entries in {0, 1, ..., M}) that are tropically indecomposable, for n = 3, 4, 5 and M = 10, 100, 1000. If the fraction converges to 1/n with error ~ 1/M^{n/2}, the tropical analogue holds.\n\n**Impact:** Opens a new research direction connecting tropical geometry to algebraic generation theory. If the tropical certificate density satisfies the same asymptotics, it suggests a universal structural principle governing irreducibility across algebraic settings.\n\n**Catalog References:** `Pythagorean/CertificateDensity.lean` (algebraic density), `Pythagorean/TropicalBerggrenZeta.lean` (tropical arithmetic)\n\n**Proof Strategy:** Define tropical irreducibility via the tropical determinant and permanent structure. Use the tropical analogue of the characteristic polynomial (the tropical eigenvalue set) to classify tropical matrices. Apply tropical M\u00f6bius inversion to count tropically indecomposable polynomials.\n\n**Domain Bridges:** Tropical Geometry \u2194 Group Theory \u2194 Number Theory\n\n**Lineage:** Extends the Pythagorean-tropical bridge to a new domain.\n\n**Ambition:** Grand challenge \u2014 speculative but testable connection between algebraic and tropical worlds.",
@@ -1732,10 +1652,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5e0902bf",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b808f823",
     "timestamp": "2026-05-26T01:21:27.843587+00:00"
   },
   {
@@ -1751,12 +1671,69 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4f520a5f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T01:57:00.404929+00:00"
+  },
+  {
+    "id": "fd_1025",
+    "title": "Direction 1: Universal Support-Tutte Polynomial",
+    "description": "**Conjecture:** Any support invariant F satisfying (i) multiplicativity on disjoint-coordinate direct sums and (ii) a deletion\u2013contraction recurrence on M-convex supports factors uniquely through a universal support-Tutte polynomial T_S(x, y), i.e., F = \u03c6 \u2218 T_S for some ring homomorphism \u03c6.\n\n**The key insight is** that the deletion\u2013contraction recurrence on supports, combined with the loop/coloop trichotomy, generates a free algebraic structure indexed by \"support activities\" analogous to Tutte's internal/external activities. The universality would follow from showing that every M-convex support admits a canonical activity ordering.\n\n**Why now?** The minor closure theorems (Theorems 3.1\u20133.4 in `Catalog/Pythagorean/SupportMinorTheory.lean`) guarantee that the recurrence is well-defined on the class of M-convex supports. This was the missing structural prerequisite.\n\n**Test:** For all M-convex subsets of the degree-\u22645 simplex on 4 variables, compute the support-Tutte polynomial using two different coordinate orderings. If the values agree in all cases, universality is strongly supported. A single disagreement would disprove universality and redirect toward a weaker theory (e.g., universality only for matroid-induced supports).\n\n**Impact:** A universal support-Tutte polynomial would be a new algebraic invariant of M-convex sets, generalizing the classical Tutte polynomial and potentially capturing information invisible to matroid Tutte theory (e.g., degree information from non-{0,1} supports).\n\n**Catalog References:** `Catalog/Pythagorean/SupportMinorTheory.lean` (SupportTutteInvariant structure, minor_step_card_le).\n\n**Proof Strategy:** \n1. Define support activities via a total ordering on coordinates, analogous to Tutte (1954).\n2. Show the activity-based expansion agrees with the deletion\u2013contraction recurrence.\n3. Prove uniqueness by induction on support cardinality.\n\n**Domain Bridges:** Statistical physics (Potts model partition functions), knot theory (Jones polynomial via Tutte specialization).\n\n**Lineage:** Direct extension of Theorem 3.4 (exchange_of_minor) in the current catalog.\n\n**Ambition:** Grand challenge \u2014 would establish a new universal algebraic invariant.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "abb48be4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T02:33:38.976648+00:00"
+  },
+  {
+    "id": "fd_1026",
+    "title": "Direction 2: Lorentzian Minor Closure Conjecture",
+    "description": "**Conjecture:** If S is the support of a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh), then every minor of S is realizable as the support of a Lorentzian polynomial.\n\n**The key insight is** that Lorentzianity is a stronger condition than exchange (it additionally requires Hessian signature conditions on all degree-2 derivatives). The conjecture posits that this stronger condition is also minor-closed. If true, it would mean Lorentzian polynomials form a combinatorial species with both algebraic and geometric structure preserved under minors.\n\n**Why now?** We have proved that exchange (the combinatorial shadow of Lorentzianity) is minor-closed. The remaining question is whether the analytic/geometric conditions are also preserved. Computational evidence from `demo.py` shows no counterexample for degree \u2264 6 on \u2264 5 variables.\n\n**Test:** \n1. Enumerate all minors of supports of e_k(x_1,...,x_n) for n \u2264 7, k \u2264 4.\n2. For each minor, attempt to construct a Lorentzian polynomial with that support using the recognition criteria from `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`.\n3. Search for a counterexample: a minor support that satisfies exchange but admits no Lorentzian realization.\n\n**Impact:** Would establish Lorentzian polynomials as a minor-closed combinatorial species, enabling inductive classification programs and connecting Hodge theory to matroid-type decomposition.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange, IsBrandenHuhLorentzian), `Catalog/Pythagorean/SupportMinorTheory.lean` (exchange_of_minor).\n\n**Proof Strategy:** \n1. Show deletion preserves Lorentzianity by analyzing Hessian signature under variable restriction.\n2. Show contraction preserves Lorentzianity by analyzing the effect on quadratic forms.\n3. Use the recursive spectral certificate (recursivelyLorentzian_iff_brandenHuh) to reduce to checking degree-2 leaves.\n\n**Domain Bridges:** Algebraic geometry (Hodge index theorem), discrete convex analysis (M-convex optimization).\n\n**Lineage:** Builds on both the minor theory (this paper) and the Lorentzian recognition (LorentzianRecognitionComplete.lean).\n\n**Ambition:** Grand challenge \u2014 would unify Hodge theory with matroid minor theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "abb48be4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T02:33:39.011759+00:00"
+  },
+  {
+    "id": "fd_1030",
+    "title": "Direction 1: Spectral Fingerprints for Classical Subgroups",
+    "description": "**Conjecture**: For each classical matrix group family G \u2208 {SL_n, Sp_{2n}, O_n, SO_n, SU_n} over F_q, the characteristic polynomial distribution of random elements has a distinct fingerprint from GL_n(F_q) and from each other classical family of the same dimension. Specifically, the irreducible rate and split rate of random charpolys in G(F_q) converge to deterministic values \u03c1_irr(G, n, q) and \u03c1_spl(G, n, q) that separate G from all other classical groups of the same dimension.\n\n**Test**: For SL_3(F_7) and Sp_4(F_5), computationally estimate the characteristic polynomial statistics from 10,000 random elements and compare to the GL predictions. If the distributions differ significantly (p < 0.01 in a chi-squared test against the GL distribution), the conjecture is supported.\n\n**Impact**: This would extend the recognition framework from identifying (n, q) within GL_n to identifying the *group type* (GL, SL, Sp, O, ...) \u2014 a dramatically more powerful recognition tool that addresses the core problem in computational group theory.\n\n**Catalog References**: `Catalog/Algebra/CharpolyRecognition.lean` (fingerprint framework, loss function), `Catalog/Algebra/MatrixGroupGeneration.lean` (generation certificates, invariant subspace theorem).\n\n**Proof Strategy**: For SL_n, the constraint det(A) = 1 restricts the constant term of the charpoly to (-1)^n, reducing the polynomial space. Count irreducible polynomials with prescribed constant term using character sums over F_q. For Sp_{2n}, charpolys are palindromic (self-reciprocal), dramatically reducing the irreducible fraction. Prove these structural constraints yield distinct rates.\n\n**Domain Bridges**: Connects to random matrix theory over finite fields (Fulman, 2000) and representation theory of classical groups (Carter, 1985).\n\n**Lineage**: Direct extension of the current GL_n fingerprint framework.\n\n**Ambition**: Grand challenge \u2014 requires new algebraic counting results for constrained polynomial families.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "114b795e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T03:06:43.848125+00:00"
   },
   {
     "id": "seed_005",
@@ -1879,44 +1856,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1025",
-    "title": "Direction 1: Universal Support-Tutte Polynomial",
-    "description": "**Conjecture:** Any support invariant F satisfying (i) multiplicativity on disjoint-coordinate direct sums and (ii) a deletion\u2013contraction recurrence on M-convex supports factors uniquely through a universal support-Tutte polynomial T_S(x, y), i.e., F = \u03c6 \u2218 T_S for some ring homomorphism \u03c6.\n\n**The key insight is** that the deletion\u2013contraction recurrence on supports, combined with the loop/coloop trichotomy, generates a free algebraic structure indexed by \"support activities\" analogous to Tutte's internal/external activities. The universality would follow from showing that every M-convex support admits a canonical activity ordering.\n\n**Why now?** The minor closure theorems (Theorems 3.1\u20133.4 in `Catalog/Pythagorean/SupportMinorTheory.lean`) guarantee that the recurrence is well-defined on the class of M-convex supports. This was the missing structural prerequisite.\n\n**Test:** For all M-convex subsets of the degree-\u22645 simplex on 4 variables, compute the support-Tutte polynomial using two different coordinate orderings. If the values agree in all cases, universality is strongly supported. A single disagreement would disprove universality and redirect toward a weaker theory (e.g., universality only for matroid-induced supports).\n\n**Impact:** A universal support-Tutte polynomial would be a new algebraic invariant of M-convex sets, generalizing the classical Tutte polynomial and potentially capturing information invisible to matroid Tutte theory (e.g., degree information from non-{0,1} supports).\n\n**Catalog References:** `Catalog/Pythagorean/SupportMinorTheory.lean` (SupportTutteInvariant structure, minor_step_card_le).\n\n**Proof Strategy:** \n1. Define support activities via a total ordering on coordinates, analogous to Tutte (1954).\n2. Show the activity-based expansion agrees with the deletion\u2013contraction recurrence.\n3. Prove uniqueness by induction on support cardinality.\n\n**Domain Bridges:** Statistical physics (Potts model partition functions), knot theory (Jones polynomial via Tutte specialization).\n\n**Lineage:** Direct extension of Theorem 3.4 (exchange_of_minor) in the current catalog.\n\n**Ambition:** Grand challenge \u2014 would establish a new universal algebraic invariant.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "abb48be4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T02:33:38.976648+00:00"
-  },
-  {
-    "id": "fd_1026",
-    "title": "Direction 2: Lorentzian Minor Closure Conjecture",
-    "description": "**Conjecture:** If S is the support of a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh), then every minor of S is realizable as the support of a Lorentzian polynomial.\n\n**The key insight is** that Lorentzianity is a stronger condition than exchange (it additionally requires Hessian signature conditions on all degree-2 derivatives). The conjecture posits that this stronger condition is also minor-closed. If true, it would mean Lorentzian polynomials form a combinatorial species with both algebraic and geometric structure preserved under minors.\n\n**Why now?** We have proved that exchange (the combinatorial shadow of Lorentzianity) is minor-closed. The remaining question is whether the analytic/geometric conditions are also preserved. Computational evidence from `demo.py` shows no counterexample for degree \u2264 6 on \u2264 5 variables.\n\n**Test:** \n1. Enumerate all minors of supports of e_k(x_1,...,x_n) for n \u2264 7, k \u2264 4.\n2. For each minor, attempt to construct a Lorentzian polynomial with that support using the recognition criteria from `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`.\n3. Search for a counterexample: a minor support that satisfies exchange but admits no Lorentzian realization.\n\n**Impact:** Would establish Lorentzian polynomials as a minor-closed combinatorial species, enabling inductive classification programs and connecting Hodge theory to matroid-type decomposition.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange, IsBrandenHuhLorentzian), `Catalog/Pythagorean/SupportMinorTheory.lean` (exchange_of_minor).\n\n**Proof Strategy:** \n1. Show deletion preserves Lorentzianity by analyzing Hessian signature under variable restriction.\n2. Show contraction preserves Lorentzianity by analyzing the effect on quadratic forms.\n3. Use the recursive spectral certificate (recursivelyLorentzian_iff_brandenHuh) to reduce to checking degree-2 leaves.\n\n**Domain Bridges:** Algebraic geometry (Hodge index theorem), discrete convex analysis (M-convex optimization).\n\n**Lineage:** Builds on both the minor theory (this paper) and the Lorentzian recognition (LorentzianRecognitionComplete.lean).\n\n**Ambition:** Grand challenge \u2014 would unify Hodge theory with matroid minor theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "abb48be4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T02:33:39.011759+00:00"
   },
   {
     "id": "seed_013",
@@ -2340,25 +2279,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "4f520a5f",
     "consumed_by_exp_id": "48617359",
     "timestamp": "2026-05-26T01:57:00.371515+00:00"
-  },
-  {
-    "id": "fd_1030",
-    "title": "Direction 1: Spectral Fingerprints for Classical Subgroups",
-    "description": "**Conjecture**: For each classical matrix group family G \u2208 {SL_n, Sp_{2n}, O_n, SO_n, SU_n} over F_q, the characteristic polynomial distribution of random elements has a distinct fingerprint from GL_n(F_q) and from each other classical family of the same dimension. Specifically, the irreducible rate and split rate of random charpolys in G(F_q) converge to deterministic values \u03c1_irr(G, n, q) and \u03c1_spl(G, n, q) that separate G from all other classical groups of the same dimension.\n\n**Test**: For SL_3(F_7) and Sp_4(F_5), computationally estimate the characteristic polynomial statistics from 10,000 random elements and compare to the GL predictions. If the distributions differ significantly (p < 0.01 in a chi-squared test against the GL distribution), the conjecture is supported.\n\n**Impact**: This would extend the recognition framework from identifying (n, q) within GL_n to identifying the *group type* (GL, SL, Sp, O, ...) \u2014 a dramatically more powerful recognition tool that addresses the core problem in computational group theory.\n\n**Catalog References**: `Catalog/Algebra/CharpolyRecognition.lean` (fingerprint framework, loss function), `Catalog/Algebra/MatrixGroupGeneration.lean` (generation certificates, invariant subspace theorem).\n\n**Proof Strategy**: For SL_n, the constraint det(A) = 1 restricts the constant term of the charpoly to (-1)^n, reducing the polynomial space. Count irreducible polynomials with prescribed constant term using character sums over F_q. For Sp_{2n}, charpolys are palindromic (self-reciprocal), dramatically reducing the irreducible fraction. Prove these structural constraints yield distinct rates.\n\n**Domain Bridges**: Connects to random matrix theory over finite fields (Fulman, 2000) and representation theory of classical groups (Carter, 1985).\n\n**Lineage**: Direct extension of the current GL_n fingerprint framework.\n\n**Ambition**: Grand challenge \u2014 requires new algebraic counting results for constrained polynomial families.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "114b795e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T03:06:43.848125+00:00"
   },
   {
     "id": "seed_032",

@@ -4,6 +4,51 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_2_certificate_density_for_symplectic_and.json",
+    "title": "Certificate Density for Classical Groups: Self-Reciprocal Polynomials and Symplectic Generation",
+    "domain": "Algebra / Finite Group Theory / Polynomial Arithmetic",
+    "date": "2026-05-26T03:41:09Z",
+    "exp_id": "ba580866",
+    "quality_score": 0.719670909090909,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_1_lorentzian_polynomial_certificates_for.json",
+    "title": "Lorentzian Polynomial Certificates for Exchange Optimization",
+    "domain": "Combinatorial Optimization / Hodge Theory / Matroid Theory",
+    "date": "2026-05-26T03:40:49Z",
+    "exp_id": "ddebc997",
+    "quality_score": 0.6746709090909091,
+    "quality": "partial"
+  },
+  {
+    "filename": "direction_1_exact_weighted_tropical_dimension_form.json",
+    "title": "Exact Weighted Tropical Dimension Formula via Degeneracy Subgraphs",
+    "domain": "Tropical Geometry / Weighted Graph Theory",
+    "date": "2026-05-26T03:40:26Z",
+    "exp_id": "e958dd48",
+    "quality_score": 0.7201487272727274,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_2_extension_to_sl_n_sp_2n_and_orthogonal.json",
+    "title": "Unified Certificate Generation for Classical Groups",
+    "domain": "Algebra / Classical Groups / Finite Fields",
+    "date": "2026-05-26T03:40:03Z",
+    "exp_id": "0eb55b27",
+    "quality_score": 0.6602491734442975,
+    "quality": "partial"
+  },
+  {
+    "filename": "direction_1_confluence_and_unique_normal_forms.json",
+    "title": "Confluence and Unique Normal Forms for Tensor Distributivity Rewrites",
+    "domain": "Term Rewriting Theory / Tensor Algebra",
+    "date": "2026-05-26T03:39:40Z",
+    "exp_id": "b7265325",
+    "quality_score": 0.7231701356096614,
+    "quality": "substantial"
+  },
+  {
     "filename": "direction_3_black_box_group_recognition_via_charac.json",
     "title": "Black-Box Group Recognition via Characteristic Polynomial Certificates",
     "domain": "Algebraic Group Theory / Finite Field Combinatorics",
@@ -474,6 +519,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "direction_1_lorentzian_polynomial_certificates_for.json": {
+    "title": "Lorentzian Polynomial Certificates for Exchange Optimization",
+    "exp_id": "ddebc997",
+    "source_exp_ids": [
+      "abf333bc"
+    ],
+    "domain": "Combinatorial Optimization / Hodge Theory / Matroid Theory"
+  },
   "direction_2_hypergraph_transversals_as_tropical_co.json": {
     "title": "Hypergraph Transversals as Tropical Convex Optimization",
     "exp_id": "89ddcffd",
@@ -561,6 +614,14 @@ window.PACKAGE_DB_INDEX = {
       "fd2f08b2"
     ],
     "domain": "Algebraic Graph Topology / Tropical Linear Algebra / Topological Data Analysis"
+  },
+  "direction_1_exact_weighted_tropical_dimension_form.json": {
+    "title": "Exact Weighted Tropical Dimension Formula via Degeneracy Subgraphs",
+    "exp_id": "e958dd48",
+    "source_exp_ids": [
+      "e8f8d5e4"
+    ],
+    "domain": "Tropical Geometry / Weighted Graph Theory"
   },
   "direction_3_compositional_rounding_certificates_fo.json": {
     "title": "Compositional Rounding Certificates for Modular Hypergraphs",
@@ -666,6 +727,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Probability Theory / Markov Chains"
   },
+  "direction_2_certificate_density_for_symplectic_and.json": {
+    "title": "Certificate Density for Classical Groups: Self-Reciprocal Polynomials and Symplectic Generation",
+    "exp_id": "ba580866",
+    "source_exp_ids": [
+      "eb4b8f41"
+    ],
+    "domain": "Algebra / Finite Group Theory / Polynomial Arithmetic"
+  },
   "direction_5_higher_dimensional_tropical_morse_theo.json": {
     "title": "Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
     "exp_id": "c9247862",
@@ -673,6 +742,22 @@ window.PACKAGE_DB_INDEX = {
       "db7ef9c7"
     ],
     "domain": "Combinatorial Topology / Tropical Geometry"
+  },
+  "direction_2_extension_to_sl_n_sp_2n_and_orthogonal.json": {
+    "title": "Unified Certificate Generation for Classical Groups",
+    "exp_id": "0eb55b27",
+    "source_exp_ids": [
+      "44ebbbfd"
+    ],
+    "domain": "Algebra / Classical Groups / Finite Fields"
+  },
+  "direction_1_confluence_and_unique_normal_forms.json": {
+    "title": "Confluence and Unique Normal Forms for Tensor Distributivity Rewrites",
+    "exp_id": "b7265325",
+    "source_exp_ids": [
+      "c1bdccd8"
+    ],
+    "domain": "Term Rewriting Theory / Tensor Algebra"
   },
   "direction_3_quantum_ground_state_preparation_via_l.json": {
     "title": "Quantum Ground-State Preparation via Lorentzian Polynomial Certificates",
@@ -903,7 +988,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 270,
+      "hue": 95,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -914,7 +999,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 272,
+      "hue": 90,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -925,7 +1010,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -936,7 +1021,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -947,7 +1032,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 275,
+      "hue": 271,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -958,7 +1043,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7554863879178124,
       "quality": "substantial"
     },
@@ -969,7 +1054,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -980,7 +1065,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 270,
+      "hue": 314,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -991,7 +1076,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7475694375378231,
       "quality": "substantial"
     },
@@ -1002,7 +1087,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 91,
+      "hue": 271,
       "priority_score": 0.7452328425357874,
       "quality": "substantial"
     },
@@ -1046,7 +1131,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.7426729134392938,
       "quality": "substantial"
     },
@@ -1057,7 +1142,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:49:47Z",
-      "hue": 314,
+      "hue": 90,
       "priority_score": 0.718787256166983,
       "quality": "substantial"
     },
@@ -1068,7 +1153,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T17:57:55Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7485430061705161,
       "quality": "substantial"
     },
@@ -1079,7 +1164,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:02:50Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7448372075471699,
       "quality": "substantial"
     },
@@ -1090,7 +1175,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T18:03:18Z",
-      "hue": 95,
+      "hue": 280,
       "priority_score": 0.7496613212625398,
       "quality": "substantial"
     },
@@ -1101,7 +1186,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T18:39:27Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7633440525911624,
       "quality": "substantial"
     },
@@ -1112,7 +1197,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:39:59Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7061918953063686,
       "quality": "substantial"
     },
@@ -1123,7 +1208,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T18:40:46Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.6968374111334675,
       "quality": "partial"
     },
@@ -1134,7 +1219,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T19:29:15Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7239525714285715,
       "quality": "substantial"
     },
@@ -1156,7 +1241,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:02:12Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7190936000000001,
       "quality": "substantial"
     },
@@ -1167,7 +1252,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:34:49Z",
-      "hue": 91,
+      "hue": 89,
       "priority_score": 0.7132103632664923,
       "quality": "substantial"
     },
@@ -1178,7 +1263,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:35:13Z",
-      "hue": 90,
+      "hue": 281,
       "priority_score": 0.7238752112676057,
       "quality": "substantial"
     },
@@ -1189,7 +1274,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T20:35:34Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7266461478599222,
       "quality": "substantial"
     },
@@ -1200,7 +1285,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:35:56Z",
-      "hue": 91,
+      "hue": 359,
       "priority_score": 0.7224016949152543,
       "quality": "substantial"
     },
@@ -1211,7 +1296,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T21:12:32Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7286,
       "quality": "substantial"
     },
@@ -1222,7 +1307,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T21:13:06Z",
-      "hue": 270,
+      "hue": 271,
       "priority_score": 0.7215128,
       "quality": "substantial"
     },
@@ -1233,7 +1318,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T21:13:36Z",
-      "hue": 95,
+      "hue": 271,
       "priority_score": 0.7197528467153285,
       "quality": "substantial"
     },
@@ -1244,7 +1329,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T21:49:23Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.7272178424657534,
       "quality": "substantial"
     },
@@ -1255,7 +1340,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T21:51:06Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7304195636363637,
       "quality": "substantial"
     },
@@ -1266,7 +1351,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T22:25:13Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7444580722891567,
       "quality": "substantial"
     },
@@ -1277,7 +1362,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T22:25:35Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7277750000000001,
       "quality": "substantial"
     },
@@ -1288,7 +1373,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T22:58:33Z",
-      "hue": 270,
+      "hue": 275,
       "priority_score": 0.7187674157303372,
       "quality": "substantial"
     },
@@ -1299,7 +1384,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T22:59:02Z",
-      "hue": 270,
+      "hue": 92,
       "priority_score": 0.7849381886792453,
       "quality": "substantial"
     },
@@ -1310,7 +1395,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T23:33:12Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7260796984924622,
       "quality": "substantial"
     },
@@ -1321,7 +1406,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T23:33:35Z",
-      "hue": 92,
+      "hue": 271,
       "priority_score": 0.7261742857142859,
       "quality": "substantial"
     },
@@ -1332,7 +1417,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T00:07:27Z",
-      "hue": 92,
+      "hue": 270,
       "priority_score": 0.7241576377952756,
       "quality": "substantial"
     },
@@ -1354,7 +1439,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T00:40:46Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7214240378548897,
       "quality": "substantial"
     },
@@ -1365,7 +1450,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T00:41:16Z",
-      "hue": 92,
+      "hue": 272,
       "priority_score": 0.7112743078154176,
       "quality": "substantial"
     },
@@ -1376,7 +1461,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T00:41:36Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.771213734939759,
       "quality": "substantial"
     },
@@ -1387,7 +1472,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T00:41:59Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.717992972972973,
       "quality": "substantial"
     },
@@ -1398,7 +1483,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T01:20:52Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7184184032238947,
       "quality": "substantial"
     },
@@ -1409,7 +1494,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-26T01:21:25Z",
-      "hue": 91,
+      "hue": 134,
       "priority_score": 0.7442945762711866,
       "quality": "substantial"
     },
@@ -1420,7 +1505,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-26T01:56:35Z",
-      "hue": 272,
+      "hue": 275,
       "priority_score": 0.7199839008264464,
       "quality": "substantial"
     },
@@ -1431,7 +1516,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-26T01:56:58Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.66746,
       "quality": "partial"
     },
@@ -1453,7 +1538,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T02:33:36Z",
-      "hue": 272,
+      "hue": 91,
       "priority_score": 0.7277349606299213,
       "quality": "substantial"
     },
@@ -1464,8 +1549,63 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T03:06:41Z",
-      "hue": 271,
+      "hue": 90,
       "priority_score": 0.7225979310344828,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_confluence_and_unique_normal_forms",
+      "title": "Confluence and Unique Normal Forms for Tensor Distributivity Rewrites",
+      "domain": "Term Rewriting Theory / Tensor Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T03:39:40Z",
+      "hue": 270,
+      "priority_score": 0.7231701356096614,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_extension_to_sl_n_sp_2n_and_orthogonal",
+      "title": "Unified Certificate Generation for Classical Groups",
+      "domain": "Algebra / Classical Groups / Finite Fields",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T03:40:03Z",
+      "hue": 90,
+      "priority_score": 0.6602491734442975,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_1_exact_weighted_tropical_dimension_form",
+      "title": "Exact Weighted Tropical Dimension Formula via Degeneracy Subgraphs",
+      "domain": "Tropical Geometry / Weighted Graph Theory",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-26T03:40:26Z",
+      "hue": 92,
+      "priority_score": 0.7201487272727274,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_lorentzian_polynomial_certificates_for",
+      "title": "Lorentzian Polynomial Certificates for Exchange Optimization",
+      "domain": "Combinatorial Optimization / Hodge Theory / Matroid Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T03:40:49Z",
+      "hue": 90,
+      "priority_score": 0.6746709090909091,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_2_certificate_density_for_symplectic_and",
+      "title": "Certificate Density for Classical Groups: Self-Reciprocal Polynomials and Symplectic Generation",
+      "domain": "Algebra / Finite Group Theory / Polynomial Arithmetic",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T03:41:09Z",
+      "hue": 91,
+      "priority_score": 0.719670909090909,
       "quality": "substantial"
     }
   ],
@@ -1480,6 +1620,20 @@ window.PACKAGE_GRAPH = {
     {
       "source": "direction_1_m_convexity_closure_under_differentiat",
       "target": "direction_1_deletion_contraction_duality_for_polyn",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_weighted_extension",
+      "target": "direction_1_exact_weighted_tropical_dimension_form",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_m_convex_optimization_via_directional_",
+      "target": "direction_1_lorentzian_polynomial_certificates_for",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -1506,6 +1660,13 @@ window.PACKAGE_GRAPH = {
       "type": "provenance"
     },
     {
+      "source": "direction_1_certificate_density_asymptotics_via_th",
+      "target": "direction_2_certificate_density_for_symplectic_and",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
       "source": "yang_mills_mass_gap",
       "target": "direction_2_character_expansion_and_strong_couplin",
       "strength": 1.0,
@@ -1515,6 +1676,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "direction_2_universality_of_phase_transition_criti",
       "target": "direction_2_concentration_of_subgroup_pressure",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_generation_certificates_for_matrix_gro",
+      "target": "direction_2_extension_to_sl_n_sp_2n_and_orthogonal",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -1664,7 +1832,7 @@ window.PACKAGE_GRAPH = {
     {
       "domain_a": "Geometry",
       "domain_b": "Tropical",
-      "package_count": 8,
+      "package_count": 9,
       "strength": 1.0
     },
     {

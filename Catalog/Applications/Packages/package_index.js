@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra / Finite Group Theory / Polynomial Arithmetic",
     "date": "2026-05-26T03:41:09Z",
     "exp_id": "ba580866",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.719670909090909,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_lorentzian_polynomial_certificates_for.json",
@@ -1605,8 +1605,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-26T03:41:09Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.719670909090909,
+      "quality": "substantial"
     }
   ],
   "edges": [

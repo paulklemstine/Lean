@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1697 of the highest-quality
+A curated collection of 1731 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1697
+Total files: 1731
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -11,6 +11,7 @@ import FINAL.Algebra.AlgebraicCircuitComplexity
 import FINAL.Algebra.AlgebraicSpacetime
 import FINAL.Algebra.AlgebraicTheoryOfAlgebra
 import FINAL.Algebra.AntipodeUniqueness
+import FINAL.Algebra.ArbitrageProfit
 import FINAL.Algebra.ArithmeticDarkMatter
 import FINAL.Algebra.AttackComposition
 import FINAL.Algebra.AverageCriterion
@@ -35,9 +36,12 @@ import FINAL.Algebra.Channel6Research
 import FINAL.Algebra.CharpolyRecognition
 import FINAL.Algebra.ChimeraFactoring
 import FINAL.Algebra.ClosedFormAncestor
+import FINAL.Algebra.Code
 import FINAL.Algebra.Coding
 import FINAL.Algebra.CompactOperators
+import FINAL.Algebra.Companion
 import FINAL.Algebra.ComputationalSoundness
+import FINAL.Algebra.Conditional
 import FINAL.Algebra.Congruence
 import FINAL.Algebra.ConnesKreimerCoproduct
 import FINAL.Algebra.Constructions
@@ -53,6 +57,7 @@ import FINAL.Algebra.CubeResidues
 import FINAL.Algebra.CubeSubgroup
 import FINAL.Algebra.CyclicGroupSubgroups
 import FINAL.Algebra.CyclotomicGaloisGroup
+import FINAL.Algebra.DeepConnections
 import FINAL.Algebra.DeepOpenProblems
 import FINAL.Algebra.Defs
 import FINAL.Algebra.DegreeTheory
@@ -72,12 +77,14 @@ import FINAL.Algebra.EMLCongruenceHilbert
 import FINAL.Algebra.EigenvalueRepulsion
 import FINAL.Algebra.Elimination
 import FINAL.Algebra.Equivalences
+import FINAL.Algebra.EulerBricks
 import FINAL.Algebra.EvalKernel
 import FINAL.Algebra.Exact
 import FINAL.Algebra.ExceptionalGroups
 import FINAL.Algebra.ExponentBounds
 import FINAL.Algebra.ExtTorBasic
 import FINAL.Algebra.Extensions
+import FINAL.Algebra.FHEOracles
 import FINAL.Algebra.FactoringViaBerggren
 import FINAL.Algebra.Families
 import FINAL.Algebra.FermatFactor
@@ -90,6 +97,7 @@ import FINAL.Algebra.Freivalds
 import FINAL.Algebra.FreivaldsBridge
 import FINAL.Algebra.FreivaldsSchwartzZippel
 import FINAL.Algebra.FreivaldsVerification
+import FINAL.Algebra.FrontierResearch
 import FINAL.Algebra.FutureExploration
 import FINAL.Algebra.GaloisObstruction
 import FINAL.Algebra.GenesisOracle
@@ -107,10 +115,12 @@ import FINAL.Algebra.HilbertClassFieldBasic
 import FINAL.Algebra.HomingMissile
 import FINAL.Algebra.HurwitzQuaternions
 import FINAL.Algebra.Hyperbolic
+import FINAL.Algebra.IOFExplorations
 import FINAL.Algebra.IdealClassGroupBridge
 import FINAL.Algebra.IdempotentCongruenceBasis
 import FINAL.Algebra.IdempotentHilbertBasis
 import FINAL.Algebra.IdempotentLensing
+import FINAL.Algebra.IharaZeta
 import FINAL.Algebra.InsideOutFactor
 import FINAL.Algebra.InsideOutResearch
 import FINAL.Algebra.IntegerDiffraction
@@ -119,9 +129,12 @@ import FINAL.Algebra.InversePythagoreanTree
 import FINAL.Algebra.InvertedTreeV3Research
 import FINAL.Algebra.KaroubiIdempotent
 import FINAL.Algebra.KernelCardinality
+import FINAL.Algebra.KernelDensity
+import FINAL.Algebra.Kronecker
 import FINAL.Algebra.Langlands
 import FINAL.Algebra.Lattice
 import FINAL.Algebra.LatticeTreeDuality
+import FINAL.Algebra.Lehmer
 import FINAL.Algebra.LightConeTheory
 import FINAL.Algebra.LightDarkPrimes
 import FINAL.Algebra.LocalEulerExt
@@ -142,6 +155,7 @@ import FINAL.Algebra.MontgomeryPairCorrelation
 import FINAL.Algebra.MoonshotExplorations
 import FINAL.Algebra.MultiocularGodOracle
 import FINAL.Algebra.NewExplorations
+import FINAL.Algebra.NewHypotheses
 import FINAL.Algebra.NewResults
 import FINAL.Algebra.NewtonIdempotent
 import FINAL.Algebra.NilpotenceTheory
@@ -151,6 +165,8 @@ import FINAL.Algebra.NuclearAlgebra
 import FINAL.Algebra.NullstellensatzPIT
 import FINAL.Algebra.NumberLineOracle
 import FINAL.Algebra.Observable
+import FINAL.Algebra.Obstruction
+import FINAL.Algebra.OctonionicTropicalApplications
 import FINAL.Algebra.OpenDirections
 import FINAL.Algebra.OpenQuestions
 import FINAL.Algebra.OpenQuestions_2
@@ -167,6 +183,7 @@ import FINAL.Algebra.Photon
 import FINAL.Algebra.PhysicalPhenomena
 import FINAL.Algebra.PolyMethod
 import FINAL.Algebra.PolynomialTransforms
+import FINAL.Algebra.Positivity
 import FINAL.Algebra.PredictionGeometry
 import FINAL.Algebra.PrimeCounting
 import FINAL.Algebra.PrimeDivisorCongruence
@@ -178,7 +195,9 @@ import FINAL.Algebra.QDF_HE_Frontiers
 import FINAL.Algebra.QDF_NewDirections
 import FINAL.Algebra.QuadrupleGhostStructure
 import FINAL.Algebra.Quantum
+import FINAL.Algebra.QuantumCollapse
 import FINAL.Algebra.QuantumPhaseLatticeExtended
+import FINAL.Algebra.QuarticFiber
 import FINAL.Algebra.QuaternaryPythagoreanTree
 import FINAL.Algebra.QuaternionAlgebras
 import FINAL.Algebra.QuaternionBasic
@@ -187,10 +206,12 @@ import FINAL.Algebra.QuaternionRotation
 import FINAL.Algebra.Radical
 import FINAL.Algebra.RamanujanFrontiers3
 import FINAL.Algebra.RamanujanOpenProblems
+import FINAL.Algebra.RankOne
 import FINAL.Algebra.Recurrence
 import FINAL.Algebra.Recursion
 import FINAL.Algebra.Reduction
 import FINAL.Algebra.RegulatorPosDef
+import FINAL.Algebra.ResidueDescent
 import FINAL.Algebra.ReversibleComputing
 import FINAL.Algebra.RiemannConnection
 import FINAL.Algebra.Robustness
@@ -217,6 +238,8 @@ import FINAL.Algebra.StrangeLight
 import FINAL.Algebra.StrangeLoops
 import FINAL.Algebra.StrictUpperTriangular
 import FINAL.Algebra.Surface
+import FINAL.Algebra.Sylvester
+import FINAL.Algebra.SymmCube
 import FINAL.Algebra.Synthesis
 import FINAL.Algebra.Theorems
 import FINAL.Algebra.ThreeDreams
@@ -237,6 +260,7 @@ import FINAL.Algebra.TwoEyesNextSteps
 import FINAL.Algebra.UltrametricCondNeg
 import FINAL.Algebra.UnifyingTheory
 import FINAL.Algebra.UniswapV4Hooks
+import FINAL.Algebra.UnityIsomorphism
 import FINAL.Algebra.UniversalParentInverse
 import FINAL.Algebra.UniversalTranslator
 import FINAL.Algebra.WeightedRotaBaxter
@@ -919,6 +943,7 @@ import FINAL.EML.TransferLearningBounds
 import FINAL.EML.TwoPhase
 import FINAL.EML.UltrametricCertifiedRobustness
 import FINAL.EML.UnifiedCompression
+import FINAL.EML.UnivariateVanishing
 import FINAL.EML.V14Research
 import FINAL.EML.V15Research
 import FINAL.EML.V16Research
@@ -1039,12 +1064,14 @@ import FINAL.MachineLearning.ArithmeticMonodromy
 import FINAL.MachineLearning.ArithmeticPhaseLocking
 import FINAL.MachineLearning.AsymptoticRate
 import FINAL.MachineLearning.Attention
+import FINAL.MachineLearning.BIBD
 import FINAL.MachineLearning.Basic
 import FINAL.MachineLearning.Benford
 import FINAL.MachineLearning.BerggrenOrbitSpectral
 import FINAL.MachineLearning.BerggrenSecondExtremal
 import FINAL.MachineLearning.BernoulliMeasure
 import FINAL.MachineLearning.BinomialBounds
+import FINAL.MachineLearning.BiologicalCrystallization
 import FINAL.MachineLearning.BoundedFamily
 import FINAL.MachineLearning.Bounds
 import FINAL.MachineLearning.BracketRobustness
@@ -1099,6 +1126,7 @@ import FINAL.MachineLearning.Growth
 import FINAL.MachineLearning.GrowthEstimate
 import FINAL.MachineLearning.HexGeometry
 import FINAL.MachineLearning.IdempotentAggregation
+import FINAL.MachineLearning.InferenceArithmetic
 import FINAL.MachineLearning.IrrationalityCriteria
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.LLMSingleMatMul
@@ -1128,6 +1156,7 @@ import FINAL.MachineLearning.PigeonholeFamily
 import FINAL.MachineLearning.PresheafIdentifiability
 import FINAL.MachineLearning.PrimeGapFramework
 import FINAL.MachineLearning.PrimitiveReduction
+import FINAL.MachineLearning.ProdBounds
 import FINAL.MachineLearning.ProfileDepthGap
 import FINAL.MachineLearning.PromptOptimization
 import FINAL.MachineLearning.ProofCompression
@@ -1139,6 +1168,7 @@ import FINAL.MachineLearning.QuantumObservables
 import FINAL.MachineLearning.ReflectiveConvergence
 import FINAL.MachineLearning.ReflectiveConvergenceArchitecture
 import FINAL.MachineLearning.Robustness
+import FINAL.MachineLearning.Scaling
 import FINAL.MachineLearning.SecondExtremal
 import FINAL.MachineLearning.SemiringRelativeReality
 import FINAL.MachineLearning.Separation
@@ -1181,6 +1211,7 @@ import FINAL.MachineLearning.TropicalNeuralRobustness
 import FINAL.MachineLearning.TropicalPairwiseRobustness
 import FINAL.MachineLearning.TropicalReflectiveEquilibrium
 import FINAL.MachineLearning.TropicalRobustness
+import FINAL.MachineLearning.TropicalRouting
 import FINAL.MachineLearning.TropicalScalingLaws
 import FINAL.MachineLearning.TropicalTimeTravel
 import FINAL.MachineLearning.TropicalTop2Robustness
@@ -1191,6 +1222,7 @@ import FINAL.MachineLearning.UltrametricKLDivergence
 import FINAL.MachineLearning.UniqueOddExponent
 import FINAL.MachineLearning.UniversalArchitecture
 import FINAL.MachineLearning.Valuation
+import FINAL.MachineLearning.WeakChen
 import FINAL.Physics.Advanced
 import FINAL.Physics.Angular
 import FINAL.Physics.AngularMomentum
@@ -1331,6 +1363,7 @@ import FINAL.Pythagorean.EhrhartSeries
 import FINAL.Pythagorean.EinsteinContraction
 import FINAL.Pythagorean.EmergentComputation
 import FINAL.Pythagorean.EqualitySaturationExtraction
+import FINAL.Pythagorean.ExactWeightedTropicalDimension
 import FINAL.Pythagorean.ExchangeDescent
 import FINAL.Pythagorean.ExplicitMorseTheory
 import FINAL.Pythagorean.Extraction
@@ -1355,6 +1388,7 @@ import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.KeplerEccentricity
 import FINAL.Pythagorean.KnuthBendixCompletion
 import FINAL.Pythagorean.LagrangeFourSquare
+import FINAL.Pythagorean.LorentzianExchangeCertificates
 import FINAL.Pythagorean.LorentzianRecognitionComplete
 import FINAL.Pythagorean.LorentzianSpectralGap
 import FINAL.Pythagorean.MConvexBridge
