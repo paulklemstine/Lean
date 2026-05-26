@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Computational Complexity",
     "date": "2026-05-26T04:52:13Z",
     "exp_id": "fd24faba",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7313830769230769,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_sharp_cutoff_for_the_adjacent_transpos.json",
@@ -1717,8 +1717,8 @@ window.PACKAGE_GRAPH = {
       "shape": "cube",
       "date": "2026-05-26T04:52:13Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7313830769230769,
+      "quality": "substantial"
     }
   ],
   "edges": [

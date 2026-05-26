@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1745 of the highest-quality
+A curated collection of 1761 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1745
+Total files: 1761
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -721,6 +721,7 @@ import FINAL.Computation.BranchingPrograms
 import FINAL.Computation.Circuits
 import FINAL.Computation.CollatzTropical
 import FINAL.Computation.CollatzTropicalContraction
+import FINAL.Computation.Compression
 import FINAL.Computation.ConfigurationSpace
 import FINAL.Computation.Defs
 import FINAL.Computation.Entropy
@@ -748,6 +749,7 @@ import FINAL.Computation.OptimalPlanning
 import FINAL.Computation.OracleAboutOracle
 import FINAL.Computation.OracleApplicationsFrontier
 import FINAL.Computation.OracleBootstrapGPT2
+import FINAL.Computation.OracleStrangeLoop
 import FINAL.Computation.PadicValuationDepth
 import FINAL.Computation.PathSemantics
 import FINAL.Computation.Propagation
@@ -761,6 +763,7 @@ import FINAL.Computation.SearchTheory
 import FINAL.Computation.SpecificationAsFixedPoints
 import FINAL.Computation.Spectral
 import FINAL.Computation.SpectralOracle
+import FINAL.Computation.StillLife
 import FINAL.Computation.Theorems
 import FINAL.Computation.TimeSpaceTradeoff
 import FINAL.Computation.TropicalAmortized
@@ -1075,6 +1078,7 @@ import FINAL.MachineLearning.BerggrenSecondExtremal
 import FINAL.MachineLearning.BernoulliMeasure
 import FINAL.MachineLearning.BinomialBounds
 import FINAL.MachineLearning.BiologicalCrystallization
+import FINAL.MachineLearning.Bootstrap
 import FINAL.MachineLearning.BoundedDivisorSearch
 import FINAL.MachineLearning.BoundedFamily
 import FINAL.MachineLearning.BoundedSearch
@@ -1084,6 +1088,7 @@ import FINAL.MachineLearning.BroadcastTheorems
 import FINAL.MachineLearning.CASpacetimeAperiodicity
 import FINAL.MachineLearning.CATransitionMonoid
 import FINAL.MachineLearning.CNFRealizability
+import FINAL.MachineLearning.CRT
 import FINAL.MachineLearning.Catoni
 import FINAL.MachineLearning.CayleyTransform
 import FINAL.MachineLearning.CechComplex
@@ -1100,6 +1105,7 @@ import FINAL.MachineLearning.Coboundary
 import FINAL.MachineLearning.CoeffRestriction
 import FINAL.MachineLearning.CompilationCompression
 import FINAL.MachineLearning.Compositionality
+import FINAL.MachineLearning.CompressionPipeline
 import FINAL.MachineLearning.ConceptualDependencyCriticalPath
 import FINAL.MachineLearning.Consequences
 import FINAL.MachineLearning.Convergence
@@ -1137,6 +1143,8 @@ import FINAL.MachineLearning.IdempotentAggregation
 import FINAL.MachineLearning.InferenceArithmetic
 import FINAL.MachineLearning.IrrationalityCriteria
 import FINAL.MachineLearning.IterExp
+import FINAL.MachineLearning.IterateBound
+import FINAL.MachineLearning.Kardashev
 import FINAL.MachineLearning.KardashevBound
 import FINAL.MachineLearning.LLMSingleMatMul
 import FINAL.MachineLearning.LSEBound
@@ -1145,13 +1153,16 @@ import FINAL.MachineLearning.LegendreGapReduction
 import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LoopFoundations
+import FINAL.MachineLearning.LowRankObstruction
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MinCutPrinciple
 import FINAL.MachineLearning.MinMax
 import FINAL.MachineLearning.ModelShrinkage
+import FINAL.MachineLearning.MultiHead
 import FINAL.MachineLearning.MulticlassMargin
 import FINAL.MachineLearning.NNCompilationTheory
 import FINAL.MachineLearning.NetherPortals
+import FINAL.MachineLearning.NetworkOptimality
 import FINAL.MachineLearning.NeuralCompilationTeams
 import FINAL.MachineLearning.NeuralSheafCohomology
 import FINAL.MachineLearning.NewtonClosure
@@ -1175,6 +1186,8 @@ import FINAL.MachineLearning.ProofSearchRenormalization
 import FINAL.MachineLearning.ProofTheoreticDepth
 import FINAL.MachineLearning.ProvabilityPACBayesian
 import FINAL.MachineLearning.QuantizedResidualMDL
+import FINAL.MachineLearning.QuantumMoonshots
+import FINAL.MachineLearning.QuantumNeuralArchitecture
 import FINAL.MachineLearning.QuantumObservables
 import FINAL.MachineLearning.ReflectiveConvergence
 import FINAL.MachineLearning.ReflectiveConvergenceArchitecture
@@ -1186,10 +1199,12 @@ import FINAL.MachineLearning.SecondExtremal
 import FINAL.MachineLearning.SemiringRelativeReality
 import FINAL.MachineLearning.Separation
 import FINAL.MachineLearning.SheafCertifiedRobustness
+import FINAL.MachineLearning.SinkTheorem
 import FINAL.MachineLearning.SmallCases
 import FINAL.MachineLearning.SpectralApprox
 import FINAL.MachineLearning.SpectralBounds
 import FINAL.MachineLearning.Stability
+import FINAL.MachineLearning.StructuralCases
 import FINAL.MachineLearning.SupportComplexity
 import FINAL.MachineLearning.SurvivorSieve
 import FINAL.MachineLearning.SymmEulerTransfer
@@ -1403,6 +1418,7 @@ import FINAL.Pythagorean.KeplerEccentricity
 import FINAL.Pythagorean.KnuthBendixCompletion
 import FINAL.Pythagorean.LagrangeFourSquare
 import FINAL.Pythagorean.LorentzianExchangeCertificates
+import FINAL.Pythagorean.LorentzianHardness
 import FINAL.Pythagorean.LorentzianRecognitionComplete
 import FINAL.Pythagorean.LorentzianSpectralGap
 import FINAL.Pythagorean.MConvexBridge

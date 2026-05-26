@@ -598,5 +598,7 @@
   "ddebc997": "direction_1_lorentzian_polynomial_certificates_for.json",
   "ba580866": "direction_2_certificate_density_for_symplectic_and.json",
   "86601194": "direction_1_spectral_tropical_stability__from_conj.json",
-  "000321e6": "direction_2_functorial_localization_of_persistence.json"
+  "000321e6": "direction_2_functorial_localization_of_persistence.json",
+  "48617359": "direction_1_sharp_cutoff_for_the_adjacent_transpos.json",
+  "fd24faba": "direction_1_hardness_of_unrestricted_degree_lorent.json"
 }
