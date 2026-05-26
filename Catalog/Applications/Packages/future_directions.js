@@ -463,10 +463,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6a88b92d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a6efeb29",
     "timestamp": "2026-05-25T15:29:21.811130+00:00"
   },
   {
@@ -1099,10 +1099,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "354ccda2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "17192924",
     "timestamp": "2026-05-25T21:49:45.153662+00:00"
   },
   {
@@ -1145,26 +1145,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "db7ef9c7",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:51:37.153172+00:00"
-  },
-  {
-    "id": "fd_0962",
-    "title": "Direction 3: Tropical Morse Spectra as Quantum Graph State Classifiers",
-    "description": "**Conjecture:** The tropical Morse spectrum of the interaction graph of a quantum error-correcting code determines the code distance and the number of logical qubits. Specifically, for CSS codes built from a graph G, the code distance equals the minimum critical value gap in TMS(G), and the number of logical qubits equals \u03b2\u2081(G).\n\n**Test:** (1) Construct the interaction graphs of the [[7,1,3]] Steane code, [[9,1,3]] Shor code, and surface codes on n\u00d7n grids for n = 3,5,7. (2) Compute TMS and extract critical value gaps. (3) Verify that min gap = code distance. (4) Falsified if the relationship breaks for any CSS code.\n\n**Impact:** Would establish a direct bridge between tropical geometry and quantum error correction, potentially enabling topological optimization of quantum codes via TMS gradient descent.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `redundant_edges_eq_cycle_rank` (\u03b2\u2081 computation)\n- `Pythagorean/TropicalMorse/Theorems.lean`: `morse_betti_correspondence` (topological invariants)\n\n**Proof Strategy:** For CSS codes, the logical operators correspond to non-trivial cycles in the code graph. The code distance is the minimum-weight logical operator, which corresponds to the shortest non-trivial cycle in the weight filtration. Show that this equals the minimum critical value at which a cycle event occurs.\n\n**Domain Bridges:** Quantum information theory \u2194 Tropical geometry \u2194 Algebraic topology\n\n**Lineage:** Novel cross-domain connection enabled by the Morse-Betti correspondence\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if correct, connects two major fields\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "db7ef9c7",
-    "consumed_by_exp_id": "b0b26cee",
-    "timestamp": "2026-05-25T21:51:37.177766+00:00"
   },
   {
     "id": "fd_0965",
@@ -1659,24 +1639,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T04:51:55.424405+00:00"
   },
   {
-    "id": "fd_1052",
-    "title": "Direction 3: Driven Diffusive Systems and TASEP Phase Transitions",
-    "description": "**Conjecture:** The adjacent-transposition-plus-cycle walk, when projected to single-card trajectories, converges to a process in the universality class of the **totally asymmetric simple exclusion process** (TASEP) on a ring of $n$ sites. Specifically, the displacement of card $j$ under the walk, rescaled by $n$, converges to the TASEP current fluctuation process as $n \\to \\infty$.\n\n**Test:** Track single-card displacement statistics for $n = 5, 6, 7, 8$. Compare the variance of the card position at time $t$ with the predicted $\\Theta(t/n^2)$ scaling from TASEP. Test whether the limiting displacement distribution matches the Tracy-Widom distribution (characteristic of TASEP fluctuations).\n\n**Impact:** Would forge a rigorous connection between algebraic mixing on $S_n$ and statistical mechanics of driven particle systems. This would import KPZ universality class results into permutation theory.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (observable contraction), `Pythagorean/CayleyExpander/HybridWalk.lean` (cycleDisplacementObservable).\n\n**Proof Strategy:** Project the walk to the trajectory of one labeled card. Show that the projected process is a random walk on $\\mathbb{Z}/n\\mathbb{Z}$ with local random steps and a constant drift from the long cycle. Identify the scaling limit using the mapping to TASEP via Robinson-Schensted correspondence.\n\n**Domain Bridges:** Statistical mechanics (TASEP, KPZ universality), integrable systems (Bethe ansatz), random matrix theory (Tracy-Widom distribution).\n\n**Lineage:** Extends the cross-domain bridge between permutation mixing and exclusion processes discussed in Theorem A.\n\n**Ambition:** \ud83d\udfe1 Grand Challenge \u2014 connects two mature but separate fields.\n\n**\"The key insight is...\"** that the long cycle creates a coherent drift in card-position space, and the competition between drift and diffusion is precisely the TASEP mechanism.\n\n**\"Why now?\"** Recent breakthroughs in KPZ universality (Quastel, Matetski\u2013Quastel\u2013Remenik, 2022) provide precise distributional predictions that can be tested against our exact computations for small $n$.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "48617359",
-    "consumed_by_exp_id": "f42c0a57",
-    "timestamp": "2026-05-26T04:51:55.454839+00:00"
-  },
-  {
     "id": "fd_1053",
     "title": "Direction 4: Cryptographic Security Bounds for Permutation Networks",
     "description": "**Conjecture:** Any permutation network that alternates $k$ rounds of adjacent-swap layers with cyclic-shift layers requires at least $\\Omega(n^2 \\log n / k)$ rounds to achieve statistical security (TV distance $< 2^{-\\lambda}$ from a random permutation for security parameter $\\lambda$).\n\n**Test:** Implement the AES-like permutation network with varying numbers of swap layers per round. Measure the TV distance from uniform for $n = 8$ (matching common block cipher state sizes) and compare with the predicted bound.\n\n**Impact:** Would provide the first mathematically certified lower bound on round complexity for this class of lightweight ciphers. Direct applications to the security analysis of PRESENT, GIFT, and other bitslice-style block ciphers.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (mixing time lower bound), `Pythagorean/CayleyExpander/HybridWalk.lean` (HybridPermutationWalk framework).\n\n**Proof Strategy:** Model the cipher's permutation layer as a deterministic version of our random walk. Use the observable lower bound (Theorem C) to show that any product of $T$ generators from the hybrid set leaves a detectable bias in the cycle displacement statistic.\n\n**Domain Bridges:** Cryptography (block cipher design), information theory (min-entropy), hardware security (side-channel resistance of lightweight ciphers).\n\n**Lineage:** Application of Theorem C to security engineering.\n\n**Ambition:** \ud83d\udfe2 Solid Extension \u2014 direct application of existing theory to a new domain.\n\n**\"The key insight is...\"** that our observable lower bound provides a *distinguisher* \u2014 a statistical test that can tell a cipher's output from random \u2014 and the decay rate $1 - \\Theta(1/n^2)$ translates directly into a minimum number of rounds.\n\n**\"Why now?\"** The NIST Lightweight Cryptography standardization process has renewed interest in formal security analysis of simple permutation networks. Our tools provide exactly the right mathematical framework.\n\n---",
@@ -1694,6 +1656,104 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "48617359",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T04:51:55.485067+00:00"
+  },
+  {
+    "id": "fd_1070",
+    "title": "Direction 1: Non-Multiaffine Extension via Weighted Support Analysis",
+    "description": "**Conjecture:** For general homogeneous polynomials (not necessarily multiaffine) of degree $d$ in $n$ variables, there exists a weighted support measure $\\sigma(f)$ such that the number of nonzero quadratic derivative leaves is bounded by $\\sigma(f)$, and $\\sigma(f)$ can be computed from the Newton polytope of $f$ in polynomial time.\n\n**Test:** Define $\\sigma(f)$ as the number of lattice points in the $(d-2)$-shadow of the Newton polytope. Compute this for specific families (power-sum polynomials, Schur polynomials, elementary symmetric polynomials) and compare with the actual nonzero leaf count. A disproof would be a polynomial where coefficient cancellation forces the leaf count below the Newton polytope prediction.\n\n**Impact:** Would extend the support compression principle from multiaffine polynomials to all homogeneous polynomials, vastly expanding its applicability. This is essential for applications to Hodge theory and algebraic geometry, where multiaffineness is not guaranteed.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean` (Theorem `nonzeroDerivativeLeafSet_eq_indep`), `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`NewtonSupport`, `IsHomogeneousDeg`)\n\n**Proof Strategy:** Generalize the support criterion by replacing exact containment with a dominated-support condition. For non-multiaffine polynomials, the key difficulty is coefficient cancellation: two surviving monomials might cancel in the derivative. Approach via the theory of *stable polynomials* or *completely log-concave* polynomials, where cancellation is structurally prevented.\n\n**Domain Bridges:** Connects to algebraic geometry (Newton polytopes), optimization (lattice point enumeration), and convex geometry (mixed volumes).\n\n**Lineage:** Builds directly on Theorem 1 (support criterion) by removing the multiaffine hypothesis.\n\n**Ambition:** Grand challenge \u2014 would unify the multiaffine compression theory with the full Br\u00e4nd\u00e9n-Huh framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b24e9482",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T05:27:26.773711+00:00"
+  },
+  {
+    "id": "fd_1072",
+    "title": "Direction 3: Partition Function Certification in Statistical Physics",
+    "description": "**Conjecture:** The partition function $Z_M(\\lambda) = \\sum_{I \\text{ indep}} \\lambda^{|I|}$ of the *independence complex* of a matroid $M$ is a Lorentzian polynomial in the $\\lambda_i$ variables (one per element), and the support compression principle reduces the certification cost from exponential to polynomial for sparse matroids arising in lattice models.\n\n**The key insight is:** Matroid independence complexes are the natural setting for hard-core lattice gas models, and Lorentzian certification of the partition function would imply strong log-concavity of the independence sequence \u2014 a result with direct thermodynamic consequences (absence of phase transitions in certain regimes).\n\n**Why now?** The Anari-Liu-Oveis Gharan-Vinzant result on log-concave polynomials [2021] already established connections between matroid theory and partition functions. Our support compression theorem provides the missing algorithmic component: not just that Lorentzian certification exists in principle, but that it's computationally feasible for sparse systems.\n\n**Test:** Compute the partition function for graphic matroids of small Ising-model lattices. Verify Lorentzian positivity by exhaustive leaf checking, then compare the compressed leaf count with the ambient count. The conjecture predicts that lattice sparsity translates to certification sparsity.\n\n**Impact:** Would connect formal verification of polynomial positivity to predictions in statistical mechanics, providing mathematically certified bounds on phase transition parameters.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean`, `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`IsMConvexExchangeNat`)\n\n**Proof Strategy:** Extend the basis polynomial framework to the full independence complex polynomial. Use the matroid truncation operation to relate independent sets of different sizes to basis polynomials of truncated matroids.\n\n**Domain Bridges:** Statistical physics (partition functions, phase transitions), probability (log-concave distributions), algorithm design (MCMC sampling).\n\n**Lineage:** Extends Theorem 2 (matroid bridge) from bases to the full independence complex.\n\n**Ambition:** Grand challenge \u2014 bridges formal mathematics to physics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b24e9482",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T05:27:26.856241+00:00"
+  },
+  {
+    "id": "fd_1075",
+    "title": "Direction 1: Quantitative Helfgott-Type Growth in GL(2, F_p)",
+    "description": "**Conjecture:** For every $\\varepsilon > 0$, there exists $\\delta > 0$ such that for every prime $p$ and every symmetric subset $A \\subseteq \\mathrm{SL}(2, \\mathbb{F}_p)$ with $1 \\in A$ and $|A| \\leq p^{3 - \\varepsilon}$, either $A$ is contained in a proper subgroup or $|A \\cdot A \\cdot A| \\geq |A|^{1 + \\delta}$.\n\n**Test:** Implement the product set triple computation $A^3$ for randomly sampled sets in $\\mathrm{SL}(2, \\mathbb{F}_p)$ with $p = 11, 13, 17, 19, 23$ and measure the exponent $\\delta$ as a function of $|A|/p^3$. A single family with sublinear triple-product growth would refute the conjecture.\n\n**Impact:** This would be the first formally verified quantitative growth theorem for linear groups, providing an explicit exponent rather than just a qualitative dichotomy. It would connect our Theorem 2 (strict growth) to Helfgott's breakthrough result and potentially yield constructive expander bounds.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the irreducible characteristic polynomial certificates can exclude containment in Borel (triangular) subgroups, which is the main obstruction to growth in $\\mathrm{SL}(2)$.\n\n**Proof Strategy:** Decompose into three lemmas: (a) escape from tori using trace arguments, (b) escape from Borel subgroups using irreducibility certificates, (c) sum-product estimates over $\\mathbb{F}_p$ for the remaining case. The key insight is that the generation certificates from the catalog provide exactly the escape witnesses needed.\n\n**Domain Bridges:** Additive combinatorics (sum-product estimates), analytic number theory (exponential sum bounds).\n\n**Lineage:** Extends `strict_growth_of_not_subgroup` from qualitative to quantitative.\n\n**Ambition:** Grand challenge \u2014 would constitute a new formally verified proof of (a special case of) a major theorem in arithmetic combinatorics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a0951d1f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T06:04:06.524018+00:00"
+  },
+  {
+    "id": "fd_1076",
+    "title": "Direction 2: Pseudofinite Transfer via Definable Ultraproducts",
+    "description": "**Conjecture:** The polynomially definable growth-or-control dichotomy transfers from individual finite fields $\\mathbb{F}_q$ to the pseudofinite field $\\mathbb{F}_\\omega = \\prod_q \\mathbb{F}_q / \\mathcal{U}$ via \u0141o\u015b's theorem: a definable subset of $\\mathrm{GL}(2, \\mathbb{F}_\\omega)$ with bounded doubling is controlled by a definable subgroup.\n\n**Test:** Formalize \u0141o\u015b's theorem for the restricted class of polynomial-image sentences and verify that the growth ratio $|A^2|/|A|$ is preserved under ultraproduct transfer for at least 3 concrete definable families.\n\n**Impact:** This would establish the first formal bridge between finite model theory and approximate group theory, showing that verified finite results automatically yield pseudofinite counterparts. It opens a path toward formalizing Hrushovski's approach.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the `PolyDefinableSubset` structure and generation certificates provide the definable language needed for transfer.\n\n**Proof Strategy:** The key insight is that our `PolyDefinableSubset` structure is already designed as a first-order definable object. Formalizing \u0141o\u015b's theorem for bounded-quantifier sentences over matrix algebras, then applying it to the growth predicate $|A^2| \\leq K|A|$.\n\n**Why now?** The definitions file (`ApproxSubgroupDefs.lean`) already contains the model-theoretic scaffolding (polynomial definability, coset control). Adding ultraproduct infrastructure is now a concrete formalization task rather than a conceptual challenge.\n\n**Domain Bridges:** Model theory, mathematical logic, ultraproduct theory.\n\n**Lineage:** Builds on `PolyDefinableSubset` and `CosetControlledBy` definitions.\n\n**Ambition:** Grand challenge \u2014 would be the first formally verified pseudofinite transfer theorem in group theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a0951d1f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T06:04:06.558801+00:00"
+  },
+  {
+    "id": "fd_1077",
+    "title": "Direction 3: Spectral Gap from Product Growth",
+    "description": "**Conjecture:** If $A \\subseteq G$ is a symmetric generating set of a finite group with $1 \\in A$ and growth ratio $\\sigma = |A^2|/|A|$, then the spectral gap $\\lambda_1$ of the normalized Cayley graph adjacency operator satisfies $\\lambda_1 \\geq c(\\sigma - 1) / \\sigma$ for an absolute constant $c > 0$.\n\n**Test:** For each family in our computational suite, compute the actual eigenvalues of the Cayley graph adjacency matrix (feasible for $\\mathrm{GL}(2, \\mathbb{F}_5)$ with 480 elements) and compare the spectral gap to the predicted bound. Deviation from the linear relationship would refine the conjecture.\n\n**Impact:** This would complete the triangle between model theory, group growth, and spectral graph theory. Product growth \u2192 spectral gap \u2192 mixing time \u2192 expander certificates, all formally verified.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the orbit spanning theorem (`span_orbit_eq_top_of_irreducible`) provides the invariant-subspace-free condition that, spectrally, prevents eigenvalue concentration.\n\n**Proof Strategy:** The key insight is that `support_walk_grows_of_product_grows` (Theorem 3) already establishes the qualitative connection; quantifying it requires bounding the $\\ell^2$ norm of the convolution operator using the cardinality growth. Use the Cauchy-Schwarz convolution bound: $\\|f * g\\|_2^2 \\leq \\|f\\|_1^2 \\cdot \\|g\\|_2^2 / |G|$.\n\n**Why now?** Theorem 3 provides the qualitative link; upgrading to a quantitative spectral bound is a natural next step that was impossible before the random walk theorem was verified.\n\n**Domain Bridges:** Spectral graph theory, probability theory, theoretical computer science (expander graphs).\n\n**Lineage:** Extends `support_walk_grows_of_product_grows`.\n\n**Ambition:** Solid extension \u2014 quantitative version of an established qualitative link.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a0951d1f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T06:04:06.590349+00:00"
   },
   {
     "id": "seed_005",
@@ -1818,47 +1878,87 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
-    "id": "fd_1070",
-    "title": "Direction 1: Non-Multiaffine Extension via Weighted Support Analysis",
-    "description": "**Conjecture:** For general homogeneous polynomials (not necessarily multiaffine) of degree $d$ in $n$ variables, there exists a weighted support measure $\\sigma(f)$ such that the number of nonzero quadratic derivative leaves is bounded by $\\sigma(f)$, and $\\sigma(f)$ can be computed from the Newton polytope of $f$ in polynomial time.\n\n**Test:** Define $\\sigma(f)$ as the number of lattice points in the $(d-2)$-shadow of the Newton polytope. Compute this for specific families (power-sum polynomials, Schur polynomials, elementary symmetric polynomials) and compare with the actual nonzero leaf count. A disproof would be a polynomial where coefficient cancellation forces the leaf count below the Newton polytope prediction.\n\n**Impact:** Would extend the support compression principle from multiaffine polynomials to all homogeneous polynomials, vastly expanding its applicability. This is essential for applications to Hodge theory and algebraic geometry, where multiaffineness is not guaranteed.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean` (Theorem `nonzeroDerivativeLeafSet_eq_indep`), `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`NewtonSupport`, `IsHomogeneousDeg`)\n\n**Proof Strategy:** Generalize the support criterion by replacing exact containment with a dominated-support condition. For non-multiaffine polynomials, the key difficulty is coefficient cancellation: two surviving monomials might cancel in the derivative. Approach via the theory of *stable polynomials* or *completely log-concave* polynomials, where cancellation is structurally prevented.\n\n**Domain Bridges:** Connects to algebraic geometry (Newton polytopes), optimization (lattice point enumeration), and convex geometry (mixed volumes).\n\n**Lineage:** Builds directly on Theorem 1 (support criterion) by removing the multiaffine hypothesis.\n\n**Ambition:** Grand challenge \u2014 would unify the multiaffine compression theory with the full Br\u00e4nd\u00e9n-Huh framework.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b24e9482",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T05:27:26.773711+00:00"
-  },
-  {
-    "id": "fd_1072",
-    "title": "Direction 3: Partition Function Certification in Statistical Physics",
-    "description": "**Conjecture:** The partition function $Z_M(\\lambda) = \\sum_{I \\text{ indep}} \\lambda^{|I|}$ of the *independence complex* of a matroid $M$ is a Lorentzian polynomial in the $\\lambda_i$ variables (one per element), and the support compression principle reduces the certification cost from exponential to polynomial for sparse matroids arising in lattice models.\n\n**The key insight is:** Matroid independence complexes are the natural setting for hard-core lattice gas models, and Lorentzian certification of the partition function would imply strong log-concavity of the independence sequence \u2014 a result with direct thermodynamic consequences (absence of phase transitions in certain regimes).\n\n**Why now?** The Anari-Liu-Oveis Gharan-Vinzant result on log-concave polynomials [2021] already established connections between matroid theory and partition functions. Our support compression theorem provides the missing algorithmic component: not just that Lorentzian certification exists in principle, but that it's computationally feasible for sparse systems.\n\n**Test:** Compute the partition function for graphic matroids of small Ising-model lattices. Verify Lorentzian positivity by exhaustive leaf checking, then compare the compressed leaf count with the ambient count. The conjecture predicts that lattice sparsity translates to certification sparsity.\n\n**Impact:** Would connect formal verification of polynomial positivity to predictions in statistical mechanics, providing mathematically certified bounds on phase transition parameters.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean`, `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`IsMConvexExchangeNat`)\n\n**Proof Strategy:** Extend the basis polynomial framework to the full independence complex polynomial. Use the matroid truncation operation to relate independent sets of different sizes to basis polynomials of truncated matroids.\n\n**Domain Bridges:** Statistical physics (partition functions, phase transitions), probability (log-concave distributions), algorithm design (MCMC sampling).\n\n**Lineage:** Extends Theorem 2 (matroid bridge) from bases to the full independence complex.\n\n**Ambition:** Grand challenge \u2014 bridges formal mathematics to physics.\n\n---",
+    "id": "fd_1081",
+    "title": "Direction 1: Weighted Distance Equality via Tropical Cycle Optimization",
+    "description": "**Conjecture:** For graph-derived CSS codes with arbitrary positive edge weights, the code distance equals the minimum total weight of a simple cycle in the interaction graph. Under an appropriate \"girth-adapted\" filtration (edges ordered by a cycle-aware criterion), the first cycle birth value equals this minimum cycle weight.\n\n**Test:** Construct random weighted graphs on 8\u201320 vertices with weights drawn from {1, 2, ..., 10}. Compute:\n- The minimum-weight simple cycle (by exhaustive search for small graphs).\n- The first cycle birth under Kruskal filtration.\n- The first cycle birth under a modified filtration that orders edges by their contribution to shortest cycles.\nIf the girth-adapted FCB equals the minimum cycle weight in >95% of cases, the conjecture is supported. If it fails, identify the structural obstruction.\n\n**Impact:** Would extend the exact distance theorem from unit weights to arbitrary weights, making the tropical approach directly applicable to quantum hardware with non-uniform coupling strengths.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/QuantumGraphCodes.lean`: `codeDistance_eq_firstCycleBirth_of_simpleCycle`\n- `Pythagorean/TropicalMorse/Theorems.lean`: `redundant_edges_eq_cycle_rank`\n\n**Proof Strategy:** Define a \"cycle-adapted\" weight ordering that processes edges in order of their minimum-cycle-weight contribution. Prove that under this ordering, the first cycle birth equals the minimum cycle weight. Use the monotonicity theorem to bootstrap from the unit-weight case.\n\n**Domain Bridges:** Tropical geometry \u2194 combinatorial optimization \u2194 quantum hardware design.\n\n**Lineage:** Direct extension of Theorem 3 (exact distance in simple-cycle regime).\n\n**Ambition:** Solid extension \u2014 requires new combinatorial arguments but builds directly on established foundations.\n\n**The key insight is** that the filtration ordering determines which cycle appears first, and an intelligently chosen ordering can make the first cycle birth coincide with the minimum-weight cycle.\n\n**Why now?** The monotonicity theorem provides the key tool: if we can show that the girth-adapted filtration maximizes the first cycle birth among all filtrations, the result follows.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
+      "Tropical",
       "Physics",
-      "Cryptography",
       "Bridges",
-      "Logic",
-      "Speculative"
+      "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b24e9482",
+    "source_exp_id": "b0b26cee",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T05:27:26.856241+00:00"
+    "timestamp": "2026-05-26T07:14:49.731669+00:00"
+  },
+  {
+    "id": "fd_1082",
+    "title": "Direction 2: Spectral Decoding via Tropical Morse Barcodes",
+    "description": "**Conjecture:** The full tropical Morse spectrum (not just the first cycle birth) encodes sufficient information to construct an efficient minimum-weight decoder for graph-CSS codes. Specifically, the barcode structure \u2014 the persistence intervals of cycle events \u2014 identifies likely error patterns and guides syndrome-based correction.\n\n**Test:** Implement a \"tropical decoder\" that uses the TMS barcode to weight the edges of the decoding graph. Compare decoder performance (logical error rate vs. physical error rate) against:\n- Minimum-weight perfect matching (MWPM) decoder.\n- Union-find decoder.\nTest on surface codes of sizes 3\u00d73, 5\u00d75, 7\u00d77 under depolarizing noise at rates p = 0.01, 0.05, 0.10. If the tropical decoder achieves comparable or better logical error rates, the conjecture is supported.\n\n**Impact:** Would provide a new class of decoders inspired by tropical geometry, potentially with better scaling or simpler implementation than existing approaches.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Defs.lean`: `TMSpectrum`, `tropicalMorseComplexity`\n- `Pythagorean/TropicalMorse/Theorems.lean`: `spectral_gap_distinguishes`\n\n**Proof Strategy:** Show that the barcode persistence intervals correspond to \"error vulnerability windows\" \u2014 ranges of error weights where specific logical operators become active. Use this to construct a weight function for the decoding graph that penalizes edges in high-vulnerability regions.\n\n**Domain Bridges:** Persistent homology \u2194 quantum error correction \u2194 algorithmic graph theory.\n\n**Lineage:** Extends the spectral classification theorem (Theorem 5) from static classification to dynamic error correction.\n\n**Ambition:** Grand challenge \u2014 connects two major research programs (persistent homology and quantum decoding) through a concrete algorithmic proposal.\n\n**The key insight is** that the tropical Morse barcode encodes not just the *number* of logical operators but their *weight hierarchy*, which is exactly the information a decoder needs to distinguish likely from unlikely errors.\n\n**Why now?** The TMS computation is O(E log E), making it feasible to run in real-time as a preprocessing step for decoding. Recent advances in barcode-guided algorithms in topological data analysis provide the technical toolkit.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0b26cee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T07:14:49.772033+00:00"
+  },
+  {
+    "id": "fd_1083",
+    "title": "Direction 3: Higher-Dimensional Tropical Morse Theory for Quantum LDPC Codes",
+    "description": "**Conjecture:** The tropical Morse theory framework extends to simplicial complexes of dimension \u2265 2, and the resulting higher-dimensional tropical Morse spectrum determines the parameters of CSS codes derived from chain complexes (including hypergraph product codes, fiber bundle codes, and balanced product codes).\n\n**Test:** Implement a simplicial tropical filtration for:\n- The 2D toric code (as a simplicial complex on the torus).\n- Hypergraph product codes HP(H\u2081, H\u2082) for random LDPC matrices H\u2081, H\u2082 of size 10\u00d720.\n- Balanced product codes for small group algebras.\nCompute \u03b2\u2081 and \u03b2\u2082 from the filtration and compare with known code parameters. If the higher-dimensional \u03b2 values correctly predict k and d bounds for \u226590% of test cases, the conjecture is supported.\n\n**Impact:** Would extend the tropical Morse framework to the most promising class of quantum codes for fault-tolerant computing (quantum LDPC codes), where asymptotically good parameters have been recently demonstrated.\n\n**Catalog References:**\n- `Bridges/Catalog/Pythagorean/TropicalMorse/HigherSimplicial.lean`: higher-dimensional extensions\n- `Pythagorean/TropicalMorse/QuantumGraphCodes.lean`: `filtration_exclusive_dichotomy`\n\n**Proof Strategy:** Define the higher-dimensional filtration as the sublevel set filtration of the weight function on the simplicial complex. The key technical challenge is proving the analogue of the exclusive dichotomy: each simplex addition changes exactly one Betti number. This follows from the long exact sequence in homology for the pair (K_\u2264t, K_\u2264t').\n\n**Domain Bridges:** Higher-dimensional tropical geometry \u2194 homological algebra \u2194 quantum LDPC codes \u2194 expander theory.\n\n**Lineage:** Natural generalization of all four main theorems to higher dimensions.\n\n**Ambition:** Grand challenge \u2014 requires substantial new mathematical development and connects to the frontier of quantum LDPC code theory.\n\n**The key insight is** that the exclusive dichotomy theorem (each edge addition changes exactly one Betti number) generalizes to simplices of all dimensions, and this generalization is exactly what's needed to extend the logical qubit and distance theorems.\n\n**Why now?** The recent breakthroughs in quantum LDPC codes (achieving constant rate and polynomial distance) create urgent demand for new analytical tools. Tropical Morse theory provides a natural framework that has been waiting for this application.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0b26cee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T07:14:49.805352+00:00"
+  },
+  {
+    "id": "fd_1084",
+    "title": "Direction 4: Statistical Mechanics of Decoding via Tropical Percolation",
+    "description": "**Conjecture:** The tropical Morse spectrum of a quantum code's interaction graph determines the critical error threshold for maximum-likelihood decoding, analogous to the bond percolation threshold in the random-bond Ising model. Specifically, the \"tropical percolation threshold\" \u2014 the weight at which half of all cycle events have occurred \u2014 predicts the threshold error rate within 10%.\n\n**Test:** For surface codes of sizes n = 5, 7, 9, 11:\n- Compute the tropical percolation threshold t_trop = median cycle birth value.\n- Run Monte Carlo simulations to estimate the ML decoding threshold p_c.\n- Compare t_trop / max_weight with p_c.\nIf the correlation is > 0.9 across all sizes, the conjecture is supported.\n\n**Impact:** Would provide a new analytical prediction for decoding thresholds, bypassing expensive Monte Carlo simulations and potentially explaining why certain code families have higher thresholds than others.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `percolation_transition_count`, `giant_component_threshold`\n\n**Proof Strategy:** The tropical filtration is formally isomorphic to the bond percolation process. The cycle events correspond to loop formations in percolation. Show that the density of cycle events near the percolation threshold controls the error-correction capacity, using duality between the Nishimori line and the tropical critical surface.\n\n**Domain Bridges:** Statistical mechanics \u2194 tropical geometry \u2194 quantum error correction \u2194 percolation theory.\n\n**Lineage:** Extends the percolation connection already established in `percolation_transition_count` to a quantitative prediction.\n\n**Ambition:** Grand challenge \u2014 connects three deep theories (statistical mechanics, tropical geometry, quantum error correction) through a falsifiable quantitative prediction.\n\n**The key insight is** that the tropical filtration is literally a percolation process, and the statistics of cycle events in the filtration directly control the code's error-correction capacity.\n\n**Why now?** Recent work on the statistical mechanics of quantum error correction (the random-bond Ising model approach) provides the theoretical context, and the tropical Morse computation provides the efficient computational tool.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b0b26cee",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T07:14:49.839089+00:00"
   },
   {
     "id": "seed_013",
@@ -2263,61 +2363,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:13:49.686566+00:00"
   },
   {
-    "id": "fd_1075",
-    "title": "Direction 1: Quantitative Helfgott-Type Growth in GL(2, F_p)",
-    "description": "**Conjecture:** For every $\\varepsilon > 0$, there exists $\\delta > 0$ such that for every prime $p$ and every symmetric subset $A \\subseteq \\mathrm{SL}(2, \\mathbb{F}_p)$ with $1 \\in A$ and $|A| \\leq p^{3 - \\varepsilon}$, either $A$ is contained in a proper subgroup or $|A \\cdot A \\cdot A| \\geq |A|^{1 + \\delta}$.\n\n**Test:** Implement the product set triple computation $A^3$ for randomly sampled sets in $\\mathrm{SL}(2, \\mathbb{F}_p)$ with $p = 11, 13, 17, 19, 23$ and measure the exponent $\\delta$ as a function of $|A|/p^3$. A single family with sublinear triple-product growth would refute the conjecture.\n\n**Impact:** This would be the first formally verified quantitative growth theorem for linear groups, providing an explicit exponent rather than just a qualitative dichotomy. It would connect our Theorem 2 (strict growth) to Helfgott's breakthrough result and potentially yield constructive expander bounds.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the irreducible characteristic polynomial certificates can exclude containment in Borel (triangular) subgroups, which is the main obstruction to growth in $\\mathrm{SL}(2)$.\n\n**Proof Strategy:** Decompose into three lemmas: (a) escape from tori using trace arguments, (b) escape from Borel subgroups using irreducibility certificates, (c) sum-product estimates over $\\mathbb{F}_p$ for the remaining case. The key insight is that the generation certificates from the catalog provide exactly the escape witnesses needed.\n\n**Domain Bridges:** Additive combinatorics (sum-product estimates), analytic number theory (exponential sum bounds).\n\n**Lineage:** Extends `strict_growth_of_not_subgroup` from qualitative to quantitative.\n\n**Ambition:** Grand challenge \u2014 would constitute a new formally verified proof of (a special case of) a major theorem in arithmetic combinatorics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a0951d1f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T06:04:06.524018+00:00"
-  },
-  {
-    "id": "fd_1076",
-    "title": "Direction 2: Pseudofinite Transfer via Definable Ultraproducts",
-    "description": "**Conjecture:** The polynomially definable growth-or-control dichotomy transfers from individual finite fields $\\mathbb{F}_q$ to the pseudofinite field $\\mathbb{F}_\\omega = \\prod_q \\mathbb{F}_q / \\mathcal{U}$ via \u0141o\u015b's theorem: a definable subset of $\\mathrm{GL}(2, \\mathbb{F}_\\omega)$ with bounded doubling is controlled by a definable subgroup.\n\n**Test:** Formalize \u0141o\u015b's theorem for the restricted class of polynomial-image sentences and verify that the growth ratio $|A^2|/|A|$ is preserved under ultraproduct transfer for at least 3 concrete definable families.\n\n**Impact:** This would establish the first formal bridge between finite model theory and approximate group theory, showing that verified finite results automatically yield pseudofinite counterparts. It opens a path toward formalizing Hrushovski's approach.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the `PolyDefinableSubset` structure and generation certificates provide the definable language needed for transfer.\n\n**Proof Strategy:** The key insight is that our `PolyDefinableSubset` structure is already designed as a first-order definable object. Formalizing \u0141o\u015b's theorem for bounded-quantifier sentences over matrix algebras, then applying it to the growth predicate $|A^2| \\leq K|A|$.\n\n**Why now?** The definitions file (`ApproxSubgroupDefs.lean`) already contains the model-theoretic scaffolding (polynomial definability, coset control). Adding ultraproduct infrastructure is now a concrete formalization task rather than a conceptual challenge.\n\n**Domain Bridges:** Model theory, mathematical logic, ultraproduct theory.\n\n**Lineage:** Builds on `PolyDefinableSubset` and `CosetControlledBy` definitions.\n\n**Ambition:** Grand challenge \u2014 would be the first formally verified pseudofinite transfer theorem in group theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a0951d1f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T06:04:06.558801+00:00"
-  },
-  {
-    "id": "fd_1077",
-    "title": "Direction 3: Spectral Gap from Product Growth",
-    "description": "**Conjecture:** If $A \\subseteq G$ is a symmetric generating set of a finite group with $1 \\in A$ and growth ratio $\\sigma = |A^2|/|A|$, then the spectral gap $\\lambda_1$ of the normalized Cayley graph adjacency operator satisfies $\\lambda_1 \\geq c(\\sigma - 1) / \\sigma$ for an absolute constant $c > 0$.\n\n**Test:** For each family in our computational suite, compute the actual eigenvalues of the Cayley graph adjacency matrix (feasible for $\\mathrm{GL}(2, \\mathbb{F}_5)$ with 480 elements) and compare the spectral gap to the predicted bound. Deviation from the linear relationship would refine the conjecture.\n\n**Impact:** This would complete the triangle between model theory, group growth, and spectral graph theory. Product growth \u2192 spectral gap \u2192 mixing time \u2192 expander certificates, all formally verified.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the orbit spanning theorem (`span_orbit_eq_top_of_irreducible`) provides the invariant-subspace-free condition that, spectrally, prevents eigenvalue concentration.\n\n**Proof Strategy:** The key insight is that `support_walk_grows_of_product_grows` (Theorem 3) already establishes the qualitative connection; quantifying it requires bounding the $\\ell^2$ norm of the convolution operator using the cardinality growth. Use the Cauchy-Schwarz convolution bound: $\\|f * g\\|_2^2 \\leq \\|f\\|_1^2 \\cdot \\|g\\|_2^2 / |G|$.\n\n**Why now?** Theorem 3 provides the qualitative link; upgrading to a quantitative spectral bound is a natural next step that was impossible before the random walk theorem was verified.\n\n**Domain Bridges:** Spectral graph theory, probability theory, theoretical computer science (expander graphs).\n\n**Lineage:** Extends `support_walk_grows_of_product_grows`.\n\n**Ambition:** Solid extension \u2014 quantitative version of an established qualitative link.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a0951d1f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T06:04:06.590349+00:00"
-  },
-  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2330,23 +2375,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
-  },
-  {
-    "id": "fd_1080",
-    "title": "Domain Bridges:",
-    "description": "Matroid theory \u2194 tropical geometry \u2194 optimization \u2194 coding theory",
-    "domains": [
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5726bd2a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T06:39:15.353407+00:00"
   },
   {
     "id": "seed_007",
