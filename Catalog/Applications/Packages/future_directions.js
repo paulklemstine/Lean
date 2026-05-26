@@ -401,10 +401,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "92e3853a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ae175a0",
     "timestamp": "2026-05-25T03:08:48.881853+00:00"
   },
   {
@@ -1322,26 +1322,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T01:21:04.728538+00:00"
   },
   {
-    "id": "fd_1021",
-    "title": "Direction 2: Explicit Poincar\u00e9 Constant and Exponential Variance Decay",
-    "description": "**Conjecture**: For the $S_n$ walk with adjacent transpositions and long cycle, there exists $c > 0$ such that for all mean-zero $f : S_n \\to \\mathbb{R}$:\n$$\n\\text{Var}(f) \\leq \\frac{c \\cdot n^2}{|S|} \\cdot E_S(f)\n$$\nwhere $E_S(f)$ is the Dirichlet energy. Equivalently, the spectral gap satisfies $\\gamma \\geq |S|/(c \\cdot n^2)$.\n\n**Test**: Compute the exact spectral gap for $n = 3, \\ldots, 8$ and verify $\\gamma \\cdot n^2 / |S|$ converges to a constant. For $n = 3$: gap \u2248 0.5; for $n = 6$: gap \u2248 0.134. Check whether $\\gamma \\cdot n^2$ stabilizes.\n\n**Impact**: Would upgrade the variance decay theorem from $\\text{Var}(A^t f) \\leq \\text{Var}(f)$ to the exponential form $\\text{Var}(A^t f) \\leq (1 - c/n^2)^{2t} \\cdot \\text{Var}(f)$, giving explicit relaxation rates.\n\n**Catalog References**: `Pythagorean/CayleyExpander/Defs.lean` (Dirichlet energy, `CanonicalPathData`), `Pythagorean/CayleyExpander/SpectralGap.lean` (variance-energy relation, Poincar\u00e9 inequality).\n\n**Proof Strategy**: \n1. Construct explicit canonical paths in $\\text{Cay}(S_n, S)$ using the bubble sort + rotation algorithm.\n2. Bound the congestion: each edge carries at most $C \\cdot n^2 \\cdot (n-2)!$ paths.\n3. Apply the Poincar\u00e9 comparison: $\\gamma \\geq |S| / (\\text{congestion} \\cdot \\text{max\\_length})$.\n4. Formalize using `CanonicalPathData` and `explicitGapBound` from `Defs.lean`.\n\n**Domain Bridges**: Poincar\u00e9 inequality \u2192 functional inequalities \u2192 log-Sobolev \u2192 hypercontractivity \u2192 quantum information.\n\n**Lineage**: Builds directly on the catalog's `CanonicalPathData` structure and `explicitGapBound` definition.\n\n**Ambition**: Solid extension \u2014 achievable with existing infrastructure.\n\n**The key insight is** that the long cycle reduces canonical path lengths from $O(n^2)$ to $O(n)$ (sort first, then rotate), and the congestion is controlled by the symmetry of the group action.\n\n**Why now?** The `CanonicalPathData` structure is already defined in the catalog with all necessary fields (paths, length bounds, congestion bounds). Only the concrete instantiation for $S_n$ with the specific generators is needed.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "4f520a5f",
-    "consumed_by_exp_id": "c0f735e4",
-    "timestamp": "2026-05-26T01:57:00.404929+00:00"
-  },
-  {
     "id": "fd_1025",
     "title": "Direction 1: Universal Support-Tutte Polynomial",
     "description": "**Conjecture:** Any support invariant F satisfying (i) multiplicativity on disjoint-coordinate direct sums and (ii) a deletion\u2013contraction recurrence on M-convex supports factors uniquely through a universal support-Tutte polynomial T_S(x, y), i.e., F = \u03c6 \u2218 T_S for some ring homomorphism \u03c6.\n\n**The key insight is** that the deletion\u2013contraction recurrence on supports, combined with the loop/coloop trichotomy, generates a free algebraic structure indexed by \"support activities\" analogous to Tutte's internal/external activities. The universality would follow from showing that every M-convex support admits a canonical activity ordering.\n\n**Why now?** The minor closure theorems (Theorems 3.1\u20133.4 in `Catalog/Pythagorean/SupportMinorTheory.lean`) guarantee that the recurrence is well-defined on the class of M-convex supports. This was the missing structural prerequisite.\n\n**Test:** For all M-convex subsets of the degree-\u22645 simplex on 4 variables, compute the support-Tutte polynomial using two different coordinate orderings. If the values agree in all cases, universality is strongly supported. A single disagreement would disprove universality and redirect toward a weaker theory (e.g., universality only for matroid-induced supports).\n\n**Impact:** A universal support-Tutte polynomial would be a new algebraic invariant of M-convex sets, generalizing the classical Tutte polynomial and potentially capturing information invisible to matroid Tutte theory (e.g., degree information from non-{0,1} supports).\n\n**Catalog References:** `Catalog/Pythagorean/SupportMinorTheory.lean` (SupportTutteInvariant structure, minor_step_card_le).\n\n**Proof Strategy:** \n1. Define support activities via a total ordering on coordinates, analogous to Tutte (1954).\n2. Show the activity-based expansion agrees with the deletion\u2013contraction recurrence.\n3. Prove uniqueness by induction on support cardinality.\n\n**Domain Bridges:** Statistical physics (Potts model partition functions), knot theory (Jones polynomial via Tutte specialization).\n\n**Lineage:** Direct extension of Theorem 3.4 (exchange_of_minor) in the current catalog.\n\n**Ambition:** Grand challenge \u2014 would establish a new universal algebraic invariant.\n\n---",
@@ -1956,6 +1936,44 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
+    "id": "fd_1121",
+    "title": "Direction 1: Computational Verification of the G\u2082 Character-Ratio Conjecture",
+    "description": "**Conjecture:** There exists C_{G\u2082} > 0 such that for every prime power q of good characteristic and every regular semisimple element s in a maximal torus of G\u2082(\ud835\udd3d_q),\n\n    max_{\u03c7 \u2208 Irr(G\u2082(\ud835\udd3d_q)), \u03c7 \u2260 1} |\u03c7(s)/\u03c7(1)| \u2264 C_{G\u2082}/q.\n\n**Test:** Compute character tables of G\u2082(\ud835\udd3d_q) for q = 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 using GAP/CHEVIE. For each q, compute M(q) = q \u00b7 max_{s,\u03c7} |\u03c7(s)/\u03c7(1)|. The conjecture predicts M(q) remains bounded; falsification occurs if M(q) grows systematically. Decompose M(q) by torus type to identify which tori contribute the extremal ratios.\n\n**Impact:** If verified computationally, this provides the input data for our certificate framework, yielding the first proven uniform expander family from an exceptional group. If falsified, it reveals structural obstructions to expansion in exceptional groups, which would itself be a significant discovery.\n\n**Catalog References:** `Pythagorean/G2CharacterSheafCertificate.lean` \u2014 `G2CharacterRatioBound`, `g2_conjecture_implies_expansion`, `g2_uniform_expansion`\n\n**Proof Strategy:** Use the Enomoto\u2013Yamada (1986) and Chang (2006) parameterization of irreducible characters of G\u2082(\ud835\udd3d_q) via Deligne\u2013Lusztig theory. The characters are organized into Harish-Chandra series corresponding to the 6 conjugacy classes of W(G\u2082). For each series, estimate |\u03c7(s)/\u03c7(1)| using Green function formulas.\n\n**Domain Bridges:** Algebraic geometry (Deligne\u2013Lusztig theory) \u2192 combinatorics (expansion); computational algebra (GAP/CHEVIE) \u2192 formal verification.\n\n**Lineage:** Extends Liebeck\u2013Shalev (2004) character-ratio bounds from asymptotic estimates to explicit constants.\n\n**Ambition:** Solid extension \u2014 the mathematical tools exist; the novelty is in the explicit computation and formal certification.\n\n**The key insight is** that bounded toral complexity (at most 6 torus types for G\u2082) reduces an infinite verification problem to a finite one, making computational verification tractable.\n\n**Why now?** Character tables for G\u2082(\ud835\udd3d_q) are available in CHEVIE for all q, and the certificate framework can immediately consume the resulting bounds to produce certified expanders.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "45723a87",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T11:58:49.922241+00:00"
+  },
+  {
+    "id": "fd_1122",
+    "title": "Direction 2: Exceptional Expander Ladder \u2014 F\u2084, E\u2086, E\u2087, E\u2088",
+    "description": "**Conjecture:** For each exceptional group X \u2208 {F\u2084, E\u2086, E\u2087, E\u2088}, there exists C_X > 0 such that the character-ratio bound holds with constant C_X on regular semisimple toral elements, yielding a uniform expander family.\n\n**Test:** Compute M_X(q) for small q for each exceptional type. The bounded toral complexity argument predicts M_X(q) bounded for each X; the constants C_X should increase with rank but remain finite. Cross-reference with known character-degree polynomials to establish feasibility.\n\n**Impact:** A complete exceptional expander ladder would provide 5 fundamentally new families of expander graphs, each with algebraically structured spectral properties distinct from classical-group expanders.\n\n**Catalog References:** `Pythagorean/G2CharacterSheafCertificate.lean` \u2014 `CharacterRatioCertificate`, `uniform_expansion_of_certified_family`, `bounded_toral_complexity`\n\n**Proof Strategy:** For each exceptional type:\n1. Enumerate Weyl group conjugacy classes (torus types): |W(F\u2084)| = 1152, |W(E\u2086)| = 51840, |W(E\u2087)| = 2903040, |W(E\u2088)| = 696729600. The number of conjugacy classes (= torus types) is 25, 25, 60, 112 respectively.\n2. For each torus type, use Deligne\u2013Lusztig character formulas to bound |\u03c7(s)/\u03c7(1)|.\n3. Take the maximum over torus types.\n\n**Domain Bridges:** Exceptional Lie theory \u2192 combinatorics \u2192 computer science (explicit expander constructions).\n\n**Lineage:** Direct extension of the G\u2082 certificate framework.\n\n**Ambition:** Grand challenge \u2014 E\u2088 has 112 torus types and the character theory is extremely complex. A complete treatment would be a major achievement in computational representation theory.\n\n**The key insight is** that the certificate framework is parametric in the group: no new theory is needed, only new character data. The transference theorems apply verbatim.\n\n**Why now?** The certificate formalism has been established and verified; the remaining barrier is computational, not theoretical.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "45723a87",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T11:58:49.966238+00:00"
+  },
+  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -2356,44 +2374,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:13:49.686566+00:00"
-  },
-  {
-    "id": "fd_1121",
-    "title": "Direction 1: Computational Verification of the G\u2082 Character-Ratio Conjecture",
-    "description": "**Conjecture:** There exists C_{G\u2082} > 0 such that for every prime power q of good characteristic and every regular semisimple element s in a maximal torus of G\u2082(\ud835\udd3d_q),\n\n    max_{\u03c7 \u2208 Irr(G\u2082(\ud835\udd3d_q)), \u03c7 \u2260 1} |\u03c7(s)/\u03c7(1)| \u2264 C_{G\u2082}/q.\n\n**Test:** Compute character tables of G\u2082(\ud835\udd3d_q) for q = 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 using GAP/CHEVIE. For each q, compute M(q) = q \u00b7 max_{s,\u03c7} |\u03c7(s)/\u03c7(1)|. The conjecture predicts M(q) remains bounded; falsification occurs if M(q) grows systematically. Decompose M(q) by torus type to identify which tori contribute the extremal ratios.\n\n**Impact:** If verified computationally, this provides the input data for our certificate framework, yielding the first proven uniform expander family from an exceptional group. If falsified, it reveals structural obstructions to expansion in exceptional groups, which would itself be a significant discovery.\n\n**Catalog References:** `Pythagorean/G2CharacterSheafCertificate.lean` \u2014 `G2CharacterRatioBound`, `g2_conjecture_implies_expansion`, `g2_uniform_expansion`\n\n**Proof Strategy:** Use the Enomoto\u2013Yamada (1986) and Chang (2006) parameterization of irreducible characters of G\u2082(\ud835\udd3d_q) via Deligne\u2013Lusztig theory. The characters are organized into Harish-Chandra series corresponding to the 6 conjugacy classes of W(G\u2082). For each series, estimate |\u03c7(s)/\u03c7(1)| using Green function formulas.\n\n**Domain Bridges:** Algebraic geometry (Deligne\u2013Lusztig theory) \u2192 combinatorics (expansion); computational algebra (GAP/CHEVIE) \u2192 formal verification.\n\n**Lineage:** Extends Liebeck\u2013Shalev (2004) character-ratio bounds from asymptotic estimates to explicit constants.\n\n**Ambition:** Solid extension \u2014 the mathematical tools exist; the novelty is in the explicit computation and formal certification.\n\n**The key insight is** that bounded toral complexity (at most 6 torus types for G\u2082) reduces an infinite verification problem to a finite one, making computational verification tractable.\n\n**Why now?** Character tables for G\u2082(\ud835\udd3d_q) are available in CHEVIE for all q, and the certificate framework can immediately consume the resulting bounds to produce certified expanders.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "45723a87",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T11:58:49.922241+00:00"
-  },
-  {
-    "id": "fd_1122",
-    "title": "Direction 2: Exceptional Expander Ladder \u2014 F\u2084, E\u2086, E\u2087, E\u2088",
-    "description": "**Conjecture:** For each exceptional group X \u2208 {F\u2084, E\u2086, E\u2087, E\u2088}, there exists C_X > 0 such that the character-ratio bound holds with constant C_X on regular semisimple toral elements, yielding a uniform expander family.\n\n**Test:** Compute M_X(q) for small q for each exceptional type. The bounded toral complexity argument predicts M_X(q) bounded for each X; the constants C_X should increase with rank but remain finite. Cross-reference with known character-degree polynomials to establish feasibility.\n\n**Impact:** A complete exceptional expander ladder would provide 5 fundamentally new families of expander graphs, each with algebraically structured spectral properties distinct from classical-group expanders.\n\n**Catalog References:** `Pythagorean/G2CharacterSheafCertificate.lean` \u2014 `CharacterRatioCertificate`, `uniform_expansion_of_certified_family`, `bounded_toral_complexity`\n\n**Proof Strategy:** For each exceptional type:\n1. Enumerate Weyl group conjugacy classes (torus types): |W(F\u2084)| = 1152, |W(E\u2086)| = 51840, |W(E\u2087)| = 2903040, |W(E\u2088)| = 696729600. The number of conjugacy classes (= torus types) is 25, 25, 60, 112 respectively.\n2. For each torus type, use Deligne\u2013Lusztig character formulas to bound |\u03c7(s)/\u03c7(1)|.\n3. Take the maximum over torus types.\n\n**Domain Bridges:** Exceptional Lie theory \u2192 combinatorics \u2192 computer science (explicit expander constructions).\n\n**Lineage:** Direct extension of the G\u2082 certificate framework.\n\n**Ambition:** Grand challenge \u2014 E\u2088 has 112 torus types and the character theory is extremely complex. A complete treatment would be a major achievement in computational representation theory.\n\n**The key insight is** that the certificate framework is parametric in the group: no new theory is needed, only new character data. The transference theorems apply verbatim.\n\n**Why now?** The certificate formalism has been established and verified; the remaining barrier is computational, not theoretical.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "45723a87",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T11:58:49.966238+00:00"
   },
   {
     "id": "seed_032",

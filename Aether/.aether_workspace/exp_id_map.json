@@ -624,5 +624,6 @@
   "d74ce5bf": "direction_3_abelian_sandpile_criticality_via_lapla.json",
   "36d84586": "direction_1_basis_uniqueness_up_to_tropical_projec.json",
   "d4196bad": "direction_5_expander_based_derandomization_in_cert.json",
-  "45723a87": "direction_2_exceptional_groups_and_character_sheaf.json"
+  "45723a87": "direction_2_exceptional_groups_and_character_sheaf.json",
+  "c0f735e4": "direction_2_explicit_poincar_constant_and_exponent.json"
 }
