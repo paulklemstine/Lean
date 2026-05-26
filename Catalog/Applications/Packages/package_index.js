@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Numerical Stability",
     "date": "2026-05-26T15:25:12Z",
     "exp_id": "f52aba3c",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7345251306175558,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_spectral_fingerprints_for_classical_su.json",
@@ -2641,8 +2641,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-26T15:25:12Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7345251306175558,
+      "quality": "substantial"
     }
   ],
   "edges": [

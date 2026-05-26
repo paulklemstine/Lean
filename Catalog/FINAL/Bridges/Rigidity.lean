@@ -1,0 +1,1 @@
+../../Bridges/Catalog/Bridges/TropicalHolography/Rigidity.lean

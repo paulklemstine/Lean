@@ -435,25 +435,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:14:31.150620+00:00"
   },
   {
-    "id": "fd_0889",
-    "title": "Direction 2: Lorentzian Condition Numbers and Smoothed Analysis",
-    "description": "**Conjecture:** Under smoothed analysis (Gaussian perturbation of coefficients with variance \u03c3\u00b2), the probability that a degree-d polynomial near the Lorentzian boundary is misclassified decays as exp(\u2212\u03a9(\u03b5\u00b2/(n\u03c3\u00b2))), where \u03b5 is the spectral gap.\n\n**Test:** For polynomials with spectral gap \u03b5 close to 0, sample Gaussian perturbations at various \u03c3 and measure misclassification rate. Fit the exponential decay model. If the rate does not depend on \u03b5\u00b2/\u03c3\u00b2 but on a different quantity, the conjecture fails.\n\n**Impact:** Would establish Lorentzian recognition as numerically well-conditioned in the smoothed analysis sense, even for polynomials near the boundary. This is the strongest possible statement about practical reliability.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `HasGappedSignature`, `LorentzianConditionNumber`\n\n**Proof Strategy:** Use the perturbation theorem to reduce to bounding P[\u2016E\u2016_op > \u03b5] for Gaussian Wigner matrices E. Known tail bounds for the largest eigenvalue of GOE give the desired exponential decay.\n\n**Domain Bridges:** Smoothed analysis (Spielman\u2013Teng program), random matrix theory, computational complexity\n\n**Lineage:** Extends the condition number concept from numerical linear algebra to algebraic combinatorics.\n\n**Ambition:** Grand challenge \u2014 would merge Lorentzian polynomial theory with the Spielman\u2013Teng paradigm. \u2605\u2605\u2605\u2605\u2605\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "f52aba3c",
-    "timestamp": "2026-05-25T17:14:31.171940+00:00"
-  },
-  {
     "id": "fd_0890",
     "title": "Direction 3: Tropical Shadows of Lorentzian Stability",
     "description": "**Conjecture:** The tropicalization of the Lorentzian stability radius (infimum of coefficient perturbations destroying Lorentzianity) equals the minimum tropical spectral gap across tropical quadratic leaves.\n\n**Test:** Compute tropical quadratic leaves for small examples (complete graphs, uniform matroids). Compare the tropical spectral gap to the log of the exact stability radius. If they differ by more than O(log n), the conjecture fails.\n\n**Impact:** Would provide a purely combinatorial proxy for the numerical stability radius, computable in polynomial time without eigenvalue decomposition. This could enable Lorentzian certification for polynomials with millions of variables.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `UniformSpectralMargin`; `Catalog/Tropical/` \u2014 various tropical geometry files\n\n**Proof Strategy:** Use the Maslov dequantization: take the limit of log(stability_radius(t\u1d45 \u00b7 f)) / log(t) as t \u2192 \u221e. Show this limit equals the tropical spectral gap via the tropical eigenvalue theory of Akian, Gaubert, and Guterman.\n\n**Domain Bridges:** Tropical geometry, max-plus algebra, combinatorial optimization\n\n**Lineage:** Builds on both the stability theory (this work) and tropical Lorentzian theory.\n\n**Ambition:** Grand challenge \u2014 would create a new bridge between numerical stability and tropical geometry. \u2605\u2605\u2605\u2605\u2605\n\n---",
@@ -793,10 +774,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "834b245c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "88f5188e",
     "timestamp": "2026-05-25T21:13:41.991865+00:00"
   },
   {
@@ -1195,25 +1176,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T02:33:39.011759+00:00"
   },
   {
-    "id": "fd_1030",
-    "title": "Direction 1: Spectral Fingerprints for Classical Subgroups",
-    "description": "**Conjecture**: For each classical matrix group family G \u2208 {SL_n, Sp_{2n}, O_n, SO_n, SU_n} over F_q, the characteristic polynomial distribution of random elements has a distinct fingerprint from GL_n(F_q) and from each other classical family of the same dimension. Specifically, the irreducible rate and split rate of random charpolys in G(F_q) converge to deterministic values \u03c1_irr(G, n, q) and \u03c1_spl(G, n, q) that separate G from all other classical groups of the same dimension.\n\n**Test**: For SL_3(F_7) and Sp_4(F_5), computationally estimate the characteristic polynomial statistics from 10,000 random elements and compare to the GL predictions. If the distributions differ significantly (p < 0.01 in a chi-squared test against the GL distribution), the conjecture is supported.\n\n**Impact**: This would extend the recognition framework from identifying (n, q) within GL_n to identifying the *group type* (GL, SL, Sp, O, ...) \u2014 a dramatically more powerful recognition tool that addresses the core problem in computational group theory.\n\n**Catalog References**: `Catalog/Algebra/CharpolyRecognition.lean` (fingerprint framework, loss function), `Catalog/Algebra/MatrixGroupGeneration.lean` (generation certificates, invariant subspace theorem).\n\n**Proof Strategy**: For SL_n, the constraint det(A) = 1 restricts the constant term of the charpoly to (-1)^n, reducing the polynomial space. Count irreducible polynomials with prescribed constant term using character sums over F_q. For Sp_{2n}, charpolys are palindromic (self-reciprocal), dramatically reducing the irreducible fraction. Prove these structural constraints yield distinct rates.\n\n**Domain Bridges**: Connects to random matrix theory over finite fields (Fulman, 2000) and representation theory of classical groups (Carter, 1985).\n\n**Lineage**: Direct extension of the current GL_n fingerprint framework.\n\n**Ambition**: Grand challenge \u2014 requires new algebraic counting results for constrained polynomial families.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "114b795e",
-    "consumed_by_exp_id": "56d80658",
-    "timestamp": "2026-05-26T03:06:43.848125+00:00"
-  },
-  {
     "id": "fd_1050",
     "title": "Direction 1: Log-Sobolev Inequality for the Hybrid Walk",
     "description": "**Conjecture:** The modified log-Sobolev constant $\\rho_n$ of the adjacent-transposition-plus-cycle walk satisfies $\\rho_n \\geq c/n^2$ for a universal constant $c > 0$. This would immediately yield $t_{\\text{mix}} \\leq O(n^2 \\log \\log n!)$ = $O(n^2 \\log n)$, closing the gap between upper and lower bounds.\n\n**Test:** Compute the log-Sobolev constant numerically for $n = 3, 4, 5, 6$ via semidefinite programming (the constant equals the minimum of $\\mathcal{E}(f, \\log f) / \\text{Ent}(f^2)$ over nonzero test functions). If $\\rho_n \\cdot n^2$ stabilizes, the conjecture is confirmed.\n\n**Impact:** Would be the first log-Sobolev inequality for a hybrid-generator walk on $S_n$. This is stronger than the spectral gap and would give the sharp $O(n^2 \\log n)$ mixing time, confirming the cutoff conjecture up to constants.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (spectral gap bounds), `Pythagorean/CayleyExpander/HybridWalk.lean` (walk definitions).\n\n**Proof Strategy:** Use the comparison method: compare the log-Sobolev constant of the hybrid walk with that of the random transposition walk (known to be $\\Theta(1/n)$) via a canonical path argument with controlled entropy distortion.\n\n**Domain Bridges:** Functional analysis (log-Sobolev inequalities), information theory (entropy methods), quantum information (quantum log-Sobolev for permutation channels).\n\n**Lineage:** Extends Theorem A (spectral gap) to the stronger log-Sobolev regime.\n\n**Ambition:** \ud83d\udfe1 Grand Challenge \u2014 would resolve the central open problem.\n\n**\"The key insight is...\"** that log-Sobolev constants capture higher-order concentration beyond what spectral gaps provide, and the cycle generator's role in reducing entropy transport cost may be visible only at this level.\n\n**\"Why now?\"** The spectral gap infrastructure is now certified and the numerical tools to test the conjecture exist. Recent advances in log-Sobolev inequalities for permutation groups (Salez, 2023) provide new technical tools.\n\n---",
@@ -1226,10 +1188,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "48617359",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ff6108f7",
     "timestamp": "2026-05-26T04:51:55.380022+00:00"
   },
   {
@@ -1481,10 +1443,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "21d69cc6",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50190731",
     "timestamp": "2026-05-26T09:39:15.086140+00:00"
   },
   {
@@ -1697,7 +1659,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4ae175a0",
@@ -1716,12 +1678,51 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4ae175a0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T13:43:58.481343+00:00"
+  },
+  {
+    "id": "fd_1146",
+    "title": "Direction 1: Arithmetic Persistent Homology",
+    "description": "**Conjecture**: There exists a persistence module structure over \u2124, equipped with an \"arithmetic barcode\" consisting of (birth, death, torsion-label) triples, that strictly refines the field-coefficient barcode and is computable in polynomial time for bounded-dimension complexes.\n\n**Test**: Implement arithmetic persistence for 2-complexes arising from point cloud data (protein structures, molecular surfaces). Compare the discriminating power of arithmetic barcodes vs. standard barcodes on benchmark datasets (e.g., SHREC, ModelNet). A positive result: arithmetic barcodes distinguish pairs of shapes that standard barcodes cannot. A negative result: the torsion information adds no discriminating power for real-world data, falsifying practical relevance.\n\n**Impact**: This would create a new computational topology tool \u2014 \"persistent homology with arithmetic memory\" \u2014 that leverages the entire integer homology structure rather than discarding torsion. Applications in drug discovery, materials science, and computational biology would follow directly.\n\n**Catalog References**: `Pythagorean/TropicalMorse/IntegerTrichotomy.lean` (trichotomy theorem), `Pythagorean/TropicalMorse/Defs.lean` (tropical spectrum definitions).\n\n**Proof Strategy**: Model the filtered chain complex over \u2124, compute Smith normal forms at each filtration step, and track invariant factor changes using the trichotomy to label each event. The key technical challenge is defining a suitable notion of \"interval\" for torsion features, since torsion can be created in one step and modified (not destroyed) in later steps.\n\n**Domain Bridges**: Topological data analysis, computational biology, materials science.\n\n**Lineage**: Extends the classical persistent homology framework of Edelsbrunner-Letscher-Zomorodian by incorporating the torsion layer revealed by the trichotomy.\n\n**Ambition**: Grand challenge \u2014 creating a new computational paradigm.\n\n**The key insight is** that the trichotomy provides a natural event classifier for each step of the filtration, converting a global algebraic computation into a sequence of local arithmetic events that can be tracked and displayed as a barcode with richer labels.\n\n**Why now?** The trichotomy theorem provides the mathematical foundation (previously missing) for classifying filtration events over \u2124, and Smith normal form algorithms are now fast enough for moderate-size complexes thanks to advances in computational number theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d4af762e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T14:17:29.239586+00:00"
+  },
+  {
+    "id": "fd_1151",
+    "title": "Direction 1: Dynamic Spectral Gap Tracking for Online Mixing-Time Guarantees",
+    "description": "**Conjecture:** For a sequence of rank-1 Lorentzian polynomial updates $f_t \\to f_{t+1} = f_t + c_t X^{\\alpha_t}$, the spectral gap $\\gamma_t$ of the natural basis-exchange Markov chain satisfies\n$$|\\gamma_{t+1} - \\gamma_t| \\leq C \\cdot \\frac{|\\text{Affected}(\\alpha_t, d-2)|}{\\text{Total leaves}} \\cdot \\|c_t\\|$$\nwhere $C$ depends only on the degree and conditioning of the quadratic leaves.\n\n**Test:** Compute spectral gaps explicitly for graphic matroid polynomials on graphs with 10\u201350 vertices under edge insertions. Measure whether the gap change is proportional to the affected leaf fraction. A single instance where the gap changes discontinuously at a non-affected leaf would falsify the conjecture.\n\n**Impact:** If true, this would enable fully online mixing-time certificates: after each update, the mixing time bound is adjusted by a local computation rather than a global spectral analysis. This would make streaming combinatorial sampling provably efficient.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` (spectral_gap_log_concave_lower_bound), `Pythagorean/DynamicLorentzianCertificates.lean` (iteratedMPderiv_rankOneUpdate_eq_of_not_le)\n\n**Proof Strategy:** Formalize the Weyl perturbation bound for Hessian eigenvalues under rank-1 coefficient updates. Show that only affected-leaf Hessians change, then bound the total spectral gap perturbation by summing Weyl bounds over affected leaves.\n\n**Domain Bridges:** Spectral graph theory, random matrix theory, Markov chain mixing\n\n**Lineage:** Extends the locality theorem from certificate *validity* to certificate *quality* (spectral gap).\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 requires deep integration of perturbation theory with Lorentzian structure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "02e24032",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T14:50:50.001252+00:00"
   },
   {
     "id": "seed_005",
@@ -1829,26 +1830,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1146",
-    "title": "Direction 1: Arithmetic Persistent Homology",
-    "description": "**Conjecture**: There exists a persistence module structure over \u2124, equipped with an \"arithmetic barcode\" consisting of (birth, death, torsion-label) triples, that strictly refines the field-coefficient barcode and is computable in polynomial time for bounded-dimension complexes.\n\n**Test**: Implement arithmetic persistence for 2-complexes arising from point cloud data (protein structures, molecular surfaces). Compare the discriminating power of arithmetic barcodes vs. standard barcodes on benchmark datasets (e.g., SHREC, ModelNet). A positive result: arithmetic barcodes distinguish pairs of shapes that standard barcodes cannot. A negative result: the torsion information adds no discriminating power for real-world data, falsifying practical relevance.\n\n**Impact**: This would create a new computational topology tool \u2014 \"persistent homology with arithmetic memory\" \u2014 that leverages the entire integer homology structure rather than discarding torsion. Applications in drug discovery, materials science, and computational biology would follow directly.\n\n**Catalog References**: `Pythagorean/TropicalMorse/IntegerTrichotomy.lean` (trichotomy theorem), `Pythagorean/TropicalMorse/Defs.lean` (tropical spectrum definitions).\n\n**Proof Strategy**: Model the filtered chain complex over \u2124, compute Smith normal forms at each filtration step, and track invariant factor changes using the trichotomy to label each event. The key technical challenge is defining a suitable notion of \"interval\" for torsion features, since torsion can be created in one step and modified (not destroyed) in later steps.\n\n**Domain Bridges**: Topological data analysis, computational biology, materials science.\n\n**Lineage**: Extends the classical persistent homology framework of Edelsbrunner-Letscher-Zomorodian by incorporating the torsion layer revealed by the trichotomy.\n\n**Ambition**: Grand challenge \u2014 creating a new computational paradigm.\n\n**The key insight is** that the trichotomy provides a natural event classifier for each step of the filtration, converting a global algebraic computation into a sequence of local arithmetic events that can be tracked and displayed as a barcode with richer labels.\n\n**Why now?** The trichotomy theorem provides the mathematical foundation (previously missing) for classifying filtration events over \u2124, and Smith normal form algorithms are now fast enough for moderate-size complexes thanks to advances in computational number theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d4af762e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T14:17:29.239586+00:00"
   },
   {
     "id": "seed_013",
@@ -2298,23 +2279,24 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:07:45.821446+00:00"
   },
   {
-    "id": "fd_1151",
-    "title": "Direction 1: Dynamic Spectral Gap Tracking for Online Mixing-Time Guarantees",
-    "description": "**Conjecture:** For a sequence of rank-1 Lorentzian polynomial updates $f_t \\to f_{t+1} = f_t + c_t X^{\\alpha_t}$, the spectral gap $\\gamma_t$ of the natural basis-exchange Markov chain satisfies\n$$|\\gamma_{t+1} - \\gamma_t| \\leq C \\cdot \\frac{|\\text{Affected}(\\alpha_t, d-2)|}{\\text{Total leaves}} \\cdot \\|c_t\\|$$\nwhere $C$ depends only on the degree and conditioning of the quadratic leaves.\n\n**Test:** Compute spectral gaps explicitly for graphic matroid polynomials on graphs with 10\u201350 vertices under edge insertions. Measure whether the gap change is proportional to the affected leaf fraction. A single instance where the gap changes discontinuously at a non-affected leaf would falsify the conjecture.\n\n**Impact:** If true, this would enable fully online mixing-time certificates: after each update, the mixing time bound is adjusted by a local computation rather than a global spectral analysis. This would make streaming combinatorial sampling provably efficient.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` (spectral_gap_log_concave_lower_bound), `Pythagorean/DynamicLorentzianCertificates.lean` (iteratedMPderiv_rankOneUpdate_eq_of_not_le)\n\n**Proof Strategy:** Formalize the Weyl perturbation bound for Hessian eigenvalues under rank-1 coefficient updates. Show that only affected-leaf Hessians change, then bound the total spectral gap perturbation by summing Weyl bounds over affected leaves.\n\n**Domain Bridges:** Spectral graph theory, random matrix theory, Markov chain mixing\n\n**Lineage:** Extends the locality theorem from certificate *validity* to certificate *quality* (spectral gap).\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 requires deep integration of perturbation theory with Lorentzian structure.\n\n---",
+    "id": "fd_1160",
+    "title": "Direction 1: Sharp GOE Constants via Tracy-Widom Transfer",
+    "description": "**Conjecture**: For n\u00d7n Gaussian symmetric perturbations E with E_{ij} ~ N(0, \u03c3\u00b2/n), the misclassification probability satisfies\n\nP(misclassification) \u2264 exp(\u2212(\u03b5 \u2212 2\u03c3)\u00b2\u208a \u00b7 n / (C\u03c3\u00b2))\n\nwith an explicit constant C depending only on the normalization, and the transition occurs sharply at \u03b5 = 2\u03c3 (the edge of the Wigner semicircle).\n\n**Test**: Compare Monte Carlo failure rates against the predicted sharp threshold \u03b5 = 2\u03c3 for dimensions n = 10, 50, 200. The transition width should scale as n^{\u22122/3}, matching Tracy-Widom fluctuations.\n\n**Impact**: Transforms the abstract exponential tail bound into a quantitative engineering formula. For the first time, a practitioner could compute the exact number of bits of precision needed to certify Lorentzianity at a given confidence level.\n\n**Catalog References**: `Pythagorean/LorentzianSmoothedAnalysis.lean` (failure_event_subset_gap_event, smoothed_bound_monotone_in_gap), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (HasGappedSignature).\n\n**Proof Strategy**: \n1. Formalize the Wigner semicircle law for GOE matrices: the largest eigenvalue of E converges to 2\u03c3.\n2. Use Tracy-Widom tail bounds: P(\u03bb_max > 2\u03c3 + t\u03c3n^{\u22122/3}) \u2264 exp(\u2212ct^{3/2}).\n3. Compose with failure_event_subset_gap_event to get P(misclass) \u2264 P(\u2016E\u2016 > \u03b5).\n4. Substitute the Tracy-Widom tail at t = (\u03b5 \u2212 2\u03c3)n^{2/3}/\u03c3.\n\n**Domain Bridges**: Random matrix theory \u2192 algebraic combinatorics \u2192 numerical analysis.\n\n**Lineage**: Builds directly on Theorems 1 and 3 of this cycle.\n\n**Ambition**: Grand challenge \u2014 requires formalizing Tracy-Widom distribution or at least its tail bounds.\n\nThe key insight is that the Wigner semicircle edge at 2\u03c3 creates a sharp phase transition for Lorentzian stability, replacing the gradual exponential decay with a precise threshold.\n\nWhy now? The failure containment theorem (this cycle) provides the formal reduction; only the random matrix input is missing. Mathlib's growing spectral theory infrastructure makes formalization feasible within 1-2 cycles.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
       "Physics",
       "Bridges",
-      "Logic"
+      "Logic",
+      "Speculative"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "02e24032",
+    "source_exp_id": "f52aba3c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T14:50:50.001252+00:00"
+    "timestamp": "2026-05-26T15:25:16.762042+00:00"
   },
   {
     "id": "seed_032",

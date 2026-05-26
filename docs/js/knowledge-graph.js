@@ -1627,19 +1627,11 @@
                 // Package number centered on node
                 if (node.pkgNum && r > 8) {
                     ctx.save();
-                    const fontSize = Math.max(10, Math.min(r * 0.9, 22));
+                    ctx.fillStyle = `hsla(${adjColor.h}, 20%, 95%, 0.9)`;
+                    const fontSize = Math.max(8, Math.min(r * 0.7, 16));
                     ctx.font = `bold ${fontSize}px 'SF Mono', monospace`;
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
-                    const numStr = String(node.pkgNum);
-                    const textW = ctx.measureText(numStr).width;
-                    const pad = fontSize * 0.3;
-                    const bgR = Math.max(textW / 2 + pad, fontSize * 0.55);
-                    ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, bgR, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
-                    ctx.fill();
-                    ctx.fillStyle = '#ffffff';
                     ctx.fillText(node.pkgNum, sp.x, sp.y);
                     ctx.restore();
                 }
