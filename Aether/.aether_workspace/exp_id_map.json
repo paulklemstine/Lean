@@ -625,5 +625,9 @@
   "36d84586": "direction_1_basis_uniqueness_up_to_tropical_projec.json",
   "d4196bad": "direction_5_expander_based_derandomization_in_cert.json",
   "45723a87": "direction_2_exceptional_groups_and_character_sheaf.json",
-  "c0f735e4": "direction_2_explicit_poincar_constant_and_exponent.json"
+  "c0f735e4": "direction_2_explicit_poincar_constant_and_exponent.json",
+  "1fb257b2": "direction_2_chip_firing_canonical_forms_via_tropic.json",
+  "3130e902": "direction_4_cryptographic_security_bounds_for_perm.json",
+  "daae69f2": "direction_4_tropical_contraction_and_support_trunc.json",
+  "72356358": "direction_4_matroidal_quantum_state_preparation.json"
 }

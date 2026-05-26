@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorial Hodge Theory / Quantum Algorithms / Matroid Theory",
     "date": "2026-05-26T13:07:35Z",
     "exp_id": "72356358",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7344439999999999,
+    "quality": "substantial"
   },
   {
     "filename": "direction_4_tropical_contraction_and_support_trunc.json",
@@ -2557,8 +2557,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-26T13:07:35Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7344439999999999,
+      "quality": "substantial"
     }
   ],
   "edges": [
