@@ -1,994 +1,821 @@
-#!/usr/bin/env python3
 """
-applications.py — Real-world applications of Lorentzian recognition complexity.
+Applications of Lorentzian Recognition Complexity Theory
 
-Demonstrates practical applications of the complexity-theoretic results:
-1. Matroid basis counting via Lorentzian polynomials
-2. Log-concavity verification for combinatorial sequences
-3. Network reliability polynomial analysis
-4. Optimization barrier detection via Hessian spectrum
-"""
-
-import numpy as np
-from math import comb, factorial
-from typing import List, Tuple, Dict
-from itertools import combinations
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Application 1: Matroid Basis Counting
-# ─────────────────────────────────────────────────────────────────────
-
-def uniform_matroid_basis_polynomial(n: int, r: int) -> Dict[tuple, int]:
-    """Construct the basis generating polynomial of the uniform matroid U(r,n).
-    
-    The polynomial is ∑_{S ∈ C(n,r)} ∏_{i ∈ S} x_i, which is the
-    elementary symmetric polynomial e_r(x_1,...,x_n).
-    
-    This polynomial is always Lorentzian (Brändén-Huh 2020).
-    The number of monomials is C(n, r), and the recursive recognition
-    tree has C(n + r - 3, r - 2) leaves.
-    """
-    terms = {}
-    for subset in combinations(range(n), r):
-        exponent = [0] * n
-        for i in subset:
-            exponent[i] = 1
-        terms[tuple(exponent)] = 1
-    return terms
-
-
-def analyze_matroid_complexity():
-    """Analyze recognition complexity for matroid basis polynomials."""
-    print("=" * 65)
-    print("APPLICATION 1: Matroid Basis Counting Complexity")
-    print("=" * 65)
-    print()
-    print("The basis generating polynomial of a matroid is Lorentzian.")
-    print("Recognition complexity grows with rank and ground set size.")
-    print()
-    print(f"{'Matroid U(r,n)':>15} {'Bases':>8} {'Rec. leaves':>12} {'Leaf/Base':>10}")
-    print("-" * 50)
-    
-    for n in [4, 6, 8, 10, 12]:
-        for r in [2, n // 2, n - 2]:
-            if r < 2 or r > n:
-                continue
-            bases = comb(n, r)
-            leaves = comb(n + r - 3, r - 2)
-            ratio = leaves / bases if bases > 0 else 0
-            print(f"  U({r},{n})      {bases:>8,} {leaves:>12,} {ratio:>10.2f}")
-    print()
-    print("When r grows with n, the recognition cost explodes relative to")
-    print("the number of bases — this is the phase transition in action.")
-    print()
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Application 2: Log-Concavity Verification
-# ─────────────────────────────────────────────────────────────────────
-
-def is_log_concave(seq: List[float]) -> bool:
-    """Check if a sequence is log-concave: a_k^2 ≥ a_{k-1} · a_{k+1}."""
-    for k in range(1, len(seq) - 1):
-        if seq[k - 1] > 0 and seq[k + 1] > 0:
-            if seq[k] ** 2 < seq[k - 1] * seq[k + 1] - 1e-10:
-                return False
-    return True
-
-
-def ultra_log_concave_check(seq: List[float]) -> bool:
-    """Check if a_k / C(n,k) is log-concave (ultra-log-concavity)."""
-    n = len(seq) - 1
-    normalized = [seq[k] / comb(n, k) if comb(n, k) > 0 else 0 
-                  for k in range(len(seq))]
-    return is_log_concave(normalized)
-
-
-def demonstrate_log_concavity():
-    """Show log-concavity verification with complexity analysis."""
-    print("=" * 65)
-    print("APPLICATION 2: Log-Concavity Verification")
-    print("=" * 65)
-    print()
-    
-    # Binomial coefficients (always ultra-log-concave)
-    for n in [5, 10, 15, 20]:
-        seq = [comb(n, k) for k in range(n + 1)]
-        lc = is_log_concave(seq)
-        ulc = ultra_log_concave_check(seq)
-        print(f"  Binomial C({n},k): log-concave={lc}, ultra-log-concave={ulc}")
-    print()
-    
-    # Stirling numbers (log-concave but not ultra-log-concave)
-    print("  Stirling numbers S(n,k):")
-    for n in [5, 8, 10]:
-        # Compute Stirling numbers of the second kind
-        S = [[0] * (n + 1) for _ in range(n + 1)]
-        S[0][0] = 1
-        for i in range(1, n + 1):
-            for j in range(1, i + 1):
-                S[i][j] = j * S[i-1][j] + S[i-1][j-1]
-        seq = [S[n][k] for k in range(n + 1)]
-        lc = is_log_concave([x for x in seq if x > 0])
-        print(f"    S({n},k) = {seq[:min(8, len(seq))]}{'...' if len(seq) > 8 else ''}")
-        print(f"    Log-concave (nonzero part): {lc}")
-    print()
-    
-    # Complexity of verification
-    print("  Complexity of log-concavity verification:")
-    print("  - Direct coefficient check: O(n) for a single sequence")
-    print("  - Via Lorentzian recognition: O(n^{d-2}) in n variables, degree d")
-    print("  - When degree grows: certificate size ≥ 2^{d-2} (our lower bound)")
-    print()
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Application 3: Network Reliability
-# ─────────────────────────────────────────────────────────────────────
-
-def network_reliability_polynomial(adj_matrix: np.ndarray) -> Dict[int, float]:
-    """Compute the reliability polynomial of a graph.
-    
-    R(p) = ∑_k r_k · p^k · (1-p)^{m-k} where r_k is the number of
-    k-edge subsets that make the graph connected.
-    
-    For small graphs, this is done by brute force.
-    """
-    n = len(adj_matrix)
-    edges = []
-    for i in range(n):
-        for j in range(i + 1, n):
-            if adj_matrix[i, j] > 0:
-                edges.append((i, j))
-    m = len(edges)
-    
-    coefficients = {}
-    for k in range(m + 1):
-        count = 0
-        for subset in combinations(range(m), k):
-            # Check if the edge subset makes the graph connected
-            adj = {i: set() for i in range(n)}
-            for idx in subset:
-                u, v = edges[idx]
-                adj[u].add(v)
-                adj[v].add(u)
-            
-            # BFS connectivity check
-            visited = {0}
-            queue = [0]
-            while queue:
-                node = queue.pop(0)
-                for neighbor in adj[node]:
-                    if neighbor not in visited:
-                        visited.add(neighbor)
-                        queue.append(neighbor)
-            
-            if len(visited) == n:
-                count += 1
-        coefficients[k] = count
-    
-    return coefficients
-
-
-def demonstrate_network_reliability():
-    """Show network reliability analysis with complexity bounds."""
-    print("=" * 65)
-    print("APPLICATION 3: Network Reliability Polynomials")
-    print("=" * 65)
-    print()
-    
-    # Complete graph K_4
-    K4 = np.array([
-        [0, 1, 1, 1],
-        [1, 0, 1, 1],
-        [1, 1, 0, 1],
-        [1, 1, 1, 0]
-    ])
-    
-    print("  K₄ (complete graph on 4 vertices):")
-    coeffs = network_reliability_polynomial(K4)
-    print(f"    Reliability coefficients: {coeffs}")
-    r_vals = [coeffs.get(k, 0) for k in range(max(coeffs.keys()) + 1) if coeffs.get(k, 0) > 0]
-    print(f"    Log-concave: {is_log_concave(r_vals)}")
-    print()
-    
-    # Cycle graph C_5
-    C5 = np.zeros((5, 5), dtype=int)
-    for i in range(5):
-        C5[i, (i + 1) % 5] = 1
-        C5[(i + 1) % 5, i] = 1
-    
-    print("  C₅ (cycle on 5 vertices):")
-    coeffs = network_reliability_polynomial(C5)
-    print(f"    Reliability coefficients: {coeffs}")
-    r_vals = [coeffs.get(k, 0) for k in range(max(coeffs.keys()) + 1) if coeffs.get(k, 0) > 0]
-    print(f"    Log-concave: {is_log_concave(r_vals)}")
-    print()
-    
-    print("  Complexity implications:")
-    print("  - Verifying log-concavity of reliability polynomials is related")
-    print("    to Lorentzian recognition of the multivariate version")
-    print("  - Our results show this verification has inherent exponential")
-    print("    cost when the graph grows without bounded degree")
-    print()
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Application 4: Optimization Barrier Detection
-# ─────────────────────────────────────────────────────────────────────
-
-def hessian_spectrum_analysis(f_hessian: np.ndarray) -> Dict[str, any]:
-    """Analyze the Hessian spectrum for optimization landscape properties.
-    
-    A Lorentzian Hessian (at most one positive eigenvalue) indicates
-    a nearly convex/concave landscape — good for optimization.
-    
-    Multiple positive eigenvalues indicate saddle points and
-    non-convex complexity barriers.
-    """
-    eigenvalues = np.sort(np.linalg.eigvalsh(f_hessian))[::-1]
-    n_positive = np.sum(eigenvalues > 1e-8)
-    n_negative = np.sum(eigenvalues < -1e-8)
-    n_zero = len(eigenvalues) - n_positive - n_negative
-    
-    return {
-        'eigenvalues': eigenvalues,
-        'n_positive': n_positive,
-        'n_negative': n_negative,
-        'n_zero': n_zero,
-        'is_lorentzian': n_positive <= 1,
-        'condition_number': abs(eigenvalues[0] / eigenvalues[-1]) if abs(eigenvalues[-1]) > 1e-15 else float('inf'),
-        'spectral_gap': eigenvalues[0] - eigenvalues[1] if len(eigenvalues) > 1 else 0
-    }
-
-
-def demonstrate_optimization_barriers():
-    """Show optimization landscape analysis via Hessian spectrum."""
-    print("=" * 65)
-    print("APPLICATION 4: Optimization Barrier Detection")
-    print("=" * 65)
-    print()
-    
-    np.random.seed(42)
-    n = 5
-    
-    # Case 1: Lorentzian Hessian (good landscape)
-    print("  Case 1: Rank-1 perturbation of negative definite (Lorentzian)")
-    B = -2 * np.eye(n)
-    v = np.random.randn(n)
-    H1 = B + np.outer(v, v)
-    analysis = hessian_spectrum_analysis(H1)
-    print(f"    Eigenvalues: {np.round(analysis['eigenvalues'], 3)}")
-    print(f"    Lorentzian: {analysis['is_lorentzian']}")
-    print(f"    → Nearly concave landscape, optimization tractable")
-    print()
-    
-    # Case 2: Non-Lorentzian Hessian (hard landscape)
-    print("  Case 2: Multiple positive eigenvalues (non-Lorentzian)")
-    H2 = np.diag([3.0, 2.0, -1.0, -2.0, -3.0])
-    analysis = hessian_spectrum_analysis(H2)
-    print(f"    Eigenvalues: {np.round(analysis['eigenvalues'], 3)}")
-    print(f"    Lorentzian: {analysis['is_lorentzian']}")
-    print(f"    → Saddle-point landscape, optimization may be NP-hard")
-    print()
-    
-    # Case 3: Phase transition with increasing perturbation
-    print("  Case 3: Phase transition as perturbation rank increases")
-    B = -5 * np.eye(n)
-    for rank in range(1, n + 1):
-        V = np.random.randn(n, rank) * 2
-        H = B + V @ V.T
-        analysis = hessian_spectrum_analysis(H)
-        status = "✓ Lorentzian" if analysis['is_lorentzian'] else "✗ Non-Lorentzian"
-        print(f"    Rank-{rank} perturbation: {analysis['n_positive']} pos eigenvalues — {status}")
-    print()
-    print("  → The Lorentzian condition breaks precisely when the perturbation")
-    print("    rank exceeds 1, matching our rank-one perturbation theorem.")
-    print()
-
-
-def main():
-    """Run all application demonstrations."""
-    print()
-    print("╔═════════════════════════════════════════════════════════════════╗")
-    print("║  Applications of Lorentzian Recognition Complexity Theory     ║")
-    print("╚═════════════════════════════════════════════════════════════════╝")
-    print()
-    
-    analyze_matroid_complexity()
-    demonstrate_log_concavity()
-    demonstrate_network_reliability()
-    demonstrate_optimization_barriers()
-    
-    print("=" * 65)
-    print("All applications demonstrated successfully.")
-    print("=" * 65)
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-demo.py — Interactive demonstration of Lorentzian recognition complexity.
-
-Demonstrates the core mathematical results:
-1. Exponential growth of derivative trees in unrestricted degree
-2. CNF-to-polynomial encoding and branch obstruction
-3. Spectral (Hessian) tests for Lorentzian signature
-4. Phase transition between fixed-degree and unrestricted-degree regimes
-
-Usage:
-    python demo.py
+Demonstrates practical applications of the theoretical results:
+1. Estimating recognition difficulty for given polynomial parameters
+2. SAT-to-branch-obstruction pipeline
+3. Hessian signature analysis for optimization
+4. Certificate size prediction for polynomial families
 """
 
 import numpy as np
-from itertools import product as iproduct
-from math import comb, factorial
-from typing import List, Tuple, Dict, Set, Optional
+from math import comb, log2, factorial
+from itertools import product
+from typing import List, Tuple, Dict, Optional
 
-# ─────────────────────────────────────────────────────────────────────
-# Part 1: Stars-and-Bars Counting / Derivative Tree Size
-# ─────────────────────────────────────────────────────────────────────
 
-def stars_and_bars_count(n: int, d: int) -> int:
-    """Number of multiindices of weight d in n variables = C(n+d-1, d)."""
-    if n == 0 and d == 0:
-        return 1
+def multiindex_count(n: int, d: int) -> int:
+    """C(n+d-1, d) = number of multiindices of weight d in n variables."""
     if n == 0:
-        return 0
+        return 1 if d == 0 else 0
     return comb(n + d - 1, d)
 
 
-def quadratic_leaf_count(n: int, degree: int) -> int:
-    """Number of quadratic leaves in recursive Lorentzian recognition.
-    
-    For a degree-d polynomial in n variables, the recursive recognition
-    tree has C(n + d - 3, d - 2) leaves at the quadratic level.
-    """
-    if degree < 2:
+def quadratic_leaf_count(n: int, d: int) -> int:
+    """Number of quadratic leaves in Lorentzian recognition tree."""
+    if d < 2:
         return 1
-    return stars_and_bars_count(n, degree - 2)
+    return multiindex_count(n, d - 2)
 
 
-def demonstrate_exponential_growth():
-    """Show the exponential growth of derivative tree size."""
-    print("=" * 70)
-    print("DEMONSTRATION 1: Derivative Tree Exponential Growth")
-    print("=" * 70)
-    print()
-    print("The number of quadratic leaves in recursive Lorentzian recognition")
-    print("for degree d in n variables is C(n+d-3, d-2).")
-    print()
-    
-    # Fixed degree, varying n (polynomial growth)
-    print("--- Fixed degree d=6, varying n (polynomial growth O(n^4)) ---")
-    print(f"{'n':>5} {'Leaves':>12} {'Upper bound n^4':>16}")
-    for n in [2, 3, 5, 10, 20, 50, 100]:
-        leaves = quadratic_leaf_count(n, 6)
-        upper = n ** 4
-        print(f"{n:>5} {leaves:>12,} {upper:>16,}")
-    print()
-    
-    # Varying degree with n = 2d (exponential growth)
-    print("--- Unrestricted degree with n = 2d (exponential growth) ---")
-    print(f"{'d':>5} {'n=2d':>6} {'Leaves':>15} {'2^(d-2)':>12} {'Ratio':>10}")
-    for d in range(2, 16):
-        n = 2 * d
-        leaves = quadratic_leaf_count(n, d)
-        lower = 2 ** (d - 2)
-        ratio = leaves / lower if lower > 0 else float('inf')
-        print(f"{d:>5} {n:>6} {leaves:>15,} {lower:>12,} {ratio:>10.1f}")
-    print()
-    print("Key insight: leaves grow EXPONENTIALLY when degree is unrestricted!")
-    print(f"Central binomial bound: C(2k,k) >= 2^k verified for k=0..20:")
-    for k in range(21):
-        assert comb(2*k, k) >= 2**k, f"Failed at k={k}"
-    print("  ✓ All verified.")
-    print()
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Part 2: CNF Formula and SAT-to-Polynomial Encoding
-# ─────────────────────────────────────────────────────────────────────
-
-class CNFFormula:
-    """A CNF (Conjunctive Normal Form) Boolean formula.
-    
-    A formula is a conjunction of clauses, where each clause is a
-    disjunction of literals. A literal is a variable or its negation.
+# ============================================================
+# Application 1: Recognition Difficulty Estimator
+# ============================================================
+def recognition_difficulty(n: int, d: int) -> Dict:
     """
-    
-    def __init__(self, num_vars: int, clauses: List[List[Tuple[int, bool]]]):
-        """
-        Args:
-            num_vars: Number of Boolean variables (indexed 0..num_vars-1)
-            clauses: List of clauses, each clause is a list of (var_idx, polarity) pairs
-        """
-        self.num_vars = num_vars
-        self.clauses = clauses
-    
-    def is_satisfied_by(self, assignment: List[bool]) -> bool:
-        """Check if an assignment satisfies the formula."""
-        for clause in self.clauses:
-            satisfied = False
-            for var_idx, polarity in clause:
-                if assignment[var_idx] == polarity:
-                    satisfied = True
-                    break
-            if not satisfied:
-                return False
-        return True
-    
-    def is_satisfiable(self) -> Tuple[bool, Optional[List[bool]]]:
-        """Brute-force SAT check. Returns (is_sat, witness_or_None)."""
-        for bits in iproduct([False, True], repeat=self.num_vars):
-            assignment = list(bits)
-            if self.is_satisfied_by(assignment):
-                return True, assignment
-        return False, None
-    
-    def __repr__(self):
-        clause_strs = []
-        for clause in self.clauses:
-            lits = []
-            for var_idx, polarity in clause:
-                name = f"x{var_idx}" if polarity else f"¬x{var_idx}"
-                lits.append(name)
-            clause_strs.append("(" + " ∨ ".join(lits) + ")")
-        return " ∧ ".join(clause_strs)
+    Estimate the computational difficulty of Lorentzian recognition
+    for a polynomial with given parameters.
 
+    Args:
+        n: Number of variables
+        d: Degree of the polynomial
 
-def sat_encoding_polynomial_monomials(phi: CNFFormula) -> Dict[tuple, int]:
-    """Construct the monomial representation of the SAT-encoding polynomial.
-    
-    For a CNF formula φ with m clauses on n variables, we construct a
-    polynomial P_φ in 2n variables (x_0, y_0, ..., x_{n-1}, y_{n-1}) where
-    each clause contributes a product of (x_i + y_i) terms with substitutions
-    based on literal polarity.
-    
-    Returns a dictionary mapping exponent tuples to coefficients.
+    Returns:
+        Dict with difficulty metrics
+
+    Example:
+        >>> recognition_difficulty(10, 5)
+        {'n': 10, 'd': 5, 'leaf_count': 220, ...}
     """
-    n = phi.num_vars
-    monomials: Dict[tuple, int] = {}
-    
-    for clause in phi.clauses:
-        # For each clause, construct the product of literal-encoding terms
-        # A positive literal x_i contributes x_i, a negative literal ¬x_i contributes y_i
-        # The clause product is then a sum of monomials
-        clause_vars = set()
-        literal_map = {}
-        for var_idx, polarity in clause:
-            clause_vars.add(var_idx)
-            literal_map[var_idx] = polarity
-        
-        # Generate all selections (one literal from each variable in the clause)
-        vars_list = sorted(clause_vars)
-        for bits in iproduct([0, 1], repeat=len(vars_list)):
-            exponent = [0] * (2 * n)
-            for j, var_idx in enumerate(vars_list):
-                if bits[j] == 0:
-                    exponent[2 * var_idx] += 1      # x_i term
-                else:
-                    exponent[2 * var_idx + 1] += 1  # y_i term
-            
-            key = tuple(exponent)
-            monomials[key] = monomials.get(key, 0) + 1
-    
-    return monomials
+    leaves = quadratic_leaf_count(n, d)
+    lower = 2 ** (d - 2) if n > d - 2 and d >= 2 else 1
+    upper = n ** (d - 2) if d >= 2 else 1
 
+    # Each leaf requires O(n^3) eigenvalue computation
+    total_ops_estimate = leaves * n ** 3
 
-def demonstrate_sat_encoding():
-    """Show the CNF-to-polynomial encoding and branch structure."""
-    print("=" * 70)
-    print("DEMONSTRATION 2: SAT-to-Polynomial Encoding")
-    print("=" * 70)
-    print()
-    
-    # Example 1: Simple satisfiable formula
-    phi1 = CNFFormula(2, [
-        [(0, True), (1, True)],    # x0 ∨ x1
-        [(0, False), (1, False)],  # ¬x0 ∨ ¬x1
-    ])
-    print(f"Formula φ₁ = {phi1}")
-    sat, witness = phi1.is_satisfiable()
-    print(f"  Satisfiable: {sat}, witness: {witness}")
-    
-    monomials = sat_encoding_polynomial_monomials(phi1)
-    print(f"  Encoding polynomial has {len(monomials)} monomials")
-    print(f"  Total degree: {max(sum(k) for k in monomials.keys())}")
-    print()
-    
-    # Example 2: Unsatisfiable formula (x ∧ ¬x)
-    phi2 = CNFFormula(1, [
-        [(0, True)],   # x0
-        [(0, False)],  # ¬x0
-    ])
-    print(f"Formula φ₂ = {phi2}")
-    sat, witness = phi2.is_satisfiable()
-    print(f"  Satisfiable: {sat}")
-    
-    monomials = sat_encoding_polynomial_monomials(phi2)
-    print(f"  Encoding polynomial has {len(monomials)} monomials")
-    print()
-    
-    # Example 3: 3-SAT instance
-    phi3 = CNFFormula(3, [
-        [(0, True), (1, True), (2, True)],
-        [(0, False), (1, False), (2, True)],
-        [(0, True), (1, False), (2, False)],
-        [(0, False), (1, True), (2, False)],
-    ])
-    print(f"Formula φ₃ = {phi3}")
-    sat, witness = phi3.is_satisfiable()
-    print(f"  Satisfiable: {sat}, witness: {witness}")
-    print()
-    
-    # Branch obstruction analysis
-    print("--- Branch Obstruction Analysis ---")
-    phi_unsat = CNFFormula(2, [
-        [(0, True), (1, True)],
-        [(0, True), (1, False)],
-        [(0, False), (1, True)],
-        [(0, False), (1, False)],
-    ])
-    print(f"Unsatisfiable formula: {phi_unsat}")
-    sat, _ = phi_unsat.is_satisfiable()
-    print(f"  Satisfiable: {sat}")
-    
-    # Show branch obstructions for each assignment
-    print("  Branch obstructions by assignment:")
-    for bits in iproduct([False, True], repeat=phi_unsat.num_vars):
-        assignment = list(bits)
-        unsatisfied = []
-        for i, clause in enumerate(phi_unsat.clauses):
-            clause_sat = any(assignment[v] == p for v, p in clause)
-            if not clause_sat:
-                unsatisfied.append(i)
-        assign_str = ''.join('1' if b else '0' for b in assignment)
-        print(f"    τ = {assign_str}: unsatisfied clauses = {unsatisfied}")
-    print()
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Part 3: Spectral Tests for Lorentzian Signature
-# ─────────────────────────────────────────────────────────────────────
-
-def has_lorentzian_signature(A: np.ndarray) -> Tuple[bool, str]:
-    """Check if a symmetric matrix has Lorentzian signature.
-    
-    A matrix has Lorentzian signature if it has at most one positive eigenvalue.
-    Returns (is_lorentzian, explanation).
-    """
-    eigenvalues = np.linalg.eigvalsh(A)
-    n_positive = np.sum(eigenvalues > 1e-10)
-    n_negative = np.sum(eigenvalues < -1e-10)
-    n_zero = len(eigenvalues) - n_positive - n_negative
-    
-    is_lor = n_positive <= 1
-    explanation = (f"eigenvalues: {np.sort(eigenvalues)[::-1]}, "
-                   f"positive: {n_positive}, negative: {n_negative}, zero: {n_zero}")
-    return is_lor, explanation
-
-
-def demonstrate_spectral_bridge():
-    """Show the spectral → Lorentzian bridge theorems."""
-    print("=" * 70)
-    print("DEMONSTRATION 3: Spectral-Lorentzian Bridge")
-    print("=" * 70)
-    print()
-    
-    n = 4
-    
-    # Theorem: negative semidefinite → Lorentzian
-    print("--- Negative Semidefinite → Lorentzian ---")
-    B = -np.eye(n) - np.random.randn(n, n).T @ np.random.randn(n, n) / n
-    B = (B + B.T) / 2  # symmetrize
-    # Make it negative semidefinite
-    evals = np.linalg.eigvalsh(B)
-    if max(evals) > 0:
-        B -= (max(evals) + 0.1) * np.eye(n)
-    
-    is_lor, explanation = has_lorentzian_signature(B)
-    print(f"  B (negative semidef): Lorentzian = {is_lor}")
-    print(f"    {explanation}")
-    print()
-    
-    # Theorem: rank-1 perturbation preserves Lorentzian
-    print("--- Rank-1 Perturbation Theorem ---")
-    v = np.random.randn(n)
-    A = B + np.outer(v, v)
-    is_lor, explanation = has_lorentzian_signature(A)
-    print(f"  A = B + v⊗vᵀ: Lorentzian = {is_lor}")
-    print(f"    {explanation}")
-    print()
-    
-    # Multiple perturbations showing the theorem
-    print("  Testing 100 random rank-1 perturbations of neg-semidef matrices...")
-    all_lorentzian = True
-    for _ in range(100):
-        n_test = np.random.randint(2, 8)
-        B_test = -np.eye(n_test)
-        evals = np.linalg.eigvalsh(B_test)
-        shift = max(0, max(evals) + np.random.rand())
-        B_test -= shift * np.eye(n_test)
-        
-        v_test = np.random.randn(n_test)
-        A_test = B_test + np.outer(v_test, v_test)
-        is_lor, _ = has_lorentzian_signature(A_test)
-        if not is_lor:
-            all_lorentzian = False
-            break
-    print(f"  All Lorentzian: {all_lorentzian} ✓" if all_lorentzian else "  FAILED ✗")
-    print()
-    
-    # Counter-example: rank-2 perturbation can fail
-    print("--- Rank-2 Perturbation Can Fail ---")
-    B2 = -3 * np.eye(n)
-    v1 = np.array([1, 0, 0, 0], dtype=float)
-    v2 = np.array([0, 1, 0, 0], dtype=float)
-    A2 = B2 + 2 * np.outer(v1, v1) + 2 * np.outer(v2, v2)
-    is_lor, explanation = has_lorentzian_signature(A2)
-    print(f"  A = B + 2·v₁⊗v₁ᵀ + 2·v₂⊗v₂ᵀ: Lorentzian = {is_lor}")
-    print(f"    {explanation}")
-    print()
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Part 4: Phase Transition Visualization (text-based)
-# ─────────────────────────────────────────────────────────────────────
-
-def demonstrate_phase_transition():
-    """Show the complexity phase transition."""
-    print("=" * 70)
-    print("DEMONSTRATION 4: Complexity Phase Transition")
-    print("=" * 70)
-    print()
-    print("Certificate complexity = C(n + d - 3, d - 2)")
-    print()
-    print("FIXED DEGREE (d=10): polynomial in n")
-    print(f"{'n':>6} {'Cert. complexity':>18} {'n^8 (upper)':>14}")
-    for n in [2, 5, 10, 20, 50]:
-        cc = stars_and_bars_count(n, 8)
-        upper = n ** 8
-        print(f"{n:>6} {cc:>18,} {upper:>14,}")
-    print()
-    
-    print("UNRESTRICTED DEGREE (n = 2d): exponential in d")
-    print(f"{'d':>6} {'n=2d':>6} {'Cert. complexity':>18} {'2^(d-2)':>14} {'Growth factor':>14}")
-    prev_cc = 1
-    for d in range(2, 20):
-        n = 2 * d
-        k = d - 2
-        cc = stars_and_bars_count(n, k)
-        lower = 2 ** k if k >= 0 else 1
-        growth = cc / prev_cc if prev_cc > 0 else 0
-        print(f"{d:>6} {n:>6} {cc:>18,} {lower:>14,} {growth:>14.2f}")
-        prev_cc = cc
-    print()
-    print("The growth factor increases without bound — superexponential growth!")
-    print()
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Part 5: Certificate Size Conjecture Testing
-# ─────────────────────────────────────────────────────────────────────
-
-def test_branch_complexity_conjecture():
-    """Test the branch-complexity barrier conjecture."""
-    print("=" * 70)
-    print("DEMONSTRATION 5: Branch-Complexity Barrier Conjecture")
-    print("=" * 70)
-    print()
-    print("Conjecture: ∃ c > 0 and family p_d with certificate size ≥ exp(c·d)")
-    print()
-    print("Testing: minimum certificate sizes for small degrees")
-    print(f"{'d':>5} {'Min leaves (n=d)':>16} {'Min leaves (n=2d)':>18} {'2^d':>10}")
-    for d in range(2, 12):
-        # Minimum over reasonable n values
-        min_n_d = stars_and_bars_count(d, d - 2)
-        min_n_2d = stars_and_bars_count(2 * d, d - 2)
-        exp_d = 2 ** d
-        print(f"{d:>5} {min_n_d:>16,} {min_n_2d:>18,} {exp_d:>10,}")
-    print()
-    print("For n = 2d, certificate size grows faster than 2^d — conjecture supported!")
-    print()
-
-
-def main():
-    """Run all demonstrations."""
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  LORENTZIAN RECOGNITION COMPLEXITY — Interactive Demonstration      ║")
-    print("║                                                                    ║")
-    print("║  Exploring the complexity phase transition in Hodge-theoretic      ║")
-    print("║  positivity: from polynomial-time (fixed degree) to exponential    ║")
-    print("║  certificates (unrestricted degree).                               ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-    
-    demonstrate_exponential_growth()
-    demonstrate_sat_encoding()
-    demonstrate_spectral_bridge()
-    demonstrate_phase_transition()
-    test_branch_complexity_conjecture()
-    
-    print("=" * 70)
-    print("All demonstrations complete.")
-    print("=" * 70)
-
-
-if __name__ == "__main__":
-    main()
-
-
-"""
-Visualization: Central Binomial Coefficient Lower Bound
-
-Illustrates the key combinatorial inequality C(2k, k) ≥ 2^k that drives
-the exponential lower bound on derivative tree size. Shows the growing
-gap between the central binomial coefficient and the exponential baseline.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from math import comb
-
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-# Left: Log-scale comparison
-ks = np.arange(0, 26)
-central_binom = [comb(2*k, k) for k in ks]
-exp_bound = [2**k for k in ks]
-four_pow = [4**k for k in ks]
-
-ax1.semilogy(ks, central_binom, 'b-o', markersize=6, linewidth=2,
-             label=r'C(2k, k)', zorder=3)
-ax1.semilogy(ks, exp_bound, 'r--s', markersize=4, linewidth=1.5,
-             label=r'$2^k$ (lower bound)', alpha=0.8)
-ax1.semilogy(ks, four_pow, 'g--^', markersize=4, linewidth=1.5,
-             label=r'$4^k$ (upper bound)', alpha=0.6)
-ax1.fill_between(ks, exp_bound, central_binom, alpha=0.15, color='blue',
-                 label='Proved gap')
-
-ax1.set_xlabel('k', fontsize=13)
-ax1.set_ylabel('Value (log scale)', fontsize=13)
-ax1.set_title('Central Binomial Coefficient vs Exponentials', fontsize=13, fontweight='bold')
-ax1.legend(fontsize=10, loc='upper left')
-ax1.grid(True, alpha=0.3)
-
-# Right: Ratio C(2k,k) / 2^k
-ratios = [comb(2*k, k) / 2**k for k in ks]
-
-ax2.plot(ks, ratios, 'b-o', markersize=6, linewidth=2)
-ax2.axhline(y=1, color='r', linestyle='--', alpha=0.5, label='Minimum ratio = 1')
-ax2.fill_between(ks, 1, ratios, alpha=0.15, color='blue')
-
-# Add asymptotic formula annotation
-ax2.annotate(r'$\frac{C(2k,k)}{2^k} \sim \frac{2^k}{\sqrt{\pi k}}$',
-             xy=(15, ratios[15]), xytext=(18, ratios[10]),
-             fontsize=12, arrowprops=dict(arrowstyle='->', color='black'),
-             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
-ax2.set_xlabel('k', fontsize=13)
-ax2.set_ylabel('C(2k, k) / 2^k', fontsize=13)
-ax2.set_title('Ratio: Central Binomial to Exponential', fontsize=13, fontweight='bold')
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
-
-plt.suptitle('The Central Binomial Lower Bound: Engine of Exponential Growth',
-             fontsize=14, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('central_binomial.png', dpi=150, bbox_inches='tight')
-print("Saved central_binomial.png")
-
-
-"""
-Visualization: Hessian Spectrum and Lorentzian Signature
-
-Shows how the eigenvalue spectrum of Hessian matrices determines
-Lorentzian signature. Demonstrates the rank-one perturbation theorem:
-adding a single positive direction to a negative definite matrix
-preserves the Lorentzian condition, but rank-2 perturbations can break it.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-
-fig, axes = plt.subplots(2, 3, figsize=(16, 10))
-
-n = 6
-
-# Generate a negative definite base matrix
-B = -3 * np.eye(n)
-
-# Row 1: Increasing rank perturbation
-for col, rank in enumerate([1, 2, 3]):
-    ax = axes[0, col]
-    
-    # Generate random perturbation of given rank
-    V = np.random.randn(n, rank) * 1.5
-    A = B + V @ V.T
-    eigenvalues = np.sort(np.linalg.eigvalsh(A))[::-1]
-    n_positive = np.sum(eigenvalues > 1e-8)
-    
-    colors = ['green' if e > 1e-8 else ('red' if e < -1e-8 else 'gray') 
-              for e in eigenvalues]
-    
-    bars = ax.bar(range(n), eigenvalues, color=colors, edgecolor='black', linewidth=0.5)
-    ax.axhline(y=0, color='black', linewidth=1)
-    ax.set_xlabel('Eigenvalue index', fontsize=11)
-    ax.set_ylabel('Value', fontsize=11)
-    
-    is_lor = n_positive <= 1
-    status = "✓ LORENTZIAN" if is_lor else "✗ NOT LORENTZIAN"
-    status_color = "green" if is_lor else "red"
-    ax.set_title(f'Rank-{rank} perturbation\n{status}',
-                 fontsize=12, fontweight='bold', color=status_color)
-    ax.set_xticks(range(n))
-    ax.grid(True, alpha=0.3, axis='y')
-
-# Row 2: Transition animation - gradually increase perturbation strength
-scales = np.linspace(0, 3.0, 6)
-v1 = np.array([1, 0, 0, 0, 0, 0], dtype=float)
-v2 = np.array([0, 1, 0, 0, 0, 0], dtype=float)
-
-for col in range(3):
-    ax = axes[1, col]
-    
-    if col == 0:
-        # Single direction, increasing strength
-        all_evals = []
-        strengths = np.linspace(0, 5, 50)
-        for s in strengths:
-            A = B + s * np.outer(v1, v1)
-            evals = np.sort(np.linalg.eigvalsh(A))[::-1]
-            all_evals.append(evals)
-        all_evals = np.array(all_evals)
-        
-        for i in range(n):
-            color = 'blue' if i == 0 else 'gray'
-            lw = 2 if i == 0 else 1
-            ax.plot(strengths, all_evals[:, i], color=color, linewidth=lw)
-        ax.axhline(y=0, color='black', linewidth=0.5, linestyle='--')
-        ax.fill_between(strengths, 0, np.max(all_evals, axis=1),
-                       where=np.sum(all_evals > 1e-8, axis=1) <= 1,
-                       alpha=0.1, color='green', label='Lorentzian')
-        ax.set_xlabel('Perturbation strength', fontsize=11)
-        ax.set_ylabel('Eigenvalue', fontsize=11)
-        ax.set_title('Rank-1: Always Lorentzian', fontsize=12, fontweight='bold', color='green')
-        ax.grid(True, alpha=0.3)
-    
-    elif col == 1:
-        # Two directions, increasing strength
-        all_evals = []
-        strengths = np.linspace(0, 5, 50)
-        for s in strengths:
-            A = B + s * np.outer(v1, v1) + s * np.outer(v2, v2)
-            evals = np.sort(np.linalg.eigvalsh(A))[::-1]
-            all_evals.append(evals)
-        all_evals = np.array(all_evals)
-        
-        # Find transition point
-        n_pos = [np.sum(e > 1e-8) for e in all_evals]
-        transition_idx = next((i for i, np_ in enumerate(n_pos) if np_ > 1), len(strengths)-1)
-        transition_s = strengths[transition_idx]
-        
-        for i in range(n):
-            color = 'blue' if i < 2 else 'gray'
-            lw = 2 if i < 2 else 1
-            ax.plot(strengths, all_evals[:, i], color=color, linewidth=lw)
-        ax.axhline(y=0, color='black', linewidth=0.5, linestyle='--')
-        ax.axvline(x=transition_s, color='red', linewidth=1.5, linestyle='--',
-                   label=f'Transition at s≈{transition_s:.1f}')
-        ax.set_xlabel('Perturbation strength', fontsize=11)
-        ax.set_ylabel('Eigenvalue', fontsize=11)
-        ax.set_title('Rank-2: Transition Point', fontsize=12, fontweight='bold', color='orange')
-        ax.legend(fontsize=9)
-        ax.grid(True, alpha=0.3)
-    
+    # Classify difficulty
+    if d < 2:
+        regime = "trivial"
+    elif d <= 5:
+        regime = "polynomial (fixed degree)"
+    elif leaves < 10 ** 6:
+        regime = "feasible"
+    elif leaves < 10 ** 12:
+        regime = "challenging"
     else:
-        # Heatmap of Lorentzian signature vs (rank, strength)
-        ranks = range(1, n + 1)
-        strengths = np.linspace(0.1, 5, 30)
-        heatmap = np.zeros((len(list(ranks)), len(strengths)))
-        
-        for ri, rank in enumerate(ranks):
-            for si, s in enumerate(strengths):
-                V_rand = np.random.randn(n, rank)
-                A = B + s * V_rand @ V_rand.T / rank
-                evals = np.linalg.eigvalsh(A)
-                n_pos = np.sum(evals > 1e-8)
-                heatmap[ri, si] = n_pos
-        
-        im = ax.imshow(heatmap, aspect='auto', cmap='RdYlGn_r',
-                       extent=[strengths[0], strengths[-1], n + 0.5, 0.5],
-                       vmin=0, vmax=n)
-        ax.set_xlabel('Perturbation strength', fontsize=11)
-        ax.set_ylabel('Perturbation rank', fontsize=11)
-        ax.set_title('Positive Eigenvalue Count', fontsize=12, fontweight='bold')
-        plt.colorbar(im, ax=ax, label='# positive eigenvalues')
-        
-        # Mark the Lorentzian boundary
-        ax.axhline(y=1.5, color='white', linewidth=2, linestyle='--')
-        ax.text(strengths[-1]*0.7, 1.2, 'LORENTZIAN', color='white',
-                fontsize=9, fontweight='bold')
+        regime = "intractable"
 
-plt.suptitle('Hessian Spectrum & Lorentzian Signature: The Rank-One Perturbation Theorem',
-             fontsize=14, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('hessian_spectrum.png', dpi=150, bbox_inches='tight')
-print("Saved hessian_spectrum.png")
+    return {
+        'n': n,
+        'd': d,
+        'leaf_count': leaves,
+        'lower_bound': lower,
+        'upper_bound': upper,
+        'ops_estimate': total_ops_estimate,
+        'log2_leaves': log2(leaves) if leaves > 0 else 0,
+        'regime': regime,
+    }
+
+
+# ============================================================
+# Application 2: SAT-to-Branch Pipeline
+# ============================================================
+def sat_to_branch_analysis(n_vars: int, clauses: List[List[Tuple[int, bool]]]) -> Dict:
+    """
+    Analyze a CNF formula through the lens of branch obstruction.
+
+    For each assignment, finds conflicted clauses and reports statistics
+    relevant to the SAT-Lorentzian correspondence.
+
+    Args:
+        n_vars: Number of variables
+        clauses: CNF clauses
+
+    Returns:
+        Dict with branch analysis results
+    """
+    total_assignments = 2 ** n_vars
+    n_obstructed = 0  # assignments with ≥1 conflicted clause
+    conflict_histogram = {}  # number of conflicts → count
+
+    for assignment in product([False, True], repeat=n_vars):
+        n_conflicts = 0
+        for clause in clauses:
+            if all(assignment[v] != p for v, p in clause):
+                n_conflicts += 1
+        if n_conflicts > 0:
+            n_obstructed += 1
+        conflict_histogram[n_conflicts] = conflict_histogram.get(n_conflicts, 0) + 1
+
+    is_unsat = (n_obstructed == total_assignments)
+
+    return {
+        'n_vars': n_vars,
+        'n_clauses': len(clauses),
+        'total_assignments': total_assignments,
+        'obstructed_assignments': n_obstructed,
+        'is_unsatisfiable': is_unsat,
+        'obstruction_fraction': n_obstructed / total_assignments,
+        'conflict_histogram': dict(sorted(conflict_histogram.items())),
+    }
+
+
+# ============================================================
+# Application 3: Spectral Obstruction Detector
+# ============================================================
+def detect_spectral_obstruction(matrix: np.ndarray) -> Dict:
+    """
+    Analyze a symmetric matrix for Lorentzian signature properties.
+
+    Reports eigenvalue structure, Lorentzian status, and if not Lorentzian,
+    provides witness vectors forming a positive-definite subspace.
+
+    Args:
+        matrix: Symmetric matrix
+
+    Returns:
+        Dict with spectral analysis
+    """
+    n = matrix.shape[0]
+    H = (matrix + matrix.T) / 2  # symmetrize
+    eigenvalues, eigenvectors = np.linalg.eigh(H)
+
+    pos_indices = np.where(eigenvalues > 1e-10)[0]
+    n_positive = len(pos_indices)
+    is_lorentzian = n_positive <= 1
+
+    result = {
+        'dimension': n,
+        'eigenvalues': eigenvalues.tolist(),
+        'n_positive': n_positive,
+        'n_negative': int(np.sum(eigenvalues < -1e-10)),
+        'n_zero': n - n_positive - int(np.sum(eigenvalues < -1e-10)),
+        'is_lorentzian': is_lorentzian,
+    }
+
+    if not is_lorentzian and n_positive >= 2:
+        # Provide two positive directions as obstruction witness
+        v1 = eigenvectors[:, pos_indices[0]]
+        v2 = eigenvectors[:, pos_indices[1]]
+        result['obstruction_vectors'] = (v1.tolist(), v2.tolist())
+        result['quadform_v1'] = float(v1 @ H @ v1)
+        result['quadform_v2'] = float(v2 @ H @ v2)
+
+    return result
+
+
+# ============================================================
+# Application 4: Certificate Size Prediction
+# ============================================================
+def certificate_size_analysis(n_range: range, d_modes: List[str]) -> List[Dict]:
+    """
+    Predict certificate sizes for different polynomial families.
+
+    Modes:
+    - "fixed_3": degree 3 (linear growth)
+    - "fixed_5": degree 5 (polynomial growth)
+    - "linear": degree = n (exponential growth)
+    - "quadratic": degree = n^2 (super-exponential)
+
+    Args:
+        n_range: Range of variable counts
+        d_modes: List of degree growth modes
+
+    Returns:
+        List of prediction records
+    """
+    results = []
+    for n in n_range:
+        for mode in d_modes:
+            if mode == "fixed_3":
+                d = 3
+            elif mode == "fixed_5":
+                d = 5
+            elif mode == "linear":
+                d = n
+            elif mode == "quadratic":
+                d = min(n * n, 30)  # cap for computation
+            else:
+                continue
+
+            leaves = quadratic_leaf_count(n, d)
+            results.append({
+                'n': n,
+                'd': d,
+                'mode': mode,
+                'leaves': leaves,
+                'log2_leaves': log2(leaves) if leaves > 0 else 0,
+            })
+    return results
+
+
+# ============================================================
+# Main: Run all applications
+# ============================================================
+if __name__ == "__main__":
+    print("=" * 60)
+    print("Applications of Lorentzian Recognition Complexity")
+    print("=" * 60)
+
+    # App 1: Difficulty estimation
+    print("\n--- Recognition Difficulty Estimator ---")
+    test_cases = [(5, 3), (10, 5), (20, 10), (50, 50), (100, 4)]
+    for n, d in test_cases:
+        r = recognition_difficulty(n, d)
+        print(f"  n={r['n']:3d}, d={r['d']:3d}: "
+              f"leaves={r['leaf_count']:>12}, "
+              f"log₂={r['log2_leaves']:6.1f}, "
+              f"regime='{r['regime']}'")
+
+    # App 2: SAT analysis
+    print("\n--- SAT-to-Branch Pipeline ---")
+    formulas = [
+        ("x∧¬x", 1, [[(0, True)], [(0, False)]]),
+        ("(x₀∨x₁)∧(¬x₀∨x₁)∧(x₀∨¬x₁)∧(¬x₀∨¬x₁)", 2, [
+            [(0, True), (1, True)], [(0, False), (1, True)],
+            [(0, True), (1, False)], [(0, False), (1, False)],
+        ]),
+        ("(x₀∨x₁)∧(¬x₀∨x₂)", 3, [
+            [(0, True), (1, True)], [(0, False), (2, True)],
+        ]),
+    ]
+    for name, nv, cl in formulas:
+        r = sat_to_branch_analysis(nv, cl)
+        print(f"  {name}: UNSAT={r['is_unsatisfiable']}, "
+              f"obstruction={r['obstruction_fraction']:.1%}, "
+              f"conflicts={r['conflict_histogram']}")
+
+    # App 3: Spectral analysis
+    print("\n--- Spectral Obstruction Detection ---")
+    matrices = [
+        ("Lorentzian", np.diag([1., -1., -1.])),
+        ("Pos. definite", np.eye(3)),
+        ("2 positive", np.diag([2., 1., -3.])),
+    ]
+    for name, A in matrices:
+        r = detect_spectral_obstruction(A)
+        print(f"  {name}: Lor={r['is_lorentzian']}, "
+              f"eigs={[f'{e:.1f}' for e in r['eigenvalues']]}, "
+              f"pos={r['n_positive']}")
+
+    # App 4: Certificate predictions
+    print("\n--- Certificate Size Predictions ---")
+    results = certificate_size_analysis(range(3, 11), ["fixed_3", "linear"])
+    for r in results:
+        print(f"  n={r['n']:2d}, mode={r['mode']:>8s}, d={r['d']:3d}: "
+              f"leaves={r['leaves']:>10}, log₂={r['log2_leaves']:6.1f}")
 
 
 """
-Visualization: Complexity Phase Transition in Lorentzian Recognition
+Interactive Demo: Lorentzian Recognition Complexity
 
-Shows the dramatic difference between fixed-degree (polynomial) and
-unrestricted-degree (exponential) certificate complexity. The left panel
-shows polynomial growth for fixed d; the right panel shows exponential
-growth when d grows with n.
+Demonstrates the key mathematical results:
+1. Exponential growth of derivative tree leaves
+2. Phase transition between fixed and unbounded degree
+3. SAT-branch duality for CNF formulas
+4. Spectral obstruction for Lorentzian signature
+5. Certificate complexity bounds
 """
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import numpy as np
-from math import comb
+from itertools import product
+from math import comb, log2
+
+
+def multiindex_count(n: int, d: int) -> int:
+    """C(n+d-1, d) = number of multiindices of weight d in n variables."""
+    if n == 0:
+        return 1 if d == 0 else 0
+    return comb(n + d - 1, d)
+
+
+def quadratic_leaf_count(n: int, d: int) -> int:
+    """Number of quadratic leaves in Lorentzian recognition tree."""
+    if d < 2:
+        return 1
+    return multiindex_count(n, d - 2)
+
+
+def binary_to_multiindex(b, n):
+    """Encode binary string as multiindex (lower bound construction)."""
+    k = len(b)
+    alpha = [0] * n
+    s = 0
+    for i in range(k):
+        alpha[i] = 1 if b[i] else 0
+        s += alpha[i]
+    alpha[k] = k - s
+    return tuple(alpha)
+
+
+def has_lorentzian_signature(matrix):
+    """Check if symmetric matrix has at most one positive eigenvalue."""
+    eigenvalues = np.linalg.eigvalsh(matrix)
+    return int(np.sum(eigenvalues > 1e-10)) <= 1
+
+
+def cnf_is_satisfiable(n_vars, clauses):
+    """Brute-force SAT check. Returns (is_sat, witness_or_None)."""
+    for assignment in product([False, True], repeat=n_vars):
+        if all(
+            any(assignment[v] == p for v, p in clause)
+            for clause in clauses
+        ):
+            return True, assignment
+    return False, None
+
+
+def find_conflicted_clauses(assignment, clauses):
+    """Find clauses where all literals are falsified."""
+    return [
+        i for i, clause in enumerate(clauses)
+        if all(assignment[v] != p for v, p in clause)
+    ]
+
+
+# ============================================================
+# DEMO 1: Exponential Lower Bound
+# ============================================================
+def demo_exponential_lower_bound():
+    print("=" * 60)
+    print("DEMO 1: Exponential Lower Bound on Leaf Count")
+    print("=" * 60)
+    print()
+    print("The binary-to-multiindex injection proves:")
+    print("  |M(n, k)| ≥ 2^k  when n > k")
+    print()
+
+    print(f"{'k':>3} {'n':>3} {'|M(n,k)|':>10} {'2^k':>10} {'n^k':>10} {'Ratio':>8}")
+    print("-" * 50)
+    for k in range(9):
+        n = k + 1
+        actual = multiindex_count(n, k)
+        lb = 2 ** k
+        ub = n ** k if k > 0 else 1
+        ratio = actual / lb if lb > 0 else float('inf')
+        print(f"{k:3d} {n:3d} {actual:10d} {lb:10d} {ub:10d} {ratio:8.2f}")
+
+    print()
+    print("Injection example (k=3, n=5):")
+    print("  Binary strings → Multiindices of weight 3:")
+    for bits in product([False, True], repeat=3):
+        alpha = binary_to_multiindex(bits, 5)
+        print(f"  {tuple(int(b) for b in bits)} → {alpha}  (sum={sum(alpha)})")
+
+
+# ============================================================
+# DEMO 2: Phase Transition
+# ============================================================
+def demo_phase_transition():
+    print()
+    print("=" * 60)
+    print("DEMO 2: Phase Transition — Fixed vs. Growing Degree")
+    print("=" * 60)
+    print()
+    print("Fixed degree d=3: L(n, 3) = n (linear growth)")
+    print("Growing degree d=n: L(n+1, n) ≥ 2^(n-2) (exponential growth)")
+    print()
+
+    print(f"{'n':>3} {'L(n,3)':>8} {'L(n+1,n)':>12} {'2^(n-2)':>10} {'log₂(L)':>8}")
+    print("-" * 45)
+    for n in range(3, 14):
+        fixed = quadratic_leaf_count(n, 3)
+        growing = quadratic_leaf_count(n + 1, n)
+        lb = 2 ** (n - 2)
+        log_g = log2(growing) if growing > 0 else 0
+        print(f"{n:3d} {fixed:8d} {growing:12d} {lb:10d} {log_g:8.1f}")
+
+    print()
+    print("The gap between L(n+1,n) and 2^(n-2) grows rapidly,")
+    print("confirming the exponential lower bound is not tight —")
+    print("actual growth is Θ(4^n / √n) by Stirling's formula.")
+
+
+# ============================================================
+# DEMO 3: SAT-Branch Duality
+# ============================================================
+def demo_sat_branch_duality():
+    print()
+    print("=" * 60)
+    print("DEMO 3: Branch-SAT Duality")
+    print("=" * 60)
+    print()
+    print("Theorem: φ is UNSAT ⟺ every assignment has a conflicted clause")
+    print()
+
+    examples = [
+        ("Satisfiable: (x₀∨x₁) ∧ (¬x₀∨x₁)", 2, [
+            [(0, True), (1, True)],
+            [(0, False), (1, True)],
+        ]),
+        ("Unsatisfiable: (x₀) ∧ (¬x₀)", 1, [
+            [(0, True)],
+            [(0, False)],
+        ]),
+        ("Unsatisfiable: (x₀∨x₁) ∧ (¬x₀) ∧ (¬x₁)", 2, [
+            [(0, True), (1, True)],
+            [(0, False)],
+            [(1, False)],
+        ]),
+        ("Satisfiable: (x₀∨¬x₁) ∧ (x₁∨¬x₂) ∧ (x₂∨¬x₀)", 3, [
+            [(0, True), (1, False)],
+            [(1, True), (2, False)],
+            [(2, True), (0, False)],
+        ]),
+    ]
+
+    for name, n_vars, clauses in examples:
+        is_sat, witness = cnf_is_satisfiable(n_vars, clauses)
+
+        all_have_conflict = True
+        for assignment in product([False, True], repeat=n_vars):
+            conflicts = find_conflicted_clauses(assignment, clauses)
+            if len(conflicts) == 0:
+                all_have_conflict = False
+                break
+
+        duality_ok = is_sat != all_have_conflict
+        print(f"  {name}")
+        print(f"    SAT={is_sat}, AllConflict={all_have_conflict}, "
+              f"Duality={'✓' if duality_ok else '✗'}")
+        if is_sat and witness:
+            print(f"    Witness: {witness}")
+        print()
+
+
+# ============================================================
+# DEMO 4: Spectral Obstruction
+# ============================================================
+def demo_spectral_obstruction():
+    print()
+    print("=" * 60)
+    print("DEMO 4: Spectral Obstruction Theorem")
+    print("=" * 60)
+    print()
+    print("Theorem: Positive-definite matrices (dim ≥ 2) are NOT Lorentzian")
+    print("Theorem: 2 positive directions ⟹ not Lorentzian")
+    print()
+
+    matrices = [
+        ("diag(1, -1, -1) [Lorentzian]", np.diag([1., -1., -1.])),
+        ("diag(1, -1, -1, -1) [Lorentzian]", np.diag([1., -1., -1., -1.])),
+        ("Identity 3×3 [Pos. def. → NOT Lor.]", np.eye(3)),
+        ("diag(1, 1, -1) [2 pos → NOT Lor.]", np.diag([1., 1., -1.])),
+        ("diag(0, 0, 0) [Zero → Lor. trivially]", np.zeros((3, 3))),
+        ("diag(-1, -1, -1) [Neg. def. → Lor.]", np.diag([-1., -1., -1.])),
+        ("diag(2, -3, -5) [Lorentzian]", np.diag([2., -3., -5.])),
+    ]
+
+    for name, A in matrices:
+        eigs = np.linalg.eigvalsh(A)
+        is_lor = has_lorentzian_signature(A)
+        n_pos = int(np.sum(eigs > 1e-10))
+        print(f"  {name}")
+        print(f"    Eigenvalues: {eigs}")
+        print(f"    Positive eigenvalues: {n_pos}")
+        print(f"    Lorentzian signature: {is_lor}")
+        print()
+
+
+# ============================================================
+# DEMO 5: Certificate Complexity
+# ============================================================
+def demo_certificate_complexity():
+    print()
+    print("=" * 60)
+    print("DEMO 5: Certificate Complexity Bounds")
+    print("=" * 60)
+    print()
+    print("For a degree-d polynomial in n variables:")
+    print("  Lower bound: 2^(d-2)  (when n > d-2)")
+    print("  Upper bound: n^(d-2)")
+    print("  Exact count: C(n+d-3, d-2)")
+    print()
+
+    print(f"{'n':>3} {'d':>3} {'Exact':>10} {'Lower':>10} {'Upper':>10} {'Tight?':>8}")
+    print("-" * 50)
+    for n, d in [(4, 3), (5, 4), (6, 5), (10, 5), (5, 10), (8, 8), (10, 10)]:
+        if d < 2:
+            continue
+        exact = quadratic_leaf_count(n, d)
+        lower = 2 ** (d - 2) if n > d - 2 else 0
+        upper = n ** (d - 2)
+        tight = "Yes" if exact >= lower else "No"
+        print(f"{n:3d} {d:3d} {exact:10d} {lower:10d} {upper:10d} {tight:>8}")
+
+    print()
+    print("The lower bound 2^(d-2) is always satisfied when n > d-2.")
+    print("The gap between exact and upper bound shows room for improvement.")
+
+
+# ============================================================
+# DEMO 6: Two-Variable Exact Count
+# ============================================================
+def demo_two_variable_exact():
+    print()
+    print("=" * 60)
+    print("DEMO 6: Exact Multiindex Count in 2 Variables")
+    print("=" * 60)
+    print()
+    print("Theorem: |M(2, k)| = k + 1  for all k")
+    print()
+
+    print(f"{'k':>3} {'|M(2,k)|':>10} {'k+1':>5} {'Match':>7}")
+    print("-" * 30)
+    for k in range(13):
+        actual = multiindex_count(2, k)
+        expected = k + 1
+        match = "✓" if actual == expected else "✗"
+        print(f"{k:3d} {actual:10d} {expected:5d} {match:>7}")
+
+
+# ============================================================
+# Run all demos
+# ============================================================
+if __name__ == "__main__":
+    demo_exponential_lower_bound()
+    demo_phase_transition()
+    demo_sat_branch_duality()
+    demo_spectral_obstruction()
+    demo_certificate_complexity()
+    demo_two_variable_exact()
+
+    print()
+    print("=" * 60)
+    print("All demos completed successfully.")
+    print("=" * 60)
+
+
+"""
+Visualization: Branch-SAT Duality
+
+Shows the correspondence between Boolean assignments and branch obstructions.
+For a small CNF formula, visualizes which assignments conflict which clauses,
+illustrating the Branch-SAT Duality Theorem.
+
+Self-contained — does not import any local modules.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from itertools import product
+
+def find_conflicts(n_vars, clauses):
+    """For each assignment, find conflicted clause indices."""
+    assignments = list(product([False, True], repeat=n_vars))
+    conflict_matrix = np.zeros((len(assignments), len(clauses)), dtype=int)
+
+    for i, assignment in enumerate(assignments):
+        for j, clause in enumerate(clauses):
+            if all(assignment[v] != p for v, p in clause):
+                conflict_matrix[i, j] = 1
+
+    return assignments, conflict_matrix
+
+# Example 1: Unsatisfiable formula
+# (x₀∨x₁) ∧ (¬x₀) ∧ (¬x₁)
+clauses_unsat = [
+    [(0, True), (1, True)],   # x₀ ∨ x₁
+    [(0, False)],              # ¬x₀
+    [(1, False)],              # ¬x₁
+]
+clause_labels_unsat = ['x₀∨x₁', '¬x₀', '¬x₁']
+assignments_u, conflicts_u = find_conflicts(2, clauses_unsat)
+assign_labels_u = [f"({int(a[0])},{int(a[1])})" for a in assignments_u]
+
+# Example 2: Satisfiable formula
+# (x₀∨x₁) ∧ (¬x₀∨x₁)
+clauses_sat = [
+    [(0, True), (1, True)],    # x₀ ∨ x₁
+    [(0, False), (1, True)],   # ¬x₀ ∨ x₁
+]
+clause_labels_sat = ['x₀∨x₁', '¬x₀∨x₁']
+assignments_s, conflicts_s = find_conflicts(2, clauses_sat)
+assign_labels_s = [f"({int(a[0])},{int(a[1])})" for a in assignments_s]
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# Left: Unsatisfiable
+ax = axes[0]
+im = ax.imshow(conflicts_u, cmap='RdYlGn_r', aspect='auto', vmin=0, vmax=1)
+ax.set_xticks(range(len(clause_labels_unsat)))
+ax.set_xticklabels(clause_labels_unsat, fontsize=11)
+ax.set_yticks(range(len(assign_labels_u)))
+ax.set_yticklabels(assign_labels_u, fontsize=11)
+ax.set_xlabel('Clauses', fontsize=12)
+ax.set_ylabel('Assignment (x₀, x₁)', fontsize=12)
+ax.set_title('UNSATISFIABLE\nEvery row has ≥1 conflict (red)', fontsize=12, color='red')
+
+for i in range(conflicts_u.shape[0]):
+    for j in range(conflicts_u.shape[1]):
+        color = 'white' if conflicts_u[i, j] else 'black'
+        text = '✗' if conflicts_u[i, j] else '✓'
+        ax.text(j, i, text, ha='center', va='center', fontsize=14, color=color)
+
+# Right: Satisfiable
+ax = axes[1]
+im = ax.imshow(conflicts_s, cmap='RdYlGn_r', aspect='auto', vmin=0, vmax=1)
+ax.set_xticks(range(len(clause_labels_sat)))
+ax.set_xticklabels(clause_labels_sat, fontsize=11)
+ax.set_yticks(range(len(assign_labels_s)))
+ax.set_yticklabels(assign_labels_s, fontsize=11)
+ax.set_xlabel('Clauses', fontsize=12)
+ax.set_ylabel('Assignment (x₀, x₁)', fontsize=12)
+ax.set_title('SATISFIABLE\nSome rows have no conflict', fontsize=12, color='green')
+
+for i in range(conflicts_s.shape[0]):
+    for j in range(conflicts_s.shape[1]):
+        color = 'white' if conflicts_s[i, j] else 'black'
+        text = '✗' if conflicts_s[i, j] else '✓'
+        ax.text(j, i, text, ha='center', va='center', fontsize=14, color=color)
+
+    # Highlight conflict-free rows
+    if np.sum(conflicts_s[i]) == 0:
+        ax.add_patch(plt.Rectangle((-0.5, i - 0.5), len(clause_labels_sat), 1,
+                                    fill=False, edgecolor='green', linewidth=3))
+
+plt.suptitle('Branch-SAT Duality: Assignment-Clause Conflict Maps',
+             fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('viz_branch_duality.png', dpi=150, bbox_inches='tight')
+print("Saved viz_branch_duality.png")
+
+
+"""
+Visualization: Phase Transition in Lorentzian Recognition Complexity
+
+Shows how certificate complexity transitions from polynomial (fixed degree)
+to exponential (degree growing with variables). This is the central visual
+of the hardness result.
+
+Self-contained — does not import any local modules.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from math import comb, log2
+
+def quadratic_leaf_count(n, d):
+    if d < 2:
+        return 1
+    return comb(n + d - 3, d - 2)
+
+# Compute data
+ns = list(range(3, 16))
+
+fixed_3 = [quadratic_leaf_count(n, 3) for n in ns]
+fixed_5 = [quadratic_leaf_count(n, 5) for n in ns]
+growing = [quadratic_leaf_count(n + 1, n) for n in ns]
+lower_bound = [2 ** (n - 2) for n in ns]
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-# Left panel: Fixed degree, varying n (polynomial growth)
-ax1 = axes[0]
-for d in [4, 6, 8, 10]:
-    ns = np.arange(2, 51)
-    counts = [comb(n + d - 3, d - 2) for n in ns]
-    ax1.semilogy(ns, counts, 'o-', markersize=3, label=f'd = {d}')
+# Left panel: Linear scale
+ax = axes[0]
+ax.plot(ns, fixed_3, 'b-o', label='Fixed degree d=3', markersize=5)
+ax.plot(ns, fixed_5, 'g-s', label='Fixed degree d=5', markersize=5)
+ax.plot(ns, growing, 'r-^', label='Growing degree d=n', markersize=5)
+ax.plot(ns, lower_bound, 'k--', label='Lower bound 2^(n-2)', linewidth=1.5)
+ax.set_xlabel('Number of variables n', fontsize=12)
+ax.set_ylabel('Certificate size (leaf count)', fontsize=12)
+ax.set_title('Certificate Complexity: Linear Scale', fontsize=13)
+ax.legend(fontsize=10)
+ax.set_yscale('log')
+ax.grid(True, alpha=0.3)
 
-ax1.set_xlabel('Number of variables n', fontsize=12)
-ax1.set_ylabel('Certificate complexity (log scale)', fontsize=12)
-ax1.set_title('Fixed Degree: Polynomial Growth in n', fontsize=13, fontweight='bold')
-ax1.legend(fontsize=10)
-ax1.grid(True, alpha=0.3)
-ax1.text(0.05, 0.95, 'TAME REGIME', transform=ax1.transAxes,
-         fontsize=14, fontweight='bold', color='green', va='top',
-         bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.5))
+# Right panel: Log scale showing phase transition
+ax = axes[1]
+log_fixed_3 = [log2(x) if x > 0 else 0 for x in fixed_3]
+log_fixed_5 = [log2(x) if x > 0 else 0 for x in fixed_5]
+log_growing = [log2(x) if x > 0 else 0 for x in growing]
+log_lower = [n - 2 for n in ns]
 
-# Right panel: Unrestricted degree (n = 2d), exponential growth
-ax2 = axes[1]
-ds = np.arange(2, 25)
+ax.plot(ns, log_fixed_3, 'b-o', label='Fixed d=3: O(log n)', markersize=5)
+ax.plot(ns, log_fixed_5, 'g-s', label='Fixed d=5: O(log n)', markersize=5)
+ax.plot(ns, log_growing, 'r-^', label='d=n: Θ(n)', markersize=5)
+ax.plot(ns, log_lower, 'k--', label='Lower bound: n-2', linewidth=1.5)
 
-# Exact certificate complexity C(3d-5, d-2)
-exact = [comb(3*d - 5, d - 2) for d in ds]
-# Upper bound n^(d-2) = (2d)^(d-2)
-upper = [(2*d)**(d-2) for d in ds]
-# Lower bound 2^(d-2)
-lower = [2**(d-2) for d in ds]
+# Shade the two regimes
+ax.axvspan(2.5, 15.5, alpha=0.05, color='red')
+ax.text(9, max(log_growing) * 0.85, 'EXPONENTIAL\n(d grows with n)',
+        ha='center', fontsize=11, color='red', fontweight='bold')
+ax.text(5, max(log_fixed_5) + 1, 'POLYNOMIAL\n(d fixed)',
+        ha='center', fontsize=10, color='blue')
 
-ax2.semilogy(ds, exact, 'b-o', markersize=5, linewidth=2, label='Exact: C(3d−5, d−2)')
-ax2.semilogy(ds, upper, 'r--', linewidth=1.5, alpha=0.7, label='Upper: (2d)^(d−2)')
-ax2.semilogy(ds, lower, 'g--', linewidth=1.5, alpha=0.7, label='Lower: 2^(d−2)')
-ax2.fill_between(ds, lower, upper, alpha=0.1, color='purple')
-
-ax2.set_xlabel('Degree d (with n = 2d variables)', fontsize=12)
-ax2.set_ylabel('Certificate complexity (log scale)', fontsize=12)
-ax2.set_title('Unrestricted Degree: Exponential Growth in d', fontsize=13, fontweight='bold')
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
-ax2.text(0.05, 0.95, 'HARD REGIME', transform=ax2.transAxes,
-         fontsize=14, fontweight='bold', color='red', va='top',
-         bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.5))
+ax.set_xlabel('Number of variables n', fontsize=12)
+ax.set_ylabel('log₂(Certificate size)', fontsize=12)
+ax.set_title('Phase Transition: log₂ Scale', fontsize=13)
+ax.legend(fontsize=10, loc='upper left')
+ax.grid(True, alpha=0.3)
 
 plt.suptitle('Complexity Phase Transition in Lorentzian Recognition',
              fontsize=15, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('phase_transition.png', dpi=150, bbox_inches='tight')
-print("Saved phase_transition.png")
+plt.savefig('viz_phase_transition.png', dpi=150, bbox_inches='tight')
+print("Saved viz_phase_transition.png")
+
+
+"""
+Visualization: Spectral Obstruction for Lorentzian Signature
+
+Shows level curves of quadratic forms Q(x) = x^T A x for matrices with
+different eigenvalue signatures, illustrating when Lorentzian signature
+holds versus when it fails (two positive directions defeat it).
+
+Self-contained — does not import any local modules.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def quadratic_form(A, x, y):
+    """Compute Q_A([x, y]) = x^T A [x,y] for 2D vectors."""
+    return A[0, 0] * x**2 + (A[0, 1] + A[1, 0]) * x * y + A[1, 1] * y**2
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 11))
+
+x = np.linspace(-2, 2, 300)
+y = np.linspace(-2, 2, 300)
+X, Y = np.meshgrid(x, y)
+
+# Matrix configurations
+configs = [
+    {
+        'title': 'Lorentzian Signature\ndiag(1, -1)',
+        'A': np.array([[1., 0.], [0., -1.]]),
+        'description': '1 positive eigenvalue ✓',
+        'color': 'green',
+    },
+    {
+        'title': 'Positive Definite (NOT Lorentzian)\ndiag(1, 1)',
+        'A': np.array([[1., 0.], [0., 1.]]),
+        'description': '2 positive eigenvalues ✗',
+        'color': 'red',
+    },
+    {
+        'title': 'Negative Semidefinite (Lorentzian)\ndiag(-1, -2)',
+        'A': np.array([[-1., 0.], [0., -2.]]),
+        'description': '0 positive eigenvalues ✓',
+        'color': 'green',
+    },
+    {
+        'title': 'Mixed Non-Lorentzian\n[[2, 1], [1, 2]]',
+        'A': np.array([[2., 1.], [1., 2.]]),
+        'description': '2 positive eigenvalues ✗',
+        'color': 'red',
+    },
+]
+
+for idx, config in enumerate(configs):
+    ax = axes[idx // 2][idx % 2]
+    A = config['A']
+
+    Z = quadratic_form(A, X, Y)
+
+    # Level curves
+    levels = np.linspace(-4, 4, 17)
+    cs = ax.contour(X, Y, Z, levels=levels, cmap='RdBu_r', linewidths=0.8)
+    ax.contourf(X, Y, Z, levels=levels, cmap='RdBu_r', alpha=0.3)
+    ax.contour(X, Y, Z, levels=[0], colors='black', linewidths=2)
+
+    # Mark positive region
+    ax.contourf(X, Y, Z, levels=[0, 100], colors=['none'], hatches=['/'],
+                alpha=0)
+
+    # Eigenvalue info
+    eigs = np.linalg.eigvalsh(A)
+    eigvecs = np.linalg.eigh(A)[1]
+
+    # Draw eigenvectors
+    for i in range(2):
+        ev = eigvecs[:, i]
+        color_arrow = 'green' if eigs[i] > 0.01 else ('red' if eigs[i] < -0.01 else 'gray')
+        ax.annotate('', xy=(ev[0] * 1.5, ev[1] * 1.5),
+                    xytext=(0, 0),
+                    arrowprops=dict(arrowstyle='->', color=color_arrow,
+                                    lw=2.5))
+
+    ax.set_xlim(-2, 2)
+    ax.set_ylim(-2, 2)
+    ax.set_aspect('equal')
+    ax.set_xlabel('x₁', fontsize=11)
+    ax.set_ylabel('x₂', fontsize=11)
+    ax.set_title(config['title'], fontsize=11, color=config['color'],
+                 fontweight='bold')
+    ax.text(0.02, 0.98, config['description'],
+            transform=ax.transAxes, fontsize=9,
+            verticalalignment='top',
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
+
+    ax.axhline(y=0, color='gray', linewidth=0.5)
+    ax.axvline(x=0, color='gray', linewidth=0.5)
+    ax.grid(True, alpha=0.2)
+
+plt.suptitle('Spectral Obstruction: Quadratic Form Level Curves\n'
+             'Green arrows = positive eigendirections, '
+             'Red arrows = negative eigendirections',
+             fontsize=13, fontweight='bold')
+plt.tight_layout()
+plt.savefig('viz_spectral_obstruction.png', dpi=150, bbox_inches='tight')
+print("Saved viz_spectral_obstruction.png")
