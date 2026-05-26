@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1653 of the highest-quality
+A curated collection of 1662 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1653
+Total files: 1662
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -242,6 +242,7 @@ import FINAL.Bridges.BetaClassCanonicity
 import FINAL.Bridges.BisimCohomology
 import FINAL.Bridges.BisimMinimization
 import FINAL.Bridges.BisimulationMetric
+import FINAL.Bridges.BooleanThermodynamicEliminationDuality
 import FINAL.Bridges.BordaRobustness
 import FINAL.Bridges.BranchComplexity
 import FINAL.Bridges.BreakthroughDirections
@@ -274,6 +275,7 @@ import FINAL.Bridges.ClosureKoopmanReconstruction
 import FINAL.Bridges.ClosureKramersWannierDuality
 import FINAL.Bridges.ClosureLefschetzTrace
 import FINAL.Bridges.ClosureMatroidSecretSharing
+import FINAL.Bridges.ClosureMoritaMain
 import FINAL.Bridges.ClosureMyhillNerodeDuality
 import FINAL.Bridges.ClosureNucleusDuality
 import FINAL.Bridges.ClosureOperadDuality
@@ -286,9 +288,12 @@ import FINAL.Bridges.ClosureScaleDuality
 import FINAL.Bridges.ClosureSecretSharingDuality
 import FINAL.Bridges.ClosureSheafCodeDuality
 import FINAL.Bridges.ClosureSheafLearningDuality
+import FINAL.Bridges.ClosureStoneRealizationDuality
 import FINAL.Bridges.ClosureStoneSpectrumDuality
+import FINAL.Bridges.ClosureSyndromeDecodingDuality
 import FINAL.Bridges.ClosureThermodynamicComputationDuality
 import FINAL.Bridges.ClosureVCDuality
+import FINAL.Bridges.ClosureVoronoiDuality
 import FINAL.Bridges.CoalgebraicNeuralMyhillNerode
 import FINAL.Bridges.CodingTheoryBridge
 import FINAL.Bridges.CoeffExtraction
@@ -382,6 +387,7 @@ import FINAL.Bridges.KnuthBendixCompletion
 import FINAL.Bridges.LargeDeviationPrinciple
 import FINAL.Bridges.LawvereCodingTheorem
 import FINAL.Bridges.LawvereEMLMetricSemantics
+import FINAL.Bridges.LawvereRateDistortionDuality
 import FINAL.Bridges.LawvereThermodynamicGalois
 import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LipschitzMarginCell
@@ -431,6 +437,7 @@ import FINAL.Bridges.Pareto
 import FINAL.Bridges.PersistentProofHomology
 import FINAL.Bridges.PhaseTransition
 import FINAL.Bridges.PolynomialInterpolationEquiv
+import FINAL.Bridges.PredicateTransport
 import FINAL.Bridges.PrimeCongruenceGeneralizationDuality
 import FINAL.Bridges.PrimeCongruencePACBayes
 import FINAL.Bridges.PrimeSpectralRateDistortion
@@ -438,6 +445,7 @@ import FINAL.Bridges.PrimeSpectralSchrodingerBridge
 import FINAL.Bridges.PrimeSpectrumCodingTheorem
 import FINAL.Bridges.ProofAlgGeomBridge
 import FINAL.Bridges.ProofAutomatonDuality
+import FINAL.Bridges.ProofCongruenceAutomata
 import FINAL.Bridges.ProofSemiringDiagonalization
 import FINAL.Bridges.ProofSemiringStone
 import FINAL.Bridges.ProofSemiringStoneDuality
@@ -1329,6 +1337,7 @@ import FINAL.Pythagorean.MultiSortedMaster
 import FINAL.Pythagorean.NeuralProofGuidance
 import FINAL.Pythagorean.NewResearchTheorems
 import FINAL.Pythagorean.NewTheorems
+import FINAL.Pythagorean.NoiseStabilityTheorems
 import FINAL.Pythagorean.NonAbelianPhaseClassification
 import FINAL.Pythagorean.NormalizationBisimDistance
 import FINAL.Pythagorean.O31_Generators

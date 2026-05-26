@@ -266,10 +266,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "b7265325",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:54:40.932722+00:00"
   },
   {
@@ -509,24 +509,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T15:29:21.854833+00:00"
   },
   {
-    "id": "fd_0873",
-    "title": "Direction 1: Certificate Density Asymptotics via the Prime Polynomial Theorem",
-    "description": "**Conjecture:** For fixed prime power q and n \u2192 \u221e, the certificate density in GL_n(F_q) satisfies \u03b4_n(q) = 1/n + O(q^{-n/2}/n), matching the density of irreducible monic polynomials of degree n over F_q.\n\n**Test:** Compute certificate densities for GL_n(F_q) with n = 2, 3, 4, 5, 6 and q = 2, 3, 4, 5, 7 using sampling (for larger groups) and exact enumeration (for small ones). Fit the data to \u03b4_n(q) = c/n + d/n\u00b2 and extract the constants. If c deviates significantly from 1, the conjecture fails.\n\n**Impact:** This would establish the first quantitative certificate-density theorem for matrix groups, providing the key input for generation probability lower bounds. It would also connect the certificate framework to analytic number theory over function fields.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (Theorem 4: `generation_lower_bound_of_certificate_system`), `Algebra/SymmGroupGen/Basic.lean` (analogous density bounds for S_n).\n\n**Proof Strategy:** Adapt the prime polynomial theorem (Gauss's formula: the number of monic irreducible polynomials of degree n over F_q equals (1/n) \u03a3_{d|n} \u03bc(n/d) q^d) to count characteristic polynomials rather than arbitrary polynomials. The main technical challenge is showing that the map from GL_n(F_q) to monic degree-n polynomials via the characteristic polynomial has approximately uniform fibers.\n\n**Domain Bridges:** Analytic number theory over function fields; random matrix theory (the characteristic polynomial of a random matrix over F_q has an approximately uniform distribution over monic polynomials).\n\n**Lineage:** Builds directly on Theorem 4 and the computational experiments in `demo.py`.\n\n**Ambition:** Solid extension. The conjecture is strongly supported by data and the proof strategy is well-understood, though executing it formally may require substantial infrastructure.\n\n**The key insight is** that the characteristic polynomial map from GL_n(F_q) to the space of monic degree-n polynomials with nonzero constant term is \"close to uniform,\" so the density of irreducible characteristic polynomials closely tracks the density of irreducible polynomials.\n\n**Why now?** Mathlib's recent development of polynomial irreducibility theory and finite field arithmetic provides the formal tools needed for the first time.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "eb4b8f41",
-    "timestamp": "2026-05-25T15:29:44.816206+00:00"
-  },
-  {
     "id": "fd_0874",
     "title": "Direction 2: Extension to SL_n, Sp_{2n}, and Orthogonal Groups",
     "description": "**Conjecture:** For each family of classical groups G_n(F_q) (SL_n, Sp_{2n}, O_n^\u00b1, U_n), there exists a certificate predicate C_n with density \u0398(1/n) such that certified elements are sufficient for generation with probability 1 - O(1/q).\n\n**Test:** For each family at small parameters (n = 2, 3; q = 2, 3, 5):\n- Define the appropriate certificate (e.g., for SL_n: irreducible charpoly with det = 1; for Sp_{2n}: irreducible charpoly that is self-reciprocal).\n- Enumerate group elements and compute certificate density.\n- Test generation by certified pairs.\n- If any family has density o(1/n), the conjecture fails for that family.\n\n**Impact:** Would provide the first unified certificate framework across all classical groups, enabling certified random generation algorithms for the most important families of finite groups in algebra, physics, and computer science.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (all theorems), `Algebra/SymmetricGroupGeneration/Core.lean`.\n\n**Proof Strategy:** For SL_n: restrict to matrices with determinant 1 and irreducible charpoly. The irreducible action theorem (Theorem 1) applies unchanged. The density question reduces to counting irreducible polynomials with prescribed constant term.\n\nFor Sp_{2n}: the certificate should involve the characteristic polynomial being irreducible and self-reciprocal (palindromic). The invariant subspace theorem needs to be strengthened to account for the symplectic form.\n\n**Domain Bridges:** Symplectic geometry (Hamiltonian dynamics); quantum information (random Clifford circuits use Sp_{2n}(F_2)); algebraic topology (monodromy groups in Lefschetz theory).\n\n**Lineage:** Direct generalization of the current GL_n framework.\n\n**Ambition:** Grand challenge for the full conjecture; solid extension for SL_n alone.\n\n**The key insight is** that the certificate architecture is group-independent \u2014 only the certificate predicate and the density estimate change from one classical group to another. The abstract `GenerationCertificateSystem` structure already anticipates this.\n\n**Why now?** The current work establishes the architectural pattern; extending to SL_n is a natural first step that could be completed in a single research cycle.\n\n---",
@@ -561,10 +543,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "114b795e",
     "timestamp": "2026-05-25T15:29:44.862008+00:00"
   },
   {
@@ -1001,10 +983,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e8f8d5e4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e958dd48",
     "timestamp": "2026-05-25T20:35:38.438401+00:00"
   },
   {
@@ -1343,28 +1325,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "2953ee13",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.908872+00:00"
-  },
-  {
-    "id": "fd_0966",
-    "title": "Direction 2: Noise-Stability Universality and the Algorithmic Phase Diagram",
-    "description": "**Conjecture (Grand Challenge):** For all multiaffine homogeneous strongly log-concave distributions, the maximum admissible coefficient perturbation preserving polynomial-time mixing (i.e., spectral gap $\\geq 1/\\text{poly}(n)$) is asymptotically equivalent, up to universal constants, to the Lorentzian stability radius.\n\n**The key insight is** that if this conjecture holds, algebraic geometry (Hodge theory, Lorentzian signature) and algorithmic complexity (mixing time of Markov chains) are measuring the *same* underlying quantity through different lenses. The Lorentzian stability radius, which is defined purely in terms of polynomial geometry, would be a universal predictor of algorithmic robustness.\n\n**Why now?** The formal pipeline established in this cycle \u2014 Lorentzian gap \u2192 residual gap \u2192 spectral gap \u2192 mixing time \u2014 provides the first complete certified path from algebraic structure to algorithmic bounds. Verifying universality requires computing both quantities for diverse distribution families, which is now possible with the certified tools.\n\n**Test:** For each of 5 distribution families (uniform matroid, partition matroid, graphic matroid, determinantal process, strongly Rayleigh), compute (a) the Lorentzian stability radius by eigenvalue analysis and (b) the empirical mixing-time phase boundary by running Glauber dynamics with increasing perturbation until mixing slows exponentially. Plot the ratio; universality predicts it converges to a constant.\n\n**Impact:** If confirmed, this establishes a new paradigm: algebraic geometry as algorithm design. If refuted, the counterexample family would reveal what additional structure beyond Lorentzianity governs algorithmic tractability.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (all main theorems); `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem `reversed_cauchy_schwarz_of_gapped`).\n\n**Proof Strategy:** Forward direction (algebraic radius \u2264 algorithmic radius) follows from the existing pipeline. Reverse direction requires showing that distributions near the Lorentzian boundary exhibit bottlenecks in the state graph \u2014 likely via a conductance argument using the vanishing of the Rayleigh-type inequality at the boundary.\n\n**Domain Bridges:** Computational complexity (hardness of approximate counting near phase transitions), statistical physics (universality classes in critical phenomena).\n\n**Lineage:** Builds on the dimension-free mixing conjecture from this cycle. Extends to a universal claim.\n\n**Ambition:** Grand challenge \u2014 this would unify two major research programs (algebraic combinatorics and Markov chain mixing theory).\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "5e0902bf",
-    "timestamp": "2026-05-25T22:25:38.941205+00:00"
   },
   {
     "id": "fd_0967",
@@ -1922,6 +1882,62 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
+    "id": "fd_1010",
+    "title": "Direction 1: Necklace Divisibility via Burnside's Lemma",
+    "description": "**Conjecture:** The necklace divisibility theorem n | \u03a3_{d|n} \u03bc(n/d) q^d can be formally proved by constructing the cyclic group action on q-ary strings of length n and applying Burnside's lemma to count primitive necklaces.\n\n**Test:** Formalize the Z/nZ action on (Fin q)^(Fin n), verify that Burnside's lemma gives (1/n) \u03a3_{d|n} \u03c6(n/d) q^(gcd(n,d)) total necklaces, and that inclusion-exclusion via M\u00f6bius inversion extracts the primitive necklace count (1/n) \u03a3_{d|n} \u03bc(n/d) q^d. If the primitive count is not a non-negative integer for any (q,n), the approach fails.\n\n**Impact:** Closes the one remaining sorry in the formalization and establishes the first fully verified proof of this 200-year-old number-theoretic identity in a modern proof assistant.\n\n**Catalog References:** `Pythagorean/CertificateDensity.lean` (Theorem: `necklace_sum_div_n`)\n\n**Proof Strategy:** Define the type `Necklace q n := (Fin n \u2192 Fin q)`, the cyclic shift action `\u03c3 : (Fin n \u2192 Fin q) \u2192 (Fin n \u2192 Fin q)` by `\u03c3 f i = f (i + 1)`, and the orbit quotient. Apply `MulAction.card_quotient_eq_sum_card_fixedBy` from Mathlib. The fixed points of \u03c3^d are exactly the strings with period dividing d, giving q^(gcd(n,d)) fixed points. The M\u00f6bius inversion step uses the established framework.\n\n**Domain Bridges:** Combinatorics \u2194 Number Theory \u2194 Algebra\n\n**Lineage:** Extends `necklace_sum_div_prime` (Fermat's little theorem case) to all n.\n\n**Ambition:** Solid extension \u2014 closes a specific gap in the current formalization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb4b8f41",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T01:21:04.623072+00:00"
+  },
+  {
+    "id": "fd_1011",
+    "title": "Direction 2: Certificate Density for Symplectic and Orthogonal Groups",
+    "description": "**Conjecture:** For the symplectic group Sp_{2n}(\ud835\udd3d_q), the certificate density (proportion of elements with irreducible characteristic polynomial satisfying the symplectic symmetry constraint f(x) = x^{2n} f(1/x)) is asymptotically 1/(2n), with error O(q^{-n}).\n\n**Test:** Compute the certificate density for Sp_4(\ud835\udd3d_q) for q = 3, 5, 7 and compare with 1/4. The \"self-reciprocal irreducible\" count for degree 2n should be approximately q^n/(2n). If the actual count deviates from this by more than q^{n/2} for any tested case, the conjecture's error term needs revision.\n\n**Impact:** Extends the certificate framework from GL_n to all classical groups, providing generation probability bounds for the groups that appear in quantum error correction (Sp_{2n} stabilizes symplectic quantum codes).\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (generation framework), `Pythagorean/CertificateDensity.lean` (GL_n density)\n\n**Proof Strategy:** Count self-reciprocal irreducible polynomials using the map f(x) \u21a6 x^n f(x + 1/x), which reduces to counting irreducible polynomials of degree n. Apply the existing necklace formula to this reduced count. The orbit-stabilizer argument carries over with the centralizer now being a unitary group U_1(\ud835\udd3d_{q^n}).\n\n**Domain Bridges:** Algebra (classical groups) \u2194 Number Theory (self-reciprocal polynomials) \u2194 Quantum Computing (symplectic stabilizer codes)\n\n**Lineage:** Direct extension of the GL_n certificate density theorem.\n\n**Ambition:** Solid extension \u2014 fills an important gap for non-GL classical groups.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb4b8f41",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T01:21:04.649417+00:00"
+  },
+  {
+    "id": "fd_1014",
+    "title": "Direction 5: Tropical Certificate Density and Expander Graph Construction",
+    "description": "**Conjecture:** The certificate density framework admits a tropical analogue, where the finite field \ud835\udd3d_q is replaced by the tropical semifield T = (\u211d \u222a {-\u221e}, max, +), and \"irreducible\" tropical characteristic polynomials correspond to indecomposable tropical matrices. The tropical certificate density converges to 1/n as the \"tropical q\" (a scaling parameter) tends to infinity, with the same M\u00f6bius-function error structure.\n\n**Test:** Compute the fraction of n\u00d7n tropical matrices (with entries in {0, 1, ..., M}) that are tropically indecomposable, for n = 3, 4, 5 and M = 10, 100, 1000. If the fraction converges to 1/n with error ~ 1/M^{n/2}, the tropical analogue holds.\n\n**Impact:** Opens a new research direction connecting tropical geometry to algebraic generation theory. If the tropical certificate density satisfies the same asymptotics, it suggests a universal structural principle governing irreducibility across algebraic settings.\n\n**Catalog References:** `Pythagorean/CertificateDensity.lean` (algebraic density), `Pythagorean/TropicalBerggrenZeta.lean` (tropical arithmetic)\n\n**Proof Strategy:** Define tropical irreducibility via the tropical determinant and permanent structure. Use the tropical analogue of the characteristic polynomial (the tropical eigenvalue set) to classify tropical matrices. Apply tropical M\u00f6bius inversion to count tropically indecomposable polynomials.\n\n**Domain Bridges:** Tropical Geometry \u2194 Group Theory \u2194 Number Theory\n\n**Lineage:** Extends the Pythagorean-tropical bridge to a new domain.\n\n**Ambition:** Grand challenge \u2014 speculative but testable connection between algebraic and tropical worlds.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb4b8f41",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T01:21:04.728538+00:00"
+  },
+  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -2322,6 +2338,26 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:13:49.686566+00:00"
+  },
+  {
+    "id": "fd_1019",
+    "title": "Direction 5: Quantum Algorithmic Phase Transitions via Lorentzian Polynomials",
+    "description": "**Conjecture:** The Lorentzian stability radius of the permanent polynomial (or its natural analogue for quantum sampling) controls the phase boundary of quantum approximate sampling algorithms. Specifically, for a matrix A with permanent per(A), the stability radius of the associated Lorentzian structure predicts the noise threshold below which approximate sampling from the output distribution of a boson sampling experiment remains classically hard.\n\n**Test:** For small matrices (n \u2264 8), compute the Lorentzian radius of the permanent polynomial and compare with the known noise thresholds for classical simulability of boson sampling (Aaronson-Arkhipov framework).\n\n**Impact:** Would provide the first connection between Lorentzian polynomial theory and quantum computational complexity. If the noise threshold for quantum advantage coincides with the Lorentzian stability radius, it suggests that quantum advantage is itself a geometric phenomenon.\n\n**Catalog References:**\n- `Pythagorean/NoiseStabilityDefs.lean`: `LorentzianStableUnder` (the stability predicate)\n- `Pythagorean/NoiseStabilityTheorems.lean`: `spectralGap_pos_of_lorentzian` (qualitative transfer)\n\n**Proof Strategy:** The permanent of a PSD matrix is Lorentzian (Marcus, Spielman, Srivastava, 2015). The key insight is that the noise model in boson sampling corresponds to a coefficient perturbation of the permanent polynomial. Apply the stability radius framework to bound the perturbation at which the polynomial loses its Lorentzian structure, and argue (via the geometric \u2192 algorithmic transfer) that this is the threshold for classical simulability.\n\n**Domain Bridges:** Quantum computing (boson sampling, quantum supremacy), computational complexity (permanent, #P-hardness)\n\n**Lineage:** Most speculative direction \u2014 requires new results connecting quantum sampling to Lorentzian structure.\n\n**Ambition:** Grand challenge \u2014 could reshape our understanding of quantum advantage.",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e0902bf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T01:21:27.843587+00:00"
   },
   {
     "id": "seed_032",

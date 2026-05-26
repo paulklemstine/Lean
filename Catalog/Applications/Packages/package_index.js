@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Lorentzian Polynomial Geometry / Algorithmic Mixing Theory",
     "date": "2026-05-26T01:21:25Z",
     "exp_id": "5e0902bf",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7442945762711866,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_certificate_density_asymptotics_via_th.json",
@@ -1325,8 +1325,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-26T01:21:25Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7442945762711866,
+      "quality": "substantial"
     }
   ],
   "edges": [
