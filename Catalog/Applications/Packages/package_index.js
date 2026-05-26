@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry \u00d7 Statistical Physics \u00d7 Weighted Graph Theory",
     "date": "2026-05-26T09:00:05Z",
     "exp_id": "017aafa5",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.772976,
+    "quality": "substantial"
   },
   {
     "filename": "direction_3_negative_dependence_and_rapid_mixing_v.json",
@@ -2165,8 +2165,8 @@ window.PACKAGE_GRAPH = {
       "shape": "diamond",
       "date": "2026-05-26T09:00:05Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.772976,
+      "quality": "substantial"
     }
   ],
   "edges": [

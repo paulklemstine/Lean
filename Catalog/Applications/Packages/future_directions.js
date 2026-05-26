@@ -442,10 +442,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "97def267",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d74ce5bf",
     "timestamp": "2026-05-25T14:24:37.121580+00:00"
   },
   {
@@ -781,25 +781,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T19:29:17.914245+00:00"
   },
   {
-    "id": "fd_0929",
-    "title": "Direction 3: Negative Dependence and Rapid Mixing via Directional Log-Concavity",
-    "description": "**Conjecture**: For a probability distribution \u03bc on {0,1}\u207f whose generating polynomial satisfies k-fold directional log-concavity (k \u2265 2), the Glauber dynamics Markov chain mixes in time O(n log n), with the mixing time constant depending on k.\n\n**The key insight is** that mixed directional log-concavity is exactly the condition of pairwise negative dependence (the FKG inequality reversed), and the higher-order conditions in the k-fold hierarchy provide increasingly strong spectral gap bounds. The k = 2 condition should imply a spectral gap of \u03a9(1/n), which by standard Markov chain theory gives O(n log n) mixing.\n\n**Why now?** Anari\u2013Liu\u2013Oveis Gharan\u2013Vinzant (2019) proved rapid mixing for distributions associated with log-concave polynomials, but their proof goes through the complete homogeneous polynomial machinery. Our direct coefficient-level approach via mixed DLC could yield a simpler proof with explicit constants.\n\n**Test**: Simulate Glauber dynamics for canonical partition functions of fermionic systems (tested in `applications.py`) and measure empirical mixing times. Compare mixing time against the k-fold depth of the generating polynomial. If there is a clear correlation (higher k \u2192 faster mixing), this provides strong evidence for the conjecture.\n\n**Impact**: Would provide the first direct link between the k-fold hierarchy and algorithmic efficiency, with applications to approximate counting, sampling, and statistical inference.\n\n**Catalog References**: `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (`KFoldLogConcave.mul`, `partitionFunctionCoeff_kFoldLogConcave_of_factorization`); `Pythagorean/MultivariateLogConcavity.lean` (`mixedLogConcave_mul`, `support_rectangle_closure`).\n\n**Proof Strategy**: Use the factored function theorem (`factored_mixed_logconcave`) to reduce to independent site distributions. Show that the product stability of mixed DLC (`mixedLogConcave_mul`) preserves the spectral gap bound under composition. Derive the mixing time bound from the spectral gap using the log-Sobolev inequality approach of Diaconis\u2013Saloff-Coste.\n\n**Domain Bridges**: Probability theory (mixing times, spectral gaps) \u2194 Statistical physics (Glauber dynamics, phase transitions) \u2194 Computer science (approximate counting, FPRAS).\n\n**Lineage**: Extends `mixedLogConcave_mul` and `factored_mixed_logconcave`.\n\n**Ambition**: Solid extension with immediate algorithmic impact.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "6297694a",
-    "timestamp": "2026-05-25T19:29:17.948753+00:00"
-  },
-  {
     "id": "fd_0932",
     "title": "Direction 1: Intrinsically Typed Higher-Order Rewriting with \u03b2\u03b7-Completion",
     "description": "**Conjecture:** For the simply-typed \u03bb-calculus with \u03b2\u03b7-reduction, substitution functoriality and rewrite closure extend to the \u03b2\u03b7 setting, and the generated equational theory descends cleanly to \u03b2\u03b7-equivalence classes. Concretely: if `HOEqGen(E, t, u)` and `t ~\u03b2\u03b7 t'`, `u ~\u03b2\u03b7 u'`, then `HOEqGen(E, t', u')` in a theory with \u03b2\u03b7-rules included.\n\n**Test:** Formalize intrinsically typed terms (indexed by context and type) using de Bruijn indices. Prove `subst_comp` and `hoRewrites_closed_under_subst` for typed terms. Then add \u03b7-contraction (`lam(app(rename(\u00b7+1, f), var 0)) \u2192 f`) and verify the \u03b7-commutation lemma: `eta_closed_under_subst`. Check computationally on typed terms up to size 12 that \u03b2\u03b7-normalization commutes with rewriting for orthogonal rule sets.\n\n**Impact:** Intrinsically typed terms would eliminate ill-scoped terms by construction, making the formalization stronger and aligning with the Fiore-Plotkin-Turi framework for abstract syntax. \u03b2\u03b7-completion is strictly more powerful than \u03b2-completion and is required for extensional reasoning about functional programs.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (subst_comp, beta_closed_under_subst, liftSubst_compSubst); `Pythagorean/ConcreteTermAlgebra.lean` (FOTerm.subst_comp as the first-order prototype).\n\n**Proof Strategy:** Start with the Autosubst-style approach: define a universe of types, index terms by `(Ctx, Ty)`, and derive the substitution lemmas mechanically. The \u03b7 case requires proving `subst(lam(app(rename(\u00b7+1, f), var 0)), \u03c3) = subst(f, \u03c3)` when f has appropriate type, which reduces to showing `liftSubst(\u03c3)(1) = rename(\u00b7+1)(\u03c3(0))` \u2014 a definitional equality.\n\n**Domain Bridges:** Type theory (intrinsic typing), categorical semantics (presheaves over contexts), proof automation (extensional simplification).\n\n**Lineage:** Direct extension of the current work's substitution calculus.\n\n**Ambition:** Solid extension \u2014 builds directly on verified infrastructure with clear proof path.\n\n**\"The key insight is...\"** that \u03b7-contraction is the *semantic* counterpart of \u03b2-reduction \u2014 where \u03b2 says \"functions compute,\" \u03b7 says \"things that compute like functions *are* functions\" \u2014 and the substitution calculus we have already verified handles both uniformly once the commutation lemma is established.\n\n**\"Why now?\"** The substitution infrastructure (11 lemmas from `liftRen_id` through `subst_comp`) is now verified and battle-tested. Extending to \u03b7 requires exactly one new commutation lemma and one new lifting property, both following the established pattern.\n\n---",
@@ -890,26 +871,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "e8f8d5e4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T20:35:38.492371+00:00"
-  },
-  {
-    "id": "fd_0940",
-    "title": "Direction 4: Energy Landscape Metastability Detection",
-    "description": "**Conjecture:** For molecular energy landscapes modeled as weighted graphs, the weighted tropical kernel dimension at a vertex subset S equals the number of independent metastable degeneracies \u2014 configurations where multiple transition pathways have equal activation energy.\n\n**The key insight is** that tropical balance (minimum attained twice) is exactly the condition for metastability: a state where two escape routes have identical barrier heights, making the system poised between transitions. The kernel dimension counts independent such degeneracies.\n\n**Why now?** Molecular dynamics simulations routinely produce energy landscape graphs, but lack principled tools for detecting and counting metastable degeneracies. The tropical framework provides an algebraic characterization that can be computed directly from the landscape graph.\n\n**Test:** Apply the weighted tropical kernel algorithm to energy landscape graphs extracted from molecular dynamics simulations of small peptides. Compare detected metastable degeneracies with known folding intermediates.\n\n**Impact:** Would provide a new computational tool for identifying transition states in protein folding, materials science, and chemical kinetics.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorem 3.9, zero kernel under degeneracy).\n\n**Proof Strategy:** Model energy landscapes as weighted graphs. Show tropical balance \u2194 metastable degeneracy. Prove dimension = independent degeneracy count under appropriate non-degeneracy conditions.\n\n**Domain Bridges:** Statistical physics, computational chemistry, molecular dynamics.\n\n**Lineage:** Extends Frauenfelder [1991], Wales [2003].\n\n**Ambition:** Solid extension with high applied impact.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e8f8d5e4",
-    "consumed_by_exp_id": "017aafa5",
-    "timestamp": "2026-05-25T20:35:38.515830+00:00"
   },
   {
     "id": "fd_0943",
@@ -1240,10 +1201,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4196bad",
     "timestamp": "2026-05-25T22:58:43.577519+00:00"
   },
   {
@@ -1513,10 +1474,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "abb48be4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e8af4e3",
     "timestamp": "2026-05-26T02:33:39.011759+00:00"
   },
   {
@@ -1779,6 +1740,84 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T07:14:49.839089+00:00"
   },
   {
+    "id": "fd_1086",
+    "title": "Direction 1: Quantum 2-Designs from Certified Unitary Expanders",
+    "description": "**Conjecture:** For every prime power q and n \u2265 2, the finite unitary group SU_n(\ud835\udd3d_{q\u00b2}) admits certified pairs (s, t) whose Cayley graph produces an \u03b5-approximate unitary 2-design with |S| = O(1) generators and mixing time O(log |G|), where \u03b5 and the implicit constant are independent of q.\n\n**Test:** Implement the certificate check for SU\u2082(\ud835\udd3d_{q\u00b2}) \u2245 SL\u2082(\ud835\udd3d_q) for q = 3, 5, 7. Compute the frame potential (a measure of 2-design quality) for the Cayley walk and verify it converges to the Haar value 2/n! within O(log |G|) steps. Compare with random unitary circuits of the same depth.\n\n**Impact:** Explicit unitary 2-designs are essential for quantum state tomography, randomized benchmarking, and quantum error correction. Current constructions use either random circuits (non-deterministic) or Clifford groups (limited to stabilizer codes). Certified unitary expanders would provide a new family of deterministic 2-designs with provable convergence, bridging classical group theory and quantum information.\n\n**Catalog References:** `Catalog/Algebra/ClassicalGroupExpanders.lean` (ClassicalGenCertificate, HasVertexExpansion), `Catalog/Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy:** (1) Define a \"quantum certificate\" for SU_n by requiring irreducible charpoly over \ud835\udd3d_{q\u00b2} and a form-compatibility condition for the Hermitian structure. (2) Show certified pairs generate SU_n (extending Theorem 2). (3) Transfer spectral gap to frame potential convergence using the representation-theoretic spectral bound and the fact that SU_n has quasirandomness parameter growing with q.\n\n**Domain Bridges:** Quantum information theory \u2194 finite group theory \u2194 spectral graph theory. The 2-design application connects Cayley expansion to quantum circuit depth, and the certificate architecture provides a new algorithmic interface between classical algebra and quantum computing.\n\n**Lineage:** Extends the structural certificate (Theorem 1) from GL_n to SU_n, and the spectral transfer (Theorem 4) to the quantum mixing regime.\n\n**Ambition:** Grand challenge. If successful, provides the first uniform family of certified quantum 2-designs from finite groups of Lie type.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d9e69258",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T08:24:14.577634+00:00"
+  },
+  {
+    "id": "fd_1088",
+    "title": "Direction 3: Certified Expander Codes with Linear-Time Decoding",
+    "description": "**Conjecture:** For every \u03b5 > 0 and rate R < 1, there exists a family of certified Cayley-graph expander codes over Sp_{2n}(\ud835\udd3d_q) (with n, q varying) achieving rate \u2265 R, relative distance \u2265 \u03b4(\u03b5) > 0, and linear-time decoding complexity O(N) where N is the block length, provided the Cayley graph is constructed from a certified pair with gap \u2265 \u03b5.\n\n**Test:** Implement Sipser-Spielman (or Zemor) decoding on Tanner codes built from certified Cayley graphs of GL\u2082(\ud835\udd3d_p) for p = 3, 5, 7, 11. Measure decoding failure rate vs. channel noise for BSC and AWGN channels. Compare with standard LDPC codes of similar block length and rate.\n\n**Impact:** Currently, the best explicit linear-time decodable codes (Spielman 1996, Guruswami-Indyk 2005) rely on expanders whose construction is somewhat ad hoc. Certified Cayley-graph codes would provide a *uniform family* with provable parameters directly from the group certificate, potentially matching or exceeding the performance of capacity-approaching codes in the moderate block-length regime.\n\n**Catalog References:** `Catalog/Algebra/ClassicalGroupExpanders.lean` (expansion_neighbor_growth, expansion_monotone_of_superset), `Catalog/Algebra/MatrixGroupGeneration.lean` (span_orbit_eq_top_of_irreducible \u2014 orbit spanning as code generator).\n\n**Proof Strategy:** (1) Construct bipartite Tanner codes from the bipartite double cover of certified Cayley graphs. (2) Use the vertex expansion bound (Theorem 4) to prove the inner codes' parity-check matrices satisfy the \"unique neighbor\" property. (3) Analyze the Sipser-Spielman peeling decoder: each round corrects a constant fraction of errors, so O(log N) rounds suffice. (4) Each round takes O(N) time, giving O(N log N) total \u2014 tight analysis using the certificate gap should reduce this to O(N).\n\n**Domain Bridges:** Coding theory \u2194 group theory \u2194 spectral graph theory \u2194 algorithm design. The certificate provides a single algebraic object (the generator pair) that simultaneously determines the code, the graph, and the decoding algorithm.\n\n**Lineage:** Builds on the cross-domain bridge (expansion \u2192 boundary growth) from Theorem 4 and the coding-theory connection discussed in the research paper.\n\n**Ambition:** Solid extension with high practical impact.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d9e69258",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T08:24:14.647375+00:00"
+  },
+  {
+    "id": "fd_1091",
+    "title": "Direction 1: Overlap Class Conjecture \u2014 Beyond Disjoint Supports",
+    "description": "**Conjecture:** For every connected graph G, basepoint q, and S \u2286 V \\ {q}, the number of tropical projective equivalence classes of minimal generating families of the tropical kernel equals the number of overlap classes of cycle supports in G[S].\n\n**Test:** Enumerate all connected graphs on n \u2264 9 vertices, compute all minimal generating families, quotient by TropProjEquiv, and compare the class count against the cycle overlap class count. A single counterexample falsifies the conjecture; universal agreement up to n = 9 provides strong evidence.\n\n**Impact:** Would extend the uniqueness theorem from the fully disjoint case to the general case, transforming tropical kernel generators into a complete graph invariant for all connected graphs (not just those with separated cycle structures).\n\n**Catalog References:** `Catalog/Pythagorean/TropicalBridge/TropicalKernelRigidity.lean` (TropProjEquiv, PairwiseDisjointSupports), `Catalog/Pythagorean/TropicalBridge/DefectTheory.lean` (inducedCycleRank).\n\n**Proof Strategy:** Define \"overlap degree\" as the maximum intersection size between two support sets. Prove uniqueness up to TropProjEquiv for overlap degree 0 (our current theorem), then induct on overlap degree using a \"peeling\" argument that reduces overlapping supports to disjoint ones plus correction terms.\n\n**Domain Bridges:** Connects tropical linear algebra to combinatorial topology (cycle spaces), matroid theory (circuit overlap structure), and coding theory (support weights of linear codes).\n\n**Lineage:** Extends the main theorem of this work. Builds on the support-matching injectivity argument of `support_matching_injective`.\n\n**Ambition:** Grand challenge \u2014 would unify tropical kernel theory with cycle matroid structure.\n\n**The key insight is** that the number of equivalence classes should be determined entirely by the combinatorial overlap pattern of cycle supports, not by the specific geometry of the graph. **Why now?** The formal verification infrastructure for TropProjEquiv and PairwiseDisjointSupports provides the first rigorous foundation for testing this prediction computationally.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "42d710f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T08:59:20.810965+00:00"
+  },
+  {
+    "id": "fd_1092",
+    "title": "Direction 2: Chip-Firing Canonical Forms via Tropical Kernels",
+    "description": "**Conjecture:** The canonical tropical kernel generators, under the separation hypothesis, correspond bijectively to the generators of the critical group (sandpile group / Jacobian) of the graph restricted to S.\n\n**Test:** For all connected graphs on n \u2264 7, compute both the canonical tropical kernel generators and the Smith normal form of the restricted Laplacian. Verify that the number of generators matches the rank of the critical group, and that the canonical generators span the correct sublattice.\n\n**Impact:** Would provide a tropical-geometric interpretation of the critical group, connecting chip-firing dynamics to tropical kernel uniqueness.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalBridge/TropicalKernelRigidity.lean` (harmonicKernel, IsHarmonicOn), `Catalog/Pythagorean/TropicalBridge/Defs.lean` (graphLaplacian, firingIndependentOn).\n\n**Proof Strategy:** Show that the canonical generators of the harmonic kernel modulo constants form a basis for the critical group. Use the leaf rigidity lemma to propagate values from cycles to trees, matching the chip-firing spreading rule.\n\n**Domain Bridges:** Connects tropical algebra to algebraic graph theory (critical groups), number theory (lattice theory), and statistical mechanics (sandpile models / self-organized criticality).\n\n**Lineage:** Builds on `harmonic_leaf_rigidity` and `constant_isHarmonicOn`.\n\n**Ambition:** Solid extension \u2014 well-motivated by existing connections between chip-firing and tropical geometry.\n\n**The key insight is** that the uniqueness of tropical kernel generators under separation should reflect the uniqueness of the Smith normal form \u2014 both are canonical decompositions forced by the Laplacian structure. **Why now?** The leaf rigidity and harmonic kernel infrastructure are now formally verified, providing a solid foundation for connecting to chip-firing.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "42d710f5",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T08:59:20.844806+00:00"
+  },
+  {
     "id": "seed_005",
     "title": "P vs NP Problem",
     "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
@@ -1901,25 +1940,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
-    "id": "fd_1086",
-    "title": "Direction 1: Quantum 2-Designs from Certified Unitary Expanders",
-    "description": "**Conjecture:** For every prime power q and n \u2265 2, the finite unitary group SU_n(\ud835\udd3d_{q\u00b2}) admits certified pairs (s, t) whose Cayley graph produces an \u03b5-approximate unitary 2-design with |S| = O(1) generators and mixing time O(log |G|), where \u03b5 and the implicit constant are independent of q.\n\n**Test:** Implement the certificate check for SU\u2082(\ud835\udd3d_{q\u00b2}) \u2245 SL\u2082(\ud835\udd3d_q) for q = 3, 5, 7. Compute the frame potential (a measure of 2-design quality) for the Cayley walk and verify it converges to the Haar value 2/n! within O(log |G|) steps. Compare with random unitary circuits of the same depth.\n\n**Impact:** Explicit unitary 2-designs are essential for quantum state tomography, randomized benchmarking, and quantum error correction. Current constructions use either random circuits (non-deterministic) or Clifford groups (limited to stabilizer codes). Certified unitary expanders would provide a new family of deterministic 2-designs with provable convergence, bridging classical group theory and quantum information.\n\n**Catalog References:** `Catalog/Algebra/ClassicalGroupExpanders.lean` (ClassicalGenCertificate, HasVertexExpansion), `Catalog/Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy:** (1) Define a \"quantum certificate\" for SU_n by requiring irreducible charpoly over \ud835\udd3d_{q\u00b2} and a form-compatibility condition for the Hermitian structure. (2) Show certified pairs generate SU_n (extending Theorem 2). (3) Transfer spectral gap to frame potential convergence using the representation-theoretic spectral bound and the fact that SU_n has quasirandomness parameter growing with q.\n\n**Domain Bridges:** Quantum information theory \u2194 finite group theory \u2194 spectral graph theory. The 2-design application connects Cayley expansion to quantum circuit depth, and the certificate architecture provides a new algorithmic interface between classical algebra and quantum computing.\n\n**Lineage:** Extends the structural certificate (Theorem 1) from GL_n to SU_n, and the spectral transfer (Theorem 4) to the quantum mixing regime.\n\n**Ambition:** Grand challenge. If successful, provides the first uniform family of certified quantum 2-designs from finite groups of Lie type.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d9e69258",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T08:24:14.577634+00:00"
-  },
-  {
     "id": "fd_1087",
     "title": "Direction 2: Uniform Spectral Gaps for Sp\u2084 via Deligne\u2013Lusztig Character Bounds",
     "description": "**Conjecture:** There exists a universal constant \u03b5\u2080 > 0 such that for every odd prime power q, the group Sp\u2084(\ud835\udd3d_q) admits a certified pair with normalized spectral gap \u2265 \u03b5\u2080, and this gap can be explicitly bounded using character values on the Deligne\u2013Lusztig virtual representations associated to the maximal torus containing the regular toral generator.\n\n**Test:** For q = 3, 5, 7, 9, 11: (1) Enumerate certified pairs in Sp\u2084(\ud835\udd3d_q). (2) Compute spectral gaps. (3) Evaluate the Deligne\u2013Lusztig character sum formula and compare with the computed gap. The conjecture is falsified if the measured gaps decrease toward 0 as q grows, or if the character bound diverges from the computed gap.\n\n**Impact:** A uniform spectral gap for Sp\u2084 would be the first result extending the Ramanujan property beyond rank-1 groups (SL\u2082 / PGL\u2082) to rank-2 symplectic groups, with direct applications to codes over symplectic geometries and to higher-dimensional lattice-based cryptography.\n\n**Catalog References:** `Catalog/Algebra/ClassicalGroupExpanders.lean` (IsRegularToral, ClassicalGenCertificate, HasVertexExpansion), `Catalog/Algebra/MatrixGroupGeneration.lean` (all invariant-subspace theorems).\n\n**Proof Strategy:** (1) Formalize the Deligne\u2013Lusztig character formula for Sp\u2084 over \ud835\udd3d_q, at least for characters associated to maximal tori containing the regular toral element. (2) Bound the character ratio |\u03c7(s)|/\u03c7(1) using the geometric structure of the Deligne\u2013Lusztig variety. (3) Apply the Diaconis\u2013Shahshahani upper bound lemma: the total variation distance after k steps is bounded by \u2211_{\u03c1 nontrivial} dim(\u03c1) \u00b7 |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)|^{2k}. (4) Show the quasirandomness lower bound dim(\u03c1) \u2265 (q\u00b2\u22121)/2 kills all nontrivial contributions after O(log q) steps.\n\n**Domain Bridges:** Algebraic geometry (Deligne\u2013Lusztig theory) \u2194 finite group representation theory \u2194 spectral graph theory. The character bound connects geometric properties of algebraic varieties over finite fields to combinatorial expansion.\n\n**Lineage:** Directly extends the certificate architecture from the current project, deepening the \"representation-theoretic transfer\" layer with Deligne\u2013Lusztig technology.\n\n**Ambition:** Solid extension. The character formula for Sp\u2084 is known (due to Srinivasan and others), so the key work is formalization and explicit bound computation.\n\n---",
@@ -1939,25 +1959,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "d9e69258",
     "consumed_by_exp_id": "21d69cc6",
     "timestamp": "2026-05-26T08:24:14.609677+00:00"
-  },
-  {
-    "id": "fd_1088",
-    "title": "Direction 3: Certified Expander Codes with Linear-Time Decoding",
-    "description": "**Conjecture:** For every \u03b5 > 0 and rate R < 1, there exists a family of certified Cayley-graph expander codes over Sp_{2n}(\ud835\udd3d_q) (with n, q varying) achieving rate \u2265 R, relative distance \u2265 \u03b4(\u03b5) > 0, and linear-time decoding complexity O(N) where N is the block length, provided the Cayley graph is constructed from a certified pair with gap \u2265 \u03b5.\n\n**Test:** Implement Sipser-Spielman (or Zemor) decoding on Tanner codes built from certified Cayley graphs of GL\u2082(\ud835\udd3d_p) for p = 3, 5, 7, 11. Measure decoding failure rate vs. channel noise for BSC and AWGN channels. Compare with standard LDPC codes of similar block length and rate.\n\n**Impact:** Currently, the best explicit linear-time decodable codes (Spielman 1996, Guruswami-Indyk 2005) rely on expanders whose construction is somewhat ad hoc. Certified Cayley-graph codes would provide a *uniform family* with provable parameters directly from the group certificate, potentially matching or exceeding the performance of capacity-approaching codes in the moderate block-length regime.\n\n**Catalog References:** `Catalog/Algebra/ClassicalGroupExpanders.lean` (expansion_neighbor_growth, expansion_monotone_of_superset), `Catalog/Algebra/MatrixGroupGeneration.lean` (span_orbit_eq_top_of_irreducible \u2014 orbit spanning as code generator).\n\n**Proof Strategy:** (1) Construct bipartite Tanner codes from the bipartite double cover of certified Cayley graphs. (2) Use the vertex expansion bound (Theorem 4) to prove the inner codes' parity-check matrices satisfy the \"unique neighbor\" property. (3) Analyze the Sipser-Spielman peeling decoder: each round corrects a constant fraction of errors, so O(log N) rounds suffice. (4) Each round takes O(N) time, giving O(N log N) total \u2014 tight analysis using the certificate gap should reduce this to O(N).\n\n**Domain Bridges:** Coding theory \u2194 group theory \u2194 spectral graph theory \u2194 algorithm design. The certificate provides a single algebraic object (the generator pair) that simultaneously determines the code, the graph, and the decoding algorithm.\n\n**Lineage:** Builds on the cross-domain bridge (expansion \u2192 boundary growth) from Theorem 4 and the coding-theory connection discussed in the research paper.\n\n**Ambition:** Solid extension with high practical impact.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d9e69258",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T08:24:14.647375+00:00"
   },
   {
     "id": "seed_013",
