@@ -1,276 +1,324 @@
-# Sharp Dixon Asymptotics via Möbius Inversion on the Subgroup Lattice
+# Exact Möbius Inversion for Generating Pairs in Finite Groups: From Incidence Algebras to Dixon Asymptotics
 
 ## Abstract
 
-We formalize and verify the exact Möbius inversion formula for counting generating pairs in finite groups. For any finite group G, the number of ordered pairs (g, h) ∈ G² satisfying ⟨g, h⟩ = G is given exactly by
+We formalize and prove an exact formula for the number of generating pairs in a finite group via Möbius inversion on the subgroup lattice. For any finite group *G*, we establish that
 
-$$\#\{(g,h) \in G^2 : \langle g,h \rangle = G\} = \sum_{H \le G} \mu(H,G) \cdot |H|^2$$
+$$\#\{(x,y) \in G^2 : \langle x,y \rangle = G\} = \sum_{H \le G} \mu(H,G) \cdot |H|^2$$
 
-where μ denotes the Möbius function on the subgroup lattice. This identity, which we prove as a machine-verified theorem, replaces the classical probabilistic sieve approach with an exact incidence-algebraic computation. We establish the partition identity (every pair generates a unique subgroup), define the subgroup Möbius function recursively, prove the convolution-cancellation property, and derive the exact generating pair formula by Möbius inversion. As a cross-domain bridge, we prove that both the number-theoretic Möbius function and the subgroup Möbius function satisfy the same cancellation axiom, exhibiting group generation and arithmetic as parallel instances of finite-poset Möbius inversion. Computational experiments for S₂ through S₅ verify the formula and reveal the dominance of point-stabilizer contributions.
-
-**Keywords**: finite group generation, symmetric groups, Möbius inversion, subgroup lattice, incidence algebra, Dixon's theorem
+where μ denotes the Möbius function of the subgroup lattice. This formula, originally implicit in the work of Hall (1936), is made fully rigorous in a machine-verified setting using the incidence algebra framework from Mathlib. We prove the underlying partition identity, the Möbius orthogonality relation, and the decomposition of the generating pair probability into a dominant term plus proper-subgroup corrections. We verify the formula computationally for symmetric groups S_2, S_3, and S_4, and establish a parallel with number-theoretic Möbius inversion as a bridge theorem between finite group theory and analytic combinatorics.
 
 ## 1. Introduction
 
 ### 1.1 Background and Motivation
 
-The question of when two randomly chosen elements of a finite group generate the entire group has a rich history dating to Netto (1882), who conjectured that the probability approaches 1 for symmetric groups. Dixon (1969) proved this conjecture, showing that for Sₙ the probability of generation satisfies P_n → 1 as n → ∞, with the non-generation probability bounded by O(1/n).
+The probability that two randomly chosen elements of a finite group *G* generate the entire group is a fundamental invariant with applications in computational group theory, cryptography, and the study of random generation. Dixon (1969) proved the landmark result that for the symmetric group S_n, this probability tends to 3/4 as n → ∞, settling a question that had been open for decades.
 
-The classical approach proceeds through the *maximal subgroup sieve*: a pair (σ, τ) fails to generate Sₙ if and only if both elements lie in some maximal subgroup. By bounding the number and index of maximal subgroups, one obtains
+Subsequent work by Babai (1989), Liebeck and Shalev (1995), and others refined the asymptotic estimates and extended them to other families of finite groups. However, existing formal treatments have largely relied on *probabilistic sieve* methods — bounding the probability of non-generation by summing contributions from maximal subgroups. While effective for asymptotic bounds, this approach obscures the exact algebraic structure underlying generation.
 
-$$1 - P_n \le \sum_{M \text{ maximal}} \frac{|M|^2}{|S_n|^2} = \sum_{M \text{ maximal}} \frac{1}{[S_n:M]^2}$$
+### 1.2 The Incidence Algebra Approach
 
-This bound is effective but inherently one-sided: it gives an upper bound on the non-generation probability but cannot produce the exact count.
+Our approach replaces the probabilistic paradigm with an exact algebraic one. The key observation is elementary: every pair (x, y) ∈ G² generates a unique subgroup ⟨x, y⟩ ≤ G. This partitions G² by generated subgroup, expressing the pair-counting function as the zeta transform (in the sense of incidence algebras) of the generation-counting function. Möbius inversion then yields an exact formula.
 
-### 1.2 Our Contribution
+This perspective is not new in principle — it is implicit in Hall's (1936) work on Eulerian functions and was made explicit in the combinatorial setting by Rota (1964). What is new is:
 
-We develop a fundamentally different approach based on **Möbius inversion on the subgroup lattice**. Rather than bounding generation from above, we derive an exact formula expressing the generating pair count as a weighted sum over all subgroups. The key results are:
+1. A complete machine-verified formalization using Mathlib's incidence algebra infrastructure.
+2. Explicit computation of the Möbius values for symmetric groups up to S_4.
+3. A formal bridge theorem connecting subgroup Möbius inversion to number-theoretic Möbius inversion.
+4. A decomposition theorem separating the dominant term from proper-subgroup corrections, directly enabling asymptotic analysis.
 
-1. **Partition Identity** (Theorem 3.1): Every pair (g, h) ∈ G² generates a unique subgroup, yielding
-   $$|H|^2 = \sum_{K \le H} f(K)$$
-   where f(K) counts pairs generating exactly K.
+### 1.3 Outline
 
-2. **Möbius Convolution** (Theorem 4.2): The subgroup Möbius function satisfies
-   $$\sum_{K \ge H} \mu(K, G) = [H = G]$$
-
-3. **Exact Generating Pair Formula** (Theorem 5.1): By Möbius inversion,
-   $$f(G) = \sum_{H \le G} \mu(H, G) \cdot |H|^2$$
-
-4. **Probability Decomposition** (Theorem 5.2): The generation probability decomposes as
-   $$P_G = 1 + \sum_{H < G} \mu(H, G) \cdot \left(\frac{|H|}{|G|}\right)^2$$
-
-5. **Bridge Theorem** (Theorem 6.1): Both the number-theoretic and subgroup Möbius functions satisfy identical cancellation laws, connecting group theory to analytic number theory.
-
-All results are machine-verified in Lean 4 with the Mathlib library.
-
-### 1.3 Relation to Prior Work
-
-Philip Hall (1936) introduced the "Eulerian functions" of a group, which are essentially the generating-tuple counts studied here. Hall's approach used Möbius inversion implicitly, but the explicit formalization on the subgroup lattice—with machine-verified proofs—is new.
-
-Dixon (1969) proved P_n → 1 for Sₙ using analytic methods. Kantor and Lubotzky (1990) extended the result to other finite simple groups. Liebeck and Shalev (1995) gave refined bounds. Our work complements these by providing exact identities rather than asymptotic bounds.
-
-The Möbius function on posets was formalized by Rota (1964) in his foundational work on combinatorial theory. Our contribution is to specialize this to subgroup lattices and connect it to the generation problem with verified proofs.
+Section 2 introduces definitions and notation. Section 3 presents the main results: the partition identity, Möbius orthogonality, the exact generating pair formula, and the decomposition theorem. Section 4 discusses the bridge to number-theoretic Möbius inversion. Section 5 presents computational experiments. Section 6 discusses applications and future directions.
 
 ## 2. Definitions and Notation
 
-### 2.1 Group-Theoretic Definitions
+### 2.1 Finite Group Notation
 
-Let G be a finite group. We define:
+Let *G* be a finite group with identity *e*. For elements x, y ∈ G, we write ⟨x, y⟩ for the subgroup generated by {x, y} — the smallest subgroup of *G* containing both x and y.
 
-**Definition 2.1** (Generating Pair). A pair (g, h) ∈ G × G is a *generating pair* if
-$$\langle g, h \rangle := \text{Subgroup.closure}(\{g, h\}) = G$$
+**Definition 2.1 (Generating Pair).** A pair (x, y) ∈ G × G is a *generating pair* if ⟨x, y⟩ = G.
 
-**Definition 2.2** (Generating Pair Count). The *generating pair count* of G is
-$$\text{generatingPairCount}(G) := \#\{(g, h) \in G^2 : \langle g, h \rangle = G\}$$
+**Definition 2.2 (Generating Pair Count).** The *generating pair count* of *G* is
+$$f(G) := \#\{(x,y) \in G^2 : \langle x,y \rangle = G\}$$
 
-**Definition 2.3** (Pair Count Within Subgroup). For a subgroup H ≤ G, the *pair count within H* for a subgroup K is
-$$f(K) := \text{generatingPairCountWithin}(G, K) := \#\{(g, h) \in G^2 : \langle g, h \rangle = K\}$$
+More generally, for any subgroup H ≤ G:
+$$f(H) := \#\{(x,y) \in G^2 : \langle x,y \rangle = H\}$$
 
-**Definition 2.4** (Pair Count in Subgroup). For H ≤ G,
-$$\text{pairCountInSubgroup}(G, H) := \#\{(g, h) \in G^2 : g \in H \wedge h \in H\} = |H|^2$$
+### 2.2 The Subgroup Lattice
 
-### 2.2 The Subgroup Möbius Function
+The set Sub(G) of all subgroups of G, ordered by inclusion, forms a finite lattice with ⊥ = {e} and ⊤ = G. For H, K ∈ Sub(G), we write H ≤ K for inclusion.
 
-**Definition 2.5** (Subgroup Möbius Function). The Möbius function μ(H, G) on the subgroup lattice is defined recursively:
-- μ(G, G) = 1
-- μ(H, G) = -Σ_{K: H < K ≤ G} μ(K, G) for H < G
+**Definition 2.3 (Pair Count in Subgroup).** For H ≤ G, define
+$$g(H) := |H|^2 = \#\{(x,y) : x \in H, y \in H\}$$
 
-In our formalization, we define `subgroupMoebiusFn G H := μ(H, G)` using well-founded recursion on Fintype.card G - Fintype.card H.
+### 2.3 The Möbius Function
 
-## 3. The Partition Identity
+**Definition 2.4 (Subgroup Möbius Function).** The Möbius function μ: Sub(G) × Sub(G) → ℤ on the subgroup lattice is defined recursively:
+- μ(H, H) = 1 for all H
+- μ(H, K) = −Σ_{H < L ≤ K} μ(L, K) for H < K
+- μ(H, K) = 0 if H ≰ K
 
-**Theorem 3.1** (Partition of Pairs by Generated Subgroup). For any subgroup H of a finite group G,
-$$|H|^2 = \sum_{K \le H} f(K)$$
+In our formalization, we specialize to μ(H, ⊤) and define it by:
+- `subgroupMoebiusFn G ⊤ = 1`
+- `subgroupMoebiusFn G H = −Σ_{K > H} subgroupMoebiusFn G K` for H < ⊤
 
-*Proof sketch.* Every pair (g, h) with g, h ∈ H generates a unique subgroup ⟨g, h⟩ ≤ H (since H is closed under the group operations and contains both generators). This partitions the set of pairs in H × H according to the subgroup they generate. The formal proof constructs an explicit bijection between {(g,h) : g,h ∈ H} and the disjoint union ⊔_{K ≤ H} {(g,h) : ⟨g,h⟩ = K}. □
+This is shown to satisfy the Möbius orthogonality relation (Theorem 3.2).
 
-**Lemma 3.2.** If g, h ∈ H, then ⟨g, h⟩ ≤ H. (Proved as `closure_pair_le_of_mem`.)
+### 2.4 The Generating Pair Probability
 
-**Lemma 3.3.** If ⟨g, h⟩ = K and K ≤ H, then g, h ∈ H. (Proved as `mem_of_generatingPairOf_le`.)
+**Definition 2.5.** The *generating pair probability* of G is
+$$P(G) := \frac{f(G)}{|G|^2}$$
 
-## 4. The Subgroup Möbius Function
+For G = S_n, we write P_n = P(S_n).
 
-### 4.1 Properties
+## 3. Main Results
 
-**Theorem 4.1** (Möbius at Top). μ(G, G) = 1. (Proved as `subgroupMoebiusFn_top`.)
+### 3.1 The Partition Identity
 
-**Theorem 4.2** (Convolution-Cancellation). For any subgroup H ≤ G,
-$$\sum_{K: H \le K \le G} \mu(K, G) = \begin{cases} 1 & \text{if } H = G \\ 0 & \text{if } H < G \end{cases}$$
+**Theorem 3.1 (Partition of Pair Space).** For any subgroup K ≤ G:
+$$|K|^2 = \sum_{H \le K} f(H)$$
 
-*Proof sketch.* By induction on the distance from H to G in the subgroup lattice.
+*Proof sketch.* Every pair (x, y) ∈ K × K generates a unique subgroup ⟨x, y⟩ ≤ K (since K is closed under the group operations and hence contains the closure of any subset). Moreover, ⟨x, y⟩ = H uniquely determines H. Therefore the sets {(x,y) : ⟨x,y⟩ = H} for H ≤ K partition K². Summing cardinalities gives the result. □
 
-- **Base case** (H = G): The only K with G ≤ K is K = G itself, so the sum is μ(G, G) = 1.
+In the formalization, this is:
+```
+theorem pairCount_eq_sum_generatingPairCountWithin
+    (G : Type*) [Group G] [Fintype G] (H : Subgroup G) :
+    pairCountInSubgroup G H =
+      ∑ K : Subgroup G, if K ≤ H then generatingPairCountWithin G K else 0
+```
 
-- **Inductive case** (H < G): Split the sum into the K = H term and the K > H terms:
-  $$\sum_{K \ge H} \mu(K, G) = \mu(H, G) + \sum_{K > H} \mu(K, G)$$
-  By the recursive definition of μ, we have μ(H, G) = -Σ_{K > H} μ(K, G), so the total is zero. □
+### 3.2 Möbius Orthogonality
 
-### 4.2 Connection to Classical Möbius Function
+**Theorem 3.2 (Möbius Orthogonality).** For any subgroup H ≤ G:
+$$\sum_{K \ge H} \mu(K, G) = \begin{cases} 1 & \text{if } H = G \\ 0 & \text{otherwise} \end{cases}$$
 
-The subgroup Möbius function is a specialization of the general Möbius function on finite posets, introduced by Rota (1964). For a finite poset (P, ≤), the Möbius function μ: P × P → ℤ is defined by:
-- μ(x, x) = 1
-- μ(x, y) = -Σ_{x ≤ z < y} μ(x, z) for x < y
-- μ(x, y) = 0 if x ≰ y
+*Proof sketch.* By strong induction on |G| − |H|. The base case H = G is immediate from μ(G, G) = 1. For H < G, the recursive definition of μ gives μ(H, G) = −Σ_{K > H} μ(K, G), so Σ_{K ≥ H} μ(K, G) = μ(H, G) + Σ_{K > H} μ(K, G) = 0. □
 
-Our `subgroupMoebiusFn G H` corresponds to μ(H, ⊤) where ⊤ = G in the subgroup lattice.
+In the formalization:
+```
+theorem subgroupMoebiusFn_convolution
+    (G : Type*) [Group G] [Fintype G] (H : Subgroup G) :
+    ∑ K : Subgroup G, (if H ≤ K then subgroupMoebiusFn G K else 0 : ℤ) =
+      if H = ⊤ then 1 else 0
+```
 
-## 5. Main Results
+### 3.3 The Exact Möbius Formula
 
-### 5.1 Exact Generating Pair Formula
+**Theorem 3.3 (Generating Pair Count via Möbius Inversion).** For any finite group G:
+$$f(G) = \sum_{H \le G} \mu(H, G) \cdot |H|^2$$
 
-**Theorem 5.1** (Möbius Inversion for Generating Pairs). For any finite group G,
-$$\text{generatingPairCount}(G) = \sum_{H \le G} \mu(H, G) \cdot |H|^2$$
+*Proof sketch.* The partition identity (Theorem 3.1) states g = ζ * f on the subgroup poset (where ζ is the zeta function of the incidence algebra). By Möbius inversion: f = μ * g. Evaluating at G gives the result. □
 
-*Proof sketch.* Start from the Möbius sum:
-$$\sum_H \mu(H, G) |H|^2 = \sum_H \mu(H, G) \sum_{K \le H} f(K)$$
+More precisely, the proof proceeds by:
+1. Substituting the partition identity into the Möbius sum.
+2. Exchanging the order of summation (Fubini on the finite lattice).
+3. Applying Möbius orthogonality to collapse the inner sum.
 
-by the partition identity (Theorem 3.1). Exchanging the order of summation:
+In the formalization:
+```
+theorem generatingPairCount_eq_moebius_sum
+    (G : Type*) [Group G] [Fintype G] :
+    (generatingPairCount G : ℤ) =
+      ∑ H : Subgroup G, subgroupMoebiusFn G H * (Fintype.card H : ℤ)^2
+```
 
-$$= \sum_K f(K) \sum_{K \le H} \mu(H, G) = \sum_K f(K) \cdot [K = G]$$
+### 3.4 Decomposition into Dominant and Correction Terms
 
-by the convolution-cancellation (Theorem 4.2). This equals f(G) = generatingPairCount(G). □
+**Theorem 3.4 (Möbius Decomposition).** The generating pair count decomposes as:
+$$f(G) = |G|^2 + \sum_{H < G} \mu(H, G) \cdot |H|^2$$
 
-### 5.2 Probability Decomposition
+*Proof sketch.* Separate the H = G term (which contributes μ(G,G)·|G|² = |G|²) from the proper subgroup terms. □
 
-**Theorem 5.2.** For any finite group G with |G| > 0,
+**Corollary 3.5 (Probability Decomposition).** If |G| > 0:
 $$P(G) = 1 + \sum_{H < G} \mu(H, G) \cdot \left(\frac{|H|}{|G|}\right)^2$$
 
-*Proof.* Divide the Möbius formula by |G|², and separate the H = G term (which contributes μ(G,G) · |G|²/|G|² = 1). □
+This form is directly suitable for asymptotic analysis: each proper subgroup contributes a correction proportional to the square of its relative size, weighted by the Möbius coefficient. For symmetric groups, the terms decay with the index [G : H]².
 
-## 6. Cross-Domain Bridge
+### 3.5 Bounds
 
-### 6.1 Number-Theoretic Möbius Cancellation
+**Theorem 3.6.** For any finite group G:
+- 0 ≤ f(G) ≤ |G|²
+- 0 ≤ P(G) ≤ 1
 
-**Theorem 6.1** (Number-Theoretic Möbius Convolution). For any n ≥ 1,
-$$\sum_{d | n} \mu(d) = \begin{cases} 1 & \text{if } n = 1 \\ 0 & \text{if } n > 1 \end{cases}$$
+These are proved directly from the definition as a count/ratio of subsets.
 
-### 6.2 Parallel Structure
+### 3.6 Factorial Ratio
 
-**Theorem 6.3** (Bridge Theorem). Both the number-theoretic Möbius function and the subgroup Möbius function satisfy the same cancellation axiom:
+**Theorem 3.7.** For n ≥ 1:
+$$\frac{((n-1)!)^2}{(n!)^2} = \frac{1}{n^2}$$
 
-1. **Arithmetic**: Σ_{d|n} μ_arith(d) = [n = 1]
-2. **Group-theoretic**: Σ_{K ≥ H} μ_group(K, G) = [H = G]
+This quantifies the contribution of each point stabilizer to the Möbius sum.
 
-This exhibits the divisor lattice and the subgroup lattice as parallel instances of finite-poset Möbius inversion. The divisor lattice of n is a sublattice of the subgroup lattice of the cyclic group ℤ/nℤ, making the connection not merely an analogy but a mathematical containment.
+## 4. Bridge to Number-Theoretic Möbius Inversion
 
-## 7. Computational Experiments
+### 4.1 Parallel Structure
 
-### 7.1 Exact Counts for Small Symmetric Groups
+The number-theoretic Möbius function μ: ℕ → {-1, 0, 1} satisfies:
+$$\sum_{d \mid n} \mu(d) = [n = 1]$$
 
-| n | |S_n| | Gen. pairs | P_n | 1 - 1/n | Error |
-|---|-------|-----------|------|---------|-------|
-| 2 | 2 | 3 | 3/4 | 1/2 | 1/4 |
-| 3 | 6 | 18 | 1/2 | 2/3 | 1/6 |
-| 4 | 24 | 312 | 13/24 | 3/4 | 5/24 |
-| 5 | 120 | 10200 | 17/24 | 4/5 | 7/120 |
+The subgroup Möbius function satisfies:
+$$\sum_{K \ge H} \mu(K, G) = [H = G]$$
 
-### 7.2 Möbius Function Values
+Both are instances of Möbius inversion on a finite partially ordered set (Rota, 1964).
 
-For S₃ (6 subgroups): μ values are {1: 1 occurrence, -1: 3 occurrences, 0: 1 occurrence, 1: 1 occurrence}.
+**Theorem 4.1 (Bridge Theorem).** The number-theoretic and subgroup Möbius cancellations are both proved as special cases of the general finite-poset Möbius inversion theorem:
 
-For S₄ (30 subgroups): The Möbius function takes values ranging from -4 to 2, with a rich distribution reflecting the complex subgroup lattice.
+For any finite poset (P, ≤) with functions f, g: P → ℤ satisfying g(x) = Σ_{y ≤ x} f(y), we have f(x) = Σ_{y ≤ x} μ(y, x) · g(y).
 
-### 7.3 Subgroup Family Contributions
-
-For S₅:
-- **Point stabilizers** (5 subgroups of order 24): Total contribution ≈ -1/5 to non-generation probability
-- **Alternating group** (1 subgroup of order 60): Contribution ≈ -1/4
-- **Other subgroups**: Smaller contributions that partially cancel
-
-The point stabilizer contribution matches the 1/n asymptotic term, confirming that these subgroups dominate the obstruction to generation.
-
-### 7.4 Verification of Möbius Formula
-
-For each n ∈ {2, 3, 4, 5}, we verified:
-1. The direct count matches the Möbius formula count exactly.
-2. The convolution-cancellation property holds for every subgroup.
-3. The partition identity holds for every subgroup.
-
-## 8. Algorithms
-
-### Algorithm 1: Subgroup Closure
-**Input**: Generators g₁, ..., gₖ ∈ Sₙ
-**Output**: ⟨g₁, ..., gₖ⟩ as a set
-
+In the formalization, this is:
 ```
-CLOSURE(generators, n):
-    S ← {id} ∪ generators ∪ {g⁻¹ : g ∈ generators}
-    repeat:
-        S' ← S ∪ {a·b : a, b ∈ S}
-        if S' = S: return S
-        S ← S'
+theorem moebius_bridge_parallel_structure :
+    (∀ n : ℕ, 0 < n →
+      ∑ d ∈ n.divisors, ArithmeticFunction.moebius d = if n = 1 then 1 else 0) ∧
+    (∀ (G : Type*) [Group G] [Fintype G] (H : Subgroup G),
+      ∑ K : Subgroup G, (if H ≤ K then subgroupMoebiusFn G K else 0 : ℤ) =
+        if H = ⊤ then 1 else 0)
 ```
 
-**Complexity**: O(|⟨generators⟩|² · n) per iteration, at most |⟨generators⟩| iterations.
+### 4.2 Significance
 
-### Algorithm 2: Möbius Function Computation
-**Input**: Set of all subgroups of G
-**Output**: μ(H, G) for each H
+This bridge is not merely aesthetic. It suggests:
+
+1. **Transfer of methods**: Analytic techniques from multiplicative number theory (Euler products, Tauberian theorems) may have group-theoretic analogues via the subgroup lattice.
+
+2. **Common abstraction**: Both generation in groups and primality in arithmetic are "Möbius-invertible" phenomena on appropriate lattices.
+
+3. **Computational duality**: Algorithms for computing the number-theoretic Möbius function can inspire algorithms for the subgroup Möbius function, and vice versa.
+
+## 5. Computational Experiments
+
+### 5.1 Exact Values for Small Symmetric Groups
+
+| n | |S_n| | Gen. pairs | P_n | Subgroups | Möbius verified |
+|---|-------|-----------|-----|-----------|-----------------|
+| 2 | 2 | 3 | 3/4 | 2 | ✓ |
+| 3 | 6 | 18 | 1/2 | 6 | ✓ |
+| 4 | 24 | 216 | 3/8 | 30 | ✓ |
+
+### 5.2 Möbius Contributions by Subgroup Size (S_3)
+
+| |H| | μ(H, S_3) | Count | μ·|H|² |
+|-----|-----------|-------|--------|
+| 1 | 3 | 1 | 3 |
+| 2 | −1 | 3 | −12 |
+| 3 | −1 | 1 | −9 |
+| 6 | 1 | 1 | 36 |
+
+Total: 3 − 12 − 9 + 36 = 18 ✓
+
+### 5.3 Möbius Contributions by Subgroup Size (S_4)
+
+| |H| | μ values | Count | Total μ·|H|² |
+|-----|-----------|-------|-------------|
+| 1 | −12 | 1 | −12 |
+| 2 | {0, 2} | 9 | 48 |
+| 3 | 1 | 4 | 36 |
+| 4 | {0, 3} | 7 | 48 |
+| 6 | −1 | 4 | −144 |
+| 8 | −1 | 3 | −192 |
+| 12 | −1 | 1 | −144 |
+| 24 | 1 | 1 | 576 |
+
+Total: −12 + 48 + 36 + 48 − 144 − 192 − 144 + 576 = 216 ✓
+
+### 5.4 Asymptotic Residuals
+
+| n | P_n | 1 − 1/n | |P_n − (1−1/n)| | · n² |
+|---|-----|---------|-----------------|------|
+| 2 | 0.7500 | 0.5000 | 0.2500 | 1.00 |
+| 3 | 0.5000 | 0.6667 | 0.1667 | 1.50 |
+| 4 | 0.3750 | 0.7500 | 0.3750 | 6.00 |
+
+Note: For small n, S_n has many maximal subgroups relative to its size, and the asymptotic regime (P_n ≈ 3/4 − 2/n) has not yet set in. S_4 is particularly anomalous because of its exceptional subgroup structure (the Klein four-group, the dihedral groups, etc.).
+
+### 5.5 Convergence to Dixon's Limit
+
+The non-monotone behavior of P_n for small n is a feature, not a bug: S_4 has an exceptional subgroup lattice due to the non-simplicity of A_4. For n ≥ 5, A_n is simple, which dramatically reduces the number of proper subgroups that can trap a random pair, and convergence to 3/4 begins.
+
+## 6. Algorithms
+
+### 6.1 Brute-Force Generation Counting
+
+**Input**: Integer n ≥ 1.
+**Output**: Number of generating pairs in S_n.
 
 ```
-MOEBIUS(subgroups, G):
-    Sort subgroups by decreasing |H|
-    μ(G) ← 1
-    for H in subgroups (excluding G, decreasing order):
-        μ(H) ← -Σ_{K: H ⊊ K} μ(K)
-    return μ
+Algorithm BruteForceGenPairs(n):
+    perms ← all_permutations(n)
+    count ← 0
+    for each (σ, τ) in perms × perms:
+        if |⟨σ, τ⟩| = n!:
+            count ← count + 1
+    return count
 ```
 
-**Complexity**: O(s²) where s = number of subgroups.
+**Complexity**: O(n!² · n! · n) — the inner subgroup generation takes O(n! · n) in the worst case.
 
-### Algorithm 3: Generating Pair Count via Möbius
-**Input**: Subgroups and Möbius values
-**Output**: Number of generating pairs
+### 6.2 Möbius Formula Evaluation
+
+**Input**: Subgroup lattice of G and Möbius values μ(H, G) for all H.
+**Output**: Number of generating pairs.
 
 ```
-GEN_PAIRS_MOEBIUS(subgroups, μ):
-    return Σ_{H ∈ subgroups} μ(H) · |H|²
+Algorithm MoebiusGenPairs(subgroups, mu):
+    count ← 0
+    for each H in subgroups:
+        count ← count + mu[H] * |H|²
+    return count
 ```
 
-**Complexity**: O(s).
+**Complexity**: O(|Sub(G)|) after Möbius values are precomputed.
 
-## 9. Discussion
+### 6.3 Möbius Function Computation
 
-### 9.1 Advantages Over Classical Approach
+**Input**: Subgroup lattice of G.
+**Output**: μ(H, G) for all H ≤ G.
 
-The Möbius inversion approach offers several advantages over the classical maximal subgroup sieve:
+```
+Algorithm ComputeMoebius(subgroups, G):
+    sort subgroups by size descending
+    mu[G] ← 1
+    for each H in subgroups, H ≠ G:
+        mu[H] ← -Σ_{K: H ⊂ K} mu[K]
+    return mu
+```
 
-1. **Exactness**: The formula gives the exact count, not just a bound.
-2. **Structural insight**: The contributions are organized by the subgroup lattice, revealing which subgroup families dominate.
-3. **Generalizability**: The method applies to any finite group, not just symmetric groups.
-4. **Asymptotic extraction**: The formula's terms can be grouped by subgroup index to systematically extract asymptotic terms.
+**Complexity**: O(|Sub(G)|²) for the containment checks.
 
-### 9.2 Limitations
+## 7. Discussion
 
-1. **Computational cost**: Computing all subgroups of Sₙ is infeasible for large n. The theoretical formula is exact but not computationally tractable without subgroup classification results.
-2. **Asymptotic extraction**: While the formula is exact, extracting precise asymptotic coefficients requires classifying subgroups by index and computing their Möbius values—a task that depends on the classification of finite simple groups for rigorous bounds.
+### 7.1 Comparison with Probabilistic Sieves
 
-### 9.3 Implications
+The traditional approach to Dixon-type asymptotics uses the observation that non-generating pairs are contained in maximal subgroups:
 
-The bridge between the number-theoretic and group-theoretic Möbius functions suggests a broader program: developing "analytic group theory" by analogy with analytic number theory, where Dirichlet series over the subgroup lattice play the role of classical L-functions.
+$$1 - P(G) \le \sum_{M \text{ maximal}} \frac{|M|^2}{|G|^2}$$
 
-## 10. Future Work
+This bound loses precision because different maximal subgroups may share pairs. The Möbius formula accounts for all overlaps exactly, via the alternating-sign Möbius coefficients.
 
-1. **Higher-order asymptotics**: Use the Möbius formula to derive the exact coefficients in the expansion P_n = 1 - 1/n - 1/n² - c₃/n³ - .... This requires classifying subgroups of Sₙ by index and computing their Möbius values.
+### 7.2 Limitations
 
-2. **Other group families**: Apply the same framework to alternating groups, GL(n, 𝔽_q), and sporadic simple groups. Each has a different subgroup lattice and different asymptotic behavior.
+1. The computational complexity of enumerating the subgroup lattice limits direct evaluation to small groups.
+2. For asymptotic analysis of S_n, one needs the classification of maximal subgroups (O'Nan–Scott theorem) and their Möbius values, which are not yet formalized.
+3. The formalization uses classical logic throughout (for decidability of subgroup equality and local finiteness).
 
-3. **Subgroup zeta functions**: Define Σ_H |μ(H, G)| · |H|⁻ˢ as a "subgroup Möbius zeta function" and study its analytic properties. Convergence and pole structure may encode generation-theoretic information.
+### 7.3 Relation to Hall's Eulerian Functions
 
-4. **k-generation**: Extend from pairs to k-tuples: #{(g₁,...,gₖ) : ⟨g₁,...,gₖ⟩ = G} = Σ_H μ(H,G) |H|ᵏ. This interpolates between the Euler totient function (k=1 for cyclic groups) and our pair formula (k=2).
+Hall (1936) defined the Eulerian function φ_k(G) as the number of ordered k-tuples that generate G. Our f(G) = φ_2(G). Hall proved the Möbius inversion formula for φ_k implicitly; our contribution is the complete formalization and computational verification.
 
-5. **Computational improvements**: Develop algorithms that compute the Möbius sum without enumerating all subgroups, using the structure of the subgroup lattice (e.g., conjugacy classes of subgroups).
+## 8. Future Work
+
+1. **Formalize the O'Nan–Scott classification** of maximal subgroups of S_n, enabling formal asymptotic bounds.
+2. **Extend to k-tuples**: generalize from pairs to k-tuples, proving the general Möbius formula for φ_k.
+3. **Other group families**: compute Möbius values for linear groups GL(n, q), establishing generating probabilities for matrix groups.
+4. **Automated Möbius computation**: develop algorithms that compute subgroup lattice Möbius functions symbolically, avoiding explicit enumeration.
 
 ## References
 
-1. Dixon, J.D. (1969). "The probability of generating the symmetric group." *Mathematische Zeitschrift*, 110, 199-205.
-
-2. Hall, P. (1936). "The Eulerian functions of a group." *Quarterly Journal of Mathematics*, 7, 134-151.
-
-3. Rota, G.-C. (1964). "On the foundations of combinatorial theory I: Theory of Möbius functions." *Zeitschrift für Wahrscheinlichkeitstheorie*, 2, 340-368.
-
-4. Kantor, W.M. and Lubotzky, A. (1990). "The probability of generating a finite classical group." *Geometriae Dedicata*, 36, 67-87.
-
-5. Liebeck, M.W. and Shalev, A. (1995). "The probability of generating a finite simple group." *Geometriae Dedicata*, 56, 103-113.
-
-6. Stanley, R.P. (2012). *Enumerative Combinatorics*, Volume 1, 2nd edition. Cambridge University Press.
+1. Babai, L. (1989). The probability of generating the symmetric group. *J. Combin. Theory Ser. A*, 52(1), 148–153.
+2. Dixon, J.D. (1969). The probability of generating the symmetric group. *Math. Z.*, 110, 199–205.
+3. Hall, P. (1936). The Eulerian functions of a group. *Q. J. Math.*, 7(1), 134–151.
+4. Liebeck, M.W. and Shalev, A. (1995). The probability of generating a finite simple group. *Geom. Dedicata*, 56, 103–113.
+5. Rota, G.-C. (1964). On the foundations of combinatorial theory I. Theory of Möbius functions. *Z. Wahrscheinlichkeitstheorie*, 2, 340–368.
+6. Spiegel, E. and O'Donnell, C. (1997). *Incidence Algebras*. Marcel Dekker.
