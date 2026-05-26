@@ -440,10 +440,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f0664fee",
     "timestamp": "2026-05-25T14:24:15.354053+00:00"
   },
   {
@@ -1179,10 +1179,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "db7ef9c7",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b0b26cee",
     "timestamp": "2026-05-25T21:51:37.177766+00:00"
   },
   {
@@ -1618,26 +1618,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T01:21:04.728538+00:00"
   },
   {
-    "id": "fd_1019",
-    "title": "Direction 5: Quantum Algorithmic Phase Transitions via Lorentzian Polynomials",
-    "description": "**Conjecture:** The Lorentzian stability radius of the permanent polynomial (or its natural analogue for quantum sampling) controls the phase boundary of quantum approximate sampling algorithms. Specifically, for a matrix A with permanent per(A), the stability radius of the associated Lorentzian structure predicts the noise threshold below which approximate sampling from the output distribution of a boson sampling experiment remains classically hard.\n\n**Test:** For small matrices (n \u2264 8), compute the Lorentzian radius of the permanent polynomial and compare with the known noise thresholds for classical simulability of boson sampling (Aaronson-Arkhipov framework).\n\n**Impact:** Would provide the first connection between Lorentzian polynomial theory and quantum computational complexity. If the noise threshold for quantum advantage coincides with the Lorentzian stability radius, it suggests that quantum advantage is itself a geometric phenomenon.\n\n**Catalog References:**\n- `Pythagorean/NoiseStabilityDefs.lean`: `LorentzianStableUnder` (the stability predicate)\n- `Pythagorean/NoiseStabilityTheorems.lean`: `spectralGap_pos_of_lorentzian` (qualitative transfer)\n\n**Proof Strategy:** The permanent of a PSD matrix is Lorentzian (Marcus, Spielman, Srivastava, 2015). The key insight is that the noise model in boson sampling corresponds to a coefficient perturbation of the permanent polynomial. Apply the stability radius framework to bound the perturbation at which the polynomial loses its Lorentzian structure, and argue (via the geometric \u2192 algorithmic transfer) that this is the threshold for classical simulability.\n\n**Domain Bridges:** Quantum computing (boson sampling, quantum supremacy), computational complexity (permanent, #P-hardness)\n\n**Lineage:** Most speculative direction \u2014 requires new results connecting quantum sampling to Lorentzian structure.\n\n**Ambition:** Grand challenge \u2014 could reshape our understanding of quantum advantage.",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5e0902bf",
-    "consumed_by_exp_id": "b808f823",
-    "timestamp": "2026-05-26T01:21:27.843587+00:00"
-  },
-  {
     "id": "fd_1021",
     "title": "Direction 2: Explicit Poincar\u00e9 Constant and Exponential Variance Decay",
     "description": "**Conjecture**: For the $S_n$ walk with adjacent transpositions and long cycle, there exists $c > 0$ such that for all mean-zero $f : S_n \\to \\mathbb{R}$:\n$$\n\\text{Var}(f) \\leq \\frac{c \\cdot n^2}{|S|} \\cdot E_S(f)\n$$\nwhere $E_S(f)$ is the Dirichlet energy. Equivalently, the spectral gap satisfies $\\gamma \\geq |S|/(c \\cdot n^2)$.\n\n**Test**: Compute the exact spectral gap for $n = 3, \\ldots, 8$ and verify $\\gamma \\cdot n^2 / |S|$ converges to a constant. For $n = 3$: gap \u2248 0.5; for $n = 6$: gap \u2248 0.134. Check whether $\\gamma \\cdot n^2$ stabilizes.\n\n**Impact**: Would upgrade the variance decay theorem from $\\text{Var}(A^t f) \\leq \\text{Var}(f)$ to the exponential form $\\text{Var}(A^t f) \\leq (1 - c/n^2)^{2t} \\cdot \\text{Var}(f)$, giving explicit relaxation rates.\n\n**Catalog References**: `Pythagorean/CayleyExpander/Defs.lean` (Dirichlet energy, `CanonicalPathData`), `Pythagorean/CayleyExpander/SpectralGap.lean` (variance-energy relation, Poincar\u00e9 inequality).\n\n**Proof Strategy**: \n1. Construct explicit canonical paths in $\\text{Cay}(S_n, S)$ using the bubble sort + rotation algorithm.\n2. Bound the congestion: each edge carries at most $C \\cdot n^2 \\cdot (n-2)!$ paths.\n3. Apply the Poincar\u00e9 comparison: $\\gamma \\geq |S| / (\\text{congestion} \\cdot \\text{max\\_length})$.\n4. Formalize using `CanonicalPathData` and `explicitGapBound` from `Defs.lean`.\n\n**Domain Bridges**: Poincar\u00e9 inequality \u2192 functional inequalities \u2192 log-Sobolev \u2192 hypercontractivity \u2192 quantum information.\n\n**Lineage**: Builds directly on the catalog's `CanonicalPathData` structure and `explicitGapBound` definition.\n\n**Ambition**: Solid extension \u2014 achievable with existing infrastructure.\n\n**The key insight is** that the long cycle reduces canonical path lengths from $O(n^2)$ to $O(n)$ (sort first, then rotate), and the congestion is controlled by the symmetry of the group action.\n\n**Why now?** The `CanonicalPathData` structure is already defined in the catalog with all necessary fields (paths, length bounds, congestion bounds). Only the concrete instantiation for $S_n$ with the specific generators is needed.\n\n---",
@@ -1713,6 +1693,83 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "114b795e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T03:06:43.848125+00:00"
+  },
+  {
+    "id": "fd_1050",
+    "title": "Direction 1: Log-Sobolev Inequality for the Hybrid Walk",
+    "description": "**Conjecture:** The modified log-Sobolev constant $\\rho_n$ of the adjacent-transposition-plus-cycle walk satisfies $\\rho_n \\geq c/n^2$ for a universal constant $c > 0$. This would immediately yield $t_{\\text{mix}} \\leq O(n^2 \\log \\log n!)$ = $O(n^2 \\log n)$, closing the gap between upper and lower bounds.\n\n**Test:** Compute the log-Sobolev constant numerically for $n = 3, 4, 5, 6$ via semidefinite programming (the constant equals the minimum of $\\mathcal{E}(f, \\log f) / \\text{Ent}(f^2)$ over nonzero test functions). If $\\rho_n \\cdot n^2$ stabilizes, the conjecture is confirmed.\n\n**Impact:** Would be the first log-Sobolev inequality for a hybrid-generator walk on $S_n$. This is stronger than the spectral gap and would give the sharp $O(n^2 \\log n)$ mixing time, confirming the cutoff conjecture up to constants.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (spectral gap bounds), `Pythagorean/CayleyExpander/HybridWalk.lean` (walk definitions).\n\n**Proof Strategy:** Use the comparison method: compare the log-Sobolev constant of the hybrid walk with that of the random transposition walk (known to be $\\Theta(1/n)$) via a canonical path argument with controlled entropy distortion.\n\n**Domain Bridges:** Functional analysis (log-Sobolev inequalities), information theory (entropy methods), quantum information (quantum log-Sobolev for permutation channels).\n\n**Lineage:** Extends Theorem A (spectral gap) to the stronger log-Sobolev regime.\n\n**Ambition:** \ud83d\udfe1 Grand Challenge \u2014 would resolve the central open problem.\n\n**\"The key insight is...\"** that log-Sobolev constants capture higher-order concentration beyond what spectral gaps provide, and the cycle generator's role in reducing entropy transport cost may be visible only at this level.\n\n**\"Why now?\"** The spectral gap infrastructure is now certified and the numerical tools to test the conjecture exist. Recent advances in log-Sobolev inequalities for permutation groups (Salez, 2023) provide new technical tools.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "48617359",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T04:51:55.380022+00:00"
+  },
+  {
+    "id": "fd_1051",
+    "title": "Direction 2: Universality of Hybrid Walks \u2014 General Local/Global Generators",
+    "description": "**Conjecture:** For any finite group $G$ with a \"local\" symmetric generating set $S_L$ (spectral gap $\\gamma_L$) and a \"global\" symmetric generating set $S_G$ with $|S_G| = O(1)$, the spectral gap of the combined walk satisfies $\\gamma_{L \\cup G} = \\Theta(\\gamma_L)$ \u2014 i.e., a bounded number of global generators does not change the spectral gap order.\n\n**Test:** Verify computationally for:\n- $G = \\mathbb{Z}_n^2$ (2D lattice group), $S_L$ = nearest-neighbor generators, $S_G$ = one diagonal generator.\n- $G = S_n$, $S_L$ = adjacent transpositions, $S_G$ = star transpositions $(1, i)$.\n- $G = \\text{GL}_n(\\mathbb{F}_q)$, $S_L$ = elementary matrices, $S_G$ = one permutation matrix.\n\n**Impact:** Would establish a universal principle: **bounded-size global generators preserve the diffusive scale of local generators.** This unifies many known results and opens a new theory of Markov chain acceleration.\n\n**Catalog References:** `Pythagorean/CayleyExpander/HybridWalk.lean` (HybridPermutationWalk structure), `Bridges/Catalog/Pythagorean/CayleyExpander/Defs.lean` (CayleySpectralData, CanonicalPathData).\n\n**Proof Strategy:** Generalize the canonical path argument: show that global generators reduce path congestion but cannot reduce the number of local steps needed, preserving the spectral gap order.\n\n**Domain Bridges:** Geometric group theory (word metrics), algebraic graph theory (Cayley graph expansion), operator algebras (spectral transfer).\n\n**Lineage:** Direct generalization of Theorem A.\n\n**Ambition:** \ud83d\udfe2 Solid Extension \u2014 conceptually clear generalization with known proof template.\n\n**\"The key insight is...\"** that spectral gaps are controlled by bottlenecks, and global generators can widen bottlenecks but cannot eliminate the local structure that creates them.\n\n**\"Why now?\"** The formalized HybridPermutationWalk structure provides the right abstraction layer for general statements. Testing on multiple group families is now computationally feasible.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "48617359",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T04:51:55.424405+00:00"
+  },
+  {
+    "id": "fd_1052",
+    "title": "Direction 3: Driven Diffusive Systems and TASEP Phase Transitions",
+    "description": "**Conjecture:** The adjacent-transposition-plus-cycle walk, when projected to single-card trajectories, converges to a process in the universality class of the **totally asymmetric simple exclusion process** (TASEP) on a ring of $n$ sites. Specifically, the displacement of card $j$ under the walk, rescaled by $n$, converges to the TASEP current fluctuation process as $n \\to \\infty$.\n\n**Test:** Track single-card displacement statistics for $n = 5, 6, 7, 8$. Compare the variance of the card position at time $t$ with the predicted $\\Theta(t/n^2)$ scaling from TASEP. Test whether the limiting displacement distribution matches the Tracy-Widom distribution (characteristic of TASEP fluctuations).\n\n**Impact:** Would forge a rigorous connection between algebraic mixing on $S_n$ and statistical mechanics of driven particle systems. This would import KPZ universality class results into permutation theory.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (observable contraction), `Pythagorean/CayleyExpander/HybridWalk.lean` (cycleDisplacementObservable).\n\n**Proof Strategy:** Project the walk to the trajectory of one labeled card. Show that the projected process is a random walk on $\\mathbb{Z}/n\\mathbb{Z}$ with local random steps and a constant drift from the long cycle. Identify the scaling limit using the mapping to TASEP via Robinson-Schensted correspondence.\n\n**Domain Bridges:** Statistical mechanics (TASEP, KPZ universality), integrable systems (Bethe ansatz), random matrix theory (Tracy-Widom distribution).\n\n**Lineage:** Extends the cross-domain bridge between permutation mixing and exclusion processes discussed in Theorem A.\n\n**Ambition:** \ud83d\udfe1 Grand Challenge \u2014 connects two mature but separate fields.\n\n**\"The key insight is...\"** that the long cycle creates a coherent drift in card-position space, and the competition between drift and diffusion is precisely the TASEP mechanism.\n\n**\"Why now?\"** Recent breakthroughs in KPZ universality (Quastel, Matetski\u2013Quastel\u2013Remenik, 2022) provide precise distributional predictions that can be tested against our exact computations for small $n$.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "48617359",
+    "consumed_by_exp_id": "f42c0a57",
+    "timestamp": "2026-05-26T04:51:55.454839+00:00"
+  },
+  {
+    "id": "fd_1053",
+    "title": "Direction 4: Cryptographic Security Bounds for Permutation Networks",
+    "description": "**Conjecture:** Any permutation network that alternates $k$ rounds of adjacent-swap layers with cyclic-shift layers requires at least $\\Omega(n^2 \\log n / k)$ rounds to achieve statistical security (TV distance $< 2^{-\\lambda}$ from a random permutation for security parameter $\\lambda$).\n\n**Test:** Implement the AES-like permutation network with varying numbers of swap layers per round. Measure the TV distance from uniform for $n = 8$ (matching common block cipher state sizes) and compare with the predicted bound.\n\n**Impact:** Would provide the first mathematically certified lower bound on round complexity for this class of lightweight ciphers. Direct applications to the security analysis of PRESENT, GIFT, and other bitslice-style block ciphers.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (mixing time lower bound), `Pythagorean/CayleyExpander/HybridWalk.lean` (HybridPermutationWalk framework).\n\n**Proof Strategy:** Model the cipher's permutation layer as a deterministic version of our random walk. Use the observable lower bound (Theorem C) to show that any product of $T$ generators from the hybrid set leaves a detectable bias in the cycle displacement statistic.\n\n**Domain Bridges:** Cryptography (block cipher design), information theory (min-entropy), hardware security (side-channel resistance of lightweight ciphers).\n\n**Lineage:** Application of Theorem C to security engineering.\n\n**Ambition:** \ud83d\udfe2 Solid Extension \u2014 direct application of existing theory to a new domain.\n\n**\"The key insight is...\"** that our observable lower bound provides a *distinguisher* \u2014 a statistical test that can tell a cipher's output from random \u2014 and the decay rate $1 - \\Theta(1/n^2)$ translates directly into a minimum number of rounds.\n\n**\"Why now?\"** The NIST Lightweight Cryptography standardization process has renewed interest in formal security analysis of simple permutation networks. Our tools provide exactly the right mathematical framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "48617359",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T04:51:55.485067+00:00"
   },
   {
     "id": "seed_005",
@@ -1835,83 +1892,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1050",
-    "title": "Direction 1: Log-Sobolev Inequality for the Hybrid Walk",
-    "description": "**Conjecture:** The modified log-Sobolev constant $\\rho_n$ of the adjacent-transposition-plus-cycle walk satisfies $\\rho_n \\geq c/n^2$ for a universal constant $c > 0$. This would immediately yield $t_{\\text{mix}} \\leq O(n^2 \\log \\log n!)$ = $O(n^2 \\log n)$, closing the gap between upper and lower bounds.\n\n**Test:** Compute the log-Sobolev constant numerically for $n = 3, 4, 5, 6$ via semidefinite programming (the constant equals the minimum of $\\mathcal{E}(f, \\log f) / \\text{Ent}(f^2)$ over nonzero test functions). If $\\rho_n \\cdot n^2$ stabilizes, the conjecture is confirmed.\n\n**Impact:** Would be the first log-Sobolev inequality for a hybrid-generator walk on $S_n$. This is stronger than the spectral gap and would give the sharp $O(n^2 \\log n)$ mixing time, confirming the cutoff conjecture up to constants.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (spectral gap bounds), `Pythagorean/CayleyExpander/HybridWalk.lean` (walk definitions).\n\n**Proof Strategy:** Use the comparison method: compare the log-Sobolev constant of the hybrid walk with that of the random transposition walk (known to be $\\Theta(1/n)$) via a canonical path argument with controlled entropy distortion.\n\n**Domain Bridges:** Functional analysis (log-Sobolev inequalities), information theory (entropy methods), quantum information (quantum log-Sobolev for permutation channels).\n\n**Lineage:** Extends Theorem A (spectral gap) to the stronger log-Sobolev regime.\n\n**Ambition:** \ud83d\udfe1 Grand Challenge \u2014 would resolve the central open problem.\n\n**\"The key insight is...\"** that log-Sobolev constants capture higher-order concentration beyond what spectral gaps provide, and the cycle generator's role in reducing entropy transport cost may be visible only at this level.\n\n**\"Why now?\"** The spectral gap infrastructure is now certified and the numerical tools to test the conjecture exist. Recent advances in log-Sobolev inequalities for permutation groups (Salez, 2023) provide new technical tools.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "48617359",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T04:51:55.380022+00:00"
-  },
-  {
-    "id": "fd_1051",
-    "title": "Direction 2: Universality of Hybrid Walks \u2014 General Local/Global Generators",
-    "description": "**Conjecture:** For any finite group $G$ with a \"local\" symmetric generating set $S_L$ (spectral gap $\\gamma_L$) and a \"global\" symmetric generating set $S_G$ with $|S_G| = O(1)$, the spectral gap of the combined walk satisfies $\\gamma_{L \\cup G} = \\Theta(\\gamma_L)$ \u2014 i.e., a bounded number of global generators does not change the spectral gap order.\n\n**Test:** Verify computationally for:\n- $G = \\mathbb{Z}_n^2$ (2D lattice group), $S_L$ = nearest-neighbor generators, $S_G$ = one diagonal generator.\n- $G = S_n$, $S_L$ = adjacent transpositions, $S_G$ = star transpositions $(1, i)$.\n- $G = \\text{GL}_n(\\mathbb{F}_q)$, $S_L$ = elementary matrices, $S_G$ = one permutation matrix.\n\n**Impact:** Would establish a universal principle: **bounded-size global generators preserve the diffusive scale of local generators.** This unifies many known results and opens a new theory of Markov chain acceleration.\n\n**Catalog References:** `Pythagorean/CayleyExpander/HybridWalk.lean` (HybridPermutationWalk structure), `Bridges/Catalog/Pythagorean/CayleyExpander/Defs.lean` (CayleySpectralData, CanonicalPathData).\n\n**Proof Strategy:** Generalize the canonical path argument: show that global generators reduce path congestion but cannot reduce the number of local steps needed, preserving the spectral gap order.\n\n**Domain Bridges:** Geometric group theory (word metrics), algebraic graph theory (Cayley graph expansion), operator algebras (spectral transfer).\n\n**Lineage:** Direct generalization of Theorem A.\n\n**Ambition:** \ud83d\udfe2 Solid Extension \u2014 conceptually clear generalization with known proof template.\n\n**\"The key insight is...\"** that spectral gaps are controlled by bottlenecks, and global generators can widen bottlenecks but cannot eliminate the local structure that creates them.\n\n**\"Why now?\"** The formalized HybridPermutationWalk structure provides the right abstraction layer for general statements. Testing on multiple group families is now computationally feasible.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "48617359",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T04:51:55.424405+00:00"
-  },
-  {
-    "id": "fd_1052",
-    "title": "Direction 3: Driven Diffusive Systems and TASEP Phase Transitions",
-    "description": "**Conjecture:** The adjacent-transposition-plus-cycle walk, when projected to single-card trajectories, converges to a process in the universality class of the **totally asymmetric simple exclusion process** (TASEP) on a ring of $n$ sites. Specifically, the displacement of card $j$ under the walk, rescaled by $n$, converges to the TASEP current fluctuation process as $n \\to \\infty$.\n\n**Test:** Track single-card displacement statistics for $n = 5, 6, 7, 8$. Compare the variance of the card position at time $t$ with the predicted $\\Theta(t/n^2)$ scaling from TASEP. Test whether the limiting displacement distribution matches the Tracy-Widom distribution (characteristic of TASEP fluctuations).\n\n**Impact:** Would forge a rigorous connection between algebraic mixing on $S_n$ and statistical mechanics of driven particle systems. This would import KPZ universality class results into permutation theory.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (observable contraction), `Pythagorean/CayleyExpander/HybridWalk.lean` (cycleDisplacementObservable).\n\n**Proof Strategy:** Project the walk to the trajectory of one labeled card. Show that the projected process is a random walk on $\\mathbb{Z}/n\\mathbb{Z}$ with local random steps and a constant drift from the long cycle. Identify the scaling limit using the mapping to TASEP via Robinson-Schensted correspondence.\n\n**Domain Bridges:** Statistical mechanics (TASEP, KPZ universality), integrable systems (Bethe ansatz), random matrix theory (Tracy-Widom distribution).\n\n**Lineage:** Extends the cross-domain bridge between permutation mixing and exclusion processes discussed in Theorem A.\n\n**Ambition:** \ud83d\udfe1 Grand Challenge \u2014 connects two mature but separate fields.\n\n**\"The key insight is...\"** that the long cycle creates a coherent drift in card-position space, and the competition between drift and diffusion is precisely the TASEP mechanism.\n\n**\"Why now?\"** Recent breakthroughs in KPZ universality (Quastel, Matetski\u2013Quastel\u2013Remenik, 2022) provide precise distributional predictions that can be tested against our exact computations for small $n$.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "48617359",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T04:51:55.454839+00:00"
-  },
-  {
-    "id": "fd_1053",
-    "title": "Direction 4: Cryptographic Security Bounds for Permutation Networks",
-    "description": "**Conjecture:** Any permutation network that alternates $k$ rounds of adjacent-swap layers with cyclic-shift layers requires at least $\\Omega(n^2 \\log n / k)$ rounds to achieve statistical security (TV distance $< 2^{-\\lambda}$ from a random permutation for security parameter $\\lambda$).\n\n**Test:** Implement the AES-like permutation network with varying numbers of swap layers per round. Measure the TV distance from uniform for $n = 8$ (matching common block cipher state sizes) and compare with the predicted bound.\n\n**Impact:** Would provide the first mathematically certified lower bound on round complexity for this class of lightweight ciphers. Direct applications to the security analysis of PRESENT, GIFT, and other bitslice-style block ciphers.\n\n**Catalog References:** `Pythagorean/CayleyExpander/AdjCycleMixing.lean` (mixing time lower bound), `Pythagorean/CayleyExpander/HybridWalk.lean` (HybridPermutationWalk framework).\n\n**Proof Strategy:** Model the cipher's permutation layer as a deterministic version of our random walk. Use the observable lower bound (Theorem C) to show that any product of $T$ generators from the hybrid set leaves a detectable bias in the cycle displacement statistic.\n\n**Domain Bridges:** Cryptography (block cipher design), information theory (min-entropy), hardware security (side-channel resistance of lightweight ciphers).\n\n**Lineage:** Application of Theorem C to security engineering.\n\n**Ambition:** \ud83d\udfe2 Solid Extension \u2014 direct application of existing theory to a new domain.\n\n**\"The key insight is...\"** that our observable lower bound provides a *distinguisher* \u2014 a statistical test that can tell a cipher's output from random \u2014 and the decay rate $1 - \\Theta(1/n^2)$ translates directly into a minimum number of rounds.\n\n**\"Why now?\"** The NIST Lightweight Cryptography standardization process has renewed interest in formal security analysis of simple permutation networks. Our tools provide exactly the right mathematical framework.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "48617359",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T04:51:55.485067+00:00"
   },
   {
     "id": "seed_013",
@@ -2356,5 +2336,48 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
+  },
+  {
+    "id": "fd_1070",
+    "title": "Direction 1: Non-Multiaffine Extension via Weighted Support Analysis",
+    "description": "**Conjecture:** For general homogeneous polynomials (not necessarily multiaffine) of degree $d$ in $n$ variables, there exists a weighted support measure $\\sigma(f)$ such that the number of nonzero quadratic derivative leaves is bounded by $\\sigma(f)$, and $\\sigma(f)$ can be computed from the Newton polytope of $f$ in polynomial time.\n\n**Test:** Define $\\sigma(f)$ as the number of lattice points in the $(d-2)$-shadow of the Newton polytope. Compute this for specific families (power-sum polynomials, Schur polynomials, elementary symmetric polynomials) and compare with the actual nonzero leaf count. A disproof would be a polynomial where coefficient cancellation forces the leaf count below the Newton polytope prediction.\n\n**Impact:** Would extend the support compression principle from multiaffine polynomials to all homogeneous polynomials, vastly expanding its applicability. This is essential for applications to Hodge theory and algebraic geometry, where multiaffineness is not guaranteed.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean` (Theorem `nonzeroDerivativeLeafSet_eq_indep`), `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`NewtonSupport`, `IsHomogeneousDeg`)\n\n**Proof Strategy:** Generalize the support criterion by replacing exact containment with a dominated-support condition. For non-multiaffine polynomials, the key difficulty is coefficient cancellation: two surviving monomials might cancel in the derivative. Approach via the theory of *stable polynomials* or *completely log-concave* polynomials, where cancellation is structurally prevented.\n\n**Domain Bridges:** Connects to algebraic geometry (Newton polytopes), optimization (lattice point enumeration), and convex geometry (mixed volumes).\n\n**Lineage:** Builds directly on Theorem 1 (support criterion) by removing the multiaffine hypothesis.\n\n**Ambition:** Grand challenge \u2014 would unify the multiaffine compression theory with the full Br\u00e4nd\u00e9n-Huh framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b24e9482",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T05:27:26.773711+00:00"
+  },
+  {
+    "id": "fd_1072",
+    "title": "Direction 3: Partition Function Certification in Statistical Physics",
+    "description": "**Conjecture:** The partition function $Z_M(\\lambda) = \\sum_{I \\text{ indep}} \\lambda^{|I|}$ of the *independence complex* of a matroid $M$ is a Lorentzian polynomial in the $\\lambda_i$ variables (one per element), and the support compression principle reduces the certification cost from exponential to polynomial for sparse matroids arising in lattice models.\n\n**The key insight is:** Matroid independence complexes are the natural setting for hard-core lattice gas models, and Lorentzian certification of the partition function would imply strong log-concavity of the independence sequence \u2014 a result with direct thermodynamic consequences (absence of phase transitions in certain regimes).\n\n**Why now?** The Anari-Liu-Oveis Gharan-Vinzant result on log-concave polynomials [2021] already established connections between matroid theory and partition functions. Our support compression theorem provides the missing algorithmic component: not just that Lorentzian certification exists in principle, but that it's computationally feasible for sparse systems.\n\n**Test:** Compute the partition function for graphic matroids of small Ising-model lattices. Verify Lorentzian positivity by exhaustive leaf checking, then compare the compressed leaf count with the ambient count. The conjecture predicts that lattice sparsity translates to certification sparsity.\n\n**Impact:** Would connect formal verification of polynomial positivity to predictions in statistical mechanics, providing mathematically certified bounds on phase transition parameters.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean`, `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`IsMConvexExchangeNat`)\n\n**Proof Strategy:** Extend the basis polynomial framework to the full independence complex polynomial. Use the matroid truncation operation to relate independent sets of different sizes to basis polynomials of truncated matroids.\n\n**Domain Bridges:** Statistical physics (partition functions, phase transitions), probability (log-concave distributions), algorithm design (MCMC sampling).\n\n**Lineage:** Extends Theorem 2 (matroid bridge) from bases to the full independence complex.\n\n**Ambition:** Grand challenge \u2014 bridges formal mathematics to physics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b24e9482",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T05:27:26.856241+00:00"
   }
 ];

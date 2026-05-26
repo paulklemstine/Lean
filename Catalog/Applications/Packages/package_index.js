@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorics / Lorentzian Polynomials / Matroid Theory",
     "date": "2026-05-26T05:27:21Z",
     "exp_id": "b24e9482",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6708168441145281,
+    "quality": "partial"
   },
   {
     "filename": "direction_1_sharp_dixon_asymptotics_via_mbius_inve.json",
@@ -1801,8 +1801,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-26T05:27:21Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6708168441145281,
+      "quality": "partial"
     }
   ],
   "edges": [
