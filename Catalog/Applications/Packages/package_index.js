@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Quantum Error Correction / Graph Theory",
     "date": "2026-05-26T18:57:37Z",
     "exp_id": "208288a0",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6502599049235993,
+    "quality": "partial"
   },
   {
     "filename": "direction_1_quantum_2_designs_from_certified_unita.json",
@@ -2949,8 +2949,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-26T18:57:37Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6502599049235993,
+      "quality": "partial"
     }
   ],
   "edges": [
