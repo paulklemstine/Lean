@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Representation Theory / Spectral Graph Theory / Exceptional Lie Groups",
     "date": "2026-05-26T11:58:45Z",
     "exp_id": "45723a87",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7314591304347826,
+    "quality": "substantial"
   },
   {
     "filename": "direction_5_expander_based_derandomization_in_cert.json",
@@ -2417,8 +2417,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-26T11:58:45Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7314591304347826,
+      "quality": "substantial"
     }
   ],
   "edges": [

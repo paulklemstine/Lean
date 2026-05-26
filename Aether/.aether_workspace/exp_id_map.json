@@ -622,5 +622,7 @@
   "4895ceb4": "direction_1_higher_dimensional_tropical_morse_theo.json",
   "79565d7a": "direction_4_complexity_of_certificate_verification.json",
   "d74ce5bf": "direction_3_abelian_sandpile_criticality_via_lapla.json",
-  "36d84586": "direction_1_basis_uniqueness_up_to_tropical_projec.json"
+  "36d84586": "direction_1_basis_uniqueness_up_to_tropical_projec.json",
+  "d4196bad": "direction_5_expander_based_derandomization_in_cert.json",
+  "45723a87": "direction_2_exceptional_groups_and_character_sheaf.json"
 }

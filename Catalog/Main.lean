@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1829 of the highest-quality
+A curated collection of 1835 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1829
+Total files: 1835
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -10,6 +10,7 @@ import FINAL.Algebra.Agent
 import FINAL.Algebra.AlgebraicCircuitComplexity
 import FINAL.Algebra.AlgebraicSpacetime
 import FINAL.Algebra.AlgebraicTheoryOfAlgebra
+import FINAL.Algebra.Amplification
 import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.ArbitrageProfit
 import FINAL.Algebra.ArithmeticDarkMatter
@@ -401,6 +402,7 @@ import FINAL.Bridges.FootprintHelpers
 import FINAL.Bridges.Foundations
 import FINAL.Bridges.FullEMLDiffClosure
 import FINAL.Bridges.FunctorialDecoding
+import FINAL.Bridges.G2CharacterSheafCertificate
 import FINAL.Bridges.GL3KemenyRobustness
 import FINAL.Bridges.GL3SatakeAbstainRobustness
 import FINAL.Bridges.GL3TopCycleRobustness
@@ -409,6 +411,7 @@ import FINAL.Bridges.GL3TropicalSatakeCertification
 import FINAL.Bridges.GL3TropicalSatakeScoreStability
 import FINAL.Bridges.GaloisCohomologicalConsensus
 import FINAL.Bridges.GaloisDeepLearning
+import FINAL.Bridges.GaloisNeuralCorrespondence
 import FINAL.Bridges.GardenOfEden
 import FINAL.Bridges.GibbsPosterior
 import FINAL.Bridges.HTreeRobust
@@ -427,6 +430,7 @@ import FINAL.Bridges.HopfCausalCore
 import FINAL.Bridges.HopfCircuitRenormalization
 import FINAL.Bridges.HypothesisTopos
 import FINAL.Bridges.IRVStability
+import FINAL.Bridges.IdempotentBlackwellThermodynamicDuality
 import FINAL.Bridges.IdempotentGaugeCurvatureDuality
 import FINAL.Bridges.IdempotentHolographicClosureDuality
 import FINAL.Bridges.IdempotentHolographicRealization
@@ -447,6 +451,7 @@ import FINAL.Bridges.KantorovichLawvereDuality
 import FINAL.Bridges.KeplerLaws
 import FINAL.Bridges.KnuthBendixCompletion
 import FINAL.Bridges.LargeDeviationPrinciple
+import FINAL.Bridges.LatticePrimeSeparation
 import FINAL.Bridges.LawvereCodingTheorem
 import FINAL.Bridges.LawvereEMLMetricSemantics
 import FINAL.Bridges.LawvereRateDistortionDuality
@@ -681,6 +686,7 @@ import FINAL.Bridges.TropicalSeparationClassifier
 import FINAL.Bridges.TropicalShannonCode
 import FINAL.Bridges.TropicalSpectralDuality
 import FINAL.Bridges.TropicalSpectralHardness
+import FINAL.Bridges.TropicalSpectrumDuality
 import FINAL.Bridges.TropicalStoneDuality
 import FINAL.Bridges.TropicalStoneRecognitionDuality
 import FINAL.Bridges.TropicalStoneWeierstrass

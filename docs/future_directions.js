@@ -363,10 +363,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "02e24032",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:11:10.263299+00:00"
   },
   {
@@ -863,10 +863,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2b6d84b4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72356358",
     "timestamp": "2026-05-25T21:13:09.763547+00:00"
   },
   {
@@ -1081,10 +1081,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c8e335c",
     "timestamp": "2026-05-25T22:58:43.475104+00:00"
   },
   {
@@ -1124,26 +1124,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "8778f4a5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:58:43.526680+00:00"
-  },
-  {
-    "id": "fd_0974",
-    "title": "Direction 5: Expander-Based Derandomization in Certified Computation",
-    "description": "**Conjecture:** For any Boolean function f: S_n \u2192 {0,1} with E[f] \u2265 2/3, a random walk of length O(log(1/\u03b5)/gap) on a Cayley expander of S_n produces k samples such that the majority vote has error probability \u2264 \u03b5, using only O(n log n + k log(degree)) random bits.\n\n**Test:** Implement the Ajtai\u2013Koml\u00f3s\u2013Szemer\u00e9di expander walk sampler for Cay(S_5, {\u03c3\u00b11, \u03c4\u00b11}) and verify the error amplification bound empirically for random Boolean functions with various biases.\n\n**Impact:** This would bridge formal spectral theory to the foundations of derandomization in theoretical computer science, providing certified guarantees for algorithms that use random bits efficiently.\n\n**The key insight is** that correlated samples from an expander walk are \"almost as good as\" independent samples for amplifying success probability, and the spectral gap quantifies the word \"almost.\" This transforms the spectral gap from a graph-theoretic invariant into a computational resource.\n\n**Why now?** The averaging operator machinery, L\u00b2 contraction, and mean-zero analysis from this cycle provide exactly the tools needed to state and prove the expander walk lemma. The key missing piece is the large deviation bound for correlated samples, which can be derived from the L\u00b2 contraction by a Markov inequality argument.\n\n**Catalog References:** `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction, averaging operator), `Algebra/ExpanderWalk/Core.lean` (existing expander walk infrastructure).\n\n**Proof Strategy:** Apply the L\u00b2 contraction theorem k times to bound the variance of the empirical mean. Use Chebyshev's inequality to convert variance bounds to probability bounds. The spectral gap enters through the correlation decay between walk positions.\n\n**Domain Bridges:** Complexity theory (BPP vs P), algorithm design (derandomization), cryptography (pseudorandom generators), quantum computing (quantum walks).\n\n**Lineage:** Connects the Cayley graph spectral framework to the existing ExpanderWalk infrastructure in the Algebra catalog.\n\n**Ambition:** Solid extension with grand challenge elements \u2014 the basic lemma is provable, but optimal bounds require spectral concentration inequalities.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "d4196bad",
-    "timestamp": "2026-05-25T22:58:43.577519+00:00"
   },
   {
     "id": "fd_0976",
@@ -1805,7 +1785,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4895ceb4",
@@ -1826,12 +1806,32 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4895ceb4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T10:14:17.553765+00:00"
+  },
+  {
+    "id": "fd_1106",
+    "title": "Direction 1: Complete Aschbacher Certificate Theory",
+    "description": "**Conjecture:** For each of the 8 Aschbacher classes of maximal subgroups of GL(n, \ud835\udd3d_q), there exists a polynomial-time certificate condition on a pair (g, h) that excludes membership of \u27e8g, h\u27e9 in that class. The conjunction of all 8 certificates implies \u27e8g, h\u27e9 = GL(n, \ud835\udd3d_q) (or \u27e8g, h\u27e9 \u2287 SL(n, \ud835\udd3d_q)).\n\n**Test:** Formalize certificate conditions for each Aschbacher class and verify them computationally for GL(3, \ud835\udd3d_q) and GL(4, \ud835\udd3d_q) with q \u2264 100. For each class, construct explicit pairs lying in a maximal subgroup of that type and verify that the certificate correctly identifies them. A single class where no polynomial-time certificate exists would disprove the conjecture.\n\n**Impact:** A complete Aschbacher certificate theory would transform computational group recognition from an exponential-time problem (subgroup enumeration) to a polynomial-time problem (certificate verification). This would have immediate consequences for:\n- Constructive recognition of classical groups in computational algebra systems (GAP, Magma)\n- Efficient verification of group-based cryptographic protocols\n- Polynomial-time testing of group generation in randomized algorithms\n\n**Catalog References:**\n- `Catalog/Algebra/MatrixGroupGeneration.lean`: `eq_bot_or_top_of_charpoly_irreducible` handles Class C\u2081\n- `Pythagorean/CertificateComplexity.lean`: `irreducible_charpoly_excludes_invariant_direct_summand` handles part of Class C\u2082\n\n**Proof Strategy:** For each Aschbacher class, identify the algebraic invariant that distinguishes the class:\n- C\u2081 (reducible): charpoly factorization \u2014 DONE\n- C\u2082 (imprimitive): charpoly multiplicative structure\n- C\u2083 (extension field): minpoly degree relative to subfield\n- C\u2084 (tensor product): charpoly symmetry under Kronecker decomposition\n- C\u2085 (subfield): trace field computation\n- C\u2086 (symplectic/extraspecial): form invariant testing\n- C\u2087 (tensor induced): higher tensor analysis\n- C\u2088 (classical): bilinear form preservation\n\n**Domain Bridges:** Coding theory (class C\u2082 relates to code automorphism groups), representation theory (all classes), algebraic geometry (class C\u2083 connects to Weil restriction).\n\n**Lineage:** Builds directly on Theorems 1-4 of the current work.\n\n**Ambition:** Grand challenge \u2014 would resolve a 40-year-old algorithmic problem in computational group theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "79565d7a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T11:21:55.320419+00:00"
   },
   {
     "id": "seed_005",
@@ -1954,26 +1954,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1106",
-    "title": "Direction 1: Complete Aschbacher Certificate Theory",
-    "description": "**Conjecture:** For each of the 8 Aschbacher classes of maximal subgroups of GL(n, \ud835\udd3d_q), there exists a polynomial-time certificate condition on a pair (g, h) that excludes membership of \u27e8g, h\u27e9 in that class. The conjunction of all 8 certificates implies \u27e8g, h\u27e9 = GL(n, \ud835\udd3d_q) (or \u27e8g, h\u27e9 \u2287 SL(n, \ud835\udd3d_q)).\n\n**Test:** Formalize certificate conditions for each Aschbacher class and verify them computationally for GL(3, \ud835\udd3d_q) and GL(4, \ud835\udd3d_q) with q \u2264 100. For each class, construct explicit pairs lying in a maximal subgroup of that type and verify that the certificate correctly identifies them. A single class where no polynomial-time certificate exists would disprove the conjecture.\n\n**Impact:** A complete Aschbacher certificate theory would transform computational group recognition from an exponential-time problem (subgroup enumeration) to a polynomial-time problem (certificate verification). This would have immediate consequences for:\n- Constructive recognition of classical groups in computational algebra systems (GAP, Magma)\n- Efficient verification of group-based cryptographic protocols\n- Polynomial-time testing of group generation in randomized algorithms\n\n**Catalog References:**\n- `Catalog/Algebra/MatrixGroupGeneration.lean`: `eq_bot_or_top_of_charpoly_irreducible` handles Class C\u2081\n- `Pythagorean/CertificateComplexity.lean`: `irreducible_charpoly_excludes_invariant_direct_summand` handles part of Class C\u2082\n\n**Proof Strategy:** For each Aschbacher class, identify the algebraic invariant that distinguishes the class:\n- C\u2081 (reducible): charpoly factorization \u2014 DONE\n- C\u2082 (imprimitive): charpoly multiplicative structure\n- C\u2083 (extension field): minpoly degree relative to subfield\n- C\u2084 (tensor product): charpoly symmetry under Kronecker decomposition\n- C\u2085 (subfield): trace field computation\n- C\u2086 (symplectic/extraspecial): form invariant testing\n- C\u2087 (tensor induced): higher tensor analysis\n- C\u2088 (classical): bilinear form preservation\n\n**Domain Bridges:** Coding theory (class C\u2082 relates to code automorphism groups), representation theory (all classes), algebraic geometry (class C\u2083 connects to Weil restriction).\n\n**Lineage:** Builds directly on Theorems 1-4 of the current work.\n\n**Ambition:** Grand challenge \u2014 would resolve a 40-year-old algorithmic problem in computational group theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "79565d7a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T11:21:55.320419+00:00"
   },
   {
     "id": "seed_013",
@@ -2376,6 +2356,44 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:13:49.686566+00:00"
+  },
+  {
+    "id": "fd_1121",
+    "title": "Direction 1: Computational Verification of the G\u2082 Character-Ratio Conjecture",
+    "description": "**Conjecture:** There exists C_{G\u2082} > 0 such that for every prime power q of good characteristic and every regular semisimple element s in a maximal torus of G\u2082(\ud835\udd3d_q),\n\n    max_{\u03c7 \u2208 Irr(G\u2082(\ud835\udd3d_q)), \u03c7 \u2260 1} |\u03c7(s)/\u03c7(1)| \u2264 C_{G\u2082}/q.\n\n**Test:** Compute character tables of G\u2082(\ud835\udd3d_q) for q = 2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25 using GAP/CHEVIE. For each q, compute M(q) = q \u00b7 max_{s,\u03c7} |\u03c7(s)/\u03c7(1)|. The conjecture predicts M(q) remains bounded; falsification occurs if M(q) grows systematically. Decompose M(q) by torus type to identify which tori contribute the extremal ratios.\n\n**Impact:** If verified computationally, this provides the input data for our certificate framework, yielding the first proven uniform expander family from an exceptional group. If falsified, it reveals structural obstructions to expansion in exceptional groups, which would itself be a significant discovery.\n\n**Catalog References:** `Pythagorean/G2CharacterSheafCertificate.lean` \u2014 `G2CharacterRatioBound`, `g2_conjecture_implies_expansion`, `g2_uniform_expansion`\n\n**Proof Strategy:** Use the Enomoto\u2013Yamada (1986) and Chang (2006) parameterization of irreducible characters of G\u2082(\ud835\udd3d_q) via Deligne\u2013Lusztig theory. The characters are organized into Harish-Chandra series corresponding to the 6 conjugacy classes of W(G\u2082). For each series, estimate |\u03c7(s)/\u03c7(1)| using Green function formulas.\n\n**Domain Bridges:** Algebraic geometry (Deligne\u2013Lusztig theory) \u2192 combinatorics (expansion); computational algebra (GAP/CHEVIE) \u2192 formal verification.\n\n**Lineage:** Extends Liebeck\u2013Shalev (2004) character-ratio bounds from asymptotic estimates to explicit constants.\n\n**Ambition:** Solid extension \u2014 the mathematical tools exist; the novelty is in the explicit computation and formal certification.\n\n**The key insight is** that bounded toral complexity (at most 6 torus types for G\u2082) reduces an infinite verification problem to a finite one, making computational verification tractable.\n\n**Why now?** Character tables for G\u2082(\ud835\udd3d_q) are available in CHEVIE for all q, and the certificate framework can immediately consume the resulting bounds to produce certified expanders.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "45723a87",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T11:58:49.922241+00:00"
+  },
+  {
+    "id": "fd_1122",
+    "title": "Direction 2: Exceptional Expander Ladder \u2014 F\u2084, E\u2086, E\u2087, E\u2088",
+    "description": "**Conjecture:** For each exceptional group X \u2208 {F\u2084, E\u2086, E\u2087, E\u2088}, there exists C_X > 0 such that the character-ratio bound holds with constant C_X on regular semisimple toral elements, yielding a uniform expander family.\n\n**Test:** Compute M_X(q) for small q for each exceptional type. The bounded toral complexity argument predicts M_X(q) bounded for each X; the constants C_X should increase with rank but remain finite. Cross-reference with known character-degree polynomials to establish feasibility.\n\n**Impact:** A complete exceptional expander ladder would provide 5 fundamentally new families of expander graphs, each with algebraically structured spectral properties distinct from classical-group expanders.\n\n**Catalog References:** `Pythagorean/G2CharacterSheafCertificate.lean` \u2014 `CharacterRatioCertificate`, `uniform_expansion_of_certified_family`, `bounded_toral_complexity`\n\n**Proof Strategy:** For each exceptional type:\n1. Enumerate Weyl group conjugacy classes (torus types): |W(F\u2084)| = 1152, |W(E\u2086)| = 51840, |W(E\u2087)| = 2903040, |W(E\u2088)| = 696729600. The number of conjugacy classes (= torus types) is 25, 25, 60, 112 respectively.\n2. For each torus type, use Deligne\u2013Lusztig character formulas to bound |\u03c7(s)/\u03c7(1)|.\n3. Take the maximum over torus types.\n\n**Domain Bridges:** Exceptional Lie theory \u2192 combinatorics \u2192 computer science (explicit expander constructions).\n\n**Lineage:** Direct extension of the G\u2082 certificate framework.\n\n**Ambition:** Grand challenge \u2014 E\u2088 has 112 torus types and the character theory is extremely complex. A complete treatment would be a major achievement in computational representation theory.\n\n**The key insight is** that the certificate framework is parametric in the group: no new theory is needed, only new character data. The transference theorems apply verbatim.\n\n**Why now?** The certificate formalism has been established and verified; the remaining barrier is computational, not theoretical.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "45723a87",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T11:58:49.966238+00:00"
   },
   {
     "id": "seed_032",
