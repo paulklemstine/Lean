@@ -1629,7 +1629,7 @@
                     ctx.save();
                     ctx.fillStyle = `hsla(${adjColor.h}, 20%, 95%, 0.9)`;
                     const fontSize = Math.max(8, Math.min(r * 0.7, 16));
-                    ctx.font = `bold ${fontSize}px monospace`;
+                    ctx.font = `bold ${fontSize}px 'SF Mono', monospace`;
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
                     ctx.fillText(node.pkgNum, sp.x, sp.y);
