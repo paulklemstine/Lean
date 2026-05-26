@@ -127,11 +127,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Build a stable numbering map: assign numbers based on date-asc order of full PACKAGE_INDEX
-    const pkgNumberMap = {};
-    if (window.Aether.packages) {
-        const byDate = [...window.Aether.packages].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
-        byDate.forEach((pkg, i) => { pkgNumberMap[pkg.filename] = i + 1; });
+    // Build a stable numbering map lazily: assign numbers based on date-asc order
+    let _pkgNumberMap = null;
+    function getPkgNumberMap() {
+        if (_pkgNumberMap) return _pkgNumberMap;
+        _pkgNumberMap = {};
+        const pkgs = window.Aether.packages || [];
+        const byDate = [...pkgs].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+        byDate.forEach((pkg, i) => { _pkgNumberMap[pkg.filename] = i + 1; });
+        return _pkgNumberMap;
     }
 
     window.renderSidebar = function(pkgArray) {
@@ -175,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 else scoreColor = '#ef4444';                   // red - low
             }
 
-            const pkgNum = pkgNumberMap[pkg.filename] || '';
+            const pkgNum = getPkgNumberMap()[pkg.filename] || '';
             li.innerHTML = `
                 <div class="nav-item-title">${pkgNum ? pkgNum + '. ' : ''}${pkg.title || 'Untitled Research'}</div>
                 ${qs != null ? `<div class="nav-item-score" data-quality="${quality}">
