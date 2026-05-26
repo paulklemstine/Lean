@@ -525,10 +525,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bcd75759",
     "timestamp": "2026-05-25T17:14:59.835069+00:00"
   },
   {
@@ -1599,7 +1599,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "72356358",
@@ -1618,7 +1618,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "72356358",
@@ -1639,7 +1639,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "72356358",
@@ -1659,7 +1659,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "72356358",
@@ -1678,12 +1678,50 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "72356358",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T13:07:38.816025+00:00"
+  },
+  {
+    "id": "fd_1141",
+    "title": "Direction 1: Dixon Asymptotics via O'Nan\u2013Scott Classification",
+    "description": "**Conjecture**: For all n \u2265 5, the generating pair probability P_n for S_n satisfies\n$$\\left|P_n - \\left(\\frac{3}{4} - \\frac{3}{2n}\\right)\\right| \\le \\frac{C}{n^2}$$\nfor an explicit constant C \u2264 10, where the 3/4 comes from the alternating group obstruction and the 3/(2n) from point stabilizers.\n\n**Test**: Compute exact P_n for n = 5, 6, 7 using GAP's subgroup lattice functions and compare the residual n\u00b2 \u00b7 |P_n \u2212 3/4 + 3/(2n)| against the conjectured bound. If the residual exceeds 10 for any n \u2264 7, the conjecture as stated is false.\n\n**Impact**: This would be the first formally verified sharp asymptotic for Dixon's theorem, going beyond the existing O(1/n) bounds. It would demonstrate that formal methods can produce not just verification but mathematical discovery.\n\n**Catalog References**: `Pythagorean/SubgroupMoebius.lean` (generatingPairCount_eq_moebius_sum, generatingPairProbability_eq_one_plus_proper), `Pythagorean/SubgroupMoebiusAsymp.lean` (generatingPairCount_moebius_decomposition, factorial_ratio_sq)\n\n**Proof Strategy**: (1) Formalize the O'Nan\u2013Scott theorem classifying maximal subgroups of S_n into intransitive, imprimitive, and primitive families. (2) Compute M\u00f6bius values for each family using the decomposition theorem. (3) Bound the primitive contribution using index estimates from the Classification of Finite Simple Groups. (4) Sum contributions from intransitive maximal subgroups (point stabilizers, 2-point stabilizers) explicitly.\n\n**Domain Bridges**: Analytic number theory (Euler product analogues for subgroup growth), computational group theory (GAP/Magma subgroup enumeration), permutation group theory (O'Nan\u2013Scott theorem)\n\n**Lineage**: Extends `generatingPairCount_moebius_decomposition` and `factorial_ratio_sq`\n\n**Ambition**: Grand challenge \u2014 requires formalizing significant finite group theory infrastructure\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4ae175a0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T13:43:58.448526+00:00"
+  },
+  {
+    "id": "fd_1142",
+    "title": "Direction 2: M\u00f6bius Inversion for k-Tuple Generation",
+    "description": "**Conjecture**: The M\u00f6bius inversion formula generalizes to k-tuples: for any finite group G and k \u2265 1,\n$$\\phi_k(G) = \\sum_{H \\le G} \\mu(H, G) \\cdot |H|^k$$\nwhere \u03c6_k(G) counts ordered k-tuples generating G. Moreover, for S_n and k = 3, the generating probability P_{n,3} satisfies P_{n,3} \u2192 1 as n \u2192 \u221e (not 3/4, since three random permutations almost surely include an odd one).\n\n**The key insight is** that the partition identity generalizes immediately: every k-tuple generates a unique subgroup, so |H|^k = \u03a3_{K \u2264 H} \u03c6_k(K). M\u00f6bius inversion gives the formula.\n\n**Why now?** The existing formalization of the k=2 case provides all the infrastructure (M\u00f6bius function, partition identity, summation exchange). The generalization to k > 2 requires only replacing |H|\u00b2 with |H|^k.\n\n**Test**: For k = 3 and n = 3, 4, compute \u03c6_3(S_n) both by brute force and via the M\u00f6bius formula. Verify agreement.\n\n**Impact**: Establishes the complete Hall Eulerian function framework in a formal setting.\n\n**Catalog References**: `Pythagorean/SubgroupMoebius.lean` (generatingPairCount_eq_moebius_sum, pairCount_eq_sum_generatingPairCountWithin)\n\n**Proof Strategy**: Generalize `generatingPairCountWithin` to k-tuples. The partition identity proof generalizes verbatim (replace G \u00d7 G with G^k). Apply the same M\u00f6bius inversion.\n\n**Domain Bridges**: Algebraic combinatorics (species theory for k-tuples), representation theory (character-theoretic formulas for \u03c6_k)\n\n**Lineage**: Direct generalization of `generatingPairCount_eq_moebius_sum`\n\n**Ambition**: Solid extension \u2014 straightforward generalization with significant payoff\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4ae175a0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T13:43:58.481343+00:00"
   },
   {
     "id": "seed_005",
@@ -1793,42 +1831,24 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
-    "id": "fd_1141",
-    "title": "Direction 1: Dixon Asymptotics via O'Nan\u2013Scott Classification",
-    "description": "**Conjecture**: For all n \u2265 5, the generating pair probability P_n for S_n satisfies\n$$\\left|P_n - \\left(\\frac{3}{4} - \\frac{3}{2n}\\right)\\right| \\le \\frac{C}{n^2}$$\nfor an explicit constant C \u2264 10, where the 3/4 comes from the alternating group obstruction and the 3/(2n) from point stabilizers.\n\n**Test**: Compute exact P_n for n = 5, 6, 7 using GAP's subgroup lattice functions and compare the residual n\u00b2 \u00b7 |P_n \u2212 3/4 + 3/(2n)| against the conjectured bound. If the residual exceeds 10 for any n \u2264 7, the conjecture as stated is false.\n\n**Impact**: This would be the first formally verified sharp asymptotic for Dixon's theorem, going beyond the existing O(1/n) bounds. It would demonstrate that formal methods can produce not just verification but mathematical discovery.\n\n**Catalog References**: `Pythagorean/SubgroupMoebius.lean` (generatingPairCount_eq_moebius_sum, generatingPairProbability_eq_one_plus_proper), `Pythagorean/SubgroupMoebiusAsymp.lean` (generatingPairCount_moebius_decomposition, factorial_ratio_sq)\n\n**Proof Strategy**: (1) Formalize the O'Nan\u2013Scott theorem classifying maximal subgroups of S_n into intransitive, imprimitive, and primitive families. (2) Compute M\u00f6bius values for each family using the decomposition theorem. (3) Bound the primitive contribution using index estimates from the Classification of Finite Simple Groups. (4) Sum contributions from intransitive maximal subgroups (point stabilizers, 2-point stabilizers) explicitly.\n\n**Domain Bridges**: Analytic number theory (Euler product analogues for subgroup growth), computational group theory (GAP/Magma subgroup enumeration), permutation group theory (O'Nan\u2013Scott theorem)\n\n**Lineage**: Extends `generatingPairCount_moebius_decomposition` and `factorial_ratio_sq`\n\n**Ambition**: Grand challenge \u2014 requires formalizing significant finite group theory infrastructure\n\n---",
+    "id": "fd_1146",
+    "title": "Direction 1: Arithmetic Persistent Homology",
+    "description": "**Conjecture**: There exists a persistence module structure over \u2124, equipped with an \"arithmetic barcode\" consisting of (birth, death, torsion-label) triples, that strictly refines the field-coefficient barcode and is computable in polynomial time for bounded-dimension complexes.\n\n**Test**: Implement arithmetic persistence for 2-complexes arising from point cloud data (protein structures, molecular surfaces). Compare the discriminating power of arithmetic barcodes vs. standard barcodes on benchmark datasets (e.g., SHREC, ModelNet). A positive result: arithmetic barcodes distinguish pairs of shapes that standard barcodes cannot. A negative result: the torsion information adds no discriminating power for real-world data, falsifying practical relevance.\n\n**Impact**: This would create a new computational topology tool \u2014 \"persistent homology with arithmetic memory\" \u2014 that leverages the entire integer homology structure rather than discarding torsion. Applications in drug discovery, materials science, and computational biology would follow directly.\n\n**Catalog References**: `Pythagorean/TropicalMorse/IntegerTrichotomy.lean` (trichotomy theorem), `Pythagorean/TropicalMorse/Defs.lean` (tropical spectrum definitions).\n\n**Proof Strategy**: Model the filtered chain complex over \u2124, compute Smith normal forms at each filtration step, and track invariant factor changes using the trichotomy to label each event. The key technical challenge is defining a suitable notion of \"interval\" for torsion features, since torsion can be created in one step and modified (not destroyed) in later steps.\n\n**Domain Bridges**: Topological data analysis, computational biology, materials science.\n\n**Lineage**: Extends the classical persistent homology framework of Edelsbrunner-Letscher-Zomorodian by incorporating the torsion layer revealed by the trichotomy.\n\n**Ambition**: Grand challenge \u2014 creating a new computational paradigm.\n\n**The key insight is** that the trichotomy provides a natural event classifier for each step of the filtration, converting a global algebraic computation into a sequence of local arithmetic events that can be tracked and displayed as a barcode with richer labels.\n\n**Why now?** The trichotomy theorem provides the mathematical foundation (previously missing) for classifying filtration events over \u2124, and Smith normal form algorithms are now fast enough for moderate-size complexes thanks to advances in computational number theory.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Geometry",
       "Computation",
-      "Cryptography",
+      "Tropical",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4ae175a0",
+    "source_exp_id": "d4af762e",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:43:58.448526+00:00"
-  },
-  {
-    "id": "fd_1142",
-    "title": "Direction 2: M\u00f6bius Inversion for k-Tuple Generation",
-    "description": "**Conjecture**: The M\u00f6bius inversion formula generalizes to k-tuples: for any finite group G and k \u2265 1,\n$$\\phi_k(G) = \\sum_{H \\le G} \\mu(H, G) \\cdot |H|^k$$\nwhere \u03c6_k(G) counts ordered k-tuples generating G. Moreover, for S_n and k = 3, the generating probability P_{n,3} satisfies P_{n,3} \u2192 1 as n \u2192 \u221e (not 3/4, since three random permutations almost surely include an odd one).\n\n**The key insight is** that the partition identity generalizes immediately: every k-tuple generates a unique subgroup, so |H|^k = \u03a3_{K \u2264 H} \u03c6_k(K). M\u00f6bius inversion gives the formula.\n\n**Why now?** The existing formalization of the k=2 case provides all the infrastructure (M\u00f6bius function, partition identity, summation exchange). The generalization to k > 2 requires only replacing |H|\u00b2 with |H|^k.\n\n**Test**: For k = 3 and n = 3, 4, compute \u03c6_3(S_n) both by brute force and via the M\u00f6bius formula. Verify agreement.\n\n**Impact**: Establishes the complete Hall Eulerian function framework in a formal setting.\n\n**Catalog References**: `Pythagorean/SubgroupMoebius.lean` (generatingPairCount_eq_moebius_sum, pairCount_eq_sum_generatingPairCountWithin)\n\n**Proof Strategy**: Generalize `generatingPairCountWithin` to k-tuples. The partition identity proof generalizes verbatim (replace G \u00d7 G with G^k). Apply the same M\u00f6bius inversion.\n\n**Domain Bridges**: Algebraic combinatorics (species theory for k-tuples), representation theory (character-theoretic formulas for \u03c6_k)\n\n**Lineage**: Direct generalization of `generatingPairCount_eq_moebius_sum`\n\n**Ambition**: Solid extension \u2014 straightforward generalization with significant payoff\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4ae175a0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:43:58.481343+00:00"
+    "timestamp": "2026-05-26T14:17:29.239586+00:00"
   },
   {
     "id": "seed_013",
@@ -2278,24 +2298,23 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:07:45.821446+00:00"
   },
   {
-    "id": "fd_1146",
-    "title": "Direction 1: Arithmetic Persistent Homology",
-    "description": "**Conjecture**: There exists a persistence module structure over \u2124, equipped with an \"arithmetic barcode\" consisting of (birth, death, torsion-label) triples, that strictly refines the field-coefficient barcode and is computable in polynomial time for bounded-dimension complexes.\n\n**Test**: Implement arithmetic persistence for 2-complexes arising from point cloud data (protein structures, molecular surfaces). Compare the discriminating power of arithmetic barcodes vs. standard barcodes on benchmark datasets (e.g., SHREC, ModelNet). A positive result: arithmetic barcodes distinguish pairs of shapes that standard barcodes cannot. A negative result: the torsion information adds no discriminating power for real-world data, falsifying practical relevance.\n\n**Impact**: This would create a new computational topology tool \u2014 \"persistent homology with arithmetic memory\" \u2014 that leverages the entire integer homology structure rather than discarding torsion. Applications in drug discovery, materials science, and computational biology would follow directly.\n\n**Catalog References**: `Pythagorean/TropicalMorse/IntegerTrichotomy.lean` (trichotomy theorem), `Pythagorean/TropicalMorse/Defs.lean` (tropical spectrum definitions).\n\n**Proof Strategy**: Model the filtered chain complex over \u2124, compute Smith normal forms at each filtration step, and track invariant factor changes using the trichotomy to label each event. The key technical challenge is defining a suitable notion of \"interval\" for torsion features, since torsion can be created in one step and modified (not destroyed) in later steps.\n\n**Domain Bridges**: Topological data analysis, computational biology, materials science.\n\n**Lineage**: Extends the classical persistent homology framework of Edelsbrunner-Letscher-Zomorodian by incorporating the torsion layer revealed by the trichotomy.\n\n**Ambition**: Grand challenge \u2014 creating a new computational paradigm.\n\n**The key insight is** that the trichotomy provides a natural event classifier for each step of the filtration, converting a global algebraic computation into a sequence of local arithmetic events that can be tracked and displayed as a barcode with richer labels.\n\n**Why now?** The trichotomy theorem provides the mathematical foundation (previously missing) for classifying filtration events over \u2124, and Smith normal form algorithms are now fast enough for moderate-size complexes thanks to advances in computational number theory.\n\n---",
+    "id": "fd_1151",
+    "title": "Direction 1: Dynamic Spectral Gap Tracking for Online Mixing-Time Guarantees",
+    "description": "**Conjecture:** For a sequence of rank-1 Lorentzian polynomial updates $f_t \\to f_{t+1} = f_t + c_t X^{\\alpha_t}$, the spectral gap $\\gamma_t$ of the natural basis-exchange Markov chain satisfies\n$$|\\gamma_{t+1} - \\gamma_t| \\leq C \\cdot \\frac{|\\text{Affected}(\\alpha_t, d-2)|}{\\text{Total leaves}} \\cdot \\|c_t\\|$$\nwhere $C$ depends only on the degree and conditioning of the quadratic leaves.\n\n**Test:** Compute spectral gaps explicitly for graphic matroid polynomials on graphs with 10\u201350 vertices under edge insertions. Measure whether the gap change is proportional to the affected leaf fraction. A single instance where the gap changes discontinuously at a non-affected leaf would falsify the conjecture.\n\n**Impact:** If true, this would enable fully online mixing-time certificates: after each update, the mixing time bound is adjusted by a local computation rather than a global spectral analysis. This would make streaming combinatorial sampling provably efficient.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` (spectral_gap_log_concave_lower_bound), `Pythagorean/DynamicLorentzianCertificates.lean` (iteratedMPderiv_rankOneUpdate_eq_of_not_le)\n\n**Proof Strategy:** Formalize the Weyl perturbation bound for Hessian eigenvalues under rank-1 coefficient updates. Show that only affected-leaf Hessians change, then bound the total spectral gap perturbation by summing Weyl bounds over affected leaves.\n\n**Domain Bridges:** Spectral graph theory, random matrix theory, Markov chain mixing\n\n**Lineage:** Extends the locality theorem from certificate *validity* to certificate *quality* (spectral gap).\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 requires deep integration of perturbation theory with Lorentzian structure.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
       "Computation",
-      "Tropical",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "d4af762e",
+    "source_exp_id": "02e24032",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T14:17:29.239586+00:00"
+    "timestamp": "2026-05-26T14:50:50.001252+00:00"
   },
   {
     "id": "seed_032",

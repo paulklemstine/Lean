@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1851 of the highest-quality
+A curated collection of 1857 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1851
+Total files: 1857
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -303,6 +303,7 @@ import FINAL.Bridges.BisimMinimization
 import FINAL.Bridges.BisimulationMetric
 import FINAL.Bridges.BooleanThermodynamicEliminationDuality
 import FINAL.Bridges.BordaRobustness
+import FINAL.Bridges.BottleneckUpgrade
 import FINAL.Bridges.BranchComplexity
 import FINAL.Bridges.BreakthroughDirections
 import FINAL.Bridges.Bridge
@@ -336,6 +337,7 @@ import FINAL.Bridges.ClosureExtractorSpectrumDuality
 import FINAL.Bridges.ClosureFixedPointCircuitDuality
 import FINAL.Bridges.ClosureGaugeRealizationDuality
 import FINAL.Bridges.ClosureHolographyDuality
+import FINAL.Bridges.ClosureKolmogorovDuality
 import FINAL.Bridges.ClosureKolmogorovRealization
 import FINAL.Bridges.ClosureKoopmanReconstruction
 import FINAL.Bridges.ClosureKramersWannierDuality
@@ -384,6 +386,7 @@ import FINAL.Bridges.DiffSpectrumTheory
 import FINAL.Bridges.DifferentialAlgebraicLearning
 import FINAL.Bridges.Dijkstra
 import FINAL.Bridges.Duality
+import FINAL.Bridges.DynamicLorentzianCertificates
 import FINAL.Bridges.DynamicProgramming
 import FINAL.Bridges.DynamicalRamanujan
 import FINAL.Bridges.ECOCDefs
@@ -421,6 +424,7 @@ import FINAL.Bridges.GaloisDeepLearning
 import FINAL.Bridges.GaloisNeuralCorrespondence
 import FINAL.Bridges.GardenOfEden
 import FINAL.Bridges.GibbsPosterior
+import FINAL.Bridges.GuardedFixedPointIndex
 import FINAL.Bridges.HTreeRobust
 import FINAL.Bridges.HammingMetric
 import FINAL.Bridges.HellyPrinciple
@@ -551,6 +555,7 @@ import FINAL.Bridges.RGArchitectureDynamics
 import FINAL.Bridges.RateDistortion
 import FINAL.Bridges.Reconstruction
 import FINAL.Bridges.RenormalizationUniversality
+import FINAL.Bridges.RepresentableDimension
 import FINAL.Bridges.Representation
 import FINAL.Bridges.Representer
 import FINAL.Bridges.ResNetTropicalCertified
@@ -661,6 +666,7 @@ import FINAL.Bridges.TropicalKernelMeanDuality
 import FINAL.Bridges.TropicalKernelRigidity
 import FINAL.Bridges.TropicalLensBerggrenDuality
 import FINAL.Bridges.TropicalLensRigidityDuality
+import FINAL.Bridges.TropicalMetamathematics
 import FINAL.Bridges.TropicalMorseGraphs
 import FINAL.Bridges.TropicalNerode
 import FINAL.Bridges.TropicalNeuralBridge

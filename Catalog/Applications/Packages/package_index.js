@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Dynamic Algorithms",
     "date": "2026-05-26T14:50:42Z",
     "exp_id": "02e24032",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7205326285479228,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_torsion_aware_tropical_morse_theory.json",
@@ -2585,8 +2585,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-26T14:50:42Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7205326285479228,
+      "quality": "substantial"
     }
   ],
   "edges": [
