@@ -382,10 +382,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "36d84586",
     "timestamp": "2026-05-25T03:05:35.257371+00:00"
   },
   {
@@ -619,26 +619,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "cf039036",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T17:14:59.835069+00:00"
-  },
-  {
-    "id": "fd_0915",
-    "title": "Direction 1: Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
-    "description": "**Conjecture:** For a weighted simplicial complex K with a filtration by weight threshold, the degree-d tropical Morse data (counting birth and death events of d-dimensional cycles) recovers the degree-d persistent homology barcode. Specifically, critical events in degree d are classified as births (increasing \u03b2d) or deaths (decreasing \u03b2d\u22121 under the pairing), and the tropical persistent rank equals the classical one in every degree.\n\n**Test:** Formalize the edge insertion dichotomy for 2-dimensional faces added to a simplicial complex, showing that adding a triangle either kills a 1-cycle (death event) or creates a 2-cycle (birth event). Verify computationally on random 2-complexes with up to 100 vertices. Disprove by exhibiting a filtration step where the Betti number change pattern violates the simple dichotomy (which would occur when the boundary of the new simplex interacts nontrivially with existing homology).\n\n**Impact:** Would unify tropical geometry with the full persistent homology pipeline, giving tropical interpretations of all barcode features in all dimensions. This would be the first tropical Morse theory for simplicial complexes, extending classical discrete Morse theory (Forman) with filtration data.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/TropicalMorseGraphs.lean` \u2014 `betti_update_dichotomy`, `tropical_persistence_eq_classical`\n- `Catalog/Pythagorean/TropicalBridge/WeightedDefect.lean` \u2014 `wdCycleRank`, `wdComponentCount`\n\n**Proof Strategy:** Extend the inductive proof of `filtration_betti1_eq_cycleCount` from graphs to simplicial complexes. The key difficulty is that adding a d-simplex can create new d-cycles AND kill (d\u22121)-cycles simultaneously (unlike the graph case where these are always separate). Handle this via the algebraic structure of the boundary operator: decompose the change in homology using the long exact sequence of the pair (K_{i+1}, K_i).\n\n**Domain Bridges:** Topological data analysis \u2192 tropical geometry \u2192 algebraic topology \u2192 computational geometry\n\n**Lineage:** Extends Theorem 3.1 (edge insertion dichotomy) to arbitrary simplicial dimension.\n\n**Ambition:** Grand challenge \u2014 would fundamentally expand the scope of tropical persistence from networks to high-dimensional data analysis.\n\n**The key insight is** that the edge insertion dichotomy generalizes to higher dimensions if and only if one can decompose the boundary map of each new simplex into a \"killing\" part and a \"creating\" part, which the long exact sequence of relative homology provides canonically.\n\n**Why now?** The graph-level theory is now fully verified, providing the base case and proof template. Mathlib's growing simplicial complex infrastructure makes higher-dimensional formalization increasingly feasible.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "4895ceb4",
-    "timestamp": "2026-05-25T18:39:32.434172+00:00"
   },
   {
     "id": "fd_0916",
@@ -1919,6 +1899,61 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
+    "id": "fd_1096",
+    "title": "Direction 1: General Symplectic Groups Sp\u2082\u2099(\ud835\udd3d_q)",
+    "description": "**Conjecture:** For every n \u2265 1, there exist constants C_n and \u03b5_n > 0 such that for all odd prime powers q, there exist certified generating pairs (s, t) in Sp\u2082\u2099(\ud835\udd3d_q) with regular toral s satisfying |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| \u2264 C_n/q for all nontrivial irreducibles \u03c1, yielding spectral gap \u2265 \u03b5_n.\n\n**Test:** Compute spectral gaps for Sp\u2086(\ud835\udd3d_q) (n=3) for q = 3, 5, 7 using the same torus-type strategy. Verify that the gaps remain bounded away from zero and that the character-ratio bound C\u2083/q fits the data with C\u2083 independent of q. The conjecture is falsified if the optimal C_n grows faster than polynomially in n, or if no single torus type works uniformly.\n\n**Impact:** This would establish the first systematic family of higher-rank expanders parametrized by both rank and field size, unifying scattered results into a single framework.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (DLCharacterBoundCertificate, uniform_gap_from_dl_certificate), `Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy:** Extend the DLCharacterBoundCertificate to carry a rank parameter n. Use Landazuri\u2013Seitz bounds for Sp\u2082\u2099 (minimum nontrivial irrep dim \u2265 (q^n \u2212 1)/(q \u2212 1) \u2212 1) and Deligne\u2013Lusztig character formulas for type C_n tori. The transference machinery (Theorems A and C) applies without modification.\n\n**Domain Bridges:** Higher-rank symplectic expanders connect to polar space codes (coding theory) and Siegel modular forms (number theory).\n\n**Lineage:** Direct extension of the Sp\u2084 transference framework.\n\n**Ambition:** Grand challenge \u2014 would resolve the higher-rank expansion problem for an entire infinite family.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d69cc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T09:39:15.046719+00:00"
+  },
+  {
+    "id": "fd_1097",
+    "title": "Direction 2: Exceptional Groups and Character-Sheaf Certificates",
+    "description": "**Conjecture:** For the exceptional group G\u2082(\ud835\udd3d_q), there exist regular toral elements s with character-ratio bound |\u03c7(s)/\u03c7(1)| \u2264 C/q where C depends only on the root system, not on q. Combined with the transference theorem, this yields uniform G\u2082 expanders.\n\n**Test:** For G\u2082(\ud835\udd3d_q) with q = 3, 5, 7 (|G\u2082(\ud835\udd3d\u2083)| = 6,048), compute all irreducible character values on regular semisimple elements of each torus type. Verify that the maximum character ratio is bounded by C/q for some fixed C. Falsified if the ratio grows or oscillates with q.\n\n**Impact:** The first explicit expander construction for an exceptional group, opening a bridge between exceptional Lie theory and combinatorial expansion.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (character_ratio_to_spectral_gap, cheeger_from_spectral_gap).\n\n**Proof Strategy:** G\u2082 has only 5 conjugacy classes of maximal tori. Enumerate them, compute Deligne\u2013Lusztig characters via Green functions, and extract explicit character-ratio bounds. The transference theorem applies directly. **The key insight is** that the small number of torus types in exceptional groups makes explicit enumeration feasible, unlike classical groups where the number grows with rank.\n\n**Why now?** The transference framework absorbs any character-ratio bound, and G\u2082 character tables are explicitly known (Chang, Ree 1974). The bottleneck was never the character theory but the lack of a clean consumption mechanism.\n\n**Domain Bridges:** Exceptional symmetries arise in string theory (E\u2088), materials science (icosahedral symmetry via H\u2083 \u2282 E\u2088), and the Langlands program.\n\n**Lineage:** Parallel to Direction 1, but exploring width (different group families) rather than depth (higher rank).\n\n**Ambition:** Grand challenge \u2014 first formalized exceptional-group expanders.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d69cc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T09:39:15.086140+00:00"
+  },
+  {
+    "id": "fd_1098",
+    "title": "Direction 3: Hecke Operator Comparison and Building Spectra",
+    "description": "**Conjecture:** The spectral gap of the Cayley graph Cay(Sp\u2084(\ud835\udd3d_q), S) with toral generators is within a constant factor of the spectral gap of the Hecke operator on the spherical building of Sp\u2084(\ud835\udd3d_q), with the comparison constant depending only on the degree |S|.\n\n**Test:** For q = 3, 5, 7, compute both the Cayley graph spectral gap and the building Hecke operator spectral gap. Plot the ratio gap_Cayley / gap_Hecke as a function of q. Falsified if the ratio diverges or tends to zero.\n\n**Impact:** Would connect finite-group expansion to the rich theory of automorphic forms on buildings, potentially yielding a finite-field analogue of the Ramanujan conjecture for Sp\u2084.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (spectralGapBound, sp4_uniform_gap_family).\n\n**Proof Strategy:** Model the Cayley graph operator as a perturbation of the building Hecke operator. Use the Iwahori decomposition to decompose the regular representation into building representations. Bound the perturbation via the character-ratio certificate. **The key insight is** that the building decomposition separates the \"geometric\" contribution (controlled by the building spectrum) from the \"arithmetic\" contribution (controlled by character ratios), and the certificate bounds the latter.\n\n**Why now?** The Bruhat\u2013Tits building of Sp\u2084 is a 2-dimensional simplicial complex whose spectral theory is well-studied (Cartwright\u2013Steger). The transference framework provides the missing link between building spectra and Cayley graph spectra.\n\n**Domain Bridges:** Building spectra connect to automorphic representations (number theory), high-dimensional expanders (combinatorics), and topological data analysis (applied mathematics).\n\n**Lineage:** Extends the spectral gap framework from graphs to higher-dimensional simplicial complexes.\n\n**Ambition:** Solid extension \u2014 proven feasibility from existing building-spectrum literature.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d69cc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T09:39:15.120527+00:00"
+  },
+  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -2321,49 +2356,15 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:13:49.686566+00:00"
   },
   {
-    "id": "fd_1096",
-    "title": "Direction 1: General Symplectic Groups Sp\u2082\u2099(\ud835\udd3d_q)",
-    "description": "**Conjecture:** For every n \u2265 1, there exist constants C_n and \u03b5_n > 0 such that for all odd prime powers q, there exist certified generating pairs (s, t) in Sp\u2082\u2099(\ud835\udd3d_q) with regular toral s satisfying |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| \u2264 C_n/q for all nontrivial irreducibles \u03c1, yielding spectral gap \u2265 \u03b5_n.\n\n**Test:** Compute spectral gaps for Sp\u2086(\ud835\udd3d_q) (n=3) for q = 3, 5, 7 using the same torus-type strategy. Verify that the gaps remain bounded away from zero and that the character-ratio bound C\u2083/q fits the data with C\u2083 independent of q. The conjecture is falsified if the optimal C_n grows faster than polynomially in n, or if no single torus type works uniformly.\n\n**Impact:** This would establish the first systematic family of higher-rank expanders parametrized by both rank and field size, unifying scattered results into a single framework.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (DLCharacterBoundCertificate, uniform_gap_from_dl_certificate), `Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy:** Extend the DLCharacterBoundCertificate to carry a rank parameter n. Use Landazuri\u2013Seitz bounds for Sp\u2082\u2099 (minimum nontrivial irrep dim \u2265 (q^n \u2212 1)/(q \u2212 1) \u2212 1) and Deligne\u2013Lusztig character formulas for type C_n tori. The transference machinery (Theorems A and C) applies without modification.\n\n**Domain Bridges:** Higher-rank symplectic expanders connect to polar space codes (coding theory) and Siegel modular forms (number theory).\n\n**Lineage:** Direct extension of the Sp\u2084 transference framework.\n\n**Ambition:** Grand challenge \u2014 would resolve the higher-rank expansion problem for an entire infinite family.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "21d69cc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T09:39:15.046719+00:00"
-  },
-  {
-    "id": "fd_1097",
-    "title": "Direction 2: Exceptional Groups and Character-Sheaf Certificates",
-    "description": "**Conjecture:** For the exceptional group G\u2082(\ud835\udd3d_q), there exist regular toral elements s with character-ratio bound |\u03c7(s)/\u03c7(1)| \u2264 C/q where C depends only on the root system, not on q. Combined with the transference theorem, this yields uniform G\u2082 expanders.\n\n**Test:** For G\u2082(\ud835\udd3d_q) with q = 3, 5, 7 (|G\u2082(\ud835\udd3d\u2083)| = 6,048), compute all irreducible character values on regular semisimple elements of each torus type. Verify that the maximum character ratio is bounded by C/q for some fixed C. Falsified if the ratio grows or oscillates with q.\n\n**Impact:** The first explicit expander construction for an exceptional group, opening a bridge between exceptional Lie theory and combinatorial expansion.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (character_ratio_to_spectral_gap, cheeger_from_spectral_gap).\n\n**Proof Strategy:** G\u2082 has only 5 conjugacy classes of maximal tori. Enumerate them, compute Deligne\u2013Lusztig characters via Green functions, and extract explicit character-ratio bounds. The transference theorem applies directly. **The key insight is** that the small number of torus types in exceptional groups makes explicit enumeration feasible, unlike classical groups where the number grows with rank.\n\n**Why now?** The transference framework absorbs any character-ratio bound, and G\u2082 character tables are explicitly known (Chang, Ree 1974). The bottleneck was never the character theory but the lack of a clean consumption mechanism.\n\n**Domain Bridges:** Exceptional symmetries arise in string theory (E\u2088), materials science (icosahedral symmetry via H\u2083 \u2282 E\u2088), and the Langlands program.\n\n**Lineage:** Parallel to Direction 1, but exploring width (different group families) rather than depth (higher rank).\n\n**Ambition:** Grand challenge \u2014 first formalized exceptional-group expanders.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "21d69cc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T09:39:15.086140+00:00"
-  },
-  {
-    "id": "fd_1098",
-    "title": "Direction 3: Hecke Operator Comparison and Building Spectra",
-    "description": "**Conjecture:** The spectral gap of the Cayley graph Cay(Sp\u2084(\ud835\udd3d_q), S) with toral generators is within a constant factor of the spectral gap of the Hecke operator on the spherical building of Sp\u2084(\ud835\udd3d_q), with the comparison constant depending only on the degree |S|.\n\n**Test:** For q = 3, 5, 7, compute both the Cayley graph spectral gap and the building Hecke operator spectral gap. Plot the ratio gap_Cayley / gap_Hecke as a function of q. Falsified if the ratio diverges or tends to zero.\n\n**Impact:** Would connect finite-group expansion to the rich theory of automorphic forms on buildings, potentially yielding a finite-field analogue of the Ramanujan conjecture for Sp\u2084.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (spectralGapBound, sp4_uniform_gap_family).\n\n**Proof Strategy:** Model the Cayley graph operator as a perturbation of the building Hecke operator. Use the Iwahori decomposition to decompose the regular representation into building representations. Bound the perturbation via the character-ratio certificate. **The key insight is** that the building decomposition separates the \"geometric\" contribution (controlled by the building spectrum) from the \"arithmetic\" contribution (controlled by character ratios), and the certificate bounds the latter.\n\n**Why now?** The Bruhat\u2013Tits building of Sp\u2084 is a 2-dimensional simplicial complex whose spectral theory is well-studied (Cartwright\u2013Steger). The transference framework provides the missing link between building spectra and Cayley graph spectra.\n\n**Domain Bridges:** Building spectra connect to automorphic representations (number theory), high-dimensional expanders (combinatorics), and topological data analysis (applied mathematics).\n\n**Lineage:** Extends the spectral gap framework from graphs to higher-dimensional simplicial complexes.\n\n**Ambition:** Solid extension \u2014 proven feasibility from existing building-spectrum literature.\n\n---",
+    "id": "fd_1101",
+    "title": "Direction 1: Torsion-Aware Tropical Morse Theory",
+    "description": "**Conjecture**: Over \u2124 coefficients, the simplex insertion dichotomy generalizes to a *trichotomy*: each d-simplex insertion either (a) births a free d-cycle, (b) kills a free (d\u22121)-cycle, or (c) changes the torsion subgroup of H_{d\u22121} \u2014 specifically, either creating a new torsion element or annihilating one. The tropical event type should encode the Smith normal form diagonal entry, giving a \"tropical torsion spectrum.\"\n\n**The key insight is** that over \u2124, the boundary of an inserted simplex can be a non-trivial multiple of an existing cycle rather than zero or linearly independent, leading to torsion phenomena invisible over fields.\n\n**Why now?** The field-coefficient dichotomy is formally verified. The \u2124 case is the natural next step, and the Smith normal form machinery exists in Mathlib. The Linial-Meshulam model over \u2124 is known to exhibit torsion phase transitions.\n\n**Test**: Compute H_1(K; \u2124) for random 2-complexes on \u2124\u2083-projective-plane-like structures. Track torsion changes at each triangle insertion. Classify into the three event types.\n\n**Impact**: Opens tropical Morse theory to torsion-sensitive applications (manifold recognition, crystallographic defects, quantum error correction codes where torsion encodes logical qubits).\n\n**Catalog References**: `Catalog/Pythagorean/TropicalMorse/SimplicialMorse.lean` \u2014 simplex_insertion_dichotomy (the field case to generalize).\n\n**Proof Strategy**: Define torsion rank and torsion-type for Smith normal form entries. Prove the \u2124-coefficient insertion produces exactly one change in the combined (free rank, torsion profile) invariant.\n\n**Domain Bridges**: Algebraic topology (torsion in homology), quantum error correction (homological codes), number theory (class groups as torsion).\n\n**Lineage**: Extends the birth/death dichotomy from free rank to full homological type.\n\n**Ambition**: Grand challenge \u2014 would unify persistent homology with arithmetic invariant theory.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
+      "Computation",
+      "Tropical",
       "Physics",
       "Bridges",
       "Logic"
@@ -2371,9 +2372,30 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "21d69cc6",
+    "source_exp_id": "4895ceb4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T09:39:15.120527+00:00"
+    "timestamp": "2026-05-26T10:14:17.520231+00:00"
+  },
+  {
+    "id": "fd_1102",
+    "title": "Direction 2: Tropical Stability Theorem for Event Profiles",
+    "description": "**Conjecture**: If two weight functions w, w' on the same simplicial complex satisfy ||w \u2212 w'||_\u221e \u2264 \u03b5, then the bottleneck distance between the induced tropical barcode profiles is at most \u03b5. Moreover, the number of events whose type (birth/death) changes is bounded by the number of \"critical crossings\" \u2014 pairs of simplices whose weight ordering is reversed.\n\n**The key insight is** that the tropical event type at each insertion depends on the boundary rank, which is a discrete invariant. Small weight perturbations can only change event types at insertions whose weight is within \u03b5 of another insertion's weight \u2014 the \"critical crossings.\"\n\n**Why now?** Classical stability (Cohen-Steiner\u2013Edelsbrunner\u2013Harer 2007) is established for barcodes but not for tropical event profiles. Our verified correspondence theorem (`tropical_persistent_rank_eq_classical`) provides the algebraic bridge. The stability statement is falsifiable and algorithmically testable.\n\n**Test**: Generate 1000 pairs of random weight functions differing by at most \u03b5 = 0.1 on 2-complexes with 20 vertices. Compute both tropical event profiles. Measure bottleneck distance and compare to \u03b5.\n\n**Impact**: Would establish tropical event profiles as a robust descriptor for applications (materials science, sensor networks) where weights are measured with noise.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalMorse/Theorems.lean` \u2014 sublevel_perturbation_containment (graph-level stability). `Catalog/Pythagorean/TropicalMorse/SimplicialMorse.lean` \u2014 tropical_persistent_rank_eq_classical.\n\n**Proof Strategy**: Use the interleaving distance between filtrations. Show that weight perturbation \u03b5 creates at most an \u03b5-interleaving, which bounds the bottleneck distance on barcodes, which bounds the event profile divergence.\n\n**Domain Bridges**: Topological data analysis (stability theory), signal processing (robustness), metric geometry (Gromov-Hausdorff stability).\n\n**Lineage**: Direct extension of existing stability results to the tropical event language.\n\n**Ambition**: Solid extension \u2014 essential infrastructure for applications.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4895ceb4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T10:14:17.553765+00:00"
   },
   {
     "id": "seed_032",

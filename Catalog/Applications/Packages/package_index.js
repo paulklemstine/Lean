@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Persistent Homology / Discrete Morse Theory",
     "date": "2026-05-26T10:14:09Z",
     "exp_id": "4895ceb4",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7241421283979179,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_uniform_spectral_gaps_for_sp_via_delig.json",
@@ -2249,8 +2249,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-26T10:14:09Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7241421283979179,
+      "quality": "substantial"
     }
   ],
   "edges": [
