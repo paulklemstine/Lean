@@ -199,10 +199,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "daaf598b",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:13:44.233016+00:00"
   },
   {
@@ -293,10 +293,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "93ec6871",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:11:10.243679+00:00"
   },
   {
@@ -838,10 +838,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d844dc7e",
     "timestamp": "2026-05-25T22:25:38.967457+00:00"
   },
   {
@@ -1081,27 +1081,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "48617359",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T04:51:55.424405+00:00"
-  },
-  {
-    "id": "fd_1070",
-    "title": "Direction 1: Non-Multiaffine Extension via Weighted Support Analysis",
-    "description": "**Conjecture:** For general homogeneous polynomials (not necessarily multiaffine) of degree $d$ in $n$ variables, there exists a weighted support measure $\\sigma(f)$ such that the number of nonzero quadratic derivative leaves is bounded by $\\sigma(f)$, and $\\sigma(f)$ can be computed from the Newton polytope of $f$ in polynomial time.\n\n**Test:** Define $\\sigma(f)$ as the number of lattice points in the $(d-2)$-shadow of the Newton polytope. Compute this for specific families (power-sum polynomials, Schur polynomials, elementary symmetric polynomials) and compare with the actual nonzero leaf count. A disproof would be a polynomial where coefficient cancellation forces the leaf count below the Newton polytope prediction.\n\n**Impact:** Would extend the support compression principle from multiaffine polynomials to all homogeneous polynomials, vastly expanding its applicability. This is essential for applications to Hodge theory and algebraic geometry, where multiaffineness is not guaranteed.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean` (Theorem `nonzeroDerivativeLeafSet_eq_indep`), `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`NewtonSupport`, `IsHomogeneousDeg`)\n\n**Proof Strategy:** Generalize the support criterion by replacing exact containment with a dominated-support condition. For non-multiaffine polynomials, the key difficulty is coefficient cancellation: two surviving monomials might cancel in the derivative. Approach via the theory of *stable polynomials* or *completely log-concave* polynomials, where cancellation is structurally prevented.\n\n**Domain Bridges:** Connects to algebraic geometry (Newton polytopes), optimization (lattice point enumeration), and convex geometry (mixed volumes).\n\n**Lineage:** Builds directly on Theorem 1 (support criterion) by removing the multiaffine hypothesis.\n\n**Ambition:** Grand challenge \u2014 would unify the multiaffine compression theory with the full Br\u00e4nd\u00e9n-Huh framework.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "b24e9482",
-    "consumed_by_exp_id": "ef991832",
-    "timestamp": "2026-05-26T05:27:26.773711+00:00"
   },
   {
     "id": "fd_1075",
@@ -1741,6 +1720,45 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
+    "id": "fd_1199",
+    "title": "Direction 1: Double Scaling Limit \u2014 When Does m Matter?",
+    "description": "**Conjecture:** There exists a critical scaling function m*(k) such that:\n- If m = o(m*(k)), the wreath perturbation remains irrelevant: |\u03b2_W(k,m) - m\u00b7\u03b2(S_k)| \u2192 0.\n- If m ~ m*(k), the perturbation becomes marginal.\n- If m \u226b m*(k), the perturbation is relevant: the universality class changes.\n\nWe conjecture m*(k) = k^\u03b1 for some exponent \u03b1 > 0 (possibly \u03b1 = 1).\n\n**Test:** Compute \u03b2_W(k, m) for k \u2208 {3,...,8} and m \u2208 {k/2, k, 2k, k\u00b2} using GAP or subgroup enumeration. Plot the rescaled deviation as a function of m/k^\u03b1 for various \u03b1. The correct \u03b1 collapses the data onto a universal curve.\n\n**Impact:** Identifies the precise boundary between \"irrelevant\" and \"relevant\" regimes for wreath products. This is the analog of identifying the upper critical dimension in statistical mechanics.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `beta_wreath_eq_mul_beta_symm_plus_error`, `defect_ratio_tendsto_zero`\n- `Catalog/Bridges/Catalog/Pythagorean/SubgroupUniversality.lean`: `pressure_directPower_linear`\n\n**Proof Strategy:** Extend the perturbative bound by tracking the m-dependence explicitly. The defect bound has constant C_m; determine C_m's growth rate in m. If C_m grows polynomially, the critical scaling is m* ~ k/C_m^{1/...}. Use Clifford theory to bound the number of wreath-product irreducibles as a function of both k and m.\n\n**Domain Bridges:** Statistical mechanics (upper critical dimension), random matrix theory (transition between GOE and GUE universality classes as matrix size grows).\n\n**Lineage:** Direct extension of Theorems 4-5 from the current work; builds on the perturbative bound framework.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish a complete phase diagram for wreath product universality.\n\n**The key insight is** that the m-dependence of the perturbative constant C_m controls the crossover between irrelevant and relevant regimes, analogous to how the dimension d controls the relevance of interaction terms in \u03c6\u2074 field theory.\n\n**Why now?** The formalized perturbation framework provides the first rigorous tool for studying m-dependence. The computational infrastructure (algorithms.py) can probe the double scaling regime for small k, m, providing empirical guidance for the conjecture.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "550b5c8b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T21:18:02.967940+00:00"
+  },
+  {
+    "id": "fd_1200",
+    "title": "Direction 2: Relevant Perturbations via Central Extensions",
+    "description": "**Conjecture:** Central extensions of the form 1 \u2192 Z/pZ \u2192 G\u0303 \u2192 G \u2192 1, where p divides |G|, can produce *relevant* perturbations that shift the critical exponent by O(1) (not O(1/k)).\n\nSpecifically, for G = S_k and p = 2, the double cover S\u0303_k (the Schur cover) satisfies:\n$$|\\beta(\\tilde{S}_k) - \\beta(S_k)| \\geq c > 0$$\nfor all k \u2265 4, for some absolute constant c.\n\n**Test:** Enumerate subgroups of the double covers of S_4 and S_5 using GAP's `SchurCover` function. Compute subgroup pressure and critical exponents. Compare with S_k. If the exponents differ by O(1), the perturbation is relevant.\n\n**Impact:** Would identify the first known *relevant* algebraic perturbation, establishing that not all group modifications are irrelevant. This would prove that the universality classification is nontrivial.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `AsymptoticallyIrrelevant` (as a contrast \u2014 central extensions would NOT satisfy this predicate)\n- `Catalog/Pythagorean/SubgroupPressureConcentration.lean`: pressure model framework\n\n**Proof Strategy:** Use the fact that central extensions change the subgroup lattice structure fundamentally: they introduce subgroups of index 2 that don't exist in the base group. Show that these contribute O(1) to the pressure at the critical point.\n\n**Domain Bridges:** Representation theory (Schur multiplier), topology (central extensions as covering spaces), quantum mechanics (projective representations).\n\n**Lineage:** Motivated by the contrast with wreath product irrelevance \u2014 what makes central extensions different?\n\n**Ambition:** Grand challenge \u2014 would establish that the irrelevance/relevance classification is substantive.\n\n**The key insight is** that central extensions modify the *low-index* subgroup structure (adding subgroups of index 2), which contributes maximally to the pressure near the critical point, unlike wreath perturbations which mainly add *high-index* subgroups.\n\n**Why now?** The formal framework for irrelevance (AsymptoticallyIrrelevant) provides a precise target: showing that a specific group construction *fails* to satisfy this predicate would be equally valuable as showing it holds.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "550b5c8b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T21:18:03.005388+00:00"
+  },
+  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -2203,101 +2221,111 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T16:01:35.746391+00:00"
   },
   {
-    "id": "fd_1199",
-    "title": "Direction 1: Double Scaling Limit \u2014 When Does m Matter?",
-    "description": "**Conjecture:** There exists a critical scaling function m*(k) such that:\n- If m = o(m*(k)), the wreath perturbation remains irrelevant: |\u03b2_W(k,m) - m\u00b7\u03b2(S_k)| \u2192 0.\n- If m ~ m*(k), the perturbation becomes marginal.\n- If m \u226b m*(k), the perturbation is relevant: the universality class changes.\n\nWe conjecture m*(k) = k^\u03b1 for some exponent \u03b1 > 0 (possibly \u03b1 = 1).\n\n**Test:** Compute \u03b2_W(k, m) for k \u2208 {3,...,8} and m \u2208 {k/2, k, 2k, k\u00b2} using GAP or subgroup enumeration. Plot the rescaled deviation as a function of m/k^\u03b1 for various \u03b1. The correct \u03b1 collapses the data onto a universal curve.\n\n**Impact:** Identifies the precise boundary between \"irrelevant\" and \"relevant\" regimes for wreath products. This is the analog of identifying the upper critical dimension in statistical mechanics.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `beta_wreath_eq_mul_beta_symm_plus_error`, `defect_ratio_tendsto_zero`\n- `Catalog/Bridges/Catalog/Pythagorean/SubgroupUniversality.lean`: `pressure_directPower_linear`\n\n**Proof Strategy:** Extend the perturbative bound by tracking the m-dependence explicitly. The defect bound has constant C_m; determine C_m's growth rate in m. If C_m grows polynomially, the critical scaling is m* ~ k/C_m^{1/...}. Use Clifford theory to bound the number of wreath-product irreducibles as a function of both k and m.\n\n**Domain Bridges:** Statistical mechanics (upper critical dimension), random matrix theory (transition between GOE and GUE universality classes as matrix size grows).\n\n**Lineage:** Direct extension of Theorems 4-5 from the current work; builds on the perturbative bound framework.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish a complete phase diagram for wreath product universality.\n\n**The key insight is** that the m-dependence of the perturbative constant C_m controls the crossover between irrelevant and relevant regimes, analogous to how the dimension d controls the relevance of interaction terms in \u03c6\u2074 field theory.\n\n**Why now?** The formalized perturbation framework provides the first rigorous tool for studying m-dependence. The computational infrastructure (algorithms.py) can probe the double scaling regime for small k, m, providing empirical guidance for the conjecture.\n\n---",
+    "id": "fd_1204",
+    "title": "Direction 1: k-th Order Shadow Theorem and Iterated Shadow Geometry",
+    "description": "**Conjecture:** For any k \u2265 1 and any polynomial f over a domain of characteristic zero, the set of monomials appearing in some k-th partial derivative \u2202_{i\u2081}\u00b7\u00b7\u00b7\u2202_{i\u2096}f equals exactly the k-th shadow Sh\u2096(Supp(f)) = {\u03b2 : \u2203 \u03b1 \u2208 Supp(f), \u2203 i\u2081,...,i\u2096, \u03b1 = \u03b2 + e_{i\u2081} + \u00b7\u00b7\u00b7 + e_{i\u2096}}. Furthermore, the sequence of shadow sizes |Sh\u2081(S)| \u2265 |Sh\u2082(S)| \u2265 \u00b7\u00b7\u00b7 \u2265 |Sh\u2090(S)| forms a log-concave sequence when S is M-convex.\n\n**Test:** Prove the k-th shadow theorem in Lean by induction on k, using the single-step coefficient transport formula. For the log-concavity conjecture, computationally test with M-convex supports (matroid basis supports) in up to 8 variables and degree 6. A disproof would be any M-convex S where |Sh\u2096(S)|\u00b2 > |Sh\u2096\u208b\u2081(S)| \u00b7 |Sh\u2096\u208a\u2081(S)| for some k.\n\n**Impact:** This would establish a complete hierarchy of shadow invariants controlling all-order derivative complexity, with the log-concavity providing tight bounds on how fast derivative complexity decays. For Lorentzian polynomials, this would give a new proof route to the ultra-log-concavity of derivative norms.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (coeff_pderiv_single, coeff_pderiv_pderiv), `Catalog/Bridges/Catalog/Pythagorean/SupportCompression.lean` (nonzeroDerivativeLeafSet_eq_indep)\n\n**Proof Strategy:** Induction on k. The base case k=2 is our main theorem. For the inductive step, apply the single-derivative coefficient formula to reduce the (k+1)-th shadow to the k-th shadow of a derivative, then use the inductive hypothesis. The log-concavity conjecture likely requires injection-based arguments or connections to matroid theory.\n\n**Domain Bridges:** Connects to combinatorial commutative algebra (Hilbert function behavior), algebraic topology (Betti number sequences of toric varieties), and information theory (entropy of derivative distributions).\n\n**Lineage:** Direct extension of the Quadratic Shadow Theorem, building on the coefficient transport lemma.\n\n**Ambition:** Solid extension \u2014 the k-th shadow theorem should be provable within one cycle. The log-concavity conjecture is a grand challenge that may require new ideas from matroid theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ef991832",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T21:53:04.887954+00:00"
+  },
+  {
+    "id": "fd_1205",
+    "title": "Direction 2: Anti-Cancellation for Aggregated Derivatives in Lorentzian Polynomials",
+    "description": "**Conjecture:** For a Lorentzian polynomial f with M-convex support, the trace of the Hessian \u03a3\u1d62 \u2202\u00b2f/\u2202x\u1d62\u00b2 has nonzero coefficient at every \u03b2 \u2208 Sh\u2082(Supp(f)) that is reachable by subtracting 2e\u1d62 for some i from some support element. More ambitiously: for any positive linear combination \u03a3 a\u1d62\u2c7c \u2202\u1d62\u2202\u2c7cf with a\u1d62\u2c7c > 0, every shadow point remains nonzero.\n\n**The key insight is** that Lorentzian polynomials satisfy a deep positivity condition: all coefficients have the same sign after appropriate normalization, and the M-convexity of the support provides \"exchange paths\" that prevent total cancellation across derivative contributions.\n\n**Why now?** The individual derivative theorem removes cancellation entirely; the natural next step is understanding when partial cancellation (across derivatives, not within one) can occur. The Lorentzian condition is the most natural structural hypothesis preventing this.\n\n**Test:** For each homogeneous polynomial f of degree d \u2264 6 in n \u2264 5 variables with M-convex support and positive coefficients, compute the Hessian trace \u03a3\u1d62 \u2202\u00b2f/\u2202x\u1d62\u00b2 and check if every shadow point (of the diagonal type) appears. A disproof would be a Lorentzian polynomial where cancellation in the aggregated trace eliminates a shadow point. Test at least 10,000 random positive-coefficient polynomials with M-convex support.\n\n**Impact:** This would be the first theorem connecting Lorentzian positivity to aggregated derivative sparsity, opening a new chapter in the theory of Lorentzian polynomials beyond the multiaffine case.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (IsMConvexExchangeNat, IsLorentzianQuadratic), `Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (coeff_pderiv_pderiv_ne_zero_iff)\n\n**Proof Strategy:** Strategy C from the original proposal. Use M-convex exchange to show that coefficient arrays along shadow fibers are sign-coherent, then prove that the weighted sum cannot vanish. May require new lemmas on the structure of M-convex polytope fibers.\n\n**Domain Bridges:** Statistical physics (partition function susceptibilities never vanish for Lorentzian systems), optimization (Hessian of log-concave functions has guaranteed non-degeneracy), tropical geometry (tropical Hessian of a Lorentzian polynomial has full tropical rank).\n\n**Lineage:** Builds on Direction 1's individual exactness and the Catalog's M-convexity results.\n\n**Ambition:** Grand challenge \u2014 this would be a genuine advance in the theory of Lorentzian polynomials, requiring new ideas about the interaction of positivity and aggregation.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ef991832",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T21:53:04.933230+00:00"
+  },
+  {
+    "id": "fd_1206",
+    "title": "Direction 3: Tropical Shadow and Newton Polytope Projections",
+    "description": "**Conjecture:** The quadratic shadow Sh\u2082(S) equals the set of lattice points in the Minkowski difference Newt(S) \u2296 \u0394\u2082 \u2229 \u2124\u207f, where Newt(S) is the convex hull and \u0394\u2082 is the simplex of degree-2 exponents. Furthermore, this identification extends to a tropical analogue: the tropical second derivative of a tropical polynomial has support equal to the tropical shadow.\n\n**The key insight is** that the shadow construction is secretly a lattice-point projection of the Newton polytope, and tropicalization preserves this projection structure.\n\n**Why now?** Tropical geometry has matured to the point where tropical Hessians and tropical second derivatives are well-defined. The shadow theorem provides the missing link between the algebraic and tropical pictures.\n\n**Test:** For 3-variable polynomials of degree \u2264 8, compute both Sh\u2082(S) and the lattice points of Newt(S) \u2296 \u0394\u2082. These should agree when S is a lattice polytope (all lattice points present). For general S (sparse), Sh\u2082(S) should be contained in but not equal to the polytope lattice points. Find precise conditions for equality.\n\n**Impact:** This would create a bridge between the algebraic shadow theorem and the geometric theory of Newton polytopes, enabling tools from convex geometry (volume, mixed volume, Ehrhart theory) to be applied to derivative complexity questions.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (QuadraticShadow, computeQuadShadow), any tropical geometry files in the Catalog\n\n**Proof Strategy:** Strategy B from the original proposal. Define the Minkowski shadow as a convex body, characterize its lattice points, and show containment in both directions. The tropical direction requires defining tropical differentiation on tropical polynomial rings and showing it respects the shadow structure.\n\n**Domain Bridges:** Toric geometry (toric varieties associated to shadow polytopes), algebraic statistics (log-linear models and sufficient statistics), geometric combinatorics (Ehrhart theory of shadow polytopes).\n\n**Lineage:** Connects the algebraic shadow (this work) to the geometric program of Newton polytope theory (Gelfand-Kapranov-Zelevinsky).\n\n**Ambition:** Grand challenge for the full tropical program; solid extension for the lattice-point characterization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ef991832",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T21:53:04.972544+00:00"
+  },
+  {
+    "id": "fd_1207",
+    "title": "Direction 4: Shadow Complexity as an Arithmetic Circuit Lower Bound",
+    "description": "**Conjecture:** For any arithmetic circuit C computing all n\u00b2 second partial derivatives of a polynomial f with support S, the circuit size |C| satisfies |C| \u2265 |Sh\u2082(S)| / n\u00b2. Furthermore, there exist polynomial families where this bound is tight, giving an optimal sparsity-based lower bound.\n\n**The key insight is** that the shadow size is a lower bound on the number of distinct nonzero outputs any computation must produce, and sharing of intermediate results can reduce the work by at most an n\u00b2 factor (from shared first-derivative computations).\n\n**Why now?** Arithmetic circuit complexity has few general lower bounds beyond degree-based arguments. Support-based bounds represent a new paradigm, and the shadow theorem provides the first rigorous support-to-output complexity connection.\n\n**Test:** Construct explicit polynomial families (e.g., sparse random, structured algebraic) where the shadow size grows superlinearly in the support size. Implement optimal Hessian computation algorithms and measure their complexity relative to the shadow bound. A disproof of tightness would be a family where every algorithm beats the bound by a super-constant factor.\n\n**Impact:** New lower bound technique for arithmetic complexity based on Newton-polytope geometry rather than degree. Could resolve specific questions about optimal Hessian computation complexity.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (quadShadow_mono, computeQuadShadow_mono \u2014 monotonicity as complexity monotone)\n\n**Proof Strategy:** Counting argument: any correct algorithm for computing all \u2202\u1d62\u2202\u2c7cf must produce |Sh\u2082(S)| distinct nonzero values. Each arithmetic operation produces at most one new value. First-derivative sharing reduces redundancy by at most n\u00b2. Formalize this as a lower bound on the number of additions and multiplications.\n\n**Domain Bridges:** Algebraic complexity theory (VP vs VNP, depth reduction), automatic differentiation (optimal Jacobian accumulation), sparse linear algebra (Hessian compression).\n\n**Lineage:** Builds on the algorithm correctness theorem and monotonicity results from this work.\n\n**Ambition:** Solid extension for the basic counting lower bound; grand challenge for tightness and connections to VP vs VNP.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
       "Bridges",
-      "Logic"
+      "Logic",
+      "Speculative"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "550b5c8b",
+    "source_exp_id": "ef991832",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T21:18:02.967940+00:00"
+    "timestamp": "2026-05-26T21:53:05.013082+00:00"
   },
   {
-    "id": "fd_1200",
-    "title": "Direction 2: Relevant Perturbations via Central Extensions",
-    "description": "**Conjecture:** Central extensions of the form 1 \u2192 Z/pZ \u2192 G\u0303 \u2192 G \u2192 1, where p divides |G|, can produce *relevant* perturbations that shift the critical exponent by O(1) (not O(1/k)).\n\nSpecifically, for G = S_k and p = 2, the double cover S\u0303_k (the Schur cover) satisfies:\n$$|\\beta(\\tilde{S}_k) - \\beta(S_k)| \\geq c > 0$$\nfor all k \u2265 4, for some absolute constant c.\n\n**Test:** Enumerate subgroups of the double covers of S_4 and S_5 using GAP's `SchurCover` function. Compute subgroup pressure and critical exponents. Compare with S_k. If the exponents differ by O(1), the perturbation is relevant.\n\n**Impact:** Would identify the first known *relevant* algebraic perturbation, establishing that not all group modifications are irrelevant. This would prove that the universality classification is nontrivial.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `AsymptoticallyIrrelevant` (as a contrast \u2014 central extensions would NOT satisfy this predicate)\n- `Catalog/Pythagorean/SubgroupPressureConcentration.lean`: pressure model framework\n\n**Proof Strategy:** Use the fact that central extensions change the subgroup lattice structure fundamentally: they introduce subgroups of index 2 that don't exist in the base group. Show that these contribute O(1) to the pressure at the critical point.\n\n**Domain Bridges:** Representation theory (Schur multiplier), topology (central extensions as covering spaces), quantum mechanics (projective representations).\n\n**Lineage:** Motivated by the contrast with wreath product irrelevance \u2014 what makes central extensions different?\n\n**Ambition:** Grand challenge \u2014 would establish that the irrelevance/relevance classification is substantive.\n\n**The key insight is** that central extensions modify the *low-index* subgroup structure (adding subgroups of index 2), which contributes maximally to the pressure near the critical point, unlike wreath perturbations which mainly add *high-index* subgroups.\n\n**Why now?** The formal framework for irrelevance (AsymptoticallyIrrelevant) provides a precise target: showing that a specific group construction *fails* to satisfy this predicate would be equally valuable as showing it holds.\n\n---",
+    "id": "fd_1208",
+    "title": "Direction 5: Shadow Structure of Partition Functions and Phase Transitions",
+    "description": "**Conjecture:** For partition functions Z = \u03a3_\u03b1 e^{-\u03b2E(\u03b1)} x^\u03b1 of lattice models, the shadow size |Sh\u2082(Supp(Z))| undergoes a phase transition at critical temperature: below criticality, the shadow is \"small\" (polynomial in the system size), while above criticality, it is \"large\" (exponential). This transition corresponds to the onset of long-range correlations.\n\n**The key insight is** that the shadow of a partition function's support encodes exactly the second-order response modes (susceptibilities, correlations), and phase transitions are characterized by the divergence of these quantities \u2014 which requires a sudden increase in the number of active response modes.\n\n**Why now?** The shadow theorem provides the first rigorous link between combinatorial support geometry and derivative-based thermodynamic quantities. This creates a new geometric approach to understanding phase transitions, complementing the traditional analytic (Yang-Lee) and probabilistic (Gibbs measure) approaches.\n\n**Test:** Implement partition functions for the 2D Ising model on small lattices (up to 8\u00d78). As temperature varies, track |Sh\u2082(Supp(Z))| and compare with known critical temperature T_c. Also test Potts models and dimer models. A disproof would be a model with known phase transition where the shadow size varies smoothly through the critical point.\n\n**Impact:** Would establish a new connection between combinatorial geometry and statistical physics, providing a purely geometric signature of phase transitions without reference to free energy analyticity or correlation length divergence.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (nonzeroQuadLeafSet_eq_shadow, shadowMultiplicity)\n\n**Proof Strategy:** For specific lattice models, characterize the support of Z combinatorially (it corresponds to valid spin configurations). Show that at high temperature (large support), the shadow is exponential, while at low temperature (concentrated support around ground states), the shadow is polynomial. The transition should occur at the point where the support \"percolates\" in an appropriate lattice-theoretic sense.\n\n**Domain Bridges:** Statistical mechanics (Lee-Yang theorem, correlation inequalities), combinatorics (counting lattice configurations), computational complexity (#P-hardness of partition functions).\n\n**Lineage:** Connects the pure mathematical shadow theory to physical observables, extending the \"partition function as polynomial\" philosophy of Borcea-Br\u00e4nd\u00e9n.\n\n**Ambition:** Grand challenge \u2014 requires new ideas connecting lattice combinatorics to shadow geometry. Even partial results (specific models, asymptotic bounds) would be highly impactful.",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
+      "Computation",
       "Physics",
       "Cryptography",
       "Bridges",
-      "Logic"
+      "Logic",
+      "Speculative"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "550b5c8b",
+    "source_exp_id": "ef991832",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T21:18:03.005388+00:00"
-  },
-  {
-    "id": "fd_1201",
-    "title": "Direction 3: Entropy Rate Universality for Random Walks on Groups",
-    "description": "**Conjecture:** For the lazy random walk on S_k \u2240 S_m (step = random transposition within a random block, or random block swap), the entropy rate h(k,m) satisfies:\n$$h(k,m) = m \\cdot h_{\\text{block}}(k) + O(1/k)$$\nwhere h_block(k) is the entropy rate of the within-block walk on S_k.\n\nMoreover, the rescaled correction k\u00b7(h(k,m) - m\u00b7h_block(k)) converges to a constant determined by the spectral gap of S_m.\n\n**Test:** Simulate random walks on S_k \u2240 S_m for k \u2208 {3,...,8}, m \u2208 {2,3,4} with 10\u2076 steps each. Estimate entropy rates via the plug-in estimator on trajectory word frequencies. Compute the correction and plot k\u00b7correction vs k.\n\n**Impact:** Would establish a concrete probabilistic consequence of the algebraic perturbation theorem, bridging finite group theory to probability and information theory.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `wreath_entropy_correction_bound`, `entropy_correction_from_pressure_perturbation`\n- `Catalog/Pythagorean/SubgroupPressureConcentration.lean`: self-averaging theorems\n\n**Proof Strategy:** Connect entropy rate to the subgroup pressure via the variational principle: h = inf_s (s\u00b7\u03b2 + F(s)), where F is the free energy. Use the O(1/k) pressure perturbation to bound the entropy rate perturbation via Lipschitz continuity of the Legendre transform.\n\n**Domain Bridges:** Information theory (entropy rate, Shannon theory), ergodic theory (Abramov's formula for skew products), probability (mixing times, cutoff phenomena).\n\n**Lineage:** Extends Theorem 13 (entropy correction bound) from abstract Lipschitz control to concrete random walk entropy.\n\n**Ambition:** Solid extension \u2014 builds directly on existing theorems with well-understood probabilistic tools.\n\n**The key insight is** that the entropy rate is a Lipschitz function of the pressure functional via the Legendre transform, so O(1/k) pressure perturbation automatically gives O(1/k) entropy rate perturbation.\n\n**Why now?** The formal entropy correction bound (Theorem 13) provides the algebraic foundation. Modern random walk simulation tools can easily test the prediction for small groups.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "550b5c8b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T21:18:03.041883+00:00"
-  },
-  {
-    "id": "fd_1202",
-    "title": "Direction 4: Quantum Statistical Mechanics of Subgroup Pressure",
-    "description": "**Conjecture:** Define a *quantum subgroup pressure* by replacing the classical sum over subgroups with a sum over irreducible representations:\n$$\\Pi_q(G; s) = \\sum_{\\rho \\in \\text{Irr}(G)} (\\dim \\rho)^{-s}$$\nFor wreath products, the quantum pressure satisfies a perturbation decomposition analogous to the classical one, with the defect controlled by Clifford theory:\n$$|\\beta_q^W(k,m) - m \\cdot \\beta_q(S_k)| \\leq C_m / k$$\n\n**Test:** Compute Irr(S_k \u2240 S_m) for small k using the Clifford-theoretic parameterization (partitions of k raised to partitions of m). Sum dimension^{-s} and estimate the quantum critical exponent. Compare with the classical exponent.\n\n**Impact:** Would open a second front in algebraic perturbation theory: representation-theoretic universality. If the same O(1/k) bound holds for both subgroup and representation counting, it suggests a deep duality.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: full perturbation framework (to be mirrored for representations)\n- `Catalog/Pythagorean/ArithmeticStatistics/SubgroupPressureGL.lean`: representation-theoretic connection via GL_n\n\n**Proof Strategy:** Use the Clifford-theoretic description of Irr(S_k \u2240 S_m): irreducibles are parameterized by orbits of m-tuples of S_k-irreducibles under S_m, with stabilizer representations. The \"product\" irreducibles correspond to the trivial S_m-orbit, and the defect comes from nontrivial orbits. Bound the number and dimension of nontrivial-orbit irreducibles.\n\n**Domain Bridges:** Quantum mechanics (representation theory as quantum symmetry), random matrix theory (character ratios), coding theory (group codes from representations).\n\n**Lineage:** Bridges from subgroup counting to representation counting; motivated by the Clifford theory discussion in Strategy C.\n\n**Ambition:** Grand challenge \u2014 would establish representation-theoretic perturbation theory alongside subgroup-theoretic perturbation theory.\n\n**The key insight is** that Clifford theory provides an explicit parameterization of wreath product irreducibles in terms of base group irreducibles and top group combinatorics, making the \"product vs coupling\" decomposition natural in the representation-theoretic setting.\n\n**Why now?** The representation theory of wreath products is fully understood (Clifford theory), and the formal perturbation framework provides exact templates for the quantum analogue.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "550b5c8b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T21:18:03.080755+00:00"
-  },
-  {
-    "id": "fd_1203",
-    "title": "Direction 5: Subgroup Pressure and Coding Theory",
-    "description": "**Conjecture:** For a linear code C \u2282 F_q^n with automorphism group Aut(C), the subgroup pressure \u03b2(Aut(C)) controls the *list-decoding radius* of C. Specifically, codes whose automorphism groups are wreath products (e.g., concatenated codes, product codes) have list-decoding radii well-approximated by their component codes, with O(1/k) correction where k is the inner code length.\n\n**Test:** Compute automorphism groups of known concatenated codes (Reed-Solomon inner, random outer) using MAGMA or SageMath. Estimate \u03b2(Aut(C)) and compare with known list-decoding bounds. Check whether the wreath perturbation bound predicts the deviation from product behavior.\n\n**Impact:** Would establish the first connection between subgroup pressure theory and coding theory, potentially providing new structural bounds on decoding complexity.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `block_orbit_complexity_bound`, perturbation framework\n- `Catalog/Pythagorean/SubgroupPressureConcentration.lean`: concentration of pressure\n\n**Proof Strategy:** Relate list-decoding radius to orbit complexity of the automorphism group action on codewords. Use the block orbit complexity bound (Theorem 14) to show that wreath-product automorphism groups have orbit complexity close to product orbit complexity.\n\n**Domain Bridges:** Coding theory (list decoding, algebraic geometry codes), complexity theory (hardness of decoding), cryptography (code-based cryptosystems).\n\n**Lineage:** Extends the block orbit complexity bound to the coding theory setting; connects abstract orbit counting to concrete decoding algorithms.\n\n**Ambition:** Solid extension \u2014 uses well-established connections between group theory and coding theory.\n\n**The key insight is** that the list-decoding radius is controlled by the number of codeword orbits under the automorphism group, which is exactly the orbit complexity that our perturbation theory bounds.\n\n**Why now?** Recent advances in list-decoding (Guruswami\u2013Rudra, Kopparty) have highlighted the role of algebraic structure, and the subgroup pressure framework provides a new lens for quantifying this structure.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "550b5c8b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T21:18:03.121232+00:00"
+    "timestamp": "2026-05-26T21:53:05.052331+00:00"
   },
   {
     "id": "seed_032",
