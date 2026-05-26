@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1900 of the highest-quality
+A curated collection of 1905 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1900
+Total files: 1905
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -414,6 +414,7 @@ import FINAL.Bridges.EntropyClosureSeparation
 import FINAL.Bridges.EnvelopeCanonical
 import FINAL.Bridges.EulerianTrail
 import FINAL.Bridges.Examples
+import FINAL.Bridges.ExceptionalExpanderLadder
 import FINAL.Bridges.Extremal
 import FINAL.Bridges.ExtremalPoly
 import FINAL.Bridges.FactorRecoveryReduction
@@ -1497,6 +1498,7 @@ import FINAL.Pythagorean.DiophantineCertifiedOptimization
 import FINAL.Pythagorean.DirectedCyclePressure
 import FINAL.Pythagorean.DirectionalLogConcavity
 import FINAL.Pythagorean.Duality
+import FINAL.Pythagorean.DynamicSpectralGap
 import FINAL.Pythagorean.DynamicalSquaring
 import FINAL.Pythagorean.EffectivePotential
 import FINAL.Pythagorean.EhrhartIDP
@@ -1521,6 +1523,8 @@ import FINAL.Pythagorean.GrowthRegimeTrichotomy
 import FINAL.Pythagorean.HardnessLocalization
 import FINAL.Pythagorean.HardnessLocalizationDuality
 import FINAL.Pythagorean.HarmonicMusicTheory
+import FINAL.Pythagorean.HelfgottGrowth
+import FINAL.Pythagorean.HelfgottSL2
 import FINAL.Pythagorean.HennessyMilner
 import FINAL.Pythagorean.HeterogeneityGapConjecture
 import FINAL.Pythagorean.HigherDefectTheory
@@ -1594,6 +1598,7 @@ import FINAL.Pythagorean.SeparatorAwareForgetting
 import FINAL.Pythagorean.SharpKAMThreshold
 import FINAL.Pythagorean.SharpThresholdConcentration
 import FINAL.Pythagorean.SpacetimeLattice
+import FINAL.Pythagorean.SparseLorentzianCertificates
 import FINAL.Pythagorean.SpectralBounds
 import FINAL.Pythagorean.SpectralCompression
 import FINAL.Pythagorean.SpectralDiracTheory

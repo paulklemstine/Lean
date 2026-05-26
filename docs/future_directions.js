@@ -181,10 +181,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8850da3d",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -272,10 +272,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "83d44e07",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "258120ed",
     "timestamp": "2026-05-25T02:10:32.364163+00:00"
   },
   {
@@ -623,10 +623,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "26108723",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T20:01:51.820906+00:00"
   },
   {
@@ -838,10 +838,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f952b956",
     "timestamp": "2026-05-25T22:25:38.967457+00:00"
   },
   {
@@ -859,10 +859,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d97a486b",
     "timestamp": "2026-05-25T22:25:38.995692+00:00"
   },
   {
@@ -879,10 +879,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "ad0ea09c",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:39.023118+00:00"
   },
   {
@@ -1083,24 +1083,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T04:51:55.424405+00:00"
   },
   {
-    "id": "fd_1075",
-    "title": "Direction 1: Quantitative Helfgott-Type Growth in GL(2, F_p)",
-    "description": "**Conjecture:** For every $\\varepsilon > 0$, there exists $\\delta > 0$ such that for every prime $p$ and every symmetric subset $A \\subseteq \\mathrm{SL}(2, \\mathbb{F}_p)$ with $1 \\in A$ and $|A| \\leq p^{3 - \\varepsilon}$, either $A$ is contained in a proper subgroup or $|A \\cdot A \\cdot A| \\geq |A|^{1 + \\delta}$.\n\n**Test:** Implement the product set triple computation $A^3$ for randomly sampled sets in $\\mathrm{SL}(2, \\mathbb{F}_p)$ with $p = 11, 13, 17, 19, 23$ and measure the exponent $\\delta$ as a function of $|A|/p^3$. A single family with sublinear triple-product growth would refute the conjecture.\n\n**Impact:** This would be the first formally verified quantitative growth theorem for linear groups, providing an explicit exponent rather than just a qualitative dichotomy. It would connect our Theorem 2 (strict growth) to Helfgott's breakthrough result and potentially yield constructive expander bounds.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the irreducible characteristic polynomial certificates can exclude containment in Borel (triangular) subgroups, which is the main obstruction to growth in $\\mathrm{SL}(2)$.\n\n**Proof Strategy:** Decompose into three lemmas: (a) escape from tori using trace arguments, (b) escape from Borel subgroups using irreducibility certificates, (c) sum-product estimates over $\\mathbb{F}_p$ for the remaining case. The key insight is that the generation certificates from the catalog provide exactly the escape witnesses needed.\n\n**Domain Bridges:** Additive combinatorics (sum-product estimates), analytic number theory (exponential sum bounds).\n\n**Lineage:** Extends `strict_growth_of_not_subgroup` from qualitative to quantitative.\n\n**Ambition:** Grand challenge \u2014 would constitute a new formally verified proof of (a special case of) a major theorem in arithmetic combinatorics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a0951d1f",
-    "consumed_by_exp_id": "5098a45f",
-    "timestamp": "2026-05-26T06:04:06.524018+00:00"
-  },
-  {
     "id": "fd_1076",
     "title": "Direction 2: Pseudofinite Transfer via Definable Ultraproducts",
     "description": "**Conjecture:** The polynomially definable growth-or-control dichotomy transfers from individual finite fields $\\mathbb{F}_q$ to the pseudofinite field $\\mathbb{F}_\\omega = \\prod_q \\mathbb{F}_q / \\mathcal{U}$ via \u0141o\u015b's theorem: a definable subset of $\\mathrm{GL}(2, \\mathbb{F}_\\omega)$ with bounded doubling is controlled by a definable subgroup.\n\n**Test:** Formalize \u0141o\u015b's theorem for the restricted class of polynomial-image sentences and verify that the growth ratio $|A^2|/|A|$ is preserved under ultraproduct transfer for at least 3 concrete definable families.\n\n**Impact:** This would establish the first formal bridge between finite model theory and approximate group theory, showing that verified finite results automatically yield pseudofinite counterparts. It opens a path toward formalizing Hrushovski's approach.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the `PolyDefinableSubset` structure and generation certificates provide the definable language needed for transfer.\n\n**Proof Strategy:** The key insight is that our `PolyDefinableSubset` structure is already designed as a first-order definable object. Formalizing \u0141o\u015b's theorem for bounded-quantifier sentences over matrix algebras, then applying it to the growth predicate $|A^2| \\leq K|A|$.\n\n**Why now?** The definitions file (`ApproxSubgroupDefs.lean`) already contains the model-theoretic scaffolding (polynomial definability, coset control). Adding ultraproduct infrastructure is now a concrete formalization task rather than a conceptual challenge.\n\n**Domain Bridges:** Model theory, mathematical logic, ultraproduct theory.\n\n**Lineage:** Builds on `PolyDefinableSubset` and `CosetControlledBy` definitions.\n\n**Ambition:** Grand challenge \u2014 would be the first formally verified pseudofinite transfer theorem in group theory.\n\n---",
@@ -1218,25 +1200,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T09:39:15.046719+00:00"
   },
   {
-    "id": "fd_1122",
-    "title": "Direction 2: Exceptional Expander Ladder \u2014 F\u2084, E\u2086, E\u2087, E\u2088",
-    "description": "**Conjecture:** For each exceptional group X \u2208 {F\u2084, E\u2086, E\u2087, E\u2088}, there exists C_X > 0 such that the character-ratio bound holds with constant C_X on regular semisimple toral elements, yielding a uniform expander family.\n\n**Test:** Compute M_X(q) for small q for each exceptional type. The bounded toral complexity argument predicts M_X(q) bounded for each X; the constants C_X should increase with rank but remain finite. Cross-reference with known character-degree polynomials to establish feasibility.\n\n**Impact:** A complete exceptional expander ladder would provide 5 fundamentally new families of expander graphs, each with algebraically structured spectral properties distinct from classical-group expanders.\n\n**Catalog References:** `Pythagorean/G2CharacterSheafCertificate.lean` \u2014 `CharacterRatioCertificate`, `uniform_expansion_of_certified_family`, `bounded_toral_complexity`\n\n**Proof Strategy:** For each exceptional type:\n1. Enumerate Weyl group conjugacy classes (torus types): |W(F\u2084)| = 1152, |W(E\u2086)| = 51840, |W(E\u2087)| = 2903040, |W(E\u2088)| = 696729600. The number of conjugacy classes (= torus types) is 25, 25, 60, 112 respectively.\n2. For each torus type, use Deligne\u2013Lusztig character formulas to bound |\u03c7(s)/\u03c7(1)|.\n3. Take the maximum over torus types.\n\n**Domain Bridges:** Exceptional Lie theory \u2192 combinatorics \u2192 computer science (explicit expander constructions).\n\n**Lineage:** Direct extension of the G\u2082 certificate framework.\n\n**Ambition:** Grand challenge \u2014 E\u2088 has 112 torus types and the character theory is extremely complex. A complete treatment would be a major achievement in computational representation theory.\n\n**The key insight is** that the certificate framework is parametric in the group: no new theory is needed, only new character data. The transference theorems apply verbatim.\n\n**Why now?** The certificate formalism has been established and verified; the remaining barrier is computational, not theoretical.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "45723a87",
-    "consumed_by_exp_id": "5e6b0585",
-    "timestamp": "2026-05-26T11:58:49.966238+00:00"
-  },
-  {
     "id": "fd_1126",
     "title": "Direction 1: Full Group Isomorphism via Smith Normal Form Tracking",
     "description": "**Conjecture:** For every finite connected graph *G* and every nonempty separated subset *S*, there exists an explicit additive group isomorphism\n\n```\nCanonicalKernelSpan(G, S) / Constants \u2245 \u2124^|S| / Im(L_S)\n```\n\nwhere the isomorphism is constructively given by the Smith normal form transition matrices.\n\n**Test:** For all connected graphs with n \u2264 8, compute the canonical kernel generators and the SNF of L_S, verify that the transition matrix from generators to SNF basis is unimodular on the free part, and check that the quotient structures match as finite abelian groups.\n\n**Impact:** This would complete the \"tropical-critical correspondence\" by providing an explicit, algorithmically computable isomorphism. It would give the first tropical-geometric proof of the structure theorem for critical groups.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (harmonic kernel algebra, separation uniqueness)\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean` (graphLaplacian, firingIndependentOn)\n\n**Proof Strategy:** Strategy A from the current work \u2014 quotient-lattice comparison. Define the map from canonical generators to cokernel elements via the Laplacian. Prove injectivity by contradiction using separation. Prove surjectivity by showing every cokernel element lifts to a harmonic representative.\n\n**Domain Bridges:** Algebraic graph theory \u2194 lattice theory, number theory (Smith normal form)\n\n**Lineage:** Extends `harmonic_normalized_unique` and `firingEquiv_trans` to a full categorical equivalence.\n\n**Ambition:** Solid extension \u2014 high confidence of success within 1\u20132 research cycles.\n\n---",
@@ -1336,25 +1299,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "72356358",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T13:07:38.816025+00:00"
-  },
-  {
-    "id": "fd_1151",
-    "title": "Direction 1: Dynamic Spectral Gap Tracking for Online Mixing-Time Guarantees",
-    "description": "**Conjecture:** For a sequence of rank-1 Lorentzian polynomial updates $f_t \\to f_{t+1} = f_t + c_t X^{\\alpha_t}$, the spectral gap $\\gamma_t$ of the natural basis-exchange Markov chain satisfies\n$$|\\gamma_{t+1} - \\gamma_t| \\leq C \\cdot \\frac{|\\text{Affected}(\\alpha_t, d-2)|}{\\text{Total leaves}} \\cdot \\|c_t\\|$$\nwhere $C$ depends only on the degree and conditioning of the quadratic leaves.\n\n**Test:** Compute spectral gaps explicitly for graphic matroid polynomials on graphs with 10\u201350 vertices under edge insertions. Measure whether the gap change is proportional to the affected leaf fraction. A single instance where the gap changes discontinuously at a non-affected leaf would falsify the conjecture.\n\n**Impact:** If true, this would enable fully online mixing-time certificates: after each update, the mixing time bound is adjusted by a local computation rather than a global spectral analysis. This would make streaming combinatorial sampling provably efficient.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` (spectral_gap_log_concave_lower_bound), `Pythagorean/DynamicLorentzianCertificates.lean` (iteratedMPderiv_rankOneUpdate_eq_of_not_le)\n\n**Proof Strategy:** Formalize the Weyl perturbation bound for Hessian eigenvalues under rank-1 coefficient updates. Show that only affected-leaf Hessians change, then bound the total spectral gap perturbation by summing Weyl bounds over affected leaves.\n\n**Domain Bridges:** Spectral graph theory, random matrix theory, Markov chain mixing\n\n**Lineage:** Extends the locality theorem from certificate *validity* to certificate *quality* (spectral gap).\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 requires deep integration of perturbation theory with Lorentzian structure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "02e24032",
-    "consumed_by_exp_id": "710cc85b",
-    "timestamp": "2026-05-26T14:50:50.001252+00:00"
   },
   {
     "id": "fd_1160",
@@ -1726,6 +1670,86 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
+  },
+  {
+    "id": "fd_1229",
+    "title": "Direction 1: Path Congestion to Dirichlet Form Comparison \u2014 Completing the Pipeline",
+    "description": "**Conjecture**: If \u0393 is a path system routing P-edges through Q-edges with congestion \u03c1 (as defined by `PathCongestion`), then E_P(f) \u2264 \u03c1 \u00b7 E_Q(f) for all f. Combined with the formally verified `poincare_comparison`, this would yield \u03bb(Q) \u2265 \u03bb(P)/\u03c1 \u2014 the full canonical-path theorem for non-group chains.\n\n**Test**: Verify on all reversible chains on \u2264 6 states that the congestion bound correctly predicts the Dirichlet form comparison constant within a factor of 2. A counterexample with ratio > 2 would indicate the congestion definition needs refinement.\n\n**Impact**: Completes the formal pipeline from combinatorial path data to certified spectral gaps, making the comparison theorem immediately applicable to any chain where explicit paths can be constructed.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/CanonicalPaths.lean` \u2014 `variance_le_congestion_mul_energy`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `poincare_comparison`\n\n**Proof Strategy**: The proof requires a telescoping argument along paths (generalizing `telescope_word` from the Cayley catalog) combined with Cauchy\u2013Schwarz. The key step is: (f(x) - f(y))\u00b2 \u2264 |\u03b3| \u00b7 \u03a3_{e \u2208 \u03b3} (\u2207_e f)\u00b2. Sum over x,y weighted by \u03c0(x)P(x,y), swap the order of summation, and use the congestion bound.\n\n**Domain Bridges**: Probability theory \u2194 Combinatorial optimization (congestion as a graph property)\n\n**Lineage**: Direct descendant of `sqDiff_le_len_mul_sum_sqDiffs` from `CanonicalPaths.lean`\n\n**Ambition**: \ud83d\udd34 Paradigm shift \u2014 removes the last group-theoretic dependency from the canonical-path method\n\n**The key insight is** that the telescoping + Cauchy\u2013Schwarz argument uses only path structure, not group multiplication, so it transfers directly to non-group chains with the same formal structure.\n\n**Why now?** The comparison theorem is verified, the definitions of `PathCongestion` and `dirichletForm` are in place, and the proof template from `CanonicalPaths.lean` provides a clear roadmap.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a19dada",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:05:03.278928+00:00"
+  },
+  {
+    "id": "fd_1230",
+    "title": "Direction 2: Quantitative Mixing Time Bounds via Comparison Transport",
+    "description": "**Conjecture**: For any chain P compared to reference Q via `ReversibleChainComparison` with parameters (b, C), the mixing time satisfies t_mix(P, \u03b5) \u2264 (b\u00b7C/\u03bb(Q)) \u00b7 (log|\u03b1| + log(1/\u03b5)). Moreover, the prefactor b\u00b7C is tight up to constants for the class of \"lazy path walks compared to jump walks.\"\n\n**Test**: Compute exact mixing times (defined as first time TV distance < 1/4) for all reversible chains on 5 states, and verify the predicted bound is within a factor of n of the truth.\n\n**Impact**: Creates the first formally certified mixing time bounds for non-group chains, with practical implications for MCMC stopping rules.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/MixingTime.lean` \u2014 `tv_le_half_sqrt_card_mul_l2`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `spectralGap_lower_bound_of_dirichlet_comparison`\n\n**Proof Strategy**: Combine the comparison theorem's spectral gap bound with the TV-L\u00b2 comparison from `MixingTime.lean`. The L\u00b2 distance at time t satisfies ||P^t - \u03c0||\u00b2_{L\u00b2(\u03c0)} \u2264 (1-\u03bb)^{2t} \u00b7 (|\u03b1|-1), and TV \u2264 (1/2)\u221a(|\u03b1|) \u00b7 ||\u00b7||_{L\u00b2}.\n\n**Domain Bridges**: Probability theory \u2194 Algorithms (MCMC stopping rules) \u2194 Statistics (sampling guarantees)\n\n**Lineage**: Combines two catalog lineages: comparison (this work) and mixing time (CayleyExpander)\n\n**Ambition**: \ud83d\udfe1 Solid extension \u2014 connects existing verified results into a practical tool\n\n**The key insight is** that the comparison theorem produces a spectral gap bound in exactly the form needed by the mixing time machinery already formalized in the catalog.\n\n**Why now?** Both the comparison theorem and the mixing time infrastructure are verified; the connection is a straightforward composition.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a19dada",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:05:03.316466+00:00"
+  },
+  {
+    "id": "fd_1231",
+    "title": "Direction 3: Information-Theoretic Comparison via Modified Log-Sobolev Inequalities",
+    "description": "**Conjecture**: The comparison method extends to modified log-Sobolev inequalities (MLSI): if chain Q satisfies MLSI with constant \u03b1_Q, and the \"entropy comparison constant\" C_ent satisfies Ent_Q(f\u00b2) \u2264 C_ent \u00b7 Ent_P(f\u00b2), then P satisfies MLSI with constant \u03b1_Q/C_ent. This would give O(log log n) mixing time improvements over the Poincar\u00e9 route.\n\n**Test**: For the Glauber dynamics on the Ising model at \u03b2 < \u03b2_c (high temperature), verify computationally that the MLSI constant scales polynomially in n, while the Poincar\u00e9 constant scales polynomially with a worse exponent.\n\n**Impact**: Bridges probability theory to information theory through entropy methods, and provides exponentially better mixing bounds for chains with hypercontractive properties.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/LogSobolev.lean` \u2014 log-Sobolev infrastructure\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 comparison framework\n\n**Proof Strategy**: Replace variance with entropy, Dirichlet form with entropy dissipation, and adapt the comparison argument. The key difficulty is that entropy is not a quadratic functional, so the \"choose optimal c\" trick from variance comparison needs modification.\n\n**Domain Bridges**: Probability theory \u2194 Information theory (entropy, KL divergence) \u2194 Quantum information (hypercontractivity)\n\n**Lineage**: Extension of comparison framework + log-Sobolev catalog\n\n**Ambition**: \ud83d\udd34 Grand challenge \u2014 would create the first formally verified MLSI comparison theorem\n\n**The key insight is** that the comparison principle is fundamentally about transferring functional inequalities, and the Poincar\u00e9 inequality is just one instance of a general pattern that includes log-Sobolev, Nash, and Beckner inequalities.\n\n**Why now?** The log-Sobolev infrastructure exists in the catalog, and the comparison framework provides the template for the proof structure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a19dada",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:05:03.356788+00:00"
+  },
+  {
+    "id": "fd_1238",
+    "title": "Direction 5: Tropical and Nonarchimedean Spectral Certificates",
+    "description": "**Conjecture:** The locality theorem has a tropical analogue: for a tropical Lorentzian polynomial (a piecewise-linear function satisfying convexity conditions on Newton polytope faces), a local coefficient change affects only the tropical \"leaves\" (faces of the Newton polytope dual) that contain the updated monomial. The \"spectral gap\" becomes a combinatorial quantity related to the edge lengths of the tropical variety.\n\n**Test:** Implement tropical certificate computation for small examples (tropical lines, tropical cubics) and verify that coefficient changes affect only local faces of the Newton subdivision.\n\n**Impact:** Would extend the entire framework to nonarchimedean fields and tropical geometry, connecting to the tropical Hodge theory program of Adiprasito\u2013Huh\u2013Katz and potentially to algorithmic aspects of tropical optimization.\n\n**The key insight is** that tropical differentiation (the \"tropicalization\" of partial derivatives) preserves the locality structure: a tropical monomial perturbation affects only those tropical leaves whose support contains the perturbed monomial.\n\n**Why now?** Tropical Lorentzian polynomials have been studied by Br\u00e4nd\u00e9n\u2013Huh and others, but the *dynamic* theory \u2014 how certificates evolve under perturbation \u2014 has not been developed in the tropical setting.\n\n**Catalog References:** `Pythagorean/DynamicSpectralGap.lean` (locality theorem as template), tropical geometry literature.\n\n**Proof Strategy:** Define tropical iterated derivatives as min-plus convolutions. Prove the tropical analogue of the annihilation lemma. Establish a tropical certificate structure and prove locality.\n\n**Domain Bridges:** Tropical geometry, algebraic geometry (Hodge theory), optimization (tropical linear programming), phylogenetics (tropical metric spaces).\n\n**Lineage:** Tropicalization of the entire locality framework.\n\n**Ambition:** Solid extension with speculative elements \u2014 50% confidence for the basic tropical locality, 20% for the full spectral certificate theory.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "710cc85b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:39:43.873067+00:00"
   },
   {
     "id": "seed_013",
@@ -2245,81 +2269,5 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
-  },
-  {
-    "id": "fd_1229",
-    "title": "Direction 1: Path Congestion to Dirichlet Form Comparison \u2014 Completing the Pipeline",
-    "description": "**Conjecture**: If \u0393 is a path system routing P-edges through Q-edges with congestion \u03c1 (as defined by `PathCongestion`), then E_P(f) \u2264 \u03c1 \u00b7 E_Q(f) for all f. Combined with the formally verified `poincare_comparison`, this would yield \u03bb(Q) \u2265 \u03bb(P)/\u03c1 \u2014 the full canonical-path theorem for non-group chains.\n\n**Test**: Verify on all reversible chains on \u2264 6 states that the congestion bound correctly predicts the Dirichlet form comparison constant within a factor of 2. A counterexample with ratio > 2 would indicate the congestion definition needs refinement.\n\n**Impact**: Completes the formal pipeline from combinatorial path data to certified spectral gaps, making the comparison theorem immediately applicable to any chain where explicit paths can be constructed.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/CanonicalPaths.lean` \u2014 `variance_le_congestion_mul_energy`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `poincare_comparison`\n\n**Proof Strategy**: The proof requires a telescoping argument along paths (generalizing `telescope_word` from the Cayley catalog) combined with Cauchy\u2013Schwarz. The key step is: (f(x) - f(y))\u00b2 \u2264 |\u03b3| \u00b7 \u03a3_{e \u2208 \u03b3} (\u2207_e f)\u00b2. Sum over x,y weighted by \u03c0(x)P(x,y), swap the order of summation, and use the congestion bound.\n\n**Domain Bridges**: Probability theory \u2194 Combinatorial optimization (congestion as a graph property)\n\n**Lineage**: Direct descendant of `sqDiff_le_len_mul_sum_sqDiffs` from `CanonicalPaths.lean`\n\n**Ambition**: \ud83d\udd34 Paradigm shift \u2014 removes the last group-theoretic dependency from the canonical-path method\n\n**The key insight is** that the telescoping + Cauchy\u2013Schwarz argument uses only path structure, not group multiplication, so it transfers directly to non-group chains with the same formal structure.\n\n**Why now?** The comparison theorem is verified, the definitions of `PathCongestion` and `dirichletForm` are in place, and the proof template from `CanonicalPaths.lean` provides a clear roadmap.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a19dada",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:05:03.278928+00:00"
-  },
-  {
-    "id": "fd_1230",
-    "title": "Direction 2: Quantitative Mixing Time Bounds via Comparison Transport",
-    "description": "**Conjecture**: For any chain P compared to reference Q via `ReversibleChainComparison` with parameters (b, C), the mixing time satisfies t_mix(P, \u03b5) \u2264 (b\u00b7C/\u03bb(Q)) \u00b7 (log|\u03b1| + log(1/\u03b5)). Moreover, the prefactor b\u00b7C is tight up to constants for the class of \"lazy path walks compared to jump walks.\"\n\n**Test**: Compute exact mixing times (defined as first time TV distance < 1/4) for all reversible chains on 5 states, and verify the predicted bound is within a factor of n of the truth.\n\n**Impact**: Creates the first formally certified mixing time bounds for non-group chains, with practical implications for MCMC stopping rules.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/MixingTime.lean` \u2014 `tv_le_half_sqrt_card_mul_l2`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `spectralGap_lower_bound_of_dirichlet_comparison`\n\n**Proof Strategy**: Combine the comparison theorem's spectral gap bound with the TV-L\u00b2 comparison from `MixingTime.lean`. The L\u00b2 distance at time t satisfies ||P^t - \u03c0||\u00b2_{L\u00b2(\u03c0)} \u2264 (1-\u03bb)^{2t} \u00b7 (|\u03b1|-1), and TV \u2264 (1/2)\u221a(|\u03b1|) \u00b7 ||\u00b7||_{L\u00b2}.\n\n**Domain Bridges**: Probability theory \u2194 Algorithms (MCMC stopping rules) \u2194 Statistics (sampling guarantees)\n\n**Lineage**: Combines two catalog lineages: comparison (this work) and mixing time (CayleyExpander)\n\n**Ambition**: \ud83d\udfe1 Solid extension \u2014 connects existing verified results into a practical tool\n\n**The key insight is** that the comparison theorem produces a spectral gap bound in exactly the form needed by the mixing time machinery already formalized in the catalog.\n\n**Why now?** Both the comparison theorem and the mixing time infrastructure are verified; the connection is a straightforward composition.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a19dada",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:05:03.316466+00:00"
-  },
-  {
-    "id": "fd_1231",
-    "title": "Direction 3: Information-Theoretic Comparison via Modified Log-Sobolev Inequalities",
-    "description": "**Conjecture**: The comparison method extends to modified log-Sobolev inequalities (MLSI): if chain Q satisfies MLSI with constant \u03b1_Q, and the \"entropy comparison constant\" C_ent satisfies Ent_Q(f\u00b2) \u2264 C_ent \u00b7 Ent_P(f\u00b2), then P satisfies MLSI with constant \u03b1_Q/C_ent. This would give O(log log n) mixing time improvements over the Poincar\u00e9 route.\n\n**Test**: For the Glauber dynamics on the Ising model at \u03b2 < \u03b2_c (high temperature), verify computationally that the MLSI constant scales polynomially in n, while the Poincar\u00e9 constant scales polynomially with a worse exponent.\n\n**Impact**: Bridges probability theory to information theory through entropy methods, and provides exponentially better mixing bounds for chains with hypercontractive properties.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/LogSobolev.lean` \u2014 log-Sobolev infrastructure\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 comparison framework\n\n**Proof Strategy**: Replace variance with entropy, Dirichlet form with entropy dissipation, and adapt the comparison argument. The key difficulty is that entropy is not a quadratic functional, so the \"choose optimal c\" trick from variance comparison needs modification.\n\n**Domain Bridges**: Probability theory \u2194 Information theory (entropy, KL divergence) \u2194 Quantum information (hypercontractivity)\n\n**Lineage**: Extension of comparison framework + log-Sobolev catalog\n\n**Ambition**: \ud83d\udd34 Grand challenge \u2014 would create the first formally verified MLSI comparison theorem\n\n**The key insight is** that the comparison principle is fundamentally about transferring functional inequalities, and the Poincar\u00e9 inequality is just one instance of a general pattern that includes log-Sobolev, Nash, and Beckner inequalities.\n\n**Why now?** The log-Sobolev infrastructure exists in the catalog, and the comparison framework provides the template for the proof structure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a19dada",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:05:03.356788+00:00"
-  },
-  {
-    "id": "fd_1232",
-    "title": "Direction 4: Phase Transition Detection via Comparison Breakdown",
-    "description": "**Conjecture**: For the Ising model on Z\u00b2_n at inverse temperature \u03b2, the comparison constant C(\u03b2) between Glauber dynamics and a reference block dynamics satisfies C(\u03b2) = O(poly(n)) for \u03b2 < \u03b2_c and C(\u03b2) = exp(\u03a9(n)) for \u03b2 > \u03b2_c. The comparison theorem thus formally detects the phase transition: the bound is useful above the critical temperature and provably useless below.\n\n**Test**: Compute C(\u03b2) for Ising model on 4\u00d74, 6\u00d76, 8\u00d78 grids as \u03b2 crosses the critical value \u03b2_c \u2248 0.4407. Observe the transition from polynomial to exponential growth.\n\n**Impact**: Creates a formal mathematical framework for detecting and certifying phase transitions through comparison-theoretic lens, connecting mixing theory to statistical physics.\n\n**Catalog References**:\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `ReversibleChainComparison`\n- `Pythagorean/CayleyExpander/MixingTime.lean` \u2014 relaxation time\n\n**Proof Strategy**: For \u03b2 < \u03b2_c, use Dobrushin's condition to bound the comparison constant polynomially. For \u03b2 > \u03b2_c, construct explicit \"bottleneck\" functions where E_P/E_Q is exponentially large, using the phase boundary as a witness.\n\n**Domain Bridges**: Probability theory \u2194 Statistical physics (phase transitions) \u2194 Complexity theory (computational hardness of sampling)\n\n**Lineage**: Application of comparison framework to physics\n\n**Ambition**: \ud83d\udd34 Grand challenge \u2014 formal verification of a phase transition phenomenon\n\n**The key insight is** that the comparison constant C is not just a technical parameter: its growth rate as a function of system size encodes fundamental physical information about the presence or absence of long-range order.\n\n**Why now?** The comparison framework is verified, and the Ising model is one of the most-studied systems in mathematical physics, with extensive rigorous theory to guide the formalization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a19dada",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:05:03.395228+00:00"
   }
 ];
