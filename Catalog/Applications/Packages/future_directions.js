@@ -363,10 +363,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02e24032",
     "timestamp": "2026-05-25T02:11:10.263299+00:00"
   },
   {
@@ -382,10 +382,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "36d84586",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T03:05:35.257371+00:00"
   },
   {
@@ -426,27 +426,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "56c2f88c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T14:24:15.293101+00:00"
-  },
-  {
-    "id": "fd_0865",
-    "title": "Direction 3: Abelian Sandpile Criticality via Laplacian Energy Minimization",
-    "description": "**Conjecture**: The critical configurations of the abelian sandpile model on a graph $G$ are exactly the energy-minimizing representatives within each linear equivalence class, where energy is the Laplacian quadratic form $E(D) = \\sum_{v,w} D(v) L^+(v,w) D(w)$ (with $L^+$ the Moore-Penrose pseudoinverse). Moreover, the number of critical configurations equals $\\det(L^{(q)})$, which equals the Jacobian order.\n\n**Test**:\n1. Implement the energy functional and verify that q-reduced divisors minimize it within each equivalence class, for all connected graphs on \u2264 7 vertices\n2. Count critical configurations via the burning algorithm and verify equality with $\\det(L^{(q)})$\n3. Measure the spectral gap of the chip-firing Markov chain and verify it equals the Fiedler eigenvalue of the Laplacian\n4. Falsification: find a graph where a q-reduced divisor is NOT the energy minimizer (would contradict the potential theory)\n\n**Impact**: Provides a rigorous energy-theoretic foundation for self-organized criticality. The connection between chip-firing dynamics and Laplacian spectral theory could explain why sandpile models exhibit power-law avalanche distributions.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `chipFire_degree_preserved`, `principalDivisor_degree_zero`\n- `Catalog/Pythagorean/ResistanceDefect/Defs.lean`: resistance distance definitions (if available)\n\n**Proof Strategy**: Show that the Laplacian pseudoinverse energy is a convex function on each linear equivalence class, with the q-reduced divisor as the unique minimizer. Use `chipFire_degree_preserved` to show that chip-firing preserves the constraint set, and the positive semidefiniteness of $L$ to show convexity.\n\n**Domain Bridges**: Statistical mechanics (self-organized criticality, Bak-Tang-Wiesenfeld) \u2194 Spectral graph theory (Fiedler eigenvalue) \u2194 Chip-firing (q-reduced divisors)\n\n**Lineage**: Extends `chipFire_degree_preserved`, connects to sandpile physics\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2606 \u2014 Mathematically novel connection between energy minimization and q-reduction; computational verification is straightforward but the formal proof requires developing pseudoinverse theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "97def267",
-    "consumed_by_exp_id": "d74ce5bf",
-    "timestamp": "2026-05-25T14:24:37.121580+00:00"
   },
   {
     "id": "fd_0870",
@@ -1186,25 +1165,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T22:59:06.846580+00:00"
   },
   {
-    "id": "fd_0978",
-    "title": "Direction 4: Complexity of Certificate Verification",
-    "description": "**Conjecture:** Verifying that a pair $(g, h)$ generates $\\mathrm{GL}(n, \\mathbb{F}_q)$ can be done in polynomial time in $n$ and $\\log q$, using the irreducibility certificate from `MatrixGroupGeneration.lean`. Specifically, checking that the characteristic polynomials of $g$, $h$, and $gh$ are irreducible and satisfy a non-degeneracy condition suffices for generation.\n\n**Test:** Implement the certificate verification algorithm and benchmark it against BFS-based generation testing for $\\mathrm{GL}(2, \\mathbb{F}_q)$ with $q$ up to 1000. Measure speedup.\n\n**The key insight is** that the catalog's irreducibility certificates (`LinearGenerationCertificate`) provide a compact algebraic witness for generation that avoids the exponential cost of enumerating the generated subgroup. If such certificates can be verified in polynomial time and are sufficient for generation, they transform the generation problem from a group-theoretic question to a polynomial algebra question.\n\n**Why now?** The `MatrixGroupGeneration.lean` file proves that irreducible characteristic polynomials force irreducible action, which prevents containment in proper subgroups. The remaining step is to formalize that avoiding all maximal subgroups of $\\mathrm{GL}(n, \\mathbb{F}_q)$ is sufficient for generation, and that this can be checked via characteristic polynomial conditions.\n\n**Impact:** A polynomial-time certified generation test would have applications in cryptography (verifying pseudorandom generators), computational group theory (constructive recognition algorithms), and network design (certified expander construction).\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility certificates, invariant subspace theorem), `Catalog/Pythagorean/CertificateExpanders.lean` (certificate-to-expansion pipeline).\n\n**Proof Strategy:** Formalize Aschbacher's theorem classifying maximal subgroups of $\\mathrm{GL}(n, \\mathbb{F}_q)$ for $n = 2$. Show that each class of maximal subgroups is characterized by a polynomial condition on the generators. Combine to get a polynomial-time generation test.\n\n**Domain Bridges:** Computational complexity (P vs NP for group-theoretic problems), computational algebra (polynomial factorization), cryptography (pseudorandom generators).\n\n**Lineage:** Extends `ProductGrowthCertificate.ofPair` from the current cycle, which constructs certificates from generation hypotheses.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 the classification of maximal subgroups of $\\mathrm{GL}(2)$ is classical and tractable.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "79565d7a",
-    "timestamp": "2026-05-25T22:59:06.907485+00:00"
-  },
-  {
     "id": "fd_0979",
     "title": "Direction 5: Formal BGT Structure Theorem",
     "description": "**Conjecture:** The full Breuillard\u2013Green\u2013Tao classification of approximate subgroups in finite simple groups of Lie type can be formalized in Lean 4, building on the certificate-to-growth infrastructure developed in this cycle.\n\n**Test:** Formalize the statement of the BGT theorem for $\\mathrm{SL}(2, \\mathbb{F}_p)$: every $K$-approximate subgroup $A$ (i.e., $|A^3| \\leq K|A|$) is contained in a set of the form $xH$ where $H$ is a subgroup and $|xH| \\leq f(K)|A|$. Then prove the theorem for $K$ close to 1 using the Strict Growth Theorem.\n\n**The key insight is** that the Strict Growth Theorem already proves the $K = 1$ case: if $|A^3| = |A|$ (so $K = 1$) and $A$ generates $G$ and $1 \\in A$, then $A = G$ (since $A = A^2 = A^3 = \\cdots = G$ by strict growth). The BGT theorem generalizes this to $K > 1$, showing that approximate closure under tripling forces algebraic structure. Our formal infrastructure provides the foundation for this generalization.\n\n**Why now?** The formal proof of the Core Stability Theorem demonstrates that the key technique \u2014 using finite injectivity to establish group-like properties of finite sets \u2014 is formalizable. The BGT proof uses similar techniques at a higher level of abstraction, combined with the classification of finite simple groups. While the full classification is out of reach, the $\\mathrm{SL}(2)$ case is tractable and would demonstrate the approach.\n\n**Impact:** A formally verified BGT theorem, even in the $\\mathrm{SL}(2)$ case, would be a major achievement in formal combinatorics and would validate the certificate-to-growth paradigm at the deepest level.\n\n**Catalog References:** `Pythagorean/CertificateProductGrowth.lean` (all theorems from the current cycle), `Catalog/Pythagorean/CertificateExpanders.lean` (spectral machinery), `Catalog/Algebra/MatrixGroupGeneration.lean` (matrix group structure).\n\n**Proof Strategy:** Following Helfgott (2008) for $\\mathrm{SL}(2, \\mathbb{F}_p)$: (1) Use the trace map to reduce to a sum-product problem in $\\mathbb{F}_p$. (2) Apply sum-product estimates (Bourgain\u2013Katz\u2013Tao) to show that the trace of $A$ cannot concentrate. (3) Use non-concentration to derive growth via escape from subvarieties. Each step can be decomposed into lemmas amenable to formal verification.\n\n**Domain Bridges:** Additive combinatorics (sum-product estimates), algebraic geometry (subvarieties), representation theory (trace maps), classification of finite simple groups.\n\n**Lineage:** Culmination of the certificate-to-growth program initiated in this cycle.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 paradigm-shifting if achieved, requiring formalization of deep results across multiple mathematical domains.",
@@ -1277,10 +1237,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "daae69f2",
     "timestamp": "2026-05-25T23:33:15.605805+00:00"
   },
   {
@@ -1511,10 +1471,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "48617359",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3130e902",
     "timestamp": "2026-05-26T04:51:55.485067+00:00"
   },
   {
@@ -1777,6 +1737,103 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T08:59:20.844806+00:00"
   },
   {
+    "id": "fd_1096",
+    "title": "Direction 1: General Symplectic Groups Sp\u2082\u2099(\ud835\udd3d_q)",
+    "description": "**Conjecture:** For every n \u2265 1, there exist constants C_n and \u03b5_n > 0 such that for all odd prime powers q, there exist certified generating pairs (s, t) in Sp\u2082\u2099(\ud835\udd3d_q) with regular toral s satisfying |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| \u2264 C_n/q for all nontrivial irreducibles \u03c1, yielding spectral gap \u2265 \u03b5_n.\n\n**Test:** Compute spectral gaps for Sp\u2086(\ud835\udd3d_q) (n=3) for q = 3, 5, 7 using the same torus-type strategy. Verify that the gaps remain bounded away from zero and that the character-ratio bound C\u2083/q fits the data with C\u2083 independent of q. The conjecture is falsified if the optimal C_n grows faster than polynomially in n, or if no single torus type works uniformly.\n\n**Impact:** This would establish the first systematic family of higher-rank expanders parametrized by both rank and field size, unifying scattered results into a single framework.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (DLCharacterBoundCertificate, uniform_gap_from_dl_certificate), `Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy:** Extend the DLCharacterBoundCertificate to carry a rank parameter n. Use Landazuri\u2013Seitz bounds for Sp\u2082\u2099 (minimum nontrivial irrep dim \u2265 (q^n \u2212 1)/(q \u2212 1) \u2212 1) and Deligne\u2013Lusztig character formulas for type C_n tori. The transference machinery (Theorems A and C) applies without modification.\n\n**Domain Bridges:** Higher-rank symplectic expanders connect to polar space codes (coding theory) and Siegel modular forms (number theory).\n\n**Lineage:** Direct extension of the Sp\u2084 transference framework.\n\n**Ambition:** Grand challenge \u2014 would resolve the higher-rank expansion problem for an entire infinite family.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d69cc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T09:39:15.046719+00:00"
+  },
+  {
+    "id": "fd_1097",
+    "title": "Direction 2: Exceptional Groups and Character-Sheaf Certificates",
+    "description": "**Conjecture:** For the exceptional group G\u2082(\ud835\udd3d_q), there exist regular toral elements s with character-ratio bound |\u03c7(s)/\u03c7(1)| \u2264 C/q where C depends only on the root system, not on q. Combined with the transference theorem, this yields uniform G\u2082 expanders.\n\n**Test:** For G\u2082(\ud835\udd3d_q) with q = 3, 5, 7 (|G\u2082(\ud835\udd3d\u2083)| = 6,048), compute all irreducible character values on regular semisimple elements of each torus type. Verify that the maximum character ratio is bounded by C/q for some fixed C. Falsified if the ratio grows or oscillates with q.\n\n**Impact:** The first explicit expander construction for an exceptional group, opening a bridge between exceptional Lie theory and combinatorial expansion.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (character_ratio_to_spectral_gap, cheeger_from_spectral_gap).\n\n**Proof Strategy:** G\u2082 has only 5 conjugacy classes of maximal tori. Enumerate them, compute Deligne\u2013Lusztig characters via Green functions, and extract explicit character-ratio bounds. The transference theorem applies directly. **The key insight is** that the small number of torus types in exceptional groups makes explicit enumeration feasible, unlike classical groups where the number grows with rank.\n\n**Why now?** The transference framework absorbs any character-ratio bound, and G\u2082 character tables are explicitly known (Chang, Ree 1974). The bottleneck was never the character theory but the lack of a clean consumption mechanism.\n\n**Domain Bridges:** Exceptional symmetries arise in string theory (E\u2088), materials science (icosahedral symmetry via H\u2083 \u2282 E\u2088), and the Langlands program.\n\n**Lineage:** Parallel to Direction 1, but exploring width (different group families) rather than depth (higher rank).\n\n**Ambition:** Grand challenge \u2014 first formalized exceptional-group expanders.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d69cc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T09:39:15.086140+00:00"
+  },
+  {
+    "id": "fd_1098",
+    "title": "Direction 3: Hecke Operator Comparison and Building Spectra",
+    "description": "**Conjecture:** The spectral gap of the Cayley graph Cay(Sp\u2084(\ud835\udd3d_q), S) with toral generators is within a constant factor of the spectral gap of the Hecke operator on the spherical building of Sp\u2084(\ud835\udd3d_q), with the comparison constant depending only on the degree |S|.\n\n**Test:** For q = 3, 5, 7, compute both the Cayley graph spectral gap and the building Hecke operator spectral gap. Plot the ratio gap_Cayley / gap_Hecke as a function of q. Falsified if the ratio diverges or tends to zero.\n\n**Impact:** Would connect finite-group expansion to the rich theory of automorphic forms on buildings, potentially yielding a finite-field analogue of the Ramanujan conjecture for Sp\u2084.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (spectralGapBound, sp4_uniform_gap_family).\n\n**Proof Strategy:** Model the Cayley graph operator as a perturbation of the building Hecke operator. Use the Iwahori decomposition to decompose the regular representation into building representations. Bound the perturbation via the character-ratio certificate. **The key insight is** that the building decomposition separates the \"geometric\" contribution (controlled by the building spectrum) from the \"arithmetic\" contribution (controlled by character ratios), and the certificate bounds the latter.\n\n**Why now?** The Bruhat\u2013Tits building of Sp\u2084 is a 2-dimensional simplicial complex whose spectral theory is well-studied (Cartwright\u2013Steger). The transference framework provides the missing link between building spectra and Cayley graph spectra.\n\n**Domain Bridges:** Building spectra connect to automorphic representations (number theory), high-dimensional expanders (combinatorics), and topological data analysis (applied mathematics).\n\n**Lineage:** Extends the spectral gap framework from graphs to higher-dimensional simplicial complexes.\n\n**Ambition:** Solid extension \u2014 proven feasibility from existing building-spectrum literature.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "21d69cc6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T09:39:15.120527+00:00"
+  },
+  {
+    "id": "fd_1101",
+    "title": "Direction 1: Torsion-Aware Tropical Morse Theory",
+    "description": "**Conjecture**: Over \u2124 coefficients, the simplex insertion dichotomy generalizes to a *trichotomy*: each d-simplex insertion either (a) births a free d-cycle, (b) kills a free (d\u22121)-cycle, or (c) changes the torsion subgroup of H_{d\u22121} \u2014 specifically, either creating a new torsion element or annihilating one. The tropical event type should encode the Smith normal form diagonal entry, giving a \"tropical torsion spectrum.\"\n\n**The key insight is** that over \u2124, the boundary of an inserted simplex can be a non-trivial multiple of an existing cycle rather than zero or linearly independent, leading to torsion phenomena invisible over fields.\n\n**Why now?** The field-coefficient dichotomy is formally verified. The \u2124 case is the natural next step, and the Smith normal form machinery exists in Mathlib. The Linial-Meshulam model over \u2124 is known to exhibit torsion phase transitions.\n\n**Test**: Compute H_1(K; \u2124) for random 2-complexes on \u2124\u2083-projective-plane-like structures. Track torsion changes at each triangle insertion. Classify into the three event types.\n\n**Impact**: Opens tropical Morse theory to torsion-sensitive applications (manifold recognition, crystallographic defects, quantum error correction codes where torsion encodes logical qubits).\n\n**Catalog References**: `Catalog/Pythagorean/TropicalMorse/SimplicialMorse.lean` \u2014 simplex_insertion_dichotomy (the field case to generalize).\n\n**Proof Strategy**: Define torsion rank and torsion-type for Smith normal form entries. Prove the \u2124-coefficient insertion produces exactly one change in the combined (free rank, torsion profile) invariant.\n\n**Domain Bridges**: Algebraic topology (torsion in homology), quantum error correction (homological codes), number theory (class groups as torsion).\n\n**Lineage**: Extends the birth/death dichotomy from free rank to full homological type.\n\n**Ambition**: Grand challenge \u2014 would unify persistent homology with arithmetic invariant theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4895ceb4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T10:14:17.520231+00:00"
+  },
+  {
+    "id": "fd_1102",
+    "title": "Direction 2: Tropical Stability Theorem for Event Profiles",
+    "description": "**Conjecture**: If two weight functions w, w' on the same simplicial complex satisfy ||w \u2212 w'||_\u221e \u2264 \u03b5, then the bottleneck distance between the induced tropical barcode profiles is at most \u03b5. Moreover, the number of events whose type (birth/death) changes is bounded by the number of \"critical crossings\" \u2014 pairs of simplices whose weight ordering is reversed.\n\n**The key insight is** that the tropical event type at each insertion depends on the boundary rank, which is a discrete invariant. Small weight perturbations can only change event types at insertions whose weight is within \u03b5 of another insertion's weight \u2014 the \"critical crossings.\"\n\n**Why now?** Classical stability (Cohen-Steiner\u2013Edelsbrunner\u2013Harer 2007) is established for barcodes but not for tropical event profiles. Our verified correspondence theorem (`tropical_persistent_rank_eq_classical`) provides the algebraic bridge. The stability statement is falsifiable and algorithmically testable.\n\n**Test**: Generate 1000 pairs of random weight functions differing by at most \u03b5 = 0.1 on 2-complexes with 20 vertices. Compute both tropical event profiles. Measure bottleneck distance and compare to \u03b5.\n\n**Impact**: Would establish tropical event profiles as a robust descriptor for applications (materials science, sensor networks) where weights are measured with noise.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalMorse/Theorems.lean` \u2014 sublevel_perturbation_containment (graph-level stability). `Catalog/Pythagorean/TropicalMorse/SimplicialMorse.lean` \u2014 tropical_persistent_rank_eq_classical.\n\n**Proof Strategy**: Use the interleaving distance between filtrations. Show that weight perturbation \u03b5 creates at most an \u03b5-interleaving, which bounds the bottleneck distance on barcodes, which bounds the event profile divergence.\n\n**Domain Bridges**: Topological data analysis (stability theory), signal processing (robustness), metric geometry (Gromov-Hausdorff stability).\n\n**Lineage**: Direct extension of existing stability results to the tropical event language.\n\n**Ambition**: Solid extension \u2014 essential infrastructure for applications.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4895ceb4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T10:14:17.553765+00:00"
+  },
+  {
     "id": "seed_005",
     "title": "P vs NP Problem",
     "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
@@ -1899,59 +1956,24 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
-    "id": "fd_1096",
-    "title": "Direction 1: General Symplectic Groups Sp\u2082\u2099(\ud835\udd3d_q)",
-    "description": "**Conjecture:** For every n \u2265 1, there exist constants C_n and \u03b5_n > 0 such that for all odd prime powers q, there exist certified generating pairs (s, t) in Sp\u2082\u2099(\ud835\udd3d_q) with regular toral s satisfying |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)| \u2264 C_n/q for all nontrivial irreducibles \u03c1, yielding spectral gap \u2265 \u03b5_n.\n\n**Test:** Compute spectral gaps for Sp\u2086(\ud835\udd3d_q) (n=3) for q = 3, 5, 7 using the same torus-type strategy. Verify that the gaps remain bounded away from zero and that the character-ratio bound C\u2083/q fits the data with C\u2083 independent of q. The conjecture is falsified if the optimal C_n grows faster than polynomially in n, or if no single torus type works uniformly.\n\n**Impact:** This would establish the first systematic family of higher-rank expanders parametrized by both rank and field size, unifying scattered results into a single framework.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (DLCharacterBoundCertificate, uniform_gap_from_dl_certificate), `Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy:** Extend the DLCharacterBoundCertificate to carry a rank parameter n. Use Landazuri\u2013Seitz bounds for Sp\u2082\u2099 (minimum nontrivial irrep dim \u2265 (q^n \u2212 1)/(q \u2212 1) \u2212 1) and Deligne\u2013Lusztig character formulas for type C_n tori. The transference machinery (Theorems A and C) applies without modification.\n\n**Domain Bridges:** Higher-rank symplectic expanders connect to polar space codes (coding theory) and Siegel modular forms (number theory).\n\n**Lineage:** Direct extension of the Sp\u2084 transference framework.\n\n**Ambition:** Grand challenge \u2014 would resolve the higher-rank expansion problem for an entire infinite family.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "21d69cc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T09:39:15.046719+00:00"
-  },
-  {
-    "id": "fd_1097",
-    "title": "Direction 2: Exceptional Groups and Character-Sheaf Certificates",
-    "description": "**Conjecture:** For the exceptional group G\u2082(\ud835\udd3d_q), there exist regular toral elements s with character-ratio bound |\u03c7(s)/\u03c7(1)| \u2264 C/q where C depends only on the root system, not on q. Combined with the transference theorem, this yields uniform G\u2082 expanders.\n\n**Test:** For G\u2082(\ud835\udd3d_q) with q = 3, 5, 7 (|G\u2082(\ud835\udd3d\u2083)| = 6,048), compute all irreducible character values on regular semisimple elements of each torus type. Verify that the maximum character ratio is bounded by C/q for some fixed C. Falsified if the ratio grows or oscillates with q.\n\n**Impact:** The first explicit expander construction for an exceptional group, opening a bridge between exceptional Lie theory and combinatorial expansion.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (character_ratio_to_spectral_gap, cheeger_from_spectral_gap).\n\n**Proof Strategy:** G\u2082 has only 5 conjugacy classes of maximal tori. Enumerate them, compute Deligne\u2013Lusztig characters via Green functions, and extract explicit character-ratio bounds. The transference theorem applies directly. **The key insight is** that the small number of torus types in exceptional groups makes explicit enumeration feasible, unlike classical groups where the number grows with rank.\n\n**Why now?** The transference framework absorbs any character-ratio bound, and G\u2082 character tables are explicitly known (Chang, Ree 1974). The bottleneck was never the character theory but the lack of a clean consumption mechanism.\n\n**Domain Bridges:** Exceptional symmetries arise in string theory (E\u2088), materials science (icosahedral symmetry via H\u2083 \u2282 E\u2088), and the Langlands program.\n\n**Lineage:** Parallel to Direction 1, but exploring width (different group families) rather than depth (higher rank).\n\n**Ambition:** Grand challenge \u2014 first formalized exceptional-group expanders.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "21d69cc6",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T09:39:15.086140+00:00"
-  },
-  {
-    "id": "fd_1098",
-    "title": "Direction 3: Hecke Operator Comparison and Building Spectra",
-    "description": "**Conjecture:** The spectral gap of the Cayley graph Cay(Sp\u2084(\ud835\udd3d_q), S) with toral generators is within a constant factor of the spectral gap of the Hecke operator on the spherical building of Sp\u2084(\ud835\udd3d_q), with the comparison constant depending only on the degree |S|.\n\n**Test:** For q = 3, 5, 7, compute both the Cayley graph spectral gap and the building Hecke operator spectral gap. Plot the ratio gap_Cayley / gap_Hecke as a function of q. Falsified if the ratio diverges or tends to zero.\n\n**Impact:** Would connect finite-group expansion to the rich theory of automorphic forms on buildings, potentially yielding a finite-field analogue of the Ramanujan conjecture for Sp\u2084.\n\n**Catalog References:** `Pythagorean/Sp4SpectralGap.lean` (spectralGapBound, sp4_uniform_gap_family).\n\n**Proof Strategy:** Model the Cayley graph operator as a perturbation of the building Hecke operator. Use the Iwahori decomposition to decompose the regular representation into building representations. Bound the perturbation via the character-ratio certificate. **The key insight is** that the building decomposition separates the \"geometric\" contribution (controlled by the building spectrum) from the \"arithmetic\" contribution (controlled by character ratios), and the certificate bounds the latter.\n\n**Why now?** The Bruhat\u2013Tits building of Sp\u2084 is a 2-dimensional simplicial complex whose spectral theory is well-studied (Cartwright\u2013Steger). The transference framework provides the missing link between building spectra and Cayley graph spectra.\n\n**Domain Bridges:** Building spectra connect to automorphic representations (number theory), high-dimensional expanders (combinatorics), and topological data analysis (applied mathematics).\n\n**Lineage:** Extends the spectral gap framework from graphs to higher-dimensional simplicial complexes.\n\n**Ambition:** Solid extension \u2014 proven feasibility from existing building-spectrum literature.\n\n---",
+    "id": "fd_1106",
+    "title": "Direction 1: Complete Aschbacher Certificate Theory",
+    "description": "**Conjecture:** For each of the 8 Aschbacher classes of maximal subgroups of GL(n, \ud835\udd3d_q), there exists a polynomial-time certificate condition on a pair (g, h) that excludes membership of \u27e8g, h\u27e9 in that class. The conjunction of all 8 certificates implies \u27e8g, h\u27e9 = GL(n, \ud835\udd3d_q) (or \u27e8g, h\u27e9 \u2287 SL(n, \ud835\udd3d_q)).\n\n**Test:** Formalize certificate conditions for each Aschbacher class and verify them computationally for GL(3, \ud835\udd3d_q) and GL(4, \ud835\udd3d_q) with q \u2264 100. For each class, construct explicit pairs lying in a maximal subgroup of that type and verify that the certificate correctly identifies them. A single class where no polynomial-time certificate exists would disprove the conjecture.\n\n**Impact:** A complete Aschbacher certificate theory would transform computational group recognition from an exponential-time problem (subgroup enumeration) to a polynomial-time problem (certificate verification). This would have immediate consequences for:\n- Constructive recognition of classical groups in computational algebra systems (GAP, Magma)\n- Efficient verification of group-based cryptographic protocols\n- Polynomial-time testing of group generation in randomized algorithms\n\n**Catalog References:**\n- `Catalog/Algebra/MatrixGroupGeneration.lean`: `eq_bot_or_top_of_charpoly_irreducible` handles Class C\u2081\n- `Pythagorean/CertificateComplexity.lean`: `irreducible_charpoly_excludes_invariant_direct_summand` handles part of Class C\u2082\n\n**Proof Strategy:** For each Aschbacher class, identify the algebraic invariant that distinguishes the class:\n- C\u2081 (reducible): charpoly factorization \u2014 DONE\n- C\u2082 (imprimitive): charpoly multiplicative structure\n- C\u2083 (extension field): minpoly degree relative to subfield\n- C\u2084 (tensor product): charpoly symmetry under Kronecker decomposition\n- C\u2085 (subfield): trace field computation\n- C\u2086 (symplectic/extraspecial): form invariant testing\n- C\u2087 (tensor induced): higher tensor analysis\n- C\u2088 (classical): bilinear form preservation\n\n**Domain Bridges:** Coding theory (class C\u2082 relates to code automorphism groups), representation theory (all classes), algebraic geometry (class C\u2083 connects to Weil restriction).\n\n**Lineage:** Builds directly on Theorems 1-4 of the current work.\n\n**Ambition:** Grand challenge \u2014 would resolve a 40-year-old algorithmic problem in computational group theory.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
-      "Physics",
+      "Computation",
+      "Cryptography",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "21d69cc6",
+    "source_exp_id": "79565d7a",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T09:39:15.120527+00:00"
+    "timestamp": "2026-05-26T11:21:55.320419+00:00"
   },
   {
     "id": "seed_013",
@@ -2354,48 +2376,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:13:49.686566+00:00"
-  },
-  {
-    "id": "fd_1101",
-    "title": "Direction 1: Torsion-Aware Tropical Morse Theory",
-    "description": "**Conjecture**: Over \u2124 coefficients, the simplex insertion dichotomy generalizes to a *trichotomy*: each d-simplex insertion either (a) births a free d-cycle, (b) kills a free (d\u22121)-cycle, or (c) changes the torsion subgroup of H_{d\u22121} \u2014 specifically, either creating a new torsion element or annihilating one. The tropical event type should encode the Smith normal form diagonal entry, giving a \"tropical torsion spectrum.\"\n\n**The key insight is** that over \u2124, the boundary of an inserted simplex can be a non-trivial multiple of an existing cycle rather than zero or linearly independent, leading to torsion phenomena invisible over fields.\n\n**Why now?** The field-coefficient dichotomy is formally verified. The \u2124 case is the natural next step, and the Smith normal form machinery exists in Mathlib. The Linial-Meshulam model over \u2124 is known to exhibit torsion phase transitions.\n\n**Test**: Compute H_1(K; \u2124) for random 2-complexes on \u2124\u2083-projective-plane-like structures. Track torsion changes at each triangle insertion. Classify into the three event types.\n\n**Impact**: Opens tropical Morse theory to torsion-sensitive applications (manifold recognition, crystallographic defects, quantum error correction codes where torsion encodes logical qubits).\n\n**Catalog References**: `Catalog/Pythagorean/TropicalMorse/SimplicialMorse.lean` \u2014 simplex_insertion_dichotomy (the field case to generalize).\n\n**Proof Strategy**: Define torsion rank and torsion-type for Smith normal form entries. Prove the \u2124-coefficient insertion produces exactly one change in the combined (free rank, torsion profile) invariant.\n\n**Domain Bridges**: Algebraic topology (torsion in homology), quantum error correction (homological codes), number theory (class groups as torsion).\n\n**Lineage**: Extends the birth/death dichotomy from free rank to full homological type.\n\n**Ambition**: Grand challenge \u2014 would unify persistent homology with arithmetic invariant theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4895ceb4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T10:14:17.520231+00:00"
-  },
-  {
-    "id": "fd_1102",
-    "title": "Direction 2: Tropical Stability Theorem for Event Profiles",
-    "description": "**Conjecture**: If two weight functions w, w' on the same simplicial complex satisfy ||w \u2212 w'||_\u221e \u2264 \u03b5, then the bottleneck distance between the induced tropical barcode profiles is at most \u03b5. Moreover, the number of events whose type (birth/death) changes is bounded by the number of \"critical crossings\" \u2014 pairs of simplices whose weight ordering is reversed.\n\n**The key insight is** that the tropical event type at each insertion depends on the boundary rank, which is a discrete invariant. Small weight perturbations can only change event types at insertions whose weight is within \u03b5 of another insertion's weight \u2014 the \"critical crossings.\"\n\n**Why now?** Classical stability (Cohen-Steiner\u2013Edelsbrunner\u2013Harer 2007) is established for barcodes but not for tropical event profiles. Our verified correspondence theorem (`tropical_persistent_rank_eq_classical`) provides the algebraic bridge. The stability statement is falsifiable and algorithmically testable.\n\n**Test**: Generate 1000 pairs of random weight functions differing by at most \u03b5 = 0.1 on 2-complexes with 20 vertices. Compute both tropical event profiles. Measure bottleneck distance and compare to \u03b5.\n\n**Impact**: Would establish tropical event profiles as a robust descriptor for applications (materials science, sensor networks) where weights are measured with noise.\n\n**Catalog References**: `Catalog/Pythagorean/TropicalMorse/Theorems.lean` \u2014 sublevel_perturbation_containment (graph-level stability). `Catalog/Pythagorean/TropicalMorse/SimplicialMorse.lean` \u2014 tropical_persistent_rank_eq_classical.\n\n**Proof Strategy**: Use the interleaving distance between filtrations. Show that weight perturbation \u03b5 creates at most an \u03b5-interleaving, which bounds the bottleneck distance on barcodes, which bounds the event profile divergence.\n\n**Domain Bridges**: Topological data analysis (stability theory), signal processing (robustness), metric geometry (Gromov-Hausdorff stability).\n\n**Lineage**: Direct extension of existing stability results to the tropical event language.\n\n**Ambition**: Solid extension \u2014 essential infrastructure for applications.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4895ceb4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T10:14:17.553765+00:00"
   },
   {
     "id": "seed_032",

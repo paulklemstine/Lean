@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Algebra / Graph Theory / Combinatorics",
     "date": "2026-05-26T11:22:40Z",
     "exp_id": "36d84586",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.563429411764706,
+    "quality": "partial"
   },
   {
     "filename": "direction_3_abelian_sandpile_criticality_via_lapla.json",
@@ -2361,8 +2361,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-26T11:22:40Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.563429411764706,
+      "quality": "partial"
     }
   ],
   "edges": [

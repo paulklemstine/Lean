@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1817 of the highest-quality
+A curated collection of 1829 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1817
+Total files: 1829
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -273,6 +273,7 @@ import FINAL.Bridges.AlgebraEMLReconstruction
 import FINAL.Bridges.AlgebraEMLTropicalPressure
 import FINAL.Bridges.AlgebraicEMLThermodynamicFormalism
 import FINAL.Bridges.AlgebraicSpacetime
+import FINAL.Bridges.AlgorithmicTropicalKernel
 import FINAL.Bridges.ArithmeticOperadicStability
 import FINAL.Bridges.ArithmeticProfileAnalysis
 import FINAL.Bridges.ArithmeticVCDimension
@@ -494,6 +495,7 @@ import FINAL.Bridges.Optimization
 import FINAL.Bridges.OracleCobhamInvariance
 import FINAL.Bridges.OracleTraceUltrametricEntropy
 import FINAL.Bridges.OrderedAdditiveAggregation
+import FINAL.Bridges.OverlapClassRigidity
 import FINAL.Bridges.PadicOperadicNetworks
 import FINAL.Bridges.PadicQuantumInformation
 import FINAL.Bridges.Pareto
@@ -715,6 +717,7 @@ import FINAL.Bridges.UniversalDefect
 import FINAL.Bridges.VCCompactness
 import FINAL.Bridges.VSAlgebraCore
 import FINAL.Bridges.ValuationEntropyBridge
+import FINAL.Bridges.VoiceLeadingCategory
 import FINAL.Bridges.VoiceLeadingFunctor
 import FINAL.Bridges.VoiceLeadingMonge
 import FINAL.Bridges.VoiceLeadingRateDistortion
@@ -736,6 +739,7 @@ import FINAL.Computation.BinarySearch
 import FINAL.Computation.BranchingPrograms
 import FINAL.Computation.Circuits
 import FINAL.Computation.CliqueLowerBound
+import FINAL.Computation.ClosureCompressionOptimality
 import FINAL.Computation.CollatzTropical
 import FINAL.Computation.CollatzTropicalContraction
 import FINAL.Computation.Compression
@@ -782,6 +786,7 @@ import FINAL.Computation.QuantumBerggrenWalk
 import FINAL.Computation.RectStillLife
 import FINAL.Computation.ResearchQuestions
 import FINAL.Computation.Resolution
+import FINAL.Computation.ReversibleTropicalMachine
 import FINAL.Computation.ReversibleTropicalThermodynamics
 import FINAL.Computation.SearchInfoIsomorphism
 import FINAL.Computation.SearchTheory
@@ -791,11 +796,13 @@ import FINAL.Computation.SpectralOracle
 import FINAL.Computation.StillLife
 import FINAL.Computation.Theorems
 import FINAL.Computation.TimeSpaceTradeoff
+import FINAL.Computation.TracedCircuitSemantics
 import FINAL.Computation.TropicalAmortized
 import FINAL.Computation.TropicalAmortizedExamples
 import FINAL.Computation.TropicalCompression
 import FINAL.Computation.TropicalCompressionDuality
 import FINAL.Computation.TropicalLossyCompression
+import FINAL.Computation.TropicalThermodynamicComplexity
 import FINAL.Computation.TurboQuantAnalysis
 import FINAL.Computation.UniversalOracleTeam
 import FINAL.Computation.WidthToSize
@@ -822,6 +829,7 @@ import FINAL.Cryptography.BerggrenSpectralHash
 import FINAL.Cryptography.BerggrenSubsemigroupRigidity
 import FINAL.Cryptography.BerggrenSymplecticCodes
 import FINAL.Cryptography.BiOrderSeparation
+import FINAL.Cryptography.CommitmentProtocol
 import FINAL.Cryptography.Commitments
 import FINAL.Cryptography.CongruenceLatticeFactoring
 import FINAL.Cryptography.Core
@@ -844,6 +852,7 @@ import FINAL.Cryptography.MLLFormula
 import FINAL.Cryptography.MasterFormula
 import FINAL.Cryptography.MinDistance
 import FINAL.Cryptography.MinimumDistance
+import FINAL.Cryptography.MooreClosure
 import FINAL.Cryptography.NoetherianCertification
 import FINAL.Cryptography.OneWay
 import FINAL.Cryptography.PadicCryptoHardness
@@ -947,6 +956,7 @@ import FINAL.EML.PhotonResearchRound3
 import FINAL.EML.PhotonResearchRound4
 import FINAL.EML.PhotonicFrontier
 import FINAL.EML.PolyhedronCodomain
+import FINAL.EML.ProductApproximation
 import FINAL.EML.PythagoreanBridge
 import FINAL.EML.PythagoreanBridgeResearch
 import FINAL.EML.QDF_FiveDirections
@@ -972,6 +982,7 @@ import FINAL.EML.TwoPhase
 import FINAL.EML.UltrametricCertifiedRobustness
 import FINAL.EML.UnifiedCompression
 import FINAL.EML.UnivariateVanishing
+import FINAL.EML.UniversalApproximation
 import FINAL.EML.V14Research
 import FINAL.EML.V15Research
 import FINAL.EML.V16Research
@@ -1388,6 +1399,7 @@ import FINAL.Pythagorean.BoundedBetaTheorems
 import FINAL.Pythagorean.CRTBottleneck
 import FINAL.Pythagorean.CatalogBridge
 import FINAL.Pythagorean.CategoricalDimension
+import FINAL.Pythagorean.CertificateComplexity
 import FINAL.Pythagorean.CertificateExpanders
 import FINAL.Pythagorean.CertificatePhaseTransition
 import FINAL.Pythagorean.CertificatePosetWQO
