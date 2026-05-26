@@ -66,6 +66,14 @@
 
         if (graphNodes.length === 0) return;
 
+        // Assign package numbers based on date-desc order
+        if (window.PACKAGE_INDEX) {
+            const byDate = [...window.PACKAGE_INDEX].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+            const numMap = {};
+            byDate.forEach((pkg, i) => { numMap[pkg.filename.replace('.json', '')] = i + 1; });
+            graphNodes.forEach(n => { n.pkgNum = numMap[n.id] || 0; });
+        }
+
         // Expose to sidebar hover handlers
         window._graphNodes = graphNodes;
         window._setHoveredNode = function(node) { hoveredNode = node; };
@@ -1615,6 +1623,18 @@
                 node.rotAngle += node.rotSpeed * 0.016;
 
                 drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, isHovered);
+
+                // Package number centered on node
+                if (node.pkgNum && r > 8) {
+                    ctx.save();
+                    ctx.fillStyle = `hsla(${adjColor.h}, 20%, 95%, 0.9)`;
+                    const fontSize = Math.max(8, Math.min(r * 0.7, 16));
+                    ctx.font = `bold ${fontSize}px monospace`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(node.pkgNum, sp.x, sp.y);
+                    ctx.restore();
+                }
 
                 // Standout gold corona for high-quality packages
                 if ((node.priority_score ?? 0) >= 0.65) {
