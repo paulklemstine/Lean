@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Probability Theory / Spectral Graph Theory",
     "date": "2026-05-26T23:05:00Z",
     "exp_id": "4a19dada",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.659564,
+    "quality": "partial"
   },
   {
     "filename": "direction_3_spectral_expansion_for_matrix_groups_a.json",
@@ -3313,8 +3313,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-26T23:05:00Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.659564,
+      "quality": "partial"
     }
   ],
   "edges": [

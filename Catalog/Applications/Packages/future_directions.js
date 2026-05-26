@@ -181,10 +181,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "6595a609",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -606,10 +606,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "dde1d7e9",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T19:29:17.914245+00:00"
   },
   {
@@ -623,10 +623,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26108723",
     "timestamp": "2026-05-25T20:01:51.820906+00:00"
   },
   {
@@ -879,10 +879,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad0ea09c",
     "timestamp": "2026-05-25T22:25:39.023118+00:00"
   },
   {
@@ -917,10 +917,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "e954adc7",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:58:43.526680+00:00"
   },
   {
@@ -1377,26 +1377,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T15:25:16.762042+00:00"
   },
   {
-    "id": "fd_1173",
-    "title": "Direction 1: Comparison Theorems for Non-Group Markov Chains",
-    "description": "**Conjecture:** For any reversible Markov chain $P$ on state space $\\Omega$ that can be embedded into a Cayley graph $(G, S)$ via a measure-preserving map $\\phi : \\Omega \\to G$ with distortion $D$, the spectral gap of $P$ satisfies $\\lambda(P) \\geq \\lambda(G,S) / D^2$.\n\n**Test:** Formalize the Diaconis\u2013Saloff-Coste comparison theorem in Lean and instantiate it for the random walk on graph colorings (embedded into the symmetric group via the coloring-to-permutation map). Compute the distortion for the Petersen graph and verify the spectral gap bound numerically.\n\n**Impact:** This would extend the certified spectral gap framework far beyond Cayley graphs, covering most Markov chains used in practice\u2014including Glauber dynamics for spin systems, Metropolis\u2013Hastings chains, and random walk on expander graphs. It would make the canonical path formalization a universal tool rather than a group-specific one.\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (Poincar\u00e9 inequality), `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction), `Pythagorean/CayleyExpander/MixingTime.lean` (TV\u2013L\u00b2 comparison).\n\n**Proof Strategy:** Define a formal comparison framework: given two chains $P, Q$ on the same space with $P(x,y) \\leq C \\cdot Q(x,y)/\\pi_Q(y) \\cdot \\pi_P(y)$, prove $\\lambda(P) \\geq \\lambda(Q)/C$. Then specialize to Cayley graph embeddings.\n\n**Domain Bridges:** Probability theory (Markov chains), statistical physics (Glauber dynamics), algorithms (MCMC convergence).\n\n**Lineage:** Extends `variance_le_congestion_mul_energy` from Cayley graphs to general reversible chains.\n\n**Ambition:** Grand challenge \u2014 would unify spectral gap certification across all reversible Markov chains.\n\n**\"The key insight is...\"** that Cayley graph spectral gaps, once certified, can serve as *reference bounds* for arbitrary chains via the comparison theorem, converting one expensive certification into many cheap ones.\n\n**\"Why now?\"** The formal Poincar\u00e9 inequality provides the first machine-verified reference bound that a comparison theorem can leverage.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5c8e335c",
-    "consumed_by_exp_id": "4a19dada",
-    "timestamp": "2026-05-26T17:12:57.441382+00:00"
-  },
-  {
     "id": "fd_1174",
     "title": "Direction 2: Representation-Theoretic Sharpening for $S_n$",
     "description": "**Conjecture:** For $S_n$ with adjacent transpositions and bubble-sort canonical paths, the congestion $\\kappa(S_n)$ satisfies $\\kappa(S_n) = \\Theta(n^a)$ where $8 \\leq a \\leq 9$, and the resulting spectral gap bound is $\\Omega(n!^2 / n^{a+3})$. More precisely, the exact spectral gap is $1 - \\cos(\\pi/n) \\sim \\pi^2/(2n^2)$, and the canonical path bound is weaker by a factor of $\\Theta(n^{a+1} / n!^2)$.\n\n**Test:** Compute exact congestion for $n = 6, 7$ (feasible with optimized code) and fit the growth exponent. Compare with the exact spectral gap from representation theory (known to be the eigenvalue of the $(n-1)$-dimensional standard representation on the adjacent transposition generators).\n\n**Impact:** Understanding the exact congestion growth would reveal whether bubble-sort routing is inherently suboptimal or whether the canonical path method itself has structural limitations for $S_n$. This could motivate the search for better canonical paths (e.g., using insertion sort, merge sort, or representation-guided routing).\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (congestion definition), `Catalog/Bridges/Catalog/Pythagorean/CayleyExpander/SymmetricGroup.lean` (S_n generators).\n\n**Proof Strategy:** Use the Murnaghan\u2013Nakayama rule to compute the exact spectrum of the adjacency matrix of $\\text{Cay}(S_n, \\text{adj.\\ transpositions})$. Compare with the canonical path lower bound.\n\n**Domain Bridges:** Representation theory of symmetric groups, algebraic combinatorics, random matrix theory.\n\n**Lineage:** Extends the computational case study in `CanonicalPaths.lean` with exact spectral analysis.\n\n**Ambition:** Solid extension \u2014 connects formal combinatorial bounds to exact algebraic results.\n\n**\"The key insight is...\"** that the gap between canonical path bounds and exact spectral gaps quantifies the *information loss* in the routing abstraction, revealing which structural features of the group the method fails to exploit.\n\n**\"Why now?\"** The exact congestion data for $S_3, S_4, S_5$ reveals unexpectedly fast growth, motivating representation-theoretic analysis.\n\n---",
@@ -1633,7 +1613,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4c9b1112",
@@ -2265,5 +2245,81 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
+  },
+  {
+    "id": "fd_1229",
+    "title": "Direction 1: Path Congestion to Dirichlet Form Comparison \u2014 Completing the Pipeline",
+    "description": "**Conjecture**: If \u0393 is a path system routing P-edges through Q-edges with congestion \u03c1 (as defined by `PathCongestion`), then E_P(f) \u2264 \u03c1 \u00b7 E_Q(f) for all f. Combined with the formally verified `poincare_comparison`, this would yield \u03bb(Q) \u2265 \u03bb(P)/\u03c1 \u2014 the full canonical-path theorem for non-group chains.\n\n**Test**: Verify on all reversible chains on \u2264 6 states that the congestion bound correctly predicts the Dirichlet form comparison constant within a factor of 2. A counterexample with ratio > 2 would indicate the congestion definition needs refinement.\n\n**Impact**: Completes the formal pipeline from combinatorial path data to certified spectral gaps, making the comparison theorem immediately applicable to any chain where explicit paths can be constructed.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/CanonicalPaths.lean` \u2014 `variance_le_congestion_mul_energy`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `poincare_comparison`\n\n**Proof Strategy**: The proof requires a telescoping argument along paths (generalizing `telescope_word` from the Cayley catalog) combined with Cauchy\u2013Schwarz. The key step is: (f(x) - f(y))\u00b2 \u2264 |\u03b3| \u00b7 \u03a3_{e \u2208 \u03b3} (\u2207_e f)\u00b2. Sum over x,y weighted by \u03c0(x)P(x,y), swap the order of summation, and use the congestion bound.\n\n**Domain Bridges**: Probability theory \u2194 Combinatorial optimization (congestion as a graph property)\n\n**Lineage**: Direct descendant of `sqDiff_le_len_mul_sum_sqDiffs` from `CanonicalPaths.lean`\n\n**Ambition**: \ud83d\udd34 Paradigm shift \u2014 removes the last group-theoretic dependency from the canonical-path method\n\n**The key insight is** that the telescoping + Cauchy\u2013Schwarz argument uses only path structure, not group multiplication, so it transfers directly to non-group chains with the same formal structure.\n\n**Why now?** The comparison theorem is verified, the definitions of `PathCongestion` and `dirichletForm` are in place, and the proof template from `CanonicalPaths.lean` provides a clear roadmap.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a19dada",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:05:03.278928+00:00"
+  },
+  {
+    "id": "fd_1230",
+    "title": "Direction 2: Quantitative Mixing Time Bounds via Comparison Transport",
+    "description": "**Conjecture**: For any chain P compared to reference Q via `ReversibleChainComparison` with parameters (b, C), the mixing time satisfies t_mix(P, \u03b5) \u2264 (b\u00b7C/\u03bb(Q)) \u00b7 (log|\u03b1| + log(1/\u03b5)). Moreover, the prefactor b\u00b7C is tight up to constants for the class of \"lazy path walks compared to jump walks.\"\n\n**Test**: Compute exact mixing times (defined as first time TV distance < 1/4) for all reversible chains on 5 states, and verify the predicted bound is within a factor of n of the truth.\n\n**Impact**: Creates the first formally certified mixing time bounds for non-group chains, with practical implications for MCMC stopping rules.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/MixingTime.lean` \u2014 `tv_le_half_sqrt_card_mul_l2`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `spectralGap_lower_bound_of_dirichlet_comparison`\n\n**Proof Strategy**: Combine the comparison theorem's spectral gap bound with the TV-L\u00b2 comparison from `MixingTime.lean`. The L\u00b2 distance at time t satisfies ||P^t - \u03c0||\u00b2_{L\u00b2(\u03c0)} \u2264 (1-\u03bb)^{2t} \u00b7 (|\u03b1|-1), and TV \u2264 (1/2)\u221a(|\u03b1|) \u00b7 ||\u00b7||_{L\u00b2}.\n\n**Domain Bridges**: Probability theory \u2194 Algorithms (MCMC stopping rules) \u2194 Statistics (sampling guarantees)\n\n**Lineage**: Combines two catalog lineages: comparison (this work) and mixing time (CayleyExpander)\n\n**Ambition**: \ud83d\udfe1 Solid extension \u2014 connects existing verified results into a practical tool\n\n**The key insight is** that the comparison theorem produces a spectral gap bound in exactly the form needed by the mixing time machinery already formalized in the catalog.\n\n**Why now?** Both the comparison theorem and the mixing time infrastructure are verified; the connection is a straightforward composition.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a19dada",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:05:03.316466+00:00"
+  },
+  {
+    "id": "fd_1231",
+    "title": "Direction 3: Information-Theoretic Comparison via Modified Log-Sobolev Inequalities",
+    "description": "**Conjecture**: The comparison method extends to modified log-Sobolev inequalities (MLSI): if chain Q satisfies MLSI with constant \u03b1_Q, and the \"entropy comparison constant\" C_ent satisfies Ent_Q(f\u00b2) \u2264 C_ent \u00b7 Ent_P(f\u00b2), then P satisfies MLSI with constant \u03b1_Q/C_ent. This would give O(log log n) mixing time improvements over the Poincar\u00e9 route.\n\n**Test**: For the Glauber dynamics on the Ising model at \u03b2 < \u03b2_c (high temperature), verify computationally that the MLSI constant scales polynomially in n, while the Poincar\u00e9 constant scales polynomially with a worse exponent.\n\n**Impact**: Bridges probability theory to information theory through entropy methods, and provides exponentially better mixing bounds for chains with hypercontractive properties.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/LogSobolev.lean` \u2014 log-Sobolev infrastructure\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 comparison framework\n\n**Proof Strategy**: Replace variance with entropy, Dirichlet form with entropy dissipation, and adapt the comparison argument. The key difficulty is that entropy is not a quadratic functional, so the \"choose optimal c\" trick from variance comparison needs modification.\n\n**Domain Bridges**: Probability theory \u2194 Information theory (entropy, KL divergence) \u2194 Quantum information (hypercontractivity)\n\n**Lineage**: Extension of comparison framework + log-Sobolev catalog\n\n**Ambition**: \ud83d\udd34 Grand challenge \u2014 would create the first formally verified MLSI comparison theorem\n\n**The key insight is** that the comparison principle is fundamentally about transferring functional inequalities, and the Poincar\u00e9 inequality is just one instance of a general pattern that includes log-Sobolev, Nash, and Beckner inequalities.\n\n**Why now?** The log-Sobolev infrastructure exists in the catalog, and the comparison framework provides the template for the proof structure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a19dada",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:05:03.356788+00:00"
+  },
+  {
+    "id": "fd_1232",
+    "title": "Direction 4: Phase Transition Detection via Comparison Breakdown",
+    "description": "**Conjecture**: For the Ising model on Z\u00b2_n at inverse temperature \u03b2, the comparison constant C(\u03b2) between Glauber dynamics and a reference block dynamics satisfies C(\u03b2) = O(poly(n)) for \u03b2 < \u03b2_c and C(\u03b2) = exp(\u03a9(n)) for \u03b2 > \u03b2_c. The comparison theorem thus formally detects the phase transition: the bound is useful above the critical temperature and provably useless below.\n\n**Test**: Compute C(\u03b2) for Ising model on 4\u00d74, 6\u00d76, 8\u00d78 grids as \u03b2 crosses the critical value \u03b2_c \u2248 0.4407. Observe the transition from polynomial to exponential growth.\n\n**Impact**: Creates a formal mathematical framework for detecting and certifying phase transitions through comparison-theoretic lens, connecting mixing theory to statistical physics.\n\n**Catalog References**:\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `ReversibleChainComparison`\n- `Pythagorean/CayleyExpander/MixingTime.lean` \u2014 relaxation time\n\n**Proof Strategy**: For \u03b2 < \u03b2_c, use Dobrushin's condition to bound the comparison constant polynomially. For \u03b2 > \u03b2_c, construct explicit \"bottleneck\" functions where E_P/E_Q is exponentially large, using the phase boundary as a witness.\n\n**Domain Bridges**: Probability theory \u2194 Statistical physics (phase transitions) \u2194 Complexity theory (computational hardness of sampling)\n\n**Lineage**: Application of comparison framework to physics\n\n**Ambition**: \ud83d\udd34 Grand challenge \u2014 formal verification of a phase transition phenomenon\n\n**The key insight is** that the comparison constant C is not just a technical parameter: its growth rate as a function of system size encodes fundamental physical information about the presence or absence of long-range order.\n\n**Why now?** The comparison framework is verified, and the Ising model is one of the most-studied systems in mathematical physics, with extensive rigorous theory to guide the formalization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a19dada",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:05:03.395228+00:00"
   }
 ];
