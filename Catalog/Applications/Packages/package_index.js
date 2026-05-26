@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Information Theory",
     "date": "2026-05-26T00:41:59Z",
     "exp_id": "bfa066a8",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.717992972972973,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_concentration_of_subgroup_pressure.json",
@@ -1269,8 +1269,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-26T00:41:59Z",
       "hue": 281,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.717992972972973,
+      "quality": "substantial"
     }
   ],
   "edges": [

@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1637 of the highest-quality
+A curated collection of 1653 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1637
+Total files: 1653
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -42,13 +42,16 @@ import FINAL.Algebra.Counting
 import FINAL.Algebra.Covering
 import FINAL.Algebra.CramerModel
 import FINAL.Algebra.CrystallizerFrontier
+import FINAL.Algebra.CyclicGroupSubgroups
 import FINAL.Algebra.CyclotomicGaloisGroup
 import FINAL.Algebra.DeepOpenProblems
 import FINAL.Algebra.Defs
 import FINAL.Algebra.DegreeTheory
+import FINAL.Algebra.Density
 import FINAL.Algebra.Depth
 import FINAL.Algebra.Deriv
 import FINAL.Algebra.Derivability
+import FINAL.Algebra.Derivative
 import FINAL.Algebra.DescentAlgebra
 import FINAL.Algebra.DifferenceSetSymmetry
 import FINAL.Algebra.Dim2
@@ -66,6 +69,7 @@ import FINAL.Algebra.Extensions
 import FINAL.Algebra.FactoringViaBerggren
 import FINAL.Algebra.Families
 import FINAL.Algebra.FermatFactor
+import FINAL.Algebra.FiniteDimensional
 import FINAL.Algebra.Foundation
 import FINAL.Algebra.Foundations
 import FINAL.Algebra.Freivalds
@@ -83,11 +87,13 @@ import FINAL.Algebra.GravityAITeam
 import FINAL.Algebra.GroebnerDerandomization
 import FINAL.Algebra.GroupSolvability
 import FINAL.Algebra.GroverAttacks
+import FINAL.Algebra.HDWalletCascade
 import FINAL.Algebra.HalesJewett
 import FINAL.Algebra.HilbertClassFieldBasic
 import FINAL.Algebra.HomingMissile
 import FINAL.Algebra.HurwitzQuaternions
 import FINAL.Algebra.Hyperbolic
+import FINAL.Algebra.IdealClassGroupBridge
 import FINAL.Algebra.IdempotentCongruenceBasis
 import FINAL.Algebra.IdempotentHilbertBasis
 import FINAL.Algebra.IdempotentLensing
@@ -113,6 +119,8 @@ import FINAL.Algebra.MetaOracleCore
 import FINAL.Algebra.MetaOracleNextSteps
 import FINAL.Algebra.MetaOraclePythagoreanDeep
 import FINAL.Algebra.MirrorQuantum
+import FINAL.Algebra.Modular
+import FINAL.Algebra.MonomialObstruction
 import FINAL.Algebra.MontgomeryPairCorrelation
 import FINAL.Algebra.MoonshotExplorations
 import FINAL.Algebra.MultiocularGodOracle
@@ -128,6 +136,7 @@ import FINAL.Algebra.OpenQuestions
 import FINAL.Algebra.OpenQuestions_2
 import FINAL.Algebra.OptimalComputer
 import FINAL.Algebra.Oracle
+import FINAL.Algebra.Orders
 import FINAL.Algebra.ParametricFamilies
 import FINAL.Algebra.ParityCensus
 import FINAL.Algebra.ParityCylinders
@@ -135,6 +144,7 @@ import FINAL.Algebra.Periodic
 import FINAL.Algebra.Photon
 import FINAL.Algebra.PolyMethod
 import FINAL.Algebra.PredictionGeometry
+import FINAL.Algebra.PrimeCounting
 import FINAL.Algebra.Probabilistic
 import FINAL.Algebra.PythagoreanPhotonics
 import FINAL.Algebra.PythagoreanQuadruples
@@ -153,11 +163,13 @@ import FINAL.Algebra.Radical
 import FINAL.Algebra.RamanujanFrontiers3
 import FINAL.Algebra.RamanujanOpenProblems
 import FINAL.Algebra.Recursion
+import FINAL.Algebra.RegulatorPosDef
 import FINAL.Algebra.RiemannConnection
 import FINAL.Algebra.Robustness
 import FINAL.Algebra.RotaBaxter
 import FINAL.Algebra.SchwartzZippel
 import FINAL.Algebra.SchwartzZippelBridge
+import FINAL.Algebra.SelfAdjoint
 import FINAL.Algebra.Series
 import FINAL.Algebra.SieveAndLattice
 import FINAL.Algebra.SingleTree
@@ -172,6 +184,7 @@ import FINAL.Algebra.StableReduction
 import FINAL.Algebra.StandardRep
 import FINAL.Algebra.StereographicBridge
 import FINAL.Algebra.StrangeLight
+import FINAL.Algebra.StrictUpperTriangular
 import FINAL.Algebra.Synthesis
 import FINAL.Algebra.Theorems
 import FINAL.Algebra.ThreeDreams
@@ -191,6 +204,7 @@ import FINAL.Algebra.Tropical_p_adic_Valuation_Bounds_and_Lifting_the_Exponent_f
 import FINAL.Algebra.TwoEyesNextSteps
 import FINAL.Algebra.UltrametricCondNeg
 import FINAL.Algebra.UnifyingTheory
+import FINAL.Algebra.UniswapV4Hooks
 import FINAL.Algebra.UniversalParentInverse
 import FINAL.Algebra.UniversalTranslator
 import FINAL.Algebra.WeightedRotaBaxter
@@ -555,6 +569,7 @@ import FINAL.Bridges.TropicalOneWayKernelDuality
 import FINAL.Bridges.TropicalOneWayMinors
 import FINAL.Bridges.TropicalOperadicKernelDuality
 import FINAL.Bridges.TropicalPersistenceRealizationDuality
+import FINAL.Bridges.TropicalPersistentHomology
 import FINAL.Bridges.TropicalPerturbationAmplification
 import FINAL.Bridges.TropicalPhylogenetics
 import FINAL.Bridges.TropicalPrimeStoneDuality
@@ -1354,6 +1369,7 @@ import FINAL.Pythagorean.SpectralPseudorandomness
 import FINAL.Pythagorean.SpectralSparsity
 import FINAL.Pythagorean.Spectrum
 import FINAL.Pythagorean.StrongNormBisimulation
+import FINAL.Pythagorean.SubgroupPressureConcentration
 import FINAL.Pythagorean.SubstAlgebra
 import FINAL.Pythagorean.SunflowerPruning
 import FINAL.Pythagorean.TensorSortedRewrite

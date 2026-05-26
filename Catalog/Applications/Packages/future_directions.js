@@ -363,10 +363,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "357e082f",
     "timestamp": "2026-05-25T02:11:10.263299+00:00"
   },
   {
@@ -541,10 +541,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0eb55b27",
     "timestamp": "2026-05-25T15:29:44.838185+00:00"
   },
   {
@@ -981,10 +981,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad18377f",
     "timestamp": "2026-05-25T20:01:51.933532+00:00"
   },
   {
@@ -1182,25 +1182,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:49:45.078780+00:00"
   },
   {
-    "id": "fd_0956",
-    "title": "Direction 2: Concentration of Subgroup Pressure",
-    "description": "**Conjecture:** For a random subgroup ensemble $\\mathcal{H}_n$ on $S_n$ (each subgroup included independently with probability $p$), the subgroup pair pressure concentrates:\n$$\\Pr\\left[|\\Pi(S_n; \\mathcal{H}_n) - \\mathbb{E}[\\Pi]| > t\\right] \\leq 2\\exp\\left(-\\frac{t^2 n}{C}\\right)$$\nfor some universal constant $C > 0$.\n\n**Test:** Sample random subgroup ensembles of $S_n$ for $n = 5, \\ldots, 15$. Compute pressure for each sample. Plot the variance versus $n$ and test for $O(1/n)$ decay.\n\n**Impact:** This would justify the thermodynamic limit: it says that for large groups, the pressure is essentially deterministic, and critical exponents are well-defined without averaging. This is the algebraic analogue of self-averaging in disordered systems.\n\n**Catalog References:** `Pythagorean/SubgroupUniversality.lean` (susceptibility bounds), `Catalog/old/Pythagorean/SubgroupPressure.lean` (pressure definition).\n\n**Proof Strategy:** Use McDiarmid's bounded differences inequality applied to the pressure function, viewed as a function of independent inclusion indicators. The bounded differences condition requires bounding the effect of adding or removing a single subgroup, which is $O([G:H]^{-2})$.\n\n**Domain Bridges:** Probability and concentration of measure (McDiarmid, Talagrand), random matrix theory (eigenvalue concentration), information theory (entropy concentration).\n\n**Lineage:** Extends `susceptibility_add_of_freeEnergy_add` and `divergence_bound_of_additive_susceptibility` to probabilistic settings.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 uses well-established probabilistic tools but applies them to a new algebraic setting.\n\nThe key insight is that subgroup pair pressure is a sum of independent bounded terms when subgroups are drawn randomly, making it amenable to standard concentration inequalities.\n\nWhy now? The formal definition of pressure and its algebraic properties are already verified, providing the mathematical scaffolding needed for probabilistic analysis.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "354ccda2",
-    "consumed_by_exp_id": "d3113deb",
-    "timestamp": "2026-05-25T21:49:45.104432+00:00"
-  },
-  {
     "id": "fd_0957",
     "title": "Direction 3: Renormalization Group for Subgroup Ensembles",
     "description": "**Conjecture:** There exists a coarse-graining map $\\mathcal{R}$ on subgroup ensembles such that:\n1. $\\mathcal{R}$ maps the pressure to a scaled version: $\\Pi(\\mathcal{R}(\\mathcal{H})) = \\lambda \\cdot \\Pi(\\mathcal{H})$ for some $\\lambda > 0$.\n2. Fixed points of $\\mathcal{R}$ correspond to universality classes.\n3. The linearization of $\\mathcal{R}$ at a fixed point has eigenvalues that determine critical exponents.\n\n**Test:** For $S_n$ with $n = 2^k$ (powers of 2), define $\\mathcal{R}$ by passing from maximal subgroups of $S_{2^k}$ to those of $S_{2^{k-1}}$ via restriction. Compute the pressure at each scale and test for fixed-point convergence.\n\n**Impact:** This would bring the full power of renormalization group theory into finite algebra, potentially classifying all universality classes for finite group generation.\n\n**Catalog References:** `Pythagorean/SubgroupUniversality.lean` (all theorems), `Catalog/old/Pythagorean/SubgroupPressure.lean` (product factorization as coarse-graining precursor).\n\n**Proof Strategy:** Define $\\mathcal{R}$ as restriction to a quotient or block structure. For direct products, $\\mathcal{R}$ simply selects one factor, and the fixed point is the single-factor pressure. Prove that the eigenvalue spectrum of the linearization determines the exponent.\n\n**Domain Bridges:** Quantum field theory (Wilson's renormalization group), dynamical systems (iterated function systems), ergodic theory (transfer operators), topology (scaling limits).\n\n**Lineage:** Extends `freeEnergy_directPower` to a dynamical framework where extensivity is one consequence of a deeper fixed-point structure.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 paradigm-shifting. Would unify algebraic generation theory with one of the most powerful frameworks in theoretical physics.\n\nThe key insight is that the extensivity theorem $F(m,t) = m \\cdot F(1,t)$ can be reinterpreted as a fixed-point equation: the free energy per factor is invariant under the \"add one more copy\" operation, which is the simplest renormalization group transformation.\n\nWhy now? The proven extensivity and exponent additivity theorems provide the first mathematical evidence that a fixed-point structure exists. Without these, the renormalization program would be purely speculative.\n\n---",
@@ -1239,26 +1220,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "354ccda2",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:49:45.153662+00:00"
-  },
-  {
-    "id": "fd_0959",
-    "title": "Direction 5: Information-Theoretic Universality via Entropy Bounds",
-    "description": "**Conjecture:** The Shannon entropy of the distribution of subgroup containment\u2014defined as $H(\\mathcal{H}) = -\\sum_H p_H \\log p_H$ where $p_H = [G:H]^{-2} / \\Pi$\u2014satisfies:\n$$H(\\mathcal{H}_{G \\times K}) = H(\\mathcal{H}_G) + H(\\mathcal{H}_K) + O(\\log \\min(|G|, |K|)^{-1})$$\nfor independent product families, and the mutual information $I(\\mathcal{H}_G; \\mathcal{H}_K)$ vanishes.\n\n**Test:** Compute the entropy for $S_n \\times S_m$ and compare with $H(S_n) + H(S_m)$ for various $n, m$. Measure mutual information for wreath product families where independence is only approximate.\n\n**Impact:** This would reinterpret universality through information theory: universality classes correspond to families with the same entropy scaling, and critical exponents are information-theoretic invariants.\n\n**Catalog References:** `Pythagorean/SubgroupUniversality.lean` (pressure additivity, susceptibility additivity), `Catalog/old/Pythagorean/SubgroupPressure.lean` (pressure product theorem).\n\n**Proof Strategy:** Use the product factorization theorem $\\Pi(G \\times K) = \\Pi(G) \\cdot \\Pi(K)$ to decompose the normalized weights. Apply properties of entropy for product distributions.\n\n**Domain Bridges:** Information theory (Shannon entropy, mutual information), coding theory (channel capacity), machine learning (information bottleneck), quantum information (entanglement entropy).\n\n**Lineage:** Extends `log_pressure_prod_eq_add` to an entropic framework.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 leverages well-known information-theoretic tools but creates a novel bridge to algebraic combinatorics.\n\nThe key insight is that the pressure normalization turns subgroup contributions into a probability distribution, and the additivity of log-pressure under products is exactly the additivity of entropy for independent random variables.\n\nWhy now? The formalized product and additivity theorems provide the algebraic scaffolding, and the computational framework (log-slope, second differences) enables quantitative testing of information-theoretic predictions across families.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "354ccda2",
-    "consumed_by_exp_id": "bfa066a8",
-    "timestamp": "2026-05-25T21:49:45.182975+00:00"
   },
   {
     "id": "fd_0960",
@@ -1537,10 +1498,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f520a5f",
     "timestamp": "2026-05-25T22:58:43.552516+00:00"
   },
   {
@@ -1670,11 +1631,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
+    "priority_score": 1.0,
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abb48be4",
     "timestamp": "2026-05-25T23:33:15.512838+00:00"
   },
   {
@@ -1689,7 +1650,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "243a6673",
@@ -1709,7 +1670,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "243a6673",
@@ -1729,7 +1690,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "243a6673",
@@ -1750,12 +1711,93 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "243a6673",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T23:33:15.642033+00:00"
+  },
+  {
+    "id": "fd_0985",
+    "title": "Direction 1: Spectral-Tropical Entropy Bridge",
+    "description": "**Conjecture:** For any connected graph $G$ with maximum degree $\\Delta$ and largest adjacency eigenvalue $\\lambda_1$:\n$$H(G) \\geq \\log(\\lambda_1 / \\Delta)$$\nwhere $H(G)$ is the graph degree entropy.\n\n**The key insight is...** The degree entropy captures how uniformly the graph distributes topological information capacity, while $\\lambda_1 / \\Delta$ measures how close the graph is to being regular (by the Perron-Frobenius theorem, $\\lambda_1 / \\Delta \\leq 1$ with equality iff $G$ is regular). The conjecture asserts that irregular graphs have lower degree entropy, bounded below by the spectral irregularity measure. This would connect three domains: tropical algebra (stability), information theory (entropy), and spectral theory (eigenvalues).\n\n**Why now?** The formal verification of degree entropy non-negativity (Theorem 7.1 in our work) provides the foundation. Mathlib now contains the spectral theory of finite graphs (adjacency matrix eigenvalues) and the Perron-Frobenius theorem, making a formal proof feasible. The Alon-Boppana bound $\\lambda_1 \\geq 2\\sqrt{\\Delta - 1} - o(1)$ would give explicit lower bounds.\n\n**Test:** Compute $H(G)$ and $\\log(\\lambda_1/\\Delta)$ for 1000 random graphs with $n = 50$ vertices and edge probability $p \\in \\{0.1, 0.3, 0.5\\}$. Verify the inequality holds in all cases.\n\n**Impact:** Establishes a spectral floor on tropical information content, enabling stability bounds derived purely from eigenvalue data.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalBridge/Stability.lean` (degree bounds), `Catalog/Pythagorean/TropicalBridge/TropicalInformationTheory.lean` (degree entropy).\n\n**Proof Strategy:** Use the concavity of log and the relationship $\\sum p_v = 1$, $\\sum p_v \\cdot \\deg(v) = \\text{avg\\_degree}$. Apply Jensen's inequality to bound the entropy from below. Connect to $\\lambda_1$ via the Rayleigh quotient characterization.\n\n**Domain Bridges:** Spectral graph theory \u2194 Information theory \u2194 Tropical geometry.\n\n**Lineage:** Extends `degree_entropy_nonneg` and `capacity_gap_formula`.\n\n**Ambition:** Solid extension (3/5). Builds directly on established catalog theorems with clear proof strategy.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e5283ed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T23:33:37.973936+00:00"
+  },
+  {
+    "id": "fd_0990",
+    "title": "Direction 1: Lorentzian Polynomial Certificates for Exchange Optimization",
+    "description": "**Conjecture:** If the generating polynomial of a matroid M, weighted by an objective function f, is Lorentzian in the sense of Br\u00e4nd\u00e9n\u2013Huh, then f satisfies the directional exchange certificate on the bases of M. More precisely, the Lorentzian condition on the polynomial \u2211_{B basis} f(B) \u00b7 x^B implies DLC for -f on bases(M).\n\n**Test:** For matroids of rank \u2264 5 on ground sets of size \u2264 10, compute the generating polynomial with objective weights, verify the Lorentzian condition (negative semidefiniteness of the Hessian on the positive orthant), and check whether DLC holds. The conjecture predicts 100% correlation.\n\n**Impact:** This would establish a direct pipeline: Lorentzian polynomial \u2192 DLC \u2192 certified optimization. It would mean that the deep algebraic-geometric results of Br\u00e4nd\u00e9n\u2013Huh (which prove Lorentzian structure for many combinatorial polynomials) automatically yield optimization algorithms with global optimality guarantees. This transforms pure mathematics into applied algorithms.\n\n**Catalog References:** `Catalog/Pythagorean/HigherOrderLogConcavity.lean` \u2014 `KFoldLogConcave`, `kFoldLogConcave_mono`\n\n**Proof Strategy:** Use the characterization of Lorentzian polynomials via the positive semidefiniteness of associated quadratic forms. Show that the Lorentzian condition along exchange directions (2D slices corresponding to pairs (i,j)) implies the discrete midpoint inequality that underlies DLC. The key lemma is that the Lorentzian Hessian condition, restricted to the line spanned by e_i - e_j, gives exactly the ratio monotonicity needed for improving exchanges.\n\n**Domain Bridges:** Algebraic geometry (Hodge theory, Lorentzian polynomials) \u2192 Discrete optimization \u2192 Matroid theory\n\n**Lineage:** Builds on Theorems 1, 3.6 (coeffDLC_induces_exchange_optimization), and the kFoldLogConcave hierarchy.\n\n**Ambition:** Grand challenge \u2014 would unify two major research programs (Hodge-theoretic combinatorics and discrete convex analysis) that have developed independently.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "abf333bc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T00:07:30.273038+00:00"
+  },
+  {
+    "id": "fd_0991",
+    "title": "Direction 2: Quantitative Exchange Descent Bounds via Certificate Depth",
+    "description": "**Conjecture:** For a finite exchange family S \u2286 \u2124^d with diameter D and an objective f satisfying ExchangeDLC_k with k \u2265 1, the exchange descent algorithm terminates in at most C \u00b7 d^{d-k} \u00b7 D steps, where C is a universal constant. At maximum depth k = d, the bound reduces to O(D), matching the performance of augmenting-path algorithms on M-convex functions.\n\n**Test:** Generate random exchange families of varying dimension d \u2208 {4,...,12} and rank r. For each, construct objectives with controlled certificate depth (using sums of independent log-concave terms for high depth, perturbed quadratics for low depth). Measure step counts and fit the exponent as a function of (d - k).\n\n**Impact:** This would establish the first complexity-depth tradeoff in discrete optimization, creating a new axis for algorithm design: invest in proving deeper certificates to get faster algorithms. This is analogous to how smoothness parameters control convergence rates in continuous optimization.\n\n**Catalog References:** `Catalog/Pythagorean/HigherOrderLogConcavity.lean` \u2014 `KFoldLogConcave.iterRatio_kfold`, `kFoldLogConcave_mono`\n\n**Proof Strategy:** Define a potential function \u03a6_k(x) that combines the objective value with a k-dependent measure of \"distance to optimality\" in the exchange graph. Show that each descent step decreases \u03a6_k by at least \u03b4_k = \u03a9(d^{-(d-k)}), yielding the step bound. The potential should leverage the k-fold certificate to get tighter decrease estimates at higher depths.\n\n**Domain Bridges:** Computational complexity \u2192 Discrete optimization \u2192 Algebraic combinatorics\n\n**Lineage:** Extends exchangeDescent_length_bound (Theorem 3.4) and exchangeDLC_k_mono.\n\n**Ambition:** Solid extension \u2014 the O(|S|) bound is already proven; the goal is to tighten it using certificate depth.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "abf333bc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T00:07:30.309357+00:00"
+  },
+  {
+    "id": "fd_0995",
+    "title": "Direction 1: Spectral Tropical Stability \u2014 From Conjecture to Theorem",
+    "description": "**Conjecture:** For a Vietoris\u2013Rips filtration F from a finite point cloud, let \u03bb* = min_i \u03bb\u2082(F_i) be the minimum Fiedler eigenvalue across connected stages. Then for metric perturbations of size \u03b5:\n\n$$d_{tb}(F, \\tilde{F}; N) \\leq C \\cdot \\varepsilon / \\lambda_*$$\n\nfor a dimension-dependent constant C.\n\n**Test:** Generate families of point clouds with controlled algebraic connectivity (e.g., by varying cluster separation). Measure the empirical constant C(d,n) across dimensions d and point counts n. Check whether the 1/\u03bb* scaling holds, or whether a different power law (e.g., 1/\u03bb*^\u03b1) provides a better fit.\n\n**Impact:** A proven spectral stability bound would bridge tropical TDA to spectral graph theory, enabling practitioners to predict barcode stability from Laplacian eigenvalues without computing the barcode under perturbation. This would make the tropical barcode a certified invariant for robustness-critical applications.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean` (graphLap, genus_nonneg_of_connected); `Catalog/Pythagorean/TropicalPersistentHomology.lean` (tropNullity_stable_under_edgeSymmDiff, tropBarcodeDist_le_edgePerturbation).\n\n**Proof Strategy:** Bound the edge symmetric difference |E(F_i) \u0394 E(F\u0303_i)| in terms of \u03b5 and the geometry of the point cloud, then use Cheeger's inequality to relate \u03bb\u2082 to isoperimetric properties that control edge sensitivity.\n\n**Domain Bridges:** Spectral graph theory \u2194 TDA \u2194 metric geometry.\n\n**Lineage:** Extends tropNullity_stable_under_edgeSymmDiff with a spectral refinement.\n\n**Ambition:** Grand challenge \u2014 would unify spectral and topological persistence theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "325d9cdd",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T00:40:25.919648+00:00"
   },
   {
     "id": "seed_005",
@@ -1878,27 +1920,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_0985",
-    "title": "Direction 1: Spectral-Tropical Entropy Bridge",
-    "description": "**Conjecture:** For any connected graph $G$ with maximum degree $\\Delta$ and largest adjacency eigenvalue $\\lambda_1$:\n$$H(G) \\geq \\log(\\lambda_1 / \\Delta)$$\nwhere $H(G)$ is the graph degree entropy.\n\n**The key insight is...** The degree entropy captures how uniformly the graph distributes topological information capacity, while $\\lambda_1 / \\Delta$ measures how close the graph is to being regular (by the Perron-Frobenius theorem, $\\lambda_1 / \\Delta \\leq 1$ with equality iff $G$ is regular). The conjecture asserts that irregular graphs have lower degree entropy, bounded below by the spectral irregularity measure. This would connect three domains: tropical algebra (stability), information theory (entropy), and spectral theory (eigenvalues).\n\n**Why now?** The formal verification of degree entropy non-negativity (Theorem 7.1 in our work) provides the foundation. Mathlib now contains the spectral theory of finite graphs (adjacency matrix eigenvalues) and the Perron-Frobenius theorem, making a formal proof feasible. The Alon-Boppana bound $\\lambda_1 \\geq 2\\sqrt{\\Delta - 1} - o(1)$ would give explicit lower bounds.\n\n**Test:** Compute $H(G)$ and $\\log(\\lambda_1/\\Delta)$ for 1000 random graphs with $n = 50$ vertices and edge probability $p \\in \\{0.1, 0.3, 0.5\\}$. Verify the inequality holds in all cases.\n\n**Impact:** Establishes a spectral floor on tropical information content, enabling stability bounds derived purely from eigenvalue data.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalBridge/Stability.lean` (degree bounds), `Catalog/Pythagorean/TropicalBridge/TropicalInformationTheory.lean` (degree entropy).\n\n**Proof Strategy:** Use the concavity of log and the relationship $\\sum p_v = 1$, $\\sum p_v \\cdot \\deg(v) = \\text{avg\\_degree}$. Apply Jensen's inequality to bound the entropy from below. Connect to $\\lambda_1$ via the Rayleigh quotient characterization.\n\n**Domain Bridges:** Spectral graph theory \u2194 Information theory \u2194 Tropical geometry.\n\n**Lineage:** Extends `degree_entropy_nonneg` and `capacity_gap_formula`.\n\n**Ambition:** Solid extension (3/5). Builds directly on established catalog theorems with clear proof strategy.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e5283ed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T23:33:37.973936+00:00"
   },
   {
     "id": "seed_013",
@@ -2301,85 +2322,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:13:49.686566+00:00"
-  },
-  {
-    "id": "fd_0866",
-    "title": "Direction 4: Tropical Persistent Homology for Network Data Analysis",
-    "description": "**Conjecture**: For a filtration of graphs $G_1 \\subseteq G_2 \\subseteq \\cdots \\subseteq G_k$ arising from a point cloud (via Vietoris-Rips or similar construction), the sequence of tropical kernel dimensions $\\dim(\\ker_{\\text{trop}}(L_{G_i}))$ produces a \"tropical barcode\" that is stable under small perturbations of the input data, with stability constant equal to the minimum Fiedler eigenvalue across the filtration.\n\n**Test**:\n1. Generate 100 random point clouds in $\\mathbb{R}^d$ for $d \\in \\{2, 3, 5\\}$\n2. Compute tropical barcodes via the cycle rank sequence\n3. Compute classical persistent homology barcodes via standard algorithms\n4. Compare stability constants: measure the bottleneck distance between barcodes under perturbation\n5. Falsification: find a point cloud where the tropical barcode is strictly less stable than the classical barcode (would bound the stability constant)\n\n**Impact**: Could provide a faster alternative to standard persistent homology computation for topological data analysis. Tropical operations (min, plus) are simpler than field arithmetic, potentially enabling hardware acceleration.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean`: `genus_nonneg_of_connected`\n- `Catalog/Pythagorean/AdelicPersistentHomology.lean`: persistent homology infrastructure (if available)\n\n**Proof Strategy**: Use the interlacing theorem for graph Laplacian eigenvalues to bound how the tropical kernel dimension changes when edges are added. The genus changes by exactly 1 when a non-tree edge is added, giving a Lipschitz bound on the barcode.\n\n**Domain Bridges**: Topological data analysis (persistent homology, barcodes) \u2194 Tropical geometry (tropical kernel dimension) \u2194 Spectral graph theory (eigenvalue interlacing)\n\n**Lineage**: Extends `genus_nonneg_of_connected`, connects to TDA\n\n**Ambition**: \u2605\u2605\u2605\u2606\u2606 \u2014 The cycle rank interpretation is standard; the novelty is the stability analysis and tropical algorithmic framework.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "97def267",
-    "consumed_by_exp_id": "325d9cdd",
-    "timestamp": "2026-05-25T14:24:37.143822+00:00"
-  },
-  {
-    "id": "fd_0922",
-    "title": "Direction 2: Certificate-Based Quantum Expanders",
-    "description": "**Conjecture**: For certified pairs $(U, V)$ of unitary matrices in $\\text{SU}(n)$ satisfying quantum analogues of the Singer-like and primitive-determinant conditions, the quantum channel $\\Phi(\\rho) = \\frac{1}{4}(U\\rho U^* + U^*\\rho U + V\\rho V^* + V^*\\rho V)$ has spectral gap $\\gamma > 0$ on traceless Hermitian matrices.\n\n**Test**: Implement the quantum channel for $n = 2$ and random certified unitaries. Compute the spectral gap numerically. Compare with the classical Cayley graph spectral gap for the same generator type.\n\n**Impact**: Quantum expanders are needed for quantum error correction, quantum communication complexity, and quantum pseudorandomness. A certificate-based construction would bypass the probabilistic existence proofs currently used.\n\n**Catalog References**: `Catalog/Pythagorean/CertificateExpanders.lean` (the averaging operator framework generalizes to quantum channels via the same maximum principle structure).\n\n**Proof Strategy**: The key insight is that the maximum principle for harmonic functions generalizes to the quantum setting: if $\\Phi(\\rho) = \\rho$ for a traceless Hermitian $\\rho$, then the maximum eigenvalue of $\\rho$ propagates to all \"neighbors\" in the quantum Cayley graph. The Singer-like condition on $U$ ensures no nontrivial invariant subspace, preventing fixed points.\n\n**Domain Bridges**: Quantum information theory, operator algebras, random matrix theory.\n\n**Lineage**: Direct quantum analogue of the classical certificate-expansion pipeline.\n\n**Ambition**: Grand challenge \u2014 would open certificate-expansion theory to quantum computation.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "dc67a2b9",
-    "timestamp": "2026-05-25T18:40:03.321531+00:00"
-  },
-  {
-    "id": "fd_0990",
-    "title": "Direction 1: Lorentzian Polynomial Certificates for Exchange Optimization",
-    "description": "**Conjecture:** If the generating polynomial of a matroid M, weighted by an objective function f, is Lorentzian in the sense of Br\u00e4nd\u00e9n\u2013Huh, then f satisfies the directional exchange certificate on the bases of M. More precisely, the Lorentzian condition on the polynomial \u2211_{B basis} f(B) \u00b7 x^B implies DLC for -f on bases(M).\n\n**Test:** For matroids of rank \u2264 5 on ground sets of size \u2264 10, compute the generating polynomial with objective weights, verify the Lorentzian condition (negative semidefiniteness of the Hessian on the positive orthant), and check whether DLC holds. The conjecture predicts 100% correlation.\n\n**Impact:** This would establish a direct pipeline: Lorentzian polynomial \u2192 DLC \u2192 certified optimization. It would mean that the deep algebraic-geometric results of Br\u00e4nd\u00e9n\u2013Huh (which prove Lorentzian structure for many combinatorial polynomials) automatically yield optimization algorithms with global optimality guarantees. This transforms pure mathematics into applied algorithms.\n\n**Catalog References:** `Catalog/Pythagorean/HigherOrderLogConcavity.lean` \u2014 `KFoldLogConcave`, `kFoldLogConcave_mono`\n\n**Proof Strategy:** Use the characterization of Lorentzian polynomials via the positive semidefiniteness of associated quadratic forms. Show that the Lorentzian condition along exchange directions (2D slices corresponding to pairs (i,j)) implies the discrete midpoint inequality that underlies DLC. The key lemma is that the Lorentzian Hessian condition, restricted to the line spanned by e_i - e_j, gives exactly the ratio monotonicity needed for improving exchanges.\n\n**Domain Bridges:** Algebraic geometry (Hodge theory, Lorentzian polynomials) \u2192 Discrete optimization \u2192 Matroid theory\n\n**Lineage:** Builds on Theorems 1, 3.6 (coeffDLC_induces_exchange_optimization), and the kFoldLogConcave hierarchy.\n\n**Ambition:** Grand challenge \u2014 would unify two major research programs (Hodge-theoretic combinatorics and discrete convex analysis) that have developed independently.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T00:07:30.273038+00:00"
-  },
-  {
-    "id": "fd_0991",
-    "title": "Direction 2: Quantitative Exchange Descent Bounds via Certificate Depth",
-    "description": "**Conjecture:** For a finite exchange family S \u2286 \u2124^d with diameter D and an objective f satisfying ExchangeDLC_k with k \u2265 1, the exchange descent algorithm terminates in at most C \u00b7 d^{d-k} \u00b7 D steps, where C is a universal constant. At maximum depth k = d, the bound reduces to O(D), matching the performance of augmenting-path algorithms on M-convex functions.\n\n**Test:** Generate random exchange families of varying dimension d \u2208 {4,...,12} and rank r. For each, construct objectives with controlled certificate depth (using sums of independent log-concave terms for high depth, perturbed quadratics for low depth). Measure step counts and fit the exponent as a function of (d - k).\n\n**Impact:** This would establish the first complexity-depth tradeoff in discrete optimization, creating a new axis for algorithm design: invest in proving deeper certificates to get faster algorithms. This is analogous to how smoothness parameters control convergence rates in continuous optimization.\n\n**Catalog References:** `Catalog/Pythagorean/HigherOrderLogConcavity.lean` \u2014 `KFoldLogConcave.iterRatio_kfold`, `kFoldLogConcave_mono`\n\n**Proof Strategy:** Define a potential function \u03a6_k(x) that combines the objective value with a k-dependent measure of \"distance to optimality\" in the exchange graph. Show that each descent step decreases \u03a6_k by at least \u03b4_k = \u03a9(d^{-(d-k)}), yielding the step bound. The potential should leverage the k-fold certificate to get tighter decrease estimates at higher depths.\n\n**Domain Bridges:** Computational complexity \u2192 Discrete optimization \u2192 Algebraic combinatorics\n\n**Lineage:** Extends exchangeDescent_length_bound (Theorem 3.4) and exchangeDLC_k_mono.\n\n**Ambition:** Solid extension \u2014 the O(|S|) bound is already proven; the goal is to tighten it using certificate depth.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T00:07:30.309357+00:00"
   },
   {
     "id": "seed_032",

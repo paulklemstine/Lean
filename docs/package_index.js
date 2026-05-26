@@ -4,6 +4,51 @@
 
 window.PACKAGE_INDEX = [
   {
+    "filename": "direction_5_information_theoretic_universality_via.json",
+    "title": "Information-Theoretic Universality via Subgroup Entropy",
+    "domain": "Algebraic Combinatorics / Information Theory",
+    "date": "2026-05-26T00:41:59Z",
+    "exp_id": "bfa066a8",
+    "quality_score": 0.717992972972973,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_2_concentration_of_subgroup_pressure.json",
+    "title": "Concentration of Subgroup Pressure: Self-Averaging Theorems for Random Subgroup Ensembles",
+    "domain": "Algebraic Thermodynamics / Probabilistic Group Theory",
+    "date": "2026-05-26T00:41:36Z",
+    "exp_id": "d3113deb",
+    "quality_score": 0.771213734939759,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_2_heterogeneitygap_conjecture.json",
+    "title": "Structural Disorder Forces Integrality Separation: Edge-Size Heterogeneity in Hypergraph Covering",
+    "domain": "Combinatorial Optimization / Hypergraph Theory",
+    "date": "2026-05-26T00:41:16Z",
+    "exp_id": "54bded48",
+    "quality_score": 0.7112743078154176,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_2_certificate_based_quantum_expanders.json",
+    "title": "Certificate-Based Quantum Expanders: Spectral Gap from Algebraic Certification",
+    "domain": "Quantum Information Theory / Spectral Graph Theory",
+    "date": "2026-05-26T00:40:46Z",
+    "exp_id": "dc67a2b9",
+    "quality_score": 0.7214240378548897,
+    "quality": "substantial"
+  },
+  {
+    "filename": "direction_4_tropical_persistent_homology_for_netwo.json",
+    "title": "Tropical Persistent Homology for Network Data Analysis",
+    "domain": "Pythagorean / Tropical Geometry / Topological Data Analysis",
+    "date": "2026-05-26T00:40:11Z",
+    "exp_id": "325d9cdd",
+    "quality_score": 0.7698015384615384,
+    "quality": "substantial"
+  },
+  {
     "filename": "direction_5_m_convex_optimization_via_directional_.json",
     "title": "Exchange Descent under Directional Log-Concavity Certificates",
     "domain": "Discrete Convex Analysis / Algebraic Combinatorics",
@@ -374,6 +419,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Tropical Geometry / Combinatorial Optimization"
   },
+  "direction_5_information_theoretic_universality_via.json": {
+    "title": "Information-Theoretic Universality via Subgroup Entropy",
+    "exp_id": "bfa066a8",
+    "source_exp_ids": [
+      "354ccda2"
+    ],
+    "domain": "Algebraic Combinatorics / Information Theory"
+  },
   "direction_3_weighted_extension.json": {
     "title": "Weighted Tropical Graph Hodge Theory",
     "exp_id": "e8f8d5e4",
@@ -414,6 +467,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Tropical Geometry / Topological Data Analysis / Graph Theory"
   },
+  "direction_2_concentration_of_subgroup_pressure.json": {
+    "title": "Concentration of Subgroup Pressure: Self-Averaging Theorems for Random Subgroup Ensembles",
+    "exp_id": "d3113deb",
+    "source_exp_ids": [
+      "354ccda2"
+    ],
+    "domain": "Algebraic Thermodynamics / Probabilistic Group Theory"
+  },
   "direction_5_tropical_morse_theory_as_a_topological.json": {
     "title": "Tropical Morse Theory as a Topological Feature for Graph Neural Networks",
     "exp_id": "db7ef9c7",
@@ -437,6 +498,14 @@ window.PACKAGE_DB_INDEX = {
       "b9d16ed0"
     ],
     "domain": "Combinatorial Optimization / Hypergraph Theory"
+  },
+  "direction_4_tropical_persistent_homology_for_netwo.json": {
+    "title": "Tropical Persistent Homology for Network Data Analysis",
+    "exp_id": "325d9cdd",
+    "source_exp_ids": [
+      "97def267"
+    ],
+    "domain": "Pythagorean / Tropical Geometry / Topological Data Analysis"
   },
   "direction_4_higher_order_tensor_calculus_with_eins.json": {
     "title": "Universal Einstein Contraction Calculus for Order-Indexed Tensors",
@@ -630,6 +699,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "domain": "Algebraic Statistical Mechanics / Finite Group Theory"
   },
+  "direction_2_certificate_based_quantum_expanders.json": {
+    "title": "Certificate-Based Quantum Expanders: Spectral Gap from Algebraic Certification",
+    "exp_id": "dc67a2b9",
+    "source_exp_ids": [
+      "ad66d851"
+    ],
+    "domain": "Quantum Information Theory / Spectral Graph Theory"
+  },
   "direction_3_concentration_of__on_random_hypergraph.json": {
     "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
     "exp_id": "7817bcef",
@@ -645,6 +722,14 @@ window.PACKAGE_DB_INDEX = {
       "1f8fa3a8"
     ],
     "domain": "Pythagorean \u2014 Lorentzian Polynomials and Markov Chain Mixing"
+  },
+  "direction_2_heterogeneitygap_conjecture.json": {
+    "title": "Structural Disorder Forces Integrality Separation: Edge-Size Heterogeneity in Hypergraph Covering",
+    "exp_id": "54bded48",
+    "source_exp_ids": [
+      "f6e7fe77"
+    ],
+    "domain": "Combinatorial Optimization / Hypergraph Theory"
   },
   "direction_1_m_convexity_closure_under_differentiat.json": {
     "title": "M-Convexity Closure Under Differentiation",
@@ -699,7 +784,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 112,
+      "hue": 95,
       "priority_score": 0.6787085818181818,
       "quality": "partial"
     },
@@ -710,7 +795,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 90,
+      "hue": 270,
       "priority_score": 0.7458845146055211,
       "quality": "substantial"
     },
@@ -721,7 +806,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.747059509202454,
       "quality": "substantial"
     },
@@ -732,7 +817,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7472302409097711,
       "quality": "substantial"
     },
@@ -743,7 +828,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T14:24:55Z",
-      "hue": 280,
+      "hue": 91,
       "priority_score": 0.6946936070455108,
       "quality": "partial"
     },
@@ -754,7 +839,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7554863879178124,
       "quality": "substantial"
     },
@@ -765,7 +850,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 134,
+      "hue": 271,
       "priority_score": 0.7535092285678423,
       "quality": "substantial"
     },
@@ -776,7 +861,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 272,
+      "hue": 270,
       "priority_score": 0.7284316923076923,
       "quality": "substantial"
     },
@@ -787,7 +872,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 90,
+      "hue": 92,
       "priority_score": 0.7475694375378231,
       "quality": "substantial"
     },
@@ -798,7 +883,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7452328425357874,
       "quality": "substantial"
     },
@@ -809,7 +894,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7379731931205967,
       "quality": "substantial"
     },
@@ -820,7 +905,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T17:14:28Z",
-      "hue": 271,
+      "hue": 270,
       "priority_score": 0.7094771428571429,
       "quality": "substantial"
     },
@@ -831,7 +916,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:14:56Z",
-      "hue": 271,
+      "hue": 92,
       "priority_score": 0.7307286403906522,
       "quality": "substantial"
     },
@@ -842,7 +927,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
-      "hue": 90,
+      "hue": 281,
       "priority_score": 0.7426729134392938,
       "quality": "substantial"
     },
@@ -853,7 +938,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:49:47Z",
-      "hue": 92,
+      "hue": 90,
       "priority_score": 0.718787256166983,
       "quality": "substantial"
     },
@@ -864,7 +949,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T17:57:55Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7485430061705161,
       "quality": "substantial"
     },
@@ -875,7 +960,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:02:50Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.7448372075471699,
       "quality": "substantial"
     },
@@ -930,7 +1015,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T19:29:15Z",
-      "hue": 281,
+      "hue": 91,
       "priority_score": 0.7239525714285715,
       "quality": "substantial"
     },
@@ -941,7 +1026,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:01:45Z",
-      "hue": 90,
+      "hue": 271,
       "priority_score": 0.7661817738359202,
       "quality": "substantial"
     },
@@ -952,7 +1037,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:02:12Z",
-      "hue": 270,
+      "hue": 95,
       "priority_score": 0.7190936000000001,
       "quality": "substantial"
     },
@@ -963,7 +1048,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:34:49Z",
-      "hue": 92,
+      "hue": 91,
       "priority_score": 0.7132103632664923,
       "quality": "substantial"
     },
@@ -974,7 +1059,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:35:13Z",
-      "hue": 91,
+      "hue": 270,
       "priority_score": 0.7238752112676057,
       "quality": "substantial"
     },
@@ -996,7 +1081,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:35:56Z",
-      "hue": 271,
+      "hue": 272,
       "priority_score": 0.7224016949152543,
       "quality": "substantial"
     },
@@ -1007,7 +1092,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T21:12:32Z",
-      "hue": 272,
+      "hue": 271,
       "priority_score": 0.7286,
       "quality": "substantial"
     },
@@ -1018,7 +1103,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T21:13:06Z",
-      "hue": 270,
+      "hue": 112,
       "priority_score": 0.7215128,
       "quality": "substantial"
     },
@@ -1029,7 +1114,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T21:13:36Z",
-      "hue": 270,
+      "hue": 90,
       "priority_score": 0.7197528467153285,
       "quality": "substantial"
     },
@@ -1040,7 +1125,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T21:49:23Z",
-      "hue": 91,
+      "hue": 92,
       "priority_score": 0.7272178424657534,
       "quality": "substantial"
     },
@@ -1051,7 +1136,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T21:51:06Z",
-      "hue": 90,
+      "hue": 272,
       "priority_score": 0.7304195636363637,
       "quality": "substantial"
     },
@@ -1062,7 +1147,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T22:25:13Z",
-      "hue": 100,
+      "hue": 92,
       "priority_score": 0.7444580722891567,
       "quality": "substantial"
     },
@@ -1073,7 +1158,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T22:25:35Z",
-      "hue": 270,
+      "hue": 91,
       "priority_score": 0.7277750000000001,
       "quality": "substantial"
     },
@@ -1084,7 +1169,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T22:58:33Z",
-      "hue": 91,
+      "hue": 95,
       "priority_score": 0.7187674157303372,
       "quality": "substantial"
     },
@@ -1095,7 +1180,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T22:59:02Z",
-      "hue": 91,
+      "hue": 272,
       "priority_score": 0.7849381886792453,
       "quality": "substantial"
     },
@@ -1106,7 +1191,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T23:33:12Z",
-      "hue": 91,
+      "hue": 90,
       "priority_score": 0.7260796984924622,
       "quality": "substantial"
     },
@@ -1117,7 +1202,7 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T23:33:35Z",
-      "hue": 275,
+      "hue": 91,
       "priority_score": 0.7261742857142859,
       "quality": "substantial"
     },
@@ -1128,8 +1213,63 @@ window.PACKAGE_GRAPH = {
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T00:07:27Z",
-      "hue": 270,
+      "hue": 272,
       "priority_score": 0.7241576377952756,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_tropical_persistent_homology_for_netwo",
+      "title": "Tropical Persistent Homology for Network Data Analysis",
+      "domain": "Pythagorean / Tropical Geometry / Topological Data Analysis",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-26T00:40:11Z",
+      "hue": 90,
+      "priority_score": 0.7698015384615384,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_certificate_based_quantum_expanders",
+      "title": "Certificate-Based Quantum Expanders: Spectral Gap from Algebraic Certification",
+      "domain": "Quantum Information Theory / Spectral Graph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T00:40:46Z",
+      "hue": 275,
+      "priority_score": 0.7214240378548897,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_heterogeneitygap_conjecture",
+      "title": "Structural Disorder Forces Integrality Separation: Edge-Size Heterogeneity in Hypergraph Covering",
+      "domain": "Combinatorial Optimization / Hypergraph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T00:41:16Z",
+      "hue": 91,
+      "priority_score": 0.7112743078154176,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_concentration_of_subgroup_pressure",
+      "title": "Concentration of Subgroup Pressure: Self-Averaging Theorems for Random Subgroup Ensembles",
+      "domain": "Algebraic Thermodynamics / Probabilistic Group Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T00:41:36Z",
+      "hue": 100,
+      "priority_score": 0.771213734939759,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_information_theoretic_universality_via",
+      "title": "Information-Theoretic Universality via Subgroup Entropy",
+      "domain": "Algebraic Combinatorics / Information Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T00:41:59Z",
+      "hue": 281,
+      "priority_score": 0.717992972972973,
       "quality": "substantial"
     }
   ],
@@ -1149,8 +1289,22 @@ window.PACKAGE_GRAPH = {
       "type": "provenance"
     },
     {
+      "source": "direction_5_expander_graphs_from_certificate_pairs",
+      "target": "direction_2_certificate_based_quantum_expanders",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
       "source": "yang_mills_mass_gap",
       "target": "direction_2_character_expansion_and_strong_couplin",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_universality_of_phase_transition_criti",
+      "target": "direction_2_concentration_of_subgroup_pressure",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -1198,6 +1352,13 @@ window.PACKAGE_GRAPH = {
       "type": "provenance"
     },
     {
+      "source": "direction_5_chip_firing_correspondence",
+      "target": "direction_4_tropical_persistent_homology_for_netwo",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
       "source": "direction_5_expander_graphs_from_certificate_pairs",
       "target": "direction_5_certificates_and_product_growth",
       "strength": 1.0,
@@ -1207,6 +1368,13 @@ window.PACKAGE_GRAPH = {
     {
       "source": "direction_3_generation_certificates_for_matrix_gro",
       "target": "direction_5_expander_graphs_from_certificate_pairs",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_universality_of_phase_transition_criti",
+      "target": "direction_5_information_theoretic_universality_via",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -1251,26 +1419,26 @@ window.PACKAGE_GRAPH = {
     {
       "domain_a": "Geometry",
       "domain_b": "Tropical",
-      "package_count": 6,
+      "package_count": 7,
       "strength": 1.0
     },
     {
       "domain_a": "Logic",
       "domain_b": "Tropical",
-      "package_count": 4,
+      "package_count": 5,
       "strength": 1.0
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Logic",
+      "package_count": 3,
+      "strength": 0.9000000000000001
     },
     {
       "domain_a": "Algebra",
       "domain_b": "Tropical",
       "package_count": 3,
       "strength": 0.9000000000000001
-    },
-    {
-      "domain_a": "Geometry",
-      "domain_b": "Logic",
-      "package_count": 2,
-      "strength": 0.7
     },
     {
       "domain_a": "Algebra",
@@ -1281,6 +1449,24 @@ window.PACKAGE_GRAPH = {
     {
       "domain_a": "Algebra",
       "domain_b": "Logic",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Pythagorean",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Logic",
+      "domain_b": "Pythagorean",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Pythagorean",
+      "domain_b": "Tropical",
       "package_count": 1,
       "strength": 0.5
     },
