@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1778 of the highest-quality
+A curated collection of 1795 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1778
+Total files: 1795
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -461,6 +461,7 @@ import FINAL.Bridges.LowDegreeTesting
 import FINAL.Bridges.LowerEnvelope
 import FINAL.Bridges.MarginCosheaf
 import FINAL.Bridges.MaslovDequantizationRobustness
+import FINAL.Bridges.MatrixGroupGrowth
 import FINAL.Bridges.MinEntropy
 import FINAL.Bridges.MinPlusAlgebra
 import FINAL.Bridges.MinPlusHarmonicAnalysis
@@ -1001,6 +1002,7 @@ import FINAL.Geometry.UnifiedLightTheory
 import FINAL.Geometry.UnifiedTheory
 import FINAL.Logic.Advanced
 import FINAL.Logic.AdvancedTheorems
+import FINAL.Logic.AdversarialPrediction
 import FINAL.Logic.Basic
 import FINAL.Logic.Bisection
 import FINAL.Logic.Bohm
@@ -1041,12 +1043,15 @@ import FINAL.Logic.ParallelClosureCanonicalization
 import FINAL.Logic.ParameterizedStereographic
 import FINAL.Logic.PathCardinal
 import FINAL.Logic.PhotonChannels
+import FINAL.Logic.PostQuantumSignatures
 import FINAL.Logic.PushoutHIT
+import FINAL.Logic.PvsNP
 import FINAL.Logic.QuantumMirrorComputation
 import FINAL.Logic.QueryComplexity
 import FINAL.Logic.ReflectiveConvergence
 import FINAL.Logic.ResearchOrdinalDepth
 import FINAL.Logic.ResourceBoundedNonlocality
+import FINAL.Logic.SelfReferentialTheories
 import FINAL.Logic.SpectralCollapse
 import FINAL.Logic.Suspension
 import FINAL.Logic.Syntax
@@ -1076,6 +1081,7 @@ import FINAL.MachineLearning.ActivationNerveCosheafRobustness
 import FINAL.MachineLearning.AdjointAutoencoder
 import FINAL.MachineLearning.Admissible
 import FINAL.MachineLearning.Advanced
+import FINAL.MachineLearning.AetherStressTesting
 import FINAL.MachineLearning.AlgebraicCausalInference
 import FINAL.MachineLearning.AlgebraicElectricity
 import FINAL.MachineLearning.AlgebraicNeuralArchitecture
@@ -1105,6 +1111,7 @@ import FINAL.MachineLearning.CASpacetimeAperiodicity
 import FINAL.MachineLearning.CATransitionMonoid
 import FINAL.MachineLearning.CNFRealizability
 import FINAL.MachineLearning.CRT
+import FINAL.MachineLearning.Capacity
 import FINAL.MachineLearning.Catoni
 import FINAL.MachineLearning.CayleyTransform
 import FINAL.MachineLearning.CechComplex
@@ -1170,6 +1177,7 @@ import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LoopFoundations
 import FINAL.MachineLearning.LowRankObstruction
+import FINAL.MachineLearning.MaxPlusRepresenter
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MinCutPrinciple
 import FINAL.MachineLearning.MinMax
@@ -1191,6 +1199,7 @@ import FINAL.MachineLearning.PathCut
 import FINAL.MachineLearning.PhotonEpistemicBridge
 import FINAL.MachineLearning.PhotonNetworks
 import FINAL.MachineLearning.PigeonholeFamily
+import FINAL.MachineLearning.PluralityRobust
 import FINAL.MachineLearning.PresheafIdentifiability
 import FINAL.MachineLearning.PrimeGapFramework
 import FINAL.MachineLearning.PrimitiveReduction
@@ -1212,6 +1221,8 @@ import FINAL.MachineLearning.Robustness
 import FINAL.MachineLearning.Scaling
 import FINAL.MachineLearning.SchemeInvariance
 import FINAL.MachineLearning.SecondExtremal
+import FINAL.MachineLearning.SelfAdjointFiniteDim
+import FINAL.MachineLearning.SemanticCompression
 import FINAL.MachineLearning.SemiringRelativeReality
 import FINAL.MachineLearning.Separation
 import FINAL.MachineLearning.SheafCertifiedRobustness
@@ -1232,6 +1243,7 @@ import FINAL.MachineLearning.Theorems
 import FINAL.MachineLearning.TraceCounting
 import FINAL.MachineLearning.Transfer
 import FINAL.MachineLearning.TriangularThreshold
+import FINAL.MachineLearning.TropKME
 import FINAL.MachineLearning.TropicalAdversarialRegularization
 import FINAL.MachineLearning.TropicalAdversarialTraining
 import FINAL.MachineLearning.TropicalAttentionRobustness
@@ -1322,6 +1334,7 @@ import FINAL.Pythagorean.AbelianizationTorsion
 import FINAL.Pythagorean.AdelicPersistentHomology
 import FINAL.Pythagorean.AdvancedFactoringResearch
 import FINAL.Pythagorean.AlgorithmicLatticeDiophantine
+import FINAL.Pythagorean.ApproxSubgroupTheorems
 import FINAL.Pythagorean.ArithmeticPhaseClassification
 import FINAL.Pythagorean.ArithmeticTDAPipeline
 import FINAL.Pythagorean.AsymptoticCompactness
@@ -1359,6 +1372,7 @@ import FINAL.Pythagorean.BerggrenWordCubeSpectral
 import FINAL.Pythagorean.BoundedBetaDefs
 import FINAL.Pythagorean.BoundedBetaTheorems
 import FINAL.Pythagorean.CRTBottleneck
+import FINAL.Pythagorean.CatalogBridge
 import FINAL.Pythagorean.CategoricalDimension
 import FINAL.Pythagorean.CertificateExpanders
 import FINAL.Pythagorean.CertificatePhaseTransition
@@ -1373,6 +1387,7 @@ import FINAL.Pythagorean.CompressionObstruction
 import FINAL.Pythagorean.CompressionProduct
 import FINAL.Pythagorean.CompressionSpectrumStructure
 import FINAL.Pythagorean.CompressionStability
+import FINAL.Pythagorean.Compute
 import FINAL.Pythagorean.ConcreteTermAlgebra
 import FINAL.Pythagorean.ConfigGraphPathwidth
 import FINAL.Pythagorean.Configurations
@@ -1408,6 +1423,7 @@ import FINAL.Pythagorean.EhrhartSeries
 import FINAL.Pythagorean.EinsteinContraction
 import FINAL.Pythagorean.EmergentComputation
 import FINAL.Pythagorean.EqualitySaturationExtraction
+import FINAL.Pythagorean.EulerFactor
 import FINAL.Pythagorean.ExactWeightedTropicalDimension
 import FINAL.Pythagorean.ExchangeDescent
 import FINAL.Pythagorean.ExplicitMorseTheory
@@ -1464,6 +1480,7 @@ import FINAL.Pythagorean.PadicOrbitalValuation
 import FINAL.Pythagorean.PersistenceZetaMultiplicativity
 import FINAL.Pythagorean.PhaseAwareLemmaSynthesis
 import FINAL.Pythagorean.PolynomialWidth
+import FINAL.Pythagorean.PrimePowerHecke
 import FINAL.Pythagorean.PrimewiseTorsionStability
 import FINAL.Pythagorean.ProductFormula
 import FINAL.Pythagorean.Properties

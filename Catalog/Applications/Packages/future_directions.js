@@ -382,10 +382,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "42d710f5",
     "timestamp": "2026-05-25T03:05:35.257371+00:00"
   },
   {
@@ -753,10 +753,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d9e69258",
     "timestamp": "2026-05-25T18:40:03.345424+00:00"
   },
   {
@@ -831,10 +831,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6297694a",
     "timestamp": "2026-05-25T19:29:17.948753+00:00"
   },
   {
@@ -1366,25 +1366,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T22:58:43.577519+00:00"
   },
   {
-    "id": "fd_0975",
-    "title": "Direction 1: Quantitative Growth Bounds for Matrix Groups",
-    "description": "**Conjecture:** For every $n \\geq 2$, there exist universal constants $\\varepsilon_n > 0$ and $C_n \\geq 1$ such that for every prime power $q$ and every certified pair $(g, h)$ generating $\\mathrm{GL}(n, \\mathbb{F}_q)$, with $A = \\{1, g, g^{-1}, h, h^{-1}\\}$, either $A^3 = G$ or $|A^3| \\geq C_n |A|^{1+\\varepsilon_n}$.\n\n**Test:** Enumerate certified pairs in $\\mathrm{GL}(2, \\mathbb{F}_q)$ for $q = 5, 7, 11, 13, 17$ and compute the minimum value of $\\log|A^3|/\\log|A|$ across all non-saturated triples. If this minimum is bounded away from 1 uniformly in $q$, the conjecture is supported.\n\n**The key insight is** that the Strict Growth Theorem guarantees $|A^{k+1}| > |A^k|$ but says nothing about the growth rate. The gap between qualitative growth (our theorem) and quantitative growth (Helfgott's $|A^3| \\geq |A|^{1+\\delta}$) is where the deep structure theory of finite simple groups enters. By formalizing intermediate results \u2014 such as the escape-from-subvarieties lemma of Helfgott \u2014 one can incrementally close this gap.\n\n**Why now?** Our formal infrastructure (product powers, Cayley balls, generation certificates) is exactly the scaffolding needed to state and pursue quantitative bounds. The Strict Growth Theorem provides the base case, and Mathlib's developing theory of finite fields and linear algebra provides the algebraic tools.\n\n**Impact:** A formally verified quantitative growth bound, even for $n = 2$, would be a landmark in formal mathematics \u2014 the first machine-checked result in the Helfgott program.\n\n**Catalog References:** `Catalog/Pythagorean/CertificateExpanders.lean` (spectral certificate structure), `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility certificates).\n\n**Proof Strategy:** Formalize Helfgott's escape-from-subvarieties lemma for $\\mathrm{SL}(2, \\mathbb{F}_p)$: if $A$ generates and $|A^3| < |A|^{1+\\varepsilon}$, then $A$ is approximately contained in a proper algebraic subvariety, which contradicts generation. The key lemma is that the trace map $\\text{tr}: \\mathrm{SL}(2) \\to \\mathbb{F}_p$ cannot concentrate on few values for generating sets.\n\n**Domain Bridges:** Algebraic geometry (subvarieties of $\\mathrm{GL}_n$), additive combinatorics (sum-product estimates in finite fields).\n\n**Lineage:** Extends `strict_growth_of_generating` and `certified_pair_growth` from the current cycle.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 full quantitative growth bounds would require formalizing substantial finite group theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "0d18284a",
-    "timestamp": "2026-05-25T22:59:06.817075+00:00"
-  },
-  {
     "id": "fd_0976",
     "title": "Direction 2: Spectral Gap from Product Growth",
     "description": "**Conjecture:** There exists a formal derivation showing that strict Cayley ball growth implies a positive spectral gap for the Cayley graph adjacency operator. Specifically, if the Cayley ball of radius $k$ satisfies $|B_{k+1}| \\geq (1 + \\delta)|B_k|$ for some $\\delta > 0$ and all $B_k \\neq G$, then the spectral gap $\\lambda_1 - \\lambda_2$ of the normalized adjacency matrix is at least $f(\\delta, |A|)$ for an explicit function $f$.\n\n**Test:** For certified pairs in $\\mathrm{GL}(2, \\mathbb{F}_5)$, compute both the Cayley ball growth rates and the spectral gap of the adjacency matrix numerically. Plot the correlation between growth rate and spectral gap across 100 certified pairs.\n\n**The key insight is** that product growth and spectral expansion are two faces of the same phenomenon. The Expander Mixing Lemma shows that spectral gap controls edge distribution; conversely, the Cheeger inequality shows that expansion controls spectral gap. Our Cayley Ball Strict Growth theorem provides the expansion side; connecting it to spectral gap would complete the bridge.\n\n**Why now?** The `CertificateExpanders.lean` file already defines the averaging operator and proves self-adjointness. The missing link is connecting product growth (proved in this cycle) to the spectral analysis (developed in the catalog). The Cayley ball formulation makes this connection natural: ball growth is graph expansion, which is spectral gap.\n\n**Impact:** A formal spectral-gap theorem from certificate data would unify the algebraic (generation) and analytic (spectral) approaches to expansion.\n\n**Catalog References:** `Catalog/Pythagorean/CertificateExpanders.lean` (averaging operator, self-adjointness, harmonic maximum principle, strict contraction).\n\n**Proof Strategy:** Use the Cheeger inequality: $h(G) \\leq \\sqrt{2(1 - \\lambda_2)}$ where $h$ is the edge expansion constant. Show that Cayley ball growth implies edge expansion $h \\geq \\delta/(1+\\delta)$. Then derive $\\lambda_2 \\leq 1 - h^2/2$.\n\n**Domain Bridges:** Spectral graph theory, Markov chain mixing, random matrix theory.\n\n**Lineage:** Extends `cayley_ball_strict_growth` and `cayley_diameter_bound` from the current cycle, connects to `strict_contraction_of_generates` from the catalog.\n\n**Ambition:** \ud83d\udfe1 Solid Extension \u2014 the Cheeger inequality is well-understood; the challenge is formalization.\n\n---",
@@ -1402,24 +1383,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "edab5f0b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:59:06.846580+00:00"
-  },
-  {
-    "id": "fd_0977",
-    "title": "Direction 3: Model Theory of Approximate Subgroups",
-    "description": "**Conjecture:** The Strict Growth Theorem can be reinterpreted as a model-theoretic dichotomy: a definable subset $A$ of a finite group $G$ either (a) is contained in a coset of a proper definable subgroup, or (b) satisfies strict growth $|A^{k+1}| > |A^k|$ at every step. This dichotomy should be formalizable in the language of definable sets over pseudofinite fields.\n\n**Test:** Formalize the notion of a \"definable approximate subgroup\" in Lean and prove the dichotomy for definable subsets of $\\mathrm{GL}(2, \\mathbb{F}_q)$.\n\n**The key insight is** that the Breuillard\u2013Green\u2013Tao classification of approximate groups has a model-theoretic kernel: approximate subgroups in connected groups are close to cosets of definable subgroups. Our Strict Growth Theorem is the simplest instance of this dichotomy (the \"non-approximate-subgroup\" case). Formalizing the model-theoretic framework would make the general theory accessible to formal verification.\n\n**Why now?** Hrushovski's work (2012) showed that model theory provides the natural language for approximate group theory. With Lean's type theory and Mathlib's algebraic infrastructure, formalizing definable sets and the compactness arguments that drive the BGT theory is becoming feasible.\n\n**Impact:** A formal model-theoretic framework for approximate groups would bridge formal verification to one of the most active areas of combinatorial group theory.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` (irreducibility and generation certificates provide the \"definable generation\" data).\n\n**Proof Strategy:** Define \"definable subsets\" of $G$ as images of polynomial maps $\\mathbb{F}_q^m \\to G$. Show that the Strict Growth Theorem applies to definable generating sets. Use ultraproduct arguments (formalized in Lean) to transfer to pseudofinite fields.\n\n**Domain Bridges:** Model theory (ultraproducts, definable sets), algebraic geometry (Zariski topology on $\\mathrm{GL}_n$), logic (compactness, transfer).\n\n**Lineage:** Extends `right_mul_stable_eq_univ` (the core algebraic engine) to a model-theoretic context.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 requires substantial model-theoretic infrastructure not yet in Mathlib.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "a0951d1f",
-    "timestamp": "2026-05-25T22:59:06.879782+00:00"
   },
   {
     "id": "fd_0978",
@@ -2296,6 +2259,49 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:13:49.686566+00:00"
   },
   {
+    "id": "fd_1070",
+    "title": "Direction 1: Non-Multiaffine Extension via Weighted Support Analysis",
+    "description": "**Conjecture:** For general homogeneous polynomials (not necessarily multiaffine) of degree $d$ in $n$ variables, there exists a weighted support measure $\\sigma(f)$ such that the number of nonzero quadratic derivative leaves is bounded by $\\sigma(f)$, and $\\sigma(f)$ can be computed from the Newton polytope of $f$ in polynomial time.\n\n**Test:** Define $\\sigma(f)$ as the number of lattice points in the $(d-2)$-shadow of the Newton polytope. Compute this for specific families (power-sum polynomials, Schur polynomials, elementary symmetric polynomials) and compare with the actual nonzero leaf count. A disproof would be a polynomial where coefficient cancellation forces the leaf count below the Newton polytope prediction.\n\n**Impact:** Would extend the support compression principle from multiaffine polynomials to all homogeneous polynomials, vastly expanding its applicability. This is essential for applications to Hodge theory and algebraic geometry, where multiaffineness is not guaranteed.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean` (Theorem `nonzeroDerivativeLeafSet_eq_indep`), `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`NewtonSupport`, `IsHomogeneousDeg`)\n\n**Proof Strategy:** Generalize the support criterion by replacing exact containment with a dominated-support condition. For non-multiaffine polynomials, the key difficulty is coefficient cancellation: two surviving monomials might cancel in the derivative. Approach via the theory of *stable polynomials* or *completely log-concave* polynomials, where cancellation is structurally prevented.\n\n**Domain Bridges:** Connects to algebraic geometry (Newton polytopes), optimization (lattice point enumeration), and convex geometry (mixed volumes).\n\n**Lineage:** Builds directly on Theorem 1 (support criterion) by removing the multiaffine hypothesis.\n\n**Ambition:** Grand challenge \u2014 would unify the multiaffine compression theory with the full Br\u00e4nd\u00e9n-Huh framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b24e9482",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T05:27:26.773711+00:00"
+  },
+  {
+    "id": "fd_1072",
+    "title": "Direction 3: Partition Function Certification in Statistical Physics",
+    "description": "**Conjecture:** The partition function $Z_M(\\lambda) = \\sum_{I \\text{ indep}} \\lambda^{|I|}$ of the *independence complex* of a matroid $M$ is a Lorentzian polynomial in the $\\lambda_i$ variables (one per element), and the support compression principle reduces the certification cost from exponential to polynomial for sparse matroids arising in lattice models.\n\n**The key insight is:** Matroid independence complexes are the natural setting for hard-core lattice gas models, and Lorentzian certification of the partition function would imply strong log-concavity of the independence sequence \u2014 a result with direct thermodynamic consequences (absence of phase transitions in certain regimes).\n\n**Why now?** The Anari-Liu-Oveis Gharan-Vinzant result on log-concave polynomials [2021] already established connections between matroid theory and partition functions. Our support compression theorem provides the missing algorithmic component: not just that Lorentzian certification exists in principle, but that it's computationally feasible for sparse systems.\n\n**Test:** Compute the partition function for graphic matroids of small Ising-model lattices. Verify Lorentzian positivity by exhaustive leaf checking, then compare the compressed leaf count with the ambient count. The conjecture predicts that lattice sparsity translates to certification sparsity.\n\n**Impact:** Would connect formal verification of polynomial positivity to predictions in statistical mechanics, providing mathematically certified bounds on phase transition parameters.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean`, `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`IsMConvexExchangeNat`)\n\n**Proof Strategy:** Extend the basis polynomial framework to the full independence complex polynomial. Use the matroid truncation operation to relate independent sets of different sizes to basis polynomials of truncated matroids.\n\n**Domain Bridges:** Statistical physics (partition functions, phase transitions), probability (log-concave distributions), algorithm design (MCMC sampling).\n\n**Lineage:** Extends Theorem 2 (matroid bridge) from bases to the full independence complex.\n\n**Ambition:** Grand challenge \u2014 bridges formal mathematics to physics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b24e9482",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T05:27:26.856241+00:00"
+  },
+  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2338,46 +2344,58 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
   },
   {
-    "id": "fd_1070",
-    "title": "Direction 1: Non-Multiaffine Extension via Weighted Support Analysis",
-    "description": "**Conjecture:** For general homogeneous polynomials (not necessarily multiaffine) of degree $d$ in $n$ variables, there exists a weighted support measure $\\sigma(f)$ such that the number of nonzero quadratic derivative leaves is bounded by $\\sigma(f)$, and $\\sigma(f)$ can be computed from the Newton polytope of $f$ in polynomial time.\n\n**Test:** Define $\\sigma(f)$ as the number of lattice points in the $(d-2)$-shadow of the Newton polytope. Compute this for specific families (power-sum polynomials, Schur polynomials, elementary symmetric polynomials) and compare with the actual nonzero leaf count. A disproof would be a polynomial where coefficient cancellation forces the leaf count below the Newton polytope prediction.\n\n**Impact:** Would extend the support compression principle from multiaffine polynomials to all homogeneous polynomials, vastly expanding its applicability. This is essential for applications to Hodge theory and algebraic geometry, where multiaffineness is not guaranteed.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean` (Theorem `nonzeroDerivativeLeafSet_eq_indep`), `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`NewtonSupport`, `IsHomogeneousDeg`)\n\n**Proof Strategy:** Generalize the support criterion by replacing exact containment with a dominated-support condition. For non-multiaffine polynomials, the key difficulty is coefficient cancellation: two surviving monomials might cancel in the derivative. Approach via the theory of *stable polynomials* or *completely log-concave* polynomials, where cancellation is structurally prevented.\n\n**Domain Bridges:** Connects to algebraic geometry (Newton polytopes), optimization (lattice point enumeration), and convex geometry (mixed volumes).\n\n**Lineage:** Builds directly on Theorem 1 (support criterion) by removing the multiaffine hypothesis.\n\n**Ambition:** Grand challenge \u2014 would unify the multiaffine compression theory with the full Br\u00e4nd\u00e9n-Huh framework.\n\n---",
+    "id": "fd_1075",
+    "title": "Direction 1: Quantitative Helfgott-Type Growth in GL(2, F_p)",
+    "description": "**Conjecture:** For every $\\varepsilon > 0$, there exists $\\delta > 0$ such that for every prime $p$ and every symmetric subset $A \\subseteq \\mathrm{SL}(2, \\mathbb{F}_p)$ with $1 \\in A$ and $|A| \\leq p^{3 - \\varepsilon}$, either $A$ is contained in a proper subgroup or $|A \\cdot A \\cdot A| \\geq |A|^{1 + \\delta}$.\n\n**Test:** Implement the product set triple computation $A^3$ for randomly sampled sets in $\\mathrm{SL}(2, \\mathbb{F}_p)$ with $p = 11, 13, 17, 19, 23$ and measure the exponent $\\delta$ as a function of $|A|/p^3$. A single family with sublinear triple-product growth would refute the conjecture.\n\n**Impact:** This would be the first formally verified quantitative growth theorem for linear groups, providing an explicit exponent rather than just a qualitative dichotomy. It would connect our Theorem 2 (strict growth) to Helfgott's breakthrough result and potentially yield constructive expander bounds.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the irreducible characteristic polynomial certificates can exclude containment in Borel (triangular) subgroups, which is the main obstruction to growth in $\\mathrm{SL}(2)$.\n\n**Proof Strategy:** Decompose into three lemmas: (a) escape from tori using trace arguments, (b) escape from Borel subgroups using irreducibility certificates, (c) sum-product estimates over $\\mathbb{F}_p$ for the remaining case. The key insight is that the generation certificates from the catalog provide exactly the escape witnesses needed.\n\n**Domain Bridges:** Additive combinatorics (sum-product estimates), analytic number theory (exponential sum bounds).\n\n**Lineage:** Extends `strict_growth_of_not_subgroup` from qualitative to quantitative.\n\n**Ambition:** Grand challenge \u2014 would constitute a new formally verified proof of (a special case of) a major theorem in arithmetic combinatorics.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
-      "Physics",
-      "Cryptography",
+      "Computation",
       "Bridges",
-      "Logic",
-      "Speculative"
+      "Logic"
     ],
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b24e9482",
+    "source_exp_id": "a0951d1f",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T05:27:26.773711+00:00"
+    "timestamp": "2026-05-26T06:04:06.524018+00:00"
   },
   {
-    "id": "fd_1072",
-    "title": "Direction 3: Partition Function Certification in Statistical Physics",
-    "description": "**Conjecture:** The partition function $Z_M(\\lambda) = \\sum_{I \\text{ indep}} \\lambda^{|I|}$ of the *independence complex* of a matroid $M$ is a Lorentzian polynomial in the $\\lambda_i$ variables (one per element), and the support compression principle reduces the certification cost from exponential to polynomial for sparse matroids arising in lattice models.\n\n**The key insight is:** Matroid independence complexes are the natural setting for hard-core lattice gas models, and Lorentzian certification of the partition function would imply strong log-concavity of the independence sequence \u2014 a result with direct thermodynamic consequences (absence of phase transitions in certain regimes).\n\n**Why now?** The Anari-Liu-Oveis Gharan-Vinzant result on log-concave polynomials [2021] already established connections between matroid theory and partition functions. Our support compression theorem provides the missing algorithmic component: not just that Lorentzian certification exists in principle, but that it's computationally feasible for sparse systems.\n\n**Test:** Compute the partition function for graphic matroids of small Ising-model lattices. Verify Lorentzian positivity by exhaustive leaf checking, then compare the compressed leaf count with the ambient count. The conjecture predicts that lattice sparsity translates to certification sparsity.\n\n**Impact:** Would connect formal verification of polynomial positivity to predictions in statistical mechanics, providing mathematically certified bounds on phase transition parameters.\n\n**Catalog References:** `Catalog/Pythagorean/SupportCompression.lean`, `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (`IsMConvexExchangeNat`)\n\n**Proof Strategy:** Extend the basis polynomial framework to the full independence complex polynomial. Use the matroid truncation operation to relate independent sets of different sizes to basis polynomials of truncated matroids.\n\n**Domain Bridges:** Statistical physics (partition functions, phase transitions), probability (log-concave distributions), algorithm design (MCMC sampling).\n\n**Lineage:** Extends Theorem 2 (matroid bridge) from bases to the full independence complex.\n\n**Ambition:** Grand challenge \u2014 bridges formal mathematics to physics.\n\n---",
+    "id": "fd_1076",
+    "title": "Direction 2: Pseudofinite Transfer via Definable Ultraproducts",
+    "description": "**Conjecture:** The polynomially definable growth-or-control dichotomy transfers from individual finite fields $\\mathbb{F}_q$ to the pseudofinite field $\\mathbb{F}_\\omega = \\prod_q \\mathbb{F}_q / \\mathcal{U}$ via \u0141o\u015b's theorem: a definable subset of $\\mathrm{GL}(2, \\mathbb{F}_\\omega)$ with bounded doubling is controlled by a definable subgroup.\n\n**Test:** Formalize \u0141o\u015b's theorem for the restricted class of polynomial-image sentences and verify that the growth ratio $|A^2|/|A|$ is preserved under ultraproduct transfer for at least 3 concrete definable families.\n\n**Impact:** This would establish the first formal bridge between finite model theory and approximate group theory, showing that verified finite results automatically yield pseudofinite counterparts. It opens a path toward formalizing Hrushovski's approach.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the `PolyDefinableSubset` structure and generation certificates provide the definable language needed for transfer.\n\n**Proof Strategy:** The key insight is that our `PolyDefinableSubset` structure is already designed as a first-order definable object. Formalizing \u0141o\u015b's theorem for bounded-quantifier sentences over matrix algebras, then applying it to the growth predicate $|A^2| \\leq K|A|$.\n\n**Why now?** The definitions file (`ApproxSubgroupDefs.lean`) already contains the model-theoretic scaffolding (polynomial definability, coset control). Adding ultraproduct infrastructure is now a concrete formalization task rather than a conceptual challenge.\n\n**Domain Bridges:** Model theory, mathematical logic, ultraproduct theory.\n\n**Lineage:** Builds on `PolyDefinableSubset` and `CosetControlledBy` definitions.\n\n**Ambition:** Grand challenge \u2014 would be the first formally verified pseudofinite transfer theorem in group theory.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
-      "Computation",
       "Physics",
-      "Cryptography",
       "Bridges",
-      "Logic",
-      "Speculative"
+      "Logic"
     ],
     "priority_score": 0.7,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "b24e9482",
+    "source_exp_id": "a0951d1f",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T05:27:26.856241+00:00"
+    "timestamp": "2026-05-26T06:04:06.558801+00:00"
+  },
+  {
+    "id": "fd_1077",
+    "title": "Direction 3: Spectral Gap from Product Growth",
+    "description": "**Conjecture:** If $A \\subseteq G$ is a symmetric generating set of a finite group with $1 \\in A$ and growth ratio $\\sigma = |A^2|/|A|$, then the spectral gap $\\lambda_1$ of the normalized Cayley graph adjacency operator satisfies $\\lambda_1 \\geq c(\\sigma - 1) / \\sigma$ for an absolute constant $c > 0$.\n\n**Test:** For each family in our computational suite, compute the actual eigenvalues of the Cayley graph adjacency matrix (feasible for $\\mathrm{GL}(2, \\mathbb{F}_5)$ with 480 elements) and compare the spectral gap to the predicted bound. Deviation from the linear relationship would refine the conjecture.\n\n**Impact:** This would complete the triangle between model theory, group growth, and spectral graph theory. Product growth \u2192 spectral gap \u2192 mixing time \u2192 expander certificates, all formally verified.\n\n**Catalog References:** `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 the orbit spanning theorem (`span_orbit_eq_top_of_irreducible`) provides the invariant-subspace-free condition that, spectrally, prevents eigenvalue concentration.\n\n**Proof Strategy:** The key insight is that `support_walk_grows_of_product_grows` (Theorem 3) already establishes the qualitative connection; quantifying it requires bounding the $\\ell^2$ norm of the convolution operator using the cardinality growth. Use the Cauchy-Schwarz convolution bound: $\\|f * g\\|_2^2 \\leq \\|f\\|_1^2 \\cdot \\|g\\|_2^2 / |G|$.\n\n**Why now?** Theorem 3 provides the qualitative link; upgrading to a quantitative spectral bound is a natural next step that was impossible before the random walk theorem was verified.\n\n**Domain Bridges:** Spectral graph theory, probability theory, theoretical computer science (expander graphs).\n\n**Lineage:** Extends `support_walk_grows_of_product_grows`.\n\n**Ambition:** Solid extension \u2014 quantitative version of an established qualitative link.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a0951d1f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T06:04:06.590349+00:00"
   }
 ];

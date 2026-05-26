@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Approximate Group Theory",
     "date": "2026-05-26T06:04:01Z",
     "exp_id": "a0951d1f",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.6653370495258167,
+    "quality": "partial"
   },
   {
     "filename": "direction_1_quantitative_growth_bounds_for_matrix_.json",
@@ -1885,8 +1885,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-26T06:04:01Z",
       "hue": 89,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6653370495258167,
+      "quality": "partial"
     }
   ],
   "edges": [
