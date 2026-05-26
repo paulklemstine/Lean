@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Finite Group Theory / Algebraic Combinatorics",
     "date": "2026-05-26T13:43:52Z",
     "exp_id": "4ae175a0",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7297311111111111,
+    "quality": "substantial"
   },
   {
     "filename": "direction_4_matroidal_quantum_state_preparation.json",
@@ -2557,8 +2557,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-26T13:43:52Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7297311111111111,
+      "quality": "substantial"
     }
   ],
   "edges": [

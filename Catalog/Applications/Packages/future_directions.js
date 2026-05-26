@@ -140,10 +140,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "34bffabf",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:11:24.518980+00:00"
   },
   {
@@ -160,10 +160,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "b33365a6",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -272,10 +272,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "83d44e07",
-    "consumed_by_exp_id": "c89156c3",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:10:32.364163+00:00"
   },
   {
@@ -1207,10 +1207,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "114b795e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56d80658",
     "timestamp": "2026-05-26T03:06:43.848125+00:00"
   },
   {
@@ -1716,6 +1716,104 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
+    "id": "fd_1135",
+    "title": "Direction 1: Bounded-Treewidth Polynomial Certificate Compilation",
+    "description": "**Conjecture:** For any graphic matroid of a graph $G$ with treewidth $k$, the deletion/contraction certificate can be compiled with size at most $p(|E(G)|, 2^k)$ for a universal polynomial $p$.\n\n**Test:** Implement the certificate compiler for random graphs of controlled treewidth (e.g., graphs constructed from tree decompositions with bag size $k$). Measure certificate size as a function of $|E|$ and $k$. Fit the scaling to $a \\cdot |E|^b \\cdot 2^{ck}$ and test whether $b$ and $c$ are bounded constants.\n\n**The key insight is** that deletion/contraction along a tree decomposition eliminates elements in a structured order, preventing the exponential branching that occurs for arbitrary element orderings. The treewidth bounds the maximum number of \"active\" elements at any point in the recursion.\n\n**Why now?** The formal verification of the deletion/contraction recurrence provides a certified foundation for analyzing compilation complexity. Tree decomposition algorithms are well-understood from parameterized complexity theory, and their combination with matroid recursion is a natural but unstudied problem.\n\n**Impact:** If confirmed, this would give polynomial-time exact quantum sampling for spanning trees of bounded-treewidth graphs \u2014 a class including series-parallel graphs, outerplanar graphs, and graphs arising in VLSI design and phylogenetics.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (partition function recurrence), `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (exchange certificate pipeline).\n\n**Proof Strategy:** Induction on tree decomposition bags. Show that contracting all vertices in a bag produces a matroid on the separator, with certificate size bounded by $2^k$ per bag times the number of bags.\n\n**Domain Bridges:** Parameterized complexity \u2194 quantum algorithms \u2194 matroid theory.\n\n**Lineage:** Extends Theorem 4.1 (partition function recurrence) to complexity analysis.\n\n**Ambition:** Solid extension \u2014 builds directly on established certificate structure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "72356358",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T13:07:38.657776+00:00"
+  },
+  {
+    "id": "fd_1136",
+    "title": "Direction 2: Gate-Level Quantum Circuit Synthesis from Certificates",
+    "description": "**Conjecture:** The recursive certificate tree for a matroid of rank $r$ on $n$ elements can be converted into a quantum circuit of depth $O(n \\cdot r)$ using $O(n)$ ancilla qubits and controlled rotation gates, with amplitudes matching the certificate to machine precision.\n\n**Test:** Implement the certificate-to-circuit conversion for small matroids (rank 2\u20134, ground set size 4\u20138). Simulate the quantum circuit classically and verify that output probabilities match the exact weighted basis distribution to $< 10^{-10}$ total variation distance.\n\n**The key insight is** that each deletion/contraction branch in the certificate tree corresponds to a conditional rotation: given that the qubit for element $e$ is in state $|0\\rangle$ (deletion) or $|1\\rangle$ (contraction), apply rotations determined by the sub-certificate. The tree structure maps to a sequence of controlled-$R_y$ gates.\n\n**Why now?** Current quantum state preparation methods (e.g., amplitude encoding via QRAM, Grover-Rudolph) are general but not structure-aware. The matroid certificate provides domain-specific structure that can reduce circuit depth. Recent advances in mid-circuit measurement and feed-forward make tree-structured circuits physically realizable.\n\n**Impact:** A practical quantum circuit for sampling spanning trees would advance quantum network analysis, quantum Monte Carlo for graph problems, and quantum-enhanced optimization.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (certificate structure and amplitude spec).\n\n**Proof Strategy:** Inductive construction: at each element, a controlled rotation splits amplitude between deletion and contraction branches. Angle is $\\theta_e = \\arctan(\\sqrt{w(e) \\cdot Z_{M/e} / Z_{M \\setminus e}})$.\n\n**Domain Bridges:** Quantum circuit synthesis \u2194 matroid theory \u2194 combinatorial optimization.\n\n**Lineage:** Extends Theorem 4.2 (quantum sampler exactness) to physical implementation.\n\n**Ambition:** Grand challenge \u2014 requires bridging formal mathematics with quantum hardware constraints.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "72356358",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T13:07:38.698339+00:00"
+  },
+  {
+    "id": "fd_1137",
+    "title": "Direction 3: Strong Rayleigh Property and Spectral Gap Certificates",
+    "description": "**Conjecture:** For any matroid $M$ whose basis-generating polynomial is strongly Rayleigh (satisfies the stronger condition that all univariate restrictions are real-rooted), the basis exchange walk has spectral gap $\\Omega(1/r)$, and this spectral gap can be certified from the Lorentzian Hessian signature, giving an approximation guarantee for truncated certificates of depth $O(r \\log(1/\\varepsilon))$.\n\n**Test:** For graphic matroids of small complete and random graphs, numerically estimate the spectral gap of the basis exchange Markov chain. Compare with the prediction $1/r$ where $r$ is the rank. For partition matroids, verify that the spectral gap is exactly $1/r$.\n\n**The key insight is** that the Lorentzian Hessian encodes curvature information about the basis polytope, and negative curvature (the \"at most one positive eigenvalue\" condition) controls the rate of convergence of the exchange walk. This would give a Hodge-theoretic proof of rapid mixing.\n\n**Why now?** Anari, Liu, Oveis Gharan, and Vinzant [ALOV19] proved rapid mixing for log-concave distributions using a different approach (high-dimensional walks). The Lorentzian certificate approach would give a more direct, certifiable bound.\n\n**Impact:** Would unify three areas: Lorentzian polynomial theory (algebraic geometry), Markov chain mixing (probability), and approximate quantum sampling (quantum computing).\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Hessian signature), `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (exchange from log-concavity).\n\n**Proof Strategy:** Use the reversed Cauchy-Schwarz inequality from Lorentzian theory (already formalized) to bound the spectral gap from below. The key step is showing that the Lorentzian signature of the generating polynomial implies a Poincar\u00e9 inequality on the basis exchange graph.\n\n**Domain Bridges:** Algebraic geometry (Lorentzianity) \u2194 probability (Markov chains) \u2194 quantum computing (approximate sampling).\n\n**Lineage:** Extends the log-concavity \u2192 exchange inequality pipeline from `LorentzianExchangeCertificates.lean`.\n\n**Ambition:** Grand challenge \u2014 would constitute a new proof of rapid mixing from Hodge theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "72356358",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T13:07:38.737603+00:00"
+  },
+  {
+    "id": "fd_1138",
+    "title": "Direction 4: Pl\u00fccker Coordinates and Fermionic State Preparation",
+    "description": "**Conjecture:** For a representable matroid $M$ with representing matrix $A \\in \\mathbb{R}^{r \\times n}$, the basis-generating polynomial evaluated at weights $w$ equals the squared absolute Pl\u00fccker norm: $P_M(w) = \\sum_{|S|=r} |\\det(A_S)|^2 \\prod_{e \\in S} w(e)$, and the corresponding quantum state is the occupation-number state of a free-fermion system.\n\n**Test:** For small representable matroids (rank 2\u20133, ground set 4\u20136), compute Pl\u00fccker coordinates from the representing matrix. Verify that basis weights equal $|\\det(A_S)|^2 \\cdot \\prod w(e)$, and that the quantum state can be prepared by a Slater determinant circuit.\n\n**The key insight is** that for representable matroids, the Grassmannian structure provides an alternative route to quantum state preparation: instead of the deletion/contraction tree, use the Pl\u00fccker embedding to express the state as a fermionic Gaussian state, which can be prepared by a polynomial-size circuit of matchgate operations.\n\n**Why now?** Free-fermion quantum simulation is one of the few areas where quantum circuits of polynomial size are provably sufficient. Connecting matroid certificates to fermionic states would bridge combinatorial optimization with quantum simulation of many-body physics.\n\n**Impact:** Would establish that matroid basis sampling for representable matroids has efficient quantum circuits via the Grassmannian route, complementing the deletion/contraction approach for general matroids.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (basis weights and partition function).\n\n**Proof Strategy:** Express the basis-generating polynomial as a trace over the exterior algebra. Use the Cauchy-Binet formula to relate basis determinants to Pl\u00fccker coordinates.\n\n**Domain Bridges:** Algebraic geometry (Grassmannians) \u2194 quantum physics (fermions) \u2194 matroid theory.\n\n**Lineage:** New direction extending the certificate framework to representable matroids.\n\n**Ambition:** Solid extension \u2014 uses well-known connections but applies them to the certificate framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "72356358",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T13:07:38.776247+00:00"
+  },
+  {
+    "id": "fd_1139",
+    "title": "Direction 5: Partition Function Phase Transitions and Matroid Complexity",
+    "description": "**Conjecture:** For the graphic matroid of a random Erd\u0151s\u2013R\u00e9nyi graph $G(n, p)$ with uniform weights, there is a phase transition in the certificate complexity at $p = c \\cdot \\log(n) / n$ for some constant $c$: below the threshold, the certificate is polynomial-size; above it, the certificate requires exponential size.\n\n**Test:** For $n = 8, 10, 12, 14$ and edge probabilities $p$ ranging from $0.1$ to $0.9$, generate random graphs, compile certificates, and measure certificate size. Plot size vs. $p$ for each $n$ and look for a threshold phenomenon.\n\n**The key insight is** that the connectivity threshold of random graphs ($p \\sim \\log(n)/n$) coincides with a transition in the matroid structure: below the threshold, the matroid is sparse with few bases; above it, the number of spanning trees grows exponentially, and the deletion/contraction tree must track exponentially many branches.\n\n**Why now?** Phase transitions in computational complexity are a central theme in theoretical computer science (SAT threshold, graph coloring threshold). The matroid certificate framework provides a new family of problems where phase transitions can be studied both analytically and experimentally.\n\n**Impact:** Would connect matroid theory to the theory of computational phase transitions, with implications for understanding when quantum sampling advantages are achievable.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (partition function positivity, certificate construction).\n\n**Proof Strategy:** Below the connectivity threshold, use the sparse structure to bound certificate size. Above the threshold, use entropy arguments to show that the certificate must represent exponentially many paths through the deletion/contraction tree.\n\n**Domain Bridges:** Random graph theory \u2194 computational complexity \u2194 quantum sampling \u2194 statistical physics.\n\n**Lineage:** New direction connecting certificate complexity to random graph thresholds.\n\n**Ambition:** Grand challenge \u2014 would require new techniques at the intersection of random graphs and matroid complexity.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "72356358",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T13:07:38.816025+00:00"
+  },
+  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -2163,53 +2261,32 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:07:45.821446+00:00"
   },
   {
-    "id": "fd_1135",
-    "title": "Direction 1: Bounded-Treewidth Polynomial Certificate Compilation",
-    "description": "**Conjecture:** For any graphic matroid of a graph $G$ with treewidth $k$, the deletion/contraction certificate can be compiled with size at most $p(|E(G)|, 2^k)$ for a universal polynomial $p$.\n\n**Test:** Implement the certificate compiler for random graphs of controlled treewidth (e.g., graphs constructed from tree decompositions with bag size $k$). Measure certificate size as a function of $|E|$ and $k$. Fit the scaling to $a \\cdot |E|^b \\cdot 2^{ck}$ and test whether $b$ and $c$ are bounded constants.\n\n**The key insight is** that deletion/contraction along a tree decomposition eliminates elements in a structured order, preventing the exponential branching that occurs for arbitrary element orderings. The treewidth bounds the maximum number of \"active\" elements at any point in the recursion.\n\n**Why now?** The formal verification of the deletion/contraction recurrence provides a certified foundation for analyzing compilation complexity. Tree decomposition algorithms are well-understood from parameterized complexity theory, and their combination with matroid recursion is a natural but unstudied problem.\n\n**Impact:** If confirmed, this would give polynomial-time exact quantum sampling for spanning trees of bounded-treewidth graphs \u2014 a class including series-parallel graphs, outerplanar graphs, and graphs arising in VLSI design and phylogenetics.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (partition function recurrence), `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (exchange certificate pipeline).\n\n**Proof Strategy:** Induction on tree decomposition bags. Show that contracting all vertices in a bag produces a matroid on the separator, with certificate size bounded by $2^k$ per bag times the number of bags.\n\n**Domain Bridges:** Parameterized complexity \u2194 quantum algorithms \u2194 matroid theory.\n\n**Lineage:** Extends Theorem 4.1 (partition function recurrence) to complexity analysis.\n\n**Ambition:** Solid extension \u2014 builds directly on established certificate structure.\n\n---",
+    "id": "fd_1141",
+    "title": "Direction 1: Dixon Asymptotics via O'Nan\u2013Scott Classification",
+    "description": "**Conjecture**: For all n \u2265 5, the generating pair probability P_n for S_n satisfies\n$$\\left|P_n - \\left(\\frac{3}{4} - \\frac{3}{2n}\\right)\\right| \\le \\frac{C}{n^2}$$\nfor an explicit constant C \u2264 10, where the 3/4 comes from the alternating group obstruction and the 3/(2n) from point stabilizers.\n\n**Test**: Compute exact P_n for n = 5, 6, 7 using GAP's subgroup lattice functions and compare the residual n\u00b2 \u00b7 |P_n \u2212 3/4 + 3/(2n)| against the conjectured bound. If the residual exceeds 10 for any n \u2264 7, the conjecture as stated is false.\n\n**Impact**: This would be the first formally verified sharp asymptotic for Dixon's theorem, going beyond the existing O(1/n) bounds. It would demonstrate that formal methods can produce not just verification but mathematical discovery.\n\n**Catalog References**: `Pythagorean/SubgroupMoebius.lean` (generatingPairCount_eq_moebius_sum, generatingPairProbability_eq_one_plus_proper), `Pythagorean/SubgroupMoebiusAsymp.lean` (generatingPairCount_moebius_decomposition, factorial_ratio_sq)\n\n**Proof Strategy**: (1) Formalize the O'Nan\u2013Scott theorem classifying maximal subgroups of S_n into intransitive, imprimitive, and primitive families. (2) Compute M\u00f6bius values for each family using the decomposition theorem. (3) Bound the primitive contribution using index estimates from the Classification of Finite Simple Groups. (4) Sum contributions from intransitive maximal subgroups (point stabilizers, 2-point stabilizers) explicitly.\n\n**Domain Bridges**: Analytic number theory (Euler product analogues for subgroup growth), computational group theory (GAP/Magma subgroup enumeration), permutation group theory (O'Nan\u2013Scott theorem)\n\n**Lineage**: Extends `generatingPairCount_moebius_decomposition` and `factorial_ratio_sq`\n\n**Ambition**: Grand challenge \u2014 requires formalizing significant finite group theory infrastructure\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
-      "Physics",
+      "Cryptography",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "72356358",
+    "source_exp_id": "4ae175a0",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:07:38.657776+00:00"
+    "timestamp": "2026-05-26T13:43:58.448526+00:00"
   },
   {
-    "id": "fd_1136",
-    "title": "Direction 2: Gate-Level Quantum Circuit Synthesis from Certificates",
-    "description": "**Conjecture:** The recursive certificate tree for a matroid of rank $r$ on $n$ elements can be converted into a quantum circuit of depth $O(n \\cdot r)$ using $O(n)$ ancilla qubits and controlled rotation gates, with amplitudes matching the certificate to machine precision.\n\n**Test:** Implement the certificate-to-circuit conversion for small matroids (rank 2\u20134, ground set size 4\u20138). Simulate the quantum circuit classically and verify that output probabilities match the exact weighted basis distribution to $< 10^{-10}$ total variation distance.\n\n**The key insight is** that each deletion/contraction branch in the certificate tree corresponds to a conditional rotation: given that the qubit for element $e$ is in state $|0\\rangle$ (deletion) or $|1\\rangle$ (contraction), apply rotations determined by the sub-certificate. The tree structure maps to a sequence of controlled-$R_y$ gates.\n\n**Why now?** Current quantum state preparation methods (e.g., amplitude encoding via QRAM, Grover-Rudolph) are general but not structure-aware. The matroid certificate provides domain-specific structure that can reduce circuit depth. Recent advances in mid-circuit measurement and feed-forward make tree-structured circuits physically realizable.\n\n**Impact:** A practical quantum circuit for sampling spanning trees would advance quantum network analysis, quantum Monte Carlo for graph problems, and quantum-enhanced optimization.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (certificate structure and amplitude spec).\n\n**Proof Strategy:** Inductive construction: at each element, a controlled rotation splits amplitude between deletion and contraction branches. Angle is $\\theta_e = \\arctan(\\sqrt{w(e) \\cdot Z_{M/e} / Z_{M \\setminus e}})$.\n\n**Domain Bridges:** Quantum circuit synthesis \u2194 matroid theory \u2194 combinatorial optimization.\n\n**Lineage:** Extends Theorem 4.2 (quantum sampler exactness) to physical implementation.\n\n**Ambition:** Grand challenge \u2014 requires bridging formal mathematics with quantum hardware constraints.\n\n---",
+    "id": "fd_1142",
+    "title": "Direction 2: M\u00f6bius Inversion for k-Tuple Generation",
+    "description": "**Conjecture**: The M\u00f6bius inversion formula generalizes to k-tuples: for any finite group G and k \u2265 1,\n$$\\phi_k(G) = \\sum_{H \\le G} \\mu(H, G) \\cdot |H|^k$$\nwhere \u03c6_k(G) counts ordered k-tuples generating G. Moreover, for S_n and k = 3, the generating probability P_{n,3} satisfies P_{n,3} \u2192 1 as n \u2192 \u221e (not 3/4, since three random permutations almost surely include an odd one).\n\n**The key insight is** that the partition identity generalizes immediately: every k-tuple generates a unique subgroup, so |H|^k = \u03a3_{K \u2264 H} \u03c6_k(K). M\u00f6bius inversion gives the formula.\n\n**Why now?** The existing formalization of the k=2 case provides all the infrastructure (M\u00f6bius function, partition identity, summation exchange). The generalization to k > 2 requires only replacing |H|\u00b2 with |H|^k.\n\n**Test**: For k = 3 and n = 3, 4, compute \u03c6_3(S_n) both by brute force and via the M\u00f6bius formula. Verify agreement.\n\n**Impact**: Establishes the complete Hall Eulerian function framework in a formal setting.\n\n**Catalog References**: `Pythagorean/SubgroupMoebius.lean` (generatingPairCount_eq_moebius_sum, pairCount_eq_sum_generatingPairCountWithin)\n\n**Proof Strategy**: Generalize `generatingPairCountWithin` to k-tuples. The partition identity proof generalizes verbatim (replace G \u00d7 G with G^k). Apply the same M\u00f6bius inversion.\n\n**Domain Bridges**: Algebraic combinatorics (species theory for k-tuples), representation theory (character-theoretic formulas for \u03c6_k)\n\n**Lineage**: Direct generalization of `generatingPairCount_eq_moebius_sum`\n\n**Ambition**: Solid extension \u2014 straightforward generalization with significant payoff\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "72356358",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:07:38.698339+00:00"
-  },
-  {
-    "id": "fd_1137",
-    "title": "Direction 3: Strong Rayleigh Property and Spectral Gap Certificates",
-    "description": "**Conjecture:** For any matroid $M$ whose basis-generating polynomial is strongly Rayleigh (satisfies the stronger condition that all univariate restrictions are real-rooted), the basis exchange walk has spectral gap $\\Omega(1/r)$, and this spectral gap can be certified from the Lorentzian Hessian signature, giving an approximation guarantee for truncated certificates of depth $O(r \\log(1/\\varepsilon))$.\n\n**Test:** For graphic matroids of small complete and random graphs, numerically estimate the spectral gap of the basis exchange Markov chain. Compare with the prediction $1/r$ where $r$ is the rank. For partition matroids, verify that the spectral gap is exactly $1/r$.\n\n**The key insight is** that the Lorentzian Hessian encodes curvature information about the basis polytope, and negative curvature (the \"at most one positive eigenvalue\" condition) controls the rate of convergence of the exchange walk. This would give a Hodge-theoretic proof of rapid mixing.\n\n**Why now?** Anari, Liu, Oveis Gharan, and Vinzant [ALOV19] proved rapid mixing for log-concave distributions using a different approach (high-dimensional walks). The Lorentzian certificate approach would give a more direct, certifiable bound.\n\n**Impact:** Would unify three areas: Lorentzian polynomial theory (algebraic geometry), Markov chain mixing (probability), and approximate quantum sampling (quantum computing).\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Hessian signature), `Catalog/Pythagorean/LorentzianExchangeCertificates.lean` (exchange from log-concavity).\n\n**Proof Strategy:** Use the reversed Cauchy-Schwarz inequality from Lorentzian theory (already formalized) to bound the spectral gap from below. The key step is showing that the Lorentzian signature of the generating polynomial implies a Poincar\u00e9 inequality on the basis exchange graph.\n\n**Domain Bridges:** Algebraic geometry (Lorentzianity) \u2194 probability (Markov chains) \u2194 quantum computing (approximate sampling).\n\n**Lineage:** Extends the log-concavity \u2192 exchange inequality pipeline from `LorentzianExchangeCertificates.lean`.\n\n**Ambition:** Grand challenge \u2014 would constitute a new proof of rapid mixing from Hodge theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
       "Bridges",
       "MachineLearning",
       "Logic"
@@ -2217,48 +2294,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "72356358",
+    "source_exp_id": "4ae175a0",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:07:38.737603+00:00"
-  },
-  {
-    "id": "fd_1138",
-    "title": "Direction 4: Pl\u00fccker Coordinates and Fermionic State Preparation",
-    "description": "**Conjecture:** For a representable matroid $M$ with representing matrix $A \\in \\mathbb{R}^{r \\times n}$, the basis-generating polynomial evaluated at weights $w$ equals the squared absolute Pl\u00fccker norm: $P_M(w) = \\sum_{|S|=r} |\\det(A_S)|^2 \\prod_{e \\in S} w(e)$, and the corresponding quantum state is the occupation-number state of a free-fermion system.\n\n**Test:** For small representable matroids (rank 2\u20133, ground set 4\u20136), compute Pl\u00fccker coordinates from the representing matrix. Verify that basis weights equal $|\\det(A_S)|^2 \\cdot \\prod w(e)$, and that the quantum state can be prepared by a Slater determinant circuit.\n\n**The key insight is** that for representable matroids, the Grassmannian structure provides an alternative route to quantum state preparation: instead of the deletion/contraction tree, use the Pl\u00fccker embedding to express the state as a fermionic Gaussian state, which can be prepared by a polynomial-size circuit of matchgate operations.\n\n**Why now?** Free-fermion quantum simulation is one of the few areas where quantum circuits of polynomial size are provably sufficient. Connecting matroid certificates to fermionic states would bridge combinatorial optimization with quantum simulation of many-body physics.\n\n**Impact:** Would establish that matroid basis sampling for representable matroids has efficient quantum circuits via the Grassmannian route, complementing the deletion/contraction approach for general matroids.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (basis weights and partition function).\n\n**Proof Strategy:** Express the basis-generating polynomial as a trace over the exterior algebra. Use the Cauchy-Binet formula to relate basis determinants to Pl\u00fccker coordinates.\n\n**Domain Bridges:** Algebraic geometry (Grassmannians) \u2194 quantum physics (fermions) \u2194 matroid theory.\n\n**Lineage:** New direction extending the certificate framework to representable matroids.\n\n**Ambition:** Solid extension \u2014 uses well-known connections but applies them to the certificate framework.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "72356358",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:07:38.776247+00:00"
-  },
-  {
-    "id": "fd_1139",
-    "title": "Direction 5: Partition Function Phase Transitions and Matroid Complexity",
-    "description": "**Conjecture:** For the graphic matroid of a random Erd\u0151s\u2013R\u00e9nyi graph $G(n, p)$ with uniform weights, there is a phase transition in the certificate complexity at $p = c \\cdot \\log(n) / n$ for some constant $c$: below the threshold, the certificate is polynomial-size; above it, the certificate requires exponential size.\n\n**Test:** For $n = 8, 10, 12, 14$ and edge probabilities $p$ ranging from $0.1$ to $0.9$, generate random graphs, compile certificates, and measure certificate size. Plot size vs. $p$ for each $n$ and look for a threshold phenomenon.\n\n**The key insight is** that the connectivity threshold of random graphs ($p \\sim \\log(n)/n$) coincides with a transition in the matroid structure: below the threshold, the matroid is sparse with few bases; above it, the number of spanning trees grows exponentially, and the deletion/contraction tree must track exponentially many branches.\n\n**Why now?** Phase transitions in computational complexity are a central theme in theoretical computer science (SAT threshold, graph coloring threshold). The matroid certificate framework provides a new family of problems where phase transitions can be studied both analytically and experimentally.\n\n**Impact:** Would connect matroid theory to the theory of computational phase transitions, with implications for understanding when quantum sampling advantages are achievable.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (partition function positivity, certificate construction).\n\n**Proof Strategy:** Below the connectivity threshold, use the sparse structure to bound certificate size. Above the threshold, use entropy arguments to show that the certificate must represent exponentially many paths through the deletion/contraction tree.\n\n**Domain Bridges:** Random graph theory \u2194 computational complexity \u2194 quantum sampling \u2194 statistical physics.\n\n**Lineage:** New direction connecting certificate complexity to random graph thresholds.\n\n**Ambition:** Grand challenge \u2014 would require new techniques at the intersection of random graphs and matroid complexity.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "72356358",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:07:38.816025+00:00"
+    "timestamp": "2026-05-26T13:43:58.481343+00:00"
   },
   {
     "id": "seed_032",
