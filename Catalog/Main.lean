@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1889 of the highest-quality
+A curated collection of 1892 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1889
+Total files: 1892
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -280,6 +280,7 @@ import FINAL.Bridges.AlgebraEMLTropicalPressure
 import FINAL.Bridges.AlgebraicEMLThermodynamicFormalism
 import FINAL.Bridges.AlgebraicSpacetime
 import FINAL.Bridges.AlgorithmicTropicalKernel
+import FINAL.Bridges.AlmostSimplePressure
 import FINAL.Bridges.AlternatingPermutationSecurity
 import FINAL.Bridges.ArithmeticOperadicStability
 import FINAL.Bridges.ArithmeticProfileAnalysis
@@ -1498,6 +1499,7 @@ import FINAL.Pythagorean.EffectivePotential
 import FINAL.Pythagorean.EhrhartIDP
 import FINAL.Pythagorean.EhrhartSeries
 import FINAL.Pythagorean.EinsteinContraction
+import FINAL.Pythagorean.ElectricalFlow
 import FINAL.Pythagorean.EmergentComputation
 import FINAL.Pythagorean.EqualitySaturationExtraction
 import FINAL.Pythagorean.EulerFactor
@@ -1626,6 +1628,7 @@ import FINAL.Pythagorean.WeightedDefect
 import FINAL.Pythagorean.WeightedHypergraphTransversal
 import FINAL.Pythagorean.WitnessHittingSets
 import FINAL.Pythagorean.WitnessSynthesis
+import FINAL.Pythagorean.WreathPerturbation
 import FINAL.Shared.CrossDomainBridges
 import FINAL.Shared.CryptoEntropyBridges
 import FINAL.Shared.CryptographicEntropy

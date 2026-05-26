@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Algebraic Statistical Mechanics",
     "date": "2026-05-26T21:18:00Z",
     "exp_id": "550b5c8b",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7326680000000001,
+    "quality": "substantial"
   },
   {
     "filename": "direction_3_pressure_theory_for_almost_simple_grou.json",
@@ -3145,8 +3145,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-26T21:18:00Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7326680000000001,
+      "quality": "substantial"
     }
   ],
   "edges": [

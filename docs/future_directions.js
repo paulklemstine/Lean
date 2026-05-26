@@ -199,10 +199,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "daaf598b",
     "timestamp": "2026-05-24T23:13:44.233016+00:00"
   },
   {
@@ -293,10 +293,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "93ec6871",
     "timestamp": "2026-05-25T02:11:10.243679+00:00"
   },
   {
@@ -764,24 +764,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:13:42.015713+00:00"
   },
   {
-    "id": "fd_0955",
-    "title": "Direction 1: Wreath Product Perturbation Theory",
-    "description": "**Conjecture:** For the wreath product $W_{k,m} = S_k \\wr S_m$ acting on $km$ points with imprimitive subgroup family $\\mathcal{I}_{k,m}$, the critical exponent $\\beta_{W}$ satisfies:\n$$\\beta_{W}(k,m) = \\beta_{\\text{product}}(k,m) + O(k^{-1})$$\nwhere $\\beta_{\\text{product}}$ is the exponent of the direct product $S_k^m$. In renormalization language, the imprimitive structure is an *irrelevant perturbation* for large $k$.\n\n**Test:** Compute the subgroup pair pressure of $S_k \\wr S_m$ for $k \\leq 8$, $m \\leq 5$ using GAP. Extract effective exponents via log-slope estimation. Compare with the direct product prediction $\\beta_{\\text{product}} = m \\cdot \\beta(S_k)$. A deviation growing as $k$ increases would refute the conjecture.\n\n**Impact:** If true, this would be the first proof that universality persists beyond exact factorization\u2014the algebraic analogue of showing that a phase transition's exponent is unchanged by short-range perturbations. If false, it identifies wreath product structure as a new relevant parameter.\n\n**Catalog References:** `Catalog/old/Pythagorean/SubgroupPressure.lean` (product factorization), `Pythagorean/SubgroupUniversality.lean` (exponent additivity).\n\n**Proof Strategy:** Define the wreath product pressure as a perturbation of the product pressure: $\\Pi_W = \\Pi_{\\text{prod}} + \\delta\\Pi$ where $\\delta\\Pi$ captures cross-factor subgroups. Use the divergence bound theorem to show that $\\delta\\Pi$ contributes sub-dominant scaling.\n\n**Domain Bridges:** Connects to representation theory (irreducible representations of wreath products via Clifford theory), probability (random walks on wreath products), and additive combinatorics (orbit counting).\n\n**Lineage:** Builds directly on `exponent_mul_of_two_sided_bounds` and `subgroupPairPressure_prod`.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 would establish the first non-trivial irrelevant perturbation result in algebraic statistical mechanics.\n\nThe key insight is that wreath products add controlled \"imprimitive interactions\" between direct product factors, and the question of whether these are relevant or irrelevant exactly parallels the Harris criterion in condensed matter physics.\n\nWhy now? The formal verification of exponent additivity for exact products provides the baseline against which perturbative deviations can be measured. Without the exact result, there would be no reference point for the approximate theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "354ccda2",
-    "consumed_by_exp_id": "550b5c8b",
-    "timestamp": "2026-05-25T21:49:45.078780+00:00"
-  },
-  {
     "id": "fd_0957",
     "title": "Direction 3: Renormalization Group for Subgroup Ensembles",
     "description": "**Conjecture:** There exists a coarse-graining map $\\mathcal{R}$ on subgroup ensembles such that:\n1. $\\mathcal{R}$ maps the pressure to a scaled version: $\\Pi(\\mathcal{R}(\\mathcal{H})) = \\lambda \\cdot \\Pi(\\mathcal{H})$ for some $\\lambda > 0$.\n2. Fixed points of $\\mathcal{R}$ correspond to universality classes.\n3. The linearization of $\\mathcal{R}$ at a fixed point has eigenvalues that determine critical exponents.\n\n**Test:** For $S_n$ with $n = 2^k$ (powers of 2), define $\\mathcal{R}$ by passing from maximal subgroups of $S_{2^k}$ to those of $S_{2^{k-1}}$ via restriction. Compute the pressure at each scale and test for fixed-point convergence.\n\n**Impact:** This would bring the full power of renormalization group theory into finite algebra, potentially classifying all universality classes for finite group generation.\n\n**Catalog References:** `Pythagorean/SubgroupUniversality.lean` (all theorems), `Catalog/old/Pythagorean/SubgroupPressure.lean` (product factorization as coarse-graining precursor).\n\n**Proof Strategy:** Define $\\mathcal{R}$ as restriction to a quotient or block structure. For direct products, $\\mathcal{R}$ simply selects one factor, and the fixed point is the single-factor pressure. Prove that the eigenvalue spectrum of the linearization determines the exponent.\n\n**Domain Bridges:** Quantum field theory (Wilson's renormalization group), dynamical systems (iterated function systems), ergodic theory (transfer operators), topology (scaling limits).\n\n**Lineage:** Extends `freeEnergy_directPower` to a dynamical framework where extensivity is one consequence of a deeper fixed-point structure.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 paradigm-shifting. Would unify algebraic generation theory with one of the most powerful frameworks in theoretical physics.\n\nThe key insight is that the extensivity theorem $F(m,t) = m \\cdot F(1,t)$ can be reinterpreted as a fixed-point equation: the free energy per factor is invariant under the \"add one more copy\" operation, which is the simplest renormalization group transformation.\n\nWhy now? The proven extensivity and exponent additivity theorems provide the first mathematical evidence that a fixed-point structure exists. Without these, the renormalization program would be purely speculative.\n\n---",
@@ -1158,26 +1140,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T06:04:06.558801+00:00"
   },
   {
-    "id": "fd_1082",
-    "title": "Direction 2: Spectral Decoding via Tropical Morse Barcodes",
-    "description": "**Conjecture:** The full tropical Morse spectrum (not just the first cycle birth) encodes sufficient information to construct an efficient minimum-weight decoder for graph-CSS codes. Specifically, the barcode structure \u2014 the persistence intervals of cycle events \u2014 identifies likely error patterns and guides syndrome-based correction.\n\n**Test:** Implement a \"tropical decoder\" that uses the TMS barcode to weight the edges of the decoding graph. Compare decoder performance (logical error rate vs. physical error rate) against:\n- Minimum-weight perfect matching (MWPM) decoder.\n- Union-find decoder.\nTest on surface codes of sizes 3\u00d73, 5\u00d75, 7\u00d77 under depolarizing noise at rates p = 0.01, 0.05, 0.10. If the tropical decoder achieves comparable or better logical error rates, the conjecture is supported.\n\n**Impact:** Would provide a new class of decoders inspired by tropical geometry, potentially with better scaling or simpler implementation than existing approaches.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Defs.lean`: `TMSpectrum`, `tropicalMorseComplexity`\n- `Pythagorean/TropicalMorse/Theorems.lean`: `spectral_gap_distinguishes`\n\n**Proof Strategy:** Show that the barcode persistence intervals correspond to \"error vulnerability windows\" \u2014 ranges of error weights where specific logical operators become active. Use this to construct a weight function for the decoding graph that penalizes edges in high-vulnerability regions.\n\n**Domain Bridges:** Persistent homology \u2194 quantum error correction \u2194 algorithmic graph theory.\n\n**Lineage:** Extends the spectral classification theorem (Theorem 5) from static classification to dynamic error correction.\n\n**Ambition:** Grand challenge \u2014 connects two major research programs (persistent homology and quantum decoding) through a concrete algorithmic proposal.\n\n**The key insight is** that the tropical Morse barcode encodes not just the *number* of logical operators but their *weight hierarchy*, which is exactly the information a decoder needs to distinguish likely from unlikely errors.\n\n**Why now?** The TMS computation is O(E log E), making it feasible to run in real-time as a preprocessing step for decoding. Recent advances in barcode-guided algorithms in topological data analysis provide the technical toolkit.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "b0b26cee",
-    "consumed_by_exp_id": "e1e8732d",
-    "timestamp": "2026-05-26T07:14:49.772033+00:00"
-  },
-  {
     "id": "fd_1083",
     "title": "Direction 3: Higher-Dimensional Tropical Morse Theory for Quantum LDPC Codes",
     "description": "**Conjecture:** The tropical Morse theory framework extends to simplicial complexes of dimension \u2265 2, and the resulting higher-dimensional tropical Morse spectrum determines the parameters of CSS codes derived from chain complexes (including hypergraph product codes, fiber bundle codes, and balanced product codes).\n\n**Test:** Implement a simplicial tropical filtration for:\n- The 2D toric code (as a simplicial complex on the torus).\n- Hypergraph product codes HP(H\u2081, H\u2082) for random LDPC matrices H\u2081, H\u2082 of size 10\u00d720.\n- Balanced product codes for small group algebras.\nCompute \u03b2\u2081 and \u03b2\u2082 from the filtration and compare with known code parameters. If the higher-dimensional \u03b2 values correctly predict k and d bounds for \u226590% of test cases, the conjecture is supported.\n\n**Impact:** Would extend the tropical Morse framework to the most promising class of quantum codes for fault-tolerant computing (quantum LDPC codes), where asymptotically good parameters have been recently demonstrated.\n\n**Catalog References:**\n- `Bridges/Catalog/Pythagorean/TropicalMorse/HigherSimplicial.lean`: higher-dimensional extensions\n- `Pythagorean/TropicalMorse/QuantumGraphCodes.lean`: `filtration_exclusive_dichotomy`\n\n**Proof Strategy:** Define the higher-dimensional filtration as the sublevel set filtration of the weight function on the simplicial complex. The key technical challenge is proving the analogue of the exclusive dichotomy: each simplex addition changes exactly one Betti number. This follows from the long exact sequence in homology for the pair (K_\u2264t, K_\u2264t').\n\n**Domain Bridges:** Higher-dimensional tropical geometry \u2194 homological algebra \u2194 quantum LDPC codes \u2194 expander theory.\n\n**Lineage:** Natural generalization of all four main theorems to higher dimensions.\n\n**Ambition:** Grand challenge \u2014 requires substantial new mathematical development and connects to the frontier of quantum LDPC code theory.\n\n**The key insight is** that the exclusive dichotomy theorem (each edge addition changes exactly one Betti number) generalizes to simplices of all dimensions, and this generalization is exactly what's needed to extend the logical qubit and distance theorems.\n\n**Why now?** The recent breakthroughs in quantum LDPC codes (achieving constant rate and polynomial distance) create urgent demand for new analytical tools. Tropical Morse theory provides a natural framework that has been waiting for this application.\n\n---",
@@ -1449,10 +1411,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "02e24032",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "710cc85b",
     "timestamp": "2026-05-26T14:50:50.001252+00:00"
   },
   {
@@ -1508,10 +1470,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "5c8e335c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4a19dada",
     "timestamp": "2026-05-26T17:12:57.441382+00:00"
   },
   {
@@ -1572,25 +1534,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "5c8e335c",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T17:12:57.552181+00:00"
-  },
-  {
-    "id": "fd_1177",
-    "title": "Direction 5: Effective Resistance and Electrical Flow Certificates",
-    "description": "**Conjecture:** The canonical path congestion $\\kappa$ is related to the effective resistance of the Cayley graph by $\\kappa \\geq |G| \\cdot \\max_{x,y} R_{\\text{eff}}(x,y)$, where $R_{\\text{eff}}$ is the effective resistance between vertices $x$ and $y$ in the electrical network interpretation of the graph.\n\n**Test:** Compute exact effective resistances for $\\text{Cay}(S_3, \\text{adj.\\ trans.})$, $\\text{Cay}(S_4, \\text{adj.\\ trans.})$, and compare with canonical path congestion. Verify the conjectured inequality numerically.\n\n**Impact:** This would connect the combinatorial canonical path method to the rich theory of electrical networks, effective resistance, and random walks. It could provide tighter bounds by using electrical flow theory (which finds optimal flows automatically).\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (congestion), `Pythagorean/CayleyExpander/SpectralGap.lean` (Dirichlet energy = dissipation).\n\n**Proof Strategy:** Interpret canonical paths as unit flows from $x$ to $y$. The energy of a flow bounds effective resistance from above (by Thomson's principle). The congestion of the canonical path system bounds the total energy of all flows. Combine to relate congestion to effective resistance.\n\n**Domain Bridges:** Electrical network theory, potential theory, random walk hitting times.\n\n**Lineage:** Extends the Dirichlet energy interpretation in `CanonicalPaths.lean` to the full electrical network framework.\n\n**Ambition:** Solid extension \u2014 connects two well-established theories in a formally verified way.\n\n**\"The key insight is...\"** that canonical paths define explicit current flows, and the congestion bound is a bound on the maximum current through any wire\u2014directly connecting to Thomson's principle.\n\n**\"Why now?\"** The formal Dirichlet energy framework provides the foundation for electrical network interpretations.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5c8e335c",
-    "consumed_by_exp_id": "d42cb594",
-    "timestamp": "2026-05-26T17:12:57.587340+00:00"
   },
   {
     "id": "fd_1178",
@@ -2258,6 +2201,103 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T16:01:35.746391+00:00"
+  },
+  {
+    "id": "fd_1199",
+    "title": "Direction 1: Double Scaling Limit \u2014 When Does m Matter?",
+    "description": "**Conjecture:** There exists a critical scaling function m*(k) such that:\n- If m = o(m*(k)), the wreath perturbation remains irrelevant: |\u03b2_W(k,m) - m\u00b7\u03b2(S_k)| \u2192 0.\n- If m ~ m*(k), the perturbation becomes marginal.\n- If m \u226b m*(k), the perturbation is relevant: the universality class changes.\n\nWe conjecture m*(k) = k^\u03b1 for some exponent \u03b1 > 0 (possibly \u03b1 = 1).\n\n**Test:** Compute \u03b2_W(k, m) for k \u2208 {3,...,8} and m \u2208 {k/2, k, 2k, k\u00b2} using GAP or subgroup enumeration. Plot the rescaled deviation as a function of m/k^\u03b1 for various \u03b1. The correct \u03b1 collapses the data onto a universal curve.\n\n**Impact:** Identifies the precise boundary between \"irrelevant\" and \"relevant\" regimes for wreath products. This is the analog of identifying the upper critical dimension in statistical mechanics.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `beta_wreath_eq_mul_beta_symm_plus_error`, `defect_ratio_tendsto_zero`\n- `Catalog/Bridges/Catalog/Pythagorean/SubgroupUniversality.lean`: `pressure_directPower_linear`\n\n**Proof Strategy:** Extend the perturbative bound by tracking the m-dependence explicitly. The defect bound has constant C_m; determine C_m's growth rate in m. If C_m grows polynomially, the critical scaling is m* ~ k/C_m^{1/...}. Use Clifford theory to bound the number of wreath-product irreducibles as a function of both k and m.\n\n**Domain Bridges:** Statistical mechanics (upper critical dimension), random matrix theory (transition between GOE and GUE universality classes as matrix size grows).\n\n**Lineage:** Direct extension of Theorems 4-5 from the current work; builds on the perturbative bound framework.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish a complete phase diagram for wreath product universality.\n\n**The key insight is** that the m-dependence of the perturbative constant C_m controls the crossover between irrelevant and relevant regimes, analogous to how the dimension d controls the relevance of interaction terms in \u03c6\u2074 field theory.\n\n**Why now?** The formalized perturbation framework provides the first rigorous tool for studying m-dependence. The computational infrastructure (algorithms.py) can probe the double scaling regime for small k, m, providing empirical guidance for the conjecture.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "550b5c8b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T21:18:02.967940+00:00"
+  },
+  {
+    "id": "fd_1200",
+    "title": "Direction 2: Relevant Perturbations via Central Extensions",
+    "description": "**Conjecture:** Central extensions of the form 1 \u2192 Z/pZ \u2192 G\u0303 \u2192 G \u2192 1, where p divides |G|, can produce *relevant* perturbations that shift the critical exponent by O(1) (not O(1/k)).\n\nSpecifically, for G = S_k and p = 2, the double cover S\u0303_k (the Schur cover) satisfies:\n$$|\\beta(\\tilde{S}_k) - \\beta(S_k)| \\geq c > 0$$\nfor all k \u2265 4, for some absolute constant c.\n\n**Test:** Enumerate subgroups of the double covers of S_4 and S_5 using GAP's `SchurCover` function. Compute subgroup pressure and critical exponents. Compare with S_k. If the exponents differ by O(1), the perturbation is relevant.\n\n**Impact:** Would identify the first known *relevant* algebraic perturbation, establishing that not all group modifications are irrelevant. This would prove that the universality classification is nontrivial.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `AsymptoticallyIrrelevant` (as a contrast \u2014 central extensions would NOT satisfy this predicate)\n- `Catalog/Pythagorean/SubgroupPressureConcentration.lean`: pressure model framework\n\n**Proof Strategy:** Use the fact that central extensions change the subgroup lattice structure fundamentally: they introduce subgroups of index 2 that don't exist in the base group. Show that these contribute O(1) to the pressure at the critical point.\n\n**Domain Bridges:** Representation theory (Schur multiplier), topology (central extensions as covering spaces), quantum mechanics (projective representations).\n\n**Lineage:** Motivated by the contrast with wreath product irrelevance \u2014 what makes central extensions different?\n\n**Ambition:** Grand challenge \u2014 would establish that the irrelevance/relevance classification is substantive.\n\n**The key insight is** that central extensions modify the *low-index* subgroup structure (adding subgroups of index 2), which contributes maximally to the pressure near the critical point, unlike wreath perturbations which mainly add *high-index* subgroups.\n\n**Why now?** The formal framework for irrelevance (AsymptoticallyIrrelevant) provides a precise target: showing that a specific group construction *fails* to satisfy this predicate would be equally valuable as showing it holds.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "550b5c8b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T21:18:03.005388+00:00"
+  },
+  {
+    "id": "fd_1201",
+    "title": "Direction 3: Entropy Rate Universality for Random Walks on Groups",
+    "description": "**Conjecture:** For the lazy random walk on S_k \u2240 S_m (step = random transposition within a random block, or random block swap), the entropy rate h(k,m) satisfies:\n$$h(k,m) = m \\cdot h_{\\text{block}}(k) + O(1/k)$$\nwhere h_block(k) is the entropy rate of the within-block walk on S_k.\n\nMoreover, the rescaled correction k\u00b7(h(k,m) - m\u00b7h_block(k)) converges to a constant determined by the spectral gap of S_m.\n\n**Test:** Simulate random walks on S_k \u2240 S_m for k \u2208 {3,...,8}, m \u2208 {2,3,4} with 10\u2076 steps each. Estimate entropy rates via the plug-in estimator on trajectory word frequencies. Compute the correction and plot k\u00b7correction vs k.\n\n**Impact:** Would establish a concrete probabilistic consequence of the algebraic perturbation theorem, bridging finite group theory to probability and information theory.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `wreath_entropy_correction_bound`, `entropy_correction_from_pressure_perturbation`\n- `Catalog/Pythagorean/SubgroupPressureConcentration.lean`: self-averaging theorems\n\n**Proof Strategy:** Connect entropy rate to the subgroup pressure via the variational principle: h = inf_s (s\u00b7\u03b2 + F(s)), where F is the free energy. Use the O(1/k) pressure perturbation to bound the entropy rate perturbation via Lipschitz continuity of the Legendre transform.\n\n**Domain Bridges:** Information theory (entropy rate, Shannon theory), ergodic theory (Abramov's formula for skew products), probability (mixing times, cutoff phenomena).\n\n**Lineage:** Extends Theorem 13 (entropy correction bound) from abstract Lipschitz control to concrete random walk entropy.\n\n**Ambition:** Solid extension \u2014 builds directly on existing theorems with well-understood probabilistic tools.\n\n**The key insight is** that the entropy rate is a Lipschitz function of the pressure functional via the Legendre transform, so O(1/k) pressure perturbation automatically gives O(1/k) entropy rate perturbation.\n\n**Why now?** The formal entropy correction bound (Theorem 13) provides the algebraic foundation. Modern random walk simulation tools can easily test the prediction for small groups.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "550b5c8b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T21:18:03.041883+00:00"
+  },
+  {
+    "id": "fd_1202",
+    "title": "Direction 4: Quantum Statistical Mechanics of Subgroup Pressure",
+    "description": "**Conjecture:** Define a *quantum subgroup pressure* by replacing the classical sum over subgroups with a sum over irreducible representations:\n$$\\Pi_q(G; s) = \\sum_{\\rho \\in \\text{Irr}(G)} (\\dim \\rho)^{-s}$$\nFor wreath products, the quantum pressure satisfies a perturbation decomposition analogous to the classical one, with the defect controlled by Clifford theory:\n$$|\\beta_q^W(k,m) - m \\cdot \\beta_q(S_k)| \\leq C_m / k$$\n\n**Test:** Compute Irr(S_k \u2240 S_m) for small k using the Clifford-theoretic parameterization (partitions of k raised to partitions of m). Sum dimension^{-s} and estimate the quantum critical exponent. Compare with the classical exponent.\n\n**Impact:** Would open a second front in algebraic perturbation theory: representation-theoretic universality. If the same O(1/k) bound holds for both subgroup and representation counting, it suggests a deep duality.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: full perturbation framework (to be mirrored for representations)\n- `Catalog/Pythagorean/ArithmeticStatistics/SubgroupPressureGL.lean`: representation-theoretic connection via GL_n\n\n**Proof Strategy:** Use the Clifford-theoretic description of Irr(S_k \u2240 S_m): irreducibles are parameterized by orbits of m-tuples of S_k-irreducibles under S_m, with stabilizer representations. The \"product\" irreducibles correspond to the trivial S_m-orbit, and the defect comes from nontrivial orbits. Bound the number and dimension of nontrivial-orbit irreducibles.\n\n**Domain Bridges:** Quantum mechanics (representation theory as quantum symmetry), random matrix theory (character ratios), coding theory (group codes from representations).\n\n**Lineage:** Bridges from subgroup counting to representation counting; motivated by the Clifford theory discussion in Strategy C.\n\n**Ambition:** Grand challenge \u2014 would establish representation-theoretic perturbation theory alongside subgroup-theoretic perturbation theory.\n\n**The key insight is** that Clifford theory provides an explicit parameterization of wreath product irreducibles in terms of base group irreducibles and top group combinatorics, making the \"product vs coupling\" decomposition natural in the representation-theoretic setting.\n\n**Why now?** The representation theory of wreath products is fully understood (Clifford theory), and the formal perturbation framework provides exact templates for the quantum analogue.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "550b5c8b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T21:18:03.080755+00:00"
+  },
+  {
+    "id": "fd_1203",
+    "title": "Direction 5: Subgroup Pressure and Coding Theory",
+    "description": "**Conjecture:** For a linear code C \u2282 F_q^n with automorphism group Aut(C), the subgroup pressure \u03b2(Aut(C)) controls the *list-decoding radius* of C. Specifically, codes whose automorphism groups are wreath products (e.g., concatenated codes, product codes) have list-decoding radii well-approximated by their component codes, with O(1/k) correction where k is the inner code length.\n\n**Test:** Compute automorphism groups of known concatenated codes (Reed-Solomon inner, random outer) using MAGMA or SageMath. Estimate \u03b2(Aut(C)) and compare with known list-decoding bounds. Check whether the wreath perturbation bound predicts the deviation from product behavior.\n\n**Impact:** Would establish the first connection between subgroup pressure theory and coding theory, potentially providing new structural bounds on decoding complexity.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `block_orbit_complexity_bound`, perturbation framework\n- `Catalog/Pythagorean/SubgroupPressureConcentration.lean`: concentration of pressure\n\n**Proof Strategy:** Relate list-decoding radius to orbit complexity of the automorphism group action on codewords. Use the block orbit complexity bound (Theorem 14) to show that wreath-product automorphism groups have orbit complexity close to product orbit complexity.\n\n**Domain Bridges:** Coding theory (list decoding, algebraic geometry codes), complexity theory (hardness of decoding), cryptography (code-based cryptosystems).\n\n**Lineage:** Extends the block orbit complexity bound to the coding theory setting; connects abstract orbit counting to concrete decoding algorithms.\n\n**Ambition:** Solid extension \u2014 uses well-established connections between group theory and coding theory.\n\n**The key insight is** that the list-decoding radius is controlled by the number of codeword orbits under the automorphism group, which is exactly the orbit complexity that our perturbation theory bounds.\n\n**Why now?** Recent advances in list-decoding (Guruswami\u2013Rudra, Kopparty) have highlighted the role of algebraic structure, and the subgroup pressure framework provides a new lens for quantifying this structure.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "550b5c8b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T21:18:03.121232+00:00"
   },
   {
     "id": "seed_032",

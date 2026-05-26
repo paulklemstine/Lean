@@ -650,5 +650,9 @@
   "208288a0": "direction_1_weighted_distance_equality_via_tropica.json",
   "ff6108f7": "direction_1_log_sobolev_inequality_for_the_hybrid_.json",
   "befda33d": "direction_4_statistical_physics_of_random_transver.json",
-  "a93e0253": "direction_1_full_grtnerellis_large_deviation_princ.json"
+  "a93e0253": "direction_1_full_grtnerellis_large_deviation_princ.json",
+  "e1e8732d": "direction_2_spectral_decoding_via_tropical_morse_b.json",
+  "d42cb594": "direction_5_effective_resistance_and_electrical_fl.json",
+  "a875f3ce": "direction_3_pressure_theory_for_almost_simple_grou.json",
+  "550b5c8b": "direction_1_wreath_product_perturbation_theory.json"
 }
