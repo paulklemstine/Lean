@@ -1452,45 +1452,13 @@ Research mode: {concept.research_mode}
         job.status = "integrated"
         self.completed_count += 1
 
-        # Update the packages_db.js if we saved a JSON package
+        # Update package_index.js and lineage if we saved a JSON package
         if job.result_json_package:
             try:
                 packages_dir = self.catalog_root / "Applications" / "Packages"
                 packages_dir.mkdir(parents=True, exist_ok=True)
-                
-                # Regenerate packages_db.js from all json files in the directory
-                import glob
-                json_files = list(packages_dir.glob("*.json"))
-                
-                package_index = []
-                package_db = {}
-                
-                for fp in json_files:
-                    if fp.name in ("index.json", "package.json", "lineage.json", "future_directions_snapshot.json"): continue
-                    try:
-                        data = json.loads(fp.read_text(encoding='utf-8'))
-                        date_str = data.get("date", __import__("time").strftime('%Y-%m-%dT%H:%M:%SZ', __import__("time").gmtime(os.path.getmtime(str(fp)))))
-                        package_index.append({
-                            "filename": fp.name,
-                            "title": data.get("title", "Untitled Research"),
-                            "domain": data.get("domain", "General"),
-                            "date": date_str
-                        })
-                        package_db[fp.name] = data
-                    except Exception as e:
-                        print(f"[Integrate] Error parsing {fp.name}: {e}")
-                        
-                package_index.sort(key=lambda x: x.get("date", ""), reverse=True)
-                
-                js_content = f"// AUTO-GENERATED FILE. DO NOT EDIT.\n"
-                js_content += f"// This file bundles all JSON packages so they can be loaded from file:// without CORS issues.\n\n"
-                js_content += f"window.PACKAGE_INDEX = {json.dumps(package_index, indent=2)};\n\n"
-                js_content += f"window.PACKAGE_DB = {json.dumps(package_db, indent=2)};\n"
-                
-                (packages_dir / "packages_db.js").write_text(js_content, encoding="utf-8")
-                print(f"[Integrate] Updated packages_db.js with {len(package_index)} packages.")
 
-                # Also update lineage graph and append PACKAGE_GRAPH
+                # Run update_index.py to regenerate package_index.js (lightweight index)
                 try:
                     import subprocess
                     aether_root = Path(__file__).parent
@@ -1505,7 +1473,6 @@ Research mode: {concept.research_mode}
                         else:
                             print(f"[Integrate] Warning: lineage_extractor failed: {result.stderr[:200]}")
 
-                    # Run update_index.py which adds PACKAGE_GRAPH to packages_db.js
                     update_script = packages_dir / "update_index.py"
                     if update_script.exists():
                         result = subprocess.run(
@@ -1513,13 +1480,13 @@ Research mode: {concept.research_mode}
                             capture_output=True, text=True, cwd=str(packages_dir)
                         )
                         if result.returncode == 0:
-                            print(f"[Integrate] Updated packages_db.js with PACKAGE_GRAPH")
+                            print(f"[Integrate] Updated package_index.js with PACKAGE_GRAPH")
                         else:
                             print(f"[Integrate] Warning: update_index failed: {result.stderr[:200]}")
                 except Exception as e:
-                    print(f"[Integrate] Warning: Failed to update graph data: {e}")
+                    print(f"[Integrate] Warning: Failed to update package_index.js: {e}")
             except Exception as e:
-                print(f"[Integrate] Warning: Failed to update packages_db.js: {e}")
+                print(f"[Integrate] Warning: Failed to update package_index.js: {e}")
 
         return job
 
@@ -2638,9 +2605,6 @@ Research mode: {concept.research_mode}
             pkg_index = self.catalog_root / "Applications" / "Packages" / "package_index.js"
             if pkg_index.exists():
                 paths_to_add.append("Catalog/Applications/Packages/package_index.js")
-            pkg_db = self.catalog_root / "Applications" / "Packages" / "packages_db.js"
-            if pkg_db.exists():
-                paths_to_add.append("Catalog/Applications/Packages/packages_db.js")
             lineage = self.catalog_root / "Applications" / "Packages" / "lineage.json"
             if lineage.exists():
                 paths_to_add.append("Catalog/Applications/Packages/lineage.json")

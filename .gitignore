@@ -15,3 +15,7 @@
 /Aether/.aether_workspace/projects/
 /Aether/.aether_workspace/pollinations_api_key
 !/Catalog/Applications/Packages/future_directions.json
+/Catalog/Applications/Packages/old/
+/Catalog/Applications/Packages/packages_db.js
+/docs/old/
+/docs/packages_db.js
