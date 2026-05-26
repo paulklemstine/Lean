@@ -917,26 +917,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T19:29:17.982054+00:00"
   },
   {
-    "id": "fd_0931",
-    "title": "Direction 5: M-Convex Optimization via Directional Log-Concavity Certificates",
-    "description": "**Conjecture**: For optimization problems on M-convex sets (base polyhedra of matroids, integral polymatroids), a directional log-concavity certificate for the objective function guarantees polynomial-time solvability via a simple exchange algorithm, with the convergence rate controlled by the k-fold depth.\n\n**The key insight is** that the rectangle closure theorem (`support_rectangle_closure`) provides a \"local-to-global\" principle: if the objective function satisfies mixed DLC, then any local improvement via coordinate exchange leads to a global improvement. Combined with the exchange property of the feasible set, this means the exchange algorithm cannot cycle and must converge to the optimum.\n\n**Why now?** Murota's discrete convex analysis provides polynomial-time algorithms for M-convex function minimization, but the algorithms require full M-convexity. Our graded hierarchy via k-fold depth suggests that partial log-concavity (depth k < d) may already suffice for efficient optimization, with the convergence rate degrading gracefully as k decreases.\n\n**Test**: Implement the exchange algorithm for weighted matroid intersection with various objective functions. Measure the number of exchange steps as a function of (n, d, k) where k is the k-fold depth. If the step count scales as O(n^{d-k}), this confirms the graded convergence theory.\n\n**Impact**: Would extend the reach of efficient discrete optimization algorithms to a broader class of objective functions, with certificates that are easier to verify than full M-convexity.\n\n**Catalog References**: `Pythagorean/MultivariateLogConcavity.lean` (`support_rectangle_closure`, `kfold_mono`, `CoeffDirectionalLogConcave`); `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (`SupportSatisfiesExchange`).\n\n**Proof Strategy**: Define a potential function \u03a6 = \u2212\u2211 log f(m\u209c) along the exchange algorithm trajectory. Show that each exchange step decreases \u03a6 by at least a quantity controlled by the k-fold depth. Use the product stability theorem to bound the total number of steps. Formalize the convergence proof and verify soundness of the exchange algorithm against the `SupportSatisfiesExchange` predicate.\n\n**Domain Bridges**: Combinatorial optimization (matroid intersection, submodular maximization) \u2194 Algorithm design (exchange algorithms, local search) \u2194 Economics (mechanism design, auction theory).\n\n**Lineage**: Extends `support_rectangle_closure` and connects to `SupportSatisfiesExchange`.\n\n**Ambition**: Solid extension with direct practical applications.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "abf333bc",
-    "timestamp": "2026-05-25T19:29:18.016009+00:00"
-  },
-  {
     "id": "fd_0932",
     "title": "Direction 1: Intrinsically Typed Higher-Order Rewriting with \u03b2\u03b7-Completion",
     "description": "**Conjecture:** For the simply-typed \u03bb-calculus with \u03b2\u03b7-reduction, substitution functoriality and rewrite closure extend to the \u03b2\u03b7 setting, and the generated equational theory descends cleanly to \u03b2\u03b7-equivalence classes. Concretely: if `HOEqGen(E, t, u)` and `t ~\u03b2\u03b7 t'`, `u ~\u03b2\u03b7 u'`, then `HOEqGen(E, t', u')` in a theory with \u03b2\u03b7-rules included.\n\n**Test:** Formalize intrinsically typed terms (indexed by context and type) using de Bruijn indices. Prove `subst_comp` and `hoRewrites_closed_under_subst` for typed terms. Then add \u03b7-contraction (`lam(app(rename(\u00b7+1, f), var 0)) \u2192 f`) and verify the \u03b7-commutation lemma: `eta_closed_under_subst`. Check computationally on typed terms up to size 12 that \u03b2\u03b7-normalization commutes with rewriting for orthogonal rule sets.\n\n**Impact:** Intrinsically typed terms would eliminate ill-scoped terms by construction, making the formalization stronger and aligning with the Fiore-Plotkin-Turi framework for abstract syntax. \u03b2\u03b7-completion is strictly more powerful than \u03b2-completion and is required for extensional reasoning about functional programs.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (subst_comp, beta_closed_under_subst, liftSubst_compSubst); `Pythagorean/ConcreteTermAlgebra.lean` (FOTerm.subst_comp as the first-order prototype).\n\n**Proof Strategy:** Start with the Autosubst-style approach: define a universe of types, index terms by `(Ctx, Ty)`, and derive the substitution lemmas mechanically. The \u03b7 case requires proving `subst(lam(app(rename(\u00b7+1, f), var 0)), \u03c3) = subst(f, \u03c3)` when f has appropriate type, which reduces to showing `liftSubst(\u03c3)(1) = rename(\u00b7+1)(\u03c3(0))` \u2014 a definitional equality.\n\n**Domain Bridges:** Type theory (intrinsic typing), categorical semantics (presheaves over contexts), proof automation (extensional simplification).\n\n**Lineage:** Direct extension of the current work's substitution calculus.\n\n**Ambition:** Solid extension \u2014 builds directly on verified infrastructure with clear proof path.\n\n**\"The key insight is...\"** that \u03b7-contraction is the *semantic* counterpart of \u03b2-reduction \u2014 where \u03b2 says \"functions compute,\" \u03b7 says \"things that compute like functions *are* functions\" \u2014 and the substitution calculus we have already verified handles both uniformly once the commutation lemma is established.\n\n**\"Why now?\"** The substitution infrastructure (11 lemmas from `liftRen_id` through `subst_comp`) is now verified and battle-tested. Extending to \u03b7 requires exactly one new commutation lemma and one new lifting property, both following the established pattern.\n\n---",
@@ -1376,10 +1356,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "db7ef9c7",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9247862",
     "timestamp": "2026-05-25T21:51:37.228515+00:00"
   },
   {
@@ -1595,7 +1575,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "edab5f0b",
@@ -1614,7 +1594,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "edab5f0b",
@@ -1632,7 +1612,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "edab5f0b",
@@ -1651,7 +1631,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "edab5f0b",
@@ -1671,12 +1651,111 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "edab5f0b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:59:06.937020+00:00"
+  },
+  {
+    "id": "fd_0980",
+    "title": "Direction 1: Deletion-Contraction Duality for Polynomial Supports",
+    "description": "**Conjecture:** Define *support deletion* as D_i(S) := {m \u2208 S : m_i = 0} (the restriction to vectors with zero i-th coordinate). If S satisfies the exchange property, then D_i(S) satisfies the exchange property, and there is a formal deletion-contraction recurrence for a support-level Tutte polynomial that encodes the contraction hierarchy.\n\n**Test:** Formalize support deletion in Lean. Check the exchange property computationally for all deletions of M-convex subsets of the degree-\u22646 simplex on \u22645 variables. Formalize the Tutte-type recurrence and verify it for uniform matroids and graphic matroids.\n\n**Impact:** This would complete the matroid-theoretic toolkit at the support level, enabling inductive proofs via deletion-contraction for any polynomial invariant that factors through the support. Combined with the contraction theorem, it would give a full minor theory for M-convex polynomial supports.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (contraction theorem), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (exchange definition).\n\n**Proof Strategy:** Direct case analysis, analogous to the contraction proof. For deletion, the key is that removing vectors with m_i = 0 preserves exchange because the exchange witnesses either both have m_i = 0 (and hence remain) or the situation reduces to a previously handled case.\n\n**Domain Bridges:** Matroid theory \u2194 algebraic combinatorics \u2194 knot theory (via Tutte\u2013Jones connections).\n\n**Lineage:** Extends the contraction theorem to a full minor framework.\n\n**Ambition:** Solid extension \u2014 the conjecture is very likely true and fills an obvious gap.\n\n**The key insight is** that deletion corresponds to evaluation (setting x\u1d62 = 0) while contraction corresponds to differentiation, and both preserve the matroidal skeleton.\n\n**Why now?** The contraction half is formally proved. The deletion half should follow by similar techniques, and together they would complete the combinatorial dictionary.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "243a6673",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T23:33:15.512838+00:00"
+  },
+  {
+    "id": "fd_0981",
+    "title": "Direction 2: Valuated M-Convexity and Coefficient Transport",
+    "description": "**Conjecture:** Define a *valuated exchange property* that tracks not just support membership but coefficient values: for \u03b1, \u03b2 \u2208 supp(p) with \u03b1\u1d62 > \u03b2\u1d62, the exchange witness j satisfies a quantitative bound relating the coefficients of the four involved monomials. This valuated exchange should be preserved under differentiation (with appropriate rescaling).\n\n**Test:** Formalize a valuated exchange predicate. Test it on the basis-generating polynomials of uniform matroids with explicit coefficient weights. Prove or disprove preservation for the simplest nontrivial case (n=3, d=2).\n\n**Impact:** This would bridge from combinatorial support (boolean membership) to analytic coefficient behavior (quantitative inequalities), connecting the support-level theorem to log-concavity and ultra-log-concavity of coefficients along rays.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (coeff_pderiv_eq), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signature).\n\n**Proof Strategy:** Use the coefficient formula [\u2202p/\u2202x\u1d62]_m = (m\u1d62+1)\u00b7[p]_{m+e\u1d62} to transport coefficient inequalities. The (m\u1d62+1) factor creates a predictable rescaling that should preserve the valuated exchange up to this factor.\n\n**Domain Bridges:** Discrete convex analysis (Murota's valuated matroids) \u2194 algebraic geometry (intersection theory) \u2194 combinatorial optimization (submodular function minimization).\n\n**Lineage:** Deepens the contraction theorem from topology (support) to geometry (valuated support).\n\n**Ambition:** Solid extension \u2014 the coefficient formula makes the rescaling explicit.\n\n**The key insight is** that the coefficient of the derivative at m is a simple multiplicative transform of the coefficient at m+e\u1d62, so quantitative exchange bounds should transport with controlled distortion.\n\n**Why now?** The coefficient formula is formally proved, and the qualitative (support-level) result is established. The quantitative upgrade is the natural next step.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "243a6673",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T23:33:15.543578+00:00"
+  },
+  {
+    "id": "fd_0982",
+    "title": "Direction 3: Hodge-Theoretic Interpretation of Exchange Depth",
+    "description": "**Conjecture:** The *exchange depth* of a polynomial p \u2014 the maximum total order of mixed differentiation that preserves nonempty M-convex support \u2014 equals the minimum over all coordinates of min_{m \u2208 supp(p)} m_i, which is the \"inner radius\" of the Newton polytope. Furthermore, this quantity has a Hodge-theoretic interpretation as the dimension of a certain positive cone in the cohomology of the associated toric variety.\n\n**Test:** Compute exchange depth for all homogeneous supports of degree \u2264 8 on \u2264 4 variables. Compare with the inner radius. Formalize the inner radius computation in Lean and prove the equality for the full simplex (where both equal d/n rounded down).\n\n**Impact:** This would connect the combinatorial derivative hierarchy to the geometry of Newton polytopes and the algebra of toric varieties, opening a route to machine-verified Hodge-theoretic inequalities.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (exchangeWidth, mixedPDeriv), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Hessian signature).\n\n**Proof Strategy:** For the full simplex, the inner radius is \u230ad/n\u230b and the exchange depth is exactly d (every contraction reduces degree by 1 until the support is a single point). For general M-convex sets, the conjecture may need refinement. Start with a computational census and refine the conjecture based on data.\n\n**Domain Bridges:** Algebraic combinatorics \u2194 algebraic geometry (toric varieties) \u2194 Hodge theory (mixed Hodge structures).\n\n**Lineage:** Extends exchange width monotonicity to a structural invariant with geometric meaning.\n\n**Ambition:** Grand challenge \u2014 the Hodge interpretation is speculative and would require significant new formal infrastructure.\n\n**The key insight is** that exchange depth measures the \"thickness\" of the M-convex set in a direction that corresponds to the depth of the derivative tower, and this thickness should be computable from the Newton polytope alone.\n\n**Why now?** The exchange width machinery is formalized and the monotonicity theorem is proved. The geometric interpretation is the natural question to ask next.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "243a6673",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T23:33:15.575441+00:00"
+  },
+  {
+    "id": "fd_0983",
+    "title": "Direction 4: Tropical Contraction and Support Truncation",
+    "description": "**Conjecture:** Under tropicalization (replacing + with max and \u00d7 with +), the contraction operation on polynomial supports corresponds to a *tropical truncation* of the Newton polytope: the operation that removes a face of the polytope and re-indexes the remaining lattice points. This tropical truncation preserves the \"tropical M-convexity\" (the tropical analog of the exchange property).\n\n**Test:** Implement tropical polynomial operations in Python. Compute tropical supports for degree-\u22645 polynomials in \u22644 variables. Verify that tropical contraction = support contraction for these cases. Formalize the tropical exchange property and prove it coincides with the classical one for integer-valued tropical polynomials.\n\n**Impact:** This would connect the derivative/contraction theorem to tropical geometry, the fastest-growing interface between combinatorics and algebraic geometry. It would position the M-convexity closure result as a shadow of a deeper tropical-geometric principle.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (SupportContraction), `Catalog/Tropical/` (tropical geometry files if present).\n\n**Proof Strategy:** Establish a formal tropicalization functor that sends MvPolynomial \u211d to tropical polynomials, and show it commutes with contraction. The M-convexity preservation would then follow from the classical result.\n\n**Domain Bridges:** Discrete convex analysis \u2194 tropical geometry \u2194 algebraic geometry (Berkovich spaces, non-Archimedean geometry).\n\n**Lineage:** Extends the contraction theorem to the tropical world.\n\n**Ambition:** Grand challenge \u2014 tropical formalization in Lean is still nascent.\n\n**The key insight is** that support sets are Newton polytopes, contraction acts on lattice points, and tropical geometry provides the natural language for operations on Newton polytopes.\n\n**Why now?** Tropical geometry has reached maturity as a mathematical theory, and its connections to M-convexity via valuated matroids are well-established informally. Formalization would be pioneering.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "243a6673",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T23:33:15.605805+00:00"
+  },
+  {
+    "id": "fd_0984",
+    "title": "Direction 5: Negative Dependence Preservation Under Conditioning",
+    "description": "**Conjecture:** If a probability distribution \u03bc on {0,1}\u207f is *strongly Rayleigh* (its generating polynomial is stable), then for any element i, the conditional distribution \u03bc(\u00b7|i \u2208 S) is again strongly Rayleigh. At the support level, this reduces to our contraction theorem. At the coefficient level, it requires preserving the stability (zero-free half-plane) property, which should follow from the Borcea-Br\u00e4nd\u00e9n theory.\n\n**Test:** For determinantal point processes (DPPs) with kernel matrices of rank \u2264 5 on \u2264 8 elements, compute the generating polynomial, verify stability, differentiate, and verify stability again. Formalize the connection between conditioning and differentiation for DPPs.\n\n**Impact:** This would provide a formal bridge from algebraic combinatorics to statistical physics and machine learning (DPPs are widely used for diversity-promoting sampling). It would certify that the negative dependence properties that make DPPs useful survive conditioning \u2014 a fact used informally in every DPP application.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (pderiv closure), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian/stable connection).\n\n**Proof Strategy:** Use the Borcea-Br\u00e4nd\u00e9n characterization: a polynomial is stable iff it has nonneg coefficients and its support satisfies exchange (for homogeneous polynomials, this is equivalent to Lorentzianity). Differentiation preserves nonnegativity (proved) and exchange (proved), hence stability.\n\n**Domain Bridges:** Combinatorics (matroid theory) \u2194 probability (DPPs, negative dependence) \u2194 statistical physics (partition functions) \u2194 machine learning (diversity sampling).\n\n**Lineage:** Applies the contraction theorem to the most impactful application domain.\n\n**Ambition:** Solid extension with grand-challenge framing \u2014 the individual steps are provable, but the full formalization of the stable polynomial \u2194 negative dependence connection would be a major formal verification milestone.\n\n**The key insight is** that differentiation = conditioning at the algebraic level, and our contraction theorem provides the combinatorial layer of the preservation argument. The analytic layer (coefficient positivity) is already proved.\n\n**Why now?** DPPs are increasingly important in machine learning, and practitioners rely on negative dependence preservation without formal guarantees. A machine-checked proof would provide certifiable guarantees for algorithmic applications.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "243a6673",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-25T23:33:15.642033+00:00"
   },
   {
     "id": "seed_005",
@@ -1801,103 +1880,25 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
-    "id": "fd_0980",
-    "title": "Direction 1: Deletion-Contraction Duality for Polynomial Supports",
-    "description": "**Conjecture:** Define *support deletion* as D_i(S) := {m \u2208 S : m_i = 0} (the restriction to vectors with zero i-th coordinate). If S satisfies the exchange property, then D_i(S) satisfies the exchange property, and there is a formal deletion-contraction recurrence for a support-level Tutte polynomial that encodes the contraction hierarchy.\n\n**Test:** Formalize support deletion in Lean. Check the exchange property computationally for all deletions of M-convex subsets of the degree-\u22646 simplex on \u22645 variables. Formalize the Tutte-type recurrence and verify it for uniform matroids and graphic matroids.\n\n**Impact:** This would complete the matroid-theoretic toolkit at the support level, enabling inductive proofs via deletion-contraction for any polynomial invariant that factors through the support. Combined with the contraction theorem, it would give a full minor theory for M-convex polynomial supports.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (contraction theorem), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (exchange definition).\n\n**Proof Strategy:** Direct case analysis, analogous to the contraction proof. For deletion, the key is that removing vectors with m_i = 0 preserves exchange because the exchange witnesses either both have m_i = 0 (and hence remain) or the situation reduces to a previously handled case.\n\n**Domain Bridges:** Matroid theory \u2194 algebraic combinatorics \u2194 knot theory (via Tutte\u2013Jones connections).\n\n**Lineage:** Extends the contraction theorem to a full minor framework.\n\n**Ambition:** Solid extension \u2014 the conjecture is very likely true and fills an obvious gap.\n\n**The key insight is** that deletion corresponds to evaluation (setting x\u1d62 = 0) while contraction corresponds to differentiation, and both preserve the matroidal skeleton.\n\n**Why now?** The contraction half is formally proved. The deletion half should follow by similar techniques, and together they would complete the combinatorial dictionary.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T23:33:15.512838+00:00"
-  },
-  {
-    "id": "fd_0981",
-    "title": "Direction 2: Valuated M-Convexity and Coefficient Transport",
-    "description": "**Conjecture:** Define a *valuated exchange property* that tracks not just support membership but coefficient values: for \u03b1, \u03b2 \u2208 supp(p) with \u03b1\u1d62 > \u03b2\u1d62, the exchange witness j satisfies a quantitative bound relating the coefficients of the four involved monomials. This valuated exchange should be preserved under differentiation (with appropriate rescaling).\n\n**Test:** Formalize a valuated exchange predicate. Test it on the basis-generating polynomials of uniform matroids with explicit coefficient weights. Prove or disprove preservation for the simplest nontrivial case (n=3, d=2).\n\n**Impact:** This would bridge from combinatorial support (boolean membership) to analytic coefficient behavior (quantitative inequalities), connecting the support-level theorem to log-concavity and ultra-log-concavity of coefficients along rays.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (coeff_pderiv_eq), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signature).\n\n**Proof Strategy:** Use the coefficient formula [\u2202p/\u2202x\u1d62]_m = (m\u1d62+1)\u00b7[p]_{m+e\u1d62} to transport coefficient inequalities. The (m\u1d62+1) factor creates a predictable rescaling that should preserve the valuated exchange up to this factor.\n\n**Domain Bridges:** Discrete convex analysis (Murota's valuated matroids) \u2194 algebraic geometry (intersection theory) \u2194 combinatorial optimization (submodular function minimization).\n\n**Lineage:** Deepens the contraction theorem from topology (support) to geometry (valuated support).\n\n**Ambition:** Solid extension \u2014 the coefficient formula makes the rescaling explicit.\n\n**The key insight is** that the coefficient of the derivative at m is a simple multiplicative transform of the coefficient at m+e\u1d62, so quantitative exchange bounds should transport with controlled distortion.\n\n**Why now?** The coefficient formula is formally proved, and the qualitative (support-level) result is established. The quantitative upgrade is the natural next step.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T23:33:15.543578+00:00"
-  },
-  {
-    "id": "fd_0982",
-    "title": "Direction 3: Hodge-Theoretic Interpretation of Exchange Depth",
-    "description": "**Conjecture:** The *exchange depth* of a polynomial p \u2014 the maximum total order of mixed differentiation that preserves nonempty M-convex support \u2014 equals the minimum over all coordinates of min_{m \u2208 supp(p)} m_i, which is the \"inner radius\" of the Newton polytope. Furthermore, this quantity has a Hodge-theoretic interpretation as the dimension of a certain positive cone in the cohomology of the associated toric variety.\n\n**Test:** Compute exchange depth for all homogeneous supports of degree \u2264 8 on \u2264 4 variables. Compare with the inner radius. Formalize the inner radius computation in Lean and prove the equality for the full simplex (where both equal d/n rounded down).\n\n**Impact:** This would connect the combinatorial derivative hierarchy to the geometry of Newton polytopes and the algebra of toric varieties, opening a route to machine-verified Hodge-theoretic inequalities.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (exchangeWidth, mixedPDeriv), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Hessian signature).\n\n**Proof Strategy:** For the full simplex, the inner radius is \u230ad/n\u230b and the exchange depth is exactly d (every contraction reduces degree by 1 until the support is a single point). For general M-convex sets, the conjecture may need refinement. Start with a computational census and refine the conjecture based on data.\n\n**Domain Bridges:** Algebraic combinatorics \u2194 algebraic geometry (toric varieties) \u2194 Hodge theory (mixed Hodge structures).\n\n**Lineage:** Extends exchange width monotonicity to a structural invariant with geometric meaning.\n\n**Ambition:** Grand challenge \u2014 the Hodge interpretation is speculative and would require significant new formal infrastructure.\n\n**The key insight is** that exchange depth measures the \"thickness\" of the M-convex set in a direction that corresponds to the depth of the derivative tower, and this thickness should be computable from the Newton polytope alone.\n\n**Why now?** The exchange width machinery is formalized and the monotonicity theorem is proved. The geometric interpretation is the natural question to ask next.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T23:33:15.575441+00:00"
-  },
-  {
-    "id": "fd_0983",
-    "title": "Direction 4: Tropical Contraction and Support Truncation",
-    "description": "**Conjecture:** Under tropicalization (replacing + with max and \u00d7 with +), the contraction operation on polynomial supports corresponds to a *tropical truncation* of the Newton polytope: the operation that removes a face of the polytope and re-indexes the remaining lattice points. This tropical truncation preserves the \"tropical M-convexity\" (the tropical analog of the exchange property).\n\n**Test:** Implement tropical polynomial operations in Python. Compute tropical supports for degree-\u22645 polynomials in \u22644 variables. Verify that tropical contraction = support contraction for these cases. Formalize the tropical exchange property and prove it coincides with the classical one for integer-valued tropical polynomials.\n\n**Impact:** This would connect the derivative/contraction theorem to tropical geometry, the fastest-growing interface between combinatorics and algebraic geometry. It would position the M-convexity closure result as a shadow of a deeper tropical-geometric principle.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (SupportContraction), `Catalog/Tropical/` (tropical geometry files if present).\n\n**Proof Strategy:** Establish a formal tropicalization functor that sends MvPolynomial \u211d to tropical polynomials, and show it commutes with contraction. The M-convexity preservation would then follow from the classical result.\n\n**Domain Bridges:** Discrete convex analysis \u2194 tropical geometry \u2194 algebraic geometry (Berkovich spaces, non-Archimedean geometry).\n\n**Lineage:** Extends the contraction theorem to the tropical world.\n\n**Ambition:** Grand challenge \u2014 tropical formalization in Lean is still nascent.\n\n**The key insight is** that support sets are Newton polytopes, contraction acts on lattice points, and tropical geometry provides the natural language for operations on Newton polytopes.\n\n**Why now?** Tropical geometry has reached maturity as a mathematical theory, and its connections to M-convexity via valuated matroids are well-established informally. Formalization would be pioneering.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T23:33:15.605805+00:00"
-  },
-  {
-    "id": "fd_0984",
-    "title": "Direction 5: Negative Dependence Preservation Under Conditioning",
-    "description": "**Conjecture:** If a probability distribution \u03bc on {0,1}\u207f is *strongly Rayleigh* (its generating polynomial is stable), then for any element i, the conditional distribution \u03bc(\u00b7|i \u2208 S) is again strongly Rayleigh. At the support level, this reduces to our contraction theorem. At the coefficient level, it requires preserving the stability (zero-free half-plane) property, which should follow from the Borcea-Br\u00e4nd\u00e9n theory.\n\n**Test:** For determinantal point processes (DPPs) with kernel matrices of rank \u2264 5 on \u2264 8 elements, compute the generating polynomial, verify stability, differentiate, and verify stability again. Formalize the connection between conditioning and differentiation for DPPs.\n\n**Impact:** This would provide a formal bridge from algebraic combinatorics to statistical physics and machine learning (DPPs are widely used for diversity-promoting sampling). It would certify that the negative dependence properties that make DPPs useful survive conditioning \u2014 a fact used informally in every DPP application.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (pderiv closure), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian/stable connection).\n\n**Proof Strategy:** Use the Borcea-Br\u00e4nd\u00e9n characterization: a polynomial is stable iff it has nonneg coefficients and its support satisfies exchange (for homogeneous polynomials, this is equivalent to Lorentzianity). Differentiation preserves nonnegativity (proved) and exchange (proved), hence stability.\n\n**Domain Bridges:** Combinatorics (matroid theory) \u2194 probability (DPPs, negative dependence) \u2194 statistical physics (partition functions) \u2194 machine learning (diversity sampling).\n\n**Lineage:** Applies the contraction theorem to the most impactful application domain.\n\n**Ambition:** Solid extension with grand-challenge framing \u2014 the individual steps are provable, but the full formalization of the stable polynomial \u2194 negative dependence connection would be a major formal verification milestone.\n\n**The key insight is** that differentiation = conditioning at the algebraic level, and our contraction theorem provides the combinatorial layer of the preservation argument. The analytic layer (coefficient positivity) is already proved.\n\n**Why now?** DPPs are increasingly important in machine learning, and practitioners rely on negative dependence preservation without formal guarantees. A machine-checked proof would provide certifiable guarantees for algorithmic applications.",
+    "id": "fd_0985",
+    "title": "Direction 1: Spectral-Tropical Entropy Bridge",
+    "description": "**Conjecture:** For any connected graph $G$ with maximum degree $\\Delta$ and largest adjacency eigenvalue $\\lambda_1$:\n$$H(G) \\geq \\log(\\lambda_1 / \\Delta)$$\nwhere $H(G)$ is the graph degree entropy.\n\n**The key insight is...** The degree entropy captures how uniformly the graph distributes topological information capacity, while $\\lambda_1 / \\Delta$ measures how close the graph is to being regular (by the Perron-Frobenius theorem, $\\lambda_1 / \\Delta \\leq 1$ with equality iff $G$ is regular). The conjecture asserts that irregular graphs have lower degree entropy, bounded below by the spectral irregularity measure. This would connect three domains: tropical algebra (stability), information theory (entropy), and spectral theory (eigenvalues).\n\n**Why now?** The formal verification of degree entropy non-negativity (Theorem 7.1 in our work) provides the foundation. Mathlib now contains the spectral theory of finite graphs (adjacency matrix eigenvalues) and the Perron-Frobenius theorem, making a formal proof feasible. The Alon-Boppana bound $\\lambda_1 \\geq 2\\sqrt{\\Delta - 1} - o(1)$ would give explicit lower bounds.\n\n**Test:** Compute $H(G)$ and $\\log(\\lambda_1/\\Delta)$ for 1000 random graphs with $n = 50$ vertices and edge probability $p \\in \\{0.1, 0.3, 0.5\\}$. Verify the inequality holds in all cases.\n\n**Impact:** Establishes a spectral floor on tropical information content, enabling stability bounds derived purely from eigenvalue data.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalBridge/Stability.lean` (degree bounds), `Catalog/Pythagorean/TropicalBridge/TropicalInformationTheory.lean` (degree entropy).\n\n**Proof Strategy:** Use the concavity of log and the relationship $\\sum p_v = 1$, $\\sum p_v \\cdot \\deg(v) = \\text{avg\\_degree}$. Apply Jensen's inequality to bound the entropy from below. Connect to $\\lambda_1$ via the Rayleigh quotient characterization.\n\n**Domain Bridges:** Spectral graph theory \u2194 Information theory \u2194 Tropical geometry.\n\n**Lineage:** Extends `degree_entropy_nonneg` and `capacity_gap_formula`.\n\n**Ambition:** Solid extension (3/5). Builds directly on established catalog theorems with clear proof strategy.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
+      "Tropical",
       "Physics",
       "Bridges",
-      "MachineLearning",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "243a6673",
+    "source_exp_id": "7e5283ed",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T23:33:15.642033+00:00"
+    "timestamp": "2026-05-25T23:33:37.973936+00:00"
   },
   {
     "id": "seed_013",
@@ -2342,15 +2343,14 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:03.321531+00:00"
   },
   {
-    "id": "fd_0985",
-    "title": "Direction 1: Spectral-Tropical Entropy Bridge",
-    "description": "**Conjecture:** For any connected graph $G$ with maximum degree $\\Delta$ and largest adjacency eigenvalue $\\lambda_1$:\n$$H(G) \\geq \\log(\\lambda_1 / \\Delta)$$\nwhere $H(G)$ is the graph degree entropy.\n\n**The key insight is...** The degree entropy captures how uniformly the graph distributes topological information capacity, while $\\lambda_1 / \\Delta$ measures how close the graph is to being regular (by the Perron-Frobenius theorem, $\\lambda_1 / \\Delta \\leq 1$ with equality iff $G$ is regular). The conjecture asserts that irregular graphs have lower degree entropy, bounded below by the spectral irregularity measure. This would connect three domains: tropical algebra (stability), information theory (entropy), and spectral theory (eigenvalues).\n\n**Why now?** The formal verification of degree entropy non-negativity (Theorem 7.1 in our work) provides the foundation. Mathlib now contains the spectral theory of finite graphs (adjacency matrix eigenvalues) and the Perron-Frobenius theorem, making a formal proof feasible. The Alon-Boppana bound $\\lambda_1 \\geq 2\\sqrt{\\Delta - 1} - o(1)$ would give explicit lower bounds.\n\n**Test:** Compute $H(G)$ and $\\log(\\lambda_1/\\Delta)$ for 1000 random graphs with $n = 50$ vertices and edge probability $p \\in \\{0.1, 0.3, 0.5\\}$. Verify the inequality holds in all cases.\n\n**Impact:** Establishes a spectral floor on tropical information content, enabling stability bounds derived purely from eigenvalue data.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalBridge/Stability.lean` (degree bounds), `Catalog/Pythagorean/TropicalBridge/TropicalInformationTheory.lean` (degree entropy).\n\n**Proof Strategy:** Use the concavity of log and the relationship $\\sum p_v = 1$, $\\sum p_v \\cdot \\deg(v) = \\text{avg\\_degree}$. Apply Jensen's inequality to bound the entropy from below. Connect to $\\lambda_1$ via the Rayleigh quotient characterization.\n\n**Domain Bridges:** Spectral graph theory \u2194 Information theory \u2194 Tropical geometry.\n\n**Lineage:** Extends `degree_entropy_nonneg` and `capacity_gap_formula`.\n\n**Ambition:** Solid extension (3/5). Builds directly on established catalog theorems with clear proof strategy.\n\n---",
+    "id": "fd_0990",
+    "title": "Direction 1: Lorentzian Polynomial Certificates for Exchange Optimization",
+    "description": "**Conjecture:** If the generating polynomial of a matroid M, weighted by an objective function f, is Lorentzian in the sense of Br\u00e4nd\u00e9n\u2013Huh, then f satisfies the directional exchange certificate on the bases of M. More precisely, the Lorentzian condition on the polynomial \u2211_{B basis} f(B) \u00b7 x^B implies DLC for -f on bases(M).\n\n**Test:** For matroids of rank \u2264 5 on ground sets of size \u2264 10, compute the generating polynomial with objective weights, verify the Lorentzian condition (negative semidefiniteness of the Hessian on the positive orthant), and check whether DLC holds. The conjecture predicts 100% correlation.\n\n**Impact:** This would establish a direct pipeline: Lorentzian polynomial \u2192 DLC \u2192 certified optimization. It would mean that the deep algebraic-geometric results of Br\u00e4nd\u00e9n\u2013Huh (which prove Lorentzian structure for many combinatorial polynomials) automatically yield optimization algorithms with global optimality guarantees. This transforms pure mathematics into applied algorithms.\n\n**Catalog References:** `Catalog/Pythagorean/HigherOrderLogConcavity.lean` \u2014 `KFoldLogConcave`, `kFoldLogConcave_mono`\n\n**Proof Strategy:** Use the characterization of Lorentzian polynomials via the positive semidefiniteness of associated quadratic forms. Show that the Lorentzian condition along exchange directions (2D slices corresponding to pairs (i,j)) implies the discrete midpoint inequality that underlies DLC. The key lemma is that the Lorentzian Hessian condition, restricted to the line spanned by e_i - e_j, gives exactly the ratio monotonicity needed for improving exchanges.\n\n**Domain Bridges:** Algebraic geometry (Hodge theory, Lorentzian polynomials) \u2192 Discrete optimization \u2192 Matroid theory\n\n**Lineage:** Builds on Theorems 1, 3.6 (coeffDLC_induces_exchange_optimization), and the kFoldLogConcave hierarchy.\n\n**Ambition:** Grand challenge \u2014 would unify two major research programs (Hodge-theoretic combinatorics and discrete convex analysis) that have developed independently.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
-      "Tropical",
       "Physics",
       "Bridges",
       "Logic"
@@ -2358,9 +2358,28 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "7e5283ed",
+    "source_exp_id": "abf333bc",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T23:33:37.973936+00:00"
+    "timestamp": "2026-05-26T00:07:30.273038+00:00"
+  },
+  {
+    "id": "fd_0991",
+    "title": "Direction 2: Quantitative Exchange Descent Bounds via Certificate Depth",
+    "description": "**Conjecture:** For a finite exchange family S \u2286 \u2124^d with diameter D and an objective f satisfying ExchangeDLC_k with k \u2265 1, the exchange descent algorithm terminates in at most C \u00b7 d^{d-k} \u00b7 D steps, where C is a universal constant. At maximum depth k = d, the bound reduces to O(D), matching the performance of augmenting-path algorithms on M-convex functions.\n\n**Test:** Generate random exchange families of varying dimension d \u2208 {4,...,12} and rank r. For each, construct objectives with controlled certificate depth (using sums of independent log-concave terms for high depth, perturbed quadratics for low depth). Measure step counts and fit the exponent as a function of (d - k).\n\n**Impact:** This would establish the first complexity-depth tradeoff in discrete optimization, creating a new axis for algorithm design: invest in proving deeper certificates to get faster algorithms. This is analogous to how smoothness parameters control convergence rates in continuous optimization.\n\n**Catalog References:** `Catalog/Pythagorean/HigherOrderLogConcavity.lean` \u2014 `KFoldLogConcave.iterRatio_kfold`, `kFoldLogConcave_mono`\n\n**Proof Strategy:** Define a potential function \u03a6_k(x) that combines the objective value with a k-dependent measure of \"distance to optimality\" in the exchange graph. Show that each descent step decreases \u03a6_k by at least \u03b4_k = \u03a9(d^{-(d-k)}), yielding the step bound. The potential should leverage the k-fold certificate to get tighter decrease estimates at higher depths.\n\n**Domain Bridges:** Computational complexity \u2192 Discrete optimization \u2192 Algebraic combinatorics\n\n**Lineage:** Extends exchangeDescent_length_bound (Theorem 3.4) and exchangeDLC_k_mono.\n\n**Ambition:** Solid extension \u2014 the O(|S|) bound is already proven; the goal is to tighten it using certificate depth.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "abf333bc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T00:07:30.309357+00:00"
   },
   {
     "id": "seed_032",

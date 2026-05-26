@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1629 of the highest-quality
+A curated collection of 1637 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1629
+Total files: 1637
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -40,6 +40,7 @@ import FINAL.Algebra.Core
 import FINAL.Algebra.CosmicBootstrap
 import FINAL.Algebra.Counting
 import FINAL.Algebra.Covering
+import FINAL.Algebra.CramerModel
 import FINAL.Algebra.CrystallizerFrontier
 import FINAL.Algebra.CyclotomicGaloisGroup
 import FINAL.Algebra.DeepOpenProblems
@@ -48,6 +49,7 @@ import FINAL.Algebra.DegreeTheory
 import FINAL.Algebra.Depth
 import FINAL.Algebra.Deriv
 import FINAL.Algebra.Derivability
+import FINAL.Algebra.DescentAlgebra
 import FINAL.Algebra.DifferenceSetSymmetry
 import FINAL.Algebra.Dim2
 import FINAL.Algebra.DruzkowskiTheory
@@ -58,9 +60,11 @@ import FINAL.Algebra.Elimination
 import FINAL.Algebra.EvalKernel
 import FINAL.Algebra.Exact
 import FINAL.Algebra.ExceptionalGroups
+import FINAL.Algebra.ExponentBounds
 import FINAL.Algebra.ExtTorBasic
 import FINAL.Algebra.Extensions
 import FINAL.Algebra.FactoringViaBerggren
+import FINAL.Algebra.Families
 import FINAL.Algebra.FermatFactor
 import FINAL.Algebra.Foundation
 import FINAL.Algebra.Foundations
@@ -90,6 +94,7 @@ import FINAL.Algebra.IdempotentLensing
 import FINAL.Algebra.InsideOutFactor
 import FINAL.Algebra.InsideOutResearch
 import FINAL.Algebra.IntegerDiffraction
+import FINAL.Algebra.Invariance
 import FINAL.Algebra.InversePythagoreanTree
 import FINAL.Algebra.InvertedTreeV3Research
 import FINAL.Algebra.KaroubiIdempotent
@@ -100,6 +105,7 @@ import FINAL.Algebra.LightConeTheory
 import FINAL.Algebra.LightDarkPrimes
 import FINAL.Algebra.LocalGlobal
 import FINAL.Algebra.Lorentz
+import FINAL.Algebra.MartingalePrediction
 import FINAL.Algebra.MassEnergyDuality
 import FINAL.Algebra.MatrixEncoding
 import FINAL.Algebra.MatrixGroupGeneration
@@ -143,6 +149,7 @@ import FINAL.Algebra.QuaternionAlgebras
 import FINAL.Algebra.QuaternionBasic
 import FINAL.Algebra.QuaternionDescent
 import FINAL.Algebra.QuaternionRotation
+import FINAL.Algebra.Radical
 import FINAL.Algebra.RamanujanFrontiers3
 import FINAL.Algebra.RamanujanOpenProblems
 import FINAL.Algebra.Recursion
@@ -1268,6 +1275,7 @@ import FINAL.Pythagorean.EhrhartSeries
 import FINAL.Pythagorean.EinsteinContraction
 import FINAL.Pythagorean.EmergentComputation
 import FINAL.Pythagorean.EqualitySaturationExtraction
+import FINAL.Pythagorean.ExchangeDescent
 import FINAL.Pythagorean.ExplicitMorseTheory
 import FINAL.Pythagorean.Extraction
 import FINAL.Pythagorean.FiltrationObstruction
