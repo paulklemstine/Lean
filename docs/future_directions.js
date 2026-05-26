@@ -655,10 +655,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4895ceb4",
     "timestamp": "2026-05-25T18:39:32.434172+00:00"
   },
   {
@@ -720,25 +720,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "ad66d851",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:03.296660+00:00"
-  },
-  {
-    "id": "fd_0923",
-    "title": "Direction 3: Certified Expanders for Classical Groups",
-    "description": "**Conjecture**: For each classical group family ($\\text{Sp}_{2n}(\\mathbb{F}_q)$, $\\text{SO}_n(\\mathbb{F}_q)$, $\\text{SU}_n(\\mathbb{F}_{q^2})$), there exist certificate conditions (analogues of Singer-like and primitive-determinant) that guarantee generation and spectral expansion of the resulting Cayley graphs.\n\n**Test**: For $\\text{Sp}_4(\\mathbb{F}_3)$ and $\\text{SO}_3(\\mathbb{F}_5)$, enumerate certified pairs, build Cayley graphs, and compute spectral gaps. Compare with the GL\u2082 family.\n\n**Impact**: Would provide explicit expanders from every major family of finite groups of Lie type, dramatically expanding the toolkit for network design and coding theory.\n\n**Catalog References**: `Catalog/Algebra/MatrixGroupGeneration.lean` (the invariant subspace theorem applies to any finite field and module).\n\n**Proof Strategy**: The key insight is that Singer-like elements exist in all classical groups (as regular semisimple elements whose centralizer is a maximal torus), and the primitivity condition generalizes to the center of the group. The maximum principle proof transfers verbatim; only the generation step needs group-specific arguments.\n\n**Why now?** The formal infrastructure for the maximum principle and stability lemma is now in place and works for any finite group.\n\n**Domain Bridges**: Finite group theory, algebraic geometry (Deligne\u2013Lusztig theory), coding theory.\n\n**Lineage**: Direct extension of the GL\u2082 theory to other Lie-type groups.\n\n**Ambition**: Solid extension \u2014 builds directly on established methods.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "d9e69258",
-    "timestamp": "2026-05-25T18:40:03.345424+00:00"
   },
   {
     "id": "fd_0924",
@@ -1084,27 +1065,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "354ccda2",
     "consumed_by_exp_id": "17192924",
     "timestamp": "2026-05-25T21:49:45.153662+00:00"
-  },
-  {
-    "id": "fd_0960",
-    "title": "Direction 1: Full k-WL Separation via Non-Uniform CFI Weights",
-    "description": "**Conjecture:** For every fixed k \u2208 \u2115, there exist edge-weighted graphs G\u2081, G\u2082 such that k-WL(G\u2081) = k-WL(G\u2082) but TMS(G\u2081) \u2260 TMS(G\u2082). Specifically, the Cai-F\u00fcrer-Immerman graph pairs built from n-cycles with n > k, equipped with non-uniform gadget weights w_gadget = 1/(2i+1) for gadget i, achieve TMS separation through differing H\u2081 barcode lengths.\n\n**Test:** (1) Implement CFI construction with non-uniform weights for k = 2, 3, 4. (2) Verify k-WL equivalence using the pebble game. (3) Compute TMS and check that exactly one H\u2081 barcode endpoint differs. (4) Falsified if all weight assignments yield identical TMS for any k.\n\n**Impact:** Would establish TMS as the first single, efficiently computable graph invariant that provably exceeds the entire WL hierarchy for weighted graphs. This would be a landmark result in descriptive complexity theory.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `tms_strictly_expressive_over_WL1` (1-WL case)\n- `Pythagorean/TropicalMorse/Theorems.lean`: `spectral_gap_contrapositive` (separation mechanism)\n- `Pythagorean/TropicalMorse/Defs.lean`: `TMSpectrum`, `WL1Equiv`\n\n**Proof Strategy:** Extend the formal framework to include k-WL equivalence (defined as the k-variable counting logic equivalence). Use the CFI symmetry lemma: CFI pairs are k-WL equivalent for k < dim(base graph). Then show that non-uniform weights break the parity symmetry in the weight filtration, producing a critical value gap in the H\u2081 barcode at the \"parity cycle\" threshold.\n\n**Domain Bridges:** Descriptive complexity \u2194 Tropical geometry \u2194 Finite model theory\n\n**Lineage:** Builds on Cai-F\u00fcrer-Immerman (1992) + our strict expressiveness theorem\n\n**Ambition:** Grand challenge \u2014 would resolve a major open question in GNN expressiveness theory\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "db7ef9c7",
-    "consumed_by_exp_id": "089dd341",
-    "timestamp": "2026-05-25T21:51:37.119607+00:00"
   },
   {
     "id": "fd_0961",
@@ -1749,7 +1709,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b0b26cee",
@@ -1769,7 +1729,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b0b26cee",
@@ -1791,7 +1751,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b0b26cee",
@@ -1811,7 +1771,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b0b26cee",
@@ -1939,6 +1899,65 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
+  },
+  {
+    "id": "fd_1086",
+    "title": "Direction 1: Quantum 2-Designs from Certified Unitary Expanders",
+    "description": "**Conjecture:** For every prime power q and n \u2265 2, the finite unitary group SU_n(\ud835\udd3d_{q\u00b2}) admits certified pairs (s, t) whose Cayley graph produces an \u03b5-approximate unitary 2-design with |S| = O(1) generators and mixing time O(log |G|), where \u03b5 and the implicit constant are independent of q.\n\n**Test:** Implement the certificate check for SU\u2082(\ud835\udd3d_{q\u00b2}) \u2245 SL\u2082(\ud835\udd3d_q) for q = 3, 5, 7. Compute the frame potential (a measure of 2-design quality) for the Cayley walk and verify it converges to the Haar value 2/n! within O(log |G|) steps. Compare with random unitary circuits of the same depth.\n\n**Impact:** Explicit unitary 2-designs are essential for quantum state tomography, randomized benchmarking, and quantum error correction. Current constructions use either random circuits (non-deterministic) or Clifford groups (limited to stabilizer codes). Certified unitary expanders would provide a new family of deterministic 2-designs with provable convergence, bridging classical group theory and quantum information.\n\n**Catalog References:** `Catalog/Algebra/ClassicalGroupExpanders.lean` (ClassicalGenCertificate, HasVertexExpansion), `Catalog/Algebra/MatrixGroupGeneration.lean` (eq_bot_or_top_of_charpoly_irreducible).\n\n**Proof Strategy:** (1) Define a \"quantum certificate\" for SU_n by requiring irreducible charpoly over \ud835\udd3d_{q\u00b2} and a form-compatibility condition for the Hermitian structure. (2) Show certified pairs generate SU_n (extending Theorem 2). (3) Transfer spectral gap to frame potential convergence using the representation-theoretic spectral bound and the fact that SU_n has quasirandomness parameter growing with q.\n\n**Domain Bridges:** Quantum information theory \u2194 finite group theory \u2194 spectral graph theory. The 2-design application connects Cayley expansion to quantum circuit depth, and the certificate architecture provides a new algorithmic interface between classical algebra and quantum computing.\n\n**Lineage:** Extends the structural certificate (Theorem 1) from GL_n to SU_n, and the spectral transfer (Theorem 4) to the quantum mixing regime.\n\n**Ambition:** Grand challenge. If successful, provides the first uniform family of certified quantum 2-designs from finite groups of Lie type.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d9e69258",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T08:24:14.577634+00:00"
+  },
+  {
+    "id": "fd_1087",
+    "title": "Direction 2: Uniform Spectral Gaps for Sp\u2084 via Deligne\u2013Lusztig Character Bounds",
+    "description": "**Conjecture:** There exists a universal constant \u03b5\u2080 > 0 such that for every odd prime power q, the group Sp\u2084(\ud835\udd3d_q) admits a certified pair with normalized spectral gap \u2265 \u03b5\u2080, and this gap can be explicitly bounded using character values on the Deligne\u2013Lusztig virtual representations associated to the maximal torus containing the regular toral generator.\n\n**Test:** For q = 3, 5, 7, 9, 11: (1) Enumerate certified pairs in Sp\u2084(\ud835\udd3d_q). (2) Compute spectral gaps. (3) Evaluate the Deligne\u2013Lusztig character sum formula and compare with the computed gap. The conjecture is falsified if the measured gaps decrease toward 0 as q grows, or if the character bound diverges from the computed gap.\n\n**Impact:** A uniform spectral gap for Sp\u2084 would be the first result extending the Ramanujan property beyond rank-1 groups (SL\u2082 / PGL\u2082) to rank-2 symplectic groups, with direct applications to codes over symplectic geometries and to higher-dimensional lattice-based cryptography.\n\n**Catalog References:** `Catalog/Algebra/ClassicalGroupExpanders.lean` (IsRegularToral, ClassicalGenCertificate, HasVertexExpansion), `Catalog/Algebra/MatrixGroupGeneration.lean` (all invariant-subspace theorems).\n\n**Proof Strategy:** (1) Formalize the Deligne\u2013Lusztig character formula for Sp\u2084 over \ud835\udd3d_q, at least for characters associated to maximal tori containing the regular toral element. (2) Bound the character ratio |\u03c7(s)|/\u03c7(1) using the geometric structure of the Deligne\u2013Lusztig variety. (3) Apply the Diaconis\u2013Shahshahani upper bound lemma: the total variation distance after k steps is bounded by \u2211_{\u03c1 nontrivial} dim(\u03c1) \u00b7 |\u03c7_\u03c1(s)/\u03c7_\u03c1(1)|^{2k}. (4) Show the quasirandomness lower bound dim(\u03c1) \u2265 (q\u00b2\u22121)/2 kills all nontrivial contributions after O(log q) steps.\n\n**Domain Bridges:** Algebraic geometry (Deligne\u2013Lusztig theory) \u2194 finite group representation theory \u2194 spectral graph theory. The character bound connects geometric properties of algebraic varieties over finite fields to combinatorial expansion.\n\n**Lineage:** Directly extends the certificate architecture from the current project, deepening the \"representation-theoretic transfer\" layer with Deligne\u2013Lusztig technology.\n\n**Ambition:** Solid extension. The character formula for Sp\u2084 is known (due to Srinivasan and others), so the key work is formalization and explicit bound computation.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "d9e69258",
+    "consumed_by_exp_id": "21d69cc6",
+    "timestamp": "2026-05-26T08:24:14.609677+00:00"
+  },
+  {
+    "id": "fd_1088",
+    "title": "Direction 3: Certified Expander Codes with Linear-Time Decoding",
+    "description": "**Conjecture:** For every \u03b5 > 0 and rate R < 1, there exists a family of certified Cayley-graph expander codes over Sp_{2n}(\ud835\udd3d_q) (with n, q varying) achieving rate \u2265 R, relative distance \u2265 \u03b4(\u03b5) > 0, and linear-time decoding complexity O(N) where N is the block length, provided the Cayley graph is constructed from a certified pair with gap \u2265 \u03b5.\n\n**Test:** Implement Sipser-Spielman (or Zemor) decoding on Tanner codes built from certified Cayley graphs of GL\u2082(\ud835\udd3d_p) for p = 3, 5, 7, 11. Measure decoding failure rate vs. channel noise for BSC and AWGN channels. Compare with standard LDPC codes of similar block length and rate.\n\n**Impact:** Currently, the best explicit linear-time decodable codes (Spielman 1996, Guruswami-Indyk 2005) rely on expanders whose construction is somewhat ad hoc. Certified Cayley-graph codes would provide a *uniform family* with provable parameters directly from the group certificate, potentially matching or exceeding the performance of capacity-approaching codes in the moderate block-length regime.\n\n**Catalog References:** `Catalog/Algebra/ClassicalGroupExpanders.lean` (expansion_neighbor_growth, expansion_monotone_of_superset), `Catalog/Algebra/MatrixGroupGeneration.lean` (span_orbit_eq_top_of_irreducible \u2014 orbit spanning as code generator).\n\n**Proof Strategy:** (1) Construct bipartite Tanner codes from the bipartite double cover of certified Cayley graphs. (2) Use the vertex expansion bound (Theorem 4) to prove the inner codes' parity-check matrices satisfy the \"unique neighbor\" property. (3) Analyze the Sipser-Spielman peeling decoder: each round corrects a constant fraction of errors, so O(log N) rounds suffice. (4) Each round takes O(N) time, giving O(N log N) total \u2014 tight analysis using the certificate gap should reduce this to O(N).\n\n**Domain Bridges:** Coding theory \u2194 group theory \u2194 spectral graph theory \u2194 algorithm design. The certificate provides a single algebraic object (the generator pair) that simultaneously determines the code, the graph, and the decoding algorithm.\n\n**Lineage:** Builds on the cross-domain bridge (expansion \u2192 boundary growth) from Theorem 4 and the coding-theory connection discussed in the research paper.\n\n**Ambition:** Solid extension with high practical impact.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d9e69258",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T08:24:14.647375+00:00"
   },
   {
     "id": "seed_013",

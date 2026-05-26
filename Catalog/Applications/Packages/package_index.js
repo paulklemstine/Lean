@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Topological Descriptive Complexity",
     "date": "2026-05-26T08:24:34Z",
     "exp_id": "089dd341",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.725907976630964,
+    "quality": "substantial"
   },
   {
     "filename": "direction_3_certified_expanders_for_classical_grou.json",
@@ -2081,8 +2081,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-26T08:24:34Z",
       "hue": 95,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.725907976630964,
+      "quality": "substantial"
     }
   ],
   "edges": [
