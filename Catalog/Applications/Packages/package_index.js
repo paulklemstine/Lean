@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Operadic Algebra / Higher-Order Rewriting / Homotopical Algebra",
     "date": "2026-05-26T01:57:20Z",
     "exp_id": "ad18377f",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.700136255319149,
+    "quality": "substantial"
   },
   {
     "filename": "direction_4_certified_mixing_time_bounds_and_cutof.json",
@@ -1409,8 +1409,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-26T01:57:20Z",
       "hue": 359,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.700136255319149,
+      "quality": "substantial"
     }
   ],
   "edges": [

@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1662 of the highest-quality
+A curated collection of 1684 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1662
+Total files: 1684
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -13,6 +13,7 @@ import FINAL.Algebra.AlgebraicTheoryOfAlgebra
 import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.ArithmeticDarkMatter
 import FINAL.Algebra.AttackComposition
+import FINAL.Algebra.AverageCriterion
 import FINAL.Algebra.Basic
 import FINAL.Algebra.Berggren
 import FINAL.Algebra.BerggrenHopfCore
@@ -23,6 +24,7 @@ import FINAL.Algebra.BrauerManin
 import FINAL.Algebra.Bridge10_Research
 import FINAL.Algebra.Bridges
 import FINAL.Algebra.CanonicalTree
+import FINAL.Algebra.CategoryTheory
 import FINAL.Algebra.CausalCertification
 import FINAL.Algebra.CayleyDicksonHierarchy
 import FINAL.Algebra.ChainFactoring
@@ -33,15 +35,19 @@ import FINAL.Algebra.ClosedFormAncestor
 import FINAL.Algebra.Coding
 import FINAL.Algebra.CompactOperators
 import FINAL.Algebra.ComputationalSoundness
+import FINAL.Algebra.Congruence
 import FINAL.Algebra.ConnesKreimerCoproduct
 import FINAL.Algebra.Constructions
 import FINAL.Algebra.CoordinateRingDepth
 import FINAL.Algebra.Core
 import FINAL.Algebra.CosmicBootstrap
 import FINAL.Algebra.Counting
+import FINAL.Algebra.Cover
 import FINAL.Algebra.Covering
 import FINAL.Algebra.CramerModel
 import FINAL.Algebra.CrystallizerFrontier
+import FINAL.Algebra.CubeResidues
+import FINAL.Algebra.CubeSubgroup
 import FINAL.Algebra.CyclicGroupSubgroups
 import FINAL.Algebra.CyclotomicGaloisGroup
 import FINAL.Algebra.DeepOpenProblems
@@ -60,6 +66,7 @@ import FINAL.Algebra.ECDLP
 import FINAL.Algebra.EMLCongruenceHilbert
 import FINAL.Algebra.EigenvalueRepulsion
 import FINAL.Algebra.Elimination
+import FINAL.Algebra.Equivalences
 import FINAL.Algebra.EvalKernel
 import FINAL.Algebra.Exact
 import FINAL.Algebra.ExceptionalGroups
@@ -70,6 +77,7 @@ import FINAL.Algebra.FactoringViaBerggren
 import FINAL.Algebra.Families
 import FINAL.Algebra.FermatFactor
 import FINAL.Algebra.FiniteDimensional
+import FINAL.Algebra.FluidGravity
 import FINAL.Algebra.Foundation
 import FINAL.Algebra.Foundations
 import FINAL.Algebra.Freivalds
@@ -109,6 +117,7 @@ import FINAL.Algebra.Langlands
 import FINAL.Algebra.LatticeTreeDuality
 import FINAL.Algebra.LightConeTheory
 import FINAL.Algebra.LightDarkPrimes
+import FINAL.Algebra.LocalEulerExt
 import FINAL.Algebra.LocalGlobal
 import FINAL.Algebra.Lorentz
 import FINAL.Algebra.MartingalePrediction
@@ -128,6 +137,7 @@ import FINAL.Algebra.NewExplorations
 import FINAL.Algebra.NewResults
 import FINAL.Algebra.NewtonIdempotent
 import FINAL.Algebra.NilpotenceTheory
+import FINAL.Algebra.Normalization
 import FINAL.Algebra.NuclearAlgebra
 import FINAL.Algebra.NullstellensatzPIT
 import FINAL.Algebra.NumberLineOracle
@@ -137,14 +147,19 @@ import FINAL.Algebra.OpenQuestions_2
 import FINAL.Algebra.OptimalComputer
 import FINAL.Algebra.Oracle
 import FINAL.Algebra.Orders
+import FINAL.Algebra.ParallelPaths
 import FINAL.Algebra.ParametricFamilies
 import FINAL.Algebra.ParityCensus
 import FINAL.Algebra.ParityCylinders
+import FINAL.Algebra.Percolation
 import FINAL.Algebra.Periodic
 import FINAL.Algebra.Photon
+import FINAL.Algebra.PhysicalPhenomena
 import FINAL.Algebra.PolyMethod
+import FINAL.Algebra.PolynomialTransforms
 import FINAL.Algebra.PredictionGeometry
 import FINAL.Algebra.PrimeCounting
+import FINAL.Algebra.PrimeDivisorCongruence
 import FINAL.Algebra.Probabilistic
 import FINAL.Algebra.PythagoreanPhotonics
 import FINAL.Algebra.PythagoreanQuadruples
@@ -162,14 +177,19 @@ import FINAL.Algebra.QuaternionRotation
 import FINAL.Algebra.Radical
 import FINAL.Algebra.RamanujanFrontiers3
 import FINAL.Algebra.RamanujanOpenProblems
+import FINAL.Algebra.Recurrence
 import FINAL.Algebra.Recursion
+import FINAL.Algebra.Reduction
 import FINAL.Algebra.RegulatorPosDef
+import FINAL.Algebra.ReversibleComputing
 import FINAL.Algebra.RiemannConnection
 import FINAL.Algebra.Robustness
+import FINAL.Algebra.RootBound
 import FINAL.Algebra.RotaBaxter
 import FINAL.Algebra.SchwartzZippel
 import FINAL.Algebra.SchwartzZippelBridge
 import FINAL.Algebra.SelfAdjoint
+import FINAL.Algebra.SemiprimeScaffolding
 import FINAL.Algebra.Series
 import FINAL.Algebra.SieveAndLattice
 import FINAL.Algebra.SingleTree
@@ -358,6 +378,7 @@ import FINAL.Bridges.HellyTheory
 import FINAL.Bridges.HierarchicalRobustness
 import FINAL.Bridges.HigherOrderCompletion
 import FINAL.Bridges.HigherOrderEqSat
+import FINAL.Bridges.HigherSimplicial
 import FINAL.Bridges.HilbertPolyaOperator
 import FINAL.Bridges.HilbertVCCorrespondence
 import FINAL.Bridges.HolographicProofRenormalization
@@ -1328,6 +1349,7 @@ import FINAL.Pythagorean.MConvexBridge
 import FINAL.Pythagorean.MConvexOptimization
 import FINAL.Pythagorean.ManySortedConvergentRewriteOptimizer
 import FINAL.Pythagorean.MechanismDesignMultiCriteria
+import FINAL.Pythagorean.MixingTime
 import FINAL.Pythagorean.ModularFormsAdvanced
 import FINAL.Pythagorean.MonadAlgebraNormalization
 import FINAL.Pythagorean.MonoidCategory

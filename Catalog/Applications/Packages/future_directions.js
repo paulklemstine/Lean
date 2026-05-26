@@ -952,24 +952,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T20:01:51.882080+00:00"
   },
   {
-    "id": "fd_0936",
-    "title": "Direction 5: Operadic Rewriting and Homotopical Completion",
-    "description": "**Conjecture:** The substitution category formalized in our work (with `compSubst_assoc`, identity laws, and the presheaf-like action of terms) is the underlying category of a *colored operad* whose algebras are exactly the models of the STLC. Higher-order completion modulo \u03b2 can be interpreted as a homotopical completion in the sense of operadic Koszul duality: the completed rewriting system computes a cofibrant replacement of the operad.\n\n**Test:** Formalize the operad structure: define the composition operation on substitutions, verify the interchange law, and construct the corresponding operad. Then show that the critical pair computation of Direction 2 corresponds to computing the operadic Koszulity condition. Test on the associativity operad (whose Koszul dual is well-known) as a sanity check.\n\n**Impact:** This would connect higher-order rewriting to the rapidly growing field of homotopical algebra and operadic methods. It would provide a new perspective on completion as a *homological* computation, potentially yielding new termination criteria and complexity bounds for higher-order completion.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (compSubst_assoc, compSubst_idSubst_left, compSubst_idSubst_right \u2014 the categorical structure of substitutions is the starting point for the operadic construction).\n\n**Proof Strategy:** Define an operad `O` with colors `\u2115` (arities), operations `O(n\u2081,...,n\u2096; m) = Subst(n\u2081+...+n\u2096, m)`, and composition given by `compSubst`. Verify the operad axioms from the categorical properties already proved. Then define rewriting rules as generators of an operadic ideal, and show that completion computes the operadic Gr\u00f6bner basis.\n\n**Domain Bridges:** Homotopical algebra (operads, Koszul duality), algebraic topology (cofibrant replacements), homological algebra (resolutions).\n\n**Lineage:** Reinterprets the substitution category as operadic structure.\n\n**Ambition:** Grand challenge / paradigm-shifting \u2014 connects rewriting theory to homotopical algebra.\n\n**\"The key insight is...\"** that substitution composition is not just a *convenience* but an *operadic structure* \u2014 the multi-sorted composition operation of an operad whose algebras are exactly the models of the type theory. Completion, viewed through this lens, is computing a resolution of the operad.\n\n**\"Why now?\"** The categorical properties of substitution (associativity, identity, functoriality) are now formally verified, providing the raw material for an operadic construction. Recent advances in homotopical algebra (Loday-Vallette, Dotsenko-Khoroshkin) provide the theoretical tools for operadic completion.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "ad18377f",
-    "timestamp": "2026-05-25T20:01:51.933532+00:00"
-  },
-  {
     "id": "fd_0937",
     "title": "Direction 1: Exact Weighted Tropical Dimension Formula",
     "description": "**Conjecture:** For any finite weighted graph G with basepoint q and vertex subset S, the weighted tropical kernel dimension satisfies\n\n  dim_trop(G, q, S) = \u03b2\u2081^w(G, S) + \u03ba^w(G, q, S)\n\nwhere \u03b2\u2081^w counts \"weight-compatible independent cycles\" and \u03ba^w counts \"weight-degenerate q-visible components.\" Under generic weights, \u03b2\u2081^w = \u03b2\u2081 and \u03ba^w = \u03ba, recovering the unweighted formula.\n\n**The key insight is** that the weighted first Betti number \u03b2\u2081^w is not merely the cycle rank of the underlying graph but the cycle rank of the *weight-degeneracy subgraph* \u2014 the subgraph restricted to edges participating in local weight ties. This refined invariant interpolates between \u03b2\u2081 (when all weights are equal) and 0 (when weights are generic).\n\n**Why now?** The nine verified theorems (especially Theorems 3.4 and 3.9, relating genericity and degeneracy to kernel membership) provide the boundary cases. Computational experiments on small graphs (n \u2264 6) can now systematically test the formula and identify the correct definition of \u03b2\u2081^w by exhaustive comparison.\n\n**Test:** Enumerate all weighted graphs on 4-5 vertices with weights in {1,...,5}. For each, compute the kernel dimension by brute force and compare with \u03b2\u2081^w + \u03ba^w for candidate definitions of \u03b2\u2081^w. The conjecture is falsifiable if any graph violates the equality.\n\n**Impact:** An exact dimension formula would be the weighted tropical analogue of the Baker-Norine Riemann-Roch theorem, opening the door to tropical divisor theory with valuations.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorems 3.4, 3.9), `Pythagorean/TropicalBridge/WeightedDefect.lean` (structural defect formula).\n\n**Proof Strategy:** Define \u03b2\u2081^w via the weight-degeneracy subgraph. Prove lower bound by explicit cycle/component constructions (extending Theorems 3.5-3.6). Prove upper bound by showing every kernel vector decomposes as a sum of cycle and component contributions.\n\n**Domain Bridges:** Tropical algebraic geometry (tropical linear spaces), matroid theory (circuit rank).\n\n**Lineage:** Extends Baker-Norine [2007], Develin-Santos-Sturmfels [2005].\n\n**Ambition:** Grand challenge \u2014 would unify tropical divisor theory with weighted optimization.\n\n---",
@@ -1285,27 +1267,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:51:37.203392+00:00"
   },
   {
-    "id": "fd_0964",
-    "title": "Direction 5: Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
-    "description": "**Conjecture:** The tropical Morse spectrum generalizes from graphs (1-skeleta) to simplicial complexes of arbitrary dimension, yielding a complete invariant for the persistent homology barcode in all dimensions. For a weighted d-dimensional simplicial complex K with weight function w on simplices, the d-dimensional TMS records critical values where H_k changes for 0 \u2264 k \u2264 d, and the resulting invariant is strictly more expressive than the d-WL test.\n\n**Test:** (1) Define the TMS for weighted 2-complexes (triangulated surfaces). (2) Compute TMS for the torus, Klein bottle, and projective plane with random edge/face weights. (3) Verify that TMS distinguishes them while 2-WL does not. (4) Falsified if 2-WL already distinguishes all weighted 2-complexes tested.\n\n**Impact:** Would extend the entire tropical Morse framework from graph theory to computational topology, opening applications in mesh analysis, computational geometry, and topological materials science.\n\n**Catalog References:**\n- `Pythagorean/TropicalMorse/Theorems.lean`: `euler_char_from_filtration` (1D case to generalize)\n- `Pythagorean/TropicalMorse/Theorems.lean`: `dehn_sommerville_1d` (Dehn-Sommerville to generalize)\n\n**Proof Strategy:** The key challenge is defining \"merge\" and \"cycle birth\" in higher dimensions. Use discrete Morse theory (Forman, 1998): a simplex \u03c3 is critical if it is not paired in a discrete gradient field. The tropical Morse spectrum becomes the sequence of critical simplices ordered by weight, with event types determined by the dimension of the critical simplex.\n\n**Domain Bridges:** Algebraic topology \u2194 Tropical geometry \u2194 Computational geometry \u2194 Discrete Morse theory\n\n**Lineage:** Generalization of all current results from dimension 1 to arbitrary dimension\n\n**Ambition:** Grand challenge \u2014 requires substantial new theory, but the framework is clear",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "db7ef9c7",
-    "consumed_by_exp_id": "c9247862",
-    "timestamp": "2026-05-25T21:51:37.228515+00:00"
-  },
-  {
     "id": "fd_0965",
     "title": "Direction 1: Tight Lorentzian Stability Radii for Matroid Families",
     "description": "**Conjecture:** For the uniform matroid $U_{r,n}$, the exact Lorentzian stability radius (maximum coefficient perturbation preserving Lorentzianity of the generating polynomial) is $\\Theta(\\binom{n}{r}^{-1} \\cdot \\lambda_{\\min}^{\\text{gap}})$, where $\\lambda_{\\min}^{\\text{gap}}$ is the minimum normalized Hessian eigengap across all quadratic leaves.\n\n**Test:** Compute the exact stability radius for $U_{r,n}$ with $n \\leq 15$ by binary search over perturbation magnitudes, checking Lorentzianity via eigenvalue computation on all $\\binom{n}{2}$ quadratic leaves. Compare to the predicted formula. Discrepancies of more than 10% in the ratio would refute the conjecture.\n\n**Impact:** Tight stability radii would replace the conservative factor-of-2 bound in `certifyNoisySLC` with optimal constants, potentially doubling the effective robustness radius for practical applications.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `residual_gap_of_perturbation`); `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem `lorentzian_stability_radius_exists`).\n\n**Proof Strategy:** For the upper bound, construct explicit perturbation families that destroy Lorentzianity at the predicted threshold. For the lower bound, use the Hessian eigenvalue structure of the elementary symmetric polynomial to compute the exact quadratic form bound implied by coefficient perturbation.\n\n**Domain Bridges:** Combinatorial optimization (matroid intersection algorithms), algebraic combinatorics (Schur positivity and symmetric function theory).\n\n**Lineage:** Direct extension of `residual_gap_of_perturbation` from this cycle. The uniform matroid case is the canonical test bed.\n\n**Ambition:** Solid extension \u2014 this is a concrete computation grounded in existing theory, but the exact formula would be new and useful.\n\n---",
@@ -1444,25 +1405,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "8778f4a5",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:58:43.526680+00:00"
-  },
-  {
-    "id": "fd_0973",
-    "title": "Direction 4: Certified Mixing Time Bounds and Cutoff Phenomena",
-    "description": "**Conjecture:** For the Cayley graph of S_n with standard generators (adjacent transposition + long cycle), the mixing time in total variation satisfies:\n\nt_mix(\u03b5) = \u0398(n\u00b2 log n)\n\nand the random walk exhibits a cutoff: the total variation distance transitions from near 1 to near 0 in a window of width O(n\u00b2).\n\n**Test:** Compute the exact total variation distance d(t) = \u2016P^t(e, \u00b7) - \u03c0\u2016_TV for n = 5, 6, 7 and verify the cutoff profile. Formalize the upper bound t_mix \u2264 C \u00b7 n\u00b2 \u00b7 log(n!) / gap using the spectral gap.\n\n**Impact:** Cutoff is one of the most striking phenomena in probability theory \u2014 the abrupt transition from \"far from mixed\" to \"well mixed.\" A formally verified cutoff theorem would connect the spectral gap infrastructure to concrete probabilistic guarantees.\n\n**The key insight is** that the spectral gap gives mixing time bounds via the relation t_mix \u2264 (1/gap) \u00b7 log(|G|/\u03b5), but the actual mixing time can be much smaller due to the contribution of the full spectrum, not just the gap.\n\n**Why now?** The L\u00b2 contraction theorem (Theorem 3) provides the foundational inequality. The variance decomposition and mean-zero projection machinery enable tracking the distance to equilibrium across iterations.\n\n**Catalog References:** `Pythagorean/CayleyExpander/SpectralGap.lean` (L\u00b2 contraction, variance), `Pythagorean/CayleyExpander/SymmetricGroup.lean` (S_n generators).\n\n**Proof Strategy:** Upper bound: use spectral gap with L\u00b2\u2192L\u00b9 comparison. Lower bound: use Wilson's method (distinguish random walk distribution from uniform using a test function based on number of fixed points).\n\n**Domain Bridges:** Probability theory (Markov chains), statistical physics (relaxation), card shuffling (combinatorics), MCMC algorithms (statistics/ML).\n\n**Lineage:** Extends the L\u00b2 contraction theorem to total variation mixing guarantees.\n\n**Ambition:** Solid extension \u2014 the spectral gap infrastructure makes upper bounds tractable; cutoff requires additional representation-theoretic input.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "4f520a5f",
-    "timestamp": "2026-05-25T22:58:43.552516+00:00"
   },
   {
     "id": "fd_0974",
@@ -1713,10 +1655,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddebc997",
     "timestamp": "2026-05-26T00:07:30.273038+00:00"
   },
   {
@@ -1753,11 +1695,87 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "325d9cdd",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "86601194",
     "timestamp": "2026-05-26T00:40:25.919648+00:00"
+  },
+  {
+    "id": "fd_1010",
+    "title": "Direction 1: Necklace Divisibility via Burnside's Lemma",
+    "description": "**Conjecture:** The necklace divisibility theorem n | \u03a3_{d|n} \u03bc(n/d) q^d can be formally proved by constructing the cyclic group action on q-ary strings of length n and applying Burnside's lemma to count primitive necklaces.\n\n**Test:** Formalize the Z/nZ action on (Fin q)^(Fin n), verify that Burnside's lemma gives (1/n) \u03a3_{d|n} \u03c6(n/d) q^(gcd(n,d)) total necklaces, and that inclusion-exclusion via M\u00f6bius inversion extracts the primitive necklace count (1/n) \u03a3_{d|n} \u03bc(n/d) q^d. If the primitive count is not a non-negative integer for any (q,n), the approach fails.\n\n**Impact:** Closes the one remaining sorry in the formalization and establishes the first fully verified proof of this 200-year-old number-theoretic identity in a modern proof assistant.\n\n**Catalog References:** `Pythagorean/CertificateDensity.lean` (Theorem: `necklace_sum_div_n`)\n\n**Proof Strategy:** Define the type `Necklace q n := (Fin n \u2192 Fin q)`, the cyclic shift action `\u03c3 : (Fin n \u2192 Fin q) \u2192 (Fin n \u2192 Fin q)` by `\u03c3 f i = f (i + 1)`, and the orbit quotient. Apply `MulAction.card_quotient_eq_sum_card_fixedBy` from Mathlib. The fixed points of \u03c3^d are exactly the strings with period dividing d, giving q^(gcd(n,d)) fixed points. The M\u00f6bius inversion step uses the established framework.\n\n**Domain Bridges:** Combinatorics \u2194 Number Theory \u2194 Algebra\n\n**Lineage:** Extends `necklace_sum_div_prime` (Fermat's little theorem case) to all n.\n\n**Ambition:** Solid extension \u2014 closes a specific gap in the current formalization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb4b8f41",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T01:21:04.623072+00:00"
+  },
+  {
+    "id": "fd_1011",
+    "title": "Direction 2: Certificate Density for Symplectic and Orthogonal Groups",
+    "description": "**Conjecture:** For the symplectic group Sp_{2n}(\ud835\udd3d_q), the certificate density (proportion of elements with irreducible characteristic polynomial satisfying the symplectic symmetry constraint f(x) = x^{2n} f(1/x)) is asymptotically 1/(2n), with error O(q^{-n}).\n\n**Test:** Compute the certificate density for Sp_4(\ud835\udd3d_q) for q = 3, 5, 7 and compare with 1/4. The \"self-reciprocal irreducible\" count for degree 2n should be approximately q^n/(2n). If the actual count deviates from this by more than q^{n/2} for any tested case, the conjecture's error term needs revision.\n\n**Impact:** Extends the certificate framework from GL_n to all classical groups, providing generation probability bounds for the groups that appear in quantum error correction (Sp_{2n} stabilizes symplectic quantum codes).\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (generation framework), `Pythagorean/CertificateDensity.lean` (GL_n density)\n\n**Proof Strategy:** Count self-reciprocal irreducible polynomials using the map f(x) \u21a6 x^n f(x + 1/x), which reduces to counting irreducible polynomials of degree n. Apply the existing necklace formula to this reduced count. The orbit-stabilizer argument carries over with the centralizer now being a unitary group U_1(\ud835\udd3d_{q^n}).\n\n**Domain Bridges:** Algebra (classical groups) \u2194 Number Theory (self-reciprocal polynomials) \u2194 Quantum Computing (symplectic stabilizer codes)\n\n**Lineage:** Direct extension of the GL_n certificate density theorem.\n\n**Ambition:** Solid extension \u2014 fills an important gap for non-GL classical groups.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb4b8f41",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T01:21:04.649417+00:00"
+  },
+  {
+    "id": "fd_1014",
+    "title": "Direction 5: Tropical Certificate Density and Expander Graph Construction",
+    "description": "**Conjecture:** The certificate density framework admits a tropical analogue, where the finite field \ud835\udd3d_q is replaced by the tropical semifield T = (\u211d \u222a {-\u221e}, max, +), and \"irreducible\" tropical characteristic polynomials correspond to indecomposable tropical matrices. The tropical certificate density converges to 1/n as the \"tropical q\" (a scaling parameter) tends to infinity, with the same M\u00f6bius-function error structure.\n\n**Test:** Compute the fraction of n\u00d7n tropical matrices (with entries in {0, 1, ..., M}) that are tropically indecomposable, for n = 3, 4, 5 and M = 10, 100, 1000. If the fraction converges to 1/n with error ~ 1/M^{n/2}, the tropical analogue holds.\n\n**Impact:** Opens a new research direction connecting tropical geometry to algebraic generation theory. If the tropical certificate density satisfies the same asymptotics, it suggests a universal structural principle governing irreducibility across algebraic settings.\n\n**Catalog References:** `Pythagorean/CertificateDensity.lean` (algebraic density), `Pythagorean/TropicalBerggrenZeta.lean` (tropical arithmetic)\n\n**Proof Strategy:** Define tropical irreducibility via the tropical determinant and permanent structure. Use the tropical analogue of the characteristic polynomial (the tropical eigenvalue set) to classify tropical matrices. Apply tropical M\u00f6bius inversion to count tropically indecomposable polynomials.\n\n**Domain Bridges:** Tropical Geometry \u2194 Group Theory \u2194 Number Theory\n\n**Lineage:** Extends the Pythagorean-tropical bridge to a new domain.\n\n**Ambition:** Grand challenge \u2014 speculative but testable connection between algebraic and tropical worlds.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "eb4b8f41",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T01:21:04.728538+00:00"
+  },
+  {
+    "id": "fd_1019",
+    "title": "Direction 5: Quantum Algorithmic Phase Transitions via Lorentzian Polynomials",
+    "description": "**Conjecture:** The Lorentzian stability radius of the permanent polynomial (or its natural analogue for quantum sampling) controls the phase boundary of quantum approximate sampling algorithms. Specifically, for a matrix A with permanent per(A), the stability radius of the associated Lorentzian structure predicts the noise threshold below which approximate sampling from the output distribution of a boson sampling experiment remains classically hard.\n\n**Test:** For small matrices (n \u2264 8), compute the Lorentzian radius of the permanent polynomial and compare with the known noise thresholds for classical simulability of boson sampling (Aaronson-Arkhipov framework).\n\n**Impact:** Would provide the first connection between Lorentzian polynomial theory and quantum computational complexity. If the noise threshold for quantum advantage coincides with the Lorentzian stability radius, it suggests that quantum advantage is itself a geometric phenomenon.\n\n**Catalog References:**\n- `Pythagorean/NoiseStabilityDefs.lean`: `LorentzianStableUnder` (the stability predicate)\n- `Pythagorean/NoiseStabilityTheorems.lean`: `spectralGap_pos_of_lorentzian` (qualitative transfer)\n\n**Proof Strategy:** The permanent of a PSD matrix is Lorentzian (Marcus, Spielman, Srivastava, 2015). The key insight is that the noise model in boson sampling corresponds to a coefficient perturbation of the permanent polynomial. Apply the stability radius framework to bound the perturbation at which the polynomial loses its Lorentzian structure, and argue (via the geometric \u2192 algorithmic transfer) that this is the threshold for classical simulability.\n\n**Domain Bridges:** Quantum computing (boson sampling, quantum supremacy), computational complexity (permanent, #P-hardness)\n\n**Lineage:** Most speculative direction \u2014 requires new results connecting quantum sampling to Lorentzian structure.\n\n**Ambition:** Grand challenge \u2014 could reshape our understanding of quantum advantage.",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "5e0902bf",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T01:21:27.843587+00:00"
   },
   {
     "id": "seed_005",
@@ -1880,62 +1898,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1010",
-    "title": "Direction 1: Necklace Divisibility via Burnside's Lemma",
-    "description": "**Conjecture:** The necklace divisibility theorem n | \u03a3_{d|n} \u03bc(n/d) q^d can be formally proved by constructing the cyclic group action on q-ary strings of length n and applying Burnside's lemma to count primitive necklaces.\n\n**Test:** Formalize the Z/nZ action on (Fin q)^(Fin n), verify that Burnside's lemma gives (1/n) \u03a3_{d|n} \u03c6(n/d) q^(gcd(n,d)) total necklaces, and that inclusion-exclusion via M\u00f6bius inversion extracts the primitive necklace count (1/n) \u03a3_{d|n} \u03bc(n/d) q^d. If the primitive count is not a non-negative integer for any (q,n), the approach fails.\n\n**Impact:** Closes the one remaining sorry in the formalization and establishes the first fully verified proof of this 200-year-old number-theoretic identity in a modern proof assistant.\n\n**Catalog References:** `Pythagorean/CertificateDensity.lean` (Theorem: `necklace_sum_div_n`)\n\n**Proof Strategy:** Define the type `Necklace q n := (Fin n \u2192 Fin q)`, the cyclic shift action `\u03c3 : (Fin n \u2192 Fin q) \u2192 (Fin n \u2192 Fin q)` by `\u03c3 f i = f (i + 1)`, and the orbit quotient. Apply `MulAction.card_quotient_eq_sum_card_fixedBy` from Mathlib. The fixed points of \u03c3^d are exactly the strings with period dividing d, giving q^(gcd(n,d)) fixed points. The M\u00f6bius inversion step uses the established framework.\n\n**Domain Bridges:** Combinatorics \u2194 Number Theory \u2194 Algebra\n\n**Lineage:** Extends `necklace_sum_div_prime` (Fermat's little theorem case) to all n.\n\n**Ambition:** Solid extension \u2014 closes a specific gap in the current formalization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "eb4b8f41",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T01:21:04.623072+00:00"
-  },
-  {
-    "id": "fd_1011",
-    "title": "Direction 2: Certificate Density for Symplectic and Orthogonal Groups",
-    "description": "**Conjecture:** For the symplectic group Sp_{2n}(\ud835\udd3d_q), the certificate density (proportion of elements with irreducible characteristic polynomial satisfying the symplectic symmetry constraint f(x) = x^{2n} f(1/x)) is asymptotically 1/(2n), with error O(q^{-n}).\n\n**Test:** Compute the certificate density for Sp_4(\ud835\udd3d_q) for q = 3, 5, 7 and compare with 1/4. The \"self-reciprocal irreducible\" count for degree 2n should be approximately q^n/(2n). If the actual count deviates from this by more than q^{n/2} for any tested case, the conjecture's error term needs revision.\n\n**Impact:** Extends the certificate framework from GL_n to all classical groups, providing generation probability bounds for the groups that appear in quantum error correction (Sp_{2n} stabilizes symplectic quantum codes).\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (generation framework), `Pythagorean/CertificateDensity.lean` (GL_n density)\n\n**Proof Strategy:** Count self-reciprocal irreducible polynomials using the map f(x) \u21a6 x^n f(x + 1/x), which reduces to counting irreducible polynomials of degree n. Apply the existing necklace formula to this reduced count. The orbit-stabilizer argument carries over with the centralizer now being a unitary group U_1(\ud835\udd3d_{q^n}).\n\n**Domain Bridges:** Algebra (classical groups) \u2194 Number Theory (self-reciprocal polynomials) \u2194 Quantum Computing (symplectic stabilizer codes)\n\n**Lineage:** Direct extension of the GL_n certificate density theorem.\n\n**Ambition:** Solid extension \u2014 fills an important gap for non-GL classical groups.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "eb4b8f41",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T01:21:04.649417+00:00"
-  },
-  {
-    "id": "fd_1014",
-    "title": "Direction 5: Tropical Certificate Density and Expander Graph Construction",
-    "description": "**Conjecture:** The certificate density framework admits a tropical analogue, where the finite field \ud835\udd3d_q is replaced by the tropical semifield T = (\u211d \u222a {-\u221e}, max, +), and \"irreducible\" tropical characteristic polynomials correspond to indecomposable tropical matrices. The tropical certificate density converges to 1/n as the \"tropical q\" (a scaling parameter) tends to infinity, with the same M\u00f6bius-function error structure.\n\n**Test:** Compute the fraction of n\u00d7n tropical matrices (with entries in {0, 1, ..., M}) that are tropically indecomposable, for n = 3, 4, 5 and M = 10, 100, 1000. If the fraction converges to 1/n with error ~ 1/M^{n/2}, the tropical analogue holds.\n\n**Impact:** Opens a new research direction connecting tropical geometry to algebraic generation theory. If the tropical certificate density satisfies the same asymptotics, it suggests a universal structural principle governing irreducibility across algebraic settings.\n\n**Catalog References:** `Pythagorean/CertificateDensity.lean` (algebraic density), `Pythagorean/TropicalBerggrenZeta.lean` (tropical arithmetic)\n\n**Proof Strategy:** Define tropical irreducibility via the tropical determinant and permanent structure. Use the tropical analogue of the characteristic polynomial (the tropical eigenvalue set) to classify tropical matrices. Apply tropical M\u00f6bius inversion to count tropically indecomposable polynomials.\n\n**Domain Bridges:** Tropical Geometry \u2194 Group Theory \u2194 Number Theory\n\n**Lineage:** Extends the Pythagorean-tropical bridge to a new domain.\n\n**Ambition:** Grand challenge \u2014 speculative but testable connection between algebraic and tropical worlds.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "eb4b8f41",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T01:21:04.728538+00:00"
   },
   {
     "id": "seed_013",
@@ -2340,24 +2302,45 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:13:49.686566+00:00"
   },
   {
-    "id": "fd_1019",
-    "title": "Direction 5: Quantum Algorithmic Phase Transitions via Lorentzian Polynomials",
-    "description": "**Conjecture:** The Lorentzian stability radius of the permanent polynomial (or its natural analogue for quantum sampling) controls the phase boundary of quantum approximate sampling algorithms. Specifically, for a matrix A with permanent per(A), the stability radius of the associated Lorentzian structure predicts the noise threshold below which approximate sampling from the output distribution of a boson sampling experiment remains classically hard.\n\n**Test:** For small matrices (n \u2264 8), compute the Lorentzian radius of the permanent polynomial and compare with the known noise thresholds for classical simulability of boson sampling (Aaronson-Arkhipov framework).\n\n**Impact:** Would provide the first connection between Lorentzian polynomial theory and quantum computational complexity. If the noise threshold for quantum advantage coincides with the Lorentzian stability radius, it suggests that quantum advantage is itself a geometric phenomenon.\n\n**Catalog References:**\n- `Pythagorean/NoiseStabilityDefs.lean`: `LorentzianStableUnder` (the stability predicate)\n- `Pythagorean/NoiseStabilityTheorems.lean`: `spectralGap_pos_of_lorentzian` (qualitative transfer)\n\n**Proof Strategy:** The permanent of a PSD matrix is Lorentzian (Marcus, Spielman, Srivastava, 2015). The key insight is that the noise model in boson sampling corresponds to a coefficient perturbation of the permanent polynomial. Apply the stability radius framework to bound the perturbation at which the polynomial loses its Lorentzian structure, and argue (via the geometric \u2192 algorithmic transfer) that this is the threshold for classical simulability.\n\n**Domain Bridges:** Quantum computing (boson sampling, quantum supremacy), computational complexity (permanent, #P-hardness)\n\n**Lineage:** Most speculative direction \u2014 requires new results connecting quantum sampling to Lorentzian structure.\n\n**Ambition:** Grand challenge \u2014 could reshape our understanding of quantum advantage.",
+    "id": "fd_1020",
+    "title": "Direction 1: Sharp Cutoff for the Adjacent-Transposition-Plus-Cycle Walk on $S_n$",
+    "description": "**Conjecture**: The symmetric random walk on $S_n$ generated by adjacent transpositions $(i\\;i\\!+\\!1)$ and the long cycle $(1\\;2\\;\\cdots\\;n)$ exhibits cutoff at time $t_n^* = c \\cdot n^2 \\log n$ with window $O(n^2)$, for an explicit constant $c > 0$. Formally:\n$$\n\\lim_{n \\to \\infty} d_n(t_n^* + s \\cdot n^2) = \\Phi(s)\n$$\nfor a limiting profile function $\\Phi$.\n\n**Test**: Compute exact TV profiles for $n = 5, 6, 7, 8$ (using sparse matrix methods for $n = 8$). Verify that the rescaled profiles $(t - t_{mix}(0.5))/n^2$ converge to a universal curve. Measure the ratio $t_{mix}(0.25)/n^2 \\log n$ and check convergence to a constant.\n\n**Impact**: This would be the first certified cutoff result for a \"natural\" generating set on $S_n$ that combines local and global moves. Unlike the random transposition walk (Diaconis\u2013Shahshahani) or the top-to-random walk, this generating set has not been analyzed by representation-theoretic methods.\n\n**Catalog References**: `Pythagorean/CayleyExpander/MixingTime.lean` (TV\u2013L\u00b2 comparison, observable lower bounds), `Bridges/Catalog/Pythagorean/CayleyExpander/SymmetricGroup.lean` (generators, spectral nondegeneracy).\n\n**Proof Strategy**: \n1. Prove $\\gamma \\geq c/n^2$ using canonical paths along the Cayley graph (the `CanonicalPathData` structure in `Defs.lean` provides the scaffold).\n2. For the upper bound, combine with Theorem 1 to get $t_{mix} \\leq C n^2 \\log(n!)$.\n3. For the lower bound, use the fixed-point observable (Theorem 3) to show $d_n(t) \\geq 1/2$ for $t \\leq c' n^2 \\log n$.\n4. Prove window width $O(n^2)$ by analyzing the contribution of the second eigenvalue.\n\n**Domain Bridges**: Random walks on $S_n$ \u2192 card shuffling \u2192 cryptographic permutation generators \u2192 randomized algorithm design.\n\n**Lineage**: Extends Diaconis\u2013Shahshahani (1981), Aldous\u2013Diaconis (1986).\n\n**Ambition**: Grand challenge \u2014 would resolve an open problem in mixing time theory.\n\n**The key insight is** that the long cycle creates $O(n)$ shortcuts in the Cayley graph, reducing the diameter from $O(n^2)$ (transpositions alone) to $O(n)$, but the mixing time is controlled by the slower $O(n^2 \\log n)$ spectral relaxation because global mixing requires all $n$ positions to decorrelate.\n\n**Why now?** The formal infrastructure for both upper bounds (TV\u2013L\u00b2 + L\u00b2 contraction) and lower bounds (observable witnesses) is now in place. What's missing is the gap estimate, which can be attacked using the canonical path machinery already defined in the catalog.\n\n---",
     "domains": [
       "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "4f520a5f",
+    "consumed_by_exp_id": "48617359",
+    "timestamp": "2026-05-26T01:57:00.371515+00:00"
+  },
+  {
+    "id": "fd_1021",
+    "title": "Direction 2: Explicit Poincar\u00e9 Constant and Exponential Variance Decay",
+    "description": "**Conjecture**: For the $S_n$ walk with adjacent transpositions and long cycle, there exists $c > 0$ such that for all mean-zero $f : S_n \\to \\mathbb{R}$:\n$$\n\\text{Var}(f) \\leq \\frac{c \\cdot n^2}{|S|} \\cdot E_S(f)\n$$\nwhere $E_S(f)$ is the Dirichlet energy. Equivalently, the spectral gap satisfies $\\gamma \\geq |S|/(c \\cdot n^2)$.\n\n**Test**: Compute the exact spectral gap for $n = 3, \\ldots, 8$ and verify $\\gamma \\cdot n^2 / |S|$ converges to a constant. For $n = 3$: gap \u2248 0.5; for $n = 6$: gap \u2248 0.134. Check whether $\\gamma \\cdot n^2$ stabilizes.\n\n**Impact**: Would upgrade the variance decay theorem from $\\text{Var}(A^t f) \\leq \\text{Var}(f)$ to the exponential form $\\text{Var}(A^t f) \\leq (1 - c/n^2)^{2t} \\cdot \\text{Var}(f)$, giving explicit relaxation rates.\n\n**Catalog References**: `Pythagorean/CayleyExpander/Defs.lean` (Dirichlet energy, `CanonicalPathData`), `Pythagorean/CayleyExpander/SpectralGap.lean` (variance-energy relation, Poincar\u00e9 inequality).\n\n**Proof Strategy**: \n1. Construct explicit canonical paths in $\\text{Cay}(S_n, S)$ using the bubble sort + rotation algorithm.\n2. Bound the congestion: each edge carries at most $C \\cdot n^2 \\cdot (n-2)!$ paths.\n3. Apply the Poincar\u00e9 comparison: $\\gamma \\geq |S| / (\\text{congestion} \\cdot \\text{max\\_length})$.\n4. Formalize using `CanonicalPathData` and `explicitGapBound` from `Defs.lean`.\n\n**Domain Bridges**: Poincar\u00e9 inequality \u2192 functional inequalities \u2192 log-Sobolev \u2192 hypercontractivity \u2192 quantum information.\n\n**Lineage**: Builds directly on the catalog's `CanonicalPathData` structure and `explicitGapBound` definition.\n\n**Ambition**: Solid extension \u2014 achievable with existing infrastructure.\n\n**The key insight is** that the long cycle reduces canonical path lengths from $O(n^2)$ to $O(n)$ (sort first, then rotate), and the congestion is controlled by the symmetry of the group action.\n\n**Why now?** The `CanonicalPathData` structure is already defined in the catalog with all necessary fields (paths, length bounds, congestion bounds). Only the concrete instantiation for $S_n$ with the specific generators is needed.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
       "Geometry",
       "Computation",
       "Physics",
       "Bridges",
-      "Logic",
-      "Speculative"
+      "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "5e0902bf",
+    "source_exp_id": "4f520a5f",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T01:21:27.843587+00:00"
+    "timestamp": "2026-05-26T01:57:00.404929+00:00"
   },
   {
     "id": "seed_032",
