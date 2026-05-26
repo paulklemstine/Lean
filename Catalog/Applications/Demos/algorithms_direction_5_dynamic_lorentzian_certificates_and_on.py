@@ -1,325 +1,337 @@
 #!/usr/bin/env python3
 """
-Dynamic Lorentzian Certificate Maintenance Algorithm
+Algorithms for Dynamic Lorentzian Certificate Maintenance
 
-Implements the core algorithms for dynamic certificate maintenance:
-1. AffectedNodes: identify derivative nodes impacted by a rank-1 update
-2. DynamicCertificateUpdate: recompute only affected certificate leaves
-3. WarmStartDiscrepancy: estimate distribution drift from coefficient change
-4. FullPipeline: end-to-end dynamic certification with cost comparison
-
-All algorithms include docstrings, type hints, and example usage.
+Implements the core algorithms from the research paper:
+1. AffectedNodes — identify derivative nodes affected by a rank-1 update
+2. DynamicCertificateUpdate — update only affected certificate leaves
+3. WarmStartDiscrepancy — estimate distribution drift from coefficient perturbation
+4. CompareUpdateStrategies — benchmark dynamic vs full rebuild
 """
 
-from typing import List, Tuple, Set, Dict, Optional
-from itertools import combinations
+from itertools import product
 from collections import defaultdict
+import random
 import math
+from typing import List, Tuple, Dict, Set, Optional
 
 
-# ==============================================================================
-# Core Data Structures
-# ==============================================================================
+# ============================================================================
+# Algorithm 1: Affected Nodes Identification
+# ============================================================================
 
-class CertificateNode:
-    """A node in a Lorentzian certificate tree.
-
-    Attributes:
-        multiindex: The derivative multiindex (β) at this node.
-        depth: The derivative order (sum of multiindex components).
-        value: The polynomial value at this node (e.g., quadratic form coefficients).
-        children: List of child nodes (deeper derivatives).
-        is_leaf: Whether this is a leaf (quadratic form level).
+def affected_nodes(alpha: Tuple[int, ...], max_depth: int) -> Dict[int, List[Tuple[int, ...]]]:
     """
+    Identify all derivative tree nodes affected by a rank-1 monomial update X^α.
 
-    def __init__(self, multiindex: Tuple[int, ...], depth: int,
-                 value: Optional[float] = None):
-        self.multiindex = multiindex
-        self.depth = depth
-        self.value = value
-        self.children: List['CertificateNode'] = []
-        self.is_leaf = False
+    For each derivative depth k (0 ≤ k ≤ max_depth), computes the set:
+        Affected(α, k) = {β : sum(β) = k and β_i ≤ α_i for all i}
 
-    def __repr__(self) -> str:
-        return f"CertificateNode(β={self.multiindex}, depth={self.depth})"
-
-
-# ==============================================================================
-# Algorithm 1: Affected Node Identification
-# ==============================================================================
-
-def identify_affected_nodes(
-    alpha: Tuple[int, ...],
-    max_depth: int
-) -> Dict[int, List[Tuple[int, ...]]]:
-    """
-    Identify all derivative nodes affected by a rank-1 update with exponent α.
-
-    A node with multiindex β is affected iff β ≤ α coordinatewise.
-    This is the combinatorial shadow of the Locality Theorem.
-
-    Parameters:
-        alpha: Exponent vector of the update monomial X^α.
-        max_depth: Maximum derivative depth to consider (d-2 for degree d).
+    Args:
+        alpha: Monomial exponent vector (n-tuple of nonneg ints)
+        max_depth: Maximum derivative depth to check (typically d-2)
 
     Returns:
-        Dictionary mapping depth k to list of affected multiindices at that depth.
+        Dictionary mapping depth k to list of affected multiindices β
 
-    Complexity: O(∏(α_i + 1)) per depth level.
-
-    Example:
-        >>> identify_affected_nodes((2, 1, 0), max_depth=2)
-        {0: [(0, 0, 0)], 1: [(0, 1, 0), (1, 0, 0)], 2: [(1, 1, 0), (2, 0, 0)]}
+    Complexity: O(∏(α_i + 1)) total across all depths
     """
     n = len(alpha)
-    affected: Dict[int, List[Tuple[int, ...]]] = {}
+    ranges = [range(a + 1) for a in alpha]
+    result: Dict[int, List[Tuple[int, ...]]] = defaultdict(list)
 
-    for k in range(max_depth + 1):
-        nodes_at_k: List[Tuple[int, ...]] = []
+    for beta in product(*ranges):
+        k = sum(beta)
+        if k <= max_depth:
+            result[k].append(beta)
 
-        def backtrack(pos: int, remaining: int, current: List[int]) -> None:
-            if pos == n:
-                if remaining == 0:
-                    nodes_at_k.append(tuple(current))
-                return
-            for val in range(min(remaining, alpha[pos]) + 1):
-                current.append(val)
-                backtrack(pos + 1, remaining - val, current)
-                current.pop()
-
-        backtrack(0, k, [])
-        affected[k] = nodes_at_k
-
-    return affected
+    return dict(result)
 
 
-def affected_count_at_depth(alpha: Tuple[int, ...], k: int) -> int:
-    """Count affected nodes at a single depth level.
-
-    Parameters:
-        alpha: Update exponent vector.
-        k: Derivative depth.
-
-    Returns:
-        Number of affected multiindices at depth k.
+def affected_count_fast(alpha: Tuple[int, ...], k: int) -> int:
     """
-    return len(identify_affected_nodes(alpha, k).get(k, []))
+    Count affected multiindices at depth k using dynamic programming.
+
+    Uses the recurrence: count(α, k, i) = sum over j=0..min(α_i, k) of count(α, k-j, i-1)
+
+    Complexity: O(n * k * max(α_i))
+    """
+    n = len(alpha)
+    if k < 0:
+        return 0
+
+    # dp[j] = number of ways to achieve sum j using first i coordinates
+    dp = [0] * (k + 1)
+    dp[0] = 1
+
+    for i in range(n):
+        new_dp = [0] * (k + 1)
+        for j in range(k + 1):
+            if dp[j] == 0:
+                continue
+            for v in range(min(alpha[i], k - j) + 1):
+                new_dp[j + v] += dp[j]
+        dp = new_dp
+
+    return dp[k]
 
 
-# ==============================================================================
+# ============================================================================
 # Algorithm 2: Dynamic Certificate Update
-# ==============================================================================
+# ============================================================================
 
-def dynamic_certificate_update(
-    n_vars: int,
-    degree: int,
-    alpha: Tuple[int, ...],
-    leaf_cost: float = 1.0
-) -> Dict[str, float]:
+class CertificateNode:
+    """A node in the Lorentzian certificate tree."""
+
+    def __init__(self, depth: int, multiindex: Tuple[int, ...], value: float = 0.0):
+        self.depth = depth
+        self.multiindex = multiindex
+        self.value = value  # e.g., spectral gap or eigenvalue check result
+        self.children: List['CertificateNode'] = []
+        self.is_valid = True
+
+
+class LorentzianCertificate:
     """
-    Compute the cost of dynamically updating a Lorentzian certificate
-    after a rank-1 update f → f + c·X^α.
+    A certificate tree for Lorentzian-ness verification.
 
-    Only recomputes certificate nodes in the affected derivative profile.
-    Each affected leaf costs O(n²) for spectral verification.
+    The tree has depth d-2, with each internal node at depth k corresponding
+    to an iterated partial derivative ∂^β f of total order k.
+    Leaves (at depth d-2) correspond to quadratic forms whose negative
+    semidefiniteness certifies the Lorentzian property.
+    """
 
-    Parameters:
-        n_vars: Number of variables (n).
-        degree: Polynomial degree (d).
-        alpha: Exponent vector of the update monomial.
-        leaf_cost: Base cost per leaf recomputation (default 1.0).
+    def __init__(self, n: int, d: int):
+        self.n = n
+        self.d = d
+        self.max_depth = max(0, d - 2)
+        self.nodes: Dict[Tuple[int, ...], CertificateNode] = {}
+        self._build_tree()
+
+    def _build_tree(self):
+        """Build the certificate tree with all derivative nodes."""
+        for k in range(self.max_depth + 1):
+            for beta in self._multiindices(k):
+                node = CertificateNode(k, beta, value=random.uniform(0, 1))
+                self.nodes[beta] = node
+
+    def _multiindices(self, k: int) -> List[Tuple[int, ...]]:
+        """Generate all multiindices of total order k on n variables."""
+        if self.n == 0:
+            return [()]
+        result = []
+        self._gen_multiindices(k, self.n, [], result)
+        return result
+
+    def _gen_multiindices(self, remaining: int, dims: int,
+                          current: list, result: list):
+        if dims == 1:
+            result.append(tuple(current + [remaining]))
+            return
+        for v in range(remaining + 1):
+            self._gen_multiindices(remaining - v, dims - 1,
+                                   current + [v], result)
+
+    def total_nodes(self) -> int:
+        return len(self.nodes)
+
+    def dynamic_update(self, alpha: Tuple[int, ...],
+                       recompute_fn=None) -> Tuple[int, int]:
+        """
+        Perform a dynamic certificate update for rank-1 monomial X^α.
+
+        Only recomputes nodes whose multiindex is coordinatewise ≤ α.
+        Returns (nodes_updated, nodes_total).
+        """
+        n = len(alpha)
+        updated = 0
+
+        for beta, node in self.nodes.items():
+            # Check if β ≤ α coordinatewise
+            if all(beta[i] <= alpha[i] for i in range(n)):
+                # This node is affected — recompute
+                if recompute_fn:
+                    node.value = recompute_fn(beta)
+                else:
+                    node.value = random.uniform(0, 1)
+                updated += 1
+
+        return updated, self.total_nodes()
+
+    def full_rebuild(self, recompute_fn=None) -> Tuple[int, int]:
+        """Full certificate rebuild: recompute all nodes."""
+        for beta, node in self.nodes.items():
+            if recompute_fn:
+                node.value = recompute_fn(beta)
+            else:
+                node.value = random.uniform(0, 1)
+        total = self.total_nodes()
+        return total, total
+
+
+def dynamic_certificate_update(n: int, d: int, alpha: Tuple[int, ...]) -> Dict:
+    """
+    Main algorithm: compare dynamic update vs full rebuild.
+
+    Args:
+        n: Number of variables
+        d: Polynomial degree
+        alpha: Monomial exponent for rank-1 update
 
     Returns:
-        Dictionary with cost breakdown:
-            - 'dynamic_cost': Total dynamic update cost.
-            - 'rebuild_cost': Full rebuild cost for comparison.
-            - 'savings_ratio': 1 - dynamic/rebuild.
-            - 'affected_by_depth': Affected count per depth.
-            - 'total_affected': Total affected nodes.
-
-    Example:
-        >>> result = dynamic_certificate_update(4, 4, (1, 1, 1, 0))
-        >>> print(f"Savings: {result['savings_ratio']:.1%}")
+        Dictionary with cost comparison metrics
     """
-    max_depth = degree - 2
-    affected = identify_affected_nodes(alpha, max_depth)
+    cert = LorentzianCertificate(n, d)
 
-    total_affected = 0
-    affected_by_depth: Dict[int, int] = {}
-    for k in range(max_depth + 1):
-        count = len(affected.get(k, []))
-        affected_by_depth[k] = count
-        total_affected += count
-
-    # Each affected node at leaf level requires O(n²) spectral check
-    # Internal nodes require O(1) recombination per affected child
-    dynamic_cost = n_vars**2 * total_affected * leaf_cost
-    rebuild_cost = n_vars**degree * leaf_cost
-
-    savings = 1 - (dynamic_cost / rebuild_cost) if rebuild_cost > 0 else 0
+    updated, total = cert.dynamic_update(alpha)
+    rebuild_total, _ = cert.full_rebuild()
 
     return {
-        'dynamic_cost': dynamic_cost,
-        'rebuild_cost': rebuild_cost,
-        'savings_ratio': savings,
-        'affected_by_depth': affected_by_depth,
-        'total_affected': total_affected,
+        'n': n,
+        'd': d,
+        'alpha': alpha,
+        'dynamic_nodes_updated': updated,
+        'total_nodes': total,
+        'rebuild_nodes': rebuild_total,
+        'speedup': total / max(updated, 1),
+        'fraction_affected': updated / max(total, 1),
     }
 
 
-# ==============================================================================
+# ============================================================================
 # Algorithm 3: Warm-Start Discrepancy Estimation
-# ==============================================================================
+# ============================================================================
 
-def warm_start_discrepancy(
-    w: List[float],
-    w_prime: List[float]
-) -> Dict[str, float]:
+def warm_start_discrepancy(w: List[float], w_prime: List[float]) -> Dict:
     """
-    Estimate the warm-start total variation discrepancy when coefficient
-    vectors change from w to w'.
+    Estimate warm-start discrepancy between normalized distributions.
 
-    Uses the proven bound: TV(μ, ν) ≤ Δ / min(Z, Z')
-    where μ = w/Z, ν = w'/Z', Δ = ||w - w'||₁.
+    Computes:
+    - ℓ₁ distance between weight vectors
+    - Total variation between normalized distributions
+    - Upper bound TV ≤ Δ/min(Z, Z')
 
-    Parameters:
-        w: Original nonneg coefficient vector.
-        w_prime: Updated nonneg coefficient vector.
+    Args:
+        w: Original weight vector (nonneg)
+        w_prime: Updated weight vector (nonneg)
 
     Returns:
-        Dictionary with:
-            - 'total_variation': Exact TV between normalized distributions.
-            - 'l1_delta': L1 distance between coefficient vectors.
-            - 'bound': Upper bound from the theorem.
-            - 'bound_tight': Whether the bound is within 2x of exact.
-
-    Example:
-        >>> result = warm_start_discrepancy([3, 5, 2], [3.1, 4.9, 2.1])
-        >>> print(f"TV = {result['total_variation']:.6f}, bound = {result['bound']:.6f}")
+        Dictionary with discrepancy metrics
     """
-    assert len(w) == len(w_prime), "Weight vectors must have same length"
-    assert all(x >= 0 for x in w), "Weights must be nonneg"
-    assert all(x >= 0 for x in w_prime), "Weights must be nonneg"
+    n = len(w)
+    assert len(w_prime) == n
 
     Z = sum(w)
     Z_prime = sum(w_prime)
-    assert Z > 0 and Z_prime > 0, "Total weights must be positive"
 
-    # Normalize
+    if Z == 0 or Z_prime == 0:
+        return {'error': 'Zero total weight'}
+
     mu = [x / Z for x in w]
     nu = [x / Z_prime for x in w_prime]
 
-    # Exact TV
-    tv = 0.5 * sum(abs(m - n) for m, n in zip(mu, nu))
-
-    # L1 distance
-    delta = sum(abs(a - b) for a, b in zip(w, w_prime))
-
-    # Bound from theorem
-    bound = delta / min(Z, Z_prime)
+    l1_dist = sum(abs(a - b) for a, b in zip(w, w_prime))
+    tv_dist = 0.5 * sum(abs(a - b) for a, b in zip(mu, nu))
+    bound = l1_dist / min(Z, Z_prime)
 
     return {
-        'total_variation': tv,
-        'l1_delta': delta,
-        'bound': bound,
-        'bound_tight': tv > 0 and bound / tv < 2.0,
+        'n': n,
         'Z': Z,
         'Z_prime': Z_prime,
+        'l1_distance': l1_dist,
+        'tv_distance': tv_dist,
+        'tv_bound': bound,
+        'bound_tight': tv_dist / max(bound, 1e-15),
+        'bound_holds': tv_dist <= bound + 1e-10,
     }
 
 
-# ==============================================================================
-# Algorithm 4: Full Dynamic Certification Pipeline
-# ==============================================================================
+# ============================================================================
+# Algorithm 4: Full Comparison Pipeline
+# ============================================================================
 
-def full_pipeline(
-    n_vertices: int,
-    edges: List[Tuple[int, int]],
-    new_tree_edges: Set[int]
-) -> Dict:
+def compare_update_strategies(n: int, d: int,
+                               alpha: Tuple[int, ...]) -> Dict:
     """
-    Full dynamic certification pipeline for a graphic matroid.
+    Full comparison of dynamic vs rebuild strategies.
 
-    Given a graph and a new spanning tree (represented by edge indices),
-    compute the dynamic certificate update, warm-start discrepancy,
-    and cost comparison.
-
-    Parameters:
-        n_vertices: Number of vertices.
-        edges: List of edges as (u, v) pairs.
-        new_tree_edges: Set of edge indices forming the new spanning tree.
-
-    Returns:
-        Comprehensive result dictionary.
+    Combines certificate cost analysis with warm-start discrepancy estimation.
     """
-    n_edges = len(edges)
-    degree = n_vertices - 1
+    # Certificate costs
+    max_depth = max(0, d - 2)
+    affected = affected_nodes(alpha, max_depth)
+    total_affected = sum(len(v) for v in affected.values())
 
-    # Build update monomial (indicator of tree edges)
-    alpha = tuple(1 if i in new_tree_edges else 0 for i in range(n_edges))
+    # Generate example weight vectors
+    random.seed(hash(alpha) % 2**31)
+    n_bases = max(10, 2 * n)
+    w = [random.uniform(0.1, 2.0) for _ in range(n_bases)]
+    w_prime = w.copy()
+    # Perturb one weight (simulating rank-1 update effect on coefficients)
+    perturb_idx = hash(alpha) % n_bases
+    w_prime[perturb_idx] += 0.5
 
-    # Certificate update costs
-    cert_result = dynamic_certificate_update(n_edges, degree, alpha)
-
-    # Warm-start analysis (uniform vs slightly perturbed weights)
-    w = [1.0] * (2**n_edges)  # Simplified: uniform over all subsets
-    w_prime = list(w)
-    # Perturb the weight of subsets containing the new tree
-    for i in range(len(w)):
-        if i % 3 == 0:  # Simplified perturbation
-            w_prime[i] += 0.01
-
-    # Only compute warm-start for small cases
-    if len(w) <= 10000:
-        ws_result = warm_start_discrepancy(w[:100], w_prime[:100])
-    else:
-        ws_result = {'total_variation': 0, 'bound': 0}
+    disc = warm_start_discrepancy(w, w_prime)
 
     return {
-        'alpha': alpha,
-        'degree': degree,
-        'certificate': cert_result,
-        'warm_start': ws_result,
+        'certificate': {
+            'n': n,
+            'd': d,
+            'alpha': alpha,
+            'max_depth': max_depth,
+            'affected_by_depth': {k: len(v) for k, v in affected.items()},
+            'total_affected': total_affected,
+            'dynamic_cost': n**2 * total_affected,
+            'rebuild_cost': n**d,
+        },
+        'warm_start': disc,
     }
 
 
-# ==============================================================================
+# ============================================================================
 # Example Usage
-# ==============================================================================
+# ============================================================================
 
 if __name__ == "__main__":
     print("Dynamic Lorentzian Certificate Algorithms")
     print("=" * 50)
 
     # Example 1: Affected nodes
-    print("\n--- Algorithm 1: Affected Node Identification ---")
     alpha = (2, 1, 1, 0)
-    affected = identify_affected_nodes(alpha, max_depth=3)
-    for k, nodes in affected.items():
-        print(f"  Depth {k}: {len(nodes)} affected nodes")
+    d = sum(alpha)
+    print(f"\n1. Affected nodes for α = {alpha}, d = {d}:")
+    nodes = affected_nodes(alpha, d - 2)
+    for k, betas in sorted(nodes.items()):
+        print(f"   Depth {k}: {len(betas)} affected nodes")
 
-    # Example 2: Dynamic update cost
-    print("\n--- Algorithm 2: Dynamic Certificate Update ---")
-    result = dynamic_certificate_update(6, 4, (1, 1, 1, 0, 0, 0))
-    print(f"  Dynamic cost:  {result['dynamic_cost']:.0f}")
-    print(f"  Rebuild cost:  {result['rebuild_cost']:.0f}")
-    print(f"  Savings:       {result['savings_ratio']:.1%}")
+    # Example 2: Fast counting
+    print(f"\n2. Fast affected count comparison:")
+    for k in range(d):
+        fast = affected_count_fast(alpha, k)
+        exact = len(affected_nodes(alpha, k).get(k, []))
+        print(f"   k={k}: fast={fast}, exact={exact}, match={fast==exact}")
 
-    # Example 3: Warm-start discrepancy
-    print("\n--- Algorithm 3: Warm-Start Discrepancy ---")
-    w = [3.0, 5.0, 2.0, 4.0, 1.0]
-    w_prime = [3.1, 4.8, 2.05, 4.15, 0.9]
-    ws = warm_start_discrepancy(w, w_prime)
-    print(f"  TV distance:   {ws['total_variation']:.6f}")
-    print(f"  L1 delta:      {ws['l1_delta']:.4f}")
-    print(f"  Bound:         {ws['bound']:.6f}")
-    print(f"  Bound tight:   {ws['bound_tight']}")
+    # Example 3: Dynamic update
+    print(f"\n3. Dynamic certificate update:")
+    result = dynamic_certificate_update(4, 4, alpha)
+    for key, val in result.items():
+        print(f"   {key}: {val}")
 
-    # Example 4: Full pipeline
-    print("\n--- Algorithm 4: Full Pipeline ---")
-    edges = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)]
-    result = full_pipeline(4, edges, {0, 1, 2})
-    print(f"  Update exponent: {result['alpha']}")
-    print(f"  Dynamic cost:    {result['certificate']['dynamic_cost']:.0f}")
-    print(f"  Rebuild cost:    {result['certificate']['rebuild_cost']:.0f}")
-    print(f"  Savings:         {result['certificate']['savings_ratio']:.1%}")
+    # Example 4: Warm-start discrepancy
+    print(f"\n4. Warm-start discrepancy:")
+    w = [1.0, 2.0, 1.5, 3.0, 0.5]
+    w_prime = [1.0, 2.3, 1.5, 3.0, 0.5]
+    disc = warm_start_discrepancy(w, w_prime)
+    for key, val in disc.items():
+        if isinstance(val, float):
+            print(f"   {key}: {val:.6f}")
+        else:
+            print(f"   {key}: {val}")
+
+    # Example 5: Full comparison
+    print(f"\n5. Full comparison pipeline:")
+    comp = compare_update_strategies(4, 4, (1, 1, 1, 1))
+    for section, data in comp.items():
+        print(f"\n   {section}:")
+        for key, val in data.items():
+            print(f"     {key}: {val}")
