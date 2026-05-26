@@ -136,10 +136,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "000321e6",
     "timestamp": "2026-05-24T23:11:24.492421+00:00"
   },
   {
@@ -528,26 +528,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "44ebbbfd",
     "consumed_by_exp_id": "0eb55b27",
     "timestamp": "2026-05-25T15:29:44.838185+00:00"
-  },
-  {
-    "id": "fd_0875",
-    "title": "Direction 3: Black-Box Group Recognition via Characteristic Polynomial Certificates",
-    "description": "**Conjecture:** There exists a polynomial-time black-box algorithm that, given oracle access to a group G isomorphic to some GL_n(F_q) (with n, q unknown), determines n and q with probability \u2265 1 - \u03b5 using O(log(1/\u03b5)) random elements and characteristic polynomial computations.\n\n**Test:** Implement the following algorithm and test on GL_n(F_q) for n = 2, ..., 6 and q = 2, 3, 5, 7:\n1. Draw random elements g\u2081, ..., g_k.\n2. Compute characteristic polynomials of g_i.\n3. Find the degree n as the polynomial degree.\n4. Estimate q from the coefficient distribution.\n5. Verify by testing irreducibility rates against the prime polynomial theorem.\n\nIf the algorithm fails to identify n, q correctly for > 10% of trials with k = 20, the conjecture is too optimistic.\n\n**Impact:** Would provide a rigorous foundation for black-box group algorithms used in computational algebra systems like GAP and Magma. Current algorithms are heuristic; this would be the first formally certified version.\n\n**Catalog References:** `Algebra/MatrixGroupGeneration.lean` (certificate testing infrastructure).\n\n**Proof Strategy:** The degree of the characteristic polynomial immediately reveals n. The field size q can be recovered from the distribution of roots: the fraction of charpoly values that are split (all roots in F_q) versus irreducible follows a q-dependent distribution.\n\n**Domain Bridges:** Computational algebra (GAP, Magma implementations); cryptography (group-based cryptosystems require group identification); machine learning (learning group structure from samples).\n\n**Lineage:** Applies the certificate testing algorithm (`is_singer_certificate_candidate`) to the recognition problem.\n\n**Ambition:** Grand challenge \u2014 requires both theoretical analysis and robust implementation.\n\n**The key insight is** that the characteristic polynomial of a random matrix encodes enough information about the underlying group to identify it, and the certificate framework provides the theoretical basis for extracting this information.\n\n**Why now?** Black-box group algorithms are increasingly important in computational algebra, but lack formal correctness guarantees. The certificate framework provides the right abstraction level.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "44ebbbfd",
-    "consumed_by_exp_id": "114b795e",
-    "timestamp": "2026-05-25T15:29:44.862008+00:00"
   },
   {
     "id": "fd_0886",
@@ -1759,6 +1739,26 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T01:21:27.843587+00:00"
   },
   {
+    "id": "fd_1021",
+    "title": "Direction 2: Explicit Poincar\u00e9 Constant and Exponential Variance Decay",
+    "description": "**Conjecture**: For the $S_n$ walk with adjacent transpositions and long cycle, there exists $c > 0$ such that for all mean-zero $f : S_n \\to \\mathbb{R}$:\n$$\n\\text{Var}(f) \\leq \\frac{c \\cdot n^2}{|S|} \\cdot E_S(f)\n$$\nwhere $E_S(f)$ is the Dirichlet energy. Equivalently, the spectral gap satisfies $\\gamma \\geq |S|/(c \\cdot n^2)$.\n\n**Test**: Compute the exact spectral gap for $n = 3, \\ldots, 8$ and verify $\\gamma \\cdot n^2 / |S|$ converges to a constant. For $n = 3$: gap \u2248 0.5; for $n = 6$: gap \u2248 0.134. Check whether $\\gamma \\cdot n^2$ stabilizes.\n\n**Impact**: Would upgrade the variance decay theorem from $\\text{Var}(A^t f) \\leq \\text{Var}(f)$ to the exponential form $\\text{Var}(A^t f) \\leq (1 - c/n^2)^{2t} \\cdot \\text{Var}(f)$, giving explicit relaxation rates.\n\n**Catalog References**: `Pythagorean/CayleyExpander/Defs.lean` (Dirichlet energy, `CanonicalPathData`), `Pythagorean/CayleyExpander/SpectralGap.lean` (variance-energy relation, Poincar\u00e9 inequality).\n\n**Proof Strategy**: \n1. Construct explicit canonical paths in $\\text{Cay}(S_n, S)$ using the bubble sort + rotation algorithm.\n2. Bound the congestion: each edge carries at most $C \\cdot n^2 \\cdot (n-2)!$ paths.\n3. Apply the Poincar\u00e9 comparison: $\\gamma \\geq |S| / (\\text{congestion} \\cdot \\text{max\\_length})$.\n4. Formalize using `CanonicalPathData` and `explicitGapBound` from `Defs.lean`.\n\n**Domain Bridges**: Poincar\u00e9 inequality \u2192 functional inequalities \u2192 log-Sobolev \u2192 hypercontractivity \u2192 quantum information.\n\n**Lineage**: Builds directly on the catalog's `CanonicalPathData` structure and `explicitGapBound` definition.\n\n**Ambition**: Solid extension \u2014 achievable with existing infrastructure.\n\n**The key insight is** that the long cycle reduces canonical path lengths from $O(n^2)$ to $O(n)$ (sort first, then rotate), and the congestion is controlled by the symmetry of the group action.\n\n**Why now?** The `CanonicalPathData` structure is already defined in the catalog with all necessary fields (paths, length bounds, congestion bounds). Only the concrete instantiation for $S_n$ with the specific generators is needed.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4f520a5f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T01:57:00.404929+00:00"
+  },
+  {
     "id": "seed_005",
     "title": "P vs NP Problem",
     "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
@@ -1881,14 +1881,32 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
-    "id": "fd_1021",
-    "title": "Direction 2: Explicit Poincar\u00e9 Constant and Exponential Variance Decay",
-    "description": "**Conjecture**: For the $S_n$ walk with adjacent transpositions and long cycle, there exists $c > 0$ such that for all mean-zero $f : S_n \\to \\mathbb{R}$:\n$$\n\\text{Var}(f) \\leq \\frac{c \\cdot n^2}{|S|} \\cdot E_S(f)\n$$\nwhere $E_S(f)$ is the Dirichlet energy. Equivalently, the spectral gap satisfies $\\gamma \\geq |S|/(c \\cdot n^2)$.\n\n**Test**: Compute the exact spectral gap for $n = 3, \\ldots, 8$ and verify $\\gamma \\cdot n^2 / |S|$ converges to a constant. For $n = 3$: gap \u2248 0.5; for $n = 6$: gap \u2248 0.134. Check whether $\\gamma \\cdot n^2$ stabilizes.\n\n**Impact**: Would upgrade the variance decay theorem from $\\text{Var}(A^t f) \\leq \\text{Var}(f)$ to the exponential form $\\text{Var}(A^t f) \\leq (1 - c/n^2)^{2t} \\cdot \\text{Var}(f)$, giving explicit relaxation rates.\n\n**Catalog References**: `Pythagorean/CayleyExpander/Defs.lean` (Dirichlet energy, `CanonicalPathData`), `Pythagorean/CayleyExpander/SpectralGap.lean` (variance-energy relation, Poincar\u00e9 inequality).\n\n**Proof Strategy**: \n1. Construct explicit canonical paths in $\\text{Cay}(S_n, S)$ using the bubble sort + rotation algorithm.\n2. Bound the congestion: each edge carries at most $C \\cdot n^2 \\cdot (n-2)!$ paths.\n3. Apply the Poincar\u00e9 comparison: $\\gamma \\geq |S| / (\\text{congestion} \\cdot \\text{max\\_length})$.\n4. Formalize using `CanonicalPathData` and `explicitGapBound` from `Defs.lean`.\n\n**Domain Bridges**: Poincar\u00e9 inequality \u2192 functional inequalities \u2192 log-Sobolev \u2192 hypercontractivity \u2192 quantum information.\n\n**Lineage**: Builds directly on the catalog's `CanonicalPathData` structure and `explicitGapBound` definition.\n\n**Ambition**: Solid extension \u2014 achievable with existing infrastructure.\n\n**The key insight is** that the long cycle reduces canonical path lengths from $O(n^2)$ to $O(n)$ (sort first, then rotate), and the congestion is controlled by the symmetry of the group action.\n\n**Why now?** The `CanonicalPathData` structure is already defined in the catalog with all necessary fields (paths, length bounds, congestion bounds). Only the concrete instantiation for $S_n$ with the specific generators is needed.\n\n---",
+    "id": "fd_1025",
+    "title": "Direction 1: Universal Support-Tutte Polynomial",
+    "description": "**Conjecture:** Any support invariant F satisfying (i) multiplicativity on disjoint-coordinate direct sums and (ii) a deletion\u2013contraction recurrence on M-convex supports factors uniquely through a universal support-Tutte polynomial T_S(x, y), i.e., F = \u03c6 \u2218 T_S for some ring homomorphism \u03c6.\n\n**The key insight is** that the deletion\u2013contraction recurrence on supports, combined with the loop/coloop trichotomy, generates a free algebraic structure indexed by \"support activities\" analogous to Tutte's internal/external activities. The universality would follow from showing that every M-convex support admits a canonical activity ordering.\n\n**Why now?** The minor closure theorems (Theorems 3.1\u20133.4 in `Catalog/Pythagorean/SupportMinorTheory.lean`) guarantee that the recurrence is well-defined on the class of M-convex supports. This was the missing structural prerequisite.\n\n**Test:** For all M-convex subsets of the degree-\u22645 simplex on 4 variables, compute the support-Tutte polynomial using two different coordinate orderings. If the values agree in all cases, universality is strongly supported. A single disagreement would disprove universality and redirect toward a weaker theory (e.g., universality only for matroid-induced supports).\n\n**Impact:** A universal support-Tutte polynomial would be a new algebraic invariant of M-convex sets, generalizing the classical Tutte polynomial and potentially capturing information invisible to matroid Tutte theory (e.g., degree information from non-{0,1} supports).\n\n**Catalog References:** `Catalog/Pythagorean/SupportMinorTheory.lean` (SupportTutteInvariant structure, minor_step_card_le).\n\n**Proof Strategy:** \n1. Define support activities via a total ordering on coordinates, analogous to Tutte (1954).\n2. Show the activity-based expansion agrees with the deletion\u2013contraction recurrence.\n3. Prove uniqueness by induction on support cardinality.\n\n**Domain Bridges:** Statistical physics (Potts model partition functions), knot theory (Jones polynomial via Tutte specialization).\n\n**Lineage:** Direct extension of Theorem 3.4 (exchange_of_minor) in the current catalog.\n\n**Ambition:** Grand challenge \u2014 would establish a new universal algebraic invariant.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "abb48be4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T02:33:38.976648+00:00"
+  },
+  {
+    "id": "fd_1026",
+    "title": "Direction 2: Lorentzian Minor Closure Conjecture",
+    "description": "**Conjecture:** If S is the support of a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh), then every minor of S is realizable as the support of a Lorentzian polynomial.\n\n**The key insight is** that Lorentzianity is a stronger condition than exchange (it additionally requires Hessian signature conditions on all degree-2 derivatives). The conjecture posits that this stronger condition is also minor-closed. If true, it would mean Lorentzian polynomials form a combinatorial species with both algebraic and geometric structure preserved under minors.\n\n**Why now?** We have proved that exchange (the combinatorial shadow of Lorentzianity) is minor-closed. The remaining question is whether the analytic/geometric conditions are also preserved. Computational evidence from `demo.py` shows no counterexample for degree \u2264 6 on \u2264 5 variables.\n\n**Test:** \n1. Enumerate all minors of supports of e_k(x_1,...,x_n) for n \u2264 7, k \u2264 4.\n2. For each minor, attempt to construct a Lorentzian polynomial with that support using the recognition criteria from `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`.\n3. Search for a counterexample: a minor support that satisfies exchange but admits no Lorentzian realization.\n\n**Impact:** Would establish Lorentzian polynomials as a minor-closed combinatorial species, enabling inductive classification programs and connecting Hodge theory to matroid-type decomposition.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange, IsBrandenHuhLorentzian), `Catalog/Pythagorean/SupportMinorTheory.lean` (exchange_of_minor).\n\n**Proof Strategy:** \n1. Show deletion preserves Lorentzianity by analyzing Hessian signature under variable restriction.\n2. Show contraction preserves Lorentzianity by analyzing the effect on quadratic forms.\n3. Use the recursive spectral certificate (recursivelyLorentzian_iff_brandenHuh) to reduce to checking degree-2 leaves.\n\n**Domain Bridges:** Algebraic geometry (Hodge index theorem), discrete convex analysis (M-convex optimization).\n\n**Lineage:** Builds on both the minor theory (this paper) and the Lorentzian recognition (LorentzianRecognitionComplete.lean).\n\n**Ambition:** Grand challenge \u2014 would unify Hodge theory with matroid minor theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
       "Physics",
       "Bridges",
       "Logic"
@@ -1896,9 +1914,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "4f520a5f",
+    "source_exp_id": "abb48be4",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T01:57:00.404929+00:00"
+    "timestamp": "2026-05-26T02:33:39.011759+00:00"
   },
   {
     "id": "seed_013",
@@ -2324,32 +2342,13 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T01:57:00.371515+00:00"
   },
   {
-    "id": "fd_1025",
-    "title": "Direction 1: Universal Support-Tutte Polynomial",
-    "description": "**Conjecture:** Any support invariant F satisfying (i) multiplicativity on disjoint-coordinate direct sums and (ii) a deletion\u2013contraction recurrence on M-convex supports factors uniquely through a universal support-Tutte polynomial T_S(x, y), i.e., F = \u03c6 \u2218 T_S for some ring homomorphism \u03c6.\n\n**The key insight is** that the deletion\u2013contraction recurrence on supports, combined with the loop/coloop trichotomy, generates a free algebraic structure indexed by \"support activities\" analogous to Tutte's internal/external activities. The universality would follow from showing that every M-convex support admits a canonical activity ordering.\n\n**Why now?** The minor closure theorems (Theorems 3.1\u20133.4 in `Catalog/Pythagorean/SupportMinorTheory.lean`) guarantee that the recurrence is well-defined on the class of M-convex supports. This was the missing structural prerequisite.\n\n**Test:** For all M-convex subsets of the degree-\u22645 simplex on 4 variables, compute the support-Tutte polynomial using two different coordinate orderings. If the values agree in all cases, universality is strongly supported. A single disagreement would disprove universality and redirect toward a weaker theory (e.g., universality only for matroid-induced supports).\n\n**Impact:** A universal support-Tutte polynomial would be a new algebraic invariant of M-convex sets, generalizing the classical Tutte polynomial and potentially capturing information invisible to matroid Tutte theory (e.g., degree information from non-{0,1} supports).\n\n**Catalog References:** `Catalog/Pythagorean/SupportMinorTheory.lean` (SupportTutteInvariant structure, minor_step_card_le).\n\n**Proof Strategy:** \n1. Define support activities via a total ordering on coordinates, analogous to Tutte (1954).\n2. Show the activity-based expansion agrees with the deletion\u2013contraction recurrence.\n3. Prove uniqueness by induction on support cardinality.\n\n**Domain Bridges:** Statistical physics (Potts model partition functions), knot theory (Jones polynomial via Tutte specialization).\n\n**Lineage:** Direct extension of Theorem 3.4 (exchange_of_minor) in the current catalog.\n\n**Ambition:** Grand challenge \u2014 would establish a new universal algebraic invariant.\n\n---",
+    "id": "fd_1030",
+    "title": "Direction 1: Spectral Fingerprints for Classical Subgroups",
+    "description": "**Conjecture**: For each classical matrix group family G \u2208 {SL_n, Sp_{2n}, O_n, SO_n, SU_n} over F_q, the characteristic polynomial distribution of random elements has a distinct fingerprint from GL_n(F_q) and from each other classical family of the same dimension. Specifically, the irreducible rate and split rate of random charpolys in G(F_q) converge to deterministic values \u03c1_irr(G, n, q) and \u03c1_spl(G, n, q) that separate G from all other classical groups of the same dimension.\n\n**Test**: For SL_3(F_7) and Sp_4(F_5), computationally estimate the characteristic polynomial statistics from 10,000 random elements and compare to the GL predictions. If the distributions differ significantly (p < 0.01 in a chi-squared test against the GL distribution), the conjecture is supported.\n\n**Impact**: This would extend the recognition framework from identifying (n, q) within GL_n to identifying the *group type* (GL, SL, Sp, O, ...) \u2014 a dramatically more powerful recognition tool that addresses the core problem in computational group theory.\n\n**Catalog References**: `Catalog/Algebra/CharpolyRecognition.lean` (fingerprint framework, loss function), `Catalog/Algebra/MatrixGroupGeneration.lean` (generation certificates, invariant subspace theorem).\n\n**Proof Strategy**: For SL_n, the constraint det(A) = 1 restricts the constant term of the charpoly to (-1)^n, reducing the polynomial space. Count irreducible polynomials with prescribed constant term using character sums over F_q. For Sp_{2n}, charpolys are palindromic (self-reciprocal), dramatically reducing the irreducible fraction. Prove these structural constraints yield distinct rates.\n\n**Domain Bridges**: Connects to random matrix theory over finite fields (Fulman, 2000) and representation theory of classical groups (Carter, 1985).\n\n**Lineage**: Direct extension of the current GL_n fingerprint framework.\n\n**Ambition**: Grand challenge \u2014 requires new algebraic counting results for constrained polynomial families.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
       "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "abb48be4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T02:33:38.976648+00:00"
-  },
-  {
-    "id": "fd_1026",
-    "title": "Direction 2: Lorentzian Minor Closure Conjecture",
-    "description": "**Conjecture:** If S is the support of a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh), then every minor of S is realizable as the support of a Lorentzian polynomial.\n\n**The key insight is** that Lorentzianity is a stronger condition than exchange (it additionally requires Hessian signature conditions on all degree-2 derivatives). The conjecture posits that this stronger condition is also minor-closed. If true, it would mean Lorentzian polynomials form a combinatorial species with both algebraic and geometric structure preserved under minors.\n\n**Why now?** We have proved that exchange (the combinatorial shadow of Lorentzianity) is minor-closed. The remaining question is whether the analytic/geometric conditions are also preserved. Computational evidence from `demo.py` shows no counterexample for degree \u2264 6 on \u2264 5 variables.\n\n**Test:** \n1. Enumerate all minors of supports of e_k(x_1,...,x_n) for n \u2264 7, k \u2264 4.\n2. For each minor, attempt to construct a Lorentzian polynomial with that support using the recognition criteria from `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`.\n3. Search for a counterexample: a minor support that satisfies exchange but admits no Lorentzian realization.\n\n**Impact:** Would establish Lorentzian polynomials as a minor-closed combinatorial species, enabling inductive classification programs and connecting Hodge theory to matroid-type decomposition.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange, IsBrandenHuhLorentzian), `Catalog/Pythagorean/SupportMinorTheory.lean` (exchange_of_minor).\n\n**Proof Strategy:** \n1. Show deletion preserves Lorentzianity by analyzing Hessian signature under variable restriction.\n2. Show contraction preserves Lorentzianity by analyzing the effect on quadratic forms.\n3. Use the recursive spectral certificate (recursivelyLorentzian_iff_brandenHuh) to reduce to checking degree-2 leaves.\n\n**Domain Bridges:** Algebraic geometry (Hodge index theorem), discrete convex analysis (M-convex optimization).\n\n**Lineage:** Builds on both the minor theory (this paper) and the Lorentzian recognition (LorentzianRecognitionComplete.lean).\n\n**Ambition:** Grand challenge \u2014 would unify Hodge theory with matroid minor theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
       "Physics",
       "Bridges",
       "Logic"
@@ -2357,9 +2356,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "abb48be4",
+    "source_exp_id": "114b795e",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T02:33:39.011759+00:00"
+    "timestamp": "2026-05-26T03:06:43.848125+00:00"
   },
   {
     "id": "seed_032",

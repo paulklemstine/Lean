@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Group Theory / Finite Field Combinatorics",
     "date": "2026-05-26T03:06:41Z",
     "exp_id": "114b795e",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7225979310344828,
+    "quality": "substantial"
   },
   {
     "filename": "direction_1_deletion_contraction_duality_for_polyn.json",
@@ -1465,8 +1465,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-26T03:06:41Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7225979310344828,
+      "quality": "substantial"
     }
   ],
   "edges": [
