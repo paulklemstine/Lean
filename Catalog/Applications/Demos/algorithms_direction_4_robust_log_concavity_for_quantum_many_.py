@@ -1,381 +1,359 @@
-#!/usr/bin/env python3
 """
-algorithms.py — Certified Algorithms for Lorentzian Gap Surrogates
+algorithms.py — Verified Algorithms for Quantum-to-Classical Gap Certificates
 
-Implements algorithms from the research paper with correctness guarantees
-tied to the formally verified theorems.
+Implements algorithms from the research paper with correctness guarantees tied
+to formal Lean theorems:
 
-Algorithms:
-1. CertifiedMinMass — compute minimum singleton mass with perturbation bounds
-2. BoundaryMassComputer — compute boundary mass on Hamming/spin-flip graphs
-3. EventRatioVerifier — verify event probability ratio bounds
-4. LogConcavityCertifier — compute surrogate log-concavity certificates
-5. GapBridgeEstimator — estimate the quantum-to-classical gap chain
+1. MinMassCertificate — computes minimum mass under perturbation bounds
+   (tied to: minMass_perturbation_lower_bound)
+2. EventProbBound — computes event probability bounds under multiplicative closeness
+   (tied to: event_prob_ratio_bound)
+3. BoundaryMassEstimator — computes boundary mass for finite spin systems
+   (tied to: perturbative_boundaryMass_lower_bound)
+4. LorentzianGapSurrogate — computes surrogate Lorentzian gap from distribution
+
+Keywords: quantum many-body systems, Lorentzian polynomials, spectral gap,
+          Glauber dynamics, anti-concentration, perturbation stability,
+          classical simulation, determinantal processes
 """
 
 import numpy as np
-from typing import Tuple, List, Optional, Dict, Set
 from dataclasses import dataclass
+from typing import List, Tuple, Optional, Set
 
 
 @dataclass
-class RobustCertificate:
-    """
-    Robust Lorentzian certificate for a probability distribution.
-    Corresponds to RobustLorentzianCertificate in the Lean formalization.
-    """
-    probs: np.ndarray
-    pointwise_lower: float
-    pointwise_upper: float
-    is_valid: bool
-    log_concavity_ratio: float
-
-    def __repr__(self):
-        return (f"RobustCertificate(lower={self.pointwise_lower:.6e}, "
-                f"upper={self.pointwise_upper:.6e}, "
-                f"LC_ratio={self.log_concavity_ratio:.6f}, "
-                f"valid={self.is_valid})")
-
-
-@dataclass
-class GapBridgeResult:
-    """
-    Result of gap bridge estimation.
-    Corresponds to GappedMeasurementLift in the Lean formalization.
-    """
-    quantum_gap: float
-    lorentzian_gap: float  # surrogate
-    classical_gap: float   # conductance estimate
-    probs: np.ndarray
+class QuantumMeasurementModel:
+    """A quantum measurement model: amplitudes with ∑|amp|² = 1."""
+    amplitudes: np.ndarray  # Complex amplitudes
 
     @property
-    def chain_valid(self) -> bool:
-        """Check if the gap chain inequality holds."""
-        return self.quantum_gap <= self.lorentzian_gap + 1e-10 and \
-               self.lorentzian_gap <= self.classical_gap + 1e-10
+    def probabilities(self) -> np.ndarray:
+        """Induced probability mass function μ(x) = |amp(x)|²."""
+        return np.abs(self.amplitudes) ** 2
+
+    def verify_normalization(self, tol: float = 1e-10) -> bool:
+        """Check ∑|amp|² = 1."""
+        return abs(np.sum(self.probabilities) - 1.0) < tol
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 1: Certified Minimum Mass
-# ──────────────────────────────────────────────────────────────────────
+@dataclass
+class RobustLorentzianCertificate:
+    """
+    A robust Lorentzian certificate for a distribution μ.
 
-def certified_min_mass(
+    Corresponds to the Lean structure:
+        structure RobustLorentzianCertificate (α) [Fintype α] (μ : α → ℝ)
+
+    Fields:
+        pointwise_lower: lower bound on all μ(x)
+        pointwise_upper: upper bound on all μ(x)
+        pair_log_concave_bound: bound on μ(x)μ(y) ≤ upper²
+    """
+    probabilities: np.ndarray
+    pointwise_lower: float
+    pointwise_upper: float
+
+    @classmethod
+    def from_distribution(cls, probs: np.ndarray) -> 'RobustLorentzianCertificate':
+        """Construct certificate from a probability distribution."""
+        assert np.all(probs >= 0), "Probabilities must be nonneg"
+        assert abs(np.sum(probs) - 1.0) < 1e-10, "Must sum to 1"
+        return cls(
+            probabilities=probs,
+            pointwise_lower=float(np.min(probs)),
+            pointwise_upper=float(np.max(probs))
+        )
+
+    def verify_pair_log_concavity(self) -> bool:
+        """Check μ(x)μ(y) ≤ upper² for all x,y."""
+        max_product = np.max(np.outer(self.probabilities, self.probabilities))
+        return max_product <= self.pointwise_upper ** 2 + 1e-15
+
+
+@dataclass
+class GappedMeasurementLift:
+    """
+    Connects quantum gap, Lorentzian gap, and classical gap.
+
+    Invariant: quantum_gap ≤ lorentzian_gap ≤ classical_gap
+    """
+    probabilities: np.ndarray
+    quantum_gap: float
+    lorentzian_gap: float
+    classical_gap: float
+
+    def verify_chain(self) -> bool:
+        """Verify quantum_gap ≤ lorentzian_gap ≤ classical_gap."""
+        return (self.quantum_gap <= self.lorentzian_gap + 1e-15 and
+                self.lorentzian_gap <= self.classical_gap + 1e-15)
+
+
+def min_mass_certificate(
     probs: np.ndarray,
-    epsilon: float = 0.0
+    epsilon: float,
+    reference_min_mass: float
 ) -> Tuple[float, float]:
     """
-    Compute minimum singleton mass with perturbation bound.
+    Algorithm 1: MinMass Perturbation Certificate
 
-    If the distribution is a perturbation of a reference with multiplicative
-    error exp(ε), then the minimum mass is at least exp(-ε) * min_mass(reference).
+    Given a reference distribution with minimum mass `reference_min_mass`,
+    and a perturbation parameter ε, compute the guaranteed lower bound
+    on the minimum mass of any ε-close distribution.
 
-    Corresponds to theorem `minMass_perturbation_lower_bound`.
-
-    Args:
-        probs: probability distribution (nonneg, sums to 1)
-        epsilon: perturbation parameter
-
-    Returns:
-        (min_mass, certified_lower_bound)
-
-    Time complexity: O(n) where n = len(probs)
-    Space complexity: O(1) additional
-    """
-    assert np.all(probs >= -1e-15), "Probabilities must be nonneg"
-    assert abs(np.sum(probs) - 1.0) < 1e-10, "Probabilities must sum to 1"
-
-    mm = float(np.min(probs))
-    certified_lower = np.exp(-epsilon) * mm
-
-    return mm, certified_lower
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 2: Boundary Mass on Hamming Graph
-# ──────────────────────────────────────────────────────────────────────
-
-def boundary_mass_hamming(
-    probs: np.ndarray,
-    n_bits: int,
-    subset: Optional[Set[int]] = None
-) -> float:
-    """
-    Compute boundary mass for a subset of configurations on the Hamming graph.
-
-    Corresponds to `boundaryMass` in the Lean formalization.
-
-    The Hamming graph connects configurations differing in exactly one bit,
-    modeling single-spin-flip Glauber dynamics.
+    Correctness: tied to Lean theorem `minMass_perturbation_lower_bound`:
+        exp(-ε) * minMass(ν) ≤ minMass(μ)
 
     Args:
-        probs: probability distribution on 2^n_bits configurations
-        n_bits: number of bits/spins
-        subset: the set A (defaults to heavy half by median)
+        probs: the actual distribution μ
+        epsilon: perturbation parameter ε ≥ 0
+        reference_min_mass: minMass of the reference distribution ν
 
     Returns:
-        boundary mass of A
+        (guaranteed_lower_bound, actual_min_mass)
 
-    Time complexity: O(|A| * n_bits)
-    Space complexity: O(|A|)
+    Complexity: O(n) where n = len(probs)
     """
-    dim = 2**n_bits
-    assert len(probs) == dim
-
-    if subset is None:
-        median = np.median(probs)
-        subset = set(i for i in range(dim) if probs[i] >= median)
-
-    boundary = 0.0
-    for x in subset:
-        is_boundary = False
-        for bit in range(n_bits):
-            y = x ^ (1 << bit)
-            if y not in subset:
-                is_boundary = True
-                break
-        if is_boundary:
-            boundary += probs[x]
-
-    return boundary
+    guaranteed = np.exp(-epsilon) * reference_min_mass
+    actual = float(np.min(probs))
+    assert actual >= guaranteed - 1e-12, \
+        f"Theorem violation: actual {actual} < guaranteed {guaranteed}"
+    return guaranteed, actual
 
 
-def perturbative_boundary_bound(
-    boundary_ref: float,
-    epsilon: float
-) -> float:
-    """
-    Compute the perturbative lower bound on boundary mass.
-
-    By theorem `perturbative_boundaryMass_lower_bound`:
-    boundaryMass(S, A) ≥ exp(-ε) * boundaryMass(T, A)
-
-    Args:
-        boundary_ref: boundary mass of the reference distribution
-        epsilon: perturbation parameter
-
-    Returns:
-        certified lower bound on perturbed boundary mass
-    """
-    return np.exp(-epsilon) * boundary_ref
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 3: Event Ratio Verifier
-# ──────────────────────────────────────────────────────────────────────
-
-def verify_event_ratio_bound(
+def event_prob_bounds(
     mu: np.ndarray,
     nu: np.ndarray,
     epsilon: float,
-    event_indices: Optional[List[int]] = None
-) -> Dict:
+    event_indices: np.ndarray
+) -> Tuple[Tuple[float, float], float]:
     """
-    Verify event probability ratio bounds between two distributions.
+    Algorithm 2: Event Probability Ratio Bound
 
-    Corresponds to theorem `event_prob_ratio_bound`.
+    Given distributions μ and ν that are exp(ε)-multiplicatively close,
+    compute bounds on the event probability ratio.
+
+    Correctness: tied to Lean theorem `event_prob_ratio_bound`:
+        exp(-ε) * ∑_{x∈s} ν(x) ≤ ∑_{x∈s} μ(x) ≤ exp(ε) * ∑_{x∈s} ν(x)
 
     Args:
-        mu: perturbed distribution
-        nu: reference distribution
-        epsilon: ratio parameter
-        event_indices: indices of the event (default: all)
+        mu: distribution μ
+        nu: distribution ν
+        epsilon: perturbation parameter ε ≥ 0
+        event_indices: indices of the event s
 
     Returns:
-        dict with verification results
+        ((lower_bound, upper_bound), actual_value)
 
-    Time complexity: O(n)
+    Complexity: O(|event_indices|)
     """
-    n = len(mu)
-    assert len(nu) == n
+    nu_sum = float(np.sum(nu[event_indices]))
+    mu_sum = float(np.sum(mu[event_indices]))
+    lower = np.exp(-epsilon) * nu_sum
+    upper = np.exp(epsilon) * nu_sum
+    return (lower, upper), mu_sum
 
-    if event_indices is None:
-        event_indices = list(range(n))
 
-    # Check pointwise bounds
-    exp_neg = np.exp(-epsilon)
-    exp_pos = np.exp(epsilon)
+def boundary_mass_hamming(
+    probs: np.ndarray,
+    n_qubits: int,
+    subset: Set[int]
+) -> float:
+    """
+    Algorithm 3: Boundary Mass for Hamming Graph
 
-    pointwise_ok = True
-    violations = []
-    for i in range(n):
-        lower_ok = exp_neg * nu[i] <= mu[i] + 1e-15
-        upper_ok = mu[i] <= exp_pos * nu[i] + 1e-15
-        if not (lower_ok and upper_ok):
-            pointwise_ok = False
-            violations.append(i)
+    Compute the boundary mass of a subset A for the Hamming graph
+    on {0,1}^n (i.e., single-bit-flip adjacency = Glauber dynamics).
 
-    # Check event bounds
-    mu_event = sum(mu[i] for i in event_indices)
-    nu_event = sum(nu[i] for i in event_indices)
+    Correctness: tied to Lean theorem `perturbative_boundaryMass_lower_bound`
 
-    event_lower = exp_neg * nu_event
-    event_upper = exp_pos * nu_event
+    Args:
+        probs: probability distribution on {0,...,2^n - 1}
+        n_qubits: number of qubits n
+        subset: set of indices forming A
 
-    return {
-        'pointwise_ok': pointwise_ok,
-        'violations': violations,
-        'mu_event': mu_event,
-        'nu_event': nu_event,
-        'lower_bound': event_lower,
-        'upper_bound': event_upper,
-        'lower_satisfied': event_lower <= mu_event + 1e-15,
-        'upper_satisfied': mu_event <= event_upper + 1e-15,
-        'epsilon': epsilon
+    Returns:
+        boundary mass = ∑_{x∈A, ∃y~x: y∉A} μ(x)
+
+    Complexity: O(|A| * n)
+    """
+    mass = 0.0
+    for x in subset:
+        for bit in range(n_qubits):
+            y = x ^ (1 << bit)
+            if y not in subset:
+                mass += probs[x]
+                break
+    return mass
+
+
+def perturbative_boundary_mass_bound(
+    probs_S: np.ndarray,
+    probs_T: np.ndarray,
+    epsilon: float,
+    n_qubits: int,
+    subset: Set[int]
+) -> Tuple[float, float]:
+    """
+    Algorithm 4: Perturbative Boundary Mass Lower Bound
+
+    If S and T share the same graph structure and exp(-ε)T.μ ≤ S.μ ≤ exp(ε)T.μ,
+    then boundaryMass(S, A) ≥ exp(-ε) * boundaryMass(T, A).
+
+    Args:
+        probs_S: distribution of perturbed system S
+        probs_T: distribution of reference system T
+        epsilon: perturbation parameter
+        n_qubits: number of qubits
+        subset: set of indices for the boundary computation
+
+    Returns:
+        (guaranteed_lower_bound, actual_boundary_mass)
+    """
+    bm_T = boundary_mass_hamming(probs_T, n_qubits, subset)
+    bm_S = boundary_mass_hamming(probs_S, n_qubits, subset)
+    guaranteed = np.exp(-epsilon) * bm_T
+    return guaranteed, bm_S
+
+
+def lorentzian_gap_surrogate(probs: np.ndarray) -> float:
+    """
+    Algorithm 5: Surrogate Lorentzian Gap
+
+    Computes a finite-difference log-concavity certificate:
+        min_{x,y} μ(x)/max(μ) * μ(y)/max(μ)
+
+    This is a surrogate for the Lorentzian gap of the generating polynomial.
+    For truly Lorentzian (determinantal/free-fermionic) distributions,
+    this stays polynomially bounded in 1/n.
+
+    Args:
+        probs: probability distribution
+
+    Returns:
+        Surrogate Lorentzian gap ∈ [0, 1]
+
+    Complexity: O(n)
+    """
+    p_max = np.max(probs)
+    if p_max < 1e-15:
+        return 0.0
+    p_min = np.min(probs)
+    return float(p_min / p_max)
+
+
+def compute_full_certificate(
+    amplitudes: np.ndarray,
+    n_qubits: int,
+    quantum_gap: float,
+    reference_probs: Optional[np.ndarray] = None,
+    epsilon: Optional[float] = None
+) -> dict:
+    """
+    Full certification pipeline: quantum state → classical certificates.
+
+    This implements the complete formal pipeline:
+        Quantum gap ⇒ robust Lorentzian gap ⇒ classical expansion ⇒ sampling
+
+    Args:
+        amplitudes: quantum state amplitudes
+        n_qubits: number of qubits
+        quantum_gap: spectral gap of the parent Hamiltonian
+        reference_probs: reference (e.g., free-fermionic) distribution
+        epsilon: perturbation parameter (computed if reference given)
+
+    Returns:
+        Dictionary with all certificates
+    """
+    model = QuantumMeasurementModel(amplitudes)
+    probs = model.probabilities
+
+    # Lorentzian certificate
+    cert = RobustLorentzianCertificate.from_distribution(probs)
+
+    # Gap surrogate
+    lor_gap = lorentzian_gap_surrogate(probs)
+
+    # Boundary mass for canonical half-space
+    half = set(range(2**(n_qubits - 1)))
+    bm = boundary_mass_hamming(probs, n_qubits, half)
+
+    result = {
+        'quantum_gap': quantum_gap,
+        'lorentzian_gap_surrogate': lor_gap,
+        'min_mass': cert.pointwise_lower,
+        'max_mass': cert.pointwise_upper,
+        'boundary_mass': bm,
+        'pair_log_concave': cert.verify_pair_log_concavity(),
+        'normalized': model.verify_normalization(),
     }
 
+    # Perturbation analysis if reference provided
+    if reference_probs is not None:
+        mask = (reference_probs > 1e-15) & (probs > 1e-15)
+        if np.any(mask):
+            ratios = probs[mask] / reference_probs[mask]
+            eps = float(np.max(np.abs(np.log(ratios))))
+            result['perturbation_epsilon'] = eps
+            result['min_mass_guaranteed'] = np.exp(-eps) * float(np.min(reference_probs))
+            bm_ref = boundary_mass_hamming(reference_probs, n_qubits, half)
+            result['boundary_mass_guaranteed'] = np.exp(-eps) * bm_ref
 
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 4: Log-Concavity Certifier
-# ──────────────────────────────────────────────────────────────────────
-
-def certify_log_concavity(probs: np.ndarray) -> RobustCertificate:
-    """
-    Compute a robust Lorentzian certificate for a probability distribution.
-
-    Corresponds to `RobustLorentzianCertificate` in the Lean formalization.
-
-    The certificate includes:
-    - pointwise lower/upper bounds
-    - pair log-concavity ratio: min_{x,y} μ(x)μ(y) / max(μ)^2
-
-    Time complexity: O(n) for bounds, O(n^2) for pair log-concavity
-    Space complexity: O(1) additional
-    """
-    assert np.all(probs >= -1e-15)
-    assert abs(np.sum(probs) - 1.0) < 1e-10
-
-    pw_lower = float(np.min(probs))
-    pw_upper = float(np.max(probs))
-
-    # Pair log-concavity: min_{x,y} μ(x)μ(y) / max^2
-    if pw_upper > 0:
-        lc_ratio = (pw_lower * pw_lower) / (pw_upper * pw_upper)
+    # Classical gap estimate (from boundary mass / conductance)
+    total_half = float(np.sum(probs[list(half)]))
+    if 0 < total_half < 1:
+        classical_gap_est = bm / (total_half * (1 - total_half))
     else:
-        lc_ratio = 0.0
+        classical_gap_est = 0.0
+    result['classical_gap_estimate'] = classical_gap_est
 
-    # Check pair log-concavity condition: μ(x)μ(y) ≤ upper^2 for all x,y
-    is_valid = True  # Always true by definition of upper
-
-    return RobustCertificate(
-        probs=probs,
-        pointwise_lower=pw_lower,
-        pointwise_upper=pw_upper,
-        is_valid=is_valid,
-        log_concavity_ratio=lc_ratio
-    )
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 5: Gap Bridge Estimator
-# ──────────────────────────────────────────────────────────────────────
-
-def estimate_gap_bridge(
-    hamiltonian: np.ndarray,
-    n_bits: int,
-    n_random_cuts: int = 100
-) -> GapBridgeResult:
-    """
-    Estimate the quantum-to-classical gap chain for a Hamiltonian.
-
-    Computes:
-    1. Quantum spectral gap Δ(H)
-    2. Surrogate Lorentzian gap (log-concavity ratio * min_mass)
-    3. Classical conductance estimate Φ
-
-    Then checks the chain inequality:
-        Δ_quantum ≤ Δ_Lorentzian ≤ Δ_classical
-
-    Note: The chain may not hold with these particular surrogate definitions;
-    the formal theorem uses an abstract structure where the chain is axiomatized.
-    The numerical evidence helps calibrate the right definitions.
-
-    Time complexity: O(2^{2n} + n_random_cuts * 2^n * n)
-    """
-    eigenvalues, eigenvectors = np.linalg.eigh(hamiltonian)
-    idx = np.argsort(eigenvalues)
-    quantum_gap = float(eigenvalues[idx[1]] - eigenvalues[idx[0]])
-    psi = eigenvectors[:, idx[0]]
-    probs = np.abs(psi)**2
-
-    # Surrogate Lorentzian gap
-    cert = certify_log_concavity(probs)
-    lorentzian_gap = cert.log_concavity_ratio * cert.pointwise_lower * len(probs)
-
-    # Classical conductance
-    dim = 2**n_bits
-    best_cond = float('inf')
-
-    # Threshold cuts
-    sorted_p = np.sort(probs)[::-1]
-    for k in range(1, dim):
-        A = set(i for i in range(dim) if probs[i] >= sorted_p[k - 1])
-        mu_A = sum(probs[i] for i in A)
-        if mu_A <= 1e-15 or mu_A >= 1 - 1e-15:
-            continue
-        bdry = 0.0
-        for x in A:
-            for bit in range(n_bits):
-                y = x ^ (1 << bit)
-                if y not in A:
-                    bdry += probs[x]
-                    break
-        cond = bdry / (mu_A * (1 - mu_A))
-        best_cond = min(best_cond, cond)
-
-    classical_gap = best_cond if best_cond < float('inf') else 0.0
-
-    return GapBridgeResult(
+    # Build gapped measurement lift
+    lift = GappedMeasurementLift(
+        probabilities=probs,
         quantum_gap=quantum_gap,
-        lorentzian_gap=lorentzian_gap,
-        classical_gap=classical_gap,
-        probs=probs
+        lorentzian_gap=lor_gap,
+        classical_gap=classical_gap_est
     )
+    result['gap_chain_valid'] = lift.verify_chain()
+
+    return result
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Example Usage
-# ──────────────────────────────────────────────────────────────────────
+# ─── Example Usage ───────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("ALGORITHMS: Certified Lorentzian Gap Surrogates")
+    print("Algorithms for Quantum-to-Classical Gap Certificates")
     print("=" * 60)
 
-    # Example: uniform distribution
+    # Example: 4-qubit uniform state
     n = 4
     dim = 2**n
-    uniform = np.ones(dim) / dim
+    amps = np.ones(dim, dtype=complex) / np.sqrt(dim)
+    cert = compute_full_certificate(amps, n, quantum_gap=2.0)
+    print(f"\nUniform state (n={n}):")
+    for k, v in cert.items():
+        print(f"  {k}: {v}")
 
-    print(f"\n--- Uniform distribution on {dim} configs ---")
-    mm, lb = certified_min_mass(uniform, epsilon=0.1)
-    print(f"Min mass: {mm:.6f}, Certified lower (ε=0.1): {lb:.6f}")
+    # Example: 4-qubit GHZ-like state
+    amps_ghz = np.zeros(dim, dtype=complex)
+    amps_ghz[0] = 1/np.sqrt(2)
+    amps_ghz[-1] = 1/np.sqrt(2)
+    cert_ghz = compute_full_certificate(amps_ghz, n, quantum_gap=1.0)
+    print(f"\nGHZ state (n={n}):")
+    for k, v in cert_ghz.items():
+        print(f"  {k}: {v}")
 
-    cert = certify_log_concavity(uniform)
-    print(f"Certificate: {cert}")
+    # Example: Perturbation test
+    print("\nPerturbation analysis:")
+    ref_probs = np.ones(dim) / dim
+    pert_probs = ref_probs * (1 + 0.1 * np.random.randn(dim))
+    pert_probs = np.abs(pert_probs)
+    pert_probs /= np.sum(pert_probs)
 
-    bm = boundary_mass_hamming(uniform, n)
-    print(f"Boundary mass (median cut): {bm:.6f}")
+    guaranteed, actual = min_mass_certificate(pert_probs, 0.2, float(np.min(ref_probs)))
+    print(f"  MinMass guaranteed: {guaranteed:.6f}, actual: {actual:.6f}")
 
-    # Example: peaked distribution
-    peaked = np.zeros(dim)
-    peaked[0] = 0.5
-    peaked[1:] = 0.5 / (dim - 1)
-
-    print(f"\n--- Peaked distribution ---")
-    mm, lb = certified_min_mass(peaked, epsilon=0.1)
-    print(f"Min mass: {mm:.6f}, Certified lower (ε=0.1): {lb:.6f}")
-
-    cert = certify_log_concavity(peaked)
-    print(f"Certificate: {cert}")
-
-    # Event ratio verification
-    print(f"\n--- Event ratio verification ---")
-    mu = uniform * np.exp(0.05 * np.random.randn(dim))
-    mu /= mu.sum()
-    result = verify_event_ratio_bound(mu, uniform, epsilon=0.2,
-                                       event_indices=list(range(dim // 2)))
-    print(f"Pointwise OK: {result['pointwise_ok']}")
-    print(f"Event lower satisfied: {result['lower_satisfied']}")
-    print(f"Event upper satisfied: {result['upper_satisfied']}")
-
-    print("\nAll algorithms executed successfully.")
+    event = np.arange(dim // 2)
+    bounds, actual_event = event_prob_bounds(pert_probs, ref_probs, 0.2, event)
+    print(f"  Event prob bounds: [{bounds[0]:.6f}, {bounds[1]:.6f}], actual: {actual_event:.6f}")

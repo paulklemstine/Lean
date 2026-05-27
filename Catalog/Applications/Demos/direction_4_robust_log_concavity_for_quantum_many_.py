@@ -1,833 +1,940 @@
-#!/usr/bin/env python3
 """
-applications.py — Real-World Applications of Quantum-to-Classical Gap Bridge
+applications.py — Real-World Applications of the Quantum-to-Classical Bridge
 
-Demonstrates practical applications of the formally verified theorems:
+Demonstrates how the formally verified theorems apply to:
+1. Classical simulation of quantum measurements near free-fermionic points
+2. Certified sampling from quantum measurement distributions
+3. Phase transition detection via Lorentzian gap monitoring
+4. Anti-concentration bounds for quantum computational advantage
 
-1. Certified classical sampling near free-fermionic points
-2. Ground-state property estimation with provable accuracy
-3. Phase transition detection via certificate degradation
+Keywords: quantum many-body systems, transverse-field Ising model, free fermions,
+          matchgate circuits, Lorentzian polynomials, strong log-concavity,
+          spectral gap, Glauber dynamics, anti-concentration, negative dependence,
+          perturbation stability, classical simulation, combinatorial Hodge theory,
+          determinantal processes, quantum-to-classical correspondence
 """
 
 import numpy as np
-from typing import Tuple, List
+from typing import Tuple, Dict, List
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Hamiltonian construction utilities
-# ──────────────────────────────────────────────────────────────────────
-
-def pauli_z():
-    return np.array([[1, 0], [0, -1]], dtype=complex)
+# ═══════════════════════════════════════════════════════════════════════════
+# Application 1: Classical Simulation Near Free-Fermionic Points
+# ═══════════════════════════════════════════════════════════════════════════
 
 def pauli_x():
     return np.array([[0, 1], [1, 0]], dtype=complex)
 
-def kron_chain(ops):
-    result = ops[0]
-    for op in ops[1:]:
-        result = np.kron(result, op)
+def pauli_z():
+    return np.array([[1, 0], [0, -1]], dtype=complex)
+
+def kron_at(op, site, n):
+    result = np.eye(1, dtype=complex)
+    for i in range(n):
+        result = np.kron(result, op if i == site else np.eye(2, dtype=complex))
     return result
 
 def tfim_hamiltonian(n, J, h):
-    """Transverse-field Ising model: H = -J Σ Z_i Z_{i+1} - h Σ X_i"""
     dim = 2**n
     H = np.zeros((dim, dim), dtype=complex)
-    I2 = np.eye(2, dtype=complex)
     for i in range(n - 1):
-        ops = [I2] * n
-        ops[i] = pauli_z()
-        ops[i + 1] = pauli_z()
-        H -= J * kron_chain(ops)
+        ZZ = kron_at(pauli_z(), i, n) @ kron_at(pauli_z(), i + 1, n)
+        H -= J * ZZ
     for i in range(n):
-        ops = [I2] * n
-        ops[i] = pauli_x()
-        H -= h * kron_chain(ops)
+        H -= h * kron_at(pauli_x(), i, n)
     return H
 
-def ground_state(H):
-    eigenvalues, eigenvectors = np.linalg.eigh(H)
-    idx = np.argsort(eigenvalues)
-    return eigenvalues[idx[0]], eigenvalues[idx[1]] - eigenvalues[idx[0]], eigenvectors[:, idx[0]]
 
-
-# ──────────────────────────────────────────────────────────────────────
-# Application 1: Certified Classical Sampling
-# ──────────────────────────────────────────────────────────────────────
-
-def certified_sampling_demo():
+def classical_simulation_certificate(n: int, J: float, h_ref: float, h_target: float) -> Dict:
     """
-    Demonstrate certified classical sampling near a free-fermionic point.
+    Application 1: Certified classical simulation.
 
-    By theorem `event_prob_ratio_bound`, if the measurement distribution μ
-    is multiplicatively close to a reference ν, then event probabilities
-    are controlled. This means we can sample from μ using ν as a proposal.
+    Given a free-fermionic reference point (h_ref) and a target point (h_target),
+    compute the perturbation parameter ε and verify that the formal theorems
+    guarantee bounded approximation error.
 
-    The acceptance ratio is bounded by exp(2ε), giving an efficient
-    rejection sampling scheme.
+    This uses:
+    - event_prob_ratio_bound: event probabilities are within exp(ε) factor
+    - minMass_perturbation_lower_bound: anti-concentration is preserved
+    - perturbative_boundaryMass_lower_bound: expansion is preserved
+
+    Returns a certificate with guaranteed bounds.
     """
-    print("=" * 60)
-    print("APPLICATION 1: Certified Classical Sampling")
-    print("=" * 60)
-    print()
-
-    n = 5
-    J = 1.0
-
-    # Reference point: high transverse field (nearly free)
-    h_ref = 3.0
     H_ref = tfim_hamiltonian(n, J, h_ref)
-    e0_ref, gap_ref, psi_ref = ground_state(H_ref)
-    nu = np.abs(psi_ref)**2
+    H_target = tfim_hamiltonian(n, J, h_target)
 
-    print(f"Reference: h={h_ref}, gap={gap_ref:.4f}")
-    print(f"Reference min mass: {np.min(nu):.6f}")
-    print()
+    evals_ref, evecs_ref = np.linalg.eigh(H_ref)
+    evals_tgt, evecs_tgt = np.linalg.eigh(H_target)
 
-    # Perturbed points
-    for delta_h in [0.1, 0.3, 0.5, 1.0, 1.5]:
-        h_pert = h_ref - delta_h
-        H_pert = tfim_hamiltonian(n, J, h_pert)
-        e0_pert, gap_pert, psi_pert = ground_state(H_pert)
-        mu = np.abs(psi_pert)**2
+    idx_ref = np.argsort(evals_ref)
+    idx_tgt = np.argsort(evals_tgt)
 
-        # Compute actual multiplicative ratio
-        with np.errstate(divide='ignore', invalid='ignore'):
-            ratios = np.where(nu > 1e-15, mu / nu, 0)
-            ratios_valid = ratios[nu > 1e-15]
+    probs_ref = np.abs(evecs_ref[:, idx_ref[0]])**2
+    probs_tgt = np.abs(evecs_tgt[:, idx_tgt[0]])**2
+    gap_ref = evals_ref[idx_ref[1]] - evals_ref[idx_ref[0]]
+    gap_tgt = evals_tgt[idx_tgt[1]] - evals_tgt[idx_tgt[0]]
 
-        if len(ratios_valid) > 0:
-            max_ratio = np.max(ratios_valid)
-            min_ratio = np.min(ratios_valid)
-            epsilon = max(np.log(max_ratio), -np.log(min_ratio)) if min_ratio > 0 else float('inf')
-        else:
-            epsilon = float('inf')
+    # Compute perturbation parameter
+    mask = (probs_ref > 1e-15) & (probs_tgt > 1e-15)
+    if np.any(mask):
+        eps = float(np.max(np.abs(np.log(probs_tgt[mask] / probs_ref[mask]))))
+    else:
+        eps = float('inf')
 
-        # Certified event bound (by theorem event_prob_ratio_bound)
-        event = list(range(2**n // 2))  # first half of configurations
-        mu_event = sum(mu[i] for i in event)
-        nu_event = sum(nu[i] for i in event)
+    # Guaranteed bounds from formal theorems
+    min_mass_ref = float(np.min(probs_ref))
+    min_mass_guaranteed = np.exp(-eps) * min_mass_ref
 
-        if epsilon < float('inf'):
-            lower_cert = np.exp(-epsilon) * nu_event
-            upper_cert = np.exp(epsilon) * nu_event
-            satisfied = lower_cert <= mu_event + 1e-10 and mu_event <= upper_cert + 1e-10
-        else:
-            lower_cert = 0
-            upper_cert = float('inf')
-            satisfied = True
+    # Boundary mass (Hamming graph)
+    half = set(range(2**(n-1)))
+    bm_ref = sum(probs_ref[x] for x in half
+                 if any(x ^ (1 << b) not in half for b in range(n)))
+    bm_guaranteed = np.exp(-eps) * bm_ref
+    bm_actual = sum(probs_tgt[x] for x in half
+                    if any(x ^ (1 << b) not in half for b in range(n)))
 
-        print(f"  Δh={delta_h:.1f}: gap={gap_pert:.4f}, ε={epsilon:.4f}, "
-              f"event_check={'✓' if satisfied else '✗'}, "
-              f"accept_rate≥{np.exp(-2*epsilon):.4f}" if epsilon < float('inf') else
-              f"  Δh={delta_h:.1f}: gap={gap_pert:.4f}, ε=∞")
-
-    print()
+    return {
+        'n': n, 'h_ref': h_ref, 'h_target': h_target,
+        'perturbation_epsilon': eps,
+        'gap_reference': gap_ref,
+        'gap_target': gap_tgt,
+        'min_mass_reference': min_mass_ref,
+        'min_mass_guaranteed': min_mass_guaranteed,
+        'min_mass_actual': float(np.min(probs_tgt)),
+        'boundary_mass_guaranteed': bm_guaranteed,
+        'boundary_mass_actual': bm_actual,
+        'simulation_feasible': eps < 2.0,  # Heuristic threshold
+    }
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Application 2: Ground-State Property Estimation
-# ──────────────────────────────────────────────────────────────────────
+# ═══════════════════════════════════════════════════════════════════════════
+# Application 2: Phase Transition Detection via Lorentzian Gap Monitoring
+# ═══════════════════════════════════════════════════════════════════════════
 
-def property_estimation_demo():
+def phase_transition_detector(n: int, J: float, h_range: np.ndarray) -> Dict:
     """
-    Demonstrate ground-state observable estimation with certified bounds.
+    Application 2: Detect quantum phase transitions by monitoring the
+    Lorentzian gap surrogate.
 
-    By the complement sum identity (theorem `complement_sum_identity`),
-    and the gap bridge (theorem `quantum_gap_bridge_chain`), we can
-    bound the accuracy of observable estimates.
+    The transverse-field Ising model has a phase transition at h/J = 1.
+    The Lorentzian gap surrogate should show a sharp change near this point,
+    correlated with the closing of the quantum spectral gap.
+
+    This demonstrates the quantum-to-classical correspondence:
+    changes in quantum structure (gap closing) are visible in the
+    classical measurement distribution geometry (Lorentzian gap).
     """
-    print("=" * 60)
-    print("APPLICATION 2: Ground-State Property Estimation")
-    print("=" * 60)
-    print()
+    results = {'h': [], 'quantum_gap': [], 'lorentzian_surrogate': [],
+               'min_mass': [], 'entropy': []}
 
-    n = 6
-    J = 1.0
-
-    for h in [0.5, 1.0, 1.5, 2.0, 3.0]:
+    for h in h_range:
         H = tfim_hamiltonian(n, J, h)
-        e0, gap, psi = ground_state(H)
-        probs = np.abs(psi)**2
+        evals, evecs = np.linalg.eigh(H)
+        idx = np.argsort(evals)
+        probs = np.abs(evecs[:, idx[0]])**2
+        gap = evals[idx[1]] - evals[idx[0]]
 
-        # Magnetization observable
-        dim = 2**n
-        magnetization = 0.0
-        for x in range(dim):
-            bits = [(x >> i) & 1 for i in range(n)]
-            mag_x = sum(2 * b - 1 for b in bits) / n
-            magnetization += probs[x] * mag_x
-
-        # Anti-concentration: minimum mass
-        min_m = np.min(probs)
-        max_m = np.max(probs)
-
-        # Samples needed for ε-accurate estimation (from anti-concentration)
-        epsilon_target = 0.05
-        if min_m > 0:
-            samples_needed = int(np.ceil(1 / (epsilon_target**2 * min_m)))
-        else:
-            samples_needed = float('inf')
-
-        print(f"  h={h:.1f}: gap={gap:.4f}, <m>={magnetization:+.4f}, "
-              f"min_mass={min_m:.2e}, samples_needed≈{samples_needed}")
-
-    print()
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Application 3: Phase Transition Detection
-# ──────────────────────────────────────────────────────────────────────
-
-def phase_transition_demo():
-    """
-    Detect quantum phase transitions via certificate degradation.
-
-    The Lorentzian certificate degrades near phase transitions,
-    where the quantum spectral gap closes. This provides a
-    classical probe of quantum criticality.
-    """
-    print("=" * 60)
-    print("APPLICATION 3: Phase Transition Detection via Certificate")
-    print("=" * 60)
-    print()
-
-    n = 7
-    J = 1.0
-    h_values = np.linspace(0.2, 2.5, 40)
-
-    print(f"  {'h':>5s}  {'gap':>8s}  {'min_mass':>10s}  {'LC_ratio':>10s}  {'entropy':>8s}")
-    print("  " + "-" * 55)
-
-    min_gap_h = None
-    min_gap = float('inf')
-
-    for h in h_values:
-        H = tfim_hamiltonian(n, J, h)
-        e0, gap, psi = ground_state(H)
-        probs = np.abs(psi)**2
-
-        min_m = np.min(probs)
-        max_m = np.max(probs)
-        lc_ratio = (min_m / max_m)**2 if max_m > 0 else 0
+        p_min = float(np.min(probs))
+        p_max = float(np.max(probs))
+        lor_surr = p_min / p_max if p_max > 1e-15 else 0.0
 
         # Shannon entropy
-        entropy = -np.sum(probs[probs > 0] * np.log2(probs[probs > 0]))
+        mask = probs > 1e-15
+        entropy = -float(np.sum(probs[mask] * np.log(probs[mask])))
 
-        if gap < min_gap:
-            min_gap = gap
-            min_gap_h = h
-
-        print(f"  {h:5.2f}  {gap:8.4f}  {min_m:10.2e}  {lc_ratio:10.6f}  {entropy:8.4f}")
-
-    print()
-    print(f"  Critical point estimate: h ≈ {min_gap_h:.2f} (gap = {min_gap:.6f})")
-    print(f"  Exact critical point: h/J = 1.0")
-    print(f"  The Lorentzian certificate degrades near criticality,")
-    print(f"  signaling the quantum phase transition.")
-    print()
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Main
-# ──────────────────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    certified_sampling_demo()
-    property_estimation_demo()
-    phase_transition_demo()
-
-    print("=" * 60)
-    print("All applications demonstrated successfully.")
-    print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-demo.py — Quantum-to-Classical Gap Bridge: Transverse-Field Ising Model
-
-Constructs small transverse-field Ising instances, diagonalizes the Hamiltonian,
-extracts ground-state measurement probabilities, and computes surrogate
-Lorentzian/expansion certificates. Plots the certificate vs. quantum spectral gap
-as the transverse field strength varies.
-
-This demonstrates the conjectural relationship:
-  quantum gap ∝ Lorentzian gap ∝ classical expansion gap
-"""
-
-import numpy as np
-from itertools import product as iterprod
-
-# ──────────────────────────────────────────────────────────────────────
-# Transverse-Field Ising Model Hamiltonian
-# ──────────────────────────────────────────────────────────────────────
-
-def pauli_z():
-    return np.array([[1, 0], [0, -1]], dtype=complex)
-
-def pauli_x():
-    return np.array([[0, 1], [1, 0]], dtype=complex)
-
-def identity(n):
-    return np.eye(2**n, dtype=complex)
-
-def kron_op(ops):
-    """Tensor product of a list of 2x2 operators."""
-    result = ops[0]
-    for op in ops[1:]:
-        result = np.kron(result, op)
-    return result
-
-def tfim_hamiltonian(n, J, h):
-    """
-    Transverse-field Ising model on n sites (open boundary conditions).
-    H = -J Σ Z_i Z_{i+1} - h Σ X_i
-    """
-    dim = 2**n
-    H = np.zeros((dim, dim), dtype=complex)
-    I2 = np.eye(2, dtype=complex)
-    Zop = pauli_z()
-    Xop = pauli_x()
-
-    # ZZ interactions
-    for i in range(n - 1):
-        ops = [I2] * n
-        ops[i] = Zop
-        ops[i + 1] = Zop
-        H -= J * kron_op(ops)
-
-    # Transverse field
-    for i in range(n):
-        ops = [I2] * n
-        ops[i] = Xop
-        H -= h * kron_op(ops)
-
-    return H
-
-def ground_state_data(H):
-    """Returns (ground energy, gap, ground state vector, measurement probs)."""
-    eigenvalues, eigenvectors = np.linalg.eigh(H)
-    idx = np.argsort(eigenvalues)
-    e0 = eigenvalues[idx[0]]
-    e1 = eigenvalues[idx[1]]
-    gap = e1 - e0
-    psi = eigenvectors[:, idx[0]]
-    probs = np.abs(psi)**2
-    return e0, gap, psi, probs
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Surrogate Lorentzian / Expansion Certificates
-# ──────────────────────────────────────────────────────────────────────
-
-def min_mass(probs):
-    """Minimum singleton probability (anti-concentration)."""
-    return np.min(probs)
-
-def max_mass(probs):
-    """Maximum singleton probability."""
-    return np.max(probs)
-
-def log_concavity_ratio(probs):
-    """
-    Surrogate log-concavity certificate: min_{x,y} μ(x)μ(y) / max(μ)^2.
-    For a perfectly uniform distribution this is 1.
-    For a Lorentzian/strongly log-concave distribution, bounded away from 0.
-    """
-    m = max_mass(probs)
-    if m == 0:
-        return 0.0
-    pairs = np.outer(probs, probs)
-    return np.min(pairs) / m**2
-
-def boundary_mass_hamming(probs, n):
-    """
-    Boundary mass for the Hamming graph (single bit-flip adjacency).
-    For each configuration x, check if any Hamming neighbor has lower probability.
-    Boundary mass = Σ_x μ(x) · 1[x has a neighbor in complement of heavy set].
-    Here we use a simple version: for each threshold, compute boundary mass.
-    """
-    dim = 2**n
-    median_prob = np.median(probs)
-    heavy = probs >= median_prob
-    boundary = 0.0
-    for x in range(dim):
-        if heavy[x]:
-            for bit in range(n):
-                y = x ^ (1 << bit)
-                if not heavy[y]:
-                    boundary += probs[x]
-                    break
-    return boundary
-
-def conductance_estimate(probs, n):
-    """
-    Estimate the conductance (Cheeger constant) of the distribution
-    on the Hamming graph: Φ = min_{A: 0<μ(A)<1} μ(∂A) / (μ(A)(1-μ(A))).
-    We approximate by sampling random subsets.
-    """
-    dim = 2**n
-    best_cond = float('inf')
-    # Try threshold cuts at each probability level
-    sorted_probs = np.sort(probs)[::-1]
-    cum_mass = 0.0
-    for k in range(1, dim):
-        threshold = sorted_probs[k - 1]
-        A = set(i for i in range(dim) if probs[i] >= threshold)
-        mu_A = sum(probs[i] for i in A)
-        if mu_A <= 0 or mu_A >= 1:
-            continue
-        # Compute boundary mass
-        bdry = 0.0
-        for x in A:
-            for bit in range(n):
-                y = x ^ (1 << bit)
-                if y not in A:
-                    bdry += probs[x]
-                    break
-        cond = bdry / (mu_A * (1 - mu_A))
-        best_cond = min(best_cond, cond)
-    return best_cond if best_cond < float('inf') else 0.0
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Main Demo
-# ──────────────────────────────────────────────────────────────────────
-
-def main():
-    print("=" * 70)
-    print("QUANTUM-TO-CLASSICAL GAP BRIDGE: Transverse-Field Ising Model")
-    print("=" * 70)
-    print()
-
-    n = 6  # number of spins
-    J = 1.0
-    h_values = np.linspace(0.1, 3.0, 30)
-
-    print(f"System: {n}-site TFIM with J={J}, open boundary conditions")
-    print(f"Scanning transverse field h from {h_values[0]:.1f} to {h_values[-1]:.1f}")
-    print()
-
-    results = []
-    print(f"{'h':>6s}  {'Δ(H)':>10s}  {'min_mass':>10s}  {'LC_ratio':>10s}  {'Φ_est':>10s}  {'bdry_mass':>10s}")
-    print("-" * 70)
-
-    for h in h_values:
-        H = tfim_hamiltonian(n, J, h)
-        e0, gap, psi, probs = ground_state_data(H)
-        mm = min_mass(probs)
-        lc = log_concavity_ratio(probs)
-        bm = boundary_mass_hamming(probs, n)
-        cond = conductance_estimate(probs, n)
-        results.append((h, gap, mm, lc, bm, cond))
-        print(f"{h:6.2f}  {gap:10.6f}  {mm:10.6f}  {lc:10.6f}  {cond:10.4f}  {bm:10.6f}")
-
-    print()
-    print("KEY OBSERVATIONS:")
-    print("─" * 70)
-    print("• The quantum spectral gap Δ(H) is large away from the critical point h≈J.")
-    print("• The log-concavity ratio (Lorentzian surrogate) tracks the gap.")
-    print("• The conductance estimate (classical expansion) also tracks the gap.")
-    print("• Near criticality (h≈1), all three quantities decrease together,")
-    print("  consistent with the conjectured polynomial relationship.")
-    print()
-    print("This supports the conjecture:")
-    print("  Δ_quantum / poly(n) ≤ Δ_Lorentzian ≤ Δ_classical")
-    print()
-
-    # Summary statistics
-    gaps = [r[1] for r in results]
-    lcs = [r[3] for r in results]
-    conds = [r[5] for r in results]
-
-    corr_gap_lc = np.corrcoef(gaps, lcs)[0, 1]
-    corr_gap_cond = np.corrcoef(gaps, [c for c in conds])[0, 1]
-    print(f"Correlation(Δ_quantum, LC_ratio): {corr_gap_lc:.4f}")
-    print(f"Correlation(Δ_quantum, Φ_est):    {corr_gap_cond:.4f}")
-    print()
-    print("Strong positive correlations support the quantum-to-classical bridge.")
+        results['h'].append(float(h))
+        results['quantum_gap'].append(float(gap))
+        results['lorentzian_surrogate'].append(lor_surr)
+        results['min_mass'].append(p_min)
+        results['entropy'].append(entropy)
 
     return results
 
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Application 3: Anti-Concentration for Quantum Advantage
+# ═══════════════════════════════════════════════════════════════════════════
+
+def anticoncentration_analysis(n: int) -> Dict:
+    """
+    Application 3: Anti-concentration analysis for quantum computational advantage.
+
+    For quantum advantage arguments (e.g., BosonSampling, IQP), one needs
+    the measurement distribution to be anti-concentrated: not too much mass
+    on any single outcome. Our formal theorems show that:
+
+    1. Anti-concentration (minMass) is preserved under perturbation
+    2. Event probabilities are controlled by perturbation bounds
+    3. Boundary mass (expansion) ensures efficient classical sampling
+
+    This provides a rigorous framework for studying when quantum advantage
+    survives noise.
+    """
+    results = {'state_type': [], 'min_mass': [], 'max_mass': [],
+               'entropy': [], 'lorentzian_gap': []}
+
+    dim = 2**n
+
+    # Uniform (maximally anti-concentrated)
+    probs_unif = np.ones(dim) / dim
+    results['state_type'].append('Uniform')
+    results['min_mass'].append(1.0/dim)
+    results['max_mass'].append(1.0/dim)
+    results['entropy'].append(n * np.log(2))
+    results['lorentzian_gap'].append(1.0)
+
+    # Random state (Haar measure)
+    amps = np.random.randn(dim) + 1j * np.random.randn(dim)
+    amps /= np.linalg.norm(amps)
+    probs_haar = np.abs(amps)**2
+    results['state_type'].append('Haar random')
+    results['min_mass'].append(float(np.min(probs_haar)))
+    results['max_mass'].append(float(np.max(probs_haar)))
+    mask = probs_haar > 1e-15
+    results['entropy'].append(-float(np.sum(probs_haar[mask] * np.log(probs_haar[mask]))))
+    results['lorentzian_gap'].append(float(np.min(probs_haar) / np.max(probs_haar)))
+
+    # Ground state at different field strengths
+    for h in [0.5, 1.0, 2.0]:
+        H = tfim_hamiltonian(n, 1.0, h)
+        evals, evecs = np.linalg.eigh(H)
+        idx = np.argsort(evals)
+        probs = np.abs(evecs[:, idx[0]])**2
+
+        results['state_type'].append(f'TFIM h={h}')
+        results['min_mass'].append(float(np.min(probs)))
+        results['max_mass'].append(float(np.max(probs)))
+        mask = probs > 1e-15
+        results['entropy'].append(-float(np.sum(probs[mask] * np.log(probs[mask]))))
+        p_max = float(np.max(probs))
+        results['lorentzian_gap'].append(float(np.min(probs) / p_max) if p_max > 1e-15 else 0.0)
+
+    return results
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Main Application Demo
+# ═══════════════════════════════════════════════════════════════════════════
+
+def main():
+    print("=" * 70)
+    print("Applications of the Quantum-to-Classical Bridge Theorems")
+    print("=" * 70)
+
+    # ── Application 1: Classical Simulation ──
+    print("\n" + "─" * 60)
+    print("Application 1: Classical Simulation Certificates")
+    print("─" * 60)
+    for n in [4, 6]:
+        for delta_h in [0.1, 0.3, 0.5]:
+            cert = classical_simulation_certificate(n, 1.0, 1.0, 1.0 + delta_h)
+            feasible = "✓ FEASIBLE" if cert['simulation_feasible'] else "✗ INFEASIBLE"
+            print(f"  n={n}, δh={delta_h}: ε={cert['perturbation_epsilon']:.4f}, "
+                  f"minMass≥{cert['min_mass_guaranteed']:.6f}, "
+                  f"bdryMass≥{cert['boundary_mass_guaranteed']:.6f} "
+                  f"[{feasible}]")
+
+    # ── Application 2: Phase Transition Detection ──
+    print("\n" + "─" * 60)
+    print("Application 2: Phase Transition Detection")
+    print("─" * 60)
+    for n in [4, 6]:
+        h_range = np.linspace(0.2, 2.5, 30)
+        results = phase_transition_detector(n, 1.0, h_range)
+
+        # Find minimum gap (closest to phase transition)
+        min_gap_idx = np.argmin(results['quantum_gap'])
+        print(f"  n={n}: Phase transition detected near h={results['h'][min_gap_idx]:.2f}")
+        print(f"    Min quantum gap: {results['quantum_gap'][min_gap_idx]:.6f}")
+        print(f"    Lorentzian surrogate at transition: "
+              f"{results['lorentzian_surrogate'][min_gap_idx]:.6f}")
+
+    # ── Application 3: Anti-Concentration ──
+    print("\n" + "─" * 60)
+    print("Application 3: Anti-Concentration Analysis (n=6)")
+    print("─" * 60)
+    results = anticoncentration_analysis(6)
+    print(f"  {'State':>15s} {'MinMass':>12s} {'MaxMass':>12s} "
+          f"{'Entropy':>10s} {'LorGap':>10s}")
+    for i in range(len(results['state_type'])):
+        print(f"  {results['state_type'][i]:>15s} "
+              f"{results['min_mass'][i]:12.8f} "
+              f"{results['max_mass'][i]:12.8f} "
+              f"{results['entropy'][i]:10.4f} "
+              f"{results['lorentzian_gap'][i]:10.6f}")
+
+    # ── Generate plots ──
+    print("\n" + "─" * 60)
+    print("Generating application plots...")
+    print("─" * 60)
+
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    # Plot phase transition
+    h_range = np.linspace(0.2, 2.5, 50)
+    results = phase_transition_detector(6, 1.0, h_range)
+
+    axes[0].plot(results['h'], results['quantum_gap'], 'b-', linewidth=2, label='Quantum gap')
+    axes[0].plot(results['h'], results['lorentzian_surrogate'], 'r--', linewidth=2,
+                 label='Lorentzian surrogate')
+    axes[0].axvline(x=1.0, color='gray', linestyle=':', alpha=0.5, label='Critical point')
+    axes[0].set_xlabel('Transverse field h')
+    axes[0].set_ylabel('Gap / Certificate')
+    axes[0].set_title('Phase Transition Detection (n=6)')
+    axes[0].legend(fontsize=8)
+    axes[0].grid(True, alpha=0.3)
+
+    # Plot simulation feasibility
+    deltas = np.linspace(0.05, 1.5, 30)
+    epsilons = []
+    for d in deltas:
+        cert = classical_simulation_certificate(6, 1.0, 1.0, 1.0 + d)
+        epsilons.append(cert['perturbation_epsilon'])
+    axes[1].plot(deltas, epsilons, 'g-o', markersize=3, linewidth=1.5)
+    axes[1].axhline(y=2.0, color='red', linestyle='--', label='Feasibility threshold')
+    axes[1].set_xlabel('Perturbation δh')
+    axes[1].set_ylabel('Perturbation ε')
+    axes[1].set_title('Simulation Feasibility (n=6)')
+    axes[1].legend(fontsize=8)
+    axes[1].grid(True, alpha=0.3)
+
+    # Plot anti-concentration
+    ac = anticoncentration_analysis(6)
+    x_pos = np.arange(len(ac['state_type']))
+    axes[2].bar(x_pos, ac['lorentzian_gap'], color=['blue', 'orange', 'green', 'red', 'purple'])
+    axes[2].set_xticks(x_pos)
+    axes[2].set_xticklabels(ac['state_type'], rotation=30, ha='right', fontsize=8)
+    axes[2].set_ylabel('Lorentzian Gap Surrogate')
+    axes[2].set_title('Anti-Concentration by State Type')
+    axes[2].grid(True, alpha=0.3, axis='y')
+
+    plt.tight_layout()
+    plt.savefig('applications_plots.png', dpi=150, bbox_inches='tight')
+    print("Plots saved to applications_plots.png")
+
+    print("\n" + "=" * 70)
+    print("Applications demo complete.")
+    print("=" * 70)
+
+
 if __name__ == "__main__":
-    results = main()
+    main()
 
 
-#!/usr/bin/env python3
+"""
+demo.py — Quantum-to-Classical Gap Bridge: Computational Demonstration
+
+Constructs small transverse-field Ising model instances, diagonalizes the
+Hamiltonian numerically, extracts ground-state measurement probabilities,
+computes surrogate Lorentzian / expansion certificates, and plots certificate
+vs. quantum spectral gap as field strength varies.
+
+This demo visibly tests the conjectural scaling law:
+    LorentzianGap(μ_λ) ≥ Δ(H(λ)) / poly(n)
+
+Keywords: quantum many-body systems, transverse-field Ising model, free fermions,
+          matchgate circuits, Lorentzian polynomials, strong log-concavity,
+          spectral gap, Glauber dynamics, anti-concentration, negative dependence,
+          perturbation stability, classical simulation, combinatorial Hodge theory,
+          determinantal processes, quantum-to-classical correspondence
+"""
+
+import numpy as np
+from typing import Tuple, Dict, List
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+
+def pauli_x() -> np.ndarray:
+    return np.array([[0, 1], [1, 0]], dtype=complex)
+
+
+def pauli_z() -> np.ndarray:
+    return np.array([[1, 0], [0, -1]], dtype=complex)
+
+
+def identity(n: int) -> np.ndarray:
+    return np.eye(2**n, dtype=complex)
+
+
+def kron_at(op: np.ndarray, site: int, n: int) -> np.ndarray:
+    """Place operator `op` at `site` in an n-qubit system."""
+    result = np.eye(1, dtype=complex)
+    for i in range(n):
+        result = np.kron(result, op if i == site else np.eye(2, dtype=complex))
+    return result
+
+
+def transverse_field_ising(n: int, J: float, h: float) -> np.ndarray:
+    """
+    Construct the transverse-field Ising Hamiltonian on n sites (open boundary):
+        H = -J ∑ Z_i Z_{i+1} - h ∑ X_i
+    """
+    dim = 2**n
+    H = np.zeros((dim, dim), dtype=complex)
+    for i in range(n - 1):
+        ZZ = kron_at(pauli_z(), i, n) @ kron_at(pauli_z(), i + 1, n)
+        H -= J * ZZ
+    for i in range(n):
+        H -= h * kron_at(pauli_x(), i, n)
+    return H
+
+
+def ground_state_data(H: np.ndarray) -> Tuple[np.ndarray, float, np.ndarray]:
+    """
+    Compute the ground state, spectral gap, and measurement probabilities.
+    Returns (ground_state_vector, spectral_gap, probabilities).
+    """
+    eigenvalues, eigenvectors = np.linalg.eigh(H)
+    idx = np.argsort(eigenvalues)
+    E0 = eigenvalues[idx[0]]
+    E1 = eigenvalues[idx[1]]
+    psi = eigenvectors[:, idx[0]]
+    gap = E1 - E0
+    probs = np.abs(psi)**2
+    return psi, gap, probs
+
+
+def min_mass(probs: np.ndarray) -> float:
+    """Minimum probability mass (anti-concentration certificate)."""
+    return float(np.min(probs))
+
+
+def log_concavity_certificate(probs: np.ndarray) -> float:
+    """
+    Surrogate Lorentzian gap: ratio of min to max probability.
+    For a Lorentzian/log-concave distribution, this ratio is polynomially bounded.
+    """
+    p_min = np.min(probs)
+    p_max = np.max(probs)
+    if p_max < 1e-15:
+        return 0.0
+    return float(p_min / p_max)
+
+
+def pairwise_log_concavity_score(probs: np.ndarray) -> float:
+    """
+    Measures max(μ(x)μ(y)) / max(μ)^2 over all pairs — should be ≤ 1
+    for log-concave distributions.
+    """
+    p_max = np.max(probs)
+    if p_max < 1e-15:
+        return 0.0
+    max_product = np.max(np.outer(probs, probs))
+    return float(max_product / p_max**2)
+
+
+def boundary_mass(probs: np.ndarray, n: int, subset_indices: np.ndarray) -> float:
+    """
+    Compute boundary mass for a Hamming-graph adjacency on bitstrings.
+    A vertex x in A has a boundary neighbor if flipping one bit takes it outside A.
+    """
+    subset_set = set(subset_indices)
+    mass = 0.0
+    for x in subset_indices:
+        has_boundary = False
+        for bit in range(n):
+            y = x ^ (1 << bit)
+            if y not in subset_set:
+                has_boundary = True
+                break
+        if has_boundary:
+            mass += probs[x]
+    return mass
+
+
+def perturbation_ratio(probs1: np.ndarray, probs2: np.ndarray) -> float:
+    """
+    Compute the multiplicative perturbation parameter ε such that
+    exp(-ε) * probs2[x] ≤ probs1[x] ≤ exp(ε) * probs2[x] for all x.
+    """
+    mask = (probs2 > 1e-15) & (probs1 > 1e-15)
+    if not np.any(mask):
+        return float('inf')
+    ratios = probs1[mask] / probs2[mask]
+    log_ratios = np.abs(np.log(ratios))
+    return float(np.max(log_ratios))
+
+
+def scan_field_strength(n: int, J: float, h_values: np.ndarray) -> Dict[str, List[float]]:
+    """
+    Scan over field strengths and compute quantum gap + certificates.
+    """
+    results = {
+        'h': [], 'quantum_gap': [], 'min_mass': [],
+        'log_concavity': [], 'pairwise_score': [],
+        'boundary_mass_half': []
+    }
+
+    for h in h_values:
+        H = transverse_field_ising(n, J, h)
+        psi, gap, probs = ground_state_data(H)
+
+        # Compute certificates
+        mm = min_mass(probs)
+        lc = log_concavity_certificate(probs)
+        ps = pairwise_log_concavity_score(probs)
+
+        # Boundary mass for first half of configurations
+        half = np.arange(2**(n-1))
+        bm = boundary_mass(probs, n, half)
+
+        results['h'].append(float(h))
+        results['quantum_gap'].append(float(gap))
+        results['min_mass'].append(mm)
+        results['log_concavity'].append(lc)
+        results['pairwise_score'].append(ps)
+        results['boundary_mass_half'].append(bm)
+
+    return results
+
+
+def plot_results(results: Dict[str, List[float]], n: int):
+    """Generate publication-quality plots."""
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+    h = results['h']
+
+    # Plot 1: Quantum spectral gap
+    axes[0, 0].plot(h, results['quantum_gap'], 'b-o', markersize=3, linewidth=1.5)
+    axes[0, 0].set_xlabel('Transverse field h')
+    axes[0, 0].set_ylabel('Spectral gap Δ(H)')
+    axes[0, 0].set_title(f'Quantum Spectral Gap (n={n})')
+    axes[0, 0].grid(True, alpha=0.3)
+
+    # Plot 2: Min mass (anti-concentration)
+    axes[0, 1].semilogy(h, results['min_mass'], 'r-s', markersize=3, linewidth=1.5)
+    axes[0, 1].set_xlabel('Transverse field h')
+    axes[0, 1].set_ylabel('min μ(x)')
+    axes[0, 1].set_title(f'Anti-concentration Certificate (n={n})')
+    axes[0, 1].grid(True, alpha=0.3)
+
+    # Plot 3: Log-concavity certificate vs gap
+    axes[1, 0].plot(results['quantum_gap'], results['log_concavity'],
+                    'g-^', markersize=3, linewidth=1.5)
+    axes[1, 0].set_xlabel('Spectral gap Δ(H)')
+    axes[1, 0].set_ylabel('Log-concavity certificate')
+    axes[1, 0].set_title('Lorentzian Gap Surrogate vs Quantum Gap')
+    axes[1, 0].grid(True, alpha=0.3)
+
+    # Plot 4: Boundary mass vs gap
+    axes[1, 1].plot(results['quantum_gap'], results['boundary_mass_half'],
+                    'm-D', markersize=3, linewidth=1.5)
+    axes[1, 1].set_xlabel('Spectral gap Δ(H)')
+    axes[1, 1].set_ylabel('Boundary mass (half-space)')
+    axes[1, 1].set_title('Classical Expansion vs Quantum Gap')
+    axes[1, 1].grid(True, alpha=0.3)
+
+    plt.suptitle(f'Quantum-to-Classical Bridge: Transverse-Field Ising Model (n={n})',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    plt.savefig('quantum_classical_bridge.png', dpi=150, bbox_inches='tight')
+    print("Plot saved to quantum_classical_bridge.png")
+
+
+def main():
+    print("=" * 70)
+    print("Quantum-to-Classical Gap Bridge: Computational Demonstration")
+    print("=" * 70)
+
+    # Small system sizes for exact diagonalization
+    for n in [4, 6, 8]:
+        print(f"\n{'─' * 50}")
+        print(f"Transverse-Field Ising Model, n = {n} sites")
+        print(f"{'─' * 50}")
+
+        J = 1.0
+        h_values = np.linspace(0.1, 3.0, 30)
+        results = scan_field_strength(n, J, h_values)
+
+        # Print summary table
+        print(f"{'h':>6s} {'Gap':>10s} {'MinMass':>12s} {'LogConc':>10s} {'BdryMass':>10s}")
+        for i in range(0, len(h_values), 5):
+            print(f"{results['h'][i]:6.2f} "
+                  f"{results['quantum_gap'][i]:10.4f} "
+                  f"{results['min_mass'][i]:12.6f} "
+                  f"{results['log_concavity'][i]:10.6f} "
+                  f"{results['boundary_mass_half'][i]:10.6f}")
+
+        # Perturbation test: compare h=1.0 reference to nearby h values
+        print(f"\n  Perturbation analysis (reference h=1.0):")
+        H_ref = transverse_field_ising(n, J, 1.0)
+        _, gap_ref, probs_ref = ground_state_data(H_ref)
+        for delta_h in [0.1, 0.3, 0.5, 1.0]:
+            H_pert = transverse_field_ising(n, J, 1.0 + delta_h)
+            _, gap_pert, probs_pert = ground_state_data(H_pert)
+            eps = perturbation_ratio(probs_pert, probs_ref)
+            print(f"    δh={delta_h:.1f}: ε={eps:.4f}, "
+                  f"gap_ref={gap_ref:.4f}, gap_pert={gap_pert:.4f}, "
+                  f"ratio={gap_pert/gap_ref:.4f}")
+
+    # Generate plots for n=6
+    print(f"\n{'─' * 50}")
+    print("Generating plots for n=6...")
+    results = scan_field_strength(6, 1.0, np.linspace(0.1, 3.0, 50))
+    plot_results(results, 6)
+
+    # Conjectural scaling test
+    print(f"\n{'─' * 50}")
+    print("Testing conjectural scaling law:")
+    print("  LorentzianGap(μ) ≥ Δ(H) / poly(n)")
+    print(f"{'─' * 50}")
+    for n in [4, 6, 8]:
+        H = transverse_field_ising(n, 1.0, 1.0)  # Near critical point
+        _, gap, probs = ground_state_data(H)
+        lc = log_concavity_certificate(probs)
+        ratio = lc / gap if gap > 1e-15 else float('inf')
+        print(f"  n={n}: gap={gap:.6f}, LC={lc:.6f}, LC/gap={ratio:.6f}, "
+              f"n^2={n**2}")
+
+    print("\n" + "=" * 70)
+    print("Demo complete.")
+    print("=" * 70)
+
+
+if __name__ == "__main__":
+    main()
+
+
 """
 Visualization: Quantum-to-Classical Gap Bridge
 
-Plots the quantum spectral gap, surrogate Lorentzian gap, and classical
-conductance estimate for the transverse-field Ising model as a function
-of the transverse field strength h. This visualizes the core conjecture
-that all three gaps are polynomially related.
+Visualizes the central correspondence: how the quantum spectral gap of a
+transverse-field Ising model controls the Lorentzian gap surrogate and
+classical expansion (boundary mass) of the ground-state measurement distribution.
+
+Three panels show:
+1. Quantum gap vs transverse field strength
+2. Lorentzian gap surrogate tracking the quantum gap
+3. Scatter plot revealing the quantitative bridge: classical expansion vs quantum gap
 """
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-# ── Hamiltonian construction (self-contained) ─────────────────────────
 
-def kron_chain(ops):
-    result = ops[0]
-    for op in ops[1:]:
-        result = np.kron(result, op)
+def pauli_x():
+    return np.array([[0, 1], [1, 0]], dtype=complex)
+
+def pauli_z():
+    return np.array([[1, 0], [0, -1]], dtype=complex)
+
+def kron_at(op, site, n):
+    result = np.eye(1, dtype=complex)
+    for i in range(n):
+        result = np.kron(result, op if i == site else np.eye(2, dtype=complex))
     return result
 
 def tfim_hamiltonian(n, J, h):
     dim = 2**n
     H = np.zeros((dim, dim), dtype=complex)
-    I2 = np.eye(2, dtype=complex)
-    Zop = np.array([[1,0],[0,-1]], dtype=complex)
-    Xop = np.array([[0,1],[1,0]], dtype=complex)
     for i in range(n - 1):
-        ops = [I2]*n; ops[i] = Zop; ops[i+1] = Zop
-        H -= J * kron_chain(ops)
+        H -= J * kron_at(pauli_z(), i, n) @ kron_at(pauli_z(), i + 1, n)
     for i in range(n):
-        ops = [I2]*n; ops[i] = Xop
-        H -= h * kron_chain(ops)
+        H -= h * kron_at(pauli_x(), i, n)
     return H
 
-def analyze(H, n):
-    evals, evecs = np.linalg.eigh(H)
-    idx = np.argsort(evals)
-    gap = float(evals[idx[1]] - evals[idx[0]])
-    psi = evecs[:, idx[0]]
-    probs = np.abs(psi)**2
-    dim = 2**n
-
-    # Lorentzian surrogate: LC_ratio * min_mass * dim
-    mm = np.min(probs)
-    mx = np.max(probs)
-    lc = (mm/mx)**2 if mx > 0 else 0
-    lor_gap = lc * mm * dim
-
-    # Classical conductance
-    best_cond = float('inf')
-    sp = np.sort(probs)[::-1]
-    for k in range(1, dim):
-        A = set(i for i in range(dim) if probs[i] >= sp[k-1])
-        mu_A = sum(probs[i] for i in A)
-        if mu_A <= 1e-15 or mu_A >= 1-1e-15:
-            continue
-        bdry = 0.0
-        for x in A:
-            for bit in range(n):
-                y = x ^ (1 << bit)
-                if y not in A:
-                    bdry += probs[x]
-                    break
-        cond = bdry / (mu_A * (1 - mu_A))
-        best_cond = min(best_cond, cond)
-    cl_gap = best_cond if best_cond < float('inf') else 0.0
-
-    return gap, lor_gap, cl_gap
-
-# ── Main plot ─────────────────────────────────────────────────────────
-
-n = 6
-J = 1.0
-h_vals = np.linspace(0.1, 3.0, 40)
-
-quantum_gaps = []
-lor_gaps = []
-cl_gaps = []
-
-for h in h_vals:
-    H = tfim_hamiltonian(n, J, h)
-    qg, lg, cg = analyze(H, n)
-    quantum_gaps.append(qg)
-    lor_gaps.append(lg)
-    cl_gaps.append(cg)
-
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
-
-# Top panel: all three gaps
-ax1.plot(h_vals, quantum_gaps, 'b-o', markersize=3, label='Quantum gap Δ(H)', linewidth=2)
-ax1.plot(h_vals, lor_gaps, 'r-s', markersize=3, label='Lorentzian surrogate', linewidth=2)
-ax1.plot(h_vals, cl_gaps, 'g-^', markersize=3, label='Classical conductance Φ', linewidth=2)
-ax1.axvline(x=1.0, color='gray', linestyle='--', alpha=0.7, label='Critical point h/J=1')
-ax1.set_ylabel('Gap value', fontsize=12)
-ax1.set_title(f'Quantum-to-Classical Gap Bridge ({n}-site TFIM)', fontsize=14)
-ax1.legend(fontsize=10)
-ax1.set_yscale('log')
-ax1.grid(True, alpha=0.3)
-
-# Bottom panel: gap ratios
-qg = np.array(quantum_gaps)
-lg = np.array(lor_gaps)
-cg = np.array(cl_gaps)
-with np.errstate(divide='ignore', invalid='ignore'):
-    ratio_ql = np.where(lg > 1e-15, qg / lg, np.nan)
-    ratio_qc = np.where(cg > 1e-15, qg / cg, np.nan)
-
-ax2.plot(h_vals, ratio_ql, 'purple', marker='o', markersize=3,
-         label='Δ_quantum / Δ_Lorentzian', linewidth=2)
-ax2.plot(h_vals, ratio_qc, 'orange', marker='s', markersize=3,
-         label='Δ_quantum / Δ_classical', linewidth=2)
-ax2.axvline(x=1.0, color='gray', linestyle='--', alpha=0.7)
-ax2.set_xlabel('Transverse field h/J', fontsize=12)
-ax2.set_ylabel('Gap ratio', fontsize=12)
-ax2.set_title('Gap Ratios (should be ≤ poly(n) if conjecture holds)', fontsize=14)
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('gap_bridge.png', dpi=150, bbox_inches='tight')
-plt.show()
-print("Saved gap_bridge.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Measurement Probability Landscape
-
-Heatmap of ground-state measurement probabilities for the transverse-field
-Ising model as a function of field strength h and configuration index.
-Shows how the measurement distribution transforms from ordered (low h)
-to disordered (high h), with the Lorentzian structure most visible
-in the disordered phase.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-
-# ── Hamiltonian construction (self-contained) ─────────────────────────
-
-def kron_chain(ops):
-    result = ops[0]
-    for op in ops[1:]:
-        result = np.kron(result, op)
-    return result
-
-def tfim_hamiltonian(n, J, h):
-    dim = 2**n
-    H = np.zeros((dim, dim), dtype=complex)
-    I2 = np.eye(2, dtype=complex)
-    Zop = np.array([[1,0],[0,-1]], dtype=complex)
-    Xop = np.array([[0,1],[1,0]], dtype=complex)
-    for i in range(n - 1):
-        ops = [I2]*n; ops[i] = Zop; ops[i+1] = Zop
-        H -= J * kron_chain(ops)
-    for i in range(n):
-        ops = [I2]*n; ops[i] = Xop
-        H -= h * kron_chain(ops)
-    return H
-
-# ── Compute landscape ────────────────────────────────────────────────
-
-n = 6
-J = 1.0
-h_vals = np.linspace(0.1, 3.0, 60)
-dim = 2**n
-
-landscape = np.zeros((len(h_vals), dim))
-gaps = []
-min_masses = []
-entropies = []
-
-for i, h in enumerate(h_vals):
+def analyze(n, J, h):
     H = tfim_hamiltonian(n, J, h)
     evals, evecs = np.linalg.eigh(H)
     idx = np.argsort(evals)
-    gaps.append(evals[idx[1]] - evals[idx[0]])
-    psi = evecs[:, idx[0]]
-    probs = np.abs(psi)**2
-    landscape[i] = probs
-    min_masses.append(np.min(probs))
-    ent = -np.sum(probs[probs > 0] * np.log2(probs[probs > 0]))
-    entropies.append(ent)
+    probs = np.abs(evecs[:, idx[0]])**2
+    gap = evals[idx[1]] - evals[idx[0]]
+    p_min, p_max = np.min(probs), np.max(probs)
+    lor = p_min / p_max if p_max > 1e-15 else 0.0
+    half = set(range(2**(n-1)))
+    bm = sum(probs[x] for x in half if any(x ^ (1 << b) not in half for b in range(n)))
+    return float(gap), lor, bm
 
-# ── Plot ──────────────────────────────────────────────────────────────
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-# Top-left: probability heatmap
-ax = axes[0, 0]
-im = ax.imshow(landscape.T, aspect='auto', origin='lower',
-               extent=[h_vals[0], h_vals[-1], 0, dim],
-               norm=mcolors.LogNorm(vmin=max(1e-6, landscape[landscape>0].min()),
-                                    vmax=landscape.max()),
-               cmap='viridis')
-ax.set_xlabel('Transverse field h/J', fontsize=11)
-ax.set_ylabel('Configuration index', fontsize=11)
-ax.set_title('Ground-State Measurement Probabilities', fontsize=13)
-ax.axvline(x=1.0, color='red', linestyle='--', alpha=0.7, linewidth=1.5)
-plt.colorbar(im, ax=ax, label='μ(x)')
-
-# Top-right: spectral gap
-ax = axes[0, 1]
-ax.plot(h_vals, gaps, 'b-', linewidth=2)
-ax.axvline(x=1.0, color='red', linestyle='--', alpha=0.7)
-ax.set_xlabel('h/J', fontsize=11)
-ax.set_ylabel('Spectral gap Δ(H)', fontsize=11)
-ax.set_title('Quantum Spectral Gap', fontsize=13)
-ax.grid(True, alpha=0.3)
-
-# Bottom-left: minimum mass (anti-concentration)
-ax = axes[1, 0]
-ax.semilogy(h_vals, min_masses, 'r-', linewidth=2)
-ax.axvline(x=1.0, color='gray', linestyle='--', alpha=0.7)
-ax.set_xlabel('h/J', fontsize=11)
-ax.set_ylabel('min μ(x)', fontsize=11)
-ax.set_title('Anti-Concentration (min mass)', fontsize=13)
-ax.grid(True, alpha=0.3)
-
-# Bottom-right: entropy
-ax = axes[1, 1]
-ax.plot(h_vals, entropies, 'g-', linewidth=2)
-ax.axhline(y=n, color='gray', linestyle=':', alpha=0.5, label=f'max entropy = {n}')
-ax.axvline(x=1.0, color='gray', linestyle='--', alpha=0.7)
-ax.set_xlabel('h/J', fontsize=11)
-ax.set_ylabel('Shannon entropy (bits)', fontsize=11)
-ax.set_title('Distribution Entropy', fontsize=13)
-ax.legend()
-ax.grid(True, alpha=0.3)
-
-fig.suptitle(f'Quantum Measurement Landscape: {n}-site Transverse-Field Ising Model',
-             fontsize=15, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('measurement_landscape.png', dpi=150, bbox_inches='tight')
-plt.show()
-print("Saved measurement_landscape.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Perturbation Stability of Measurement Distributions
-
-Demonstrates the formally verified theorem `event_prob_ratio_bound`:
-when distributions are multiplicatively close, event probabilities
-are controlled. Shows how the perturbation envelope exp(±ε) bounds
-event probabilities as the perturbation grows.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-# ── Hamiltonian construction (self-contained) ─────────────────────────
-
-def kron_chain(ops):
-    result = ops[0]
-    for op in ops[1:]:
-        result = np.kron(result, op)
-    return result
-
-def tfim_hamiltonian(n, J, h):
-    dim = 2**n
-    H = np.zeros((dim, dim), dtype=complex)
-    I2 = np.eye(2, dtype=complex)
-    Zop = np.array([[1,0],[0,-1]], dtype=complex)
-    Xop = np.array([[0,1],[1,0]], dtype=complex)
-    for i in range(n - 1):
-        ops = [I2]*n; ops[i] = Zop; ops[i+1] = Zop
-        H -= J * kron_chain(ops)
-    for i in range(n):
-        ops = [I2]*n; ops[i] = Xop
-        H -= h * kron_chain(ops)
-    return H
-
-# ── Compute perturbation data ────────────────────────────────────────
-
-n = 5
-J = 1.0
-h_ref = 2.5  # Reference: deep in paramagnetic phase
-dim = 2**n
-
-H_ref = tfim_hamiltonian(n, J, h_ref)
-evals_ref, evecs_ref = np.linalg.eigh(H_ref)
-idx = np.argsort(evals_ref)
-psi_ref = evecs_ref[:, idx[0]]
-nu = np.abs(psi_ref)**2
-
-# Scan perturbation strength
-delta_h_vals = np.linspace(0, 2.0, 50)
-epsilons = []
-event_ratios = []
-min_mass_ratios = []
-boundary_ratios = []
-
-event_indices = set(range(dim // 2))
-
-for dh in delta_h_vals:
-    h_pert = h_ref - dh
-    if h_pert <= 0:
-        break
-    H_pert = tfim_hamiltonian(n, J, h_pert)
-    evals_p, evecs_p = np.linalg.eigh(H_pert)
-    idx_p = np.argsort(evals_p)
-    psi_p = evecs_p[:, idx_p[0]]
-    mu = np.abs(psi_p)**2
-
-    # Compute actual ε
-    with np.errstate(divide='ignore', invalid='ignore'):
-        log_ratios = np.where(nu > 1e-15, np.log(mu / nu), 0)
-    eps = float(np.max(np.abs(log_ratios[nu > 1e-15]))) if np.any(nu > 1e-15) else 0
-    epsilons.append(eps)
-
-    # Event probability ratio
-    mu_event = sum(mu[i] for i in event_indices)
-    nu_event = sum(nu[i] for i in event_indices)
-    if nu_event > 0:
-        event_ratios.append(mu_event / nu_event)
-    else:
-        event_ratios.append(1.0)
-
-    # Min mass ratio
-    mm_mu = np.min(mu)
-    mm_nu = np.min(nu)
-    if mm_nu > 0:
-        min_mass_ratios.append(mm_mu / mm_nu)
-    else:
-        min_mass_ratios.append(1.0)
-
-delta_h_vals = delta_h_vals[:len(epsilons)]
-
-# ── Plot ──────────────────────────────────────────────────────────────
 
 fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-# Panel 1: ε vs perturbation strength
-ax = axes[0]
-ax.plot(delta_h_vals, epsilons, 'b-o', markersize=3, linewidth=2)
-ax.set_xlabel('Perturbation Δh', fontsize=11)
-ax.set_ylabel('Multiplicative error ε', fontsize=11)
-ax.set_title('Perturbation Parameter ε', fontsize=13)
-ax.grid(True, alpha=0.3)
+colors = {'4': '#2196F3', '6': '#FF5722', '8': '#4CAF50'}
 
-# Panel 2: Event ratio with certified bounds
-ax = axes[1]
-eps_arr = np.array(epsilons)
-ax.fill_between(delta_h_vals, np.exp(-eps_arr), np.exp(eps_arr),
-                alpha=0.2, color='green', label='Certified envelope e^{±ε}')
-ax.plot(delta_h_vals, event_ratios, 'r-', linewidth=2,
-        label='Actual event ratio μ(S)/ν(S)')
-ax.plot(delta_h_vals, np.exp(eps_arr), 'g--', linewidth=1, alpha=0.7)
-ax.plot(delta_h_vals, np.exp(-eps_arr), 'g--', linewidth=1, alpha=0.7)
-ax.set_xlabel('Perturbation Δh', fontsize=11)
-ax.set_ylabel('Event probability ratio', fontsize=11)
-ax.set_title('Event Ratio Bound (Thm 1)', fontsize=13)
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
+for n in [4, 6, 8]:
+    h_vals = np.linspace(0.1, 3.0, 60)
+    gaps, lors, bms = [], [], []
+    for h in h_vals:
+        g, l, b = analyze(n, 1.0, h)
+        gaps.append(g)
+        lors.append(l)
+        bms.append(b)
 
-# Panel 3: Min mass ratio with certified bound
-ax = axes[2]
-ax.fill_between(delta_h_vals, np.exp(-eps_arr), np.ones_like(eps_arr) * 5,
-                alpha=0.15, color='blue', label='Certified lower: e^{-ε}')
-ax.plot(delta_h_vals, min_mass_ratios, 'purple', linewidth=2,
-        label='Actual min_mass(μ)/min_mass(ν)')
-ax.plot(delta_h_vals, np.exp(-eps_arr), 'b--', linewidth=1, alpha=0.7)
-ax.set_xlabel('Perturbation Δh', fontsize=11)
-ax.set_ylabel('Min mass ratio', fontsize=11)
-ax.set_title('Min Mass Perturbation (Thm 2)', fontsize=13)
-ax.legend(fontsize=9)
-ax.set_ylim(bottom=0)
-ax.grid(True, alpha=0.3)
+    c = colors[str(n)]
 
-fig.suptitle('Perturbation Stability of Quantum Measurement Distributions',
+    axes[0].plot(h_vals, gaps, color=c, linewidth=2, label=f'n={n}')
+    axes[0].set_xlabel('Transverse field h/J', fontsize=12)
+    axes[0].set_ylabel('Spectral gap Δ(H)', fontsize=12)
+    axes[0].set_title('Quantum Spectral Gap', fontsize=13, fontweight='bold')
+    axes[0].axvline(x=1.0, color='gray', linestyle=':', alpha=0.5)
+    axes[0].legend(fontsize=10)
+    axes[0].grid(True, alpha=0.2)
+
+    axes[1].plot(h_vals, lors, color=c, linewidth=2, label=f'n={n}')
+    axes[1].set_xlabel('Transverse field h/J', fontsize=12)
+    axes[1].set_ylabel('min(μ)/max(μ)', fontsize=12)
+    axes[1].set_title('Lorentzian Gap Surrogate', fontsize=13, fontweight='bold')
+    axes[1].axvline(x=1.0, color='gray', linestyle=':', alpha=0.5)
+    axes[1].legend(fontsize=10)
+    axes[1].grid(True, alpha=0.2)
+
+    axes[2].scatter(gaps, bms, color=c, s=20, alpha=0.7, label=f'n={n}')
+    axes[2].set_xlabel('Quantum gap Δ(H)', fontsize=12)
+    axes[2].set_ylabel('Boundary mass (half-space)', fontsize=12)
+    axes[2].set_title('Classical Expansion vs Quantum Gap', fontsize=13, fontweight='bold')
+    axes[2].legend(fontsize=10)
+    axes[2].grid(True, alpha=0.2)
+
+plt.suptitle('Quantum-to-Classical Bridge: Transverse-Field Ising Model',
+             fontsize=15, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('viz_gap_bridge.png', dpi=150, bbox_inches='tight')
+
+
+"""
+Visualization: Perturbative Stability of Measurement Distributions
+
+Shows how the formal perturbation theorems work in practice:
+1. Heatmap of measurement distributions at different field strengths
+2. Perturbation parameter ε as a function of distance from reference
+3. Guaranteed vs actual bounds from the formal theorems
+
+Demonstrates event_prob_ratio_bound and minMass_perturbation_lower_bound.
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm
+
+
+def pauli_x():
+    return np.array([[0, 1], [1, 0]], dtype=complex)
+
+def pauli_z():
+    return np.array([[1, 0], [0, -1]], dtype=complex)
+
+def kron_at(op, site, n):
+    result = np.eye(1, dtype=complex)
+    for i in range(n):
+        result = np.kron(result, op if i == site else np.eye(2, dtype=complex))
+    return result
+
+def tfim_hamiltonian(n, J, h):
+    dim = 2**n
+    H = np.zeros((dim, dim), dtype=complex)
+    for i in range(n - 1):
+        H -= J * kron_at(pauli_z(), i, n) @ kron_at(pauli_z(), i + 1, n)
+    for i in range(n):
+        H -= h * kron_at(pauli_x(), i, n)
+    return H
+
+def ground_probs(n, J, h):
+    H = tfim_hamiltonian(n, J, h)
+    evals, evecs = np.linalg.eigh(H)
+    idx = np.argsort(evals)
+    return np.abs(evecs[:, idx[0]])**2
+
+
+n = 5
+dim = 2**n
+h_ref = 1.0
+probs_ref = ground_probs(n, 1.0, h_ref)
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 11))
+
+# Panel 1: Heatmap of distributions
+h_values = np.linspace(0.2, 2.5, 40)
+dist_matrix = np.zeros((len(h_values), dim))
+for i, h in enumerate(h_values):
+    dist_matrix[i] = ground_probs(n, 1.0, h)
+
+im = axes[0, 0].imshow(dist_matrix, aspect='auto', cmap='hot',
+                        extent=[0, dim-1, h_values[-1], h_values[0]],
+                        norm=LogNorm(vmin=1e-6, vmax=1))
+axes[0, 0].set_xlabel('Configuration index', fontsize=11)
+axes[0, 0].set_ylabel('Transverse field h', fontsize=11)
+axes[0, 0].set_title('Ground-State Measurement Distribution', fontsize=12, fontweight='bold')
+plt.colorbar(im, ax=axes[0, 0], label='μ(x)')
+
+# Panel 2: Perturbation ε vs distance
+deltas = np.linspace(0.01, 1.5, 50)
+epsilons = []
+for d in deltas:
+    probs_pert = ground_probs(n, 1.0, h_ref + d)
+    mask = (probs_ref > 1e-15) & (probs_pert > 1e-15)
+    if np.any(mask):
+        eps = float(np.max(np.abs(np.log(probs_pert[mask] / probs_ref[mask]))))
+    else:
+        eps = float('inf')
+    epsilons.append(eps)
+
+axes[0, 1].plot(deltas, epsilons, 'b-', linewidth=2)
+axes[0, 1].fill_between(deltas, 0, epsilons, alpha=0.15, color='blue')
+axes[0, 1].set_xlabel('Distance from reference |h - h₀|', fontsize=11)
+axes[0, 1].set_ylabel('Perturbation parameter ε', fontsize=11)
+axes[0, 1].set_title('Multiplicative Closeness', fontsize=12, fontweight='bold')
+axes[0, 1].grid(True, alpha=0.3)
+
+# Panel 3: Guaranteed vs actual event probabilities
+test_deltas = [0.1, 0.3, 0.5, 0.8, 1.0]
+event = np.arange(dim // 2)  # first half
+
+for d in test_deltas:
+    probs_pert = ground_probs(n, 1.0, h_ref + d)
+    mask = (probs_ref > 1e-15) & (probs_pert > 1e-15)
+    eps = float(np.max(np.abs(np.log(probs_pert[mask] / probs_ref[mask])))) if np.any(mask) else 10.0
+
+    nu_sum = np.sum(probs_ref[event])
+    mu_sum = np.sum(probs_pert[event])
+    lower = np.exp(-eps) * nu_sum
+    upper = np.exp(eps) * nu_sum
+
+    axes[1, 0].errorbar(d, mu_sum, yerr=[[mu_sum - lower], [upper - mu_sum]],
+                        fmt='o', color='darkblue', capsize=5, markersize=8)
+
+axes[1, 0].set_xlabel('Perturbation δh', fontsize=11)
+axes[1, 0].set_ylabel('Event probability Pr[first half]', fontsize=11)
+axes[1, 0].set_title('Event Prob Ratio Bound (Theorem 1)', fontsize=12, fontweight='bold')
+axes[1, 0].grid(True, alpha=0.3)
+
+# Panel 4: MinMass guaranteed vs actual
+min_mass_ref = float(np.min(probs_ref))
+deltas_dense = np.linspace(0.01, 1.2, 40)
+guaranteed_list = []
+actual_list = []
+
+for d in deltas_dense:
+    probs_pert = ground_probs(n, 1.0, h_ref + d)
+    mask = (probs_ref > 1e-15) & (probs_pert > 1e-15)
+    eps = float(np.max(np.abs(np.log(probs_pert[mask] / probs_ref[mask])))) if np.any(mask) else 10.0
+    guaranteed_list.append(np.exp(-eps) * min_mass_ref)
+    actual_list.append(float(np.min(probs_pert)))
+
+axes[1, 1].semilogy(deltas_dense, actual_list, 'b-o', markersize=3, linewidth=1.5, label='Actual min mass')
+axes[1, 1].semilogy(deltas_dense, guaranteed_list, 'r--s', markersize=3, linewidth=1.5, label='Guaranteed (Theorem 2)')
+axes[1, 1].fill_between(deltas_dense, guaranteed_list, actual_list, alpha=0.1, color='green')
+axes[1, 1].set_xlabel('Perturbation δh', fontsize=11)
+axes[1, 1].set_ylabel('Minimum mass', fontsize=11)
+axes[1, 1].set_title('MinMass Perturbation Bound (Theorem 2)', fontsize=12, fontweight='bold')
+axes[1, 1].legend(fontsize=9)
+axes[1, 1].grid(True, alpha=0.3)
+
+plt.suptitle('Perturbative Stability of Quantum Measurement Distributions (n=5)',
              fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig('perturbation_stability.png', dpi=150, bbox_inches='tight')
-plt.show()
-print("Saved perturbation_stability.png")
+plt.savefig('viz_perturbation.png', dpi=150, bbox_inches='tight')
+
+
+"""
+Visualization: Phase Landscape of Lorentzian Quantum Geometry
+
+A 2D heatmap showing how the Lorentzian gap surrogate varies across the
+(J, h) parameter space of the transverse-field Ising model. Regions of
+high Lorentzian gap (red) correspond to states amenable to classical
+simulation; regions of low gap (blue) mark quantum phase transitions
+where simulation becomes hard.
+
+This visualizes the central conjecture: the geometry of measurement
+distributions encodes computational complexity.
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+
+def pauli_x():
+    return np.array([[0, 1], [1, 0]], dtype=complex)
+
+def pauli_z():
+    return np.array([[1, 0], [0, -1]], dtype=complex)
+
+def kron_at(op, site, n):
+    result = np.eye(1, dtype=complex)
+    for i in range(n):
+        result = np.kron(result, op if i == site else np.eye(2, dtype=complex))
+    return result
+
+def tfim_hamiltonian(n, J, h):
+    dim = 2**n
+    H = np.zeros((dim, dim), dtype=complex)
+    for i in range(n - 1):
+        H -= J * kron_at(pauli_z(), i, n) @ kron_at(pauli_z(), i + 1, n)
+    for i in range(n):
+        H -= h * kron_at(pauli_x(), i, n)
+    return H
+
+def compute_certificates(n, J, h):
+    H = tfim_hamiltonian(n, J, h)
+    evals, evecs = np.linalg.eigh(H)
+    idx = np.argsort(evals)
+    probs = np.abs(evecs[:, idx[0]])**2
+    gap = evals[idx[1]] - evals[idx[0]]
+    p_min, p_max = np.min(probs), np.max(probs)
+    lor = p_min / p_max if p_max > 1e-15 else 0.0
+    mask = probs > 1e-15
+    entropy = -float(np.sum(probs[mask] * np.log(probs[mask])))
+    return float(gap), lor, entropy
+
+
+n = 6
+J_vals = np.linspace(0.1, 2.5, 40)
+h_vals = np.linspace(0.1, 2.5, 40)
+
+gap_grid = np.zeros((len(h_vals), len(J_vals)))
+lor_grid = np.zeros((len(h_vals), len(J_vals)))
+ent_grid = np.zeros((len(h_vals), len(J_vals)))
+
+for i, h in enumerate(h_vals):
+    for j, J in enumerate(J_vals):
+        g, l, e = compute_certificates(n, J, h)
+        gap_grid[i, j] = g
+        lor_grid[i, j] = l
+        ent_grid[i, j] = e
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
+
+# Quantum gap landscape
+im0 = axes[0].imshow(gap_grid, extent=[J_vals[0], J_vals[-1], h_vals[-1], h_vals[0]],
+                      aspect='auto', cmap='viridis', origin='upper')
+axes[0].plot(J_vals, J_vals, 'w--', linewidth=1.5, alpha=0.7, label='h/J = 1 (critical)')
+axes[0].set_xlabel('Coupling J', fontsize=12)
+axes[0].set_ylabel('Transverse field h', fontsize=12)
+axes[0].set_title('Quantum Spectral Gap Δ(H)', fontsize=13, fontweight='bold')
+axes[0].legend(fontsize=9, loc='upper left')
+plt.colorbar(im0, ax=axes[0])
+
+# Lorentzian gap landscape
+im1 = axes[1].imshow(lor_grid, extent=[J_vals[0], J_vals[-1], h_vals[-1], h_vals[0]],
+                      aspect='auto', cmap='RdYlBu_r', origin='upper',
+                      vmin=0, vmax=1)
+axes[1].plot(J_vals, J_vals, 'k--', linewidth=1.5, alpha=0.7, label='h/J = 1 (critical)')
+axes[1].set_xlabel('Coupling J', fontsize=12)
+axes[1].set_ylabel('Transverse field h', fontsize=12)
+axes[1].set_title('Lorentzian Gap Surrogate', fontsize=13, fontweight='bold')
+axes[1].legend(fontsize=9, loc='upper left')
+plt.colorbar(im1, ax=axes[1])
+
+# Entropy landscape
+im2 = axes[2].imshow(ent_grid, extent=[J_vals[0], J_vals[-1], h_vals[-1], h_vals[0]],
+                      aspect='auto', cmap='magma', origin='upper')
+axes[2].plot(J_vals, J_vals, 'w--', linewidth=1.5, alpha=0.7, label='h/J = 1 (critical)')
+axes[2].set_xlabel('Coupling J', fontsize=12)
+axes[2].set_ylabel('Transverse field h', fontsize=12)
+axes[2].set_title('Measurement Entropy', fontsize=13, fontweight='bold')
+axes[2].legend(fontsize=9, loc='upper left')
+plt.colorbar(im2, ax=axes[2])
+
+plt.suptitle(f'Phase Landscape of Lorentzian Quantum Geometry (TFIM, n={n})',
+             fontsize=15, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('viz_phase_landscape.png', dpi=150, bbox_inches='tight')
