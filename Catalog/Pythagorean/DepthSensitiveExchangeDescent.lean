@@ -86,7 +86,7 @@ Variant of the descent bound yielding a natural number upper bound.
 -/
 theorem descent_step_count_le_nat (n : ℕ) (Φ : ℕ → ℚ) (δ B : ℚ)
     (hδ : 0 < δ)
-    (_hB : 0 ≤ B)
+    (hB : 0 ≤ B)
     (hdec : ∀ i, i < n → Φ (i + 1) + δ ≤ Φ i)
     (hrange : Φ 0 - Φ n ≤ B) :
     n ≤ ⌈B / δ⌉₊ := by
@@ -169,7 +169,7 @@ theorem depthDecrement_pos {d k : ℕ} {c : ℚ} (hc : 0 < c) (hd : 1 ≤ d) :
 /-
 At maximal depth `k = d`, the decrement simplifies to `c`.
 -/
-theorem depthDecrement_at_max_depth {d : ℕ} {c : ℚ} (_hd : 1 ≤ d) :
+theorem depthDecrement_at_max_depth {d : ℕ} {c : ℚ} (hd : 1 ≤ d) :
     depthDecrement d d c = c := by
   unfold depthDecrement;
   lia
@@ -203,18 +203,21 @@ theorem exchangeDescent_depth_bound
     (Φ : (Fin d → ℤ) → ℚ)
     (δ B : ℚ)
     (hδ : 0 < δ)
+    (hB : 0 ≤ B)
     (hdec : ∀ x y, improvingExchangeStep S f x y → Φ y + δ ≤ Φ x)
     (hrange : ∀ x y, x ∈ S → y ∈ S → Φ x - Φ y ≤ B)
-    (hB : 0 ≤ B)
     (chain : DescentChain S f n) :
     n ≤ ⌈B / δ⌉₊ := by
-  have h_decreasing : ∀ i : Fin n, Φ (chain.seq (Fin.castSucc i)) ≥ Φ (chain.seq (Fin.succ i)) + δ := by
-    exact fun i => hdec _ _ ( chain.step i )
-  have h_range : Φ (chain.seq 0) - Φ (chain.seq (Fin.last n)) ≤ B := by
-    exact hrange _ _ ( chain.mem _ ) ( chain.mem _ )
-  convert descent_step_count_le_nat n ( fun i => if hi : i < n + 1 then Φ ( chain.seq ⟨ i, hi ⟩ ) else 0 ) δ B hδ hB _ _ using 1;
-  · exact fun i hi => by simpa [ hi, hi.le ] using h_decreasing ⟨ i, hi ⟩ ;
-  · grind;
+  -- Apply the descent_step_count_le_nat theorem with the potential function Φ, the decrement δ, and the bound B.
+  have h_applied : n ≤ ⌈B / δ⌉₊ := by
+    have h_decreasing : ∀ i : Fin n, Φ (chain.seq (Fin.castSucc i)) ≥ Φ (chain.seq (Fin.succ i)) + δ := by
+      exact fun i => hdec _ _ ( chain.step i )
+    have h_range : Φ (chain.seq 0) - Φ (chain.seq (Fin.last n)) ≤ B := by
+      exact hrange _ _ ( chain.mem _ ) ( chain.mem _ )
+    convert descent_step_count_le_nat n ( fun i => if hi : i < n + 1 then Φ ( chain.seq ⟨ i, hi ⟩ ) else 0 ) δ B hδ hB _ _ using 1;
+    · exact fun i hi => by simpa [ hi, hi.le ] using h_decreasing ⟨ i, hi ⟩ ;
+    · grind;
+  exact h_applied
 
 /-
 **Theorem A': Descent bound in terms of exchange diameter.**
@@ -229,20 +232,23 @@ theorem exchangeDescent_depth_bound_poly
     (Φ : (Fin d → ℤ) → ℚ)
     (c C₀ : ℚ)
     (D : ℕ)
-    (hc : 0 < c) (_hC₀ : 0 < C₀)
-    (hd : 1 ≤ d) (_hk : k ≤ d)
+    (hc : 0 < c) (hC₀ : 0 < C₀)
+    (hd : 1 ≤ d) (hk : k ≤ d)
     (hdec : ∀ x y, improvingExchangeStep S f x y →
       Φ y + depthDecrement d k c ≤ Φ x)
     (hrange : ∀ x y, x ∈ S → y ∈ S → Φ x - Φ y ≤ C₀ * ↑D)
     (n : ℕ)
     (chain : DescentChain S f n) :
     (n : ℚ) ≤ C₀ * ↑D * ↑d ^ (d - k) / c := by
+  -- From the chain, define Φ' i = Φ(chain.seq i). The decrease hdec gives: for each step, Φ(y) + depthDecrement d k c ≤ Φ(x). The range hrange gives Φ(x₀) - Φ(xₙ) ≤ C₀ * D.
   have h_chain_decrease : ∀ i : Fin n, Φ (chain.seq i.succ) + depthDecrement d k c ≤ Φ (chain.seq i.castSucc) := by
     exact fun i => hdec _ _ ( chain.step i );
+  -- By induction on $i$, we can show that $\Phi(chain.seq i) + i \cdot depthDecrement d k c \leq \Phi(chain.seq 0)$.
   have h_induction : ∀ i : Fin (n + 1), Φ (chain.seq i) + i.val * depthDecrement d k c ≤ Φ (chain.seq 0) := by
     intro i;
     induction i using Fin.inductionOn <;> norm_num at *;
     linarith [ h_chain_decrease ‹_› ];
+  -- By combining the results from the induction hypothesis and the range condition, we get $n \cdot depthDecrement d k c \leq C₀ \cdot D$.
   have h_combined : (n : ℚ) * depthDecrement d k c ≤ C₀ * D := by
     have := h_induction ⟨ n, Nat.lt_succ_self n ⟩ ; have := hrange ( chain.seq 0 ) ( chain.seq ⟨ n, Nat.lt_succ_self n ⟩ ) ( chain.mem 0 ) ( chain.mem ⟨ n, Nat.lt_succ_self n ⟩ ) ; norm_num at * ; linarith;
   rw [ le_div_iff₀ ] <;> first | positivity | rw [ depthDecrement ] at h_combined ; rw [ mul_div, div_le_iff₀ ] at h_combined <;> first | positivity | linarith;
@@ -272,11 +278,10 @@ theorem exchangeDescent_depth_eq_dim_linear
     (n : ℕ)
     (chain : DescentChain S f n) :
     (n : ℚ) ≤ C₀ / c * ↑D := by
-  have h := exchangeDescent_depth_bound_poly S f Φ c C₀ D hc hC₀ hd le_rfl
-    (fun x y step => by simpa [depthDecrement_at_max_depth hd] using hdec x y step) hrange n chain
-  simp only [Nat.sub_self, pow_zero, mul_one] at h
-  have : C₀ * ↑D / c = C₀ / c * ↑D := by ring
-  linarith
+  convert exchangeDescent_depth_bound_poly S f Φ c C₀ D hc hC₀ hd le_rfl _ _ n chain using 1;
+  · norm_num ; ring;
+  · exact fun x y h => by simpa [ depthDecrement_at_max_depth hd ] using hdec x y h;
+  · assumption
 
 /-! ## Part 5: Certificate Depth Hierarchy -/
 
@@ -309,7 +314,7 @@ depth `k₂` is at least as tight as from depth `k₁`.
 theorem depthCertificate_runtime_monotone
     {d k₁ k₂ : ℕ} {c C₀ : ℚ} {D : ℕ}
     (hc : 0 < c) (hC₀ : 0 < C₀) (hd : 1 ≤ d)
-    (hk : k₁ ≤ k₂) (_ : k₂ ≤ d) :
+    (hk : k₁ ≤ k₂) (hk₂ : k₂ ≤ d) :
     C₀ * ↑D * ↑d ^ (d - k₂) / c ≤ C₀ * ↑D * ↑d ^ (d - k₁) / c := by
   gcongr ; aesop
 
