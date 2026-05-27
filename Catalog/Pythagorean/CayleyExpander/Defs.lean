@@ -5,33 +5,17 @@ Released under Apache 2.0 license.
 # Cayley Expander Definitions
 
 Core definitions for the spectral theory of Cayley graphs of finite groups.
-This file establishes the algebraic and analytic vocabulary needed to
-connect group generation to quantitative expansion.
-
-## Main Definitions
-
-* `cayleyDirichletEnergy` — Dirichlet energy of functions on Cayley graphs
-* `cayleyAveragingOp` — normalized averaging operator
-* `meanValue` — mean value of a function over a finite group
-* `variance` — variance of a function over a finite group
-* `l2NormSq` — L² norm squared of a function
-* `CayleySpectralData` — structure encapsulating expansion data
-* `CanonicalPathData` — canonical path system for Poincaré inequality
 -/
 import Mathlib
 
 open Finset BigOperators
 
-/-! ## Basic definitions for Cayley graph spectral theory -/
-
-/-- The Dirichlet energy of a function on a Cayley graph:
-    E_S(f) = ∑_{x ∈ G} ∑_{s ∈ S} (f(sx) - f(x))². -/
+/-- The Dirichlet energy of a function on a Cayley graph. -/
 noncomputable def cayleyDirichletEnergy {G : Type*} [Fintype G] [Group G]
     (S : Finset G) (f : G → ℝ) : ℝ :=
   ∑ x : G, ∑ s ∈ S, (f (s * x) - f x) ^ 2
 
-/-- The normalized averaging (Markov) operator on functions G → ℝ:
-    (Af)(x) = (1/|S|) ∑_{s ∈ S} f(s * x). -/
+/-- The normalized averaging operator. -/
 noncomputable def cayleyAveragingOp {G : Type*} [Fintype G] [Group G]
     (S : Finset G) (f : G → ℝ) : G → ℝ :=
   fun x => (∑ s ∈ S, f (s * x)) / S.card
