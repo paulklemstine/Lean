@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Spectral Graph Theory / Finite Groups",
     "date": "2026-05-27T09:06:52Z",
     "exp_id": "f57302af",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.5546440681932141,
+    "quality": "partial",
     "pkg_num": 157
   },
   {
@@ -4562,8 +4562,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-27T09:06:52Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.5546440681932141,
+      "quality": "partial"
     }
   ],
   "edges": [

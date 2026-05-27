@@ -136,10 +136,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43bc0e86",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -154,10 +154,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "162c22af",
     "timestamp": "2026-05-24T23:13:44.233016+00:00"
   },
   {
@@ -189,10 +189,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "96bc3b32",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:54:40.932722+00:00"
   },
   {
@@ -254,25 +254,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "1f8fa3a8",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:11:10.263299+00:00"
-  },
-  {
-    "id": "fd_0840",
-    "title": "Direction 1: Basis Uniqueness up to Tropical Projective Equivalence",
-    "description": "**Conjecture**: For each connected graph G, basepoint q, and subset S \u2286 V \\ {q}, the cycle-component generating family of the tropical kernel of L_S is unique up to tropical scaling (adding constants to individual generators) and permutation, whenever G[S] has a pairwise edge-disjoint cycle basis and distinct q-visible components.\n\n**Test**: Exhaustive search over all connected graphs on n \u2264 7 vertices. For each (G, q, S), compute all minimal tropical generating families of ker_trop(L_S) and compare equivalence classes. Verify that the number of equivalence classes is exactly 1 when the edge-disjointness condition holds, and characterize the failure cases.\n\n**Impact**: Establishes canonical generators for tropical kernels, enabling effective computation and comparison across graph families. Would be the tropical analogue of the uniqueness of the Smith normal form.\n\n**Catalog References**: `Pythagorean/TropicalBridge/Defs.lean` (tropicalKernel, componentIndicator), `Pythagorean/TropicalBridge/TropicalHodge.lean` (componentIndicator_mem_tropicalKernel, tropicalKernel_leaf_eq).\n\n**Proof Strategy**: Use the separation properties of cycle generators (support on cycle vertices) and component generators (support on component vertices) to show that any alternative generating family must be related by tropical scaling. The key tool is the leaf propagation lemma, which forces values along tree edges.\n\n**Domain Bridges**: Tropical linear algebra \u2194 matroid theory (the cycle matroid determines uniqueness), algebraic combinatorics \u2194 graph theory.\n\n**Lineage**: Extends the structural kernel theorems in `TropicalHodge.lean` from existence to uniqueness.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 technically challenging but conceptually clear)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fd2f08b2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:35.257371+00:00"
   },
   {
     "id": "fd_0858",
@@ -458,10 +439,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "beedac6c",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -664,10 +645,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2b6d84b4",
-    "consumed_by_exp_id": "62793b15",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:13:09.676387+00:00"
   },
   {
@@ -806,10 +787,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "c37ca719",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.995692+00:00"
   },
   {
@@ -845,10 +826,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "29c86e53",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:58:43.501683+00:00"
   },
   {
@@ -1042,10 +1023,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "42d710f5",
-    "consumed_by_exp_id": "db19bfd3",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T08:59:20.810965+00:00"
   },
   {
@@ -1081,10 +1062,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1fb257b2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4837868",
     "timestamp": "2026-05-26T13:05:51.407161+00:00"
   },
   {
@@ -1603,12 +1584,73 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "e18f2436",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T08:27:03.925234+00:00"
+  },
+  {
+    "id": "fd_1350",
+    "title": "Direction 2: Multi-Mode Lorentzian Witnesses via Higher Derivative Leaves",
+    "description": "**Conjecture.** For a Lorentzian polynomial $Z_K$ of degree $n$, the derivative leaves of codimension $n - k$ (yielding degree-$k$ polynomials for $k \\geq 3$) carry richer entanglement information than pairwise leaves. Specifically, the *mixed Hessian* of a degree-$k$ leaf \u2014 a $k \\times k$ matrix \u2014 has at most one positive eigenvalue (by Lorentzianity), and the magnitude of this positive eigenvalue bounds the $k$-mode entanglement entropy.\n\n**Test.** For $k = 3, 4$ and $n = 6, 8$: enumerate derivative leaves of codimension $n-k$, compute their Hessians, extract the unique positive eigenvalue, and correlate it with $S_A$ for the corresponding $k$-element subset $A$.\n\n**Impact.** Multi-mode witnesses would detect entanglement in subsystems that pairwise witnesses miss \u2014 analogous to how three-body correlations in condensed matter detect physics invisible to two-body probes.\n\n**Catalog References.** `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (Lorentzianity definition, `IsDPPLorentzian`), `Catalog/Pythagorean/QuantumDPPEntanglement.lean` (pairwise leaf analysis).\n\n**Proof Strategy.** Use the Br\u00e4nd\u00e9n\u2013Huh characterization: Lorentzianity of degree-$k$ leaves means their Hessians have at most one positive eigenvalue. Express the Hessian entries as linear combinations of principal minors of $K$. Use the Cauchy\u2013Binet formula to relate these to eigenvalues of $K_A$.\n\n**Domain Bridges.** Exterior algebra (Pl\u00fccker coordinates connect principal minors to Grassmannian geometry), tensor networks (multi-mode correlations as tensor contractions).\n\n**Lineage.** Generalizes the degree-2 leaf analysis of Theorem 2 to arbitrary codimension.\n\n**Ambition.** Grand challenge \u2014 requires substantial new Lorentzian polynomial infrastructure in Lean.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4c1deed8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T08:27:26.882112+00:00"
+  },
+  {
+    "id": "fd_1354",
+    "title": "Direction 1: Probabilistic Stability \u2014 The 1/\u221an Law for Random Perturbations",
+    "description": "**Conjecture:** For random symmetric perturbations with i.i.d. mean-zero entries bounded by \u03b4, the Lorentzian signature is preserved with high probability whenever \u03b4 \u2264 K \u00b7 \u03b5 / \u221an, where K is a universal constant.\n\n**Test:** Compute survival probabilities for random perturbations of e_k Hessians at scale \u03b4 = \u03b5 / n^\u03b1 for \u03b1 \u2208 {0.4, 0.5, 0.6, 0.7} and dimensions n \u2208 {10, 50, 100, 500}. If the critical \u03b1 is 0.5 \u00b1 0.02, the conjecture is confirmed. If \u03b1 stabilizes near 0.6 or higher, the conjecture needs revision.\n\n**Impact:** A factor-of-\u221an improvement over the deterministic bound would make certified stochastic algorithms (e.g., randomized rounding, MCMC samplers) dramatically more efficient. It would connect Lorentzian combinatorics directly to random matrix universality.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` (Theorems 2-3), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem 9)\n\n**Proof Strategy:** Use the Wigner semicircle law or matrix Bernstein inequality to bound the spectral radius of the random perturbation matrix. The key step: show that the random perturbation's operator norm concentrates at O(\u221an \u00b7 \u03b4) rather than worst-case O(n \u00b7 \u03b4), then apply the gapped-signature perturbation theorem.\n\n**Domain Bridges:** Random matrix theory (GOE/GUE universality), high-dimensional probability (matrix concentration), statistical physics (random coupling constants).\n\n**Lineage:** Extends `quadFormBound_of_entry_bound_sharp` from deterministic to probabilistic setting.\n\n**Ambition:** Grand challenge \u2014 would establish first probabilistic stability theory for Lorentzian cones.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ac6bc32a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T08:27:46.772540+00:00"
+  },
+  {
+    "id": "fd_1357",
+    "title": "Direction 4: Stability of Partition Functions Under Noisy Couplings",
+    "description": "**Conjecture:** For the partition function Z(J) = \u2211_\u03c3 exp(-\u03b2 \u2211_{ij} J_{ij} \u03c3_i \u03c3_j) of an Ising model with Lorentzian coupling structure, perturbations of couplings |\u0394J_{ij}| \u2264 \u03b5/(\u03b2n) preserve the log-concavity of the partition function as a polynomial in external fields.\n\n**The key insight is** that the Hessian of log Z with respect to external fields is controlled by the Lorentzian stability of the generating polynomial, and the sharp 1/n constant translates directly to coupling robustness.\n\n**Why now?** The connection between Lorentzian polynomials and partition functions is established (Anari et al., 2019), and the sharp stability constant makes the quantitative translation meaningful for physical systems.\n\n**Test:** Compute the partition function of the complete graph Ising model for n \u2208 {4, 6, 8, 10, 12} and verify that coupling perturbations of size O(\u03b5/n) preserve log-concavity of the magnetization polynomial.\n\n**Impact:** Would provide rigorous robustness guarantees for phase transition detection in noisy physical systems, connecting Lorentzian geometry to experimental physics.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` (dimension_degree_stability_law_linear), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (strong_concavity_on_orthogonal_complement)\n\n**Proof Strategy:** Express the partition function's Hessian in terms of the coupling matrix's Hessian, apply the sharp stability theorem, and translate the coefficient perturbation bound into a coupling perturbation bound via the chain rule.\n\n**Domain Bridges:** Statistical physics (Ising models, phase transitions), probability (log-concave distributions), quantum information (quantum Boltzmann machines).\n\n**Lineage:** Extends the stability theory from abstract polynomials to physical partition functions.\n\n**Ambition:** Grand challenge \u2014 would be the first application of sharp Lorentzian stability to physics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ac6bc32a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T08:27:46.927552+00:00"
   },
   {
     "id": "fd_0806",
@@ -1658,26 +1700,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1350",
-    "title": "Direction 2: Multi-Mode Lorentzian Witnesses via Higher Derivative Leaves",
-    "description": "**Conjecture.** For a Lorentzian polynomial $Z_K$ of degree $n$, the derivative leaves of codimension $n - k$ (yielding degree-$k$ polynomials for $k \\geq 3$) carry richer entanglement information than pairwise leaves. Specifically, the *mixed Hessian* of a degree-$k$ leaf \u2014 a $k \\times k$ matrix \u2014 has at most one positive eigenvalue (by Lorentzianity), and the magnitude of this positive eigenvalue bounds the $k$-mode entanglement entropy.\n\n**Test.** For $k = 3, 4$ and $n = 6, 8$: enumerate derivative leaves of codimension $n-k$, compute their Hessians, extract the unique positive eigenvalue, and correlate it with $S_A$ for the corresponding $k$-element subset $A$.\n\n**Impact.** Multi-mode witnesses would detect entanglement in subsystems that pairwise witnesses miss \u2014 analogous to how three-body correlations in condensed matter detect physics invisible to two-body probes.\n\n**Catalog References.** `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (Lorentzianity definition, `IsDPPLorentzian`), `Catalog/Pythagorean/QuantumDPPEntanglement.lean` (pairwise leaf analysis).\n\n**Proof Strategy.** Use the Br\u00e4nd\u00e9n\u2013Huh characterization: Lorentzianity of degree-$k$ leaves means their Hessians have at most one positive eigenvalue. Express the Hessian entries as linear combinations of principal minors of $K$. Use the Cauchy\u2013Binet formula to relate these to eigenvalues of $K_A$.\n\n**Domain Bridges.** Exterior algebra (Pl\u00fccker coordinates connect principal minors to Grassmannian geometry), tensor networks (multi-mode correlations as tensor contractions).\n\n**Lineage.** Generalizes the degree-2 leaf analysis of Theorem 2 to arbitrary codimension.\n\n**Ambition.** Grand challenge \u2014 requires substantial new Lorentzian polynomial infrastructure in Lean.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4c1deed8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T08:27:26.882112+00:00"
   },
   {
     "id": "seed_013",
@@ -2080,68 +2102,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T07:52:22.669578+00:00"
-  },
-  {
-    "id": "fd_1340",
-    "title": "Direction 3: Valuated Matroid Exchange Certificates",
-    "description": "**Conjecture.** For a valuated matroid (E, w) with basis exchange property, the tropical spectral gap of the quadratic leaf Hessian equals the minimum exchange defect in the matroid:\n\ntropGap = min_{B\u2081, B\u2082, i, j} [w(B\u2081) + w(B\u2082) - w(B\u2081 - i + j) - w(B\u2082 + i - j)]\n\nwhere the minimum is over all pairs of bases B\u2081, B\u2082 and exchange elements i \u2208 B\u2081\\B\u2082, j \u2208 B\u2082\\B\u2081.\n\n**Test.** Compute both quantities for graphical matroids of small graphs (K\u2084, K\u2085, Petersen graph, random graphs on 6-8 vertices) and compare.\n\n**Impact.** Establishes tropical spectral gaps as matroid invariants, making them accessible to the extensive algorithmic toolkit of matroid optimization (greedy algorithms, matroid intersection, etc.).\n\n**Catalog References.** `Pythagorean/TropicalLorentzianShadows.lean` (exchangeSlack_diag, tropical_gap_certificate_exists), `Catalog/Pythagorean/LorentzianExchangeCertificates.lean`\n\n**Proof Strategy.** For rank-2 matroids, the quadratic leaf Hessian is directly the basis weight matrix, and the exchange defect is the diagonal exchange slack. For higher rank, use the Cauchy-Binet formula to express quadratic leaf entries in terms of basis weights.\n\n**Domain Bridges.** Combinatorial optimization (polynomial-time certification), algebraic combinatorics (matroid theory), tropical geometry (tropical Grassmannians)\n\n**Lineage.** Extends the certificate theorem (Theorem 3.8) to the matroid setting.\n\n**Ambition.** Solid extension \u2014 connects established matroid theory with the new tropical stability framework.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7849b5c2",
-    "consumed_by_exp_id": "c96095b2",
-    "timestamp": "2026-05-27T07:52:13.051854+00:00"
-  },
-  {
-    "id": "fd_1354",
-    "title": "Direction 1: Probabilistic Stability \u2014 The 1/\u221an Law for Random Perturbations",
-    "description": "**Conjecture:** For random symmetric perturbations with i.i.d. mean-zero entries bounded by \u03b4, the Lorentzian signature is preserved with high probability whenever \u03b4 \u2264 K \u00b7 \u03b5 / \u221an, where K is a universal constant.\n\n**Test:** Compute survival probabilities for random perturbations of e_k Hessians at scale \u03b4 = \u03b5 / n^\u03b1 for \u03b1 \u2208 {0.4, 0.5, 0.6, 0.7} and dimensions n \u2208 {10, 50, 100, 500}. If the critical \u03b1 is 0.5 \u00b1 0.02, the conjecture is confirmed. If \u03b1 stabilizes near 0.6 or higher, the conjecture needs revision.\n\n**Impact:** A factor-of-\u221an improvement over the deterministic bound would make certified stochastic algorithms (e.g., randomized rounding, MCMC samplers) dramatically more efficient. It would connect Lorentzian combinatorics directly to random matrix universality.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` (Theorems 2-3), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem 9)\n\n**Proof Strategy:** Use the Wigner semicircle law or matrix Bernstein inequality to bound the spectral radius of the random perturbation matrix. The key step: show that the random perturbation's operator norm concentrates at O(\u221an \u00b7 \u03b4) rather than worst-case O(n \u00b7 \u03b4), then apply the gapped-signature perturbation theorem.\n\n**Domain Bridges:** Random matrix theory (GOE/GUE universality), high-dimensional probability (matrix concentration), statistical physics (random coupling constants).\n\n**Lineage:** Extends `quadFormBound_of_entry_bound_sharp` from deterministic to probabilistic setting.\n\n**Ambition:** Grand challenge \u2014 would establish first probabilistic stability theory for Lorentzian cones.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ac6bc32a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T08:27:46.772540+00:00"
-  },
-  {
-    "id": "fd_1357",
-    "title": "Direction 4: Stability of Partition Functions Under Noisy Couplings",
-    "description": "**Conjecture:** For the partition function Z(J) = \u2211_\u03c3 exp(-\u03b2 \u2211_{ij} J_{ij} \u03c3_i \u03c3_j) of an Ising model with Lorentzian coupling structure, perturbations of couplings |\u0394J_{ij}| \u2264 \u03b5/(\u03b2n) preserve the log-concavity of the partition function as a polynomial in external fields.\n\n**The key insight is** that the Hessian of log Z with respect to external fields is controlled by the Lorentzian stability of the generating polynomial, and the sharp 1/n constant translates directly to coupling robustness.\n\n**Why now?** The connection between Lorentzian polynomials and partition functions is established (Anari et al., 2019), and the sharp stability constant makes the quantitative translation meaningful for physical systems.\n\n**Test:** Compute the partition function of the complete graph Ising model for n \u2208 {4, 6, 8, 10, 12} and verify that coupling perturbations of size O(\u03b5/n) preserve log-concavity of the magnetization polynomial.\n\n**Impact:** Would provide rigorous robustness guarantees for phase transition detection in noisy physical systems, connecting Lorentzian geometry to experimental physics.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` (dimension_degree_stability_law_linear), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (strong_concavity_on_orthogonal_complement)\n\n**Proof Strategy:** Express the partition function's Hessian in terms of the coupling matrix's Hessian, apply the sharp stability theorem, and translate the coefficient perturbation bound into a coupling perturbation bound via the chain rule.\n\n**Domain Bridges:** Statistical physics (Ising models, phase transitions), probability (log-concave distributions), quantum information (quantum Boltzmann machines).\n\n**Lineage:** Extends the stability theory from abstract polynomials to physical partition functions.\n\n**Ambition:** Grand challenge \u2014 would be the first application of sharp Lorentzian stability to physics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ac6bc32a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T08:27:46.927552+00:00"
   },
   {
     "id": "seed_032",

@@ -707,5 +707,8 @@
   "4c1deed8": "direction_4_quantum_dpps_and_entanglement_bounds_v.json",
   "ac6bc32a": "direction_1_sharp_constants_in_the_dimension_degre.json",
   "c9570576": "direction_2_interacting_fermions_and_approximate_g.json",
-  "d0911202": "direction_5_spectral_phase_transitions_in_quantum_.json"
+  "d0911202": "direction_5_spectral_phase_transitions_in_quantum_.json",
+  "e47dd495": "direction_3_sheaf_theoretic_tropical_persistence.json",
+  "c96095b2": "direction_3_valuated_matroid_exchange_certificates.json",
+  "f57302af": "direction_4_algorithmic_spectral_certification.json"
 }
