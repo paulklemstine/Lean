@@ -217,6 +217,13 @@ def rebuild_commit_push() -> bool:
             cwd=str(REPO_ROOT), capture_output=True, timeout=30
         )
 
+        # Stash unstaged changes before pull to avoid "cannot pull with rebase" errors
+        stash = subprocess.run(
+            ["git", "stash", "--include-untracked"],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+        )
+        had_stash = stash.returncode == 0 and "No local changes" not in (stash.stdout or "")
+
         # Pull with rebase to handle remote changes
         pull = subprocess.run(
             ["git", "pull", "--rebase", "-X", "ours", "origin", "master"],
@@ -224,8 +231,14 @@ def rebuild_commit_push() -> bool:
         )
         if pull.returncode != 0:
             subprocess.run(["git", "rebase", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
+            if had_stash:
+                subprocess.run(["git", "stash", "pop"], cwd=str(REPO_ROOT), capture_output=True)
             print(f"[Tick] git pull --rebase failed: {pull.stderr}")
             return False
+
+        # Restore stashed changes after successful pull
+        if had_stash:
+            subprocess.run(["git", "stash", "pop"], cwd=str(REPO_ROOT), capture_output=True)
 
         push = subprocess.run(
             ["git", "push"], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
