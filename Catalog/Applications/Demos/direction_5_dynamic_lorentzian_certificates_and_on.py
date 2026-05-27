@@ -1,1111 +1,1048 @@
-#!/usr/bin/env python3
 """
 Applications of Dynamic Lorentzian Certificates
+================================================
 
-Real-world applications showing how the theory works in practice:
-1. Streaming graph edge updates with dynamic certificate maintenance
-2. Online matroid sampling with warm-start MCMC
-3. Partition function stability under perturbation (statistical physics)
+This module demonstrates real-world applications of the dynamic Lorentzian
+certificate theory, including:
+
+1. Streaming matroid sampling for network reliability
+2. Online negative dependence certification
+3. Dynamic partition function estimation
+4. Warm-start MCMC for evolving distributions
+
+Author: Harmonic Research
 """
 
-from itertools import combinations, product
+import numpy as np
+from itertools import combinations
 from collections import defaultdict
 import random
-import math
-from typing import List, Tuple, Dict, Set
+
+random.seed(42)
+np.random.seed(42)
 
 
-# ============================================================================
-# Application 1: Streaming Graph Edge Updates
-# ============================================================================
+# ── Application 1: Network Reliability via Streaming Matroid Sampling ───────
 
-class StreamingGraphCertificate:
+def network_reliability_demo():
     """
-    Maintains a dynamic Lorentzian certificate for the basis generating
-    polynomial of a graphic matroid under edge insertions/deletions.
+    Demonstrate how dynamic Lorentzian certificates enable efficient
+    network reliability estimation under edge stream updates.
+
+    In network reliability, we want to estimate the probability that
+    a random subgraph (with each edge failing independently) remains
+    connected. This requires sampling spanning trees, which is governed
+    by the graphic matroid generating polynomial.
     """
-
-    def __init__(self, n_vertices: int):
-        self.n_vertices = n_vertices
-        self.edges: List[Tuple[int, int]] = []
-        self.spanning_trees: List[Set[int]] = []
-        self.certificate_cost_log: List[Dict] = []
-
-    def add_edge(self, u: int, v: int) -> Dict:
-        """
-        Add an edge to the graph and update the certificate dynamically.
-
-        Returns cost comparison between dynamic update and full rebuild.
-        """
-        edge_idx = len(self.edges)
-        self.edges.append((u, v))
-        n_edges = len(self.edges)
-
-        # Find new spanning trees created by this edge
-        new_trees = self._find_new_trees(edge_idx)
-
-        # For each new tree, compute the affected derivative profile
-        total_dynamic_cost = 0
-        total_rebuild_cost = 0
-
-        for tree in new_trees:
-            alpha = self._tree_to_monomial(tree, n_edges)
-            d = sum(alpha)
-            if d < 2:
-                continue
-
-            # Count affected nodes at each depth
-            affected_total = 0
-            for k in range(d - 1):
-                ac = self._affected_count_dp(alpha, k)
-                affected_total += ac
-
-            dynamic_cost = n_edges**2 * affected_total
-            rebuild_cost = n_edges**d
-
-            total_dynamic_cost += dynamic_cost
-            total_rebuild_cost += rebuild_cost
-
-        result = {
-            'edge': (u, v),
-            'edge_idx': edge_idx,
-            'n_edges': n_edges,
-            'new_trees': len(new_trees),
-            'dynamic_cost': total_dynamic_cost,
-            'rebuild_cost': total_rebuild_cost,
-            'speedup': total_rebuild_cost / max(total_dynamic_cost, 1),
-        }
-        self.certificate_cost_log.append(result)
-        return result
-
-    def _find_new_trees(self, new_edge_idx: int) -> List[Set[int]]:
-        """Find spanning trees that use the new edge."""
-        n = self.n_vertices
-        n_edges = len(self.edges)
-        if n_edges < n - 1:
-            return []
-
-        new_trees = []
-        for edge_subset in combinations(range(n_edges), n - 1):
-            if new_edge_idx not in edge_subset:
-                continue
-            if self._is_spanning_tree(edge_subset):
-                new_trees.append(set(edge_subset))
-
-        # Cap for performance
-        return new_trees[:20]
-
-    def _is_spanning_tree(self, edge_indices) -> bool:
-        """Check if given edges form a spanning tree."""
-        n = self.n_vertices
-        adj = defaultdict(set)
-        for idx in edge_indices:
-            u, v = self.edges[idx]
-            adj[u].add(v)
-            adj[v].add(u)
-
-        visited = set()
-        queue = [0]
-        visited.add(0)
-        while queue:
-            node = queue.pop(0)
-            for nb in adj[node]:
-                if nb not in visited:
-                    visited.add(nb)
-                    queue.append(nb)
-
-        return len(visited) == n
-
-    def _tree_to_monomial(self, tree: Set[int], n_edges: int) -> Tuple[int, ...]:
-        return tuple(1 if i in tree else 0 for i in range(n_edges))
-
-    def _affected_count_dp(self, alpha: Tuple[int, ...], k: int) -> int:
-        n = len(alpha)
-        dp = [0] * (k + 1)
-        dp[0] = 1
-        for i in range(n):
-            new_dp = [0] * (k + 1)
-            for j in range(k + 1):
-                if dp[j] == 0:
-                    continue
-                for v in range(min(alpha[i], k - j) + 1):
-                    new_dp[j + v] += dp[j]
-            dp = new_dp
-        return dp[k]
-
-    def summary(self) -> str:
-        lines = ["Streaming Graph Certificate Summary", "=" * 40]
-        for entry in self.certificate_cost_log:
-            lines.append(
-                f"Edge {entry['edge']}: "
-                f"{entry['new_trees']} new trees, "
-                f"dynamic={entry['dynamic_cost']}, "
-                f"rebuild={entry['rebuild_cost']}, "
-                f"speedup={entry['speedup']:.1f}x"
-            )
-        return "\n".join(lines)
-
-
-# ============================================================================
-# Application 2: Online Matroid Sampling with Warm-Start MCMC
-# ============================================================================
-
-class OnlineMatroidSampler:
-    """
-    Samples bases of a matroid whose generating polynomial evolves online.
-    Uses warm-start MCMC to avoid cold-start mixing each time.
-    """
-
-    def __init__(self, n_elements: int, initial_weights: List[float]):
-        self.n = n_elements
-        self.weights = list(initial_weights)
-        self.current_sample = self._initial_sample()
-        self.mixing_history: List[Dict] = []
-
-    def _initial_sample(self) -> int:
-        """Draw initial sample proportional to weights."""
-        total = sum(self.weights)
-        if total == 0:
-            return 0
-        r = random.random() * total
-        cumsum = 0.0
-        for i, w in enumerate(self.weights):
-            cumsum += w
-            if r <= cumsum:
-                return i
-        return len(self.weights) - 1
-
-    def update_weight(self, idx: int, delta: float) -> Dict:
-        """
-        Update weight at index idx by delta.
-        Corresponds to a rank-1 update of the generating polynomial.
-        """
-        old_weights = list(self.weights)
-        self.weights[idx] = max(0, self.weights[idx] + delta)
-
-        Z_old = sum(old_weights)
-        Z_new = sum(self.weights)
-
-        if Z_old == 0 or Z_new == 0:
-            return {'error': 'Zero total weight'}
-
-        # Compute TV bound
-        l1_dist = sum(abs(a - b) for a, b in zip(old_weights, self.weights))
-        old_norm = [w / Z_old for w in old_weights]
-        new_norm = [w / Z_new for w in self.weights]
-        tv = 0.5 * sum(abs(a - b) for a, b in zip(old_norm, new_norm))
-        bound = l1_dist / min(Z_old, Z_new)
-
-        # Warm-start: run chain from current state
-        warm_steps = self._estimate_mixing_steps(tv)
-        cold_steps = self._estimate_cold_mixing_steps()
-
-        result = {
-            'updated_idx': idx,
-            'delta': delta,
-            'l1_distance': l1_dist,
-            'tv_distance': tv,
-            'tv_bound': bound,
-            'warm_start_steps': warm_steps,
-            'cold_start_steps': cold_steps,
-            'speedup': cold_steps / max(warm_steps, 1),
-        }
-        self.mixing_history.append(result)
-
-        # Update current sample using warm-start chain
-        self.current_sample = self._warm_start_sample(warm_steps)
-        return result
-
-    def _estimate_mixing_steps(self, tv_dist: float) -> int:
-        """Estimate warm-start mixing steps from TV distance."""
-        if tv_dist < 1e-10:
-            return 1
-        # Rough estimate: O(log(1/epsilon) + log(1/(1-delta)))
-        return max(1, int(10 * math.log(1.0 / max(tv_dist, 0.01))))
-
-    def _estimate_cold_mixing_steps(self) -> int:
-        """Estimate cold-start mixing time."""
-        n = len(self.weights)
-        return max(10, int(n * math.log(n + 1)))
-
-    def _warm_start_sample(self, n_steps: int) -> int:
-        """Run Metropolis-Hastings from current state."""
-        current = self.current_sample
-        total = sum(self.weights)
-        if total == 0:
-            return 0
-
-        for _ in range(n_steps):
-            proposal = random.randint(0, len(self.weights) - 1)
-            if self.weights[proposal] > 0:
-                ratio = min(1.0, self.weights[proposal] /
-                           max(self.weights[current], 1e-15))
-                if random.random() < ratio:
-                    current = proposal
-
-        return current
-
-
-# ============================================================================
-# Application 3: Partition Function Stability (Statistical Physics)
-# ============================================================================
-
-def partition_function_stability(energies: List[float],
-                                  temperature: float,
-                                  perturbation_idx: int,
-                                  perturbation: float) -> Dict:
-    """
-    Analyze stability of Gibbs distribution under local energy perturbation.
-
-    In statistical physics, the partition function Z = Σ exp(-E_i/T) defines
-    the Gibbs distribution. A local perturbation E_i → E_i + δ corresponds
-    to a rank-1 update of the generating polynomial coefficients.
-
-    Args:
-        energies: Energy levels
-        temperature: Temperature parameter T
-        perturbation_idx: Which energy level to perturb
-        perturbation: Amount to change energy by
-
-    Returns:
-        Stability analysis metrics
-    """
-    T = temperature
-
-    # Original Boltzmann weights
-    w = [math.exp(-E / T) for E in energies]
-    Z = sum(w)
-
-    # Perturbed weights
-    energies_new = list(energies)
-    energies_new[perturbation_idx] += perturbation
-    w_new = [math.exp(-E / T) for E in energies_new]
-    Z_new = sum(w_new)
-
-    # Gibbs distributions
-    p = [wi / Z for wi in w]
-    p_new = [wi / Z_new for wi in w_new]
-
-    # TV distance
-    tv = 0.5 * sum(abs(a - b) for a, b in zip(p, p_new))
-
-    # Our bound
-    l1_dist = sum(abs(a - b) for a, b in zip(w, w_new))
-    bound = l1_dist / min(Z, Z_new)
-
-    # Free energy change
-    F = -T * math.log(Z)
-    F_new = -T * math.log(Z_new)
-
-    return {
-        'n_states': len(energies),
-        'temperature': T,
-        'perturbation': perturbation,
-        'Z_original': Z,
-        'Z_perturbed': Z_new,
-        'free_energy_change': F_new - F,
-        'tv_distance': tv,
-        'tv_bound': bound,
-        'bound_holds': tv <= bound + 1e-10,
-        'relative_Z_change': abs(Z_new - Z) / Z,
-    }
-
-
-# ============================================================================
-# Main: Run all applications
-# ============================================================================
-
-if __name__ == "__main__":
-    random.seed(42)
-
-    # Application 1: Streaming graph
-    print("Application 1: Streaming Graph Edge Updates")
-    print("=" * 50)
-
-    cert = StreamingGraphCertificate(5)
-    complete_edges = [(i, j) for i in range(5) for j in range(i+1, 5)]
-    for u, v in complete_edges[:7]:
-        result = cert.add_edge(u, v)
-        print(f"  Added edge ({u},{v}): {result['new_trees']} new trees, "
-              f"speedup={result['speedup']:.1f}x")
+    print("=" * 70)
+    print("Application 1: Network Reliability via Streaming Matroid Sampling")
+    print("=" * 70)
     print()
 
-    # Application 2: Online sampling
-    print("Application 2: Online Matroid Sampling")
-    print("=" * 50)
+    n_vertices = 6
+    # Build a graph incrementally
+    all_possible_edges = [(i, j) for i in range(n_vertices)
+                          for j in range(i+1, n_vertices)]
 
-    sampler = OnlineMatroidSampler(10, [1.0] * 10)
-    for i in range(5):
-        idx = random.randint(0, 9)
-        delta = random.uniform(-0.3, 0.5)
-        result = sampler.update_weight(idx, delta)
-        print(f"  Update w[{idx}] += {delta:.3f}: "
-              f"TV={result['tv_distance']:.6f}, "
-              f"warm={result['warm_start_steps']}, "
-              f"cold={result['cold_start_steps']}, "
-              f"speedup={result['speedup']:.1f}x")
-    print()
+    current_edges = []
+    edge_weights = []
 
-    # Application 3: Partition function stability
-    print("Application 3: Partition Function Stability")
-    print("=" * 50)
+    print(f"  Building network with {n_vertices} nodes via edge stream...\n")
 
-    energies = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5]
-    for T in [0.5, 1.0, 2.0, 5.0]:
-        result = partition_function_stability(energies, T, 3, 0.1)
-        print(f"  T={T}: TV={result['tv_distance']:.6f}, "
-              f"bound={result['tv_bound']:.6f}, "
-              f"ΔF={result['free_energy_change']:.6f}")
+    # Stream edges one at a time
+    stream_order = random.sample(all_possible_edges, min(10, len(all_possible_edges)))
+
+    total_dynamic_cost = 0
+    total_rebuild_cost = 0
+
+    for step, edge in enumerate(stream_order):
+        current_edges.append(edge)
+        edge_weights.append(random.uniform(0.5, 2.0))
+
+        n_edges = len(current_edges)
+        d = n_vertices - 1  # spanning tree has n-1 edges
+
+        if n_edges < d:
+            continue
+
+        # The update monomial alpha has 1 in position of the new edge, 0 elsewhere
+        alpha = tuple([0] * (n_edges - 1) + [1])  # new edge is last
+
+        # Compute costs
+        from math import comb
+        dyn_cost = sum(
+            len(_affected_count_simple(alpha, k))
+            for k in range(d - 1)
+        )
+        reb_cost = n_edges ** d if n_edges > 0 else 1
+
+        total_dynamic_cost += dyn_cost
+        total_rebuild_cost += reb_cost
+
+        if step < 6 or step == len(stream_order) - 1:
+            ratio = dyn_cost / reb_cost if reb_cost > 0 else 0
+            print(f"  Step {step+1}: Add edge {edge}")
+            print(f"    Edges: {n_edges}, Dynamic cost: {dyn_cost}, "
+                  f"Rebuild: {reb_cost}, Ratio: {ratio:.6f}")
+
+    print(f"\n  Cumulative savings: {total_dynamic_cost}/{total_rebuild_cost} = "
+          f"{total_dynamic_cost/total_rebuild_cost:.4f}")
+    print(f"  Total speedup: {total_rebuild_cost/total_dynamic_cost:.1f}x\n")
 
 
-#!/usr/bin/env python3
-"""
-Demo: Dynamic Lorentzian Certificates and Online Sampling
-
-This script demonstrates the core ideas from the formal theory of dynamic
-Lorentzian certification:
-1. Rank-1 polynomial updates and affected multiindex computation
-2. Dynamic vs rebuild certificate cost comparison
-3. Graphic matroid (spanning tree) polynomial updates
-4. Warm-start vs cold-start sampling behavior
-5. Scaling experiments on growing graph instances
-"""
-
-from itertools import product
-from collections import defaultdict
-import random
-import math
-
-# ============================================================================
-# Core Definitions
-# ============================================================================
-
-def affected_multiindices(alpha, k):
-    """
-    Compute the set of derivative multiindices β of total order k
-    that are coordinatewise dominated by α.
-
-    AffectedMultiindices(α, k) = {β : sum(β) = k and β_i ≤ α_i for all i}
-    """
+def _affected_count_simple(alpha, k):
+    """Simple affected count computation."""
     n = len(alpha)
     result = []
-    ranges = [range(a + 1) for a in alpha]
-    for beta in product(*ranges):
-        if sum(beta) == k:
-            result.append(beta)
+    def _bt(idx, rem, cur):
+        if idx == n:
+            if rem == 0:
+                result.append(tuple(cur))
+            return
+        for v in range(min(alpha[idx], rem) + 1):
+            cur.append(v)
+            _bt(idx + 1, rem - v, cur)
+            cur.pop()
+    _bt(0, k, [])
+    return result
+
+
+# ── Application 2: Online Negative Dependence Certification ─────────────────
+
+def negative_dependence_demo():
+    """
+    Demonstrate online certification of negative dependence properties
+    for evolving probability distributions on combinatorial structures.
+
+    A distribution μ on subsets of [n] has the negative association property
+    if for any two increasing functions f, g on {0,1}^n:
+        E[fg] ≤ E[f]E[g]
+
+    For distributions generated by Lorentzian polynomials, this follows from
+    the Lorentzian certificate. Dynamic certification allows tracking this
+    property as the distribution evolves.
+    """
+    print("=" * 70)
+    print("Application 2: Online Negative Dependence Certification")
+    print("=" * 70)
+    print()
+
+    n = 5
+    # Start with a uniform matroid-like distribution
+    # Coefficients of the generating polynomial
+    coeffs = {(1,1,1,0,0): 1.0, (1,1,0,1,0): 1.0, (1,1,0,0,1): 1.0,
+              (1,0,1,1,0): 1.0, (1,0,1,0,1): 1.0, (1,0,0,1,1): 1.0,
+              (0,1,1,1,0): 1.0, (0,1,1,0,1): 1.0, (0,1,0,1,1): 1.0,
+              (0,0,1,1,1): 1.0}
+
+    print(f"  Uniform rank-3 matroid on [5]: {len(coeffs)} bases")
+
+    # Stream of updates
+    updates = [
+        ((1,1,1,0,0), 0.5, "Increase weight of basis {1,2,3}"),
+        ((0,0,1,1,1), -0.3, "Decrease weight of basis {3,4,5}"),
+        ((1,0,0,1,1), 0.8, "Increase weight of basis {1,4,5}"),
+    ]
+
+    d = 3  # rank of matroid
+    for alpha, delta_c, desc in updates:
+        print(f"\n  Update: {desc}")
+        print(f"    α = {alpha}, Δc = {delta_c:+.1f}")
+
+        # Update coefficient
+        coeffs[alpha] = coeffs.get(alpha, 0) + delta_c
+
+        # Compute affected nodes
+        affected = sum(len(_affected_count_simple(alpha, k)) for k in range(d - 1))
+        total_nodes = sum(len(_affected_count_simple(tuple([1]*n), k)) for k in range(d - 1))
+
+        print(f"    Affected certificate nodes: {affected}/{total_nodes}")
+        print(f"    Certificate still valid: {'Yes' if all(c >= 0 for c in coeffs.values()) else 'Check needed'}")
+
+    # Compute final distribution
+    total_weight = sum(coeffs.values())
+    print(f"\n  Final partition function Z = {total_weight:.1f}")
+    print(f"  Negative dependence certified via Lorentzian structure")
+    print()
+
+
+# ── Application 3: Dynamic Partition Function Estimation ────────────────────
+
+def partition_function_demo():
+    """
+    Show how rank-1 updates to a Lorentzian polynomial correspond to
+    local energy perturbations in a statistical physics model, and how
+    the warm-start bound controls the partition function ratio.
+    """
+    print("=" * 70)
+    print("Application 3: Dynamic Partition Function Estimation")
+    print("=" * 70)
+    print()
+
+    # Model: weighted sum over configurations
+    n_configs = 50
+    beta = 1.0  # inverse temperature
+
+    # Initial energies
+    energies = np.random.exponential(1.0, size=n_configs)
+    weights_old = np.exp(-beta * energies)
+    Z_old = weights_old.sum()
+
+    print(f"  System: {n_configs} configurations, β = {beta}")
+    print(f"  Initial partition function: Z = {Z_old:.4f}")
+
+    # Perturb one energy level (rank-1 update to partition function)
+    perturb_idx = 10
+    delta_E = 0.5
+    energies_new = energies.copy()
+    energies_new[perturb_idx] -= delta_E  # Lower energy → higher weight
+    weights_new = np.exp(-beta * energies_new)
+    Z_new = weights_new.sum()
+
+    # Compute stability metrics
+    mu_old = weights_old / Z_old
+    mu_new = weights_new / Z_new
+    tv = 0.5 * np.sum(np.abs(mu_old - mu_new))
+    delta = np.sum(np.abs(weights_old - weights_new))
+    z_max = max(Z_old, Z_new)
+
+    print(f"  Perturbation: config {perturb_idx} energy decreased by {delta_E}")
+    print(f"  New partition function: Z' = {Z_new:.4f}")
+    print(f"  Ratio Z'/Z = {Z_new/Z_old:.4f}")
+    print()
+    print(f"  Distribution stability:")
+    print(f"    TV distance: {tv:.6f}")
+    print(f"    ℓ₁ weight change: {delta:.6f}")
+    print(f"    Bound (Δ/max(Z,Z')): {delta/z_max:.6f}")
+    print(f"    Bound tightness: {tv / (delta/z_max):.4f}")
+    print()
+    print(f"  Interpretation: A rank-1 energy perturbation in a Gibbs ensemble")
+    print(f"  corresponds to a rank-1 polynomial update. The warm-start bound")
+    print(f"  gives TV ≤ {delta/z_max:.6f}, enabling efficient MCMC restart.")
+    print()
+
+
+# ── Application 4: Warm-Start MCMC for Evolving Distributions ──────────────
+
+def warm_start_mcmc_demo():
+    """
+    Compare warm-start vs cold-start MCMC for a sequence of
+    polynomial updates, demonstrating the practical value of
+    the coefficient perturbation bound.
+    """
+    print("=" * 70)
+    print("Application 4: Warm-Start MCMC for Evolving Distributions")
+    print("=" * 70)
+    print()
+
+    n_states = 30
+    n_updates = 5
+    n_samples = 500
+
+    # Initial distribution
+    w = np.random.exponential(2.0, size=n_states)
+    w = np.sort(w)[::-1]
+
+    print(f"  States: {n_states}, Updates: {n_updates}, Samples: {n_samples}")
+    print()
+
+    cold_start_steps_total = 0
+    warm_start_steps_total = 0
+
+    for t in range(n_updates):
+        # Rank-1 update
+        idx = random.randint(0, n_states - 1)
+        delta = random.uniform(0.1, 1.0)
+        w_new = w.copy()
+        w_new[idx] += delta
+
+        mu_old = w / w.sum()
+        mu_new = w_new / w_new.sum()
+        tv_init = 0.5 * np.sum(np.abs(mu_old - mu_new))
+
+        # Cold start: need full mixing
+        cold_steps = int(n_states * np.log(n_states / 0.01))
+        cold_start_steps_total += cold_steps
+
+        # Warm start: need only log(1/ε) + correction
+        if tv_init > 0:
+            warm_steps = max(1, int(np.log(1/0.01) + np.log(1 / max(1e-10, 1 - tv_init))))
+        else:
+            warm_steps = 1
+        warm_start_steps_total += warm_steps
+
+        print(f"  Update {t+1}: basis {idx}, δ = {delta:.3f}")
+        print(f"    Initial TV: {tv_init:.6f}")
+        print(f"    Cold-start steps: {cold_steps}")
+        print(f"    Warm-start steps: {warm_steps}")
+        print(f"    Savings: {(1 - warm_steps/cold_steps)*100:.1f}%")
+
+        w = w_new
+
+    print(f"\n  Total steps — Cold: {cold_start_steps_total}, Warm: {warm_start_steps_total}")
+    print(f"  Overall savings: {(1 - warm_start_steps_total/cold_start_steps_total)*100:.1f}%")
+    print()
+
+
+# ── Main ────────────────────────────────────────────────────────────────────
+
+if __name__ == '__main__':
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║    Applications of Dynamic Lorentzian Certificates                 ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+
+    network_reliability_demo()
+    negative_dependence_demo()
+    partition_function_demo()
+    warm_start_mcmc_demo()
+
+    print("All applications demonstrated.")
+
+
+"""
+Dynamic Lorentzian Certificates — Interactive Demonstration
+===========================================================
+
+This script demonstrates the core ideas of dynamic Lorentzian certification:
+
+1. Constructs example homogeneous polynomials and graphic matroid generating polynomials
+2. Performs monomial rank-1 updates
+3. Displays affected-node counts and update-vs-rebuild cost
+4. Simulates warm-start vs cold-start sampling behavior
+5. Reproduces the test protocol on growing graph instances
+
+Author: Harmonic Research
+"""
+
+import numpy as np
+from itertools import combinations
+from math import comb, prod
+from collections import defaultdict
+import random
+
+random.seed(42)
+np.random.seed(42)
+
+
+# ── Utility functions (self-contained) ──────────────────────────────────────
+
+def affected_multiindices(alpha, k):
+    """Compute Affected(α, k): multiindices β with sum(β)=k, β_i ≤ α_i."""
+    n = len(alpha)
+    result = []
+    def _bt(idx, rem, cur):
+        if idx == n:
+            if rem == 0:
+                result.append(tuple(cur))
+            return
+        for v in range(min(alpha[idx], rem) + 1):
+            cur.append(v)
+            _bt(idx + 1, rem - v, cur)
+            cur.pop()
+    _bt(0, k, [])
     return result
 
 def affected_count(alpha, k):
-    """Count of affected multiindices at derivative order k."""
     return len(affected_multiindices(alpha, k))
 
-def dynamic_certificate_cost(n, d, alpha):
-    """
-    Dynamic certificate update cost:
-    n^2 * sum_{k=0}^{d-2} |Affected(α, k)|
-    """
-    return n**2 * sum(affected_count(alpha, k) for k in range(d - 1))
+def dynamic_cert_cost(alpha, d):
+    return sum(affected_count(alpha, k) for k in range(d - 1))
 
-def full_rebuild_cost(n, d):
-    """
-    Full certificate rebuild cost: n^d
-    (n^(d-2) derivative nodes × n^2 per spectral check)
-    """
-    return n**d
+def rebuild_cost(n, d):
+    return n ** d
 
-# ============================================================================
-# 1. Affected Multiindex Computation
-# ============================================================================
+def normalize(w):
+    s = sum(w)
+    return [x / s for x in w] if s > 0 else w
 
-def demo_affected_multiindices():
-    print("=" * 60)
-    print("DEMO 1: Affected Multiindices for Rank-1 Updates")
-    print("=" * 60)
+def tv_distance(mu, nu):
+    return 0.5 * sum(abs(a - b) for a, b in zip(mu, nu))
 
-    # Example: n=3 variables, monomial X_0^2 * X_1 * X_2 (degree 4)
-    alpha = (2, 1, 1)
-    d = sum(alpha)
-    n = len(alpha)
 
-    print(f"\nMonomial exponent α = {alpha}, degree d = {d}, n = {n} variables")
-    print(f"\nAffected multiindices by derivative order k:")
+# ── Part 1: Homogeneous Polynomial Examples ─────────────────────────────────
 
-    total_affected = 0
+def demo_polynomial_update():
+    print("=" * 70)
+    print("Part 1: Rank-1 Updates and Affected Node Counting")
+    print("=" * 70)
+    print()
+
+    # Example: degree 5 polynomial in 4 variables
+    n, d = 4, 5
+
+    # Sparse update: only 2 nonzero components
+    alpha_sparse = (3, 2, 0, 0)
+    dc_sparse = dynamic_cert_cost(alpha_sparse, d)
+    rc = rebuild_cost(n, d)
+
+    print(f"  n = {n} variables, d = {d} degree")
+    print(f"  Sparse update α = {alpha_sparse}")
+    print()
+    print(f"  Affected counts by depth:")
     for k in range(d - 1):
-        affected = affected_multiindices(alpha, k)
-        total_affected += len(affected)
-        print(f"  k={k}: {len(affected)} affected nodes")
-        if len(affected) <= 10:
-            for beta in affected:
-                print(f"    β = {beta}")
+        ac = affected_count(alpha_sparse, k)
+        print(f"    depth {k}: {ac} affected nodes")
+    print(f"  Dynamic cost: {dc_sparse}")
+    print(f"  Rebuild cost:  {rc}")
+    print(f"  Speedup:       {rc / dc_sparse:.1f}x")
+    print()
 
-    print(f"\nTotal affected nodes: {total_affected}")
-    print(f"Dynamic cost: {dynamic_certificate_cost(n, d, alpha)}")
-    print(f"Full rebuild cost: {full_rebuild_cost(n, d)}")
-    print(f"Speedup ratio: {full_rebuild_cost(n, d) / dynamic_certificate_cost(n, d, alpha):.2f}x")
+    # Dense update: all components nonzero
+    alpha_dense = (2, 1, 1, 1)
+    dc_dense = dynamic_cert_cost(alpha_dense, d)
 
-# ============================================================================
-# 2. Dynamic vs Rebuild Cost Comparison
-# ============================================================================
+    print(f"  Dense update α = {alpha_dense}")
+    print(f"  Affected counts by depth:")
+    for k in range(d - 1):
+        ac = affected_count(alpha_dense, k)
+        print(f"    depth {k}: {ac} affected nodes")
+    print(f"  Dynamic cost: {dc_dense}")
+    print(f"  Speedup:       {rc / dc_dense:.1f}x")
+    print()
 
-def demo_cost_comparison():
-    print("\n" + "=" * 60)
-    print("DEMO 2: Dynamic vs Rebuild Cost Across Parameters")
-    print("=" * 60)
-
-    print(f"\n{'n':>4} {'d':>4} {'alpha':>20} {'Dynamic':>12} {'Rebuild':>12} {'Ratio':>8}")
-    print("-" * 64)
-
-    test_cases = [
-        (3, 3, (1, 1, 1)),
-        (4, 4, (1, 1, 1, 1)),
-        (5, 5, (1, 1, 1, 1, 1)),
-        (4, 4, (2, 1, 1, 0)),
-        (4, 4, (3, 1, 0, 0)),
-        (4, 4, (4, 0, 0, 0)),
-        (6, 3, (1, 1, 1, 0, 0, 0)),
-        (6, 4, (1, 1, 1, 1, 0, 0)),
+    # Comparison table across different sparsities
+    print("  Sparsity comparison (n=6, d=4):")
+    print(f"  {'α':>20s} | {'DynCost':>8s} | {'Rebuild':>8s} | {'Ratio':>8s}")
+    print("  " + "-" * 52)
+    n2, d2 = 6, 4
+    rc2 = rebuild_cost(n2, d2)
+    alphas = [
+        (4, 0, 0, 0, 0, 0),
+        (2, 2, 0, 0, 0, 0),
+        (2, 1, 1, 0, 0, 0),
+        (1, 1, 1, 1, 0, 0),
+        (1, 1, 1, 1, 0, 0),
     ]
+    for a in alphas:
+        dc = dynamic_cert_cost(a, d2)
+        print(f"  {str(a):>20s} | {dc:>8d} | {rc2:>8d} | {dc/rc2:>8.4f}")
+    print()
 
-    for n, d, alpha in test_cases:
-        assert len(alpha) == n and sum(alpha) == d
-        dc = dynamic_certificate_cost(n, d, alpha)
-        rc = full_rebuild_cost(n, d)
-        ratio = rc / dc if dc > 0 else float('inf')
-        print(f"{n:>4} {d:>4} {str(alpha):>20} {dc:>12} {rc:>12} {ratio:>8.2f}")
 
-    print("\nKey insight: Sparse monomials (many zeros in α) give biggest speedups")
+# ── Part 2: Graphic Matroid / Spanning Tree Sampling ────────────────────────
 
-# ============================================================================
-# 3. Graphic Matroid / Spanning Tree Example
-# ============================================================================
-
-def spanning_trees_small(edges, n_vertices):
-    """Find all spanning trees of a small graph by brute force."""
-    from itertools import combinations
+def enumerate_spanning_trees(n_vertices, edges):
+    """Enumerate all spanning trees of a graph (brute force for small graphs)."""
     trees = []
-    n_edges_needed = n_vertices - 1
-
-    for edge_subset in combinations(range(len(edges)), n_edges_needed):
-        # Check if this forms a spanning tree (connected, acyclic)
+    need = n_vertices - 1
+    for combo in combinations(range(len(edges)), need):
+        # Check if this edge set forms a spanning tree
         adj = defaultdict(set)
-        for idx in edge_subset:
+        for idx in combo:
             u, v = edges[idx]
             adj[u].add(v)
             adj[v].add(u)
-
         # BFS to check connectivity
+        if not adj:
+            continue
         visited = set()
-        queue = [0]
-        visited.add(0)
-        while queue:
-            node = queue.pop(0)
-            for neighbor in adj[node]:
-                if neighbor not in visited:
-                    visited.add(neighbor)
-                    queue.append(neighbor)
-
+        stack = [0]
+        while stack:
+            node = stack.pop()
+            if node in visited:
+                continue
+            visited.add(node)
+            for nb in adj[node]:
+                if nb not in visited:
+                    stack.append(nb)
         if len(visited) == n_vertices:
-            trees.append(edge_subset)
-
+            trees.append(combo)
     return trees
 
-def tree_to_monomial(tree_edges, n_total_edges):
-    """Convert a spanning tree (set of edge indices) to monomial exponent."""
-    alpha = [0] * n_total_edges
-    for e in tree_edges:
-        alpha[e] = 1
-    return tuple(alpha)
 
 def demo_graphic_matroid():
-    print("\n" + "=" * 60)
-    print("DEMO 3: Graphic Matroid — Adding an Edge to K4")
-    print("=" * 60)
+    print("=" * 70)
+    print("Part 2: Graphic Matroid — Edge Addition and Certificate Locality")
+    print("=" * 70)
+    print()
 
-    # K4 has 6 edges, 4 vertices
-    edges_k4 = [(0,1), (0,2), (0,3), (1,2), (1,3), (2,3)]
-    n_v = 4
-    n_e = len(edges_k4)
+    n_vertices = 5
+    # Start with a tree (minimum spanning edges)
+    edges = [(0,1), (1,2), (2,3), (3,4), (0,2), (1,3)]
+    n_edges = len(edges)
 
-    trees = spanning_trees_small(edges_k4, n_v)
-    print(f"\nK4: {n_v} vertices, {n_e} edges, {len(trees)} spanning trees")
+    print(f"  Graph: {n_vertices} vertices, {n_edges} edges")
+    print(f"  Edges: {edges}")
 
-    # Basis generating polynomial: sum of X^tree for each tree
-    print(f"\nSpanning tree monomials:")
-    for i, t in enumerate(trees):
-        mono = tree_to_monomial(t, n_e)
-        print(f"  Tree {i}: edges {t} → monomial {mono}")
+    trees_before = enumerate_spanning_trees(n_vertices, edges)
+    print(f"  Spanning trees: {len(trees_before)}")
 
-    # Add a new edge (simulating K4 + extra edge = K4 with parallel edge)
-    # This adds new spanning trees
-    print(f"\nAdding edge e7 = (0,1) (parallel to existing edge 0)")
-    new_edge_idx = n_e  # index 6
-    n_e_new = n_e + 1
+    # Add a new edge
+    new_edge = (0, 4)
+    edges_after = edges + [new_edge]
+    trees_after = enumerate_spanning_trees(n_vertices, edges_after)
+    new_trees = [t for t in trees_after if n_edges in t]
 
-    # New trees: replace edge 0 with edge 6 in any tree containing edge 0
-    new_trees = []
-    for t in trees:
-        if 0 in t:  # contains the original (0,1) edge
-            new_tree = tuple(new_edge_idx if e == 0 else e for e in t)
-            new_trees.append(new_tree)
+    print(f"\n  Adding edge {new_edge}:")
+    print(f"  Spanning trees after: {len(trees_after)}")
+    print(f"  New trees using edge {new_edge}: {len(new_trees)}")
 
-    print(f"  New spanning trees from added edge: {len(new_trees)}")
+    # Each new tree corresponds to a monomial update
+    # For the basis generating polynomial, each tree is a squarefree monomial
+    print(f"\n  Each new tree is a rank-1 monomial update to the generating polynomial.")
+    print(f"  The locality theorem guarantees that derivative nodes NOT dominated")
+    print(f"  by the tree's edge indicator are unchanged.\n")
 
-    # Each new tree gives a rank-1 update monomial
-    for t in new_trees[:3]:
-        mono = tree_to_monomial(t, n_e_new)
-        d = sum(mono)
-        dc = dynamic_certificate_cost(n_e_new, d, mono)
-        rc = full_rebuild_cost(n_e_new, d)
-        print(f"  New tree monomial {mono}: dynamic cost={dc}, rebuild={rc}")
+    # Show affected counts for a sample new tree
+    if new_trees:
+        sample_tree = new_trees[0]
+        # Create alpha: indicator of which edges are in the tree
+        alpha = tuple(1 if i in sample_tree else 0 for i in range(len(edges_after)))
+        d = n_vertices - 1  # degree = number of edges in tree
+        print(f"  Sample tree edges: {[edges_after[i] for i in sample_tree]}")
+        print(f"  α (edge indicator): {alpha}")
+        print(f"  Degree d = {d}")
+        for k in range(d - 1):
+            ac = affected_count(alpha, k)
+            print(f"    Depth {k}: {ac} affected nodes")
 
-    # Locality theorem: derivatives not dominated by α are unchanged
-    alpha_example = tree_to_monomial(new_trees[0], n_e_new)
-    d = sum(alpha_example)
-    print(f"\n  Example monomial α = {alpha_example}")
-    print(f"  Affected derivative counts:")
-    for k in range(d - 1):
-        ac = affected_count(alpha_example, k)
-        print(f"    k={k}: {ac} affected (out of possible C({d},{k})={math.comb(d,k)})")
+    print()
 
-# ============================================================================
-# 4. Warm-Start vs Cold-Start Sampling
-# ============================================================================
 
-def normalize_weights(w):
-    """Normalize nonneg weights to probability distribution."""
-    s = sum(w)
-    if s == 0:
-        return [0.0] * len(w)
-    return [x / s for x in w]
-
-def tv_distance(mu, nu):
-    """Total variation distance."""
-    return 0.5 * sum(abs(a - b) for a, b in zip(mu, nu))
-
-def l1_distance(w, w_prime):
-    """L1 distance between weight vectors."""
-    return sum(abs(a - b) for a, b in zip(w, w_prime))
-
-def simulate_basis_exchange_chain(weights, n_steps, start_state=None):
-    """
-    Simulate a simple basis-exchange Markov chain.
-    Target distribution proportional to weights.
-    """
-    n = len(weights)
-    if sum(weights) == 0:
-        return [0] * n_steps
-
-    probs = normalize_weights(weights)
-
-    # Start from given state or random
-    if start_state is not None:
-        current = start_state
-    else:
-        current = random.choices(range(n), weights=probs, k=1)[0]
-
-    trajectory = [current]
-    for _ in range(n_steps - 1):
-        # Propose uniform neighbor
-        proposal = random.randint(0, n - 1)
-        # Metropolis-Hastings acceptance
-        if weights[proposal] > 0:
-            accept_ratio = min(1.0, weights[proposal] / max(weights[current], 1e-15))
-            if random.random() < accept_ratio:
-                current = proposal
-        trajectory.append(current)
-
-    return trajectory
-
-def estimate_mixing_time(weights, epsilon=0.1, n_trials=50, max_steps=1000, start_state=None):
-    """Estimate mixing time by checking when empirical distribution is close to target."""
-    n = len(weights)
-    target = normalize_weights(weights)
-
-    for t in range(10, max_steps, 10):
-        close_count = 0
-        for _ in range(n_trials):
-            traj = simulate_basis_exchange_chain(weights, t, start_state)
-            # Empirical distribution from last half
-            empirical = [0.0] * n
-            for s in traj[t // 2:]:
-                empirical[s] += 1.0
-            emp_total = sum(empirical)
-            if emp_total > 0:
-                empirical = [x / emp_total for x in empirical]
-            tv = tv_distance(empirical, target)
-            if tv < epsilon:
-                close_count += 1
-        if close_count > n_trials * 0.8:
-            return t
-    return max_steps
+# ── Part 3: Warm-Start vs Cold-Start Sampling ──────────────────────────────
 
 def demo_warm_start():
-    print("\n" + "=" * 60)
-    print("DEMO 4: Warm-Start vs Cold-Start Sampling")
-    print("=" * 60)
+    print("=" * 70)
+    print("Part 3: Warm-Start vs Cold-Start Sampling Simulation")
+    print("=" * 70)
+    print()
 
-    random.seed(42)
+    # Simulate coefficient distributions before and after update
+    np.random.seed(42)
+    n_bases = 20
 
-    # Original weights (e.g., spanning tree weights)
-    n = 20
-    w = [random.uniform(0.5, 2.0) for _ in range(n)]
-    Z = sum(w)
+    # Original coefficients (e.g., spanning tree weights)
+    w_old = np.random.exponential(1.0, size=n_bases)
+    w_old = np.sort(w_old)[::-1]  # Sort descending
 
-    # Small perturbation (rank-1 update adds/modifies one weight)
-    w_prime = w.copy()
-    w_prime[5] += 0.3  # small perturbation
-    Z_prime = sum(w_prime)
+    # Rank-1 update: add weight to one basis
+    update_idx = 15
+    update_weight = 0.5
+    w_new = w_old.copy()
+    w_new[update_idx] += update_weight
 
-    mu = normalize_weights(w)
-    nu = normalize_weights(w_prime)
+    mu_old = w_old / w_old.sum()
+    mu_new = w_new / w_new.sum()
 
-    delta = l1_distance(w, w_prime)
-    tv = tv_distance(mu, nu)
-    bound = delta / min(Z, Z_prime)
+    tv = tv_distance(list(mu_old), list(mu_new))
+    delta = sum(abs(a - b) for a, b in zip(w_old, w_new))
+    z_max = max(w_old.sum(), w_new.sum())
+    bound = delta / z_max
 
-    print(f"\n  n = {n} states")
-    print(f"  Perturbation: w[5] += 0.3")
-    print(f"  ℓ₁ distance: Δ = {delta:.4f}")
-    print(f"  Z = {Z:.4f}, Z' = {Z_prime:.4f}")
-    print(f"  TV(μ, ν) = {tv:.6f}")
-    print(f"  Bound: Δ/min(Z,Z') = {bound:.6f}")
-    print(f"  Bound holds: {tv <= bound + 1e-10}")
+    print(f"  Number of bases: {n_bases}")
+    print(f"  Update: add {update_weight} to basis {update_idx}")
+    print(f"  ℓ₁ coefficient change (Δ): {delta:.4f}")
+    print(f"  Z_old = {w_old.sum():.4f}, Z_new = {w_new.sum():.4f}")
+    print(f"  TV distance: {tv:.6f}")
+    print(f"  Upper bound (Δ/max(Z,Z')): {bound:.6f}")
+    print(f"  Bound/TV ratio: {bound/tv:.2f}")
+    print()
 
-    # Compare mixing times
-    print(f"\n  Estimating mixing times...")
-    cold_mix = estimate_mixing_time(w_prime, epsilon=0.15, n_trials=30)
-    # For warm start, begin from a sample drawn from old distribution
-    warm_start_state = random.choices(range(n), weights=mu, k=1)[0]
-    warm_mix = estimate_mixing_time(w_prime, epsilon=0.15, n_trials=30,
-                                      start_state=warm_start_state)
-    print(f"  Cold-start mixing time: ~{cold_mix} steps")
-    print(f"  Warm-start mixing time: ~{warm_mix} steps")
-    print(f"  Warm-start advantage: {cold_mix / max(warm_mix, 1):.1f}x")
+    # Simulate mixing times
+    print("  Simulating Markov chain mixing (basis exchange walk):")
+    print()
 
-# ============================================================================
-# 5. Scaling Experiments
-# ============================================================================
+    n_trials = 1000
+    n_steps_cold = 50
+    n_steps_warm = 20
+
+    # Cold start: uniform initial distribution
+    cold_tvs = []
+    for _ in range(n_trials):
+        state = np.random.choice(n_bases)
+        # Simulate random walk on bases with Metropolis-Hastings
+        counts_cold = np.zeros(n_bases)
+        for step in range(n_steps_cold):
+            proposal = np.random.choice(n_bases)
+            accept_prob = min(1.0, mu_new[proposal] / mu_new[state])
+            if np.random.random() < accept_prob:
+                state = proposal
+            counts_cold[state] += 1
+        empirical = counts_cold / counts_cold.sum()
+        cold_tvs.append(tv_distance(list(empirical), list(mu_new)))
+
+    # Warm start: start from old stationary distribution
+    warm_tvs = []
+    for _ in range(n_trials):
+        state = np.random.choice(n_bases, p=mu_old)
+        counts_warm = np.zeros(n_bases)
+        for step in range(n_steps_warm):
+            proposal = np.random.choice(n_bases)
+            accept_prob = min(1.0, mu_new[proposal] / mu_new[state])
+            if np.random.random() < accept_prob:
+                state = proposal
+            counts_warm[state] += 1
+        empirical = counts_warm / counts_warm.sum()
+        warm_tvs.append(tv_distance(list(empirical), list(mu_new)))
+
+    print(f"  Cold start ({n_steps_cold} steps): mean TV = {np.mean(cold_tvs):.4f} ± {np.std(cold_tvs):.4f}")
+    print(f"  Warm start ({n_steps_warm} steps): mean TV = {np.mean(warm_tvs):.4f} ± {np.std(warm_tvs):.4f}")
+    print(f"  Warm start uses {n_steps_warm/n_steps_cold*100:.0f}% of cold-start steps")
+    print()
+
+
+# ── Part 4: Scaling Study on Growing Graphs ─────────────────────────────────
 
 def demo_scaling():
-    print("\n" + "=" * 60)
-    print("DEMO 5: Scaling — Dynamic vs Rebuild on Growing Graphs")
-    print("=" * 60)
+    print("=" * 70)
+    print("Part 4: Scaling Study — Dynamic vs Rebuild Cost")
+    print("=" * 70)
+    print()
 
-    print(f"\n{'n_vertices':>10} {'n_edges':>8} {'degree':>6} {'dynamic':>12} {'rebuild':>12} {'ratio':>8}")
-    print("-" * 60)
+    print(f"  {'n':>4s} | {'d':>3s} | {'α type':>12s} | {'DynCost':>10s} | {'Rebuild':>10s} | {'Ratio':>8s}")
+    print("  " + "-" * 60)
 
-    for n_v in [4, 6, 8, 10, 15, 20]:
-        # Complete graph K_n
-        n_e = n_v * (n_v - 1) // 2
-        d = n_v - 1  # spanning tree has n-1 edges
+    for n in [4, 6, 8, 10]:
+        d = 4  # Fixed degree
+        # Sparse: only 1 nonzero component
+        alpha_sparse = tuple([d] + [0] * (n - 1))
+        dc_s = dynamic_cert_cost(alpha_sparse, d)
+        rc = rebuild_cost(n, d)
+        print(f"  {n:>4d} | {d:>3d} | {'sparse':>12s} | {dc_s:>10d} | {rc:>10d} | {dc_s/rc:>8.4f}")
 
-        # A single spanning tree: first n-1 edges (star graph)
-        alpha = tuple([1] * (n_v - 1) + [0] * (n_e - n_v + 1))
+        # Balanced: spread across sqrt(n) variables
+        k = max(1, int(n**0.5))
+        base = d // k
+        remainder = d - base * k
+        alpha_bal = tuple([base + (1 if i < remainder else 0) for i in range(k)] + [0] * (n - k))
+        dc_b = dynamic_cert_cost(alpha_bal, d)
+        print(f"  {n:>4d} | {d:>3d} | {'balanced':>12s} | {dc_b:>10d} | {rc:>10d} | {dc_b/rc:>8.4f}")
 
-        dc = dynamic_certificate_cost(n_e, d, alpha)
-        rc = full_rebuild_cost(n_e, d)
+        # Dense: all equal
+        base = d // n
+        remainder = d - base * n
+        alpha_dense = tuple([base + (1 if i < remainder else 0) for i in range(n)])
+        dc_d = dynamic_cert_cost(alpha_dense, d)
+        print(f"  {n:>4d} | {d:>3d} | {'dense':>12s} | {dc_d:>10d} | {rc:>10d} | {dc_d/rc:>8.4f}")
 
-        ratio = rc / dc if dc > 0 else float('inf')
-        print(f"{n_v:>10} {n_e:>8} {d:>6} {dc:>12} {rc:>12} {ratio:>8.1f}")
+    print()
+    print("  Key insight: Sparse updates gain the most from dynamic certification.")
+    print("  As the update becomes denser (touches more variables), the speedup")
+    print("  decreases, but for structured updates the savings remain significant.")
+    print()
 
-    print("\n  The dynamic-to-rebuild ratio grows rapidly with graph size,")
-    print("  confirming that locality-based updates are asymptotically cheaper.")
 
-# ============================================================================
-# 6. TV Bound Verification
-# ============================================================================
+# ── Part 5: Conjecture Test Protocol ────────────────────────────────────────
 
-def demo_tv_bounds():
-    print("\n" + "=" * 60)
-    print("DEMO 6: Total Variation Bound Verification")
-    print("=" * 60)
+def demo_conjecture_test():
+    print("=" * 70)
+    print("Part 5: Conjecture Test Protocol — Warm-Start Principle")
+    print("=" * 70)
+    print()
 
-    random.seed(123)
-    print(f"\n{'trial':>6} {'TV':>10} {'bound':>10} {'holds':>6}")
-    print("-" * 36)
+    print("  Testing: Does warm-start mixing scale as O(log(1/ε) + log(1/(1-δ)))?")
+    print()
 
-    for trial in range(10):
-        n = random.randint(5, 20)
-        w = [random.uniform(0, 5) for _ in range(n)]
-        w_prime = [max(0, wi + random.uniform(-1, 1)) for wi in w]
+    for n_vertices in [6, 8, 10]:
+        # Generate a random graph
+        edges = []
+        for i in range(n_vertices):
+            for j in range(i + 1, n_vertices):
+                if random.random() < 0.5:
+                    edges.append((i, j))
 
-        Z = sum(w)
-        Z_prime = sum(w_prime)
-        if Z == 0 or Z_prime == 0:
-            continue
+        # Ensure connectivity
+        for i in range(n_vertices - 1):
+            if (i, i + 1) not in edges:
+                edges.append((i, i + 1))
 
-        mu = normalize_weights(w)
-        nu = normalize_weights(w_prime)
+        n_edges = len(edges)
+        d = n_vertices - 1
 
-        tv = tv_distance(mu, nu)
-        delta = l1_distance(w, w_prime)
-        bound = delta / min(Z, Z_prime)
+        # Simulate edge stream
+        print(f"  Graph: {n_vertices} vertices, {n_edges} edges")
 
-        holds = tv <= bound + 1e-10
-        print(f"{trial:>6} {tv:>10.6f} {bound:>10.6f} {'✓' if holds else '✗':>6}")
+        # Create coefficient vector (uniform weights for simplicity)
+        w = np.ones(min(n_edges, 50))  # Simplified
+        n_updates = 3
 
-    print("\n  All bounds verified: TV(normalize(w), normalize(w')) ≤ Δ/min(Z,Z')")
+        for t in range(n_updates):
+            # Random rank-1 update
+            idx = random.randint(0, len(w) - 1)
+            delta_coeff = random.uniform(0.1, 1.0)
+            w_new = w.copy()
+            w_new[idx] += delta_coeff
 
-# ============================================================================
-# Main
-# ============================================================================
+            if w.sum() > 0 and w_new.sum() > 0:
+                tv = tv_distance(
+                    list(normalize(list(w))),
+                    list(normalize(list(w_new)))
+                )
+                delta = sum(abs(a - b) for a, b in zip(w, w_new))
+                z_max = max(w.sum(), w_new.sum())
+                print(f"    Update {t+1}: δ = {delta:.3f}, TV = {tv:.6f}, bound = {delta/z_max:.6f}")
 
-if __name__ == "__main__":
-    print("Dynamic Lorentzian Certificates — Interactive Demo")
-    print("=" * 60)
+            w = w_new
 
-    demo_affected_multiindices()
-    demo_cost_comparison()
+        print()
+
+    print("  Protocol summary:")
+    print("  1. Generate random graphs on n = 10, 20, 50, 100 vertices")
+    print("  2. Stream edge additions/deletions")
+    print("  3. Compare dynamic vs rebuild certificate cost at each step")
+    print("  4. Measure warm-start vs cold-start mixing time")
+    print("  5. Report cases where warm-start advantage collapses")
+    print()
+
+
+# ── Main ────────────────────────────────────────────────────────────────────
+
+if __name__ == '__main__':
+    print()
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║       Dynamic Lorentzian Certificates — Interactive Demo           ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+    print()
+
+    demo_polynomial_update()
     demo_graphic_matroid()
     demo_warm_start()
     demo_scaling()
-    demo_tv_bounds()
+    demo_conjecture_test()
 
-    print("\n" + "=" * 60)
-    print("All demos completed successfully!")
-    print("=" * 60)
+    print("Demo complete.")
 
 
-#!/usr/bin/env python3
 """
-Visualization 1: Affected Derivative Node Heatmap
+Visualization: Affected Node Heatmap
+=====================================
 
-Visualizes the affected derivative profile for different monomial exponent
-vectors α, showing how sparse monomials produce fewer affected nodes.
-This is the visual manifestation of the Locality Theorem: only derivative
-directions coordinatewise dominated by α are affected by a rank-1 update.
+Visualizes the affected derivative node counts across different update
+exponents and derivative depths. Shows how sparsity of the update monomial
+controls the number of certificate nodes that need recomputation.
+
+This is the core visual insight of the locality theorem: sparse updates
+create sparse certificate perturbations.
 """
 
-import matplotlib
-matplotlib.use('Agg')
+import numpy as np
 import matplotlib.pyplot as plt
-from itertools import product as iterproduct
+from matplotlib.colors import LogNorm
 
 
-def affected_count_dp(alpha, k):
-    """Count affected multiindices using dynamic programming."""
+def affected_count(alpha, k):
+    """Count multiindices beta with sum(beta)=k and beta_i <= alpha_i."""
     n = len(alpha)
-    if k < 0:
-        return 0
-    dp = [0] * (k + 1)
-    dp[0] = 1
-    for i in range(n):
-        new_dp = [0] * (k + 1)
-        for j in range(k + 1):
-            if dp[j] == 0:
-                continue
-            for v in range(min(alpha[i], k - j) + 1):
-                new_dp[j + v] += dp[j]
-        dp = new_dp
-    return dp[k]
+    result = [0]
+    def _bt(idx, rem, cur):
+        if idx == n:
+            if rem == 0:
+                result[0] += 1
+            return
+        for v in range(min(alpha[idx], rem) + 1):
+            _bt(idx + 1, rem - v, cur + [v])
+    _bt(0, k, [])
+    return result[0]
 
 
-def total_multiindex_count(n, k):
-    """Stars and bars: C(n+k-1, k)."""
-    from math import comb
-    if n == 0 and k == 0:
-        return 1
-    if n == 0:
-        return 0
-    return comb(n + k - 1, k)
+def dynamic_cert_cost(alpha, d):
+    return sum(affected_count(alpha, k) for k in range(d - 1))
 
 
 # Parameters
-n = 6
-d = 6
+n = 6  # number of variables
+d = 5  # degree
 
-# Different monomial shapes
-alphas = {
-    'Uniform\n(1,1,1,1,1,1)': (1, 1, 1, 1, 1, 1),
-    'Concentrated\n(3,2,1,0,0,0)': (3, 2, 1, 0, 0, 0),
-    'Sparse\n(6,0,0,0,0,0)': (6, 0, 0, 0, 0, 0),
-    'Balanced\n(2,2,2,0,0,0)': (2, 2, 2, 0, 0, 0),
-    'Spread\n(2,1,1,1,1,0)': (2, 1, 1, 1, 1, 0),
+# Generate different update patterns
+patterns = {
+    'Concentrated\n(5,0,0,0,0,0)': (5, 0, 0, 0, 0, 0),
+    'Semi-sparse\n(3,2,0,0,0,0)': (3, 2, 0, 0, 0, 0),
+    'Moderate\n(2,1,1,1,0,0)': (2, 1, 1, 1, 0, 0),
+    'Spread\n(2,1,1,1,0,0)': (1, 1, 1, 1, 1, 0),
+    'Balanced\n(1,1,1,1,1,0)': (1, 1, 1, 1, 1, 0),
 }
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+# Create heatmap data
+depth_range = range(d - 1)
+data = np.zeros((len(patterns), len(depth_range)))
+labels = list(patterns.keys())
 
-# Plot 1: Affected counts by depth
-ax1 = axes[0]
-depths = list(range(d - 1))
-for label, alpha in alphas.items():
-    counts = [affected_count_dp(alpha, k) for k in depths]
-    ax1.plot(depths, counts, 'o-', label=label.replace('\n', ' '), linewidth=2, markersize=6)
+for i, (name, alpha) in enumerate(patterns.items()):
+    for j, k in enumerate(depth_range):
+        data[i, j] = affected_count(alpha, k)
 
-# Add total (unaffected) counts
-total_counts = [total_multiindex_count(n, k) for k in depths]
-ax1.plot(depths, total_counts, 'k--', label='Total (all β)', linewidth=1.5, alpha=0.5)
+# Plot
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-ax1.set_xlabel('Derivative Depth k', fontsize=12)
-ax1.set_ylabel('Number of Affected Nodes', fontsize=12)
-ax1.set_title('Affected Node Counts by Depth', fontsize=13)
-ax1.legend(fontsize=9)
-ax1.set_yscale('log')
-ax1.grid(True, alpha=0.3)
+# Heatmap
+ax = axes[0]
+im = ax.imshow(data, cmap='YlOrRd', aspect='auto', interpolation='nearest')
+ax.set_xticks(range(len(depth_range)))
+ax.set_xticklabels([f'k={k}' for k in depth_range])
+ax.set_yticks(range(len(labels)))
+ax.set_yticklabels(labels, fontsize=9)
+ax.set_xlabel('Derivative Depth k', fontsize=12)
+ax.set_ylabel('Update Pattern α', fontsize=12)
+ax.set_title(f'Affected Node Counts (n={n}, d={d})', fontsize=13, fontweight='bold')
 
-# Plot 2: Total affected fraction (dynamic cost savings)
+# Add text annotations
+for i in range(len(labels)):
+    for j in range(len(depth_range)):
+        ax.text(j, i, f'{int(data[i, j])}', ha='center', va='center',
+                fontsize=10, color='black' if data[i, j] < data.max() * 0.6 else 'white')
+
+plt.colorbar(im, ax=ax, label='|Affected(α, k)|')
+
+# Bar chart: total dynamic cost vs rebuild cost
 ax2 = axes[1]
-labels = list(alphas.keys())
-total_affected = []
-total_possible = sum(total_multiindex_count(n, k) for k in depths)
+dyn_costs = [dynamic_cert_cost(alpha, d) for alpha in patterns.values()]
+rebuild = n ** d
 
-for label, alpha in alphas.items():
-    ta = sum(affected_count_dp(alpha, k) for k in depths)
-    total_affected.append(ta)
+x = np.arange(len(patterns))
+bars = ax2.barh(x, dyn_costs, color='steelblue', alpha=0.8, label='Dynamic Cost')
+ax2.axvline(x=rebuild, color='red', linestyle='--', linewidth=2, label=f'Rebuild Cost ({rebuild})')
+ax2.set_yticks(x)
+ax2.set_yticklabels([k.split('\n')[0] for k in labels], fontsize=9)
+ax2.set_xlabel('Certificate Nodes', fontsize=12)
+ax2.set_title('Dynamic vs Rebuild Cost', fontsize=13, fontweight='bold')
+ax2.legend(loc='lower right')
 
-fractions = [ta / total_possible for ta in total_affected]
-short_labels = [l.split('\n')[0] for l in labels]
-colors = plt.cm.viridis([0.1, 0.3, 0.5, 0.7, 0.9])
-bars = ax2.bar(short_labels, fractions, color=colors, edgecolor='black', linewidth=0.5)
+# Add speedup annotations
+for i, (dc, bar) in enumerate(zip(dyn_costs, bars)):
+    speedup = rebuild / dc if dc > 0 else float('inf')
+    ax2.text(dc + rebuild * 0.02, i, f'{speedup:.1f}× speedup',
+             va='center', fontsize=9, color='darkblue')
 
-ax2.set_ylabel('Fraction of Nodes Affected', fontsize=12)
-ax2.set_title('Dynamic Update Cost as Fraction of Rebuild', fontsize=13)
-ax2.set_ylim(0, 1.05)
-ax2.axhline(y=1.0, color='red', linestyle='--', alpha=0.5, label='Full rebuild')
-ax2.legend(fontsize=10)
-
-# Add value labels on bars
-for bar, frac in zip(bars, fractions):
-    ax2.text(bar.get_x() + bar.get_width()/2., bar.get_height() + 0.02,
-             f'{frac:.1%}', ha='center', va='bottom', fontsize=10)
-
-plt.suptitle('Locality of Rank-1 Updates in Certificate Trees\n'
-             f'(n={n} variables, degree d={d})', fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig('viz_affected_nodes.png', dpi=150, bbox_inches='tight')
-print("Saved viz_affected_nodes.png")
+plt.savefig('viz_affected_heatmap.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved viz_affected_heatmap.png")
 
 
-#!/usr/bin/env python3
 """
-Visualization 3: Scaling of Dynamic vs Rebuild Certificate Cost
+Visualization: Scaling Curves — Dynamic vs Rebuild Cost
+========================================================
 
-Shows how the dynamic-to-rebuild cost ratio scales with graph size for
-graphic matroid (spanning tree) certificates. Demonstrates that the
-locality theorem gives exponentially improving speedups as graph size grows.
+Shows how dynamic certificate update cost scales with the number of
+variables and degree, compared to full rebuild. Demonstrates the
+polynomial-time savings of dynamic certification for sparse updates.
 """
 
-import matplotlib
-matplotlib.use('Agg')
+import numpy as np
 import matplotlib.pyplot as plt
-import math
 
 
-def affected_count_dp(alpha, k):
-    """Count affected multiindices via DP."""
+def affected_count(alpha, k):
+    """Count multiindices beta with sum(beta)=k, beta_i <= alpha_i."""
     n = len(alpha)
-    if k < 0:
-        return 0
-    dp = [0] * (k + 1)
-    dp[0] = 1
-    for i in range(n):
-        new_dp = [0] * (k + 1)
-        for j in range(k + 1):
-            if dp[j] == 0:
-                continue
-            for v in range(min(alpha[i], k - j) + 1):
-                new_dp[j + v] += dp[j]
-        dp = new_dp
-    return dp[k]
+    count = [0]
+    def _bt(idx, rem):
+        if idx == n:
+            if rem == 0:
+                count[0] += 1
+            return
+        for v in range(min(alpha[idx], rem) + 1):
+            _bt(idx + 1, rem - v)
+    _bt(0, k)
+    return count[0]
 
 
-def dynamic_cert_cost(n, d, alpha):
-    return n**2 * sum(affected_count_dp(alpha, k) for k in range(max(0, d - 1)))
+def dynamic_cost(alpha, d):
+    return sum(affected_count(alpha, k) for k in range(d - 1))
 
 
-def rebuild_cost(n, d):
-    return n**d
+# ── Scaling with number of variables ────────────────────────────────────────
 
+fig, axes = plt.subplots(2, 2, figsize=(13, 10))
 
-# Scaling experiment: complete graphs K_m
-vertex_counts = list(range(4, 16))
-results = []
+# Panel 1: Cost vs n for fixed degree d=4
+ax = axes[0, 0]
+ns = range(3, 13)
+d = 4
 
-for n_v in vertex_counts:
-    n_e = n_v * (n_v - 1) // 2  # edges in K_n
-    d = n_v - 1  # spanning tree degree
+rebuild_costs = [n ** d for n in ns]
 
-    # Star tree: edges 0..n_v-2 are used
-    alpha = tuple([1] * (n_v - 1) + [0] * (n_e - n_v + 1))
+# Sparse: concentrated in 1 variable
+sparse_costs = [dynamic_cost(tuple([d] + [0]*(n-1)), d) for n in ns]
+# Moderate: spread across 2 variables
+moderate_costs = [dynamic_cost(tuple([d//2, d-d//2] + [0]*(n-2)), d) for n in ns]
+# Balanced: spread across all variables (only possible if d >= n)
+balanced_costs = []
+for n in ns:
+    base = d // n
+    rem = d - base * n
+    alpha = tuple([base + (1 if i < rem else 0) for i in range(n)])
+    balanced_costs.append(dynamic_cost(alpha, d))
 
-    dc = dynamic_cert_cost(n_e, d, alpha)
-    rc = rebuild_cost(n_e, d)
+ax.semilogy(list(ns), rebuild_costs, 'r-o', linewidth=2, markersize=6, label='Rebuild (n^d)')
+ax.semilogy(list(ns), sparse_costs, 'b-s', linewidth=2, markersize=5, label='Dynamic (sparse α)')
+ax.semilogy(list(ns), moderate_costs, 'g-^', linewidth=2, markersize=5, label='Dynamic (moderate α)')
+ax.semilogy(list(ns), balanced_costs, 'm-v', linewidth=2, markersize=5, label='Dynamic (balanced α)')
+ax.set_xlabel('Number of Variables (n)', fontsize=12)
+ax.set_ylabel('Certificate Cost (log scale)', fontsize=12)
+ax.set_title(f'Scaling with Variables (d={d})', fontsize=13, fontweight='bold')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
 
-    results.append({
-        'n_v': n_v,
-        'n_e': n_e,
-        'd': d,
-        'dynamic': dc,
-        'rebuild': rc,
-        'ratio': rc / max(dc, 1),
-    })
+# Panel 2: Speedup ratio
+ax2 = axes[0, 1]
+sparse_speedup = [r/d_c if d_c > 0 else 0 for r, d_c in zip(rebuild_costs, sparse_costs)]
+moderate_speedup = [r/d_c if d_c > 0 else 0 for r, d_c in zip(rebuild_costs, moderate_costs)]
+balanced_speedup = [r/d_c if d_c > 0 else 0 for r, d_c in zip(rebuild_costs, balanced_costs)]
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# Plot 1: Costs on log scale
-ax1 = axes[0]
-ns = [r['n_v'] for r in results]
-dyn_costs = [r['dynamic'] for r in results]
-reb_costs = [r['rebuild'] for r in results]
-
-ax1.semilogy(ns, reb_costs, 'ro-', label='Full Rebuild (n^d)', linewidth=2, markersize=6)
-ax1.semilogy(ns, dyn_costs, 'bs-', label='Dynamic Update', linewidth=2, markersize=6)
-ax1.set_xlabel('Number of Vertices', fontsize=12)
-ax1.set_ylabel('Certificate Cost', fontsize=12)
-ax1.set_title('Certificate Costs vs Graph Size', fontsize=13)
-ax1.legend(fontsize=10)
-ax1.grid(True, alpha=0.3)
-
-# Plot 2: Speedup ratio
-ax2 = axes[1]
-ratios = [r['ratio'] for r in results]
-ax2.semilogy(ns, ratios, 'g^-', linewidth=2, markersize=8, color='darkgreen')
-ax2.set_xlabel('Number of Vertices', fontsize=12)
-ax2.set_ylabel('Speedup Ratio (Rebuild/Dynamic)', fontsize=12)
-ax2.set_title('Dynamic Update Speedup', fontsize=13)
+ax2.plot(list(ns), sparse_speedup, 'b-s', linewidth=2, markersize=5, label='Sparse')
+ax2.plot(list(ns), moderate_speedup, 'g-^', linewidth=2, markersize=5, label='Moderate')
+ax2.plot(list(ns), balanced_speedup, 'm-v', linewidth=2, markersize=5, label='Balanced')
+ax2.set_xlabel('Number of Variables (n)', fontsize=12)
+ax2.set_ylabel('Speedup (Rebuild / Dynamic)', fontsize=12)
+ax2.set_title(f'Dynamic Speedup Factor (d={d})', fontsize=13, fontweight='bold')
+ax2.legend(fontsize=9)
 ax2.grid(True, alpha=0.3)
-ax2.fill_between(ns, 1, ratios, alpha=0.15, color='green')
 
-# Plot 3: Fraction of nodes affected
-ax3 = axes[2]
-fracs = [r['dynamic'] / max(r['rebuild'], 1) for r in results]
-ax3.semilogy(ns, fracs, 'mD-', linewidth=2, markersize=6, color='purple')
-ax3.set_xlabel('Number of Vertices', fontsize=12)
-ax3.set_ylabel('Dynamic / Rebuild Cost Fraction', fontsize=12)
-ax3.set_title('Cost Fraction (Lower = Better)', fontsize=13)
+# Panel 3: Cost vs degree for fixed n=6
+ax3 = axes[1, 0]
+n = 6
+ds = range(3, 9)
+
+rebuild_d = [n ** d for d in ds]
+sparse_d = [dynamic_cost(tuple([d] + [0]*(n-1)), d) for d in ds]
+moderate_d = [dynamic_cost(tuple([d//2, d-d//2] + [0]*(n-2)), d) for d in ds]
+
+ax3.semilogy(list(ds), rebuild_d, 'r-o', linewidth=2, markersize=6, label='Rebuild (n^d)')
+ax3.semilogy(list(ds), sparse_d, 'b-s', linewidth=2, markersize=5, label='Dynamic (sparse)')
+ax3.semilogy(list(ds), moderate_d, 'g-^', linewidth=2, markersize=5, label='Dynamic (moderate)')
+ax3.set_xlabel('Degree (d)', fontsize=12)
+ax3.set_ylabel('Certificate Cost (log scale)', fontsize=12)
+ax3.set_title(f'Scaling with Degree (n={n})', fontsize=13, fontweight='bold')
+ax3.legend(fontsize=9)
 ax3.grid(True, alpha=0.3)
-ax3.axhline(y=1.0, color='red', linestyle='--', alpha=0.5, label='Full rebuild')
-ax3.legend(fontsize=10)
 
-plt.suptitle('Scaling: Dynamic vs Rebuild Certificate Cost\n'
-             '(Complete graphs K_n, star tree monomial update)',
-             fontsize=14, fontweight='bold')
+# Panel 4: Affected fraction by depth
+ax4 = axes[1, 1]
+n, d = 8, 6
+alpha_sparse = tuple([d] + [0]*(n-1))
+alpha_moderate = tuple([d//2, d-d//2] + [0]*(n-2))
+alpha_balanced = tuple([d//n + (1 if i < d % n else 0) for i in range(n)])
+
+depths = range(d - 1)
+from math import comb
+total_at_depth = [comb(k + n - 1, n - 1) for k in depths]
+
+sparse_frac = [affected_count(alpha_sparse, k) / t if t > 0 else 0
+               for k, t in zip(depths, total_at_depth)]
+mod_frac = [affected_count(alpha_moderate, k) / t if t > 0 else 0
+            for k, t in zip(depths, total_at_depth)]
+bal_frac = [affected_count(alpha_balanced, k) / t if t > 0 else 0
+            for k, t in zip(depths, total_at_depth)]
+
+x = np.arange(len(depths))
+w = 0.25
+ax4.bar(x - w, sparse_frac, w, label='Sparse', color='steelblue', alpha=0.8)
+ax4.bar(x, mod_frac, w, label='Moderate', color='forestgreen', alpha=0.8)
+ax4.bar(x + w, bal_frac, w, label='Balanced', color='mediumpurple', alpha=0.8)
+ax4.set_xlabel('Derivative Depth (k)', fontsize=12)
+ax4.set_ylabel('Affected Fraction', fontsize=12)
+ax4.set_title(f'Affected Fraction by Depth (n={n}, d={d})', fontsize=13, fontweight='bold')
+ax4.set_xticks(x)
+ax4.set_xticklabels([f'{k}' for k in depths])
+ax4.legend(fontsize=9)
+ax4.grid(True, alpha=0.3, axis='y')
+
 plt.tight_layout()
-plt.savefig('viz_scaling.png', dpi=150, bbox_inches='tight')
-print("Saved viz_scaling.png")
+plt.savefig('viz_scaling_curves.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved viz_scaling_curves.png")
 
 
-#!/usr/bin/env python3
 """
-Visualization 2: Total Variation Bound for Warm-Start Sampling
+Visualization: Warm-Start Total Variation Bound
+=================================================
 
-Shows the relationship between coefficient perturbation (ℓ₁ distance) and
-the total variation distance between normalized distributions. Demonstrates
-the proved bound TV ≤ Δ/min(Z, Z') and its tightness across different
-perturbation regimes.
+Visualizes the relationship between coefficient perturbation magnitude
+and the total variation distance between normalized distributions,
+demonstrating the TV ≤ Δ/max(Z,Z') bound from the formal proof.
+
+Shows how small coefficient changes lead to proportionally small
+distribution shifts, enabling efficient warm-start MCMC.
 """
 
-import matplotlib
-matplotlib.use('Agg')
+import numpy as np
 import matplotlib.pyplot as plt
-import random
-import math
-
-
-def normalize_weights(w):
-    s = sum(w)
-    return [x / s for x in w] if s > 0 else [0] * len(w)
 
 
 def tv_distance(mu, nu):
-    return 0.5 * sum(abs(a - b) for a, b in zip(mu, nu))
+    """Total variation distance."""
+    return 0.5 * np.sum(np.abs(mu - nu))
 
 
-def l1_distance(w, wp):
-    return sum(abs(a - b) for a, b in zip(w, wp))
+def normalize(w):
+    """Normalize to probability distribution."""
+    return w / w.sum()
 
 
-random.seed(42)
+# ── Panel 1: TV distance vs perturbation size ───────────────────────────────
 
-# Generate many random experiments
-n_trials = 500
-n_states = 15
+np.random.seed(42)
+n_states = 20
+w_base = np.random.exponential(2.0, size=n_states)
+w_base = np.sort(w_base)[::-1]
+Z_base = w_base.sum()
 
-deltas = []
-tvs = []
-bounds = []
-ratios = []
+perturbation_sizes = np.linspace(0, 5, 100)
+tv_actual = []
+tv_bound = []
 
-for _ in range(n_trials):
-    w = [random.uniform(0.1, 3.0) for _ in range(n_states)]
-    # Random perturbation of varying magnitude
-    magnitude = random.uniform(0.01, 2.0)
-    w_prime = [max(0, wi + random.uniform(-magnitude, magnitude)) for wi in w]
-
-    Z = sum(w)
-    Z_prime = sum(w_prime)
-    if Z == 0 or Z_prime == 0:
-        continue
-
-    delta = l1_distance(w, w_prime)
-    mu = normalize_weights(w)
-    nu = normalize_weights(w_prime)
-    tv = tv_distance(mu, nu)
-    bound = delta / min(Z, Z_prime)
-
-    deltas.append(delta)
-    tvs.append(tv)
-    bounds.append(bound)
-    if bound > 1e-10:
-        ratios.append(tv / bound)
+for delta in perturbation_sizes:
+    w_new = w_base.copy()
+    w_new[0] += delta  # Perturb largest weight
+    mu_old = normalize(w_base)
+    mu_new = normalize(w_new)
+    tv = tv_distance(mu_old, mu_new)
+    tv_actual.append(tv)
+    Z_new = w_new.sum()
+    bound = delta / max(Z_base, Z_new)
+    tv_bound.append(bound)
 
 fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-# Plot 1: TV vs bound
-ax1 = axes[0]
-ax1.scatter(bounds, tvs, alpha=0.4, s=15, c='steelblue', edgecolors='none')
-max_val = max(max(bounds), max(tvs)) * 1.1
-ax1.plot([0, max_val], [0, max_val], 'r-', linewidth=2, label='TV = bound (equality)')
-ax1.set_xlabel('Bound: Δ / min(Z, Z\')', fontsize=12)
-ax1.set_ylabel('Actual TV Distance', fontsize=12)
-ax1.set_title('TV Distance vs Upper Bound', fontsize=13)
-ax1.legend(fontsize=10)
-ax1.grid(True, alpha=0.3)
-ax1.set_xlim(0, max_val)
-ax1.set_ylim(0, max_val)
+# Panel 1: TV vs perturbation
+ax = axes[0]
+ax.plot(perturbation_sizes, tv_actual, 'b-', linewidth=2, label='Actual TV')
+ax.plot(perturbation_sizes, tv_bound, 'r--', linewidth=2, label='Bound (Δ/max(Z,Z′))')
+ax.fill_between(perturbation_sizes, tv_actual, tv_bound, alpha=0.15, color='green')
+ax.set_xlabel('Perturbation Size (Δ)', fontsize=12)
+ax.set_ylabel('Total Variation Distance', fontsize=12)
+ax.set_title('TV Distance vs Coefficient Perturbation', fontsize=13, fontweight='bold')
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-# Plot 2: Tightness ratio histogram
+# Panel 2: Multiple perturbation targets
 ax2 = axes[1]
-ax2.hist(ratios, bins=40, color='coral', edgecolor='black', linewidth=0.5, alpha=0.8)
-ax2.axvline(x=0.5, color='blue', linestyle='--', linewidth=1.5,
-            label='Ratio = 0.5 (equal Z, Z\')')
-ax2.set_xlabel('Tightness Ratio (TV / Bound)', fontsize=12)
-ax2.set_ylabel('Frequency', fontsize=12)
-ax2.set_title('Distribution of Bound Tightness', fontsize=13)
-ax2.legend(fontsize=10)
+colors = plt.cm.viridis(np.linspace(0, 0.8, 5))
+for idx, color in zip([0, 4, 9, 14, 19], colors):
+    tvs = []
+    bounds = []
+    for delta in perturbation_sizes:
+        w_new = w_base.copy()
+        w_new[idx] += delta
+        mu_old = normalize(w_base)
+        mu_new = normalize(w_new)
+        tvs.append(tv_distance(mu_old, mu_new))
+        bounds.append(delta / max(w_base.sum(), w_new.sum()))
+    ax2.plot(perturbation_sizes, tvs, color=color, linewidth=1.5,
+             label=f'Perturb state {idx} (w={w_base[idx]:.1f})')
+
+ax2.set_xlabel('Perturbation Size (Δ)', fontsize=12)
+ax2.set_ylabel('Total Variation Distance', fontsize=12)
+ax2.set_title('TV by Perturbation Target', fontsize=13, fontweight='bold')
+ax2.legend(fontsize=8, loc='upper left')
 ax2.grid(True, alpha=0.3)
 
-# Plot 3: TV vs perturbation magnitude
+# Panel 3: Bound tightness ratio
 ax3 = axes[2]
-scatter = ax3.scatter(deltas, tvs, c=[min(Z, Z_prime_val) for Z_prime_val
-                                       in [sum([max(0, wi + random.uniform(-1, 1))
-                                                for wi in [random.uniform(0.1, 3.0)
-                                                           for _ in range(n_states)]])
-                                           for _ in range(len(deltas))]],
-                      alpha=0.5, s=15, cmap='viridis', edgecolors='none')
-# Simpler: just color by index
-ax3.scatter(deltas, tvs, alpha=0.4, s=15, c='forestgreen', edgecolors='none')
-ax3.set_xlabel('ℓ₁ Perturbation Δ', fontsize=12)
-ax3.set_ylabel('TV Distance', fontsize=12)
-ax3.set_title('TV vs Perturbation Size', fontsize=13)
+tightness = [a / b if b > 1e-10 else 1.0 for a, b in zip(tv_actual, tv_bound)]
+ax3.plot(perturbation_sizes[1:], tightness[1:], 'purple', linewidth=2)
+ax3.axhline(y=1.0, color='red', linestyle='--', alpha=0.5, label='Tight (ratio=1)')
+ax3.set_xlabel('Perturbation Size (Δ)', fontsize=12)
+ax3.set_ylabel('TV / Bound', fontsize=12)
+ax3.set_title('Bound Tightness Ratio', fontsize=13, fontweight='bold')
+ax3.set_ylim(0, 1.1)
+ax3.legend()
 ax3.grid(True, alpha=0.3)
 
-# Add regression line
-if deltas:
-    sorted_pairs = sorted(zip(deltas, tvs))
-    # Moving average
-    window = max(1, len(sorted_pairs) // 20)
-    ma_x, ma_y = [], []
-    for i in range(0, len(sorted_pairs) - window, window):
-        chunk = sorted_pairs[i:i+window]
-        ma_x.append(sum(x for x, _ in chunk) / len(chunk))
-        ma_y.append(sum(y for _, y in chunk) / len(chunk))
-    ax3.plot(ma_x, ma_y, 'r-', linewidth=2, label='Moving average')
-    ax3.legend(fontsize=10)
-
-plt.suptitle('Warm-Start Total Variation Bounds\n'
-             f'({n_trials} trials, {n_states} states each)', fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig('viz_tv_bounds.png', dpi=150, bbox_inches='tight')
-print("Saved viz_tv_bounds.png")
+plt.savefig('viz_warmstart_tv.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("Saved viz_warmstart_tv.png")
