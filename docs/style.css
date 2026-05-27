@@ -562,6 +562,7 @@ body {
 }
 
 .welcome-desc a, .welcome-footer a {
+    pointer-events: auto;
     background: linear-gradient(90deg, #22ccff, #8844ff, #ff4466, #22ccff);
     background-size: 300% 100%;
     animation: gradientCycle 6s ease-in-out infinite;
