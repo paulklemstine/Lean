@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1962 of the highest-quality
+A curated collection of 1964 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1962
+Total files: 1964
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1572,6 +1572,7 @@ import FINAL.Pythagorean.HigherOrderLogConcavity
 import FINAL.Pythagorean.HigherOrderMinorPerturbation
 import FINAL.Pythagorean.HybridWalk
 import FINAL.Pythagorean.HypergraphTransversal
+import FINAL.Pythagorean.InfoTheoreticMonotonicity
 import FINAL.Pythagorean.IntegerTrichotomy
 import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.KeplerEccentricity
@@ -1625,6 +1626,7 @@ import FINAL.Pythagorean.ProductFormula
 import FINAL.Pythagorean.Properties
 import FINAL.Pythagorean.PythagoreanFactoring
 import FINAL.Pythagorean.PythagoreanPairing
+import FINAL.Pythagorean.QuantumChannelMixing
 import FINAL.Pythagorean.QuantumRungeLenz
 import FINAL.Pythagorean.QuotientClosure
 import FINAL.Pythagorean.QuotientSections

@@ -435,10 +435,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "33b7a398",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.908872+00:00"
   },
   {
@@ -631,10 +631,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a0951d1f",
-    "consumed_by_exp_id": "a2154f02",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T06:04:06.558801+00:00"
   },
   {
@@ -752,10 +752,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f43533d0",
     "timestamp": "2026-05-26T21:53:04.887954+00:00"
   },
   {
@@ -855,10 +855,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f44ba709",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d72eb6e1",
     "timestamp": "2026-05-27T04:11:16.628921+00:00"
   },
   {
@@ -976,10 +976,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "05e24005",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0623d1ff",
     "timestamp": "2026-05-27T12:09:20.690830+00:00"
   },
   {
@@ -1219,25 +1219,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "be453c44",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T16:03:48.605918+00:00"
-  },
-  {
-    "id": "fd_1456",
-    "title": "Direction 3: Quantum Channel Mixing via Cayley Moment Bounds",
-    "description": "**Conjecture:** The purity of the k-fold quantum channel $\\Phi_{\\sigma,\\tau}^k$ (the completely positive map induced by the random walk step on S_n) decays as $\\text{tr}(\\Phi^k(\\rho)^2) \\leq 1/n! + C_k \\cdot (1 - \\lambda)^k$ where $\\lambda$ is the spectral gap, and the moment kernel directly controls the purity decay.\n\n**Test:** Implement the quantum channel $\\Phi$ for small S_n (n = 3, 4) as a superoperator on density matrices, and verify that purity decay matches the moment kernel predictions from `spectral_moment_eq_return_prob`.\n\n**The key insight is** that the spectral moment = return probability theorem (`spectral_moment_eq_return_prob` in our formalization) is literally a purity calculation for the associated quantum channel. The normalized adjacency operator is a bistochastic quantum channel, and tr(\u0100^m) computes the m-th moment of its spectrum, which controls the rate at which quantum states approach the maximally mixed state.\n\n**Why now?** Quantum computing demands explicit mixing time bounds for random circuits. Our certified moment framework provides the exact mathematical objects needed. The bridge from group walks to quantum channels is a functor that can be formalized.\n\n**Impact:** Certified mixing bounds for quantum channels on symmetric groups would have immediate applications in quantum algorithm design, random circuit sampling, and quantum error correction.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (spectral_moment_eq_return_prob, momentKernel_le_one, free_group_moment_two_lower).\n\n**Proof Strategy:** Formalize the quantum channel associated to a Cayley graph walk. Show that purity = (1/|G|) \u00b7 tr(\u0100^{2k}) and apply the moment-kernel bounds.\n\n**Domain Bridges:** Quantum information \u2192 spectral graph theory \u2192 representation theory.\n\n**Lineage:** Direct application of Theorem 6 (cross-domain bridge).\n\n**Ambition:** Solid extension \u2014 immediate applications with existing infrastructure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "be453c44",
-    "consumed_by_exp_id": "27e499fd",
-    "timestamp": "2026-05-27T16:03:48.729875+00:00"
   },
   {
     "id": "fd_1479",
@@ -1556,7 +1537,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "37ca1705",
@@ -2115,26 +2096,5 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.336768+00:00"
-  },
-  {
-    "id": "fd_1518",
-    "title": "Direction 3: Lorentzian Control of Glauber Dynamics Mixing",
-    "description": "**Conjecture:** For Ising models whose coupling matrix has gapped Lorentzian signature with margin \u03b5, the mixing time of Glauber dynamics is O(n log n / \u03b5), and this bound is stable under \u03b5/(2n\u00b2) coupling perturbations.\n\n**Test:** Simulate Glauber dynamics on K_n for n \u2208 {8, 12, 16, 20} with varying spectral gaps (by rescaling J). Measure empirical mixing times and compare to the predicted n log n / \u03b5 scaling. Perturb couplings and verify mixing time stability.\n\n**Impact:** Would establish Lorentzian structure as a sufficient condition for rapid mixing, paralleling the role of log-concavity for continuous distributions. This directly bridges algebraic combinatorics (Lorentzian polynomials) with the theory of Markov chain Monte Carlo sampling.\n\nThe key insight is that the gapped Lorentzian signature implies the Gibbs measure satisfies a Poincar\u00e9 inequality, which in turn controls the spectral gap of the Glauber dynamics generator. The perturbation stability of the spectral gap (our Theorem 3.8) should propagate to mixing time stability.\n\nWhy now? Recent work on modified log-Sobolev inequalities for discrete distributions [CLV21] provides the technical framework. Our covariance bound (Theorem 3.7) gives the missing ingredient: quantitative control of the Gibbs measure's correlation structure under perturbation.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `strong_concavity_on_orthogonal_complement`, `tangent_strong_concavity_of_gapped`\n\n**Proof Strategy:** Establish a Poincar\u00e9 inequality from the gapped signature. Use the perturbation stability theorem to show the Poincar\u00e9 constant is stable. Derive mixing time bounds from the stable Poincar\u00e9 inequality.\n\n**Domain Bridges:** Markov chain theory, sampling algorithms, optimization (simulated annealing)\n\n**Lineage:** Extension of Theorems 3.7 and 3.8\n\n**Ambition:** Grand challenge \u2014 would connect algebraic geometry to computational complexity\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "00a34fc1",
-    "consumed_by_exp_id": "8dd17845",
-    "timestamp": "2026-05-27T19:49:58.803212+00:00"
   }
 ];

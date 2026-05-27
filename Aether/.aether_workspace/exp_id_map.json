@@ -762,5 +762,8 @@
   "dc5aaeb8": "direction_5_newton_hierarchy_for_interacting_fermi.json",
   "37ca1705": "direction_2_sparse_support_certificate_compression.json",
   "dd920969": "direction_1_universal_support_tutte_polynomial.json",
-  "d3daf58d": "direction_3_hessian_based_lorentzian_gap_via_mvpol.json"
+  "d3daf58d": "direction_3_hessian_based_lorentzian_gap_via_mvpol.json",
+  "27e499fd": "direction_3_quantum_channel_mixing_via_cayley_mome.json",
+  "8dd17845": "direction_3_lorentzian_control_of_glauber_dynamics.json",
+  "90f5c361": "direction_3_information_theoretic_monotonicity_for.json"
 }

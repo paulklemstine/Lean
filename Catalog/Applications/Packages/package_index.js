@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Discrete Information Geometry",
     "date": "2026-05-27T21:40:32Z",
     "exp_id": "90f5c361",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7158934117647058,
+    "quality": "substantial",
     "pkg_num": 193
   },
   {
@@ -5606,8 +5606,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-27T21:40:32Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7158934117647058,
+      "quality": "substantial"
     }
   ],
   "edges": [
