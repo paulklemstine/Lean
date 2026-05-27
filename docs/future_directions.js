@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "37ca1705",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -285,10 +285,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "209e0d92",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:03.296660+00:00"
   },
   {
@@ -921,28 +921,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T08:27:03.925234+00:00"
   },
   {
-    "id": "fd_1357",
-    "title": "Direction 4: Stability of Partition Functions Under Noisy Couplings",
-    "description": "**Conjecture:** For the partition function Z(J) = \u2211_\u03c3 exp(-\u03b2 \u2211_{ij} J_{ij} \u03c3_i \u03c3_j) of an Ising model with Lorentzian coupling structure, perturbations of couplings |\u0394J_{ij}| \u2264 \u03b5/(\u03b2n) preserve the log-concavity of the partition function as a polynomial in external fields.\n\n**The key insight is** that the Hessian of log Z with respect to external fields is controlled by the Lorentzian stability of the generating polynomial, and the sharp 1/n constant translates directly to coupling robustness.\n\n**Why now?** The connection between Lorentzian polynomials and partition functions is established (Anari et al., 2019), and the sharp stability constant makes the quantitative translation meaningful for physical systems.\n\n**Test:** Compute the partition function of the complete graph Ising model for n \u2208 {4, 6, 8, 10, 12} and verify that coupling perturbations of size O(\u03b5/n) preserve log-concavity of the magnetization polynomial.\n\n**Impact:** Would provide rigorous robustness guarantees for phase transition detection in noisy physical systems, connecting Lorentzian geometry to experimental physics.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` (dimension_degree_stability_law_linear), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (strong_concavity_on_orthogonal_complement)\n\n**Proof Strategy:** Express the partition function's Hessian in terms of the coupling matrix's Hessian, apply the sharp stability theorem, and translate the coefficient perturbation bound into a coupling perturbation bound via the chain rule.\n\n**Domain Bridges:** Statistical physics (Ising models, phase transitions), probability (log-concave distributions), quantum information (quantum Boltzmann machines).\n\n**Lineage:** Extends the stability theory from abstract polynomials to physical partition functions.\n\n**Ambition:** Grand challenge \u2014 would be the first application of sharp Lorentzian stability to physics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ac6bc32a",
-    "consumed_by_exp_id": "00a34fc1",
-    "timestamp": "2026-05-27T08:27:46.927552+00:00"
-  },
-  {
     "id": "fd_1383",
     "title": "Direction 2: Metrized Graphs and Continuous Tropical Curves",
     "description": "**Conjecture**: For a metrized graph $(G, \\ell)$ with edge lengths $\\ell : E \\to \\mathbb{R}_{>0}$, the constructive SNF correspondence extends to a correspondence between the *continuous* tropical Jacobian $\\mathrm{Jac}(\\Gamma)$ (a real torus of dimension equal to the genus) and a suitable weighted Laplacian cokernel, with the invariant factors replaced by lattice invariants of the period matrix.\n\n**The key insight is** that the discrete graph Laplacian is a combinatorial shadow of the continuous Laplacian on the metrized graph, and the SNF decomposition should \"deform\" continuously as edge lengths vary.\n\n**Why now?** The catalog already has foundational definitions for graph Laplacians (`graphLaplacian` in Defs.lean) and the TropicalBridge framework handles both discrete and tropical objects. The new SNF correspondence provides the algebraic spine needed to track invariants through the continuous deformation.\n\n**Test**: Implement a numerical computation of the period matrix of a metrized graph for small examples (genus \u2264 3). Compare the lattice invariants (successive minima, Hermite normal form) with the discrete SNF invariant factors in the limit of uniform edge lengths. Check whether the two agree up to a computable correction factor.\n\n**Impact**: This would establish the tropical-critical correspondence at the level of tropical curves, connecting to the Baker-Norine Riemann-Roch theorem and the theory of divisors on metric graphs.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/SNFCorrespondence.lean` \u2014 `SmithNFData`, `restrictedLapMat`\n- `Catalog/Pythagorean/TropicalBridge/Stability.lean` \u2014 stability results for tropical structures\n\n**Proof Strategy**: Define a weighted Laplacian $L_\\ell$ with entries $-1/\\ell(e)$ for edges and appropriate diagonal terms. Show that as edge lengths vary, the SNF invariant factors change in a controlled way (lower semicontinuity of divisibility).\n\n**Domain Bridges**: Tropical geometry \u2194 algebraic geometry; discrete math \u2194 analysis on metric spaces.\n\n**Lineage**: Extends the discrete `restrictedLap_sep_det` to the continuous setting.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new analytical tools)\n\n---",
@@ -1018,10 +996,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "05e24005",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d3daf58d",
     "timestamp": "2026-05-27T12:09:20.795454+00:00"
   },
   {
@@ -1493,6 +1471,106 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1511",
+    "title": "Direction 1: Closure of K=1 Valuated Exchange under Differentiation",
+    "description": "**Conjecture.** For every homogeneous polynomial p with nonnegative coefficients and M-convex support, if ValuatedExchange(p, 1) holds, then ValuatedExchange(\u2202_i p, 1) holds for all variables i.\n\n**Test.** Exhaustive computational search over weighted uniform matroid polynomials U(d, n) for n \u2264 7, d \u2264 4, with 10,000 random weight vectors per configuration. Any counterexample refutes the conjecture; survival through this regime provides strong evidence. Additionally, attempt formal proof for U(d, n) with d = 2 (degree-2 case) using the fact that derivatives are linear and Theorem 5 (`valuatedExchange_of_linear_nonneg`) already handles linear support.\n\n**Impact.** If true, this establishes K=1 valuated exchange as a closed cone property under differentiation, paralleling the Br\u00e4nd\u00e9n\u2013Huh closure theorem for Lorentzian polynomials. This would position valuated exchange as a new fundamental positivity condition in algebraic combinatorics, potentially providing simpler proofs of log-concavity results that currently require the full Lorentzian machinery.\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorems 1\u20135), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian characterization).\n\n**Proof Strategy.** For the degree-2 case: prove that all derivatives of degree-2 M-convex-support polynomials have linear single-variable support, then apply Theorem 5. For general degree: use the product factorization (Theorem 3) to reduce the derivative exchange inequality to the original exchange inequality times a computable rescaling factor, then bound the rescaling factor.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 Lorentzian polynomial theory; if K=1 exchange equals Lorentzianity for homogeneous polynomials, this provides a new characterization of Lorentzian polynomials.\n\n**Lineage.** Extends `valuatedExchange_of_linear_nonneg` and `pderiv_coeff_product_eq`.\n\n**Ambition.** Grand challenge \u2014 would constitute a new characterization theorem in algebraic combinatorics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78306251",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:12:46.907197+00:00"
+  },
+  {
+    "id": "fd_1512",
+    "title": "Direction 2: Tropical Coefficient Transport and Valuated Matroid Connections",
+    "description": "**Conjecture.** The logarithmic transformation w(\u03b1) = -log(coeff(\u03b1)) converts the multiplicative valuated exchange inequality into an additive inequality w(\u03b1) + w(\u03b2) \u2264 w(\u03b1') + w(\u03b2') + C, and the coefficient transport under differentiation becomes an affine correction w_{\u2202_i}(m) = w(m + e_i) - log(m_i + 1). The resulting structure is a valuated matroid in the sense of Dress\u2013Wenzel.\n\n**Test.** Formalize the additive valuated exchange property `AdditiveValuatedExchange` over linearly ordered additive commutative monoids. Prove that for polynomials with positive coefficients over \u211d, the logarithmic transformation converts `ValuatedExchange(p, K)` to `AdditiveValuatedExchange(w, log K)`. Verify computationally on tropical polynomial arithmetic.\n\n**Impact.** This bridges the polynomial-coefficient world to the well-developed theory of valuated matroids and tropical convexity, opening access to algorithms and structural results from tropical geometry. The affine correction from differentiation would become a tropical contraction operator, connecting to tropical intersection theory.\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorem 1), `Catalog/Pythagorean/ValuatedMatroidExchange.lean` (tropical exchange families), `Catalog/Pythagorean/TropicalMConvexity.lean`.\n\n**Proof Strategy.** Define the additive exchange property. Prove the logarithmic conversion as a standalone lemma. The key step is showing that the affine correction from differentiation preserves the additive exchange inequality with explicit bounds on the constant.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Tropical geometry \u2194 Valuated matroid theory.\n\n**Lineage.** Extends `coeff_pderiv_transport` via logarithmic transformation.\n\n**Ambition.** Solid extension \u2014 connects two well-developed theories through the new formalism.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78306251",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:12:46.980308+00:00"
+  },
+  {
+    "id": "fd_1513",
+    "title": "Direction 3: Certified Optimization via Exchange Constants",
+    "description": "**Conjecture.** For polynomial optimization problems on M-convex sets (e.g., maximizing a linear objective over matroid bases), the exchange constant K of the basis-generating polynomial provides a certified approximation ratio: any exchange-local optimum is within a factor of K of the global optimum.\n\n**Test.** Formalize the connection between `ValuatedExchange` and the certified optimization framework in `MConvexOptimization.lean`. Prove that if ValuatedExchange(p, K) holds and p encodes a weighted matroid, then the greedy algorithm achieves a K-approximation. Test computationally on random matroid intersection instances.\n\n**Impact.** This would provide the first polynomial-time certified optimization algorithm for weighted matroid problems with explicit quality guarantees derived from the coefficient geometry of the generating polynomial.\n\n**Catalog References.** `Catalog/Pythagorean/MConvexOptimization.lean` (certified optimization on M-convex sets), `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean`.\n\n**Proof Strategy.** Use the exchange local-min-implies-global-min theorem from `MConvexOptimization.lean` combined with the coefficient inequality from `ValuatedExchange` to bound the cost gap at each exchange step.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Combinatorial optimization \u2194 Algorithm design.\n\n**Lineage.** Extends `exchange_local_min_implies_global_min` from `MConvexOptimization.lean`.\n\n**Ambition.** Solid extension \u2014 algorithmic consequence of the coefficient inequality.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78306251",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:12:47.048620+00:00"
+  },
+  {
+    "id": "fd_1514",
+    "title": "Direction 4: Hodge-Theoretic Interpretation of Valuated Exchange",
+    "description": "**Conjecture.** The valuated exchange property with K = 1 is equivalent to the Hodge\u2013Riemann relations in degree 1 for the associated toric variety. Specifically, the four-point inequality coeff(a)\u00b7coeff(b) \u2264 coeff(a')\u00b7coeff(b') on exchange squares corresponds to the mixed Hodge\u2013Riemann bilinear relations restricted to the span of the exchange directions.\n\n**Test.** Prove the equivalence for the simplest nontrivial case: homogeneous degree-2 polynomials on Fin n. In this case, the polynomial determines a symmetric bilinear form, and the Hodge\u2013Riemann relation reduces to the Cauchy\u2013Schwarz inequality. The exchange squares should correspond to specific 2\u00d72 minors of the coefficient matrix.\n\n**Impact.** This would provide the first direct, constructive connection between the exchange axiom of discrete convex analysis and the Hodge theory of algebraic geometry, potentially simplifying proofs of the Hodge conjecture for matroids (Adiprasito\u2013Huh\u2013Katz).\n\n**Catalog References.** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Hessian signature = Lorentzian), `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorem 4, log-concavity bridge).\n\n**Proof Strategy.** For degree-2: express the exchange inequality as a statement about 2\u00d72 minors of the coefficient matrix, then relate to the signature condition in `LorentzianRecognitionComplete.lean`. For higher degree: use iterated differentiation to reduce to degree 2 and apply the transport identity.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Algebraic geometry \u2194 Combinatorial Hodge theory.\n\n**Lineage.** Extends `valuatedExchange_logConcave_on_ray` and `recursivelyLorentzian_iff_brandenHuh`.\n\n**Ambition.** Grand challenge \u2014 would connect three major areas of mathematics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78306251",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:12:47.115604+00:00"
+  },
+  {
+    "id": "fd_1515",
+    "title": "Direction 5: Entropy Monotonicity under Derivative Transport",
+    "description": "**Conjecture.** For Lorentzian polynomials with M-convex support, the Shannon entropy of the normalized coefficient distribution is monotonically non-increasing under partial differentiation: H(\u2202_i p / ||\u2202_i p||\u2081) \u2264 H(p / ||p||\u2081).\n\n**The key insight is** that the coefficient transport identity introduces a coordinate-dependent rescaling (m_i + 1) that concentrates mass toward lower-degree monomials, reducing entropy. This is analogous to the concentration of measure phenomenon in high-dimensional probability.\n\n**Why now?** The coefficient transport identity (Theorem 1) provides the exact formula for how coefficients transform, making entropy computations tractable. Combined with the nonnegativity preservation (Theorem 2), we can normalize coefficients to probability distributions at each derivative level.\n\n**Test.** Compute entropy at each derivative level for random weighted uniform matroid polynomials. Verify monotonicity computationally for n \u2264 7. Attempt a formal proof using the transport identity and convexity of the entropy function.\n\n**Impact.** Entropy monotonicity would provide a new invariant for the derivative tower of Lorentzian polynomials, with applications to information-theoretic bounds in combinatorics and statistical mechanics (partition function analysis).\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorems 1\u20132).\n\n**Proof Strategy.** Express H(\u2202_i p) in terms of original coefficients via the transport identity. Use the log-sum inequality and the convexity of x log x to bound the entropy change.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Information theory \u2194 Statistical physics.\n\n**Lineage.** Extends `coeff_pderiv_transport` and `coeff_pderiv_nonneg`.\n\n**Ambition.** Solid extension \u2014 computable entropy bounds from formal coefficient identities.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78306251",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:12:47.193133+00:00"
   },
   {
     "id": "seed_013",
@@ -1988,106 +2066,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T18:36:27.820898+00:00"
   },
   {
-    "id": "fd_1511",
-    "title": "Direction 1: Closure of K=1 Valuated Exchange under Differentiation",
-    "description": "**Conjecture.** For every homogeneous polynomial p with nonnegative coefficients and M-convex support, if ValuatedExchange(p, 1) holds, then ValuatedExchange(\u2202_i p, 1) holds for all variables i.\n\n**Test.** Exhaustive computational search over weighted uniform matroid polynomials U(d, n) for n \u2264 7, d \u2264 4, with 10,000 random weight vectors per configuration. Any counterexample refutes the conjecture; survival through this regime provides strong evidence. Additionally, attempt formal proof for U(d, n) with d = 2 (degree-2 case) using the fact that derivatives are linear and Theorem 5 (`valuatedExchange_of_linear_nonneg`) already handles linear support.\n\n**Impact.** If true, this establishes K=1 valuated exchange as a closed cone property under differentiation, paralleling the Br\u00e4nd\u00e9n\u2013Huh closure theorem for Lorentzian polynomials. This would position valuated exchange as a new fundamental positivity condition in algebraic combinatorics, potentially providing simpler proofs of log-concavity results that currently require the full Lorentzian machinery.\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorems 1\u20135), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian characterization).\n\n**Proof Strategy.** For the degree-2 case: prove that all derivatives of degree-2 M-convex-support polynomials have linear single-variable support, then apply Theorem 5. For general degree: use the product factorization (Theorem 3) to reduce the derivative exchange inequality to the original exchange inequality times a computable rescaling factor, then bound the rescaling factor.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 Lorentzian polynomial theory; if K=1 exchange equals Lorentzianity for homogeneous polynomials, this provides a new characterization of Lorentzian polynomials.\n\n**Lineage.** Extends `valuatedExchange_of_linear_nonneg` and `pderiv_coeff_product_eq`.\n\n**Ambition.** Grand challenge \u2014 would constitute a new characterization theorem in algebraic combinatorics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "78306251",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T19:12:46.907197+00:00"
-  },
-  {
-    "id": "fd_1512",
-    "title": "Direction 2: Tropical Coefficient Transport and Valuated Matroid Connections",
-    "description": "**Conjecture.** The logarithmic transformation w(\u03b1) = -log(coeff(\u03b1)) converts the multiplicative valuated exchange inequality into an additive inequality w(\u03b1) + w(\u03b2) \u2264 w(\u03b1') + w(\u03b2') + C, and the coefficient transport under differentiation becomes an affine correction w_{\u2202_i}(m) = w(m + e_i) - log(m_i + 1). The resulting structure is a valuated matroid in the sense of Dress\u2013Wenzel.\n\n**Test.** Formalize the additive valuated exchange property `AdditiveValuatedExchange` over linearly ordered additive commutative monoids. Prove that for polynomials with positive coefficients over \u211d, the logarithmic transformation converts `ValuatedExchange(p, K)` to `AdditiveValuatedExchange(w, log K)`. Verify computationally on tropical polynomial arithmetic.\n\n**Impact.** This bridges the polynomial-coefficient world to the well-developed theory of valuated matroids and tropical convexity, opening access to algorithms and structural results from tropical geometry. The affine correction from differentiation would become a tropical contraction operator, connecting to tropical intersection theory.\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorem 1), `Catalog/Pythagorean/ValuatedMatroidExchange.lean` (tropical exchange families), `Catalog/Pythagorean/TropicalMConvexity.lean`.\n\n**Proof Strategy.** Define the additive exchange property. Prove the logarithmic conversion as a standalone lemma. The key step is showing that the affine correction from differentiation preserves the additive exchange inequality with explicit bounds on the constant.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Tropical geometry \u2194 Valuated matroid theory.\n\n**Lineage.** Extends `coeff_pderiv_transport` via logarithmic transformation.\n\n**Ambition.** Solid extension \u2014 connects two well-developed theories through the new formalism.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "78306251",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T19:12:46.980308+00:00"
-  },
-  {
-    "id": "fd_1513",
-    "title": "Direction 3: Certified Optimization via Exchange Constants",
-    "description": "**Conjecture.** For polynomial optimization problems on M-convex sets (e.g., maximizing a linear objective over matroid bases), the exchange constant K of the basis-generating polynomial provides a certified approximation ratio: any exchange-local optimum is within a factor of K of the global optimum.\n\n**Test.** Formalize the connection between `ValuatedExchange` and the certified optimization framework in `MConvexOptimization.lean`. Prove that if ValuatedExchange(p, K) holds and p encodes a weighted matroid, then the greedy algorithm achieves a K-approximation. Test computationally on random matroid intersection instances.\n\n**Impact.** This would provide the first polynomial-time certified optimization algorithm for weighted matroid problems with explicit quality guarantees derived from the coefficient geometry of the generating polynomial.\n\n**Catalog References.** `Catalog/Pythagorean/MConvexOptimization.lean` (certified optimization on M-convex sets), `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean`.\n\n**Proof Strategy.** Use the exchange local-min-implies-global-min theorem from `MConvexOptimization.lean` combined with the coefficient inequality from `ValuatedExchange` to bound the cost gap at each exchange step.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Combinatorial optimization \u2194 Algorithm design.\n\n**Lineage.** Extends `exchange_local_min_implies_global_min` from `MConvexOptimization.lean`.\n\n**Ambition.** Solid extension \u2014 algorithmic consequence of the coefficient inequality.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "78306251",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T19:12:47.048620+00:00"
-  },
-  {
-    "id": "fd_1514",
-    "title": "Direction 4: Hodge-Theoretic Interpretation of Valuated Exchange",
-    "description": "**Conjecture.** The valuated exchange property with K = 1 is equivalent to the Hodge\u2013Riemann relations in degree 1 for the associated toric variety. Specifically, the four-point inequality coeff(a)\u00b7coeff(b) \u2264 coeff(a')\u00b7coeff(b') on exchange squares corresponds to the mixed Hodge\u2013Riemann bilinear relations restricted to the span of the exchange directions.\n\n**Test.** Prove the equivalence for the simplest nontrivial case: homogeneous degree-2 polynomials on Fin n. In this case, the polynomial determines a symmetric bilinear form, and the Hodge\u2013Riemann relation reduces to the Cauchy\u2013Schwarz inequality. The exchange squares should correspond to specific 2\u00d72 minors of the coefficient matrix.\n\n**Impact.** This would provide the first direct, constructive connection between the exchange axiom of discrete convex analysis and the Hodge theory of algebraic geometry, potentially simplifying proofs of the Hodge conjecture for matroids (Adiprasito\u2013Huh\u2013Katz).\n\n**Catalog References.** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Hessian signature = Lorentzian), `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorem 4, log-concavity bridge).\n\n**Proof Strategy.** For degree-2: express the exchange inequality as a statement about 2\u00d72 minors of the coefficient matrix, then relate to the signature condition in `LorentzianRecognitionComplete.lean`. For higher degree: use iterated differentiation to reduce to degree 2 and apply the transport identity.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Algebraic geometry \u2194 Combinatorial Hodge theory.\n\n**Lineage.** Extends `valuatedExchange_logConcave_on_ray` and `recursivelyLorentzian_iff_brandenHuh`.\n\n**Ambition.** Grand challenge \u2014 would connect three major areas of mathematics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "78306251",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T19:12:47.115604+00:00"
-  },
-  {
-    "id": "fd_1515",
-    "title": "Direction 5: Entropy Monotonicity under Derivative Transport",
-    "description": "**Conjecture.** For Lorentzian polynomials with M-convex support, the Shannon entropy of the normalized coefficient distribution is monotonically non-increasing under partial differentiation: H(\u2202_i p / ||\u2202_i p||\u2081) \u2264 H(p / ||p||\u2081).\n\n**The key insight is** that the coefficient transport identity introduces a coordinate-dependent rescaling (m_i + 1) that concentrates mass toward lower-degree monomials, reducing entropy. This is analogous to the concentration of measure phenomenon in high-dimensional probability.\n\n**Why now?** The coefficient transport identity (Theorem 1) provides the exact formula for how coefficients transform, making entropy computations tractable. Combined with the nonnegativity preservation (Theorem 2), we can normalize coefficients to probability distributions at each derivative level.\n\n**Test.** Compute entropy at each derivative level for random weighted uniform matroid polynomials. Verify monotonicity computationally for n \u2264 7. Attempt a formal proof using the transport identity and convexity of the entropy function.\n\n**Impact.** Entropy monotonicity would provide a new invariant for the derivative tower of Lorentzian polynomials, with applications to information-theoretic bounds in combinatorics and statistical mechanics (partition function analysis).\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorems 1\u20132).\n\n**Proof Strategy.** Express H(\u2202_i p) in terms of original coefficients via the transport identity. Use the log-sum inequality and the convexity of x log x to bound the entropy change.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Information theory \u2194 Statistical physics.\n\n**Lineage.** Extends `coeff_pderiv_transport` and `coeff_pderiv_nonneg`.\n\n**Ambition.** Solid extension \u2014 computable entropy bounds from formal coefficient identities.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "78306251",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T19:12:47.193133+00:00"
-  },
-  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2114,5 +2092,85 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.336768+00:00"
+  },
+  {
+    "id": "fd_1516",
+    "title": "Direction 1: Sharp Perturbation Scale via Cauchy-Schwarz Improvement",
+    "description": "**Conjecture:** For the coupling perturbation problem, the safe entrywise perturbation scale can be improved from \u03b5/(2n\u00b2) to \u03b5/(2n) by using the sharp quadratic form bound from `LorentzianSharpStability.lean`.\n\n**Test:** Prove that the sharp Cauchy-Schwarz inequality |Q_E(v)| \u2264 n\u00b7B\u00b7\u2016v\u2016\u00b2 (Theorem `quadFormBound_of_entry_bound_sharp` from the catalog) directly implies certified_robustness_preserves_signature with tolerance \u03b5/(2n) instead of \u03b5/(2n\u00b2). Computationally, verify that for complete graphs K_n with n up to 20, the empirical threshold for signature destruction scales as \u0398(1/n) rather than \u0398(1/n\u00b2).\n\n**Impact:** An n-fold improvement in the certified safe perturbation scale. For a 100-spin system, this increases the tolerance from ~5\u00d710\u207b\u2075\u03b5 to ~5\u00d710\u207b\u00b3\u03b5, making the certificate practically useful for real materials.\n\nThe key insight is that the existing proof in `IsingPartitionStability.lean` uses the n\u00b2 quadratic form bound (`quadFormBound_of_entry_bound`) while the sharp catalog result achieves n. Replacing one lemma propagates through the entire robustness chain.\n\nWhy now? The sharp bound `quadFormBound_of_entry_bound_sharp` is already proved in `Catalog/Pythagorean/LorentzianSharpStability.lean`. The only barrier is connecting the two files, which requires a straightforward import and substitution.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` \u2014 `quadFormBound_of_entry_bound_sharp`, `stability_law_sharp`\n\n**Proof Strategy:** Import the sharp bound, substitute it in the proof of `certified_robustness_preserves_signature`, and propagate the improved constant through `combined_robustness`.\n\n**Domain Bridges:** Numerical linear algebra (operator norm bounds), experimental physics (measurement tolerance)\n\n**Lineage:** Direct improvement of Theorem 3.8 in this work\n\n**Ambition:** Solid extension \u2014 straightforward but impactful\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00a34fc1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:49:58.667166+00:00"
+  },
+  {
+    "id": "fd_1517",
+    "title": "Direction 2: Lee-Yang Zero Stability Under Coupling Noise",
+    "description": "**Conjecture:** If the coupling matrix of an Ising model has gapped Lorentzian signature, then the Lee-Yang zeros of the partition function (viewed as a polynomial in e^{\u03b2h}) are stable under coupling perturbations: each zero moves by at most O(\u03b2n\u00b2\u03b4) in the complex plane.\n\n**Test:** For K_n models with n \u2208 {4, 6, 8, 10}, compute the Lee-Yang zeros of Z(e^{\u03b2h}) before and after coupling perturbation. Plot zero displacement vs \u03b4 and verify O(\u03b2n\u00b2\u03b4) scaling. Test whether the zeros remain on the unit circle (Lee-Yang theorem) under small perturbations.\n\n**Impact:** Would connect three deep mathematical threads: Lorentzian polynomials, Lee-Yang theory, and perturbation theory of polynomial roots. A rigorous Lee-Yang zero stability theorem would have immediate implications for the theory of phase transitions in disordered systems.\n\nThe key insight is that Lee-Yang zeros are roots of a univariate specialization of the partition polynomial, and Lorentzian structure constrains root locations via the half-plane property. Perturbation of coefficients (which our coupling perturbation induces) should yield controlled root movement by Rouch\u00e9-type arguments.\n\nWhy now? The covariance form identity (Theorem 3.6) provides the precise relationship between coupling perturbation and coefficient perturbation of the partition polynomial. The log-Lipschitz bound (Theorem 3.4) gives the quantitative control needed for Rouch\u00e9's theorem.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` \u2014 spectral stability results; `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `reversed_cauchy_schwarz_of_gapped`\n\n**Proof Strategy:** Express the partition function as a univariate polynomial in z = e^{\u03b2h}. Use the log-Lipschitz bound to control coefficient perturbation. Apply Rouch\u00e9's theorem on appropriate contours to bound zero displacement.\n\n**Domain Bridges:** Complex analysis (Rouch\u00e9's theorem), phase transition theory (Lee-Yang circle theorem), random matrix theory\n\n**Lineage:** Extension of Theorems 3.4 and 3.6\n\n**Ambition:** Grand challenge \u2014 would unify three major mathematical frameworks\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00a34fc1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:49:58.734781+00:00"
+  },
+  {
+    "id": "fd_1518",
+    "title": "Direction 3: Lorentzian Control of Glauber Dynamics Mixing",
+    "description": "**Conjecture:** For Ising models whose coupling matrix has gapped Lorentzian signature with margin \u03b5, the mixing time of Glauber dynamics is O(n log n / \u03b5), and this bound is stable under \u03b5/(2n\u00b2) coupling perturbations.\n\n**Test:** Simulate Glauber dynamics on K_n for n \u2208 {8, 12, 16, 20} with varying spectral gaps (by rescaling J). Measure empirical mixing times and compare to the predicted n log n / \u03b5 scaling. Perturb couplings and verify mixing time stability.\n\n**Impact:** Would establish Lorentzian structure as a sufficient condition for rapid mixing, paralleling the role of log-concavity for continuous distributions. This directly bridges algebraic combinatorics (Lorentzian polynomials) with the theory of Markov chain Monte Carlo sampling.\n\nThe key insight is that the gapped Lorentzian signature implies the Gibbs measure satisfies a Poincar\u00e9 inequality, which in turn controls the spectral gap of the Glauber dynamics generator. The perturbation stability of the spectral gap (our Theorem 3.8) should propagate to mixing time stability.\n\nWhy now? Recent work on modified log-Sobolev inequalities for discrete distributions [CLV21] provides the technical framework. Our covariance bound (Theorem 3.7) gives the missing ingredient: quantitative control of the Gibbs measure's correlation structure under perturbation.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `strong_concavity_on_orthogonal_complement`, `tangent_strong_concavity_of_gapped`\n\n**Proof Strategy:** Establish a Poincar\u00e9 inequality from the gapped signature. Use the perturbation stability theorem to show the Poincar\u00e9 constant is stable. Derive mixing time bounds from the stable Poincar\u00e9 inequality.\n\n**Domain Bridges:** Markov chain theory, sampling algorithms, optimization (simulated annealing)\n\n**Lineage:** Extension of Theorems 3.7 and 3.8\n\n**Ambition:** Grand challenge \u2014 would connect algebraic geometry to computational complexity\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "00a34fc1",
+    "consumed_by_exp_id": "8dd17845",
+    "timestamp": "2026-05-27T19:49:58.803212+00:00"
+  },
+  {
+    "id": "fd_1519",
+    "title": "Direction 4: Extension to Potts Models and Determinantal Spin Systems",
+    "description": "**Conjecture:** The robustness theory extends to q-state Potts models with q > 2, where the coupling matrix is replaced by a higher-order interaction tensor, and the Lorentzian condition generalizes to a multi-linear signature condition.\n\n**Test:** Formalize the 3-state Potts partition function. For small systems (n \u2264 6), compute the partition function under coupling perturbation and verify log-Lipschitz bounds with the appropriate scaling (expected: \u03b2n\u00b2(q-1)\u03b4 for q states).\n\n**Impact:** Would extend the Lorentzian robustness framework beyond the binary Ising case to the much richer world of multi-state spin systems, covering applications in image segmentation, community detection, and protein folding.\n\nThe key insight is that the Potts partition function can be expressed in terms of a generating polynomial in q variables per site (one per state), and the Lorentzian condition on this higher-dimensional polynomial should control stability via the same spectral gap mechanism.\n\nWhy now? The Lorentzian polynomial theory already encompasses multivariate polynomials of arbitrary degree. The challenge is formulating the appropriate \"gapped signature\" condition for the higher-order case and proving the analogous quadratic form bounds.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` \u2014 general n-dimensional bounds; `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 multi-leaf stability\n\n**Proof Strategy:** Define the Potts partition function as a sum over q^n configurations. Prove energy bounds by extending spinVal to q states. Apply the existing quadratic form machinery to the enlarged coupling structure.\n\n**Domain Bridges:** Computer vision (Potts model for segmentation), network science (community detection), biophysics (protein modeling)\n\n**Lineage:** Generalization of all theorems in this work\n\n**Ambition:** Solid extension \u2014 technically demanding but conceptually straightforward\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "00a34fc1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:49:58.872640+00:00"
   }
 ];
