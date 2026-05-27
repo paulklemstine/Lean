@@ -1,259 +1,318 @@
+#!/usr/bin/env python3
 """
-algorithms.py — Certified Lorentzian stability algorithms.
+algorithms.py — Certified Lorentzian Stability Algorithms
 
-Implements the verified computational methods from the research paper:
-1. Certified stability checker (soundness proved in Lean 4)
-2. Stability radius computation
-3. Spectral gap estimation
-4. Entry-to-operator-norm conversion
+Implements the verified algorithms from the Lean formalization:
+1. Certified perturbation radius computation
+2. Spectral gap estimation for Hessians
+3. Lorentzianity checking with margin
 """
+
 import numpy as np
-from typing import Tuple, Optional, List
+from typing import Tuple, Optional
 from itertools import combinations
 
 
-def certified_perturbation_tolerance(epsilon: float, n: int) -> float:
+def certified_perturbation_radius(epsilon: float, n: int) -> float:
     """
-    Compute the certified perturbation tolerance τ(ε, n) = ε / (2n).
-
-    If all entries of a perturbation matrix satisfy |E_ij| ≤ τ,
-    then the Lorentzian signature is preserved with a residual
-    spectral gap of ε/2.
-
-    This is formally verified in Lean 4 as `certifiedPertTolerance`.
-
+    Compute the certified perturbation radius for Lorentzian stability.
+    
+    Given a spectral gap epsilon and dimension n, returns the maximum
+    entrywise perturbation delta such that Lorentzianity is preserved.
+    
+    This implements the 1/n law: delta = epsilon / n.
+    
+    Corresponds to Lean: certifiedPerturbationRadius
+    
     Args:
-        epsilon: Spectral margin (gap parameter)
-        n: Matrix dimension
-
+        epsilon: Spectral gap (minimum negative eigenvalue magnitude on w-perp)
+        n: Ambient dimension
+        
     Returns:
-        Maximum safe entry perturbation magnitude
-    """
-    if n <= 0 or epsilon <= 0:
-        return 0.0
-    return epsilon / (2.0 * n)
-
-
-def certify_stability(epsilon: float, n: int, E: np.ndarray) -> bool:
-    """
-    Certify that a perturbation preserves Lorentzian signature.
-
-    Given spectral margin ε, dimension n, and perturbation matrix E,
-    checks whether all entries of E are within the certified tolerance.
-
-    Soundness: If this returns True and A has gapped signature with
-    margin ε, then A + E has at most one positive eigenvalue.
-    (Verified in Lean 4 as `certified_stability_correct`.)
-
-    Args:
-        epsilon: Spectral margin of the original matrix
-        n: Dimension
-        E: Perturbation matrix (n × n)
-
-    Returns:
-        True if the perturbation is certified safe
-
+        Certified maximum perturbation magnitude
+        
     Example:
-        >>> A = np.diag([3.0, -1.0, -1.0])  # Gapped Lorentzian
-        >>> epsilon = 1.0  # Spectral gap
-        >>> E = 0.1 * np.ones((3, 3))
-        >>> certify_stability(epsilon, 3, E)  # τ = 1/(2·3) ≈ 0.167
+        >>> certified_perturbation_radius(1.0, 10)
+        0.1
+    """
+    if n <= 0:
+        return 0.0
+    return epsilon / n
+
+
+def old_certified_perturbation_radius(epsilon: float, n: int) -> float:
+    """
+    Old certified perturbation radius using the 1/n² law.
+    
+    This is the previous, suboptimal bound.
+    
+    Args:
+        epsilon: Spectral gap
+        n: Ambient dimension
+        
+    Returns:
+        Old certified maximum perturbation magnitude
+        
+    Example:
+        >>> old_certified_perturbation_radius(1.0, 10)
+        0.01
+    """
+    if n <= 0:
+        return 0.0
+    return epsilon / (n ** 2)
+
+
+def spectral_gap_of_matrix(A: np.ndarray) -> Tuple[float, np.ndarray]:
+    """
+    Compute the spectral gap of a symmetric matrix for Lorentzian signature.
+    
+    The spectral gap is the magnitude of the least-negative eigenvalue
+    on the orthogonal complement of the most-positive eigenvector.
+    
+    Args:
+        A: Symmetric matrix (n x n)
+        
+    Returns:
+        Tuple of (gap, witness_direction_w)
+        
+    Example:
+        >>> A = np.array([[-1, 0], [0, -2]])
+        >>> gap, w = spectral_gap_of_matrix(A)
+        >>> gap
+        1.0
+    """
+    n = A.shape[0]
+    eigvals, eigvecs = np.linalg.eigh(A)
+    
+    # Sort eigenvalues in descending order
+    idx = np.argsort(eigvals)[::-1]
+    eigvals = eigvals[idx]
+    eigvecs = eigvecs[:, idx]
+    
+    # The witness direction is the eigenvector of the largest eigenvalue
+    w = eigvecs[:, 0]
+    
+    # The gap is the magnitude of the second eigenvalue (first negative one)
+    if n < 2:
+        return 0.0, w
+    
+    negative_eigs = eigvals[eigvals < 0]
+    if len(negative_eigs) == 0:
+        return 0.0, w
+    
+    gap = float(np.min(np.abs(negative_eigs)))
+    return gap, w
+
+
+def check_lorentzian_signature(A: np.ndarray, tol: float = 1e-10) -> bool:
+    """
+    Check if a symmetric matrix has at most one positive eigenvalue.
+    
+    Args:
+        A: Symmetric matrix
+        tol: Tolerance for eigenvalue positivity
+        
+    Returns:
+        True if at most one eigenvalue is positive
+        
+    Example:
+        >>> A = np.diag([1, -1, -1])
+        >>> check_lorentzian_signature(A)
         True
     """
-    tau = certified_perturbation_tolerance(epsilon, n)
-    return bool(np.all(np.abs(E) <= tau + 1e-15))
+    eigvals = np.linalg.eigvalsh(A)
+    return int(np.sum(eigvals > tol)) <= 1
 
 
-def compute_spectral_gap(H: np.ndarray) -> Tuple[float, np.ndarray]:
-    """
-    Compute the spectral gap and witness direction for a symmetric matrix.
-
-    For a matrix with at most one positive eigenvalue, the spectral gap
-    is the magnitude of the second-largest eigenvalue (which is ≤ 0).
-
-    Args:
-        H: Symmetric matrix (n × n)
-
-    Returns:
-        (gap, witness): spectral gap ε ≥ 0 and witness direction w
-    """
-    eigenvalues, eigenvectors = np.linalg.eigh(H)
-    idx = np.argsort(eigenvalues)[::-1]
-    eigenvalues = eigenvalues[idx]
-    eigenvectors = eigenvectors[:, idx]
-
-    if len(eigenvalues) < 2:
-        return 0.0, eigenvectors[:, 0] if len(eigenvalues) > 0 else np.array([1.0])
-
-    # Witness is the top eigenvector
-    witness = eigenvectors[:, 0]
-
-    # Gap is -λ₂ if λ₂ < 0
-    gap = max(0.0, -eigenvalues[1])
-
-    return gap, witness
-
-
-def quadform_bound_sharp(n: int, B: float) -> float:
-    """
-    Sharp quadratic form bound: n · B.
-
-    For any n×n matrix A with |A_ij| ≤ B,
-    |Q_A(v)| ≤ n · B · ‖v‖² for all v.
-
-    This is the central result of the paper, improving the
-    previous bound of n² · B. Proved in Lean 4 as
-    `quadFormBound_of_entry_bound_sharp`.
-
-    Args:
-        n: Matrix dimension
-        B: Entry bound
-
-    Returns:
-        Quadratic form bound n·B
-
-    Example:
-        >>> quadform_bound_sharp(10, 0.01)
-        0.1
-        >>> # Compare with old bound:
-        >>> # quadform_bound_old(10, 0.01) = 1.0
-    """
-    return float(n) * B
-
-
-def stability_radius(
-    hessians: List[np.ndarray],
-    perturbation_direction: List[np.ndarray]
+def certified_lorentzian_radius(
+    H: np.ndarray, 
+    E_direction: np.ndarray
 ) -> float:
     """
-    Compute the certified stability radius for a collection of Hessians.
-
-    Given Hessian matrices H_1, ..., H_m and perturbation directions
-    E_1, ..., E_m, compute the maximum t ≥ 0 such that H_k + t·E_k
-    has at most one positive eigenvalue for all k.
-
-    Uses the sharp n·B bound for the conversion from entry perturbation
-    to quadratic form perturbation.
-
+    Compute the certified maximum t >= 0 such that H + t*E remains Lorentzian.
+    
+    Uses a combination of:
+    1. Spectral gap computation for the base matrix H
+    2. Operator norm estimation for the perturbation direction E
+    3. The sharp 1/n bound for entrywise perturbations
+    
+    Corresponds to Lean: certifiedPerturbationRadius_sound
+    
     Args:
-        hessians: List of Hessian matrices
-        perturbation_direction: List of perturbation matrices (same shape)
-
+        H: Base Hessian matrix (symmetric, Lorentzian signature)
+        E_direction: Perturbation direction matrix
+        
     Returns:
-        Maximum certified safe scaling factor t₀
-
+        Certified maximum scaling t
+        
     Example:
-        >>> H = [np.diag([3.0, -1.0, -1.0])]
-        >>> E = [np.ones((3, 3)) * 0.1]
-        >>> t0 = stability_radius(H, E)
-        >>> print(f"Safe up to t = {t0:.4f}")
+        >>> H = np.diag([2, -1, -1])
+        >>> E = np.ones((3, 3)) * 0.1
+        >>> t = certified_lorentzian_radius(H, E)
+        >>> t > 0
+        True
     """
-    t0 = float('inf')
-
-    for H, E in zip(hessians, perturbation_direction):
-        n = H.shape[0]
-        gap, _ = compute_spectral_gap(H)
-
-        if gap <= 0:
-            return 0.0
-
-        max_entry = np.max(np.abs(E))
-        if max_entry <= 0:
-            continue
-
-        # Using certified tolerance: τ = gap / (2n)
-        # t · max_entry ≤ τ  ⟹  t ≤ gap / (2n · max_entry)
-        t_safe = gap / (2.0 * n * max_entry)
-        t0 = min(t0, t_safe)
-
-    return t0 if t0 < float('inf') else 0.0
+    n = H.shape[0]
+    gap, _ = spectral_gap_of_matrix(H)
+    
+    if gap <= 0:
+        return 0.0
+    
+    # Compute the quadratic form bound of E
+    # |Q_E(v)| <= n * max|E_ij| * ||v||^2
+    max_entry = np.max(np.abs(E_direction))
+    
+    if max_entry <= 0:
+        return float('inf')
+    
+    # certified radius: gap / (n * max_entry)
+    # because t * max_entry <= gap / n implies preservation
+    return gap / (n * max_entry)
 
 
-def elementary_symmetric_hessian(n: int, k: int, x: np.ndarray) -> np.ndarray:
+def bisection_lorentzian_radius(
+    H: np.ndarray,
+    E: np.ndarray,
+    tol: float = 1e-8,
+    max_iter: int = 100
+) -> float:
     """
-    Compute the Hessian of e_k(x_1, ..., x_n) at point x.
+    Numerical bisection to find the destruction threshold.
+    
+    Finds the maximum t such that H + t*E has Lorentzian signature.
+    
+    Args:
+        H: Base Hessian matrix
+        E: Perturbation matrix
+        tol: Convergence tolerance
+        max_iter: Maximum iterations
+        
+    Returns:
+        Approximate destruction threshold
+    """
+    lo, hi = 0.0, 10.0
+    
+    # First, find an upper bound where Lorentzianity is destroyed
+    while check_lorentzian_signature(H + hi * E) and hi < 1e6:
+        hi *= 2
+    
+    if hi >= 1e6:
+        return float('inf')
+    
+    # Binary search
+    for _ in range(max_iter):
+        mid = (lo + hi) / 2
+        if check_lorentzian_signature(H + mid * E):
+            lo = mid
+        else:
+            hi = mid
+        if hi - lo < tol:
+            break
+    
+    return (lo + hi) / 2
 
+
+def quadform_bound_sharp(A: np.ndarray, v: np.ndarray) -> float:
+    """
+    Compute the sharp quadratic form bound |Q_A(v)| <= n * B * ||v||^2.
+    
+    This implements the improved bound from the Lean theorem
+    quadFormBound_of_entry_bound_sharp.
+    
+    Args:
+        A: Matrix
+        v: Vector
+        
+    Returns:
+        The bound n * max|A_ij| * ||v||^2
+    """
+    n = A.shape[0]
+    B = np.max(np.abs(A))
+    sq_norm = np.sum(v ** 2)
+    return n * B * sq_norm
+
+
+def quadform_bound_old(A: np.ndarray, v: np.ndarray) -> float:
+    """
+    Compute the old (suboptimal) quadratic form bound |Q_A(v)| <= n^2 * B * ||v||^2.
+    
+    Args:
+        A: Matrix
+        v: Vector
+        
+    Returns:
+        The bound n^2 * max|A_ij| * ||v||^2
+    """
+    n = A.shape[0]
+    B = np.max(np.abs(A))
+    sq_norm = np.sum(v ** 2)
+    return n ** 2 * B * sq_norm
+
+
+def elementary_symmetric_hessian(n: int, k: int, x: Optional[np.ndarray] = None) -> np.ndarray:
+    """
+    Compute the Hessian of e_k(x_1,...,x_n) at a point x.
+    
     Args:
         n: Number of variables
-        k: Degree of the elementary symmetric polynomial
-        x: Evaluation point (length n)
-
+        k: Degree of elementary symmetric polynomial
+        x: Evaluation point (default: all ones)
+        
     Returns:
-        n × n Hessian matrix
+        n x n Hessian matrix
     """
-    if k < 2:
-        return np.zeros((n, n))
-
+    if x is None:
+        x = np.ones(n)
+    
     H = np.zeros((n, n))
-    indices = list(range(n))
-
+    if k < 2:
+        return H
+    
     for i in range(n):
         for j in range(n):
-            if i == j:
-                H[i, j] = 0.0
-            else:
-                remaining = [idx for idx in indices if idx != i and idx != j]
-                if k - 2 == 0:
-                    H[i, j] = 1.0
-                elif k - 2 > len(remaining):
+            if i != j:
+                remaining = [l for l in range(n) if l != i and l != j]
+                if k - 2 > len(remaining):
                     H[i, j] = 0.0
+                elif k - 2 == 0:
+                    H[i, j] = 1.0
                 else:
                     val = 0.0
-                    for combo in combinations(remaining, k - 2):
+                    for subset in combinations(remaining, k - 2):
                         prod = 1.0
-                        for c in combo:
-                            prod *= x[c]
+                        for idx in subset:
+                            prod *= x[idx]
                         val += prod
                     H[i, j] = val
     return H
 
 
-def verify_lorentzian_signature(H: np.ndarray, tol: float = 1e-10) -> bool:
-    """
-    Check whether a symmetric matrix has at most one positive eigenvalue.
-
-    Args:
-        H: Symmetric matrix
-        tol: Tolerance for positivity check
-
-    Returns:
-        True if at most one eigenvalue is positive
-    """
-    eigenvalues = np.linalg.eigvalsh(H)
-    n_positive = np.sum(eigenvalues > tol)
-    return n_positive <= 1
-
-
-# === Example usage ===
-
-if __name__ == "__main__":
-    print("Certified Lorentzian Stability Algorithms")
-    print("=" * 50)
-
-    # Example 1: Certify stability
-    n = 5
-    A = np.diag([5.0, -1.0, -1.0, -1.0, -1.0])
-    gap, w = compute_spectral_gap(A)
-    print(f"\nExample 1: n={n}, spectral gap = {gap:.4f}")
-    print(f"  Certified tolerance (sharp): {certified_perturbation_tolerance(gap, n):.6f}")
-    print(f"  Old tolerance (n²): {gap / (n*n):.6f}")
-    print(f"  Improvement factor: {n}×")
-
-    # Example 2: Stability radius
-    E = np.random.RandomState(42).randn(n, n)
-    E = (E + E.T) / 2
-    t0 = stability_radius([A], [E])
-    print(f"\nExample 2: Stability radius = {t0:.6f}")
-    print(f"  At t = {t0:.6f}, A + t·E is certified Lorentzian")
-
-    # Example 3: Elementary symmetric polynomial
-    k = 3
-    n = 8
-    x = np.ones(n)
-    H = elementary_symmetric_hessian(n, k, x)
-    gap, _ = compute_spectral_gap(H)
-    is_lor = verify_lorentzian_signature(H)
-    print(f"\nExample 3: e_{k} in {n} variables at (1,...,1)")
-    print(f"  Lorentzian: {is_lor}")
+# Example usage
+if __name__ == '__main__':
+    print("=== Certified Lorentzian Stability Algorithms ===\n")
+    
+    # Example 1: Simple 3x3 Lorentzian matrix
+    H = np.diag([3.0, -1.0, -1.0])
+    gap, w = spectral_gap_of_matrix(H)
+    print(f"Matrix: diag(3, -1, -1)")
+    print(f"  Spectral gap: {gap}")
+    print(f"  Witness direction: {w}")
+    print(f"  Old certified radius (1/n²): {old_certified_perturbation_radius(gap, 3):.6f}")
+    print(f"  New certified radius (1/n):  {certified_perturbation_radius(gap, 3):.6f}")
+    
+    # Example 2: Elementary symmetric polynomial
+    print(f"\n--- e_3 in 6 variables ---")
+    H = elementary_symmetric_hessian(6, 3)
+    gap, w = spectral_gap_of_matrix(H)
     print(f"  Spectral gap: {gap:.4f}")
-    print(f"  Sharp tolerance: {certified_perturbation_tolerance(gap, n):.6f}")
+    print(f"  Old certified radius (1/n²): {old_certified_perturbation_radius(gap, 6):.6f}")
+    print(f"  New certified radius (1/n):  {certified_perturbation_radius(gap, 6):.6f}")
+    
+    # Example 3: Certified radius with specific perturbation
+    E = np.random.randn(6, 6)
+    E = (E + E.T) / 2
+    t_cert = certified_lorentzian_radius(H, E)
+    t_num = bisection_lorentzian_radius(H, E)
+    print(f"\n  Certified radius for random perturbation: {t_cert:.6f}")
+    print(f"  Numerical destruction threshold:          {t_num:.6f}")
+    print(f"  Ratio (numerical/certified):              {t_num/t_cert:.2f}x")
