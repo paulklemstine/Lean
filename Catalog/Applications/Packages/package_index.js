@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Quantum Information / Algebraic Combinatorics",
     "date": "2026-05-27T18:36:13Z",
     "exp_id": "eedf1ad8",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7726808000000001,
+    "quality": "substantial",
     "pkg_num": 185
   },
   {
@@ -5374,8 +5374,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-27T18:36:13Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7726808000000001,
+      "quality": "substantial"
     }
   ],
   "edges": [

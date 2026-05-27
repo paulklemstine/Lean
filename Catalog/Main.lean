@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1955 of the highest-quality
+A curated collection of 1957 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1955
+Total files: 1957
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1539,6 +1539,7 @@ import FINAL.Pythagorean.EhrhartSeries
 import FINAL.Pythagorean.EinsteinContraction
 import FINAL.Pythagorean.ElectricalFlow
 import FINAL.Pythagorean.EmergentComputation
+import FINAL.Pythagorean.EntanglementCompression
 import FINAL.Pythagorean.EqualitySaturationExtraction
 import FINAL.Pythagorean.EulerFactor
 import FINAL.Pythagorean.ExactWeightedTropicalDimension
@@ -1606,6 +1607,7 @@ import FINAL.Pythagorean.O31_Generators
 import FINAL.Pythagorean.OpenQuestions
 import FINAL.Pythagorean.OrbitClassification
 import FINAL.Pythagorean.OrbitOrderDuality
+import FINAL.Pythagorean.OverlapSupport
 import FINAL.Pythagorean.PF2Theorems
 import FINAL.Pythagorean.PadicControlledStability
 import FINAL.Pythagorean.PadicOrbitalValuation

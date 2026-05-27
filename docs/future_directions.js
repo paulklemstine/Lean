@@ -199,27 +199,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T17:14:59.768954+00:00"
   },
   {
-    "id": "fd_0896",
-    "title": "Direction 3: Pressure Theory for Almost Simple Groups",
-    "description": "**Conjecture:** For a finite almost simple group $G$ with socle $S$, the pressure from the maximal subgroup family satisfies\n$$\\mathrm{pressure}(G, \\mathcal{M}) = O(|G|^{-\\epsilon})$$\nfor some $\\epsilon > 0$ depending on the type of $S$ (alternating, classical, exceptional, sporadic). This gives $P_{\\text{gen}} \\to 1$ as $|G| \\to \\infty$, recovering the Liebeck\u2013Shalev theorem with explicit rates.\n\n**The key insight is** that the pressure framework provides a systematic way to organize the contribution of each maximal subgroup type (geometric vs. non-geometric in the Aschbacher classification), with the dominant contribution coming from the geometric subgroups of smallest index.\n\n**Why now?** The entropy-energy bounds (Theorems 2\u20133) provide a framework to compute pressure without enumerating all maximal subgroups\u2014bounding the count and minimum index suffices.\n\n**Test:** Compute exact pressure for $\\text{PSL}_2(p)$ for primes $p \\leq 100$ and verify the conjectured decay rate. The maximal subgroups of $\\text{PSL}_2(p)$ are well-known.\n\n**Impact:** Would give the best known explicit bounds on generation probability for classical groups, with direct applications to cryptographic group selection.\n\n**Catalog References:** `Pythagorean/SubgroupPressure.lean` (entropy-energy bounds)\n\n**Proof Strategy:** Use the Aschbacher classification of maximal subgroups of classical groups. For each class, bound the number of subgroups (entropy) and the minimum index (energy). Apply the upper bound theorem: pressure \u2264 |F| / D\u00b2.\n\n**Domain Bridges:** Finite simple group theory, Aschbacher classification, cryptography.\n\n**Lineage:** Applies the general pressure theory to the most important group families.\n\n**Ambition:** Solid extension \u2014 builds directly on established techniques.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:59.812468+00:00"
-  },
-  {
     "id": "fd_0907",
     "title": "Spectral Sequence Stability via Persistent Homology Barcodes",
     "description": "Conjecture: For first-quadrant homological spectral sequences E\u2081 \u21d2 H, if two spectral sequences have E\u2081 pages that are \u03b5-interleaved as bigraded persistence modules (with respect to the total-degree filtration), then their 'limit barcodes' \u2014 which record elements surviving to E\u221e as infinite bars and elements killed by d_r as finite bars of length r \u2014 are C\u00b7\u03b5-interleaved for a constant C depending only on the spectral sequence length (max page index). Test: For the Serre spectral sequences of the Hopf fibration S\u00b9\u2192S\u00b3\u2192S\u00b2 and its small perturbations (e.g., replacing S\u00b3 with a lens space L(3,1)), compute the E\u2081 interleaving distance and verify that the limit barcodes satisfy the conjectured stability bound. Secondary test on pairs of Adams spectral sequences for related spectra. Impact: This would establish the first stability theorem for spectral sequences, making differential computations robust under perturbation \u2014 with transformative applications to stable homotopy theory (Adams SS), symplectic topology (Eilenberg-Moore SS), and algebraic geometry (Leray SS for morphisms of varieties).",
@@ -442,26 +421,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:13:42.015713+00:00"
   },
   {
-    "id": "fd_0957",
-    "title": "Direction 3: Renormalization Group for Subgroup Ensembles",
-    "description": "**Conjecture:** There exists a coarse-graining map $\\mathcal{R}$ on subgroup ensembles such that:\n1. $\\mathcal{R}$ maps the pressure to a scaled version: $\\Pi(\\mathcal{R}(\\mathcal{H})) = \\lambda \\cdot \\Pi(\\mathcal{H})$ for some $\\lambda > 0$.\n2. Fixed points of $\\mathcal{R}$ correspond to universality classes.\n3. The linearization of $\\mathcal{R}$ at a fixed point has eigenvalues that determine critical exponents.\n\n**Test:** For $S_n$ with $n = 2^k$ (powers of 2), define $\\mathcal{R}$ by passing from maximal subgroups of $S_{2^k}$ to those of $S_{2^{k-1}}$ via restriction. Compute the pressure at each scale and test for fixed-point convergence.\n\n**Impact:** This would bring the full power of renormalization group theory into finite algebra, potentially classifying all universality classes for finite group generation.\n\n**Catalog References:** `Pythagorean/SubgroupUniversality.lean` (all theorems), `Catalog/old/Pythagorean/SubgroupPressure.lean` (product factorization as coarse-graining precursor).\n\n**Proof Strategy:** Define $\\mathcal{R}$ as restriction to a quotient or block structure. For direct products, $\\mathcal{R}$ simply selects one factor, and the fixed point is the single-factor pressure. Prove that the eigenvalue spectrum of the linearization determines the exponent.\n\n**Domain Bridges:** Quantum field theory (Wilson's renormalization group), dynamical systems (iterated function systems), ergodic theory (transfer operators), topology (scaling limits).\n\n**Lineage:** Extends `freeEnergy_directPower` to a dynamical framework where extensivity is one consequence of a deeper fixed-point structure.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 paradigm-shifting. Would unify algebraic generation theory with one of the most powerful frameworks in theoretical physics.\n\nThe key insight is that the extensivity theorem $F(m,t) = m \\cdot F(1,t)$ can be reinterpreted as a fixed-point equation: the free energy per factor is invariant under the \"add one more copy\" operation, which is the simplest renormalization group transformation.\n\nWhy now? The proven extensivity and exponent additivity theorems provide the first mathematical evidence that a fixed-point structure exists. Without these, the renormalization program would be purely speculative.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "354ccda2",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T21:49:45.129187+00:00"
-  },
-  {
     "id": "fd_0965",
     "title": "Direction 1: Tight Lorentzian Stability Radii for Matroid Families",
     "description": "**Conjecture:** For the uniform matroid $U_{r,n}$, the exact Lorentzian stability radius (maximum coefficient perturbation preserving Lorentzianity of the generating polynomial) is $\\Theta(\\binom{n}{r}^{-1} \\cdot \\lambda_{\\min}^{\\text{gap}})$, where $\\lambda_{\\min}^{\\text{gap}}$ is the minimum normalized Hessian eigengap across all quadratic leaves.\n\n**Test:** Compute the exact stability radius for $U_{r,n}$ with $n \\leq 15$ by binary search over perturbation magnitudes, checking Lorentzianity via eigenvalue computation on all $\\binom{n}{2}$ quadratic leaves. Compare to the predicted formula. Discrepancies of more than 10% in the ratio would refute the conjecture.\n\n**Impact:** Tight stability radii would replace the conservative factor-of-2 bound in `certifyNoisySLC` with optimal constants, potentially doubling the effective robustness radius for practical applications.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `residual_gap_of_perturbation`); `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem `lorentzian_stability_radius_exists`).\n\n**Proof Strategy:** For the upper bound, construct explicit perturbation families that destroy Lorentzianity at the predicted threshold. For the lower bound, use the Hessian eigenvalue structure of the elementary symmetric polynomial to compute the exact quadratic form bound implied by coefficient perturbation.\n\n**Domain Bridges:** Combinatorial optimization (matroid intersection algorithms), algebraic combinatorics (Schur positivity and symmetric function theory).\n\n**Lineage:** Direct extension of `residual_gap_of_perturbation` from this cycle. The uniform matroid case is the canonical test bed.\n\n**Ambition:** Solid extension \u2014 this is a concrete computation grounded in existing theory, but the exact formula would be new and useful.\n\n---",
@@ -556,10 +515,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "db173401",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:58:43.501683+00:00"
   },
   {
@@ -575,10 +534,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "78306251",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T23:33:15.543578+00:00"
   },
   {
@@ -903,26 +862,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T04:11:16.628921+00:00"
   },
   {
-    "id": "fd_1288",
-    "title": "Direction 4: Certified Fermion Sampling in Noisy Quantum Circuits (Grand Challenge)",
-    "description": "**Conjecture:** For a noisy quantum circuit preparing an n-mode fermionic Gaussian state with depolarizing noise rate \u03b5 per gate and gate depth d, the output correlation matrix K' satisfies:\n\n\u2016K \u2212 K'\u2016_max \u2264 C \u00b7 d \u00b7 \u03b5\n\nwhere K is the ideal correlation matrix. Combined with our certified DPP bounds, this gives:\n\nnegative dependence defect \u2264 6M \u00b7 C \u00b7 d \u00b7 \u03b5\n\nproviding a certified quality bound for fermion sampling under realistic noise.\n\n**Test:** Simulate noisy Gaussian fermionic circuits for n = 4, 8, 16 modes with depolarizing noise \u03b5 = 0.001 to 0.1. Compute the actual correlation matrix K' and compare \u2016K \u2212 K'\u2016_max with the predicted C\u00b7d\u00b7\u03b5 bound. Verify that the certified negative dependence defect matches empirical observation.\n\n**Impact:** This would bring certified DPP theory into quantum computation. Fermion sampling is a key primitive in quantum chemistry and materials science. Certified bounds would determine when noisy quantum hardware produces reliable fermionic correlations\u2014a critical question for quantum advantage claims.\n\n**Catalog References:** `Pythagorean/CertifiedDPPSampling.lean` (certified_approx_dpp_sound), `Speculative/AutoResearch/DPPLorentzian.lean` (DPPKernel, psd_pairInclusion_nonneg).\n\n**Proof Strategy:** Use the Lie-Trotter formula for fermionic Gaussian unitaries to show that each noisy gate perturbs the correlation matrix by at most C\u03b5 in operator norm. Accumulate errors over d gates using submultiplicativity. Convert operator norm to entry-wise norm using \u2016A\u2016_max \u2264 \u2016A\u2016_op.\n\n**Domain Bridges:** Quantum information (fermionic linear optics), condensed matter physics (free fermion ground states), quantum error correction (noise threshold theorems).\n\n**Lineage:** Extends certified_approx_dpp_sound from matrix perturbation to quantum noise models. The DPP-fermion connection (Macchi 1975) provides the bridge.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Grand challenge. Requires formalizing quantum channel noise models and their interaction with correlation matrices. High impact if successful: would provide the first certified quality bounds for quantum fermion sampling.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f44ba709",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T04:11:16.674461+00:00"
-  },
-  {
     "id": "fd_1333",
     "title": "Direction 2: Higher-Rank Extension to GL_n(\ud835\udd3d_q)",
     "description": "**Conjecture:** For GL_n(\ud835\udd3d_q) with n \u2265 3, there exists a polynomial-time certification algorithm based on:\n(a) irreducibility of the full characteristic polynomial,\n(b) maximality of the determinant order,\n(c) escape from all Aschbacher-class maximal subgroups,\nthat certifies a positive spectral gap.\n\n**Test:** Implement the certification pipeline for GL\u2083(\ud835\udd3d\u2083) (|G| = 11232) and GL\u2083(\ud835\udd3d\u2085) (|G| = 1488000). Verify that certified pairs are expanders by numerical eigenvalue computation for GL\u2083(\ud835\udd3d\u2083).\n\n**Impact:** Would establish algorithmic spectral certification as a general paradigm for matrix groups, not limited to the 2\u00d72 case. This opens the door to certified expander construction in groups of cryptographic relevance.\n\n**The key insight is** that Aschbacher's classification of maximal subgroups of GL_n provides a finite list of \"obstruction types,\" and each can be checked by polynomial-time algebraic tests. The irreducible charpoly condition generalizes naturally (ruling out block-diagonal containment), and primitivity of the determinant extends without modification.\n\n**Why now?** The 2\u00d72 framework is now formally verified and computationally validated. The Aschbacher classification is well-understood for small n, and the algebraic tests generalize cleanly. Lean's matrix library supports arbitrary dimensions.\n\n**Catalog References:** `Pythagorean/AlgorithmicSpectralCertification.lean` (AlgebraicSeedCondition, algebraic_seed_excludes_diagonal)\n\n**Proof Strategy:** \n1. Generalize AlgebraicSeedCondition to n\u00d7n: require charpoly irreducible, det primitive, and escape from each Aschbacher class.\n2. Prove each class can be excluded by a polynomial-time test.\n3. Show that passing all tests forces generation, then invoke the maximum principle.\n\n**Domain Bridges:** Finite group theory (Aschbacher's theorem), computational algebra, cryptography (groups used in lattice-based schemes)\n\n**Lineage:** Direct extension of `algebraic_seed_excludes_diagonal` and `AlgebraicSeedCondition` to higher rank\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires formalizing substantial finite group theory)\n\n---",
@@ -1002,25 +941,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "ac6bc32a",
     "consumed_by_exp_id": "00a34fc1",
     "timestamp": "2026-05-27T08:27:46.927552+00:00"
-  },
-  {
-    "id": "fd_1382",
-    "title": "Direction 1: Non-Separated Extensions via Overlapping Support Theory",
-    "description": "**Conjecture**: For an arbitrary nonempty vertex subset $S \\subseteq V(G)$ (not necessarily separated), the canonical kernel quotient is isomorphic to the Laplacian cokernel $\\mathbb{Z}^{|S|}/\\mathrm{Im}(L_S)$, with the isomorphism tracked through a non-trivial SNF decomposition. The off-diagonal entries of $L_S$ encode the \"interaction terms\" between overlapping harmonic generators, and the SNF basis change diagonalizes these interactions.\n\n**Test**: Enumerate all connected graphs with $n \\leq 7$ and all nonempty subsets $S$ (not just separated ones). Compute $L_S$, its SNF, and verify that the invariant factors match the canonical kernel quotient structure. Check whether the transition matrices satisfy the TracksCanonicalGens predicate. A single failure would refute the conjecture.\n\n**Impact**: This would extend the tropical-critical correspondence from independent sets to arbitrary vertex subsets, covering the full graph Jacobian rather than just its restriction to separated sets. It would make the correspondence a complete structural theorem rather than a partial one.\n\n**Catalog References**: \n- `Catalog/Pythagorean/TropicalBridge/SNFCorrespondence.lean` \u2014 `SeparatedSet`, `restrictedLapMat`, `LaplacianCokernel`\n- `Catalog/Pythagorean/TropicalBridge/TropicalKernelRigidity.lean` \u2014 `TropProjEquiv`, `disjoint_support_unique_up_to_tropProjEquiv`\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean` \u2014 `graphLaplacian`, `firingIndependentOn`\n\n**Proof Strategy**: Decompose the restricted Laplacian $L_S = D + N$ where $D$ is the diagonal part (vertex degrees) and $N$ encodes adjacencies within $S$. Show that the SNF of $L_S$ can be computed by iteratively eliminating off-diagonal entries using unimodular row/column operations, tracking how each operation transforms the canonical generators.\n\n**Domain Bridges**: Algebraic graph theory \u2194 computational linear algebra; tropical geometry \u2194 matroid theory (the independence condition generalizes from matroids to arbitrary sets).\n\n**Lineage**: Directly extends `restrictedLap_sep_offdiag` and `cokernel_sep_cyclic` from the current work.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 well within reach with current technology)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e4837868",
-    "consumed_by_exp_id": "8987e0ea",
-    "timestamp": "2026-05-27T12:07:55.419765+00:00"
   },
   {
     "id": "fd_1383",
@@ -1212,10 +1132,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ecb85d0",
     "timestamp": "2026-05-27T12:50:23.884792+00:00"
   },
   {
@@ -1320,26 +1240,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T15:24:35.519993+00:00"
   },
   {
-    "id": "fd_1446",
-    "title": "Direction 4: Compressed Sensing of Many-Body Entanglement",
-    "description": "**Conjecture:** For 1D gapped free-fermion chains with subsystem size m, the entanglement entropy S can be reconstructed to within error \u03b5 from O(log(m/\u03b5)) elementary symmetric polynomials, rather than all m eigenvalues.\n\n**Test:** For systems with L = 200, L_A = 50-100, measure reconstruction error as a function of K (number of e\u2096 values used). If error decays exponentially in K for gapped systems, the conjecture is supported.\n\n**Impact:** Would demonstrate that entanglement has a natural *compressed sensing* structure: sparse in the symmetric polynomial basis, enabling sublinear measurement complexity.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `quadratic_entropy_lower_bound`, `certifiedEntropyApprox_correct`, `powerSum_determined_by_esymm_two`.\n\n**Proof Strategy:** Use the exponential decay of correlation functions in gapped systems to show that e\u2096 decays rapidly for large k, implying that the polynomial entropy surrogate converges rapidly.\n\n**Domain Bridges:** Compressed sensing \u2192 approximation theory \u2192 quantum information \u2192 numerical linear algebra.\n\n**Lineage:** Direct extension of the certified entropy algorithm; builds on the error analysis.\n\n**Ambition:** Solid extension with high practical impact.\n\n*The key insight is* that the area law \u2014 which says entanglement is \"low-rank\" \u2014 should manifest as rapid decay of the elementary symmetric polynomial sequence, enabling compressed representation.\n\n*Why now?* The certified algorithm (`certifiedEntropyApprox_correct`) provides the foundation; extending it to higher-order surrogates requires only the Newton\u2013Girard recursion (Direction 1).\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ec2aa218",
-    "consumed_by_exp_id": "eedf1ad8",
-    "timestamp": "2026-05-27T15:24:35.839293+00:00"
-  },
-  {
     "id": "fd_1447",
     "title": "Direction 5: Newton Hierarchy for Interacting Fermions via Determinantal Approximation",
     "description": "**Conjecture:** For weakly interacting fermion systems (e.g., Hubbard model at weak coupling), the Newton ratio profile of the exact entanglement spectrum is close to that of the best-fit free-fermion (Gaussian) approximation, with corrections controlled by the interaction strength.\n\n**Test:** Compute exact entanglement spectra for the Hubbard model at half-filling (L=8-12 sites, exact diagonalization) and compare Newton ratio profiles with those of the corresponding non-interacting model. If the ratio profiles converge as interaction strength \u2192 0, the conjecture is supported.\n\n**Impact:** Would extend the algebraic compression framework beyond free fermions to interacting systems, vastly expanding its applicability.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `NewtonRatioProfile`, `AreaLawCompatible`, `esymm_newton_inequality`.\n\n**Proof Strategy:** Use perturbation theory in the interaction strength U. The entanglement spectrum \u03bb\u1d62(U) = \u03bb\u1d62(0) + U\u00b7\u03b4\u03bb\u1d62 + O(U\u00b2), and the Newton defects \u0394\u2096(U) = \u0394\u2096(0) + U\u00b7\u03b4\u0394\u2096 + O(U\u00b2). Bound |\u03b4\u0394\u2096| using Lipschitz continuity of the elementary symmetric polynomials.\n\n**Domain Bridges:** Many-body quantum physics \u2192 algebraic combinatorics \u2192 perturbation theory.\n\n**Lineage:** Extends the free-fermion framework to interacting systems; uses the stability of Newton defects.\n\n**Ambition:** Solid extension with transformative potential for computational quantum physics.\n\n*The key insight is* that Newton's inequality is robust under perturbation: if the exact spectrum is close to a free-fermion spectrum, then the Newton defects are close to their free-fermion values, and the algebraic compression still applies approximately.\n\n*Why now?* The formal proof of Newton's inequality and the computational infrastructure for Newton ratio profiles are now available; the Hubbard model is computationally accessible for small systems.",
@@ -1352,10 +1252,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ec2aa218",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dc5aaeb8",
     "timestamp": "2026-05-27T15:24:36.058680+00:00"
   },
   {
@@ -1398,26 +1298,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "c6eef6ce",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T15:25:01.509711+00:00"
-  },
-  {
-    "id": "fd_1451",
-    "title": "Direction 4: Continuous-Time Chip-Firing and Conformal Field Theory",
-    "description": "**Conjecture (Grand Challenge):** The chip-firing process on a metric graph \u0393 admits a continuous-time stochastic extension where chips perform Brownian motion along edges. The stationary measure of this process is the GFF restricted to integer-valued configurations, and the recurrent configurations form the tropical Jacobian J(\u0393).\n\n**Test:** Simulate continuous-time chip-firing on cycle graphs C_n and theta graphs \u0398(a,b,c). Measure the empirical distribution of recurrent configurations and compare with the uniform measure on J(\u0393). Deviations from uniformity would disprove the conjecture.\n\n**Impact:** This would establish a direct bridge between the combinatorics of chip-firing (discrete mathematics), the geometry of tropical curves (algebraic geometry), and conformal field theory (physics). The tropical Jacobian would acquire a dynamical interpretation.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` (all theorems)\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (FiringEquivalentOn)\n\n**Proof Strategy:** Define the continuous chip-firing process as a Markov chain on Div^0(\u0393)/Prin(\u0393) \u2245 J(\u0393). Show that the transition kernel is doubly stochastic (using symmetry of the Laplacian), implying uniformity of the stationary measure.\n\n**Domain Bridges:** Stochastic processes \u2194 Tropical geometry \u2194 Conformal field theory\n\n**Lineage:** Extends `FiringEquivalentOn` and `RestrictedLaplacianImage` to the stochastic setting.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new ideas at the interface of probability and geometry)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c6eef6ce",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T15:25:01.724433+00:00"
   },
   {
     "id": "fd_1454",
@@ -1489,21 +1369,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "147eb4db",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T16:40:30.062802+00:00"
-  },
-  {
-    "id": "fd_1481",
-    "title": "Average-Case Descent Bounds",
-    "description": "Conjecture: For random exchange families on `[0, M]^d` with i.i.d. log-concave objective components, the expected descent length is `\u0398(d^{(d-k)/2})` \u2014 the square root of the worst case.\n\nTest: Generate 1000 random exchange families for each `(d, k)` with `d \u2208 {4, ..., 10}`. Run exchange descent from random start points. Fit the expected step count to `d^\u03b1` and estimate `\u03b1` as a function of `d - k`.\n\nImpact: Would provide practical guidance: if average-case is much better than worst-case, practitioners can rely on descent methods even when certificate depth is low.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "147eb4db",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T16:40:30.122941+00:00"
   },
   {
     "id": "fd_1482",
@@ -1596,44 +1461,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "dbcfb2f4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T17:24:45.553550+00:00"
-  },
-  {
-    "id": "fd_1487",
-    "title": "Direction 4: Error-Correcting Codes from Bounded-Codegree Coverings",
-    "description": "**Conjecture**: For d \u2265 3 and K \u2265 1, the minimum transversal of a d-uniform hypergraph with \u0394\u2082 \u2264 K defines a binary code with minimum distance \u2265 d/(K+1) and rate \u2265 1 \u2212 (d\u2212\u03b5)\u00b7\u03c4*/n, where \u03b5 = \u03b5(d,K) > 0. In particular, bounded codegree covering systems yield codes that exceed the Gilbert-Varshamov bound when K is sufficiently small relative to d.\n\n**Test**: Construct explicit d-uniform hypergraphs with \u0394\u2082 \u2264 K (e.g., from Steiner systems or randomized constructions). Compute the minimum transversal and treat it as a codeword. Measure the minimum Hamming distance between transversals and compare to the GV bound.\n\n**Impact**: Would provide:\n- New constructions of LDPC-like codes from hypergraph covering\n- Connections between coding-theoretic distance and combinatorial overlap\n- A covering-based framework for code design\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (codegree bounds), `Catalog/Pythagorean/HypergraphTransversal.lean` (transversal theory).\n\n**Proof Strategy**: The minimum distance between two distinct transversals S\u2081, S\u2082 is |S\u2081 \u0394 S\u2082|. Under bounded codegree, the symmetric difference is large because the edges \"force\" transversals to spread out. Use the energy bound to show that concentrated transversals have high overlap energy, contradicting optimality.\n\n**Domain Bridges**: Coding theory, information theory, combinatorial design.\n\n**Lineage**: Uses `pairCodegree_le_one_of_pairwiseDisjoint` as the K=1 base case (Steiner systems).\n\n**Ambition**: Solid extension \u2014 connects two well-established fields through a new lens.\n\n**The key insight is** that bounded pair codegree forces transversals to be \"spread out,\" which is precisely the property needed for good error-correcting codes.\n\n**Why now?** The formal connection between codegree and energy opens a quantitative bridge to coding theory that was not previously available.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T17:24:45.619179+00:00"
-  },
-  {
-    "id": "fd_1488",
-    "title": "Direction 5: Sparse Biological Interaction Networks",
-    "description": "**Conjecture**: In protein-protein interaction networks modeled as d-uniform hypergraphs (where edges represent protein complexes), the pair codegree \u0394\u2082 is bounded by O(log n) where n is the number of proteins. Consequently, the drug target selection problem (minimum hitting set of essential complexes) admits an approximation ratio of d \u2212 \u03a9(1/log n), significantly better than the worst-case d factor.\n\n**Test**: Analyze real PPI databases (BioGRID, STRING) for pair codegree distribution. For the top 1000 protein complexes, compute \u0394\u2082 and compare to log n. Then solve the hitting set LP, apply threshold rounding, and compare to the ILP solution. The conjecture predicts a gap ratio significantly below d.\n\n**Impact**: Would provide:\n- Rigorous approximation guarantees for drug target identification\n- Structural characterization of biological network overlap\n- Principled algorithms for essential gene prediction\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (all main theorems).\n\n**Proof Strategy**: Biological networks are known to have bounded degree distributions (scale-free with bounded average degree). Under degree bounds, the pair codegree is bounded by the product of individual degrees divided by the number of edges \u2014 which gives O(log n) in typical scale-free networks.\n\n**Domain Bridges**: Computational biology, network science, drug discovery.\n\n**Lineage**: Applies `integrality_gap_improved_capped` to biological network instances.\n\n**Ambition**: Solid extension \u2014 directly applicable to existing datasets.\n\n**The key insight is** that biological networks have naturally bounded pair codegree due to evolutionary pressure against redundant interactions, making them ideal candidates for overlap-sensitive optimization.\n\n**Why now?** Large-scale PPI databases are now available, and the formal guarantees from this work provide the first rigorous framework for overlap-adaptive analysis of biological covering problems.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T17:24:45.684727+00:00"
   },
   {
     "id": "fd_0806",
@@ -2129,6 +1956,36 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T14:12:46.483587+00:00"
+  },
+  {
+    "id": "fd_1509",
+    "title": "Arithmetic Universality Class for Primewise Persistent Homology of Rational Dyna",
+    "description": "Conjecture: Let f,g \\in \\mathbb{Q}(x) be rational maps of degree at least 2 that are not conjugate over \\overline{\\mathbb{Q}} and whose postcritical dynamics are not both Latt\\u00e8s. For each good prime p, form the directed graph of the map on \\mathbb{P}^1(\\mathbb{F}_p), build a canonical filtered flag complex from orbit-preimage structure, and record the primewise persistence profile \\Pi_f(p). Then there exists a finite set of persistence statistics S(f) extracted from \\{\\Pi_f(p)\\}_p such that S(f)=S(g) for a density-1 set of primes p if and only if f and g are conjugate over \\overline{\\mathbb{Q}}. Test: Compute these persistence profiles for large families of quadratic and cubic rational maps over many good primes; confirmation is separation of non-conjugate maps with only finitely many exceptional primes, while repeated density-1 collisions between genuinely non-conjugate maps refute the conjecture. Impact: This would create a new topological invariant of arithmetic dynamics, turning mod-p orbit data into a practical and theoretically sharp classifier of algebraic dynamical systems, with possible applications to detecting hidden symmetries, exceptional maps, and dynamical moduli stratification.",
+    "domains": [
+      "Arithmetic Dynamics",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T18:35:56.749847+00:00"
+  },
+  {
+    "id": "fd_1510",
+    "title": "Prime-Indexed Persistent Homology Recovers the Conductor of an Elliptic Curve",
+    "description": "Conjecture: There exists an explicit functorial construction sending an elliptic curve E/Q to a finite-type filtered chain complex C_p(E) for each good prime p such that the collection of primewise persistence signatures {PH(C_p(E))}_p determines the conductor N_E up to finitely many ambiguities, and in fact distinguishes whether a given prime l divides N_E by a uniform local pattern visible in the persistence data for a positive-density set of auxiliary good primes p. Test: Define candidate complexes from reductions of E mod p together with Frobenius/orbit data, compute persistence signatures across large databases of elliptic curves with varying conductors, and check whether a classifier built only from these signatures predicts the support of N_E with accuracy tending to 1 as more good primes p are sampled; refutation occurs if non-isogenous curves with different conductor supports systematically produce indistinguishable primewise persistence ensembles. Impact: This would create a new topological route to extracting deep arithmetic invariants from families over finite fields, potentially opening a persistence-based dictionary between arithmetic geometry and topological signal extraction.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T18:36:27.820898+00:00"
   },
   {
     "id": "seed_032",
