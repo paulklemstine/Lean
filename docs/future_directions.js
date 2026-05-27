@@ -154,10 +154,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "3e567686",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:26:36.199585+00:00"
   },
   {
@@ -319,10 +319,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "fae8584a",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T19:29:17.881900+00:00"
   },
   {
@@ -435,10 +435,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33b7a398",
     "timestamp": "2026-05-25T22:25:38.908872+00:00"
   },
   {
@@ -455,10 +455,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "90f5c361",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.967457+00:00"
   },
   {
@@ -631,10 +631,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a0951d1f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a2154f02",
     "timestamp": "2026-05-26T06:04:06.558801+00:00"
   },
   {
@@ -673,10 +673,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "42d710f5",
-    "consumed_by_exp_id": "56c118ac",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T08:59:20.810965+00:00"
   },
   {
@@ -981,26 +981,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "05e24005",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T12:09:20.690830+00:00"
-  },
-  {
-    "id": "fd_1396",
-    "title": "Direction 3: Hessian-Based Lorentzian Gap via MvPolynomial Infrastructure",
-    "description": "**Conjecture:** The minMass/maxMass ratio used as a Lorentzian gap surrogate in the current work can be replaced by a true Hessian-based certificate: the smallest eigenvalue of the Hessian of log P_\u03bc restricted to the orthogonal complement of the all-ones direction. This refined gap provides tighter bounds on mixing time.\n\n**Test:** For TFIM ground states (n = 4,...,8), compute the full Hessian of log P_\u03bc at the all-ones point. Extract the restricted spectrum. Compare the minimum eigenvalue with the minMass/maxMass surrogate and the actual Glauber mixing time. The Hessian-based gap should be a tighter predictor.\n\n**Impact:** Replaces the crude surrogate with a geometrically natural quantity, enabling sharper perturbation bounds. The Hessian-based gap is the natural Riemannian metric on the space of Lorentzian polynomials, and computing it opens the door to gradient-based optimization over quantum measurement distributions.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean`: `RobustLorentzianCertificate`, `minMass`\n- `Catalog/Bridges/Catalog/Pythagorean/RobustLorentzianSampling.lean`: `HasGappedSignature`, `QuadForm`\n- `Catalog/Pythagorean/DirectionalLogConcavity.lean`\n\n**Proof Strategy:** Define the generating polynomial using Mathlib's `MvPolynomial`. Compute its Hessian symbolically. Prove that for Lorentzian polynomials, the restricted Hessian has exactly one positive eigenvalue. Use `residual_gap_of_perturbation` from the Catalog to show perturbative stability of the Hessian gap.\n\n**Domain Bridges:** Riemannian geometry \u2194 Lorentzian polynomials \u2194 MvPolynomial algebra \u2194 spectral theory\n\n**Lineage:** Direct refinement of `RobustLorentzianCertificate` using algebraic infrastructure.\n\n**Ambition:** Solid extension \u2014 builds directly on Catalog tools\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "05e24005",
-    "consumed_by_exp_id": "d3daf58d",
-    "timestamp": "2026-05-27T12:09:20.795454+00:00"
   },
   {
     "id": "fd_1398",
@@ -1496,7 +1476,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "00a34fc1",
@@ -1516,7 +1496,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "00a34fc1",
@@ -1536,7 +1516,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "00a34fc1",
@@ -1553,12 +1533,35 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "46f40501",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T20:26:10.892515+00:00"
+  },
+  {
+    "id": "fd_1536",
+    "title": "Direction 1: Universal M-Convex Compression Theorem",
+    "description": "**Conjecture:** For any homogeneous polynomial p with nonneg coefficients whose Newton support S forms an M-convex set, the nonzero quadratic leaf count of the Lorentzian recognition tree is exactly |{\u03b1 \u2208 S^{(r-2)} : \u03b1 lies in the (r-2)-skeleton of S}|, where S^{(k)} denotes the k-truncation shadow of S under M-convex exchange.\n\n**Test:** Formalize the M-convex shadow operator, compute it for non-matroidal M-convex sets (e.g., flow polytope lattice points), and verify that the leaf count matches. A disproof would be an M-convex support where cancellation invalidates the bijection.\n\n**Impact:** This would generalize the matroid leaf-independence bijection to the full class of M-convex supports, making discrete convex analysis the *universal* language for Lorentzian certification complexity. It would subsume all matroid-specific results as special cases.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidBasisLeafCompression.lean` (Theorem `derivative_nonzero_iff_dominated_support`), `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (M-convex exchange definition `IsMConvexExchangeNat`).\n\n**Proof Strategy:** Extend the multiaffine domination lemma to general M-convex supports. The key obstacle is coefficient cancellation: for non-multiaffine supports, distinct \u03b2 with \u03b1 \u2264 \u03b2 may produce the same monomial after differentiation, allowing cancellation. Show that M-convex exchange prevents such cancellation by proving that the derivative map is injective on the fiber above each surviving leaf.\n\n**Domain Bridges:** Discrete optimization (flow polytopes), algebraic combinatorics (Schur positivity), tropical geometry (valuated matroids).\n\n**Lineage:** Extends `derivative_nonzero_iff_dominated_support` from multiaffine to general M-convex.\n\n**Ambition:** Grand challenge \u2014 would establish discrete convexity as a complexity theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "37ca1705",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T20:27:17.556195+00:00"
   },
   {
     "id": "fd_0806",
@@ -2084,29 +2087,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T18:36:27.820898+00:00"
-  },
-  {
-    "id": "fd_1536",
-    "title": "Direction 1: Universal M-Convex Compression Theorem",
-    "description": "**Conjecture:** For any homogeneous polynomial p with nonneg coefficients whose Newton support S forms an M-convex set, the nonzero quadratic leaf count of the Lorentzian recognition tree is exactly |{\u03b1 \u2208 S^{(r-2)} : \u03b1 lies in the (r-2)-skeleton of S}|, where S^{(k)} denotes the k-truncation shadow of S under M-convex exchange.\n\n**Test:** Formalize the M-convex shadow operator, compute it for non-matroidal M-convex sets (e.g., flow polytope lattice points), and verify that the leaf count matches. A disproof would be an M-convex support where cancellation invalidates the bijection.\n\n**Impact:** This would generalize the matroid leaf-independence bijection to the full class of M-convex supports, making discrete convex analysis the *universal* language for Lorentzian certification complexity. It would subsume all matroid-specific results as special cases.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidBasisLeafCompression.lean` (Theorem `derivative_nonzero_iff_dominated_support`), `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean` (M-convex exchange definition `IsMConvexExchangeNat`).\n\n**Proof Strategy:** Extend the multiaffine domination lemma to general M-convex supports. The key obstacle is coefficient cancellation: for non-multiaffine supports, distinct \u03b2 with \u03b1 \u2264 \u03b2 may produce the same monomial after differentiation, allowing cancellation. Show that M-convex exchange prevents such cancellation by proving that the derivative map is injective on the fiber above each surviving leaf.\n\n**Domain Bridges:** Discrete optimization (flow polytopes), algebraic combinatorics (Schur positivity), tropical geometry (valuated matroids).\n\n**Lineage:** Extends `derivative_nonzero_iff_dominated_support` from multiaffine to general M-convex.\n\n**Ambition:** Grand challenge \u2014 would establish discrete convexity as a complexity theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "37ca1705",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T20:27:17.556195+00:00"
   },
   {
     "id": "seed_032",

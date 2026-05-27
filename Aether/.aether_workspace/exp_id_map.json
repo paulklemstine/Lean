@@ -760,5 +760,7 @@
   "46f40501": "direction_1_typed_higher_order_tensor_rewriting_wi.json",
   "4ecb85d0": "direction_4_tropical_tensor_distributivity_and_min.json",
   "dc5aaeb8": "direction_5_newton_hierarchy_for_interacting_fermi.json",
-  "37ca1705": "direction_2_sparse_support_certificate_compression.json"
+  "37ca1705": "direction_2_sparse_support_certificate_compression.json",
+  "dd920969": "direction_1_universal_support_tutte_polynomial.json",
+  "d3daf58d": "direction_3_hessian_based_lorentzian_gap_via_mvpol.json"
 }
