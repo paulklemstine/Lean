@@ -756,5 +756,9 @@
   "78306251": "direction_2_valuated_m_convexity_and_coefficient_t.json",
   "db173401": "direction_2_moment_method_attack_on_the_random_cay.json",
   "940a799a": "direction_2_higher_order_critical_pairs_and_knuth_.json",
-  "00a34fc1": "direction_4_stability_of_partition_functions_under.json"
+  "00a34fc1": "direction_4_stability_of_partition_functions_under.json",
+  "46f40501": "direction_1_typed_higher_order_tensor_rewriting_wi.json",
+  "4ecb85d0": "direction_4_tropical_tensor_distributivity_and_min.json",
+  "dc5aaeb8": "direction_5_newton_hierarchy_for_interacting_fermi.json",
+  "37ca1705": "direction_2_sparse_support_certificate_compression.json"
 }

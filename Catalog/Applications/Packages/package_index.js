@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorics / Lorentzian Polynomials / Matroid Theory",
     "date": "2026-05-27T20:27:14Z",
     "exp_id": "37ca1705",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7218578947368421,
+    "quality": "substantial",
     "pkg_num": 190
   },
   {
@@ -5519,8 +5519,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-27T20:27:14Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7218578947368421,
+      "quality": "substantial"
     }
   ],
   "edges": [
