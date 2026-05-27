@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Graph Theory / Tropical Geometry",
     "date": "2026-05-27T23:30:15Z",
     "exp_id": "56c118ac",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.722156,
+    "quality": "substantial",
     "pkg_num": 196
   },
   {
@@ -5693,8 +5693,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-27T23:30:15Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.722156,
+      "quality": "substantial"
     }
   ],
   "edges": [

@@ -285,10 +285,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "7550d9c2",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:03.296660+00:00"
   },
   {
@@ -1016,10 +1016,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7e0c9f23",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b639c238",
     "timestamp": "2026-05-27T12:10:11.335247+00:00"
   },
   {
@@ -2070,6 +2070,82 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T18:36:27.820898+00:00"
   },
   {
+    "id": "fd_1557",
+    "title": "Direction 1: Sharp Representation-Theoretic Bounds via GL\u2082 Decomposition",
+    "description": "**Conjecture:** For every prime q \u2265 5 and every certified pair (g, h) in GL\u2082(\ud835\udd3d_q), the spectral gap satisfies \u03b3(S) \u2265 C/q where C = 1/2 \u2212 \u03b5 for any \u03b5 > 0 and sufficiently large q. Moreover, the worst-case eigenvalue comes from the principal series representation family.\n\n**Test:** Decompose the averaging operator on each of the four representation families of GL\u2082(\ud835\udd3d_q) \u2014 (i) one-dimensional determinant twists, (ii) principal series, (iii) Steinberg twists, (iv) cuspidal representations \u2014 and compute the operator norm on each family for q \u2208 {5, 7, 11, 13, 17, 19, 23}. If the principal series consistently dominates (giving the largest nontrivial eigenvalue), the conjecture is supported. If cuspidal representations dominate for some q, the conjecture needs revision.\n\n**Impact:** A proof would give the first broad family of 4-regular explicit expanders for GL\u2082 with algebraic certificates and a sharp uniform bound. This would bypass Bourgain\u2013Gamburd's probabilistic method with a deterministic, certificate-driven alternative.\n\n**Catalog References:**\n- `Catalog/Pythagorean/UniformSpectralGap.lean`: `singerLike_no_eigenvalue\u2082`, `singerLike_no_invariant_line\u2082`, `GL2Cert.harmonic_meanzero_eq_zero`\n- `Catalog/Algebra/MatrixGroupGeneration.lean`: `eq_bot_or_top_of_charpoly_irreducible`\n- `Catalog/Pythagorean/CertificateExpanders.lean`: `harmonic_meanzero_eq_zero`, `certified_pair_harmonic_trivial`\n\n**Proof Strategy:** For each representation family \u03c1, bound \u2016(1/4)(\u03c1(g)+\u03c1(g\u207b\u00b9)+\u03c1(h)+\u03c1(h\u207b\u00b9))\u2016 using:\n- Principal series: Singer-like g acts on induced representations from the Borel subgroup; its matrix coefficients are character sums bounded by Weil's theorem.\n- Cuspidal: Use the explicit character table of GL\u2082(\ud835\udd3d_q) and Deligne-style bounds on character sums.\n- Steinberg: The unique irreducible quotient of dimension q; Singer-like action gives O(1/\u221aq) bounds.\n- One-dimensional: Primitive det ensures non-triviality on determinant characters.\n\n**Domain Bridges:** Automorphic forms (character sum bounds via Weil), number theory (Deligne's theorem on character sums), spectral graph theory (eigenvalue\u2013expansion connection).\n\n**The key insight is** that each representation family of GL\u2082(\ud835\udd3d_q) responds to exactly one of the three certification conditions, and the family-wise bounds combine to a uniform gap.\n\n**Why now?** The formal verification of the harmonic maximum principle and Singer eigenvalue exclusion provides the foundational infrastructure. The explicit character table of GL\u2082(\ud835\udd3d_q) is classical and well-documented, making formalization feasible.\n\n**Lineage:** Extends `certified_pair_gap_pos` from qualitative (\u03b3 > 0) to quantitative (\u03b3 \u2265 C/q).\n\n**Ambition:** Grand challenge \u2014 would establish a new paradigm for explicit expander construction.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "209e0d92",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T22:19:22.514222+00:00"
+  },
+  {
+    "id": "fd_1558",
+    "title": "Direction 2: Certificate-Driven Expanders for GL_n(\ud835\udd3d_q)",
+    "description": "**Conjecture:** For fixed n \u2265 2 and varying prime q, there exist certified pairs in GL_n(\ud835\udd3d_q) \u2014 defined by irreducible charpoly of degree n for the first generator and primitive determinant for the second \u2014 such that the spectral gap satisfies \u03b3 \u2265 C_n / q^{n-1}.\n\n**Test:** For n = 3 and q \u2208 {5, 7, 11}, enumerate elements of GL\u2083(\ud835\udd3d_q) with irreducible degree-3 characteristic polynomials, pair with primitive-determinant matrices, verify generation, and compute spectral gaps numerically.\n\n**Impact:** Would extend the certificate framework from GL\u2082 to arbitrary rank, yielding expander families of exponentially growing size with polynomial-gap bounds.\n\n**Catalog References:**\n- `Catalog/Algebra/MatrixGroupGeneration.lean`: `eq_bot_or_top_of_charpoly_irreducible` (already proven for arbitrary dimension)\n- `Catalog/Pythagorean/UniformSpectralGap.lean`: `SingerLike\u2082` (to be generalized to `SingerLike_n`)\n\n**Proof Strategy:** The irreducible action theorem (`eq_bot_or_top_of_charpoly_irreducible`) already works in arbitrary dimension. The main challenge is the representation-theoretic analysis, which for GL_n requires Harish-Chandra theory and parabolic induction.\n\n**Domain Bridges:** Representation theory of p-adic groups, Langlands program (at the finite-field level), algebraic combinatorics (Bruhat decomposition).\n\n**The key insight is** that the irreducible action theorem from MatrixGroupGeneration is already dimension-agnostic \u2014 the hard work is in the representation decomposition, not the algebra.\n\n**Why now?** The dimension-independent invariant subspace theorem is already formalized. The representation theory of GL_n(\ud835\udd3d_q) is more complex but structurally similar to GL\u2082.\n\n**Lineage:** Direct generalization of Direction 1 from n=2 to arbitrary n.\n\n**Ambition:** Solid extension \u2014 significant but follows a clear path from existing results.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "209e0d92",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T22:19:22.614499+00:00"
+  },
+  {
+    "id": "fd_1565",
+    "title": "Direction 1: Componentwise Factorization of TropProjEquiv Classes",
+    "description": "**Conjecture:** For any connected graph $G$, basepoint $q$, and subset $S \\subseteq V \\setminus \\{q\\}$, the number of tropical projective equivalence classes of minimal generating families factors as a product over overlap classes:\n$$|\\text{TropProjEquiv classes}| = \\prod_{C \\in \\text{OverlapClasses}} f(C)$$\nwhere $f(C)$ depends only on the restriction of the generating family to class $C$.\n\n**Test:** Implement the full tropical kernel computation for connected graphs on $n \\leq 8$ vertices. For each $(G, q, S)$, enumerate minimal generating families, quotient by TropProjEquiv, and check whether the class count is multiplicative over overlap classes. A single instance where the count is not a product of per-class counts would refute the conjecture.\n\n**Impact:** If true, this reduces the global classification problem to independent local problems, one per overlap class. This is the tropical analogue of the decomposition of representations into irreducible components.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/OverlapClassRigidity.lean`: `overlapClassCount_eq_card_of_pairwiseDisjoint`, `disjoint_overlap_classes_no_interaction`\n- `Catalog/Pythagorean/TropicalBridge/TropicalKernelRigidity.lean`: `disjoint_support_unique_up_to_tropProjEquiv`\n\n**Proof Strategy:** Use the sector independence theorem to decompose any minimal generating family into per-class subfamilies. Show that TropProjEquiv acts independently on each sector (the permutation $\\sigma$ preserves overlap classes by `tropProjEquiv_preserves_overlap`). Deduce multiplicativity.\n\n**Domain Bridges:** Statistical physics (independent partition functions per interaction sector), representation theory (irreducible decomposition).\n\n**Lineage:** Extends `overlapClassCount_eq_card_of_pairwiseDisjoint` from the disjoint case to general overlap.\n\n**Ambition:** Grand challenge \u2014 would establish overlap classes as the definitive interaction sectors for tropical algebra on graphs.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56c118ac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T23:30:19.262061+00:00"
+  },
+  {
+    "id": "fd_1566",
+    "title": "Direction 2: Uniqueness in the Overlap-Degree-One Regime",
+    "description": "**Conjecture:** When the overlap degree is at most 1 (every pair of distinct cycle supports shares at most one vertex), the minimal generating family within each overlap class is unique up to TropProjEquiv.\n\n**Test:** For all connected graphs on $n \\leq 9$ vertices with overlap degree $\\leq 1$, enumerate generating families within each overlap class and verify uniqueness up to TropProjEquiv. The `overlapDegree_le_one_iff` theorem provides the Lean-verified characterization.\n\n**Impact:** This would be the first genuinely new rigidity theorem beyond disjoint supports. It covers a large fraction of non-trivial cases (our computational experiments show overlap degree 1 is the most common non-trivial regime).\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/OverlapClassRigidity.lean`: `overlapDegree_le_one_iff`, `overlapDegree_le_iff`\n- `Catalog/Pythagorean/TropicalBridge/TropicalKernelRigidity.lean`: `support_matching_injective`\n\n**Proof Strategy:** When two supports share exactly one vertex $v$, the harmonic constraint at $v$ creates a linear relation between the two generators' values. This should force the generators to be related by an additive constant on their overlap, which combined with `support_matching_injective` should yield the permutation. The key insight is that a single shared vertex creates a \"hinge\" constraint, not enough freedom for independent variation.\n\n**Domain Bridges:** Matroid theory (circuits sharing one element satisfy the weak circuit elimination axiom), coding theory (minimum-weight codewords with overlap 1 are \"almost orthogonal\").\n\n**Lineage:** Directly extends the base case `overlapDegree_eq_zero_iff_pairwiseDisjoint` by one step.\n\n**Ambition:** Solid extension \u2014 high probability of success, would open the overlap-degree hierarchy.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "56c118ac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T23:30:19.336253+00:00"
+  },
+  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2096,42 +2172,5 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.336768+00:00"
-  },
-  {
-    "id": "fd_1557",
-    "title": "Direction 1: Sharp Representation-Theoretic Bounds via GL\u2082 Decomposition",
-    "description": "**Conjecture:** For every prime q \u2265 5 and every certified pair (g, h) in GL\u2082(\ud835\udd3d_q), the spectral gap satisfies \u03b3(S) \u2265 C/q where C = 1/2 \u2212 \u03b5 for any \u03b5 > 0 and sufficiently large q. Moreover, the worst-case eigenvalue comes from the principal series representation family.\n\n**Test:** Decompose the averaging operator on each of the four representation families of GL\u2082(\ud835\udd3d_q) \u2014 (i) one-dimensional determinant twists, (ii) principal series, (iii) Steinberg twists, (iv) cuspidal representations \u2014 and compute the operator norm on each family for q \u2208 {5, 7, 11, 13, 17, 19, 23}. If the principal series consistently dominates (giving the largest nontrivial eigenvalue), the conjecture is supported. If cuspidal representations dominate for some q, the conjecture needs revision.\n\n**Impact:** A proof would give the first broad family of 4-regular explicit expanders for GL\u2082 with algebraic certificates and a sharp uniform bound. This would bypass Bourgain\u2013Gamburd's probabilistic method with a deterministic, certificate-driven alternative.\n\n**Catalog References:**\n- `Catalog/Pythagorean/UniformSpectralGap.lean`: `singerLike_no_eigenvalue\u2082`, `singerLike_no_invariant_line\u2082`, `GL2Cert.harmonic_meanzero_eq_zero`\n- `Catalog/Algebra/MatrixGroupGeneration.lean`: `eq_bot_or_top_of_charpoly_irreducible`\n- `Catalog/Pythagorean/CertificateExpanders.lean`: `harmonic_meanzero_eq_zero`, `certified_pair_harmonic_trivial`\n\n**Proof Strategy:** For each representation family \u03c1, bound \u2016(1/4)(\u03c1(g)+\u03c1(g\u207b\u00b9)+\u03c1(h)+\u03c1(h\u207b\u00b9))\u2016 using:\n- Principal series: Singer-like g acts on induced representations from the Borel subgroup; its matrix coefficients are character sums bounded by Weil's theorem.\n- Cuspidal: Use the explicit character table of GL\u2082(\ud835\udd3d_q) and Deligne-style bounds on character sums.\n- Steinberg: The unique irreducible quotient of dimension q; Singer-like action gives O(1/\u221aq) bounds.\n- One-dimensional: Primitive det ensures non-triviality on determinant characters.\n\n**Domain Bridges:** Automorphic forms (character sum bounds via Weil), number theory (Deligne's theorem on character sums), spectral graph theory (eigenvalue\u2013expansion connection).\n\n**The key insight is** that each representation family of GL\u2082(\ud835\udd3d_q) responds to exactly one of the three certification conditions, and the family-wise bounds combine to a uniform gap.\n\n**Why now?** The formal verification of the harmonic maximum principle and Singer eigenvalue exclusion provides the foundational infrastructure. The explicit character table of GL\u2082(\ud835\udd3d_q) is classical and well-documented, making formalization feasible.\n\n**Lineage:** Extends `certified_pair_gap_pos` from qualitative (\u03b3 > 0) to quantitative (\u03b3 \u2265 C/q).\n\n**Ambition:** Grand challenge \u2014 would establish a new paradigm for explicit expander construction.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "209e0d92",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T22:19:22.514222+00:00"
-  },
-  {
-    "id": "fd_1558",
-    "title": "Direction 2: Certificate-Driven Expanders for GL_n(\ud835\udd3d_q)",
-    "description": "**Conjecture:** For fixed n \u2265 2 and varying prime q, there exist certified pairs in GL_n(\ud835\udd3d_q) \u2014 defined by irreducible charpoly of degree n for the first generator and primitive determinant for the second \u2014 such that the spectral gap satisfies \u03b3 \u2265 C_n / q^{n-1}.\n\n**Test:** For n = 3 and q \u2208 {5, 7, 11}, enumerate elements of GL\u2083(\ud835\udd3d_q) with irreducible degree-3 characteristic polynomials, pair with primitive-determinant matrices, verify generation, and compute spectral gaps numerically.\n\n**Impact:** Would extend the certificate framework from GL\u2082 to arbitrary rank, yielding expander families of exponentially growing size with polynomial-gap bounds.\n\n**Catalog References:**\n- `Catalog/Algebra/MatrixGroupGeneration.lean`: `eq_bot_or_top_of_charpoly_irreducible` (already proven for arbitrary dimension)\n- `Catalog/Pythagorean/UniformSpectralGap.lean`: `SingerLike\u2082` (to be generalized to `SingerLike_n`)\n\n**Proof Strategy:** The irreducible action theorem (`eq_bot_or_top_of_charpoly_irreducible`) already works in arbitrary dimension. The main challenge is the representation-theoretic analysis, which for GL_n requires Harish-Chandra theory and parabolic induction.\n\n**Domain Bridges:** Representation theory of p-adic groups, Langlands program (at the finite-field level), algebraic combinatorics (Bruhat decomposition).\n\n**The key insight is** that the irreducible action theorem from MatrixGroupGeneration is already dimension-agnostic \u2014 the hard work is in the representation decomposition, not the algebra.\n\n**Why now?** The dimension-independent invariant subspace theorem is already formalized. The representation theory of GL_n(\ud835\udd3d_q) is more complex but structurally similar to GL\u2082.\n\n**Lineage:** Direct generalization of Direction 1 from n=2 to arbitrary n.\n\n**Ambition:** Solid extension \u2014 significant but follows a clear path from existing results.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "209e0d92",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T22:19:22.614499+00:00"
   }
 ];
