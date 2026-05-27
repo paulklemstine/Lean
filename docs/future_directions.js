@@ -86,10 +86,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "793bbd8c",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.544197+00:00"
   },
   {
@@ -234,10 +234,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "84929cd5",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:54:40.932722+00:00"
   },
   {
@@ -1016,10 +1016,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d0d5d0f",
     "timestamp": "2026-05-26T00:07:30.309357+00:00"
   },
   {
@@ -1679,12 +1679,30 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "19908b05",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T04:11:37.403103+00:00"
+  },
+  {
+    "id": "fd_1305",
+    "title": "Direction 1: Unbounded Confluence via Well-Founded Overlap Induction",
+    "description": "**Conjecture**: For every finite left-linear simply typed Miller-pattern rewrite system E, if all \u03b2-critical pairs (at all sizes) are joinable, then HoRewrite_\u03b2(E) is confluent on all closed simply-typed terms.\n\n**The key insight is** that the bounded framework established in `Pythagorean/HOCriticalPairs.lean` can be lifted to an unbounded result by showing that the set of critical pairs is *well-founded*: overlaps at larger sizes decompose into smaller overlaps via the substitution functoriality theorem (`subst_comp`). This transforms the bounded critical pair theorem into an inductive proof over the termination ordering.\n\n**Why now?** The substitution infrastructure (`subst_comp`, `hoRewrite_closed_under_subst`, `betaStep_closed_under_subst`) and Newman's lemma (`newman_lemma`) from the current development provide the exact tools needed. The missing piece is a structural analysis of how overlap size relates to the well-founded ordering from `Terminating E`.\n\n**Test**: Formalize the statement in Lean 4 and attempt proof by well-founded induction on the overlap complexity. A disproof would require constructing a Miller-pattern system where joinability at every finite size fails to imply joinability at the limit.\n\n**Impact**: An unconditional higher-order critical pair theorem would be a landmark result in rewriting theory, removing the last barrier to using completion as a decision procedure for higher-order equational reasoning.\n\n**Catalog References**: `Pythagorean/HOCriticalPairs.lean` (Theorems: `newman_lemma`, `localConfluence_of_joinable_criticalPairs`, `subst_comp`)\n\n**Proof Strategy**: Transfinite induction on the maximal overlap size. Use `subst_comp` to decompose large overlaps into compositions of smaller ones.\n\n**Domain Bridges**: Automated theorem proving (equational reasoning), compiler verification (full correctness guarantees)\n\n**Lineage**: Direct extension of the bounded critical pair theorem\n\n**Ambition**: Grand challenge \u2014 would resolve a 50-year open question in higher-order rewriting theory\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "9c7a3d48",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T04:49:16.645214+00:00"
   },
   {
     "id": "seed_005",
@@ -1792,24 +1810,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1305",
-    "title": "Direction 1: Unbounded Confluence via Well-Founded Overlap Induction",
-    "description": "**Conjecture**: For every finite left-linear simply typed Miller-pattern rewrite system E, if all \u03b2-critical pairs (at all sizes) are joinable, then HoRewrite_\u03b2(E) is confluent on all closed simply-typed terms.\n\n**The key insight is** that the bounded framework established in `Pythagorean/HOCriticalPairs.lean` can be lifted to an unbounded result by showing that the set of critical pairs is *well-founded*: overlaps at larger sizes decompose into smaller overlaps via the substitution functoriality theorem (`subst_comp`). This transforms the bounded critical pair theorem into an inductive proof over the termination ordering.\n\n**Why now?** The substitution infrastructure (`subst_comp`, `hoRewrite_closed_under_subst`, `betaStep_closed_under_subst`) and Newman's lemma (`newman_lemma`) from the current development provide the exact tools needed. The missing piece is a structural analysis of how overlap size relates to the well-founded ordering from `Terminating E`.\n\n**Test**: Formalize the statement in Lean 4 and attempt proof by well-founded induction on the overlap complexity. A disproof would require constructing a Miller-pattern system where joinability at every finite size fails to imply joinability at the limit.\n\n**Impact**: An unconditional higher-order critical pair theorem would be a landmark result in rewriting theory, removing the last barrier to using completion as a decision procedure for higher-order equational reasoning.\n\n**Catalog References**: `Pythagorean/HOCriticalPairs.lean` (Theorems: `newman_lemma`, `localConfluence_of_joinable_criticalPairs`, `subst_comp`)\n\n**Proof Strategy**: Transfinite induction on the maximal overlap size. Use `subst_comp` to decompose large overlaps into compositions of smaller ones.\n\n**Domain Bridges**: Automated theorem proving (equational reasoning), compiler verification (full correctness guarantees)\n\n**Lineage**: Direct extension of the bounded critical pair theorem\n\n**Ambition**: Grand challenge \u2014 would resolve a 50-year open question in higher-order rewriting theory\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "9c7a3d48",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T04:49:16.645214+00:00"
   },
   {
     "id": "seed_013",

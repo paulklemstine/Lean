@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1921 of the highest-quality
+A curated collection of 1922 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1921
+Total files: 1922
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -287,6 +287,7 @@ import FINAL.Bridges.ArithmeticProfileAnalysis
 import FINAL.Bridges.ArithmeticVCDimension
 import FINAL.Bridges.ArrowDepthComplexity
 import FINAL.Bridges.AschbacherCertificates
+import FINAL.Bridges.BGTStructure
 import FINAL.Bridges.Basic
 import FINAL.Bridges.BeatpathRobustness
 import FINAL.Bridges.BerggrenAutomatonRealization

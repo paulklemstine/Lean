@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Noncommutative Additive Combinatorics / Approximate Group Theory",
     "date": "2026-05-27T05:23:33Z",
     "exp_id": "136def5b",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7104440000000001,
+    "quality": "substantial",
     "pkg_num": 142
   },
   {
@@ -4127,8 +4127,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-27T05:23:33Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7104440000000001,
+      "quality": "substantial"
     }
   ],
   "edges": [
