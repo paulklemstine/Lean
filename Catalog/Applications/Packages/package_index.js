@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorial Optimization / Hypergraph Theory",
     "date": "2026-05-27T10:19:34Z",
     "exp_id": "162c22af",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7185656,
+    "quality": "substantial",
     "pkg_num": 159
   },
   {
@@ -4620,8 +4620,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-27T10:19:34Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7185656,
+      "quality": "substantial"
     }
   ],
   "edges": [

@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1937 of the highest-quality
+A curated collection of 1940 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1937
+Total files: 1940
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -455,6 +455,7 @@ import FINAL.Bridges.HammingMetric
 import FINAL.Bridges.HellyPrinciple
 import FINAL.Bridges.HellyTheory
 import FINAL.Bridges.HessianLorentzianGap
+import FINAL.Bridges.HeterogeneityGapTheory
 import FINAL.Bridges.HierarchicalRobustness
 import FINAL.Bridges.HigherOrderCompletion
 import FINAL.Bridges.HigherOrderEqSat
@@ -507,6 +508,7 @@ import FINAL.Bridges.Logic
 import FINAL.Bridges.LongestCommonValuedPrefix
 import FINAL.Bridges.LorentzianBivariateBridge
 import FINAL.Bridges.LorentzianBivariateNewBridge
+import FINAL.Bridges.LorentzianGroundState
 import FINAL.Bridges.LorentzianInformation
 import FINAL.Bridges.LorentzianNewton
 import FINAL.Bridges.LorentzianRecognition
@@ -587,6 +589,7 @@ import FINAL.Bridges.QuantumStabilizerClosure
 import FINAL.Bridges.QuantumTropicalCore
 import FINAL.Bridges.QuantumTropicalUnification
 import FINAL.Bridges.RGArchitectureDynamics
+import FINAL.Bridges.RandomTransversalThermodynamics
 import FINAL.Bridges.RateDistortion
 import FINAL.Bridges.Reconstruction
 import FINAL.Bridges.RenormalizationUniversality

@@ -439,10 +439,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e2e7763",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -606,10 +606,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae9fd36c",
     "timestamp": "2026-05-25T20:01:51.882080+00:00"
   },
   {
@@ -1567,10 +1567,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7849b5c2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5bd845bb",
     "timestamp": "2026-05-27T07:52:13.152156+00:00"
   },
   {
@@ -1653,6 +1653,26 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T08:27:46.927552+00:00"
   },
   {
+    "id": "fd_1370",
+    "title": "Direction 1: Full Lorentzian Hessian Formalization via MvPolynomial",
+    "description": "**Conjecture:** For the multiaffine generating polynomial P_\u03bc(z) = \u2211_S \u03bc(S) \u220f_{i\u2208S} z_i of a determinantal measure \u03bc, the Hessian matrix \u2202\u00b2P/\u2202z_i\u2202z_j evaluated at the all-ones vector has Lorentzian signature (at most one positive eigenvalue), and this signature is preserved under coefficient perturbation of size \u03b4 < \u03b5 where \u03b5 is the spectral gap of the Hessian.\n\n**Test:** Formalize MvPolynomial-based Hessian computation in Lean for distributions on Fin n \u2192 Bool. Compute Hessian eigenvalues for determinantal measures on n \u2264 8. Verify Lorentzian signature and test preservation under random coefficient perturbation.\n\n**Impact:** This would complete the Lorentzian layer of the gap bridge, connecting the abstract GappedMeasurementLift to concrete polynomial geometry. It would also provide the first Lean formalization of Lorentzian polynomials.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean` \u2014 GappedMeasurementLift, RobustLorentzianCertificate\n- `Catalog/Bridges/Catalog/Pythagorean/RobustLorentzianSampling.lean` \u2014 gapped_signature_persists_under_perturbation, residual_gap_of_perturbation\n\n**Proof Strategy:** Build on the existing quadratic form infrastructure in RobustLorentzianSampling.lean. Define the Hessian as a matrix over MvPolynomial coefficients. Use the residual_gap_of_perturbation theorem to transfer gap bounds from the exact determinantal polynomial to perturbed polynomials. The key new lemma: for a determinantal polynomial det(I + diag(z)K), the Hessian at z=1 has eigenvalues determined by K's spectrum, which can be computed from the kernel matrix.\n\n**Domain Bridges:** Algebraic combinatorics \u2194 quantum many-body physics \u2194 formal verification\n\n**Lineage:** Direct extension of Theorems 1\u20133 in this work; builds on Br\u00e4nd\u00e9n\u2013Huh [2020].\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 (Solid extension \u2014 technically demanding but mathematically well-understood)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c37ca719",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T09:42:35.531653+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1700,6 +1720,45 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1374",
+    "title": "Direction 1: Quantitative Gap Interpolation Under Bounded Pair Codegree",
+    "description": "**Conjecture:** For every integer d \u2265 3 and real \u03b1 \u2208 (0, 1), there exists \u03b5 = \u03b5(d, \u03b1) > 0 such that if H is a d-uniform hypergraph on n vertices with max pair codegree K \u2264 \u03b1 \u00b7 n^{1/(d-1)}, then \u03c4(H) \u2264 (d \u2212 \u03b5) \u00b7 \u03c4*(H).\n\n**Test:** Formalize the rounding argument with an explicit \u03b5(d, K) expression. Computationally, sweep K by generating random hypergraphs conditioned on bounded pair codegree and measure the empirical gap. If the predicted \u03b5 matches to within 10%, the conjecture is validated.\n\n**Impact:** This would give the first explicit interpolation formula between gap = 1 (vertex-disjoint, K = 0) and gap = d (adversarial, K unbounded). It would immediately yield improved approximation guarantees for random covering instances in any density regime where codegrees are controlled.\n\n**Catalog References:** `Catalog/Pythagorean/HypergraphTransversal.lean` (integrality_gap_upper, uniform_integrality_gap), `Catalog/Pythagorean/RandomTransversalThermodynamics.lean` (pairCodegree_le_one_of_disjoint, disjoint_has_low_overlap)\n\n**Proof Strategy:** Strategy A from the main development \u2014 deterministic pseudorandom rounding via threshold decomposition. Define a layered threshold scheme where vertices with x(v) \u2265 1/(d\u22121) are included unconditionally, and vertices in [1/d, 1/(d\u22121)] are included with probability depending on local codegree. Bound the expected uncovered edge count using the pair codegree bound and a union-bound argument. Repair greedily; the repair cost is O(K \u00b7 \u03c4*) which is sub-linear for K \u226a n.\n\n**Domain Bridges:** Approximation algorithms (improved factor), probabilistic combinatorics (codegree conditions), statistical physics (order parameter quantification)\n\n**Lineage:** Extends vertex_disjoint_integrality_gap_one from gap = 1 at K = 0 to a continuous function \u03b5(d, K).\n\n**Ambition:** Grand challenge \u2014 would resolve the main conjecture for a broad class of random hypergraphs.\n\n**The key insight is** that the rounding improvement is controlled by the same codegree statistics that govern local weak convergence of random hypergraph neighborhoods \u2014 connecting the optimization problem to the structural theory of random graphs.\n\n**Why now?** The vertex-disjoint case is fully formalized, providing the base case. The threshold rounding infrastructure from the catalog supports the layered scheme. The pair codegree definition is in place. What remains is the probabilistic repair analysis, which is within reach of current Lean formalization capabilities combined with explicit combinatorial bounds.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3020679e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T10:18:44.784960+00:00"
+  },
+  {
+    "id": "fd_1375",
+    "title": "Direction 2: Critical Exponents for Finite-Size Susceptibility",
+    "description": "**Conjecture:** The fractional cover susceptibility \u03c7(c) = E[max_e |\u0394\u03c4*(H, e)|] of random d-uniform hypergraphs H_{n,m} with m = \u230acn\u230b satisfies \u03c7(c) ~ |c \u2212 c*|^{\u2212\u03b3} near the critical density c*, with a universal exponent \u03b3 = \u03b3(d) independent of n for n sufficiently large.\n\n**Test:** Compute susceptibility via edge-insertion experiments at fine resolution near the empirically identified critical density. Fit power-law scaling and estimate \u03b3. If the exponent stabilizes as n grows from 50 to 500, the conjecture is supported.\n\n**Impact:** Establishing critical exponents for LP observables would forge a rigorous link between combinatorial optimization and statistical mechanics. It would classify covering problems into universality classes defined by their critical behavior.\n\n**Catalog References:** `Catalog/Pythagorean/FracTransversalConcentration.lean` (fracTransversalNum_addEdge_le, edgeExposure_fracTransversalNum_boundedDiff), `Catalog/Pythagorean/RandomTransversalThermodynamics.lean` (fracTransversalNum_addEdge_abs_le')\n\n**Proof Strategy:** Edge-exposure interpolation (Strategy B). Build a Doob martingale along the edge-exposure filtration using the 1-Lipschitz bound. Analyze the conditional variance at each step to extract the susceptibility. Near criticality, the conditional variance should peak, producing the power-law divergence.\n\n**Domain Bridges:** Statistical physics (critical exponents, universality), probability theory (martingale variance analysis), optimization (finite-size scaling of LP bounds)\n\n**Lineage:** Builds directly on the susceptibility bound (Theorem 1) and the edge-exposure framework from FracTransversalConcentration.lean.\n\n**Ambition:** Paradigm-shifting \u2014 would create a universality classification for LP relaxation quality, analogous to universality classes in phase transitions.\n\n**The key insight is** that the 1-Lipschitz bound provides a worst-case envelope for the martingale increments, but the typical increment is much smaller away from criticality. The ratio of typical to worst-case increment is the order parameter that controls the phase.\n\n**Why now?** The Lipschitz bound and edge-exposure framework are fully formalized. Computational experiments can identify c* and measure \u03c7 empirically. The gap between the formal bound (\u03c7 \u2264 1) and the empirical behavior (\u03c7 \u226a 1 away from c*) is the signal to exploit.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3020679e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T10:18:44.849475+00:00"
   },
   {
     "id": "seed_013",
@@ -2102,26 +2161,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T07:52:22.669578+00:00"
-  },
-  {
-    "id": "fd_1370",
-    "title": "Direction 1: Full Lorentzian Hessian Formalization via MvPolynomial",
-    "description": "**Conjecture:** For the multiaffine generating polynomial P_\u03bc(z) = \u2211_S \u03bc(S) \u220f_{i\u2208S} z_i of a determinantal measure \u03bc, the Hessian matrix \u2202\u00b2P/\u2202z_i\u2202z_j evaluated at the all-ones vector has Lorentzian signature (at most one positive eigenvalue), and this signature is preserved under coefficient perturbation of size \u03b4 < \u03b5 where \u03b5 is the spectral gap of the Hessian.\n\n**Test:** Formalize MvPolynomial-based Hessian computation in Lean for distributions on Fin n \u2192 Bool. Compute Hessian eigenvalues for determinantal measures on n \u2264 8. Verify Lorentzian signature and test preservation under random coefficient perturbation.\n\n**Impact:** This would complete the Lorentzian layer of the gap bridge, connecting the abstract GappedMeasurementLift to concrete polynomial geometry. It would also provide the first Lean formalization of Lorentzian polynomials.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean` \u2014 GappedMeasurementLift, RobustLorentzianCertificate\n- `Catalog/Bridges/Catalog/Pythagorean/RobustLorentzianSampling.lean` \u2014 gapped_signature_persists_under_perturbation, residual_gap_of_perturbation\n\n**Proof Strategy:** Build on the existing quadratic form infrastructure in RobustLorentzianSampling.lean. Define the Hessian as a matrix over MvPolynomial coefficients. Use the residual_gap_of_perturbation theorem to transfer gap bounds from the exact determinantal polynomial to perturbed polynomials. The key new lemma: for a determinantal polynomial det(I + diag(z)K), the Hessian at z=1 has eigenvalues determined by K's spectrum, which can be computed from the kernel matrix.\n\n**Domain Bridges:** Algebraic combinatorics \u2194 quantum many-body physics \u2194 formal verification\n\n**Lineage:** Direct extension of Theorems 1\u20133 in this work; builds on Br\u00e4nd\u00e9n\u2013Huh [2020].\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 (Solid extension \u2014 technically demanding but mathematically well-understood)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c37ca719",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T09:42:35.531653+00:00"
   },
   {
     "id": "seed_032",

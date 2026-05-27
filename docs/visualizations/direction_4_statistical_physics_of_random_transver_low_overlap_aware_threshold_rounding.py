@@ -1,11 +1,16 @@
 """
-algorithms.py — Low-overlap-aware threshold rounding for hypergraph transversals.
+algorithms.py — Low-Overlap-Aware Threshold Rounding for Hypergraph Transversals
 
-Implements the key algorithmic insights from the formal theory:
-1. Fractional transversal LP relaxation via linear programming
-2. Overlap profile computation (pair-codegree statistics)
-3. Threshold rounding with overlap-aware parameter tuning
+Implements the core algorithmic pipeline from the random transversal
+thermodynamics theory:
+
+1. Fractional transversal LP solver (via scipy)
+2. Overlap profile computation (pair codegrees)
+3. Threshold rounding with overlap-aware parameter selection
 4. Greedy repair for uncovered edges
+5. Integrality gap and rounding defect computation
+
+Author: Harmonic Research
 """
 
 import numpy as np
@@ -15,235 +20,244 @@ from scipy.optimize import linprog
 
 
 class Hypergraph:
-    """A finite hypergraph on vertex set {0, 1, ..., n-1}."""
+    """A finite hypergraph on vertices {0, 1, ..., n-1}."""
 
     def __init__(self, n: int, edges: List[Set[int]]):
         self.n = n
         self.edges = [frozenset(e) for e in edges]
-        self.m = len(self.edges)
 
-    def degree(self, v: int) -> int:
-        """Number of edges containing vertex v."""
-        return sum(1 for e in self.edges if v in e)
+    @staticmethod
+    def random_uniform(n: int, m: int, d: int, rng=None) -> 'Hypergraph':
+        """Generate a random d-uniform hypergraph on n vertices with m edges."""
+        if rng is None:
+            rng = np.random.default_rng()
+        edges = []
+        vertices = list(range(n))
+        for _ in range(m):
+            e = frozenset(rng.choice(vertices, size=d, replace=False))
+            edges.append(e)
+        return Hypergraph(n, edges)
 
-    def pair_codegree(self, u: int, v: int) -> int:
-        """Number of edges containing both u and v."""
-        return sum(1 for e in self.edges if u in e and v in e)
+    def unique_edges(self) -> List[frozenset]:
+        """Return deduplicated edges."""
+        return list(set(self.edges))
 
-    def max_pair_codegree(self) -> int:
-        """Maximum pair-codegree over all distinct vertex pairs."""
-        max_cod = 0
-        vertices_in_edges = set()
-        for e in self.edges:
-            vertices_in_edges.update(e)
-        vlist = sorted(vertices_in_edges)
-        for i, u in enumerate(vlist):
-            for v in vlist[i+1:]:
-                cod = self.pair_codegree(u, v)
-                max_cod = max(max_cod, cod)
-        return max_cod
-
-    def overlap_profile(self) -> Dict[str, float]:
-        """Compute overlap profile statistics."""
-        max_cod = self.max_pair_codegree()
-        return {
-            'max_pair_codegree': max_cod,
-            'normalized_overlap': max_cod / max(self.m, 1),
-            'is_linear': max_cod <= 1,
-            'is_disjoint': max_cod == 0,
-        }
-
-    def is_uniform(self) -> Tuple[bool, int]:
-        """Check if hypergraph is d-uniform; return (is_uniform, d)."""
+    def is_uniform(self) -> Optional[int]:
+        """Return uniformity d if uniform, else None."""
         if not self.edges:
-            return True, 0
-        d = len(self.edges[0])
-        return all(len(e) == d for e in self.edges), d
-
-    def is_transversal(self, S: Set[int]) -> bool:
-        """Check if S is a transversal (hits every edge)."""
-        return all(S & e for e in self.edges)
+            return None
+        sizes = set(len(e) for e in self.edges)
+        return sizes.pop() if len(sizes) == 1 else None
 
 
-def random_uniform_hypergraph(n: int, m: int, d: int, rng=None) -> Hypergraph:
-    """Generate a random d-uniform hypergraph on n vertices with m edges.
-
-    Edges are sampled uniformly at random (with replacement for simplicity).
+def solve_fractional_transversal(H: Hypergraph) -> Tuple[np.ndarray, float]:
     """
-    if rng is None:
-        rng = np.random.default_rng()
-    edges = []
-    vertices = list(range(n))
-    for _ in range(m):
-        edge = set(rng.choice(vertices, size=d, replace=False))
-        edges.append(edge)
-    return Hypergraph(n, edges)
+    Solve the fractional transversal LP:
+        min  sum x_v
+        s.t. sum_{v in e} x_v >= 1 for all e
+             x_v >= 0
 
-
-def solve_fractional_transversal_lp(H: Hypergraph) -> Tuple[float, np.ndarray]:
-    """Solve the fractional transversal LP relaxation.
-
-    Minimize ∑ x(v) subject to:
-        ∑_{v ∈ e} x(v) ≥ 1 for all edges e
-        x(v) ≥ 0 for all v
-
-    Returns (optimal_value, optimal_x).
+    Returns (x_opt, tau_star) where x_opt is the optimal assignment
+    and tau_star is the fractional transversal number.
     """
     n = H.n
-    if not H.edges:
-        return 0.0, np.zeros(n)
+    edges = H.unique_edges()
+    if not edges:
+        return np.zeros(n), 0.0
 
-    c = np.ones(n)  # minimize sum of x
-    # Constraints: -∑_{v∈e} x(v) ≤ -1
-    A_ub = np.zeros((len(H.edges), n))
-    b_ub = -np.ones(len(H.edges))
-    for i, e in enumerate(H.edges):
+    c = np.ones(n)  # minimize sum x_v
+
+    # Constraints: -sum_{v in e} x_v <= -1
+    A_ub = np.zeros((len(edges), n))
+    b_ub = -np.ones(len(edges))
+    for i, e in enumerate(edges):
         for v in e:
-            A_ub[i, v] = -1
+            A_ub[i, v] = -1.0
 
     bounds = [(0, None) for _ in range(n)]
+
     result = linprog(c, A_ub=A_ub, b_ub=b_ub, bounds=bounds, method='highs')
+
     if result.success:
-        return result.fun, result.x
+        return result.x, result.fun
     else:
-        return float('inf'), np.ones(n)
+        # Fallback: uniform assignment
+        d = max(len(e) for e in edges) if edges else 1
+        x = np.full(n, 1.0 / d)
+        return x, n / d
 
 
-def threshold_rounding(x: np.ndarray, d: int) -> Set[int]:
-    """Standard threshold rounding at 1/d."""
-    threshold = 1.0 / d
-    return {v for v in range(len(x)) if x[v] >= threshold}
+def compute_pair_codegrees(H: Hypergraph) -> Dict[Tuple[int, int], int]:
+    """Compute pair codegree for all vertex pairs appearing in edges."""
+    codeg = {}
+    for e in H.unique_edges():
+        for u, v in combinations(sorted(e), 2):
+            codeg[(u, v)] = codeg.get((u, v), 0) + 1
+    return codeg
 
 
-def low_overlap_rounding(H: Hypergraph, x: np.ndarray, d: int,
-                          overlap_stats: Optional[Dict] = None) -> Set[int]:
-    """Overlap-aware threshold rounding.
-
-    If the hypergraph has low overlap (disjoint or near-linear edges),
-    we can use an improved threshold that exploits the structure.
-
-    For disjoint edges (max_pair_codegree = 0), we pick one max-weight
-    vertex per edge, achieving factor 1 instead of d.
-
-    For linear hypergraphs (max_pair_codegree ≤ 1), we use an intermediate strategy.
+def compute_overlap_profile(H: Hypergraph) -> Dict[str, float]:
     """
-    if overlap_stats is None:
-        overlap_stats = H.overlap_profile()
+    Compute overlap profile statistics:
+    - max_pair_codegree: maximum pair codegree
+    - mean_pair_codegree: mean pair codegree (over pairs with codeg > 0)
+    - num_high_overlap_pairs: pairs with codegree > 1
+    """
+    codeg = compute_pair_codegrees(H)
+    if not codeg:
+        return {'max_pair_codegree': 0, 'mean_pair_codegree': 0.0,
+                'num_high_overlap_pairs': 0}
 
-    if overlap_stats['is_disjoint']:
-        # Pick the vertex with highest x-value from each edge
-        S = set()
-        for e in H.edges:
-            best_v = max(e, key=lambda v: x[v])
-            S.add(best_v)
-        return S
-    elif overlap_stats['is_linear']:
-        # Use threshold 1/(d-0.5) for slight improvement
-        threshold = 1.0 / max(d - 0.5, 1)
-        S = {v for v in range(len(x)) if x[v] >= threshold}
-        # Greedy repair
-        for e in H.edges:
-            if not S & e:
-                best_v = max(e, key=lambda v: x[v])
-                S.add(best_v)
-        return S
+    vals = list(codeg.values())
+    return {
+        'max_pair_codegree': max(vals),
+        'mean_pair_codegree': np.mean(vals),
+        'num_high_overlap_pairs': sum(1 for v in vals if v > 1)
+    }
+
+
+def threshold_round(x: np.ndarray, theta: float) -> Set[int]:
+    """Round fractional solution: include vertex v iff x_v >= theta."""
+    return set(int(v) for v in np.where(x >= theta)[0])
+
+
+def greedy_repair(H: Hypergraph, S: Set[int]) -> Set[int]:
+    """Greedily add vertices to S to cover all uncovered edges."""
+    S = set(S)
+    for e in H.unique_edges():
+        if not S & e:
+            # Add the first vertex of the uncovered edge
+            S.add(min(e))
+    return S
+
+
+def low_overlap_round(H: Hypergraph, x: np.ndarray,
+                       overlap_stats: Dict[str, float]) -> Tuple[Set[int], Dict]:
+    """
+    Low-overlap-aware threshold rounding algorithm.
+
+    1. Compute threshold based on uniformity and overlap profile
+    2. Round vertices above threshold
+    3. Greedily repair uncovered edges
+    4. Return the cover and diagnostic statistics
+
+    The key insight: when pair codegrees are low (sparse overlap),
+    we can use a slightly higher threshold than 1/d, which gives
+    a smaller initial rounded set. The greedy repair cost is controlled
+    by the overlap profile.
+    """
+    d = H.is_uniform()
+    if d is None:
+        d = max(len(e) for e in H.unique_edges()) if H.edges else 1
+
+    max_codeg = overlap_stats.get('max_pair_codegree', d)
+
+    # Standard threshold: 1/d
+    # Overlap-adjusted threshold: slightly higher when overlap is low
+    if max_codeg <= 1 and d >= 2:
+        # Low overlap regime: we can be more aggressive
+        theta = 1.0 / d + 0.5 / (d * d)
     else:
-        # Standard threshold + greedy repair
-        S = threshold_rounding(x, d)
-        for e in H.edges:
-            if not S & e:
-                best_v = max(e, key=lambda v: x[v])
-                S.add(best_v)
-        return S
+        theta = 1.0 / d
+
+    # Round
+    S_initial = threshold_round(x, theta)
+
+    # Repair
+    S_final = greedy_repair(H, S_initial)
+
+    # Diagnostics
+    uncovered = sum(1 for e in H.unique_edges() if not S_initial & e)
+    diagnostics = {
+        'threshold': theta,
+        'initial_size': len(S_initial),
+        'repair_count': len(S_final) - len(S_initial),
+        'final_size': len(S_final),
+        'uncovered_before_repair': uncovered,
+        'overlap_adjusted': max_codeg <= 1 and d >= 2
+    }
+
+    return S_final, diagnostics
 
 
-def greedy_transversal(H: Hypergraph) -> Set[int]:
-    """Greedy transversal: iteratively pick the highest-degree uncovered vertex."""
-    uncovered = list(range(len(H.edges)))
-    covered = [False] * len(H.edges)
+def compute_integrality_gap_estimate(H: Hypergraph) -> Dict[str, float]:
+    """
+    Compute integrality gap estimate for a hypergraph.
+    Returns fractional optimum, rounded integer solution size,
+    and the ratio.
+    """
+    x_opt, tau_star = solve_fractional_transversal(H)
+
+    if tau_star < 1e-10:
+        return {
+            'tau_star': 0.0,
+            'tau_rounded': 0,
+            'gap_ratio': 1.0,
+            'rounding_defect': 0.0
+        }
+
+    overlap = compute_overlap_profile(H)
+    S, diag = low_overlap_round(H, x_opt, overlap)
+
+    tau_rounded = len(S)
+    gap_ratio = tau_rounded / tau_star if tau_star > 0 else 1.0
+    rounding_defect = tau_rounded - tau_star
+
+    return {
+        'tau_star': tau_star,
+        'tau_rounded': tau_rounded,
+        'gap_ratio': gap_ratio,
+        'rounding_defect': rounding_defect,
+        'normalized_rounding_defect': rounding_defect / H.n if H.n > 0 else 0,
+        'overlap_profile': overlap,
+        'rounding_diagnostics': diag
+    }
+
+
+def compute_greedy_transversal(H: Hypergraph) -> Set[int]:
+    """Greedy transversal: repeatedly pick the highest-degree vertex."""
     S = set()
+    uncovered = list(H.unique_edges())
 
     while uncovered:
-        # Count how many uncovered edges each vertex hits
-        vertex_hits = {}
-        for idx in uncovered:
-            for v in H.edges[idx]:
-                vertex_hits[v] = vertex_hits.get(v, 0) + 1
-        if not vertex_hits:
+        # Count vertex degrees in uncovered edges
+        degree = {}
+        for e in uncovered:
+            for v in e:
+                degree[v] = degree.get(v, 0) + 1
+
+        if not degree:
             break
-        # Pick vertex with most hits
-        best_v = max(vertex_hits, key=vertex_hits.get)
-        S.add(best_v)
+
+        # Pick highest-degree vertex
+        best = max(degree, key=degree.get)
+        S.add(best)
+
         # Remove covered edges
-        new_uncovered = []
-        for idx in uncovered:
-            if best_v not in H.edges[idx]:
-                new_uncovered.append(idx)
-        uncovered = new_uncovered
+        uncovered = [e for e in uncovered if best not in e]
 
     return S
 
 
-def compute_integrality_gap(H: Hypergraph, d: int) -> Dict[str, float]:
-    """Compute integrality gap and related observables.
-
-    Returns dict with:
-        fractional_opt: LP relaxation optimum (τ*)
-        greedy_upper: greedy transversal size (upper bound on τ)
-        lp_rounded: threshold-rounded transversal size
-        overlap_rounded: overlap-aware rounded size
-        gap_greedy: greedy/fractional ratio
-        gap_lp: lp_rounded/fractional ratio
-        gap_overlap: overlap_rounded/fractional ratio
-        overlap_stats: overlap profile
-        rounding_defect: greedy - fractional
-    """
-    frac_opt, x = solve_fractional_transversal_lp(H)
-
-    overlap_stats = H.overlap_profile()
-
-    # Standard threshold rounding
-    S_threshold = threshold_rounding(x, d)
-    # Repair uncovered edges
-    for e in H.edges:
-        if not S_threshold & e:
-            S_threshold.add(max(e, key=lambda v: x[v]))
-
-    # Overlap-aware rounding
-    S_overlap = low_overlap_rounding(H, x, d, overlap_stats)
-
-    # Greedy
-    S_greedy = greedy_transversal(H)
-
-    integral_upper = min(len(S_threshold), len(S_greedy), len(S_overlap))
-
-    result = {
-        'fractional_opt': frac_opt,
-        'greedy_size': len(S_greedy),
-        'threshold_size': len(S_threshold),
-        'overlap_rounded_size': len(S_overlap),
-        'integral_upper': integral_upper,
-        'gap_greedy': len(S_greedy) / max(frac_opt, 1e-10),
-        'gap_threshold': len(S_threshold) / max(frac_opt, 1e-10),
-        'gap_overlap': len(S_overlap) / max(frac_opt, 1e-10),
-        'rounding_defect': integral_upper - frac_opt,
-        'normalized_defect': (integral_upper - frac_opt) / max(H.n, 1),
-        'overlap_stats': overlap_stats,
-    }
-    return result
-
-
+# Example usage
 if __name__ == '__main__':
-    # Example usage
-    rng = np.random.default_rng(42)
-    H = random_uniform_hypergraph(20, 10, 3, rng)
-    print(f"Hypergraph: n={H.n}, m={H.m}, d=3")
-    print(f"Overlap profile: {H.overlap_profile()}")
-    result = compute_integrality_gap(H, 3)
-    print(f"Fractional optimum: {result['fractional_opt']:.4f}")
-    print(f"Greedy size: {result['greedy_size']}")
-    print(f"Threshold rounded: {result['threshold_size']}")
-    print(f"Overlap rounded: {result['overlap_rounded_size']}")
-    print(f"Gap (greedy): {result['gap_greedy']:.4f}")
-    print(f"Gap (overlap): {result['gap_overlap']:.4f}")
-    print(f"Rounding defect: {result['rounding_defect']:.4f}")
+    np.random.seed(42)
+
+    print("=" * 60)
+    print("Low-Overlap-Aware Threshold Rounding Algorithm")
+    print("=" * 60)
+
+    for d in [3, 4, 5]:
+        n = 50
+        m = int(2.0 * n)
+        H = Hypergraph.random_uniform(n, m, d)
+
+        result = compute_integrality_gap_estimate(H)
+        print(f"\nd={d}, n={n}, m={m}:")
+        print(f"  τ* (fractional) = {result['tau_star']:.3f}")
+        print(f"  τ  (rounded)    = {result['tau_rounded']}")
+        print(f"  Gap ratio       = {result['gap_ratio']:.3f}")
+        print(f"  Worst-case d    = {d}")
+        print(f"  Rounding defect = {result['rounding_defect']:.3f}")
+        print(f"  Max pair codeg  = {result['overlap_profile']['max_pair_codegree']}")
+        print(f"  Overlap-adjusted= {result['rounding_diagnostics']['overlap_adjusted']}")
