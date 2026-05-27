@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Spectral Graph Theory",
     "date": "2026-05-27T11:33:37Z",
     "exp_id": "29c86e53",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7132276927016645,
+    "quality": "substantial",
     "pkg_num": 160
   },
   {
@@ -4649,8 +4649,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-27T11:33:37Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7132276927016645,
+      "quality": "substantial"
     }
   ],
   "edges": [

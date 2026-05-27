@@ -365,10 +365,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "7e0c9f23",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T17:14:59.768954+00:00"
   },
   {
@@ -787,10 +787,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "05e24005",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.995692+00:00"
   },
   {
@@ -1467,10 +1467,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "4d0d5d0f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc55aee4",
     "timestamp": "2026-05-27T07:12:33.963680+00:00"
   },
   {
@@ -1645,12 +1645,32 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c37ca719",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T09:42:35.531653+00:00"
+  },
+  {
+    "id": "fd_1374",
+    "title": "Direction 1: Quantitative Gap Interpolation Under Bounded Pair Codegree",
+    "description": "**Conjecture:** For every integer d \u2265 3 and real \u03b1 \u2208 (0, 1), there exists \u03b5 = \u03b5(d, \u03b1) > 0 such that if H is a d-uniform hypergraph on n vertices with max pair codegree K \u2264 \u03b1 \u00b7 n^{1/(d-1)}, then \u03c4(H) \u2264 (d \u2212 \u03b5) \u00b7 \u03c4*(H).\n\n**Test:** Formalize the rounding argument with an explicit \u03b5(d, K) expression. Computationally, sweep K by generating random hypergraphs conditioned on bounded pair codegree and measure the empirical gap. If the predicted \u03b5 matches to within 10%, the conjecture is validated.\n\n**Impact:** This would give the first explicit interpolation formula between gap = 1 (vertex-disjoint, K = 0) and gap = d (adversarial, K unbounded). It would immediately yield improved approximation guarantees for random covering instances in any density regime where codegrees are controlled.\n\n**Catalog References:** `Catalog/Pythagorean/HypergraphTransversal.lean` (integrality_gap_upper, uniform_integrality_gap), `Catalog/Pythagorean/RandomTransversalThermodynamics.lean` (pairCodegree_le_one_of_disjoint, disjoint_has_low_overlap)\n\n**Proof Strategy:** Strategy A from the main development \u2014 deterministic pseudorandom rounding via threshold decomposition. Define a layered threshold scheme where vertices with x(v) \u2265 1/(d\u22121) are included unconditionally, and vertices in [1/d, 1/(d\u22121)] are included with probability depending on local codegree. Bound the expected uncovered edge count using the pair codegree bound and a union-bound argument. Repair greedily; the repair cost is O(K \u00b7 \u03c4*) which is sub-linear for K \u226a n.\n\n**Domain Bridges:** Approximation algorithms (improved factor), probabilistic combinatorics (codegree conditions), statistical physics (order parameter quantification)\n\n**Lineage:** Extends vertex_disjoint_integrality_gap_one from gap = 1 at K = 0 to a continuous function \u03b5(d, K).\n\n**Ambition:** Grand challenge \u2014 would resolve the main conjecture for a broad class of random hypergraphs.\n\n**The key insight is** that the rounding improvement is controlled by the same codegree statistics that govern local weak convergence of random hypergraph neighborhoods \u2014 connecting the optimization problem to the structural theory of random graphs.\n\n**Why now?** The vertex-disjoint case is fully formalized, providing the base case. The threshold rounding infrastructure from the catalog supports the layered scheme. The pair codegree definition is in place. What remains is the probabilistic repair analysis, which is within reach of current Lean formalization capabilities combined with explicit combinatorial bounds.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3020679e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T10:18:44.784960+00:00"
   },
   {
     "id": "fd_0806",
@@ -1700,26 +1720,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1374",
-    "title": "Direction 1: Quantitative Gap Interpolation Under Bounded Pair Codegree",
-    "description": "**Conjecture:** For every integer d \u2265 3 and real \u03b1 \u2208 (0, 1), there exists \u03b5 = \u03b5(d, \u03b1) > 0 such that if H is a d-uniform hypergraph on n vertices with max pair codegree K \u2264 \u03b1 \u00b7 n^{1/(d-1)}, then \u03c4(H) \u2264 (d \u2212 \u03b5) \u00b7 \u03c4*(H).\n\n**Test:** Formalize the rounding argument with an explicit \u03b5(d, K) expression. Computationally, sweep K by generating random hypergraphs conditioned on bounded pair codegree and measure the empirical gap. If the predicted \u03b5 matches to within 10%, the conjecture is validated.\n\n**Impact:** This would give the first explicit interpolation formula between gap = 1 (vertex-disjoint, K = 0) and gap = d (adversarial, K unbounded). It would immediately yield improved approximation guarantees for random covering instances in any density regime where codegrees are controlled.\n\n**Catalog References:** `Catalog/Pythagorean/HypergraphTransversal.lean` (integrality_gap_upper, uniform_integrality_gap), `Catalog/Pythagorean/RandomTransversalThermodynamics.lean` (pairCodegree_le_one_of_disjoint, disjoint_has_low_overlap)\n\n**Proof Strategy:** Strategy A from the main development \u2014 deterministic pseudorandom rounding via threshold decomposition. Define a layered threshold scheme where vertices with x(v) \u2265 1/(d\u22121) are included unconditionally, and vertices in [1/d, 1/(d\u22121)] are included with probability depending on local codegree. Bound the expected uncovered edge count using the pair codegree bound and a union-bound argument. Repair greedily; the repair cost is O(K \u00b7 \u03c4*) which is sub-linear for K \u226a n.\n\n**Domain Bridges:** Approximation algorithms (improved factor), probabilistic combinatorics (codegree conditions), statistical physics (order parameter quantification)\n\n**Lineage:** Extends vertex_disjoint_integrality_gap_one from gap = 1 at K = 0 to a continuous function \u03b5(d, K).\n\n**Ambition:** Grand challenge \u2014 would resolve the main conjecture for a broad class of random hypergraphs.\n\n**The key insight is** that the rounding improvement is controlled by the same codegree statistics that govern local weak convergence of random hypergraph neighborhoods \u2014 connecting the optimization problem to the structural theory of random graphs.\n\n**Why now?** The vertex-disjoint case is fully formalized, providing the base case. The threshold rounding infrastructure from the catalog supports the layered scheme. The pair codegree definition is in place. What remains is the probabilistic repair analysis, which is within reach of current Lean formalization capabilities combined with explicit combinatorial bounds.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3020679e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T10:18:44.784960+00:00"
   },
   {
     "id": "fd_1375",
