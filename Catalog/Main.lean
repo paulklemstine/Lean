@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1929 of the highest-quality
+A curated collection of 1930 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1929
+Total files: 1930
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1651,6 +1651,7 @@ import FINAL.Pythagorean.TropicalHypergraphTransversal
 import FINAL.Pythagorean.TropicalKAMStability
 import FINAL.Pythagorean.TropicalKAMTheorems
 import FINAL.Pythagorean.TropicalKeplerOrbits
+import FINAL.Pythagorean.TropicalLorentzianShadows
 import FINAL.Pythagorean.TropicalMConvexity
 import FINAL.Pythagorean.TropicalMarkov
 import FINAL.Pythagorean.TropicalPAdicBerggren

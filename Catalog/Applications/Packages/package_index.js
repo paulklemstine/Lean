@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry \u00d7 Lorentzian Polynomial Theory",
     "date": "2026-05-27T07:52:07Z",
     "exp_id": "7849b5c2",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7102633898305085,
+    "quality": "substantial",
     "pkg_num": 151
   },
   {
@@ -4388,8 +4388,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-27T07:52:07Z",
       "hue": 95,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7102633898305085,
+      "quality": "substantial"
     }
   ],
   "edges": [

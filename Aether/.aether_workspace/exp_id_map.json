@@ -699,5 +699,8 @@
   "84929cd5": "direction_1_confluence_and_unique_normal_forms.json",
   "4d0d5d0f": "direction_2_quantitative_exchange_descent_bounds_v.json",
   "502ef518": "direction_1_lorentzian_to_coefficient_bridge_via_b.json",
-  "05254341": "direction_1_sharp_constants_in_the_dimension_degre.json"
+  "05254341": "direction_1_sharp_constants_in_the_dimension_degre.json",
+  "793bbd8c": "jacobian_conjecture.json",
+  "b449612f": "direction_4_algorithmic_spectral_certification.json",
+  "7849b5c2": "direction_3_tropical_shadows_of_lorentzian_stabili.json"
 }
