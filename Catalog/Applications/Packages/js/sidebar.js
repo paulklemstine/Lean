@@ -164,8 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (qs >= 0.75) scoreColor = '#fbbf24';      // gold - standout
                 else if (qs >= 0.65) scoreColor = '#8b5cf6';  // violet - strong
                 else if (qs >= 0.55) scoreColor = '#06b6d4';  // cyan - good
-                else if (qs >= 0.45) scoreColor = '#f59e0b';  // amber - moderate
-                else scoreColor = '#ef4444';                   // red - low
+                else if (qs >= 0.45) scoreColor = '#dc2626';  // red - moderate
+                else scoreColor = '#991b1b';                   // dark red - low
             }
 
             const pkgNum = pkg.pkg_num || '';
