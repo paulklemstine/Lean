@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1947 of the highest-quality
+A curated collection of 1948 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1947
+Total files: 1948
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -802,6 +802,7 @@ import FINAL.Bridges.VoiceLeadingTransport
 import FINAL.Bridges.WeightAlgebra
 import FINAL.Bridges.WeightedTropicalHodge
 import FINAL.Bridges.WeightedVariance
+import FINAL.Bridges.WreathONanScott
 import FINAL.Bridges.algebra_physics_bridge_theorem
 import FINAL.Computation.AffineDistortionComplexity
 import FINAL.Computation.Algebra
