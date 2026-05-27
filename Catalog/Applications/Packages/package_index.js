@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Complexity & Matroid Theory",
     "date": "2026-05-27T02:48:03Z",
     "exp_id": "2217051e",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7698281355932204,
+    "quality": "substantial",
     "pkg_num": 132
   },
   {
@@ -3837,8 +3837,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-27T02:48:03Z",
       "hue": 134,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7698281355932204,
+      "quality": "substantial"
     }
   ],
   "edges": [

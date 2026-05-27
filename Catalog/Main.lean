@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1913 of the highest-quality
+A curated collection of 1914 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1913
+Total files: 1914
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -396,6 +396,7 @@ import FINAL.Bridges.Decoder
 import FINAL.Bridges.DefectTheory
 import FINAL.Bridges.Defs
 import FINAL.Bridges.DetCompressionGap
+import FINAL.Bridges.DeterminantalComplexity
 import FINAL.Bridges.DiffSpectrumTheory
 import FINAL.Bridges.DifferentialAlgebraicLearning
 import FINAL.Bridges.Dijkstra

@@ -641,10 +641,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "9c7a3d48",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T20:01:51.853060+00:00"
   },
   {
@@ -1446,26 +1446,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T21:53:05.013082+00:00"
   },
   {
-    "id": "fd_1213",
-    "title": "Direction 5: Determinantal Complexity and Matroid Representability",
-    "description": "**Conjecture**: The minimum size of a matrix $A$ such that $\\det(A D_w A^\\top)$ equals the basis-generating polynomial of $M$ is a complexity-theoretic measure of the matroid $M$ that lower-bounds the circuit complexity of sampling from $M$'s basis distribution.\n\n**Test**: Compute this \"determinantal complexity\" for all matroids on at most 8 elements and correlate with known matroid invariants (rank, girth, number of bases).\n\n**Impact**: Would connect matroid representability theory to algebraic complexity theory, potentially providing new lower bounds for VP vs. VNP problems.\n\n**Catalog References**: `Catalog/Pythagorean/FermionicPlucker.lean` (Cauchy\u2013Binet as determinantal representation of basis polynomials).\n\n**Proof Strategy**: Use the fact that $\\mu_A(w) = \\det(A D_w A^\\top)$ is a polynomial in $w$ of degree $r$, and relate the matrix size to the algebraic complexity of this polynomial.\n\n**Domain Bridges**: Complexity theory \u2194 algebraic geometry \u2194 matroid theory.\n\n**Lineage**: Extends the Cauchy\u2013Binet identity into the realm of algebraic complexity.\n\n**Ambition**: Grand challenge \u2014 connection to VP/VNP is highly speculative but potentially transformative.\n\n**The key insight is** that the Cauchy\u2013Binet identity gives an explicit determinantal representation of the basis-generating polynomial, and the representation size is a natural complexity measure.\n\n**Why now?** The formal proof of Cauchy\u2013Binet provides a certified determinantal representation that can be used as input to complexity-theoretic analysis.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "4c9b1112",
-    "consumed_by_exp_id": "2217051e",
-    "timestamp": "2026-05-26T22:26:40.549529+00:00"
-  },
-  {
     "id": "fd_1229",
     "title": "Direction 1: Path Congestion to Dirichlet Form Comparison \u2014 Completing the Pipeline",
     "description": "**Conjecture**: If \u0393 is a path system routing P-edges through Q-edges with congestion \u03c1 (as defined by `PathCongestion`), then E_P(f) \u2264 \u03c1 \u00b7 E_Q(f) for all f. Combined with the formally verified `poincare_comparison`, this would yield \u03bb(Q) \u2265 \u03bb(P)/\u03c1 \u2014 the full canonical-path theorem for non-group chains.\n\n**Test**: Verify on all reversible chains on \u2264 6 states that the congestion bound correctly predicts the Dirichlet form comparison constant within a factor of 2. A counterexample with ratio > 2 would indicate the congestion definition needs refinement.\n\n**Impact**: Completes the formal pipeline from combinatorial path data to certified spectral gaps, making the comparison theorem immediately applicable to any chain where explicit paths can be constructed.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/CanonicalPaths.lean` \u2014 `variance_le_congestion_mul_energy`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `poincare_comparison`\n\n**Proof Strategy**: The proof requires a telescoping argument along paths (generalizing `telescope_word` from the Cayley catalog) combined with Cauchy\u2013Schwarz. The key step is: (f(x) - f(y))\u00b2 \u2264 |\u03b3| \u00b7 \u03a3_{e \u2208 \u03b3} (\u2207_e f)\u00b2. Sum over x,y weighted by \u03c0(x)P(x,y), swap the order of summation, and use the congestion bound.\n\n**Domain Bridges**: Probability theory \u2194 Combinatorial optimization (congestion as a graph property)\n\n**Lineage**: Direct descendant of `sqDiff_le_len_mul_sum_sqDiffs` from `CanonicalPaths.lean`\n\n**Ambition**: \ud83d\udd34 Paradigm shift \u2014 removes the last group-theoretic dependency from the canonical-path method\n\n**The key insight is** that the telescoping + Cauchy\u2013Schwarz argument uses only path structure, not group multiplication, so it transfers directly to non-group chains with the same formal structure.\n\n**Why now?** The comparison theorem is verified, the definitions of `PathCongestion` and `dirichletForm` are in place, and the proof template from `CanonicalPaths.lean` provides a clear roadmap.\n\n---",
@@ -1537,10 +1517,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "258120ed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3696c4be",
     "timestamp": "2026-05-27T00:51:51.560054+00:00"
   },
   {
@@ -1644,6 +1624,127 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "d97a486b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T00:52:11.288128+00:00"
+  },
+  {
+    "id": "fd_1256",
+    "title": "Direction 1: Full Tracy\u2013Widom Formalization via Painlev\u00e9 II",
+    "description": "**Conjecture:** The Tracy\u2013Widom distribution F\u2082 can be formalized in Lean 4 as the Fredholm determinant of the Airy kernel, and the GOE edge convergence theorem can be proved:\n\n$$\\lim_{n \\to \\infty} \\mathbb{P}\\left(\\frac{\\lambda_{\\max}(E_n) - 2\\sigma}{\\sigma n^{-2/3}} \\leq t\\right) = F_{\\mathrm{TW}}(t).$$\n\n**Test:** Formalize the Painlev\u00e9 II ODE y'' = 2y\u00b3 + ty, prove existence and uniqueness of the Hastings\u2013McLeod solution, and derive that F\u2082(t) = exp(\u2212\u222b_t^\u221e (s\u2212t)q(s)\u00b2ds). Verify numerically against known tables (e.g., F\u2082(0) \u2248 0.9678).\n\n**Impact:** Would provide the first machine-verified formalization of Tracy\u2013Widom in any proof assistant, enabling sharp (not just exponential) failure bounds. Would replace the current `TracyWidomGOEUpperTail` placeholder with a constructive definition.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: `TracyWidomGOEUpperTail` placeholder\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: spectral gap framework\n\n**Proof Strategy:** Formalize Airy functions via their integral representation, prove Fredholm determinant convergence for trace-class operators, then specialize to the Airy kernel on L\u00b2(t, \u221e).\n\n**Domain Bridges:** Integrable probability, ODE theory, functional analysis, mathematical physics.\n\n**Lineage:** Extends the universality transfer theorem to exact asymptotics.\n\n**Ambition:** Grand challenge \u2014 would be a landmark in formal mathematics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6a75662e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T02:07:17.293067+00:00"
+  },
+  {
+    "id": "fd_1257",
+    "title": "Direction 2: Wigner Universality for Non-Gaussian Perturbations",
+    "description": "**Conjecture:** The transfer theorem and phase transition at 2\u03c3 hold for any Wigner matrix ensemble with sub-Gaussian entries having variance \u03c3\u00b2/n, not just GOE. Specifically, for any i.i.d. (up to symmetry) entry distribution with E[X] = 0, E[X\u00b2] = \u03c3\u00b2/n, and sub-Gaussian tail \u03c8\u2082 \u2264 K:\n\n$$\\mathbb{P}(\\|E\\|_{\\mathrm{op}} \\geq 2\\sigma + t) \\leq C \\exp(-cn \\min(t^2/\\sigma^2, t/K))$$\n\nand consequently the same SharpFailureUpperBound applies.\n\n**Test:** Prove the concentration inequality for sub-Gaussian Wigner matrices using \u03b5-net arguments. Verify numerically by comparing Bernoulli(\u00b11/\u221an) and uniform([-\u221a3/n, \u221a3/n]) entries against the Gaussian case.\n\n**Impact:** Would extend the certification law to all practical noise models (quantization noise, bounded perturbations, sparse corruptions). The `HasEdgeTail` universality framework in SharpGOEConstants.lean is already designed to support this.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: `HasEdgeTail`, `universality_transfer`\n- `Catalog/Bridges/Catalog/Pythagorean/LorentzianSmoothedAnalysis.lean`: abstract transfer\n\n**Proof Strategy:** Use Talagrand's concentration inequality for Lipschitz functions of independent random variables, combined with \u03b5-net covering arguments for the unit sphere.\n\n**Domain Bridges:** High-dimensional probability, concentration of measure, geometric functional analysis.\n\n**Lineage:** Direct extension of the universality transfer theorem.\n\n**Ambition:** Solid extension \u2014 well within current techniques but requires substantial formalization effort.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6a75662e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T02:07:17.345276+00:00"
+  },
+  {
+    "id": "fd_1258",
+    "title": "Direction 3: Complexity-Theoretic Phase Transition for Lorentzian Recognition",
+    "description": "**Conjecture:** There exists a computational phase transition for Lorentzian recognition under random perturbation:\n- For \u03b5 > 2\u03c3 + \u03b4 (well above edge): recognition is solvable in polynomial time with exponentially small error.\n- For \u03b5 < 2\u03c3 \u2212 \u03b4 (well below edge): recognition requires exponential time or has constant error probability.\n- At \u03b5 = 2\u03c3 (the edge): the problem is \"computationally critical\" \u2014 polynomial-time algorithms exist but with polynomially decaying confidence.\n\n**Test:** Formalize a reduction from a known hard problem (e.g., detecting planted clique) to Lorentzian recognition at the critical noise level \u03b5 \u2248 2\u03c3. Alternatively, show that spectral algorithms achieve the information-theoretic threshold.\n\n**Impact:** Would establish a new type of average-case complexity result where the hardness threshold is determined by a random matrix constant, bridging algebraic geometry and computational complexity theory.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: phase transition theorems\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: `HasGappedSignature`\n\n**Proof Strategy:** Adapt the statistical-computational gap framework from planted problems (Berthet\u2013Rigollet, 2013) to the Lorentzian setting. The key insight is that the gap failure event at \u03b5 \u2248 2\u03c3 has probability \u0398(1), making statistical testing non-trivial.\n\n**Domain Bridges:** Computational complexity, statistical learning theory, planted problems, average-case analysis.\n\n**Lineage:** Inspired by the phase transition geometry formalized in the sharp bound theorems.\n\n**Ambition:** Grand challenge \u2014 would open an entirely new research program.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6a75662e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T02:07:17.397934+00:00"
+  },
+  {
+    "id": "fd_1259",
+    "title": "Direction 4: Free Probability and Lorentzian Stability Under Structured Noise",
+    "description": "**Conjecture:** For structured (non-i.i.d.) perturbations arising from free probability\u2014such as free convolution of a deterministic spectrum with a semicircular element\u2014the certification threshold is determined by the *free* spectral edge rather than 2\u03c3. Specifically, if A has eigenvalues \u03bc\u2081 \u2265 ... \u2265 \u03bc\u2099 and E is a free semicircular element of variance \u03c3\u00b2, then the largest eigenvalue of A + E concentrates near the right edge of the free convolution \u03bc_A \u229e \u03c3_sc, which may differ from 2\u03c3.\n\n**Test:** Compute the free convolution edge for specific deterministic spectra (e.g., A = diag(\u03bb, 0, ..., 0)) using the Stieltjes transform. Compare against Monte Carlo simulations of the actual largest eigenvalue of A + GOE.\n\n**Impact:** Would extend the certification framework to realistic structured perturbation models where the noise has correlations or non-trivial spectral structure. This is essential for applications in signal processing and quantum information.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: `GOEEdgeWindow`, `EdgeScaledGap`\n- `Catalog/Bridges/Catalog/Pythagorean/LorentzianSmoothedAnalysis.lean`: smoothed analysis\n\n**Proof Strategy:** Formalize the subordination method for free convolution (Biane, 1998), compute the free edge as the rightmost point of the support of the free convolution, and transfer the certification bound.\n\n**Domain Bridges:** Free probability, operator algebras, random matrix theory, quantum information.\n\n**Lineage:** Generalizes the GOE-specific 2\u03c3 threshold to structured noise.\n\n**Ambition:** Solid extension \u2014 free convolution theory is well-developed but not yet formalized.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6a75662e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T02:07:17.446462+00:00"
+  },
+  {
+    "id": "fd_1260",
+    "title": "Direction 5: Spectral Phase Transitions in Quantum Many-Body Certification",
+    "description": "**Conjecture:** The spectral phase transition at 2\u03c3 has a direct analog in quantum many-body physics: the certification of topological order in a noisy quantum state undergoes a phase transition at a critical noise rate determined by the spectral gap of the parent Hamiltonian and the random matrix edge of the noise operator.\n\nSpecifically, for a topologically ordered ground state |\u03c8\u27e9 of a gapped Hamiltonian H with spectral gap \u0394, and for depolarizing noise of strength p, the fidelity-based certification of topological order transitions at p* \u221d \u0394/(2\u03c3_eff) where \u03c3_eff is determined by the effective noise matrix.\n\n**Test:** Simulate the toric code under depolarizing noise for various system sizes. Plot the fidelity of topological order certification against p/p* and check for curve collapse with n^(\u22122/3) scaling.\n\n**Impact:** Would connect the Lorentzian certification framework to quantum error correction and topological quantum computing, potentially yielding new noise threshold estimates.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: phase transition theorems, universality framework\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: spectral gap stability\n\n**Proof Strategy:** Map the certification problem to a spectral gap stability question, identify the effective noise matrix, and apply the transfer theorem with the quantum generalization of the GOE edge.\n\n**Domain Bridges:** Quantum information, topological order, condensed matter physics, quantum error correction.\n\n**Lineage:** Grand vision extending the 2\u03c3 threshold from classical linear algebra to quantum many-body systems.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful, connecting algebraic certification to quantum physics.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "6a75662e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T02:07:17.500460+00:00"
+  },
+  {
+    "id": "fd_1261",
+    "title": "Direction 1: Precise Threshold Constant for Certificate Complexity",
+    "description": "**Conjecture:** There exists a universal constant c > 0 such that for G(n,p) with edge probability p, the certificate complexity of the graphic matroid M(G) satisfies:\n- If p < (c \u2212 \u03b5) \u00b7 ln(n)/n, then E[certComplexity(M(G))] \u2264 n^O(1) with high probability.\n- If p > (c + \u03b5) \u00b7 ln(n)/n, then E[certComplexity(M(G))] \u2265 2^(n^\u03a9(1)) with high probability.\n\nMoreover, c = 1 (the Erd\u0151s\u2013R\u00e9nyi connectivity threshold constant).\n\n**Test:** For n \u2208 {20, 30, 50, 100}, compute certificate complexity bounds for G(n,p) at p = k\u00b7ln(n)/n for k \u2208 {0.5, 0.8, 0.9, 1.0, 1.1, 1.2, 1.5, 2.0}. Plot log(cert_complexity) vs k. The conjecture predicts convergence to a step function at k = 1 as n \u2192 \u221e.\n\n**Impact:** Would establish the first precise phase transition result in matroid certificate complexity, analogous to the k-SAT threshold. Would connect two previously separate threshold phenomena (connectivity and certificate complexity).\n\n**Catalog References:**\n- `Catalog/Pythagorean/MatroidCertificatePhaseTransition.lean`: `phase_transition_sparse_dense`, `exponential_objects_exponential_cert`\n- `Catalog/Pythagorean/CertificatePhaseTransition.lean`: `exists_transition_window`, `satisfiable_of_card_lt_minObstructionSize`\n\n**Proof Strategy:** Use Friedgut's sharp threshold theorem for monotone graph properties combined with the information-theoretic lower bound (leaves \u2264 2^depth). The key missing step is connecting the spanning tree count to the monotone property framework: define the property \"M(G) has certificate complexity \u2265 t\" and verify it is monotone.\n\n**Domain Bridges:** Random graph theory \u2194 matroid theory \u2194 computational complexity\n\n**Lineage:** Extends the structural phase transition theorem (Theorem 3.9) from the current work to a graph-theoretic statement.\n\n**Ambition:** Grand challenge \u2014 would resolve a fundamental question about computational phase transitions.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "14c19443",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T02:07:39.326624+00:00"
   },
   {
     "id": "seed_005",
@@ -1770,127 +1871,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "258120ed",
     "consumed_by_exp_id": "f44ba709",
     "timestamp": "2026-05-27T00:51:51.763159+00:00"
-  },
-  {
-    "id": "fd_1256",
-    "title": "Direction 1: Full Tracy\u2013Widom Formalization via Painlev\u00e9 II",
-    "description": "**Conjecture:** The Tracy\u2013Widom distribution F\u2082 can be formalized in Lean 4 as the Fredholm determinant of the Airy kernel, and the GOE edge convergence theorem can be proved:\n\n$$\\lim_{n \\to \\infty} \\mathbb{P}\\left(\\frac{\\lambda_{\\max}(E_n) - 2\\sigma}{\\sigma n^{-2/3}} \\leq t\\right) = F_{\\mathrm{TW}}(t).$$\n\n**Test:** Formalize the Painlev\u00e9 II ODE y'' = 2y\u00b3 + ty, prove existence and uniqueness of the Hastings\u2013McLeod solution, and derive that F\u2082(t) = exp(\u2212\u222b_t^\u221e (s\u2212t)q(s)\u00b2ds). Verify numerically against known tables (e.g., F\u2082(0) \u2248 0.9678).\n\n**Impact:** Would provide the first machine-verified formalization of Tracy\u2013Widom in any proof assistant, enabling sharp (not just exponential) failure bounds. Would replace the current `TracyWidomGOEUpperTail` placeholder with a constructive definition.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: `TracyWidomGOEUpperTail` placeholder\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: spectral gap framework\n\n**Proof Strategy:** Formalize Airy functions via their integral representation, prove Fredholm determinant convergence for trace-class operators, then specialize to the Airy kernel on L\u00b2(t, \u221e).\n\n**Domain Bridges:** Integrable probability, ODE theory, functional analysis, mathematical physics.\n\n**Lineage:** Extends the universality transfer theorem to exact asymptotics.\n\n**Ambition:** Grand challenge \u2014 would be a landmark in formal mathematics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T02:07:17.293067+00:00"
-  },
-  {
-    "id": "fd_1257",
-    "title": "Direction 2: Wigner Universality for Non-Gaussian Perturbations",
-    "description": "**Conjecture:** The transfer theorem and phase transition at 2\u03c3 hold for any Wigner matrix ensemble with sub-Gaussian entries having variance \u03c3\u00b2/n, not just GOE. Specifically, for any i.i.d. (up to symmetry) entry distribution with E[X] = 0, E[X\u00b2] = \u03c3\u00b2/n, and sub-Gaussian tail \u03c8\u2082 \u2264 K:\n\n$$\\mathbb{P}(\\|E\\|_{\\mathrm{op}} \\geq 2\\sigma + t) \\leq C \\exp(-cn \\min(t^2/\\sigma^2, t/K))$$\n\nand consequently the same SharpFailureUpperBound applies.\n\n**Test:** Prove the concentration inequality for sub-Gaussian Wigner matrices using \u03b5-net arguments. Verify numerically by comparing Bernoulli(\u00b11/\u221an) and uniform([-\u221a3/n, \u221a3/n]) entries against the Gaussian case.\n\n**Impact:** Would extend the certification law to all practical noise models (quantization noise, bounded perturbations, sparse corruptions). The `HasEdgeTail` universality framework in SharpGOEConstants.lean is already designed to support this.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: `HasEdgeTail`, `universality_transfer`\n- `Catalog/Bridges/Catalog/Pythagorean/LorentzianSmoothedAnalysis.lean`: abstract transfer\n\n**Proof Strategy:** Use Talagrand's concentration inequality for Lipschitz functions of independent random variables, combined with \u03b5-net covering arguments for the unit sphere.\n\n**Domain Bridges:** High-dimensional probability, concentration of measure, geometric functional analysis.\n\n**Lineage:** Direct extension of the universality transfer theorem.\n\n**Ambition:** Solid extension \u2014 well within current techniques but requires substantial formalization effort.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T02:07:17.345276+00:00"
-  },
-  {
-    "id": "fd_1258",
-    "title": "Direction 3: Complexity-Theoretic Phase Transition for Lorentzian Recognition",
-    "description": "**Conjecture:** There exists a computational phase transition for Lorentzian recognition under random perturbation:\n- For \u03b5 > 2\u03c3 + \u03b4 (well above edge): recognition is solvable in polynomial time with exponentially small error.\n- For \u03b5 < 2\u03c3 \u2212 \u03b4 (well below edge): recognition requires exponential time or has constant error probability.\n- At \u03b5 = 2\u03c3 (the edge): the problem is \"computationally critical\" \u2014 polynomial-time algorithms exist but with polynomially decaying confidence.\n\n**Test:** Formalize a reduction from a known hard problem (e.g., detecting planted clique) to Lorentzian recognition at the critical noise level \u03b5 \u2248 2\u03c3. Alternatively, show that spectral algorithms achieve the information-theoretic threshold.\n\n**Impact:** Would establish a new type of average-case complexity result where the hardness threshold is determined by a random matrix constant, bridging algebraic geometry and computational complexity theory.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: phase transition theorems\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: `HasGappedSignature`\n\n**Proof Strategy:** Adapt the statistical-computational gap framework from planted problems (Berthet\u2013Rigollet, 2013) to the Lorentzian setting. The key insight is that the gap failure event at \u03b5 \u2248 2\u03c3 has probability \u0398(1), making statistical testing non-trivial.\n\n**Domain Bridges:** Computational complexity, statistical learning theory, planted problems, average-case analysis.\n\n**Lineage:** Inspired by the phase transition geometry formalized in the sharp bound theorems.\n\n**Ambition:** Grand challenge \u2014 would open an entirely new research program.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T02:07:17.397934+00:00"
-  },
-  {
-    "id": "fd_1259",
-    "title": "Direction 4: Free Probability and Lorentzian Stability Under Structured Noise",
-    "description": "**Conjecture:** For structured (non-i.i.d.) perturbations arising from free probability\u2014such as free convolution of a deterministic spectrum with a semicircular element\u2014the certification threshold is determined by the *free* spectral edge rather than 2\u03c3. Specifically, if A has eigenvalues \u03bc\u2081 \u2265 ... \u2265 \u03bc\u2099 and E is a free semicircular element of variance \u03c3\u00b2, then the largest eigenvalue of A + E concentrates near the right edge of the free convolution \u03bc_A \u229e \u03c3_sc, which may differ from 2\u03c3.\n\n**Test:** Compute the free convolution edge for specific deterministic spectra (e.g., A = diag(\u03bb, 0, ..., 0)) using the Stieltjes transform. Compare against Monte Carlo simulations of the actual largest eigenvalue of A + GOE.\n\n**Impact:** Would extend the certification framework to realistic structured perturbation models where the noise has correlations or non-trivial spectral structure. This is essential for applications in signal processing and quantum information.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: `GOEEdgeWindow`, `EdgeScaledGap`\n- `Catalog/Bridges/Catalog/Pythagorean/LorentzianSmoothedAnalysis.lean`: smoothed analysis\n\n**Proof Strategy:** Formalize the subordination method for free convolution (Biane, 1998), compute the free edge as the rightmost point of the support of the free convolution, and transfer the certification bound.\n\n**Domain Bridges:** Free probability, operator algebras, random matrix theory, quantum information.\n\n**Lineage:** Generalizes the GOE-specific 2\u03c3 threshold to structured noise.\n\n**Ambition:** Solid extension \u2014 free convolution theory is well-developed but not yet formalized.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T02:07:17.446462+00:00"
-  },
-  {
-    "id": "fd_1260",
-    "title": "Direction 5: Spectral Phase Transitions in Quantum Many-Body Certification",
-    "description": "**Conjecture:** The spectral phase transition at 2\u03c3 has a direct analog in quantum many-body physics: the certification of topological order in a noisy quantum state undergoes a phase transition at a critical noise rate determined by the spectral gap of the parent Hamiltonian and the random matrix edge of the noise operator.\n\nSpecifically, for a topologically ordered ground state |\u03c8\u27e9 of a gapped Hamiltonian H with spectral gap \u0394, and for depolarizing noise of strength p, the fidelity-based certification of topological order transitions at p* \u221d \u0394/(2\u03c3_eff) where \u03c3_eff is determined by the effective noise matrix.\n\n**Test:** Simulate the toric code under depolarizing noise for various system sizes. Plot the fidelity of topological order certification against p/p* and check for curve collapse with n^(\u22122/3) scaling.\n\n**Impact:** Would connect the Lorentzian certification framework to quantum error correction and topological quantum computing, potentially yielding new noise threshold estimates.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: phase transition theorems, universality framework\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: spectral gap stability\n\n**Proof Strategy:** Map the certification problem to a spectral gap stability question, identify the effective noise matrix, and apply the transfer theorem with the quantum generalization of the GOE edge.\n\n**Domain Bridges:** Quantum information, topological order, condensed matter physics, quantum error correction.\n\n**Lineage:** Grand vision extending the 2\u03c3 threshold from classical linear algebra to quantum many-body systems.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful, connecting algebraic certification to quantum physics.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T02:07:17.500460+00:00"
-  },
-  {
-    "id": "fd_1261",
-    "title": "Direction 1: Precise Threshold Constant for Certificate Complexity",
-    "description": "**Conjecture:** There exists a universal constant c > 0 such that for G(n,p) with edge probability p, the certificate complexity of the graphic matroid M(G) satisfies:\n- If p < (c \u2212 \u03b5) \u00b7 ln(n)/n, then E[certComplexity(M(G))] \u2264 n^O(1) with high probability.\n- If p > (c + \u03b5) \u00b7 ln(n)/n, then E[certComplexity(M(G))] \u2265 2^(n^\u03a9(1)) with high probability.\n\nMoreover, c = 1 (the Erd\u0151s\u2013R\u00e9nyi connectivity threshold constant).\n\n**Test:** For n \u2208 {20, 30, 50, 100}, compute certificate complexity bounds for G(n,p) at p = k\u00b7ln(n)/n for k \u2208 {0.5, 0.8, 0.9, 1.0, 1.1, 1.2, 1.5, 2.0}. Plot log(cert_complexity) vs k. The conjecture predicts convergence to a step function at k = 1 as n \u2192 \u221e.\n\n**Impact:** Would establish the first precise phase transition result in matroid certificate complexity, analogous to the k-SAT threshold. Would connect two previously separate threshold phenomena (connectivity and certificate complexity).\n\n**Catalog References:**\n- `Catalog/Pythagorean/MatroidCertificatePhaseTransition.lean`: `phase_transition_sparse_dense`, `exponential_objects_exponential_cert`\n- `Catalog/Pythagorean/CertificatePhaseTransition.lean`: `exists_transition_window`, `satisfiable_of_card_lt_minObstructionSize`\n\n**Proof Strategy:** Use Friedgut's sharp threshold theorem for monotone graph properties combined with the information-theoretic lower bound (leaves \u2264 2^depth). The key missing step is connecting the spanning tree count to the monotone property framework: define the property \"M(G) has certificate complexity \u2265 t\" and verify it is monotone.\n\n**Domain Bridges:** Random graph theory \u2194 matroid theory \u2194 computational complexity\n\n**Lineage:** Extends the structural phase transition theorem (Theorem 3.9) from the current work to a graph-theoretic statement.\n\n**Ambition:** Grand challenge \u2014 would resolve a fundamental question about computational phase transitions.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "14c19443",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T02:07:39.326624+00:00"
   },
   {
     "id": "seed_013",
@@ -2309,6 +2289,22 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
+  },
+  {
+    "id": "fd_1271",
+    "title": "Domain Bridges:",
+    "description": "Matroid theory \u2194 algebraic geometry (Grassmannian, Pl\u00fccker relations)",
+    "domains": [
+      "Algebra",
+      "Geometry",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "2217051e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T02:48:08.539912+00:00"
   },
   {
     "id": "seed_007",
