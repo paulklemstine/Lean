@@ -127,13 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Build a stable numbering map: assign numbers based on date-asc order of full PACKAGE_INDEX
-    const pkgNumberMap = {};
-    if (window.Aether.packages) {
-        const byDate = [...window.Aether.packages].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
-        byDate.forEach((pkg, i) => { pkgNumberMap[pkg.filename] = i + 1; });
-    }
-
     window.renderSidebar = function(pkgArray) {
         filteredPackages = pkgArray;
         packageList.innerHTML = '';
@@ -175,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 else scoreColor = '#ef4444';                   // red - low
             }
 
-            const pkgNum = pkgNumberMap[pkg.filename] || '';
+            const pkgNum = pkg.pkg_num || '';
             li.innerHTML = `
                 <div class="nav-item-title">${pkgNum ? pkgNum + '. ' : ''}${pkg.title || 'Untitled Research'}</div>
                 ${qs != null ? `<div class="nav-item-score" data-quality="${quality}">

@@ -66,11 +66,12 @@
 
         if (graphNodes.length === 0) return;
 
-        // Assign package numbers based on date-asc order (oldest = 1)
+        // Assign package numbers from stable pkg_num in PACKAGE_INDEX
         if (window.PACKAGE_INDEX) {
-            const byDate = [...window.PACKAGE_INDEX].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
             const numMap = {};
-            byDate.forEach((pkg, i) => { numMap[pkg.filename.replace('.json', '')] = i + 1; });
+            window.PACKAGE_INDEX.forEach(pkg => {
+                if (pkg.pkg_num) numMap[pkg.filename.replace('.json', '')] = pkg.pkg_num;
+            });
             graphNodes.forEach(n => { n.pkgNum = numMap[n.id] || 0; });
         }
 
@@ -751,6 +752,7 @@
 
                 // Comet trail: ring buffer of last 20 positions
                 const v = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+                if (!n.trail) n.trail = [];
                 if (v > 30.0) {
                     n.trail.push({ x: n.x, y: n.y });
                     if (n.trail.length > 20) n.trail.shift();
@@ -2066,8 +2068,17 @@
             const domain = nodeData.primary_domain || nodeData.domain || 'Bridges';
             const centroid = clusterData.centroids[domain] || clusterData.centroids[Object.keys(clusterData.centroids)[0]];
             const px = nodeData.priority_score ?? 0.5;
+            // Look up stable package number from PACKAGE_INDEX
+            let pkgNum = nodeData.pkg_num || 0;
+            if (!pkgNum && window.PACKAGE_INDEX) {
+                const match = window.PACKAGE_INDEX.find(p => p.filename.replace('.json', '') === nodeData.id);
+                if (match && match.pkg_num) pkgNum = match.pkg_num;
+            }
             const node = {
                 ...nodeData,
+                pkgNum: pkgNum,
+                trail: [],
+                radarPulse: null,
                 x: centroid ? centroid.x + (Math.random() - 0.5) * 60 : (Math.random() - 0.5) * 200,
                 y: centroid ? centroid.y + (Math.random() - 0.5) * 60 : (Math.random() - 0.5) * 200,
                 targetX: centroid ? centroid.x + (Math.random() - 0.5) * 40 : 0,

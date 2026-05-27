@@ -1,0 +1,4401 @@
+// AUTO-GENERATED FILE. DO NOT EDIT.
+// Lightweight index for sidebar, graph, and lineage links.
+// Full package data is loaded on-demand from individual .json files.
+
+window.PACKAGE_INDEX = [
+  {
+    "filename": "direction_4_robust_log_concavity_for_quantum_many_.json",
+    "title": "Robust Log-Concavity for Quantum Many-Body Ground States",
+    "domain": "Quantum Many-Body Theory / Lorentzian Polynomials / Classical Expansion",
+    "date": "2026-05-27T00:52:08Z",
+    "exp_id": "d97a486b",
+    "quality_score": 0.7774966433566434,
+    "quality": "substantial",
+    "pkg_num": 126
+  },
+  {
+    "filename": "direction_2_lorentzian_polynomials_in_statistical_.json",
+    "title": "Lorentzian Polynomials in Statistical Physics and Probability",
+    "domain": "Algebraic Combinatorics / Probability / Statistical Physics",
+    "date": "2026-05-27T00:51:48Z",
+    "exp_id": "258120ed",
+    "quality_score": 0.7206784406779662,
+    "quality": "substantial",
+    "pkg_num": 125
+  },
+  {
+    "filename": "direction_3_information_theoretic_monotonicity_for.json",
+    "title": "Information-Theoretic Monotonicity for Robustly Lorentzian Measures",
+    "domain": "Discrete Probability / Information Theory / Lorentzian Geometry",
+    "date": "2026-05-27T00:51:30Z",
+    "exp_id": "f952b956",
+    "quality_score": 0.7255008839779007,
+    "quality": "substantial",
+    "pkg_num": 124
+  },
+  {
+    "filename": "direction_3_certified_expander_codes_with_linear_t.json",
+    "title": "Certified Expander Codes from Cayley Graphs with Linear-Time Decoding",
+    "domain": "Coding Theory / Algebraic Graph Theory",
+    "date": "2026-05-27T00:51:04Z",
+    "exp_id": "d4879402",
+    "quality_score": 0.7277883902439024,
+    "quality": "substantial",
+    "pkg_num": 123
+  },
+  {
+    "filename": "direction_5_continuous_extension_via_discretizatio.json",
+    "title": "Continuous-to-Discrete Robustness Transfer for Lorentzian Stability",
+    "domain": "Geometric Discretization Theory / Lorentzian Polynomial Stability",
+    "date": "2026-05-27T00:15:51Z",
+    "exp_id": "ad0ea09c",
+    "quality_score": 0.7752345794392524,
+    "quality": "substantial",
+    "pkg_num": 122
+  },
+  {
+    "filename": "direction_2_valuated_matroid_theory_via_k_fold_log.json",
+    "title": "Higher Discrete Curvature Theory for Valuated Matroids via k-Fold Directional Log-Concavity",
+    "domain": "Combinatorial Algebraic Geometry / Tropical Geometry / Discrete Convex Analysis",
+    "date": "2026-05-27T00:15:18Z",
+    "exp_id": "dde1d7e9",
+    "quality_score": 0.6498758987341773,
+    "quality": "partial",
+    "pkg_num": 121
+  },
+  {
+    "filename": "direction_1_quantitative_helfgott_type_growth_in_g.json",
+    "title": "Quantitative Helfgott-Type Growth in SL(2, F_p): Formal Escape Certificates and Product Expansion",
+    "domain": "Additive Combinatorics / Finite Group Theory",
+    "date": "2026-05-26T23:40:38Z",
+    "exp_id": "5098a45f",
+    "quality_score": 0.6490118139534884,
+    "quality": "partial",
+    "pkg_num": 120
+  },
+  {
+    "filename": "direction_2_exceptional_expander_ladder__f_e_e_e.json",
+    "title": "Exceptional Expander Ladder: Certificate Framework for F\u2084, E\u2086, E\u2087, E\u2088",
+    "domain": "Exceptional Lie Theory / Spectral Graph Theory / Certified Optimization",
+    "date": "2026-05-26T23:40:19Z",
+    "exp_id": "5e6b0585",
+    "quality_score": 0.7835981654135338,
+    "quality": "substantial",
+    "pkg_num": 119
+  },
+  {
+    "filename": "direction_2_sparse_support_certificate_compression.json",
+    "title": "Sparse-Support Certificate Compression for Matroid Basis Polynomials",
+    "domain": "Combinatorial Algebraic Geometry / Matroid Theory",
+    "date": "2026-05-26T23:40:04Z",
+    "exp_id": "6595a609",
+    "quality_score": 0.6956024000000001,
+    "quality": "partial",
+    "pkg_num": 118
+  },
+  {
+    "filename": "direction_1_dynamic_spectral_gap_tracking_for_onli.json",
+    "title": "Dynamic Spectral Gap Tracking for Online Mixing-Time Guarantees",
+    "domain": "Combinatorial Sampling / Lorentzian Polynomials / Spectral Graph Theory",
+    "date": "2026-05-26T23:39:40Z",
+    "exp_id": "710cc85b",
+    "quality_score": 0.7033800000000001,
+    "quality": "substantial",
+    "pkg_num": 117
+  },
+  {
+    "filename": "direction_1_comparison_theorems_for_non_group_mark.json",
+    "title": "Comparison Theorems for Non-Group Markov Chains",
+    "domain": "Probability Theory / Spectral Graph Theory",
+    "date": "2026-05-26T23:05:00Z",
+    "exp_id": "4a19dada",
+    "quality_score": 0.659564,
+    "quality": "partial",
+    "pkg_num": 116
+  },
+  {
+    "filename": "direction_3_spectral_expansion_for_matrix_groups_a.json",
+    "title": "Spectral Expansion for Matrix Groups: Arithmetic Certificates for Cayley Graphs on SL\u2082(\ud835\udd3d_p)",
+    "domain": "Arithmetic Combinatorics / Spectral Graph Theory",
+    "date": "2026-05-26T23:04:37Z",
+    "exp_id": "e954adc7",
+    "quality_score": 0.7183925,
+    "quality": "substantial",
+    "pkg_num": 115
+  },
+  {
+    "filename": "direction_4_tropical_mixing_without_spectral_inter.json",
+    "title": "Direct Tropical Mixing Without Spectral Intermediate",
+    "domain": "Tropical Geometry / Markov Chain Mixing",
+    "date": "2026-05-26T22:28:04Z",
+    "exp_id": "93ec6871",
+    "quality_score": 0.710588,
+    "quality": "substantial",
+    "pkg_num": 114
+  },
+  {
+    "filename": "direction_2_heterogeneitygap_conjecture.json",
+    "title": "Edge-Size Disorder as a Structural Predictor of Integrality Gaps in Hypergraph Transversals",
+    "domain": "Combinatorial Optimization / Hypergraph Theory",
+    "date": "2026-05-26T22:27:37Z",
+    "exp_id": "daaf598b",
+    "quality_score": 0.65906,
+    "quality": "partial",
+    "pkg_num": 113
+  },
+  {
+    "filename": "direction_1_complete_aschbacher_certificate_theory.json",
+    "title": "Aschbacher Certificate Theory: Polynomial-Time Obstruction Certificates for Matrix Group Recognition",
+    "domain": "Computational Group Theory / Finite Classical Groups",
+    "date": "2026-05-26T22:27:11Z",
+    "exp_id": "cc9f1755",
+    "quality_score": 0.7725412307692309,
+    "quality": "substantial",
+    "pkg_num": 112
+  },
+  {
+    "filename": "direction_4_plcker_coordinates_and_fermionic_state.json",
+    "title": "Pl\u00fccker Coordinates and Fermionic State Preparation: Quantum Matroid Geometry",
+    "domain": "Pythagorean",
+    "date": "2026-05-26T22:26:36Z",
+    "exp_id": "4c9b1112",
+    "quality_score": 0.713033797752809,
+    "quality": "substantial",
+    "pkg_num": 111
+  },
+  {
+    "filename": "direction_1_non_multiaffine_extension_via_weighted.json",
+    "title": "The Quadratic Shadow Theorem: Second-Derivative Structure from Newton Support Geometry",
+    "domain": "Algebraic Combinatorics / Polynomial Algebra",
+    "date": "2026-05-26T21:53:02Z",
+    "exp_id": "ef991832",
+    "quality_score": 0.7587311652173914,
+    "quality": "substantial",
+    "pkg_num": 110
+  },
+  {
+    "filename": "direction_1_wreath_product_perturbation_theory.json",
+    "title": "Wreath Product Perturbation Theory for Subgroup Pressure",
+    "domain": "Pythagorean / Algebraic Statistical Mechanics",
+    "date": "2026-05-26T21:18:00Z",
+    "exp_id": "550b5c8b",
+    "quality_score": 0.7326680000000001,
+    "quality": "substantial",
+    "pkg_num": 109
+  },
+  {
+    "filename": "direction_3_pressure_theory_for_almost_simple_grou.json",
+    "title": "Pressure Theory for Almost Simple Groups",
+    "domain": "Finite Group Theory / Thermodynamic Formalism",
+    "date": "2026-05-26T21:17:42Z",
+    "exp_id": "a875f3ce",
+    "quality_score": 0.7693653584905661,
+    "quality": "substantial",
+    "pkg_num": 108
+  },
+  {
+    "filename": "direction_5_effective_resistance_and_electrical_fl.json",
+    "title": "Electrical Flow Certificates for Cayley Graphs",
+    "domain": "Algebraic Combinatorics / Spectral Graph Theory / Electrical Network Theory",
+    "date": "2026-05-26T21:17:25Z",
+    "exp_id": "d42cb594",
+    "quality_score": 0.7283000000000001,
+    "quality": "substantial",
+    "pkg_num": 107
+  },
+  {
+    "filename": "direction_2_spectral_decoding_via_tropical_morse_b.json",
+    "title": "Spectral Decoding via Tropical Morse Barcodes",
+    "domain": "Tropical-Topological Decoding Theory",
+    "date": "2026-05-26T21:16:58Z",
+    "exp_id": "e1e8732d",
+    "quality_score": 0.7368618604651165,
+    "quality": "substantial",
+    "pkg_num": 106
+  },
+  {
+    "filename": "direction_1_full_grtnerellis_large_deviation_princ.json",
+    "title": "Large Deviation Principle for Generation Defect on Direct Powers of Finite Groups",
+    "domain": "Probabilistic Group Theory / Large Deviations / Thermodynamic Formalism",
+    "date": "2026-05-26T19:36:51Z",
+    "exp_id": "a93e0253",
+    "quality_score": 0.7302034482758621,
+    "quality": "substantial",
+    "pkg_num": 105
+  },
+  {
+    "filename": "direction_4_statistical_physics_of_random_transver.json",
+    "title": "Random Transversal Thermodynamics: Improved Integrality Gaps and Response Laws in Sparse Uniform Hypergraphs",
+    "domain": "Pythagorean / Combinatorial Optimization / Statistical Physics",
+    "date": "2026-05-26T19:36:21Z",
+    "exp_id": "befda33d",
+    "quality_score": 0.7327347826086956,
+    "quality": "substantial",
+    "pkg_num": 104
+  },
+  {
+    "filename": "direction_1_log_sobolev_inequality_for_the_hybrid_.json",
+    "title": "Modified Log-Sobolev Inequalities for Hybrid Permutation Walks",
+    "domain": "Probability Theory / Markov Chains / Information Theory",
+    "date": "2026-05-26T19:35:44Z",
+    "exp_id": "ff6108f7",
+    "quality_score": 0.7167155046439628,
+    "quality": "substantial",
+    "pkg_num": 103
+  },
+  {
+    "filename": "direction_1_weighted_distance_equality_via_tropica.json",
+    "title": "Weighted Distance Equality via Tropical Cycle Optimization",
+    "domain": "Tropical Geometry / Quantum Error Correction / Graph Theory",
+    "date": "2026-05-26T18:57:37Z",
+    "exp_id": "208288a0",
+    "quality_score": 0.6502599049235993,
+    "quality": "partial",
+    "pkg_num": 102
+  },
+  {
+    "filename": "direction_1_quantum_2_designs_from_certified_unita.json",
+    "title": "Quantum 2-Designs from Certified Unitary Expanders",
+    "domain": "Algebraic Quantum Information Theory",
+    "date": "2026-05-26T18:57:14Z",
+    "exp_id": "4ce7826a",
+    "quality_score": 0.7185778181818183,
+    "quality": "substantial",
+    "pkg_num": 101
+  },
+  {
+    "filename": "direction_4_global_stability_as_max_envelope.json",
+    "title": "Global Stability as Max Envelope: Prime Decomposition of Torsion Persistence",
+    "domain": "Algebraic Topology / Persistent Homology / Number Theory",
+    "date": "2026-05-26T18:56:49Z",
+    "exp_id": "34bffabf",
+    "quality_score": 0.7288202994652406,
+    "quality": "substantial",
+    "pkg_num": 100
+  },
+  {
+    "filename": "direction_4_arithmetic_statistics_via_subgroup_pre.json",
+    "title": "Arithmetic Statistics via Subgroup Pressure in Linear Groups",
+    "domain": "Finite Group Theory / Arithmetic Statistics / Statistical Mechanics",
+    "date": "2026-05-26T18:56:16Z",
+    "exp_id": "17192924",
+    "quality_score": 0.7145541738405998,
+    "quality": "substantial",
+    "pkg_num": 99
+  },
+  {
+    "filename": "direction_1_bounded_treewidth_polynomial_certifica.json",
+    "title": "Treewidth-Parameterized Certificate Compilation for Deletion/Contraction Recurrences",
+    "domain": "Parameterized Complexity / Matroid Theory / Graph Theory",
+    "date": "2026-05-26T18:22:23Z",
+    "exp_id": "802479fb",
+    "quality_score": 0.7315382132796782,
+    "quality": "substantial",
+    "pkg_num": 98
+  },
+  {
+    "filename": "direction_3_hecke_operator_comparison_and_building.json",
+    "title": "Hecke Operator Comparison and Building Spectra for Sp4(Fq)",
+    "domain": "Spectral Graph Theory / Representation Theory / High-Dimensional Expansion",
+    "date": "2026-05-26T17:13:23Z",
+    "exp_id": "ad3dfe1b",
+    "quality_score": 0.7713502400000001,
+    "quality": "substantial",
+    "pkg_num": 97
+  },
+  {
+    "filename": "direction_1_canonical_path_poincar_inequality_for_.json",
+    "title": "Canonical Path Poincar\u00e9 Inequality for Cayley Graphs",
+    "domain": "Spectral Graph Theory / Combinatorial Group Theory",
+    "date": "2026-05-26T17:12:50Z",
+    "exp_id": "5c8e335c",
+    "quality_score": 0.7240127065217392,
+    "quality": "substantial",
+    "pkg_num": 96
+  },
+  {
+    "filename": "direction_2_tropical_interleaving_distance_and_alg.json",
+    "title": "Tropical Interleaving Distance and Algebraic Stability",
+    "domain": "Tropical Persistence Theory / Topological Data Analysis",
+    "date": "2026-05-26T16:37:14Z",
+    "exp_id": "88f5188e",
+    "quality_score": 0.7668083870967742,
+    "quality": "substantial",
+    "pkg_num": 95
+  },
+  {
+    "filename": "direction_2_lorentzian_minor_closure_conjecture.json",
+    "title": "Lorentzian Minor Closure: Support Realizability Under Deletion and Contraction",
+    "domain": "Combinatorial Algebraic Geometry / Lorentzian Polynomials",
+    "date": "2026-05-26T16:36:47Z",
+    "exp_id": "8e8af4e3",
+    "quality_score": 0.7215146524064171,
+    "quality": "substantial",
+    "pkg_num": 94
+  },
+  {
+    "filename": "direction_2_exceptional_groups_and_character_sheaf.json",
+    "title": "Character-Ratio Certificates for Exceptional Group Expansion",
+    "domain": "Representation Theory / Spectral Graph Theory / Exceptional Lie Groups",
+    "date": "2026-05-26T16:01:24Z",
+    "exp_id": "50190731",
+    "quality_score": 0.7719703484062268,
+    "quality": "substantial",
+    "pkg_num": 93
+  },
+  {
+    "filename": "direction_4_large_deviation_principles_for_generat.json",
+    "title": "Large Deviation Principles for Random Generation via Subgroup Pressure",
+    "domain": "Finite Group Theory / Statistical Mechanics / Large Deviations",
+    "date": "2026-05-26T16:00:43Z",
+    "exp_id": "bcd75759",
+    "quality_score": 0.7817936263736264,
+    "quality": "substantial",
+    "pkg_num": 92
+  },
+  {
+    "filename": "direction_2_lorentzian_condition_numbers_and_smoot.json",
+    "title": "Lorentzian Condition Numbers and Smoothed Analysis",
+    "domain": "Algebraic Combinatorics / Numerical Stability",
+    "date": "2026-05-26T15:25:12Z",
+    "exp_id": "f52aba3c",
+    "quality_score": 0.7345251306175558,
+    "quality": "substantial",
+    "pkg_num": 91
+  },
+  {
+    "filename": "direction_1_spectral_fingerprints_for_classical_su.json",
+    "title": "Spectral Fingerprints for Classical Subgroups",
+    "domain": "Algebra / Group Theory / Finite Fields",
+    "date": "2026-05-26T15:24:45Z",
+    "exp_id": "56d80658",
+    "quality_score": 0.7330869830508475,
+    "quality": "substantial",
+    "pkg_num": 90
+  },
+  {
+    "filename": "direction_1_hardness_of_unrestricted_degree_lorent.json",
+    "title": "Complexity Lower Bounds for Unrestricted-Degree Lorentzian Polynomial Recognition",
+    "domain": "Algebraic Combinatorics / Computational Complexity / Hodge Theory",
+    "date": "2026-05-26T15:24:20Z",
+    "exp_id": "b33365a6",
+    "quality_score": 0.7248706358381504,
+    "quality": "substantial",
+    "pkg_num": 89
+  },
+  {
+    "filename": "direction_5_dynamic_lorentzian_certificates_and_on.json",
+    "title": "Dynamic Lorentzian Certificates and Online Sampling",
+    "domain": "Algebraic Combinatorics / Dynamic Algorithms",
+    "date": "2026-05-26T14:50:42Z",
+    "exp_id": "02e24032",
+    "quality_score": 0.7205326285479228,
+    "quality": "substantial",
+    "pkg_num": 88
+  },
+  {
+    "filename": "direction_1_torsion_aware_tropical_morse_theory.json",
+    "title": "Torsion-Aware Tropical Morse Theory: Integer Simplex Insertion Trichotomy",
+    "domain": "Algebraic Topology / Arithmetic Geometry",
+    "date": "2026-05-26T14:17:26Z",
+    "exp_id": "d4af762e",
+    "quality_score": 0.7510426086956522,
+    "quality": "substantial",
+    "pkg_num": 87
+  },
+  {
+    "filename": "direction_1_sharp_dixon_asymptotics_via_mbius_inve.json",
+    "title": "Sharp Dixon Asymptotics via M\u00f6bius Inversion on the Subgroup Lattice",
+    "domain": "Finite Group Theory / Algebraic Combinatorics",
+    "date": "2026-05-26T13:43:52Z",
+    "exp_id": "4ae175a0",
+    "quality_score": 0.7297311111111111,
+    "quality": "substantial",
+    "pkg_num": 86
+  },
+  {
+    "filename": "direction_4_matroidal_quantum_state_preparation.json",
+    "title": "Matroidal Quantum State Preparation via Exchange Certificates",
+    "domain": "Combinatorial Hodge Theory / Quantum Algorithms / Matroid Theory",
+    "date": "2026-05-26T13:07:35Z",
+    "exp_id": "72356358",
+    "quality_score": 0.7344439999999999,
+    "quality": "substantial",
+    "pkg_num": 85
+  },
+  {
+    "filename": "direction_4_tropical_contraction_and_support_trunc.json",
+    "title": "Tropical Contraction and Support Truncation",
+    "domain": "Tropical Geometry / Discrete Convex Analysis",
+    "date": "2026-05-26T13:07:01Z",
+    "exp_id": "daae69f2",
+    "quality_score": 0.7127178032839152,
+    "quality": "substantial",
+    "pkg_num": 84
+  },
+  {
+    "filename": "direction_4_cryptographic_security_bounds_for_perm.json",
+    "title": "Cryptographic Security Bounds for Alternating Permutation Networks",
+    "domain": "Cryptography / Finite Group Theory / Mixing Time",
+    "date": "2026-05-26T13:06:26Z",
+    "exp_id": "3130e902",
+    "quality_score": 0.7165936336723626,
+    "quality": "substantial",
+    "pkg_num": 83
+  },
+  {
+    "filename": "direction_2_chip_firing_canonical_forms_via_tropic.json",
+    "title": "Chip-Firing Canonical Forms via Tropical Kernels",
+    "domain": "Algebraic Graph Theory / Tropical Geometry",
+    "date": "2026-05-26T13:05:45Z",
+    "exp_id": "1fb257b2",
+    "quality_score": 0.7244910588235294,
+    "quality": "substantial",
+    "pkg_num": 82
+  },
+  {
+    "filename": "direction_2_explicit_poincar_constant_and_exponent.json",
+    "title": "Explicit Poincar\u00e9 Constants and Exponential Variance Decay for the Bubble-Rotation Walk on S_n",
+    "domain": "Spectral Graph Theory / Combinatorial Probability / Cayley Graphs",
+    "date": "2026-05-26T12:33:23Z",
+    "exp_id": "c0f735e4",
+    "quality_score": 0.7172006698542598,
+    "quality": "substantial",
+    "pkg_num": 81
+  },
+  {
+    "filename": "direction_5_expander_based_derandomization_in_cert.json",
+    "title": "Expander-Walk Majority Amplification: Certified Derandomization from Spectral Gap",
+    "domain": "Algebraic Graph Theory / Computational Complexity / Derandomization",
+    "date": "2026-05-26T11:58:20Z",
+    "exp_id": "d4196bad",
+    "quality_score": 0.7785651221719457,
+    "quality": "substantial",
+    "pkg_num": 80
+  },
+  {
+    "filename": "direction_1_basis_uniqueness_up_to_tropical_projec.json",
+    "title": "Tropical Kernel Rigidity: Canonical Generators up to Tropical Projective Equivalence",
+    "domain": "Tropical Algebra / Graph Theory / Combinatorics",
+    "date": "2026-05-26T11:22:40Z",
+    "exp_id": "36d84586",
+    "quality_score": 0.563429411764706,
+    "quality": "partial",
+    "pkg_num": 79
+  },
+  {
+    "filename": "direction_3_abelian_sandpile_criticality_via_lapla.json",
+    "title": "Abelian Sandpile Criticality via Laplacian Energy Minimization",
+    "domain": "Graph Theory / Combinatorial Dynamics / Spectral Theory",
+    "date": "2026-05-26T11:22:13Z",
+    "exp_id": "d74ce5bf",
+    "quality_score": 0.7183609174311927,
+    "quality": "substantial",
+    "pkg_num": 78
+  },
+  {
+    "filename": "direction_4_complexity_of_certificate_verification.json",
+    "title": "Certificate Complexity for Matrix Group Generation",
+    "domain": "Computational Group Theory / Algebraic Complexity",
+    "date": "2026-05-26T11:21:46Z",
+    "exp_id": "79565d7a",
+    "quality_score": 0.7125355495823101,
+    "quality": "substantial",
+    "pkg_num": 77
+  },
+  {
+    "filename": "direction_1_overlap_class_conjecture__beyond_disjo.json",
+    "title": "Overlap Class Rigidity: Beyond Disjoint Supports in Tropical Kernel Theory",
+    "domain": "Tropical Geometry / Graph Theory",
+    "date": "2026-05-26T10:46:46Z",
+    "exp_id": "db19bfd3",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 76
+  },
+  {
+    "filename": "direction_3_algorithmic_tropical_kernel_computatio.json",
+    "title": "Algorithmic Tropical Kernel Computation for Weighted Graphs",
+    "domain": "Tropical Geometry / Combinatorial Optimization",
+    "date": "2026-05-26T10:46:21Z",
+    "exp_id": "16a503d2",
+    "quality_score": null,
+    "quality": "unrated",
+    "pkg_num": 75
+  },
+  {
+    "filename": "direction_1_higher_dimensional_tropical_morse_theo.json",
+    "title": "Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
+    "domain": "Tropical Geometry / Persistent Homology / Discrete Morse Theory",
+    "date": "2026-05-26T10:14:09Z",
+    "exp_id": "4895ceb4",
+    "quality_score": 0.7241421283979179,
+    "quality": "substantial",
+    "pkg_num": 74
+  },
+  {
+    "filename": "direction_2_uniform_spectral_gaps_for_sp_via_delig.json",
+    "title": "Uniform Spectral Gaps for Sp\u2084(\ud835\udd3d_q) via Deligne\u2013Lusztig Character Bounds",
+    "domain": "Algebraic Combinatorics / Representation Theory",
+    "date": "2026-05-26T09:39:04Z",
+    "exp_id": "21d69cc6",
+    "quality_score": 0.7304065660377359,
+    "quality": "substantial",
+    "pkg_num": 73
+  },
+  {
+    "filename": "direction_1_reflection_positivity_and_perron_frobe.json",
+    "title": "Reflection Positivity and Perron-Frobenius for the Transfer Matrix",
+    "domain": "Mathematical Physics / Spectral Theory / Lattice Gauge Theory",
+    "date": "2026-05-26T09:37:59Z",
+    "exp_id": "a6efeb29",
+    "quality_score": 0.7308755357710652,
+    "quality": "substantial",
+    "pkg_num": 72
+  },
+  {
+    "filename": "direction_4_energy_landscape_metastability_detecti.json",
+    "title": "Tropical Metastability Detection on Energy Landscapes",
+    "domain": "Tropical Geometry \u00d7 Statistical Physics \u00d7 Weighted Graph Theory",
+    "date": "2026-05-26T09:00:05Z",
+    "exp_id": "017aafa5",
+    "quality_score": 0.772976,
+    "quality": "substantial",
+    "pkg_num": 71
+  },
+  {
+    "filename": "direction_3_negative_dependence_and_rapid_mixing_v.json",
+    "title": "Directional Log-Concavity as a Spectral Certificate for Glauber Dynamics",
+    "domain": "Combinatorial Probability / Algorithmic Negative Dependence",
+    "date": "2026-05-26T08:59:38Z",
+    "exp_id": "6297694a",
+    "quality_score": 0.7224309737780574,
+    "quality": "substantial",
+    "pkg_num": 70
+  },
+  {
+    "filename": "direction_1_full_k_wl_separation_via_non_uniform_c.json",
+    "title": "Tropical Morse Spectra Escape the Weisfeiler-Leman Hierarchy",
+    "domain": "Topological Descriptive Complexity",
+    "date": "2026-05-26T08:24:34Z",
+    "exp_id": "089dd341",
+    "quality_score": 0.725907976630964,
+    "quality": "substantial",
+    "pkg_num": 69
+  },
+  {
+    "filename": "direction_3_certified_expanders_for_classical_grou.json",
+    "title": "Certified Expanders for Classical Groups: A Representation-Theoretic Expansion Program",
+    "domain": "Finite Group Theory / Spectral Graph Theory / Algebraic Combinatorics",
+    "date": "2026-05-26T08:24:04Z",
+    "exp_id": "d9e69258",
+    "quality_score": 0.7589612456833784,
+    "quality": "substantial",
+    "pkg_num": 68
+  },
+  {
+    "filename": "direction_4_tropical_hodge_theory_via_supermodular.json",
+    "title": "Tropical Hodge Theory via Supermodularity Hierarchies",
+    "domain": "Tropical Geometry / Combinatorial Optimization / Discrete Convexity",
+    "date": "2026-05-26T07:50:30Z",
+    "exp_id": "65ed3803",
+    "quality_score": 0.7269657639751552,
+    "quality": "substantial",
+    "pkg_num": 67
+  },
+  {
+    "filename": "direction_3_driven_diffusive_systems_and_tasep_pha.json",
+    "title": "Tagged-Card TASEP Structure in Permutation Random Walks",
+    "domain": "Algebraic Combinatorics / Nonequilibrium Statistical Mechanics",
+    "date": "2026-05-26T07:15:12Z",
+    "exp_id": "f42c0a57",
+    "quality_score": 0.7125025626631281,
+    "quality": "substantial",
+    "pkg_num": 66
+  },
+  {
+    "filename": "direction_3_tropical_morse_spectra_as_quantum_grap.json",
+    "title": "Tropical Morse Spectra as Quantum Graph State Classifiers",
+    "domain": "Tropical Geometry \u00d7 Quantum Information Theory",
+    "date": "2026-05-26T07:14:43Z",
+    "exp_id": "b0b26cee",
+    "quality_score": 0.7383767129455912,
+    "quality": "substantial",
+    "pkg_num": 65
+  },
+  {
+    "filename": "direction_4_entropy_curvature_and_information_theo.json",
+    "title": "Entropy Curvature and Information-Theoretic Depth",
+    "domain": "Discrete Information Geometry / Higher-Order Log-Concavity",
+    "date": "2026-05-26T06:39:37Z",
+    "exp_id": "f0664fee",
+    "quality_score": 0.7661189087734614,
+    "quality": "substantial",
+    "pkg_num": 64
+  },
+  {
+    "filename": "direction_4_verified_oe_log_e_implementation_with_.json",
+    "title": "Verified Near-Linear Tropical Morse Spectrum via Dynamic Homology Invariants",
+    "domain": "Topological Data Analysis / Graph Algorithms / Tropical Geometry",
+    "date": "2026-05-26T06:39:08Z",
+    "exp_id": "5726bd2a",
+    "quality_score": 0.6787933647058824,
+    "quality": "partial",
+    "pkg_num": 63
+  },
+  {
+    "filename": "direction_3_model_theory_of_approximate_subgroups.json",
+    "title": "Growth-or-Control Dichotomy: Model Theory of Approximate Subgroups in Finite Matrix Groups",
+    "domain": "Algebraic Combinatorics / Approximate Group Theory",
+    "date": "2026-05-26T06:04:01Z",
+    "exp_id": "a0951d1f",
+    "quality_score": 0.6653370495258167,
+    "quality": "partial",
+    "pkg_num": 62
+  },
+  {
+    "filename": "direction_1_quantitative_growth_bounds_for_matrix_.json",
+    "title": "Quantitative Growth Bounds for Matrix Groups",
+    "domain": "Finite Group Theory / Additive Combinatorics",
+    "date": "2026-05-26T06:03:36Z",
+    "exp_id": "0d18284a",
+    "quality_score": 0.607924752333094,
+    "quality": "partial",
+    "pkg_num": 61
+  },
+  {
+    "filename": "direction_5_quantum_algorithmic_phase_transitions_.json",
+    "title": "Quantum Algorithmic Phase Transitions via Lorentzian Polynomials",
+    "domain": "Pythagorean / Quantum Computing / Combinatorial Hodge Theory",
+    "date": "2026-05-26T05:26:33Z",
+    "exp_id": "b808f823",
+    "quality_score": 0.7338751496503497,
+    "quality": "substantial",
+    "pkg_num": 60
+  },
+  {
+    "filename": "direction_1_sharp_cutoff_for_the_adjacent_transpos.json",
+    "title": "Sharp Cutoff Analysis for the Adjacent-Transposition-Plus-Cycle Walk on the Symmetric Group",
+    "domain": "Probability Theory / Algebraic Combinatorics",
+    "date": "2026-05-26T04:51:52Z",
+    "exp_id": "48617359",
+    "quality_score": 0.7424210332103323,
+    "quality": "substantial",
+    "pkg_num": 59
+  },
+  {
+    "filename": "direction_2_functorial_localization_of_persistence.json",
+    "title": "Functorial Localization of Persistence Modules: Arithmetic Decomposition of Torsion Stability",
+    "domain": "Arithmetic Persistence Theory / Topological Data Analysis",
+    "date": "2026-05-26T04:17:54Z",
+    "exp_id": "000321e6",
+    "quality_score": 0.7313913151506497,
+    "quality": "substantial",
+    "pkg_num": 58
+  },
+  {
+    "filename": "direction_1_spectral_tropical_stability__from_conj.json",
+    "title": "Spectral Tropical Stability: Algebraic Connectivity Controls Tropical Persistent Homology",
+    "domain": "Spectral Graph Theory \u00d7 Tropical Persistent Homology",
+    "date": "2026-05-26T04:17:31Z",
+    "exp_id": "86601194",
+    "quality_score": 0.7238947727272729,
+    "quality": "substantial",
+    "pkg_num": 57
+  },
+  {
+    "filename": "direction_2_certificate_density_for_symplectic_and.json",
+    "title": "Certificate Density for Classical Groups: Self-Reciprocal Polynomials and Symplectic Generation",
+    "domain": "Algebra / Finite Group Theory / Polynomial Arithmetic",
+    "date": "2026-05-26T03:41:09Z",
+    "exp_id": "ba580866",
+    "quality_score": 0.719670909090909,
+    "quality": "substantial",
+    "pkg_num": 56
+  },
+  {
+    "filename": "direction_1_lorentzian_polynomial_certificates_for.json",
+    "title": "Lorentzian Polynomial Certificates for Exchange Optimization",
+    "domain": "Combinatorial Optimization / Hodge Theory / Matroid Theory",
+    "date": "2026-05-26T03:40:49Z",
+    "exp_id": "ddebc997",
+    "quality_score": 0.6746709090909091,
+    "quality": "partial",
+    "pkg_num": 55
+  },
+  {
+    "filename": "direction_1_exact_weighted_tropical_dimension_form.json",
+    "title": "Exact Weighted Tropical Dimension Formula via Degeneracy Subgraphs",
+    "domain": "Tropical Geometry / Weighted Graph Theory",
+    "date": "2026-05-26T03:40:26Z",
+    "exp_id": "e958dd48",
+    "quality_score": 0.7201487272727274,
+    "quality": "substantial",
+    "pkg_num": 54
+  },
+  {
+    "filename": "direction_2_extension_to_sl_n_sp_2n_and_orthogonal.json",
+    "title": "Unified Certificate Generation for Classical Groups",
+    "domain": "Algebra / Classical Groups / Finite Fields",
+    "date": "2026-05-26T03:40:03Z",
+    "exp_id": "0eb55b27",
+    "quality_score": 0.6602491734442975,
+    "quality": "partial",
+    "pkg_num": 53
+  },
+  {
+    "filename": "direction_1_confluence_and_unique_normal_forms.json",
+    "title": "Confluence and Unique Normal Forms for Tensor Distributivity Rewrites",
+    "domain": "Term Rewriting Theory / Tensor Algebra",
+    "date": "2026-05-26T03:39:40Z",
+    "exp_id": "b7265325",
+    "quality_score": 0.7231701356096614,
+    "quality": "substantial",
+    "pkg_num": 52
+  },
+  {
+    "filename": "direction_3_black_box_group_recognition_via_charac.json",
+    "title": "Black-Box Group Recognition via Characteristic Polynomial Certificates",
+    "domain": "Algebraic Group Theory / Finite Field Combinatorics",
+    "date": "2026-05-26T03:06:41Z",
+    "exp_id": "114b795e",
+    "quality_score": 0.7225979310344828,
+    "quality": "substantial",
+    "pkg_num": 51
+  },
+  {
+    "filename": "direction_1_deletion_contraction_duality_for_polyn.json",
+    "title": "Deletion\u2013Contraction Duality for Polynomial Supports",
+    "domain": "Algebraic Combinatorics / Discrete Convex Analysis",
+    "date": "2026-05-26T02:33:36Z",
+    "exp_id": "abb48be4",
+    "quality_score": 0.7277349606299213,
+    "quality": "substantial",
+    "pkg_num": 50
+  },
+  {
+    "filename": "direction_5_operadic_rewriting_and_homotopical_com.json",
+    "title": "Operadic Rewriting and Homotopical Completion",
+    "domain": "Operadic Algebra / Higher-Order Rewriting / Homotopical Algebra",
+    "date": "2026-05-26T01:57:20Z",
+    "exp_id": "ad18377f",
+    "quality_score": 0.700136255319149,
+    "quality": "substantial",
+    "pkg_num": 49
+  },
+  {
+    "filename": "direction_4_certified_mixing_time_bounds_and_cutof.json",
+    "title": "Certified Mixing Time Bounds and Cutoff Phenomena for Random Walks on Symmetric Groups",
+    "domain": "Probability Theory / Algebraic Combinatorics / Statistical Physics",
+    "date": "2026-05-26T01:56:58Z",
+    "exp_id": "4f520a5f",
+    "quality_score": 0.66746,
+    "quality": "partial",
+    "pkg_num": 48
+  },
+  {
+    "filename": "direction_5_higher_dimensional_tropical_morse_theo.json",
+    "title": "Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
+    "domain": "Combinatorial Topology / Tropical Geometry",
+    "date": "2026-05-26T01:56:35Z",
+    "exp_id": "c9247862",
+    "quality_score": 0.7199839008264464,
+    "quality": "substantial",
+    "pkg_num": 47
+  },
+  {
+    "filename": "direction_2_noise_stability_universality_and_the_a.json",
+    "title": "Noise-Stability Universality and the Algorithmic Phase Diagram",
+    "domain": "Lorentzian Polynomial Geometry / Algorithmic Mixing Theory",
+    "date": "2026-05-26T01:21:25Z",
+    "exp_id": "5e0902bf",
+    "quality_score": 0.7442945762711866,
+    "quality": "substantial",
+    "pkg_num": 46
+  },
+  {
+    "filename": "direction_1_certificate_density_asymptotics_via_th.json",
+    "title": "Certificate Density Asymptotics via the Prime Polynomial Theorem",
+    "domain": "Number Theory / Finite Group Theory",
+    "date": "2026-05-26T01:20:52Z",
+    "exp_id": "eb4b8f41",
+    "quality_score": 0.7184184032238947,
+    "quality": "substantial",
+    "pkg_num": 45
+  },
+  {
+    "filename": "direction_5_information_theoretic_universality_via.json",
+    "title": "Information-Theoretic Universality via Subgroup Entropy",
+    "domain": "Algebraic Combinatorics / Information Theory",
+    "date": "2026-05-26T00:41:59Z",
+    "exp_id": "bfa066a8",
+    "quality_score": 0.717992972972973,
+    "quality": "substantial",
+    "pkg_num": 44
+  },
+  {
+    "filename": "direction_2_concentration_of_subgroup_pressure.json",
+    "title": "Concentration of Subgroup Pressure: Self-Averaging Theorems for Random Subgroup Ensembles",
+    "domain": "Algebraic Thermodynamics / Probabilistic Group Theory",
+    "date": "2026-05-26T00:41:36Z",
+    "exp_id": "d3113deb",
+    "quality_score": 0.771213734939759,
+    "quality": "substantial",
+    "pkg_num": 43
+  },
+  {
+    "filename": "direction_2_certificate_based_quantum_expanders.json",
+    "title": "Certificate-Based Quantum Expanders: Spectral Gap from Algebraic Certification",
+    "domain": "Quantum Information Theory / Spectral Graph Theory",
+    "date": "2026-05-26T00:40:46Z",
+    "exp_id": "dc67a2b9",
+    "quality_score": 0.7214240378548897,
+    "quality": "substantial",
+    "pkg_num": 42
+  },
+  {
+    "filename": "direction_4_tropical_persistent_homology_for_netwo.json",
+    "title": "Tropical Persistent Homology for Network Data Analysis",
+    "domain": "Pythagorean / Tropical Geometry / Topological Data Analysis",
+    "date": "2026-05-26T00:40:11Z",
+    "exp_id": "325d9cdd",
+    "quality_score": 0.7698015384615384,
+    "quality": "substantial",
+    "pkg_num": 41
+  },
+  {
+    "filename": "direction_5_m_convex_optimization_via_directional_.json",
+    "title": "Exchange Descent under Directional Log-Concavity Certificates",
+    "domain": "Discrete Convex Analysis / Algebraic Combinatorics",
+    "date": "2026-05-26T00:07:27Z",
+    "exp_id": "abf333bc",
+    "quality_score": 0.7241576377952756,
+    "quality": "substantial",
+    "pkg_num": 40
+  },
+  {
+    "filename": "direction_4_information_theoretic_bounds_on_tropic.json",
+    "title": "Tropical Channel Capacity and Barcode Stability: An Information-Theoretic Foundation",
+    "domain": "Tropical Information Theory / Topological Data Analysis",
+    "date": "2026-05-25T23:33:35Z",
+    "exp_id": "7e5283ed",
+    "quality_score": 0.7261742857142859,
+    "quality": "substantial",
+    "pkg_num": 39
+  },
+  {
+    "filename": "direction_1_m_convexity_closure_under_differentiat.json",
+    "title": "M-Convexity Closure Under Differentiation",
+    "domain": "Algebraic Combinatorics / Discrete Convex Analysis",
+    "date": "2026-05-25T23:33:12Z",
+    "exp_id": "243a6673",
+    "quality_score": 0.7260796984924622,
+    "quality": "substantial",
+    "pkg_num": 38
+  },
+  {
+    "filename": "direction_5_certificates_and_product_growth.json",
+    "title": "Certificate-to-Growth Mechanisms in Finite Linear Groups",
+    "domain": "Pythagorean / Algebraic Combinatorics",
+    "date": "2026-05-25T22:59:02Z",
+    "exp_id": "edab5f0b",
+    "quality_score": 0.7849381886792453,
+    "quality": "substantial",
+    "pkg_num": 37
+  },
+  {
+    "filename": "direction_2_random_cayley_expanders_and_spectral_g.json",
+    "title": "Random Cayley Expanders and Spectral Gaps: From Generation to Quantitative Mixing",
+    "domain": "Spectral Graph Theory / Finite Group Theory",
+    "date": "2026-05-25T22:58:33Z",
+    "exp_id": "8778f4a5",
+    "quality_score": 0.7187674157303372,
+    "quality": "substantial",
+    "pkg_num": 36
+  },
+  {
+    "filename": "direction_5_stability_of_strongly_log_concave_dist.json",
+    "title": "Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
+    "domain": "Lorentzian Polynomials / Robust Sampling Theory",
+    "date": "2026-05-25T22:25:35Z",
+    "exp_id": "2953ee13",
+    "quality_score": 0.7277750000000001,
+    "quality": "substantial",
+    "pkg_num": 35
+  },
+  {
+    "filename": "direction_1_sharp_valuation_sensitive_stability_bo.json",
+    "title": "P-adic Controlled Persistence Stability: Valuation-Sensitive Interleaving Theory",
+    "domain": "Arithmetic Topological Data Analysis",
+    "date": "2026-05-25T22:25:13Z",
+    "exp_id": "1b3fdf32",
+    "quality_score": 0.7444580722891567,
+    "quality": "substantial",
+    "pkg_num": 34
+  },
+  {
+    "filename": "direction_5_tropical_morse_theory_as_a_topological.json",
+    "title": "Tropical Morse Theory as a Topological Feature for Graph Neural Networks",
+    "domain": "Tropical Geometry / Topological Data Analysis / Graph Neural Networks",
+    "date": "2026-05-25T21:51:06Z",
+    "exp_id": "db7ef9c7",
+    "quality_score": 0.7304195636363637,
+    "quality": "substantial",
+    "pkg_num": 33
+  },
+  {
+    "filename": "direction_2_universality_of_phase_transition_criti.json",
+    "title": "Universality of Critical Exponents in Subgroup Thermodynamics",
+    "domain": "Algebraic Statistical Mechanics / Finite Group Theory",
+    "date": "2026-05-25T21:49:23Z",
+    "exp_id": "354ccda2",
+    "quality_score": 0.7272178424657534,
+    "quality": "substantial",
+    "pkg_num": 32
+  },
+  {
+    "filename": "direction_1_stability_theory_for_tropical_persiste.json",
+    "title": "Stability Theory for Tropical Persistence Barcodes",
+    "domain": "Tropical Geometry / Topological Data Analysis / Graph Theory",
+    "date": "2026-05-25T21:13:36Z",
+    "exp_id": "834b245c",
+    "quality_score": 0.7197528467153285,
+    "quality": "substantial",
+    "pkg_num": 31
+  },
+  {
+    "filename": "direction_3_quantum_ground_state_preparation_via_l.json",
+    "title": "Quantum Ground-State Preparation via Lorentzian Polynomial Certificates",
+    "domain": "Pythagorean / Algebraic Combinatorics / Quantum Computing",
+    "date": "2026-05-25T21:13:06Z",
+    "exp_id": "2b6d84b4",
+    "quality_score": 0.7215128,
+    "quality": "substantial",
+    "pkg_num": 30
+  },
+  {
+    "filename": "direction_2_mixing_time_bounds_from_concavity_dept.json",
+    "title": "Mixing Time Bounds from Concavity Depth",
+    "domain": "Probability Theory / Markov Chains",
+    "date": "2026-05-25T21:12:32Z",
+    "exp_id": "0e278652",
+    "quality_score": 0.7286,
+    "quality": "substantial",
+    "pkg_num": 29
+  },
+  {
+    "filename": "langlands_program_functoriality.json",
+    "title": "Langlands Functoriality: Local Euler Data and Symmetric Power Transfer",
+    "domain": "Algebra / Number Theory",
+    "date": "2026-05-25T20:35:56Z",
+    "exp_id": "7e4a0191",
+    "quality_score": 0.7224016949152543,
+    "quality": "substantial",
+    "pkg_num": 28
+  },
+  {
+    "filename": "direction_3_weighted_extension.json",
+    "title": "Weighted Tropical Graph Hodge Theory",
+    "domain": "Tropical Geometry / Graph Theory / Combinatorial Optimization",
+    "date": "2026-05-25T20:35:34Z",
+    "exp_id": "e8f8d5e4",
+    "quality_score": 0.7266461478599222,
+    "quality": "substantial",
+    "pkg_num": 27
+  },
+  {
+    "filename": "direction_1_submodular_objectives_and_the_curvatur.json",
+    "title": "Curvature-Gap Theorem: Submodular Objectives and Threshold Rounding",
+    "domain": "Submodular Optimization / Hypergraph Theory",
+    "date": "2026-05-25T20:35:13Z",
+    "exp_id": "1e2eba72",
+    "quality_score": 0.7238752112676057,
+    "quality": "substantial",
+    "pkg_num": 26
+  },
+  {
+    "filename": "quantum_error_correction_bounds.json",
+    "title": "Quantum MacWilliams Identities and the Bravyi-Terhal Bound",
+    "domain": "Quantum Information Theory / Algebraic Combinatorics",
+    "date": "2026-05-25T20:34:49Z",
+    "exp_id": "b633df37",
+    "quality_score": 0.7132103632664923,
+    "quality": "substantial",
+    "pkg_num": 25
+  },
+  {
+    "filename": "direction_3_compositional_rounding_certificates_fo.json",
+    "title": "Compositional Rounding Certificates for Modular Hypergraphs",
+    "domain": "Combinatorial Optimization / Hypergraph Theory",
+    "date": "2026-05-25T20:02:12Z",
+    "exp_id": "2a42387f",
+    "quality_score": 0.7190936000000001,
+    "quality": "substantial",
+    "pkg_num": 24
+  },
+  {
+    "filename": "direction_5_higher_order_completion_and_lambda_cal.json",
+    "title": "Higher-Order Completion and Lambda-Calculus Integration",
+    "domain": "Rewriting Theory / Lambda Calculus / Certified Program Transformation",
+    "date": "2026-05-25T20:01:45Z",
+    "exp_id": "2933a8cf",
+    "quality_score": 0.7661817738359202,
+    "quality": "substantial",
+    "pkg_num": 23
+  },
+  {
+    "filename": "direction_3_multivariate_k_fold_log_concavity_and_.json",
+    "title": "Multivariate k-Fold Log-Concavity and M-Convexity",
+    "domain": "Pythagorean / Discrete Convex Analysis / Lorentzian Polynomials",
+    "date": "2026-05-25T19:29:15Z",
+    "exp_id": "a1f92284",
+    "quality_score": 0.7239525714285715,
+    "quality": "substantial",
+    "pkg_num": 22
+  },
+  {
+    "filename": "direction_5_mechanism_design_with_certified_multi_.json",
+    "title": "Certified Multi-Criteria Truthful Approximation Mechanisms",
+    "domain": "Mechanism Design / Multi-Objective Optimization / Combinatorial Algorithms",
+    "date": "2026-05-25T18:40:46Z",
+    "exp_id": "da756381",
+    "quality_score": 0.6968374111334675,
+    "quality": "partial",
+    "pkg_num": 21
+  },
+  {
+    "filename": "direction_5_expander_graphs_from_certificate_pairs.json",
+    "title": "Expander Graphs from Certificate Pairs",
+    "domain": "Algebraic Graph Theory / Spectral Expansion",
+    "date": "2026-05-25T18:39:59Z",
+    "exp_id": "ad66d851",
+    "quality_score": 0.7061918953063686,
+    "quality": "substantial",
+    "pkg_num": 20
+  },
+  {
+    "filename": "direction_5_tropical_morse_theory_for_network_phas.json",
+    "title": "Tropical Morse Theory for Network Phase Transitions",
+    "domain": "Tropical Geometry / Persistent Homology / Network Science",
+    "date": "2026-05-25T18:39:27Z",
+    "exp_id": "88770e41",
+    "quality_score": 0.7633440525911624,
+    "quality": "substantial",
+    "pkg_num": 19
+  },
+  {
+    "filename": "direction_2_hypergraph_transversals_as_tropical_co.json",
+    "title": "Hypergraph Transversals as Tropical Convex Optimization",
+    "domain": "Tropical Geometry / Combinatorial Optimization",
+    "date": "2026-05-25T18:03:18Z",
+    "exp_id": "89ddcffd",
+    "quality_score": 0.7496613212625398,
+    "quality": "substantial",
+    "pkg_num": 18
+  },
+  {
+    "filename": "direction_4_higher_order_tensor_calculus_with_eins.json",
+    "title": "Universal Einstein Contraction Calculus for Order-Indexed Tensors",
+    "domain": "Multilinear Algebra / Tensor Calculus / Scientific Computing",
+    "date": "2026-05-25T18:02:50Z",
+    "exp_id": "d8aa38e8",
+    "quality_score": 0.7448372075471699,
+    "quality": "substantial",
+    "pkg_num": 17
+  },
+  {
+    "filename": "direction_2_filtration_persistence_formula.json",
+    "title": "Tropical Persistence Barcodes for Graph Filtrations",
+    "domain": "Algebraic Graph Topology / Tropical Linear Algebra / Topological Data Analysis",
+    "date": "2026-05-25T17:57:55Z",
+    "exp_id": "f0f7ec54",
+    "quality_score": 0.7485430061705161,
+    "quality": "substantial",
+    "pkg_num": 16
+  },
+  {
+    "filename": "hadamard_matrix_conjecture.json",
+    "title": "Hadamard Existence by Algebraic Generation",
+    "domain": "Algebra / Combinatorics",
+    "date": "2026-05-25T17:49:47Z",
+    "exp_id": "e79eba9b",
+    "quality_score": 0.718787256166983,
+    "quality": "substantial",
+    "pkg_num": 15
+  },
+  {
+    "filename": "direction_2_character_expansion_and_strong_couplin.json",
+    "title": "Character Expansion Mass Gap: Representation-Theoretic Spectral Asymptotics in Lattice Yang-Mills Theory",
+    "domain": "Mathematical Physics / Representation Theory / Spectral Analysis",
+    "date": "2026-05-25T17:15:32Z",
+    "exp_id": "a9352256",
+    "quality_score": 0.7426729134392938,
+    "quality": "substantial",
+    "pkg_num": 14
+  },
+  {
+    "filename": "direction_5_phase_transitions_in_generation_probab.json",
+    "title": "Subgroup Thermodynamics: Phase Transitions in Random Generation via Pair Pressure",
+    "domain": "Algebra / Probabilistic Group Theory / Statistical Mechanics",
+    "date": "2026-05-25T17:14:56Z",
+    "exp_id": "cf039036",
+    "quality_score": 0.7307286403906522,
+    "quality": "substantial",
+    "pkg_num": 13
+  },
+  {
+    "filename": "direction_5_numerical_stability_of_lorentzian_reco.json",
+    "title": "Numerical Stability of Lorentzian Recognition: Quantitative Spectral Margins and Certified Perturbation Bounds",
+    "domain": "Pythagorean / Lorentzian Polynomial Theory",
+    "date": "2026-05-25T17:14:28Z",
+    "exp_id": "2493279d",
+    "quality_score": 0.7094771428571429,
+    "quality": "substantial",
+    "pkg_num": 12
+  },
+  {
+    "filename": "direction_5_weighted_and_multi_objective_extension.json",
+    "title": "Weighted and Multi-Objective Hypergraph Transversals: Certified LP Rounding for Multi-Criteria Optimization",
+    "domain": "Combinatorial Optimization / Polyhedral Combinatorics",
+    "date": "2026-05-25T16:39:05Z",
+    "exp_id": "b9d16ed0",
+    "quality_score": 0.7379731931205967,
+    "quality": "substantial",
+    "pkg_num": 11
+  },
+  {
+    "filename": "direction_4_relative_tropical_hodge_theorem.json",
+    "title": "Tropical Hodge Theory for Graphs: Kernel Characterization, Incidence Factorization, and Betti Numbers",
+    "domain": "Tropical Algebra / Graph Theory / Algebraic Topology",
+    "date": "2026-05-25T16:05:40Z",
+    "exp_id": "1a0c77c0",
+    "quality_score": 0.7452328425357874,
+    "quality": "substantial",
+    "pkg_num": 10
+  },
+  {
+    "filename": "direction_1_tight_spectral_gap_via_lorentzian_stru.json",
+    "title": "Tight Spectral Gap via Lorentzian Structure",
+    "domain": "Pythagorean \u2014 Lorentzian Polynomials and Markov Chain Mixing",
+    "date": "2026-05-25T16:05:19Z",
+    "exp_id": "a6eebf63",
+    "quality_score": 0.7475694375378231,
+    "quality": "substantial",
+    "pkg_num": 9
+  },
+  {
+    "filename": "direction_3_concentration_of__on_random_hypergraph.json",
+    "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
+    "domain": "Combinatorial Optimization / Probability Theory",
+    "date": "2026-05-25T15:30:03Z",
+    "exp_id": "7817bcef",
+    "quality_score": 0.7284316923076923,
+    "quality": "substantial",
+    "pkg_num": 8
+  },
+  {
+    "filename": "direction_3_generation_certificates_for_matrix_gro.json",
+    "title": "Generation Certificates for Matrix Groups",
+    "domain": "Algebra / Finite Group Theory",
+    "date": "2026-05-25T15:29:41Z",
+    "exp_id": "44ebbbfd",
+    "quality_score": 0.7535092285678423,
+    "quality": "substantial",
+    "pkg_num": 7
+  },
+  {
+    "filename": "yang_mills_mass_gap.json",
+    "title": "Yang-Mills Mass Gap: Lattice-to-Continuum Spectral Architecture",
+    "domain": "Mathematical Physics / Quantum Field Theory",
+    "date": "2026-05-25T15:29:18Z",
+    "exp_id": "6a88b92d",
+    "quality_score": 0.7554863879178124,
+    "quality": "substantial",
+    "pkg_num": 6
+  },
+  {
+    "filename": "direction_1_brauer_manin_obstructions_for_integral.json",
+    "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
+    "domain": "Arithmetic Geometry / Number Theory",
+    "date": "2026-05-25T14:24:55Z",
+    "exp_id": "3265971b",
+    "quality_score": 0.6946936070455108,
+    "quality": "partial",
+    "pkg_num": 5
+  },
+  {
+    "filename": "direction_5_chip_firing_correspondence.json",
+    "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
+    "domain": "Tropical Geometry / Combinatorial Algebraic Geometry",
+    "date": "2026-05-25T14:24:33Z",
+    "exp_id": "97def267",
+    "quality_score": 0.7472302409097711,
+    "quality": "substantial",
+    "pkg_num": 4
+  },
+  {
+    "filename": "direction_2_higher_order_log_concavity_and_partiti.json",
+    "title": "Higher-Order Log-Concavity: A Recursive Hierarchy for Discrete Sequences",
+    "domain": "Algebraic Combinatorics / Discrete Convexity",
+    "date": "2026-05-25T14:24:11Z",
+    "exp_id": "56c2f88c",
+    "quality_score": 0.747059509202454,
+    "quality": "substantial",
+    "pkg_num": 3
+  },
+  {
+    "filename": "direction_3_compositional_witness_synthesis_algori.json",
+    "title": "Compositional Witness Synthesis for Pythagorean Triples",
+    "domain": "Pythagorean Number Theory",
+    "date": "2026-05-25T13:51:35Z",
+    "exp_id": "d78e63d5",
+    "quality_score": 0.7458845146055211,
+    "quality": "substantial",
+    "pkg_num": 2
+  },
+  {
+    "filename": "direction_5_generalization_to_higher_degree_diagon.json",
+    "title": "A Uniform Local Obstruction Calculus for Diagonal Hypersurfaces",
+    "domain": "Number Theory / Arithmetic Geometry",
+    "date": "2026-05-25T13:51:09Z",
+    "exp_id": "e97c0f01",
+    "quality_score": 0.6787085818181818,
+    "quality": "partial",
+    "pkg_num": 1
+  }
+];
+
+window.PACKAGE_DB_INDEX = {
+  "direction_1_lorentzian_polynomial_certificates_for.json": {
+    "title": "Lorentzian Polynomial Certificates for Exchange Optimization",
+    "exp_id": "ddebc997",
+    "source_exp_ids": [
+      "abf333bc"
+    ],
+    "domain": "Combinatorial Optimization / Hodge Theory / Matroid Theory"
+  },
+  "direction_2_hypergraph_transversals_as_tropical_co.json": {
+    "title": "Hypergraph Transversals as Tropical Convex Optimization",
+    "exp_id": "89ddcffd",
+    "source_exp_ids": [
+      "b9d16ed0"
+    ],
+    "domain": "Tropical Geometry / Combinatorial Optimization"
+  },
+  "direction_2_sparse_support_certificate_compression.json": {
+    "title": "Sparse-Support Certificate Compression for Matroid Basis Polynomials",
+    "exp_id": "6595a609",
+    "source_exp_ids": [
+      "33261812"
+    ],
+    "domain": "Combinatorial Algebraic Geometry / Matroid Theory"
+  },
+  "direction_3_algorithmic_tropical_kernel_computatio.json": {
+    "title": "Algorithmic Tropical Kernel Computation for Weighted Graphs",
+    "exp_id": "16a503d2",
+    "source_exp_ids": [
+      "e8f8d5e4"
+    ],
+    "domain": "Tropical Geometry / Combinatorial Optimization"
+  },
+  "direction_2_explicit_poincar_constant_and_exponent.json": {
+    "title": "Explicit Poincar\u00e9 Constants and Exponential Variance Decay for the Bubble-Rotation Walk on S_n",
+    "exp_id": "c0f735e4",
+    "source_exp_ids": [
+      "4f520a5f"
+    ],
+    "domain": "Spectral Graph Theory / Combinatorial Probability / Cayley Graphs"
+  },
+  "direction_5_information_theoretic_universality_via.json": {
+    "title": "Information-Theoretic Universality via Subgroup Entropy",
+    "exp_id": "bfa066a8",
+    "source_exp_ids": [
+      "354ccda2"
+    ],
+    "domain": "Algebraic Combinatorics / Information Theory"
+  },
+  "direction_1_non_multiaffine_extension_via_weighted.json": {
+    "title": "The Quadratic Shadow Theorem: Second-Derivative Structure from Newton Support Geometry",
+    "exp_id": "ef991832",
+    "source_exp_ids": [
+      "b24e9482"
+    ],
+    "domain": "Algebraic Combinatorics / Polynomial Algebra"
+  },
+  "direction_1_bounded_treewidth_polynomial_certifica.json": {
+    "title": "Treewidth-Parameterized Certificate Compilation for Deletion/Contraction Recurrences",
+    "exp_id": "802479fb",
+    "source_exp_ids": [
+      "72356358"
+    ],
+    "domain": "Parameterized Complexity / Matroid Theory / Graph Theory"
+  },
+  "direction_3_weighted_extension.json": {
+    "title": "Weighted Tropical Graph Hodge Theory",
+    "exp_id": "e8f8d5e4",
+    "source_exp_ids": [
+      "fd2f08b2"
+    ],
+    "domain": "Tropical Geometry / Graph Theory / Combinatorial Optimization"
+  },
+  "direction_1_full_k_wl_separation_via_non_uniform_c.json": {
+    "title": "Tropical Morse Spectra Escape the Weisfeiler-Leman Hierarchy",
+    "exp_id": "089dd341",
+    "source_exp_ids": [
+      "db7ef9c7"
+    ],
+    "domain": "Topological Descriptive Complexity"
+  },
+  "direction_1_complete_aschbacher_certificate_theory.json": {
+    "title": "Aschbacher Certificate Theory: Polynomial-Time Obstruction Certificates for Matrix Group Recognition",
+    "exp_id": "cc9f1755",
+    "source_exp_ids": [
+      "79565d7a"
+    ],
+    "domain": "Computational Group Theory / Finite Classical Groups"
+  },
+  "direction_5_phase_transitions_in_generation_probab.json": {
+    "title": "Subgroup Thermodynamics: Phase Transitions in Random Generation via Pair Pressure",
+    "exp_id": "cf039036",
+    "source_exp_ids": [
+      "92e3853a"
+    ],
+    "domain": "Algebra / Probabilistic Group Theory / Statistical Mechanics"
+  },
+  "hadamard_matrix_conjecture.json": {
+    "title": "Hadamard Existence by Algebraic Generation",
+    "exp_id": "e79eba9b",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra / Combinatorics"
+  },
+  "direction_5_m_convex_optimization_via_directional_.json": {
+    "title": "Exchange Descent under Directional Log-Concavity Certificates",
+    "exp_id": "abf333bc",
+    "source_exp_ids": [
+      "a1f92284"
+    ],
+    "domain": "Discrete Convex Analysis / Algebraic Combinatorics"
+  },
+  "direction_1_stability_theory_for_tropical_persiste.json": {
+    "title": "Stability Theory for Tropical Persistence Barcodes",
+    "exp_id": "834b245c",
+    "source_exp_ids": [
+      "f0f7ec54"
+    ],
+    "domain": "Tropical Geometry / Topological Data Analysis / Graph Theory"
+  },
+  "direction_1_sharp_dixon_asymptotics_via_mbius_inve.json": {
+    "title": "Sharp Dixon Asymptotics via M\u00f6bius Inversion on the Subgroup Lattice",
+    "exp_id": "4ae175a0",
+    "source_exp_ids": [
+      "92e3853a"
+    ],
+    "domain": "Finite Group Theory / Algebraic Combinatorics"
+  },
+  "direction_2_concentration_of_subgroup_pressure.json": {
+    "title": "Concentration of Subgroup Pressure: Self-Averaging Theorems for Random Subgroup Ensembles",
+    "exp_id": "d3113deb",
+    "source_exp_ids": [
+      "354ccda2"
+    ],
+    "domain": "Algebraic Thermodynamics / Probabilistic Group Theory"
+  },
+  "direction_1_spectral_fingerprints_for_classical_su.json": {
+    "title": "Spectral Fingerprints for Classical Subgroups",
+    "exp_id": "56d80658",
+    "source_exp_ids": [
+      "114b795e"
+    ],
+    "domain": "Algebra / Group Theory / Finite Fields"
+  },
+  "direction_5_tropical_morse_theory_as_a_topological.json": {
+    "title": "Tropical Morse Theory as a Topological Feature for Graph Neural Networks",
+    "exp_id": "db7ef9c7",
+    "source_exp_ids": [
+      "88770e41"
+    ],
+    "domain": "Tropical Geometry / Topological Data Analysis / Graph Neural Networks"
+  },
+  "direction_4_complexity_of_certificate_verification.json": {
+    "title": "Certificate Complexity for Matrix Group Generation",
+    "exp_id": "79565d7a",
+    "source_exp_ids": [
+      "edab5f0b"
+    ],
+    "domain": "Computational Group Theory / Algebraic Complexity"
+  },
+  "direction_2_lorentzian_minor_closure_conjecture.json": {
+    "title": "Lorentzian Minor Closure: Support Realizability Under Deletion and Contraction",
+    "exp_id": "8e8af4e3",
+    "source_exp_ids": [
+      "abb48be4"
+    ],
+    "domain": "Combinatorial Algebraic Geometry / Lorentzian Polynomials"
+  },
+  "direction_3_black_box_group_recognition_via_charac.json": {
+    "title": "Black-Box Group Recognition via Characteristic Polynomial Certificates",
+    "exp_id": "114b795e",
+    "source_exp_ids": [
+      "44ebbbfd"
+    ],
+    "domain": "Algebraic Group Theory / Finite Field Combinatorics"
+  },
+  "direction_2_tropical_interleaving_distance_and_alg.json": {
+    "title": "Tropical Interleaving Distance and Algebraic Stability",
+    "exp_id": "88f5188e",
+    "source_exp_ids": [
+      "834b245c"
+    ],
+    "domain": "Tropical Persistence Theory / Topological Data Analysis"
+  },
+  "direction_3_spectral_expansion_for_matrix_groups_a.json": {
+    "title": "Spectral Expansion for Matrix Groups: Arithmetic Certificates for Cayley Graphs on SL\u2082(\ud835\udd3d_p)",
+    "exp_id": "e954adc7",
+    "source_exp_ids": [
+      "8778f4a5"
+    ],
+    "domain": "Arithmetic Combinatorics / Spectral Graph Theory"
+  },
+  "direction_5_quantum_algorithmic_phase_transitions_.json": {
+    "title": "Quantum Algorithmic Phase Transitions via Lorentzian Polynomials",
+    "exp_id": "b808f823",
+    "source_exp_ids": [
+      "5e0902bf"
+    ],
+    "domain": "Pythagorean / Quantum Computing / Combinatorial Hodge Theory"
+  },
+  "direction_2_filtration_persistence_formula.json": {
+    "title": "Tropical Persistence Barcodes for Graph Filtrations",
+    "exp_id": "f0f7ec54",
+    "source_exp_ids": [
+      "fd2f08b2"
+    ],
+    "domain": "Algebraic Graph Topology / Tropical Linear Algebra / Topological Data Analysis"
+  },
+  "direction_1_exact_weighted_tropical_dimension_form.json": {
+    "title": "Exact Weighted Tropical Dimension Formula via Degeneracy Subgraphs",
+    "exp_id": "e958dd48",
+    "source_exp_ids": [
+      "e8f8d5e4"
+    ],
+    "domain": "Tropical Geometry / Weighted Graph Theory"
+  },
+  "direction_2_chip_firing_canonical_forms_via_tropic.json": {
+    "title": "Chip-Firing Canonical Forms via Tropical Kernels",
+    "exp_id": "1fb257b2",
+    "source_exp_ids": [
+      "42d710f5"
+    ],
+    "domain": "Algebraic Graph Theory / Tropical Geometry"
+  },
+  "direction_3_compositional_rounding_certificates_fo.json": {
+    "title": "Compositional Rounding Certificates for Modular Hypergraphs",
+    "exp_id": "2a42387f",
+    "source_exp_ids": [
+      "b9d16ed0"
+    ],
+    "domain": "Combinatorial Optimization / Hypergraph Theory"
+  },
+  "direction_4_tropical_mixing_without_spectral_inter.json": {
+    "title": "Direct Tropical Mixing Without Spectral Intermediate",
+    "exp_id": "93ec6871",
+    "source_exp_ids": [
+      "1f8fa3a8"
+    ],
+    "domain": "Tropical Geometry / Markov Chain Mixing"
+  },
+  "direction_4_entropy_curvature_and_information_theo.json": {
+    "title": "Entropy Curvature and Information-Theoretic Depth",
+    "exp_id": "f0664fee",
+    "source_exp_ids": [
+      "56c2f88c"
+    ],
+    "domain": "Discrete Information Geometry / Higher-Order Log-Concavity"
+  },
+  "direction_1_reflection_positivity_and_perron_frobe.json": {
+    "title": "Reflection Positivity and Perron-Frobenius for the Transfer Matrix",
+    "exp_id": "a6efeb29",
+    "source_exp_ids": [
+      "6a88b92d"
+    ],
+    "domain": "Mathematical Physics / Spectral Theory / Lattice Gauge Theory"
+  },
+  "direction_1_full_grtnerellis_large_deviation_princ.json": {
+    "title": "Large Deviation Principle for Generation Defect on Direct Powers of Finite Groups",
+    "exp_id": "a93e0253",
+    "source_exp_ids": [
+      "bcd75759"
+    ],
+    "domain": "Probabilistic Group Theory / Large Deviations / Thermodynamic Formalism"
+  },
+  "direction_1_log_sobolev_inequality_for_the_hybrid_.json": {
+    "title": "Modified Log-Sobolev Inequalities for Hybrid Permutation Walks",
+    "exp_id": "ff6108f7",
+    "source_exp_ids": [
+      "48617359"
+    ],
+    "domain": "Probability Theory / Markov Chains / Information Theory"
+  },
+  "direction_4_tropical_persistent_homology_for_netwo.json": {
+    "title": "Tropical Persistent Homology for Network Data Analysis",
+    "exp_id": "325d9cdd",
+    "source_exp_ids": [
+      "97def267"
+    ],
+    "domain": "Pythagorean / Tropical Geometry / Topological Data Analysis"
+  },
+  "direction_4_higher_order_tensor_calculus_with_eins.json": {
+    "title": "Universal Einstein Contraction Calculus for Order-Indexed Tensors",
+    "exp_id": "d8aa38e8",
+    "source_exp_ids": [
+      "c1bdccd8"
+    ],
+    "domain": "Multilinear Algebra / Tensor Calculus / Scientific Computing"
+  },
+  "direction_1_basis_uniqueness_up_to_tropical_projec.json": {
+    "title": "Tropical Kernel Rigidity: Canonical Generators up to Tropical Projective Equivalence",
+    "exp_id": "36d84586",
+    "source_exp_ids": [
+      "fd2f08b2"
+    ],
+    "domain": "Tropical Algebra / Graph Theory / Combinatorics"
+  },
+  "direction_5_generalization_to_higher_degree_diagon.json": {
+    "title": "A Uniform Local Obstruction Calculus for Diagonal Hypersurfaces",
+    "exp_id": "e97c0f01",
+    "source_exp_ids": [
+      "34c2669a"
+    ],
+    "domain": "Number Theory / Arithmetic Geometry"
+  },
+  "direction_3_multivariate_k_fold_log_concavity_and_.json": {
+    "title": "Multivariate k-Fold Log-Concavity and M-Convexity",
+    "exp_id": "a1f92284",
+    "source_exp_ids": [
+      "56c2f88c"
+    ],
+    "domain": "Pythagorean / Discrete Convex Analysis / Lorentzian Polynomials"
+  },
+  "direction_2_noise_stability_universality_and_the_a.json": {
+    "title": "Noise-Stability Universality and the Algorithmic Phase Diagram",
+    "exp_id": "5e0902bf",
+    "source_exp_ids": [
+      "2953ee13"
+    ],
+    "domain": "Lorentzian Polynomial Geometry / Algorithmic Mixing Theory"
+  },
+  "direction_1_weighted_distance_equality_via_tropica.json": {
+    "title": "Weighted Distance Equality via Tropical Cycle Optimization",
+    "exp_id": "208288a0",
+    "source_exp_ids": [
+      "b0b26cee"
+    ],
+    "domain": "Tropical Geometry / Quantum Error Correction / Graph Theory"
+  },
+  "direction_4_verified_oe_log_e_implementation_with_.json": {
+    "title": "Verified Near-Linear Tropical Morse Spectrum via Dynamic Homology Invariants",
+    "exp_id": "5726bd2a",
+    "source_exp_ids": [
+      "db7ef9c7"
+    ],
+    "domain": "Topological Data Analysis / Graph Algorithms / Tropical Geometry"
+  },
+  "direction_4_global_stability_as_max_envelope.json": {
+    "title": "Global Stability as Max Envelope: Prime Decomposition of Torsion Persistence",
+    "exp_id": "34bffabf",
+    "source_exp_ids": [
+      "2d14ce54"
+    ],
+    "domain": "Algebraic Topology / Persistent Homology / Number Theory"
+  },
+  "direction_3_tropical_morse_spectra_as_quantum_grap.json": {
+    "title": "Tropical Morse Spectra as Quantum Graph State Classifiers",
+    "exp_id": "b0b26cee",
+    "source_exp_ids": [
+      "db7ef9c7"
+    ],
+    "domain": "Tropical Geometry \u00d7 Quantum Information Theory"
+  },
+  "direction_4_statistical_physics_of_random_transver.json": {
+    "title": "Random Transversal Thermodynamics: Improved Integrality Gaps and Response Laws in Sparse Uniform Hypergraphs",
+    "exp_id": "befda33d",
+    "source_exp_ids": [
+      "b9d16ed0"
+    ],
+    "domain": "Pythagorean / Combinatorial Optimization / Statistical Physics"
+  },
+  "direction_5_weighted_and_multi_objective_extension.json": {
+    "title": "Weighted and Multi-Objective Hypergraph Transversals: Certified LP Rounding for Multi-Criteria Optimization",
+    "exp_id": "b9d16ed0",
+    "source_exp_ids": [
+      "f6e7fe77"
+    ],
+    "domain": "Combinatorial Optimization / Polyhedral Combinatorics"
+  },
+  "direction_5_mechanism_design_with_certified_multi_.json": {
+    "title": "Certified Multi-Criteria Truthful Approximation Mechanisms",
+    "exp_id": "da756381",
+    "source_exp_ids": [
+      "b9d16ed0"
+    ],
+    "domain": "Mechanism Design / Multi-Objective Optimization / Combinatorial Algorithms"
+  },
+  "direction_1_wreath_product_perturbation_theory.json": {
+    "title": "Wreath Product Perturbation Theory for Subgroup Pressure",
+    "exp_id": "550b5c8b",
+    "source_exp_ids": [
+      "354ccda2"
+    ],
+    "domain": "Pythagorean / Algebraic Statistical Mechanics"
+  },
+  "direction_1_certificate_density_asymptotics_via_th.json": {
+    "title": "Certificate Density Asymptotics via the Prime Polynomial Theorem",
+    "exp_id": "eb4b8f41",
+    "source_exp_ids": [
+      "44ebbbfd"
+    ],
+    "domain": "Number Theory / Finite Group Theory"
+  },
+  "direction_4_certified_mixing_time_bounds_and_cutof.json": {
+    "title": "Certified Mixing Time Bounds and Cutoff Phenomena for Random Walks on Symmetric Groups",
+    "exp_id": "4f520a5f",
+    "source_exp_ids": [
+      "8778f4a5"
+    ],
+    "domain": "Probability Theory / Algebraic Combinatorics / Statistical Physics"
+  },
+  "direction_4_information_theoretic_bounds_on_tropic.json": {
+    "title": "Tropical Channel Capacity and Barcode Stability: An Information-Theoretic Foundation",
+    "exp_id": "7e5283ed",
+    "source_exp_ids": [
+      "834b245c"
+    ],
+    "domain": "Tropical Information Theory / Topological Data Analysis"
+  },
+  "direction_4_large_deviation_principles_for_generat.json": {
+    "title": "Large Deviation Principles for Random Generation via Subgroup Pressure",
+    "exp_id": "bcd75759",
+    "source_exp_ids": [
+      "cf039036"
+    ],
+    "domain": "Finite Group Theory / Statistical Mechanics / Large Deviations"
+  },
+  "direction_5_certificates_and_product_growth.json": {
+    "title": "Certificate-to-Growth Mechanisms in Finite Linear Groups",
+    "exp_id": "edab5f0b",
+    "source_exp_ids": [
+      "ad66d851"
+    ],
+    "domain": "Pythagorean / Algebraic Combinatorics"
+  },
+  "direction_4_arithmetic_statistics_via_subgroup_pre.json": {
+    "title": "Arithmetic Statistics via Subgroup Pressure in Linear Groups",
+    "exp_id": "17192924",
+    "source_exp_ids": [
+      "354ccda2"
+    ],
+    "domain": "Finite Group Theory / Arithmetic Statistics / Statistical Mechanics"
+  },
+  "direction_2_mixing_time_bounds_from_concavity_dept.json": {
+    "title": "Mixing Time Bounds from Concavity Depth",
+    "exp_id": "0e278652",
+    "source_exp_ids": [
+      "56c2f88c"
+    ],
+    "domain": "Probability Theory / Markov Chains"
+  },
+  "direction_2_certificate_density_for_symplectic_and.json": {
+    "title": "Certificate Density for Classical Groups: Self-Reciprocal Polynomials and Symplectic Generation",
+    "exp_id": "ba580866",
+    "source_exp_ids": [
+      "eb4b8f41"
+    ],
+    "domain": "Algebra / Finite Group Theory / Polynomial Arithmetic"
+  },
+  "direction_5_higher_dimensional_tropical_morse_theo.json": {
+    "title": "Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
+    "exp_id": "c9247862",
+    "source_exp_ids": [
+      "db7ef9c7"
+    ],
+    "domain": "Combinatorial Topology / Tropical Geometry"
+  },
+  "direction_2_extension_to_sl_n_sp_2n_and_orthogonal.json": {
+    "title": "Unified Certificate Generation for Classical Groups",
+    "exp_id": "0eb55b27",
+    "source_exp_ids": [
+      "44ebbbfd"
+    ],
+    "domain": "Algebra / Classical Groups / Finite Fields"
+  },
+  "direction_1_confluence_and_unique_normal_forms.json": {
+    "title": "Confluence and Unique Normal Forms for Tensor Distributivity Rewrites",
+    "exp_id": "b7265325",
+    "source_exp_ids": [
+      "c1bdccd8"
+    ],
+    "domain": "Term Rewriting Theory / Tensor Algebra"
+  },
+  "direction_1_quantum_2_designs_from_certified_unita.json": {
+    "title": "Quantum 2-Designs from Certified Unitary Expanders",
+    "exp_id": "4ce7826a",
+    "source_exp_ids": [
+      "d9e69258"
+    ],
+    "domain": "Algebraic Quantum Information Theory"
+  },
+  "direction_5_dynamic_lorentzian_certificates_and_on.json": {
+    "title": "Dynamic Lorentzian Certificates and Online Sampling",
+    "exp_id": "02e24032",
+    "source_exp_ids": [
+      "1f8fa3a8"
+    ],
+    "domain": "Algebraic Combinatorics / Dynamic Algorithms"
+  },
+  "direction_2_valuated_matroid_theory_via_k_fold_log.json": {
+    "title": "Higher Discrete Curvature Theory for Valuated Matroids via k-Fold Directional Log-Concavity",
+    "exp_id": "dde1d7e9",
+    "source_exp_ids": [
+      "a1f92284"
+    ],
+    "domain": "Combinatorial Algebraic Geometry / Tropical Geometry / Discrete Convex Analysis"
+  },
+  "direction_3_quantum_ground_state_preparation_via_l.json": {
+    "title": "Quantum Ground-State Preparation via Lorentzian Polynomial Certificates",
+    "exp_id": "2b6d84b4",
+    "source_exp_ids": [
+      "1f8fa3a8"
+    ],
+    "domain": "Pythagorean / Algebraic Combinatorics / Quantum Computing"
+  },
+  "direction_4_cryptographic_security_bounds_for_perm.json": {
+    "title": "Cryptographic Security Bounds for Alternating Permutation Networks",
+    "exp_id": "3130e902",
+    "source_exp_ids": [
+      "48617359"
+    ],
+    "domain": "Cryptography / Finite Group Theory / Mixing Time"
+  },
+  "direction_1_sharp_cutoff_for_the_adjacent_transpos.json": {
+    "title": "Sharp Cutoff Analysis for the Adjacent-Transposition-Plus-Cycle Walk on the Symmetric Group",
+    "exp_id": "48617359",
+    "source_exp_ids": [
+      "4f520a5f"
+    ],
+    "domain": "Probability Theory / Algebraic Combinatorics"
+  },
+  "direction_1_canonical_path_poincar_inequality_for_.json": {
+    "title": "Canonical Path Poincar\u00e9 Inequality for Cayley Graphs",
+    "exp_id": "5c8e335c",
+    "source_exp_ids": [
+      "8778f4a5"
+    ],
+    "domain": "Spectral Graph Theory / Combinatorial Group Theory"
+  },
+  "direction_3_information_theoretic_monotonicity_for.json": {
+    "title": "Information-Theoretic Monotonicity for Robustly Lorentzian Measures",
+    "exp_id": "f952b956",
+    "source_exp_ids": [
+      "2953ee13"
+    ],
+    "domain": "Discrete Probability / Information Theory / Lorentzian Geometry"
+  },
+  "direction_2_uniform_spectral_gaps_for_sp_via_delig.json": {
+    "title": "Uniform Spectral Gaps for Sp\u2084(\ud835\udd3d_q) via Deligne\u2013Lusztig Character Bounds",
+    "exp_id": "21d69cc6",
+    "source_exp_ids": [
+      "d9e69258"
+    ],
+    "domain": "Algebraic Combinatorics / Representation Theory"
+  },
+  "direction_1_dynamic_spectral_gap_tracking_for_onli.json": {
+    "title": "Dynamic Spectral Gap Tracking for Online Mixing-Time Guarantees",
+    "exp_id": "710cc85b",
+    "source_exp_ids": [
+      "02e24032"
+    ],
+    "domain": "Combinatorial Sampling / Lorentzian Polynomials / Spectral Graph Theory"
+  },
+  "direction_1_brauer_manin_obstructions_for_integral.json": {
+    "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
+    "exp_id": "3265971b",
+    "source_exp_ids": [
+      "34c2669a"
+    ],
+    "domain": "Arithmetic Geometry / Number Theory"
+  },
+  "direction_3_compositional_witness_synthesis_algori.json": {
+    "title": "Compositional Witness Synthesis for Pythagorean Triples",
+    "exp_id": "d78e63d5",
+    "source_exp_ids": [
+      "21d0ab18"
+    ],
+    "domain": "Pythagorean Number Theory"
+  },
+  "yang_mills_mass_gap.json": {
+    "title": "Yang-Mills Mass Gap: Lattice-to-Continuum Spectral Architecture",
+    "exp_id": "6a88b92d",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Mathematical Physics / Quantum Field Theory"
+  },
+  "direction_5_effective_resistance_and_electrical_fl.json": {
+    "title": "Electrical Flow Certificates for Cayley Graphs",
+    "exp_id": "d42cb594",
+    "source_exp_ids": [
+      "5c8e335c"
+    ],
+    "domain": "Algebraic Combinatorics / Spectral Graph Theory / Electrical Network Theory"
+  },
+  "direction_1_overlap_class_conjecture__beyond_disjo.json": {
+    "title": "Overlap Class Rigidity: Beyond Disjoint Supports in Tropical Kernel Theory",
+    "exp_id": "db19bfd3",
+    "source_exp_ids": [
+      "42d710f5"
+    ],
+    "domain": "Tropical Geometry / Graph Theory"
+  },
+  "direction_5_operadic_rewriting_and_homotopical_com.json": {
+    "title": "Operadic Rewriting and Homotopical Completion",
+    "exp_id": "ad18377f",
+    "source_exp_ids": [
+      "2933a8cf"
+    ],
+    "domain": "Operadic Algebra / Higher-Order Rewriting / Homotopical Algebra"
+  },
+  "direction_1_quantitative_helfgott_type_growth_in_g.json": {
+    "title": "Quantitative Helfgott-Type Growth in SL(2, F_p): Formal Escape Certificates and Product Expansion",
+    "exp_id": "5098a45f",
+    "source_exp_ids": [
+      "a0951d1f"
+    ],
+    "domain": "Additive Combinatorics / Finite Group Theory"
+  },
+  "direction_2_lorentzian_polynomials_in_statistical_.json": {
+    "title": "Lorentzian Polynomials in Statistical Physics and Probability",
+    "exp_id": "258120ed",
+    "source_exp_ids": [
+      "83d44e07"
+    ],
+    "domain": "Algebraic Combinatorics / Probability / Statistical Physics"
+  },
+  "direction_4_energy_landscape_metastability_detecti.json": {
+    "title": "Tropical Metastability Detection on Energy Landscapes",
+    "exp_id": "017aafa5",
+    "source_exp_ids": [
+      "e8f8d5e4"
+    ],
+    "domain": "Tropical Geometry \u00d7 Statistical Physics \u00d7 Weighted Graph Theory"
+  },
+  "direction_3_generation_certificates_for_matrix_gro.json": {
+    "title": "Generation Certificates for Matrix Groups",
+    "exp_id": "44ebbbfd",
+    "source_exp_ids": [
+      "92e3853a"
+    ],
+    "domain": "Algebra / Finite Group Theory"
+  },
+  "direction_5_stability_of_strongly_log_concave_dist.json": {
+    "title": "Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
+    "exp_id": "2953ee13",
+    "source_exp_ids": [
+      "2493279d"
+    ],
+    "domain": "Lorentzian Polynomials / Robust Sampling Theory"
+  },
+  "direction_1_deletion_contraction_duality_for_polyn.json": {
+    "title": "Deletion\u2013Contraction Duality for Polynomial Supports",
+    "exp_id": "abb48be4",
+    "source_exp_ids": [
+      "243a6673"
+    ],
+    "domain": "Algebraic Combinatorics / Discrete Convex Analysis"
+  },
+  "direction_3_certified_expander_codes_with_linear_t.json": {
+    "title": "Certified Expander Codes from Cayley Graphs with Linear-Time Decoding",
+    "exp_id": "d4879402",
+    "source_exp_ids": [
+      "d9e69258"
+    ],
+    "domain": "Coding Theory / Algebraic Graph Theory"
+  },
+  "direction_5_continuous_extension_via_discretizatio.json": {
+    "title": "Continuous-to-Discrete Robustness Transfer for Lorentzian Stability",
+    "exp_id": "ad0ea09c",
+    "source_exp_ids": [
+      "2953ee13"
+    ],
+    "domain": "Geometric Discretization Theory / Lorentzian Polynomial Stability"
+  },
+  "direction_1_quantitative_growth_bounds_for_matrix_.json": {
+    "title": "Quantitative Growth Bounds for Matrix Groups",
+    "exp_id": "0d18284a",
+    "source_exp_ids": [
+      "edab5f0b"
+    ],
+    "domain": "Finite Group Theory / Additive Combinatorics"
+  },
+  "direction_5_chip_firing_correspondence.json": {
+    "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
+    "exp_id": "97def267",
+    "source_exp_ids": [
+      "fd2f08b2"
+    ],
+    "domain": "Tropical Geometry / Combinatorial Algebraic Geometry"
+  },
+  "quantum_error_correction_bounds.json": {
+    "title": "Quantum MacWilliams Identities and the Bravyi-Terhal Bound",
+    "exp_id": "b633df37",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Quantum Information Theory / Algebraic Combinatorics"
+  },
+  "direction_2_functorial_localization_of_persistence.json": {
+    "title": "Functorial Localization of Persistence Modules: Arithmetic Decomposition of Torsion Stability",
+    "exp_id": "000321e6",
+    "source_exp_ids": [
+      "2d14ce54"
+    ],
+    "domain": "Arithmetic Persistence Theory / Topological Data Analysis"
+  },
+  "direction_2_random_cayley_expanders_and_spectral_g.json": {
+    "title": "Random Cayley Expanders and Spectral Gaps: From Generation to Quantitative Mixing",
+    "exp_id": "8778f4a5",
+    "source_exp_ids": [
+      "92e3853a"
+    ],
+    "domain": "Spectral Graph Theory / Finite Group Theory"
+  },
+  "direction_1_hardness_of_unrestricted_degree_lorent.json": {
+    "title": "Complexity Lower Bounds for Unrestricted-Degree Lorentzian Polynomial Recognition",
+    "exp_id": "b33365a6",
+    "source_exp_ids": [
+      "33261812"
+    ],
+    "domain": "Algebraic Combinatorics / Computational Complexity / Hodge Theory"
+  },
+  "direction_2_exceptional_expander_ladder__f_e_e_e.json": {
+    "title": "Exceptional Expander Ladder: Certificate Framework for F\u2084, E\u2086, E\u2087, E\u2088",
+    "exp_id": "5e6b0585",
+    "source_exp_ids": [
+      "45723a87"
+    ],
+    "domain": "Exceptional Lie Theory / Spectral Graph Theory / Certified Optimization"
+  },
+  "direction_5_higher_order_completion_and_lambda_cal.json": {
+    "title": "Higher-Order Completion and Lambda-Calculus Integration",
+    "exp_id": "2933a8cf",
+    "source_exp_ids": [
+      "8e448ab4"
+    ],
+    "domain": "Rewriting Theory / Lambda Calculus / Certified Program Transformation"
+  },
+  "direction_1_sharp_valuation_sensitive_stability_bo.json": {
+    "title": "P-adic Controlled Persistence Stability: Valuation-Sensitive Interleaving Theory",
+    "exp_id": "1b3fdf32",
+    "source_exp_ids": [
+      "2d14ce54"
+    ],
+    "domain": "Arithmetic Topological Data Analysis"
+  },
+  "direction_2_higher_order_log_concavity_and_partiti.json": {
+    "title": "Higher-Order Log-Concavity: A Recursive Hierarchy for Discrete Sequences",
+    "exp_id": "56c2f88c",
+    "source_exp_ids": [
+      "1f8fa3a8"
+    ],
+    "domain": "Algebraic Combinatorics / Discrete Convexity"
+  },
+  "direction_3_pressure_theory_for_almost_simple_grou.json": {
+    "title": "Pressure Theory for Almost Simple Groups",
+    "exp_id": "a875f3ce",
+    "source_exp_ids": [
+      "cf039036"
+    ],
+    "domain": "Finite Group Theory / Thermodynamic Formalism"
+  },
+  "direction_1_torsion_aware_tropical_morse_theory.json": {
+    "title": "Torsion-Aware Tropical Morse Theory: Integer Simplex Insertion Trichotomy",
+    "exp_id": "d4af762e",
+    "source_exp_ids": [
+      "4895ceb4"
+    ],
+    "domain": "Algebraic Topology / Arithmetic Geometry"
+  },
+  "direction_1_spectral_tropical_stability__from_conj.json": {
+    "title": "Spectral Tropical Stability: Algebraic Connectivity Controls Tropical Persistent Homology",
+    "exp_id": "86601194",
+    "source_exp_ids": [
+      "325d9cdd"
+    ],
+    "domain": "Spectral Graph Theory \u00d7 Tropical Persistent Homology"
+  },
+  "direction_5_numerical_stability_of_lorentzian_reco.json": {
+    "title": "Numerical Stability of Lorentzian Recognition: Quantitative Spectral Margins and Certified Perturbation Bounds",
+    "exp_id": "2493279d",
+    "source_exp_ids": [
+      "33261812"
+    ],
+    "domain": "Pythagorean / Lorentzian Polynomial Theory"
+  },
+  "langlands_program_functoriality.json": {
+    "title": "Langlands Functoriality: Local Euler Data and Symmetric Power Transfer",
+    "exp_id": "7e4a0191",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "domain": "Algebra / Number Theory"
+  },
+  "direction_2_exceptional_groups_and_character_sheaf.json": {
+    "title": "Character-Ratio Certificates for Exceptional Group Expansion",
+    "exp_id": "50190731",
+    "source_exp_ids": [
+      "21d69cc6"
+    ],
+    "domain": "Representation Theory / Spectral Graph Theory / Exceptional Lie Groups"
+  },
+  "direction_2_character_expansion_and_strong_couplin.json": {
+    "title": "Character Expansion Mass Gap: Representation-Theoretic Spectral Asymptotics in Lattice Yang-Mills Theory",
+    "exp_id": "a9352256",
+    "source_exp_ids": [
+      "6a88b92d"
+    ],
+    "domain": "Mathematical Physics / Representation Theory / Spectral Analysis"
+  },
+  "direction_1_comparison_theorems_for_non_group_mark.json": {
+    "title": "Comparison Theorems for Non-Group Markov Chains",
+    "exp_id": "4a19dada",
+    "source_exp_ids": [
+      "5c8e335c"
+    ],
+    "domain": "Probability Theory / Spectral Graph Theory"
+  },
+  "direction_4_plcker_coordinates_and_fermionic_state.json": {
+    "title": "Pl\u00fccker Coordinates and Fermionic State Preparation: Quantum Matroid Geometry",
+    "exp_id": "4c9b1112",
+    "source_exp_ids": [
+      "72356358"
+    ],
+    "domain": "Pythagorean"
+  },
+  "direction_2_universality_of_phase_transition_criti.json": {
+    "title": "Universality of Critical Exponents in Subgroup Thermodynamics",
+    "exp_id": "354ccda2",
+    "source_exp_ids": [
+      "cf039036"
+    ],
+    "domain": "Algebraic Statistical Mechanics / Finite Group Theory"
+  },
+  "direction_2_spectral_decoding_via_tropical_morse_b.json": {
+    "title": "Spectral Decoding via Tropical Morse Barcodes",
+    "exp_id": "e1e8732d",
+    "source_exp_ids": [
+      "b0b26cee"
+    ],
+    "domain": "Tropical-Topological Decoding Theory"
+  },
+  "direction_2_certificate_based_quantum_expanders.json": {
+    "title": "Certificate-Based Quantum Expanders: Spectral Gap from Algebraic Certification",
+    "exp_id": "dc67a2b9",
+    "source_exp_ids": [
+      "ad66d851"
+    ],
+    "domain": "Quantum Information Theory / Spectral Graph Theory"
+  },
+  "direction_3_negative_dependence_and_rapid_mixing_v.json": {
+    "title": "Directional Log-Concavity as a Spectral Certificate for Glauber Dynamics",
+    "exp_id": "6297694a",
+    "source_exp_ids": [
+      "a1f92284"
+    ],
+    "domain": "Combinatorial Probability / Algorithmic Negative Dependence"
+  },
+  "direction_3_driven_diffusive_systems_and_tasep_pha.json": {
+    "title": "Tagged-Card TASEP Structure in Permutation Random Walks",
+    "exp_id": "f42c0a57",
+    "source_exp_ids": [
+      "48617359"
+    ],
+    "domain": "Algebraic Combinatorics / Nonequilibrium Statistical Mechanics"
+  },
+  "direction_3_concentration_of__on_random_hypergraph.json": {
+    "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
+    "exp_id": "7817bcef",
+    "source_exp_ids": [
+      "f6e7fe77"
+    ],
+    "domain": "Combinatorial Optimization / Probability Theory"
+  },
+  "direction_3_model_theory_of_approximate_subgroups.json": {
+    "title": "Growth-or-Control Dichotomy: Model Theory of Approximate Subgroups in Finite Matrix Groups",
+    "exp_id": "a0951d1f",
+    "source_exp_ids": [
+      "edab5f0b"
+    ],
+    "domain": "Algebraic Combinatorics / Approximate Group Theory"
+  },
+  "direction_5_expander_based_derandomization_in_cert.json": {
+    "title": "Expander-Walk Majority Amplification: Certified Derandomization from Spectral Gap",
+    "exp_id": "d4196bad",
+    "source_exp_ids": [
+      "8778f4a5"
+    ],
+    "domain": "Algebraic Graph Theory / Computational Complexity / Derandomization"
+  },
+  "direction_2_lorentzian_condition_numbers_and_smoot.json": {
+    "title": "Lorentzian Condition Numbers and Smoothed Analysis",
+    "exp_id": "f52aba3c",
+    "source_exp_ids": [
+      "2493279d"
+    ],
+    "domain": "Algebraic Combinatorics / Numerical Stability"
+  },
+  "direction_1_tight_spectral_gap_via_lorentzian_stru.json": {
+    "title": "Tight Spectral Gap via Lorentzian Structure",
+    "exp_id": "a6eebf63",
+    "source_exp_ids": [
+      "1f8fa3a8"
+    ],
+    "domain": "Pythagorean \u2014 Lorentzian Polynomials and Markov Chain Mixing"
+  },
+  "direction_4_robust_log_concavity_for_quantum_many_.json": {
+    "title": "Robust Log-Concavity for Quantum Many-Body Ground States",
+    "exp_id": "d97a486b",
+    "source_exp_ids": [
+      "2953ee13"
+    ],
+    "domain": "Quantum Many-Body Theory / Lorentzian Polynomials / Classical Expansion"
+  },
+  "direction_2_heterogeneitygap_conjecture.json": {
+    "title": "Edge-Size Disorder as a Structural Predictor of Integrality Gaps in Hypergraph Transversals",
+    "exp_id": "daaf598b",
+    "source_exp_ids": [
+      "f6e7fe77"
+    ],
+    "domain": "Combinatorial Optimization / Hypergraph Theory"
+  },
+  "direction_3_abelian_sandpile_criticality_via_lapla.json": {
+    "title": "Abelian Sandpile Criticality via Laplacian Energy Minimization",
+    "exp_id": "d74ce5bf",
+    "source_exp_ids": [
+      "97def267"
+    ],
+    "domain": "Graph Theory / Combinatorial Dynamics / Spectral Theory"
+  },
+  "direction_1_m_convexity_closure_under_differentiat.json": {
+    "title": "M-Convexity Closure Under Differentiation",
+    "exp_id": "243a6673",
+    "source_exp_ids": [
+      "83d44e07"
+    ],
+    "domain": "Algebraic Combinatorics / Discrete Convex Analysis"
+  },
+  "direction_4_tropical_contraction_and_support_trunc.json": {
+    "title": "Tropical Contraction and Support Truncation",
+    "exp_id": "daae69f2",
+    "source_exp_ids": [
+      "243a6673"
+    ],
+    "domain": "Tropical Geometry / Discrete Convex Analysis"
+  },
+  "direction_4_relative_tropical_hodge_theorem.json": {
+    "title": "Tropical Hodge Theory for Graphs: Kernel Characterization, Incidence Factorization, and Betti Numbers",
+    "exp_id": "1a0c77c0",
+    "source_exp_ids": [
+      "fd2f08b2"
+    ],
+    "domain": "Tropical Algebra / Graph Theory / Algebraic Topology"
+  },
+  "direction_3_hecke_operator_comparison_and_building.json": {
+    "title": "Hecke Operator Comparison and Building Spectra for Sp4(Fq)",
+    "exp_id": "ad3dfe1b",
+    "source_exp_ids": [
+      "21d69cc6"
+    ],
+    "domain": "Spectral Graph Theory / Representation Theory / High-Dimensional Expansion"
+  },
+  "direction_1_higher_dimensional_tropical_morse_theo.json": {
+    "title": "Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
+    "exp_id": "4895ceb4",
+    "source_exp_ids": [
+      "88770e41"
+    ],
+    "domain": "Tropical Geometry / Persistent Homology / Discrete Morse Theory"
+  },
+  "direction_1_submodular_objectives_and_the_curvatur.json": {
+    "title": "Curvature-Gap Theorem: Submodular Objectives and Threshold Rounding",
+    "exp_id": "1e2eba72",
+    "source_exp_ids": [
+      "b9d16ed0"
+    ],
+    "domain": "Submodular Optimization / Hypergraph Theory"
+  },
+  "direction_4_tropical_hodge_theory_via_supermodular.json": {
+    "title": "Tropical Hodge Theory via Supermodularity Hierarchies",
+    "exp_id": "65ed3803",
+    "source_exp_ids": [
+      "a1f92284"
+    ],
+    "domain": "Tropical Geometry / Combinatorial Optimization / Discrete Convexity"
+  },
+  "direction_4_matroidal_quantum_state_preparation.json": {
+    "title": "Matroidal Quantum State Preparation via Exchange Certificates",
+    "exp_id": "72356358",
+    "source_exp_ids": [
+      "2b6d84b4"
+    ],
+    "domain": "Combinatorial Hodge Theory / Quantum Algorithms / Matroid Theory"
+  },
+  "direction_3_certified_expanders_for_classical_grou.json": {
+    "title": "Certified Expanders for Classical Groups: A Representation-Theoretic Expansion Program",
+    "exp_id": "d9e69258",
+    "source_exp_ids": [
+      "ad66d851"
+    ],
+    "domain": "Finite Group Theory / Spectral Graph Theory / Algebraic Combinatorics"
+  },
+  "direction_5_tropical_morse_theory_for_network_phas.json": {
+    "title": "Tropical Morse Theory for Network Phase Transitions",
+    "exp_id": "88770e41",
+    "source_exp_ids": [
+      "1a0c77c0"
+    ],
+    "domain": "Tropical Geometry / Persistent Homology / Network Science"
+  },
+  "direction_5_expander_graphs_from_certificate_pairs.json": {
+    "title": "Expander Graphs from Certificate Pairs",
+    "exp_id": "ad66d851",
+    "source_exp_ids": [
+      "44ebbbfd"
+    ],
+    "domain": "Algebraic Graph Theory / Spectral Expansion"
+  }
+};
+
+
+// Knowledge Graph Data (auto-generated from lineage.json)
+window.PACKAGE_GRAPH = {
+  "nodes": [
+    {
+      "id": "direction_5_generalization_to_higher_degree_diagon",
+      "title": "A Uniform Local Obstruction Calculus for Diagonal Hypersurfaces",
+      "domain": "Number Theory / Arithmetic Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-25T13:51:09Z",
+      "hue": 270,
+      "priority_score": 0.6787085818181818,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_3_compositional_witness_synthesis_algori",
+      "title": "Compositional Witness Synthesis for Pythagorean Triples",
+      "domain": "Pythagorean Number Theory",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T13:51:35Z",
+      "hue": 272,
+      "priority_score": 0.7458845146055211,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_higher_order_log_concavity_and_partiti",
+      "title": "Higher-Order Log-Concavity: A Recursive Hierarchy for Discrete Sequences",
+      "domain": "Algebraic Combinatorics / Discrete Convexity",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T14:24:11Z",
+      "hue": 270,
+      "priority_score": 0.747059509202454,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_chip_firing_correspondence",
+      "title": "Chip-Firing Correspondence: Tropical Hodge Theory Meets Baker-Norine",
+      "domain": "Tropical Geometry / Combinatorial Algebraic Geometry",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T14:24:33Z",
+      "hue": 275,
+      "priority_score": 0.7472302409097711,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_brauer_manin_obstructions_for_integral",
+      "title": "Proto-Brauer-Manin Obstructions for Integral Points on Cubic Surfaces",
+      "domain": "Arithmetic Geometry / Number Theory",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-25T14:24:55Z",
+      "hue": 270,
+      "priority_score": 0.6946936070455108,
+      "quality": "partial"
+    },
+    {
+      "id": "yang_mills_mass_gap",
+      "title": "Yang-Mills Mass Gap: Lattice-to-Continuum Spectral Architecture",
+      "domain": "Mathematical Physics / Quantum Field Theory",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-25T15:29:18Z",
+      "hue": 90,
+      "priority_score": 0.7554863879178124,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_generation_certificates_for_matrix_gro",
+      "title": "Generation Certificates for Matrix Groups",
+      "domain": "Algebra / Finite Group Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T15:29:41Z",
+      "hue": 95,
+      "priority_score": 0.7535092285678423,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_concentration_of__on_random_hypergraph",
+      "title": "Concentration of Fractional Transversals on Sparse Random Hypergraphs",
+      "domain": "Combinatorial Optimization / Probability Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T15:30:03Z",
+      "hue": 271,
+      "priority_score": 0.7284316923076923,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_tight_spectral_gap_via_lorentzian_stru",
+      "title": "Tight Spectral Gap via Lorentzian Structure",
+      "domain": "Pythagorean \u2014 Lorentzian Polynomials and Markov Chain Mixing",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T16:05:19Z",
+      "hue": 271,
+      "priority_score": 0.7475694375378231,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_relative_tropical_hodge_theorem",
+      "title": "Tropical Hodge Theory for Graphs: Kernel Characterization, Incidence Factorization, and Betti Numbers",
+      "domain": "Tropical Algebra / Graph Theory / Algebraic Topology",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T16:05:40Z",
+      "hue": 271,
+      "priority_score": 0.7452328425357874,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_weighted_and_multi_objective_extension",
+      "title": "Weighted and Multi-Objective Hypergraph Transversals: Certified LP Rounding for Multi-Criteria Optimization",
+      "domain": "Combinatorial Optimization / Polyhedral Combinatorics",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T16:39:05Z",
+      "hue": 92,
+      "priority_score": 0.7379731931205967,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_numerical_stability_of_lorentzian_reco",
+      "title": "Numerical Stability of Lorentzian Recognition: Quantitative Spectral Margins and Certified Perturbation Bounds",
+      "domain": "Pythagorean / Lorentzian Polynomial Theory",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T17:14:28Z",
+      "hue": 270,
+      "priority_score": 0.7094771428571429,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_phase_transitions_in_generation_probab",
+      "title": "Subgroup Thermodynamics: Phase Transitions in Random Generation via Pair Pressure",
+      "domain": "Algebra / Probabilistic Group Theory / Statistical Mechanics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T17:14:56Z",
+      "hue": 270,
+      "priority_score": 0.7307286403906522,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_character_expansion_and_strong_couplin",
+      "title": "Character Expansion Mass Gap: Representation-Theoretic Spectral Asymptotics in Lattice Yang-Mills Theory",
+      "domain": "Mathematical Physics / Representation Theory / Spectral Analysis",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-25T17:15:32Z",
+      "hue": 100,
+      "priority_score": 0.7426729134392938,
+      "quality": "substantial"
+    },
+    {
+      "id": "hadamard_matrix_conjecture",
+      "title": "Hadamard Existence by Algebraic Generation",
+      "domain": "Algebra / Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T17:49:47Z",
+      "hue": 270,
+      "priority_score": 0.718787256166983,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_filtration_persistence_formula",
+      "title": "Tropical Persistence Barcodes for Graph Filtrations",
+      "domain": "Algebraic Graph Topology / Tropical Linear Algebra / Topological Data Analysis",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T17:57:55Z",
+      "hue": 270,
+      "priority_score": 0.7485430061705161,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_higher_order_tensor_calculus_with_eins",
+      "title": "Universal Einstein Contraction Calculus for Order-Indexed Tensors",
+      "domain": "Multilinear Algebra / Tensor Calculus / Scientific Computing",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T18:02:50Z",
+      "hue": 270,
+      "priority_score": 0.7448372075471699,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_hypergraph_transversals_as_tropical_co",
+      "title": "Hypergraph Transversals as Tropical Convex Optimization",
+      "domain": "Tropical Geometry / Combinatorial Optimization",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T18:03:18Z",
+      "hue": 270,
+      "priority_score": 0.7496613212625398,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_tropical_morse_theory_for_network_phas",
+      "title": "Tropical Morse Theory for Network Phase Transitions",
+      "domain": "Tropical Geometry / Persistent Homology / Network Science",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T18:39:27Z",
+      "hue": 271,
+      "priority_score": 0.7633440525911624,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_expander_graphs_from_certificate_pairs",
+      "title": "Expander Graphs from Certificate Pairs",
+      "domain": "Algebraic Graph Theory / Spectral Expansion",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T18:39:59Z",
+      "hue": 271,
+      "priority_score": 0.7061918953063686,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_mechanism_design_with_certified_multi_",
+      "title": "Certified Multi-Criteria Truthful Approximation Mechanisms",
+      "domain": "Mechanism Design / Multi-Objective Optimization / Combinatorial Algorithms",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T18:40:46Z",
+      "hue": 95,
+      "priority_score": 0.6968374111334675,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_3_multivariate_k_fold_log_concavity_and_",
+      "title": "Multivariate k-Fold Log-Concavity and M-Convexity",
+      "domain": "Pythagorean / Discrete Convex Analysis / Lorentzian Polynomials",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T19:29:15Z",
+      "hue": 91,
+      "priority_score": 0.7239525714285715,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_higher_order_completion_and_lambda_cal",
+      "title": "Higher-Order Completion and Lambda-Calculus Integration",
+      "domain": "Rewriting Theory / Lambda Calculus / Certified Program Transformation",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T20:01:45Z",
+      "hue": 271,
+      "priority_score": 0.7661817738359202,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_compositional_rounding_certificates_fo",
+      "title": "Compositional Rounding Certificates for Modular Hypergraphs",
+      "domain": "Combinatorial Optimization / Hypergraph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T20:02:12Z",
+      "hue": 270,
+      "priority_score": 0.7190936000000001,
+      "quality": "substantial"
+    },
+    {
+      "id": "quantum_error_correction_bounds",
+      "title": "Quantum MacWilliams Identities and the Bravyi-Terhal Bound",
+      "domain": "Quantum Information Theory / Algebraic Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T20:34:49Z",
+      "hue": 271,
+      "priority_score": 0.7132103632664923,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_submodular_objectives_and_the_curvatur",
+      "title": "Curvature-Gap Theorem: Submodular Objectives and Threshold Rounding",
+      "domain": "Submodular Optimization / Hypergraph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T20:35:13Z",
+      "hue": 270,
+      "priority_score": 0.7238752112676057,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_weighted_extension",
+      "title": "Weighted Tropical Graph Hodge Theory",
+      "domain": "Tropical Geometry / Graph Theory / Combinatorial Optimization",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-25T20:35:34Z",
+      "hue": 271,
+      "priority_score": 0.7266461478599222,
+      "quality": "substantial"
+    },
+    {
+      "id": "langlands_program_functoriality",
+      "title": "Langlands Functoriality: Local Euler Data and Symmetric Power Transfer",
+      "domain": "Algebra / Number Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T20:35:56Z",
+      "hue": 90,
+      "priority_score": 0.7224016949152543,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_mixing_time_bounds_from_concavity_dept",
+      "title": "Mixing Time Bounds from Concavity Depth",
+      "domain": "Probability Theory / Markov Chains",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T21:12:32Z",
+      "hue": 270,
+      "priority_score": 0.7286,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_quantum_ground_state_preparation_via_l",
+      "title": "Quantum Ground-State Preparation via Lorentzian Polynomial Certificates",
+      "domain": "Pythagorean / Algebraic Combinatorics / Quantum Computing",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T21:13:06Z",
+      "hue": 275,
+      "priority_score": 0.7215128,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_stability_theory_for_tropical_persiste",
+      "title": "Stability Theory for Tropical Persistence Barcodes",
+      "domain": "Tropical Geometry / Topological Data Analysis / Graph Theory",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T21:13:36Z",
+      "hue": 134,
+      "priority_score": 0.7197528467153285,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_universality_of_phase_transition_criti",
+      "title": "Universality of Critical Exponents in Subgroup Thermodynamics",
+      "domain": "Algebraic Statistical Mechanics / Finite Group Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T21:49:23Z",
+      "hue": 92,
+      "priority_score": 0.7272178424657534,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_tropical_morse_theory_as_a_topological",
+      "title": "Tropical Morse Theory as a Topological Feature for Graph Neural Networks",
+      "domain": "Tropical Geometry / Topological Data Analysis / Graph Neural Networks",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T21:51:06Z",
+      "hue": 100,
+      "priority_score": 0.7304195636363637,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_sharp_valuation_sensitive_stability_bo",
+      "title": "P-adic Controlled Persistence Stability: Valuation-Sensitive Interleaving Theory",
+      "domain": "Arithmetic Topological Data Analysis",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T22:25:13Z",
+      "hue": 90,
+      "priority_score": 0.7444580722891567,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_stability_of_strongly_log_concave_dist",
+      "title": "Stability of Strongly Log-Concave Distributions Under Noisy Generating Functions",
+      "domain": "Lorentzian Polynomials / Robust Sampling Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T22:25:35Z",
+      "hue": 91,
+      "priority_score": 0.7277750000000001,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_random_cayley_expanders_and_spectral_g",
+      "title": "Random Cayley Expanders and Spectral Gaps: From Generation to Quantitative Mixing",
+      "domain": "Spectral Graph Theory / Finite Group Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-25T22:58:33Z",
+      "hue": 91,
+      "priority_score": 0.7187674157303372,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_certificates_and_product_growth",
+      "title": "Certificate-to-Growth Mechanisms in Finite Linear Groups",
+      "domain": "Pythagorean / Algebraic Combinatorics",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-25T22:59:02Z",
+      "hue": 90,
+      "priority_score": 0.7849381886792453,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_m_convexity_closure_under_differentiat",
+      "title": "M-Convexity Closure Under Differentiation",
+      "domain": "Algebraic Combinatorics / Discrete Convex Analysis",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-25T23:33:12Z",
+      "hue": 271,
+      "priority_score": 0.7260796984924622,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_information_theoretic_bounds_on_tropic",
+      "title": "Tropical Channel Capacity and Barcode Stability: An Information-Theoretic Foundation",
+      "domain": "Tropical Information Theory / Topological Data Analysis",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-25T23:33:35Z",
+      "hue": 270,
+      "priority_score": 0.7261742857142859,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_m_convex_optimization_via_directional_",
+      "title": "Exchange Descent under Directional Log-Concavity Certificates",
+      "domain": "Discrete Convex Analysis / Algebraic Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T00:07:27Z",
+      "hue": 90,
+      "priority_score": 0.7241576377952756,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_tropical_persistent_homology_for_netwo",
+      "title": "Tropical Persistent Homology for Network Data Analysis",
+      "domain": "Pythagorean / Tropical Geometry / Topological Data Analysis",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-26T00:40:11Z",
+      "hue": 92,
+      "priority_score": 0.7698015384615384,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_certificate_based_quantum_expanders",
+      "title": "Certificate-Based Quantum Expanders: Spectral Gap from Algebraic Certification",
+      "domain": "Quantum Information Theory / Spectral Graph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T00:40:46Z",
+      "hue": 91,
+      "priority_score": 0.7214240378548897,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_concentration_of_subgroup_pressure",
+      "title": "Concentration of Subgroup Pressure: Self-Averaging Theorems for Random Subgroup Ensembles",
+      "domain": "Algebraic Thermodynamics / Probabilistic Group Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T00:41:36Z",
+      "hue": 90,
+      "priority_score": 0.771213734939759,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_information_theoretic_universality_via",
+      "title": "Information-Theoretic Universality via Subgroup Entropy",
+      "domain": "Algebraic Combinatorics / Information Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T00:41:59Z",
+      "hue": 270,
+      "priority_score": 0.717992972972973,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_certificate_density_asymptotics_via_th",
+      "title": "Certificate Density Asymptotics via the Prime Polynomial Theorem",
+      "domain": "Number Theory / Finite Group Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T01:20:52Z",
+      "hue": 270,
+      "priority_score": 0.7184184032238947,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_noise_stability_universality_and_the_a",
+      "title": "Noise-Stability Universality and the Algorithmic Phase Diagram",
+      "domain": "Lorentzian Polynomial Geometry / Algorithmic Mixing Theory",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-26T01:21:25Z",
+      "hue": 272,
+      "priority_score": 0.7442945762711866,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_higher_dimensional_tropical_morse_theo",
+      "title": "Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
+      "domain": "Combinatorial Topology / Tropical Geometry",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T01:56:35Z",
+      "hue": 95,
+      "priority_score": 0.7199839008264464,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_certified_mixing_time_bounds_and_cutof",
+      "title": "Certified Mixing Time Bounds and Cutoff Phenomena for Random Walks on Symmetric Groups",
+      "domain": "Probability Theory / Algebraic Combinatorics / Statistical Physics",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-26T01:56:58Z",
+      "hue": 92,
+      "priority_score": 0.66746,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_5_operadic_rewriting_and_homotopical_com",
+      "title": "Operadic Rewriting and Homotopical Completion",
+      "domain": "Operadic Algebra / Higher-Order Rewriting / Homotopical Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T01:57:20Z",
+      "hue": 270,
+      "priority_score": 0.700136255319149,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_deletion_contraction_duality_for_polyn",
+      "title": "Deletion\u2013Contraction Duality for Polynomial Supports",
+      "domain": "Algebraic Combinatorics / Discrete Convex Analysis",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T02:33:36Z",
+      "hue": 90,
+      "priority_score": 0.7277349606299213,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_black_box_group_recognition_via_charac",
+      "title": "Black-Box Group Recognition via Characteristic Polynomial Certificates",
+      "domain": "Algebraic Group Theory / Finite Field Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T03:06:41Z",
+      "hue": 90,
+      "priority_score": 0.7225979310344828,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_confluence_and_unique_normal_forms",
+      "title": "Confluence and Unique Normal Forms for Tensor Distributivity Rewrites",
+      "domain": "Term Rewriting Theory / Tensor Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T03:39:40Z",
+      "hue": 90,
+      "priority_score": 0.7231701356096614,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_extension_to_sl_n_sp_2n_and_orthogonal",
+      "title": "Unified Certificate Generation for Classical Groups",
+      "domain": "Algebra / Classical Groups / Finite Fields",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T03:40:03Z",
+      "hue": 95,
+      "priority_score": 0.6602491734442975,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_1_exact_weighted_tropical_dimension_form",
+      "title": "Exact Weighted Tropical Dimension Formula via Degeneracy Subgraphs",
+      "domain": "Tropical Geometry / Weighted Graph Theory",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T03:40:26Z",
+      "hue": 89,
+      "priority_score": 0.7201487272727274,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_lorentzian_polynomial_certificates_for",
+      "title": "Lorentzian Polynomial Certificates for Exchange Optimization",
+      "domain": "Combinatorial Optimization / Hodge Theory / Matroid Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T03:40:49Z",
+      "hue": 270,
+      "priority_score": 0.6746709090909091,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_2_certificate_density_for_symplectic_and",
+      "title": "Certificate Density for Classical Groups: Self-Reciprocal Polynomials and Symplectic Generation",
+      "domain": "Algebra / Finite Group Theory / Polynomial Arithmetic",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T03:41:09Z",
+      "hue": 91,
+      "priority_score": 0.719670909090909,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_spectral_tropical_stability__from_conj",
+      "title": "Spectral Tropical Stability: Algebraic Connectivity Controls Tropical Persistent Homology",
+      "domain": "Spectral Graph Theory \u00d7 Tropical Persistent Homology",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T04:17:31Z",
+      "hue": 272,
+      "priority_score": 0.7238947727272729,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_functorial_localization_of_persistence",
+      "title": "Functorial Localization of Persistence Modules: Arithmetic Decomposition of Torsion Stability",
+      "domain": "Arithmetic Persistence Theory / Topological Data Analysis",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-26T04:17:54Z",
+      "hue": 272,
+      "priority_score": 0.7313913151506497,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_sharp_cutoff_for_the_adjacent_transpos",
+      "title": "Sharp Cutoff Analysis for the Adjacent-Transposition-Plus-Cycle Walk on the Symmetric Group",
+      "domain": "Probability Theory / Algebraic Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T04:51:52Z",
+      "hue": 272,
+      "priority_score": 0.7424210332103323,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_quantum_algorithmic_phase_transitions_",
+      "title": "Quantum Algorithmic Phase Transitions via Lorentzian Polynomials",
+      "domain": "Pythagorean / Quantum Computing / Combinatorial Hodge Theory",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-26T05:26:33Z",
+      "hue": 92,
+      "priority_score": 0.7338751496503497,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_quantitative_growth_bounds_for_matrix_",
+      "title": "Quantitative Growth Bounds for Matrix Groups",
+      "domain": "Finite Group Theory / Additive Combinatorics",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T06:03:36Z",
+      "hue": 271,
+      "priority_score": 0.607924752333094,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_3_model_theory_of_approximate_subgroups",
+      "title": "Growth-or-Control Dichotomy: Model Theory of Approximate Subgroups in Finite Matrix Groups",
+      "domain": "Algebraic Combinatorics / Approximate Group Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T06:04:01Z",
+      "hue": 90,
+      "priority_score": 0.6653370495258167,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_4_verified_oe_log_e_implementation_with_",
+      "title": "Verified Near-Linear Tropical Morse Spectrum via Dynamic Homology Invariants",
+      "domain": "Topological Data Analysis / Graph Algorithms / Tropical Geometry",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-26T06:39:08Z",
+      "hue": 270,
+      "priority_score": 0.6787933647058824,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_4_entropy_curvature_and_information_theo",
+      "title": "Entropy Curvature and Information-Theoretic Depth",
+      "domain": "Discrete Information Geometry / Higher-Order Log-Concavity",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-26T06:39:37Z",
+      "hue": 271,
+      "priority_score": 0.7661189087734614,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_tropical_morse_spectra_as_quantum_grap",
+      "title": "Tropical Morse Spectra as Quantum Graph State Classifiers",
+      "domain": "Tropical Geometry \u00d7 Quantum Information Theory",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T07:14:43Z",
+      "hue": 270,
+      "priority_score": 0.7383767129455912,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_driven_diffusive_systems_and_tasep_pha",
+      "title": "Tagged-Card TASEP Structure in Permutation Random Walks",
+      "domain": "Algebraic Combinatorics / Nonequilibrium Statistical Mechanics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T07:15:12Z",
+      "hue": 271,
+      "priority_score": 0.7125025626631281,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_tropical_hodge_theory_via_supermodular",
+      "title": "Tropical Hodge Theory via Supermodularity Hierarchies",
+      "domain": "Tropical Geometry / Combinatorial Optimization / Discrete Convexity",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T07:50:30Z",
+      "hue": 280,
+      "priority_score": 0.7269657639751552,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_certified_expanders_for_classical_grou",
+      "title": "Certified Expanders for Classical Groups: A Representation-Theoretic Expansion Program",
+      "domain": "Finite Group Theory / Spectral Graph Theory / Algebraic Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T08:24:04Z",
+      "hue": 90,
+      "priority_score": 0.7589612456833784,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_full_k_wl_separation_via_non_uniform_c",
+      "title": "Tropical Morse Spectra Escape the Weisfeiler-Leman Hierarchy",
+      "domain": "Topological Descriptive Complexity",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-26T08:24:34Z",
+      "hue": 272,
+      "priority_score": 0.725907976630964,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_negative_dependence_and_rapid_mixing_v",
+      "title": "Directional Log-Concavity as a Spectral Certificate for Glauber Dynamics",
+      "domain": "Combinatorial Probability / Algorithmic Negative Dependence",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T08:59:38Z",
+      "hue": 270,
+      "priority_score": 0.7224309737780574,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_energy_landscape_metastability_detecti",
+      "title": "Tropical Metastability Detection on Energy Landscapes",
+      "domain": "Tropical Geometry \u00d7 Statistical Physics \u00d7 Weighted Graph Theory",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-26T09:00:05Z",
+      "hue": 95,
+      "priority_score": 0.772976,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_reflection_positivity_and_perron_frobe",
+      "title": "Reflection Positivity and Perron-Frobenius for the Transfer Matrix",
+      "domain": "Mathematical Physics / Spectral Theory / Lattice Gauge Theory",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-26T09:37:59Z",
+      "hue": 90,
+      "priority_score": 0.7308755357710652,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_uniform_spectral_gaps_for_sp_via_delig",
+      "title": "Uniform Spectral Gaps for Sp\u2084(\ud835\udd3d_q) via Deligne\u2013Lusztig Character Bounds",
+      "domain": "Algebraic Combinatorics / Representation Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T09:39:04Z",
+      "hue": 90,
+      "priority_score": 0.7304065660377359,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_higher_dimensional_tropical_morse_theo",
+      "title": "Higher-Dimensional Tropical Morse Theory for Simplicial Complexes",
+      "domain": "Tropical Geometry / Persistent Homology / Discrete Morse Theory",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T10:14:09Z",
+      "hue": 112,
+      "priority_score": 0.7241421283979179,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_algorithmic_tropical_kernel_computatio",
+      "title": "Algorithmic Tropical Kernel Computation for Weighted Graphs",
+      "domain": "Tropical Geometry / Combinatorial Optimization",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T10:46:21Z",
+      "hue": 92,
+      "priority_score": null,
+      "quality": "unrated"
+    },
+    {
+      "id": "direction_1_overlap_class_conjecture__beyond_disjo",
+      "title": "Overlap Class Rigidity: Beyond Disjoint Supports in Tropical Kernel Theory",
+      "domain": "Tropical Geometry / Graph Theory",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T10:46:46Z",
+      "hue": 271,
+      "priority_score": null,
+      "quality": "unrated"
+    },
+    {
+      "id": "direction_4_complexity_of_certificate_verification",
+      "title": "Certificate Complexity for Matrix Group Generation",
+      "domain": "Computational Group Theory / Algebraic Complexity",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-26T11:21:46Z",
+      "hue": 270,
+      "priority_score": 0.7125355495823101,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_abelian_sandpile_criticality_via_lapla",
+      "title": "Abelian Sandpile Criticality via Laplacian Energy Minimization",
+      "domain": "Graph Theory / Combinatorial Dynamics / Spectral Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T11:22:13Z",
+      "hue": 91,
+      "priority_score": 0.7183609174311927,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_basis_uniqueness_up_to_tropical_projec",
+      "title": "Tropical Kernel Rigidity: Canonical Generators up to Tropical Projective Equivalence",
+      "domain": "Tropical Algebra / Graph Theory / Combinatorics",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T11:22:40Z",
+      "hue": 91,
+      "priority_score": 0.563429411764706,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_5_expander_based_derandomization_in_cert",
+      "title": "Expander-Walk Majority Amplification: Certified Derandomization from Spectral Gap",
+      "domain": "Algebraic Graph Theory / Computational Complexity / Derandomization",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-26T11:58:20Z",
+      "hue": 270,
+      "priority_score": 0.7785651221719457,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_explicit_poincar_constant_and_exponent",
+      "title": "Explicit Poincar\u00e9 Constants and Exponential Variance Decay for the Bubble-Rotation Walk on S_n",
+      "domain": "Spectral Graph Theory / Combinatorial Probability / Cayley Graphs",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T12:33:23Z",
+      "hue": 95,
+      "priority_score": 0.7172006698542598,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_chip_firing_canonical_forms_via_tropic",
+      "title": "Chip-Firing Canonical Forms via Tropical Kernels",
+      "domain": "Algebraic Graph Theory / Tropical Geometry",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T13:05:45Z",
+      "hue": 270,
+      "priority_score": 0.7244910588235294,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_cryptographic_security_bounds_for_perm",
+      "title": "Cryptographic Security Bounds for Alternating Permutation Networks",
+      "domain": "Cryptography / Finite Group Theory / Mixing Time",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-05-26T13:06:26Z",
+      "hue": 271,
+      "priority_score": 0.7165936336723626,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_tropical_contraction_and_support_trunc",
+      "title": "Tropical Contraction and Support Truncation",
+      "domain": "Tropical Geometry / Discrete Convex Analysis",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T13:07:01Z",
+      "hue": 272,
+      "priority_score": 0.7127178032839152,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_matroidal_quantum_state_preparation",
+      "title": "Matroidal Quantum State Preparation via Exchange Certificates",
+      "domain": "Combinatorial Hodge Theory / Quantum Algorithms / Matroid Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T13:07:35Z",
+      "hue": 270,
+      "priority_score": 0.7344439999999999,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_sharp_dixon_asymptotics_via_mbius_inve",
+      "title": "Sharp Dixon Asymptotics via M\u00f6bius Inversion on the Subgroup Lattice",
+      "domain": "Finite Group Theory / Algebraic Combinatorics",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T13:43:52Z",
+      "hue": 90,
+      "priority_score": 0.7297311111111111,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_torsion_aware_tropical_morse_theory",
+      "title": "Torsion-Aware Tropical Morse Theory: Integer Simplex Insertion Trichotomy",
+      "domain": "Algebraic Topology / Arithmetic Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-26T14:17:26Z",
+      "hue": 90,
+      "priority_score": 0.7510426086956522,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_dynamic_lorentzian_certificates_and_on",
+      "title": "Dynamic Lorentzian Certificates and Online Sampling",
+      "domain": "Algebraic Combinatorics / Dynamic Algorithms",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T14:50:42Z",
+      "hue": 90,
+      "priority_score": 0.7205326285479228,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_hardness_of_unrestricted_degree_lorent",
+      "title": "Complexity Lower Bounds for Unrestricted-Degree Lorentzian Polynomial Recognition",
+      "domain": "Algebraic Combinatorics / Computational Complexity / Hodge Theory",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-26T15:24:20Z",
+      "hue": 91,
+      "priority_score": 0.7248706358381504,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_spectral_fingerprints_for_classical_su",
+      "title": "Spectral Fingerprints for Classical Subgroups",
+      "domain": "Algebra / Group Theory / Finite Fields",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T15:24:45Z",
+      "hue": 272,
+      "priority_score": 0.7330869830508475,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_lorentzian_condition_numbers_and_smoot",
+      "title": "Lorentzian Condition Numbers and Smoothed Analysis",
+      "domain": "Algebraic Combinatorics / Numerical Stability",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T15:25:12Z",
+      "hue": 280,
+      "priority_score": 0.7345251306175558,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_large_deviation_principles_for_generat",
+      "title": "Large Deviation Principles for Random Generation via Subgroup Pressure",
+      "domain": "Finite Group Theory / Statistical Mechanics / Large Deviations",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T16:00:43Z",
+      "hue": 270,
+      "priority_score": 0.7817936263736264,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_exceptional_groups_and_character_sheaf",
+      "title": "Character-Ratio Certificates for Exceptional Group Expansion",
+      "domain": "Representation Theory / Spectral Graph Theory / Exceptional Lie Groups",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T16:01:24Z",
+      "hue": 275,
+      "priority_score": 0.7719703484062268,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_lorentzian_minor_closure_conjecture",
+      "title": "Lorentzian Minor Closure: Support Realizability Under Deletion and Contraction",
+      "domain": "Combinatorial Algebraic Geometry / Lorentzian Polynomials",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-26T16:36:47Z",
+      "hue": 90,
+      "priority_score": 0.7215146524064171,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_tropical_interleaving_distance_and_alg",
+      "title": "Tropical Interleaving Distance and Algebraic Stability",
+      "domain": "Tropical Persistence Theory / Topological Data Analysis",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-26T16:37:14Z",
+      "hue": 92,
+      "priority_score": 0.7668083870967742,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_canonical_path_poincar_inequality_for_",
+      "title": "Canonical Path Poincar\u00e9 Inequality for Cayley Graphs",
+      "domain": "Spectral Graph Theory / Combinatorial Group Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T17:12:50Z",
+      "hue": 92,
+      "priority_score": 0.7240127065217392,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_hecke_operator_comparison_and_building",
+      "title": "Hecke Operator Comparison and Building Spectra for Sp4(Fq)",
+      "domain": "Spectral Graph Theory / Representation Theory / High-Dimensional Expansion",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T17:13:23Z",
+      "hue": 90,
+      "priority_score": 0.7713502400000001,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_bounded_treewidth_polynomial_certifica",
+      "title": "Treewidth-Parameterized Certificate Compilation for Deletion/Contraction Recurrences",
+      "domain": "Parameterized Complexity / Matroid Theory / Graph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T18:22:23Z",
+      "hue": 134,
+      "priority_score": 0.7315382132796782,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_arithmetic_statistics_via_subgroup_pre",
+      "title": "Arithmetic Statistics via Subgroup Pressure in Linear Groups",
+      "domain": "Finite Group Theory / Arithmetic Statistics / Statistical Mechanics",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T18:56:16Z",
+      "hue": 91,
+      "priority_score": 0.7145541738405998,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_global_stability_as_max_envelope",
+      "title": "Global Stability as Max Envelope: Prime Decomposition of Torsion Persistence",
+      "domain": "Algebraic Topology / Persistent Homology / Number Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T18:56:49Z",
+      "hue": 272,
+      "priority_score": 0.7288202994652406,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_quantum_2_designs_from_certified_unita",
+      "title": "Quantum 2-Designs from Certified Unitary Expanders",
+      "domain": "Algebraic Quantum Information Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T18:57:14Z",
+      "hue": 271,
+      "priority_score": 0.7185778181818183,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_weighted_distance_equality_via_tropica",
+      "title": "Weighted Distance Equality via Tropical Cycle Optimization",
+      "domain": "Tropical Geometry / Quantum Error Correction / Graph Theory",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T18:57:37Z",
+      "hue": 90,
+      "priority_score": 0.6502599049235993,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_1_log_sobolev_inequality_for_the_hybrid_",
+      "title": "Modified Log-Sobolev Inequalities for Hybrid Permutation Walks",
+      "domain": "Probability Theory / Markov Chains / Information Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T19:35:44Z",
+      "hue": 91,
+      "priority_score": 0.7167155046439628,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_statistical_physics_of_random_transver",
+      "title": "Random Transversal Thermodynamics: Improved Integrality Gaps and Response Laws in Sparse Uniform Hypergraphs",
+      "domain": "Pythagorean / Combinatorial Optimization / Statistical Physics",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-26T19:36:21Z",
+      "hue": 280,
+      "priority_score": 0.7327347826086956,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_full_grtnerellis_large_deviation_princ",
+      "title": "Large Deviation Principle for Generation Defect on Direct Powers of Finite Groups",
+      "domain": "Probabilistic Group Theory / Large Deviations / Thermodynamic Formalism",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T19:36:51Z",
+      "hue": 95,
+      "priority_score": 0.7302034482758621,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_spectral_decoding_via_tropical_morse_b",
+      "title": "Spectral Decoding via Tropical Morse Barcodes",
+      "domain": "Tropical-Topological Decoding Theory",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-05-26T21:16:58Z",
+      "hue": 270,
+      "priority_score": 0.7368618604651165,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_5_effective_resistance_and_electrical_fl",
+      "title": "Electrical Flow Certificates for Cayley Graphs",
+      "domain": "Algebraic Combinatorics / Spectral Graph Theory / Electrical Network Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T21:17:25Z",
+      "hue": 270,
+      "priority_score": 0.7283000000000001,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_pressure_theory_for_almost_simple_grou",
+      "title": "Pressure Theory for Almost Simple Groups",
+      "domain": "Finite Group Theory / Thermodynamic Formalism",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T21:17:42Z",
+      "hue": 90,
+      "priority_score": 0.7693653584905661,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_wreath_product_perturbation_theory",
+      "title": "Wreath Product Perturbation Theory for Subgroup Pressure",
+      "domain": "Pythagorean / Algebraic Statistical Mechanics",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-26T21:18:00Z",
+      "hue": 270,
+      "priority_score": 0.7326680000000001,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_non_multiaffine_extension_via_weighted",
+      "title": "The Quadratic Shadow Theorem: Second-Derivative Structure from Newton Support Geometry",
+      "domain": "Algebraic Combinatorics / Polynomial Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-26T21:53:02Z",
+      "hue": 270,
+      "priority_score": 0.7587311652173914,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_plcker_coordinates_and_fermionic_state",
+      "title": "Pl\u00fccker Coordinates and Fermionic State Preparation: Quantum Matroid Geometry",
+      "domain": "Pythagorean",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-05-26T22:26:36Z",
+      "hue": 90,
+      "priority_score": 0.713033797752809,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_complete_aschbacher_certificate_theory",
+      "title": "Aschbacher Certificate Theory: Polynomial-Time Obstruction Certificates for Matrix Group Recognition",
+      "domain": "Computational Group Theory / Finite Classical Groups",
+      "primary_domain": "Computation",
+      "shape": "cube",
+      "date": "2026-05-26T22:27:11Z",
+      "hue": 92,
+      "priority_score": 0.7725412307692309,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_heterogeneitygap_conjecture",
+      "title": "Edge-Size Disorder as a Structural Predictor of Integrality Gaps in Hypergraph Transversals",
+      "domain": "Combinatorial Optimization / Hypergraph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T22:27:37Z",
+      "hue": 272,
+      "priority_score": 0.65906,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_4_tropical_mixing_without_spectral_inter",
+      "title": "Direct Tropical Mixing Without Spectral Intermediate",
+      "domain": "Tropical Geometry / Markov Chain Mixing",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-26T22:28:04Z",
+      "hue": 91,
+      "priority_score": 0.710588,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_spectral_expansion_for_matrix_groups_a",
+      "title": "Spectral Expansion for Matrix Groups: Arithmetic Certificates for Cayley Graphs on SL\u2082(\ud835\udd3d_p)",
+      "domain": "Arithmetic Combinatorics / Spectral Graph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T23:04:37Z",
+      "hue": 272,
+      "priority_score": 0.7183925,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_comparison_theorems_for_non_group_mark",
+      "title": "Comparison Theorems for Non-Group Markov Chains",
+      "domain": "Probability Theory / Spectral Graph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T23:05:00Z",
+      "hue": 270,
+      "priority_score": 0.659564,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_1_dynamic_spectral_gap_tracking_for_onli",
+      "title": "Dynamic Spectral Gap Tracking for Online Mixing-Time Guarantees",
+      "domain": "Combinatorial Sampling / Lorentzian Polynomials / Spectral Graph Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T23:39:40Z",
+      "hue": 91,
+      "priority_score": 0.7033800000000001,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_sparse_support_certificate_compression",
+      "title": "Sparse-Support Certificate Compression for Matroid Basis Polynomials",
+      "domain": "Combinatorial Algebraic Geometry / Matroid Theory",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-26T23:40:04Z",
+      "hue": 270,
+      "priority_score": 0.6956024000000001,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_2_exceptional_expander_ladder__f_e_e_e",
+      "title": "Exceptional Expander Ladder: Certificate Framework for F\u2084, E\u2086, E\u2087, E\u2088",
+      "domain": "Exceptional Lie Theory / Spectral Graph Theory / Certified Optimization",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T23:40:19Z",
+      "hue": 90,
+      "priority_score": 0.7835981654135338,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_1_quantitative_helfgott_type_growth_in_g",
+      "title": "Quantitative Helfgott-Type Growth in SL(2, F_p): Formal Escape Certificates and Product Expansion",
+      "domain": "Additive Combinatorics / Finite Group Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-26T23:40:38Z",
+      "hue": 270,
+      "priority_score": 0.6490118139534884,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_2_valuated_matroid_theory_via_k_fold_log",
+      "title": "Higher Discrete Curvature Theory for Valuated Matroids via k-Fold Directional Log-Concavity",
+      "domain": "Combinatorial Algebraic Geometry / Tropical Geometry / Discrete Convex Analysis",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-27T00:15:18Z",
+      "hue": 90,
+      "priority_score": 0.6498758987341773,
+      "quality": "partial"
+    },
+    {
+      "id": "direction_5_continuous_extension_via_discretizatio",
+      "title": "Continuous-to-Discrete Robustness Transfer for Lorentzian Stability",
+      "domain": "Geometric Discretization Theory / Lorentzian Polynomial Stability",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-27T00:15:51Z",
+      "hue": 101,
+      "priority_score": 0.7752345794392524,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_certified_expander_codes_with_linear_t",
+      "title": "Certified Expander Codes from Cayley Graphs with Linear-Time Decoding",
+      "domain": "Coding Theory / Algebraic Graph Theory",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-05-27T00:51:04Z",
+      "hue": 271,
+      "priority_score": 0.7277883902439024,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_3_information_theoretic_monotonicity_for",
+      "title": "Information-Theoretic Monotonicity for Robustly Lorentzian Measures",
+      "domain": "Discrete Probability / Information Theory / Lorentzian Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-05-27T00:51:30Z",
+      "hue": 92,
+      "priority_score": 0.7255008839779007,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_2_lorentzian_polynomials_in_statistical_",
+      "title": "Lorentzian Polynomials in Statistical Physics and Probability",
+      "domain": "Algebraic Combinatorics / Probability / Statistical Physics",
+      "primary_domain": "Physics",
+      "shape": "diamond",
+      "date": "2026-05-27T00:51:48Z",
+      "hue": 271,
+      "priority_score": 0.7206784406779662,
+      "quality": "substantial"
+    },
+    {
+      "id": "direction_4_robust_log_concavity_for_quantum_many_",
+      "title": "Robust Log-Concavity for Quantum Many-Body Ground States",
+      "domain": "Quantum Many-Body Theory / Lorentzian Polynomials / Classical Expansion",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-27T00:52:08Z",
+      "hue": 270,
+      "priority_score": 0.7774966433566434,
+      "quality": "substantial"
+    }
+  ],
+  "edges": [
+    {
+      "source": "direction_4_matroidal_quantum_state_preparation",
+      "target": "direction_1_bounded_treewidth_polynomial_certifica",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_random_cayley_expanders_and_spectral_g",
+      "target": "direction_1_canonical_path_poincar_inequality_for_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_generation_certificates_for_matrix_gro",
+      "target": "direction_1_certificate_density_asymptotics_via_th",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_canonical_path_poincar_inequality_for_",
+      "target": "direction_1_comparison_theorems_for_non_group_mark",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_4_complexity_of_certificate_verification",
+      "target": "direction_1_complete_aschbacher_certificate_theory",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_m_convexity_closure_under_differentiat",
+      "target": "direction_1_deletion_contraction_duality_for_polyn",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_dynamic_lorentzian_certificates_and_on",
+      "target": "direction_1_dynamic_spectral_gap_tracking_for_onli",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_weighted_extension",
+      "target": "direction_1_exact_weighted_tropical_dimension_form",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_4_large_deviation_principles_for_generat",
+      "target": "direction_1_full_grtnerellis_large_deviation_princ",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_tropical_morse_theory_as_a_topological",
+      "target": "direction_1_full_k_wl_separation_via_non_uniform_c",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_tropical_morse_theory_for_network_phas",
+      "target": "direction_1_higher_dimensional_tropical_morse_theo",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_sharp_cutoff_for_the_adjacent_transpos",
+      "target": "direction_1_log_sobolev_inequality_for_the_hybrid_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_m_convex_optimization_via_directional_",
+      "target": "direction_1_lorentzian_polynomial_certificates_for",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_sparse_support_certificate_compression",
+      "target": "direction_1_non_multiaffine_extension_via_weighted",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_basis_uniqueness_up_to_tropical_projec",
+      "target": "direction_1_overlap_class_conjecture__beyond_disjo",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_certificates_and_product_growth",
+      "target": "direction_1_quantitative_growth_bounds_for_matrix_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_model_theory_of_approximate_subgroups",
+      "target": "direction_1_quantitative_helfgott_type_growth_in_g",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_certified_expanders_for_classical_grou",
+      "target": "direction_1_quantum_2_designs_from_certified_unita",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "yang_mills_mass_gap",
+      "target": "direction_1_reflection_positivity_and_perron_frobe",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_4_certified_mixing_time_bounds_and_cutof",
+      "target": "direction_1_sharp_cutoff_for_the_adjacent_transpos",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_black_box_group_recognition_via_charac",
+      "target": "direction_1_spectral_fingerprints_for_classical_su",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_4_tropical_persistent_homology_for_netwo",
+      "target": "direction_1_spectral_tropical_stability__from_conj",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_filtration_persistence_formula",
+      "target": "direction_1_stability_theory_for_tropical_persiste",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_weighted_and_multi_objective_extension",
+      "target": "direction_1_submodular_objectives_and_the_curvatur",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_higher_dimensional_tropical_morse_theo",
+      "target": "direction_1_torsion_aware_tropical_morse_theory",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_tropical_morse_spectra_as_quantum_grap",
+      "target": "direction_1_weighted_distance_equality_via_tropica",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_universality_of_phase_transition_criti",
+      "target": "direction_1_wreath_product_perturbation_theory",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_expander_graphs_from_certificate_pairs",
+      "target": "direction_2_certificate_based_quantum_expanders",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_certificate_density_asymptotics_via_th",
+      "target": "direction_2_certificate_density_for_symplectic_and",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "yang_mills_mass_gap",
+      "target": "direction_2_character_expansion_and_strong_couplin",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_basis_uniqueness_up_to_tropical_projec",
+      "target": "direction_2_chip_firing_canonical_forms_via_tropic",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_universality_of_phase_transition_criti",
+      "target": "direction_2_concentration_of_subgroup_pressure",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_exceptional_groups_and_character_sheaf",
+      "target": "direction_2_exceptional_expander_ladder__f_e_e_e",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_uniform_spectral_gaps_for_sp_via_delig",
+      "target": "direction_2_exceptional_groups_and_character_sheaf",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_4_certified_mixing_time_bounds_and_cutof",
+      "target": "direction_2_explicit_poincar_constant_and_exponent",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_generation_certificates_for_matrix_gro",
+      "target": "direction_2_extension_to_sl_n_sp_2n_and_orthogonal",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_weighted_and_multi_objective_extension",
+      "target": "direction_2_hypergraph_transversals_as_tropical_co",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_numerical_stability_of_lorentzian_reco",
+      "target": "direction_2_lorentzian_condition_numbers_and_smoot",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_deletion_contraction_duality_for_polyn",
+      "target": "direction_2_lorentzian_minor_closure_conjecture",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_higher_order_log_concavity_and_partiti",
+      "target": "direction_2_mixing_time_bounds_from_concavity_dept",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_stability_of_strongly_log_concave_dist",
+      "target": "direction_2_noise_stability_universality_and_the_a",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_tropical_morse_spectra_as_quantum_grap",
+      "target": "direction_2_spectral_decoding_via_tropical_morse_b",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_stability_theory_for_tropical_persiste",
+      "target": "direction_2_tropical_interleaving_distance_and_alg",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_certified_expanders_for_classical_grou",
+      "target": "direction_2_uniform_spectral_gaps_for_sp_via_delig",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_phase_transitions_in_generation_probab",
+      "target": "direction_2_universality_of_phase_transition_criti",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_multivariate_k_fold_log_concavity_and_",
+      "target": "direction_2_valuated_matroid_theory_via_k_fold_log",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_chip_firing_correspondence",
+      "target": "direction_3_abelian_sandpile_criticality_via_lapla",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_weighted_extension",
+      "target": "direction_3_algorithmic_tropical_kernel_computatio",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_generation_certificates_for_matrix_gro",
+      "target": "direction_3_black_box_group_recognition_via_charac",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_certified_expanders_for_classical_grou",
+      "target": "direction_3_certified_expander_codes_with_linear_t",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_expander_graphs_from_certificate_pairs",
+      "target": "direction_3_certified_expanders_for_classical_grou",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_weighted_and_multi_objective_extension",
+      "target": "direction_3_compositional_rounding_certificates_fo",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_sharp_cutoff_for_the_adjacent_transpos",
+      "target": "direction_3_driven_diffusive_systems_and_tasep_pha",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_uniform_spectral_gaps_for_sp_via_delig",
+      "target": "direction_3_hecke_operator_comparison_and_building",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_stability_of_strongly_log_concave_dist",
+      "target": "direction_3_information_theoretic_monotonicity_for",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_certificates_and_product_growth",
+      "target": "direction_3_model_theory_of_approximate_subgroups",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_higher_order_log_concavity_and_partiti",
+      "target": "direction_3_multivariate_k_fold_log_concavity_and_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_multivariate_k_fold_log_concavity_and_",
+      "target": "direction_3_negative_dependence_and_rapid_mixing_v",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_phase_transitions_in_generation_probab",
+      "target": "direction_3_pressure_theory_for_almost_simple_grou",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_random_cayley_expanders_and_spectral_g",
+      "target": "direction_3_spectral_expansion_for_matrix_groups_a",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_tropical_morse_theory_as_a_topological",
+      "target": "direction_3_tropical_morse_spectra_as_quantum_grap",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_universality_of_phase_transition_criti",
+      "target": "direction_4_arithmetic_statistics_via_subgroup_pre",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_random_cayley_expanders_and_spectral_g",
+      "target": "direction_4_certified_mixing_time_bounds_and_cutof",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_certificates_and_product_growth",
+      "target": "direction_4_complexity_of_certificate_verification",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_sharp_cutoff_for_the_adjacent_transpos",
+      "target": "direction_4_cryptographic_security_bounds_for_perm",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_weighted_extension",
+      "target": "direction_4_energy_landscape_metastability_detecti",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_higher_order_log_concavity_and_partiti",
+      "target": "direction_4_entropy_curvature_and_information_theo",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_stability_theory_for_tropical_persiste",
+      "target": "direction_4_information_theoretic_bounds_on_tropic",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_phase_transitions_in_generation_probab",
+      "target": "direction_4_large_deviation_principles_for_generat",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_quantum_ground_state_preparation_via_l",
+      "target": "direction_4_matroidal_quantum_state_preparation",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_4_matroidal_quantum_state_preparation",
+      "target": "direction_4_plcker_coordinates_and_fermionic_state",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_stability_of_strongly_log_concave_dist",
+      "target": "direction_4_robust_log_concavity_for_quantum_many_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_weighted_and_multi_objective_extension",
+      "target": "direction_4_statistical_physics_of_random_transver",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_m_convexity_closure_under_differentiat",
+      "target": "direction_4_tropical_contraction_and_support_trunc",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_multivariate_k_fold_log_concavity_and_",
+      "target": "direction_4_tropical_hodge_theory_via_supermodular",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_chip_firing_correspondence",
+      "target": "direction_4_tropical_persistent_homology_for_netwo",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_tropical_morse_theory_as_a_topological",
+      "target": "direction_4_verified_oe_log_e_implementation_with_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_expander_graphs_from_certificate_pairs",
+      "target": "direction_5_certificates_and_product_growth",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_stability_of_strongly_log_concave_dist",
+      "target": "direction_5_continuous_extension_via_discretizatio",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_1_canonical_path_poincar_inequality_for_",
+      "target": "direction_5_effective_resistance_and_electrical_fl",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_random_cayley_expanders_and_spectral_g",
+      "target": "direction_5_expander_based_derandomization_in_cert",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_generation_certificates_for_matrix_gro",
+      "target": "direction_5_expander_graphs_from_certificate_pairs",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_tropical_morse_theory_as_a_topological",
+      "target": "direction_5_higher_dimensional_tropical_morse_theo",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_universality_of_phase_transition_criti",
+      "target": "direction_5_information_theoretic_universality_via",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_3_multivariate_k_fold_log_concavity_and_",
+      "target": "direction_5_m_convex_optimization_via_directional_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_weighted_and_multi_objective_extension",
+      "target": "direction_5_mechanism_design_with_certified_multi_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_higher_order_completion_and_lambda_cal",
+      "target": "direction_5_operadic_rewriting_and_homotopical_com",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_noise_stability_universality_and_the_a",
+      "target": "direction_5_quantum_algorithmic_phase_transitions_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_numerical_stability_of_lorentzian_reco",
+      "target": "direction_5_stability_of_strongly_log_concave_dist",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_5_tropical_morse_theory_for_network_phas",
+      "target": "direction_5_tropical_morse_theory_as_a_topological",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_4_relative_tropical_hodge_theorem",
+      "target": "direction_5_tropical_morse_theory_for_network_phas",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    }
+  ],
+  "domain_bridges": [
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Tropical",
+      "package_count": 6,
+      "strength": 1.0
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Tropical",
+      "package_count": 21,
+      "strength": 1.0
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Logic",
+      "package_count": 4,
+      "strength": 1.0
+    },
+    {
+      "domain_a": "Logic",
+      "domain_b": "Tropical",
+      "package_count": 8,
+      "strength": 1.0
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Geometry",
+      "package_count": 6,
+      "strength": 1.0
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Computation",
+      "package_count": 3,
+      "strength": 0.9000000000000001
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Pythagorean",
+      "package_count": 3,
+      "strength": 0.9000000000000001
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Physics",
+      "package_count": 2,
+      "strength": 0.7
+    },
+    {
+      "domain_a": "Algebra",
+      "domain_b": "Logic",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Physics",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Physics",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Physics",
+      "domain_b": "Pythagorean",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Geometry",
+      "domain_b": "Pythagorean",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Logic",
+      "domain_b": "Pythagorean",
+      "package_count": 1,
+      "strength": 0.5
+    },
+    {
+      "domain_a": "Pythagorean",
+      "domain_b": "Tropical",
+      "package_count": 1,
+      "strength": 0.5
+    }
+  ]
+};
