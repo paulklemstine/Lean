@@ -898,10 +898,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8b4ad54",
     "timestamp": "2026-05-25T22:58:43.501683+00:00"
   },
   {
@@ -937,10 +937,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "136def5b",
     "timestamp": "2026-05-25T22:59:06.937020+00:00"
   },
   {
@@ -1060,27 +1060,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "abb48be4",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T02:33:38.976648+00:00"
-  },
-  {
-    "id": "fd_1051",
-    "title": "Direction 2: Universality of Hybrid Walks \u2014 General Local/Global Generators",
-    "description": "**Conjecture:** For any finite group $G$ with a \"local\" symmetric generating set $S_L$ (spectral gap $\\gamma_L$) and a \"global\" symmetric generating set $S_G$ with $|S_G| = O(1)$, the spectral gap of the combined walk satisfies $\\gamma_{L \\cup G} = \\Theta(\\gamma_L)$ \u2014 i.e., a bounded number of global generators does not change the spectral gap order.\n\n**Test:** Verify computationally for:\n- $G = \\mathbb{Z}_n^2$ (2D lattice group), $S_L$ = nearest-neighbor generators, $S_G$ = one diagonal generator.\n- $G = S_n$, $S_L$ = adjacent transpositions, $S_G$ = star transpositions $(1, i)$.\n- $G = \\text{GL}_n(\\mathbb{F}_q)$, $S_L$ = elementary matrices, $S_G$ = one permutation matrix.\n\n**Impact:** Would establish a universal principle: **bounded-size global generators preserve the diffusive scale of local generators.** This unifies many known results and opens a new theory of Markov chain acceleration.\n\n**Catalog References:** `Pythagorean/CayleyExpander/HybridWalk.lean` (HybridPermutationWalk structure), `Bridges/Catalog/Pythagorean/CayleyExpander/Defs.lean` (CayleySpectralData, CanonicalPathData).\n\n**Proof Strategy:** Generalize the canonical path argument: show that global generators reduce path congestion but cannot reduce the number of local steps needed, preserving the spectral gap order.\n\n**Domain Bridges:** Geometric group theory (word metrics), algebraic graph theory (Cayley graph expansion), operator algebras (spectral transfer).\n\n**Lineage:** Direct generalization of Theorem A.\n\n**Ambition:** \ud83d\udfe2 Solid Extension \u2014 conceptually clear generalization with known proof template.\n\n**\"The key insight is...\"** that spectral gaps are controlled by bottlenecks, and global generators can widen bottlenecks but cannot eliminate the local structure that creates them.\n\n**\"Why now?\"** The formalized HybridPermutationWalk structure provides the right abstraction layer for general statements. Testing on multiple group families is now computationally feasible.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "48617359",
-    "consumed_by_exp_id": "175f456d",
-    "timestamp": "2026-05-26T04:51:55.424405+00:00"
   },
   {
     "id": "fd_1076",
@@ -1426,84 +1405,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T21:53:04.972544+00:00"
   },
   {
-    "id": "fd_1207",
-    "title": "Direction 4: Shadow Complexity as an Arithmetic Circuit Lower Bound",
-    "description": "**Conjecture:** For any arithmetic circuit C computing all n\u00b2 second partial derivatives of a polynomial f with support S, the circuit size |C| satisfies |C| \u2265 |Sh\u2082(S)| / n\u00b2. Furthermore, there exist polynomial families where this bound is tight, giving an optimal sparsity-based lower bound.\n\n**The key insight is** that the shadow size is a lower bound on the number of distinct nonzero outputs any computation must produce, and sharing of intermediate results can reduce the work by at most an n\u00b2 factor (from shared first-derivative computations).\n\n**Why now?** Arithmetic circuit complexity has few general lower bounds beyond degree-based arguments. Support-based bounds represent a new paradigm, and the shadow theorem provides the first rigorous support-to-output complexity connection.\n\n**Test:** Construct explicit polynomial families (e.g., sparse random, structured algebraic) where the shadow size grows superlinearly in the support size. Implement optimal Hessian computation algorithms and measure their complexity relative to the shadow bound. A disproof of tightness would be a family where every algorithm beats the bound by a super-constant factor.\n\n**Impact:** New lower bound technique for arithmetic complexity based on Newton-polytope geometry rather than degree. Could resolve specific questions about optimal Hessian computation complexity.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (quadShadow_mono, computeQuadShadow_mono \u2014 monotonicity as complexity monotone)\n\n**Proof Strategy:** Counting argument: any correct algorithm for computing all \u2202\u1d62\u2202\u2c7cf must produce |Sh\u2082(S)| distinct nonzero values. Each arithmetic operation produces at most one new value. First-derivative sharing reduces redundancy by at most n\u00b2. Formalize this as a lower bound on the number of additions and multiplications.\n\n**Domain Bridges:** Algebraic complexity theory (VP vs VNP, depth reduction), automatic differentiation (optimal Jacobian accumulation), sparse linear algebra (Hessian compression).\n\n**Lineage:** Builds on the algorithm correctness theorem and monotonicity results from this work.\n\n**Ambition:** Solid extension for the basic counting lower bound; grand challenge for tightness and connections to VP vs VNP.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "a8f3ced3",
-    "timestamp": "2026-05-26T21:53:05.013082+00:00"
-  },
-  {
-    "id": "fd_1229",
-    "title": "Direction 1: Path Congestion to Dirichlet Form Comparison \u2014 Completing the Pipeline",
-    "description": "**Conjecture**: If \u0393 is a path system routing P-edges through Q-edges with congestion \u03c1 (as defined by `PathCongestion`), then E_P(f) \u2264 \u03c1 \u00b7 E_Q(f) for all f. Combined with the formally verified `poincare_comparison`, this would yield \u03bb(Q) \u2265 \u03bb(P)/\u03c1 \u2014 the full canonical-path theorem for non-group chains.\n\n**Test**: Verify on all reversible chains on \u2264 6 states that the congestion bound correctly predicts the Dirichlet form comparison constant within a factor of 2. A counterexample with ratio > 2 would indicate the congestion definition needs refinement.\n\n**Impact**: Completes the formal pipeline from combinatorial path data to certified spectral gaps, making the comparison theorem immediately applicable to any chain where explicit paths can be constructed.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/CanonicalPaths.lean` \u2014 `variance_le_congestion_mul_energy`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `poincare_comparison`\n\n**Proof Strategy**: The proof requires a telescoping argument along paths (generalizing `telescope_word` from the Cayley catalog) combined with Cauchy\u2013Schwarz. The key step is: (f(x) - f(y))\u00b2 \u2264 |\u03b3| \u00b7 \u03a3_{e \u2208 \u03b3} (\u2207_e f)\u00b2. Sum over x,y weighted by \u03c0(x)P(x,y), swap the order of summation, and use the congestion bound.\n\n**Domain Bridges**: Probability theory \u2194 Combinatorial optimization (congestion as a graph property)\n\n**Lineage**: Direct descendant of `sqDiff_le_len_mul_sum_sqDiffs` from `CanonicalPaths.lean`\n\n**Ambition**: \ud83d\udd34 Paradigm shift \u2014 removes the last group-theoretic dependency from the canonical-path method\n\n**The key insight is** that the telescoping + Cauchy\u2013Schwarz argument uses only path structure, not group multiplication, so it transfers directly to non-group chains with the same formal structure.\n\n**Why now?** The comparison theorem is verified, the definitions of `PathCongestion` and `dirichletForm` are in place, and the proof template from `CanonicalPaths.lean` provides a clear roadmap.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a19dada",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:05:03.278928+00:00"
-  },
-  {
-    "id": "fd_1230",
-    "title": "Direction 2: Quantitative Mixing Time Bounds via Comparison Transport",
-    "description": "**Conjecture**: For any chain P compared to reference Q via `ReversibleChainComparison` with parameters (b, C), the mixing time satisfies t_mix(P, \u03b5) \u2264 (b\u00b7C/\u03bb(Q)) \u00b7 (log|\u03b1| + log(1/\u03b5)). Moreover, the prefactor b\u00b7C is tight up to constants for the class of \"lazy path walks compared to jump walks.\"\n\n**Test**: Compute exact mixing times (defined as first time TV distance < 1/4) for all reversible chains on 5 states, and verify the predicted bound is within a factor of n of the truth.\n\n**Impact**: Creates the first formally certified mixing time bounds for non-group chains, with practical implications for MCMC stopping rules.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/MixingTime.lean` \u2014 `tv_le_half_sqrt_card_mul_l2`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `spectralGap_lower_bound_of_dirichlet_comparison`\n\n**Proof Strategy**: Combine the comparison theorem's spectral gap bound with the TV-L\u00b2 comparison from `MixingTime.lean`. The L\u00b2 distance at time t satisfies ||P^t - \u03c0||\u00b2_{L\u00b2(\u03c0)} \u2264 (1-\u03bb)^{2t} \u00b7 (|\u03b1|-1), and TV \u2264 (1/2)\u221a(|\u03b1|) \u00b7 ||\u00b7||_{L\u00b2}.\n\n**Domain Bridges**: Probability theory \u2194 Algorithms (MCMC stopping rules) \u2194 Statistics (sampling guarantees)\n\n**Lineage**: Combines two catalog lineages: comparison (this work) and mixing time (CayleyExpander)\n\n**Ambition**: \ud83d\udfe1 Solid extension \u2014 connects existing verified results into a practical tool\n\n**The key insight is** that the comparison theorem produces a spectral gap bound in exactly the form needed by the mixing time machinery already formalized in the catalog.\n\n**Why now?** Both the comparison theorem and the mixing time infrastructure are verified; the connection is a straightforward composition.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a19dada",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:05:03.316466+00:00"
-  },
-  {
-    "id": "fd_1231",
-    "title": "Direction 3: Information-Theoretic Comparison via Modified Log-Sobolev Inequalities",
-    "description": "**Conjecture**: The comparison method extends to modified log-Sobolev inequalities (MLSI): if chain Q satisfies MLSI with constant \u03b1_Q, and the \"entropy comparison constant\" C_ent satisfies Ent_Q(f\u00b2) \u2264 C_ent \u00b7 Ent_P(f\u00b2), then P satisfies MLSI with constant \u03b1_Q/C_ent. This would give O(log log n) mixing time improvements over the Poincar\u00e9 route.\n\n**Test**: For the Glauber dynamics on the Ising model at \u03b2 < \u03b2_c (high temperature), verify computationally that the MLSI constant scales polynomially in n, while the Poincar\u00e9 constant scales polynomially with a worse exponent.\n\n**Impact**: Bridges probability theory to information theory through entropy methods, and provides exponentially better mixing bounds for chains with hypercontractive properties.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/LogSobolev.lean` \u2014 log-Sobolev infrastructure\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 comparison framework\n\n**Proof Strategy**: Replace variance with entropy, Dirichlet form with entropy dissipation, and adapt the comparison argument. The key difficulty is that entropy is not a quadratic functional, so the \"choose optimal c\" trick from variance comparison needs modification.\n\n**Domain Bridges**: Probability theory \u2194 Information theory (entropy, KL divergence) \u2194 Quantum information (hypercontractivity)\n\n**Lineage**: Extension of comparison framework + log-Sobolev catalog\n\n**Ambition**: \ud83d\udd34 Grand challenge \u2014 would create the first formally verified MLSI comparison theorem\n\n**The key insight is** that the comparison principle is fundamentally about transferring functional inequalities, and the Poincar\u00e9 inequality is just one instance of a general pattern that includes log-Sobolev, Nash, and Beckner inequalities.\n\n**Why now?** The log-Sobolev infrastructure exists in the catalog, and the comparison framework provides the template for the proof structure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a19dada",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:05:03.356788+00:00"
-  },
-  {
     "id": "fd_1246",
     "title": "Direction 1: Real Stability of Determinantal Polynomials and the Full Lorentzianity Bridge",
     "description": "**Conjecture**: For any symmetric PSD matrix K \u2208 \u211d^{n\u00d7n}, the polynomial Z_K(x) = det(I + diag(x)K) is real stable (no zeros in the open upper half-plane \u210d^n). Combined with the Br\u00e4nd\u00e9n\u2013Huh theorem (real stable + nonneg coefficients \u27f9 Lorentzian), this would prove our Lorentzianity conjecture.\n\n**Test**: Formalize the following chain: (1) For z \u2208 \u210d^n, the matrix I + diag(z)K has positive definite Hermitian part. (2) Positive definite matrices have nonzero determinant. (3) Therefore Z_K(z) \u2260 0 on \u210d^n. Each step can be verified by constructing the Hermitian part explicitly and using `PosDef.det_ne_zero`.\n\n**Impact**: This completes the main theorem of the project \u2014 that DPP generating polynomials are Lorentzian \u2014 and unlocks the full cascade of Hodge-type inequalities for DPP coefficient arrays.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (IsBrandenHuhLorentzian definition and recursive spectral certificate equivalence).\n\n**Proof Strategy**: Define real stability as a predicate on MvPolynomial. Prove that for PSD K and z \u2208 \u210d^n, the matrix I + diag(z)K has positive definite Hermitian part (this requires formalizing Im(z_i\u00b7K_{ij}) terms). Then invoke `det_ne_zero` for positive definite matrices. The Br\u00e4nd\u00e9n\u2013Huh direction (stable \u2192 Lorentzian for homogeneous components with nonneg coefficients) requires formalizing the closure theorem, which is the main technical challenge.\n\n**Domain Bridges**: Statistical physics (partition function stability) \u2194 Algebraic geometry (Lorentzian/Hodge theory) \u2194 Probability (negative association).\n\n**The key insight is** that the positive semidefiniteness of K translates directly into the half-plane stability of the partition function, which in turn implies Lorentzianity \u2014 creating a clean algebraic pipeline from linear algebra to Hodge-theoretic geometry.\n\n**Why now?** The Br\u00e4nd\u00e9n\u2013Huh theory is now mature (5+ years since publication), Mathlib has extensive matrix theory infrastructure, and our verified definitions provide the exact formalization targets.\n\n**Lineage**: Extends `dpp_partition_function_lorentzian` (currently sorry'd) and builds on `dpp_uniformSpecialization` (verified).\n\n**Ambition**: Grand challenge \u2014 completing this would be the first machine-verified proof that determinantal partition functions are Lorentzian.\n\n---",
@@ -1522,46 +1423,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "258120ed",
     "consumed_by_exp_id": "3696c4be",
     "timestamp": "2026-05-27T00:51:51.560054+00:00"
-  },
-  {
-    "id": "fd_1247",
-    "title": "Direction 2: Higher-Order Negative Association for DPPs",
-    "description": "**Conjecture**: DPPs satisfy the full **negative association** (NA) property: for any two increasing functions f, g on disjoint sets of coordinates, Cov(f(X_A), g(X_B)) \u2264 0. This is strictly stronger than pairwise negative dependence and has deeper implications for concentration inequalities.\n\n**Test**: (1) Formalize the NA property as a predicate on probability measures. (2) Prove NA for product measures (diagonal DPPs). (3) Extend to rank-one DPPs. (4) Attempt the general case via the BBL (Borcea\u2013Br\u00e4nd\u00e9n\u2013Liggett) theorem connecting real stability to NA.\n\n**Impact**: Full NA unlocks Chernoff-type concentration bounds for DPP statistics, FKG-type correlation inequalities, and stochastic domination results.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signature), `Pythagorean/DPPLorentzian.lean` (DPP definitions and pairwise result).\n\n**Proof Strategy**: The BBL theorem states that strongly Rayleigh measures (whose generating polynomial is real stable) satisfy NA. If Direction 1 succeeds, DPPs are strongly Rayleigh, and NA follows. The key formalization challenge is the BBL proof itself, which uses multivariate analytic continuation arguments.\n\n**Domain Bridges**: Probability theory (negative association) \u2194 Statistical mechanics (FKG inequalities) \u2194 Algorithms (concentration bounds for randomized algorithms).\n\n**The key insight is** that negative association is not merely a statistical property but a geometric consequence of the polynomial's stability, which forces all monotone correlations to have the correct sign.\n\n**Why now?** Our pairwise result provides the base case, and the BBL theorem provides the roadmap.\n\n**Lineage**: Extends `dpp_pairwise_negative_dependence` (verified) to all monotone functions, not just indicator functions.\n\n**Ambition**: Solid extension \u2014 the BBL theorem is well-understood mathematically, though formalizing multivariate analytic arguments is technically demanding.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "258120ed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T00:51:51.600857+00:00"
-  },
-  {
-    "id": "fd_1248",
-    "title": "Direction 3: Matroid Exchange Property and Lorentzian Support Theory",
-    "description": "**Conjecture**: The support of every homogeneous component of a DPP generating polynomial satisfies the symmetric exchange property (is a matroid basis set). This would connect DPP theory to matroid Hodge theory (Adiprasito\u2013Huh\u2013Katz).\n\n**Test**: (1) For random PSD matrices with n \u2264 10, extract the support of each homogeneous component. (2) Verify the exchange axiom: for any two d-subsets S, T in the support and any i \u2208 S\\T, there exists j \u2208 T\\S such that (S \u2212 i + j) and (T + i \u2212 j) are both in the support. (3) Identify the matroid (it should be the uniform matroid for generic K).\n\n**Impact**: This would provide a new source of matroids \u2014 one arising from spectral data \u2014 and connect the Lorentzian polynomial theory to the matroid Hodge theory that resolved the Rota\u2013Heron\u2013Welsh conjecture.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange definition).\n\n**Proof Strategy**: For generic PSD K, all principal minors of size d are nonzero, so the support is the set of all d-subsets = uniform matroid. The interesting case is degenerate K (low rank), where the support becomes a proper matroid. The Br\u00e4nd\u00e9n\u2013Huh theorem guarantees the exchange property for Lorentzian polynomial supports.\n\n**Domain Bridges**: Algebraic combinatorics (matroid theory) \u2194 Algebraic geometry (Hodge theory) \u2194 Probability (DPP support structure).\n\n**The key insight is** that the matroid exchange property of Lorentzian polynomial supports is not an abstract axiom but a concrete structural property of DPP coefficient arrays, visible in the rank structure of the kernel matrix.\n\n**Why now?** The SupportSatisfiesExchange predicate already exists in the catalog.\n\n**Lineage**: Builds on `dpp_partition_function_lorentzian` (conjecture) and connects to matroid theory.\n\n**Ambition**: Solid extension \u2014 the exchange property for Lorentzian supports is already proved by Br\u00e4nd\u00e9n\u2013Huh; the formalization connects it to DPPs.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "258120ed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T00:51:51.641720+00:00"
   },
   {
     "id": "fd_1249",
@@ -1626,26 +1487,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T00:52:11.288128+00:00"
   },
   {
-    "id": "fd_1256",
-    "title": "Direction 1: Full Tracy\u2013Widom Formalization via Painlev\u00e9 II",
-    "description": "**Conjecture:** The Tracy\u2013Widom distribution F\u2082 can be formalized in Lean 4 as the Fredholm determinant of the Airy kernel, and the GOE edge convergence theorem can be proved:\n\n$$\\lim_{n \\to \\infty} \\mathbb{P}\\left(\\frac{\\lambda_{\\max}(E_n) - 2\\sigma}{\\sigma n^{-2/3}} \\leq t\\right) = F_{\\mathrm{TW}}(t).$$\n\n**Test:** Formalize the Painlev\u00e9 II ODE y'' = 2y\u00b3 + ty, prove existence and uniqueness of the Hastings\u2013McLeod solution, and derive that F\u2082(t) = exp(\u2212\u222b_t^\u221e (s\u2212t)q(s)\u00b2ds). Verify numerically against known tables (e.g., F\u2082(0) \u2248 0.9678).\n\n**Impact:** Would provide the first machine-verified formalization of Tracy\u2013Widom in any proof assistant, enabling sharp (not just exponential) failure bounds. Would replace the current `TracyWidomGOEUpperTail` placeholder with a constructive definition.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: `TracyWidomGOEUpperTail` placeholder\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: spectral gap framework\n\n**Proof Strategy:** Formalize Airy functions via their integral representation, prove Fredholm determinant convergence for trace-class operators, then specialize to the Airy kernel on L\u00b2(t, \u221e).\n\n**Domain Bridges:** Integrable probability, ODE theory, functional analysis, mathematical physics.\n\n**Lineage:** Extends the universality transfer theorem to exact asymptotics.\n\n**Ambition:** Grand challenge \u2014 would be a landmark in formal mathematics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T02:07:17.293067+00:00"
-  },
-  {
     "id": "fd_1257",
     "title": "Direction 2: Wigner Universality for Non-Gaussian Perturbations",
     "description": "**Conjecture:** The transfer theorem and phase transition at 2\u03c3 hold for any Wigner matrix ensemble with sub-Gaussian entries having variance \u03c3\u00b2/n, not just GOE. Specifically, for any i.i.d. (up to symmetry) entry distribution with E[X] = 0, E[X\u00b2] = \u03c3\u00b2/n, and sub-Gaussian tail \u03c8\u2082 \u2264 K:\n\n$$\\mathbb{P}(\\|E\\|_{\\mathrm{op}} \\geq 2\\sigma + t) \\leq C \\exp(-cn \\min(t^2/\\sigma^2, t/K))$$\n\nand consequently the same SharpFailureUpperBound applies.\n\n**Test:** Prove the concentration inequality for sub-Gaussian Wigner matrices using \u03b5-net arguments. Verify numerically by comparing Bernoulli(\u00b11/\u221an) and uniform([-\u221a3/n, \u221a3/n]) entries against the Gaussian case.\n\n**Impact:** Would extend the certification law to all practical noise models (quantization noise, bounded perturbations, sparse corruptions). The `HasEdgeTail` universality framework in SharpGOEConstants.lean is already designed to support this.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: `HasEdgeTail`, `universality_transfer`\n- `Catalog/Bridges/Catalog/Pythagorean/LorentzianSmoothedAnalysis.lean`: abstract transfer\n\n**Proof Strategy:** Use Talagrand's concentration inequality for Lipschitz functions of independent random variables, combined with \u03b5-net covering arguments for the unit sphere.\n\n**Domain Bridges:** High-dimensional probability, concentration of measure, geometric functional analysis.\n\n**Lineage:** Direct extension of the universality transfer theorem.\n\n**Ambition:** Solid extension \u2014 well within current techniques but requires substantial formalization effort.\n\n---",
@@ -1658,7 +1499,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "6a75662e",
@@ -1680,7 +1521,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "6a75662e",
@@ -1699,11 +1540,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
+    "priority_score": 1.0,
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f7f5fa5d",
     "timestamp": "2026-05-27T02:07:17.446462+00:00"
   },
   {
@@ -1721,7 +1562,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "6a75662e",
@@ -1739,7 +1580,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "14c19443",
@@ -1871,6 +1712,63 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "258120ed",
     "consumed_by_exp_id": "f44ba709",
     "timestamp": "2026-05-27T00:51:51.763159+00:00"
+  },
+  {
+    "id": "fd_1273",
+    "title": "Direction 1: Sharp Constants and Eigenvalue Interlacing",
+    "description": "**Conjecture:** For the torus (\u2124/n\u2124)^d with standard generators and one diagonal generator, the spectral gap ratio \u03b3_hybrid/\u03b3_local equals exactly (d+1)/d for all n and d.\n\n**Test:** Compute the spectral gap ratio for d = 2, 3, 4 and n = 5, ..., 50 via exact eigenvalue formulas for the discrete Laplacian on the torus. Verify that the ratio equals (d+1)/d to machine precision. If the ratio deviates for any d > 2, the conjecture is false.\n\n**Impact:** An exact formula for the universal constant would elevate the comparison from an order bound to a precise identity, revealing hidden algebraic structure in the spectral theory of product groups. This would connect to eigenvalue interlacing for graph unions and could yield a closed-form spectral gap for general bounded augmentations on abelian groups.\n\n**Catalog References:**\n- `Catalog/Pythagorean/CayleyExpander/HybridLocalGlobal.lean` \u2014 hybrid Dirichlet form comparison\n- `Catalog/Pythagorean/CayleyExpander/SpectralGap.lean` \u2014 spectral gap infrastructure\n\n**Proof Strategy:** Use the explicit eigenbasis of the discrete Laplacian on (\u2124/n\u2124)^d (tensor products of DFT vectors) to compute both spectral gaps exactly. The hybrid gap involves a rank-1 perturbation of the Laplacian whose effect on the second eigenvalue can be computed via the matrix determinant lemma.\n\n**Domain Bridges:** Harmonic analysis on abelian groups, circulant matrices, Fourier analysis\n\n**Lineage:** Direct extension of the torus computational experiments in this work\n\n**Ambition:** Solid extension \u2014 completes the picture for abelian groups\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "175f456d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T03:33:16.828549+00:00"
+  },
+  {
+    "id": "fd_1274",
+    "title": "Direction 2: Growing Augmentation \u2014 The Phase Transition",
+    "description": "**Conjecture:** There exists a critical growth rate f(n) for the number of global generators such that:\n- If |S_G(n)| = o(f(n)), the spectral gap ratio remains bounded (universality holds)\n- If |S_G(n)| = \u03c9(f(n)), the spectral gap ratio diverges (universality breaks)\n\nFor (\u2124/n\u2124)^2, the critical threshold is f(n) = \u0398(n^{2/3}).\n\n**Test:** For (\u2124/n\u2124)^2, add k random generators of word length \u2264 2 and compute the spectral gap ratio for k = 1, n^{1/3}, n^{1/2}, n^{2/3}, n. If the ratio remains bounded for k \u2264 n^{2/3} and diverges for k \u2265 n, the conjecture is supported.\n\n**Impact:** This would identify the exact boundary between \"locality-protected\" and \"accelerated\" regimes, resolving a fundamental question in Markov chain theory. The phase transition itself would be a new phenomenon connecting random graph theory (random Cayley augmentation) to spectral perturbation theory.\n\n**Catalog References:**\n- `Catalog/Pythagorean/CayleyExpander/HybridLocalGlobal.lean` \u2014 the bounded case\n- `Catalog/Pythagorean/CayleyExpander/CanonicalPaths.lean` \u2014 congestion methods\n\n**Proof Strategy:** For the upper bound regime, extend the Cauchy\u2013Schwarz telescoping argument with a probabilistic bound on path overlap. For the lower bound, construct explicit eigenfunctions whose Rayleigh quotient is significantly altered by growing augmentation.\n\n**Domain Bridges:** Random matrix theory (random perturbations of structured matrices), percolation theory (random long-range bonds)\n\n**Lineage:** Natural growth of the bounded augmentation principle\n\n**Ambition:** Grand challenge \u2014 would require new techniques beyond comparison methods\n\n**\"The key insight is...\"** that there must be a critical scale at which the cumulative effect of random shortcuts overcomes the local bottleneck, and identifying this scale connects spectral theory to percolation.\n\n**\"Why now?\"** The formal infrastructure for Dirichlet form comparison on Cayley graphs is now in place, and computational experiments can probe the transition regime before a full proof is available.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "175f456d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T03:33:16.871764+00:00"
+  },
+  {
+    "id": "fd_1275",
+    "title": "Direction 3: Infinite Groups and Amenability",
+    "description": "**Conjecture:** For amenable groups with polynomial growth (e.g., nilpotent groups), the locality-protection principle extends to asymptotic spectral gaps of F\u00f8lner sequences: the isoperimetric profile is invariant under bounded augmentation of the generating set.\n\n**Test:** For the discrete Heisenberg group H_3(\u2124) (a non-abelian nilpotent group of growth degree 4), compute the spectral gap of the Cayley graph restricted to balls of radius R, for both local and hybrid generators. Verify that the ratio remains bounded as R \u2192 \u221e.\n\n**Impact:** This would extend the locality-protection principle from finite groups to the rich world of infinite finitely generated groups, connecting to Varopoulos's theory of random walks on groups and the Coulhon\u2013Saloff-Coste heat kernel estimates. A positive result would show that the diffusive exponent (determined by the growth rate) is truly a quasi-isometric invariant.\n\n**Catalog References:**\n- `Catalog/Pythagorean/CayleyExpander/HybridLocalGlobal.lean` \u2014 finite group framework\n\n**Proof Strategy:** Use F\u00f8lner set approximation and the finite-group comparison theorem applied to increasing subgroups. The key challenge is controlling boundary effects as the F\u00f8lner sets grow.\n\n**Domain Bridges:** Geometric group theory (growth and isoperimetric profiles), harmonic analysis on nilpotent groups\n\n**Lineage:** Generalization from finite to infinite groups\n\n**Ambition:** Grand challenge \u2014 bridges to deep open questions in geometric group theory\n\n**\"The key insight is...\"** that polynomial growth groups have a well-defined \"diffusion exponent\" related to their growth degree, and our comparison method should preserve this exponent.\n\n**\"Why now?\"** The formal comparison infrastructure provides a template that can be adapted to truncated groups (finite quotients of infinite groups).\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "175f456d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T03:33:16.917986+00:00"
   },
   {
     "id": "seed_013",
@@ -2277,6 +2175,92 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T00:16:01.142031+00:00"
   },
   {
+    "id": "fd_1272",
+    "title": "Arithmetic Echo Reconstruction from Primewise Persistent Barcodes",
+    "description": "Conjecture: There exists an explicit functorial construction assigning to every smooth projective variety X over Q a family of filtered integer chain complexes C_p(X) indexed by good primes p such that, for a density-1 set of primes, the multiset of Frobenius eigenvalue arguments on middle \u00e9tale cohomology can be reconstructed up to o(1) error from the primewise persistent barcode of C_p(X); moreover, non-isogenous varieties with distinct Frobenius angle statistics fail this reconstruction agreement for infinitely many p. Test: Build C_p(X) for computable families (elliptic curves, K3 surfaces, selected Calabi\u2013Yau hypersurfaces), compute barcodes and compare reconstructed angle distributions against those obtained from point counts / zeta functions; confirmation requires statistically consistent recovery across growing p, while systematic mismatch or inability to distinguish known non-isogenous examples refutes the conjecture. Impact: This would create a new topological probe of arithmetic geometry, turning persistent homology into an information-complete observable for Frobenius statistics and potentially yielding new invariants for isogeny, mirror phenomena, and arithmetic classification.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T03:32:54.843053+00:00"
+  },
+  {
+    "id": "fd_1278",
+    "title": "Prime-Phase Synchronization Law for Zeta-Zero Persistence",
+    "description": "Conjecture: There exists an explicit filtration functor F that assigns to each height parameter T a finite filtered chain complex C_T over Z built from the first nontrivial zeros of the Riemann zeta function up to height T, such that the p-primary persistent barcode of C_T exhibits a phase-locking transition: for each fixed prime p, the normalized birth-time distribution converges as T -> infinity to a deterministic measure mu_p, and RH holds if and only if the family {mu_p}_p satisfies a universal synchronization identity linking its first spectral moment to log p with error o(1) uniformly in p <= T^alpha for every alpha < 1. Test: Compute C_T from verified zero data and measure the primewise barcode moments; confirmation is convergence plus the predicted synchronization law across many primes and growing T, while systematic violation for some prime range refutes the conjectured equivalence. Impact: This would create a new topological-statistical reformulation of RH, turning zero statistics into experimentally testable prime-indexed persistence signatures and potentially enabling machine-guided discovery of hidden structure in L-function zeros.",
+    "domains": [
+      "Analytic Number Theory",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T03:33:24.775449+00:00"
+  },
+  {
+    "id": "fd_1284",
+    "title": "Prime-Stable Persistent Homology Predicts Motivic Galois Orbit Size",
+    "description": "Conjecture: There exists a functorial construction sending a smooth projective variety X over Q to a family of filtered chain complexes C_p(X) over Z, indexed by good primes p, such that if the multiset-valued primewise persistent barcode of C_p(X) is eventually periodic in p modulo some integer M up to uniformly bounded bottleneck error, then the semisimplified l-adic Galois representation on each H^i_et(X,Q_l) has finite image after restriction to an open subgroup, equivalently X is potentially of Artin type in that cohomological degree. Test: Compute the barcode family for explicit classes (CM abelian varieties, K3 surfaces with high Picard rank, generic Calabi\u2013Yau hypersurfaces, modular curves) and check whether eventual periodicity occurs exactly in cases where Frobenius traces are known to come from finite-image or potentially finite monodromy representations; a single generic non-isotrivial family exhibiting periodic barcodes despite provably infinite monodromy would refute it. Impact: This would create a new topological detector for arithmetic monodromy finiteness, linking persistent homology to the structure of Galois representations and potentially giving a computable probe of motivic complexity.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T03:33:56.193661+00:00"
+  },
+  {
+    "id": "fd_1279",
+    "title": "Direction 1: Higher-Order Shadow Towers and Superlinear Lower Bounds",
+    "description": "**Conjecture:** For every $k \\geq 1$, the $k$-th shadow $\\text{Sh}_k(S)$ satisfies the lower bound $|\\text{Sh}_k(S)| \\leq n^k \\cdot \\text{size}(C_k)$ for any circuit $C_k$ computing all $k$-th partial derivative supports. Moreover, there exist explicit families where the $k$-shadow grows faster than the $(k-1)$-shadow relative to $|S|$, yielding superlinear (in $k$) lower bounds.\n\n**Test:** Formalize $\\text{Sh}_k$ for $k = 3, 4$ in Lean and computationally verify on simplex supports $T(d, m)$ that $\\text{Sh}_k(T(d,m)) = T(d, m-k)$. If the identity holds, derive exact cardinalities via binomial coefficients and prove the tower of lower bounds $\\text{size}(C_k) \\geq \\binom{m+d-k-1}{d-1} / n^k$.\n\n**Impact:** This would give the first formally verified tower of derivative-complexity lower bounds, with the $k$-th level providing a bound that grows polynomially in $m$ and $d$. For fixed $d$ and large $k$, the ratio $|\\text{Sh}_k|/n^k$ can dominate naive counting, suggesting truly new lower bounds.\n\n**Catalog References:**\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `QuadraticShadow`, `quadShadow_mono`\n- `Pythagorean/ShadowCircuitComplexity.lean`: `secondShadow`, `supportCircuit_hessian_lower_bound`\n\n**Proof Strategy:** Define $\\text{Sh}_k$ inductively as $\\text{Sh}_1(\\text{Sh}_{k-1}(S))$. Prove the simplex identity by induction on $k$, using the base case $\\text{Sh}_2(T(d,m)) = T(d,m-2)$ from this work. The lower bound theorem should generalize by replacing $n^2$ channels with $\\binom{n+k-1}{k}$ derivative channels.\n\n**Domain Bridges:** Connects to the theory of jet bundles in differential geometry, where $k$-th jets are precisely the objects whose supports form $k$-shadows.\n\n**The key insight is** that the shadow tower $\\text{Sh}_1 \\supseteq \\text{Sh}_2 \\supseteq \\cdots$ creates an arithmetic complexity filtration that no circuit can shortcut.\n\n**Why now?** The formal machinery for $\\text{Sh}_2$ is in place; extending to $\\text{Sh}_k$ requires only inductive generalization of existing definitions and proofs.\n\n**Lineage:** Builds directly on `secondShadow_simplexSupport` and `supportCircuit_hessian_lower_bound`.\n\n**Ambition:** \ud83d\udfe1 Solid extension \u2014 primarily definitional and structural generalization of established results.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a8f3ced3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T03:33:47.239729+00:00"
+  },
+  {
+    "id": "fd_1280",
+    "title": "Direction 2: Non-Cancellation Certificates and Coefficient-Aware Bounds",
+    "description": "**Conjecture:** For polynomials over fields of characteristic zero with generic coefficients, the support of the Hessian entries equals the second shadow exactly (no cancellation). This non-cancellation property can be certified by a formal Jacobian condition on the coefficient matrix, yielding coefficient-aware lower bounds that are strictly stronger than support-only bounds.\n\n**Test:** Formalize the connection between `WeightedSupportShadow.nonzeroQuadLeafSet_eq_shadow` and the shadow complexity lower bound. Show that for polynomials with nonzero coefficients, the lower bound applies to actual polynomial circuits (not just support circuits).\n\n**Impact:** Bridges the gap between the combinatorial support model and actual polynomial computation, making the lower bounds applicable to real arithmetic circuits.\n\n**Catalog References:**\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `nonzeroQuadLeafSet_eq_shadow`, `coeff_pderiv_pderiv_ne_zero_iff`\n\n**Proof Strategy:** Use `coeff_pderiv_pderiv_ne_zero_iff` to show that individual Hessian coefficients are nonzero iff the ancestor coefficient is nonzero. Combine with the support circuit model to lift the lower bound from support circuits to actual arithmetic circuits under a genericity assumption.\n\n**Domain Bridges:** Connects to algebraic geometry (generic points, Zariski topology) and commutative algebra (non-vanishing of resultants).\n\n**The key insight is** that the non-cancellation property of individual second derivatives \u2014 each output coefficient is a nonzero scalar multiple of exactly one input \u2014 converts support-level bounds into coefficient-level bounds without loss.\n\n**Why now?** The non-cancellation theorem is already formally verified in `WeightedSupportShadow.lean`; the remaining work is to formalize the circuit model connection.\n\n**Lineage:** Directly extends `nonzeroQuadLeafSet_eq_shadow` to complexity conclusions.\n\n**Ambition:** \ud83d\udfe1 Solid extension with potential for \ud83d\udd34 breakthrough if it yields new bounds on standard arithmetic circuits.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a8f3ced3",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T03:33:47.282680+00:00"
+  },
+  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2289,22 +2273,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
-  },
-  {
-    "id": "fd_1271",
-    "title": "Domain Bridges:",
-    "description": "Matroid theory \u2194 algebraic geometry (Grassmannian, Pl\u00fccker relations)",
-    "domains": [
-      "Algebra",
-      "Geometry",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2217051e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T02:48:08.539912+00:00"
   },
   {
     "id": "seed_007",
