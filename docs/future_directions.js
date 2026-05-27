@@ -752,10 +752,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "f43533d0",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T21:53:04.887954+00:00"
   },
   {
@@ -896,10 +896,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7849b5c2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8f59c0ed",
     "timestamp": "2026-05-27T07:52:13.102204+00:00"
   },
   {
@@ -1320,10 +1320,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bac59b26",
     "timestamp": "2026-05-27T17:24:45.431739+00:00"
   },
   {
@@ -2096,5 +2096,42 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.336768+00:00"
+  },
+  {
+    "id": "fd_1557",
+    "title": "Direction 1: Sharp Representation-Theoretic Bounds via GL\u2082 Decomposition",
+    "description": "**Conjecture:** For every prime q \u2265 5 and every certified pair (g, h) in GL\u2082(\ud835\udd3d_q), the spectral gap satisfies \u03b3(S) \u2265 C/q where C = 1/2 \u2212 \u03b5 for any \u03b5 > 0 and sufficiently large q. Moreover, the worst-case eigenvalue comes from the principal series representation family.\n\n**Test:** Decompose the averaging operator on each of the four representation families of GL\u2082(\ud835\udd3d_q) \u2014 (i) one-dimensional determinant twists, (ii) principal series, (iii) Steinberg twists, (iv) cuspidal representations \u2014 and compute the operator norm on each family for q \u2208 {5, 7, 11, 13, 17, 19, 23}. If the principal series consistently dominates (giving the largest nontrivial eigenvalue), the conjecture is supported. If cuspidal representations dominate for some q, the conjecture needs revision.\n\n**Impact:** A proof would give the first broad family of 4-regular explicit expanders for GL\u2082 with algebraic certificates and a sharp uniform bound. This would bypass Bourgain\u2013Gamburd's probabilistic method with a deterministic, certificate-driven alternative.\n\n**Catalog References:**\n- `Catalog/Pythagorean/UniformSpectralGap.lean`: `singerLike_no_eigenvalue\u2082`, `singerLike_no_invariant_line\u2082`, `GL2Cert.harmonic_meanzero_eq_zero`\n- `Catalog/Algebra/MatrixGroupGeneration.lean`: `eq_bot_or_top_of_charpoly_irreducible`\n- `Catalog/Pythagorean/CertificateExpanders.lean`: `harmonic_meanzero_eq_zero`, `certified_pair_harmonic_trivial`\n\n**Proof Strategy:** For each representation family \u03c1, bound \u2016(1/4)(\u03c1(g)+\u03c1(g\u207b\u00b9)+\u03c1(h)+\u03c1(h\u207b\u00b9))\u2016 using:\n- Principal series: Singer-like g acts on induced representations from the Borel subgroup; its matrix coefficients are character sums bounded by Weil's theorem.\n- Cuspidal: Use the explicit character table of GL\u2082(\ud835\udd3d_q) and Deligne-style bounds on character sums.\n- Steinberg: The unique irreducible quotient of dimension q; Singer-like action gives O(1/\u221aq) bounds.\n- One-dimensional: Primitive det ensures non-triviality on determinant characters.\n\n**Domain Bridges:** Automorphic forms (character sum bounds via Weil), number theory (Deligne's theorem on character sums), spectral graph theory (eigenvalue\u2013expansion connection).\n\n**The key insight is** that each representation family of GL\u2082(\ud835\udd3d_q) responds to exactly one of the three certification conditions, and the family-wise bounds combine to a uniform gap.\n\n**Why now?** The formal verification of the harmonic maximum principle and Singer eigenvalue exclusion provides the foundational infrastructure. The explicit character table of GL\u2082(\ud835\udd3d_q) is classical and well-documented, making formalization feasible.\n\n**Lineage:** Extends `certified_pair_gap_pos` from qualitative (\u03b3 > 0) to quantitative (\u03b3 \u2265 C/q).\n\n**Ambition:** Grand challenge \u2014 would establish a new paradigm for explicit expander construction.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "209e0d92",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T22:19:22.514222+00:00"
+  },
+  {
+    "id": "fd_1558",
+    "title": "Direction 2: Certificate-Driven Expanders for GL_n(\ud835\udd3d_q)",
+    "description": "**Conjecture:** For fixed n \u2265 2 and varying prime q, there exist certified pairs in GL_n(\ud835\udd3d_q) \u2014 defined by irreducible charpoly of degree n for the first generator and primitive determinant for the second \u2014 such that the spectral gap satisfies \u03b3 \u2265 C_n / q^{n-1}.\n\n**Test:** For n = 3 and q \u2208 {5, 7, 11}, enumerate elements of GL\u2083(\ud835\udd3d_q) with irreducible degree-3 characteristic polynomials, pair with primitive-determinant matrices, verify generation, and compute spectral gaps numerically.\n\n**Impact:** Would extend the certificate framework from GL\u2082 to arbitrary rank, yielding expander families of exponentially growing size with polynomial-gap bounds.\n\n**Catalog References:**\n- `Catalog/Algebra/MatrixGroupGeneration.lean`: `eq_bot_or_top_of_charpoly_irreducible` (already proven for arbitrary dimension)\n- `Catalog/Pythagorean/UniformSpectralGap.lean`: `SingerLike\u2082` (to be generalized to `SingerLike_n`)\n\n**Proof Strategy:** The irreducible action theorem (`eq_bot_or_top_of_charpoly_irreducible`) already works in arbitrary dimension. The main challenge is the representation-theoretic analysis, which for GL_n requires Harish-Chandra theory and parabolic induction.\n\n**Domain Bridges:** Representation theory of p-adic groups, Langlands program (at the finite-field level), algebraic combinatorics (Bruhat decomposition).\n\n**The key insight is** that the irreducible action theorem from MatrixGroupGeneration is already dimension-agnostic \u2014 the hard work is in the representation decomposition, not the algebra.\n\n**Why now?** The dimension-independent invariant subspace theorem is already formalized. The representation theory of GL_n(\ud835\udd3d_q) is more complex but structurally similar to GL\u2082.\n\n**Lineage:** Direct generalization of Direction 1 from n=2 to arbitrary n.\n\n**Ambition:** Solid extension \u2014 significant but follows a clear path from existing results.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "209e0d92",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T22:19:22.614499+00:00"
   }
 ];

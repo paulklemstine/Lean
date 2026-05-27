@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Analytic Number Theory / Additive Combinatorics",
     "date": "2026-05-27T22:19:45Z",
     "exp_id": "3e567686",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6359144000000001,
+    "quality": "partial",
     "pkg_num": 195
   },
   {
@@ -5664,8 +5664,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-27T22:19:45Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6359144000000001,
+      "quality": "partial"
     }
   ],
   "edges": [
