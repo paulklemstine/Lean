@@ -673,5 +673,10 @@
   "258120ed": "direction_2_lorentzian_polynomials_in_statistical_.json",
   "d97a486b": "direction_4_robust_log_concavity_for_quantum_many_.json",
   "d844dc7e": "direction_3_information_theoretic_monotonicity_for.json",
-  "8850da3d": "direction_2_sparse_support_certificate_compression.json"
+  "8850da3d": "direction_2_sparse_support_certificate_compression.json",
+  "d0a449c5": "direction_5_shadow_structure_of_partition_function.json",
+  "fbc28fb9": "direction_1_primewise_completeness_for_derived_per.json",
+  "6a75662e": "direction_1_sharp_goe_constants_via_tracy_widom_tr.json",
+  "14c19443": "direction_5_partition_function_phase_transitions_a.json",
+  "492f937d": "direction_1_hessian_based_lorentzian_gap_from_mvpo.json"
 }

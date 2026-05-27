@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1908 of the highest-quality
+A curated collection of 1913 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1908
+Total files: 1913
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -446,6 +446,7 @@ import FINAL.Bridges.HTreeRobust
 import FINAL.Bridges.HammingMetric
 import FINAL.Bridges.HellyPrinciple
 import FINAL.Bridges.HellyTheory
+import FINAL.Bridges.HessianLorentzianGap
 import FINAL.Bridges.HierarchicalRobustness
 import FINAL.Bridges.HigherOrderCompletion
 import FINAL.Bridges.HigherOrderEqSat
@@ -505,6 +506,7 @@ import FINAL.Bridges.LowerEnvelope
 import FINAL.Bridges.MarginCosheaf
 import FINAL.Bridges.MaslovDequantizationRobustness
 import FINAL.Bridges.MatrixGroupGrowth
+import FINAL.Bridges.MatroidCertificatePhaseTransition
 import FINAL.Bridges.MatroidQuantumCertificates
 import FINAL.Bridges.MinEntropy
 import FINAL.Bridges.MinPlusAlgebra
@@ -1573,10 +1575,12 @@ import FINAL.Pythagorean.OrbitOrderDuality
 import FINAL.Pythagorean.PF2Theorems
 import FINAL.Pythagorean.PadicControlledStability
 import FINAL.Pythagorean.PadicOrbitalValuation
+import FINAL.Pythagorean.PartitionShadow
 import FINAL.Pythagorean.PersistenceZetaMultiplicativity
 import FINAL.Pythagorean.PhaseAwareLemmaSynthesis
 import FINAL.Pythagorean.PolynomialWidth
 import FINAL.Pythagorean.PrimePowerHecke
+import FINAL.Pythagorean.PrimewiseCompleteness
 import FINAL.Pythagorean.PrimewiseTorsionStability
 import FINAL.Pythagorean.ProductFormula
 import FINAL.Pythagorean.Properties
@@ -1598,6 +1602,7 @@ import FINAL.Pythagorean.SandwichGraph
 import FINAL.Pythagorean.SandwichTheorems
 import FINAL.Pythagorean.Separation
 import FINAL.Pythagorean.SeparatorAwareForgetting
+import FINAL.Pythagorean.SharpGOEConstants
 import FINAL.Pythagorean.SharpKAMThreshold
 import FINAL.Pythagorean.SharpThresholdConcentration
 import FINAL.Pythagorean.SpacetimeLattice
