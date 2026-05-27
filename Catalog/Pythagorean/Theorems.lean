@@ -1,319 +1,247 @@
 /-
-# Coalgebraic Final Semantics: Main Theorems
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+-/
+import Mathlib
+import ValuatedMatroidDepth.Defs
 
-This file proves the core theorems of coalgebraic final semantics for simple types:
+/-!
+# Valuated Matroid Depth: Main Theorems
 
-1. **Quotient Coalgebra Structure**: The behavioral equivalence quotient inherits coalgebra structure.
-2. **Morphism Kernel Bisimulation**: Kernel of any coalgebra morphism is a bisimulation.
-3. **Uniqueness of Final Coalgebra**: Any two final coalgebras are isomorphic.
-4. **Arity Bound**: Branching degree bounded by type arity.
-5. **Modal Depth Theory**: n-step equivalence forms a descending chain.
-6. **Morphisms Preserve Behavioral Equivalence**.
-7. **Cross-domain: Simulation and automata-theoretic connection**.
+This file proves the main theorems of the directional depth filtration theory,
+establishing the algebraic, tropical, and combinatorial properties of the
+depth invariant.
 
-**Application keywords:** coalgebraic semantics, final coalgebra, bisimulation minimization,
-Myhill–Nerode for λ-calculus, polynomial functors, canonical models, observational equivalence
+## Main Results
+
+* `directionalDepthAtLeast_mul` — multiplicative depth stability (Theorem 1)
+* `negLog_supermodular_of_mixedLC` — tropical bridge via mixed log-concavity (Theorem 2)
+* `not_depth_two_of_ratio_failure` — depth obstruction criterion (Theorem 3)
+* `ratio_energy_supermodular` — statistical physics bridge (Theorem 4)
+* `exists_depth_one_not_depth_two` — depth hierarchy strictness (Theorem 5)
+
+## References
+
+* Murota, "Discrete Convex Analysis", SIAM, 2003
+* Brändén–Huh, "Lorentzian Polynomials", Annals of Mathematics, 2020
 -/
 
-import CoalgebraicSemantics.Defs
+noncomputable section
 
-open STLCType
+open Finset BigOperators Function
 
-universe u
+namespace ValuatedMatroidDepth
 
-/-! ## Theorem 1: Quotient Coalgebra Structure -/
+variable {α : Type*}
+
+section structural
+variable [Fintype α] [DecidableEq α]
+
+/-- Depth ≥ k+1 implies depth ≥ k. -/
+theorem DirectionalDepthAtLeast_of_succ
+    (k : ℕ) (f : (α → ℕ) → ℝ)
+    (hf : DirectionalDepthAtLeast (k + 1) f) :
+    DirectionalDepthAtLeast k f := by
+  induction k generalizing f with
+  | zero => exact trivial
+  | succ k ih =>
+    exact ⟨hf.1, fun i => ih _ (hf.2 i)⟩
+
+/-- Depth is monotone: depth ≥ k and j ≤ k implies depth ≥ j. -/
+theorem DirectionalDepthAtLeast_mono
+    {j k : ℕ} {f : (α → ℕ) → ℝ}
+    (hf : DirectionalDepthAtLeast k f)
+    (hjk : j ≤ k) :
+    DirectionalDepthAtLeast j f := by
+  induction k generalizing j f with
+  | zero => simp at hjk; subst hjk; exact hf
+  | succ k ih =>
+    rcases Nat.eq_or_lt_of_le hjk with rfl | hjk'
+    · exact hf
+    · exact ih (DirectionalDepthAtLeast_of_succ k f hf) (Nat.lt_succ_iff.mp hjk')
+
+end structural
+
+section basic
+variable [DecidableEq α]
+
+/-- Depth ≥ 1 implies multivariate directional log-concavity. -/
+theorem DirectionalDepthAtLeast.logConcave
+    {f : (α → ℕ) → ℝ}
+    (hf : DirectionalDepthAtLeast 1 f) :
+    MultiDirLogConcave f :=
+  hf.1
+
+/-- The ratio transform distributes over pointwise products. -/
+theorem ratioTransform_mul (i : α) (f g : (α → ℕ) → ℝ) :
+    ratioTransform i (fun m => f m * g m) =
+    fun m => ratioTransform i f m * ratioTransform i g m := by
+  ext m
+  simp only [ratioTransform]
+  rw [mul_div_mul_comm]
+
+/-- Ratio transform positivity. -/
+theorem ratioTransform_pos (i : α) (f : (α → ℕ) → ℝ)
+    (hf_pos : ∀ m, 0 < f m) :
+    ∀ m, 0 < ratioTransform i f m := fun m =>
+  div_pos (hf_pos _) (hf_pos _)
+
+/-- Infinite depth is equivalent to depth ≥ k for all k. -/
+theorem hasInfiniteDepth_iff (f : (α → ℕ) → ℝ) :
+    HasInfiniteDepth f ↔ ∀ k, DirectionalDepthAtLeast k f := by
+  rfl
+
+end basic
+
+section main_theorems
+variable [Fintype α] [DecidableEq α]
+
+/-! ## Theorem 1: Multiplicative Depth Stability -/
+
+/-- **Log-concavity of products**: if `f` and `g` are both directionally
+    log-concave and everywhere nonneg, then `f · g` is directionally log-concave. -/
+theorem multiDirLogConcave_mul
+    (f g : (α → ℕ) → ℝ)
+    (hf_nn : ∀ m, 0 ≤ f m)
+    (hg_nn : ∀ m, 0 ≤ g m)
+    (hf : MultiDirLogConcave f)
+    (hg : MultiDirLogConcave g) :
+    MultiDirLogConcave (fun m => f m * g m) := by
+  intro i m
+  have := hf i m
+  have := hg i m
+  simp_all +decide [MultiDirLogConcave]
+  convert mul_le_mul (hf i m) (hg i m) (mul_nonneg (hg_nn _) (hg_nn _)) (sq_nonneg _) using 1
+    <;> ring
+
+/-- **Theorem 1 (Multiplicative Depth Stability)**:
+    If `f` and `g` each have directional depth at least `k`, and both are everywhere
+    positive, then their pointwise product also has depth at least `k`.
+
+    This upgrades first-order log-concavity closure to an entire depth filtration,
+    making the depth classes into multiplicative monoids. -/
+theorem directionalDepthAtLeast_mul
+    (k : ℕ) (f g : (α → ℕ) → ℝ)
+    (hf_pos : ∀ m, 0 < f m)
+    (hg_pos : ∀ m, 0 < g m)
+    (hf : DirectionalDepthAtLeast k f)
+    (hg : DirectionalDepthAtLeast k g) :
+    DirectionalDepthAtLeast k (fun m => f m * g m) := by
+  induction k generalizing f g with
+  | zero => exact trivial
+  | succ k ih =>
+    constructor
+    · exact multiDirLogConcave_mul f g (fun m => le_of_lt (hf_pos m))
+        (fun m => le_of_lt (hg_pos m)) hf.1 hg.1
+    · intro i
+      have hrw : ratioTransform i (fun m => f m * g m) =
+          fun m => ratioTransform i f m * ratioTransform i g m :=
+        ratioTransform_mul i f g
+      rw [hrw]
+      exact ih _ _ (ratioTransform_pos i f hf_pos) (ratioTransform_pos i g hg_pos)
+        (hf.2 i) (hg.2 i)
+
+/-! ## Mixed Log-Concavity Multiplicative Stability -/
 
 /-
-The structure map respects behavioral equivalence.
+**Mixed log-concavity of products**: if `f` and `g` are both mixed
+    log-concave and everywhere nonneg, then `f · g` is mixed log-concave.
 -/
-theorem str_respects_behavioral_equiv (A : STLCType) (C : FiniteCoalgebra A)
-    (x y : C.Carrier)
-    (h : BehavioralEquiv A C x y) :
-    (match C.str x with
-     | Sum.inl () => (Sum.inl () : TypePolynomialFunctor A (SemanticQuotient A C))
-     | Sum.inr fx => Sum.inr (fun i => @Quotient.mk _ (behavioralSetoid A C) (fx i))) =
-    (match C.str y with
-     | Sum.inl () => (Sum.inl () : TypePolynomialFunctor A (SemanticQuotient A C))
-     | Sum.inr fy => Sum.inr (fun i => @Quotient.mk _ (behavioralSetoid A C) (fy i))) := by
-  rcases h with ⟨ R, hR, hxy ⟩;
-  cases h : C.str x <;> cases h' : C.str y <;> simp_all +decide;
-  · exact absurd ( hR.terminal_left x y hxy h ) ( by simp +decide [ h' ] );
-  · have := hR.terminal_right x y hxy; aesop;
-  · have := hR.branching x y _ _ hxy h h';
-    exact funext fun i => Quotient.sound ⟨ R, hR, this i ⟩
+theorem mixedLogConcave_mul
+    (f g : (α → ℕ) → ℝ)
+    (hf_nn : ∀ m, 0 ≤ f m)
+    (hg_nn : ∀ m, 0 ≤ g m)
+    (hf : MixedLogConcave f)
+    (hg : MixedLogConcave g) :
+    MixedLogConcave (fun m => f m * g m) := by
+  intro i j m;
+  have := hf i j m; have := hg i j m; have := hf j i m; have := hg j i m; simp_all +decide [ mul_assoc, mul_comm, mul_left_comm ] ;
+  convert mul_le_mul ‹f m * f ( m + Pi.single i 1 + Pi.single j 1 ) ≤ f ( m + Pi.single i 1 ) * f ( m + Pi.single j 1 ) › ‹g m * g ( m + Pi.single i 1 + Pi.single j 1 ) ≤ g ( m + Pi.single i 1 ) * g ( m + Pi.single j 1 ) › ( by apply_rules [ mul_nonneg, hf_nn, hg_nn ] ) ( by apply_rules [ mul_nonneg, hf_nn, hg_nn ] ) using 1 <;> ring
 
-/-- The descended structure map on the quotient. -/
-noncomputable def quotientStr (A : STLCType) (C : FiniteCoalgebra A) :
-    SemanticQuotient A C → TypePolynomialFunctor A (SemanticQuotient A C) :=
-  Quotient.lift
-    (fun x => match C.str x with
-              | Sum.inl () => (Sum.inl () : TypePolynomialFunctor A (SemanticQuotient A C))
-              | Sum.inr fx => Sum.inr (fun i => @Quotient.mk _ (behavioralSetoid A C) (fx i)))
-    (fun x y (h : BehavioralEquiv A C x y) =>
-      str_respects_behavioral_equiv A C x y h)
+/-! ## Theorem 2: Tropical Bridge -/
 
 /-
-**Theorem 1 (Quotient Has Coalgebra Structure)**
+**Theorem 2 (Tropical Bridge)**:
+    If `f` is mixed log-concave and everywhere positive, then `-log f` is
+    supermodular. This is the fundamental connection between log-concavity
+    hierarchies and tropical convexity.
+
+    The supermodularity condition `-log f(m+eᵢ+eⱼ) + (-log f(m)) ≥
+    (-log f(m+eᵢ)) + (-log f(m+eⱼ))` is equivalent to
+    `f(m+eᵢ)·f(m+eⱼ) ≥ f(m)·f(m+eᵢ+eⱼ)`, which is exactly
+    mixed log-concavity.
 -/
-theorem quotient_has_coalgebra_structure
-    (A : STLCType) (C : FiniteCoalgebra A) :
-    ∃ qstr : SemanticQuotient A C → TypePolynomialFunctor A (SemanticQuotient A C),
-      ∀ x : C.Carrier,
-        qstr (Quotient.mk (behavioralSetoid A C) x) =
-        TypePolynomialFunctor.map (Quotient.mk (behavioralSetoid A C)) (C.str x) := by
-  convert @str_respects_behavioral_equiv A C;
-  constructor <;> intro h;
-  · exact fun x y h => str_respects_behavioral_equiv A C x y h;
-  · use fun x => Quotient.liftOn' x (fun x => match C.str x with
-      | Sum.inl () => (Sum.inl () : TypePolynomialFunctor A (SemanticQuotient A C))
-      | Sum.inr fx => Sum.inr (fun i => @Quotient.mk _ (behavioralSetoid A C) (fx i))) (fun x y (h : BehavioralEquiv A C x y) =>
-      str_respects_behavioral_equiv A C x y h);
-    intro x; exact (by
-    cases h : C.str x <;> simp +decide [ h ];
-    · rfl;
-    · rfl)
+theorem negLog_supermodular_of_mixedLC
+    (f : (α → ℕ) → ℝ)
+    (hf_pos : ∀ m, 0 < f m)
+    (hf : MixedLogConcave f) :
+    IsSupermodular (fun m => - Real.log (f m)) := by
+  intro i j m hij;
+  have := hf i j m;
+  have := Real.log_le_log ( mul_pos ( hf_pos _ ) ( hf_pos _ ) ) this; simp_all +decide [ Real.log_mul, ne_of_gt ] ;
+  linarith
 
-/-! ## Theorem 2: Morphism Kernel is a Bisimulation -/
+/-! ## Theorem 3: Depth Obstruction -/
 
-/-- The kernel relation of a function. -/
-def kernelRel {α β : Type*} (f : α → β) (x y : α) : Prop := f x = f y
+/-- **Theorem 3 (Depth Obstruction)**:
+    If some ratio transform `Rᵢf` fails directional log-concavity,
+    then `f` does not have depth ≥ 2. This provides a computational
+    criterion for bounding depth from above. -/
+theorem not_depth_two_of_ratio_failure
+    (f : (α → ℕ) → ℝ)
+    (i : α)
+    (hfail : ¬ MultiDirLogConcave (ratioTransform i f)) :
+    ¬ DirectionalDepthAtLeast 2 f := by
+  contrapose! hfail
+  exact (hfail.2 i).1
+
+/-! ## Theorem 4: Cross-Domain (Statistical Physics / Energy Landscape) -/
+
+/-- **Ratio energy supermodularity**: if `f` has depth ≥ 2 and satisfies a
+    mixed log-concavity condition at the ratio level, then the local free energy
+    increment `-log(Rᵢf)` is supermodular.
+
+    In statistical mechanics, `-log f` is an energy landscape and `Rᵢf` represents
+    a local chemical potential / free-energy increment. This theorem says
+    depth ≥ 2 with mixed conditions ensures the response function is convex
+    in the tropical sense. -/
+theorem ratio_energy_supermodular
+    (i : α) (f : (α → ℕ) → ℝ)
+    (hf_pos : ∀ m, 0 < f m)
+    (_hf_depth : DirectionalDepthAtLeast 2 f)
+    (hf_mixed_ratio : MixedLogConcave (ratioTransform i f)) :
+    IsSupermodular (fun m => - Real.log (ratioTransform i f m)) :=
+  negLog_supermodular_of_mixedLC _ (ratioTransform_pos i f hf_pos) hf_mixed_ratio
+
+/-! ## Theorem 5: Hierarchy Strictness -/
 
 /-
-**Theorem 2 (Morphism Kernel Bisimulation)**
+There exists a function with depth ≥ 1 but not depth ≥ 2.
+    We construct an explicit witness on `Fin 2` (two-variable setting).
 -/
-theorem morphism_kernel_is_bisimulation
-    (A : STLCType) (C D : FiniteCoalgebra A)
-    (f : CoalgebraHom A C D) :
-    IsBisimulation A C (kernelRel f.toFun) := by
-  constructor <;> intro x y hxy hx <;> simp_all +decide [ kernelRel ];
-  · have h_comm : D.str (f.toFun x) = TypePolynomialFunctor.map f.toFun (C.str x) := by
-      exact f.comm x
-    have h_comm_y : D.str (f.toFun y) = TypePolynomialFunctor.map f.toFun (C.str y) := by
-      exact f.comm y
-    have := f.comm y; simp_all +decide [ TypePolynomialFunctor.map ] ;
-    cases h : C.str y <;> aesop;
-  · have := f.comm x; have := f.comm y; simp_all +decide [ IsBisimulation ] ;
-    cases h : C.str x <;> simp_all +decide [ TypePolynomialFunctor.map ];
-  · intro hxy' hx' hy' i
-    have h_eq : TypePolynomialFunctor.map (f.toFun) (C.str x) = TypePolynomialFunctor.map (f.toFun) (C.str y) := by
-      have := f.comm x; have := f.comm y; aesop;
-    cases h : C.str x <;> cases h' : C.str y <;> simp_all +decide [ TypePolynomialFunctor.map ];
-    injection h_eq with h_eq ; replace h_eq := congr_fun h_eq i ; aesop
+theorem exists_depth_one_not_depth_two :
+    ∃ (α : Type) (_ : Fintype α) (_ : DecidableEq α) (f : (α → ℕ) → ℝ),
+      DirectionalDepthAtLeast 1 f ∧ ¬ DirectionalDepthAtLeast 2 f := by
+  refine' ⟨ _, _, _ ⟩;
+  exact Fin 1;
+  · infer_instance;
+  · refine' ⟨ _, _, _, _ ⟩;
+    all_goals try infer_instance;
+    exact fun m => if m 0 = 0 then 1 else if m 0 = 1 then 3 else if m 0 = 2 then 2 else if m 0 = 3 then 1 else 0;
+    · constructor;
+      · intro i m; rcases m0 : m 0 with ( _ | _ | _ | _ | m0 ) <;> simp +decide [ m0 ] ;
+        · fin_cases i ; norm_num;
+        · fin_cases i ; norm_num;
+        · fin_cases i ; norm_num;
+        · fin_cases i ; norm_num;
+        · split_ifs <;> norm_num;
+      · exact fun _ => trivial;
+    · rintro ⟨ h₁, h₂ ⟩;
+      obtain ⟨ h₃, h₄ ⟩ := h₂ 0;
+      specialize h₃ 0 ( fun _ => 0 ) ; norm_num [ shiftUp, shiftUp2, ratioTransform ] at h₃
 
-/-- Morphism-identified states are behaviorally equivalent. -/
-theorem morphism_identifies_implies_behavioral_equiv
-    (A : STLCType) (C D : FiniteCoalgebra A)
-    (f : CoalgebraHom A C D)
-    {x y : C.Carrier} (h : f.toFun x = f.toFun y) :
-    BehavioralEquiv A C x y :=
-  ⟨kernelRel f.toFun, morphism_kernel_is_bisimulation A C D f, h⟩
+end main_theorems
 
-/-! ## Theorem 3: Uniqueness of Final Coalgebra -/
+end ValuatedMatroidDepth
 
-/-- A coalgebra isomorphism. -/
-structure CoalgebraIso (A : STLCType) (C D : FiniteCoalgebra A) where
-  fwd : CoalgebraHom A C D
-  bwd : CoalgebraHom A D C
-  left_inv : ∀ x, bwd.toFun (fwd.toFun x) = x
-  right_inv : ∀ y, fwd.toFun (bwd.toFun y) = y
-
-/-- Finality in a class of coalgebras. -/
-structure IsFinalIn (A : STLCType) (F : FiniteCoalgebra A)
-    (inClass : FiniteCoalgebra A → Prop) : Prop where
-  self_in_class : inClass F
-  univ : ∀ C : FiniteCoalgebra A, inClass C →
-    ∃ f : CoalgebraHom A C F,
-      ∀ g : CoalgebraHom A C F, ∀ x, g.toFun x = f.toFun x
-
-/-
-**Theorem 3 (Uniqueness of Final Coalgebra)**
--/
-theorem final_coalgebra_unique
-    (A : STLCType) {inClass : FiniteCoalgebra A → Prop}
-    {F G : FiniteCoalgebra A}
-    (hF : IsFinalIn A F inClass)
-    (hG : IsFinalIn A G inClass) :
-    Nonempty (CoalgebraIso A F G) := by
-  obtain ⟨f, hf⟩ : ∃ f : CoalgebraHom A G F, ∀ g : CoalgebraHom A G F, ∀ x, g.toFun x = f.toFun x := by
-    exact hF.univ G hG.self_in_class
-  obtain ⟨g, hg⟩ : ∃ g : CoalgebraHom A F G, ∀ h : CoalgebraHom A F G, ∀ y, h.toFun y = g.toFun y := by
-    exact hG.univ F hF.self_in_class;
-  refine' ⟨ g, f, _, _ ⟩;
-  · have := hF.univ F hF.self_in_class;
-    obtain ⟨ f, hf ⟩ := this;
-    convert hf ( CoalgebraHom.comp ‹CoalgebraHom A G F› g ) using 1;
-    simp +decide [ ← hf ( CoalgebraHom.id A F ) ];
-    rfl;
-  · have := hG.univ;
-    obtain ⟨ h, hh ⟩ := this G hG.self_in_class;
-    convert hh ( CoalgebraHom.comp g f ) using 1;
-    simp +decide [ ← hh ( CoalgebraHom.id A G ) ];
-    rfl
-
-/-! ## Theorem 4: Type Shape Controls Arity -/
-
-/-- The branching degree of a state. -/
-def branchingDegree (A : STLCType) (C : FiniteCoalgebra A) (x : C.Carrier) : ℕ :=
-  match C.str x with
-  | Sum.inl _ => 0
-  | Sum.inr _ => arityOf A
-
-/-- **Theorem 4 (Arity Bound)** -/
-theorem transition_arity_bounded_by_type
-    (A : STLCType) (C : FiniteCoalgebra A) (x : C.Carrier) :
-    branchingDegree A C x ≤ arityOf A := by
-  unfold branchingDegree
-  cases C.str x with
-  | inl _ => exact Nat.zero_le _
-  | inr _ => exact le_refl _
-
-theorem arr_arity_pos (A B : STLCType) : 0 < arityOf (.arr A B) := by
-  unfold arityOf; omega
-
-/-! ## Theorem 5: Modal Depth Approximation -/
-
-/-- n-step behavioral equivalence: agreement up to depth n. -/
-def BehavEquivN (A : STLCType) (C : FiniteCoalgebra A) :
-    ℕ → C.Carrier → C.Carrier → Prop
-  | 0 => fun _ _ => True
-  | n + 1 => fun x y =>
-    (C.str x = Sum.inl () ↔ C.str y = Sum.inl ()) ∧
-    ∀ (fx : Fin (arityOf A) → C.Carrier) (fy : Fin (arityOf A) → C.Carrier),
-      C.str x = Sum.inr fx → C.str y = Sum.inr fy →
-      ∀ i, BehavEquivN A C n (fx i) (fy i)
-
-/-- n-step equivalence is reflexive. -/
-theorem behavEquivN_refl (A : STLCType) (C : FiniteCoalgebra A) :
-    ∀ (n : ℕ) (x : C.Carrier), BehavEquivN A C n x x := by
-  intro n; induction n with
-  | zero => intro _; trivial
-  | succ n ih =>
-    intro x
-    refine ⟨Iff.rfl, fun fx fy hfx hfy i => ?_⟩
-    rw [hfx] at hfy; cases hfy; exact ih (fx i)
-
-/-- n-step equivalence is symmetric. -/
-theorem behavEquivN_symm (A : STLCType) (C : FiniteCoalgebra A) :
-    ∀ (n : ℕ) (x y : C.Carrier), BehavEquivN A C n x y → BehavEquivN A C n y x := by
-  intro n; induction n with
-  | zero => intros; trivial
-  | succ n ih =>
-    intro x y ⟨h_iff, h_branch⟩
-    exact ⟨h_iff.symm, fun fy fx hfy hfx i => ih _ _ (h_branch fx fy hfx hfy i)⟩
-
-/-- n-step equivalence is transitive. -/
-theorem behavEquivN_trans (A : STLCType) (C : FiniteCoalgebra A) :
-    ∀ (n : ℕ) (x y z : C.Carrier),
-      BehavEquivN A C n x y → BehavEquivN A C n y z → BehavEquivN A C n x z := by
-  intro n; induction n with
-  | zero => intros; trivial
-  | succ n ih =>
-    intro x y z ⟨hxy_iff, hxy_br⟩ ⟨hyz_iff, hyz_br⟩
-    refine ⟨Iff.trans hxy_iff hyz_iff, fun fx fz hfx hfz i => ?_⟩
-    have hy_not_term : ¬(C.str y = Sum.inl ()) := by
-      intro hy; have := hxy_iff.mpr hy; rw [this] at hfx; simp at hfx
-    obtain ⟨fy, hfy⟩ : ∃ fy, C.str y = Sum.inr fy := by
-      cases h : C.str y with
-      | inl u => exact absurd h hy_not_term
-      | inr g => exact ⟨g, rfl⟩
-    exact ih _ _ _ (hxy_br fx fy hfx hfy i) (hyz_br fy fz hfy hfz i)
-
-/-- **Theorem 5 (Descending Chain)**: (n+1)-step equivalence refines n-step. -/
-theorem behavEquivN_descending (A : STLCType) (C : FiniteCoalgebra A) :
-    ∀ (n : ℕ) (x y : C.Carrier),
-      BehavEquivN A C (n + 1) x y → BehavEquivN A C n x y := by
-  intro n; induction n with
-  | zero => intros; trivial
-  | succ n ih =>
-    intro x y ⟨h_iff, h_branch⟩
-    exact ⟨h_iff, fun fx fy hfx hfy i => ih _ _ (h_branch fx fy hfx hfy i)⟩
-
-/-- **Theorem (Bisimulation implies n-equivalence for all n)** -/
-theorem behavioral_implies_nstep
-    (A : STLCType) (C : FiniteCoalgebra A)
-    {x y : C.Carrier}
-    (h : BehavioralEquiv A C x y) :
-    ∀ n, BehavEquivN A C n x y := by
-  obtain ⟨R, hR, hxy⟩ := h
-  intro n
-  induction n generalizing x y with
-  | zero => trivial
-  | succ n ih =>
-    refine ⟨⟨fun hsx => hR.terminal_left x y hxy hsx,
-            fun hsy => hR.terminal_right x y hxy hsy⟩,
-           fun fx fy hfx hfy i => ?_⟩
-    exact ih (hR.branching x y fx fy hxy hfx hfy i)
-
-/-! ## Canonical Behavior Construction -/
-
-/-- The canonical (minimized) coalgebra: quotient by behavioral equivalence. -/
-noncomputable def canonicalCoalgebra (A : STLCType) (C : FiniteCoalgebra A) :
-    FiniteCoalgebra A where
-  Carrier := SemanticQuotient A C
-  str := quotientStr A C
-  fin := @Quotient.finite _ C.fin (behavioralSetoid A C)
-
-/-- The canonical projection is a coalgebra morphism. -/
-noncomputable def canonicalProjection (A : STLCType) (C : FiniteCoalgebra A) :
-    CoalgebraHom A C (canonicalCoalgebra A C) where
-  toFun := Quotient.mk (behavioralSetoid A C)
-  comm := fun x => by
-    simp only [canonicalCoalgebra, quotientStr, Quotient.lift_mk]
-    cases hsx : C.str x with
-    | inl u => simp [TypePolynomialFunctor.map]
-    | inr fx => simp only [TypePolynomialFunctor.map]; rfl
-
-/-- The canonical projection is surjective. -/
-theorem canonical_projection_surjective (A : STLCType) (C : FiniteCoalgebra A) :
-    Function.Surjective (canonicalProjection A C).toFun :=
-  Quotient.exists_rep
-
-/-- Behavioral equivalence on the quotient collapses to equality. -/
-theorem quotient_behavioral_equiv_eq
-    (A : STLCType) (C : FiniteCoalgebra A)
-    {x y : C.Carrier}
-    (h : BehavioralEquiv A C x y) :
-    (Quotient.mk (behavioralSetoid A C) x : SemanticQuotient A C) =
-    Quotient.mk (behavioralSetoid A C) y :=
-  Quotient.sound h
-
-/-! ## Cross-Domain: Simulation Relations -/
-
-/-- A simulation relation between coalgebras (automata-theoretic bridge). -/
-structure IsSimulation (A : STLCType) (C D : FiniteCoalgebra A)
-    (R : C.Carrier → D.Carrier → Prop) : Prop where
-  terminal_sim : ∀ x y, R x y → C.str x = Sum.inl () → D.str y = Sum.inl ()
-  branching_sim : ∀ x y (fx : Fin (arityOf A) → C.Carrier) (fy : Fin (arityOf A) → D.Carrier),
-    R x y → C.str x = Sum.inr fx → D.str y = Sum.inr fy →
-    ∀ i, R (fx i) (fy i)
-
-/-
-The graph of a coalgebra morphism is a simulation.
--/
-theorem morphism_graph_is_simulation
-    (A : STLCType) (C D : FiniteCoalgebra A)
-    (f : CoalgebraHom A C D) :
-    IsSimulation A C D (fun x y => f.toFun x = y) := by
-  constructor;
-  · intro x y hxy hx; have := f.comm x; aesop;
-  · intro x y fx fy hxy hx hy i; have := f.comm x; simp_all +decide [ TypePolynomialFunctor.map ] ;
-    injection this.symm with h; aesop;
-
-/-! ## Base Type Analysis -/
-
-/-- For base types, `TypePolynomialFunctor` is isomorphic to `Unit ⊕ Unit`. -/
-noncomputable def base_type_equiv (X : Type u) :
-    TypePolynomialFunctor STLCType.base X ≃ (Unit ⊕ Unit) where
-  toFun x := match x with
-    | Sum.inl u => Sum.inl u
-    | Sum.inr _ => Sum.inr ()
-  invFun x := match x with
-    | Sum.inl u => Sum.inl u
-    | Sum.inr () => Sum.inr Fin.elim0
-  left_inv x := by
-    cases x with
-    | inl u => rfl
-    | inr f =>
-      show Sum.inr Fin.elim0 = Sum.inr f
-      congr; ext i; exact Fin.elim0 i
-  right_inv x := by cases x with | inl u => rfl | inr u => rfl
+end
