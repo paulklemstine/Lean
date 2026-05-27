@@ -1,100 +1,128 @@
-#!/usr/bin/env python3
 """
-Visualization 2: Lorentzian Bridge Heatmap
+Visualization 3: Bridge Theorem Heatmap — Lorentzian Depth vs Log-Concavity Depth
 
-Heatmap showing the k-fold log-concavity depth achieved by bivariate
-specializations of products of linear forms, as a function of degree d
-and the number of ratio transform levels. Illustrates the main theorem:
-recursive Lorentzianity of depth k => k-fold log-concavity.
+Creates a heatmap showing the relationship between polynomial degree,
+Lorentzian depth, and achieved k-fold log-concavity depth for various
+families of Lorentzian polynomials.
+
+This directly illustrates the main theorem: recursive Lorentzian depth k
+implies k-fold log-concavity of bivariate specialization coefficients.
 """
 
+import math
 import numpy as np
 import matplotlib.pyplot as plt
-from math import comb
-from itertools import combinations
 
 
-def product_coeffs(weights, d):
-    """Compute bivariate specialization coefficients."""
-    coeffs = [0.0] * (d + 1)
-    for m in range(d + 1):
-        total = 0.0
-        for S in combinations(range(d), m):
-            S_set = set(S)
-            prod_val = 1.0
-            for i in range(d):
-                prod_val *= weights[i][0] if i in S_set else weights[i][1]
-            total += prod_val
-        coeffs[m] = total
+def product_of_linear_forms(d, weights=None):
+    if weights is None:
+        weights = [(i + 1) / (d + 1) for i in range(d)]
+    coeffs = [1.0]
+    for w in weights:
+        new_coeffs = [0.0] * (len(coeffs) + 1)
+        for i, c in enumerate(coeffs):
+            new_coeffs[i] += c * (1 - w)
+            new_coeffs[i + 1] += c * w
+        coeffs = new_coeffs
     return coeffs
 
 
-def find_max_depth(seq, max_k=30):
-    """Find maximum k-fold log-concavity depth."""
+def is_log_concave(seq, tol=1e-12):
+    for m in range(1, len(seq) - 1):
+        if seq[m] ** 2 < seq[m-1] * seq[m+1] - tol:
+            return False
+    return True
+
+
+def ratio_transform(seq):
+    if len(seq) < 2 or any(x == 0 for x in seq):
+        return []
+    return [seq[m+1]/seq[m] for m in range(len(seq)-1)]
+
+
+def compute_depth(seq, max_depth=20):
     current = list(seq)
-    if any(x <= 0 for x in current):
-        return -1
-    for k in range(max_k):
+    for k in range(max_depth):
         if len(current) < 3:
             return k
-        is_lc = all(current[m] ** 2 >= current[m - 1] * current[m + 1] - 1e-10
-                     for m in range(1, len(current) - 1))
-        if not is_lc:
+        if not is_log_concave(current):
             return k
-        ratios = [current[m + 1] / current[m] for m in range(len(current) - 1)]
-        if any(x <= 0 for x in ratios):
+        current = ratio_transform(current)
+        if not current or any(x <= 0 for x in current):
             return k + 1
-        current = ratios
-    return max_k
+    return max_depth
 
 
-# Compute depths for various degrees and trials
+# Generate depth data for various degrees and weight configurations
 degrees = list(range(3, 16))
-num_trials = 20
-depth_matrix = np.zeros((len(degrees), num_trials))
+n_configs = 8
 
-for i, d in enumerate(degrees):
-    for trial in range(num_trials):
-        np.random.seed(1000 * d + trial)
-        weights = [(np.random.uniform(0.3, 4.0), np.random.uniform(0.3, 4.0))
-                   for _ in range(d)]
-        coeffs = product_coeffs(weights, d)
-        depth = find_max_depth(coeffs)
-        depth_matrix[i, trial] = depth
+# Weight configurations
+def make_weights(d, config_idx):
+    if config_idx == 0:
+        return [0.5] * d  # uniform
+    elif config_idx == 1:
+        return [(i+1)/(d+1) for i in range(d)]  # linear
+    elif config_idx == 2:
+        return [0.1 + 0.8*i/max(d-1,1) for i in range(d)]  # spread
+    elif config_idx == 3:
+        return [0.9] * d  # skewed high
+    elif config_idx == 4:
+        return [0.1] * d  # skewed low
+    elif config_idx == 5:
+        return [(i+1)**2 / (d+1)**2 for i in range(d)]  # quadratic
+    elif config_idx == 6:
+        return [math.sqrt((i+1)/(d+1)) for i in range(d)]  # sqrt
+    else:
+        return [0.5 + 0.3*math.sin(2*math.pi*i/d) for i in range(d)]  # oscillating
 
-# Create figure with two panels
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-# Panel 1: Heatmap
+config_names = ['Uniform 0.5', 'Linear', 'Spread', 'Skew high',
+                'Skew low', 'Quadratic', 'Sqrt', 'Oscillating']
+
+depth_matrix = np.zeros((n_configs, len(degrees)))
+
+for j, d in enumerate(degrees):
+    for i in range(n_configs):
+        weights = make_weights(d, i)
+        coeffs = product_of_linear_forms(d, weights)
+        depth = compute_depth(coeffs)
+        depth_matrix[i, j] = depth
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+
+# Heatmap
 im = ax1.imshow(depth_matrix, aspect='auto', cmap='YlOrRd',
                 interpolation='nearest')
-ax1.set_xlabel("Trial index", fontsize=12)
-ax1.set_ylabel("Degree d", fontsize=12)
-ax1.set_yticks(range(len(degrees)))
-ax1.set_yticklabels(degrees)
-ax1.set_title("k-Fold Log-Concavity Depth\n(products of random positive linear forms)",
-              fontsize=13, fontweight='bold')
-plt.colorbar(im, ax=ax1, label='Depth k')
+ax1.set_xticks(range(len(degrees)))
+ax1.set_xticklabels(degrees)
+ax1.set_yticks(range(n_configs))
+ax1.set_yticklabels(config_names, fontsize=9)
+ax1.set_xlabel('Polynomial Degree d')
+ax1.set_ylabel('Weight Configuration')
+ax1.set_title('k-Fold Log-Concavity Depth\nfor Products of Linear Forms')
 
-# Panel 2: Depth vs degree with theoretical bound
-mean_depths = depth_matrix.mean(axis=1)
-min_depths = depth_matrix.min(axis=1)
-max_depths = depth_matrix.max(axis=1)
-theoretical = [d - 2 for d in degrees]
+# Add text annotations
+for i in range(n_configs):
+    for j in range(len(degrees)):
+        ax1.text(j, i, f'{int(depth_matrix[i,j])}', ha='center', va='center',
+                fontsize=8, color='white' if depth_matrix[i,j] > 5 else 'black')
 
-ax2.fill_between(degrees, min_depths, max_depths, alpha=0.3, color='steelblue',
-                 label='Range across trials')
-ax2.plot(degrees, mean_depths, 'o-', color='steelblue', linewidth=2,
-         markersize=6, label='Mean depth')
-ax2.plot(degrees, theoretical, 's--', color='firebrick', linewidth=2,
-         markersize=6, label='Theoretical bound d−2')
-ax2.set_xlabel("Degree d", fontsize=12)
-ax2.set_ylabel("k-fold depth", fontsize=12)
-ax2.set_title("Achieved vs Theoretical Bound", fontsize=13, fontweight='bold')
-ax2.legend(fontsize=10)
-ax2.grid(alpha=0.3)
+plt.colorbar(im, ax=ax1, label='k-fold depth')
+
+# Line plot: depth vs degree for selected families
+for i in [0, 1, 2, 5]:
+    ax2.plot(degrees, depth_matrix[i, :], 'o-', label=config_names[i], linewidth=2)
+
+# Theoretical bound d-2
+ax2.plot(degrees, [d-2 for d in degrees], 'k--', linewidth=2, label='d-2 (theoretical max)')
+
+ax2.set_xlabel('Polynomial Degree d', fontsize=12)
+ax2.set_ylabel('k-Fold Log-Concavity Depth', fontsize=12)
+ax2.set_title('Depth vs Degree\n(Bridge Theorem: depth k ⟹ k-fold LC)')
+ax2.legend(fontsize=9)
+ax2.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("viz_bridge_heatmap.png", dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved viz_bridge_heatmap.png")
+plt.savefig('bridge_heatmap.png', dpi=150, bbox_inches='tight')
+print("Saved bridge_heatmap.png")

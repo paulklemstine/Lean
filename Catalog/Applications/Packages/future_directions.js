@@ -391,10 +391,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ac6bc32a",
     "timestamp": "2026-05-25T17:14:31.150620+00:00"
   },
   {
@@ -720,10 +720,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "834b245c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e47dd495",
     "timestamp": "2026-05-25T21:13:42.015713+00:00"
   },
   {
@@ -1306,10 +1306,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d0911202",
     "timestamp": "2026-05-27T02:07:17.500460+00:00"
   },
   {
@@ -1593,6 +1593,106 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
+  },
+  {
+    "id": "fd_1320",
+    "title": "Direction 1: Higher-Order Entropy Bounds from the Full Newton Hierarchy",
+    "description": "**Conjecture:** For free-fermion subsystems of size m with correlation spectrum \u03bb \u2208 [0,1]\u1d50, the R\u00e9nyi entropies S_\u03b1 = (1/(1-\u03b1)) log(\u03a3 \u03bb\u1d62^\u03b1 + (1-\u03bb\u1d62)^\u03b1) are controlled by the full sequence of Newton ratios \u03c1\u2096 = e\u2096\u00b2/(e\u2096\u208b\u2081\u00b7e\u2096\u208a\u2081). Specifically, there exists a universal function \u03a8_\u03b1(\u03c1\u2081,...,\u03c1\u2098\u208b\u2081) such that |S_\u03b1 - \u03a8_\u03b1(\u03c1)| \u2192 0 as m \u2192 \u221e for spectra satisfying an area-law scaling.\n\n**Test:** Compute S_\u03b1 for \u03b1 \u2208 {0.5, 1, 2, \u221e} and the Newton ratio profiles for 1D free-fermion chains of length L = 50,...,500. Fit \u03a8_\u03b1 as a low-degree polynomial in the log-ratios. Test extrapolation accuracy on 2D models.\n\n**Impact:** Would establish Lorentzian polynomial data as a complete surrogate for the entanglement spectrum, eliminating the need for diagonalization in entanglement studies.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean` (entropy bounds, Newton inequality), `Bridges/LorentzianNewton.lean` (Newton inequality machinery).\n\n**Proof Strategy:** Extend the variance lower bound S \u2265 2\u00b7Var to higher moments using power-mean inequalities. The k-th moment \u03a3 \u03bb\u1d62\u1d4f is expressible via Newton-Girard identities in terms of e\u2081,...,e\u2096. Lorentzian constraints on the e\u2096 then constrain all moments simultaneously.\n\n**Domain Bridges:** Quantum information \u2194 algebraic combinatorics \u2194 approximation theory.\n\n**Lineage:** Direct extension of `entropy_ge_esymm_bound` and `esymm_newton_inequality`.\n\n**Ambition:** Solid extension \u2014 builds directly on proven results with clear path to formalization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43afaa07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T06:37:54.824643+00:00"
+  },
+  {
+    "id": "fd_1321",
+    "title": "Direction 2: Interacting Fermions and Approximate Gaussianity",
+    "description": "**Conjecture:** For weakly interacting fermion systems with interaction strength \u03b5, the entanglement entropy satisfies S \u2264 S_free + C\u00b7\u03b5\u00b7m\u00b7log(m), where S_free is the free-fermion entropy bounded by our coefficient method, and C is a universal constant independent of the system details.\n\n**The key insight is** that weak interactions perturb the correlation kernel K_A by an amount proportional to \u03b5, which changes the elementary symmetric polynomials by controlled amounts. The Lorentzian structure is stable under small perturbations (a property of the Lorentzian cone being open), so the coefficient-based bounds deform continuously.\n\n**Why now?** The Br\u00e4nd\u00e9n-Huh theory provides stability results for the Lorentzian cone, and our formalization gives the free-fermion baseline. The gap between interacting and non-interacting entropy is the central open question in quantum many-body physics.\n\n**Test:** Simulate Hubbard chains at U/t = 0.1, 0.5, 1.0 via DMRG. Compare exact entropy to free-fermion coefficient bounds. Measure the correction term's dependence on U/t and subsystem size.\n\n**Impact:** Would extend the DPP-Lorentzian framework beyond exactly solvable models to the physically relevant regime of interacting electrons.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Speculative/AutoResearch/DPPLorentzian.lean`.\n\n**Proof Strategy:** Use the Lieb-Robinson bound to control the perturbation of K_A under weak interactions, then apply Weyl's perturbation theorem for eigenvalues to bound the change in each e\u2096.\n\n**Domain Bridges:** Quantum many-body physics \u2194 DPP theory \u2194 perturbation theory.\n\n**Lineage:** Extends all entropy bounds to approximately Gaussian states.\n\n**Ambition:** Grand challenge \u2014 would bridge formal methods to the frontier of condensed matter physics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "43afaa07",
+    "consumed_by_exp_id": "c9570576",
+    "timestamp": "2026-05-27T06:37:54.875307+00:00"
+  },
+  {
+    "id": "fd_1322",
+    "title": "Direction 3: Tropical Entropy and Information Geometry",
+    "description": "**Conjecture:** The tropical limit of the DPP generating polynomial (replacing + with max and \u00d7 with +) yields a piecewise-linear function whose slopes encode a tropical entropy surrogate that approximates the von Neumann entropy to within O(1/m) for spectra satisfying an area law.\n\n**The key insight is** that tropical geometry captures the leading-order behavior of log-coefficients. Since the entropy involves logarithms of eigenvalues, the tropical limit naturally approximates the entropy calculation. The Newton inequalities become tropical concavity conditions, which are equivalent to the matroid polytope being a generalized permutohedron.\n\n**Why now?** Tropical methods have been applied to Lorentzian polynomials by Br\u00e4nd\u00e9n-Huh and to information geometry by Ay-Jost-L\u00ea-Schwachh\u00f6fer. Our formalization provides the first rigorous link between these two applications.\n\n**Test:** For random spectra of size m = 10,...,100, compute the tropical generating polynomial and the tropical entropy surrogate. Compare to exact entropy. Characterize the error as a function of spectral flatness.\n\n**Impact:** Would create a combinatorial (no analysis required) method for entropy estimation, potentially leading to polynomial-time algorithms for entanglement bounds in tensor network states.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Catalog/Tropical/LorentzForce.lean`.\n\n**Proof Strategy:** Use the Viro patchworking technique to relate the real and tropical generating polynomials, then bound the entropy approximation error using the discriminant of the tropical polynomial.\n\n**Domain Bridges:** Tropical geometry \u2194 quantum information \u2194 computational complexity.\n\n**Lineage:** Extends `esymmCoeff` and Newton inequality to the tropical setting.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43afaa07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T06:37:54.920671+00:00"
+  },
+  {
+    "id": "fd_1323",
+    "title": "Direction 4: Holographic Entanglement and Polynomial Bulk-Boundary Correspondence",
+    "description": "**Conjecture:** For holographic quantum error-correcting codes (HaPPY codes and generalizations), the boundary entanglement entropy is controlled by a \"bulk\" Lorentzian polynomial whose coefficients are the areas of minimal surfaces in the tensor network. Newton's inequality for this polynomial implies the strong subadditivity of holographic entropy.\n\n**The key insight is** that the Ryu-Takayanagi formula relates entanglement entropy to minimal surface areas, and these areas appear as coefficients in a generating polynomial associated with the bulk geometry. The Lorentzian property of this polynomial is equivalent to a discrete form of the null energy condition.\n\n**Why now?** Tensor network models of holography (MERA, HaPPY) produce explicit coefficient sequences that can be checked for Lorentzianity. Our formalization provides the entropy-coefficient bridge needed to close the loop.\n\n**Test:** Construct HaPPY codes on hyperbolic tilings with 3,...,7 layers. Compute the boundary entanglement entropy and the bulk coefficient sequence. Check Lorentzianity and compare entropy to coefficient-based bounds.\n\n**Impact:** Would provide a new proof of strong subadditivity from geometric principles, potentially illuminating the AdS/CFT correspondence.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Pythagorean/LorentzianRecognitionComplete.lean`.\n\n**Proof Strategy:** Identify the generating polynomial of the holographic code with a DPP on the bulk graph, then apply the spectral bridge theorem to connect boundary entropy to bulk coefficients.\n\n**Domain Bridges:** Holography \u2194 DPP theory \u2194 Lorentzian geometry \u2194 quantum error correction.\n\n**Lineage:** Extends the DPP-Lorentzian bridge to the holographic setting.\n\n**Ambition:** Grand challenge \u2014 potentially paradigm-shifting for quantum gravity.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43afaa07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T06:37:54.965685+00:00"
+  },
+  {
+    "id": "fd_1324",
+    "title": "Direction 5: Bosonic Analogues and Stability Obstructions",
+    "description": "**Conjecture:** For free-boson systems, the generating polynomial of the subsystem is a *permanent* rather than a determinant, and is NOT Lorentzian in general. The failure of Lorentzianity is precisely what allows bosonic entanglement to violate the area law, and the degree of non-Lorentzianity (measured by the violation of Newton's inequality) quantifies the excess entropy above the free-fermion bound.\n\n**The key insight is** that the DPP repulsion (which makes fermion entropy area-law) is encoded in the Lorentzian structure, while bosonic bunching (which allows volume-law entropy) corresponds to the anti-Lorentzian regime. The transition between the two regimes is controlled by a phase boundary in coefficient space.\n\n**Why now?** Permanental point processes (PPPs) have been studied in probability but never connected to entanglement. Our formalization of the DPP/Lorentzian side provides the contrast needed to identify what fails for bosons.\n\n**Test:** Compute the generating polynomials for free-boson subsystems of size m = 4,...,10 at various temperatures. Check Newton's inequality. Map the region in coefficient space where it fails. Correlate with entropy scaling (area vs volume law).\n\n**Impact:** Would explain the area-law/volume-law dichotomy between fermions and bosons as a geometric phase transition in polynomial coefficient space.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Speculative/AutoResearch/DPPLorentzian.lean`.\n\n**Proof Strategy:** Formalize the permanent generating polynomial, show Newton's inequality fails for bosonic thermal states, and connect the failure to entropy scaling via the spectral moment identities already formalized.\n\n**Domain Bridges:** Quantum optics \u2194 permanental processes \u2194 Lorentzian geometry \u2194 area-law physics.\n\n**Lineage:** Extends `esymm_newton_inequality` by characterizing its failure mode.\n\n**Ambition:** Solid extension with grand-challenge implications \u2014 directly testable and formalizable.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43afaa07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T06:37:55.011012+00:00"
   },
   {
     "id": "seed_013",
@@ -2031,6 +2131,103 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T06:00:04.057379+00:00"
   },
   {
+    "id": "fd_1325",
+    "title": "Direction 1: Sharp Exponent Law and Lower Bounds",
+    "description": "**Conjecture**: The exponent $d - k$ in the bound $T \\leq C \\cdot d^{d-k} \\cdot D$ is generically sharp. For each fixed $k < d$, there exist exchange families $S \\subseteq \\mathbb{Z}^d$ and objectives $f$ with depth-$k$ certificates such that $T(x_0) \\geq c \\cdot d^{d-k-1} \\cdot D$ for some $c > 0$ and some starting point $x_0$.\n\n**Test**: Construct explicit adversarial exchange families for $d \\in \\{4, \\ldots, 12\\}$ with controlled depth. Run descent and verify that step counts grow as $\\Theta(d^{d-k})$ with dimension. A failure (sublinear growth) would indicate the bound can be improved.\n\n**Impact**: Resolving the sharpness question determines whether certificate depth is a *tight* complexity parameter or merely an upper bound. A tight bound would establish the theory as optimal; a gap would motivate the search for better parameters.\n\n**Catalog References**: \n- `Catalog/Pythagorean/ExchangeDescent.lean`: `exchangeDescent_length_bound` (the |S| bound to improve upon)\n- `Pythagorean/DepthSensitiveExchangeDescent.lean`: `exchangeDescent_depth_bound_poly`, `depthCertificate_runtime_monotone`\n\n**Proof Strategy**: For lower bounds, construct \"layered\" exchange families where depth-$k$ certificates force traversal through $d^{d-k}$ potential layers. Use the shell decomposition (Strategy B from the paper) to show each layer requires $\\Omega(D/d^k)$ steps to cross.\n\n**Domain Bridges**: Connects to computational complexity (tight lower bounds) and algebraic combinatorics (explicit matroid constructions).\n\n**Lineage**: Extends the upper bound theory in `exchangeDescent_depth_bound_poly` to a matching lower bound.\n\n**Ambition**: Grand challenge \u2014 requires novel adversarial constructions that may reveal deep structure in exchange families.\n\n**The key insight is** that sharpness of the $d^{d-k}$ exponent would establish certificate depth as the *exact* discrete analogue of the condition number, not merely an approximate one.\n\n**Why now?** The formal verification of the upper bound provides the precise target for lower bound constructions. The computational infrastructure (demo.py) enables systematic testing of candidate adversarial families.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4d0d5d0f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T07:12:33.861186+00:00"
+  },
+  {
+    "id": "fd_1326",
+    "title": "Direction 2: Algorithmic Certificate Depth Computation",
+    "description": "**Conjecture**: Given a finite exchange family $S \\subseteq \\mathbb{Z}^d$ and objective $f$, the maximum certificate depth $k^*$ can be computed in time polynomial in $|S|$ and $d$ by testing the log-concavity hierarchy of coordinate projections.\n\n**Test**: Implement depth certification using the iterated ratio test from `KFoldLogConcave.iterRatio_kfold`. For separable objectives, test each coordinate's weight function for $k$-fold log-concavity. Compare the computed depth against empirical descent speed.\n\n**Impact**: Makes the theory algorithmic \u2014 practitioners could certify depth before running optimization, choosing the best algorithm based on the certificate.\n\n**Catalog References**:\n- `Catalog/Pythagorean/HigherOrderLogConcavity.lean`: `KFoldLogConcave.iterRatio_kfold`, `kFoldLogConcave_mono`\n- `Pythagorean/DepthSensitiveExchangeDescent.lean`: `kFoldLogConcave_induces_depthCertificate`\n\n**Proof Strategy**: For separable objectives, depth certification reduces to testing $k$-fold log-concavity of each component. Use `iterRatio_kfold` to recursively compute ratio sequences and check log-concavity at each level.\n\n**Domain Bridges**: Connects to algorithm design (adaptive methods), machine learning (feature selection by depth), and statistics (testing distributional structure).\n\n**Lineage**: Direct extension of the cross-domain bridge theorem `exchange_axiom_compatible_gives_DLC`.\n\n**Ambition**: Solid extension \u2014 the algorithmic framework exists; the challenge is efficiency and generality beyond separable objectives.\n\n**The key insight is** that certificate depth for separable objectives decomposes into independent 1D problems, each solvable by the iterated ratio test.\n\n**Why now?** The formal bridge between log-concavity and exchange certificates provides the mathematical foundation. The estimate_certificate_depth function in algorithms.py provides a prototype implementation.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4d0d5d0f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T07:12:33.917783+00:00"
+  },
+  {
+    "id": "fd_1327",
+    "title": "Direction 3: Valuated Matroid Extension and Tropical Geometry",
+    "description": "**Conjecture**: The depth-sensitive descent theory extends to valuated matroids, where the exchange axiom has a quantitative form: $\\text{val}(x) + \\text{val}(y) \\leq \\text{val}(x') + \\text{val}(y')$ for exchange pairs $(x', y')$. Under $k$-fold tropical concavity of the valuation, exchange descent terminates in $O(d^{d-k} \\cdot D)$ steps in the tropical metric.\n\n**Test**: Implement exchange descent on tropical polyhedra (Newton polytopes of Lorentzian polynomials). Measure step counts and compare against the discrete theory predictions. Test whether Lorentzian polynomial coefficients automatically generate deep certificates.\n\n**Impact**: Would unify discrete convex analysis, tropical geometry, and algorithmic matroid theory under a single depth-sensitive framework.\n\n**Catalog References**:\n- `Catalog/Pythagorean/ExchangeDescent.lean`: `ExchangeFamily`, `exchangeDLC_k_mono`\n- `Catalog/Pythagorean/HigherOrderLogConcavity.lean`: `KFoldLogConcave.mul`, `geometric_kFoldLogConcave`\n\n**Proof Strategy**: Define tropical depth certificates using the min-plus algebra structure of valuated matroids. Transfer the potential descent argument from $\\mathbb{Z}^d$ to the tropical torus. Use the product stability theorem `KFoldLogConcave.mul` to handle independent tropical components.\n\n**Domain Bridges**: Tropical geometry \u2194 discrete optimization \u2194 algebraic combinatorics. This is the most ambitious cross-domain bridge.\n\n**Lineage**: Extends `exchangeDescent_depth_bound` from integer lattices to tropical structures.\n\n**Ambition**: Grand challenge \u2014 requires developing new tropical analogues of several results.\n\n**The key insight is** that Lorentzian polynomials live at the intersection of tropical geometry and log-concavity, making them the natural testing ground for depth-sensitive descent in non-lattice settings.\n\n**Why now?** The Br\u00e4nd\u00e9n\u2013Huh theory of Lorentzian polynomials provides the analytic machinery. The formal verification of the integer lattice case provides the template.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4d0d5d0f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T07:12:33.963680+00:00"
+  },
+  {
+    "id": "fd_1328",
+    "title": "Direction 4: Spectral Theory of Exchange Graphs",
+    "description": "**Conjecture**: The spectral gap of the exchange graph Laplacian on $S$ (where edges connect points related by exchange steps) is bounded below by $\\Omega(\\delta_k / D)$, where $\\delta_k$ is the depth-$k$ decrement. This connects certificate depth to mixing times of random walks on exchange structures.\n\n**Test**: Compute the Laplacian spectrum of exchange graphs for small examples. Correlate the spectral gap with the observed descent speed and the certificate depth. Test whether deeper certificates consistently yield larger spectral gaps.\n\n**Impact**: Would establish certificate depth as a unified parameter controlling both deterministic descent (this paper) and randomized sampling (Markov chain mixing).\n\n**Catalog References**:\n- `Pythagorean/DepthSensitiveExchangeDescent.lean`: `depthDecrement_mono`, `depthCertificate_runtime_monotone`\n- `Catalog/Pythagorean/HigherOrderLogConcavity.lean`: `logConcaveN_mul`\n\n**Proof Strategy**: Relate the potential decrease per step ($\\delta_k$) to a Cheeger-type isoperimetric inequality on the exchange graph. Use the log-concavity structure to bound the isoperimetric constant.\n\n**Domain Bridges**: Spectral graph theory \u2194 Markov chains \u2194 discrete optimization. Connects to Anari et al.'s work on high-dimensional walks using log-concavity.\n\n**Lineage**: Extends the deterministic descent bounds to a probabilistic setting.\n\n**Ambition**: Grand challenge \u2014 spectral gaps are notoriously hard to compute and bound.\n\n**The key insight is** that the potential decrease $\\delta_k$ already measures a kind of \"expansion\" of the objective landscape, which should be related to spectral expansion of the underlying graph.\n\n**Why now?** The connection between log-concavity and spectral gaps is well-established in the continuous case (Bakry\u2013\u00c9mery theory). The formal framework for certificate depth provides the discrete structure needed to attempt the transfer.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4d0d5d0f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T07:12:34.010924+00:00"
+  },
+  {
+    "id": "fd_1329",
+    "title": "Direction 5: Adaptive Depth-Exploiting Algorithms",
+    "description": "**Conjecture**: There exists an algorithm that, given $S$ and $f$ with unknown certificate depth $k^*$, achieves descent complexity $\\tilde{O}(d^{d - k^*} \\cdot D)$ while spending only $O(|S| \\cdot d^2)$ total work on depth certification.\n\n**Test**: Implement an algorithm that alternates between (a) running exchange descent and (b) testing whether the observed descent rate is consistent with increasing depths. Benchmark against naive greedy descent and depth-oblivious algorithms.\n\n**Impact**: Makes the depth-sensitive theory practical \u2014 algorithms automatically discover and exploit certificate depth without prior knowledge.\n\n**Catalog References**:\n- `Pythagorean/DepthSensitiveExchangeDescent.lean`: `exchangeDescent_depth_bound`, `depthDecrement_mono`\n- `Catalog/Pythagorean/HigherOrderLogConcavity.lean`: `kFoldLogConcave_mono`\n\n**Proof Strategy**: Use a doubling strategy: start with depth guess $k = 1$, predict the descent rate, and increase the guess when the observed rate exceeds the prediction. Prove that the total certification cost is dominated by the descent cost.\n\n**Domain Bridges**: Algorithm design \u2194 online learning (adaptive parameter estimation) \u2194 optimization.\n\n**Lineage**: Operational consequence of `depthDecrement_mono` and `depthCertificate_runtime_monotone`.\n\n**Ambition**: Solid extension \u2014 the theory provides the structure; the challenge is engineering an efficient adaptive scheme.\n\n**The key insight is** that the monotonicity of depth decrements (`depthDecrement_mono`) means the algorithm can detect depth violations cheaply: if the observed descent rate is faster than predicted for depth $k$, the true depth must exceed $k$.\n\n**Why now?** The formal monotonicity theorems provide the mathematical guarantees needed for correctness of the adaptive scheme. The demo.py infrastructure enables rapid prototyping and testing.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4d0d5d0f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T07:12:34.057994+00:00"
+  },
+  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2071,105 +2268,5 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
-  },
-  {
-    "id": "fd_1320",
-    "title": "Direction 1: Higher-Order Entropy Bounds from the Full Newton Hierarchy",
-    "description": "**Conjecture:** For free-fermion subsystems of size m with correlation spectrum \u03bb \u2208 [0,1]\u1d50, the R\u00e9nyi entropies S_\u03b1 = (1/(1-\u03b1)) log(\u03a3 \u03bb\u1d62^\u03b1 + (1-\u03bb\u1d62)^\u03b1) are controlled by the full sequence of Newton ratios \u03c1\u2096 = e\u2096\u00b2/(e\u2096\u208b\u2081\u00b7e\u2096\u208a\u2081). Specifically, there exists a universal function \u03a8_\u03b1(\u03c1\u2081,...,\u03c1\u2098\u208b\u2081) such that |S_\u03b1 - \u03a8_\u03b1(\u03c1)| \u2192 0 as m \u2192 \u221e for spectra satisfying an area-law scaling.\n\n**Test:** Compute S_\u03b1 for \u03b1 \u2208 {0.5, 1, 2, \u221e} and the Newton ratio profiles for 1D free-fermion chains of length L = 50,...,500. Fit \u03a8_\u03b1 as a low-degree polynomial in the log-ratios. Test extrapolation accuracy on 2D models.\n\n**Impact:** Would establish Lorentzian polynomial data as a complete surrogate for the entanglement spectrum, eliminating the need for diagonalization in entanglement studies.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean` (entropy bounds, Newton inequality), `Bridges/LorentzianNewton.lean` (Newton inequality machinery).\n\n**Proof Strategy:** Extend the variance lower bound S \u2265 2\u00b7Var to higher moments using power-mean inequalities. The k-th moment \u03a3 \u03bb\u1d62\u1d4f is expressible via Newton-Girard identities in terms of e\u2081,...,e\u2096. Lorentzian constraints on the e\u2096 then constrain all moments simultaneously.\n\n**Domain Bridges:** Quantum information \u2194 algebraic combinatorics \u2194 approximation theory.\n\n**Lineage:** Direct extension of `entropy_ge_esymm_bound` and `esymm_newton_inequality`.\n\n**Ambition:** Solid extension \u2014 builds directly on proven results with clear path to formalization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "43afaa07",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T06:37:54.824643+00:00"
-  },
-  {
-    "id": "fd_1321",
-    "title": "Direction 2: Interacting Fermions and Approximate Gaussianity",
-    "description": "**Conjecture:** For weakly interacting fermion systems with interaction strength \u03b5, the entanglement entropy satisfies S \u2264 S_free + C\u00b7\u03b5\u00b7m\u00b7log(m), where S_free is the free-fermion entropy bounded by our coefficient method, and C is a universal constant independent of the system details.\n\n**The key insight is** that weak interactions perturb the correlation kernel K_A by an amount proportional to \u03b5, which changes the elementary symmetric polynomials by controlled amounts. The Lorentzian structure is stable under small perturbations (a property of the Lorentzian cone being open), so the coefficient-based bounds deform continuously.\n\n**Why now?** The Br\u00e4nd\u00e9n-Huh theory provides stability results for the Lorentzian cone, and our formalization gives the free-fermion baseline. The gap between interacting and non-interacting entropy is the central open question in quantum many-body physics.\n\n**Test:** Simulate Hubbard chains at U/t = 0.1, 0.5, 1.0 via DMRG. Compare exact entropy to free-fermion coefficient bounds. Measure the correction term's dependence on U/t and subsystem size.\n\n**Impact:** Would extend the DPP-Lorentzian framework beyond exactly solvable models to the physically relevant regime of interacting electrons.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Speculative/AutoResearch/DPPLorentzian.lean`.\n\n**Proof Strategy:** Use the Lieb-Robinson bound to control the perturbation of K_A under weak interactions, then apply Weyl's perturbation theorem for eigenvalues to bound the change in each e\u2096.\n\n**Domain Bridges:** Quantum many-body physics \u2194 DPP theory \u2194 perturbation theory.\n\n**Lineage:** Extends all entropy bounds to approximately Gaussian states.\n\n**Ambition:** Grand challenge \u2014 would bridge formal methods to the frontier of condensed matter physics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "43afaa07",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T06:37:54.875307+00:00"
-  },
-  {
-    "id": "fd_1322",
-    "title": "Direction 3: Tropical Entropy and Information Geometry",
-    "description": "**Conjecture:** The tropical limit of the DPP generating polynomial (replacing + with max and \u00d7 with +) yields a piecewise-linear function whose slopes encode a tropical entropy surrogate that approximates the von Neumann entropy to within O(1/m) for spectra satisfying an area law.\n\n**The key insight is** that tropical geometry captures the leading-order behavior of log-coefficients. Since the entropy involves logarithms of eigenvalues, the tropical limit naturally approximates the entropy calculation. The Newton inequalities become tropical concavity conditions, which are equivalent to the matroid polytope being a generalized permutohedron.\n\n**Why now?** Tropical methods have been applied to Lorentzian polynomials by Br\u00e4nd\u00e9n-Huh and to information geometry by Ay-Jost-L\u00ea-Schwachh\u00f6fer. Our formalization provides the first rigorous link between these two applications.\n\n**Test:** For random spectra of size m = 10,...,100, compute the tropical generating polynomial and the tropical entropy surrogate. Compare to exact entropy. Characterize the error as a function of spectral flatness.\n\n**Impact:** Would create a combinatorial (no analysis required) method for entropy estimation, potentially leading to polynomial-time algorithms for entanglement bounds in tensor network states.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Catalog/Tropical/LorentzForce.lean`.\n\n**Proof Strategy:** Use the Viro patchworking technique to relate the real and tropical generating polynomials, then bound the entropy approximation error using the discriminant of the tropical polynomial.\n\n**Domain Bridges:** Tropical geometry \u2194 quantum information \u2194 computational complexity.\n\n**Lineage:** Extends `esymmCoeff` and Newton inequality to the tropical setting.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "43afaa07",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T06:37:54.920671+00:00"
-  },
-  {
-    "id": "fd_1323",
-    "title": "Direction 4: Holographic Entanglement and Polynomial Bulk-Boundary Correspondence",
-    "description": "**Conjecture:** For holographic quantum error-correcting codes (HaPPY codes and generalizations), the boundary entanglement entropy is controlled by a \"bulk\" Lorentzian polynomial whose coefficients are the areas of minimal surfaces in the tensor network. Newton's inequality for this polynomial implies the strong subadditivity of holographic entropy.\n\n**The key insight is** that the Ryu-Takayanagi formula relates entanglement entropy to minimal surface areas, and these areas appear as coefficients in a generating polynomial associated with the bulk geometry. The Lorentzian property of this polynomial is equivalent to a discrete form of the null energy condition.\n\n**Why now?** Tensor network models of holography (MERA, HaPPY) produce explicit coefficient sequences that can be checked for Lorentzianity. Our formalization provides the entropy-coefficient bridge needed to close the loop.\n\n**Test:** Construct HaPPY codes on hyperbolic tilings with 3,...,7 layers. Compute the boundary entanglement entropy and the bulk coefficient sequence. Check Lorentzianity and compare entropy to coefficient-based bounds.\n\n**Impact:** Would provide a new proof of strong subadditivity from geometric principles, potentially illuminating the AdS/CFT correspondence.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Pythagorean/LorentzianRecognitionComplete.lean`.\n\n**Proof Strategy:** Identify the generating polynomial of the holographic code with a DPP on the bulk graph, then apply the spectral bridge theorem to connect boundary entropy to bulk coefficients.\n\n**Domain Bridges:** Holography \u2194 DPP theory \u2194 Lorentzian geometry \u2194 quantum error correction.\n\n**Lineage:** Extends the DPP-Lorentzian bridge to the holographic setting.\n\n**Ambition:** Grand challenge \u2014 potentially paradigm-shifting for quantum gravity.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "43afaa07",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T06:37:54.965685+00:00"
-  },
-  {
-    "id": "fd_1324",
-    "title": "Direction 5: Bosonic Analogues and Stability Obstructions",
-    "description": "**Conjecture:** For free-boson systems, the generating polynomial of the subsystem is a *permanent* rather than a determinant, and is NOT Lorentzian in general. The failure of Lorentzianity is precisely what allows bosonic entanglement to violate the area law, and the degree of non-Lorentzianity (measured by the violation of Newton's inequality) quantifies the excess entropy above the free-fermion bound.\n\n**The key insight is** that the DPP repulsion (which makes fermion entropy area-law) is encoded in the Lorentzian structure, while bosonic bunching (which allows volume-law entropy) corresponds to the anti-Lorentzian regime. The transition between the two regimes is controlled by a phase boundary in coefficient space.\n\n**Why now?** Permanental point processes (PPPs) have been studied in probability but never connected to entanglement. Our formalization of the DPP/Lorentzian side provides the contrast needed to identify what fails for bosons.\n\n**Test:** Compute the generating polynomials for free-boson subsystems of size m = 4,...,10 at various temperatures. Check Newton's inequality. Map the region in coefficient space where it fails. Correlate with entropy scaling (area vs volume law).\n\n**Impact:** Would explain the area-law/volume-law dichotomy between fermions and bosons as a geometric phase transition in polynomial coefficient space.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Speculative/AutoResearch/DPPLorentzian.lean`.\n\n**Proof Strategy:** Formalize the permanent generating polynomial, show Newton's inequality fails for bosonic thermal states, and connect the failure to entropy scaling via the spectral moment identities already formalized.\n\n**Domain Bridges:** Quantum optics \u2194 permanental processes \u2194 Lorentzian geometry \u2194 area-law physics.\n\n**Lineage:** Extends `esymm_newton_inequality` by characterizing its failure mode.\n\n**Ambition:** Solid extension with grand-challenge implications \u2014 directly testable and formalizable.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "43afaa07",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T06:37:55.011012+00:00"
   }
 ];
