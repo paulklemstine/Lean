@@ -266,10 +266,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "39acdddf",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -556,10 +556,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db173401",
     "timestamp": "2026-05-25T22:58:43.501683+00:00"
   },
   {
@@ -575,10 +575,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "78306251",
     "timestamp": "2026-05-25T23:33:15.543578+00:00"
   },
   {
@@ -654,10 +654,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "abb48be4",
-    "consumed_by_exp_id": "dd920969",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T02:33:38.976648+00:00"
   },
   {
@@ -923,25 +923,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T04:11:16.674461+00:00"
   },
   {
-    "id": "fd_1328",
-    "title": "Direction 4: Spectral Theory of Exchange Graphs",
-    "description": "**Conjecture**: The spectral gap of the exchange graph Laplacian on $S$ (where edges connect points related by exchange steps) is bounded below by $\\Omega(\\delta_k / D)$, where $\\delta_k$ is the depth-$k$ decrement. This connects certificate depth to mixing times of random walks on exchange structures.\n\n**Test**: Compute the Laplacian spectrum of exchange graphs for small examples. Correlate the spectral gap with the observed descent speed and the certificate depth. Test whether deeper certificates consistently yield larger spectral gaps.\n\n**Impact**: Would establish certificate depth as a unified parameter controlling both deterministic descent (this paper) and randomized sampling (Markov chain mixing).\n\n**Catalog References**:\n- `Pythagorean/DepthSensitiveExchangeDescent.lean`: `depthDecrement_mono`, `depthCertificate_runtime_monotone`\n- `Catalog/Pythagorean/HigherOrderLogConcavity.lean`: `logConcaveN_mul`\n\n**Proof Strategy**: Relate the potential decrease per step ($\\delta_k$) to a Cheeger-type isoperimetric inequality on the exchange graph. Use the log-concavity structure to bound the isoperimetric constant.\n\n**Domain Bridges**: Spectral graph theory \u2194 Markov chains \u2194 discrete optimization. Connects to Anari et al.'s work on high-dimensional walks using log-concavity.\n\n**Lineage**: Extends the deterministic descent bounds to a probabilistic setting.\n\n**Ambition**: Grand challenge \u2014 spectral gaps are notoriously hard to compute and bound.\n\n**The key insight is** that the potential decrease $\\delta_k$ already measures a kind of \"expansion\" of the objective landscape, which should be related to spectral expansion of the underlying graph.\n\n**Why now?** The connection between log-concavity and spectral gaps is well-established in the continuous case (Bakry\u2013\u00c9mery theory). The formal framework for certificate depth provides the discrete structure needed to attempt the transfer.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "4d0d5d0f",
-    "consumed_by_exp_id": "b86762ea",
-    "timestamp": "2026-05-27T07:12:34.010924+00:00"
-  },
-  {
     "id": "fd_1333",
     "title": "Direction 2: Higher-Rank Extension to GL_n(\ud835\udd3d_q)",
     "description": "**Conjecture:** For GL_n(\ud835\udd3d_q) with n \u2265 3, there exists a polynomial-time certification algorithm based on:\n(a) irreducibility of the full characteristic polynomial,\n(b) maximality of the determinant order,\n(c) escape from all Aschbacher-class maximal subgroups,\nthat certifies a positive spectral gap.\n\n**Test:** Implement the certification pipeline for GL\u2083(\ud835\udd3d\u2083) (|G| = 11232) and GL\u2083(\ud835\udd3d\u2085) (|G| = 1488000). Verify that certified pairs are expanders by numerical eigenvalue computation for GL\u2083(\ud835\udd3d\u2083).\n\n**Impact:** Would establish algorithmic spectral certification as a general paradigm for matrix groups, not limited to the 2\u00d72 case. This opens the door to certified expander construction in groups of cryptographic relevance.\n\n**The key insight is** that Aschbacher's classification of maximal subgroups of GL_n provides a finite list of \"obstruction types,\" and each can be checked by polynomial-time algebraic tests. The irreducible charpoly condition generalizes naturally (ruling out block-diagonal containment), and primitivity of the determinant extends without modification.\n\n**Why now?** The 2\u00d72 framework is now formally verified and computationally validated. The Aschbacher classification is well-understood for small n, and the algebraic tests generalize cleanly. Lean's matrix library supports arbitrary dimensions.\n\n**Catalog References:** `Pythagorean/AlgorithmicSpectralCertification.lean` (AlgebraicSeedCondition, algebraic_seed_excludes_diagonal)\n\n**Proof Strategy:** \n1. Generalize AlgebraicSeedCondition to n\u00d7n: require charpoly irreducible, det primitive, and escape from each Aschbacher class.\n2. Prove each class can be excluded by a polynomial-time test.\n3. Show that passing all tests forces generation, then invoke the maximum principle.\n\n**Domain Bridges:** Finite group theory (Aschbacher's theorem), computational algebra, cryptography (groups used in lattice-based schemes)\n\n**Lineage:** Direct extension of `algebraic_seed_excludes_diagonal` and `AlgebraicSeedCondition` to higher rank\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires formalizing substantial finite group theory)\n\n---",
@@ -1016,10 +997,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ac6bc32a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00a34fc1",
     "timestamp": "2026-05-27T08:27:46.927552+00:00"
   },
   {
@@ -1458,25 +1439,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T16:03:48.605918+00:00"
   },
   {
-    "id": "fd_1455",
-    "title": "Direction 2: Free Probability and Asymptotic Freeness of Random Permutations",
-    "description": "**Conjecture:** The empirical spectral distribution of the normalized adjacency operator of Cay(S_n, {\u03c3, \u03c3\u207b\u00b9, \u03c4, \u03c4\u207b\u00b9}) converges in moments to the Kesten-McKay distribution (the spectral measure of the 4-regular tree) as n \u2192 \u221e, for random generating pairs.\n\n**Test:** For n = 5, ..., 10, compute moments up to order 8 and compare with the Kesten-McKay moments. The backtrack-free counting theorem (`card_backtrackFree_words` in `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean`) gives the tree-like baseline; compare with empirical data.\n\n**The key insight is** that the convergence to the Kesten-McKay law is equivalent to asymptotic freeness of the generators \u03c3 and \u03c4 in the sense of Voiculescu's free probability theory. The moment method provides the combinatorial interface: each moment is a sum over words, and freeness means that only non-crossing partition contributions survive in the limit.\n\n**Why now?** The moment kernel framework and backtrack-free counting are the exact combinatorial objects that appear in free probability. The bridge between walk counting on groups and non-crossing partitions is a well-understood analogy that can now be formalized.\n\n**Impact:** Establishing asymptotic freeness for random permutations would unify the Random Cayley Expander Conjecture with the broader program of random matrix universality. It would show that random Cayley graphs on S_n exhibit the same spectral behavior as random regular graphs\u2014a deep structural insight.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (card_backtrackFree_words, trace_pow_eq_closedWordCount), `Pythagorean/CayleyExpander/MomentMethod.lean` (momentKernel_le_one).\n\n**Proof Strategy:** Formalize the Kesten-McKay distribution and its moments. Show that the relation-driven corrections to the moment kernel vanish by bounding the number of non-tree-like closed walks that involve \"deep\" relations in S_n.\n\n**Domain Bridges:** Free probability \u2192 random matrix theory \u2192 quantum information.\n\n**Lineage:** Extends the backtrack-free counting theorem toward asymptotic spectral analysis.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting connection between discrete group theory and continuous random matrix theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "be453c44",
-    "consumed_by_exp_id": "085c03f4",
-    "timestamp": "2026-05-27T16:03:48.671488+00:00"
-  },
-  {
     "id": "fd_1456",
     "title": "Direction 3: Quantum Channel Mixing via Cayley Moment Bounds",
     "description": "**Conjecture:** The purity of the k-fold quantum channel $\\Phi_{\\sigma,\\tau}^k$ (the completely positive map induced by the random walk step on S_n) decays as $\\text{tr}(\\Phi^k(\\rho)^2) \\leq 1/n! + C_k \\cdot (1 - \\lambda)^k$ where $\\lambda$ is the spectral gap, and the moment kernel directly controls the purity decay.\n\n**Test:** Implement the quantum channel $\\Phi$ for small S_n (n = 3, 4) as a superoperator on density matrices, and verify that purity decay matches the moment kernel predictions from `spectral_moment_eq_return_prob`.\n\n**The key insight is** that the spectral moment = return probability theorem (`spectral_moment_eq_return_prob` in our formalization) is literally a purity calculation for the associated quantum channel. The normalized adjacency operator is a bistochastic quantum channel, and tr(\u0100^m) computes the m-th moment of its spectrum, which controls the rate at which quantum states approach the maximally mixed state.\n\n**Why now?** Quantum computing demands explicit mixing time bounds for random circuits. Our certified moment framework provides the exact mathematical objects needed. The bridge from group walks to quantum channels is a functor that can be formalized.\n\n**Impact:** Certified mixing bounds for quantum channels on symmetric groups would have immediate applications in quantum algorithm design, random circuit sampling, and quantum error correction.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (spectral_moment_eq_return_prob, momentKernel_le_one, free_group_moment_two_lower).\n\n**Proof Strategy:** Formalize the quantum channel associated to a Cayley graph walk. Show that purity = (1/|G|) \u00b7 tr(\u0100^{2k}) and apply the moment-kernel bounds.\n\n**Domain Bridges:** Quantum information \u2192 spectral graph theory \u2192 representation theory.\n\n**Lineage:** Direct application of Theorem 6 (cross-domain bridge).\n\n**Ambition:** Solid extension \u2014 immediate applications with existing infrastructure.\n\n---",
@@ -1577,6 +1539,103 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T16:40:30.251712+00:00"
   },
   {
+    "id": "fd_1484",
+    "title": "Direction 1: Strict Sub-d Integrality Gap Without Capping",
+    "description": "**Conjecture**: For every d \u2265 3 and K \u2265 1, there exists \u03b5(d,K) > 0 and n\u2080(d,K) such that every d-uniform hypergraph H on n \u2265 n\u2080 vertices with \u0394\u2082(H) \u2264 K satisfies \u03c4(H) \u2264 (d \u2212 \u03b5(d,K)) \u00b7 \u03c4*(H). The predicted form is \u03b5(d,K) = c_d/(K+1) where c_d \u2248 1/(2d).\n\n**Test**: Generate random d-uniform hypergraphs conditioned on \u0394\u2082 \u2264 K for d = 3,4,5 and K = 1,2,5,10 with n = 50,100,500,1000. Compute exact \u03c4 (via ILP) and \u03c4* (via LP). Plot the ratio \u03c4/\u03c4* as a function of n for each (d,K). The conjecture predicts convergence to a value \u2264 d \u2212 c_d/(K+1). A disproof would show the ratio clustering near d for some bounded K.\n\n**Impact**: This would be the first integrality gap bound where the approximation factor depends on local overlap geometry rather than just uniformity. It would immediately impact:\n- Approximation algorithms for structured set cover instances\n- Competitive analysis of online covering with bounded overlap\n- Lower bounds in proof complexity for covering formulations\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (Theorem `integrality_gap_strict_of_capped`), `Catalog/Pythagorean/HypergraphTransversal.lean` (classical bounds).\n\n**Proof Strategy**: Use layered threshold rounding: set S\u2081 = {v : x(v) \u2265 1/(d-1)}, then bound the repair cost of uncovered edges using the pair codegree bound. The key lemma is that under \u0394\u2082 \u2264 K, the graph of \"uncovered edge\" adjacencies has bounded chromatic number, allowing a greedy repair with O(K) additional vertices per uncovered edge class.\n\n**Domain Bridges**: Approximation algorithms, polyhedral combinatorics, proof complexity.\n\n**Lineage**: Extends `integrality_gap_improved_capped` by removing the capping assumption.\n\n**Ambition**: Grand challenge \u2014 would open a new subfield of \"overlap-sensitive approximation.\"\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dbcfb2f4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T17:24:45.367460+00:00"
+  },
+  {
+    "id": "fd_1485",
+    "title": "Direction 2: Algorithmic Overlap-Adaptive Rounding",
+    "description": "**Conjecture**: There exists a polynomial-time rounding algorithm that, given a d-uniform hypergraph H with \u0394\u2082(H) \u2264 K and an optimal fractional transversal x*, outputs an integer transversal of size at most (d \u2212 \u03a9(1/K)) \u00b7 \u03c4*(H) + O(K). This algorithm does NOT require knowing K in advance \u2014 it adaptively estimates the overlap profile from the LP solution.\n\n**Test**: Implement the adaptive algorithm. Compare its output size to: (a) classical threshold rounding, (b) randomized rounding, (c) the LP relaxation value, on random instances with K = 1,2,5,10 and d = 3,4,5. The conjecture predicts consistent improvement over (a) and (b) for small K.\n\n**Impact**: First approximation algorithm with overlap-adaptive guarantees. Would influence:\n- Column generation methods for large-scale set cover\n- Online scheduling with bounded resource sharing\n- Network design with diversity constraints\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (energy bound, threshold results), `Catalog/Pythagorean/WeightedHypergraphTransversal.lean` (weighted rounding).\n\n**Proof Strategy**: Use the pair-overlap energy E(x) as a \"diagnostic\" \u2014 compute E(x*)/||x*||\u2081\u00b2 to estimate the effective overlap parameter. If this ratio is small, use an aggressive threshold (1/(d-1)); if large, fall back to 1/d. The energy bound guarantees that the effective overlap is at most K, even if K is unknown.\n\n**Domain Bridges**: Algorithm design, operations research, online optimization.\n\n**Lineage**: Builds on `pairOverlapEnergy_le_of_pairCodegreeBounded` as the diagnostic tool.\n\n**Ambition**: Solid extension \u2014 directly implementable and testable.\n\n**The key insight is** that the pair-overlap energy serves as a computable proxy for the unobserved codegree parameter, enabling adaptive algorithm design without structural assumptions.\n\n**Why now?** The formal verification of the energy bound provides a rigorous foundation for algorithm design that was previously available only as heuristic intuition.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dbcfb2f4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T17:24:45.431739+00:00"
+  },
+  {
+    "id": "fd_1486",
+    "title": "Direction 3: Statistical Physics of Covering Polytopes",
+    "description": "**Conjecture**: The partition function Z(\u03b2) = \u03a3_{S transversal} exp(\u2212\u03b2|S|) of the covering system undergoes a phase transition at \u03b2_c = ln(d\u22121) + O(1/(K+1)) when \u0394\u2082(H) \u2264 K. Below \u03b2_c, the Gibbs measure concentrates on transversals of size \u2248 \u03c4*\u00b7(d \u2212 \u03a9(1/K)); above \u03b2_c, it concentrates on the minimum transversal.\n\n**Test**: For random 3-uniform hypergraphs with \u0394\u2082 \u2264 K, estimate Z(\u03b2) via Monte Carlo simulation (Metropolis algorithm on the transversal indicator). Plot the free energy f(\u03b2) = \u2212(1/n)\u00b7ln Z(\u03b2) and identify the phase transition. Compare the critical \u03b2_c to the predicted formula.\n\n**Impact**: Would establish a rigorous connection between:\n- LP duality for covering (algebraic structure)\n- Gibbs measures on covering configurations (probabilistic structure)\n- Phase transitions in random combinatorial optimization\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (free energy coercivity), `Catalog/Pythagorean/FracTransversalConcentration.lean` (concentration bounds).\n\n**Proof Strategy**: Use the coercivity theorem as a warm-start: F(x) \u2265 0 implies the free energy is bounded below. Then develop a cluster expansion around the fractional optimum, using the energy bound to control higher-order terms. The pair codegree bound ensures the cluster expansion converges (weak coupling regime).\n\n**Domain Bridges**: Statistical physics, random constraint satisfaction, mean-field theory.\n\n**Lineage**: Extends `cover_free_energy_coercive` to the full Gibbs measure framework.\n\n**Ambition**: Grand challenge \u2014 would create a new interface between optimization and physics.\n\n**The key insight is** that the coercivity theorem is the zeroth-order term of a cluster expansion, and the energy bound controls the convergence radius.\n\n**Why now?** Formal verification of the free energy bound enables rigorous cluster expansion analysis that would otherwise be heuristic.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dbcfb2f4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T17:24:45.553550+00:00"
+  },
+  {
+    "id": "fd_1487",
+    "title": "Direction 4: Error-Correcting Codes from Bounded-Codegree Coverings",
+    "description": "**Conjecture**: For d \u2265 3 and K \u2265 1, the minimum transversal of a d-uniform hypergraph with \u0394\u2082 \u2264 K defines a binary code with minimum distance \u2265 d/(K+1) and rate \u2265 1 \u2212 (d\u2212\u03b5)\u00b7\u03c4*/n, where \u03b5 = \u03b5(d,K) > 0. In particular, bounded codegree covering systems yield codes that exceed the Gilbert-Varshamov bound when K is sufficiently small relative to d.\n\n**Test**: Construct explicit d-uniform hypergraphs with \u0394\u2082 \u2264 K (e.g., from Steiner systems or randomized constructions). Compute the minimum transversal and treat it as a codeword. Measure the minimum Hamming distance between transversals and compare to the GV bound.\n\n**Impact**: Would provide:\n- New constructions of LDPC-like codes from hypergraph covering\n- Connections between coding-theoretic distance and combinatorial overlap\n- A covering-based framework for code design\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (codegree bounds), `Catalog/Pythagorean/HypergraphTransversal.lean` (transversal theory).\n\n**Proof Strategy**: The minimum distance between two distinct transversals S\u2081, S\u2082 is |S\u2081 \u0394 S\u2082|. Under bounded codegree, the symmetric difference is large because the edges \"force\" transversals to spread out. Use the energy bound to show that concentrated transversals have high overlap energy, contradicting optimality.\n\n**Domain Bridges**: Coding theory, information theory, combinatorial design.\n\n**Lineage**: Uses `pairCodegree_le_one_of_pairwiseDisjoint` as the K=1 base case (Steiner systems).\n\n**Ambition**: Solid extension \u2014 connects two well-established fields through a new lens.\n\n**The key insight is** that bounded pair codegree forces transversals to be \"spread out,\" which is precisely the property needed for good error-correcting codes.\n\n**Why now?** The formal connection between codegree and energy opens a quantitative bridge to coding theory that was not previously available.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dbcfb2f4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T17:24:45.619179+00:00"
+  },
+  {
+    "id": "fd_1488",
+    "title": "Direction 5: Sparse Biological Interaction Networks",
+    "description": "**Conjecture**: In protein-protein interaction networks modeled as d-uniform hypergraphs (where edges represent protein complexes), the pair codegree \u0394\u2082 is bounded by O(log n) where n is the number of proteins. Consequently, the drug target selection problem (minimum hitting set of essential complexes) admits an approximation ratio of d \u2212 \u03a9(1/log n), significantly better than the worst-case d factor.\n\n**Test**: Analyze real PPI databases (BioGRID, STRING) for pair codegree distribution. For the top 1000 protein complexes, compute \u0394\u2082 and compare to log n. Then solve the hitting set LP, apply threshold rounding, and compare to the ILP solution. The conjecture predicts a gap ratio significantly below d.\n\n**Impact**: Would provide:\n- Rigorous approximation guarantees for drug target identification\n- Structural characterization of biological network overlap\n- Principled algorithms for essential gene prediction\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (all main theorems).\n\n**Proof Strategy**: Biological networks are known to have bounded degree distributions (scale-free with bounded average degree). Under degree bounds, the pair codegree is bounded by the product of individual degrees divided by the number of edges \u2014 which gives O(log n) in typical scale-free networks.\n\n**Domain Bridges**: Computational biology, network science, drug discovery.\n\n**Lineage**: Applies `integrality_gap_improved_capped` to biological network instances.\n\n**Ambition**: Solid extension \u2014 directly applicable to existing datasets.\n\n**The key insight is** that biological networks have naturally bounded pair codegree due to evolutionary pressure against redundant interactions, making them ideal candidates for overlap-sensitive optimization.\n\n**Why now?** Large-scale PPI databases are now available, and the formal guarantees from this work provide the first rigorous framework for overlap-adaptive analysis of biological covering problems.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dbcfb2f4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T17:24:45.684727+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1607,103 +1666,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1484",
-    "title": "Direction 1: Strict Sub-d Integrality Gap Without Capping",
-    "description": "**Conjecture**: For every d \u2265 3 and K \u2265 1, there exists \u03b5(d,K) > 0 and n\u2080(d,K) such that every d-uniform hypergraph H on n \u2265 n\u2080 vertices with \u0394\u2082(H) \u2264 K satisfies \u03c4(H) \u2264 (d \u2212 \u03b5(d,K)) \u00b7 \u03c4*(H). The predicted form is \u03b5(d,K) = c_d/(K+1) where c_d \u2248 1/(2d).\n\n**Test**: Generate random d-uniform hypergraphs conditioned on \u0394\u2082 \u2264 K for d = 3,4,5 and K = 1,2,5,10 with n = 50,100,500,1000. Compute exact \u03c4 (via ILP) and \u03c4* (via LP). Plot the ratio \u03c4/\u03c4* as a function of n for each (d,K). The conjecture predicts convergence to a value \u2264 d \u2212 c_d/(K+1). A disproof would show the ratio clustering near d for some bounded K.\n\n**Impact**: This would be the first integrality gap bound where the approximation factor depends on local overlap geometry rather than just uniformity. It would immediately impact:\n- Approximation algorithms for structured set cover instances\n- Competitive analysis of online covering with bounded overlap\n- Lower bounds in proof complexity for covering formulations\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (Theorem `integrality_gap_strict_of_capped`), `Catalog/Pythagorean/HypergraphTransversal.lean` (classical bounds).\n\n**Proof Strategy**: Use layered threshold rounding: set S\u2081 = {v : x(v) \u2265 1/(d-1)}, then bound the repair cost of uncovered edges using the pair codegree bound. The key lemma is that under \u0394\u2082 \u2264 K, the graph of \"uncovered edge\" adjacencies has bounded chromatic number, allowing a greedy repair with O(K) additional vertices per uncovered edge class.\n\n**Domain Bridges**: Approximation algorithms, polyhedral combinatorics, proof complexity.\n\n**Lineage**: Extends `integrality_gap_improved_capped` by removing the capping assumption.\n\n**Ambition**: Grand challenge \u2014 would open a new subfield of \"overlap-sensitive approximation.\"\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T17:24:45.367460+00:00"
-  },
-  {
-    "id": "fd_1485",
-    "title": "Direction 2: Algorithmic Overlap-Adaptive Rounding",
-    "description": "**Conjecture**: There exists a polynomial-time rounding algorithm that, given a d-uniform hypergraph H with \u0394\u2082(H) \u2264 K and an optimal fractional transversal x*, outputs an integer transversal of size at most (d \u2212 \u03a9(1/K)) \u00b7 \u03c4*(H) + O(K). This algorithm does NOT require knowing K in advance \u2014 it adaptively estimates the overlap profile from the LP solution.\n\n**Test**: Implement the adaptive algorithm. Compare its output size to: (a) classical threshold rounding, (b) randomized rounding, (c) the LP relaxation value, on random instances with K = 1,2,5,10 and d = 3,4,5. The conjecture predicts consistent improvement over (a) and (b) for small K.\n\n**Impact**: First approximation algorithm with overlap-adaptive guarantees. Would influence:\n- Column generation methods for large-scale set cover\n- Online scheduling with bounded resource sharing\n- Network design with diversity constraints\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (energy bound, threshold results), `Catalog/Pythagorean/WeightedHypergraphTransversal.lean` (weighted rounding).\n\n**Proof Strategy**: Use the pair-overlap energy E(x) as a \"diagnostic\" \u2014 compute E(x*)/||x*||\u2081\u00b2 to estimate the effective overlap parameter. If this ratio is small, use an aggressive threshold (1/(d-1)); if large, fall back to 1/d. The energy bound guarantees that the effective overlap is at most K, even if K is unknown.\n\n**Domain Bridges**: Algorithm design, operations research, online optimization.\n\n**Lineage**: Builds on `pairOverlapEnergy_le_of_pairCodegreeBounded` as the diagnostic tool.\n\n**Ambition**: Solid extension \u2014 directly implementable and testable.\n\n**The key insight is** that the pair-overlap energy serves as a computable proxy for the unobserved codegree parameter, enabling adaptive algorithm design without structural assumptions.\n\n**Why now?** The formal verification of the energy bound provides a rigorous foundation for algorithm design that was previously available only as heuristic intuition.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T17:24:45.431739+00:00"
-  },
-  {
-    "id": "fd_1486",
-    "title": "Direction 3: Statistical Physics of Covering Polytopes",
-    "description": "**Conjecture**: The partition function Z(\u03b2) = \u03a3_{S transversal} exp(\u2212\u03b2|S|) of the covering system undergoes a phase transition at \u03b2_c = ln(d\u22121) + O(1/(K+1)) when \u0394\u2082(H) \u2264 K. Below \u03b2_c, the Gibbs measure concentrates on transversals of size \u2248 \u03c4*\u00b7(d \u2212 \u03a9(1/K)); above \u03b2_c, it concentrates on the minimum transversal.\n\n**Test**: For random 3-uniform hypergraphs with \u0394\u2082 \u2264 K, estimate Z(\u03b2) via Monte Carlo simulation (Metropolis algorithm on the transversal indicator). Plot the free energy f(\u03b2) = \u2212(1/n)\u00b7ln Z(\u03b2) and identify the phase transition. Compare the critical \u03b2_c to the predicted formula.\n\n**Impact**: Would establish a rigorous connection between:\n- LP duality for covering (algebraic structure)\n- Gibbs measures on covering configurations (probabilistic structure)\n- Phase transitions in random combinatorial optimization\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (free energy coercivity), `Catalog/Pythagorean/FracTransversalConcentration.lean` (concentration bounds).\n\n**Proof Strategy**: Use the coercivity theorem as a warm-start: F(x) \u2265 0 implies the free energy is bounded below. Then develop a cluster expansion around the fractional optimum, using the energy bound to control higher-order terms. The pair codegree bound ensures the cluster expansion converges (weak coupling regime).\n\n**Domain Bridges**: Statistical physics, random constraint satisfaction, mean-field theory.\n\n**Lineage**: Extends `cover_free_energy_coercive` to the full Gibbs measure framework.\n\n**Ambition**: Grand challenge \u2014 would create a new interface between optimization and physics.\n\n**The key insight is** that the coercivity theorem is the zeroth-order term of a cluster expansion, and the energy bound controls the convergence radius.\n\n**Why now?** Formal verification of the free energy bound enables rigorous cluster expansion analysis that would otherwise be heuristic.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T17:24:45.553550+00:00"
-  },
-  {
-    "id": "fd_1487",
-    "title": "Direction 4: Error-Correcting Codes from Bounded-Codegree Coverings",
-    "description": "**Conjecture**: For d \u2265 3 and K \u2265 1, the minimum transversal of a d-uniform hypergraph with \u0394\u2082 \u2264 K defines a binary code with minimum distance \u2265 d/(K+1) and rate \u2265 1 \u2212 (d\u2212\u03b5)\u00b7\u03c4*/n, where \u03b5 = \u03b5(d,K) > 0. In particular, bounded codegree covering systems yield codes that exceed the Gilbert-Varshamov bound when K is sufficiently small relative to d.\n\n**Test**: Construct explicit d-uniform hypergraphs with \u0394\u2082 \u2264 K (e.g., from Steiner systems or randomized constructions). Compute the minimum transversal and treat it as a codeword. Measure the minimum Hamming distance between transversals and compare to the GV bound.\n\n**Impact**: Would provide:\n- New constructions of LDPC-like codes from hypergraph covering\n- Connections between coding-theoretic distance and combinatorial overlap\n- A covering-based framework for code design\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (codegree bounds), `Catalog/Pythagorean/HypergraphTransversal.lean` (transversal theory).\n\n**Proof Strategy**: The minimum distance between two distinct transversals S\u2081, S\u2082 is |S\u2081 \u0394 S\u2082|. Under bounded codegree, the symmetric difference is large because the edges \"force\" transversals to spread out. Use the energy bound to show that concentrated transversals have high overlap energy, contradicting optimality.\n\n**Domain Bridges**: Coding theory, information theory, combinatorial design.\n\n**Lineage**: Uses `pairCodegree_le_one_of_pairwiseDisjoint` as the K=1 base case (Steiner systems).\n\n**Ambition**: Solid extension \u2014 connects two well-established fields through a new lens.\n\n**The key insight is** that bounded pair codegree forces transversals to be \"spread out,\" which is precisely the property needed for good error-correcting codes.\n\n**Why now?** The formal connection between codegree and energy opens a quantitative bridge to coding theory that was not previously available.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T17:24:45.619179+00:00"
-  },
-  {
-    "id": "fd_1488",
-    "title": "Direction 5: Sparse Biological Interaction Networks",
-    "description": "**Conjecture**: In protein-protein interaction networks modeled as d-uniform hypergraphs (where edges represent protein complexes), the pair codegree \u0394\u2082 is bounded by O(log n) where n is the number of proteins. Consequently, the drug target selection problem (minimum hitting set of essential complexes) admits an approximation ratio of d \u2212 \u03a9(1/log n), significantly better than the worst-case d factor.\n\n**Test**: Analyze real PPI databases (BioGRID, STRING) for pair codegree distribution. For the top 1000 protein complexes, compute \u0394\u2082 and compare to log n. Then solve the hitting set LP, apply threshold rounding, and compare to the ILP solution. The conjecture predicts a gap ratio significantly below d.\n\n**Impact**: Would provide:\n- Rigorous approximation guarantees for drug target identification\n- Structural characterization of biological network overlap\n- Principled algorithms for essential gene prediction\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (all main theorems).\n\n**Proof Strategy**: Biological networks are known to have bounded degree distributions (scale-free with bounded average degree). Under degree bounds, the pair codegree is bounded by the product of individual degrees divided by the number of edges \u2014 which gives O(log n) in typical scale-free networks.\n\n**Domain Bridges**: Computational biology, network science, drug discovery.\n\n**Lineage**: Applies `integrality_gap_improved_capped` to biological network instances.\n\n**Ambition**: Solid extension \u2014 directly applicable to existing datasets.\n\n**The key insight is** that biological networks have naturally bounded pair codegree due to evolutionary pressure against redundant interactions, making them ideal candidates for overlap-sensitive optimization.\n\n**Why now?** Large-scale PPI databases are now available, and the formal guarantees from this work provide the first rigorous framework for overlap-adaptive analysis of biological covering problems.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T17:24:45.684727+00:00"
   },
   {
     "id": "seed_013",
