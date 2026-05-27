@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Free Probability / Random Matrix Theory / Certified Robustness",
     "date": "2026-05-27T04:49:35Z",
     "exp_id": "f7f5fa5d",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7147397913043478,
+    "quality": "substantial",
     "pkg_num": 141
   },
   {
@@ -4098,8 +4098,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-27T04:49:35Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7147397913043478,
+      "quality": "substantial"
     }
   ],
   "edges": [

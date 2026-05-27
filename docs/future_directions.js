@@ -86,10 +86,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "793bbd8c",
     "timestamp": "2026-05-24T22:37:54.544197+00:00"
   },
   {
@@ -160,10 +160,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "0d5e8c8a",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -234,10 +234,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "84929cd5",
     "timestamp": "2026-05-25T00:54:40.932722+00:00"
   },
   {
@@ -370,10 +370,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "f92b2f40",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T14:24:15.293101+00:00"
   },
   {
@@ -567,10 +567,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "5e0f52a0",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:03.370751+00:00"
   },
   {
@@ -1466,25 +1466,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T02:07:17.397934+00:00"
   },
   {
-    "id": "fd_1259",
-    "title": "Direction 4: Free Probability and Lorentzian Stability Under Structured Noise",
-    "description": "**Conjecture:** For structured (non-i.i.d.) perturbations arising from free probability\u2014such as free convolution of a deterministic spectrum with a semicircular element\u2014the certification threshold is determined by the *free* spectral edge rather than 2\u03c3. Specifically, if A has eigenvalues \u03bc\u2081 \u2265 ... \u2265 \u03bc\u2099 and E is a free semicircular element of variance \u03c3\u00b2, then the largest eigenvalue of A + E concentrates near the right edge of the free convolution \u03bc_A \u229e \u03c3_sc, which may differ from 2\u03c3.\n\n**Test:** Compute the free convolution edge for specific deterministic spectra (e.g., A = diag(\u03bb, 0, ..., 0)) using the Stieltjes transform. Compare against Monte Carlo simulations of the actual largest eigenvalue of A + GOE.\n\n**Impact:** Would extend the certification framework to realistic structured perturbation models where the noise has correlations or non-trivial spectral structure. This is essential for applications in signal processing and quantum information.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: `GOEEdgeWindow`, `EdgeScaledGap`\n- `Catalog/Bridges/Catalog/Pythagorean/LorentzianSmoothedAnalysis.lean`: smoothed analysis\n\n**Proof Strategy:** Formalize the subordination method for free convolution (Biane, 1998), compute the free edge as the rightmost point of the support of the free convolution, and transfer the certification bound.\n\n**Domain Bridges:** Free probability, operator algebras, random matrix theory, quantum information.\n\n**Lineage:** Generalizes the GOE-specific 2\u03c3 threshold to structured noise.\n\n**Ambition:** Solid extension \u2014 free convolution theory is well-developed but not yet formalized.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "f7f5fa5d",
-    "timestamp": "2026-05-27T02:07:17.446462+00:00"
-  },
-  {
     "id": "fd_1260",
     "title": "Direction 5: Spectral Phase Transitions in Quantum Many-Body Certification",
     "description": "**Conjecture:** The spectral phase transition at 2\u03c3 has a direct analog in quantum many-body physics: the certification of topological order in a noisy quantum state undergoes a phase transition at a critical noise rate determined by the spectral gap of the parent Hamiltonian and the random matrix edge of the noise operator.\n\nSpecifically, for a topologically ordered ground state |\u03c8\u27e9 of a gapped Hamiltonian H with spectral gap \u0394, and for depolarizing noise of strength p, the fidelity-based certification of topological order transitions at p* \u221d \u0394/(2\u03c3_eff) where \u03c3_eff is determined by the effective noise matrix.\n\n**Test:** Simulate the toric code under depolarizing noise for various system sizes. Plot the fidelity of topological order certification against p/p* and check for curve collapse with n^(\u22122/3) scaling.\n\n**Impact:** Would connect the Lorentzian certification framework to quantum error correction and topological quantum computing, potentially yielding new noise threshold estimates.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: phase transition theorems, universality framework\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: spectral gap stability\n\n**Proof Strategy:** Map the certification problem to a spectral gap stability question, identify the effective noise matrix, and apply the transfer theorem with the quantum generalization of the GOE edge.\n\n**Domain Bridges:** Quantum information, topological order, condensed matter physics, quantum error correction.\n\n**Lineage:** Grand vision extending the 2\u03c3 threshold from classical linear algebra to quantum many-body systems.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful, connecting algebraic certification to quantum physics.",
@@ -1594,7 +1575,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a8f3ced3",
@@ -1615,12 +1596,95 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a8f3ced3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T03:33:47.282680+00:00"
+  },
+  {
+    "id": "fd_1285",
+    "title": "Direction 1: Higher-Order Negative Dependence Certificates via k\u00d7k Minor Perturbation",
+    "description": "**Conjecture:** For symmetric PSD K and K' with \u2016K \u2212 K'\u2016_max \u2264 \u03b7, for any k-element subset S \u2286 Fin n:\n\n|det(K_S) \u2212 det(K'_S)| \u2264 P_k(M) \u00b7 \u03b7\n\nwhere P_k(M) is a polynomial in M (the entry magnitude bound) of degree k\u22121, with explicit coefficients depending only on k.\n\n**Test:** For k = 3, 4, compute exact k\u00d7k principal minor perturbation bounds by expanding the determinant. Verify computationally for random PSD contractions of increasing dimension that the empirical perturbation ratio |det(K_S) \u2212 det(K'_S)| / (P_k(M)\u00b7\u03b7) remains bounded.\n\n**Impact:** This would extend the certified framework from pairwise to k-wise negative dependence, covering applications like k-DPPs (where exactly k items are sampled) and higher-order diversity guarantees. The polynomial growth in k would show that certification cost scales polynomially with the order of the guarantee.\n\n**Catalog References:** `Pythagorean/CertifiedDPPSampling.lean` (det2_perturb_bound, pairwise_inclusion_perturb), `Speculative/AutoResearch/DPPLorentzian.lean` (psd_principal_minor_nonneg).\n\n**Proof Strategy:** Induction on k. The base case k=2 is our Theorem 1. For k \u2192 k+1, expand the (k+1)\u00d7(k+1) determinant along the first row, obtaining a sum of k products (cofactor \u00d7 entry). Each cofactor is a k\u00d7k determinant that differs by at most P_k(M)\u00b7\u03b7 by induction, and each entry differs by at most \u03b7. The triangle inequality gives P_{k+1}(M) = (k+1)\u00b7(P_k(M) + M^k)\u00b7\u03b7.\n\n**Domain Bridges:** Combinatorics (matroid theory via k-wise independence), statistical physics (k-point correlation functions), quantum chemistry (k-electron density matrices).\n\n**Lineage:** Direct extension of Theorem 1 (det2_perturb_bound) from this cycle.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Solid extension. The inductive structure is clear; the main challenge is tracking the polynomial coefficients precisely.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f44ba709",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T04:11:16.534766+00:00"
+  },
+  {
+    "id": "fd_1287",
+    "title": "Direction 3: Efficient Lorentzian Certificate Computation",
+    "description": "**Conjecture:** For an n\u00d7n PSD contraction kernel K, the Lorentzian signature defect \u03b4 of the DPP generating polynomial at the all-ones point can be computed in O(n\u00b3) time (same as eigendecomposition), and the resulting certificate has size O(n\u00b2).\n\n**Test:** Implement the Hessian computation for DPP generating polynomials at x = 1. For random PSD contractions:\n1. Compute the Hessian H_{ij} = \u2202_i\u2202_j Z_K(1) for the generating polynomial.\n2. Compute eigenvalues of H.\n3. Verify the Lorentzian condition (at most one positive eigenvalue).\n4. Measure the signature defect.\n5. Compare computation time with eigendecomposition.\n\n**Impact:** This would make Lorentzian certification practical: O(n\u00b3) is already the cost of sampling from the DPP, so certification adds no asymptotic overhead. The certificate itself is O(n\u00b2) \u2014 a matrix \u2014 which is small enough to store and transmit.\n\n**Catalog References:** `Pythagorean/CertifiedDPPSampling.lean` (LorentzianEmpiricalCert, covarianceQuadForm), `Speculative/AutoResearch/DPPLorentzian.lean` (IsDPPLorentzian, dpp_partition_function_lorentzian).\n\n**Proof Strategy:** The Hessian of det(I + diag(x)K) at x = 1 can be computed using the matrix identity: \u2202_i\u2202_j det(I + diag(x)K)|_{x=1} = det(I+K) \u00b7 [(I+K)\u207b\u00b9_{ii}(I+K)\u207b\u00b9_{jj} \u2212 (I+K)\u207b\u00b9_{ij}\u00b2]. This requires one matrix inversion and n\u00b2 entry evaluations. Formalizing this identity connects the DPP Hessian to the inverse kernel L = (I+K)\u207b\u00b9.\n\n**Domain Bridges:** Numerical linear algebra (stable matrix inversion), optimization (semidefinite programming for signature verification), machine learning (kernel learning with Lorentzian constraints).\n\n**Lineage:** Builds on LorentzianEmpiricalCert definition from this cycle. The hessianBound field of this structure would be computed by the algorithm proposed here.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Achievable with existing linear algebra infrastructure. The main formalization challenge is the matrix calculus identity connecting the generating polynomial Hessian to the inverse kernel.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f44ba709",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T04:11:16.628921+00:00"
+  },
+  {
+    "id": "fd_1288",
+    "title": "Direction 4: Certified Fermion Sampling in Noisy Quantum Circuits (Grand Challenge)",
+    "description": "**Conjecture:** For a noisy quantum circuit preparing an n-mode fermionic Gaussian state with depolarizing noise rate \u03b5 per gate and gate depth d, the output correlation matrix K' satisfies:\n\n\u2016K \u2212 K'\u2016_max \u2264 C \u00b7 d \u00b7 \u03b5\n\nwhere K is the ideal correlation matrix. Combined with our certified DPP bounds, this gives:\n\nnegative dependence defect \u2264 6M \u00b7 C \u00b7 d \u00b7 \u03b5\n\nproviding a certified quality bound for fermion sampling under realistic noise.\n\n**Test:** Simulate noisy Gaussian fermionic circuits for n = 4, 8, 16 modes with depolarizing noise \u03b5 = 0.001 to 0.1. Compute the actual correlation matrix K' and compare \u2016K \u2212 K'\u2016_max with the predicted C\u00b7d\u00b7\u03b5 bound. Verify that the certified negative dependence defect matches empirical observation.\n\n**Impact:** This would bring certified DPP theory into quantum computation. Fermion sampling is a key primitive in quantum chemistry and materials science. Certified bounds would determine when noisy quantum hardware produces reliable fermionic correlations\u2014a critical question for quantum advantage claims.\n\n**Catalog References:** `Pythagorean/CertifiedDPPSampling.lean` (certified_approx_dpp_sound), `Speculative/AutoResearch/DPPLorentzian.lean` (DPPKernel, psd_pairInclusion_nonneg).\n\n**Proof Strategy:** Use the Lie-Trotter formula for fermionic Gaussian unitaries to show that each noisy gate perturbs the correlation matrix by at most C\u03b5 in operator norm. Accumulate errors over d gates using submultiplicativity. Convert operator norm to entry-wise norm using \u2016A\u2016_max \u2264 \u2016A\u2016_op.\n\n**Domain Bridges:** Quantum information (fermionic linear optics), condensed matter physics (free fermion ground states), quantum error correction (noise threshold theorems).\n\n**Lineage:** Extends certified_approx_dpp_sound from matrix perturbation to quantum noise models. The DPP-fermion connection (Macchi 1975) provides the bridge.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Grand challenge. Requires formalizing quantum channel noise models and their interaction with correlation matrices. High impact if successful: would provide the first certified quality bounds for quantum fermion sampling.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f44ba709",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T04:11:16.674461+00:00"
+  },
+  {
+    "id": "fd_1290",
+    "title": "Direction 1: Higher-Order Shadow Anti-Cancellation",
+    "description": "**Conjecture:** For any polynomial $f$ with nonneg coefficients and any strictly positive $k$-tensor $A$, the $k$-th shadow of $\\text{Supp}(f)$ is contained in $\\text{Supp}(D_A^{(k)} f)$, where $D_A^{(k)} f = \\sum_{i_1, \\ldots, i_k} A_{i_1 \\ldots i_k} \\partial_{i_1} \\cdots \\partial_{i_k} f$.\n\n**Test:** Implement the $k$-th shadow computation and the $k$-th order differential operator for $k = 3, 4$. Run 10,000 random samples with $n \\leq 4$, $d \\leq 8$, checking whether every $k$-th shadow exponent survives. A counterexample for $k = 3$ would falsify the conjecture.\n\n**Impact:** This would establish a complete hierarchy of anti-cancellation theorems, one for each differential order. It would provide certified sparsity bounds for arbitrary-order differential operators applied to positive polynomials.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/AntiCancellationLorentzian.lean` \u2014 the second-order coefficient identity and positivity argument generalize naturally.\n\n**Proof Strategy:** The key insight is that the coefficient of $\\beta$ in $\\partial_{i_1} \\cdots \\partial_{i_k} f$ is $\\prod_{l=1}^k (\\beta(i_l) + l' + 1) \\cdot [\\beta + e_{i_1} + \\cdots + e_{i_k}] f$ where $l'$ accounts for repeated indices. Each factor is strictly positive, so the same nonneg-sum-with-positive-witness argument applies.\n\n**Domain Bridges:** Symbolic computation (arbitrary-order differential operators), PDE theory ($k$-th order elliptic operators), algebraic geometry (higher jet spaces).\n\n**Lineage:** Direct extension of Theorem C in `AntiCancellationLorentzian.lean`.\n\n**Ambition:** Solid extension \u2014 high confidence of truth, straightforward generalization of existing proof.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "19908b05",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T04:11:37.403103+00:00"
   },
   {
     "id": "seed_005",
@@ -1730,65 +1794,22 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
   },
   {
-    "id": "fd_1285",
-    "title": "Direction 1: Higher-Order Negative Dependence Certificates via k\u00d7k Minor Perturbation",
-    "description": "**Conjecture:** For symmetric PSD K and K' with \u2016K \u2212 K'\u2016_max \u2264 \u03b7, for any k-element subset S \u2286 Fin n:\n\n|det(K_S) \u2212 det(K'_S)| \u2264 P_k(M) \u00b7 \u03b7\n\nwhere P_k(M) is a polynomial in M (the entry magnitude bound) of degree k\u22121, with explicit coefficients depending only on k.\n\n**Test:** For k = 3, 4, compute exact k\u00d7k principal minor perturbation bounds by expanding the determinant. Verify computationally for random PSD contractions of increasing dimension that the empirical perturbation ratio |det(K_S) \u2212 det(K'_S)| / (P_k(M)\u00b7\u03b7) remains bounded.\n\n**Impact:** This would extend the certified framework from pairwise to k-wise negative dependence, covering applications like k-DPPs (where exactly k items are sampled) and higher-order diversity guarantees. The polynomial growth in k would show that certification cost scales polynomially with the order of the guarantee.\n\n**Catalog References:** `Pythagorean/CertifiedDPPSampling.lean` (det2_perturb_bound, pairwise_inclusion_perturb), `Speculative/AutoResearch/DPPLorentzian.lean` (psd_principal_minor_nonneg).\n\n**Proof Strategy:** Induction on k. The base case k=2 is our Theorem 1. For k \u2192 k+1, expand the (k+1)\u00d7(k+1) determinant along the first row, obtaining a sum of k products (cofactor \u00d7 entry). Each cofactor is a k\u00d7k determinant that differs by at most P_k(M)\u00b7\u03b7 by induction, and each entry differs by at most \u03b7. The triangle inequality gives P_{k+1}(M) = (k+1)\u00b7(P_k(M) + M^k)\u00b7\u03b7.\n\n**Domain Bridges:** Combinatorics (matroid theory via k-wise independence), statistical physics (k-point correlation functions), quantum chemistry (k-electron density matrices).\n\n**Lineage:** Direct extension of Theorem 1 (det2_perturb_bound) from this cycle.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Solid extension. The inductive structure is clear; the main challenge is tracking the polynomial coefficients precisely.\n\n---",
+    "id": "fd_1305",
+    "title": "Direction 1: Unbounded Confluence via Well-Founded Overlap Induction",
+    "description": "**Conjecture**: For every finite left-linear simply typed Miller-pattern rewrite system E, if all \u03b2-critical pairs (at all sizes) are joinable, then HoRewrite_\u03b2(E) is confluent on all closed simply-typed terms.\n\n**The key insight is** that the bounded framework established in `Pythagorean/HOCriticalPairs.lean` can be lifted to an unbounded result by showing that the set of critical pairs is *well-founded*: overlaps at larger sizes decompose into smaller overlaps via the substitution functoriality theorem (`subst_comp`). This transforms the bounded critical pair theorem into an inductive proof over the termination ordering.\n\n**Why now?** The substitution infrastructure (`subst_comp`, `hoRewrite_closed_under_subst`, `betaStep_closed_under_subst`) and Newman's lemma (`newman_lemma`) from the current development provide the exact tools needed. The missing piece is a structural analysis of how overlap size relates to the well-founded ordering from `Terminating E`.\n\n**Test**: Formalize the statement in Lean 4 and attempt proof by well-founded induction on the overlap complexity. A disproof would require constructing a Miller-pattern system where joinability at every finite size fails to imply joinability at the limit.\n\n**Impact**: An unconditional higher-order critical pair theorem would be a landmark result in rewriting theory, removing the last barrier to using completion as a decision procedure for higher-order equational reasoning.\n\n**Catalog References**: `Pythagorean/HOCriticalPairs.lean` (Theorems: `newman_lemma`, `localConfluence_of_joinable_criticalPairs`, `subst_comp`)\n\n**Proof Strategy**: Transfinite induction on the maximal overlap size. Use `subst_comp` to decompose large overlaps into compositions of smaller ones.\n\n**Domain Bridges**: Automated theorem proving (equational reasoning), compiler verification (full correctness guarantees)\n\n**Lineage**: Direct extension of the bounded critical pair theorem\n\n**Ambition**: Grand challenge \u2014 would resolve a 50-year open question in higher-order rewriting theory\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
-      "Physics",
       "Bridges",
-      "Logic",
-      "Speculative"
+      "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "f44ba709",
+    "source_exp_id": "9c7a3d48",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T04:11:16.534766+00:00"
-  },
-  {
-    "id": "fd_1287",
-    "title": "Direction 3: Efficient Lorentzian Certificate Computation",
-    "description": "**Conjecture:** For an n\u00d7n PSD contraction kernel K, the Lorentzian signature defect \u03b4 of the DPP generating polynomial at the all-ones point can be computed in O(n\u00b3) time (same as eigendecomposition), and the resulting certificate has size O(n\u00b2).\n\n**Test:** Implement the Hessian computation for DPP generating polynomials at x = 1. For random PSD contractions:\n1. Compute the Hessian H_{ij} = \u2202_i\u2202_j Z_K(1) for the generating polynomial.\n2. Compute eigenvalues of H.\n3. Verify the Lorentzian condition (at most one positive eigenvalue).\n4. Measure the signature defect.\n5. Compare computation time with eigendecomposition.\n\n**Impact:** This would make Lorentzian certification practical: O(n\u00b3) is already the cost of sampling from the DPP, so certification adds no asymptotic overhead. The certificate itself is O(n\u00b2) \u2014 a matrix \u2014 which is small enough to store and transmit.\n\n**Catalog References:** `Pythagorean/CertifiedDPPSampling.lean` (LorentzianEmpiricalCert, covarianceQuadForm), `Speculative/AutoResearch/DPPLorentzian.lean` (IsDPPLorentzian, dpp_partition_function_lorentzian).\n\n**Proof Strategy:** The Hessian of det(I + diag(x)K) at x = 1 can be computed using the matrix identity: \u2202_i\u2202_j det(I + diag(x)K)|_{x=1} = det(I+K) \u00b7 [(I+K)\u207b\u00b9_{ii}(I+K)\u207b\u00b9_{jj} \u2212 (I+K)\u207b\u00b9_{ij}\u00b2]. This requires one matrix inversion and n\u00b2 entry evaluations. Formalizing this identity connects the DPP Hessian to the inverse kernel L = (I+K)\u207b\u00b9.\n\n**Domain Bridges:** Numerical linear algebra (stable matrix inversion), optimization (semidefinite programming for signature verification), machine learning (kernel learning with Lorentzian constraints).\n\n**Lineage:** Builds on LorentzianEmpiricalCert definition from this cycle. The hessianBound field of this structure would be computed by the algorithm proposed here.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Achievable with existing linear algebra infrastructure. The main formalization challenge is the matrix calculus identity connecting the generating polynomial Hessian to the inverse kernel.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f44ba709",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T04:11:16.628921+00:00"
-  },
-  {
-    "id": "fd_1288",
-    "title": "Direction 4: Certified Fermion Sampling in Noisy Quantum Circuits (Grand Challenge)",
-    "description": "**Conjecture:** For a noisy quantum circuit preparing an n-mode fermionic Gaussian state with depolarizing noise rate \u03b5 per gate and gate depth d, the output correlation matrix K' satisfies:\n\n\u2016K \u2212 K'\u2016_max \u2264 C \u00b7 d \u00b7 \u03b5\n\nwhere K is the ideal correlation matrix. Combined with our certified DPP bounds, this gives:\n\nnegative dependence defect \u2264 6M \u00b7 C \u00b7 d \u00b7 \u03b5\n\nproviding a certified quality bound for fermion sampling under realistic noise.\n\n**Test:** Simulate noisy Gaussian fermionic circuits for n = 4, 8, 16 modes with depolarizing noise \u03b5 = 0.001 to 0.1. Compute the actual correlation matrix K' and compare \u2016K \u2212 K'\u2016_max with the predicted C\u00b7d\u00b7\u03b5 bound. Verify that the certified negative dependence defect matches empirical observation.\n\n**Impact:** This would bring certified DPP theory into quantum computation. Fermion sampling is a key primitive in quantum chemistry and materials science. Certified bounds would determine when noisy quantum hardware produces reliable fermionic correlations\u2014a critical question for quantum advantage claims.\n\n**Catalog References:** `Pythagorean/CertifiedDPPSampling.lean` (certified_approx_dpp_sound), `Speculative/AutoResearch/DPPLorentzian.lean` (DPPKernel, psd_pairInclusion_nonneg).\n\n**Proof Strategy:** Use the Lie-Trotter formula for fermionic Gaussian unitaries to show that each noisy gate perturbs the correlation matrix by at most C\u03b5 in operator norm. Accumulate errors over d gates using submultiplicativity. Convert operator norm to entry-wise norm using \u2016A\u2016_max \u2264 \u2016A\u2016_op.\n\n**Domain Bridges:** Quantum information (fermionic linear optics), condensed matter physics (free fermion ground states), quantum error correction (noise threshold theorems).\n\n**Lineage:** Extends certified_approx_dpp_sound from matrix perturbation to quantum noise models. The DPP-fermion connection (Macchi 1975) provides the bridge.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 \u2014 Grand challenge. Requires formalizing quantum channel noise models and their interaction with correlation matrices. High impact if successful: would provide the first certified quality bounds for quantum fermion sampling.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f44ba709",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T04:11:16.674461+00:00"
+    "timestamp": "2026-05-27T04:49:16.645214+00:00"
   },
   {
     "id": "seed_013",
@@ -2238,28 +2259,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T03:33:56.193661+00:00"
-  },
-  {
-    "id": "fd_1290",
-    "title": "Direction 1: Higher-Order Shadow Anti-Cancellation",
-    "description": "**Conjecture:** For any polynomial $f$ with nonneg coefficients and any strictly positive $k$-tensor $A$, the $k$-th shadow of $\\text{Supp}(f)$ is contained in $\\text{Supp}(D_A^{(k)} f)$, where $D_A^{(k)} f = \\sum_{i_1, \\ldots, i_k} A_{i_1 \\ldots i_k} \\partial_{i_1} \\cdots \\partial_{i_k} f$.\n\n**Test:** Implement the $k$-th shadow computation and the $k$-th order differential operator for $k = 3, 4$. Run 10,000 random samples with $n \\leq 4$, $d \\leq 8$, checking whether every $k$-th shadow exponent survives. A counterexample for $k = 3$ would falsify the conjecture.\n\n**Impact:** This would establish a complete hierarchy of anti-cancellation theorems, one for each differential order. It would provide certified sparsity bounds for arbitrary-order differential operators applied to positive polynomials.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/AntiCancellationLorentzian.lean` \u2014 the second-order coefficient identity and positivity argument generalize naturally.\n\n**Proof Strategy:** The key insight is that the coefficient of $\\beta$ in $\\partial_{i_1} \\cdots \\partial_{i_k} f$ is $\\prod_{l=1}^k (\\beta(i_l) + l' + 1) \\cdot [\\beta + e_{i_1} + \\cdots + e_{i_k}] f$ where $l'$ accounts for repeated indices. Each factor is strictly positive, so the same nonneg-sum-with-positive-witness argument applies.\n\n**Domain Bridges:** Symbolic computation (arbitrary-order differential operators), PDE theory ($k$-th order elliptic operators), algebraic geometry (higher jet spaces).\n\n**Lineage:** Direct extension of Theorem C in `AntiCancellationLorentzian.lean`.\n\n**Ambition:** Solid extension \u2014 high confidence of truth, straightforward generalization of existing proof.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "19908b05",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T04:11:37.403103+00:00"
   },
   {
     "id": "seed_032",
