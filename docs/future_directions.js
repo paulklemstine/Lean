@@ -749,10 +749,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "abb48be4",
-    "consumed_by_exp_id": "302e596c",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T02:33:38.976648+00:00"
   },
   {
