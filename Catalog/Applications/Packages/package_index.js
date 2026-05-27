@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Geometric Discretization Theory / Lorentzian Polynomial Stability",
     "date": "2026-05-27T00:15:51Z",
     "exp_id": "ad0ea09c",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7752345794392524,
+    "quality": "substantial"
   },
   {
     "filename": "direction_2_valuated_matroid_theory_via_k_fold_log.json",
@@ -3453,8 +3453,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-27T00:15:51Z",
       "hue": 275,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7752345794392524,
+      "quality": "substantial"
     }
   ],
   "edges": [

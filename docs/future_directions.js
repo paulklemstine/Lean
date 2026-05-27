@@ -181,10 +181,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "8850da3d",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -272,10 +272,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "83d44e07",
-    "consumed_by_exp_id": "258120ed",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:10:32.364163+00:00"
   },
   {
@@ -838,10 +838,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "f952b956",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.967457+00:00"
   },
   {
@@ -859,10 +859,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "d97a486b",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.995692+00:00"
   },
   {
@@ -1538,10 +1538,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d0a449c5",
     "timestamp": "2026-05-26T21:53:05.052331+00:00"
   },
   {
@@ -1558,11 +1558,69 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "4c9b1112",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2217051e",
     "timestamp": "2026-05-26T22:26:40.549529+00:00"
+  },
+  {
+    "id": "fd_1229",
+    "title": "Direction 1: Path Congestion to Dirichlet Form Comparison \u2014 Completing the Pipeline",
+    "description": "**Conjecture**: If \u0393 is a path system routing P-edges through Q-edges with congestion \u03c1 (as defined by `PathCongestion`), then E_P(f) \u2264 \u03c1 \u00b7 E_Q(f) for all f. Combined with the formally verified `poincare_comparison`, this would yield \u03bb(Q) \u2265 \u03bb(P)/\u03c1 \u2014 the full canonical-path theorem for non-group chains.\n\n**Test**: Verify on all reversible chains on \u2264 6 states that the congestion bound correctly predicts the Dirichlet form comparison constant within a factor of 2. A counterexample with ratio > 2 would indicate the congestion definition needs refinement.\n\n**Impact**: Completes the formal pipeline from combinatorial path data to certified spectral gaps, making the comparison theorem immediately applicable to any chain where explicit paths can be constructed.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/CanonicalPaths.lean` \u2014 `variance_le_congestion_mul_energy`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `poincare_comparison`\n\n**Proof Strategy**: The proof requires a telescoping argument along paths (generalizing `telescope_word` from the Cayley catalog) combined with Cauchy\u2013Schwarz. The key step is: (f(x) - f(y))\u00b2 \u2264 |\u03b3| \u00b7 \u03a3_{e \u2208 \u03b3} (\u2207_e f)\u00b2. Sum over x,y weighted by \u03c0(x)P(x,y), swap the order of summation, and use the congestion bound.\n\n**Domain Bridges**: Probability theory \u2194 Combinatorial optimization (congestion as a graph property)\n\n**Lineage**: Direct descendant of `sqDiff_le_len_mul_sum_sqDiffs` from `CanonicalPaths.lean`\n\n**Ambition**: \ud83d\udd34 Paradigm shift \u2014 removes the last group-theoretic dependency from the canonical-path method\n\n**The key insight is** that the telescoping + Cauchy\u2013Schwarz argument uses only path structure, not group multiplication, so it transfers directly to non-group chains with the same formal structure.\n\n**Why now?** The comparison theorem is verified, the definitions of `PathCongestion` and `dirichletForm` are in place, and the proof template from `CanonicalPaths.lean` provides a clear roadmap.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a19dada",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:05:03.278928+00:00"
+  },
+  {
+    "id": "fd_1230",
+    "title": "Direction 2: Quantitative Mixing Time Bounds via Comparison Transport",
+    "description": "**Conjecture**: For any chain P compared to reference Q via `ReversibleChainComparison` with parameters (b, C), the mixing time satisfies t_mix(P, \u03b5) \u2264 (b\u00b7C/\u03bb(Q)) \u00b7 (log|\u03b1| + log(1/\u03b5)). Moreover, the prefactor b\u00b7C is tight up to constants for the class of \"lazy path walks compared to jump walks.\"\n\n**Test**: Compute exact mixing times (defined as first time TV distance < 1/4) for all reversible chains on 5 states, and verify the predicted bound is within a factor of n of the truth.\n\n**Impact**: Creates the first formally certified mixing time bounds for non-group chains, with practical implications for MCMC stopping rules.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/MixingTime.lean` \u2014 `tv_le_half_sqrt_card_mul_l2`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `spectralGap_lower_bound_of_dirichlet_comparison`\n\n**Proof Strategy**: Combine the comparison theorem's spectral gap bound with the TV-L\u00b2 comparison from `MixingTime.lean`. The L\u00b2 distance at time t satisfies ||P^t - \u03c0||\u00b2_{L\u00b2(\u03c0)} \u2264 (1-\u03bb)^{2t} \u00b7 (|\u03b1|-1), and TV \u2264 (1/2)\u221a(|\u03b1|) \u00b7 ||\u00b7||_{L\u00b2}.\n\n**Domain Bridges**: Probability theory \u2194 Algorithms (MCMC stopping rules) \u2194 Statistics (sampling guarantees)\n\n**Lineage**: Combines two catalog lineages: comparison (this work) and mixing time (CayleyExpander)\n\n**Ambition**: \ud83d\udfe1 Solid extension \u2014 connects existing verified results into a practical tool\n\n**The key insight is** that the comparison theorem produces a spectral gap bound in exactly the form needed by the mixing time machinery already formalized in the catalog.\n\n**Why now?** Both the comparison theorem and the mixing time infrastructure are verified; the connection is a straightforward composition.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a19dada",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:05:03.316466+00:00"
+  },
+  {
+    "id": "fd_1231",
+    "title": "Direction 3: Information-Theoretic Comparison via Modified Log-Sobolev Inequalities",
+    "description": "**Conjecture**: The comparison method extends to modified log-Sobolev inequalities (MLSI): if chain Q satisfies MLSI with constant \u03b1_Q, and the \"entropy comparison constant\" C_ent satisfies Ent_Q(f\u00b2) \u2264 C_ent \u00b7 Ent_P(f\u00b2), then P satisfies MLSI with constant \u03b1_Q/C_ent. This would give O(log log n) mixing time improvements over the Poincar\u00e9 route.\n\n**Test**: For the Glauber dynamics on the Ising model at \u03b2 < \u03b2_c (high temperature), verify computationally that the MLSI constant scales polynomially in n, while the Poincar\u00e9 constant scales polynomially with a worse exponent.\n\n**Impact**: Bridges probability theory to information theory through entropy methods, and provides exponentially better mixing bounds for chains with hypercontractive properties.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/LogSobolev.lean` \u2014 log-Sobolev infrastructure\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 comparison framework\n\n**Proof Strategy**: Replace variance with entropy, Dirichlet form with entropy dissipation, and adapt the comparison argument. The key difficulty is that entropy is not a quadratic functional, so the \"choose optimal c\" trick from variance comparison needs modification.\n\n**Domain Bridges**: Probability theory \u2194 Information theory (entropy, KL divergence) \u2194 Quantum information (hypercontractivity)\n\n**Lineage**: Extension of comparison framework + log-Sobolev catalog\n\n**Ambition**: \ud83d\udd34 Grand challenge \u2014 would create the first formally verified MLSI comparison theorem\n\n**The key insight is** that the comparison principle is fundamentally about transferring functional inequalities, and the Poincar\u00e9 inequality is just one instance of a general pattern that includes log-Sobolev, Nash, and Beckner inequalities.\n\n**Why now?** The log-Sobolev infrastructure exists in the catalog, and the comparison framework provides the template for the proof structure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4a19dada",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-26T23:05:03.356788+00:00"
   },
   {
     "id": "seed_005",
@@ -1670,86 +1728,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
-  },
-  {
-    "id": "fd_1229",
-    "title": "Direction 1: Path Congestion to Dirichlet Form Comparison \u2014 Completing the Pipeline",
-    "description": "**Conjecture**: If \u0393 is a path system routing P-edges through Q-edges with congestion \u03c1 (as defined by `PathCongestion`), then E_P(f) \u2264 \u03c1 \u00b7 E_Q(f) for all f. Combined with the formally verified `poincare_comparison`, this would yield \u03bb(Q) \u2265 \u03bb(P)/\u03c1 \u2014 the full canonical-path theorem for non-group chains.\n\n**Test**: Verify on all reversible chains on \u2264 6 states that the congestion bound correctly predicts the Dirichlet form comparison constant within a factor of 2. A counterexample with ratio > 2 would indicate the congestion definition needs refinement.\n\n**Impact**: Completes the formal pipeline from combinatorial path data to certified spectral gaps, making the comparison theorem immediately applicable to any chain where explicit paths can be constructed.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/CanonicalPaths.lean` \u2014 `variance_le_congestion_mul_energy`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `poincare_comparison`\n\n**Proof Strategy**: The proof requires a telescoping argument along paths (generalizing `telescope_word` from the Cayley catalog) combined with Cauchy\u2013Schwarz. The key step is: (f(x) - f(y))\u00b2 \u2264 |\u03b3| \u00b7 \u03a3_{e \u2208 \u03b3} (\u2207_e f)\u00b2. Sum over x,y weighted by \u03c0(x)P(x,y), swap the order of summation, and use the congestion bound.\n\n**Domain Bridges**: Probability theory \u2194 Combinatorial optimization (congestion as a graph property)\n\n**Lineage**: Direct descendant of `sqDiff_le_len_mul_sum_sqDiffs` from `CanonicalPaths.lean`\n\n**Ambition**: \ud83d\udd34 Paradigm shift \u2014 removes the last group-theoretic dependency from the canonical-path method\n\n**The key insight is** that the telescoping + Cauchy\u2013Schwarz argument uses only path structure, not group multiplication, so it transfers directly to non-group chains with the same formal structure.\n\n**Why now?** The comparison theorem is verified, the definitions of `PathCongestion` and `dirichletForm` are in place, and the proof template from `CanonicalPaths.lean` provides a clear roadmap.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a19dada",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:05:03.278928+00:00"
-  },
-  {
-    "id": "fd_1230",
-    "title": "Direction 2: Quantitative Mixing Time Bounds via Comparison Transport",
-    "description": "**Conjecture**: For any chain P compared to reference Q via `ReversibleChainComparison` with parameters (b, C), the mixing time satisfies t_mix(P, \u03b5) \u2264 (b\u00b7C/\u03bb(Q)) \u00b7 (log|\u03b1| + log(1/\u03b5)). Moreover, the prefactor b\u00b7C is tight up to constants for the class of \"lazy path walks compared to jump walks.\"\n\n**Test**: Compute exact mixing times (defined as first time TV distance < 1/4) for all reversible chains on 5 states, and verify the predicted bound is within a factor of n of the truth.\n\n**Impact**: Creates the first formally certified mixing time bounds for non-group chains, with practical implications for MCMC stopping rules.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/MixingTime.lean` \u2014 `tv_le_half_sqrt_card_mul_l2`\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 `spectralGap_lower_bound_of_dirichlet_comparison`\n\n**Proof Strategy**: Combine the comparison theorem's spectral gap bound with the TV-L\u00b2 comparison from `MixingTime.lean`. The L\u00b2 distance at time t satisfies ||P^t - \u03c0||\u00b2_{L\u00b2(\u03c0)} \u2264 (1-\u03bb)^{2t} \u00b7 (|\u03b1|-1), and TV \u2264 (1/2)\u221a(|\u03b1|) \u00b7 ||\u00b7||_{L\u00b2}.\n\n**Domain Bridges**: Probability theory \u2194 Algorithms (MCMC stopping rules) \u2194 Statistics (sampling guarantees)\n\n**Lineage**: Combines two catalog lineages: comparison (this work) and mixing time (CayleyExpander)\n\n**Ambition**: \ud83d\udfe1 Solid extension \u2014 connects existing verified results into a practical tool\n\n**The key insight is** that the comparison theorem produces a spectral gap bound in exactly the form needed by the mixing time machinery already formalized in the catalog.\n\n**Why now?** Both the comparison theorem and the mixing time infrastructure are verified; the connection is a straightforward composition.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a19dada",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:05:03.316466+00:00"
-  },
-  {
-    "id": "fd_1231",
-    "title": "Direction 3: Information-Theoretic Comparison via Modified Log-Sobolev Inequalities",
-    "description": "**Conjecture**: The comparison method extends to modified log-Sobolev inequalities (MLSI): if chain Q satisfies MLSI with constant \u03b1_Q, and the \"entropy comparison constant\" C_ent satisfies Ent_Q(f\u00b2) \u2264 C_ent \u00b7 Ent_P(f\u00b2), then P satisfies MLSI with constant \u03b1_Q/C_ent. This would give O(log log n) mixing time improvements over the Poincar\u00e9 route.\n\n**Test**: For the Glauber dynamics on the Ising model at \u03b2 < \u03b2_c (high temperature), verify computationally that the MLSI constant scales polynomially in n, while the Poincar\u00e9 constant scales polynomially with a worse exponent.\n\n**Impact**: Bridges probability theory to information theory through entropy methods, and provides exponentially better mixing bounds for chains with hypercontractive properties.\n\n**Catalog References**:\n- `Pythagorean/CayleyExpander/LogSobolev.lean` \u2014 log-Sobolev infrastructure\n- `Pythagorean/MarkovComparison/NonGroupComparison.lean` \u2014 comparison framework\n\n**Proof Strategy**: Replace variance with entropy, Dirichlet form with entropy dissipation, and adapt the comparison argument. The key difficulty is that entropy is not a quadratic functional, so the \"choose optimal c\" trick from variance comparison needs modification.\n\n**Domain Bridges**: Probability theory \u2194 Information theory (entropy, KL divergence) \u2194 Quantum information (hypercontractivity)\n\n**Lineage**: Extension of comparison framework + log-Sobolev catalog\n\n**Ambition**: \ud83d\udd34 Grand challenge \u2014 would create the first formally verified MLSI comparison theorem\n\n**The key insight is** that the comparison principle is fundamentally about transferring functional inequalities, and the Poincar\u00e9 inequality is just one instance of a general pattern that includes log-Sobolev, Nash, and Beckner inequalities.\n\n**Why now?** The log-Sobolev infrastructure exists in the catalog, and the comparison framework provides the template for the proof structure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4a19dada",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:05:03.356788+00:00"
-  },
-  {
-    "id": "fd_1238",
-    "title": "Direction 5: Tropical and Nonarchimedean Spectral Certificates",
-    "description": "**Conjecture:** The locality theorem has a tropical analogue: for a tropical Lorentzian polynomial (a piecewise-linear function satisfying convexity conditions on Newton polytope faces), a local coefficient change affects only the tropical \"leaves\" (faces of the Newton polytope dual) that contain the updated monomial. The \"spectral gap\" becomes a combinatorial quantity related to the edge lengths of the tropical variety.\n\n**Test:** Implement tropical certificate computation for small examples (tropical lines, tropical cubics) and verify that coefficient changes affect only local faces of the Newton subdivision.\n\n**Impact:** Would extend the entire framework to nonarchimedean fields and tropical geometry, connecting to the tropical Hodge theory program of Adiprasito\u2013Huh\u2013Katz and potentially to algorithmic aspects of tropical optimization.\n\n**The key insight is** that tropical differentiation (the \"tropicalization\" of partial derivatives) preserves the locality structure: a tropical monomial perturbation affects only those tropical leaves whose support contains the perturbed monomial.\n\n**Why now?** Tropical Lorentzian polynomials have been studied by Br\u00e4nd\u00e9n\u2013Huh and others, but the *dynamic* theory \u2014 how certificates evolve under perturbation \u2014 has not been developed in the tropical setting.\n\n**Catalog References:** `Pythagorean/DynamicSpectralGap.lean` (locality theorem as template), tropical geometry literature.\n\n**Proof Strategy:** Define tropical iterated derivatives as min-plus convolutions. Prove the tropical analogue of the annihilation lemma. Establish a tropical certificate structure and prove locality.\n\n**Domain Bridges:** Tropical geometry, algebraic geometry (Hodge theory), optimization (tropical linear programming), phylogenetics (tropical metric spaces).\n\n**Lineage:** Tropicalization of the entire locality framework.\n\n**Ambition:** Solid extension with speculative elements \u2014 50% confidence for the basic tropical locality, 20% for the full spectral certificate theory.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "710cc85b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T23:39:43.873067+00:00"
   },
   {
     "id": "seed_013",
@@ -1959,21 +1937,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T23:12:30.270617+00:00"
   },
   {
-    "id": "fd_0812",
-    "title": "Prime-Indexed Spectral Shadows of Modular Forms in Persistent Homology",
-    "description": "Conjecture: There exists a natural family of filtered simplicial complexes K_N attached to arithmetic data up to cutoff N (for example complexes built from divisibility, residue-class, or Hecke-neighbor relations on integers) such that for some fixed homological degree d, the primewise torsion barcode statistics of H_d(K_N; Z) converge, after explicit normalization in N and p, to the Hecke eigenvalue distribution of a non-CM modular form f. More precisely, the generating function of p-torsion birth/death multiplicities agrees asymptotically with a polynomial statistic of the coefficients a_p(f) on a positive-density set of primes. Test: Construct several canonical arithmetic filtrations, compute primewise persistent homology for large N, and compare normalized torsion summaries against databases of modular forms; confirmation requires statistically significant agreement for one filtration/form pair beyond random and null arithmetic models, while refutation occurs if no canonical construction exhibits nontrivial correlation after normalization and model selection penalties. Impact: This would create a new bridge between topological data analysis and automorphic arithmetic, potentially yielding a geometric-topological probe of L-functions and modular symmetry hidden in combinatorial integer structures.",
-    "domains": [
-      "Arithmetic Topology",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:26:47.015579+00:00"
-  },
-  {
     "id": "fd_0818",
     "title": "Derived Equivalence Rigidity from Persistence of Point Counts",
     "description": "Conjecture: Let X and Y be smooth projective varieties over a number field K. Suppose that for a density-1 set of good primes p of K, the multisets of Frobenius eigenvalues on all l-adic cohomology groups of X and Y agree up to a degree-preserving persistent matching induced by variation over finite field extensions F_{p^r}; equivalently, their point-count generating functions produce isomorphic persistence modules in r for every cohomological degree. Then X and Y are derived equivalent, and in the Calabi-Yau case their numerical Gromov-Witten potentials agree. Test: Compute the persistence modules coming from #(X(F_{p^r})) and #(Y(F_{p^r})) for known pairs of derived-equivalent and non-derived-equivalent varieties (abelian varieties, K3 surfaces, Calabi-Yau hypersurfaces, toric mirrors) and check whether the proposed invariant separates the latter while identifying the former. A single counterexample pair with matching persistence data but provably non-derived-equivalent refutes the conjecture. Impact: This would create a new arithmetic-topological criterion for detecting derived equivalence and potentially connect point counts, motives, mirror symmetry, and persistent homology in a computable way.",
@@ -1987,21 +1950,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:54:49.105761+00:00"
-  },
-  {
-    "id": "fd_0845",
-    "title": "Arithmetic Monodromy Reconstruction from Primewise Persistent Homology",
-    "description": "Conjecture: There exists a canonical construction sending a smooth projective variety X over a number field to a family of filtered complexes C_p(X) for good primes p such that the collection of prime-indexed persistence barcodes determines the semisimplified Frobenius characteristic polynomials on \u00e9tale cohomology in each degree for a density-1 set of primes. Equivalently, if X and Y have identical barcode data for all sufficiently large good primes under this construction, then their local zeta functions agree for a density-1 set of primes. Test: Implement the construction for explicit families (elliptic curves, K3 surfaces, low-genus curves, toric hypersurfaces), compute barcode invariants prime-by-prime, and check whether non-isogenous/non-derived-equivalent examples can be separated exactly when their Frobenius polynomials differ. A refutation would be a pair with distinct local zeta data but indistinguishable persistence outputs. Impact: This would create a new topological-computational interface for recovering arithmetic Galois data from geometric filtrations, potentially yielding machine-discoverable arithmetic invariants and a new bridge between TDA, arithmetic geometry, and the Langlands viewpoint.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:05:45.192441+00:00"
   },
   {
     "id": "fd_0849",
@@ -2019,21 +1967,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:07:22.429094+00:00"
   },
   {
-    "id": "fd_0851",
-    "title": "Automorphic Monodromy from Persistence Under Hecke Correspondences",
-    "description": "Conjecture: There exists a canonical filtered simplicial complex K_N(f) attached to a cuspidal Hecke eigenform f of fixed weight and level, built from the Hecke orbit data {a_p(f)}_{p \\le N}, such that the stable persistent homology of the family {K_N(T_\\ell f)} over varying Hecke operators T_\\ell determines the local Satake parameters of f at a density-1 set of primes. In particular, two non-CM eigenforms with distinct automorphic representations yield asymptotically different persistence signatures under Hecke action. Test: Compute K_N(f) for large databases of modular forms, apply Hecke operators, and check whether barcode/landscape invariants classify forms up to matching Satake parameters outside a zero-density exceptional set; refuted if non-isomorphic forms repeatedly produce indistinguishable persistence signatures under all tested Hecke actions. Impact: This would create a new topological observable for automorphic representations, potentially giving a computational bridge between Langlands data, spectral statistics, and topological data analysis.",
-    "domains": [
-      "Number Theory",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:08:11.583910+00:00"
-  },
-  {
     "id": "fd_0857",
     "title": "Persistent Homology Detects Arithmetic Mirror Symmetry via Primewise Frobenius B",
     "description": "Conjecture: There exists a canonical construction assigning to each smooth projective Calabi\u2013Yau variety X over Q a family of filtered complexes K_p(X) for good primes p such that if X and Y form a mirror pair, then for a density-1 set of primes p their primewise persistence landscapes agree after an explicit degree-reversal transform induced by Hodge duality, while for non-mirror Calabi\u2013Yau varieties this agreement fails on a positive-density set of primes. Test: Compute K_p(X) from point-count/Frobenius data for known mirror families and compare transformed persistence landscapes across many good primes; confirmation is density-1 agreement for mirrors and systematic disagreement for controls. Refutation is failure on known mirror pairs or widespread false positives among non-mirrors. Impact: This would create a new arithmetic-topological invariant for mirror symmetry, linking p-adic/\u00e9tale data, persistent homology, and enumerative geometry, and could provide a computable signature for detecting hidden mirror partners.",
@@ -2049,21 +1982,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:08:57.522301+00:00"
   },
   {
-    "id": "fd_0899",
-    "title": "Arithmetic Noise Stability Threshold for Prime-Labeled Simplicial Complexes",
-    "description": "Conjecture: Let X be a smooth projective variety over Q with good reduction outside a finite set, and for each good prime p let K_p(X) be a canonically defined finite simplicial complex built from the Frobenius action on etale cohomology modulo p together with a filtration by Frobenius slope or valuation. Then there exists a universal noise-stability threshold function T_X(epsilon) such that if one perturbs the local Frobenius data independently on a set of primes of upper density less than epsilon, the resulting family {K'_p(X)} has the same asymptotic barcode law as {K_p(X)} for all filtration scales above T_X(epsilon); but if X and Y are not potentially derived-equivalent, then for some epsilon > 0 no such common threshold exists for the mixed family alternating between X and Y on a density-epsilon set of primes. Test: Define an explicit canonical complex from point-count/Frobenius data for concrete classes such as elliptic curves, K3 surfaces, or abelian varieties; compute persistence summaries across primes; inject controlled random and adversarial perturbations on a sparse set of primes; verify whether barcode statistics remain stable below the predicted density threshold, and whether mismatched varieties exhibit a detectable instability gap. Refutation occurs if sparse perturbations destroy asymptotic persistence laws generically, or if non-equivalent varieties remain indistinguishable under all such density-sparse prime corruptions. Impact: This would introduce a mathematically precise notion of error-correcting arithmetic topology, showing that deep geometric/arithmetic structure can be recovered robustly from incomplete or corrupted prime data, with consequences for anabelian-style reconstruction, arithmetic statistics, and certified inference from noisy zeta data.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:15:12.531139+00:00"
-  },
-  {
     "id": "fd_0901",
     "title": "Algorithmic Independence of Primewise Persistence Profiles",
     "description": "Conjecture: There exists an explicit arithmetic family of filtered chain complexes C(N) over Z, computable from N in polynomial time, such that for infinitely many cutoffs N the collection of primewise barcode summary vectors B_p(C(N)) (for p <= polylog N) is pairwise algorithmically independent in the following testable sense: no predictor running in time poly(log N) and given {B_q(C(N)) : q != p, q <= polylog N} can recover B_p(C(N)) with advantage exceeding o(1) over the empirical base rate. Test: instantiate a canonical family C(N) (e.g. from arithmetic lattices, modular-symbol complexes, or filtered congruence complexes), compute B_p across many primes, and evaluate whether cross-prime prediction accuracy provably/empirically stays at chance while within-prime structure remains highly nontrivial. Refutation occurs if a uniform low-complexity predictor consistently reconstructs one prime's persistence from the others. Impact: This would reveal a new form of arithmetic pseudorandomness visible only through topological summaries, suggesting persistence as a probe of hidden independence phenomena across primes and enabling topology-based randomness tests for arithmetic objects.",
@@ -2077,21 +1995,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T17:15:46.019869+00:00"
-  },
-  {
-    "id": "fd_0914",
-    "title": "Adelic Synchronization Threshold for Primewise Persistent Homology",
-    "description": "Conjecture: There exists an explicit arithmetic family of filtered chain complexes C(X) over Z, naturally attached to smooth projective varieties X/Q, for which the collection of primewise persistence diagrams {D_p(X)} exhibits a sharp synchronization law: if X and Y have isomorphic semisimplified l-adic Galois representations in one fixed cohomological degree, then for a density-1 set of primes p their normalized primewise persistence landscapes agree up to o(1); conversely, if the normalized landscapes agree on a density-1 set of primes, then the Frobenius trace distributions in that degree must agree. Test: Construct C_p(X) from point-count/Frobenius data for explicit families (elliptic curves, K3 surfaces, Calabi-Yau hypersurfaces), compute persistence landscapes across many good primes, and check whether density-1 agreement matches equality of Frobenius trace statistics and whether known non-isogenous examples fail synchronization on positive-density prime sets. Impact: This would turn persistent homology into a new adelic probe of arithmetic equivalence, potentially yielding computable topological fingerprints of Galois representations and a bridge between TDA and arithmetic geometry.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T18:03:31.504296+00:00"
   },
   {
     "id": "fd_0920",
@@ -2139,21 +2042,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:06:00.281798+00:00"
   },
   {
-    "id": "fd_1134",
-    "title": "Arithmetic Phase Retrieval from Primewise Torsion Resonances",
-    "description": "Conjecture: There exists an explicit canonical construction X \\mapsto C_p(X) assigning to each smooth projective variety X over Q and each good prime p a filtered chain complex over F_p such that the two-point correlation function of barcode birth times across primes, after normalization by p^{i/2} in cohomological degree i, determines the semisimplified Frobenius eigenvalue multiset in degree i up to finitely many ambiguities. Test: Compute the construction for families with known Frobenius data (elliptic curves, K3 surfaces, low-dimensional hypersurfaces) and check whether non-isogenous/non-derived-equivalent examples can share the same normalized cross-prime barcode correlation statistics; a counterexample refutes the conjecture, while successful recovery on broad benchmark families supports it. Impact: This would turn persistent homology into a phase-retrieval mechanism for arithmetic geometry, giving a new topological route to reconstruct Galois data from compressed primewise signatures.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:07:12.701752+00:00"
-  },
-  {
     "id": "fd_1170",
     "title": "Universality of Smith Normal Form Fluctuations in Random Filtered Chain Complexe",
     "description": "Conjecture: Let C be a random finite filtered chain complex over Z whose boundary matrices are sparse with i.i.d. integer entries from any mean-zero distribution with finite variance, conditioned on \u2202^2 = 0 by a local projection procedure. After centering by rank and rescaling filtration index, the joint distribution of p-adic valuation profiles of the invariant factors in the Smith normal forms converges, for every fixed homological degree and finite set of primes p, to a universal limit independent of the entry distribution. Test: Generate ensembles from distinct input laws (Bernoulli, discrete Gaussian, bounded uniform), compute Smith normal forms across filtration levels, and compare the empirical laws of invariant-factor valuation processes; confirmation is convergence to the same limit across laws, refutation is persistent distribution-dependent behavior. Impact: This would found a universality theory for torsion in arithmetic persistent homology, giving a statistical baseline for detecting genuinely arithmetic structure versus random noise.",
@@ -2199,21 +2087,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T22:27:21.399604+00:00"
   },
   {
-    "id": "fd_1221",
-    "title": "Motivic Universality Class for Zeta Zeros via Persistent Laplacian Spectra",
-    "description": "Conjecture: There exists an explicit functorial construction X \\mapsto G_X(T) from a smooth projective variety X over a finite field (or number-field model reduced modulo p) to a filtered weighted graph or simplicial complex such that the persistence-weighted Laplacian spectrum of G_X(T), after normalization in T and p, converges to the Frobenius eigenangle distribution of X; moreover, for families whose Hasse\u2013Weil zeta functions share the same local zero statistics, the limiting persistence spectral measure is identical, while a mismatch in zero statistics forces a detectable discrepancy in the persistence spectral measure. Test: Construct G_X(T) for explicit families (elliptic curves, hyperelliptic curves, selected Calabi\u2013Yau examples), compute persistence-weighted Laplacian spectral measures across many primes p, and compare against Frobenius eigenangle statistics from point counts/L-functions. Confirmation requires statistically stable agreement and family-wise universality; refutation occurs if no functorial construction yields a stable spectral match or if families with distinct zero statistics remain indistinguishable. Impact: This would create a new topological-spectral probe of arithmetic zeta data, potentially giving a computable bridge between persistent topology, random matrix statistics, and arithmetic geometry.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T22:27:48.248079+00:00"
-  },
-  {
     "id": "fd_1227",
     "title": "Barcode Rigidity for Isospectral but Non-Isometric Arithmetic Manifolds",
     "description": "Conjecture: There exists a canonical filtration functor F from compact arithmetic locally symmetric spaces M to finite filtered chain complexes over Z such that (i) if M and N are Sunada-isospectral but non-isometric, then their ordinary Laplace spectra agree while the primewise torsion persistence profiles of F(M) and F(N) differ for infinitely many good primes p; and (ii) within each commensurability class, equality of these primewise persistence profiles for a density-1 set of primes forces M and N to be isometric. Test: Construct F explicitly for known Sunada pairs or Vigneras-type isospectral manifolds, compute primewise barcodes/torsion birth multisets at many primes, and check whether the profiles separate the pair; refutation occurs if a canonical reasonable F fails systematically on such examples or if non-isometric examples remain indistinguishable across almost all primes. Impact: This would provide a genuinely new geometric invariant stronger than Laplace spectrum, linking arithmetic topology, isospectral geometry, and persistent homology, and could open a route to 'hearing' hidden arithmetic structure beyond classical spectral data.",
@@ -2227,6 +2100,38 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T22:28:15.962705+00:00"
+  },
+  {
+    "id": "fd_1244",
+    "title": "Persistent Homology Phase Transition at the Arithmetic Rank of Elliptic Curves",
+    "description": "Conjecture: Let E/Q be an elliptic curve, and for each good prime p define a filtered simplicial complex K_p(E) from the sequence of normalized Frobenius traces a_p/(2\\sqrt{p}) by taking sliding windows of length w and building a Vietoris\u2013Rips filtration in the ambient Euclidean space. As w and the prime cutoff X both grow with w = o(log log X), the limiting barcode statistics of {K_p(E)}_{p\\le X} exhibit exactly rank(E(Q)) + 1 stable persistence bands in degree 1, with the extra bands absent for rank 0 curves. Test: Compute the construction for large databases of elliptic curves of known algebraic rank; confirmation requires that the number of statistically stable H1 bands matches rank+1 across families, while systematic failure on rank-labeled datasets refutes the conjecture. Impact: This would create a topological observable for Mordell\u2013Weil rank, suggesting a new bridge between arithmetic statistics, dynamical embeddings of Frobenius data, and topological data analysis.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T00:15:28.490986+00:00"
+  },
+  {
+    "id": "fd_1245",
+    "title": "Arithmetic Universality of Torsion in Random Integer Chain Complexes",
+    "description": "Conjecture: For random finite filtered chain complexes over Z with sparse i.i.d. bounded integer boundary entries, the p-primary barcode process in any fixed homological degree converges, after explicit normalization, to a universal limit law independent of the entry distribution for all but finitely many primes p; moreover the exceptional-prime set is asymptotically determined only by the local divisibility profile of the entry distribution. Test: Sample ensembles with different bounded entry laws (e.g. symmetric Bernoulli, uniform on {-2,-1,0,1,2}, sparse Poisson-truncated) and compare normalized p-primary persistence statistics prime-by-prime; confirmation requires collapse onto the same limiting law for generic primes and systematic deviation only at predicted exceptional primes, while persistent law-dependence at generic primes refutes it. Impact: This would create a universality theory for arithmetic topology, linking random matrix Smith normal form phenomena, persistent homology, and local-global arithmetic structure, and would give principled null models for detecting genuinely non-random arithmetic-topological signals.",
+    "domains": [
+      "Random Topology",
+      "Algebraic Topology",
+      "Arithmetic Statistics",
+      "Random Matrix Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T00:16:01.142031+00:00"
   },
   {
     "id": "seed_032",
