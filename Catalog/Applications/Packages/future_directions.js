@@ -730,10 +730,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "878e52b6",
     "timestamp": "2026-05-26T00:07:30.309357+00:00"
   },
   {
@@ -977,26 +977,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T03:33:47.282680+00:00"
   },
   {
-    "id": "fd_1285",
-    "title": "Direction 1: Higher-Order Negative Dependence Certificates via k\u00d7k Minor Perturbation",
-    "description": "**Conjecture:** For symmetric PSD K and K' with \u2016K \u2212 K'\u2016_max \u2264 \u03b7, for any k-element subset S \u2286 Fin n:\n\n|det(K_S) \u2212 det(K'_S)| \u2264 P_k(M) \u00b7 \u03b7\n\nwhere P_k(M) is a polynomial in M (the entry magnitude bound) of degree k\u22121, with explicit coefficients depending only on k.\n\n**Test:** For k = 3, 4, compute exact k\u00d7k principal minor perturbation bounds by expanding the determinant. Verify computationally for random PSD contractions of increasing dimension that the empirical perturbation ratio |det(K_S) \u2212 det(K'_S)| / (P_k(M)\u00b7\u03b7) remains bounded.\n\n**Impact:** This would extend the certified framework from pairwise to k-wise negative dependence, covering applications like k-DPPs (where exactly k items are sampled) and higher-order diversity guarantees. The polynomial growth in k would show that certification cost scales polynomially with the order of the guarantee.\n\n**Catalog References:** `Pythagorean/CertifiedDPPSampling.lean` (det2_perturb_bound, pairwise_inclusion_perturb), `Speculative/AutoResearch/DPPLorentzian.lean` (psd_principal_minor_nonneg).\n\n**Proof Strategy:** Induction on k. The base case k=2 is our Theorem 1. For k \u2192 k+1, expand the (k+1)\u00d7(k+1) determinant along the first row, obtaining a sum of k products (cofactor \u00d7 entry). Each cofactor is a k\u00d7k determinant that differs by at most P_k(M)\u00b7\u03b7 by induction, and each entry differs by at most \u03b7. The triangle inequality gives P_{k+1}(M) = (k+1)\u00b7(P_k(M) + M^k)\u00b7\u03b7.\n\n**Domain Bridges:** Combinatorics (matroid theory via k-wise independence), statistical physics (k-point correlation functions), quantum chemistry (k-electron density matrices).\n\n**Lineage:** Direct extension of Theorem 1 (det2_perturb_bound) from this cycle.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Solid extension. The inductive structure is clear; the main challenge is tracking the polynomial coefficients precisely.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f44ba709",
-    "consumed_by_exp_id": "efafada1",
-    "timestamp": "2026-05-27T04:11:16.534766+00:00"
-  },
-  {
     "id": "fd_1287",
     "title": "Direction 3: Efficient Lorentzian Certificate Computation",
     "description": "**Conjecture:** For an n\u00d7n PSD contraction kernel K, the Lorentzian signature defect \u03b4 of the DPP generating polynomial at the all-ones point can be computed in O(n\u00b3) time (same as eigendecomposition), and the resulting certificate has size O(n\u00b2).\n\n**Test:** Implement the Hessian computation for DPP generating polynomials at x = 1. For random PSD contractions:\n1. Compute the Hessian H_{ij} = \u2202_i\u2202_j Z_K(1) for the generating polynomial.\n2. Compute eigenvalues of H.\n3. Verify the Lorentzian condition (at most one positive eigenvalue).\n4. Measure the signature defect.\n5. Compare computation time with eigendecomposition.\n\n**Impact:** This would make Lorentzian certification practical: O(n\u00b3) is already the cost of sampling from the DPP, so certification adds no asymptotic overhead. The certificate itself is O(n\u00b2) \u2014 a matrix \u2014 which is small enough to store and transmit.\n\n**Catalog References:** `Pythagorean/CertifiedDPPSampling.lean` (LorentzianEmpiricalCert, covarianceQuadForm), `Speculative/AutoResearch/DPPLorentzian.lean` (IsDPPLorentzian, dpp_partition_function_lorentzian).\n\n**Proof Strategy:** The Hessian of det(I + diag(x)K) at x = 1 can be computed using the matrix identity: \u2202_i\u2202_j det(I + diag(x)K)|_{x=1} = det(I+K) \u00b7 [(I+K)\u207b\u00b9_{ii}(I+K)\u207b\u00b9_{jj} \u2212 (I+K)\u207b\u00b9_{ij}\u00b2]. This requires one matrix inversion and n\u00b2 entry evaluations. Formalizing this identity connects the DPP Hessian to the inverse kernel L = (I+K)\u207b\u00b9.\n\n**Domain Bridges:** Numerical linear algebra (stable matrix inversion), optimization (semidefinite programming for signature verification), machine learning (kernel learning with Lorentzian constraints).\n\n**Lineage:** Builds on LorentzianEmpiricalCert definition from this cycle. The hessianBound field of this structure would be computed by the algorithm proposed here.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Achievable with existing linear algebra infrastructure. The main formalization challenge is the matrix calculus identity connecting the generating polynomial Hessian to the inverse kernel.\n\n---",
@@ -1038,25 +1018,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T04:11:16.674461+00:00"
   },
   {
-    "id": "fd_1320",
-    "title": "Direction 1: Higher-Order Entropy Bounds from the Full Newton Hierarchy",
-    "description": "**Conjecture:** For free-fermion subsystems of size m with correlation spectrum \u03bb \u2208 [0,1]\u1d50, the R\u00e9nyi entropies S_\u03b1 = (1/(1-\u03b1)) log(\u03a3 \u03bb\u1d62^\u03b1 + (1-\u03bb\u1d62)^\u03b1) are controlled by the full sequence of Newton ratios \u03c1\u2096 = e\u2096\u00b2/(e\u2096\u208b\u2081\u00b7e\u2096\u208a\u2081). Specifically, there exists a universal function \u03a8_\u03b1(\u03c1\u2081,...,\u03c1\u2098\u208b\u2081) such that |S_\u03b1 - \u03a8_\u03b1(\u03c1)| \u2192 0 as m \u2192 \u221e for spectra satisfying an area-law scaling.\n\n**Test:** Compute S_\u03b1 for \u03b1 \u2208 {0.5, 1, 2, \u221e} and the Newton ratio profiles for 1D free-fermion chains of length L = 50,...,500. Fit \u03a8_\u03b1 as a low-degree polynomial in the log-ratios. Test extrapolation accuracy on 2D models.\n\n**Impact:** Would establish Lorentzian polynomial data as a complete surrogate for the entanglement spectrum, eliminating the need for diagonalization in entanglement studies.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean` (entropy bounds, Newton inequality), `Bridges/LorentzianNewton.lean` (Newton inequality machinery).\n\n**Proof Strategy:** Extend the variance lower bound S \u2265 2\u00b7Var to higher moments using power-mean inequalities. The k-th moment \u03a3 \u03bb\u1d62\u1d4f is expressible via Newton-Girard identities in terms of e\u2081,...,e\u2096. Lorentzian constraints on the e\u2096 then constrain all moments simultaneously.\n\n**Domain Bridges:** Quantum information \u2194 algebraic combinatorics \u2194 approximation theory.\n\n**Lineage:** Direct extension of `entropy_ge_esymm_bound` and `esymm_newton_inequality`.\n\n**Ambition:** Solid extension \u2014 builds directly on proven results with clear path to formalization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "43afaa07",
-    "consumed_by_exp_id": "ec2aa218",
-    "timestamp": "2026-05-27T06:37:54.824643+00:00"
-  },
-  {
     "id": "fd_1325",
     "title": "Direction 1: Sharp Exponent Law and Lower Bounds",
     "description": "**Conjecture**: The exponent $d - k$ in the bound $T \\leq C \\cdot d^{d-k} \\cdot D$ is generically sharp. For each fixed $k < d$, there exist exchange families $S \\subseteq \\mathbb{Z}^d$ and objectives $f$ with depth-$k$ certificates such that $T(x_0) \\geq c \\cdot d^{d-k-1} \\cdot D$ for some $c > 0$ and some starting point $x_0$.\n\n**Test**: Construct explicit adversarial exchange families for $d \\in \\{4, \\ldots, 12\\}$ with controlled depth. Run descent and verify that step counts grow as $\\Theta(d^{d-k})$ with dimension. A failure (sublinear growth) would indicate the bound can be improved.\n\n**Impact**: Resolving the sharpness question determines whether certificate depth is a *tight* complexity parameter or merely an upper bound. A tight bound would establish the theory as optimal; a gap would motivate the search for better parameters.\n\n**Catalog References**: \n- `Catalog/Pythagorean/ExchangeDescent.lean`: `exchangeDescent_length_bound` (the |S| bound to improve upon)\n- `Pythagorean/DepthSensitiveExchangeDescent.lean`: `exchangeDescent_depth_bound_poly`, `depthCertificate_runtime_monotone`\n\n**Proof Strategy**: For lower bounds, construct \"layered\" exchange families where depth-$k$ certificates force traversal through $d^{d-k}$ potential layers. Use the shell decomposition (Strategy B from the paper) to show each layer requires $\\Omega(D/d^k)$ steps to cross.\n\n**Domain Bridges**: Connects to computational complexity (tight lower bounds) and algebraic combinatorics (explicit matroid constructions).\n\n**Lineage**: Extends the upper bound theory in `exchangeDescent_depth_bound_poly` to a matching lower bound.\n\n**Ambition**: Grand challenge \u2014 requires novel adversarial constructions that may reveal deep structure in exchange families.\n\n**The key insight is** that sharpness of the $d^{d-k}$ exponent would establish certificate depth as the *exact* discrete analogue of the condition number, not merely an approximate one.\n\n**Why now?** The formal verification of the upper bound provides the precise target for lower bound constructions. The computational infrastructure (demo.py) enables systematic testing of candidate adversarial families.\n\n---",
@@ -1069,10 +1030,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "4d0d5d0f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "147eb4db",
     "timestamp": "2026-05-27T07:12:33.861186+00:00"
   },
   {
@@ -1152,25 +1113,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "e18f2436",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T08:27:03.925234+00:00"
-  },
-  {
-    "id": "fd_1354",
-    "title": "Direction 1: Probabilistic Stability \u2014 The 1/\u221an Law for Random Perturbations",
-    "description": "**Conjecture:** For random symmetric perturbations with i.i.d. mean-zero entries bounded by \u03b4, the Lorentzian signature is preserved with high probability whenever \u03b4 \u2264 K \u00b7 \u03b5 / \u221an, where K is a universal constant.\n\n**Test:** Compute survival probabilities for random perturbations of e_k Hessians at scale \u03b4 = \u03b5 / n^\u03b1 for \u03b1 \u2208 {0.4, 0.5, 0.6, 0.7} and dimensions n \u2208 {10, 50, 100, 500}. If the critical \u03b1 is 0.5 \u00b1 0.02, the conjecture is confirmed. If \u03b1 stabilizes near 0.6 or higher, the conjecture needs revision.\n\n**Impact:** A factor-of-\u221an improvement over the deterministic bound would make certified stochastic algorithms (e.g., randomized rounding, MCMC samplers) dramatically more efficient. It would connect Lorentzian combinatorics directly to random matrix universality.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` (Theorems 2-3), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem 9)\n\n**Proof Strategy:** Use the Wigner semicircle law or matrix Bernstein inequality to bound the spectral radius of the random perturbation matrix. The key step: show that the random perturbation's operator norm concentrates at O(\u221an \u00b7 \u03b4) rather than worst-case O(n \u00b7 \u03b4), then apply the gapped-signature perturbation theorem.\n\n**Domain Bridges:** Random matrix theory (GOE/GUE universality), high-dimensional probability (matrix concentration), statistical physics (random coupling constants).\n\n**Lineage:** Extends `quadFormBound_of_entry_bound_sharp` from deterministic to probabilistic setting.\n\n**Ambition:** Grand challenge \u2014 would establish first probabilistic stability theory for Lorentzian cones.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ac6bc32a",
-    "consumed_by_exp_id": "bacc310c",
-    "timestamp": "2026-05-27T08:27:46.772540+00:00"
   },
   {
     "id": "fd_1357",
@@ -1488,6 +1430,187 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "8596d6a6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T13:37:04.718863+00:00"
+  },
+  {
+    "id": "fd_1443",
+    "title": "Direction 1: Complete Newton\u2013Girard and Higher-Order Entropy Surrogates",
+    "description": "**Conjecture:** The Newton\u2013Girard identity p\u2096 = \u2211_{j=0}^{k-2} (-1)^j e_{j+1} p_{k-1-j} + (-1)^{k-1} k e\u2096 holds for all k \u2264 m, and combined with polynomial approximation of h_\u03b1 on compact subintervals, yields entropy surrogates with error O(\u03b4^N) where \u03b4 is the spectral gap and N is the truncation order.\n\n**Test:** Formally prove Newton\u2013Girard for general k (via generating function coefficient extraction or induction on m with the ESP recurrence). Then construct degree-N polynomial approximations to h_\u03b1 on [\u03b4, 1\u2212\u03b4] and verify that the resulting entropy surrogates converge.\n\n**Impact:** Completes the algebraic engine: every polynomial spectral statistic becomes computable from elementary symmetric data, enabling arbitrarily accurate entropy estimation without diagonalization.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `powerSum_one_eq`, `powerSum_two_eq`, `powerSum_three_eq`, `newton_girard_k1`, `newton_girard_k2`, `newton_girard_k3`.\n\n**Proof Strategy:** Define E(t) = \u220f(1 + \u03bc\u1d62t) as a polynomial, compute E'(t)/E(t) = \u2211 \u03bc\u1d62/(1+\u03bc\u1d62t), expand as formal power series, and equate coefficients. The Lean formalization would use `Polynomial.coeff` extraction.\n\n**Domain Bridges:** Algebraic combinatorics \u2192 approximation theory \u2192 quantum information.\n\n**Lineage:** Extends the k \u2264 3 cases proved here; builds on `esymmCoeff_succ_eq` (ESP recurrence).\n\n**Ambition:** Solid extension \u2014 technically challenging but conceptually clear.\n\n*The key insight is* that Newton\u2013Girard converts the nonlinear entropy problem into a linear algebra problem in the polynomial ring, and that this conversion is universal in the number of variables.\n\n*Why now?* The ESP recurrence (`esymmCoeff_succ_eq`) and zero-tail lemma (`esymmCoeff_zero_succ`) are now formally available, providing the key ingredients for an inductive proof.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "ec2aa218",
+    "consumed_by_exp_id": "e72818c6",
+    "timestamp": "2026-05-27T15:24:27.678691+00:00"
+  },
+  {
+    "id": "fd_1444",
+    "title": "Direction 2: Newton Ratios as Algebraic Order Parameters for Quantum Phases",
+    "description": "**Conjecture:** For free-fermion systems at half-filling, the Newton ratio profile \u03c1\u2096 = e\u2096\u00b2/(e\u2096\u208b\u2081e\u2096\u208a\u2081) undergoes a qualitative change at quantum phase transitions: in gapless phases, max|log \u03c1\u2096| grows logarithmically with subsystem size; in gapped phases, it saturates to a finite value determined by the gap.\n\n**Test:** Compute Newton ratio profiles for the SSH model (topological insulator) across the topological phase transition. If log \u03c1\u2096 shows a discontinuous derivative at the critical point, the conjecture is supported. If it varies smoothly, the conjecture needs refinement.\n\n**Impact:** Would establish Newton ratios as a new class of algebraic order parameters for quantum phases, complementing traditional diagnostics like entanglement entropy and string order parameters.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `esymm_newton_inequality`, `newtonDefect_nonneg`, `NewtonRatioProfile`.\n\n**Proof Strategy:** Combine asymptotic analysis of Toeplitz determinants (for correlation matrices of free fermions) with the Fisher\u2013Hartwig conjecture to extract the large-m behavior of e\u2096 and hence \u03c1\u2096.\n\n**Domain Bridges:** Lorentzian geometry (log-concavity) \u2192 condensed matter physics (phase transitions) \u2192 random matrix theory (Toeplitz asymptotics).\n\n**Lineage:** Extends the Newton ratio profile concept introduced here; builds on the computational evidence in `demo.py`.\n\n**Ambition:** Grand challenge \u2014 requires connecting formal algebraic structures to asymptotic physics.\n\n*The key insight is* that Newton's inequality is not just a constraint but a diagnostic: how *tightly* the inequality is satisfied carries physical information about the quantum phase.\n\n*Why now?* The formal definition of `NewtonRatioProfile` and the proof of `esymm_newton_inequality` provide the mathematical foundation; the computational demos show the phase sensitivity.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ec2aa218",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T15:24:27.753806+00:00"
+  },
+  {
+    "id": "fd_1445",
+    "title": "Direction 3: Tropical Geometry of Entanglement Spectra",
+    "description": "**Conjecture:** In the large-m limit, the Newton ratio profile of area-law free-fermion states converges to a piecewise-linear function whose breakpoints are determined by the spectral gap structure. This piecewise-linear limit is the *tropical* analogue of the log-concave sequence, living in the tropical semiring (max-plus algebra).\n\n**Test:** Compute the tropicalization of the generating polynomial E(t) = \u220f(1+\u03bb\u1d62t) for free-fermion spectra with varying gap parameters. If the tropical curve's Newton polygon has edges whose slopes correspond to the dominant eigenvalue groups, the conjecture is supported.\n\n**Impact:** Would connect entanglement theory to tropical geometry, enabling the use of tropical intersection theory to study many-body quantum states.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `esymmCoeff`, `esymm_newton_inequality`; `Catalog/Bridges/LorentzianNewton.lean`: `newton_inequality`.\n\n**Proof Strategy:** Study log(e\u2096)/k as m \u2192 \u221e using saddle-point analysis. The tropical limit corresponds to the Legendre transform of the rate function for the empirical eigenvalue distribution.\n\n**Domain Bridges:** Tropical geometry \u2192 Lorentzian polynomial theory \u2192 quantum information \u2192 statistical mechanics.\n\n**Lineage:** Extends the Newton hierarchy from finite-dimensional algebra to asymptotic geometry.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n*The key insight is* that the log-concavity of the e\u2096 sequence is the \"classical\" shadow of a tropical convexity structure, and that the tropical limit should be analytically tractable.\n\n*Why now?* The formal log-concavity infrastructure (Newton's inequality) is now available, and tropical methods have recently been connected to Lorentzian polynomials by Br\u00e4nd\u00e9n and Huh.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ec2aa218",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T15:24:35.519993+00:00"
+  },
+  {
+    "id": "fd_1446",
+    "title": "Direction 4: Compressed Sensing of Many-Body Entanglement",
+    "description": "**Conjecture:** For 1D gapped free-fermion chains with subsystem size m, the entanglement entropy S can be reconstructed to within error \u03b5 from O(log(m/\u03b5)) elementary symmetric polynomials, rather than all m eigenvalues.\n\n**Test:** For systems with L = 200, L_A = 50-100, measure reconstruction error as a function of K (number of e\u2096 values used). If error decays exponentially in K for gapped systems, the conjecture is supported.\n\n**Impact:** Would demonstrate that entanglement has a natural *compressed sensing* structure: sparse in the symmetric polynomial basis, enabling sublinear measurement complexity.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `quadratic_entropy_lower_bound`, `certifiedEntropyApprox_correct`, `powerSum_determined_by_esymm_two`.\n\n**Proof Strategy:** Use the exponential decay of correlation functions in gapped systems to show that e\u2096 decays rapidly for large k, implying that the polynomial entropy surrogate converges rapidly.\n\n**Domain Bridges:** Compressed sensing \u2192 approximation theory \u2192 quantum information \u2192 numerical linear algebra.\n\n**Lineage:** Direct extension of the certified entropy algorithm; builds on the error analysis.\n\n**Ambition:** Solid extension with high practical impact.\n\n*The key insight is* that the area law \u2014 which says entanglement is \"low-rank\" \u2014 should manifest as rapid decay of the elementary symmetric polynomial sequence, enabling compressed representation.\n\n*Why now?* The certified algorithm (`certifiedEntropyApprox_correct`) provides the foundation; extending it to higher-order surrogates requires only the Newton\u2013Girard recursion (Direction 1).\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ec2aa218",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T15:24:35.839293+00:00"
+  },
+  {
+    "id": "fd_1447",
+    "title": "Direction 5: Newton Hierarchy for Interacting Fermions via Determinantal Approximation",
+    "description": "**Conjecture:** For weakly interacting fermion systems (e.g., Hubbard model at weak coupling), the Newton ratio profile of the exact entanglement spectrum is close to that of the best-fit free-fermion (Gaussian) approximation, with corrections controlled by the interaction strength.\n\n**Test:** Compute exact entanglement spectra for the Hubbard model at half-filling (L=8-12 sites, exact diagonalization) and compare Newton ratio profiles with those of the corresponding non-interacting model. If the ratio profiles converge as interaction strength \u2192 0, the conjecture is supported.\n\n**Impact:** Would extend the algebraic compression framework beyond free fermions to interacting systems, vastly expanding its applicability.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `NewtonRatioProfile`, `AreaLawCompatible`, `esymm_newton_inequality`.\n\n**Proof Strategy:** Use perturbation theory in the interaction strength U. The entanglement spectrum \u03bb\u1d62(U) = \u03bb\u1d62(0) + U\u00b7\u03b4\u03bb\u1d62 + O(U\u00b2), and the Newton defects \u0394\u2096(U) = \u0394\u2096(0) + U\u00b7\u03b4\u0394\u2096 + O(U\u00b2). Bound |\u03b4\u0394\u2096| using Lipschitz continuity of the elementary symmetric polynomials.\n\n**Domain Bridges:** Many-body quantum physics \u2192 algebraic combinatorics \u2192 perturbation theory.\n\n**Lineage:** Extends the free-fermion framework to interacting systems; uses the stability of Newton defects.\n\n**Ambition:** Solid extension with transformative potential for computational quantum physics.\n\n*The key insight is* that Newton's inequality is robust under perturbation: if the exact spectrum is close to a free-fermion spectrum, then the Newton defects are close to their free-fermion values, and the algebraic compression still applies approximately.\n\n*Why now?* The formal proof of Newton's inequality and the computational infrastructure for Newton ratio profiles are now available; the Hubbard model is computationally accessible for small systems.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ec2aa218",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T15:24:36.058680+00:00"
+  },
+  {
+    "id": "fd_1448",
+    "title": "Direction 1: Smith Normal Form for Rational Metric Graphs",
+    "description": "**Conjecture:** For a metric graph \u0393 with rational edge lengths \u2113_e \u2208 \u211a_{>0}, the reduced Laplacian minor (deleting one row and column from the weighted Laplacian scaled to integer entries) has a Smith normal form whose diagonal entries are the invariant factors of the *finite* part of the tropical Jacobian J(\u0393). Moreover, the number of spanning trees (weighted by length) equals the determinant of this minor.\n\n**Test:** Implement exact rational arithmetic Smith normal form computation for cycle graphs C_n with rational edge lengths. Verify that the product of invariant factors equals the weighted tree number. Compare with the numerical SVD-based computation from `algorithms.py`. Discrepancies beyond numerical precision would disprove the conjecture.\n\n**Impact:** This would give an *exact* arithmetic characterization of the tropical Jacobian for rational metric graphs, eliminating all floating-point concerns. It would also provide a bridge to the chip-firing literature, where integer lattice computations are standard.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` (weighted Laplacian properties)\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean` (graphLaplacian, laplacianPrincipalMinor)\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (discrete chip-firing)\n\n**Proof Strategy:** Scale edge lengths to a common denominator to obtain integer conductances. Apply the Kirchhoff Matrix Tree Theorem for weighted graphs. The Smith normal form of the integer Laplacian minor gives the group structure of Z^{n-1}/Im(L), which is isomorphic to the critical group.\n\n**Domain Bridges:** Algebraic graph theory \u2194 Number theory \u2194 Tropical geometry\n\n**Lineage:** Extends `graphLaplacian` and `laplacianPrincipalMinor` from Defs.lean to the weighted (metric) setting.\n\n**Ambition:** \u2605\u2605\u2605 (Solid extension \u2014 the integer case is well-understood; the rational metric case requires new formalization)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "c6eef6ce",
+    "consumed_by_exp_id": "ace12b72",
+    "timestamp": "2026-05-27T15:25:01.378044+00:00"
+  },
+  {
+    "id": "fd_1449",
+    "title": "Direction 2: N\u00e9ron Component Groups via Tropical Jacobians",
+    "description": "**Conjecture (Grand Challenge):** For a semistable curve X over a discretely valued field K with dual graph \u0393, Baker's specialization lemma gives a surjection sp: J(X)(K) \u2192 J(\u0393). The canonical kernel generators of \u0393 provide *explicit coordinates* on the component group \u03a6_J of the N\u00e9ron model of J(X), and the Smith normal form of the canonical kernel lattice computes |\u03a6_J| = det(L_red).\n\n**Test:** For hyperelliptic curves of genus 2 with known N\u00e9ron models (tabulated in the literature), compute the tropical Jacobian of the dual graph and compare the invariant factors with the known component group structure. A mismatch would indicate either a gap in the specialization map or an error in the dual graph computation.\n\n**Impact:** This would make the N\u00e9ron component group \u2014 a central object in arithmetic geometry \u2014 *computationally accessible* through elementary linear algebra on the dual graph. Currently, computing \u03a6_J requires sophisticated p-adic methods.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` (weighted Laplacian kernel, PSD)\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelDefs.lean` (RestrictedLaplacianImage)\n\n**Proof Strategy:** Use Baker's specialization lemma [BN07] combined with Raynaud's theorem on N\u00e9ron models. The key step is showing that the canonical kernel lattice generators map to generators of the period lattice of J(X)(K) under specialization.\n\n**Domain Bridges:** Tropical geometry \u2194 Arithmetic geometry \u2194 p-adic analysis\n\n**Lineage:** Extends the canonical kernel correspondence to arithmetic applications.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 connects to deep results in arithmetic geometry)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6eef6ce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T15:25:01.447437+00:00"
+  },
+  {
+    "id": "fd_1450",
+    "title": "Direction 3: Gaussian Free Field Lattice Periodicity",
+    "description": "**Conjecture:** The canonical kernel lattice \u039b_S determines the periodicity structure of the discrete Gaussian free field (GFF) on the metric graph \u0393. Specifically, the partition function of the GFF on \u0393 with periodic boundary conditions factorizes as Z(\u0393) = (2\u03c0)^{g/2} \u00b7 (det L_red)^{-1/2}, where g is the genus and L_red is the reduced Laplacian.\n\n**Test:** Compute the GFF partition function numerically for cycle graphs C_n with various edge lengths, and compare with the determinant formula. Also compute the GFF covariance matrix (= L^+) and verify it equals the effective resistance matrix.\n\n**Impact:** This bridges tropical geometry to statistical mechanics, providing a geometric interpretation of GFF observables. The canonical kernel lattice would acquire physical meaning as the \"configuration space\" of the discrete toroidal model.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` (weightedLaplacian_psd, effective resistance)\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (harmonicKernel)\n\n**Proof Strategy:** The GFF on a graph with Laplacian L has density \u221d exp(\u2212(1/2) x^T L x). By our Theorem 6, x^T L x = \u03a3 w_e (x_i \u2212 x_j)\u00b2 \u2265 0, so the measure is well-defined on \u211d^n/{constants}. The partition function is the Gaussian integral, giving det(L_red)^{-1/2}.\n\n**Domain Bridges:** Statistical mechanics \u2194 Tropical geometry \u2194 Spectral graph theory\n\n**Lineage:** Builds directly on `weightedLaplacian_psd` from Theorems.lean.\n\n**Ambition:** \u2605\u2605\u2605 (Solid extension \u2014 the connection is well-known informally but not formalized)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6eef6ce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T15:25:01.509711+00:00"
+  },
+  {
+    "id": "fd_1451",
+    "title": "Direction 4: Continuous-Time Chip-Firing and Conformal Field Theory",
+    "description": "**Conjecture (Grand Challenge):** The chip-firing process on a metric graph \u0393 admits a continuous-time stochastic extension where chips perform Brownian motion along edges. The stationary measure of this process is the GFF restricted to integer-valued configurations, and the recurrent configurations form the tropical Jacobian J(\u0393).\n\n**Test:** Simulate continuous-time chip-firing on cycle graphs C_n and theta graphs \u0398(a,b,c). Measure the empirical distribution of recurrent configurations and compare with the uniform measure on J(\u0393). Deviations from uniformity would disprove the conjecture.\n\n**Impact:** This would establish a direct bridge between the combinatorics of chip-firing (discrete mathematics), the geometry of tropical curves (algebraic geometry), and conformal field theory (physics). The tropical Jacobian would acquire a dynamical interpretation.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` (all theorems)\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (FiringEquivalentOn)\n\n**Proof Strategy:** Define the continuous chip-firing process as a Markov chain on Div^0(\u0393)/Prin(\u0393) \u2245 J(\u0393). Show that the transition kernel is doubly stochastic (using symmetry of the Laplacian), implying uniformity of the stationary measure.\n\n**Domain Bridges:** Stochastic processes \u2194 Tropical geometry \u2194 Conformal field theory\n\n**Lineage:** Extends `FiringEquivalentOn` and `RestrictedLaplacianImage` to the stochastic setting.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new ideas at the interface of probability and geometry)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6eef6ce",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T15:25:01.724433+00:00"
   },
   {
     "id": "fd_0806",

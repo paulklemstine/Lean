@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / DPP Theory / Matrix Perturbation",
     "date": "2026-05-27T15:25:42Z",
     "exp_id": "efafada1",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.71174,
+    "quality": "substantial",
     "pkg_num": 175
   },
   {
@@ -5084,8 +5084,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-27T15:25:42Z",
       "hue": 95,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.71174,
+      "quality": "substantial"
     }
   ],
   "edges": [
