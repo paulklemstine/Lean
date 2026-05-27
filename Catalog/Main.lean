@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1946 of the highest-quality
+A curated collection of 1947 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1946
+Total files: 1947
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1571,6 +1571,7 @@ import FINAL.Pythagorean.KnuthBendixCompletion
 import FINAL.Pythagorean.LagrangeFourSquare
 import FINAL.Pythagorean.LargeDeviationPressure
 import FINAL.Pythagorean.LogSobolev
+import FINAL.Pythagorean.LorentzianComplexityTransition
 import FINAL.Pythagorean.LorentzianExchangeCertificates
 import FINAL.Pythagorean.LorentzianHardness
 import FINAL.Pythagorean.LorentzianRecognitionComplete

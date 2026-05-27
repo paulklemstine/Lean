@@ -210,10 +210,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c1bee07b",
     "timestamp": "2026-05-25T02:11:10.263299+00:00"
   },
   {
@@ -748,10 +748,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "be453c44",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:58:43.501683+00:00"
   },
   {
@@ -827,10 +827,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "432667ea",
     "timestamp": "2026-05-26T00:07:30.309357+00:00"
   },
   {
@@ -965,10 +965,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "1fb257b2",
-    "consumed_by_exp_id": "c6eef6ce",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T13:05:51.445505+00:00"
   },
   {
@@ -1054,28 +1054,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "d97a486b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T00:52:11.288128+00:00"
-  },
-  {
-    "id": "fd_1258",
-    "title": "Direction 3: Complexity-Theoretic Phase Transition for Lorentzian Recognition",
-    "description": "**Conjecture:** There exists a computational phase transition for Lorentzian recognition under random perturbation:\n- For \u03b5 > 2\u03c3 + \u03b4 (well above edge): recognition is solvable in polynomial time with exponentially small error.\n- For \u03b5 < 2\u03c3 \u2212 \u03b4 (well below edge): recognition requires exponential time or has constant error probability.\n- At \u03b5 = 2\u03c3 (the edge): the problem is \"computationally critical\" \u2014 polynomial-time algorithms exist but with polynomially decaying confidence.\n\n**Test:** Formalize a reduction from a known hard problem (e.g., detecting planted clique) to Lorentzian recognition at the critical noise level \u03b5 \u2248 2\u03c3. Alternatively, show that spectral algorithms achieve the information-theoretic threshold.\n\n**Impact:** Would establish a new type of average-case complexity result where the hardness threshold is determined by a random matrix constant, bridging algebraic geometry and computational complexity theory.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: phase transition theorems\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: `HasGappedSignature`\n\n**Proof Strategy:** Adapt the statistical-computational gap framework from planted problems (Berthet\u2013Rigollet, 2013) to the Lorentzian setting. The key insight is that the gap failure event at \u03b5 \u2248 2\u03c3 has probability \u0398(1), making statistical testing non-trivial.\n\n**Domain Bridges:** Computational complexity, statistical learning theory, planted problems, average-case analysis.\n\n**Lineage:** Inspired by the phase transition geometry formalized in the sharp bound theorems.\n\n**Ambition:** Grand challenge \u2014 would open an entirely new research program.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "854e19f7",
-    "timestamp": "2026-05-27T02:07:17.397934+00:00"
   },
   {
     "id": "fd_1261",
@@ -1374,26 +1352,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T08:27:03.925234+00:00"
   },
   {
-    "id": "fd_1350",
-    "title": "Direction 2: Multi-Mode Lorentzian Witnesses via Higher Derivative Leaves",
-    "description": "**Conjecture.** For a Lorentzian polynomial $Z_K$ of degree $n$, the derivative leaves of codimension $n - k$ (yielding degree-$k$ polynomials for $k \\geq 3$) carry richer entanglement information than pairwise leaves. Specifically, the *mixed Hessian* of a degree-$k$ leaf \u2014 a $k \\times k$ matrix \u2014 has at most one positive eigenvalue (by Lorentzianity), and the magnitude of this positive eigenvalue bounds the $k$-mode entanglement entropy.\n\n**Test.** For $k = 3, 4$ and $n = 6, 8$: enumerate derivative leaves of codimension $n-k$, compute their Hessians, extract the unique positive eigenvalue, and correlate it with $S_A$ for the corresponding $k$-element subset $A$.\n\n**Impact.** Multi-mode witnesses would detect entanglement in subsystems that pairwise witnesses miss \u2014 analogous to how three-body correlations in condensed matter detect physics invisible to two-body probes.\n\n**Catalog References.** `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (Lorentzianity definition, `IsDPPLorentzian`), `Catalog/Pythagorean/QuantumDPPEntanglement.lean` (pairwise leaf analysis).\n\n**Proof Strategy.** Use the Br\u00e4nd\u00e9n\u2013Huh characterization: Lorentzianity of degree-$k$ leaves means their Hessians have at most one positive eigenvalue. Express the Hessian entries as linear combinations of principal minors of $K$. Use the Cauchy\u2013Binet formula to relate these to eigenvalues of $K_A$.\n\n**Domain Bridges.** Exterior algebra (Pl\u00fccker coordinates connect principal minors to Grassmannian geometry), tensor networks (multi-mode correlations as tensor contractions).\n\n**Lineage.** Generalizes the degree-2 leaf analysis of Theorem 2 to arbitrary codimension.\n\n**Ambition.** Grand challenge \u2014 requires substantial new Lorentzian polynomial infrastructure in Lean.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "4c1deed8",
-    "consumed_by_exp_id": "8596d6a6",
-    "timestamp": "2026-05-27T08:27:26.882112+00:00"
-  },
-  {
     "id": "fd_1354",
     "title": "Direction 1: Probabilistic Stability \u2014 The 1/\u221an Law for Random Perturbations",
     "description": "**Conjecture:** For random symmetric perturbations with i.i.d. mean-zero entries bounded by \u03b4, the Lorentzian signature is preserved with high probability whenever \u03b4 \u2264 K \u00b7 \u03b5 / \u221an, where K is a universal constant.\n\n**Test:** Compute survival probabilities for random perturbations of e_k Hessians at scale \u03b4 = \u03b5 / n^\u03b1 for \u03b1 \u2208 {0.4, 0.5, 0.6, 0.7} and dimensions n \u2208 {10, 50, 100, 500}. If the critical \u03b1 is 0.5 \u00b1 0.02, the conjecture is confirmed. If \u03b1 stabilizes near 0.6 or higher, the conjecture needs revision.\n\n**Impact:** A factor-of-\u221an improvement over the deterministic bound would make certified stochastic algorithms (e.g., randomized rounding, MCMC samplers) dramatically more efficient. It would connect Lorentzian combinatorics directly to random matrix universality.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` (Theorems 2-3), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem 9)\n\n**Proof Strategy:** Use the Wigner semicircle law or matrix Bernstein inequality to bound the spectral radius of the random perturbation matrix. The key step: show that the random perturbation's operator norm concentrates at O(\u221an \u00b7 \u03b4) rather than worst-case O(n \u00b7 \u03b4), then apply the gapped-signature perturbation theorem.\n\n**Domain Bridges:** Random matrix theory (GOE/GUE universality), high-dimensional probability (matrix concentration), statistical physics (random coupling constants).\n\n**Lineage:** Extends `quadFormBound_of_entry_bound_sharp` from deterministic to probabilistic setting.\n\n**Ambition:** Grand challenge \u2014 would establish first probabilistic stability theory for Lorentzian cones.\n\n---",
@@ -1528,7 +1486,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "05e24005",
@@ -1548,7 +1506,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "05e24005",
@@ -1568,12 +1526,141 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "05e24005",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T12:09:20.912162+00:00"
+  },
+  {
+    "id": "fd_1401",
+    "title": "Direction 2: Universality for General Semidirect Products",
+    "description": "**Conjecture:** For a family of semidirect products $G^m \\rtimes H_m$ where $H_m$ acts on $\\{1, \\ldots, m\\}$ and satisfies a \"bounded orbit complexity\" condition, the generation threshold is determined to first order by coordinate defects: $P(G^m \\rtimes H_m) = m \\cdot P(G) + o(m)$.\n\n**Test:** Formalize the abstract semidirect pressure decomposition. Define \"bounded orbit complexity\" precisely (e.g., every orbit of $H_m$ on $k$-tuples from $\\{1, \\ldots, m\\}$ has size at most $m^{O(1)}$). Prove the universality theorem under this condition. Instantiate for:\n- Wreath products $S_k \\wr S_m$ (recovering our theorem)\n- Affine groups $\\mathbb{F}_q^n \\rtimes \\text{GL}_n(\\mathbb{F}_q)$\n- Lamplighter groups $(\\mathbb{Z}/2)^n \\rtimes \\mathbb{Z}/n$\n\n**Impact:** Would establish universality as a *general principle* for semidirect products, not a special feature of wreath products. This is the \"field-opening\" direction.\n\n**Catalog References:** `Pythagorean/WreathPhaseTransition.lean` (WreathPressureData, PressureSubcriticalInM), `Pythagorean/WreathPerturbation.lean` (WreathPressureSystem).\n\n**Proof Strategy:** Abstract the key ingredients: (1) pressure additivity for the base $G^m$, (2) index lower bounds for non-product maximal subgroups, (3) counting bounds for maximal subgroup classes. The bounded orbit complexity condition provides (2) and (3).\n\n**Domain Bridges:** Geometric group theory (orbit equivalence), ergodic theory (actions on product spaces), operator algebras (crossed products).\n\n**Lineage:** Direct generalization of the wreath product universality theorem.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if achieved, as it would unify generation threshold theory for a vast class of groups.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e0c9f23",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:10:11.335247+00:00"
+  },
+  {
+    "id": "fd_1406",
+    "title": "Direction 1: Typed Higher-Order Tensor Rewriting with Binding",
+    "description": "**Conjecture:** The tensor distributivity fragment extends to a simply-typed lambda calculus with tensor operations, and confluence modulo AC + \u03b2-equivalence holds for the combined system when distributivity rules are restricted to fire only at base types.\n\n**Test:** Formalize a small simply-typed tensor calculus (scalars, vectors, matrices as base types; function types for parameterized expressions). Add the 8 distributivity rules + \u03b2-reduction. Enumerate critical pairs between \u03b2-reduction and distributivity rules. Check computationally (by BFS on terms of depth \u2264 4) whether all critical peaks are joinable modulo \u03b2\u03b7-equivalence + AC.\n\n**Impact:** This would connect tensor simplification to the rich theory of higher-order rewriting (Nipkow, 1991; van Oostrom, 1994), enabling certified optimization of tensor programs written in functional languages. A negative result (non-confluence) would identify exactly which interactions between \u03b2-reduction and distributivity cause trouble, guiding the design of restricted calculi.\n\n**Catalog References:** `Catalog/Pythagorean/TensorSortedRewrite.lean` (sorted tensor language), `Catalog/Pythagorean/TensorConfluence.lean` (confluence infrastructure).\n\n**Proof Strategy:** Use the modular confluence technique (Toyama's theorem for disjoint combinations) to separate \u03b2-reduction from distributivity. The key technical challenge is the smulVec/dot interaction with \u03bb-abstraction.\n\n**Domain Bridges:** Proof theory (Curry-Howard for linear types), compiler optimization (partial evaluation of tensor kernels).\n\n**Lineage:** Extends the current 8-rule system to the next natural level of expressiveness.\n\n**Ambition:** Grand challenge \u2014 would unify term rewriting theory for algebra with lambda calculus theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "96bc3b32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:50:23.737119+00:00"
+  },
+  {
+    "id": "fd_1407",
+    "title": "Direction 2: Equality Saturation and E-Graph Extraction for Tensor Normal Forms",
+    "description": "**Conjecture:** The normalizeCanon algorithm is optimal in the following sense: among all representations of a tensor expression's normal form modulo AC, the one produced by normalizeCanon minimizes the number of distinct subexpressions (maximal sharing). Equivalently, the e-graph saturation of the AC-equivalence class has normalizeCanon's output as the smallest extraction.\n\n**Test:** Implement an e-graph representation of tensor expressions. Saturate with the AC axioms + scalMul-scalAdd distribution. Extract the smallest term. Compare with normalizeCanon output on 1000 randomly generated terms of size 5-20. Measure the sharing ratio (number of unique subterms / total term size).\n\n**Impact:** This bridges the formal rewriting theory to the practical equality saturation paradigm used in systems like egg (Willsey et al., 2021) and Metatheory.jl. A positive result would make normalizeCanon the extraction function for a tensor e-graph optimizer. A negative result would identify cases where sharing-aware normalization improves on syntactic normalization.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean` (normalizeCanon), `Catalog/Pythagorean/EqualitySaturationExtraction.lean`.\n\n**Proof Strategy:** Define a cost model on TensorExpr (number of constructor applications). Prove normalizeCanon is locally optimal: no single AC rearrangement reduces cost. Then attempt global optimality by analyzing the structure of AC-equivalence classes.\n\n**Domain Bridges:** Compiler optimization (phase ordering), algebraic combinatorics (Catalan numbers for binary tree shapes).\n\n**Lineage:** Direct extension of normalizeCanon's completeness theorem.\n\n**Ambition:** Solid extension \u2014 connects two active research communities (rewriting theory and equality saturation).\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "96bc3b32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:50:23.787470+00:00"
+  },
+  {
+    "id": "fd_1408",
+    "title": "Direction 3: Quantum Circuit Rewriting via Tensor Distributivity",
+    "description": "**Conjecture:** The tensor distributivity rewrite system, when instantiated with matrices from SU(2)\u2297SU(2) (2-qubit gates), produces a confluent modulo AC normal form for quantum circuits on 2 qubits, where AC-equivalence corresponds to commutativity of parallel gates.\n\n**Test:** Represent 2-qubit quantum circuits as tensor expressions: gates are matrices, state vectors are vec, composition is mulVec. Enumerate all 2-qubit circuits of depth \u2264 5 using {CNOT, H, T} gate set. Apply distributivity rules (distributing controlled gates over superpositions). Check confluence by BFS.\n\n**Impact:** Quantum circuit optimization currently relies on ad hoc peephole rules. A confluent rewrite system would provide canonical circuit forms, enabling deterministic circuit comparison and certified optimization. **The key insight is** that distributivity in the tensor algebra precisely corresponds to the linearity of quantum mechanics \u2014 distributing a unitary over a superposition is the algebraic content of quantum parallelism.\n\n**Why now?** The tensor rewriting infrastructure formalized here provides the first machine-verified foundation for relating term rewriting to quantum circuit simplification. Quantum computing hardware is reaching the scale where certified optimization matters.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean`, `Catalog/Pythagorean/TensorSortedRewrite.lean`.\n\n**Proof Strategy:** Instantiate the 3-sorted tensor calculus with \u2102\u00b2-valued vectors and 2\u00d72 complex matrices. Verify that the 8 rules remain sound. Analyze critical pairs specific to the quantum gate basis.\n\n**Domain Bridges:** Quantum computing (circuit optimization), category theory (compact closed categories for quantum protocols).\n\n**Lineage:** Novel application of the confluence theorem to a new domain.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if it leads to a general confluence theory for quantum circuit rewriting.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "96bc3b32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:50:23.836779+00:00"
+  },
+  {
+    "id": "fd_1409",
+    "title": "Direction 4: Tropical Tensor Distributivity and Min-Plus Normal Forms",
+    "description": "**Conjecture:** The 8 distributivity rules, interpreted over the tropical semiring (\u211d \u222a {\u221e}, min, +), remain confluent modulo AC, and the normal forms correspond to shortest-path decompositions in weighted graphs.\n\n**Test:** Implement the tropical version of the tensor rewrite system. Generate tropical tensor expressions corresponding to adjacency matrices of random weighted graphs (n = 5..20). Normalize using the tropical analog of normalizeCanon. Compare normal forms with known shortest-path decompositions.\n\n**Impact:** This would connect tensor rewriting to combinatorial optimization, providing a new algebraic perspective on shortest-path algorithms. **The key insight is** that tropical distributivity (min distributes over +) has the same algebraic form as classical distributivity, so the confluence proof should transfer.\n\n**Why now?** Tropical geometry and combinatorics have seen explosive growth. Connecting them to term rewriting theory via the tensor calculus creates a new bridge between algebra and optimization.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean`, `Catalog/Tropical/`.\n\n**Proof Strategy:** Show that the distPotential measure is semiring-independent (it counts structural patterns, not numerical values). Transfer the confluence proof by abstracting over the coefficient semiring.\n\n**Domain Bridges:** Combinatorial optimization (shortest paths, assignment problems), algebraic statistics (tropical Grassmannians).\n\n**Lineage:** Extends the semiring-parametric aspects of the tensor calculus.\n\n**Ambition:** Solid extension with novel domain bridge.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "96bc3b32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:50:23.884792+00:00"
+  },
+  {
+    "id": "fd_1410",
+    "title": "Direction 5: Automated Critical Pair Analysis for Many-Sorted Rewrite Systems",
+    "description": "**Conjecture:** There exists an efficient algorithm (polynomial in the number of rules \u00d7 term depth) that, given a many-sorted rewrite system, automatically enumerates all critical pairs and checks joinability modulo a specified equational theory (AC, distributivity, etc.).\n\n**Test:** Implement the algorithm for the tensor calculus. Input: the 8 rules + sort discipline. Output: complete list of critical pairs with joinability witnesses. Verify that the output matches the manual analysis in this paper. Then apply to extensions with 12, 16, 20 rules (adding trace, transpose, Kronecker product operations).\n\n**Impact:** This would automate the most labor-intensive part of confluence proofs, enabling rapid exploration of rewrite system extensions. **The key insight is** that the sort discipline dramatically prunes the space of possible overlaps \u2014 most term overlaps are sort-incorrect and can be eliminated without evaluation.\n\n**Why now?** The manual critical pair analysis in this work revealed the essential overlap between rules 7 and 8. Automating this process would have caught it immediately and would scale to the larger systems needed for practical tensor optimization.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean` (manual critical pair analysis), `Catalog/Pythagorean/KnuthBendixCompletion.lean`.\n\n**Proof Strategy:** Adapt the Knuth-Bendix completion algorithm to many-sorted signatures with AC-theories. The key technical contribution would be efficient unification modulo AC in the sorted setting.\n\n**Domain Bridges:** Automated reasoning (completion procedures), programming language design (type-directed optimization).\n\n**Lineage:** Methodological extension \u2014 automating the proof technique rather than extending the mathematical content.\n\n**Ambition:** Solid extension with high practical impact.",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "96bc3b32",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:50:23.934307+00:00"
+  },
+  {
+    "id": "fd_1411",
+    "title": "Direction 1: Sharp Exponent Estimation via GPU-Accelerated LP Ensembles",
+    "description": "**Conjecture**: The critical exponent \u03b3(d) for d-uniform random hypergraph susceptibility satisfies \u03b3(3) \u2208 [1.0, 2.5] and stabilizes to within \u00b10.05 for n \u2265 200. Furthermore, \u03b3(d) is monotone decreasing in d.\n\n**Test**: Implement GPU-batched LP solving (e.g., via CUDA-accelerated HiGHS or custom interior-point methods) to compute susceptibility profiles for n = 50, 100, 200, 500 at d = 2, 3, 4, 5. Fit \u03b3(d) via log-log regression at each system size and check for convergence. Plot \u03b3(d) vs d.\n\n**Impact**: This would produce the first reliable estimates of optimization critical exponents, moving the conjecture from \"plausible\" to \"numerically established\" \u2014 the same status that Fisher scaling had before rigorous proofs.\n\n**Catalog References**: `Catalog/Pythagorean/FiniteSizeSusceptibility.lean` (exists_pseudocritical_index, quadraticSusceptibility_le_length)\n\n**Proof Strategy**: Computational. The formal framework is in place; the bottleneck is LP solving speed at scale. Use ensemble averaging over 10^4 instances per (n, m, d) triple.\n\n**Domain Bridges**: Computational complexity (algorithm performance near critical density)\n\n**Lineage**: Direct extension of the pseudocritical density computation in the current work.\n\n**Ambition**: Extension \u2014 solidifies the computational foundations.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7a9ed9f9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:55:13.796921+00:00"
   },
   {
     "id": "fd_1400",
@@ -1593,26 +1680,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "7e0c9f23",
     "consumed_by_exp_id": "814094c4",
     "timestamp": "2026-05-27T12:10:11.275572+00:00"
-  },
-  {
-    "id": "fd_1401",
-    "title": "Direction 2: Universality for General Semidirect Products",
-    "description": "**Conjecture:** For a family of semidirect products $G^m \\rtimes H_m$ where $H_m$ acts on $\\{1, \\ldots, m\\}$ and satisfies a \"bounded orbit complexity\" condition, the generation threshold is determined to first order by coordinate defects: $P(G^m \\rtimes H_m) = m \\cdot P(G) + o(m)$.\n\n**Test:** Formalize the abstract semidirect pressure decomposition. Define \"bounded orbit complexity\" precisely (e.g., every orbit of $H_m$ on $k$-tuples from $\\{1, \\ldots, m\\}$ has size at most $m^{O(1)}$). Prove the universality theorem under this condition. Instantiate for:\n- Wreath products $S_k \\wr S_m$ (recovering our theorem)\n- Affine groups $\\mathbb{F}_q^n \\rtimes \\text{GL}_n(\\mathbb{F}_q)$\n- Lamplighter groups $(\\mathbb{Z}/2)^n \\rtimes \\mathbb{Z}/n$\n\n**Impact:** Would establish universality as a *general principle* for semidirect products, not a special feature of wreath products. This is the \"field-opening\" direction.\n\n**Catalog References:** `Pythagorean/WreathPhaseTransition.lean` (WreathPressureData, PressureSubcriticalInM), `Pythagorean/WreathPerturbation.lean` (WreathPressureSystem).\n\n**Proof Strategy:** Abstract the key ingredients: (1) pressure additivity for the base $G^m$, (2) index lower bounds for non-product maximal subgroups, (3) counting bounds for maximal subgroup classes. The bounded orbit complexity condition provides (2) and (3).\n\n**Domain Bridges:** Geometric group theory (orbit equivalence), ergodic theory (actions on product spaces), operator algebras (crossed products).\n\n**Lineage:** Direct generalization of the wreath product universality theorem.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if achieved, as it would unify generation threshold theory for a vast class of groups.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7e0c9f23",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T12:10:11.335247+00:00"
   },
   {
     "id": "fd_0806",
@@ -1645,115 +1712,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1406",
-    "title": "Direction 1: Typed Higher-Order Tensor Rewriting with Binding",
-    "description": "**Conjecture:** The tensor distributivity fragment extends to a simply-typed lambda calculus with tensor operations, and confluence modulo AC + \u03b2-equivalence holds for the combined system when distributivity rules are restricted to fire only at base types.\n\n**Test:** Formalize a small simply-typed tensor calculus (scalars, vectors, matrices as base types; function types for parameterized expressions). Add the 8 distributivity rules + \u03b2-reduction. Enumerate critical pairs between \u03b2-reduction and distributivity rules. Check computationally (by BFS on terms of depth \u2264 4) whether all critical peaks are joinable modulo \u03b2\u03b7-equivalence + AC.\n\n**Impact:** This would connect tensor simplification to the rich theory of higher-order rewriting (Nipkow, 1991; van Oostrom, 1994), enabling certified optimization of tensor programs written in functional languages. A negative result (non-confluence) would identify exactly which interactions between \u03b2-reduction and distributivity cause trouble, guiding the design of restricted calculi.\n\n**Catalog References:** `Catalog/Pythagorean/TensorSortedRewrite.lean` (sorted tensor language), `Catalog/Pythagorean/TensorConfluence.lean` (confluence infrastructure).\n\n**Proof Strategy:** Use the modular confluence technique (Toyama's theorem for disjoint combinations) to separate \u03b2-reduction from distributivity. The key technical challenge is the smulVec/dot interaction with \u03bb-abstraction.\n\n**Domain Bridges:** Proof theory (Curry-Howard for linear types), compiler optimization (partial evaluation of tensor kernels).\n\n**Lineage:** Extends the current 8-rule system to the next natural level of expressiveness.\n\n**Ambition:** Grand challenge \u2014 would unify term rewriting theory for algebra with lambda calculus theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T12:50:23.737119+00:00"
-  },
-  {
-    "id": "fd_1407",
-    "title": "Direction 2: Equality Saturation and E-Graph Extraction for Tensor Normal Forms",
-    "description": "**Conjecture:** The normalizeCanon algorithm is optimal in the following sense: among all representations of a tensor expression's normal form modulo AC, the one produced by normalizeCanon minimizes the number of distinct subexpressions (maximal sharing). Equivalently, the e-graph saturation of the AC-equivalence class has normalizeCanon's output as the smallest extraction.\n\n**Test:** Implement an e-graph representation of tensor expressions. Saturate with the AC axioms + scalMul-scalAdd distribution. Extract the smallest term. Compare with normalizeCanon output on 1000 randomly generated terms of size 5-20. Measure the sharing ratio (number of unique subterms / total term size).\n\n**Impact:** This bridges the formal rewriting theory to the practical equality saturation paradigm used in systems like egg (Willsey et al., 2021) and Metatheory.jl. A positive result would make normalizeCanon the extraction function for a tensor e-graph optimizer. A negative result would identify cases where sharing-aware normalization improves on syntactic normalization.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean` (normalizeCanon), `Catalog/Pythagorean/EqualitySaturationExtraction.lean`.\n\n**Proof Strategy:** Define a cost model on TensorExpr (number of constructor applications). Prove normalizeCanon is locally optimal: no single AC rearrangement reduces cost. Then attempt global optimality by analyzing the structure of AC-equivalence classes.\n\n**Domain Bridges:** Compiler optimization (phase ordering), algebraic combinatorics (Catalan numbers for binary tree shapes).\n\n**Lineage:** Direct extension of normalizeCanon's completeness theorem.\n\n**Ambition:** Solid extension \u2014 connects two active research communities (rewriting theory and equality saturation).\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T12:50:23.787470+00:00"
-  },
-  {
-    "id": "fd_1408",
-    "title": "Direction 3: Quantum Circuit Rewriting via Tensor Distributivity",
-    "description": "**Conjecture:** The tensor distributivity rewrite system, when instantiated with matrices from SU(2)\u2297SU(2) (2-qubit gates), produces a confluent modulo AC normal form for quantum circuits on 2 qubits, where AC-equivalence corresponds to commutativity of parallel gates.\n\n**Test:** Represent 2-qubit quantum circuits as tensor expressions: gates are matrices, state vectors are vec, composition is mulVec. Enumerate all 2-qubit circuits of depth \u2264 5 using {CNOT, H, T} gate set. Apply distributivity rules (distributing controlled gates over superpositions). Check confluence by BFS.\n\n**Impact:** Quantum circuit optimization currently relies on ad hoc peephole rules. A confluent rewrite system would provide canonical circuit forms, enabling deterministic circuit comparison and certified optimization. **The key insight is** that distributivity in the tensor algebra precisely corresponds to the linearity of quantum mechanics \u2014 distributing a unitary over a superposition is the algebraic content of quantum parallelism.\n\n**Why now?** The tensor rewriting infrastructure formalized here provides the first machine-verified foundation for relating term rewriting to quantum circuit simplification. Quantum computing hardware is reaching the scale where certified optimization matters.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean`, `Catalog/Pythagorean/TensorSortedRewrite.lean`.\n\n**Proof Strategy:** Instantiate the 3-sorted tensor calculus with \u2102\u00b2-valued vectors and 2\u00d72 complex matrices. Verify that the 8 rules remain sound. Analyze critical pairs specific to the quantum gate basis.\n\n**Domain Bridges:** Quantum computing (circuit optimization), category theory (compact closed categories for quantum protocols).\n\n**Lineage:** Novel application of the confluence theorem to a new domain.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if it leads to a general confluence theory for quantum circuit rewriting.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T12:50:23.836779+00:00"
-  },
-  {
-    "id": "fd_1409",
-    "title": "Direction 4: Tropical Tensor Distributivity and Min-Plus Normal Forms",
-    "description": "**Conjecture:** The 8 distributivity rules, interpreted over the tropical semiring (\u211d \u222a {\u221e}, min, +), remain confluent modulo AC, and the normal forms correspond to shortest-path decompositions in weighted graphs.\n\n**Test:** Implement the tropical version of the tensor rewrite system. Generate tropical tensor expressions corresponding to adjacency matrices of random weighted graphs (n = 5..20). Normalize using the tropical analog of normalizeCanon. Compare normal forms with known shortest-path decompositions.\n\n**Impact:** This would connect tensor rewriting to combinatorial optimization, providing a new algebraic perspective on shortest-path algorithms. **The key insight is** that tropical distributivity (min distributes over +) has the same algebraic form as classical distributivity, so the confluence proof should transfer.\n\n**Why now?** Tropical geometry and combinatorics have seen explosive growth. Connecting them to term rewriting theory via the tensor calculus creates a new bridge between algebra and optimization.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean`, `Catalog/Tropical/`.\n\n**Proof Strategy:** Show that the distPotential measure is semiring-independent (it counts structural patterns, not numerical values). Transfer the confluence proof by abstracting over the coefficient semiring.\n\n**Domain Bridges:** Combinatorial optimization (shortest paths, assignment problems), algebraic statistics (tropical Grassmannians).\n\n**Lineage:** Extends the semiring-parametric aspects of the tensor calculus.\n\n**Ambition:** Solid extension with novel domain bridge.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T12:50:23.884792+00:00"
-  },
-  {
-    "id": "fd_1410",
-    "title": "Direction 5: Automated Critical Pair Analysis for Many-Sorted Rewrite Systems",
-    "description": "**Conjecture:** There exists an efficient algorithm (polynomial in the number of rules \u00d7 term depth) that, given a many-sorted rewrite system, automatically enumerates all critical pairs and checks joinability modulo a specified equational theory (AC, distributivity, etc.).\n\n**Test:** Implement the algorithm for the tensor calculus. Input: the 8 rules + sort discipline. Output: complete list of critical pairs with joinability witnesses. Verify that the output matches the manual analysis in this paper. Then apply to extensions with 12, 16, 20 rules (adding trace, transpose, Kronecker product operations).\n\n**Impact:** This would automate the most labor-intensive part of confluence proofs, enabling rapid exploration of rewrite system extensions. **The key insight is** that the sort discipline dramatically prunes the space of possible overlaps \u2014 most term overlaps are sort-incorrect and can be eliminated without evaluation.\n\n**Why now?** The manual critical pair analysis in this work revealed the essential overlap between rules 7 and 8. Automating this process would have caught it immediately and would scale to the larger systems needed for practical tensor optimization.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean` (manual critical pair analysis), `Catalog/Pythagorean/KnuthBendixCompletion.lean`.\n\n**Proof Strategy:** Adapt the Knuth-Bendix completion algorithm to many-sorted signatures with AC-theories. The key technical contribution would be efficient unification modulo AC in the sorted setting.\n\n**Domain Bridges:** Automated reasoning (completion procedures), programming language design (type-directed optimization).\n\n**Lineage:** Methodological extension \u2014 automating the proof technique rather than extending the mathematical content.\n\n**Ambition:** Solid extension with high practical impact.",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T12:50:23.934307+00:00"
-  },
-  {
-    "id": "fd_1411",
-    "title": "Direction 1: Sharp Exponent Estimation via GPU-Accelerated LP Ensembles",
-    "description": "**Conjecture**: The critical exponent \u03b3(d) for d-uniform random hypergraph susceptibility satisfies \u03b3(3) \u2208 [1.0, 2.5] and stabilizes to within \u00b10.05 for n \u2265 200. Furthermore, \u03b3(d) is monotone decreasing in d.\n\n**Test**: Implement GPU-batched LP solving (e.g., via CUDA-accelerated HiGHS or custom interior-point methods) to compute susceptibility profiles for n = 50, 100, 200, 500 at d = 2, 3, 4, 5. Fit \u03b3(d) via log-log regression at each system size and check for convergence. Plot \u03b3(d) vs d.\n\n**Impact**: This would produce the first reliable estimates of optimization critical exponents, moving the conjecture from \"plausible\" to \"numerically established\" \u2014 the same status that Fisher scaling had before rigorous proofs.\n\n**Catalog References**: `Catalog/Pythagorean/FiniteSizeSusceptibility.lean` (exists_pseudocritical_index, quadraticSusceptibility_le_length)\n\n**Proof Strategy**: Computational. The formal framework is in place; the bottleneck is LP solving speed at scale. Use ensemble averaging over 10^4 instances per (n, m, d) triple.\n\n**Domain Bridges**: Computational complexity (algorithm performance near critical density)\n\n**Lineage**: Direct extension of the pseudocritical density computation in the current work.\n\n**Ambition**: Extension \u2014 solidifies the computational foundations.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7a9ed9f9",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T12:55:13.796921+00:00"
   },
   {
     "id": "seed_013",
@@ -2157,6 +2115,49 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T12:10:22.420690+00:00"
+  },
+  {
+    "id": "fd_1421",
+    "title": "Direction 1: Tropical Leaf Witnesses and Valuative Invariants",
+    "description": "**Conjecture:** For a Lorentzian polynomial $p$ with coefficients in a valued field, the tropicalization of the derivative leaf $L_A$ produces a tropical polynomial whose Newton polytope encodes a \"tropical leaf witness\" \u2014 a piecewise-linear invariant of the subsystem $A$ that approximates the spectral witness in a controlled sense. Specifically, the maximum of the tropical Hessian (the tropical analogue of the mixed Hessian at ones) should bound the logarithm of the positive spectral witness from above.\n\n**Test:** Implement the tropicalization pipeline for DPP polynomials over $\\mathbb{Q}$ with $p$-adic valuations. For $n = 6, 8$, compare the tropical leaf witness (computed via Newton polytope analysis) against the real spectral witness for all subsets of size 3 and 4. A single counterexample where the tropical bound fails would refute the conjecture.\n\n**Impact:** This would create the first bridge between **tropical geometry** and **quantum entanglement witnesses**, uniting two of the most active areas of contemporary mathematics. Tropical methods are combinatorially explicit \u2014 they replace optimization over continuous spectra with finite polyhedral computations \u2014 offering a path to combinatorial certificates of multipartite entanglement.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/MultiModeLorentzianWitnesses.lean` (definitions of `derivativeLeaf`, `leafWitness`), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (DPP polynomial construction).\n\n**Proof Strategy:** Define the tropical mixed Hessian as the matrix of second tropical derivatives (min-plus convolution). Prove the bounding inequality by comparing the tropical evaluation (which corresponds to the leading-order term in the $t \\to 0$ limit of a family $p_t$ with $\\text{val}(p_t) = \\text{trop}(p)$) against the spectral radius. Use Kapranov's theorem to connect tropical roots to the asymptotic behavior of eigenvalues.\n\n**Domain Bridges:** Tropical geometry \u2194 Quantum information, Polyhedral combinatorics \u2194 Spectral theory.\n\n**Lineage:** Extends the coefficient-to-minor bridge (Theorem 6.1 in the research paper) to the tropical setting.\n\n**Ambition:** Grand challenge. If successful, this opens a fundamentally new computational paradigm for entanglement certification \u2014 replacing eigenvalue decomposition with polyhedral enumeration.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8596d6a6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T13:37:04.658423+00:00"
+  },
+  {
+    "id": "fd_1422",
+    "title": "Direction 2: Matroid Exchange Properties of Leaf Witnesses",
+    "description": "**Conjecture:** For a Lorentzian polynomial $p$ arising from a matroid (i.e., $p$ is the basis generating polynomial of a matroid $M$), the leaf witnesses satisfy a matroidal exchange inequality: if $A$ and $B$ are subsets of the same size and $a \\in A \\setminus B$, then there exists $b \\in B \\setminus A$ such that\n$$\\text{leafWitness}(p, (A \\setminus \\{a\\}) \\cup \\{b\\}) \\geq \\min(\\text{leafWitness}(p, A), \\text{leafWitness}(p, B)).$$\n\n**The key insight is** that Lorentzian geometry, via the Hodge\u2013Riemann relations on the Chow ring of a matroid, should force the leaf witness function to respect the combinatorial exchange axiom. This would make the leaf witness a \"matroid valuation\" in the sense of Dress and Wenzel.\n\n**Why now?** The connection between Lorentzian polynomials and matroids was established by Br\u00e4nd\u00e9n\u2013Huh [BH20] and deepened by Adiprasito\u2013Huh\u2013Katz [AHK18]. The formal infrastructure for derivative leaves now makes it possible to state and test matroidal properties of the witness function computationally.\n\n**Test:** Generate all matroids on ground sets of size $\\leq 8$ (there are finitely many up to isomorphism). For each matroid, compute the basis generating polynomial, evaluate leaf witnesses for all subsets of each size, and verify the exchange inequality exhaustively.\n\n**Impact:** This would establish leaf witnesses as combinatorial invariants of matroids, not just spectral quantities. It would open connections to matroid valuation theory, tropical linear algebra, and the theory of valuated matroids.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/MultiModeLorentzianWitnesses.lean` (`leafWitness`, `derivativeLeaf`), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (`IsDPPLorentzian`).\n\n**Proof Strategy:** For representable matroids $M$ represented by a matrix $V$, the kernel $K = V^T V$ produces a DPP polynomial. Use the Cauchy\u2013Binet formula to express leaf coefficients in terms of minors of $V$, then apply the Grassmann\u2013Pl\u00fccker relations to establish the exchange inequality. For general matroids, reduce to the representable case via the cryptomorphism between Lorentzian polynomials and matroids.\n\n**Domain Bridges:** Matroid theory \u2194 Lorentzian geometry, Combinatorial optimization \u2194 Spectral analysis.\n\n**Lineage:** Direct extension of the principal minor bridge (`principalMinor_pair`, `cauchy_schwarz_entries`).\n\n**Ambition:** Solid extension. The exchange inequality for degree-2 witnesses is likely provable with existing tools; the general case would be a significant advance.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8596d6a6",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T13:37:04.718863+00:00"
   },
   {
     "id": "seed_032",
