@@ -333,10 +333,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "502ef518",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T14:24:15.293101+00:00"
   },
   {
@@ -391,10 +391,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "05254341",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T17:14:31.150620+00:00"
   },
   {
@@ -411,10 +411,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "7849b5c2",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T17:14:31.193329+00:00"
   },
   {
@@ -530,10 +530,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "b449612f",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:03.370751+00:00"
   },
   {
@@ -996,10 +996,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a0951d1f",
-    "consumed_by_exp_id": "e18f2436",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T06:04:06.558801+00:00"
   },
   {
@@ -1125,26 +1125,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:05:51.445505+00:00"
   },
   {
-    "id": "fd_1179",
-    "title": "Direction 2: Quantum Entanglement Entropy via DPP-Lorentzian Structure",
-    "description": "**Conjecture**: For a system of n free fermions with single-particle density matrix K (PSD, eigenvalues in [0,1]), the entanglement entropy of a subsystem A \u2286 [n] satisfies bounds derivable from the Lorentzian structure of the DPP partition function restricted to A.\n\n**Test**: For random fermionic states (PSD K with eigenvalues in [0,1]) and subsystems A of size |A| \u2264 8, compute the entanglement entropy S_A = \u2212\u03a3_k [\u03bb_k log \u03bb_k + (1\u2212\u03bb_k)log(1\u2212\u03bb_k)] (where \u03bb_k are eigenvalues of K_A) and compare with bounds derived from the Lorentzian coefficient inequalities of the degree-|A| homogeneous component.\n\n**Impact**: Would connect Lorentzian polynomial theory to quantum information theory, providing geometric constraints on entanglement structure. Could yield new area-law or volume-law bounds for free-fermion systems.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signatures), `Pythagorean/DPPLorentzian.lean` (spectral bridge theorem).\n\n**Proof Strategy**: Use the spectral decomposition K_A = U_A \u039b_A U_A^T. The entanglement entropy is a function of eigenvalues of K_A. The Lorentzian inequalities constrain the elementary symmetric functions of these eigenvalues (which are the homogeneous component sums), and Newton's inequalities relate these to individual eigenvalues.\n\n**Domain Bridges**: Quantum information \u2194 Algebraic combinatorics \u2194 Statistical mechanics.\n\n**Lineage**: Extends the spectral bridge (Theorem 3.4) into the quantum domain.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Grand Challenge / Paradigm-Shifting). If Lorentzian structure constrains entanglement, it would open an entirely new connection between Hodge theory and quantum information.\n\n**The key insight is** that the entanglement entropy of free fermions is entirely determined by the eigenvalues of the reduced density matrix K_A, and these eigenvalues are constrained by the same Lorentzian inequalities that govern the DPP partition function.\n\n**Why now?** Free-fermion entanglement is well-understood physically but lacks a connection to algebraic combinatorics. The DPP-Lorentzian bridge we've established is exactly the missing link.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "c89156c3",
-    "consumed_by_exp_id": "43afaa07",
-    "timestamp": "2026-05-26T17:48:46.660643+00:00"
-  },
-  {
     "id": "fd_1199",
     "title": "Direction 1: Double Scaling Limit \u2014 When Does m Matter?",
     "description": "**Conjecture:** There exists a critical scaling function m*(k) such that:\n- If m = o(m*(k)), the wreath perturbation remains irrelevant: |\u03b2_W(k,m) - m\u00b7\u03b2(S_k)| \u2192 0.\n- If m ~ m*(k), the perturbation becomes marginal.\n- If m \u226b m*(k), the perturbation is relevant: the universality class changes.\n\nWe conjecture m*(k) = k^\u03b1 for some exponent \u03b1 > 0 (possibly \u03b1 = 1).\n\n**Test:** Compute \u03b2_W(k, m) for k \u2208 {3,...,8} and m \u2208 {k/2, k, 2k, k\u00b2} using GAP or subgroup enumeration. Plot the rescaled deviation as a function of m/k^\u03b1 for various \u03b1. The correct \u03b1 collapses the data onto a universal curve.\n\n**Impact:** Identifies the precise boundary between \"irrelevant\" and \"relevant\" regimes for wreath products. This is the analog of identifying the upper critical dimension in statistical mechanics.\n\n**Catalog References:**\n- `Pythagorean/WreathPerturbation.lean`: `beta_wreath_eq_mul_beta_symm_plus_error`, `defect_ratio_tendsto_zero`\n- `Catalog/Bridges/Catalog/Pythagorean/SubgroupUniversality.lean`: `pressure_directPower_linear`\n\n**Proof Strategy:** Extend the perturbative bound by tracking the m-dependence explicitly. The defect bound has constant C_m; determine C_m's growth rate in m. If C_m grows polynomially, the critical scaling is m* ~ k/C_m^{1/...}. Use Clifford theory to bound the number of wreath-product irreducibles as a function of both k and m.\n\n**Domain Bridges:** Statistical mechanics (upper critical dimension), random matrix theory (transition between GOE and GUE universality classes as matrix size grows).\n\n**Lineage:** Direct extension of Theorems 4-5 from the current work; builds on the perturbative bound framework.\n\n**Ambition:** Grand challenge \u2014 resolving this would establish a complete phase diagram for wreath product universality.\n\n**The key insight is** that the m-dependence of the perturbative constant C_m controls the crossover between irrelevant and relevant regimes, analogous to how the dimension d controls the relevance of interaction terms in \u03c6\u2074 field theory.\n\n**Why now?** The formalized perturbation framework provides the first rigorous tool for studying m-dependence. The computational infrastructure (algorithms.py) can probe the double scaling regime for small k, m, providing empirical guidance for the conjecture.\n\n---",
@@ -1220,10 +1200,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "258120ed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4c1deed8",
     "timestamp": "2026-05-27T00:51:51.722911+00:00"
   },
   {
@@ -2091,5 +2071,105 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.344026+00:00"
+  },
+  {
+    "id": "fd_1320",
+    "title": "Direction 1: Higher-Order Entropy Bounds from the Full Newton Hierarchy",
+    "description": "**Conjecture:** For free-fermion subsystems of size m with correlation spectrum \u03bb \u2208 [0,1]\u1d50, the R\u00e9nyi entropies S_\u03b1 = (1/(1-\u03b1)) log(\u03a3 \u03bb\u1d62^\u03b1 + (1-\u03bb\u1d62)^\u03b1) are controlled by the full sequence of Newton ratios \u03c1\u2096 = e\u2096\u00b2/(e\u2096\u208b\u2081\u00b7e\u2096\u208a\u2081). Specifically, there exists a universal function \u03a8_\u03b1(\u03c1\u2081,...,\u03c1\u2098\u208b\u2081) such that |S_\u03b1 - \u03a8_\u03b1(\u03c1)| \u2192 0 as m \u2192 \u221e for spectra satisfying an area-law scaling.\n\n**Test:** Compute S_\u03b1 for \u03b1 \u2208 {0.5, 1, 2, \u221e} and the Newton ratio profiles for 1D free-fermion chains of length L = 50,...,500. Fit \u03a8_\u03b1 as a low-degree polynomial in the log-ratios. Test extrapolation accuracy on 2D models.\n\n**Impact:** Would establish Lorentzian polynomial data as a complete surrogate for the entanglement spectrum, eliminating the need for diagonalization in entanglement studies.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean` (entropy bounds, Newton inequality), `Bridges/LorentzianNewton.lean` (Newton inequality machinery).\n\n**Proof Strategy:** Extend the variance lower bound S \u2265 2\u00b7Var to higher moments using power-mean inequalities. The k-th moment \u03a3 \u03bb\u1d62\u1d4f is expressible via Newton-Girard identities in terms of e\u2081,...,e\u2096. Lorentzian constraints on the e\u2096 then constrain all moments simultaneously.\n\n**Domain Bridges:** Quantum information \u2194 algebraic combinatorics \u2194 approximation theory.\n\n**Lineage:** Direct extension of `entropy_ge_esymm_bound` and `esymm_newton_inequality`.\n\n**Ambition:** Solid extension \u2014 builds directly on proven results with clear path to formalization.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43afaa07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T06:37:54.824643+00:00"
+  },
+  {
+    "id": "fd_1321",
+    "title": "Direction 2: Interacting Fermions and Approximate Gaussianity",
+    "description": "**Conjecture:** For weakly interacting fermion systems with interaction strength \u03b5, the entanglement entropy satisfies S \u2264 S_free + C\u00b7\u03b5\u00b7m\u00b7log(m), where S_free is the free-fermion entropy bounded by our coefficient method, and C is a universal constant independent of the system details.\n\n**The key insight is** that weak interactions perturb the correlation kernel K_A by an amount proportional to \u03b5, which changes the elementary symmetric polynomials by controlled amounts. The Lorentzian structure is stable under small perturbations (a property of the Lorentzian cone being open), so the coefficient-based bounds deform continuously.\n\n**Why now?** The Br\u00e4nd\u00e9n-Huh theory provides stability results for the Lorentzian cone, and our formalization gives the free-fermion baseline. The gap between interacting and non-interacting entropy is the central open question in quantum many-body physics.\n\n**Test:** Simulate Hubbard chains at U/t = 0.1, 0.5, 1.0 via DMRG. Compare exact entropy to free-fermion coefficient bounds. Measure the correction term's dependence on U/t and subsystem size.\n\n**Impact:** Would extend the DPP-Lorentzian framework beyond exactly solvable models to the physically relevant regime of interacting electrons.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Speculative/AutoResearch/DPPLorentzian.lean`.\n\n**Proof Strategy:** Use the Lieb-Robinson bound to control the perturbation of K_A under weak interactions, then apply Weyl's perturbation theorem for eigenvalues to bound the change in each e\u2096.\n\n**Domain Bridges:** Quantum many-body physics \u2194 DPP theory \u2194 perturbation theory.\n\n**Lineage:** Extends all entropy bounds to approximately Gaussian states.\n\n**Ambition:** Grand challenge \u2014 would bridge formal methods to the frontier of condensed matter physics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43afaa07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T06:37:54.875307+00:00"
+  },
+  {
+    "id": "fd_1322",
+    "title": "Direction 3: Tropical Entropy and Information Geometry",
+    "description": "**Conjecture:** The tropical limit of the DPP generating polynomial (replacing + with max and \u00d7 with +) yields a piecewise-linear function whose slopes encode a tropical entropy surrogate that approximates the von Neumann entropy to within O(1/m) for spectra satisfying an area law.\n\n**The key insight is** that tropical geometry captures the leading-order behavior of log-coefficients. Since the entropy involves logarithms of eigenvalues, the tropical limit naturally approximates the entropy calculation. The Newton inequalities become tropical concavity conditions, which are equivalent to the matroid polytope being a generalized permutohedron.\n\n**Why now?** Tropical methods have been applied to Lorentzian polynomials by Br\u00e4nd\u00e9n-Huh and to information geometry by Ay-Jost-L\u00ea-Schwachh\u00f6fer. Our formalization provides the first rigorous link between these two applications.\n\n**Test:** For random spectra of size m = 10,...,100, compute the tropical generating polynomial and the tropical entropy surrogate. Compare to exact entropy. Characterize the error as a function of spectral flatness.\n\n**Impact:** Would create a combinatorial (no analysis required) method for entropy estimation, potentially leading to polynomial-time algorithms for entanglement bounds in tensor network states.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Catalog/Tropical/LorentzForce.lean`.\n\n**Proof Strategy:** Use the Viro patchworking technique to relate the real and tropical generating polynomials, then bound the entropy approximation error using the discriminant of the tropical polynomial.\n\n**Domain Bridges:** Tropical geometry \u2194 quantum information \u2194 computational complexity.\n\n**Lineage:** Extends `esymmCoeff` and Newton inequality to the tropical setting.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43afaa07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T06:37:54.920671+00:00"
+  },
+  {
+    "id": "fd_1323",
+    "title": "Direction 4: Holographic Entanglement and Polynomial Bulk-Boundary Correspondence",
+    "description": "**Conjecture:** For holographic quantum error-correcting codes (HaPPY codes and generalizations), the boundary entanglement entropy is controlled by a \"bulk\" Lorentzian polynomial whose coefficients are the areas of minimal surfaces in the tensor network. Newton's inequality for this polynomial implies the strong subadditivity of holographic entropy.\n\n**The key insight is** that the Ryu-Takayanagi formula relates entanglement entropy to minimal surface areas, and these areas appear as coefficients in a generating polynomial associated with the bulk geometry. The Lorentzian property of this polynomial is equivalent to a discrete form of the null energy condition.\n\n**Why now?** Tensor network models of holography (MERA, HaPPY) produce explicit coefficient sequences that can be checked for Lorentzianity. Our formalization provides the entropy-coefficient bridge needed to close the loop.\n\n**Test:** Construct HaPPY codes on hyperbolic tilings with 3,...,7 layers. Compute the boundary entanglement entropy and the bulk coefficient sequence. Check Lorentzianity and compare entropy to coefficient-based bounds.\n\n**Impact:** Would provide a new proof of strong subadditivity from geometric principles, potentially illuminating the AdS/CFT correspondence.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Pythagorean/LorentzianRecognitionComplete.lean`.\n\n**Proof Strategy:** Identify the generating polynomial of the holographic code with a DPP on the bulk graph, then apply the spectral bridge theorem to connect boundary entropy to bulk coefficients.\n\n**Domain Bridges:** Holography \u2194 DPP theory \u2194 Lorentzian geometry \u2194 quantum error correction.\n\n**Lineage:** Extends the DPP-Lorentzian bridge to the holographic setting.\n\n**Ambition:** Grand challenge \u2014 potentially paradigm-shifting for quantum gravity.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43afaa07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T06:37:54.965685+00:00"
+  },
+  {
+    "id": "fd_1324",
+    "title": "Direction 5: Bosonic Analogues and Stability Obstructions",
+    "description": "**Conjecture:** For free-boson systems, the generating polynomial of the subsystem is a *permanent* rather than a determinant, and is NOT Lorentzian in general. The failure of Lorentzianity is precisely what allows bosonic entanglement to violate the area law, and the degree of non-Lorentzianity (measured by the violation of Newton's inequality) quantifies the excess entropy above the free-fermion bound.\n\n**The key insight is** that the DPP repulsion (which makes fermion entropy area-law) is encoded in the Lorentzian structure, while bosonic bunching (which allows volume-law entropy) corresponds to the anti-Lorentzian regime. The transition between the two regimes is controlled by a phase boundary in coefficient space.\n\n**Why now?** Permanental point processes (PPPs) have been studied in probability but never connected to entanglement. Our formalization of the DPP/Lorentzian side provides the contrast needed to identify what fails for bosons.\n\n**Test:** Compute the generating polynomials for free-boson subsystems of size m = 4,...,10 at various temperatures. Check Newton's inequality. Map the region in coefficient space where it fails. Correlate with entropy scaling (area vs volume law).\n\n**Impact:** Would explain the area-law/volume-law dichotomy between fermions and bosons as a geometric phase transition in polynomial coefficient space.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Speculative/AutoResearch/DPPLorentzian.lean`.\n\n**Proof Strategy:** Formalize the permanent generating polynomial, show Newton's inequality fails for bosonic thermal states, and connect the failure to entropy scaling via the spectral moment identities already formalized.\n\n**Domain Bridges:** Quantum optics \u2194 permanental processes \u2194 Lorentzian geometry \u2194 area-law physics.\n\n**Lineage:** Extends `esymm_newton_inequality` by characterizing its failure mode.\n\n**Ambition:** Solid extension with grand-challenge implications \u2014 directly testable and formalizable.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "43afaa07",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T06:37:55.011012+00:00"
   }
 ];

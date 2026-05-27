@@ -694,5 +694,6 @@
   "f92b2f40": "direction_1_lorentzian_to_coefficient_bridge_via_b.json",
   "8f3b6854": "direction_4_high_dimensional_expansion_via_canonic.json",
   "0d5e8c8a": "direction_1_hardness_of_unrestricted_degree_lorent.json",
-  "5e0f52a0": "direction_4_algorithmic_spectral_certification.json"
+  "5e0f52a0": "direction_4_algorithmic_spectral_certification.json",
+  "43afaa07": "direction_2_quantum_entanglement_entropy_via_dpp_l.json"
 }
