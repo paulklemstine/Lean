@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Lorentzian Polynomials",
     "date": "2026-05-27T22:56:19Z",
     "exp_id": "fae8584a",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6894352948636652,
+    "quality": "partial",
     "pkg_num": 196
   },
   {
@@ -5693,8 +5693,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-27T22:56:19Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6894352948636652,
+      "quality": "partial"
     }
   ],
   "edges": [

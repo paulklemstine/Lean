@@ -767,5 +767,6 @@
   "8dd17845": "direction_3_lorentzian_control_of_glauber_dynamics.json",
   "90f5c361": "direction_3_information_theoretic_monotonicity_for.json",
   "209e0d92": "direction_1_uniform_spectral_gap_bound_for_gl_q.json",
-  "3e567686": "direction_2_density_heuristics_via_the_circle_meth.json"
+  "3e567686": "direction_2_density_heuristics_via_the_circle_meth.json",
+  "fae8584a": "direction_1_lorentzian_equivalence_via_hessian_des.json"
 }
