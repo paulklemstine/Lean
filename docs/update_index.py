@@ -243,6 +243,11 @@ def update_index():
             "domain": data.get("domain", "General"),
         }
 
+    # Assign stable package numbers based on date-ascending order (oldest = 1)
+    package_index.sort(key=lambda x: x["date"])
+    for i, pkg in enumerate(package_index):
+        pkg["pkg_num"] = i + 1
+    # Then sort descending for display (newest first)
     package_index.sort(key=lambda x: x["date"], reverse=True)
 
     js_content = f"""// AUTO-GENERATED FILE. DO NOT EDIT.

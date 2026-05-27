@@ -1143,25 +1143,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T07:14:49.839089+00:00"
   },
   {
-    "id": "fd_1088",
-    "title": "Direction 3: Certified Expander Codes with Linear-Time Decoding",
-    "description": "**Conjecture:** For every \u03b5 > 0 and rate R < 1, there exists a family of certified Cayley-graph expander codes over Sp_{2n}(\ud835\udd3d_q) (with n, q varying) achieving rate \u2265 R, relative distance \u2265 \u03b4(\u03b5) > 0, and linear-time decoding complexity O(N) where N is the block length, provided the Cayley graph is constructed from a certified pair with gap \u2265 \u03b5.\n\n**Test:** Implement Sipser-Spielman (or Zemor) decoding on Tanner codes built from certified Cayley graphs of GL\u2082(\ud835\udd3d_p) for p = 3, 5, 7, 11. Measure decoding failure rate vs. channel noise for BSC and AWGN channels. Compare with standard LDPC codes of similar block length and rate.\n\n**Impact:** Currently, the best explicit linear-time decodable codes (Spielman 1996, Guruswami-Indyk 2005) rely on expanders whose construction is somewhat ad hoc. Certified Cayley-graph codes would provide a *uniform family* with provable parameters directly from the group certificate, potentially matching or exceeding the performance of capacity-approaching codes in the moderate block-length regime.\n\n**Catalog References:** `Catalog/Algebra/ClassicalGroupExpanders.lean` (expansion_neighbor_growth, expansion_monotone_of_superset), `Catalog/Algebra/MatrixGroupGeneration.lean` (span_orbit_eq_top_of_irreducible \u2014 orbit spanning as code generator).\n\n**Proof Strategy:** (1) Construct bipartite Tanner codes from the bipartite double cover of certified Cayley graphs. (2) Use the vertex expansion bound (Theorem 4) to prove the inner codes' parity-check matrices satisfy the \"unique neighbor\" property. (3) Analyze the Sipser-Spielman peeling decoder: each round corrects a constant fraction of errors, so O(log N) rounds suffice. (4) Each round takes O(N) time, giving O(N log N) total \u2014 tight analysis using the certificate gap should reduce this to O(N).\n\n**Domain Bridges:** Coding theory \u2194 group theory \u2194 spectral graph theory \u2194 algorithm design. The certificate provides a single algebraic object (the generator pair) that simultaneously determines the code, the graph, and the decoding algorithm.\n\n**Lineage:** Builds on the cross-domain bridge (expansion \u2192 boundary growth) from Theorem 4 and the coding-theory connection discussed in the research paper.\n\n**Ambition:** Solid extension with high practical impact.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d9e69258",
-    "consumed_by_exp_id": "d4879402",
-    "timestamp": "2026-05-26T08:24:14.647375+00:00"
-  },
-  {
     "id": "fd_1091",
     "title": "Direction 1: Overlap Class Conjecture \u2014 Beyond Disjoint Supports",
     "description": "**Conjecture:** For every connected graph G, basepoint q, and S \u2286 V \\ {q}, the number of tropical projective equivalence classes of minimal generating families of the tropical kernel equals the number of overlap classes of cycle supports in G[S].\n\n**Test:** Enumerate all connected graphs on n \u2264 9 vertices, compute all minimal generating families, quotient by TropProjEquiv, and compare the class count against the cycle overlap class count. A single counterexample falsifies the conjecture; universal agreement up to n = 9 provides strong evidence.\n\n**Impact:** Would extend the uniqueness theorem from the fully disjoint case to the general case, transforming tropical kernel generators into a complete graph invariant for all connected graphs (not just those with separated cycle structures).\n\n**Catalog References:** `Catalog/Pythagorean/TropicalBridge/TropicalKernelRigidity.lean` (TropProjEquiv, PairwiseDisjointSupports), `Catalog/Pythagorean/TropicalBridge/DefectTheory.lean` (inducedCycleRank).\n\n**Proof Strategy:** Define \"overlap degree\" as the maximum intersection size between two support sets. Prove uniqueness up to TropProjEquiv for overlap degree 0 (our current theorem), then induct on overlap degree using a \"peeling\" argument that reduces overlapping supports to disjoint ones plus correction terms.\n\n**Domain Bridges:** Connects tropical linear algebra to combinatorial topology (cycle spaces), matroid theory (circuit overlap structure), and coding theory (support weights of linear codes).\n\n**Lineage:** Extends the main theorem of this work. Builds on the support-matching injectivity argument of `support_matching_injective`.\n\n**Ambition:** Grand challenge \u2014 would unify tropical kernel theory with cycle matroid structure.\n\n**The key insight is** that the number of equivalence classes should be determined entirely by the combinatorial overlap pattern of cycle supports, not by the specific geometry of the graph. **Why now?** The formal verification infrastructure for TropProjEquiv and PairwiseDisjointSupports provides the first rigorous foundation for testing this prediction computationally.\n\n---",
@@ -1294,10 +1275,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "72356358",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14c19443",
     "timestamp": "2026-05-26T13:07:38.816025+00:00"
   },
   {
@@ -1314,10 +1295,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f52aba3c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a75662e",
     "timestamp": "2026-05-26T15:25:16.762042+00:00"
   },
   {
@@ -1412,10 +1393,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "34bffabf",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fbc28fb9",
     "timestamp": "2026-05-26T18:56:53.573835+00:00"
   },
   {
@@ -1576,7 +1557,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4a19dada",
@@ -1595,7 +1576,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4a19dada",
@@ -1615,7 +1596,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4a19dada",
@@ -1728,6 +1709,105 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:12.492126+00:00"
+  },
+  {
+    "id": "fd_1246",
+    "title": "Direction 1: Real Stability of Determinantal Polynomials and the Full Lorentzianity Bridge",
+    "description": "**Conjecture**: For any symmetric PSD matrix K \u2208 \u211d^{n\u00d7n}, the polynomial Z_K(x) = det(I + diag(x)K) is real stable (no zeros in the open upper half-plane \u210d^n). Combined with the Br\u00e4nd\u00e9n\u2013Huh theorem (real stable + nonneg coefficients \u27f9 Lorentzian), this would prove our Lorentzianity conjecture.\n\n**Test**: Formalize the following chain: (1) For z \u2208 \u210d^n, the matrix I + diag(z)K has positive definite Hermitian part. (2) Positive definite matrices have nonzero determinant. (3) Therefore Z_K(z) \u2260 0 on \u210d^n. Each step can be verified by constructing the Hermitian part explicitly and using `PosDef.det_ne_zero`.\n\n**Impact**: This completes the main theorem of the project \u2014 that DPP generating polynomials are Lorentzian \u2014 and unlocks the full cascade of Hodge-type inequalities for DPP coefficient arrays.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (IsBrandenHuhLorentzian definition and recursive spectral certificate equivalence).\n\n**Proof Strategy**: Define real stability as a predicate on MvPolynomial. Prove that for PSD K and z \u2208 \u210d^n, the matrix I + diag(z)K has positive definite Hermitian part (this requires formalizing Im(z_i\u00b7K_{ij}) terms). Then invoke `det_ne_zero` for positive definite matrices. The Br\u00e4nd\u00e9n\u2013Huh direction (stable \u2192 Lorentzian for homogeneous components with nonneg coefficients) requires formalizing the closure theorem, which is the main technical challenge.\n\n**Domain Bridges**: Statistical physics (partition function stability) \u2194 Algebraic geometry (Lorentzian/Hodge theory) \u2194 Probability (negative association).\n\n**The key insight is** that the positive semidefiniteness of K translates directly into the half-plane stability of the partition function, which in turn implies Lorentzianity \u2014 creating a clean algebraic pipeline from linear algebra to Hodge-theoretic geometry.\n\n**Why now?** The Br\u00e4nd\u00e9n\u2013Huh theory is now mature (5+ years since publication), Mathlib has extensive matrix theory infrastructure, and our verified definitions provide the exact formalization targets.\n\n**Lineage**: Extends `dpp_partition_function_lorentzian` (currently sorry'd) and builds on `dpp_uniformSpecialization` (verified).\n\n**Ambition**: Grand challenge \u2014 completing this would be the first machine-verified proof that determinantal partition functions are Lorentzian.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "258120ed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T00:51:51.560054+00:00"
+  },
+  {
+    "id": "fd_1247",
+    "title": "Direction 2: Higher-Order Negative Association for DPPs",
+    "description": "**Conjecture**: DPPs satisfy the full **negative association** (NA) property: for any two increasing functions f, g on disjoint sets of coordinates, Cov(f(X_A), g(X_B)) \u2264 0. This is strictly stronger than pairwise negative dependence and has deeper implications for concentration inequalities.\n\n**Test**: (1) Formalize the NA property as a predicate on probability measures. (2) Prove NA for product measures (diagonal DPPs). (3) Extend to rank-one DPPs. (4) Attempt the general case via the BBL (Borcea\u2013Br\u00e4nd\u00e9n\u2013Liggett) theorem connecting real stability to NA.\n\n**Impact**: Full NA unlocks Chernoff-type concentration bounds for DPP statistics, FKG-type correlation inequalities, and stochastic domination results.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signature), `Pythagorean/DPPLorentzian.lean` (DPP definitions and pairwise result).\n\n**Proof Strategy**: The BBL theorem states that strongly Rayleigh measures (whose generating polynomial is real stable) satisfy NA. If Direction 1 succeeds, DPPs are strongly Rayleigh, and NA follows. The key formalization challenge is the BBL proof itself, which uses multivariate analytic continuation arguments.\n\n**Domain Bridges**: Probability theory (negative association) \u2194 Statistical mechanics (FKG inequalities) \u2194 Algorithms (concentration bounds for randomized algorithms).\n\n**The key insight is** that negative association is not merely a statistical property but a geometric consequence of the polynomial's stability, which forces all monotone correlations to have the correct sign.\n\n**Why now?** Our pairwise result provides the base case, and the BBL theorem provides the roadmap.\n\n**Lineage**: Extends `dpp_pairwise_negative_dependence` (verified) to all monotone functions, not just indicator functions.\n\n**Ambition**: Solid extension \u2014 the BBL theorem is well-understood mathematically, though formalizing multivariate analytic arguments is technically demanding.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "258120ed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T00:51:51.600857+00:00"
+  },
+  {
+    "id": "fd_1248",
+    "title": "Direction 3: Matroid Exchange Property and Lorentzian Support Theory",
+    "description": "**Conjecture**: The support of every homogeneous component of a DPP generating polynomial satisfies the symmetric exchange property (is a matroid basis set). This would connect DPP theory to matroid Hodge theory (Adiprasito\u2013Huh\u2013Katz).\n\n**Test**: (1) For random PSD matrices with n \u2264 10, extract the support of each homogeneous component. (2) Verify the exchange axiom: for any two d-subsets S, T in the support and any i \u2208 S\\T, there exists j \u2208 T\\S such that (S \u2212 i + j) and (T + i \u2212 j) are both in the support. (3) Identify the matroid (it should be the uniform matroid for generic K).\n\n**Impact**: This would provide a new source of matroids \u2014 one arising from spectral data \u2014 and connect the Lorentzian polynomial theory to the matroid Hodge theory that resolved the Rota\u2013Heron\u2013Welsh conjecture.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (SupportSatisfiesExchange definition).\n\n**Proof Strategy**: For generic PSD K, all principal minors of size d are nonzero, so the support is the set of all d-subsets = uniform matroid. The interesting case is degenerate K (low rank), where the support becomes a proper matroid. The Br\u00e4nd\u00e9n\u2013Huh theorem guarantees the exchange property for Lorentzian polynomial supports.\n\n**Domain Bridges**: Algebraic combinatorics (matroid theory) \u2194 Algebraic geometry (Hodge theory) \u2194 Probability (DPP support structure).\n\n**The key insight is** that the matroid exchange property of Lorentzian polynomial supports is not an abstract axiom but a concrete structural property of DPP coefficient arrays, visible in the rank structure of the kernel matrix.\n\n**Why now?** The SupportSatisfiesExchange predicate already exists in the catalog.\n\n**Lineage**: Builds on `dpp_partition_function_lorentzian` (conjecture) and connects to matroid theory.\n\n**Ambition**: Solid extension \u2014 the exchange property for Lorentzian supports is already proved by Br\u00e4nd\u00e9n\u2013Huh; the formalization connects it to DPPs.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "258120ed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T00:51:51.641720+00:00"
+  },
+  {
+    "id": "fd_1249",
+    "title": "Direction 4: Quantum DPPs and Entanglement Bounds via Lorentzian Geometry",
+    "description": "**Conjecture**: The von Neumann entropy of a fermionic Gaussian state is bounded by a function of the Lorentzian signature of its generating polynomial. Specifically, the number of positive Hessian eigenvalues at degree-2 derivative leaves of Z_K provides a lower bound on the entanglement entropy across bipartitions.\n\n**Test**: (1) Compute the von Neumann entropy S(\u03c1) = \u2212Tr(\u03c1 log \u03c1) for the reduced density matrix of a fermionic Gaussian state with covariance K. (2) Compute the Lorentzian Hessian signatures at all derivative leaves. (3) Test whether min(S(\u03c1)) over bipartitions correlates with max(num_positive_eigenvalues) over Hessian leaves.\n\n**Impact**: This would create a new bridge between quantum information theory and Lorentzian polynomial geometry, potentially yielding computable entanglement witnesses from polynomial coefficient data.\n\n**Catalog References**: `Pythagorean/DPPLorentzian.lean` (DPP kernel and partition function definitions).\n\n**Proof Strategy**: Fermionic Gaussian states have correlation matrices that are DPP kernels. The partition function Z_K encodes the full statistics of particle number measurements. The Lorentzian condition constrains the fluctuation structure, which should bound entanglement. The key technical step is relating the Hessian signature (a polynomial-geometric object) to the entanglement spectrum (a quantum-informatic object).\n\n**Domain Bridges**: Quantum information theory (entanglement) \u2194 Statistical mechanics (fermionic systems) \u2194 Algebraic geometry (Lorentzian polynomials).\n\n**The key insight is** that entanglement in fermionic systems is dual to the Lorentzian signature of the partition function \u2014 both measure the \"width\" of the probability distribution over subset sizes.\n\n**Why now?** Quantum computing is driving demand for computable entanglement bounds, and the DPP\u2013Lorentzian connection provides a new algebraic tool.\n\n**Lineage**: Extends the DPP framework to quantum systems.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if successful, connecting quantum information to Hodge theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "258120ed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T00:51:51.722911+00:00"
+  },
+  {
+    "id": "fd_1250",
+    "title": "Direction 5: Certified DPP Sampling with Lorentzian Guarantees",
+    "description": "**Conjecture**: There exists a polynomial-time algorithm that, given a PSD kernel K and parameters \u03b5, \u03b4, produces a sample S from a distribution within \u03b5 total variation distance of the DPP, together with a machine-checkable certificate that the sample satisfies negative dependence up to additive error \u03b4.\n\n**Test**: (1) Implement an approximate DPP sampler based on eigendecomposition. (2) For each sample, compute the empirical correlation ratio and compare to the theoretical bound of 1. (3) Generate a Lorentzian certificate by checking the Hessian signature condition for the empirical distribution.\n\n**Impact**: Certified sampling would enable DPPs to be used in safety-critical applications (medical trial design, autonomous systems) where diversity guarantees must be provably correct.\n\n**Catalog References**: `Pythagorean/DPPLorentzian.lean` (negative dependence theorem, spectral bridge), `algorithms.py` (Hessian recognizer).\n\n**Proof Strategy**: The sampling algorithm uses the spectral decomposition K = U\u039bU^T to sample in eigenspace, then projects. The certificate consists of: (1) the eigendecomposition (verifiable by matrix multiplication), (2) the Hessian signature check (verifiable by eigenvalue computation), (3) the correlation ratio bound (verifiable by arithmetic). Each certificate is machine-checkable in O(n\u00b3) time.\n\n**Domain Bridges**: Algorithm design (certified computation) \u2194 Machine learning (DPP sampling) \u2194 Formal verification (proof certificates).\n\n**The key insight is** that the Lorentzian structure provides not just existence proofs but computational certificates \u2014 the Hessian signature test is a concrete, checkable condition that implies the probabilistic guarantee.\n\n**Why now?** Trustworthy AI demands certified algorithms, and DPPs are among the most widely used probabilistic models with certifiable properties.\n\n**Lineage**: Extends `certify_pairwise_negative_dependence` (implemented in Python) to full sampling with Lorentzian certificates.\n\n**Ambition**: Solid extension \u2014 builds directly on verified theorems and existing algorithms.",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "258120ed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T00:51:51.763159+00:00"
   },
   {
     "id": "seed_013",
@@ -2132,6 +2212,68 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T00:16:01.142031+00:00"
+  },
+  {
+    "id": "fd_1251",
+    "title": "Direction 1: Hessian-Based Lorentzian Gap from MvPolynomial Infrastructure",
+    "description": "**Conjecture:** For the measurement distribution \u03bc of a gapped free-fermionic ground state, the generating polynomial P_\u03bc \u2208 MvPolynomial (Fin n) \u211d has a Hessian matrix at the all-ones point with at most one positive eigenvalue, and the gap between the largest and second-largest eigenvalue is bounded below by \u03a9(\u0394(H)/poly(n)).\n\n**Test:** Formalize the generating polynomial P_\u03bc(z) = \u03a3_S \u03bc(S) \u03a0_{i\u2208S} z\u1d62 using Mathlib's `MvPolynomial`. Compute the Hessian matrix \u2202\u00b2P/\u2202z\u1d62\u2202z\u2c7c at z = 1. Verify the eigenvalue signature computationally for the TFIM on n = 3,4,5 qubits, then formalize the free-fermion case using determinantal identities.\n\n**Impact:** This would give the first formalized *concrete* Lorentzian gap, replacing the abstract `GappedMeasurementLift` with a computable invariant. Combined with the existing perturbation theorems, it would complete the pipeline for free-fermionic + perturbation systems.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean` \u2014 GappedMeasurementLift, RobustLorentzianCertificate\n- `Catalog/Bridges/Catalog/Pythagorean/RobustLorentzianSampling.lean` \u2014 HasGappedSignature, QuadFormBound\n- `Catalog/Pythagorean/LorentzianSpectralGap.lean` \u2014 spectral gap infrastructure\n\n**Proof Strategy:** Use the determinantal structure of free-fermionic states: \u03bc(S) = det(K_S) for a correlation matrix K. The Hessian of P_\u03bc at z=1 relates to K via Jacobi's complementary minor formula. The signature then follows from the eigenvalue structure of K.\n\n**Domain Bridges:** Algebraic geometry (polynomial Hessians) \u2194 quantum many-body physics (free fermions) \u2194 spectral graph theory (eigenvalue gaps)\n\n**Lineage:** Direct extension of current work. Requires MvPolynomial + Matrix eigenvalue formalization.\n\n**Ambition:** Grand challenge \u2014 would open the first concrete, computable instance of the full quantum\u2192Lorentzian\u2192classical pipeline.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "d97a486b",
+    "consumed_by_exp_id": "492f937d",
+    "timestamp": "2026-05-27T00:52:11.201424+00:00"
+  },
+  {
+    "id": "fd_1252",
+    "title": "Direction 2: Entropic Area Laws from Strong Log-Concavity",
+    "description": "**Conjecture:** If the measurement distribution \u03bc of a 1D ground state has a strongly log-concave generating polynomial with Lorentzian gap \u2265 \u03b4, then the entanglement entropy across any bipartition satisfies S(A) \u2264 C \u00b7 log(1/\u03b4) + O(1), recovering area-law scaling from a purely classical-probabilistic property of \u03bc.\n\n**Test:** For the TFIM on n = 4,...,8 qubits, compute: (a) the entanglement entropy across bipartitions, (b) the surrogate Lorentzian gap of the measurement distribution. Plot S(A) vs. 1/\u03b4. If the relationship is logarithmic, the conjecture is supported; if polynomial or worse, it is refuted.\n\n**Impact:** This would derive area laws \u2014 a central result in quantum information \u2014 from log-concavity, creating a stunning bridge between polynomial geometry and entanglement theory. It would suggest that Lorentzian structure is the *classical shadow* of area-law entanglement.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean` \u2014 QuantumMeasurementModel, minMass\n- `Catalog/Pythagorean/DirectionalLogConcavity.lean` \u2014 log-concavity infrastructure\n\n**Proof Strategy:** Use the entropy-energy tradeoff: strong log-concavity implies entropy concentration (Anari\u2013Oveis Gharan\u2013Vinzant). Combine with the Araki-Lieb inequality relating measurement entropy to entanglement entropy. The Lorentzian gap controls the entropy concentration rate.\n\n**Domain Bridges:** Quantum information theory (entanglement entropy) \u2194 Lorentzian polynomials (curvature) \u2194 information theory (entropy concentration)\n\n**Lineage:** Extends `pairMassGap_ge_two_minMass` and `minMass_perturbation_lower_bound` to entropy bounds.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if true, as it would recast area laws in geometric language.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d97a486b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T00:52:11.241965+00:00"
+  },
+  {
+    "id": "fd_1253",
+    "title": "Direction 3: Tropical Approximations to Quantum Generating Polynomials",
+    "description": "**Conjecture:** The tropical limit of the generating polynomial P_\u03bc(z) \u2014 obtained by replacing addition with max and multiplication with addition \u2014 captures the dominant support structure of \u03bc and provides an O(poly(n))-time approximation to the Lorentzian certificate that is correct up to polynomial factors.\n\n**Test:** Implement tropicalization of P_\u03bc for TFIM ground states. Compare the tropical Newton polytope to the actual support of \u03bc. Verify that the tropical Hessian signature matches the Lorentzian signature for n = 3,...,6. Benchmark computational speedup vs. exact Hessian computation.\n\n**Impact:** Tropical geometry provides a combinatorial skeleton of algebraic geometry. If the Lorentzian gap has a meaningful tropical approximation, this would give a polynomial-time algorithm for certifying classical simulability \u2014 bypassing the exponential cost of exact polynomial evaluation.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean` \u2014 RobustLorentzianCertificate\n- `Catalog/Tropical/` \u2014 existing tropical geometry infrastructure\n- `Catalog/Pythagorean/TropicalBerggrenZeta.lean` \u2014 tropical-arithmetic bridges\n\n**Proof Strategy:** Use the Viro patchworking theorem to relate tropical and classical Lorentzian conditions. The Newton polytope of P_\u03bc is a generalized permutohedron (by log-concavity), and its tropical structure encodes the support of \u03bc.\n\n**Domain Bridges:** Tropical geometry \u2194 Lorentzian polynomials \u2194 computational complexity (approximation algorithms)\n\n**Lineage:** Connects existing Tropical catalog to quantum many-body applications.\n\n**Ambition:** Solid extension \u2014 computationally tractable and testable within current infrastructure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d97a486b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T00:52:11.288128+00:00"
   },
   {
     "id": "seed_032",

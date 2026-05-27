@@ -9,8 +9,9 @@ window.PACKAGE_INDEX = [
     "domain": "Quantum Many-Body Theory / Lorentzian Polynomials / Classical Expansion",
     "date": "2026-05-27T00:52:08Z",
     "exp_id": "d97a486b",
-    "quality_score": null,
-    "quality": "unrated"
+    "quality_score": 0.7774966433566434,
+    "quality": "substantial",
+    "pkg_num": 126
   },
   {
     "filename": "direction_2_lorentzian_polynomials_in_statistical_.json",
@@ -19,7 +20,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-27T00:51:48Z",
     "exp_id": "258120ed",
     "quality_score": 0.7206784406779662,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 125
   },
   {
     "filename": "direction_3_information_theoretic_monotonicity_for.json",
@@ -28,7 +30,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-27T00:51:30Z",
     "exp_id": "f952b956",
     "quality_score": 0.7255008839779007,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 124
   },
   {
     "filename": "direction_3_certified_expander_codes_with_linear_t.json",
@@ -37,7 +40,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-27T00:51:04Z",
     "exp_id": "d4879402",
     "quality_score": 0.7277883902439024,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 123
   },
   {
     "filename": "direction_5_continuous_extension_via_discretizatio.json",
@@ -46,7 +50,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-27T00:15:51Z",
     "exp_id": "ad0ea09c",
     "quality_score": 0.7752345794392524,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 122
   },
   {
     "filename": "direction_2_valuated_matroid_theory_via_k_fold_log.json",
@@ -55,7 +60,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-27T00:15:18Z",
     "exp_id": "dde1d7e9",
     "quality_score": 0.6498758987341773,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 121
   },
   {
     "filename": "direction_1_quantitative_helfgott_type_growth_in_g.json",
@@ -64,7 +70,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T23:40:38Z",
     "exp_id": "5098a45f",
     "quality_score": 0.6490118139534884,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 120
   },
   {
     "filename": "direction_2_exceptional_expander_ladder__f_e_e_e.json",
@@ -73,7 +80,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T23:40:19Z",
     "exp_id": "5e6b0585",
     "quality_score": 0.7835981654135338,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 119
   },
   {
     "filename": "direction_2_sparse_support_certificate_compression.json",
@@ -82,7 +90,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T23:40:04Z",
     "exp_id": "6595a609",
     "quality_score": 0.6956024000000001,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 118
   },
   {
     "filename": "direction_1_dynamic_spectral_gap_tracking_for_onli.json",
@@ -91,7 +100,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T23:39:40Z",
     "exp_id": "710cc85b",
     "quality_score": 0.7033800000000001,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 117
   },
   {
     "filename": "direction_1_comparison_theorems_for_non_group_mark.json",
@@ -100,7 +110,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T23:05:00Z",
     "exp_id": "4a19dada",
     "quality_score": 0.659564,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 116
   },
   {
     "filename": "direction_3_spectral_expansion_for_matrix_groups_a.json",
@@ -109,7 +120,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T23:04:37Z",
     "exp_id": "e954adc7",
     "quality_score": 0.7183925,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 115
   },
   {
     "filename": "direction_4_tropical_mixing_without_spectral_inter.json",
@@ -118,7 +130,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T22:28:04Z",
     "exp_id": "93ec6871",
     "quality_score": 0.710588,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 114
   },
   {
     "filename": "direction_2_heterogeneitygap_conjecture.json",
@@ -127,7 +140,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T22:27:37Z",
     "exp_id": "daaf598b",
     "quality_score": 0.65906,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 113
   },
   {
     "filename": "direction_1_complete_aschbacher_certificate_theory.json",
@@ -136,7 +150,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T22:27:11Z",
     "exp_id": "cc9f1755",
     "quality_score": 0.7725412307692309,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 112
   },
   {
     "filename": "direction_4_plcker_coordinates_and_fermionic_state.json",
@@ -145,7 +160,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T22:26:36Z",
     "exp_id": "4c9b1112",
     "quality_score": 0.713033797752809,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 111
   },
   {
     "filename": "direction_1_non_multiaffine_extension_via_weighted.json",
@@ -154,7 +170,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T21:53:02Z",
     "exp_id": "ef991832",
     "quality_score": 0.7587311652173914,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 110
   },
   {
     "filename": "direction_1_wreath_product_perturbation_theory.json",
@@ -163,7 +180,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T21:18:00Z",
     "exp_id": "550b5c8b",
     "quality_score": 0.7326680000000001,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 109
   },
   {
     "filename": "direction_3_pressure_theory_for_almost_simple_grou.json",
@@ -172,7 +190,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T21:17:42Z",
     "exp_id": "a875f3ce",
     "quality_score": 0.7693653584905661,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 108
   },
   {
     "filename": "direction_5_effective_resistance_and_electrical_fl.json",
@@ -181,7 +200,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T21:17:25Z",
     "exp_id": "d42cb594",
     "quality_score": 0.7283000000000001,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 107
   },
   {
     "filename": "direction_2_spectral_decoding_via_tropical_morse_b.json",
@@ -190,7 +210,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T21:16:58Z",
     "exp_id": "e1e8732d",
     "quality_score": 0.7368618604651165,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 106
   },
   {
     "filename": "direction_1_full_grtnerellis_large_deviation_princ.json",
@@ -199,7 +220,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T19:36:51Z",
     "exp_id": "a93e0253",
     "quality_score": 0.7302034482758621,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 105
   },
   {
     "filename": "direction_4_statistical_physics_of_random_transver.json",
@@ -208,7 +230,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T19:36:21Z",
     "exp_id": "befda33d",
     "quality_score": 0.7327347826086956,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 104
   },
   {
     "filename": "direction_1_log_sobolev_inequality_for_the_hybrid_.json",
@@ -217,7 +240,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T19:35:44Z",
     "exp_id": "ff6108f7",
     "quality_score": 0.7167155046439628,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 103
   },
   {
     "filename": "direction_1_weighted_distance_equality_via_tropica.json",
@@ -226,7 +250,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T18:57:37Z",
     "exp_id": "208288a0",
     "quality_score": 0.6502599049235993,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 102
   },
   {
     "filename": "direction_1_quantum_2_designs_from_certified_unita.json",
@@ -235,7 +260,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T18:57:14Z",
     "exp_id": "4ce7826a",
     "quality_score": 0.7185778181818183,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 101
   },
   {
     "filename": "direction_4_global_stability_as_max_envelope.json",
@@ -244,7 +270,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T18:56:49Z",
     "exp_id": "34bffabf",
     "quality_score": 0.7288202994652406,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 100
   },
   {
     "filename": "direction_4_arithmetic_statistics_via_subgroup_pre.json",
@@ -253,7 +280,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T18:56:16Z",
     "exp_id": "17192924",
     "quality_score": 0.7145541738405998,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 99
   },
   {
     "filename": "direction_1_bounded_treewidth_polynomial_certifica.json",
@@ -262,7 +290,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T18:22:23Z",
     "exp_id": "802479fb",
     "quality_score": 0.7315382132796782,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 98
   },
   {
     "filename": "direction_3_hecke_operator_comparison_and_building.json",
@@ -271,7 +300,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T17:13:23Z",
     "exp_id": "ad3dfe1b",
     "quality_score": 0.7713502400000001,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 97
   },
   {
     "filename": "direction_1_canonical_path_poincar_inequality_for_.json",
@@ -280,7 +310,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T17:12:50Z",
     "exp_id": "5c8e335c",
     "quality_score": 0.7240127065217392,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 96
   },
   {
     "filename": "direction_2_tropical_interleaving_distance_and_alg.json",
@@ -289,7 +320,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T16:37:14Z",
     "exp_id": "88f5188e",
     "quality_score": 0.7668083870967742,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 95
   },
   {
     "filename": "direction_2_lorentzian_minor_closure_conjecture.json",
@@ -298,7 +330,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T16:36:47Z",
     "exp_id": "8e8af4e3",
     "quality_score": 0.7215146524064171,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 94
   },
   {
     "filename": "direction_2_exceptional_groups_and_character_sheaf.json",
@@ -307,7 +340,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T16:01:24Z",
     "exp_id": "50190731",
     "quality_score": 0.7719703484062268,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 93
   },
   {
     "filename": "direction_4_large_deviation_principles_for_generat.json",
@@ -316,7 +350,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T16:00:43Z",
     "exp_id": "bcd75759",
     "quality_score": 0.7817936263736264,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 92
   },
   {
     "filename": "direction_2_lorentzian_condition_numbers_and_smoot.json",
@@ -325,7 +360,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T15:25:12Z",
     "exp_id": "f52aba3c",
     "quality_score": 0.7345251306175558,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 91
   },
   {
     "filename": "direction_1_spectral_fingerprints_for_classical_su.json",
@@ -334,7 +370,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T15:24:45Z",
     "exp_id": "56d80658",
     "quality_score": 0.7330869830508475,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 90
   },
   {
     "filename": "direction_1_hardness_of_unrestricted_degree_lorent.json",
@@ -343,7 +380,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T15:24:20Z",
     "exp_id": "b33365a6",
     "quality_score": 0.7248706358381504,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 89
   },
   {
     "filename": "direction_5_dynamic_lorentzian_certificates_and_on.json",
@@ -352,7 +390,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T14:50:42Z",
     "exp_id": "02e24032",
     "quality_score": 0.7205326285479228,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 88
   },
   {
     "filename": "direction_1_torsion_aware_tropical_morse_theory.json",
@@ -361,7 +400,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T14:17:26Z",
     "exp_id": "d4af762e",
     "quality_score": 0.7510426086956522,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 87
   },
   {
     "filename": "direction_1_sharp_dixon_asymptotics_via_mbius_inve.json",
@@ -370,7 +410,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T13:43:52Z",
     "exp_id": "4ae175a0",
     "quality_score": 0.7297311111111111,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 86
   },
   {
     "filename": "direction_4_matroidal_quantum_state_preparation.json",
@@ -379,7 +420,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T13:07:35Z",
     "exp_id": "72356358",
     "quality_score": 0.7344439999999999,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 85
   },
   {
     "filename": "direction_4_tropical_contraction_and_support_trunc.json",
@@ -388,7 +430,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T13:07:01Z",
     "exp_id": "daae69f2",
     "quality_score": 0.7127178032839152,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 84
   },
   {
     "filename": "direction_4_cryptographic_security_bounds_for_perm.json",
@@ -397,7 +440,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T13:06:26Z",
     "exp_id": "3130e902",
     "quality_score": 0.7165936336723626,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 83
   },
   {
     "filename": "direction_2_chip_firing_canonical_forms_via_tropic.json",
@@ -406,7 +450,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T13:05:45Z",
     "exp_id": "1fb257b2",
     "quality_score": 0.7244910588235294,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 82
   },
   {
     "filename": "direction_2_explicit_poincar_constant_and_exponent.json",
@@ -415,7 +460,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T12:33:23Z",
     "exp_id": "c0f735e4",
     "quality_score": 0.7172006698542598,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 81
   },
   {
     "filename": "direction_5_expander_based_derandomization_in_cert.json",
@@ -424,7 +470,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T11:58:20Z",
     "exp_id": "d4196bad",
     "quality_score": 0.7785651221719457,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 80
   },
   {
     "filename": "direction_1_basis_uniqueness_up_to_tropical_projec.json",
@@ -433,7 +480,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T11:22:40Z",
     "exp_id": "36d84586",
     "quality_score": 0.563429411764706,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 79
   },
   {
     "filename": "direction_3_abelian_sandpile_criticality_via_lapla.json",
@@ -442,7 +490,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T11:22:13Z",
     "exp_id": "d74ce5bf",
     "quality_score": 0.7183609174311927,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 78
   },
   {
     "filename": "direction_4_complexity_of_certificate_verification.json",
@@ -451,7 +500,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T11:21:46Z",
     "exp_id": "79565d7a",
     "quality_score": 0.7125355495823101,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 77
   },
   {
     "filename": "direction_1_overlap_class_conjecture__beyond_disjo.json",
@@ -460,7 +510,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T10:46:46Z",
     "exp_id": "db19bfd3",
     "quality_score": null,
-    "quality": "unrated"
+    "quality": "unrated",
+    "pkg_num": 76
   },
   {
     "filename": "direction_3_algorithmic_tropical_kernel_computatio.json",
@@ -469,7 +520,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T10:46:21Z",
     "exp_id": "16a503d2",
     "quality_score": null,
-    "quality": "unrated"
+    "quality": "unrated",
+    "pkg_num": 75
   },
   {
     "filename": "direction_1_higher_dimensional_tropical_morse_theo.json",
@@ -478,7 +530,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T10:14:09Z",
     "exp_id": "4895ceb4",
     "quality_score": 0.7241421283979179,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 74
   },
   {
     "filename": "direction_2_uniform_spectral_gaps_for_sp_via_delig.json",
@@ -487,7 +540,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T09:39:04Z",
     "exp_id": "21d69cc6",
     "quality_score": 0.7304065660377359,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 73
   },
   {
     "filename": "direction_1_reflection_positivity_and_perron_frobe.json",
@@ -496,7 +550,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T09:37:59Z",
     "exp_id": "a6efeb29",
     "quality_score": 0.7308755357710652,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 72
   },
   {
     "filename": "direction_4_energy_landscape_metastability_detecti.json",
@@ -505,7 +560,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T09:00:05Z",
     "exp_id": "017aafa5",
     "quality_score": 0.772976,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 71
   },
   {
     "filename": "direction_3_negative_dependence_and_rapid_mixing_v.json",
@@ -514,7 +570,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T08:59:38Z",
     "exp_id": "6297694a",
     "quality_score": 0.7224309737780574,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 70
   },
   {
     "filename": "direction_1_full_k_wl_separation_via_non_uniform_c.json",
@@ -523,7 +580,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T08:24:34Z",
     "exp_id": "089dd341",
     "quality_score": 0.725907976630964,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 69
   },
   {
     "filename": "direction_3_certified_expanders_for_classical_grou.json",
@@ -532,7 +590,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T08:24:04Z",
     "exp_id": "d9e69258",
     "quality_score": 0.7589612456833784,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 68
   },
   {
     "filename": "direction_4_tropical_hodge_theory_via_supermodular.json",
@@ -541,7 +600,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T07:50:30Z",
     "exp_id": "65ed3803",
     "quality_score": 0.7269657639751552,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 67
   },
   {
     "filename": "direction_3_driven_diffusive_systems_and_tasep_pha.json",
@@ -550,7 +610,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T07:15:12Z",
     "exp_id": "f42c0a57",
     "quality_score": 0.7125025626631281,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 66
   },
   {
     "filename": "direction_3_tropical_morse_spectra_as_quantum_grap.json",
@@ -559,7 +620,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T07:14:43Z",
     "exp_id": "b0b26cee",
     "quality_score": 0.7383767129455912,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 65
   },
   {
     "filename": "direction_4_entropy_curvature_and_information_theo.json",
@@ -568,7 +630,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T06:39:37Z",
     "exp_id": "f0664fee",
     "quality_score": 0.7661189087734614,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 64
   },
   {
     "filename": "direction_4_verified_oe_log_e_implementation_with_.json",
@@ -577,7 +640,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T06:39:08Z",
     "exp_id": "5726bd2a",
     "quality_score": 0.6787933647058824,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 63
   },
   {
     "filename": "direction_3_model_theory_of_approximate_subgroups.json",
@@ -586,7 +650,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T06:04:01Z",
     "exp_id": "a0951d1f",
     "quality_score": 0.6653370495258167,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 62
   },
   {
     "filename": "direction_1_quantitative_growth_bounds_for_matrix_.json",
@@ -595,7 +660,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T06:03:36Z",
     "exp_id": "0d18284a",
     "quality_score": 0.607924752333094,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 61
   },
   {
     "filename": "direction_5_quantum_algorithmic_phase_transitions_.json",
@@ -604,7 +670,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T05:26:33Z",
     "exp_id": "b808f823",
     "quality_score": 0.7338751496503497,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 60
   },
   {
     "filename": "direction_1_sharp_cutoff_for_the_adjacent_transpos.json",
@@ -613,7 +680,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T04:51:52Z",
     "exp_id": "48617359",
     "quality_score": 0.7424210332103323,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 59
   },
   {
     "filename": "direction_2_functorial_localization_of_persistence.json",
@@ -622,7 +690,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T04:17:54Z",
     "exp_id": "000321e6",
     "quality_score": 0.7313913151506497,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 58
   },
   {
     "filename": "direction_1_spectral_tropical_stability__from_conj.json",
@@ -631,7 +700,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T04:17:31Z",
     "exp_id": "86601194",
     "quality_score": 0.7238947727272729,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 57
   },
   {
     "filename": "direction_2_certificate_density_for_symplectic_and.json",
@@ -640,7 +710,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T03:41:09Z",
     "exp_id": "ba580866",
     "quality_score": 0.719670909090909,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 56
   },
   {
     "filename": "direction_1_lorentzian_polynomial_certificates_for.json",
@@ -649,7 +720,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T03:40:49Z",
     "exp_id": "ddebc997",
     "quality_score": 0.6746709090909091,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 55
   },
   {
     "filename": "direction_1_exact_weighted_tropical_dimension_form.json",
@@ -658,7 +730,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T03:40:26Z",
     "exp_id": "e958dd48",
     "quality_score": 0.7201487272727274,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 54
   },
   {
     "filename": "direction_2_extension_to_sl_n_sp_2n_and_orthogonal.json",
@@ -667,7 +740,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T03:40:03Z",
     "exp_id": "0eb55b27",
     "quality_score": 0.6602491734442975,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 53
   },
   {
     "filename": "direction_1_confluence_and_unique_normal_forms.json",
@@ -676,7 +750,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T03:39:40Z",
     "exp_id": "b7265325",
     "quality_score": 0.7231701356096614,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 52
   },
   {
     "filename": "direction_3_black_box_group_recognition_via_charac.json",
@@ -685,7 +760,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T03:06:41Z",
     "exp_id": "114b795e",
     "quality_score": 0.7225979310344828,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 51
   },
   {
     "filename": "direction_1_deletion_contraction_duality_for_polyn.json",
@@ -694,7 +770,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T02:33:36Z",
     "exp_id": "abb48be4",
     "quality_score": 0.7277349606299213,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 50
   },
   {
     "filename": "direction_5_operadic_rewriting_and_homotopical_com.json",
@@ -703,7 +780,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T01:57:20Z",
     "exp_id": "ad18377f",
     "quality_score": 0.700136255319149,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 49
   },
   {
     "filename": "direction_4_certified_mixing_time_bounds_and_cutof.json",
@@ -712,7 +790,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T01:56:58Z",
     "exp_id": "4f520a5f",
     "quality_score": 0.66746,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 48
   },
   {
     "filename": "direction_5_higher_dimensional_tropical_morse_theo.json",
@@ -721,7 +800,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T01:56:35Z",
     "exp_id": "c9247862",
     "quality_score": 0.7199839008264464,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 47
   },
   {
     "filename": "direction_2_noise_stability_universality_and_the_a.json",
@@ -730,7 +810,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T01:21:25Z",
     "exp_id": "5e0902bf",
     "quality_score": 0.7442945762711866,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 46
   },
   {
     "filename": "direction_1_certificate_density_asymptotics_via_th.json",
@@ -739,7 +820,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T01:20:52Z",
     "exp_id": "eb4b8f41",
     "quality_score": 0.7184184032238947,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 45
   },
   {
     "filename": "direction_5_information_theoretic_universality_via.json",
@@ -748,7 +830,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T00:41:59Z",
     "exp_id": "bfa066a8",
     "quality_score": 0.717992972972973,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 44
   },
   {
     "filename": "direction_2_concentration_of_subgroup_pressure.json",
@@ -757,7 +840,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T00:41:36Z",
     "exp_id": "d3113deb",
     "quality_score": 0.771213734939759,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 43
   },
   {
     "filename": "direction_2_certificate_based_quantum_expanders.json",
@@ -766,7 +850,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T00:40:46Z",
     "exp_id": "dc67a2b9",
     "quality_score": 0.7214240378548897,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 42
   },
   {
     "filename": "direction_4_tropical_persistent_homology_for_netwo.json",
@@ -775,7 +860,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T00:40:11Z",
     "exp_id": "325d9cdd",
     "quality_score": 0.7698015384615384,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 41
   },
   {
     "filename": "direction_5_m_convex_optimization_via_directional_.json",
@@ -784,7 +870,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-26T00:07:27Z",
     "exp_id": "abf333bc",
     "quality_score": 0.7241576377952756,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 40
   },
   {
     "filename": "direction_4_information_theoretic_bounds_on_tropic.json",
@@ -793,7 +880,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T23:33:35Z",
     "exp_id": "7e5283ed",
     "quality_score": 0.7261742857142859,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 39
   },
   {
     "filename": "direction_1_m_convexity_closure_under_differentiat.json",
@@ -802,7 +890,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T23:33:12Z",
     "exp_id": "243a6673",
     "quality_score": 0.7260796984924622,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 38
   },
   {
     "filename": "direction_5_certificates_and_product_growth.json",
@@ -811,7 +900,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T22:59:02Z",
     "exp_id": "edab5f0b",
     "quality_score": 0.7849381886792453,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 37
   },
   {
     "filename": "direction_2_random_cayley_expanders_and_spectral_g.json",
@@ -820,7 +910,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T22:58:33Z",
     "exp_id": "8778f4a5",
     "quality_score": 0.7187674157303372,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 36
   },
   {
     "filename": "direction_5_stability_of_strongly_log_concave_dist.json",
@@ -829,7 +920,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T22:25:35Z",
     "exp_id": "2953ee13",
     "quality_score": 0.7277750000000001,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 35
   },
   {
     "filename": "direction_1_sharp_valuation_sensitive_stability_bo.json",
@@ -838,7 +930,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T22:25:13Z",
     "exp_id": "1b3fdf32",
     "quality_score": 0.7444580722891567,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 34
   },
   {
     "filename": "direction_5_tropical_morse_theory_as_a_topological.json",
@@ -847,7 +940,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T21:51:06Z",
     "exp_id": "db7ef9c7",
     "quality_score": 0.7304195636363637,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 33
   },
   {
     "filename": "direction_2_universality_of_phase_transition_criti.json",
@@ -856,7 +950,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T21:49:23Z",
     "exp_id": "354ccda2",
     "quality_score": 0.7272178424657534,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 32
   },
   {
     "filename": "direction_1_stability_theory_for_tropical_persiste.json",
@@ -865,7 +960,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T21:13:36Z",
     "exp_id": "834b245c",
     "quality_score": 0.7197528467153285,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 31
   },
   {
     "filename": "direction_3_quantum_ground_state_preparation_via_l.json",
@@ -874,7 +970,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T21:13:06Z",
     "exp_id": "2b6d84b4",
     "quality_score": 0.7215128,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 30
   },
   {
     "filename": "direction_2_mixing_time_bounds_from_concavity_dept.json",
@@ -883,7 +980,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T21:12:32Z",
     "exp_id": "0e278652",
     "quality_score": 0.7286,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 29
   },
   {
     "filename": "langlands_program_functoriality.json",
@@ -892,7 +990,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T20:35:56Z",
     "exp_id": "7e4a0191",
     "quality_score": 0.7224016949152543,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 28
   },
   {
     "filename": "direction_3_weighted_extension.json",
@@ -901,7 +1000,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T20:35:34Z",
     "exp_id": "e8f8d5e4",
     "quality_score": 0.7266461478599222,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 27
   },
   {
     "filename": "direction_1_submodular_objectives_and_the_curvatur.json",
@@ -910,7 +1010,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T20:35:13Z",
     "exp_id": "1e2eba72",
     "quality_score": 0.7238752112676057,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 26
   },
   {
     "filename": "quantum_error_correction_bounds.json",
@@ -919,7 +1020,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T20:34:49Z",
     "exp_id": "b633df37",
     "quality_score": 0.7132103632664923,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 25
   },
   {
     "filename": "direction_3_compositional_rounding_certificates_fo.json",
@@ -928,7 +1030,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T20:02:12Z",
     "exp_id": "2a42387f",
     "quality_score": 0.7190936000000001,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 24
   },
   {
     "filename": "direction_5_higher_order_completion_and_lambda_cal.json",
@@ -937,7 +1040,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T20:01:45Z",
     "exp_id": "2933a8cf",
     "quality_score": 0.7661817738359202,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 23
   },
   {
     "filename": "direction_3_multivariate_k_fold_log_concavity_and_.json",
@@ -946,7 +1050,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T19:29:15Z",
     "exp_id": "a1f92284",
     "quality_score": 0.7239525714285715,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 22
   },
   {
     "filename": "direction_5_mechanism_design_with_certified_multi_.json",
@@ -955,7 +1060,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T18:40:46Z",
     "exp_id": "da756381",
     "quality_score": 0.6968374111334675,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 21
   },
   {
     "filename": "direction_5_expander_graphs_from_certificate_pairs.json",
@@ -964,7 +1070,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T18:39:59Z",
     "exp_id": "ad66d851",
     "quality_score": 0.7061918953063686,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 20
   },
   {
     "filename": "direction_5_tropical_morse_theory_for_network_phas.json",
@@ -973,7 +1080,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T18:39:27Z",
     "exp_id": "88770e41",
     "quality_score": 0.7633440525911624,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 19
   },
   {
     "filename": "direction_2_hypergraph_transversals_as_tropical_co.json",
@@ -982,7 +1090,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T18:03:18Z",
     "exp_id": "89ddcffd",
     "quality_score": 0.7496613212625398,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 18
   },
   {
     "filename": "direction_4_higher_order_tensor_calculus_with_eins.json",
@@ -991,7 +1100,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T18:02:50Z",
     "exp_id": "d8aa38e8",
     "quality_score": 0.7448372075471699,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 17
   },
   {
     "filename": "direction_2_filtration_persistence_formula.json",
@@ -1000,7 +1110,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T17:57:55Z",
     "exp_id": "f0f7ec54",
     "quality_score": 0.7485430061705161,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 16
   },
   {
     "filename": "hadamard_matrix_conjecture.json",
@@ -1009,7 +1120,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T17:49:47Z",
     "exp_id": "e79eba9b",
     "quality_score": 0.718787256166983,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 15
   },
   {
     "filename": "direction_2_character_expansion_and_strong_couplin.json",
@@ -1018,7 +1130,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T17:15:32Z",
     "exp_id": "a9352256",
     "quality_score": 0.7426729134392938,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 14
   },
   {
     "filename": "direction_5_phase_transitions_in_generation_probab.json",
@@ -1027,7 +1140,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T17:14:56Z",
     "exp_id": "cf039036",
     "quality_score": 0.7307286403906522,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 13
   },
   {
     "filename": "direction_5_numerical_stability_of_lorentzian_reco.json",
@@ -1036,7 +1150,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T17:14:28Z",
     "exp_id": "2493279d",
     "quality_score": 0.7094771428571429,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 12
   },
   {
     "filename": "direction_5_weighted_and_multi_objective_extension.json",
@@ -1045,7 +1160,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T16:39:05Z",
     "exp_id": "b9d16ed0",
     "quality_score": 0.7379731931205967,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 11
   },
   {
     "filename": "direction_4_relative_tropical_hodge_theorem.json",
@@ -1054,7 +1170,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T16:05:40Z",
     "exp_id": "1a0c77c0",
     "quality_score": 0.7452328425357874,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 10
   },
   {
     "filename": "direction_1_tight_spectral_gap_via_lorentzian_stru.json",
@@ -1063,7 +1180,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T16:05:19Z",
     "exp_id": "a6eebf63",
     "quality_score": 0.7475694375378231,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 9
   },
   {
     "filename": "direction_3_concentration_of__on_random_hypergraph.json",
@@ -1072,7 +1190,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T15:30:03Z",
     "exp_id": "7817bcef",
     "quality_score": 0.7284316923076923,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 8
   },
   {
     "filename": "direction_3_generation_certificates_for_matrix_gro.json",
@@ -1081,7 +1200,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T15:29:41Z",
     "exp_id": "44ebbbfd",
     "quality_score": 0.7535092285678423,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 7
   },
   {
     "filename": "yang_mills_mass_gap.json",
@@ -1090,7 +1210,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T15:29:18Z",
     "exp_id": "6a88b92d",
     "quality_score": 0.7554863879178124,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 6
   },
   {
     "filename": "direction_1_brauer_manin_obstructions_for_integral.json",
@@ -1099,7 +1220,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T14:24:55Z",
     "exp_id": "3265971b",
     "quality_score": 0.6946936070455108,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 5
   },
   {
     "filename": "direction_5_chip_firing_correspondence.json",
@@ -1108,7 +1230,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T14:24:33Z",
     "exp_id": "97def267",
     "quality_score": 0.7472302409097711,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 4
   },
   {
     "filename": "direction_2_higher_order_log_concavity_and_partiti.json",
@@ -1117,7 +1240,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T14:24:11Z",
     "exp_id": "56c2f88c",
     "quality_score": 0.747059509202454,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 3
   },
   {
     "filename": "direction_3_compositional_witness_synthesis_algori.json",
@@ -1126,7 +1250,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T13:51:35Z",
     "exp_id": "d78e63d5",
     "quality_score": 0.7458845146055211,
-    "quality": "substantial"
+    "quality": "substantial",
+    "pkg_num": 2
   },
   {
     "filename": "direction_5_generalization_to_higher_degree_diagon.json",
@@ -1135,7 +1260,8 @@ window.PACKAGE_INDEX = [
     "date": "2026-05-25T13:51:09Z",
     "exp_id": "e97c0f01",
     "quality_score": 0.6787085818181818,
-    "quality": "partial"
+    "quality": "partial",
+    "pkg_num": 1
   }
 ];
 
@@ -3537,8 +3663,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-27T00:52:08Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7774966433566434,
+      "quality": "substantial"
     }
   ],
   "edges": [
