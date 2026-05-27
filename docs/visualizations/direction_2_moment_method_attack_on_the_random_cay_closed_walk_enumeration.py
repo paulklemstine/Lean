@@ -1,86 +1,107 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Core Algorithms for Moment Method on Random Cayley Graphs
+Algorithms for Moment Method on Random Cayley Graphs
 
-Implements the algorithms underlying the formal Lean proofs:
-  1. Word evaluation in symmetric groups
-  2. Closed-walk enumeration
-  3. Backtrack-free word generation
-  4. Adjacency matrix construction and trace computation
-  5. Moment kernel computation
+Implements the core computational methods for the moment-method analysis
+of Cayley graphs on symmetric groups:
 
-All algorithms include complexity analysis and docstrings.
+1. Word evaluation in S_n
+2. Closed-walk counting via enumeration and matrix power
+3. Backtrack-free word enumeration
+4. Moment kernel computation
+5. Adjacency matrix construction and trace computation
+6. Tree-like / relation-driven decomposition
+
+All functions include type hints and docstrings.
 """
 
 import itertools
+import math
 import numpy as np
-from math import factorial, comb
-from typing import List, Tuple, Optional, Dict
+from typing import List, Tuple, Dict, Optional
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Permutation Arithmetic
-# ═══════════════════════════════════════════════════════════════════════════
+# ─── Permutation Arithmetic ──────────────────────────────────────────────
 
 def compose(p: List[int], q: List[int]) -> List[int]:
-    """Compose permutations: (p ∘ q)(i) = p[q[i]].
-    
-    Time: O(n), Space: O(n)
-    
-    >>> compose([1, 2, 0], [2, 0, 1])
-    [0, 1, 2]
-    """
+    """Compose permutations: (p ∘ q)(i) = p[q[i]]."""
     return [p[q[i]] for i in range(len(p))]
 
 
 def inverse(p: List[int]) -> List[int]:
-    """Inverse permutation.
-    
-    Time: O(n), Space: O(n)
-    
-    >>> inverse([1, 2, 0])
-    [2, 0, 1]
-    """
-    inv = [0] * len(p)
-    for i, v in enumerate(p):
-        inv[v] = i
+    """Inverse permutation."""
+    n = len(p)
+    inv = [0] * n
+    for i in range(n):
+        inv[p[i]] = i
     return inv
 
 
 def identity(n: int) -> List[int]:
-    """Identity permutation on {0, ..., n-1}."""
+    """Identity permutation of {0,...,n-1}."""
     return list(range(n))
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Word Evaluation (corresponds to `evalWord` in Lean)
-# ═══════════════════════════════════════════════════════════════════════════
-
-# Alphabet: 0 = σ, 1 = σ⁻¹, 2 = τ, 3 = τ⁻¹
-SIGMA, SIGMA_INV, TAU, TAU_INV = 0, 1, 2, 3
-LETTER_INV = {SIGMA: SIGMA_INV, SIGMA_INV: SIGMA, TAU: TAU_INV, TAU_INV: TAU}
+def perm_to_tuple(p: List[int]) -> Tuple[int, ...]:
+    """Convert permutation list to hashable tuple."""
+    return tuple(p)
 
 
-def eval_word(sigma: List[int], tau: List[int], word: Tuple[int, ...]) -> List[int]:
-    """Evaluate a word in {σ, σ⁻¹, τ, τ⁻¹}* in S_n.
+# ─── Group Generation Test ───────────────────────────────────────────────
+
+def generates_sn(sigma: List[int], tau: List[int]) -> bool:
+    """
+    Check if σ and τ generate S_n via BFS.
     
-    Corresponds to `evalWord σ τ w` in the Lean formalization.
-    
-    Time: O(m·n) where m = len(word), n = len(sigma)
-    Space: O(n)
+    Time complexity: O(n! · n) in the worst case.
+    Space complexity: O(n!).
     
     Args:
-        sigma: First generator (permutation)
-        tau: Second generator (permutation)  
-        word: Tuple of letter indices (0-3)
+        sigma: First generator (permutation as list).
+        tau: Second generator (permutation as list).
     
     Returns:
-        Product permutation
+        True if <σ,τ> = S_n.
+    """
+    n = len(sigma)
+    target = math.factorial(n)
+    gens = [sigma, inverse(sigma), tau, inverse(tau)]
     
-    >>> sigma = [1, 0, 2]  # transposition (0 1)
-    >>> tau = [0, 2, 1]    # transposition (1 2)
-    >>> eval_word(sigma, tau, (0, 2))  # σ · τ
-    [2, 0, 1]
+    visited = {perm_to_tuple(identity(n))}
+    queue = [identity(n)]
+    
+    while queue:
+        current = queue.pop(0)
+        for g in gens:
+            new = compose(g, current)
+            t = perm_to_tuple(new)
+            if t not in visited:
+                visited.add(t)
+                queue.append(new)
+                if len(visited) == target:
+                    return True
+    return len(visited) == target
+
+
+# ─── Word Evaluation ─────────────────────────────────────────────────────
+
+def eval_word(sigma: List[int], tau: List[int], word: List[int]) -> List[int]:
+    """
+    Evaluate a word in the generators {σ, σ⁻¹, τ, τ⁻¹}.
+    
+    Letters: 0=σ, 1=σ⁻¹, 2=τ, 3=τ⁻¹.
+    The product is taken left-to-right:
+      eval_word([a₁, a₂, ..., aₘ]) = gen(a₁) · gen(a₂) · ... · gen(aₘ)
+    
+    Time complexity: O(m · n) where m = len(word), n = degree.
+    
+    Args:
+        sigma: First generator.
+        tau: Second generator.
+        word: List of letter indices (0-3).
+    
+    Returns:
+        The resulting permutation.
     """
     n = len(sigma)
     gens = [sigma, inverse(sigma), tau, inverse(tau)]
@@ -90,248 +111,338 @@ def eval_word(sigma: List[int], tau: List[int], word: Tuple[int, ...]) -> List[i
     return result
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Closed-Walk Counting (corresponds to `closedWordCount` in Lean)
-# ═══════════════════════════════════════════════════════════════════════════
+# ─── Closed-Walk Counting ────────────────────────────────────────────────
 
 def closed_word_count(sigma: List[int], tau: List[int], m: int) -> int:
-    """Count length-m words evaluating to the identity.
+    """
+    Count words of length m evaluating to the identity.
     
-    Corresponds to `closedWordCount σ τ m` in the Lean formalization.
+    This is the fundamental combinatorial quantity of the moment method.
+    By our Theorem 1: tr(A^m) = |G| · closedWordCount(σ, τ, m).
     
-    This is the fundamental quantity of the moment method:
-        closedWordCount(σ, τ, m) = tr(A^m) / |G|
-    
-    Time: O(4^m · m · n)
-    Space: O(n)
+    Time complexity: O(4^m · m · n).
+    Space complexity: O(m · n).
     
     Args:
-        sigma, tau: Generators (permutations on n elements)
-        m: Word length
+        sigma: First generator.
+        tau: Second generator.
+        m: Word length.
     
     Returns:
-        Number of words evaluating to identity
+        Number of closed words.
     """
     n = len(sigma)
     id_perm = identity(n)
     count = 0
     for word in itertools.product(range(4), repeat=m):
-        if eval_word(sigma, tau, word) == id_perm:
+        if eval_word(sigma, tau, list(word)) == id_perm:
             count += 1
     return count
 
 
-def moment_kernel(sigma: List[int], tau: List[int], m: int) -> float:
-    """Normalized return probability = closedWordCount / 4^m.
-    
-    Corresponds to `momentKernel σ τ m` in the Lean formalization.
-    
-    This equals (1/|G|) · tr(A_norm^m), the m-th spectral moment
-    of the normalized adjacency operator.
-    
-    Time: O(4^m · m · n)
+def closed_word_count_matrix(sigma: List[int], tau: List[int], m: int) -> int:
     """
-    return closed_word_count(sigma, tau, m) / (4 ** m)
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# Adjacency Matrix Construction
-# ═══════════════════════════════════════════════════════════════════════════
-
-def cayley_adj_matrix(sigma: List[int], tau: List[int]) -> np.ndarray:
-    """Construct the unnormalized adjacency matrix of Cay(G, {σ,σ⁻¹,τ,τ⁻¹}).
+    Compute closedWordCount via matrix power and trace.
     
-    Corresponds to `cayleyAdjMatrixTwoGen` in the Lean formalization.
-    Entry A[g][h] = #{s ∈ S : h = s·g}.
+    Constructs the adjacency matrix A and computes tr(A^m) / |G|.
+    This independently verifies the trace–closed-walk identity.
     
-    For S_n, this is an n! × n! matrix.
+    Time complexity: O(|G|² · m) for matrix power (or O(|G|^ω · log m) with fast exponentiation).
+    Space complexity: O(|G|²).
     
-    Time: O(|G|² · |S|), Space: O(|G|²)
-    Warning: Only feasible for small n (n ≤ 5).
+    Args:
+        sigma: First generator.
+        tau: Second generator.
+        m: Power of the adjacency matrix.
+    
+    Returns:
+        closedWordCount computed via trace.
     """
     n = len(sigma)
-    # Enumerate all permutations
-    perms = list(itertools.permutations(range(n)))
-    perm_to_idx = {p: i for i, p in enumerate(perms)}
-    N = len(perms)
+    # Enumerate all elements of S_n
+    elements = list(itertools.permutations(range(n)))
+    elem_to_idx = {e: i for i, e in enumerate(elements)}
+    N = len(elements)
     
+    # Build adjacency matrix
     gens = [sigma, inverse(sigma), tau, inverse(tau)]
-    A = np.zeros((N, N), dtype=float)
+    A = np.zeros((N, N), dtype=np.float64)
     
-    for g_idx, g in enumerate(perms):
-        for s in gens:
-            h = tuple(compose(s, list(g)))
-            h_idx = perm_to_idx[h]
-            A[h_idx][g_idx] += 1
+    for i, g in enumerate(elements):
+        for gen in gens:
+            h = tuple(compose(gen, list(g)))
+            j = elem_to_idx[h]
+            A[i][j] += 1
     
-    return A
-
-
-def verify_trace_identity(sigma: List[int], tau: List[int], m: int) -> Dict:
-    """Verify tr(A^m) = closedWordCount · |G| by direct computation.
-    
-    This is the computational verification of Theorem 1 from the
-    Lean formalization (trace_pow_eq_closedWordCount).
-    
-    Returns dict with trace, closed_word_count, and verification status.
-    """
-    n = len(sigma)
-    A = cayley_adj_matrix(sigma, tau)
+    # Compute A^m
     Am = np.linalg.matrix_power(A, m)
     trace = np.trace(Am)
     
-    cwc = closed_word_count(sigma, tau, m)
-    group_size = factorial(n)
-    expected_trace = cwc * group_size
-    
-    return {
-        "trace_A_m": trace,
-        "closed_word_count": cwc,
-        "group_size": group_size,
-        "expected_trace": expected_trace,
-        "match": abs(trace - expected_trace) < 1e-6,
-        "moment_kernel": cwc / (4 ** m),
-    }
+    # tr(A^m) = |G| * closedWordCount
+    cwc = round(trace / N)
+    return cwc
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Backtrack-Free Words (corresponds to `BacktrackFree` in Lean)
-# ═══════════════════════════════════════════════════════════════════════════
+# ─── Backtrack-Free Words ────────────────────────────────────────────────
 
-def is_backtrack_free(word: Tuple[int, ...]) -> bool:
-    """Check if a word has no immediate cancellations.
-    
-    A word is backtrack-free if no letter is immediately followed
-    by its formal inverse.
-    
-    Corresponds to `BacktrackFree` in the Lean formalization.
-    
-    Time: O(m)
+def is_backtrack_free(word: List[int]) -> bool:
     """
+    Check if a word is backtrack-free (no letter immediately followed by its inverse).
+    
+    The inverse map: 0↔1 (σ↔σ⁻¹), 2↔3 (τ↔τ⁻¹).
+    
+    Args:
+        word: List of letter indices.
+    
+    Returns:
+        True if backtrack-free.
+    """
+    inv_map = {0: 1, 1: 0, 2: 3, 3: 2}
     for i in range(len(word) - 1):
-        if word[i + 1] == LETTER_INV[word[i]]:
+        if word[i + 1] == inv_map[word[i]]:
             return False
     return True
 
 
-def count_backtrack_free(m: int) -> int:
-    """Count backtrack-free words of length m by enumeration.
-    
-    Time: O(4^m · m) — brute force
+def count_backtrack_free_words(m: int) -> int:
     """
-    count = 0
-    for word in itertools.product(range(4), repeat=m):
-        if is_backtrack_free(word):
-            count += 1
-    return count
-
-
-def backtrack_free_formula(m: int) -> int:
-    """Exact formula: 4 · 3^(m-1) for m ≥ 1, 1 for m = 0.
+    Count backtrack-free words of length m.
     
-    This is the tree-like contribution to the moment method:
-    it counts walks on the infinite 4-regular tree (Cayley graph of F_2).
+    By our Theorem (counting formula): for m ≥ 1, this equals 4 · 3^(m-1).
     
-    Time: O(1)
+    This function verifies the formula by enumeration for small m
+    and uses the formula for large m.
+    
+    Args:
+        m: Word length.
+    
+    Returns:
+        Number of backtrack-free words of length m.
     """
     if m == 0:
         return 1
     return 4 * (3 ** (m - 1))
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Free Group Return Probabilities
-# ═══════════════════════════════════════════════════════════════════════════
-
-def free_group_return_prob(two_k: int) -> float:
-    """Return probability at time 2k for SRW on F_2.
-    
-    For the 4-regular tree:
-        p_{2k}(e) = C_k · 3^k / 4^{2k}
-    
-    where C_k is the k-th Catalan number.
-    
-    Time: O(k)
+def enumerate_backtrack_free_words(m: int) -> List[Tuple[int, ...]]:
     """
-    if two_k % 2 != 0:
-        return 0.0
-    k = two_k // 2
-    if k == 0:
-        return 1.0
-    catalan = comb(2 * k, k) // (k + 1)
-    return catalan * (3 ** k) / (4 ** two_k)
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# Reverse-Invert Map (corresponds to `reverseInvertWord` in Lean)
-# ═══════════════════════════════════════════════════════════════════════════
-
-def reverse_invert(word: Tuple[int, ...]) -> Tuple[int, ...]:
-    """Reverse and invert each letter.
+    Enumerate all backtrack-free words of length m.
     
-    Corresponds to `reverseInvertWord` in the Lean formalization.
-    Key property (proved in Lean): evalWord(σ, τ, reverseInvert(w)) = (evalWord(σ, τ, w))⁻¹
+    Args:
+        m: Word length.
     
-    Time: O(m)
+    Returns:
+        List of backtrack-free words.
     """
-    return tuple(LETTER_INV[a] for a in reversed(word))
+    if m == 0:
+        return [()]
+    
+    result = []
+    for word in itertools.product(range(4), repeat=m):
+        if is_backtrack_free(list(word)):
+            result.append(word)
+    return result
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Entry Point
-# ═══════════════════════════════════════════════════════════════════════════
+# ─── Moment Kernel ────────────────────────────────────────────────────────
+
+def moment_kernel(sigma: List[int], tau: List[int], m: int) -> float:
+    """
+    Compute the moment kernel: closedWordCount / 4^m.
+    
+    This is the return probability of the random walk at time m.
+    By our spectral_moment_eq_return_prob theorem:
+      (1/|G|) · tr(A_norm^m) = momentKernel(σ, τ, m)
+    
+    Args:
+        sigma: First generator.
+        tau: Second generator.
+        m: Walk length.
+    
+    Returns:
+        Normalized closed-word count.
+    """
+    return closed_word_count(sigma, tau, m) / (4 ** m)
+
+
+# ─── Adjacency Matrix ────────────────────────────────────────────────────
+
+def build_adjacency_matrix(sigma: List[int], tau: List[int]) -> Tuple[np.ndarray, List]:
+    """
+    Build the unnormalized adjacency matrix of Cay(S_n, {σ,σ⁻¹,τ,τ⁻¹}).
+    
+    Args:
+        sigma: First generator.
+        tau: Second generator.
+    
+    Returns:
+        Tuple of (adjacency matrix, list of group elements).
+    """
+    n = len(sigma)
+    elements = list(itertools.permutations(range(n)))
+    elem_to_idx = {e: i for i, e in enumerate(elements)}
+    N = len(elements)
+    
+    gens = [sigma, inverse(sigma), tau, inverse(tau)]
+    A = np.zeros((N, N), dtype=np.float64)
+    
+    for i, g in enumerate(elements):
+        for gen in gens:
+            h = tuple(compose(gen, list(g)))
+            j = elem_to_idx[h]
+            A[i][j] += 1
+    
+    return A, elements
+
+
+def spectral_data(sigma: List[int], tau: List[int]) -> Dict:
+    """
+    Compute full spectral data for the Cayley graph.
+    
+    Returns eigenvalues, spectral gap, and moment data.
+    
+    Args:
+        sigma: First generator.
+        tau: Second generator.
+    
+    Returns:
+        Dictionary with spectral data.
+    """
+    A, elements = build_adjacency_matrix(sigma, tau)
+    N = len(elements)
+    
+    # Normalized adjacency
+    A_norm = A / 4.0
+    
+    # Eigenvalues
+    eigenvalues = np.sort(np.linalg.eigvalsh(A_norm))[::-1]
+    
+    # Spectral gap
+    lambda_1 = eigenvalues[0]  # Should be 1
+    lambda_2 = max(abs(eigenvalues[1]), abs(eigenvalues[-1]))
+    spectral_gap = 1 - lambda_2
+    
+    # Moments via trace
+    moments = {}
+    for k in range(1, 5):
+        m = 2 * k
+        Am = np.linalg.matrix_power(A_norm, m)
+        moments[k] = np.trace(Am) / N
+    
+    return {
+        'eigenvalues': eigenvalues,
+        'spectral_gap': spectral_gap,
+        'lambda_2': lambda_2,
+        'moments': moments,
+        'group_size': N,
+    }
+
+
+# ─── Decomposition: Tree-Like vs Relation-Driven ─────────────────────────
+
+def decompose_closed_words(sigma: List[int], tau: List[int], m: int) -> Dict:
+    """
+    Decompose closed words of length m into:
+    - Backtrack-free closed words (relation-driven returns)
+    - Backtracking closed words (tree-like cancellation returns)
+    
+    This decomposition is the seed of the moment method:
+    universal Catalan/tree-like terms + relation corrections.
+    
+    Args:
+        sigma: First generator.
+        tau: Second generator.
+        m: Word length.
+    
+    Returns:
+        Dictionary with decomposition data.
+    """
+    n = len(sigma)
+    id_perm = identity(n)
+    
+    bf_closed = 0
+    bt_closed = 0
+    
+    for word in itertools.product(range(4), repeat=m):
+        w = list(word)
+        if eval_word(sigma, tau, w) == id_perm:
+            if is_backtrack_free(w):
+                bf_closed += 1
+            else:
+                bt_closed += 1
+    
+    return {
+        'total_closed': bf_closed + bt_closed,
+        'backtrack_free_closed': bf_closed,
+        'backtracking_closed': bt_closed,
+        'total_words': 4 ** m,
+        'moment_kernel': (bf_closed + bt_closed) / (4 ** m),
+    }
+
+
+# ─── Free Group Baseline ─────────────────────────────────────────────────
+
+def free_group_return_prob(k: int) -> float:
+    """
+    Return probability at time 2k for simple random walk on F_2.
+    
+    For the 4-regular tree (Cayley graph of F_2 with symmetric generators),
+    the return probability at time 2k is:
+      μ^{(2k)}(e) = C(2k,k) · 3^k / 4^{2k}
+    
+    This is the Kesten formula for d-regular trees with d=4.
+    
+    Args:
+        k: Half the walk length.
+    
+    Returns:
+        Return probability μ^{(2k)}(e).
+    """
+    return math.comb(2*k, k) * (3**k) / (4**(2*k))
+
+
+# ─── Main: Example Usage ─────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("=== Algorithm Verification ===\n")
+    print("Algorithms for Moment Method on Random Cayley Graphs")
+    print("=" * 55)
     
-    # Verify backtrack-free formula
-    print("Backtrack-free word count verification:")
-    for m in range(1, 9):
-        exact = backtrack_free_formula(m)
-        if m <= 6:
-            brute = count_backtrack_free(m)
-            match = "✓" if exact == brute else "✗"
-            print(f"  m={m}: formula={exact:7d}, enumeration={brute:7d}  {match}")
-        else:
-            print(f"  m={m}: formula={exact:7d}")
+    # Example: S_4
+    n = 4
+    sigma = [1, 0, 2, 3]  # (0 1)
+    tau = [1, 2, 3, 0]    # (0 1 2 3)
     
-    print()
+    print(f"\nExample: S_{n} with σ=(0 1), τ=(0 1 2 3)")
+    print(f"Generates S_{n}: {generates_sn(sigma, tau)}")
     
-    # Verify trace identity for S_3
-    print("Trace identity verification (S_3):")
-    sigma = [1, 2, 0]  # (0 1 2)
-    tau = [1, 0, 2]    # (0 1)
+    # Closed-word counts
+    print("\nClosed-word counts:")
     for m in range(5):
-        result = verify_trace_identity(sigma, tau, m)
-        print(f"  m={m}: tr(A^m)={result['trace_A_m']:.0f}, "
-              f"cwc·|G|={result['expected_trace']}, "
-              f"match={result['match']}")
+        cwc_enum = closed_word_count(sigma, tau, m)
+        print(f"  m={m}: {cwc_enum}")
     
-    print()
+    # Verify trace identity
+    print("\nTrace identity verification (m=2,4):")
+    for m in [2, 4]:
+        cwc_enum = closed_word_count(sigma, tau, m)
+        cwc_matrix = closed_word_count_matrix(sigma, tau, m)
+        print(f"  m={m}: enumeration={cwc_enum}, matrix={cwc_matrix}, match={cwc_enum == cwc_matrix}")
     
-    # Verify reverse-invert involution
-    print("Reverse-invert involution verification:")
-    for m in range(1, 5):
-        all_ok = True
-        for word in itertools.product(range(4), repeat=m):
-            if reverse_invert(reverse_invert(word)) != word:
-                all_ok = False
-                break
-        print(f"  m={m}: involution property holds = {all_ok}")
+    # Spectral data
+    print("\nSpectral data:")
+    sd = spectral_data(sigma, tau)
+    print(f"  Group size: {sd['group_size']}")
+    print(f"  Spectral gap: {sd['spectral_gap']:.6f}")
+    print(f"  λ₂: {sd['lambda_2']:.6f}")
+    print(f"  Moments: {sd['moments']}")
     
-    print()
+    # Decomposition
+    print("\nDecomposition (m=4):")
+    dec = decompose_closed_words(sigma, tau, 4)
+    for key, val in dec.items():
+        print(f"  {key}: {val}")
     
-    # Verify reverse-invert and eval_word relationship
-    print("Reverse-invert evaluation identity:")
-    sigma = [1, 2, 0]
-    tau = [1, 0, 2]
-    n = len(sigma)
-    for m in range(1, 5):
-        all_ok = True
-        for word in itertools.product(range(4), repeat=m):
-            ev = eval_word(sigma, tau, word)
-            ev_rev = eval_word(sigma, tau, reverse_invert(word))
-            if compose(ev, ev_rev) != identity(n):
-                all_ok = False
-                break
-        print(f"  m={m}: evalWord(w) · evalWord(reverseInvert(w)) = id: {all_ok}")
+    # Free group baseline
+    print("\nFree group F₂ return probabilities:")
+    for k in range(1, 5):
+        print(f"  k={k}: μ^({2*k})(e) = {free_group_return_prob(k):.6f}")

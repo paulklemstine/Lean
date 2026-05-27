@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37ca1705",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -285,10 +285,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "209e0d92",
     "timestamp": "2026-05-25T18:40:03.296660+00:00"
   },
   {
@@ -1331,10 +1331,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "be453c44",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27e499fd",
     "timestamp": "2026-05-27T16:03:48.729875+00:00"
   },
   {
@@ -1986,6 +1986,106 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T18:36:27.820898+00:00"
+  },
+  {
+    "id": "fd_1511",
+    "title": "Direction 1: Closure of K=1 Valuated Exchange under Differentiation",
+    "description": "**Conjecture.** For every homogeneous polynomial p with nonnegative coefficients and M-convex support, if ValuatedExchange(p, 1) holds, then ValuatedExchange(\u2202_i p, 1) holds for all variables i.\n\n**Test.** Exhaustive computational search over weighted uniform matroid polynomials U(d, n) for n \u2264 7, d \u2264 4, with 10,000 random weight vectors per configuration. Any counterexample refutes the conjecture; survival through this regime provides strong evidence. Additionally, attempt formal proof for U(d, n) with d = 2 (degree-2 case) using the fact that derivatives are linear and Theorem 5 (`valuatedExchange_of_linear_nonneg`) already handles linear support.\n\n**Impact.** If true, this establishes K=1 valuated exchange as a closed cone property under differentiation, paralleling the Br\u00e4nd\u00e9n\u2013Huh closure theorem for Lorentzian polynomials. This would position valuated exchange as a new fundamental positivity condition in algebraic combinatorics, potentially providing simpler proofs of log-concavity results that currently require the full Lorentzian machinery.\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorems 1\u20135), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian characterization).\n\n**Proof Strategy.** For the degree-2 case: prove that all derivatives of degree-2 M-convex-support polynomials have linear single-variable support, then apply Theorem 5. For general degree: use the product factorization (Theorem 3) to reduce the derivative exchange inequality to the original exchange inequality times a computable rescaling factor, then bound the rescaling factor.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 Lorentzian polynomial theory; if K=1 exchange equals Lorentzianity for homogeneous polynomials, this provides a new characterization of Lorentzian polynomials.\n\n**Lineage.** Extends `valuatedExchange_of_linear_nonneg` and `pderiv_coeff_product_eq`.\n\n**Ambition.** Grand challenge \u2014 would constitute a new characterization theorem in algebraic combinatorics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78306251",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:12:46.907197+00:00"
+  },
+  {
+    "id": "fd_1512",
+    "title": "Direction 2: Tropical Coefficient Transport and Valuated Matroid Connections",
+    "description": "**Conjecture.** The logarithmic transformation w(\u03b1) = -log(coeff(\u03b1)) converts the multiplicative valuated exchange inequality into an additive inequality w(\u03b1) + w(\u03b2) \u2264 w(\u03b1') + w(\u03b2') + C, and the coefficient transport under differentiation becomes an affine correction w_{\u2202_i}(m) = w(m + e_i) - log(m_i + 1). The resulting structure is a valuated matroid in the sense of Dress\u2013Wenzel.\n\n**Test.** Formalize the additive valuated exchange property `AdditiveValuatedExchange` over linearly ordered additive commutative monoids. Prove that for polynomials with positive coefficients over \u211d, the logarithmic transformation converts `ValuatedExchange(p, K)` to `AdditiveValuatedExchange(w, log K)`. Verify computationally on tropical polynomial arithmetic.\n\n**Impact.** This bridges the polynomial-coefficient world to the well-developed theory of valuated matroids and tropical convexity, opening access to algorithms and structural results from tropical geometry. The affine correction from differentiation would become a tropical contraction operator, connecting to tropical intersection theory.\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorem 1), `Catalog/Pythagorean/ValuatedMatroidExchange.lean` (tropical exchange families), `Catalog/Pythagorean/TropicalMConvexity.lean`.\n\n**Proof Strategy.** Define the additive exchange property. Prove the logarithmic conversion as a standalone lemma. The key step is showing that the affine correction from differentiation preserves the additive exchange inequality with explicit bounds on the constant.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Tropical geometry \u2194 Valuated matroid theory.\n\n**Lineage.** Extends `coeff_pderiv_transport` via logarithmic transformation.\n\n**Ambition.** Solid extension \u2014 connects two well-developed theories through the new formalism.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78306251",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:12:46.980308+00:00"
+  },
+  {
+    "id": "fd_1513",
+    "title": "Direction 3: Certified Optimization via Exchange Constants",
+    "description": "**Conjecture.** For polynomial optimization problems on M-convex sets (e.g., maximizing a linear objective over matroid bases), the exchange constant K of the basis-generating polynomial provides a certified approximation ratio: any exchange-local optimum is within a factor of K of the global optimum.\n\n**Test.** Formalize the connection between `ValuatedExchange` and the certified optimization framework in `MConvexOptimization.lean`. Prove that if ValuatedExchange(p, K) holds and p encodes a weighted matroid, then the greedy algorithm achieves a K-approximation. Test computationally on random matroid intersection instances.\n\n**Impact.** This would provide the first polynomial-time certified optimization algorithm for weighted matroid problems with explicit quality guarantees derived from the coefficient geometry of the generating polynomial.\n\n**Catalog References.** `Catalog/Pythagorean/MConvexOptimization.lean` (certified optimization on M-convex sets), `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean`.\n\n**Proof Strategy.** Use the exchange local-min-implies-global-min theorem from `MConvexOptimization.lean` combined with the coefficient inequality from `ValuatedExchange` to bound the cost gap at each exchange step.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Combinatorial optimization \u2194 Algorithm design.\n\n**Lineage.** Extends `exchange_local_min_implies_global_min` from `MConvexOptimization.lean`.\n\n**Ambition.** Solid extension \u2014 algorithmic consequence of the coefficient inequality.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78306251",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:12:47.048620+00:00"
+  },
+  {
+    "id": "fd_1514",
+    "title": "Direction 4: Hodge-Theoretic Interpretation of Valuated Exchange",
+    "description": "**Conjecture.** The valuated exchange property with K = 1 is equivalent to the Hodge\u2013Riemann relations in degree 1 for the associated toric variety. Specifically, the four-point inequality coeff(a)\u00b7coeff(b) \u2264 coeff(a')\u00b7coeff(b') on exchange squares corresponds to the mixed Hodge\u2013Riemann bilinear relations restricted to the span of the exchange directions.\n\n**Test.** Prove the equivalence for the simplest nontrivial case: homogeneous degree-2 polynomials on Fin n. In this case, the polynomial determines a symmetric bilinear form, and the Hodge\u2013Riemann relation reduces to the Cauchy\u2013Schwarz inequality. The exchange squares should correspond to specific 2\u00d72 minors of the coefficient matrix.\n\n**Impact.** This would provide the first direct, constructive connection between the exchange axiom of discrete convex analysis and the Hodge theory of algebraic geometry, potentially simplifying proofs of the Hodge conjecture for matroids (Adiprasito\u2013Huh\u2013Katz).\n\n**Catalog References.** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Hessian signature = Lorentzian), `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorem 4, log-concavity bridge).\n\n**Proof Strategy.** For degree-2: express the exchange inequality as a statement about 2\u00d72 minors of the coefficient matrix, then relate to the signature condition in `LorentzianRecognitionComplete.lean`. For higher degree: use iterated differentiation to reduce to degree 2 and apply the transport identity.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Algebraic geometry \u2194 Combinatorial Hodge theory.\n\n**Lineage.** Extends `valuatedExchange_logConcave_on_ray` and `recursivelyLorentzian_iff_brandenHuh`.\n\n**Ambition.** Grand challenge \u2014 would connect three major areas of mathematics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78306251",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:12:47.115604+00:00"
+  },
+  {
+    "id": "fd_1515",
+    "title": "Direction 5: Entropy Monotonicity under Derivative Transport",
+    "description": "**Conjecture.** For Lorentzian polynomials with M-convex support, the Shannon entropy of the normalized coefficient distribution is monotonically non-increasing under partial differentiation: H(\u2202_i p / ||\u2202_i p||\u2081) \u2264 H(p / ||p||\u2081).\n\n**The key insight is** that the coefficient transport identity introduces a coordinate-dependent rescaling (m_i + 1) that concentrates mass toward lower-degree monomials, reducing entropy. This is analogous to the concentration of measure phenomenon in high-dimensional probability.\n\n**Why now?** The coefficient transport identity (Theorem 1) provides the exact formula for how coefficients transform, making entropy computations tractable. Combined with the nonnegativity preservation (Theorem 2), we can normalize coefficients to probability distributions at each derivative level.\n\n**Test.** Compute entropy at each derivative level for random weighted uniform matroid polynomials. Verify monotonicity computationally for n \u2264 7. Attempt a formal proof using the transport identity and convexity of the entropy function.\n\n**Impact.** Entropy monotonicity would provide a new invariant for the derivative tower of Lorentzian polynomials, with applications to information-theoretic bounds in combinatorics and statistical mechanics (partition function analysis).\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorems 1\u20132).\n\n**Proof Strategy.** Express H(\u2202_i p) in terms of original coefficients via the transport identity. Use the log-sum inequality and the convexity of x log x to bound the entropy change.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Information theory \u2194 Statistical physics.\n\n**Lineage.** Extends `coeff_pderiv_transport` and `coeff_pderiv_nonneg`.\n\n**Ambition.** Solid extension \u2014 computable entropy bounds from formal coefficient identities.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "78306251",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T19:12:47.193133+00:00"
   },
   {
     "id": "seed_032",

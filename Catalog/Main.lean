@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1957 of the highest-quality
+A curated collection of 1958 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1957
+Total files: 1958
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -795,6 +795,7 @@ import FINAL.Bridges.UnifiedFramework
 import FINAL.Bridges.UniversalDefect
 import FINAL.Bridges.VCCompactness
 import FINAL.Bridges.VSAlgebraCore
+import FINAL.Bridges.ValuatedMConvexDifferentiation
 import FINAL.Bridges.ValuationEntropyBridge
 import FINAL.Bridges.VoiceLeadingCategory
 import FINAL.Bridges.VoiceLeadingFunctor
