@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Spectral Theory / Quantum Information / Random Matrix Theory",
     "date": "2026-05-27T08:28:25Z",
     "exp_id": "d0911202",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.670076,
+    "quality": "partial",
     "pkg_num": 155
   },
   {
@@ -4504,8 +4504,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-27T08:28:25Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.670076,
+      "quality": "partial"
     }
   ],
   "edges": [

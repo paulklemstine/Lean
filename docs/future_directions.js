@@ -189,10 +189,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "96bc3b32",
     "timestamp": "2026-05-25T00:54:40.932722+00:00"
   },
   {
@@ -327,10 +327,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b9d16ed0",
-    "consumed_by_exp_id": "3020679e",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T16:39:08.918006+00:00"
   },
   {
@@ -458,10 +458,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "beedac6c",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -518,10 +518,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "f57302af",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:03.370751+00:00"
   },
   {
@@ -664,10 +664,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2b6d84b4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62793b15",
     "timestamp": "2026-05-25T21:13:09.676387+00:00"
   },
   {
@@ -806,10 +806,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c37ca719",
     "timestamp": "2026-05-25T22:25:38.995692+00:00"
   },
   {
@@ -845,10 +845,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29c86e53",
     "timestamp": "2026-05-25T22:58:43.501683+00:00"
   },
   {
@@ -1171,26 +1171,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T21:53:04.972544+00:00"
   },
   {
-    "id": "fd_1249",
-    "title": "Direction 4: Quantum DPPs and Entanglement Bounds via Lorentzian Geometry",
-    "description": "**Conjecture**: The von Neumann entropy of a fermionic Gaussian state is bounded by a function of the Lorentzian signature of its generating polynomial. Specifically, the number of positive Hessian eigenvalues at degree-2 derivative leaves of Z_K provides a lower bound on the entanglement entropy across bipartitions.\n\n**Test**: (1) Compute the von Neumann entropy S(\u03c1) = \u2212Tr(\u03c1 log \u03c1) for the reduced density matrix of a fermionic Gaussian state with covariance K. (2) Compute the Lorentzian Hessian signatures at all derivative leaves. (3) Test whether min(S(\u03c1)) over bipartitions correlates with max(num_positive_eigenvalues) over Hessian leaves.\n\n**Impact**: This would create a new bridge between quantum information theory and Lorentzian polynomial geometry, potentially yielding computable entanglement witnesses from polynomial coefficient data.\n\n**Catalog References**: `Pythagorean/DPPLorentzian.lean` (DPP kernel and partition function definitions).\n\n**Proof Strategy**: Fermionic Gaussian states have correlation matrices that are DPP kernels. The partition function Z_K encodes the full statistics of particle number measurements. The Lorentzian condition constrains the fluctuation structure, which should bound entanglement. The key technical step is relating the Hessian signature (a polynomial-geometric object) to the entanglement spectrum (a quantum-informatic object).\n\n**Domain Bridges**: Quantum information theory (entanglement) \u2194 Statistical mechanics (fermionic systems) \u2194 Algebraic geometry (Lorentzian polynomials).\n\n**The key insight is** that entanglement in fermionic systems is dual to the Lorentzian signature of the partition function \u2014 both measure the \"width\" of the probability distribution over subset sizes.\n\n**Why now?** Quantum computing is driving demand for computable entanglement bounds, and the DPP\u2013Lorentzian connection provides a new algebraic tool.\n\n**Lineage**: Extends the DPP framework to quantum systems.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if successful, connecting quantum information to Hodge theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "258120ed",
-    "consumed_by_exp_id": "4c1deed8",
-    "timestamp": "2026-05-27T00:51:51.722911+00:00"
-  },
-  {
     "id": "fd_1252",
     "title": "Direction 2: Entropic Area Laws from Strong Log-Concavity",
     "description": "**Conjecture:** If the measurement distribution \u03bc of a 1D ground state has a strongly log-concave generating polynomial with Lorentzian gap \u2265 \u03b4, then the entanglement entropy across any bipartition satisfies S(A) \u2264 C \u00b7 log(1/\u03b4) + O(1), recovering area-law scaling from a purely classical-probabilistic property of \u03bc.\n\n**Test:** For the TFIM on n = 4,...,8 qubits, compute: (a) the entanglement entropy across bipartitions, (b) the surrogate Lorentzian gap of the measurement distribution. Plot S(A) vs. 1/\u03b4. If the relationship is logarithmic, the conjecture is supported; if polynomial or worse, it is refuted.\n\n**Impact:** This would derive area laws \u2014 a central result in quantum information \u2014 from log-concavity, creating a stunning bridge between polynomial geometry and entanglement theory. It would suggest that Lorentzian structure is the *classical shadow* of area-law entanglement.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean` \u2014 QuantumMeasurementModel, minMass\n- `Catalog/Pythagorean/DirectionalLogConcavity.lean` \u2014 log-concavity infrastructure\n\n**Proof Strategy:** Use the entropy-energy tradeoff: strong log-concavity implies entropy concentration (Anari\u2013Oveis Gharan\u2013Vinzant). Combine with the Araki-Lieb inequality relating measurement entropy to entanglement entropy. The Lorentzian gap controls the entropy concentration rate.\n\n**Domain Bridges:** Quantum information theory (entanglement entropy) \u2194 Lorentzian polynomials (curvature) \u2194 information theory (entropy concentration)\n\n**Lineage:** Extends `pairMassGap_ge_two_minMass` and `minMass_perturbation_lower_bound` to entropy bounds.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if true, as it would recast area laws in geometric language.\n\n---",
@@ -1273,28 +1253,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "6a75662e",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T02:07:17.397934+00:00"
-  },
-  {
-    "id": "fd_1260",
-    "title": "Direction 5: Spectral Phase Transitions in Quantum Many-Body Certification",
-    "description": "**Conjecture:** The spectral phase transition at 2\u03c3 has a direct analog in quantum many-body physics: the certification of topological order in a noisy quantum state undergoes a phase transition at a critical noise rate determined by the spectral gap of the parent Hamiltonian and the random matrix edge of the noise operator.\n\nSpecifically, for a topologically ordered ground state |\u03c8\u27e9 of a gapped Hamiltonian H with spectral gap \u0394, and for depolarizing noise of strength p, the fidelity-based certification of topological order transitions at p* \u221d \u0394/(2\u03c3_eff) where \u03c3_eff is determined by the effective noise matrix.\n\n**Test:** Simulate the toric code under depolarizing noise for various system sizes. Plot the fidelity of topological order certification against p/p* and check for curve collapse with n^(\u22122/3) scaling.\n\n**Impact:** Would connect the Lorentzian certification framework to quantum error correction and topological quantum computing, potentially yielding new noise threshold estimates.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: phase transition theorems, universality framework\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: spectral gap stability\n\n**Proof Strategy:** Map the certification problem to a spectral gap stability question, identify the effective noise matrix, and apply the transfer theorem with the quantum generalization of the GOE edge.\n\n**Domain Bridges:** Quantum information, topological order, condensed matter physics, quantum error correction.\n\n**Lineage:** Grand vision extending the 2\u03c3 threshold from classical linear algebra to quantum many-body systems.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful, connecting algebraic certification to quantum physics.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "d0911202",
-    "timestamp": "2026-05-27T02:07:17.500460+00:00"
   },
   {
     "id": "fd_1261",
@@ -1506,7 +1464,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "43afaa07",
@@ -1525,7 +1483,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4d0d5d0f",
@@ -1547,7 +1505,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4d0d5d0f",
@@ -1566,12 +1524,91 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4d0d5d0f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T07:12:34.010924+00:00"
+  },
+  {
+    "id": "fd_1333",
+    "title": "Direction 2: Higher-Rank Extension to GL_n(\ud835\udd3d_q)",
+    "description": "**Conjecture:** For GL_n(\ud835\udd3d_q) with n \u2265 3, there exists a polynomial-time certification algorithm based on:\n(a) irreducibility of the full characteristic polynomial,\n(b) maximality of the determinant order,\n(c) escape from all Aschbacher-class maximal subgroups,\nthat certifies a positive spectral gap.\n\n**Test:** Implement the certification pipeline for GL\u2083(\ud835\udd3d\u2083) (|G| = 11232) and GL\u2083(\ud835\udd3d\u2085) (|G| = 1488000). Verify that certified pairs are expanders by numerical eigenvalue computation for GL\u2083(\ud835\udd3d\u2083).\n\n**Impact:** Would establish algorithmic spectral certification as a general paradigm for matrix groups, not limited to the 2\u00d72 case. This opens the door to certified expander construction in groups of cryptographic relevance.\n\n**The key insight is** that Aschbacher's classification of maximal subgroups of GL_n provides a finite list of \"obstruction types,\" and each can be checked by polynomial-time algebraic tests. The irreducible charpoly condition generalizes naturally (ruling out block-diagonal containment), and primitivity of the determinant extends without modification.\n\n**Why now?** The 2\u00d72 framework is now formally verified and computationally validated. The Aschbacher classification is well-understood for small n, and the algebraic tests generalize cleanly. Lean's matrix library supports arbitrary dimensions.\n\n**Catalog References:** `Pythagorean/AlgorithmicSpectralCertification.lean` (AlgebraicSeedCondition, algebraic_seed_excludes_diagonal)\n\n**Proof Strategy:** \n1. Generalize AlgebraicSeedCondition to n\u00d7n: require charpoly irreducible, det primitive, and escape from each Aschbacher class.\n2. Prove each class can be excluded by a polynomial-time test.\n3. Show that passing all tests forces generation, then invoke the maximum principle.\n\n**Domain Bridges:** Finite group theory (Aschbacher's theorem), computational algebra, cryptography (groups used in lattice-based schemes)\n\n**Lineage:** Direct extension of `algebraic_seed_excludes_diagonal` and `AlgebraicSeedCondition` to higher rank\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires formalizing substantial finite group theory)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b449612f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T07:51:41.534995+00:00"
+  },
+  {
+    "id": "fd_1341",
+    "title": "Direction 4: Phase Transitions in Tropical Stability",
+    "description": "**Conjecture.** For random symmetric weight matrices drawn from a Gaussian ensemble with mean \u03bc and variance \u03c3\u00b2, the probability that tropGap(w) \u2265 0 (i.e., the exp-weight matrix is Lorentzian at all 2\u00d72 submatrices) undergoes a sharp phase transition at a critical signal-to-noise ratio:\n\nP(tropGap \u2265 0) \u2192 1 when \u03bc_off - \u03bc_diag > c\u00b7\u03c3\u00b7\u221a(log n)\nP(tropGap \u2265 0) \u2192 0 when \u03bc_off - \u03bc_diag < c\u00b7\u03c3\u00b7\u221a(log n)\n\nfor a universal constant c.\n\n**Test.** Sample 10,000 random weight matrices for each (n, \u03bc, \u03c3) with n \u2208 {5, 10, 20, 50} and plot the Lorentzian probability as a function of (\u03bc_off - \u03bc_diag)/(\u03c3\u00b7\u221a(log n)). If the curves collapse to a single transition, the conjecture is supported.\n\n**Impact.** Characterizes the \"typical\" difficulty of Lorentzian certification in random models, relevant for average-case complexity analysis and for understanding when tropical certificates are most useful.\n\n**Catalog References.** `Pythagorean/TropicalLorentzianShadows.lean` (tropical_gap_eq_uniform, exchange_slack_lipschitz)\n\n**Proof Strategy.** The tropical gap is the minimum of O(n\u00b2) Gaussian random variables (each diagonal exchange slack is a linear combination of Gaussian entries). Use extreme value theory for correlated Gaussians, specifically the Slepian-Fernique inequality, to bound the expected minimum.\n\n**Domain Bridges.** Statistical physics (phase transitions, percolation), random matrix theory (extreme eigenvalue statistics), machine learning (random feature models)\n\n**Lineage.** New direction inspired by the Lipschitz stability theorem (Theorem 3.6).\n\n**Ambition.** Solid extension \u2014 applies existing probabilistic tools to the tropical framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7849b5c2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T07:52:13.102204+00:00"
+  },
+  {
+    "id": "fd_1342",
+    "title": "Direction 5: Tropical Spectral Certificates for Neural Network Robustness",
+    "description": "**Conjecture.** For ReLU neural networks whose layer weight matrices have Lorentzian quadratic leaves, the tropical spectral gap of the Hessian at critical points provides a lower bound on the adversarial perturbation radius:\n\nrobust_radius(x) \u2265 C \u00b7 exp(tropGap(Hessian(x))) / \u2016gradient(x)\u2016\n\n**Test.** Train small (2-layer, width 20-100) ReLU networks on MNIST/CIFAR-10. At each test point, compute the Hessian's tropical gap and compare against the empirical adversarial radius (found by PGD attack).\n\n**Impact.** Would provide the first non-trivial certified robustness bound that is *computationally cheaper* than eigenvalue-based methods (O(d\u00b2) vs O(d\u00b3) for d-dimensional Hessians) and *tighter* than Lipschitz-based bounds in regions with favorable curvature structure.\n\n**Catalog References.** `Pythagorean/TropicalLorentzianShadows.lean` (tropical_to_stability_bridge), `Catalog/MachineLearning/TropicalCertifiedRobustness.lean`, `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (quadFormBound_of_entry_bound)\n\n**Proof Strategy.** Use the stability radius lower bound (Theorem 3.7) on the Hessian at critical points, combined with the quadratic approximation of the loss landscape. The gap between quadratic approximation and true loss is controlled by third-order terms, which can be bounded for ReLU networks using tropical analysis of the piecewise-linear structure.\n\n**Domain Bridges.** Machine learning (adversarial robustness, certified defense), optimization (trust-region methods, saddle-point avoidance), signal processing (robust estimation)\n\n**Lineage.** Extends the stability-to-tropical bridge (Theorem 3.7) to the applied setting.\n\n**Ambition.** Grand challenge \u2014 would bridge pure mathematics and practical ML robustness in a novel way.",
+    "domains": [
+      "Pythagorean",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7849b5c2",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T07:52:13.152156+00:00"
+  },
+  {
+    "id": "fd_1344",
+    "title": "Direction 1: Bounded Quantifier Extension and Verified Hrushovski Stabilizers",
+    "description": "**Conjecture:** The restricted formula language can be extended with bounded existential and universal quantifiers (\u2203 x \u2208 A, \u03c6(x) and \u2200 x \u2208 A, \u03c6(x)) while preserving the inductive \u0141o\u015b theorem. This extended language is sufficient to formalize the core stabilizer argument in Hrushovski's approximate subgroup theory.\n\n**The key insight is** that bounded quantifiers over definable sets reduce to the unbounded case via the `los_exists_bounded` theorem already proved: if the bounding set is definable, then the witness selection can be performed uniformly.\n\n**Why now?** The `los_exists_bounded` theorem (formally verified in `Catalog/Algebra/PseudofiniteTransfer.lean`) provides the existential witness mechanism. Extending the inductive framework requires adding one case to the formula induction, plus a proof that definable set membership is decidable in the germ ring (which follows from `mem_ultraSet_iff_eventually`).\n\n**Test:** Formalize the statement \"\u2203 H \u2264 G definable, [A : A \u2229 H] \u2264 C\" in the extended language and verify that \u0141o\u015b transfers it.\n\n**Impact:** This would enable formal verification of the first nontrivial step in Hrushovski's program, bridging formal logic to geometric group theory.\n\n**Catalog References:** `Catalog/Algebra/PseudofiniteTransfer.lean` (los_exists_bounded, los_restrictedFormula)\n\n**Proof Strategy:** Extend `RestrictedFormula` with a `boundedExists` constructor. The \u0141o\u015b induction case uses `los_exists_bounded` to select witnesses. The key technical challenge is ensuring well-foundedness of the induction with the additional constructor.\n\n**Domain Bridges:** Model theory \u2194 Geometric group theory\n\n**Lineage:** Direct extension of the current framework.\n\n**Ambition:** Solid extension (2\u20133 months to formalize).\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e18f2436",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T08:27:03.925234+00:00"
   },
   {
     "id": "fd_0806",
@@ -1623,23 +1660,24 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
   },
   {
-    "id": "fd_1321",
-    "title": "Direction 2: Interacting Fermions and Approximate Gaussianity",
-    "description": "**Conjecture:** For weakly interacting fermion systems with interaction strength \u03b5, the entanglement entropy satisfies S \u2264 S_free + C\u00b7\u03b5\u00b7m\u00b7log(m), where S_free is the free-fermion entropy bounded by our coefficient method, and C is a universal constant independent of the system details.\n\n**The key insight is** that weak interactions perturb the correlation kernel K_A by an amount proportional to \u03b5, which changes the elementary symmetric polynomials by controlled amounts. The Lorentzian structure is stable under small perturbations (a property of the Lorentzian cone being open), so the coefficient-based bounds deform continuously.\n\n**Why now?** The Br\u00e4nd\u00e9n-Huh theory provides stability results for the Lorentzian cone, and our formalization gives the free-fermion baseline. The gap between interacting and non-interacting entropy is the central open question in quantum many-body physics.\n\n**Test:** Simulate Hubbard chains at U/t = 0.1, 0.5, 1.0 via DMRG. Compare exact entropy to free-fermion coefficient bounds. Measure the correction term's dependence on U/t and subsystem size.\n\n**Impact:** Would extend the DPP-Lorentzian framework beyond exactly solvable models to the physically relevant regime of interacting electrons.\n\n**Catalog References:** `Pythagorean/EntanglementEntropy.lean`, `Speculative/AutoResearch/DPPLorentzian.lean`.\n\n**Proof Strategy:** Use the Lieb-Robinson bound to control the perturbation of K_A under weak interactions, then apply Weyl's perturbation theorem for eigenvalues to bound the change in each e\u2096.\n\n**Domain Bridges:** Quantum many-body physics \u2194 DPP theory \u2194 perturbation theory.\n\n**Lineage:** Extends all entropy bounds to approximately Gaussian states.\n\n**Ambition:** Grand challenge \u2014 would bridge formal methods to the frontier of condensed matter physics.\n\n---",
+    "id": "fd_1350",
+    "title": "Direction 2: Multi-Mode Lorentzian Witnesses via Higher Derivative Leaves",
+    "description": "**Conjecture.** For a Lorentzian polynomial $Z_K$ of degree $n$, the derivative leaves of codimension $n - k$ (yielding degree-$k$ polynomials for $k \\geq 3$) carry richer entanglement information than pairwise leaves. Specifically, the *mixed Hessian* of a degree-$k$ leaf \u2014 a $k \\times k$ matrix \u2014 has at most one positive eigenvalue (by Lorentzianity), and the magnitude of this positive eigenvalue bounds the $k$-mode entanglement entropy.\n\n**Test.** For $k = 3, 4$ and $n = 6, 8$: enumerate derivative leaves of codimension $n-k$, compute their Hessians, extract the unique positive eigenvalue, and correlate it with $S_A$ for the corresponding $k$-element subset $A$.\n\n**Impact.** Multi-mode witnesses would detect entanglement in subsystems that pairwise witnesses miss \u2014 analogous to how three-body correlations in condensed matter detect physics invisible to two-body probes.\n\n**Catalog References.** `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (Lorentzianity definition, `IsDPPLorentzian`), `Catalog/Pythagorean/QuantumDPPEntanglement.lean` (pairwise leaf analysis).\n\n**Proof Strategy.** Use the Br\u00e4nd\u00e9n\u2013Huh characterization: Lorentzianity of degree-$k$ leaves means their Hessians have at most one positive eigenvalue. Express the Hessian entries as linear combinations of principal minors of $K$. Use the Cauchy\u2013Binet formula to relate these to eigenvalues of $K_A$.\n\n**Domain Bridges.** Exterior algebra (Pl\u00fccker coordinates connect principal minors to Grassmannian geometry), tensor networks (multi-mode correlations as tensor contractions).\n\n**Lineage.** Generalizes the degree-2 leaf analysis of Theorem 2 to arbitrary codimension.\n\n**Ambition.** Grand challenge \u2014 requires substantial new Lorentzian polynomial infrastructure in Lean.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Geometry",
       "Physics",
       "Bridges",
       "Logic",
       "Speculative"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "43afaa07",
-    "consumed_by_exp_id": "c9570576",
-    "timestamp": "2026-05-27T06:37:54.875307+00:00"
+    "source_exp_id": "4c1deed8",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T08:27:26.882112+00:00"
   },
   {
     "id": "seed_013",
@@ -2044,26 +2082,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T07:52:22.669578+00:00"
   },
   {
-    "id": "fd_1333",
-    "title": "Direction 2: Higher-Rank Extension to GL_n(\ud835\udd3d_q)",
-    "description": "**Conjecture:** For GL_n(\ud835\udd3d_q) with n \u2265 3, there exists a polynomial-time certification algorithm based on:\n(a) irreducibility of the full characteristic polynomial,\n(b) maximality of the determinant order,\n(c) escape from all Aschbacher-class maximal subgroups,\nthat certifies a positive spectral gap.\n\n**Test:** Implement the certification pipeline for GL\u2083(\ud835\udd3d\u2083) (|G| = 11232) and GL\u2083(\ud835\udd3d\u2085) (|G| = 1488000). Verify that certified pairs are expanders by numerical eigenvalue computation for GL\u2083(\ud835\udd3d\u2083).\n\n**Impact:** Would establish algorithmic spectral certification as a general paradigm for matrix groups, not limited to the 2\u00d72 case. This opens the door to certified expander construction in groups of cryptographic relevance.\n\n**The key insight is** that Aschbacher's classification of maximal subgroups of GL_n provides a finite list of \"obstruction types,\" and each can be checked by polynomial-time algebraic tests. The irreducible charpoly condition generalizes naturally (ruling out block-diagonal containment), and primitivity of the determinant extends without modification.\n\n**Why now?** The 2\u00d72 framework is now formally verified and computationally validated. The Aschbacher classification is well-understood for small n, and the algebraic tests generalize cleanly. Lean's matrix library supports arbitrary dimensions.\n\n**Catalog References:** `Pythagorean/AlgorithmicSpectralCertification.lean` (AlgebraicSeedCondition, algebraic_seed_excludes_diagonal)\n\n**Proof Strategy:** \n1. Generalize AlgebraicSeedCondition to n\u00d7n: require charpoly irreducible, det primitive, and escape from each Aschbacher class.\n2. Prove each class can be excluded by a polynomial-time test.\n3. Show that passing all tests forces generation, then invoke the maximum principle.\n\n**Domain Bridges:** Finite group theory (Aschbacher's theorem), computational algebra, cryptography (groups used in lattice-based schemes)\n\n**Lineage:** Direct extension of `algebraic_seed_excludes_diagonal` and `AlgebraicSeedCondition` to higher rank\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires formalizing substantial finite group theory)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b449612f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T07:51:41.534995+00:00"
-  },
-  {
     "id": "fd_1340",
     "title": "Direction 3: Valuated Matroid Exchange Certificates",
     "description": "**Conjecture.** For a valuated matroid (E, w) with basis exchange property, the tropical spectral gap of the quadratic leaf Hessian equals the minimum exchange defect in the matroid:\n\ntropGap = min_{B\u2081, B\u2082, i, j} [w(B\u2081) + w(B\u2082) - w(B\u2081 - i + j) - w(B\u2082 + i - j)]\n\nwhere the minimum is over all pairs of bases B\u2081, B\u2082 and exchange elements i \u2208 B\u2081\\B\u2082, j \u2208 B\u2082\\B\u2081.\n\n**Test.** Compute both quantities for graphical matroids of small graphs (K\u2084, K\u2085, Petersen graph, random graphs on 6-8 vertices) and compare.\n\n**Impact.** Establishes tropical spectral gaps as matroid invariants, making them accessible to the extensive algorithmic toolkit of matroid optimization (greedy algorithms, matroid intersection, etc.).\n\n**Catalog References.** `Pythagorean/TropicalLorentzianShadows.lean` (exchangeSlack_diag, tropical_gap_certificate_exists), `Catalog/Pythagorean/LorentzianExchangeCertificates.lean`\n\n**Proof Strategy.** For rank-2 matroids, the quadratic leaf Hessian is directly the basis weight matrix, and the exchange defect is the diagonal exchange slack. For higher rank, use the Cauchy-Binet formula to express quadratic leaf entries in terms of basis weights.\n\n**Domain Bridges.** Combinatorial optimization (polynomial-time certification), algebraic combinatorics (matroid theory), tropical geometry (tropical Grassmannians)\n\n**Lineage.** Extends the certificate theorem (Theorem 3.8) to the matroid setting.\n\n**Ambition.** Solid extension \u2014 connects established matroid theory with the new tropical stability framework.\n\n---",
@@ -2085,33 +2103,33 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T07:52:13.051854+00:00"
   },
   {
-    "id": "fd_1341",
-    "title": "Direction 4: Phase Transitions in Tropical Stability",
-    "description": "**Conjecture.** For random symmetric weight matrices drawn from a Gaussian ensemble with mean \u03bc and variance \u03c3\u00b2, the probability that tropGap(w) \u2265 0 (i.e., the exp-weight matrix is Lorentzian at all 2\u00d72 submatrices) undergoes a sharp phase transition at a critical signal-to-noise ratio:\n\nP(tropGap \u2265 0) \u2192 1 when \u03bc_off - \u03bc_diag > c\u00b7\u03c3\u00b7\u221a(log n)\nP(tropGap \u2265 0) \u2192 0 when \u03bc_off - \u03bc_diag < c\u00b7\u03c3\u00b7\u221a(log n)\n\nfor a universal constant c.\n\n**Test.** Sample 10,000 random weight matrices for each (n, \u03bc, \u03c3) with n \u2208 {5, 10, 20, 50} and plot the Lorentzian probability as a function of (\u03bc_off - \u03bc_diag)/(\u03c3\u00b7\u221a(log n)). If the curves collapse to a single transition, the conjecture is supported.\n\n**Impact.** Characterizes the \"typical\" difficulty of Lorentzian certification in random models, relevant for average-case complexity analysis and for understanding when tropical certificates are most useful.\n\n**Catalog References.** `Pythagorean/TropicalLorentzianShadows.lean` (tropical_gap_eq_uniform, exchange_slack_lipschitz)\n\n**Proof Strategy.** The tropical gap is the minimum of O(n\u00b2) Gaussian random variables (each diagonal exchange slack is a linear combination of Gaussian entries). Use extreme value theory for correlated Gaussians, specifically the Slepian-Fernique inequality, to bound the expected minimum.\n\n**Domain Bridges.** Statistical physics (phase transitions, percolation), random matrix theory (extreme eigenvalue statistics), machine learning (random feature models)\n\n**Lineage.** New direction inspired by the Lipschitz stability theorem (Theorem 3.6).\n\n**Ambition.** Solid extension \u2014 applies existing probabilistic tools to the tropical framework.\n\n---",
+    "id": "fd_1354",
+    "title": "Direction 1: Probabilistic Stability \u2014 The 1/\u221an Law for Random Perturbations",
+    "description": "**Conjecture:** For random symmetric perturbations with i.i.d. mean-zero entries bounded by \u03b4, the Lorentzian signature is preserved with high probability whenever \u03b4 \u2264 K \u00b7 \u03b5 / \u221an, where K is a universal constant.\n\n**Test:** Compute survival probabilities for random perturbations of e_k Hessians at scale \u03b4 = \u03b5 / n^\u03b1 for \u03b1 \u2208 {0.4, 0.5, 0.6, 0.7} and dimensions n \u2208 {10, 50, 100, 500}. If the critical \u03b1 is 0.5 \u00b1 0.02, the conjecture is confirmed. If \u03b1 stabilizes near 0.6 or higher, the conjecture needs revision.\n\n**Impact:** A factor-of-\u221an improvement over the deterministic bound would make certified stochastic algorithms (e.g., randomized rounding, MCMC samplers) dramatically more efficient. It would connect Lorentzian combinatorics directly to random matrix universality.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` (Theorems 2-3), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem 9)\n\n**Proof Strategy:** Use the Wigner semicircle law or matrix Bernstein inequality to bound the spectral radius of the random perturbation matrix. The key step: show that the random perturbation's operator norm concentrates at O(\u221an \u00b7 \u03b4) rather than worst-case O(n \u00b7 \u03b4), then apply the gapped-signature perturbation theorem.\n\n**Domain Bridges:** Random matrix theory (GOE/GUE universality), high-dimensional probability (matrix concentration), statistical physics (random coupling constants).\n\n**Lineage:** Extends `quadFormBound_of_entry_bound_sharp` from deterministic to probabilistic setting.\n\n**Ambition:** Grand challenge \u2014 would establish first probabilistic stability theory for Lorentzian cones.\n\n---",
     "domains": [
       "Pythagorean",
-      "Geometry",
       "Computation",
-      "Tropical",
       "Physics",
       "Bridges",
-      "MachineLearning",
-      "Logic"
+      "Logic",
+      "Speculative"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "7849b5c2",
+    "source_exp_id": "ac6bc32a",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T07:52:13.102204+00:00"
+    "timestamp": "2026-05-27T08:27:46.772540+00:00"
   },
   {
-    "id": "fd_1342",
-    "title": "Direction 5: Tropical Spectral Certificates for Neural Network Robustness",
-    "description": "**Conjecture.** For ReLU neural networks whose layer weight matrices have Lorentzian quadratic leaves, the tropical spectral gap of the Hessian at critical points provides a lower bound on the adversarial perturbation radius:\n\nrobust_radius(x) \u2265 C \u00b7 exp(tropGap(Hessian(x))) / \u2016gradient(x)\u2016\n\n**Test.** Train small (2-layer, width 20-100) ReLU networks on MNIST/CIFAR-10. At each test point, compute the Hessian's tropical gap and compare against the empirical adversarial radius (found by PGD attack).\n\n**Impact.** Would provide the first non-trivial certified robustness bound that is *computationally cheaper* than eigenvalue-based methods (O(d\u00b2) vs O(d\u00b3) for d-dimensional Hessians) and *tighter* than Lipschitz-based bounds in regions with favorable curvature structure.\n\n**Catalog References.** `Pythagorean/TropicalLorentzianShadows.lean` (tropical_to_stability_bridge), `Catalog/MachineLearning/TropicalCertifiedRobustness.lean`, `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (quadFormBound_of_entry_bound)\n\n**Proof Strategy.** Use the stability radius lower bound (Theorem 3.7) on the Hessian at critical points, combined with the quadratic approximation of the loss landscape. The gap between quadratic approximation and true loss is controlled by third-order terms, which can be bounded for ReLU networks using tropical analysis of the piecewise-linear structure.\n\n**Domain Bridges.** Machine learning (adversarial robustness, certified defense), optimization (trust-region methods, saddle-point avoidance), signal processing (robust estimation)\n\n**Lineage.** Extends the stability-to-tropical bridge (Theorem 3.7) to the applied setting.\n\n**Ambition.** Grand challenge \u2014 would bridge pure mathematics and practical ML robustness in a novel way.",
+    "id": "fd_1357",
+    "title": "Direction 4: Stability of Partition Functions Under Noisy Couplings",
+    "description": "**Conjecture:** For the partition function Z(J) = \u2211_\u03c3 exp(-\u03b2 \u2211_{ij} J_{ij} \u03c3_i \u03c3_j) of an Ising model with Lorentzian coupling structure, perturbations of couplings |\u0394J_{ij}| \u2264 \u03b5/(\u03b2n) preserve the log-concavity of the partition function as a polynomial in external fields.\n\n**The key insight is** that the Hessian of log Z with respect to external fields is controlled by the Lorentzian stability of the generating polynomial, and the sharp 1/n constant translates directly to coupling robustness.\n\n**Why now?** The connection between Lorentzian polynomials and partition functions is established (Anari et al., 2019), and the sharp stability constant makes the quantitative translation meaningful for physical systems.\n\n**Test:** Compute the partition function of the complete graph Ising model for n \u2208 {4, 6, 8, 10, 12} and verify that coupling perturbations of size O(\u03b5/n) preserve log-concavity of the magnetization polynomial.\n\n**Impact:** Would provide rigorous robustness guarantees for phase transition detection in noisy physical systems, connecting Lorentzian geometry to experimental physics.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` (dimension_degree_stability_law_linear), `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (strong_concavity_on_orthogonal_complement)\n\n**Proof Strategy:** Express the partition function's Hessian in terms of the coupling matrix's Hessian, apply the sharp stability theorem, and translate the coefficient perturbation bound into a coupling perturbation bound via the chain rule.\n\n**Domain Bridges:** Statistical physics (Ising models, phase transitions), probability (log-concave distributions), quantum information (quantum Boltzmann machines).\n\n**Lineage:** Extends the stability theory from abstract polynomials to physical partition functions.\n\n**Ambition:** Grand challenge \u2014 would be the first application of sharp Lorentzian stability to physics.\n\n---",
     "domains": [
       "Pythagorean",
-      "Tropical",
+      "Algebra",
+      "Geometry",
+      "Computation",
       "Physics",
       "Bridges",
       "MachineLearning",
@@ -2121,9 +2139,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "7849b5c2",
+    "source_exp_id": "ac6bc32a",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T07:52:13.152156+00:00"
+    "timestamp": "2026-05-27T08:27:46.927552+00:00"
   },
   {
     "id": "seed_032",

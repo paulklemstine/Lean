@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1930 of the highest-quality
+A curated collection of 1934 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1930
+Total files: 1934
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -193,6 +193,7 @@ import FINAL.Algebra.PredictionGeometry
 import FINAL.Algebra.PrimeCounting
 import FINAL.Algebra.PrimeDivisorCongruence
 import FINAL.Algebra.Probabilistic
+import FINAL.Algebra.PseudofiniteTransfer
 import FINAL.Algebra.PythagoreanPhotonics
 import FINAL.Algebra.PythagoreanQuadruples
 import FINAL.Algebra.QDF_ArithGeomQuantum
@@ -574,6 +575,7 @@ import FINAL.Bridges.ProvabilitySpectralTheory
 import FINAL.Bridges.QuantumBerggrenFourier
 import FINAL.Bridges.QuantumBerggrenWalks
 import FINAL.Bridges.QuantumClassicalBridge
+import FINAL.Bridges.QuantumDPPEntanglement
 import FINAL.Bridges.QuantumDagger
 import FINAL.Bridges.QuantumGraphCodes
 import FINAL.Bridges.QuantumGroundStatePreparation
@@ -614,6 +616,7 @@ import FINAL.Bridges.Spectral
 import FINAL.Bridges.SpectralApplications
 import FINAL.Bridges.SpectralCrypto
 import FINAL.Bridges.SpectralFingerprints
+import FINAL.Bridges.SpectralPhaseTransitions
 import FINAL.Bridges.SpectralProofSpace
 import FINAL.Bridges.SpectralRealization
 import FINAL.Bridges.SpectralReciprocity
@@ -1426,6 +1429,7 @@ import FINAL.Pythagorean.AbelianizationTorsion
 import FINAL.Pythagorean.AdelicPersistentHomology
 import FINAL.Pythagorean.AdvancedFactoringResearch
 import FINAL.Pythagorean.AlgorithmicLatticeDiophantine
+import FINAL.Pythagorean.ApproxGaussianEntropy
 import FINAL.Pythagorean.ApproxSubgroupTheorems
 import FINAL.Pythagorean.ArithmeticPhaseClassification
 import FINAL.Pythagorean.ArithmeticTDAPipeline
