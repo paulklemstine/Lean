@@ -136,10 +136,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "43bc0e86",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -154,10 +154,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "162c22af",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:13:44.233016+00:00"
   },
   {
@@ -1165,10 +1165,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d97a486b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b92c2c2d",
     "timestamp": "2026-05-27T00:52:11.241965+00:00"
   },
   {
@@ -1265,10 +1265,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "175f456d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "599ed649",
     "timestamp": "2026-05-27T03:33:16.828549+00:00"
   },
   {
@@ -1623,7 +1623,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ac6bc32a",
@@ -1645,7 +1645,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ac6bc32a",
@@ -2102,6 +2102,26 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T07:52:22.669578+00:00"
+  },
+  {
+    "id": "fd_1370",
+    "title": "Direction 1: Full Lorentzian Hessian Formalization via MvPolynomial",
+    "description": "**Conjecture:** For the multiaffine generating polynomial P_\u03bc(z) = \u2211_S \u03bc(S) \u220f_{i\u2208S} z_i of a determinantal measure \u03bc, the Hessian matrix \u2202\u00b2P/\u2202z_i\u2202z_j evaluated at the all-ones vector has Lorentzian signature (at most one positive eigenvalue), and this signature is preserved under coefficient perturbation of size \u03b4 < \u03b5 where \u03b5 is the spectral gap of the Hessian.\n\n**Test:** Formalize MvPolynomial-based Hessian computation in Lean for distributions on Fin n \u2192 Bool. Compute Hessian eigenvalues for determinantal measures on n \u2264 8. Verify Lorentzian signature and test preservation under random coefficient perturbation.\n\n**Impact:** This would complete the Lorentzian layer of the gap bridge, connecting the abstract GappedMeasurementLift to concrete polynomial geometry. It would also provide the first Lean formalization of Lorentzian polynomials.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean` \u2014 GappedMeasurementLift, RobustLorentzianCertificate\n- `Catalog/Bridges/Catalog/Pythagorean/RobustLorentzianSampling.lean` \u2014 gapped_signature_persists_under_perturbation, residual_gap_of_perturbation\n\n**Proof Strategy:** Build on the existing quadratic form infrastructure in RobustLorentzianSampling.lean. Define the Hessian as a matrix over MvPolynomial coefficients. Use the residual_gap_of_perturbation theorem to transfer gap bounds from the exact determinantal polynomial to perturbed polynomials. The key new lemma: for a determinantal polynomial det(I + diag(z)K), the Hessian at z=1 has eigenvalues determined by K's spectrum, which can be computed from the kernel matrix.\n\n**Domain Bridges:** Algebraic combinatorics \u2194 quantum many-body physics \u2194 formal verification\n\n**Lineage:** Direct extension of Theorems 1\u20133 in this work; builds on Br\u00e4nd\u00e9n\u2013Huh [2020].\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 (Solid extension \u2014 technically demanding but mathematically well-understood)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c37ca719",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T09:42:35.531653+00:00"
   },
   {
     "id": "seed_032",
