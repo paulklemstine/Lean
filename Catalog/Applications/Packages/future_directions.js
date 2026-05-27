@@ -365,10 +365,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "cf039036",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e0c9f23",
     "timestamp": "2026-05-25T17:14:59.768954+00:00"
   },
   {
@@ -439,10 +439,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "2e2e7763",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -606,10 +606,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "ae9fd36c",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T20:01:51.882080+00:00"
   },
   {
@@ -787,10 +787,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "05e24005",
     "timestamp": "2026-05-25T22:25:38.995692+00:00"
   },
   {
@@ -1150,26 +1150,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "ef991832",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T21:53:04.972544+00:00"
-  },
-  {
-    "id": "fd_1252",
-    "title": "Direction 2: Entropic Area Laws from Strong Log-Concavity",
-    "description": "**Conjecture:** If the measurement distribution \u03bc of a 1D ground state has a strongly log-concave generating polynomial with Lorentzian gap \u2265 \u03b4, then the entanglement entropy across any bipartition satisfies S(A) \u2264 C \u00b7 log(1/\u03b4) + O(1), recovering area-law scaling from a purely classical-probabilistic property of \u03bc.\n\n**Test:** For the TFIM on n = 4,...,8 qubits, compute: (a) the entanglement entropy across bipartitions, (b) the surrogate Lorentzian gap of the measurement distribution. Plot S(A) vs. 1/\u03b4. If the relationship is logarithmic, the conjecture is supported; if polynomial or worse, it is refuted.\n\n**Impact:** This would derive area laws \u2014 a central result in quantum information \u2014 from log-concavity, creating a stunning bridge between polynomial geometry and entanglement theory. It would suggest that Lorentzian structure is the *classical shadow* of area-law entanglement.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean` \u2014 QuantumMeasurementModel, minMass\n- `Catalog/Pythagorean/DirectionalLogConcavity.lean` \u2014 log-concavity infrastructure\n\n**Proof Strategy:** Use the entropy-energy tradeoff: strong log-concavity implies entropy concentration (Anari\u2013Oveis Gharan\u2013Vinzant). Combine with the Araki-Lieb inequality relating measurement entropy to entanglement entropy. The Lorentzian gap controls the entropy concentration rate.\n\n**Domain Bridges:** Quantum information theory (entanglement entropy) \u2194 Lorentzian polynomials (curvature) \u2194 information theory (entropy concentration)\n\n**Lineage:** Extends `pairMassGap_ge_two_minMass` and `minMass_perturbation_lower_bound` to entropy bounds.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if true, as it would recast area laws in geometric language.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d97a486b",
-    "consumed_by_exp_id": "b92c2c2d",
-    "timestamp": "2026-05-27T00:52:11.241965+00:00"
   },
   {
     "id": "fd_1253",
@@ -1754,10 +1734,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "3020679e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7a9ed9f9",
     "timestamp": "2026-05-27T10:18:44.849475+00:00"
   },
   {
@@ -2175,6 +2155,22 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
+  },
+  {
+    "id": "fd_1379",
+    "title": "Tightening the bridge",
+    "description": "\u2014 replacing the pair-mass gap with sharper Lorentzian curvature measures to close the gap between our bound and the true entanglement entropy.",
+    "domains": [
+      "Algebra",
+      "Physics",
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b92c2c2d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T10:57:15.683117+00:00"
   },
   {
     "id": "seed_007",
