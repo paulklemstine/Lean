@@ -241,24 +241,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:54:40.932722+00:00"
   },
   {
-    "id": "fd_0822",
-    "title": "Direction 4: Extension to System F (Polymorphic Lambda Calculus)",
-    "description": "**Conjecture:** For System F (polymorphic lambda calculus), there exists a type complexity invariant analogous to typeStateBound that exactly characterizes the maximal bounded behavioral complexity of closed terms, with the invariant depending on the type and the instantiation.\n\n**Test:** Define a candidate invariant for simple System F types (e.g., \u2200\u03b1. \u03b1 \u2192 \u03b1, Church numerals \u2200\u03b1. (\u03b1 \u2192 \u03b1) \u2192 \u03b1 \u2192 \u03b1). Compute bounded state sets for small terms of these types. Check whether any numerical pattern emerges that could serve as the polymorphic type state bound.\n\n**Impact:** Would extend the entire theory to the dominant type system of functional programming, covering Haskell, ML, and dependently typed languages.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TypeComplexityBounds.lean` \u2014 `typeStateBound_eq_complexity` (the STLC case)\n\n**Proof Strategy:** Polymorphic types introduce quantifier complexity. The key challenge: \u2200\u03b1.\u03c4 has no fixed typeStateBound because \u03b1 can be instantiated at different types. One approach: define the bound as a supremum over instantiations. Another: define it relative to a fixed universe of types.\n\n**Domain Bridges:** Polymorphism in programming languages, parametricity (Reynolds 1983), categorical semantics.\n\n**Lineage:** Extends Statman's undecidability results for System F (1979) and Girard's normalization (1972).\n\n**Ambition:** \ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f\ud83c\udf1f \u2014 Grand challenge, paradigm-shifting.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "21d0ab18",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:55:14.021207+00:00"
-  },
-  {
     "id": "fd_0831",
     "title": "Direction 2: Lorentzian Polynomials in Statistical Physics and Probability",
     "description": "**Conjecture**: The partition function of any determinantal point process (DPP), when restricted to its homogeneous components, yields Lorentzian polynomials. This implies that all marginal inclusion probabilities satisfy the negative dependence inequality $\\Pr[i \\in S \\text{ and } j \\in S] \\le \\Pr[i \\in S] \\cdot \\Pr[j \\in S]$.\n\nFormally:\n```\ntheorem dpp_partition_function_lorentzian\n    {n : \u2115} (K : Matrix (Fin n) (Fin n) \u211d) (hK : K.PosSemidef) (d : \u2115) :\n    IsBrandenHuhLorentzian d (homogeneousComponent d (dppPartitionFunction K))\n```\n\n**Test**: For random PSD matrices $K$ of size $n \\le 8$, compute the partition function, extract homogeneous components, and verify Lorentzianity via the spectral recognizer. Compare marginal correlations against the negative dependence bound.\n\n**Impact**: This would provide the first formally verified proof of negative dependence for DPPs, a fundamental result in probability and statistical physics. It would connect Lorentzian polynomial theory to random matrix theory, repulsive particle systems, and machine learning (DPPs are widely used for diverse subset selection).\n\n**The key insight is** that the partition function $\\det(I + \\text{diag}(x) \\cdot K)$ for PSD $K$ is a product of linear forms in the eigenvalue basis, making it manifestly Lorentzian. The formal challenge is connecting this spectral decomposition to the polynomial coefficient structure.\n\n**Why now?** DPPs are experiencing a surge of interest in machine learning and spatial statistics. Formally verified negative dependence guarantees would be valuable for certified randomized algorithms.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `IsBrandenHuhLorentzian`, `lorentzian_reversed_cauchy_schwarz`\n\n**Proof Strategy**: Decompose $\\det(I + DK)$ in the eigenbasis of $K$. Each factor is a positive linear form, so the product is Lorentzian by the closure property. Transfer back to the standard basis.\n\n**Domain Bridges**: Probability theory, statistical physics, machine learning, random matrix theory\n\n**Lineage**: Extends `lorentzian_reversed_cauchy_schwarz` and `spectralRecognizer_sound`\n\n**Ambition**: Grand challenge \u2014 connecting algebraic combinatorics to probability theory at the formal level\n\n---",
@@ -338,25 +320,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:05:35.257371+00:00"
   },
   {
-    "id": "fd_0852",
-    "title": "Direction 1: Sharp Dixon Asymptotics via M\u00f6bius Inversion",
-    "description": "**Conjecture:** The exact number of generating pairs in $S_n$ can be expressed via M\u00f6bius inversion on the subgroup lattice:\n$$|\\{(\\sigma, \\tau) : \\langle \\sigma, \\tau \\rangle = S_n\\}| = \\sum_{H \\leq S_n} \\mu(H, S_n) \\cdot |H|^2$$\nand the leading terms of the asymptotic expansion satisfy $P_n = 1 - 1/n - 1/n^2 - 4/n^3 - 23/n^4 - O(1/n^5)$.\n\n**Test:** Verify the M\u00f6bius inversion formula computationally for $n \\leq 7$ using GAP, then formalize the first two terms of the asymptotic expansion in Lean by bounding contributions from subgroups of index $> n$.\n\n**Impact:** This would yield the first machine-verified sharp asymptotic for a generation probability, going far beyond the $O(1/n)$ bound from the point-stabilizer sieve.\n\n**Catalog References:** `Algebra/SymmGroupGeneration.lean` \u2014 `nongeneratingPairProbability_le_maximal_subgroup_sum`, `generatingPairProbability_eq_card_ratio`.\n\n**Proof Strategy:** Define the M\u00f6bius function on the subgroup lattice of $S_n$ using `Finpartition` or direct recursion. Formalize the inclusion-exclusion identity $\\sum_{H \\leq G} \\mu(H, G) = \\delta_{H,G}$. Then express the generating pair count as a M\u00f6bius sum and bound tail terms using subgroup index estimates.\n\n**Domain Bridges:** Analytic combinatorics (singularity analysis of generating functions), number theory (M\u00f6bius inversion analogues).\n\n**Lineage:** Direct extension of the subgroup sieve inequality proved in this cycle.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the subgroup lattice M\u00f6bius function and sharp subgroup counting bounds for $S_n$.\n\n**The key insight is** that the M\u00f6bius function on the subgroup lattice encodes *exactly* how much each subgroup contributes to the generation count, turning the subgroup sieve from an inequality into an identity.\n\n**Why now?** The subgroup sieve framework is now formalized, providing the \"\u2264\" half. The M\u00f6bius inversion provides the \"=\" half, and Mathlib's growing lattice theory API makes the combinatorial prerequisites increasingly accessible.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "92e3853a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:08:48.881853+00:00"
-  },
-  {
     "id": "fd_0858",
     "title": "Direction 1: Lorentzian-to-Coefficient Bridge via Bivariate Specialization",
     "description": "**Conjecture**: For every homogeneous polynomial $P$ of degree $d$ with nonnegative coefficients and recursive Lorentzian depth $k$ (as defined by `IsRecursivelyLorentzian` in `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`), every bivariate specialization $P(x, y) = \\sum a_m x^m y^{d-m}$ with $a_m > 0$ yields a coefficient sequence that is $\\min(k, d-2)$-fold log-concave in the sense of `KFoldLogConcave` (from `Catalog/Pythagorean/HigherOrderLogConcavity.lean`).\n\n**Test**: Extract bivariate specialization coefficients from explicit Lorentzian polynomials (products of linear forms, matroid basis generating polynomials for uniform matroids, Kirchhoff polynomials of small graphs). Compute iterated ratio sequences and verify log-concavity at each depth. A single family with Lorentzian depth $k \\geq 2$ whose coefficient sequence fails 2-fold log-concavity disproves the conjecture.\n\n**Impact**: This would be the flagship theorem connecting algebraic geometry (Hessian spectral signatures) to discrete analysis (ratio sequence concavity). It would turn the abstract recognition algorithm in `LorentzianRecognitionComplete.lean` into a concrete inequality machine for coefficient sequences.\n\n**The key insight is** that the Lorentzian Hessian condition at each differentiation level translates, via the reversed Cauchy\u2013Schwarz inequality (already formalized as `lorentzian_reversed_cauchy_schwarz`), into a ratio-sequence inequality that propagates one level of the k-fold hierarchy.\n\n**Why now?** The existing Catalog contains both the recursive Lorentzian predicate and the k-fold log-concavity definitions. The reversed Cauchy\u2013Schwarz theorem provides the exact algebraic bridge needed. What remains is to formalize the coefficient extraction from bivariate specialization and verify the inequality chain at each recursive level.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (IsRecursivelyLorentzian, lorentzian_reversed_cauchy_schwarz), `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (KFoldLogConcave, KFoldLogConcave.ratio)\n\n**Proof Strategy**: Define `coeffOfBivariateHomogeneous` as the coefficient extractor. For degree-2, the reversed Cauchy\u2013Schwarz directly gives log-concavity. Induct on Lorentzian depth: each differentiation step reduces degree by 1 and Lorentzian depth by 1, while the coefficient sequence's ratio inherits the Lorentzian inequality from the derivative polynomial.\n\n**Domain Bridges**: Algebraic geometry \u2192 discrete combinatorics \u2192 sampling algorithms\n\n**Lineage**: Extends `recursivelyLorentzian_iff_brandenHuh` and `lorentzian_reversed_cauchy_schwarz`\n\n**Ambition**: Grand challenge \u2014 would establish a new theorem class connecting two major theories.\n\n---",
@@ -370,10 +333,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "502ef518",
     "timestamp": "2026-05-25T14:24:15.293101+00:00"
   },
   {
@@ -428,10 +391,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "05254341",
     "timestamp": "2026-05-25T17:14:31.150620+00:00"
   },
   {
@@ -448,10 +411,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7849b5c2",
     "timestamp": "2026-05-25T17:14:31.193329+00:00"
   },
   {
@@ -567,10 +530,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b449612f",
     "timestamp": "2026-05-25T18:40:03.370751+00:00"
   },
   {
@@ -924,26 +887,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T22:58:43.526680+00:00"
   },
   {
-    "id": "fd_0979",
-    "title": "Direction 5: Formal BGT Structure Theorem",
-    "description": "**Conjecture:** The full Breuillard\u2013Green\u2013Tao classification of approximate subgroups in finite simple groups of Lie type can be formalized in Lean 4, building on the certificate-to-growth infrastructure developed in this cycle.\n\n**Test:** Formalize the statement of the BGT theorem for $\\mathrm{SL}(2, \\mathbb{F}_p)$: every $K$-approximate subgroup $A$ (i.e., $|A^3| \\leq K|A|$) is contained in a set of the form $xH$ where $H$ is a subgroup and $|xH| \\leq f(K)|A|$. Then prove the theorem for $K$ close to 1 using the Strict Growth Theorem.\n\n**The key insight is** that the Strict Growth Theorem already proves the $K = 1$ case: if $|A^3| = |A|$ (so $K = 1$) and $A$ generates $G$ and $1 \\in A$, then $A = G$ (since $A = A^2 = A^3 = \\cdots = G$ by strict growth). The BGT theorem generalizes this to $K > 1$, showing that approximate closure under tripling forces algebraic structure. Our formal infrastructure provides the foundation for this generalization.\n\n**Why now?** The formal proof of the Core Stability Theorem demonstrates that the key technique \u2014 using finite injectivity to establish group-like properties of finite sets \u2014 is formalizable. The BGT proof uses similar techniques at a higher level of abstraction, combined with the classification of finite simple groups. While the full classification is out of reach, the $\\mathrm{SL}(2)$ case is tractable and would demonstrate the approach.\n\n**Impact:** A formally verified BGT theorem, even in the $\\mathrm{SL}(2)$ case, would be a major achievement in formal combinatorics and would validate the certificate-to-growth paradigm at the deepest level.\n\n**Catalog References:** `Pythagorean/CertificateProductGrowth.lean` (all theorems from the current cycle), `Catalog/Pythagorean/CertificateExpanders.lean` (spectral machinery), `Catalog/Algebra/MatrixGroupGeneration.lean` (matrix group structure).\n\n**Proof Strategy:** Following Helfgott (2008) for $\\mathrm{SL}(2, \\mathbb{F}_p)$: (1) Use the trace map to reduce to a sum-product problem in $\\mathbb{F}_p$. (2) Apply sum-product estimates (Bourgain\u2013Katz\u2013Tao) to show that the trace of $A$ cannot concentrate. (3) Use non-concentration to derive growth via escape from subvarieties. Each step can be decomposed into lemmas amenable to formal verification.\n\n**Domain Bridges:** Additive combinatorics (sum-product estimates), algebraic geometry (subvarieties), representation theory (trace maps), classification of finite simple groups.\n\n**Lineage:** Culmination of the certificate-to-growth program initiated in this cycle.\n\n**Ambition:** \ud83d\udd34 Grand Challenge \u2014 paradigm-shifting if achieved, requiring formalization of deep results across multiple mathematical domains.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "edab5f0b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:59:06.937020+00:00"
-  },
-  {
     "id": "fd_0981",
     "title": "Direction 2: Valuated M-Convexity and Coefficient Transport",
     "description": "**Conjecture:** Define a *valuated exchange property* that tracks not just support membership but coefficient values: for \u03b1, \u03b2 \u2208 supp(p) with \u03b1\u1d62 > \u03b2\u1d62, the exchange witness j satisfies a quantitative bound relating the coefficients of the four involved monomials. This valuated exchange should be preserved under differentiation (with appropriate rescaling).\n\n**Test:** Formalize a valuated exchange predicate. Test it on the basis-generating polynomials of uniform matroids with explicit coefficient weights. Prove or disprove preservation for the simplest nontrivial case (n=3, d=2).\n\n**Impact:** This would bridge from combinatorial support (boolean membership) to analytic coefficient behavior (quantitative inequalities), connecting the support-level theorem to log-concavity and ultra-log-concavity of coefficients along rays.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (coeff_pderiv_eq), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signature).\n\n**Proof Strategy:** Use the coefficient formula [\u2202p/\u2202x\u1d62]_m = (m\u1d62+1)\u00b7[p]_{m+e\u1d62} to transport coefficient inequalities. The (m\u1d62+1) factor creates a predictable rescaling that should preserve the valuated exchange up to this factor.\n\n**Domain Bridges:** Discrete convex analysis (Murota's valuated matroids) \u2194 algebraic geometry (intersection theory) \u2194 combinatorial optimization (submodular function minimization).\n\n**Lineage:** Deepens the contraction theorem from topology (support) to geometry (valuated support).\n\n**Ambition:** Solid extension \u2014 the coefficient formula makes the rescaling explicit.\n\n**The key insight is** that the coefficient of the derivative at m is a simple multiplicative transform of the coefficient at m+e\u1d62, so quantitative exchange bounds should transport with controlled distortion.\n\n**Why now?** The coefficient formula is formally proved, and the qualitative (support-level) result is established. The quantitative upgrade is the natural next step.\n\n---",
@@ -1016,31 +959,11 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "4d0d5d0f",
-    "timestamp": "2026-05-26T00:07:30.309357+00:00"
-  },
-  {
-    "id": "fd_1014",
-    "title": "Direction 5: Tropical Certificate Density and Expander Graph Construction",
-    "description": "**Conjecture:** The certificate density framework admits a tropical analogue, where the finite field \ud835\udd3d_q is replaced by the tropical semifield T = (\u211d \u222a {-\u221e}, max, +), and \"irreducible\" tropical characteristic polynomials correspond to indecomposable tropical matrices. The tropical certificate density converges to 1/n as the \"tropical q\" (a scaling parameter) tends to infinity, with the same M\u00f6bius-function error structure.\n\n**Test:** Compute the fraction of n\u00d7n tropical matrices (with entries in {0, 1, ..., M}) that are tropically indecomposable, for n = 3, 4, 5 and M = 10, 100, 1000. If the fraction converges to 1/n with error ~ 1/M^{n/2}, the tropical analogue holds.\n\n**Impact:** Opens a new research direction connecting tropical geometry to algebraic generation theory. If the tropical certificate density satisfies the same asymptotics, it suggests a universal structural principle governing irreducibility across algebraic settings.\n\n**Catalog References:** `Pythagorean/CertificateDensity.lean` (algebraic density), `Pythagorean/TropicalBerggrenZeta.lean` (tropical arithmetic)\n\n**Proof Strategy:** Define tropical irreducibility via the tropical determinant and permanent structure. Use the tropical analogue of the characteristic polynomial (the tropical eigenvalue set) to classify tropical matrices. Apply tropical M\u00f6bius inversion to count tropically indecomposable polynomials.\n\n**Domain Bridges:** Tropical Geometry \u2194 Group Theory \u2194 Number Theory\n\n**Lineage:** Extends the Pythagorean-tropical bridge to a new domain.\n\n**Ambition:** Grand challenge \u2014 speculative but testable connection between algebraic and tropical worlds.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "eb4b8f41",
+    "source_exp_id": "abf333bc",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T01:21:04.728538+00:00"
+    "timestamp": "2026-05-26T00:07:30.309357+00:00"
   },
   {
     "id": "fd_1025",
@@ -1073,10 +996,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a0951d1f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e18f2436",
     "timestamp": "2026-05-26T06:04:06.558801+00:00"
   },
   {
@@ -1202,64 +1125,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:05:51.445505+00:00"
   },
   {
-    "id": "fd_1136",
-    "title": "Direction 2: Gate-Level Quantum Circuit Synthesis from Certificates",
-    "description": "**Conjecture:** The recursive certificate tree for a matroid of rank $r$ on $n$ elements can be converted into a quantum circuit of depth $O(n \\cdot r)$ using $O(n)$ ancilla qubits and controlled rotation gates, with amplitudes matching the certificate to machine precision.\n\n**Test:** Implement the certificate-to-circuit conversion for small matroids (rank 2\u20134, ground set size 4\u20138). Simulate the quantum circuit classically and verify that output probabilities match the exact weighted basis distribution to $< 10^{-10}$ total variation distance.\n\n**The key insight is** that each deletion/contraction branch in the certificate tree corresponds to a conditional rotation: given that the qubit for element $e$ is in state $|0\\rangle$ (deletion) or $|1\\rangle$ (contraction), apply rotations determined by the sub-certificate. The tree structure maps to a sequence of controlled-$R_y$ gates.\n\n**Why now?** Current quantum state preparation methods (e.g., amplitude encoding via QRAM, Grover-Rudolph) are general but not structure-aware. The matroid certificate provides domain-specific structure that can reduce circuit depth. Recent advances in mid-circuit measurement and feed-forward make tree-structured circuits physically realizable.\n\n**Impact:** A practical quantum circuit for sampling spanning trees would advance quantum network analysis, quantum Monte Carlo for graph problems, and quantum-enhanced optimization.\n\n**Catalog References:** `Catalog/Pythagorean/MatroidQuantumCertificates.lean` (certificate structure and amplitude spec).\n\n**Proof Strategy:** Inductive construction: at each element, a controlled rotation splits amplitude between deletion and contraction branches. Angle is $\\theta_e = \\arctan(\\sqrt{w(e) \\cdot Z_{M/e} / Z_{M \\setminus e}})$.\n\n**Domain Bridges:** Quantum circuit synthesis \u2194 matroid theory \u2194 combinatorial optimization.\n\n**Lineage:** Extends Theorem 4.2 (quantum sampler exactness) to physical implementation.\n\n**Ambition:** Grand challenge \u2014 requires bridging formal mathematics with quantum hardware constraints.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "72356358",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T13:07:38.698339+00:00"
-  },
-  {
-    "id": "fd_1174",
-    "title": "Direction 2: Representation-Theoretic Sharpening for $S_n$",
-    "description": "**Conjecture:** For $S_n$ with adjacent transpositions and bubble-sort canonical paths, the congestion $\\kappa(S_n)$ satisfies $\\kappa(S_n) = \\Theta(n^a)$ where $8 \\leq a \\leq 9$, and the resulting spectral gap bound is $\\Omega(n!^2 / n^{a+3})$. More precisely, the exact spectral gap is $1 - \\cos(\\pi/n) \\sim \\pi^2/(2n^2)$, and the canonical path bound is weaker by a factor of $\\Theta(n^{a+1} / n!^2)$.\n\n**Test:** Compute exact congestion for $n = 6, 7$ (feasible with optimized code) and fit the growth exponent. Compare with the exact spectral gap from representation theory (known to be the eigenvalue of the $(n-1)$-dimensional standard representation on the adjacent transposition generators).\n\n**Impact:** Understanding the exact congestion growth would reveal whether bubble-sort routing is inherently suboptimal or whether the canonical path method itself has structural limitations for $S_n$. This could motivate the search for better canonical paths (e.g., using insertion sort, merge sort, or representation-guided routing).\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (congestion definition), `Catalog/Bridges/Catalog/Pythagorean/CayleyExpander/SymmetricGroup.lean` (S_n generators).\n\n**Proof Strategy:** Use the Murnaghan\u2013Nakayama rule to compute the exact spectrum of the adjacency matrix of $\\text{Cay}(S_n, \\text{adj.\\ transpositions})$. Compare with the canonical path lower bound.\n\n**Domain Bridges:** Representation theory of symmetric groups, algebraic combinatorics, random matrix theory.\n\n**Lineage:** Extends the computational case study in `CanonicalPaths.lean` with exact spectral analysis.\n\n**Ambition:** Solid extension \u2014 connects formal combinatorial bounds to exact algebraic results.\n\n**\"The key insight is...\"** that the gap between canonical path bounds and exact spectral gaps quantifies the *information loss* in the routing abstraction, revealing which structural features of the group the method fails to exploit.\n\n**\"Why now?\"** The exact congestion data for $S_3, S_4, S_5$ reveals unexpectedly fast growth, motivating representation-theoretic analysis.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "5c8e335c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T17:12:57.478975+00:00"
-  },
-  {
-    "id": "fd_1176",
-    "title": "Direction 4: High-Dimensional Expansion via Canonical Cochains",
-    "description": "**Conjecture:** The canonical path method extends to simplicial complexes: for a $d$-dimensional simplicial complex $X$ with vertex set $V$, one can define \"canonical $k$-chains\" routing $k$-cycles to $k$-boundaries, with congestion controlling the $(k+1)$-th spectral gap of the Hodge Laplacian.\n\n**Test:** Define canonical 1-chains for the complete 2-complex on 5 vertices (the boundary of a 4-simplex). Compute congestion and compare with the known spectral gap of the Hodge Laplacian.\n\n**Impact:** High-dimensional expansion is a frontier topic with applications to locally testable codes, quantum LDPC codes, and topological data analysis. A canonical cochain method would provide the first combinatorial certification of high-dimensional spectral gaps.\n\n**Catalog References:** `Pythagorean/CayleyExpander/CanonicalPaths.lean` (1-dimensional case), `Pythagorean/CayleyExpander/Defs.lean` (Dirichlet energy definitions).\n\n**Proof Strategy:** Define a higher-dimensional Dirichlet energy for $k$-forms on a simplicial complex. Generalize the telescoping identity to $k$-chains. Prove a Cauchy\u2013Schwarz bound on cochain energy. Assemble into a Hodge-theoretic Poincar\u00e9 inequality.\n\n**Domain Bridges:** Algebraic topology (cohomology, Hodge theory), quantum error correction, extremal combinatorics.\n\n**Lineage:** Generalizes `variance_le_congestion_mul_energy` from 0-forms on graphs to $k$-forms on complexes.\n\n**Ambition:** Grand challenge \u2014 would open a new direction in formal high-dimensional combinatorics.\n\n**\"The key insight is...\"** that canonical paths are 1-dimensional chains solving a 0-dimensional routing problem, and the same structure exists in every dimension.\n\n**\"Why now?\"** The formal 1-dimensional framework provides a template for higher-dimensional generalization.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "5c8e335c",
-    "consumed_by_exp_id": "8f3b6854",
-    "timestamp": "2026-05-26T17:12:57.552181+00:00"
-  },
-  {
     "id": "fd_1179",
     "title": "Direction 2: Quantum Entanglement Entropy via DPP-Lorentzian Structure",
     "description": "**Conjecture**: For a system of n free fermions with single-particle density matrix K (PSD, eigenvalues in [0,1]), the entanglement entropy of a subsystem A \u2286 [n] satisfies bounds derivable from the Lorentzian structure of the DPP partition function restricted to A.\n\n**Test**: For random fermionic states (PSD K with eigenvalues in [0,1]) and subsystems A of size |A| \u2264 8, compute the entanglement entropy S_A = \u2212\u03a3_k [\u03bb_k log \u03bb_k + (1\u2212\u03bb_k)log(1\u2212\u03bb_k)] (where \u03bb_k are eigenvalues of K_A) and compare with bounds derived from the Lorentzian coefficient inequalities of the degree-|A| homogeneous component.\n\n**Impact**: Would connect Lorentzian polynomial theory to quantum information theory, providing geometric constraints on entanglement structure. Could yield new area-law or volume-law bounds for free-fermion systems.\n\n**Catalog References**: `Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signatures), `Pythagorean/DPPLorentzian.lean` (spectral bridge theorem).\n\n**Proof Strategy**: Use the spectral decomposition K_A = U_A \u039b_A U_A^T. The entanglement entropy is a function of eigenvalues of K_A. The Lorentzian inequalities constrain the elementary symmetric functions of these eigenvalues (which are the homogeneous component sums), and Newton's inequalities relate these to individual eigenvalues.\n\n**Domain Bridges**: Quantum information \u2194 Algebraic combinatorics \u2194 Statistical mechanics.\n\n**Lineage**: Extends the spectral bridge (Theorem 3.4) into the quantum domain.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Grand Challenge / Paradigm-Shifting). If Lorentzian structure constrains entanglement, it would open an entirely new connection between Hodge theory and quantum information.\n\n**The key insight is** that the entanglement entropy of free fermions is entirely determined by the eigenvalues of the reduced density matrix K_A, and these eigenvalues are constrained by the same Lorentzian inequalities that govern the DPP partition function.\n\n**Why now?** Free-fermion entanglement is well-understood physically but lacks a connection to algebraic combinatorics. The DPP-Lorentzian bridge we've established is exactly the missing link.\n\n---",
@@ -1278,26 +1143,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "c89156c3",
     "consumed_by_exp_id": "43afaa07",
     "timestamp": "2026-05-26T17:48:46.660643+00:00"
-  },
-  {
-    "id": "fd_1183",
-    "title": "Direction 1: Bell Number State Compression",
-    "description": "**Conjecture:** The FPT certificate bound can be tightened from $|E| \\cdot 2^{k^2+k}$ to $|E| \\cdot B_{k+1}^2$, where $B_n$ is the $n$-th Bell number.\n\n**Test:** Implement the state-compressed certificate compiler using partition refinement at each bag. For $k \\in \\{2,3,4,5\\}$ and random $k$-trees on $n \\in \\{50, 100, 500\\}$ vertices, measure the ratio of actual certificate size to $|E| \\cdot B_{k+1}^2$. If this ratio stays bounded by a constant, the conjecture is supported.\n\n**Impact:** Would reduce the certificate size by a factor of $2^{k^2+k} / B_{k+1}^2$, which is superexponential in $k$. For $k = 5$: from $\\sim 10^9$ to $\\sim 41,209$ \u2014 a 24,000\u00d7 improvement.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TreewidthCertificateDefs.lean` \u2014 `BagProfile` structure, `certBranchingBound`\n- `Catalog/Pythagorean/TreewidthCertificateTheorems.lean` \u2014 `fpt_cert_size_composition`, `maxActiveEdges_le_cert_exp`\n\n**Proof Strategy:** Define a `BellCompressedState` structure that represents bag states as set partitions rather than edge subsets. Show that deletion preserves the partition (splits a class into two) and contraction refines it (merges two classes). The number of distinct partition transitions at each bag is bounded by $B_{k+1}$ for deletions and $B_{k+1}$ for contractions, giving $B_{k+1}^2$ total states.\n\n**Domain Bridges:** Connects to enumerative combinatorics (Bell numbers, Stirling numbers), lattice theory (partition lattice structure), and coding theory (partition codes for efficient state representation).\n\n**Lineage:** Builds on `maxActiveEdges_eq_choose` and `fpt_cert_size_composition`.\n\n**Ambition:** \ud83d\udfe1 Solid extension \u2014 the Bell number bound is well-understood combinatorially, and the main challenge is the formal verification infrastructure.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "802479fb",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T18:22:28.461601+00:00"
   },
   {
     "id": "fd_1199",
@@ -1563,26 +1408,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T03:33:16.917986+00:00"
   },
   {
-    "id": "fd_1279",
-    "title": "Direction 1: Higher-Order Shadow Towers and Superlinear Lower Bounds",
-    "description": "**Conjecture:** For every $k \\geq 1$, the $k$-th shadow $\\text{Sh}_k(S)$ satisfies the lower bound $|\\text{Sh}_k(S)| \\leq n^k \\cdot \\text{size}(C_k)$ for any circuit $C_k$ computing all $k$-th partial derivative supports. Moreover, there exist explicit families where the $k$-shadow grows faster than the $(k-1)$-shadow relative to $|S|$, yielding superlinear (in $k$) lower bounds.\n\n**Test:** Formalize $\\text{Sh}_k$ for $k = 3, 4$ in Lean and computationally verify on simplex supports $T(d, m)$ that $\\text{Sh}_k(T(d,m)) = T(d, m-k)$. If the identity holds, derive exact cardinalities via binomial coefficients and prove the tower of lower bounds $\\text{size}(C_k) \\geq \\binom{m+d-k-1}{d-1} / n^k$.\n\n**Impact:** This would give the first formally verified tower of derivative-complexity lower bounds, with the $k$-th level providing a bound that grows polynomially in $m$ and $d$. For fixed $d$ and large $k$, the ratio $|\\text{Sh}_k|/n^k$ can dominate naive counting, suggesting truly new lower bounds.\n\n**Catalog References:**\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `QuadraticShadow`, `quadShadow_mono`\n- `Pythagorean/ShadowCircuitComplexity.lean`: `secondShadow`, `supportCircuit_hessian_lower_bound`\n\n**Proof Strategy:** Define $\\text{Sh}_k$ inductively as $\\text{Sh}_1(\\text{Sh}_{k-1}(S))$. Prove the simplex identity by induction on $k$, using the base case $\\text{Sh}_2(T(d,m)) = T(d,m-2)$ from this work. The lower bound theorem should generalize by replacing $n^2$ channels with $\\binom{n+k-1}{k}$ derivative channels.\n\n**Domain Bridges:** Connects to the theory of jet bundles in differential geometry, where $k$-th jets are precisely the objects whose supports form $k$-shadows.\n\n**The key insight is** that the shadow tower $\\text{Sh}_1 \\supseteq \\text{Sh}_2 \\supseteq \\cdots$ creates an arithmetic complexity filtration that no circuit can shortcut.\n\n**Why now?** The formal machinery for $\\text{Sh}_2$ is in place; extending to $\\text{Sh}_k$ requires only inductive generalization of existing definitions and proofs.\n\n**Lineage:** Builds directly on `secondShadow_simplexSupport` and `supportCircuit_hessian_lower_bound`.\n\n**Ambition:** \ud83d\udfe1 Solid extension \u2014 primarily definitional and structural generalization of established results.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "a8f3ced3",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T03:33:47.239729+00:00"
-  },
-  {
     "id": "fd_1280",
     "title": "Direction 2: Non-Cancellation Certificates and Coefficient-Aware Bounds",
     "description": "**Conjecture:** For polynomials over fields of characteristic zero with generic coefficients, the support of the Hessian entries equals the second shadow exactly (no cancellation). This non-cancellation property can be certified by a formal Jacobian condition on the coefficient matrix, yielding coefficient-aware lower bounds that are strictly stronger than support-only bounds.\n\n**Test:** Formalize the connection between `WeightedSupportShadow.nonzeroQuadLeafSet_eq_shadow` and the shadow complexity lower bound. Show that for polynomials with nonzero coefficients, the lower bound applies to actual polynomial circuits (not just support circuits).\n\n**Impact:** Bridges the gap between the combinatorial support model and actual polynomial computation, making the lower bounds applicable to real arithmetic circuits.\n\n**Catalog References:**\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `nonzeroQuadLeafSet_eq_shadow`, `coeff_pderiv_pderiv_ne_zero_iff`\n\n**Proof Strategy:** Use `coeff_pderiv_pderiv_ne_zero_iff` to show that individual Hessian coefficients are nonzero iff the ancestor coefficient is nonzero. Combine with the support circuit model to lift the lower bound from support circuits to actual arithmetic circuits under a genericity assumption.\n\n**Domain Bridges:** Connects to algebraic geometry (generic points, Zariski topology) and commutative algebra (non-vanishing of resultants).\n\n**The key insight is** that the non-cancellation property of individual second derivatives \u2014 each output coefficient is a nonzero scalar multiple of exactly one input \u2014 converts support-level bounds into coefficient-level bounds without loss.\n\n**Why now?** The non-cancellation theorem is already formally verified in `WeightedSupportShadow.lean`; the remaining work is to formalize the circuit model connection.\n\n**Lineage:** Directly extends `nonzeroQuadLeafSet_eq_shadow` to complexity conclusions.\n\n**Ambition:** \ud83d\udfe1 Solid extension with potential for \ud83d\udd34 breakthrough if it yields new bounds on standard arithmetic circuits.\n\n---",
@@ -1665,28 +1490,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T04:11:16.674461+00:00"
   },
   {
-    "id": "fd_1290",
-    "title": "Direction 1: Higher-Order Shadow Anti-Cancellation",
-    "description": "**Conjecture:** For any polynomial $f$ with nonneg coefficients and any strictly positive $k$-tensor $A$, the $k$-th shadow of $\\text{Supp}(f)$ is contained in $\\text{Supp}(D_A^{(k)} f)$, where $D_A^{(k)} f = \\sum_{i_1, \\ldots, i_k} A_{i_1 \\ldots i_k} \\partial_{i_1} \\cdots \\partial_{i_k} f$.\n\n**Test:** Implement the $k$-th shadow computation and the $k$-th order differential operator for $k = 3, 4$. Run 10,000 random samples with $n \\leq 4$, $d \\leq 8$, checking whether every $k$-th shadow exponent survives. A counterexample for $k = 3$ would falsify the conjecture.\n\n**Impact:** This would establish a complete hierarchy of anti-cancellation theorems, one for each differential order. It would provide certified sparsity bounds for arbitrary-order differential operators applied to positive polynomials.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/AntiCancellationLorentzian.lean` \u2014 the second-order coefficient identity and positivity argument generalize naturally.\n\n**Proof Strategy:** The key insight is that the coefficient of $\\beta$ in $\\partial_{i_1} \\cdots \\partial_{i_k} f$ is $\\prod_{l=1}^k (\\beta(i_l) + l' + 1) \\cdot [\\beta + e_{i_1} + \\cdots + e_{i_k}] f$ where $l'$ accounts for repeated indices. Each factor is strictly positive, so the same nonneg-sum-with-positive-witness argument applies.\n\n**Domain Bridges:** Symbolic computation (arbitrary-order differential operators), PDE theory ($k$-th order elliptic operators), algebraic geometry (higher jet spaces).\n\n**Lineage:** Direct extension of Theorem C in `AntiCancellationLorentzian.lean`.\n\n**Ambition:** Solid extension \u2014 high confidence of truth, straightforward generalization of existing proof.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "19908b05",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T04:11:37.403103+00:00"
-  },
-  {
     "id": "fd_1305",
     "title": "Direction 1: Unbounded Confluence via Well-Founded Overlap Induction",
     "description": "**Conjecture**: For every finite left-linear simply typed Miller-pattern rewrite system E, if all \u03b2-critical pairs (at all sizes) are joinable, then HoRewrite_\u03b2(E) is confluent on all closed simply-typed terms.\n\n**The key insight is** that the bounded framework established in `Pythagorean/HOCriticalPairs.lean` can be lifted to an unbounded result by showing that the set of critical pairs is *well-founded*: overlaps at larger sizes decompose into smaller overlaps via the substitution functoriality theorem (`subst_comp`). This transforms the bounded critical pair theorem into an inductive proof over the termination ordering.\n\n**Why now?** The substitution infrastructure (`subst_comp`, `hoRewrite_closed_under_subst`, `betaStep_closed_under_subst`) and Newman's lemma (`newman_lemma`) from the current development provide the exact tools needed. The missing piece is a structural analysis of how overlap size relates to the well-founded ordering from `Terminating E`.\n\n**Test**: Formalize the statement in Lean 4 and attempt proof by well-founded induction on the overlap complexity. A disproof would require constructing a Miller-pattern system where joinability at every finite size fails to imply joinability at the limit.\n\n**Impact**: An unconditional higher-order critical pair theorem would be a landmark result in rewriting theory, removing the last barrier to using completion as a decision procedure for higher-order equational reasoning.\n\n**Catalog References**: `Pythagorean/HOCriticalPairs.lean` (Theorems: `newman_lemma`, `localConfluence_of_joinable_criticalPairs`, `subst_comp`)\n\n**Proof Strategy**: Transfinite induction on the maximal overlap size. Use `subst_comp` to decompose large overlaps into compositions of smaller ones.\n\n**Domain Bridges**: Automated theorem proving (equational reasoning), compiler verification (full correctness guarantees)\n\n**Lineage**: Direct extension of the bounded critical pair theorem\n\n**Ambition**: Grand challenge \u2014 would resolve a 50-year open question in higher-order rewriting theory\n\n---",
@@ -1697,7 +1500,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "9c7a3d48",
@@ -2169,21 +1972,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T22:27:21.399604+00:00"
   },
   {
-    "id": "fd_1227",
-    "title": "Barcode Rigidity for Isospectral but Non-Isometric Arithmetic Manifolds",
-    "description": "Conjecture: There exists a canonical filtration functor F from compact arithmetic locally symmetric spaces M to finite filtered chain complexes over Z such that (i) if M and N are Sunada-isospectral but non-isometric, then their ordinary Laplace spectra agree while the primewise torsion persistence profiles of F(M) and F(N) differ for infinitely many good primes p; and (ii) within each commensurability class, equality of these primewise persistence profiles for a density-1 set of primes forces M and N to be isometric. Test: Construct F explicitly for known Sunada pairs or Vigneras-type isospectral manifolds, compute primewise barcodes/torsion birth multisets at many primes, and check whether the profiles separate the pair; refutation occurs if a canonical reasonable F fails systematically on such examples or if non-isometric examples remain indistinguishable across almost all primes. Impact: This would provide a genuinely new geometric invariant stronger than Laplace spectrum, linking arithmetic topology, isospectral geometry, and persistent homology, and could open a route to 'hearing' hidden arithmetic structure beyond classical spectral data.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Spectral Geometry"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T22:28:15.962705+00:00"
-  },
-  {
     "id": "fd_1244",
     "title": "Persistent Homology Phase Transition at the Arithmetic Rank of Elliptic Curves",
     "description": "Conjecture: Let E/Q be an elliptic curve, and for each good prime p define a filtered simplicial complex K_p(E) from the sequence of normalized Frobenius traces a_p/(2\\sqrt{p}) by taking sliding windows of length w and building a Vietoris\u2013Rips filtration in the ambient Euclidean space. As w and the prime cutoff X both grow with w = o(log log X), the limiting barcode statistics of {K_p(E)}_{p\\le X} exhibit exactly rank(E(Q)) + 1 stable persistence bands in degree 1, with the extra bands absent for rank 0 curves. Test: Compute the construction for large databases of elliptic curves of known algebraic rank; confirmation requires that the number of statistically stable H1 bands matches rank+1 across families, while systematic failure on rank-labeled datasets refutes the conjecture. Impact: This would create a topological observable for Mordell\u2013Weil rank, suggesting a new bridge between arithmetic statistics, dynamical embeddings of Frobenius data, and topological data analysis.",
@@ -2216,9 +2004,41 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T00:16:01.142031+00:00"
   },
   {
-    "id": "fd_1272",
-    "title": "Arithmetic Echo Reconstruction from Primewise Persistent Barcodes",
-    "description": "Conjecture: There exists an explicit functorial construction assigning to every smooth projective variety X over Q a family of filtered integer chain complexes C_p(X) indexed by good primes p such that, for a density-1 set of primes, the multiset of Frobenius eigenvalue arguments on middle \u00e9tale cohomology can be reconstructed up to o(1) error from the primewise persistent barcode of C_p(X); moreover, non-isogenous varieties with distinct Frobenius angle statistics fail this reconstruction agreement for infinitely many p. Test: Build C_p(X) for computable families (elliptic curves, K3 surfaces, selected Calabi\u2013Yau hypersurfaces), compute barcodes and compare reconstructed angle distributions against those obtained from point counts / zeta functions; confirmation requires statistically consistent recovery across growing p, while systematic mismatch or inability to distinguish known non-isogenous examples refutes the conjecture. Impact: This would create a new topological probe of arithmetic geometry, turning persistent homology into an information-complete observable for Frobenius statistics and potentially yielding new invariants for isogeny, mirror phenomena, and arithmetic classification.",
+    "id": "fd_1317",
+    "title": "Prime-Rigidity Threshold for Integral Persistence Reconstruction",
+    "description": "Conjecture: There exists a universal constant c in (0,1) such that for any two finite filtered chain complexes C,D over Z with boundary matrices of total bit-size N, if their reductions mod p have isomorphic persistence modules for every prime p <= c log N and their rational persistence modules over Q are isomorphic, then C and D are filtered chain-homotopy equivalent over Z up to adding contractible summands. Moreover, for every c' < c there exist counterexample families of size N where agreement for all p <= c' log N does not force equivalence. Test: Exhaustively enumerate or randomly generate small filtered complexes, compare integral equivalence classes against agreement of mod-p and rational persistence data up to increasing prime cutoffs, and search for the sharp transition scale in log N; refutation is a counterexample above the proposed threshold, confirmation is sustained recovery with matching lower-bound constructions. Impact: This would turn primewise persistence into a finite arithmetic fingerprint, giving a concrete reconstruction principle for integer filtered topology and a new bridge between SNF complexity, local-global principles, and computable invariants.",
+    "domains": [
+      "Topological Data Analysis",
+      "Algebraic Topology",
+      "Arithmetic Combinatorics",
+      "Computational Algebra"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1318",
+    "title": "Mod-p Spectral Fingerprints Determine Expansion Profile of Arithmetic Simplicial",
+    "description": "Conjecture: There exists a family of bounded-degree arithmetic simplicial complexes X_N (for example Ramanujan-type quotients of Bruhat\u2013Tits buildings) such that the multiset of persistent homology barcodes of the mod-p Laplacian filtrations, taken over all primes p up to C log N, determines the real Laplacian spectral gap up to o(1) error as N -> infinity. Test: Construct explicit X_N, compute barcode statistics from mod-p combinatorial Laplacians for growing N and primes p <= C log N, and regress/predict the real spectral gap; the conjecture is supported if prediction error vanishes asymptotically and refuted if asymptotically different spectral gaps produce indistinguishable prime barcode data. Impact: This would create a new arithmetic-topological route to estimating expansion and mixing in high-dimensional complexes using only finite-field computations, linking expander theory, arithmetic geometry, and persistent homology.",
+    "domains": [
+      "Arithmetic Topology",
+      "Spectral Graph Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T05:59:32.898444+00:00"
+  },
+  {
+    "id": "fd_1319",
+    "title": "Arithmetic Holography from Primewise Persistence Profiles",
+    "description": "Conjecture: There exists an explicit functorial construction X \u21a6 P_X from smooth projective varieties over Q to a family of finite filtered chain complexes over Z, indexed by good primes p, such that if two varieties X,Y have primewise persistence distributions agreeing for a density-1 set of primes up to uniformly vanishing bottleneck error, then X and Y have isomorphic semisimplified \u2113-adic Galois representations in all degrees; conversely, any mismatch in Frobenius eigenvalue statistics on a positive-density set of primes forces a detectable separation in the persistence distributions. Test: Implement P_X for computable families (elliptic curves, K3 surfaces, low-dimensional Calabi\u2013Yau hypersurfaces), compare persistence signatures across primes against independently computed Frobenius traces/zeta data, and check whether agreement/disagreement tracks arithmetic equivalence as predicted. Refutation occurs if non-isomorphic Galois data repeatedly yields indistinguishable persistence profiles on a positive-density set, or if arithmetic-equivalent examples fail to match. Impact: This would create a new topological encoding of arithmetic geometry, potentially turning hard-to-compute motivic/Galois information into stable, data-analytic invariants and opening a bridge between persistent homology, Langlands-style arithmetic fingerprints, and computational algebraic geometry.",
     "domains": [
       "Arithmetic Geometry",
       "Topological Data Analysis"
@@ -2228,37 +2048,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "prove",
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T03:32:54.843053+00:00"
-  },
-  {
-    "id": "fd_1278",
-    "title": "Prime-Phase Synchronization Law for Zeta-Zero Persistence",
-    "description": "Conjecture: There exists an explicit filtration functor F that assigns to each height parameter T a finite filtered chain complex C_T over Z built from the first nontrivial zeros of the Riemann zeta function up to height T, such that the p-primary persistent barcode of C_T exhibits a phase-locking transition: for each fixed prime p, the normalized birth-time distribution converges as T -> infinity to a deterministic measure mu_p, and RH holds if and only if the family {mu_p}_p satisfies a universal synchronization identity linking its first spectral moment to log p with error o(1) uniformly in p <= T^alpha for every alpha < 1. Test: Compute C_T from verified zero data and measure the primewise barcode moments; confirmation is convergence plus the predicted synchronization law across many primes and growing T, while systematic violation for some prime range refutes the conjectured equivalence. Impact: This would create a new topological-statistical reformulation of RH, turning zero statistics into experimentally testable prime-indexed persistence signatures and potentially enabling machine-guided discovery of hidden structure in L-function zeros.",
-    "domains": [
-      "Analytic Number Theory",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T03:33:24.775449+00:00"
-  },
-  {
-    "id": "fd_1284",
-    "title": "Prime-Stable Persistent Homology Predicts Motivic Galois Orbit Size",
-    "description": "Conjecture: There exists a functorial construction sending a smooth projective variety X over Q to a family of filtered chain complexes C_p(X) over Z, indexed by good primes p, such that if the multiset-valued primewise persistent barcode of C_p(X) is eventually periodic in p modulo some integer M up to uniformly bounded bottleneck error, then the semisimplified l-adic Galois representation on each H^i_et(X,Q_l) has finite image after restriction to an open subgroup, equivalently X is potentially of Artin type in that cohomological degree. Test: Compute the barcode family for explicit classes (CM abelian varieties, K3 surfaces with high Picard rank, generic Calabi\u2013Yau hypersurfaces, modular curves) and check whether eventual periodicity occurs exactly in cases where Frobenius traces are known to come from finite-image or potentially finite monodromy representations; a single generic non-isotrivial family exhibiting periodic barcodes despite provably infinite monodromy would refute it. Impact: This would create a new topological detector for arithmetic monodromy finiteness, linking persistent homology to the structure of Galois representations and potentially giving a computable probe of motivic complexity.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T03:33:56.193661+00:00"
+    "timestamp": "2026-05-27T06:00:04.057379+00:00"
   },
   {
     "id": "seed_032",
