@@ -1,123 +1,95 @@
-#!/usr/bin/env python3
 """
 Visualization: Quantum-to-Classical Gap Bridge
 
-Plots the quantum spectral gap, surrogate Lorentzian gap, and classical
-conductance estimate for the transverse-field Ising model as a function
-of the transverse field strength h. This visualizes the core conjecture
-that all three gaps are polynomially related.
+Visualizes the central correspondence: how the quantum spectral gap of a
+transverse-field Ising model controls the Lorentzian gap surrogate and
+classical expansion (boundary mass) of the ground-state measurement distribution.
+
+Three panels show:
+1. Quantum gap vs transverse field strength
+2. Lorentzian gap surrogate tracking the quantum gap
+3. Scatter plot revealing the quantitative bridge: classical expansion vs quantum gap
 """
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-# ── Hamiltonian construction (self-contained) ─────────────────────────
 
-def kron_chain(ops):
-    result = ops[0]
-    for op in ops[1:]:
-        result = np.kron(result, op)
+def pauli_x():
+    return np.array([[0, 1], [1, 0]], dtype=complex)
+
+def pauli_z():
+    return np.array([[1, 0], [0, -1]], dtype=complex)
+
+def kron_at(op, site, n):
+    result = np.eye(1, dtype=complex)
+    for i in range(n):
+        result = np.kron(result, op if i == site else np.eye(2, dtype=complex))
     return result
 
 def tfim_hamiltonian(n, J, h):
     dim = 2**n
     H = np.zeros((dim, dim), dtype=complex)
-    I2 = np.eye(2, dtype=complex)
-    Zop = np.array([[1,0],[0,-1]], dtype=complex)
-    Xop = np.array([[0,1],[1,0]], dtype=complex)
     for i in range(n - 1):
-        ops = [I2]*n; ops[i] = Zop; ops[i+1] = Zop
-        H -= J * kron_chain(ops)
+        H -= J * kron_at(pauli_z(), i, n) @ kron_at(pauli_z(), i + 1, n)
     for i in range(n):
-        ops = [I2]*n; ops[i] = Xop
-        H -= h * kron_chain(ops)
+        H -= h * kron_at(pauli_x(), i, n)
     return H
 
-def analyze(H, n):
+def analyze(n, J, h):
+    H = tfim_hamiltonian(n, J, h)
     evals, evecs = np.linalg.eigh(H)
     idx = np.argsort(evals)
-    gap = float(evals[idx[1]] - evals[idx[0]])
-    psi = evecs[:, idx[0]]
-    probs = np.abs(psi)**2
-    dim = 2**n
+    probs = np.abs(evecs[:, idx[0]])**2
+    gap = evals[idx[1]] - evals[idx[0]]
+    p_min, p_max = np.min(probs), np.max(probs)
+    lor = p_min / p_max if p_max > 1e-15 else 0.0
+    half = set(range(2**(n-1)))
+    bm = sum(probs[x] for x in half if any(x ^ (1 << b) not in half for b in range(n)))
+    return float(gap), lor, bm
 
-    # Lorentzian surrogate: LC_ratio * min_mass * dim
-    mm = np.min(probs)
-    mx = np.max(probs)
-    lc = (mm/mx)**2 if mx > 0 else 0
-    lor_gap = lc * mm * dim
 
-    # Classical conductance
-    best_cond = float('inf')
-    sp = np.sort(probs)[::-1]
-    for k in range(1, dim):
-        A = set(i for i in range(dim) if probs[i] >= sp[k-1])
-        mu_A = sum(probs[i] for i in A)
-        if mu_A <= 1e-15 or mu_A >= 1-1e-15:
-            continue
-        bdry = 0.0
-        for x in A:
-            for bit in range(n):
-                y = x ^ (1 << bit)
-                if y not in A:
-                    bdry += probs[x]
-                    break
-        cond = bdry / (mu_A * (1 - mu_A))
-        best_cond = min(best_cond, cond)
-    cl_gap = best_cond if best_cond < float('inf') else 0.0
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-    return gap, lor_gap, cl_gap
+colors = {'4': '#2196F3', '6': '#FF5722', '8': '#4CAF50'}
 
-# ── Main plot ─────────────────────────────────────────────────────────
+for n in [4, 6, 8]:
+    h_vals = np.linspace(0.1, 3.0, 60)
+    gaps, lors, bms = [], [], []
+    for h in h_vals:
+        g, l, b = analyze(n, 1.0, h)
+        gaps.append(g)
+        lors.append(l)
+        bms.append(b)
 
-n = 6
-J = 1.0
-h_vals = np.linspace(0.1, 3.0, 40)
+    c = colors[str(n)]
 
-quantum_gaps = []
-lor_gaps = []
-cl_gaps = []
+    axes[0].plot(h_vals, gaps, color=c, linewidth=2, label=f'n={n}')
+    axes[0].set_xlabel('Transverse field h/J', fontsize=12)
+    axes[0].set_ylabel('Spectral gap Δ(H)', fontsize=12)
+    axes[0].set_title('Quantum Spectral Gap', fontsize=13, fontweight='bold')
+    axes[0].axvline(x=1.0, color='gray', linestyle=':', alpha=0.5)
+    axes[0].legend(fontsize=10)
+    axes[0].grid(True, alpha=0.2)
 
-for h in h_vals:
-    H = tfim_hamiltonian(n, J, h)
-    qg, lg, cg = analyze(H, n)
-    quantum_gaps.append(qg)
-    lor_gaps.append(lg)
-    cl_gaps.append(cg)
+    axes[1].plot(h_vals, lors, color=c, linewidth=2, label=f'n={n}')
+    axes[1].set_xlabel('Transverse field h/J', fontsize=12)
+    axes[1].set_ylabel('min(μ)/max(μ)', fontsize=12)
+    axes[1].set_title('Lorentzian Gap Surrogate', fontsize=13, fontweight='bold')
+    axes[1].axvline(x=1.0, color='gray', linestyle=':', alpha=0.5)
+    axes[1].legend(fontsize=10)
+    axes[1].grid(True, alpha=0.2)
 
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
+    axes[2].scatter(gaps, bms, color=c, s=20, alpha=0.7, label=f'n={n}')
+    axes[2].set_xlabel('Quantum gap Δ(H)', fontsize=12)
+    axes[2].set_ylabel('Boundary mass (half-space)', fontsize=12)
+    axes[2].set_title('Classical Expansion vs Quantum Gap', fontsize=13, fontweight='bold')
+    axes[2].legend(fontsize=10)
+    axes[2].grid(True, alpha=0.2)
 
-# Top panel: all three gaps
-ax1.plot(h_vals, quantum_gaps, 'b-o', markersize=3, label='Quantum gap Δ(H)', linewidth=2)
-ax1.plot(h_vals, lor_gaps, 'r-s', markersize=3, label='Lorentzian surrogate', linewidth=2)
-ax1.plot(h_vals, cl_gaps, 'g-^', markersize=3, label='Classical conductance Φ', linewidth=2)
-ax1.axvline(x=1.0, color='gray', linestyle='--', alpha=0.7, label='Critical point h/J=1')
-ax1.set_ylabel('Gap value', fontsize=12)
-ax1.set_title(f'Quantum-to-Classical Gap Bridge ({n}-site TFIM)', fontsize=14)
-ax1.legend(fontsize=10)
-ax1.set_yscale('log')
-ax1.grid(True, alpha=0.3)
-
-# Bottom panel: gap ratios
-qg = np.array(quantum_gaps)
-lg = np.array(lor_gaps)
-cg = np.array(cl_gaps)
-with np.errstate(divide='ignore', invalid='ignore'):
-    ratio_ql = np.where(lg > 1e-15, qg / lg, np.nan)
-    ratio_qc = np.where(cg > 1e-15, qg / cg, np.nan)
-
-ax2.plot(h_vals, ratio_ql, 'purple', marker='o', markersize=3,
-         label='Δ_quantum / Δ_Lorentzian', linewidth=2)
-ax2.plot(h_vals, ratio_qc, 'orange', marker='s', markersize=3,
-         label='Δ_quantum / Δ_classical', linewidth=2)
-ax2.axvline(x=1.0, color='gray', linestyle='--', alpha=0.7)
-ax2.set_xlabel('Transverse field h/J', fontsize=12)
-ax2.set_ylabel('Gap ratio', fontsize=12)
-ax2.set_title('Gap Ratios (should be ≤ poly(n) if conjecture holds)', fontsize=14)
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
-
+plt.suptitle('Quantum-to-Classical Bridge: Transverse-Field Ising Model',
+             fontsize=15, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('gap_bridge.png', dpi=150, bbox_inches='tight')
-plt.show()
-print("Saved gap_bridge.png")
+plt.savefig('viz_gap_bridge.png', dpi=150, bbox_inches='tight')

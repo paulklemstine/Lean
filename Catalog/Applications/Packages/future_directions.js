@@ -84,24 +84,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-24T23:11:24.506271+00:00"
   },
   {
-    "id": "fd_0787",
-    "title": "Direction 4: Global Stability as Max Envelope",
-    "description": "**Conjecture** (Hypothesis C): For finite-type filtrations with finitely many active primes,\n\n```\noptimal_global_shift(F, G) = sup_p optimal_prime_shift(p, F, G)\n```\n\nwhere the supremum is over all primes p.\n\n**Test**: Compute both sides on 1000 random filtration pairs with torsion orders in {2, 3, 5, 6, 10, 15, 30}. The conjecture predicts exact equality. A single instance of strict inequality (global < max primewise, or global > max primewise) would falsify it.\n\n**Impact**: Confirms that the primewise decomposition is a complete refinement \u2014 no information is lost, and the global bound is exactly the worst-case prime channel.\n\n**Catalog References**: `Pythagorean/PrimewiseTorsionStability.lean` \u2014 `global_stability_from_primewise`\n\n**Proof Strategy**: The inequality global \u2264 sup_p is immediate from `global_stability_from_primewise`. The reverse requires showing that the global birth distance equals the maximum primewise birth distance. This follows from the decomposition theorem: the global birth is at the minimum of all prime births, and the Hausdorff distance between minima is bounded by the max of individual distances.\n\n**Domain Bridges**: Metric geometry, minimax theory\n\n**Lineage**: Extends `global_stability_from_primewise` and `globalTorsionBirthSet_deltaClose`\n\n**Ambition**: Solid extension \u2014 proves completeness of the decomposition\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:11:24.518980+00:00"
-  },
-  {
     "id": "fd_0790",
     "title": "Direction 1: Hardness of Unrestricted-Degree Lorentzian Recognition",
     "description": "**Conjecture.** When the degree d is part of the input (not fixed), deciding whether a homogeneous polynomial with nonneg integer coefficients is Lorentzian is coNP-hard.\n\n**Test.** Reduce a known coNP-hard problem \u2014 such as verifying that a symmetric matrix has no positive eigenvalue (which is coNP-complete for matrices given in factored form) \u2014 to Lorentzian recognition. Construct explicit polynomial families where any recursive certificate must examine at least n^{\u03a9(d)} quadratic leaves. A disproof would exhibit a polynomial-time algorithm for unrestricted-degree recognition.\n\n**Impact.** This would be the first formal hardness result for any Hodge-theoretic positivity predicate, creating a new complexity class boundary. It would definitively separate \"fixed-degree tractable\" from \"unrestricted-degree hard\" and motivate the development of approximation algorithms.\n\n**Catalog References.** `Pythagorean/LorentzianRecognition.lean`: `card_multiindex_le_pow`, `quadratic_leaf_count_le` (upper bounds that the hardness would complement).\n\n**Proof Strategy.** Encode 3-SAT unsatisfiability as a Lorentzian recognition instance. Given a 3-SAT formula \u03c6 on m clauses, construct a degree-(m+2) polynomial P_\u03c6 in n variables such that P_\u03c6 is Lorentzian iff \u03c6 is unsatisfiable. The construction uses the clause-variable incidence structure to define derivative branches that are Lorentzian iff the clause is satisfied.\n\n**Domain Bridges.** Computational complexity \u2192 algebraic combinatorics. Connects the Cook\u2013Levin theory of NP-completeness to Hodge-theoretic positivity.\n\n**Lineage.** Builds on `quadratic_leaf_count_le` (polynomial upper bound) to show the bound is tight in degree.\n\n**Ambition.** Grand challenge. A positive resolution would be a landmark in algebraic complexity theory.\n\n---",
@@ -189,10 +171,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c787382",
     "timestamp": "2026-05-25T00:54:40.932722+00:00"
   },
   {
@@ -214,27 +196,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "83d44e07",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T02:10:32.364163+00:00"
-  },
-  {
-    "id": "fd_0838",
-    "title": "Direction 4: Tropical Mixing Without Spectral Intermediate",
-    "description": "**Conjecture:** The tropical diameter of the Newton subdivision of a Lorentzian polynomial *directly* controls the mixing time, without passing through the spectral gap: \u03c4_mix \u2264 O(trop_diam \u00b7 n \u00b7 log n), where trop_diam \u2264 O(d \u00b7 n) for degree-d polynomials.\n\n**Test:** For randomly generated Lorentzian polynomials (degree 3\u20135, variables 3\u201310), compute both the tropical diameter and the actual mixing time (from eigenvalue computation). Plot \u03c4_mix vs. trop_diam. If the relationship is linear (not quadratic), the direct bound holds.\n\n**Impact:** Would bypass the spectral gap entirely, providing a geometric understanding of mixing that connects to the rapidly developing field of tropical geometry.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `tropical_diameter_le_dn`, `certificate_mixing_time_bound`\n\n**Proof Strategy:** Use the canonical paths method directly with paths defined by the tropical subdivision. Each path follows the ridge between tropical cells, and its congestion is bounded by the cell volumes (which are controlled by the mixed volumes of the Newton polytope). The Lorentzian condition ensures these volumes satisfy a Brunn-Minkowski-type inequality that bounds congestion.\n\n**Domain Bridges:** Tropical geometry (Newton polytopes, subdivisions), combinatorial geometry (Brunn-Minkowski theory), algebraic statistics (toric models)\n\n**Lineage:** Extends `tropical_diameter_le_dn` with a direct mixing argument\n\n**Ambition:** Solid extension \u2014 the canonical paths framework is well-established, and tropical geometry provides the right language.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:11:10.243679+00:00"
   },
   {
     "id": "fd_0839",
@@ -313,25 +274,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "b9d16ed0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T16:39:08.918006+00:00"
-  },
-  {
-    "id": "fd_0888",
-    "title": "Direction 1: Sharp Constants in the Dimension-Degree Stability Law",
-    "description": "**Conjecture:** For every (n, d), the optimal constant C(n,d) such that entry-wise perturbation \u2264 C(n,d)\u00b7\u03b5 preserves Lorentzianity satisfies C(n,d) = \u0398(1/n) \u2014 linear in 1/n rather than the 1/n\u00b2 from our entry-based bound.\n\n**Test:** Compute C(n,d) numerically for e_k(x\u2081,...,x\u2099) with n \u2264 20, k \u2264 10 via binary search on the destruction threshold. If C(n,d) \u00b7 n is approximately constant across n, the conjecture is supported. A counterexample where C(n,d) \u00b7 n \u2192 0 would disprove it.\n\n**Impact:** Sharp constants would close the 4\u20135\u00d7 conservatism gap we observe empirically, making the certificate practically tight. This would make certified Lorentzian recognition competitive with uncertified numerical methods.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `quadFormBound_of_entry_bound`, `dimension_degree_stability_law_instance`\n\n**Proof Strategy:** Replace the entry-based AM-GM bound with a tighter analysis using Schur complements or matrix concentration inequalities. The key is showing that random symmetric perturbations with independent entries have spectral radius O(\u221an \u00b7 max_entry) rather than O(n \u00b7 max_entry).\n\n**Domain Bridges:** Numerical linear algebra (spectral radius of random matrices), high-dimensional probability (matrix Chernoff bounds)\n\n**Lineage:** Directly extends Theorem 4.4 of the current work.\n\n**Ambition:** Solid extension \u2014 would complete the quantitative picture opened by the perturbation theorem. \u2605\u2605\u2605\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T17:14:31.150620+00:00"
   },
   {
     "id": "fd_0890",
@@ -613,26 +555,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T20:01:51.882080+00:00"
   },
   {
-    "id": "fd_0938",
-    "title": "Direction 2: Valuated Matroid Equivalence",
-    "description": "**Conjecture:** The weighted tropical kernel on S is isomorphic (as a tropical linear space) to the tropical linear space of a valuated graphic matroid M(G) restricted to S-indexed constraints. The weight function w defines the valuation on circuits.\n\n**The key insight is** that the tropical balance condition at each vertex defines a tropical hyperplane in the space of potentials, and the intersection of these hyperplanes is a tropical linear space whose combinatorial type is determined by the valuated matroid of the graph.\n\n**Why now?** The Dress-Wenzel theory of valuated matroids has matured significantly, with recent algorithmic advances in tropical linear algebra. The explicit cycle balance identity (Theorem 3.1) provides the concrete bridge: the valuation of a circuit is the alternating sum of edge weights around the cycle.\n\n**Test:** For the complete graph K\u2084 with various weight functions, compute the tropical linear space of the valuated graphic matroid and compare with the weighted tropical kernel. Agreement would confirm the equivalence.\n\n**Impact:** Would place weighted tropical graph Hodge theory within the established framework of tropical linear spaces, enabling the use of powerful tools from tropical intersection theory.\n\n**Catalog References:** `Pythagorean/TropicalBridge/WeightedTropicalHodge.lean` (Theorem 3.1, cycle balance transport).\n\n**Proof Strategy:** Construct the valuated matroid from the weighted graph. Show the tropical Pl\u00fccker relations correspond to the balance conditions. Use the Dress-Wenzel axioms to verify the matroid structure.\n\n**Domain Bridges:** Tropical algebraic geometry, matroid theory, polyhedral combinatorics.\n\n**Lineage:** Extends Dress-Wenzel [1992], Murota [2003].\n\n**Ambition:** Grand challenge \u2014 would establish a foundational bridge between discrete Hodge theory and tropical linear algebra.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e8f8d5e4",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T20:35:38.468806+00:00"
-  },
-  {
     "id": "fd_0943",
     "title": "Direction 1: Characterization of Lorentzian Ground-State Families",
     "description": "**Conjecture:** For stoquastic local Hamiltonians on n sites with bounded local dimension and bounded interaction range, the ground-state coefficient vector (in the occupation-number basis) forms the coefficient family of a Lorentzian polynomial of degree O(n). The certificate depth scales as O(n \u00b7 polylog(n)).\n\n**Test:** For the transverse-field Ising model on chains n \u2264 20, compute the ground state via exact diagonalization, extract the coefficient vector, and test Lorentzianity by checking all degree-2 derivative Hessians for the at-most-one-positive-eigenvalue condition. Record the fraction of parameter space (J, h) for which the condition holds.\n\n**Impact:** This would identify the exact boundary of applicability for certificate-driven quantum state preparation, replacing the current assumption that Lorentzianity holds with a proved characterization.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (IsRecursivelyLorentzian, RecursiveLorentzianCertificate), `Catalog/Pythagorean/CertificateSampling.lean` (certificate_verification_complexity)\n\n**Proof Strategy:** Induction on system size n. For the TFIM, use the transfer matrix formulation to express ground-state amplitudes as products of 2\u00d72 matrices, then verify the Hessian condition on the resulting polynomial. The key technical step is showing that the transfer matrix product preserves the Lorentzian property of the coefficient family.\n\n**Domain Bridges:** Condensed matter physics (Perron\u2013Frobenius theory), statistical mechanics (transfer matrices), combinatorial optimization (QUBO formulations as stoquastic Hamiltonians)\n\n**Lineage:** Builds on Br\u00e4nd\u00e9n\u2013Huh [2020] characterization of Lorentzian polynomials and Bravyi\u2013Gosset [2017] complexity of stoquastic systems.\n\n**Ambition:** Grand challenge \u2014 establishing a complete characterization would be a major theorem in mathematical physics.\n\n**The key insight is** that transfer matrix structure may enforce Lorentzianity automatically for nearest-neighbor stoquastic Hamiltonians, because the matrix product preserves strong log-concavity.\n\n**Why now?** The formal framework for recursive Lorentzian certificates now exists (LorentzianRecognitionComplete.lean), and computational tools for testing Hessian signatures are available for n \u2264 20.\n\n---",
@@ -833,25 +755,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T22:58:43.501683+00:00"
   },
   {
-    "id": "fd_0972",
-    "title": "Direction 3: Spectral Expansion for Matrix Groups and Arithmetic Quotients",
-    "description": "**Conjecture:** For G = SL_2(F_p) with p prime and generators \u03c3, \u03c4 chosen uniformly conditioned on generation, the spectral gap of Cay(G, {\u03c3\u00b11, \u03c4\u00b11}) is \u03a9(1) with high probability.\n\n**Test:** Implement the construction for SL_2(F_p) for small primes p = 5, 7, 11, 13. Compute spectral gaps and compare with the Ramanujan bound 2\u221a(q-1)/q for q-regular graphs.\n\n**Impact:** This would connect the Cayley expander framework to the Langlands program and property (\u03c4) for arithmetic groups, opening formal verification to one of the deepest areas of modern mathematics.\n\n**The key insight is** that the spectral theory of matrix groups over finite fields is intimately connected to automorphic forms and L-functions. The Ramanujan conjecture for GL_2, proved by Deligne, gives optimal spectral gap bounds for certain Cayley graphs of SL_2(F_p) \u2014 the Ramanujan graphs of Lubotzky\u2013Phillips\u2013Sarnak.\n\n**Why now?** The framework of CayleySpectralData and the zero-energy rigidity theorem extend verbatim to any finite group. The key new ingredient is the representation theory of SL_2(F_p), which is classical and could be formalized incrementally.\n\n**Catalog References:** `Pythagorean/CayleyExpander/Defs.lean` (CayleySpectralData \u2014 works for any finite group), `Pythagorean/CayleyExpander/Connectivity.lean` (all theorems are polymorphic in G).\n\n**Proof Strategy:** Use the Bourgain\u2013Gamburd expansion machine (sum-product theorem \u2192 growth \u2192 spectral gap) adapted to the formal setting.\n\n**Domain Bridges:** Number theory (Ramanujan conjecture), Langlands program (automorphic forms), quantum computing (SL_2 gates).\n\n**Lineage:** Extends the S_n specialization (Theorem 4) to matrix groups, the natural next family.\n\n**Ambition:** Grand challenge \u2014 would represent a major advance in formal arithmetic.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8778f4a5",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T22:58:43.526680+00:00"
-  },
-  {
     "id": "fd_0981",
     "title": "Direction 2: Valuated M-Convexity and Coefficient Transport",
     "description": "**Conjecture:** Define a *valuated exchange property* that tracks not just support membership but coefficient values: for \u03b1, \u03b2 \u2208 supp(p) with \u03b1\u1d62 > \u03b2\u1d62, the exchange witness j satisfies a quantitative bound relating the coefficients of the four involved monomials. This valuated exchange should be preserved under differentiation (with appropriate rescaling).\n\n**Test:** Formalize a valuated exchange predicate. Test it on the basis-generating polynomials of uniform matroids with explicit coefficient weights. Prove or disprove preservation for the simplest nontrivial case (n=3, d=2).\n\n**Impact:** This would bridge from combinatorial support (boolean membership) to analytic coefficient behavior (quantitative inequalities), connecting the support-level theorem to log-concavity and ultra-log-concavity of coefficients along rays.\n\n**Catalog References:** `Pythagorean/MConvexDifferentiation.lean` (coeff_pderiv_eq), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian signature).\n\n**Proof Strategy:** Use the coefficient formula [\u2202p/\u2202x\u1d62]_m = (m\u1d62+1)\u00b7[p]_{m+e\u1d62} to transport coefficient inequalities. The (m\u1d62+1) factor creates a predictable rescaling that should preserve the valuated exchange up to this factor.\n\n**Domain Bridges:** Discrete convex analysis (Murota's valuated matroids) \u2194 algebraic geometry (intersection theory) \u2194 combinatorial optimization (submodular function minimization).\n\n**Lineage:** Deepens the contraction theorem from topology (support) to geometry (valuated support).\n\n**Ambition:** Solid extension \u2014 the coefficient formula makes the rescaling explicit.\n\n**The key insight is** that the coefficient of the derivative at m is a simple multiplicative transform of the coefficient at m+e\u1d62, so quantitative exchange bounds should transport with controlled distortion.\n\n**Why now?** The coefficient formula is formally proved, and the qualitative (support-level) result is established. The quantitative upgrade is the natural next step.\n\n---",
@@ -1048,27 +951,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T09:39:15.046719+00:00"
   },
   {
-    "id": "fd_1126",
-    "title": "Direction 1: Full Group Isomorphism via Smith Normal Form Tracking",
-    "description": "**Conjecture:** For every finite connected graph *G* and every nonempty separated subset *S*, there exists an explicit additive group isomorphism\n\n```\nCanonicalKernelSpan(G, S) / Constants \u2245 \u2124^|S| / Im(L_S)\n```\n\nwhere the isomorphism is constructively given by the Smith normal form transition matrices.\n\n**Test:** For all connected graphs with n \u2264 8, compute the canonical kernel generators and the SNF of L_S, verify that the transition matrix from generators to SNF basis is unimodular on the free part, and check that the quotient structures match as finite abelian groups.\n\n**Impact:** This would complete the \"tropical-critical correspondence\" by providing an explicit, algorithmically computable isomorphism. It would give the first tropical-geometric proof of the structure theorem for critical groups.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (harmonic kernel algebra, separation uniqueness)\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean` (graphLaplacian, firingIndependentOn)\n\n**Proof Strategy:** Strategy A from the current work \u2014 quotient-lattice comparison. Define the map from canonical generators to cokernel elements via the Laplacian. Prove injectivity by contradiction using separation. Prove surjectivity by showing every cokernel element lifts to a harmonic representative.\n\n**Domain Bridges:** Algebraic graph theory \u2194 lattice theory, number theory (Smith normal form)\n\n**Lineage:** Extends `harmonic_normalized_unique` and `firingEquiv_trans` to a full categorical equivalence.\n\n**Ambition:** Solid extension \u2014 high confidence of success within 1\u20132 research cycles.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "1fb257b2",
-    "consumed_by_exp_id": "e4837868",
-    "timestamp": "2026-05-26T13:05:51.407161+00:00"
-  },
-  {
     "id": "fd_1127",
     "title": "Direction 2: Tropical Canonical Forms on Metric Graphs",
     "description": "**Conjecture:** The canonical kernel correspondence extends from finite graphs to metric graphs (tropical curves): for a compact metric graph \u0393 and a finite separated vertex set *S*, the normalized harmonic kernel generators on *S* generate a lattice whose quotient is isomorphic to the Jacobian J(\u0393) restricted to *S*-supported divisors.\n\n**The key insight is** that the continuous Laplacian on a metric graph has the same row-sum-zero and symmetry properties as the discrete Laplacian, and leaf rigidity extends verbatim to metric graphs (the maximum principle forces harmonic functions to be linear on pendant edges).\n\n**Why now?** The Baker\u2013Norine theory for metric graphs [BN07] and the tropical Jacobian construction [MZ08] provide the necessary continuous analogues. Our discrete formalization gives a template for the metric extension.\n\n**Test:** Implement the correspondence for metric graphs discretized at varying resolutions. As resolution increases, the discrete canonical generators should converge to the continuous harmonic representatives on the metric graph. Test on genus-1 (cycle) and genus-2 (theta graph) metric graphs.\n\n**Impact:** Would establish the first explicit computational bridge between finite graph chip-firing and tropical curve theory, opening the door to algorithmic tropical Jacobian computation.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (harmonic_at_leaf_eq_neighbor, harmonic_tree_attachment_forces_unique_firing)\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean` (graphLaplacian)\n\n**Proof Strategy:** Strategy C \u2014 inductive graph decomposition. Approximate the metric graph by increasingly fine finite graphs. Show the canonical generators converge under refinement using leaf rigidity as the stability mechanism.\n\n**Domain Bridges:** Tropical geometry \u2194 Berkovich analytic spaces, non-archimedean geometry\n\n**Lineage:** Extends leaf rigidity from finite trees to continuous pendant edges.\n\n**Ambition:** Grand challenge \u2014 requires new formalization infrastructure for metric graphs, but the mathematical path is clear.\n\n---",
@@ -1174,26 +1056,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T00:52:11.288128+00:00"
   },
   {
-    "id": "fd_1257",
-    "title": "Direction 2: Wigner Universality for Non-Gaussian Perturbations",
-    "description": "**Conjecture:** The transfer theorem and phase transition at 2\u03c3 hold for any Wigner matrix ensemble with sub-Gaussian entries having variance \u03c3\u00b2/n, not just GOE. Specifically, for any i.i.d. (up to symmetry) entry distribution with E[X] = 0, E[X\u00b2] = \u03c3\u00b2/n, and sub-Gaussian tail \u03c8\u2082 \u2264 K:\n\n$$\\mathbb{P}(\\|E\\|_{\\mathrm{op}} \\geq 2\\sigma + t) \\leq C \\exp(-cn \\min(t^2/\\sigma^2, t/K))$$\n\nand consequently the same SharpFailureUpperBound applies.\n\n**Test:** Prove the concentration inequality for sub-Gaussian Wigner matrices using \u03b5-net arguments. Verify numerically by comparing Bernoulli(\u00b11/\u221an) and uniform([-\u221a3/n, \u221a3/n]) entries against the Gaussian case.\n\n**Impact:** Would extend the certification law to all practical noise models (quantization noise, bounded perturbations, sparse corruptions). The `HasEdgeTail` universality framework in SharpGOEConstants.lean is already designed to support this.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: `HasEdgeTail`, `universality_transfer`\n- `Catalog/Bridges/Catalog/Pythagorean/LorentzianSmoothedAnalysis.lean`: abstract transfer\n\n**Proof Strategy:** Use Talagrand's concentration inequality for Lipschitz functions of independent random variables, combined with \u03b5-net covering arguments for the unit sphere.\n\n**Domain Bridges:** High-dimensional probability, concentration of measure, geometric functional analysis.\n\n**Lineage:** Direct extension of the universality transfer theorem.\n\n**Ambition:** Solid extension \u2014 well within current techniques but requires substantial formalization effort.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T02:07:17.345276+00:00"
-  },
-  {
     "id": "fd_1258",
     "title": "Direction 3: Complexity-Theoretic Phase Transition for Lorentzian Recognition",
     "description": "**Conjecture:** There exists a computational phase transition for Lorentzian recognition under random perturbation:\n- For \u03b5 > 2\u03c3 + \u03b4 (well above edge): recognition is solvable in polynomial time with exponentially small error.\n- For \u03b5 < 2\u03c3 \u2212 \u03b4 (well below edge): recognition requires exponential time or has constant error probability.\n- At \u03b5 = 2\u03c3 (the edge): the problem is \"computationally critical\" \u2014 polynomial-time algorithms exist but with polynomially decaying confidence.\n\n**Test:** Formalize a reduction from a known hard problem (e.g., detecting planted clique) to Lorentzian recognition at the critical noise level \u03b5 \u2248 2\u03c3. Alternatively, show that spectral algorithms achieve the information-theoretic threshold.\n\n**Impact:** Would establish a new type of average-case complexity result where the hardness threshold is determined by a random matrix constant, bridging algebraic geometry and computational complexity theory.\n\n**Catalog References:**\n- `Pythagorean/SharpGOEConstants.lean`: phase transition theorems\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: `HasGappedSignature`\n\n**Proof Strategy:** Adapt the statistical-computational gap framework from planted problems (Berthet\u2013Rigollet, 2013) to the Lorentzian setting. The key insight is that the gap failure event at \u03b5 \u2248 2\u03c3 has probability \u0398(1), making statistical testing non-trivial.\n\n**Domain Bridges:** Computational complexity, statistical learning theory, planted problems, average-case analysis.\n\n**Lineage:** Inspired by the phase transition geometry formalized in the sharp bound theorems.\n\n**Ambition:** Grand challenge \u2014 would open an entirely new research program.\n\n---",
@@ -1209,10 +1071,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "6a75662e",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "854e19f7",
     "timestamp": "2026-05-27T02:07:17.397934+00:00"
   },
   {
@@ -1232,24 +1094,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "14c19443",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T02:07:39.326624+00:00"
-  },
-  {
-    "id": "fd_1273",
-    "title": "Direction 1: Sharp Constants and Eigenvalue Interlacing",
-    "description": "**Conjecture:** For the torus (\u2124/n\u2124)^d with standard generators and one diagonal generator, the spectral gap ratio \u03b3_hybrid/\u03b3_local equals exactly (d+1)/d for all n and d.\n\n**Test:** Compute the spectral gap ratio for d = 2, 3, 4 and n = 5, ..., 50 via exact eigenvalue formulas for the discrete Laplacian on the torus. Verify that the ratio equals (d+1)/d to machine precision. If the ratio deviates for any d > 2, the conjecture is false.\n\n**Impact:** An exact formula for the universal constant would elevate the comparison from an order bound to a precise identity, revealing hidden algebraic structure in the spectral theory of product groups. This would connect to eigenvalue interlacing for graph unions and could yield a closed-form spectral gap for general bounded augmentations on abelian groups.\n\n**Catalog References:**\n- `Catalog/Pythagorean/CayleyExpander/HybridLocalGlobal.lean` \u2014 hybrid Dirichlet form comparison\n- `Catalog/Pythagorean/CayleyExpander/SpectralGap.lean` \u2014 spectral gap infrastructure\n\n**Proof Strategy:** Use the explicit eigenbasis of the discrete Laplacian on (\u2124/n\u2124)^d (tensor products of DFT vectors) to compute both spectral gaps exactly. The hybrid gap involves a rank-1 perturbation of the Laplacian whose effect on the second eigenvalue can be computed via the matrix determinant lemma.\n\n**Domain Bridges:** Harmonic analysis on abelian groups, circulant matrices, Fourier analysis\n\n**Lineage:** Direct extension of the torus computational experiments in this work\n\n**Ambition:** Solid extension \u2014 completes the picture for abelian groups\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "175f456d",
-    "consumed_by_exp_id": "599ed649",
-    "timestamp": "2026-05-27T03:33:16.828549+00:00"
   },
   {
     "id": "fd_1274",
@@ -1385,10 +1229,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "43afaa07",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ec2aa218",
     "timestamp": "2026-05-27T06:37:54.824643+00:00"
   },
   {
@@ -1585,10 +1429,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "4c1deed8",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8596d6a6",
     "timestamp": "2026-05-27T08:27:26.882112+00:00"
   },
   {
@@ -1633,26 +1477,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T08:27:46.927552+00:00"
   },
   {
-    "id": "fd_1370",
-    "title": "Direction 1: Full Lorentzian Hessian Formalization via MvPolynomial",
-    "description": "**Conjecture:** For the multiaffine generating polynomial P_\u03bc(z) = \u2211_S \u03bc(S) \u220f_{i\u2208S} z_i of a determinantal measure \u03bc, the Hessian matrix \u2202\u00b2P/\u2202z_i\u2202z_j evaluated at the all-ones vector has Lorentzian signature (at most one positive eigenvalue), and this signature is preserved under coefficient perturbation of size \u03b4 < \u03b5 where \u03b5 is the spectral gap of the Hessian.\n\n**Test:** Formalize MvPolynomial-based Hessian computation in Lean for distributions on Fin n \u2192 Bool. Compute Hessian eigenvalues for determinantal measures on n \u2264 8. Verify Lorentzian signature and test preservation under random coefficient perturbation.\n\n**Impact:** This would complete the Lorentzian layer of the gap bridge, connecting the abstract GappedMeasurementLift to concrete polynomial geometry. It would also provide the first Lean formalization of Lorentzian polynomials.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean` \u2014 GappedMeasurementLift, RobustLorentzianCertificate\n- `Catalog/Bridges/Catalog/Pythagorean/RobustLorentzianSampling.lean` \u2014 gapped_signature_persists_under_perturbation, residual_gap_of_perturbation\n\n**Proof Strategy:** Build on the existing quadratic form infrastructure in RobustLorentzianSampling.lean. Define the Hessian as a matrix over MvPolynomial coefficients. Use the residual_gap_of_perturbation theorem to transfer gap bounds from the exact determinantal polynomial to perturbed polynomials. The key new lemma: for a determinantal polynomial det(I + diag(z)K), the Hessian at z=1 has eigenvalues determined by K's spectrum, which can be computed from the kernel matrix.\n\n**Domain Bridges:** Algebraic combinatorics \u2194 quantum many-body physics \u2194 formal verification\n\n**Lineage:** Direct extension of Theorems 1\u20133 in this work; builds on Br\u00e4nd\u00e9n\u2013Huh [2020].\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 (Solid extension \u2014 technically demanding but mathematically well-understood)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c37ca719",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T09:42:35.531653+00:00"
-  },
-  {
     "id": "fd_1374",
     "title": "Direction 1: Quantitative Gap Interpolation Under Bounded Pair Codegree",
     "description": "**Conjecture:** For every integer d \u2265 3 and real \u03b1 \u2208 (0, 1), there exists \u03b5 = \u03b5(d, \u03b1) > 0 such that if H is a d-uniform hypergraph on n vertices with max pair codegree K \u2264 \u03b1 \u00b7 n^{1/(d-1)}, then \u03c4(H) \u2264 (d \u2212 \u03b5) \u00b7 \u03c4*(H).\n\n**Test:** Formalize the rounding argument with an explicit \u03b5(d, K) expression. Computationally, sweep K by generating random hypergraphs conditioned on bounded pair codegree and measure the empirical gap. If the predicted \u03b5 matches to within 10%, the conjecture is validated.\n\n**Impact:** This would give the first explicit interpolation formula between gap = 1 (vertex-disjoint, K = 0) and gap = d (adversarial, K unbounded). It would immediately yield improved approximation guarantees for random covering instances in any density regime where codegrees are controlled.\n\n**Catalog References:** `Catalog/Pythagorean/HypergraphTransversal.lean` (integrality_gap_upper, uniform_integrality_gap), `Catalog/Pythagorean/RandomTransversalThermodynamics.lean` (pairCodegree_le_one_of_disjoint, disjoint_has_low_overlap)\n\n**Proof Strategy:** Strategy A from the main development \u2014 deterministic pseudorandom rounding via threshold decomposition. Define a layered threshold scheme where vertices with x(v) \u2265 1/(d\u22121) are included unconditionally, and vertices in [1/d, 1/(d\u22121)] are included with probability depending on local codegree. Bound the expected uncovered edge count using the pair codegree bound and a union-bound argument. Repair greedily; the repair cost is O(K \u00b7 \u03c4*) which is sub-linear for K \u226a n.\n\n**Domain Bridges:** Approximation algorithms (improved factor), probabilistic combinatorics (codegree conditions), statistical physics (order parameter quantification)\n\n**Lineage:** Extends vertex_disjoint_integrality_gap_one from gap = 1 at K = 0 to a continuous function \u03b5(d, K).\n\n**Ambition:** Grand challenge \u2014 would resolve the main conjecture for a broad class of random hypergraphs.\n\n**The key insight is** that the rounding improvement is controlled by the same codegree statistics that govern local weak convergence of random hypergraph neighborhoods \u2014 connecting the optimization problem to the structural theory of random graphs.\n\n**Why now?** The vertex-disjoint case is fully formalized, providing the base case. The threshold rounding infrastructure from the catalog supports the layered scheme. The pair codegree definition is in place. What remains is the probabilistic repair analysis, which is within reach of current Lean formalization capabilities combined with explicit combinatorial bounds.\n\n---",
@@ -1665,7 +1489,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "3020679e",
@@ -1686,23 +1510,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T00:26:01.272574+00:00"
-  },
-  {
-    "id": "fd_1245",
-    "title": "Arithmetic Universality of Torsion in Random Integer Chain Complexes",
-    "description": "Conjecture: For random finite filtered chain complexes over Z with sparse i.i.d. bounded integer boundary entries, the p-primary barcode process in any fixed homological degree converges, after explicit normalization, to a universal limit law independent of the entry distribution for all but finitely many primes p; moreover the exceptional-prime set is asymptotically determined only by the local divisibility profile of the entry distribution. Test: Sample ensembles with different bounded entry laws (e.g. symmetric Bernoulli, uniform on {-2,-1,0,1,2}, sparse Poisson-truncated) and compare normalized p-primary persistence statistics prime-by-prime; confirmation requires collapse onto the same limiting law for generic primes and systematic deviation only at predicted exceptional primes, while persistent law-dependence at generic primes refutes it. Impact: This would create a universality theory for arithmetic topology, linking random matrix Smith normal form phenomena, persistent homology, and local-global arithmetic structure, and would give principled null models for detecting genuinely non-random arithmetic-topological signals.",
-    "domains": [
-      "Random Topology",
-      "Algebraic Topology",
-      "Arithmetic Statistics",
-      "Random Matrix Theory"
-    ],
-    "priority_score": 0.9,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T00:16:01.142031+00:00"
   },
   {
     "id": "fd_1317",
@@ -1739,6 +1546,65 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "3020679e",
     "consumed_by_exp_id": "7a9ed9f9",
     "timestamp": "2026-05-27T10:18:44.849475+00:00"
+  },
+  {
+    "id": "fd_1382",
+    "title": "Direction 1: Non-Separated Extensions via Overlapping Support Theory",
+    "description": "**Conjecture**: For an arbitrary nonempty vertex subset $S \\subseteq V(G)$ (not necessarily separated), the canonical kernel quotient is isomorphic to the Laplacian cokernel $\\mathbb{Z}^{|S|}/\\mathrm{Im}(L_S)$, with the isomorphism tracked through a non-trivial SNF decomposition. The off-diagonal entries of $L_S$ encode the \"interaction terms\" between overlapping harmonic generators, and the SNF basis change diagonalizes these interactions.\n\n**Test**: Enumerate all connected graphs with $n \\leq 7$ and all nonempty subsets $S$ (not just separated ones). Compute $L_S$, its SNF, and verify that the invariant factors match the canonical kernel quotient structure. Check whether the transition matrices satisfy the TracksCanonicalGens predicate. A single failure would refute the conjecture.\n\n**Impact**: This would extend the tropical-critical correspondence from independent sets to arbitrary vertex subsets, covering the full graph Jacobian rather than just its restriction to separated sets. It would make the correspondence a complete structural theorem rather than a partial one.\n\n**Catalog References**: \n- `Catalog/Pythagorean/TropicalBridge/SNFCorrespondence.lean` \u2014 `SeparatedSet`, `restrictedLapMat`, `LaplacianCokernel`\n- `Catalog/Pythagorean/TropicalBridge/TropicalKernelRigidity.lean` \u2014 `TropProjEquiv`, `disjoint_support_unique_up_to_tropProjEquiv`\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean` \u2014 `graphLaplacian`, `firingIndependentOn`\n\n**Proof Strategy**: Decompose the restricted Laplacian $L_S = D + N$ where $D$ is the diagonal part (vertex degrees) and $N$ encodes adjacencies within $S$. Show that the SNF of $L_S$ can be computed by iteratively eliminating off-diagonal entries using unimodular row/column operations, tracking how each operation transforms the canonical generators.\n\n**Domain Bridges**: Algebraic graph theory \u2194 computational linear algebra; tropical geometry \u2194 matroid theory (the independence condition generalizes from matroids to arbitrary sets).\n\n**Lineage**: Directly extends `restrictedLap_sep_offdiag` and `cokernel_sep_cyclic` from the current work.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 well within reach with current technology)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e4837868",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:07:55.419765+00:00"
+  },
+  {
+    "id": "fd_1383",
+    "title": "Direction 2: Metrized Graphs and Continuous Tropical Curves",
+    "description": "**Conjecture**: For a metrized graph $(G, \\ell)$ with edge lengths $\\ell : E \\to \\mathbb{R}_{>0}$, the constructive SNF correspondence extends to a correspondence between the *continuous* tropical Jacobian $\\mathrm{Jac}(\\Gamma)$ (a real torus of dimension equal to the genus) and a suitable weighted Laplacian cokernel, with the invariant factors replaced by lattice invariants of the period matrix.\n\n**The key insight is** that the discrete graph Laplacian is a combinatorial shadow of the continuous Laplacian on the metrized graph, and the SNF decomposition should \"deform\" continuously as edge lengths vary.\n\n**Why now?** The catalog already has foundational definitions for graph Laplacians (`graphLaplacian` in Defs.lean) and the TropicalBridge framework handles both discrete and tropical objects. The new SNF correspondence provides the algebraic spine needed to track invariants through the continuous deformation.\n\n**Test**: Implement a numerical computation of the period matrix of a metrized graph for small examples (genus \u2264 3). Compare the lattice invariants (successive minima, Hermite normal form) with the discrete SNF invariant factors in the limit of uniform edge lengths. Check whether the two agree up to a computable correction factor.\n\n**Impact**: This would establish the tropical-critical correspondence at the level of tropical curves, connecting to the Baker-Norine Riemann-Roch theorem and the theory of divisors on metric graphs.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/SNFCorrespondence.lean` \u2014 `SmithNFData`, `restrictedLapMat`\n- `Catalog/Pythagorean/TropicalBridge/Stability.lean` \u2014 stability results for tropical structures\n\n**Proof Strategy**: Define a weighted Laplacian $L_\\ell$ with entries $-1/\\ell(e)$ for edges and appropriate diagonal terms. Show that as edge lengths vary, the SNF invariant factors change in a controlled way (lower semicontinuity of divisibility).\n\n**Domain Bridges**: Tropical geometry \u2194 algebraic geometry; discrete math \u2194 analysis on metric spaces.\n\n**Lineage**: Extends the discrete `restrictedLap_sep_det` to the continuous setting.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new analytical tools)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e4837868",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:07:55.474050+00:00"
+  },
+  {
+    "id": "fd_1384",
+    "title": "Direction 3: Arithmetic Statistics of Graph Jacobians",
+    "description": "**Conjecture**: The distribution of invariant factors of the graph Jacobian, over the ensemble of random Erd\u0151s-R\u00e9nyi graphs $G(n, p)$, converges to the Cohen-Lenstra distribution as $n \\to \\infty$ for appropriate scaling of $p$.\n\n**The key insight is** that the SNF correspondence converts the question about tropical-harmonic structure into a question about random integer matrices, where powerful tools from random matrix theory and arithmetic statistics apply.\n\n**Why now?** The catalog already contains a Cohen-Lenstra module (`Catalog/Pythagorean/CohenLenstra/`) and the new SNF correspondence provides the bridge needed to connect graph Jacobian computations to Cohen-Lenstra predictions.\n\n**Test**: Generate 10,000 random graphs $G(n, 1/2)$ for $n = 10, 20, 50, 100$. Compute the distribution of the largest invariant factor $d_1$ (the exponent of the critical group). Compare with the Cohen-Lenstra prediction $\\Pr[p^k \\mid d_1] = \\prod_{i=1}^k (1 - p^{-i})^{-1}$ for primes $p$.\n\n**Impact**: This would establish a new bridge between combinatorial probability and number-theoretic statistics, showing that the \"random\" behavior of graph invariants mirrors the \"random\" behavior of ideal class groups.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/SNFCorrespondence.lean` \u2014 `SmithNFData.invariantFactors`\n- `Catalog/Pythagorean/CohenLenstra/Defs.lean` \u2014 Cohen-Lenstra distributions\n\n**Proof Strategy**: Use the moment method: compute the expected number of elements of order $p^k$ in $\\mathrm{Jac}(G(n,p))$ and show convergence to the Cohen-Lenstra moments.\n\n**Domain Bridges**: Combinatorial probability \u2194 number theory; random matrix theory \u2194 tropical geometry.\n\n**Lineage**: Bridges the CohenLenstra catalog module to the TropicalBridge framework.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 connects two major research programs)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e4837868",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:07:55.522801+00:00"
   },
   {
     "id": "seed_013",
@@ -2023,21 +1889,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-26T13:06:00.281798+00:00"
   },
   {
-    "id": "fd_1170",
-    "title": "Universality of Smith Normal Form Fluctuations in Random Filtered Chain Complexe",
-    "description": "Conjecture: Let C be a random finite filtered chain complex over Z whose boundary matrices are sparse with i.i.d. integer entries from any mean-zero distribution with finite variance, conditioned on \u2202^2 = 0 by a local projection procedure. After centering by rank and rescaling filtration index, the joint distribution of p-adic valuation profiles of the invariant factors in the Smith normal forms converges, for every fixed homological degree and finite set of primes p, to a universal limit independent of the entry distribution. Test: Generate ensembles from distinct input laws (Bernoulli, discrete Gaussian, bounded uniform), compute Smith normal forms across filtration levels, and compare the empirical laws of invariant-factor valuation processes; confirmation is convergence to the same limit across laws, refutation is persistent distribution-dependent behavior. Impact: This would found a universality theory for torsion in arithmetic persistent homology, giving a statistical baseline for detecting genuinely arithmetic structure versus random noise.",
-    "domains": [
-      "Arithmetic Topology",
-      "Random Matrix Theory"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-26T16:00:57.658670+00:00"
-  },
-  {
     "id": "fd_1214",
     "title": "Renormalization Fixed Points for Primewise Torsion in Random Simplicial Complexe",
     "description": "Conjecture: For the Linial\u2013Meshulam random simplicial complex process Y_d(n,p), there exists for each dimension d >= 2 a nontrivial scaling window p = n^{-1/d}(c + o(1)) and a universal renormalization operator R on prime-indexed torsion persistence profiles T_p(Y_d) such that, after rescaling birth/death parameters and prime weights, the joint law of {T_p(Y_d)}_p converges to a dimension-dependent fixed point distribution independent of the microscopic model details (e.g. Bernoulli vs bounded-degree perturbations of the process). Test: Compute primewise torsion barcodes for large random complexes across multiple ensemble variants and dimensions, fit the induced profile evolution under coarse-graining, and check whether the rescaled distributions collapse to the same limiting law; refuted if limiting laws depend essentially on the ensemble or no stable fixed point appears. Impact: This would create a statistical-physics theory of arithmetic topology, giving universal laws for how torsion emerges across primes and scales, and supplying predictive tools for random topology, coding theory, and arithmetic-inspired TDA.",
@@ -2083,36 +1934,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T05:59:32.898444+00:00"
   },
   {
-    "id": "fd_1319",
-    "title": "Arithmetic Holography from Primewise Persistence Profiles",
-    "description": "Conjecture: There exists an explicit functorial construction X \u21a6 P_X from smooth projective varieties over Q to a family of finite filtered chain complexes over Z, indexed by good primes p, such that if two varieties X,Y have primewise persistence distributions agreeing for a density-1 set of primes up to uniformly vanishing bottleneck error, then X and Y have isomorphic semisimplified \u2113-adic Galois representations in all degrees; conversely, any mismatch in Frobenius eigenvalue statistics on a positive-density set of primes forces a detectable separation in the persistence distributions. Test: Implement P_X for computable families (elliptic curves, K3 surfaces, low-dimensional Calabi\u2013Yau hypersurfaces), compare persistence signatures across primes against independently computed Frobenius traces/zeta data, and check whether agreement/disagreement tracks arithmetic equivalence as predicted. Refutation occurs if non-isomorphic Galois data repeatedly yields indistinguishable persistence profiles on a positive-density set, or if arithmetic-equivalent examples fail to match. Impact: This would create a new topological encoding of arithmetic geometry, potentially turning hard-to-compute motivic/Galois information into stable, data-analytic invariants and opening a bridge between persistent homology, Langlands-style arithmetic fingerprints, and computational algebraic geometry.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T06:00:04.057379+00:00"
-  },
-  {
-    "id": "fd_1331",
-    "title": "Homological Universality of Integer Dynamical Systems via Reverse Persistence",
-    "description": "Conjecture: There exists a functorial construction sending any eventually periodic or divergent integer dynamical system T: N -> N given by a finite piecewise-affine rule to a family of filtered chain complexes C_T(N) over Z such that two systems T and S have the same asymptotic orbit-growth class if and only if, for every fixed homological degree k, the normalized primewise persistence diagrams of C_T(N) and C_S(N) converge to the same limit as N -> infinity. Test: Explicitly construct C_T(N) for benchmark systems (Collatz, reverse-and-add, happy numbers, multiplicative digital maps, linear congruential generators), compute primewise barcodes up to large N, and check whether systems with empirically distinct orbit statistics yield distinct limiting barcode laws while systems in the same universality class agree. A single counterexample pair with matching limiting diagrams but provably different orbit-growth class, or vice versa, refutes the conjecture. Impact: This would create a topological universality theory for arithmetic dynamics, turning hard questions about long-term integer iteration into computable homological signatures and potentially revealing hidden phase transitions across disparate number-theoretic dynamical systems.",
-    "domains": [
-      "Arithmetic Dynamics",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T07:51:15.592025+00:00"
-  },
-  {
     "id": "fd_1337",
     "title": "Torsion Resonance Law for Modular Form Congruence Graphs",
     "description": "Conjecture: For each normalized cuspidal Hecke eigenform f of fixed weight and level, there is a functorial construction of a finite filtered chain complex C_p(f) over Z from the mod-p Hecke orbit graph of f such that the birth scale distribution of p-torsion in H_*(C_p(f)) undergoes a sharp change exactly at primes p where f is congruent mod p to a distinct eigenform. Test: Compute C_p(f) for databases of modular forms and compare torsion barcode statistics against independently known congruence primes; confirmation is a statistically significant predictive correspondence, while systematic absence of correlation refutes the conjecture. Impact: This would create a topological detector for hidden congruences in automorphic forms, linking arithmetic deformation theory, Hecke algebras, and persistent topology in a new computational framework.",
@@ -2143,6 +1964,153 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T07:52:22.669578+00:00"
   },
   {
+    "id": "fd_1393",
+    "title": "Prime-Cover Descent for Integral Persistence Reconstruction",
+    "description": "Conjecture: There exists a universal constant B such that for every finite filtered chain complex C over Z with boundary matrices of entry size at most M and total rank r, the integral filtered chain homotopy type of C is uniquely determined by the collection of its reductions modulo p together with their persistence barcodes for all primes p <= B log(Mr). Equivalently, no two non-equivalent such complexes can have identical mod-p persistence data for every prime up to that bound. Test: Exhaustively generate non-isomorphic small filtered complexes with bounded M,r, compute mod-p persistence for all primes up to c log(Mr), and search for collisions; confirmation is absence of collisions up to growing bounds and recovery algorithms succeeding from only small-prime data, while any explicit collision refutes the conjecture. Impact: This would turn infinitely many prime probes into a finite-information reconstruction principle, giving a practical arithmetic tomography scheme for integral persistence and a new quantitative bridge between Chinese-remainder phenomena, homological algebra, and topological data analysis.",
+    "domains": [
+      "Algebraic Topology",
+      "Computational Topology",
+      "Number Theory"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:08:51.433226+00:00"
+  },
+  {
+    "id": "fd_1399",
+    "title": "Persistent Prime-Mixing Threshold for Integral Chain Complexes",
+    "description": "Conjecture: There exists a universal constant c > 0 and an explicit family of finite filtered chain complexes C_N over Z such that for every set of primes P with |P \u2229 [1, c log N]| = o(log N), the collection of mod-p persistence barcodes {Bar(C_N; F_p) : p in P} does not determine the integral persistence module of C_N, but the full set of barcodes for all primes p <= c log N does determine it up to filtered chain homotopy. Test: Construct candidate families C_N with controlled torsion spread across many small primes, then algorithmically compare reconstruction success from truncated prime sets versus all primes up to c log N; confirmation requires a sharp threshold phenomenon in recoverability, refutation occurs if either substantially fewer primes always suffice or even all primes up to c log N fail generically. Impact: This would reveal a genuine information-theoretic phase transition in how arithmetic data is distributed across primes, giving the first quantitative law for when local mod-p topological observations assemble into global integral structure.",
+    "domains": [
+      "Algebraic Topology",
+      "Arithmetic Combinatorics"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:09:29.272030+00:00"
+  },
+  {
+    "id": "fd_1405",
+    "title": "Prime-Independence Threshold for Reconstructing Integral Persistent Homotopy Typ",
+    "description": "Conjecture: There exists a dimension-dependent function N(d) such that for any finite simply connected filtered CW complexes X and Y of dimension at most d, if for every prime p <= N(d) the mod-p persistent cohomology Steenrod-module data of X and Y are isomorphic (including persistence maps and cup products), then X and Y have the same integral persistent homotopy type up to filtered rational equivalence and identical p-primary Postnikov invariants for all primes p. Test: Compute or construct pairs of filtered complexes in low dimensions with matching mod-p persistent Steenrod data for all small primes; confirmation requires that no counterexample exists below the predicted threshold and that reconstruction algorithms recover the same Postnikov tower, while any explicit pair with matching data but differing integral persistent homotopy refutes the conjecture. Impact: This would create a finite-prime blueprint for recovering deep integral homotopy information from computable persistent invariants, linking TDA, unstable homotopy theory, and arithmetic localization in a genuinely new way.",
+    "domains": [
+      "Algebraic Topology",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:10:22.420690+00:00"
+  },
+  {
+    "id": "fd_1395",
+    "title": "Direction 2: Tropical Lorentzian Geometry of Tensor Network Boundary States",
+    "description": "**Conjecture:** For quantum states represented by tensor networks (PEPS, MERA), the tropicalization of the measurement generating polynomial P_\u03bc recovers the tensor network geometry. Specifically, the tropical variety of P_\u03bc encodes the entanglement structure, and the tropical Lorentzian gap corresponds to the bond dimension.\n\n**Test:** Compute exact PEPS ground states for 2D systems (2\u00d73, 2\u00d74 lattices). Tropicalize P_\u03bc by replacing (sum, product) with (min, +). Compare the tropical variety structure with the tensor network graph. Check whether the tropical Lorentzian gap scales with log(bond dimension).\n\n**Impact:** This would create a direct bridge between tensor network theory \u2014 the dominant computational framework for quantum many-body systems \u2014 and tropical geometry. It could lead to new algorithms for tensor network contraction based on tropical optimization, and provide geometric obstructions to efficient tensor network representations.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean`: `QuantumMeasurementModel`, `boundaryMass`\n- `Catalog/Pythagorean/TropicalLorentzianShadows.lean`\n- `Catalog/Pythagorean/TropicalBerggrenZeta.lean`\n- `Catalog/Tropical/` (tropical geometry infrastructure)\n\n**Proof Strategy:** Define tropical Lorentzian polynomials following Br\u00e4nd\u00e9n\u2013Huh's characterization. Show that the tropicalization of a determinantal polynomial recovers the matroid polytope. For PEPS states, relate the matroid structure to the tensor network graph via the tropicalization map. Use the formal perturbation theorems to show stability of tropical structure.\n\n**Domain Bridges:** Tensor networks \u2194 tropical geometry \u2194 Lorentzian polynomials \u2194 matroid theory \u2194 quantum entanglement\n\n**Lineage:** Combines the quantum measurement framework with tropical geometry tools already in the Catalog.\n\n**Ambition:** Grand challenge \u2014 opens a new mathematical subject\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "05e24005",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:09:20.690830+00:00"
+  },
+  {
+    "id": "fd_1396",
+    "title": "Direction 3: Hessian-Based Lorentzian Gap via MvPolynomial Infrastructure",
+    "description": "**Conjecture:** The minMass/maxMass ratio used as a Lorentzian gap surrogate in the current work can be replaced by a true Hessian-based certificate: the smallest eigenvalue of the Hessian of log P_\u03bc restricted to the orthogonal complement of the all-ones direction. This refined gap provides tighter bounds on mixing time.\n\n**Test:** For TFIM ground states (n = 4,...,8), compute the full Hessian of log P_\u03bc at the all-ones point. Extract the restricted spectrum. Compare the minimum eigenvalue with the minMass/maxMass surrogate and the actual Glauber mixing time. The Hessian-based gap should be a tighter predictor.\n\n**Impact:** Replaces the crude surrogate with a geometrically natural quantity, enabling sharper perturbation bounds. The Hessian-based gap is the natural Riemannian metric on the space of Lorentzian polynomials, and computing it opens the door to gradient-based optimization over quantum measurement distributions.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean`: `RobustLorentzianCertificate`, `minMass`\n- `Catalog/Bridges/Catalog/Pythagorean/RobustLorentzianSampling.lean`: `HasGappedSignature`, `QuadForm`\n- `Catalog/Pythagorean/DirectionalLogConcavity.lean`\n\n**Proof Strategy:** Define the generating polynomial using Mathlib's `MvPolynomial`. Compute its Hessian symbolically. Prove that for Lorentzian polynomials, the restricted Hessian has exactly one positive eigenvalue. Use `residual_gap_of_perturbation` from the Catalog to show perturbative stability of the Hessian gap.\n\n**Domain Bridges:** Riemannian geometry \u2194 Lorentzian polynomials \u2194 MvPolynomial algebra \u2194 spectral theory\n\n**Lineage:** Direct refinement of `RobustLorentzianCertificate` using algebraic infrastructure.\n\n**Ambition:** Solid extension \u2014 builds directly on Catalog tools\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "05e24005",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:09:20.795454+00:00"
+  },
+  {
+    "id": "fd_1398",
+    "title": "Direction 5: Lorentzian Certificates for Quantum LDPC Code Distance",
+    "description": "**Conjecture:** For quantum LDPC codes with good distance (d = \u03a9(n)), the generating polynomial of the ground-space measurement distribution has Lorentzian gap \u03a9(1/poly(n)). Conversely, if the Lorentzian gap decays faster than any polynomial, the code distance is sublinear.\n\n**Test:** Construct measurement distributions for known good quantum LDPC codes (hypergraph product codes, balanced product codes) on small instances. Compute the Lorentzian gap surrogate and check whether it scales polynomially with system size. Compare with codes of poor distance (repetition code, surface code with punctures).\n\n**Impact:** Would provide an efficiently checkable classical certificate for quantum code quality. Currently, determining the distance of a quantum code is QMA-hard in general; a Lorentzian certificate would give polynomial-time checkable evidence. This would have immediate applications to quantum error correction engineering.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean`: `minMass`, `event_prob_ratio_bound`\n- `Catalog/Pythagorean/CertificateComplexity.lean`\n- `Catalog/Pythagorean/CertificateExpanders.lean`\n\n**Proof Strategy:** Relate code distance to anti-concentration of the code ground space. Use the weight enumerator polynomial (a generating polynomial for the distance distribution) and show its Lorentzian properties. Connect to the boundary mass through the Hamming graph adjacency of the code.\n\n**Domain Bridges:** Quantum error correction \u2194 Lorentzian polynomials \u2194 coding theory \u2194 graph expansion \u2194 computational complexity\n\n**Lineage:** Applies the boundary mass and anti-concentration theorems to the quantum coding setting.\n\n**Ambition:** Solid extension with high practical impact",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "05e24005",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:09:20.912162+00:00"
+  },
+  {
+    "id": "fd_1400",
+    "title": "Direction 1: Logarithmic Bound from O'Nan\u2013Scott Classification",
+    "description": "**Conjecture:** For fixed $k \\geq 5$, the non-coordinate pressure of $W_{k,m} = S_k \\wr S_m$ satisfies $P_{\\text{noncoord}}(W_{k,m}) \\leq A_k \\log m + B_k$ for explicit constants $A_k, B_k > 0$.\n\n**Test:** Formalize the O'Nan\u2013Scott classification of maximal subgroups of wreath products in product action. For each non-coordinate type, prove:\n- The number of conjugacy classes of that type is bounded by a polynomial in $m$\n- The minimal index grows at least as $m^{\\alpha}$ for some $\\alpha > 1$\n\nThen the reciprocal-index sum telescopes to $O(\\log m)$. Verify computationally for $k = 5, 6, 7$ and $m \\leq 100$ using GAP.\n\n**Impact:** This would upgrade the universality theorem from conditional (assuming sublinearity) to unconditional with explicit bounds. It would give the first certified generation threshold estimator with provable error bounds.\n\n**Catalog References:** `Pythagorean/WreathPhaseTransition.lean` (noncoord_pressure_log_bound, NoncoordPressureLogarithmicConjecture), `Pythagorean/WreathPerturbation.lean` (PerturbativeBound).\n\n**Proof Strategy:** Use the Kov\u00e1cs\u2013Praeger classification of maximal subgroups of wreath products. For each type: (1) bound the number of conjugacy classes using double coset counting, (2) bound the index using the formula $[W_{k,m}:M] = [S_k^m : M \\cap S_k^m] \\cdot [S_m : \\pi(M)]$ where $\\pi$ is the projection to the top group.\n\n**Domain Bridges:** Connects to enumerative combinatorics (counting subgroup classes), analytic number theory (index distribution as a Dirichlet-type sum), and algorithm design (certified estimators).\n\n**Lineage:** Extends `WreathPhaseTransition.lean` Theorem 2 and the aspirational logarithmic bound theorem.\n\n**Ambition:** Grand challenge \u2014 would require substantial formalization of O'Nan\u2013Scott theory, but would be the definitive result on wreath product pressure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e0c9f23",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:10:11.275572+00:00"
+  },
+  {
+    "id": "fd_1401",
+    "title": "Direction 2: Universality for General Semidirect Products",
+    "description": "**Conjecture:** For a family of semidirect products $G^m \\rtimes H_m$ where $H_m$ acts on $\\{1, \\ldots, m\\}$ and satisfies a \"bounded orbit complexity\" condition, the generation threshold is determined to first order by coordinate defects: $P(G^m \\rtimes H_m) = m \\cdot P(G) + o(m)$.\n\n**Test:** Formalize the abstract semidirect pressure decomposition. Define \"bounded orbit complexity\" precisely (e.g., every orbit of $H_m$ on $k$-tuples from $\\{1, \\ldots, m\\}$ has size at most $m^{O(1)}$). Prove the universality theorem under this condition. Instantiate for:\n- Wreath products $S_k \\wr S_m$ (recovering our theorem)\n- Affine groups $\\mathbb{F}_q^n \\rtimes \\text{GL}_n(\\mathbb{F}_q)$\n- Lamplighter groups $(\\mathbb{Z}/2)^n \\rtimes \\mathbb{Z}/n$\n\n**Impact:** Would establish universality as a *general principle* for semidirect products, not a special feature of wreath products. This is the \"field-opening\" direction.\n\n**Catalog References:** `Pythagorean/WreathPhaseTransition.lean` (WreathPressureData, PressureSubcriticalInM), `Pythagorean/WreathPerturbation.lean` (WreathPressureSystem).\n\n**Proof Strategy:** Abstract the key ingredients: (1) pressure additivity for the base $G^m$, (2) index lower bounds for non-product maximal subgroups, (3) counting bounds for maximal subgroup classes. The bounded orbit complexity condition provides (2) and (3).\n\n**Domain Bridges:** Geometric group theory (orbit equivalence), ergodic theory (actions on product spaces), operator algebras (crossed products).\n\n**Lineage:** Direct generalization of the wreath product universality theorem.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if achieved, as it would unify generation threshold theory for a vast class of groups.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7e0c9f23",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T12:10:11.335247+00:00"
+  },
+  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2155,22 +2123,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
-  },
-  {
-    "id": "fd_1379",
-    "title": "Tightening the bridge",
-    "description": "\u2014 replacing the pair-mass gap with sharper Lorentzian curvature measures to close the gap between our bound and the true entanglement entropy.",
-    "domains": [
-      "Algebra",
-      "Physics",
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b92c2c2d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T10:57:15.683117+00:00"
   },
   {
     "id": "seed_007",
