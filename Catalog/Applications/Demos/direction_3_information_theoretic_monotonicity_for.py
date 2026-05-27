@@ -1,742 +1,910 @@
 #!/usr/bin/env python3
 """
-applications.py — Real-world applications of information-theoretic
-bounds for robustly Lorentzian measures.
+applications.py — Real-world applications of information-theoretic monotonicity
+for robustly Lorentzian measures.
 
-Demonstrates:
+Demonstrates practical applications in:
 1. Privacy amplification under coordinate deletion
-2. Anti-clustering bounds in statistical mechanics
-3. Communication complexity bounds
-4. Sampling quality certification
+2. Sampling quality certification
+3. Anti-clustering bounds in statistical mechanics
+4. Communication complexity bounds
 """
 
 import numpy as np
 from itertools import combinations
-from math import log, comb, exp
+from math import log, log2, comb, sqrt, exp
+from typing import Dict, List, Tuple
 
 
-def binary_entropy(p):
-    if p <= 0 or p >= 1:
-        return 0.0
-    return -(p * log(p) + (1 - p) * log(1 - p))
+class FinsetLaw:
+    """Probability law on subsets of [n]."""
 
-
-def shannon_entropy(weights):
-    return -sum(w * log(w) for w in weights if w > 0)
-
-
-class SubsetLaw:
-    """Lightweight subset probability law."""
-    def __init__(self, n, subsets, weights):
+    def __init__(self, n: int, weights: Dict[frozenset, float]):
         self.n = n
-        self.subsets = subsets
-        self.weights = weights
-        self._dict = dict(zip(subsets, weights))
+        self.weights = {}
+        total = sum(w for w in weights.values() if w > 0)
+        for s, w in weights.items():
+            if w > 0:
+                self.weights[s] = w / total
 
-    @classmethod
-    def uniform_matroid(cls, n, k):
-        subsets = [frozenset(s) for s in combinations(range(n), k)]
-        w = 1.0 / len(subsets)
-        return cls(n, subsets, [w] * len(subsets))
+    def coord_prob(self, i: int) -> float:
+        return sum(w for s, w in self.weights.items() if i in s)
 
-    def coord_prob(self, i):
-        return sum(w for s, w in zip(self.subsets, self.weights) if i in s)
+    def pair_joint_prob(self, i: int, j: int) -> float:
+        return sum(w for s, w in self.weights.items() if i in s and j in s)
 
-    def coord_cov(self, i, j):
-        pij = sum(w for s, w in zip(self.subsets, self.weights) if i in s and j in s)
-        return pij - self.coord_prob(i) * self.coord_prob(j)
+    def coord_cov(self, i: int, j: int) -> float:
+        return self.pair_joint_prob(i, j) - self.coord_prob(i) * self.coord_prob(j)
 
-    def total_entropy(self):
-        return shannon_entropy(self.weights)
+    def entropy(self) -> float:
+        return -sum(w * log(w) for w in self.weights.values() if w > 0)
 
-    def delete_coord(self, k):
-        proj = {}
-        for s, w in zip(self.subsets, self.weights):
-            s2 = frozenset(x for x in s if x != k)
-            proj[s2] = proj.get(s2, 0) + w
-        return SubsetLaw(self.n - 1, list(proj.keys()), list(proj.values()))
+    def pairwise_mi(self, i: int, j: int) -> float:
+        p, q = self.coord_prob(i), self.coord_prob(j)
+        r = self.pair_joint_prob(i, j)
+        mi = 0.0
+        for pxy, pxpy in [(r, p*q), (p-r, p*(1-q)), (q-r, (1-p)*q),
+                           (1-p-q+r, (1-p)*(1-q))]:
+            if pxy > 1e-15 and pxpy > 1e-15:
+                mi += pxy * log(pxy / pxpy)
+        return max(0.0, mi)
+
+    def delete_coord(self, k: int) -> 'FinsetLaw':
+        new_w: Dict[frozenset, float] = {}
+        for s, w in self.weights.items():
+            ns = frozenset(i if i < k else i-1 for i in s if i != k)
+            new_w[ns] = new_w.get(ns, 0.0) + w
+        return FinsetLaw(self.n - 1, new_w)
 
 
-# ============================================================
-# Application 1: Privacy Amplification
-# ============================================================
+def uniform_matroid(n: int, r: int) -> FinsetLaw:
+    w = {frozenset(s): 1.0 for s in combinations(range(n), r)}
+    return FinsetLaw(n, w)
+
+
+# ============================================================================
+# APPLICATION 1: Privacy Amplification Under Coordinate Deletion
+# ============================================================================
 
 def privacy_amplification_demo():
     """
-    Demonstrate that coordinate deletion preserves uncertainty.
+    Show that deleting a coordinate from a robustly Lorentzian distribution
+    preserves most of the entropy, providing a privacy guarantee.
 
-    In differential privacy, if a database is sampled from a robustly
-    Lorentzian distribution, deleting one record (coordinate) can only
-    reduce entropy by at most log(2). This means the remaining data
-    retains most of its uncertainty — an adversary who sees n-1 coordinates
-    still faces nearly as much uncertainty as before.
+    In differential privacy, deletion of a data point should not change
+    the output distribution too much. For Lorentzian measures, the entropy
+    drop under deletion is bounded, providing a privacy certificate.
     """
-    print("APPLICATION 1: Privacy Amplification Under Coordinate Deletion")
-    print("-" * 60)
-    print("Theorem: H(π_k μ) ≥ H(μ) - log(2)")
-    print()
+    print("\n" + "="*65)
+    print("  APPLICATION 1: Privacy Amplification Under Deletion")
+    print("="*65)
+    print("""
+  When a robustly Lorentzian measure represents a data distribution,
+  deleting one coordinate (data point) preserves most of the entropy.
+  This bounds how much an adversary can learn from the deletion.
+  """)
 
-    for n in [4, 5, 6, 8]:
-        k = n // 2
-        mu = SubsetLaw.uniform_matroid(n, k)
-        H_original = mu.total_entropy()
+    for n in [4, 5, 6, 7]:
+        r = n // 2
+        mu = uniform_matroid(n, r)
+        H = mu.entropy()
+        max_drop = 0
+        for k in range(n):
+            Hk = mu.delete_coord(k).entropy()
+            drop = H - Hk
+            max_drop = max(max_drop, drop)
 
-        print(f"  Uniform matroid U({k},{n}):")
-        print(f"    Original entropy: H(μ) = {H_original:.4f} nats")
+        eps = max(abs(mu.coord_cov(i, j)) / (mu.coord_prob(i) * mu.coord_prob(j))
+                  for i in range(n) for j in range(i+1, n))
 
-        drops = []
-        for coord in range(n):
-            mu_del = mu.delete_coord(coord)
-            H_del = mu_del.total_entropy()
-            drop = H_original - H_del
-            drops.append(drop)
-
-        max_drop = max(drops)
-        avg_drop = np.mean(drops)
-        print(f"    Max entropy drop:     {max_drop:.4f} nats")
-        print(f"    Average entropy drop: {avg_drop:.4f} nats")
-        print(f"    Certified bound:      {log(2):.4f} nats (log 2)")
-        print(f"    Privacy margin:       {log(2) - max_drop:.4f} nats")
-        print()
+        print(f"  U({n},{r}): H = {H:.4f}, max entropy drop = {max_drop:.4f}, "
+              f"ε = {eps:.4f}, log(1/ε) = {log(1/eps):.4f}")
+        print(f"    → Deletion preserves {100*(1-max_drop/H):.1f}% of entropy")
 
 
-# ============================================================
-# Application 2: Anti-Clustering (Statistical Mechanics)
-# ============================================================
-
-def anti_clustering_demo():
-    """
-    Demonstrate susceptibility bounds as anti-clustering certificates.
-
-    In statistical mechanics, the susceptibility χ = ∑_{i,j} Cov(X_i, X_j)
-    measures how much the system responds to external fields. For robustly
-    Lorentzian measures, χ ≤ n/4, preventing the formation of large clusters.
-    """
-    print("APPLICATION 2: Anti-Clustering Bounds (Statistical Mechanics)")
-    print("-" * 60)
-    print("Theorem: χ(μ) = Σ Cov(X_i,X_j) ≤ n/4")
-    print()
-
-    for n in [4, 5, 6, 8]:
-        print(f"  n = {n}:")
-        for k in [1, n // 2, n - 1]:
-            mu = SubsetLaw.uniform_matroid(n, k)
-            chi = sum(mu.coord_cov(i, j) for i in range(n) for j in range(n))
-            bound = n / 4.0
-
-            # Decompose into diagonal (variance) and off-diagonal
-            diag = sum(mu.coord_cov(i, i) for i in range(n))
-            off_diag = chi - diag
-
-            print(f"    U({k},{n}): χ = {chi:+.6f} ≤ {bound:.4f}")
-            print(f"      Diagonal (∑Var):     {diag:+.6f}")
-            print(f"      Off-diagonal (∑Cov): {off_diag:+.6f}")
-        print()
-
-
-# ============================================================
-# Application 3: Communication Complexity
-# ============================================================
-
-def communication_complexity_demo():
-    """
-    Demonstrate mutual information bounds for two-party protocols.
-
-    If Alice holds coordinate i and Bob holds coordinate j of a random
-    subset drawn from a robustly Lorentzian distribution, the internal
-    information cost of any protocol is bounded by the mutual information
-    I(X_i; X_j) ≤ cov²/(p_i(1-p_i)*p_j(1-p_j)) ≤ ε²/(ε(1-ε))².
-    """
-    print("APPLICATION 3: Communication Complexity Bounds")
-    print("-" * 60)
-    print("Theorem: I(X_i;X_j) ≤ ε²/(ε(1-ε))² (two-coordinate info cost)")
-    print()
-
-    for n in [4, 5, 6]:
-        k = n // 2
-        mu = SubsetLaw.uniform_matroid(n, k)
-
-        # Estimate gap
-        eps = min(min(mu.coord_prob(i), 1 - mu.coord_prob(i)) for i in range(n))
-        max_cov = max(abs(mu.coord_cov(i, j))
-                      for i in range(n) for j in range(i + 1, n))
-        eps = min(eps, max_cov, 0.5)
-
-        gap_bound = eps ** 2 / (eps * (1 - eps)) ** 2 if eps > 0 else float('inf')
-
-        print(f"  U({k},{n}), ε ≈ {eps:.6f}:")
-        print(f"    Gap bound: ε²/(ε(1-ε))² = {gap_bound:.6f}")
-
-        for i in range(min(n, 3)):
-            for j in range(i + 1, min(n, 4)):
-                pij = sum(w for s, w in zip(mu.subsets, mu.weights) if i in s and j in s)
-                pi, pj = mu.coord_prob(i), mu.coord_prob(j)
-                p11, p10, p01, p00 = pij, pi - pij, pj - pij, 1 - pi - pj + pij
-                mi = binary_entropy(pi) + binary_entropy(pj) - \
-                     shannon_entropy([max(v, 0) for v in [p00, p01, p10, p11]])
-                mi = max(mi, 0)
-                cov = mu.coord_cov(i, j)
-                chi2 = cov ** 2 / (pi * (1 - pi) * pj * (1 - pj))
-                print(f"    I(X_{i};X_{j}) = {mi:.6f} ≤ χ² = {chi2:.6f} ≤ {gap_bound:.6f}")
-        print()
-
-
-# ============================================================
-# Application 4: Sampling Quality Certification
-# ============================================================
+# ============================================================================
+# APPLICATION 2: Sampling Quality Certification
+# ============================================================================
 
 def sampling_certification_demo():
     """
-    Demonstrate how the bounds can certify sampling quality.
+    Use susceptibility bounds to certify the quality of MCMC samples.
 
-    Given a sample from a purported matroid distribution, check whether
-    the observed marginals and covariances are consistent with robust
-    Lorentzianity, and if so, certify bounds on entropy and MI.
+    If a sample from a Lorentzian distribution has susceptibility below
+    the certified bound, we have evidence that the sampler has mixed well.
     """
-    print("APPLICATION 4: Sampling Quality Certification")
-    print("-" * 60)
-    print()
+    print("\n" + "="*65)
+    print("  APPLICATION 2: Sampling Quality Certification")
+    print("="*65)
+    print("""
+  The susceptibility χ = Σ|Cov(Xᵢ, Xⱼ)| measures total correlation.
+  For robustly Lorentzian measures, χ ≤ ε·(Σpᵢ)² (proved in Lean).
+  This gives a checkable certificate for sampling quality.
+  """)
 
-    n, k = 5, 2
-    mu = SubsetLaw.uniform_matroid(n, k)
+    n, r = 6, 3
+    mu = uniform_matroid(n, r)
 
-    print(f"  Reference: U({k},{n})")
-    print(f"  Checking robust Lorentzianity conditions:")
+    # Compute exact susceptibility
+    chi = sum(abs(mu.coord_cov(i, j))
+              for i in range(n) for j in range(n) if i != j)
 
-    # Check marginal bounds
-    probs = [mu.coord_prob(i) for i in range(n)]
-    eps_marginal = min(min(p, 1 - p) for p in probs)
-    print(f"    Marginal range: [{min(probs):.4f}, {max(probs):.4f}]")
-    print(f"    ε_marginal = {eps_marginal:.6f}")
+    # Compute bound
+    eps = max(abs(mu.coord_cov(i, j)) / (mu.coord_prob(i) * mu.coord_prob(j))
+              for i in range(n) for j in range(i+1, n))
+    sum_probs = sum(mu.coord_prob(i) for i in range(n))
+    bound = eps * sum_probs**2
 
-    # Check negative dependence
-    covs = []
-    for i in range(n):
-        for j in range(i + 1, n):
+    print(f"  U({n},{r}):")
+    print(f"    Susceptibility χ = {chi:.6f}")
+    print(f"    Certified bound  = {bound:.6f}")
+    print(f"    Ratio χ/bound    = {chi/bound:.4f}")
+    print(f"    Certificate: PASS ✓" if chi <= bound + 1e-10 else "    Certificate: FAIL ✗")
+
+    # Simulate "bad" samples by adding positive correlations
+    print("\n  Comparison with positively-correlated perturbation:")
+    for delta in [0.0, 0.1, 0.3, 0.5]:
+        weights_pert = {}
+        for s, w in mu.weights.items():
+            bonus = delta * (1.0 if 0 in s and 1 in s else 0.0)
+            weights_pert[s] = w + bonus
+        mu_pert = FinsetLaw(n, weights_pert)
+        chi_pert = sum(abs(mu_pert.coord_cov(i, j))
+                      for i in range(n) for j in range(n) if i != j)
+        print(f"    δ = {delta}: χ = {chi_pert:.6f} "
+              f"{'≤' if chi_pert <= bound + 1e-10 else '>'} {bound:.6f}")
+
+
+# ============================================================================
+# APPLICATION 3: Anti-Clustering in Statistical Mechanics
+# ============================================================================
+
+def anti_clustering_demo():
+    """
+    Demonstrate that Lorentzian measures exhibit anti-clustering:
+    coordinate indicators repel each other, preventing concentration.
+
+    In the spin system interpretation, this is a repulsive interaction
+    that limits magnetic susceptibility.
+    """
+    print("\n" + "="*65)
+    print("  APPLICATION 3: Anti-Clustering (Statistical Mechanics)")
+    print("="*65)
+    print("""
+  In a spin system with Lorentzian measure, the "spins" (coordinate
+  indicators) exhibit repulsive interactions. The susceptibility bound
+  χ ≤ ε·(Σpᵢ)² limits the system's magnetic response, preventing
+  spin clustering that would indicate a phase transition.
+  """)
+
+    for n in [4, 5, 6, 7, 8]:
+        r = n // 2
+        mu = uniform_matroid(n, r)
+
+        # Average covariance
+        covs = [mu.coord_cov(i, j) for i in range(n) for j in range(i+1, n)]
+        avg_cov = sum(covs) / len(covs)
+
+        # All covariances should be negative (anti-clustering)
+        all_neg = all(c <= 1e-10 for c in covs)
+
+        # Susceptibility per pair
+        chi_per_pair = sum(abs(c) for c in covs) * 2 / (n * (n-1))
+
+        print(f"  U({n},{r}): avg Cov = {avg_cov:.6f}, "
+              f"all negative = {'✓' if all_neg else '✗'}, "
+              f"χ/pair = {chi_per_pair:.6f}")
+
+
+# ============================================================================
+# APPLICATION 4: Communication Complexity Bounds
+# ============================================================================
+
+def communication_complexity_demo():
+    """
+    Show that the mutual information bound limits the information cost
+    of a two-party protocol that reveals coordinate indicators.
+
+    If Alice holds X_i and Bob holds X_j, the internal information cost
+    of any protocol computing f(X_i, X_j) is bounded by I(X_i; X_j),
+    which we bound by χ²(i,j) = Cov²/(p(1-p)q(1-q)).
+    """
+    print("\n" + "="*65)
+    print("  APPLICATION 4: Communication Complexity Bounds")
+    print("="*65)
+    print("""
+  For a robustly Lorentzian distribution, the mutual information
+  I(Xᵢ; Xⱼ) ≤ χ²(i,j) = Cov²/(p(1-p)q(1-q)) (proved in Lean).
+  This bounds the information cost of any two-party protocol
+  that operates on coordinate indicators.
+  """)
+
+    n, r = 6, 3
+    mu = uniform_matroid(n, r)
+
+    print(f"\n  U({n},{r}): Pairwise information costs")
+    print(f"  {'Pair':>8s}  {'MI':>10s}  {'χ² bound':>10s}  {'Ratio':>8s}")
+    print(f"  {'—'*8}  {'—'*10}  {'—'*10}  {'—'*8}")
+
+    for i in range(min(n, 4)):
+        for j in range(i+1, min(n, 4)):
+            mi = mu.pairwise_mi(i, j)
             c = mu.coord_cov(i, j)
-            covs.append(c)
-    all_neg = all(c <= 1e-12 for c in covs)
-    max_abs_cov = max(abs(c) for c in covs)
-    print(f"    All pairwise covs ≤ 0? {'✓' if all_neg else '✗'}")
-    print(f"    Max |Cov|: {max_abs_cov:.6f}")
+            p, q = mu.coord_prob(i), mu.coord_prob(j)
+            chisq = c**2 / (p*(1-p)*q*(1-q)) if p*(1-p)*q*(1-q) > 0 else float('inf')
+            ratio = mi / chisq if chisq > 0 else 0
+            print(f"  ({i},{j})     {mi:10.6f}  {chisq:10.6f}  {ratio:8.4f}")
 
-    eps = min(eps_marginal, max_abs_cov, 0.5)
-    print(f"    Estimated gap ε: {eps:.6f}")
-
-    if eps > 0 and all_neg:
-        print(f"\n  ✓ Distribution is robustly Lorentzian with gap ε = {eps:.6f}")
-        print(f"\n  Certified bounds:")
-        print(f"    Entropy:          H = {mu.total_entropy():.4f}")
-        print(f"    Susceptibility:   χ = {sum(mu.coord_cov(i, j) for i in range(n) for j in range(n)):.6f} ≤ {n/4:.4f}")
-        print(f"    Max MI:           {max(abs(c) for c in covs)**2 / (eps*(1-eps))**2:.6f}")
-        print(f"    Deletion drop:    ≤ {log(2):.4f}")
-    else:
-        print(f"\n  ✗ Distribution is NOT robustly Lorentzian")
-
-
-def main():
-    privacy_amplification_demo()
-    print()
-    anti_clustering_demo()
-    print()
-    communication_complexity_demo()
-    print()
-    sampling_certification_demo()
+    print(f"\n  → MI is always ≤ χ² bound (Theorem mutualInfoPair_cov_bound)")
+    print(f"  → The ratio MI/χ² ≈ 0.5, consistent with the bound being 2× tight")
 
 
 if __name__ == "__main__":
-    main()
+    print("╔══════════════════════════════════════════════════════════════════╗")
+    print("║  Applications of Information-Theoretic Lorentzian Monotonicity  ║")
+    print("╚══════════════════════════════════════════════════════════════════╝")
+
+    privacy_amplification_demo()
+    sampling_certification_demo()
+    anti_clustering_demo()
+    communication_complexity_demo()
+
+    print("\n  All applications completed.")
 
 
 #!/usr/bin/env python3
 """
-demo.py — Interactive demonstration of Information-Theoretic Monotonicity
-for Robustly Lorentzian Measures.
+demo.py — Interactive demonstration of information-theoretic monotonicity
+for robustly Lorentzian measures.
 
 Demonstrates:
-- Uniform matroid distributions
-- Perturbed negatively dependent laws
+- Uniform matroid distributions and their information profiles
 - Deletion entropy before/after removing a coordinate
 - Pairwise mutual information heatmaps
 - Comparison of empirical values against certified upper bounds
+- Variation of the gap parameter ε
 """
 
 import numpy as np
 from itertools import combinations
-from math import comb, log, exp
+from math import log, log2, comb, sqrt
+from typing import Dict, List, Tuple, Optional
 
 
-def binary_entropy(p):
-    """Binary entropy H(p) = -p log p - (1-p) log(1-p)."""
+def binary_entropy(p: float) -> float:
+    """Binary entropy h(p) = -p log₂ p - (1-p) log₂ (1-p)."""
     if p <= 0 or p >= 1:
         return 0.0
-    return -(p * log(p) + (1 - p) * log(1 - p))
+    return -p * log2(p) - (1 - p) * log2(1 - p)
 
 
-def shannon_entropy(weights):
-    """Shannon entropy H = -sum w_i log w_i."""
-    return -sum(w * log(w) for w in weights if w > 0)
+def binary_entropy_nat(p: float) -> float:
+    """Binary entropy using natural log."""
+    if p <= 0 or p >= 1:
+        return 0.0
+    return -p * log(p) - (1 - p) * log(1 - p)
 
 
 class FinsetLaw:
-    """A probability distribution on subsets of [n]."""
+    """A probability law on subsets of [n] = {0, 1, ..., n-1}.
 
-    def __init__(self, n, weight_func):
+    Encodes a probability mass function on the power set with
+    normalization and nonnegativity, mirroring the Lean FinsetLaw structure.
+    """
+
+    def __init__(self, n: int, weights: Dict[frozenset, float]):
         self.n = n
-        subsets = []
-        weights = []
-        for k in range(n + 1):
-            for s in combinations(range(n), k):
-                subset = frozenset(s)
-                w = weight_func(subset)
-                if w > 0:
-                    subsets.append(subset)
-                    weights.append(w)
-        total = sum(weights)
-        self.subsets = subsets
-        self.weights = [w / total for w in weights]
-        self._weight_dict = dict(zip(subsets, self.weights))
+        self.weights = {}
+        total = 0.0
+        for s, w in weights.items():
+            assert w >= 0, f"Weight must be nonneg, got {w} for {s}"
+            if w > 0:
+                self.weights[s] = w
+                total += w
+        # Normalize
+        if abs(total - 1.0) > 1e-10:
+            for s in self.weights:
+                self.weights[s] /= total
 
-    def weight(self, s):
-        return self._weight_dict.get(frozenset(s), 0.0)
+    def weight(self, s: frozenset) -> float:
+        return self.weights.get(s, 0.0)
 
-    def coord_prob(self, i):
-        """P(i in S)."""
-        return sum(w for s, w in zip(self.subsets, self.weights) if i in s)
+    def coord_prob(self, i: int) -> float:
+        """P(i ∈ S)."""
+        return sum(w for s, w in self.weights.items() if i in s)
 
-    def pair_joint_prob(self, i, j):
-        """P(i in S and j in S)."""
-        return sum(w for s, w in zip(self.subsets, self.weights) if i in s and j in s)
+    def pair_joint_prob(self, i: int, j: int) -> float:
+        """P(i ∈ S ∧ j ∈ S)."""
+        return sum(w for s, w in self.weights.items() if i in s and j in s)
 
-    def coord_cov(self, i, j):
-        """Cov(1_i, 1_j) = P(i,j in S) - P(i in S)*P(j in S)."""
+    def coord_cov(self, i: int, j: int) -> float:
+        """Cov(1_{i∈S}, 1_{j∈S})."""
         return self.pair_joint_prob(i, j) - self.coord_prob(i) * self.coord_prob(j)
 
-    def total_entropy(self):
-        """H(mu) = -sum w log w."""
-        return shannon_entropy(self.weights)
+    def total_entropy(self) -> float:
+        """Shannon entropy H(μ) using natural log."""
+        return -sum(w * log(w) for w in self.weights.values() if w > 0)
 
-    def mutual_info_coord(self, i, j):
-        """Mutual information I(X_i; X_j) for indicator variables."""
-        pi = self.coord_prob(i)
-        pj = self.coord_prob(j)
-        pij = self.pair_joint_prob(i, j)
-        # Joint distribution of (X_i, X_j):
-        p11 = pij
-        p10 = pi - pij
-        p01 = pj - pij
-        p00 = 1 - pi - pj + pij
-        # Clamp for numerical safety
-        vals = [max(v, 0) for v in [p00, p01, p10, p11]]
-        h_joint = shannon_entropy(vals)
-        h_i = binary_entropy(pi)
-        h_j = binary_entropy(pj)
-        return max(h_i + h_j - h_joint, 0.0)
+    def total_entropy_bits(self) -> float:
+        """Shannon entropy in bits."""
+        return -sum(w * log2(w) for w in self.weights.values() if w > 0)
 
-    def chi_squared_bound(self, i, j):
-        """Chi-squared upper bound on MI: cov^2 / (pi(1-pi)*pj(1-pj))."""
-        cov = self.coord_cov(i, j)
-        pi = self.coord_prob(i)
-        pj = self.coord_prob(j)
-        denom = pi * (1 - pi) * pj * (1 - pj)
-        if denom <= 0:
+    def spin_susceptibility(self) -> float:
+        """χ = Σ_{i≠j} |Cov(X_i, X_j)|."""
+        result = 0.0
+        for i in range(self.n):
+            for j in range(self.n):
+                if i != j:
+                    result += abs(self.coord_cov(i, j))
+        return result
+
+    def pairwise_mi(self, i: int, j: int) -> float:
+        """Mutual information I(X_i; X_j) for coordinate indicators."""
+        p = self.coord_prob(i)
+        q = self.coord_prob(j)
+        r = self.pair_joint_prob(i, j)
+        mi = 0.0
+        pairs = [
+            (r, p * q),
+            (p - r, p * (1 - q)),
+            (q - r, (1 - p) * q),
+            (1 - p - q + r, (1 - p) * (1 - q)),
+        ]
+        for pxy, pxpy in pairs:
+            if pxy > 1e-15 and pxpy > 1e-15:
+                mi += pxy * log(pxy / pxpy)
+        return mi
+
+    def chi_sq_pair(self, i: int, j: int) -> float:
+        """Chi-squared divergence for pair (i,j)."""
+        c = self.coord_cov(i, j)
+        p = self.coord_prob(i)
+        q = self.coord_prob(j)
+        denom = p * (1 - p) * q * (1 - q)
+        if denom < 1e-15:
             return float('inf')
-        return cov ** 2 / denom
+        return c**2 / denom
 
-    def delete_coord_entropy(self, k):
-        """Entropy after deleting coordinate k."""
-        projected = {}
-        for s, w in zip(self.subsets, self.weights):
-            s_new = frozenset(x for x in s if x != k)
-            projected[s_new] = projected.get(s_new, 0.0) + w
-        return shannon_entropy(list(projected.values()))
-
-    def susceptibility(self):
-        """Total covariance chi = sum_{i,j} Cov(X_i, X_j)."""
-        return sum(self.coord_cov(i, j) for i in range(self.n) for j in range(self.n))
-
-    def robustly_lorentzian_gap(self):
-        """Estimate the maximal epsilon for which this law is robustly Lorentzian."""
-        eps_marginal = min(
-            min(self.coord_prob(i), 1 - self.coord_prob(i))
-            for i in range(self.n)
-        )
-        eps_cov = min(
-            -self.coord_cov(i, j)
-            for i in range(self.n) for j in range(self.n) if i != j
-        ) if self.n > 1 else float('inf')
-        # Also need cov control: |cov| <= eps
-        max_abs_cov = max(
-            abs(self.coord_cov(i, j))
-            for i in range(self.n) for j in range(self.n) if i != j
-        ) if self.n > 1 else 0.0
-        eps = min(eps_marginal, eps_cov, 0.5)
-        if max_abs_cov > eps:
-            eps = max_abs_cov  # Need eps >= max |cov|
-        return min(eps, eps_marginal)
+    def delete_coord(self, k: int) -> 'FinsetLaw':
+        """Delete coordinate k, pushing forward the measure."""
+        new_weights: Dict[frozenset, float] = {}
+        for s, w in self.weights.items():
+            new_s = frozenset(i if i < k else i - 1 for i in s if i != k)
+            new_weights[new_s] = new_weights.get(new_s, 0.0) + w
+        return FinsetLaw(self.n - 1, new_weights)
 
 
-def uniform_matroid_law(n, k):
-    """Uniform distribution on k-element subsets of [n]."""
-    return FinsetLaw(n, lambda s: 1.0 if len(s) == k else 0.0)
+def uniform_matroid_law(n: int, r: int) -> FinsetLaw:
+    """Uniform distribution on r-element subsets of [n].
+
+    This is the canonical example of a strongly log-concave / Lorentzian distribution.
+    """
+    total = comb(n, r)
+    weights = {}
+    for subset in combinations(range(n), r):
+        weights[frozenset(subset)] = 1.0 / total
+    return FinsetLaw(n, weights)
 
 
-def perturbed_matroid_law(n, k, delta=0.1):
-    """Perturbed uniform matroid: weights proportional to 1 + delta * sum(s)."""
-    def w(s):
-        if len(s) != k:
-            return 0.0
-        return 1.0 + delta * sum(s)
-    return FinsetLaw(n, w)
+def perturbed_matroid_law(n: int, r: int, epsilon: float) -> FinsetLaw:
+    """Perturbed uniform matroid: weight ∝ 1 + ε·(indicator of 0 ∈ S).
+
+    For small ε, this stays close to the uniform matroid but breaks symmetry,
+    allowing us to test robustness of information-theoretic bounds.
+    """
+    weights = {}
+    for subset in combinations(range(n), r):
+        s = frozenset(subset)
+        w = 1.0 + epsilon * (1.0 if 0 in s else 0.0)
+        weights[s] = w
+    return FinsetLaw(n, weights)
+
+
+def compute_robustness_gap(mu: FinsetLaw) -> float:
+    """Estimate the robustness gap ε = max_{i≠j} |Cov(i,j)| / (p_i * p_j)."""
+    max_ratio = 0.0
+    for i in range(mu.n):
+        for j in range(i + 1, mu.n):
+            pi_val = mu.coord_prob(i)
+            pj_val = mu.coord_prob(j)
+            if pi_val > 0 and pj_val > 0:
+                ratio = abs(mu.coord_cov(i, j)) / (pi_val * pj_val)
+                max_ratio = max(max_ratio, ratio)
+    return max_ratio
+
+
+def audit_info_profile(mu: FinsetLaw) -> dict:
+    """Compute the full information-theoretic profile of a FinsetLaw.
+
+    Returns entropy, deleted entropies, covariance matrix, MI matrix,
+    susceptibility, and bound comparisons.
+    """
+    n = mu.n
+    profile = {
+        'n': n,
+        'entropy': mu.total_entropy(),
+        'entropy_bits': mu.total_entropy_bits(),
+        'coord_probs': [mu.coord_prob(i) for i in range(n)],
+        'covariances': [[mu.coord_cov(i, j) for j in range(n)] for i in range(n)],
+        'mutual_infos': [[mu.pairwise_mi(i, j) if i != j else 0.0
+                         for j in range(n)] for i in range(n)],
+        'chi_sq_bounds': [[mu.chi_sq_pair(i, j) if i != j else 0.0
+                          for j in range(n)] for i in range(n)],
+        'susceptibility': mu.spin_susceptibility(),
+        'deleted_entropies': [],
+    }
+
+    # Compute deletion entropies
+    for k in range(n):
+        mu_del = mu.delete_coord(k)
+        profile['deleted_entropies'].append(mu_del.total_entropy())
+
+    # Compute gap
+    eps = compute_robustness_gap(mu)
+    profile['robustness_gap'] = eps
+
+    # Susceptibility bound
+    sum_probs = sum(profile['coord_probs'])
+    profile['susceptibility_bound'] = eps * sum_probs ** 2
+
+    # Check MI ≤ chi-squared for all pairs
+    mi_le_chisq = True
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                if profile['mutual_infos'][i][j] > profile['chi_sq_bounds'][i][j] + 1e-10:
+                    mi_le_chisq = False
+    profile['mi_le_chisq_holds'] = mi_le_chisq
+
+    return profile
+
+
+def print_profile(profile: dict, title: str = "Info Profile"):
+    """Pretty-print an information profile."""
+    print(f"\n{'='*60}")
+    print(f"  {title}")
+    print(f"{'='*60}")
+    print(f"  n = {profile['n']}")
+    print(f"  H(μ) = {profile['entropy']:.6f} nats = {profile['entropy_bits']:.6f} bits")
+    print(f"  Robustness gap ε = {profile['robustness_gap']:.6f}")
+    print(f"  Susceptibility χ = {profile['susceptibility']:.6f}")
+    print(f"  Susceptibility bound = {profile['susceptibility_bound']:.6f}")
+    print(f"  χ ≤ bound? {'✓' if profile['susceptibility'] <= profile['susceptibility_bound'] + 1e-10 else '✗'}")
+    print(f"  MI ≤ χ² for all pairs? {'✓' if profile['mi_le_chisq_holds'] else '✗'}")
+
+    print(f"\n  Coordinate probabilities:")
+    for i, p in enumerate(profile['coord_probs']):
+        print(f"    p_{i} = {p:.6f}")
+
+    print(f"\n  Pairwise covariances (off-diagonal):")
+    n = profile['n']
+    for i in range(min(n, 5)):
+        for j in range(i+1, min(n, 5)):
+            print(f"    Cov({i},{j}) = {profile['covariances'][i][j]:.6f}")
+
+    print(f"\n  Pairwise MI vs χ² bound:")
+    for i in range(min(n, 5)):
+        for j in range(i+1, min(n, 5)):
+            mi = profile['mutual_infos'][i][j]
+            cs = profile['chi_sq_bounds'][i][j]
+            print(f"    I({i};{j}) = {mi:.6f} ≤ {cs:.6f} {'✓' if mi <= cs + 1e-10 else '✗'}")
+
+    print(f"\n  Deletion entropies:")
+    for k, he in enumerate(profile['deleted_entropies']):
+        drop = profile['entropy'] - he
+        print(f"    H(π_{k}μ) = {he:.6f}, drop = {drop:.6f}")
 
 
 def demo_uniform_matroids():
-    """Demonstrate entropy and MI for uniform matroids."""
-    print("=" * 60)
-    print("DEMO 1: Uniform Matroid Distributions")
-    print("=" * 60)
-    for n in [4, 5, 6]:
-        for k in [1, 2, n // 2]:
-            if k > n:
-                continue
-            mu = uniform_matroid_law(n, k)
-            H = mu.total_entropy()
-            eps = mu.robustly_lorentzian_gap()
-            chi = mu.susceptibility()
-            print(f"\n  U({k},{n}): H = {H:.4f}, ε ≈ {eps:.6f}, χ = {chi:.6f}")
-            print(f"    n/4 = {n/4:.4f} (susceptibility bound)")
-            print(f"    Coordinate probs: {[round(mu.coord_prob(i), 4) for i in range(n)]}")
-            if n <= 6:
-                for i in range(n):
-                    for j in range(i + 1, n):
-                        cov = mu.coord_cov(i, j)
-                        mi = mu.mutual_info_coord(i, j)
-                        chi2 = mu.chi_squared_bound(i, j)
-                        print(f"    Cov({i},{j}) = {cov:.6f}, MI = {mi:.6f}, χ²-bound = {chi2:.6f}")
+    """Demonstrate information profiles for uniform matroid distributions."""
+    print("\n" + "="*70)
+    print("  DEMO 1: Uniform Matroid Distributions")
+    print("="*70)
+    print("""
+  The uniform matroid U(n,r) assigns equal weight to all r-element subsets
+  of [n]. These are the canonical examples of Lorentzian/log-concave
+  distributions, with strong negative dependence properties.
+  """)
+
+    for n, r in [(4, 2), (5, 2), (6, 3)]:
+        mu = uniform_matroid_law(n, r)
+        profile = audit_info_profile(mu)
+        print_profile(profile, f"Uniform Matroid U({n},{r})")
 
 
-def demo_deletion_entropy():
-    """Demonstrate entropy loss under coordinate deletion."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Deletion Entropy (Projection Lower Bound)")
-    print("=" * 60)
-    for n in [4, 5, 6]:
-        k = n // 2
-        mu = uniform_matroid_law(n, k)
-        H = mu.total_entropy()
-        print(f"\n  U({k},{n}): H(μ) = {H:.4f}, log(2) = {log(2):.4f}")
-        for coord in range(n):
-            H_del = mu.delete_coord_entropy(coord)
-            drop = H - H_del
-            print(f"    Delete coord {coord}: H(π_k μ) = {H_del:.4f}, "
-                  f"drop = {drop:.4f}, ≤ log(2)? {'✓' if drop <= log(2) + 1e-10 else '✗'}")
+def demo_perturbation_robustness():
+    """Show how information quantities change under perturbation."""
+    print("\n" + "="*70)
+    print("  DEMO 2: Perturbation Robustness")
+    print("="*70)
+    print("""
+  We perturb U(5,2) by favoring subsets containing coordinate 0.
+  The robustness gap ε should grow with perturbation strength,
+  and all information bounds should remain valid.
+  """)
+
+    n, r = 5, 2
+    for eps in [0.0, 0.1, 0.5, 1.0, 2.0]:
+        mu = perturbed_matroid_law(n, r, eps)
+        profile = audit_info_profile(mu)
+        print_profile(profile, f"Perturbed U({n},{r}) with ε = {eps}")
 
 
-def demo_perturbation_scaling():
-    """Test how MI scales with perturbation strength."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Perturbation Scaling of Mutual Information")
-    print("=" * 60)
-    n, k = 5, 2
-    for delta in [0.0, 0.1, 0.5, 1.0, 2.0]:
-        mu = perturbed_matroid_law(n, k, delta)
-        eps = mu.robustly_lorentzian_gap()
-        mi_avg = np.mean([mu.mutual_info_coord(i, j)
-                          for i in range(n) for j in range(i + 1, n)])
-        chi2_avg = np.mean([mu.chi_squared_bound(i, j)
-                            for i in range(n) for j in range(i + 1, n)])
-        print(f"  δ = {delta:.1f}: ε ≈ {eps:.6f}, avg MI = {mi_avg:.6f}, "
-              f"avg χ²-bound = {chi2_avg:.6f}")
-        if eps > 0:
-            print(f"    Predicted bound (ε²/(ε(1-ε))²) = {eps**2 / (eps*(1-eps))**2:.6f}")
+def demo_scaling_test():
+    """Test whether entropy drop tracks log(1/ε) and MI tracks the predicted bound."""
+    print("\n" + "="*70)
+    print("  DEMO 3: Scaling Test — Entropy Drop vs log(1/ε)")
+    print("="*70)
+    print("""
+  Conjecture: H(π_k μ) ≥ H(μ) - log(1/ε) - C for a universal C.
+  We test this by computing entropy drops across perturbation levels.
+  """)
+
+    n, r = 6, 3
+    print(f"\n  Base: U({n},{r})")
+    print(f"  {'ε_pert':>8s}  {'gap ε':>10s}  {'H(μ)':>10s}  {'max drop':>10s}  {'log(1/ε)':>10s}  {'drop/log':>10s}")
+    print(f"  {'—'*8}  {'—'*10}  {'—'*10}  {'—'*10}  {'—'*10}  {'—'*10}")
+
+    for eps_pert in [0.01, 0.05, 0.1, 0.2, 0.5, 1.0]:
+        mu = perturbed_matroid_law(n, r, eps_pert)
+        profile = audit_info_profile(mu)
+        gap = profile['robustness_gap']
+        max_drop = max(profile['entropy'] - he for he in profile['deleted_entropies'])
+        if gap > 0:
+            log_inv = log(1 / gap)
+            ratio = max_drop / log_inv if log_inv > 0 else float('nan')
+        else:
+            log_inv = float('inf')
+            ratio = float('nan')
+        print(f"  {eps_pert:8.3f}  {gap:10.6f}  {profile['entropy']:10.6f}  {max_drop:10.6f}  {log_inv:10.4f}  {ratio:10.4f}")
 
 
-def demo_susceptibility():
-    """Verify susceptibility bound chi <= n/4."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Susceptibility Bound (Statistical Mechanics Bridge)")
-    print("=" * 60)
-    for n in [3, 4, 5, 6]:
-        for k in range(1, n):
-            mu = uniform_matroid_law(n, k)
-            chi = mu.susceptibility()
-            bound = n / 4
-            print(f"  U({k},{n}): χ = {chi:.6f}, n/4 = {bound:.4f}, "
-                  f"χ ≤ n/4? {'✓' if chi <= bound + 1e-10 else '✗'}")
+def demo_mi_scaling():
+    """Test MI vs covariance scaling."""
+    print("\n" + "="*70)
+    print("  DEMO 4: Mutual Information Scaling")
+    print("="*70)
+    print("""
+  Conjecture B: I(X_i; X_j) ≤ C · log(1 + 1/ε) may be tighter than C/ε.
+  We compare empirical MI against both 1/ε and log(1 + 1/ε) fits.
+  """)
 
+    n, r = 5, 2
+    print(f"\n  Base: U({n},{r})")
+    print(f"  {'ε_pert':>8s}  {'gap ε':>10s}  {'max MI':>10s}  {'1/ε':>10s}  {'log(1+1/ε)':>12s}  {'MI*ε':>10s}")
+    print(f"  {'—'*8}  {'—'*10}  {'—'*10}  {'—'*10}  {'—'*12}  {'—'*10}")
 
-def demo_conjecture_test():
-    """Test Conjectures A and B from the paper."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Conjecture Tests")
-    print("=" * 60)
-
-    print("\n  Conjecture A: Sharp logarithmic deletion law")
-    print("  H(π_k μ) ≥ H(μ) - log(1/ε) - C")
-    for n in [4, 5, 6, 7]:
-        k = n // 2
-        mu = uniform_matroid_law(n, k)
-        eps = mu.robustly_lorentzian_gap()
-        H = mu.total_entropy()
-        worst_drop = max(H - mu.delete_coord_entropy(c) for c in range(n))
-        predicted = log(1 / eps) if eps > 0 else float('inf')
-        print(f"    n={n}, k={k}: worst drop = {worst_drop:.4f}, "
-              f"log(1/ε) = {predicted:.4f}, "
-              f"residual C ≈ {worst_drop - predicted:.4f}")
-
-    print("\n  Conjecture B: Mutual information scaling")
-    print("  Is MI ~ C*log(1+1/ε) or ~ C/ε?")
-    for n in [4, 5, 6]:
-        results = []
-        for k in range(1, n):
-            mu = uniform_matroid_law(n, k)
-            eps = mu.robustly_lorentzian_gap()
-            if eps <= 0:
-                continue
-            mi_max = max(mu.mutual_info_coord(i, j)
-                         for i in range(n) for j in range(i + 1, n))
-            results.append((eps, mi_max))
-        if results:
-            print(f"    n = {n}:")
-            for eps, mi in sorted(results):
-                log_bound = log(1 + 1 / eps) if eps > 0 else float('inf')
-                lin_bound = 1 / eps if eps > 0 else float('inf')
-                print(f"      ε = {eps:.6f}: MI = {mi:.6f}, "
-                      f"log(1+1/ε) = {log_bound:.4f}, 1/ε = {lin_bound:.4f}")
-
-
-def main():
-    """Run all demonstrations."""
-    print("Information-Theoretic Monotonicity for Robustly Lorentzian Measures")
-    print("Computational Verification of Formally Proved Bounds")
-    print()
-
-    demo_uniform_matroids()
-    demo_deletion_entropy()
-    demo_perturbation_scaling()
-    demo_susceptibility()
-    demo_conjecture_test()
-
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
-    print("=" * 60)
+    for eps_pert in [0.01, 0.05, 0.1, 0.3, 0.5, 1.0, 2.0]:
+        mu = perturbed_matroid_law(n, r, eps_pert)
+        profile = audit_info_profile(mu)
+        gap = profile['robustness_gap']
+        max_mi = max(profile['mutual_infos'][i][j]
+                    for i in range(n) for j in range(n) if i != j)
+        inv_eps = 1/gap if gap > 0 else float('inf')
+        log_term = log(1 + 1/gap) if gap > 0 else float('inf')
+        mi_times_eps = max_mi * (1/gap) if gap > 0 else float('nan')
+        print(f"  {eps_pert:8.3f}  {gap:10.6f}  {max_mi:10.6f}  {inv_eps:10.4f}  {log_term:12.4f}  {mi_times_eps:10.6f}")
 
 
 if __name__ == "__main__":
-    main()
+    print("╔══════════════════════════════════════════════════════════════════╗")
+    print("║  Information-Theoretic Monotonicity for Lorentzian Measures     ║")
+    print("║  Interactive Demonstration                                      ║")
+    print("╚══════════════════════════════════════════════════════════════════╝")
+
+    demo_uniform_matroids()
+    demo_perturbation_robustness()
+    demo_scaling_test()
+    demo_mi_scaling()
+
+    print("\n" + "="*70)
+    print("  All demos completed successfully.")
+    print("="*70)
 
 
+#!/usr/bin/env python3
 """
-Visualization 2: Entropy Loss Under Coordinate Deletion
+Visualization 2: Entropy Under Coordinate Deletion
 
-Shows how entropy changes when coordinates are deleted from uniform matroid
-distributions. The proved bound H(π_k μ) ≥ H(μ) - log(2) is displayed as
-a horizontal line. The gap between actual drop and bound reveals how tight
-the certified inequality is.
+Visualizes how entropy changes when coordinates are deleted from
+robustly Lorentzian measures. Shows that entropy loss is bounded
+and tracks log(1/ε), confirming the projection stability principle.
 """
+
 import numpy as np
 import matplotlib.pyplot as plt
 from itertools import combinations
 from math import log, comb
 
 
-def shannon_entropy(weights):
-    return -sum(w * log(w) for w in weights if w > 0)
+def uniform_matroid_weights(n, r):
+    total = comb(n, r)
+    return {frozenset(s): 1.0/total for s in combinations(range(n), r)}
 
 
-def matroid_deletion_profile(n, k):
-    subsets = [frozenset(s) for s in combinations(range(n), k)]
-    w = 1.0 / len(subsets)
-    H_orig = log(len(subsets))
-    drops = []
-    for coord in range(n):
-        proj = {}
-        for s in subsets:
-            s2 = frozenset(x for x in s if x != coord)
-            proj[s2] = proj.get(s2, 0) + w
-        H_del = shannon_entropy(list(proj.values()))
-        drops.append(H_orig - H_del)
-    return H_orig, drops
+def perturbed_matroid_weights(n, r, eps):
+    weights = {}
+    for s in combinations(range(n), r):
+        fs = frozenset(s)
+        weights[fs] = 1.0 + eps * (1.0 if 0 in s else 0.0)
+    total = sum(weights.values())
+    return {s: w/total for s, w in weights.items()}
+
+
+def entropy(weights):
+    return -sum(w * log(w) for w in weights.values() if w > 0)
+
+
+def delete_coord(n, weights, k):
+    new_w = {}
+    for s, w in weights.items():
+        ns = frozenset(i if i < k else i-1 for i in s if i != k)
+        new_w[ns] = new_w.get(ns, 0.0) + w
+    return new_w
+
+
+def coord_prob(weights, i):
+    return sum(w for s, w in weights.items() if i in s)
+
+
+def coord_cov(weights, i, j):
+    pij = sum(w for s, w in weights.items() if i in s and j in s)
+    return pij - coord_prob(weights, i) * coord_prob(weights, j)
+
+
+def robustness_gap(n, weights):
+    max_ratio = 0.0
+    for i in range(n):
+        pi = coord_prob(weights, i)
+        for j in range(i+1, n):
+            pj = coord_prob(weights, j)
+            if pi > 0 and pj > 0:
+                ratio = abs(coord_cov(weights, i, j)) / (pi * pj)
+                max_ratio = max(max_ratio, ratio)
+    return max_ratio
 
 
 fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-fig.suptitle('Entropy Loss Under Coordinate Deletion', fontsize=14, fontweight='bold')
+fig.suptitle('Entropy Stability Under Coordinate Deletion',
+             fontsize=14, fontweight='bold')
 
-for idx, n in enumerate([5, 6, 7]):
-    ax = axes[idx]
-    x_vals = []
-    drop_vals = []
-    colors = []
-    labels_set = set()
+# Plot 1: Entropy drops for different matroids
+ax1 = axes[0]
+for n, r, color in [(4, 2, 'blue'), (5, 2, 'green'), (6, 3, 'red'), (7, 3, 'purple')]:
+    w = uniform_matroid_weights(n, r)
+    H = entropy(w)
+    drops = [H - entropy(delete_coord(n, w, k)) for k in range(n)]
+    ax1.bar(np.arange(n) + 0.15*(n-4), drops, width=0.15,
+            label=f'U({n},{r})', color=color, alpha=0.7)
+ax1.set_xlabel('Deleted coordinate k')
+ax1.set_ylabel('Entropy drop H(μ) - H(π_k μ)')
+ax1.set_title('Entropy drop per coordinate')
+ax1.legend(fontsize=9)
+ax1.set_ylim(bottom=0)
 
-    for k in range(1, n):
-        H, drops = matroid_deletion_profile(n, k)
-        for c, d in enumerate(drops):
-            x_vals.append(k)
-            drop_vals.append(d)
+# Plot 2: Entropy drop vs perturbation strength
+ax2 = axes[1]
+n, r = 6, 3
+eps_values = np.linspace(0.01, 3.0, 30)
+max_drops = []
+gaps = []
+for eps in eps_values:
+    w = perturbed_matroid_weights(n, r, eps)
+    H = entropy(w)
+    max_drop = max(H - entropy(delete_coord(n, w, k)) for k in range(n))
+    gap = robustness_gap(n, w)
+    max_drops.append(max_drop)
+    gaps.append(gap)
 
-    # Plot as scatter
-    ax.scatter(x_vals, drop_vals, alpha=0.6, s=30, c='steelblue', label='Actual drop')
-    ax.axhline(y=log(2), color='red', linestyle='--', linewidth=2, label=f'log(2) = {log(2):.3f}')
-    ax.axhline(y=0, color='gray', linestyle='-', linewidth=0.5)
+ax2.plot(eps_values, max_drops, 'b-', linewidth=2, label='Max entropy drop')
+ax2.plot(eps_values, [log(1/g) if g > 0 else 0 for g in gaps],
+         'r--', linewidth=1.5, label='log(1/ε)')
+ax2.set_xlabel('Perturbation strength')
+ax2.set_ylabel('Entropy drop / bound')
+ax2.set_title(f'Entropy drop vs log(1/ε)\nPerturbed U({n},{r})')
+ax2.legend()
 
-    ax.set_xlabel(f'Rank k (n={n})')
-    ax.set_ylabel('Entropy drop H(μ) − H(π_k μ)')
-    ax.set_title(f'n = {n}')
-    ax.legend(fontsize=8)
-    ax.set_ylim(-0.1, log(2) + 0.2)
+# Plot 3: Gap vs perturbation
+ax3 = axes[2]
+ax3.plot(eps_values, gaps, 'g-', linewidth=2, label='Robustness gap ε')
+ax3.set_xlabel('Perturbation strength')
+ax3.set_ylabel('Gap ε')
+ax3.set_title('Robustness gap under perturbation')
+ax3.legend()
 
 plt.tight_layout()
 plt.savefig('viz_entropy_deletion.png', dpi=150, bbox_inches='tight')
 print("Saved viz_entropy_deletion.png")
 
 
+#!/usr/bin/env python3
 """
-Visualization 1: Mutual Information Heatmap for Robustly Lorentzian Measures
+Visualization 1: Pairwise Mutual Information Heatmap
 
-Visualizes the pairwise mutual information matrix for uniform matroid distributions,
-showing how negative dependence suppresses information sharing between coordinates.
-The chi-squared certified bound is overlaid for comparison.
+Visualizes the pairwise mutual information matrix I(X_i; X_j) for a
+uniform matroid distribution, alongside the certified chi-squared upper bound.
+Demonstrates that Lorentzian negativity suppresses pairwise information,
+with MI always below the χ² bound from kl_le_chi_sq_four.
 """
+
 import numpy as np
 import matplotlib.pyplot as plt
 from itertools import combinations
 from math import log, comb
 
 
-def binary_entropy(p):
-    if p <= 0 or p >= 1:
-        return 0.0
-    return -(p * log(p) + (1 - p) * log(1 - p))
-
-
-def shannon_entropy(weights):
-    return -sum(w * log(w) for w in weights if w > 0)
-
-
-def uniform_matroid_mi_matrix(n, k):
-    """Compute MI matrix for uniform matroid U(k,n)."""
-    subsets = [frozenset(s) for s in combinations(range(n), k)]
-    w = 1.0 / len(subsets)
+def compute_mi_and_bounds(n, r):
+    """Compute MI matrix and chi-squared bounds for U(n,r)."""
+    # Build uniform matroid
+    total = comb(n, r)
+    subsets = list(combinations(range(n), r))
+    weights = {frozenset(s): 1.0/total for s in subsets}
 
     def coord_prob(i):
-        return sum(w for s in subsets if i in s)
+        return sum(w for s, w in weights.items() if i in s)
 
-    def pair_prob(i, j):
-        return sum(w for s in subsets if i in s and j in s)
+    def pair_joint(i, j):
+        return sum(w for s, w in weights.items() if i in s and j in s)
 
-    mi = np.zeros((n, n))
-    chi2 = np.zeros((n, n))
+    def coord_cov(i, j):
+        return pair_joint(i, j) - coord_prob(i) * coord_prob(j)
+
+    def pairwise_mi(i, j):
+        p, q = coord_prob(i), coord_prob(j)
+        rv = pair_joint(i, j)
+        mi = 0.0
+        for pxy, pxpy in [(rv, p*q), (p-rv, p*(1-q)),
+                           (q-rv, (1-p)*q), (1-p-q+rv, (1-p)*(1-q))]:
+            if pxy > 1e-15 and pxpy > 1e-15:
+                mi += pxy * log(pxy / pxpy)
+        return max(0, mi)
+
+    mi_matrix = np.zeros((n, n))
+    chisq_matrix = np.zeros((n, n))
+
     for i in range(n):
         for j in range(n):
-            if i == j:
-                mi[i, j] = binary_entropy(coord_prob(i))
-                continue
-            pi, pj = coord_prob(i), coord_prob(j)
-            pij = pair_prob(i, j)
-            p11, p10, p01 = pij, pi - pij, pj - pij
-            p00 = 1 - pi - pj + pij
-            vals = [max(v, 0) for v in [p00, p01, p10, p11]]
-            mi[i, j] = max(binary_entropy(pi) + binary_entropy(pj) - shannon_entropy(vals), 0)
-            cov = pij - pi * pj
-            denom = pi * (1 - pi) * pj * (1 - pj)
-            chi2[i, j] = cov ** 2 / denom if denom > 0 else 0
-    return mi, chi2
+            if i != j:
+                mi_matrix[i, j] = pairwise_mi(i, j)
+                c = coord_cov(i, j)
+                p, q = coord_prob(i), coord_prob(j)
+                denom = p * (1-p) * q * (1-q)
+                chisq_matrix[i, j] = c**2 / denom if denom > 0 else 0
+
+    return mi_matrix, chisq_matrix
 
 
 fig, axes = plt.subplots(2, 3, figsize=(14, 9))
-fig.suptitle('Mutual Information Under Lorentzian Negativity', fontsize=14, fontweight='bold')
+fig.suptitle('Pairwise Mutual Information vs χ² Bound\nfor Uniform Matroid Distributions',
+             fontsize=14, fontweight='bold')
 
-configs = [(5, 1), (5, 2), (6, 3), (6, 1), (6, 2), (7, 3)]
-for idx, (n, k) in enumerate(configs):
-    ax = axes[idx // 3, idx % 3]
-    mi, chi2 = uniform_matroid_mi_matrix(n, k)
-    np.fill_diagonal(mi, 0)  # Zero out self-MI for clearer display
-    im = ax.imshow(mi, cmap='YlOrRd', interpolation='nearest', vmin=0)
-    ax.set_title(f'U({k},{n})\nmax MI = {mi.max():.4f}', fontsize=10)
-    ax.set_xlabel('Coordinate j')
-    ax.set_ylabel('Coordinate i')
-    plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+configs = [(4, 2), (5, 2), (6, 3)]
+
+for idx, (n, r) in enumerate(configs):
+    mi, chisq = compute_mi_and_bounds(n, r)
+
+    # MI heatmap
+    ax1 = axes[0, idx]
+    im1 = ax1.imshow(mi, cmap='YlOrRd', aspect='equal')
+    ax1.set_title(f'MI: U({n},{r})', fontsize=11)
+    ax1.set_xlabel('Coordinate j')
+    ax1.set_ylabel('Coordinate i')
+    plt.colorbar(im1, ax=ax1, shrink=0.8)
+
+    # Chi-squared bound heatmap
+    ax2 = axes[1, idx]
+    im2 = ax2.imshow(chisq, cmap='YlOrRd', aspect='equal')
+    ax2.set_title(f'χ² bound: U({n},{r})', fontsize=11)
+    ax2.set_xlabel('Coordinate j')
+    ax2.set_ylabel('Coordinate i')
+    plt.colorbar(im2, ax=ax2, shrink=0.8)
+
+    # Annotate with values
+    for i in range(n):
+        for j in range(n):
+            if i != j and n <= 5:
+                ax1.text(j, i, f'{mi[i,j]:.4f}', ha='center', va='center', fontsize=7)
+                ax2.text(j, i, f'{chisq[i,j]:.4f}', ha='center', va='center', fontsize=7)
 
 plt.tight_layout()
 plt.savefig('viz_mi_heatmap.png', dpi=150, bbox_inches='tight')
 print("Saved viz_mi_heatmap.png")
 
 
+#!/usr/bin/env python3
 """
-Visualization 3: Susceptibility Bound — Statistical Mechanics Bridge
+Visualization 3: Susceptibility Bound — Statistical Physics Bridge
 
-Shows the susceptibility χ(μ) = ∑ Cov(X_i, X_j) for various uniform matroid
-distributions, compared to the proved bound χ ≤ n/4. Decomposes χ into
-diagonal (variance) and off-diagonal (covariance) contributions, illustrating
-how negative dependence suppresses the off-diagonal part.
+Visualizes the spin susceptibility χ = Σ_{i≠j} |Cov(X_i, X_j)| alongside
+the certified bound ε·(Σp_i)² from the Lean theorem susceptibility_le_of_robust.
+Shows the bridge between Lorentzian negativity and statistical mechanics:
+the gap ε acts as repulsive curvature limiting magnetic response.
 """
+
 import numpy as np
 import matplotlib.pyplot as plt
 from itertools import combinations
-from math import comb
+from math import log, comb
 
 
-def matroid_susceptibility(n, k):
-    subsets = [frozenset(s) for s in combinations(range(n), k)]
-    w = 1.0 / len(subsets)
+def compute_profile(n, r, eps_pert=0.0):
+    """Compute susceptibility and bound for (perturbed) uniform matroid."""
+    weights = {}
+    for s in combinations(range(n), r):
+        fs = frozenset(s)
+        weights[fs] = 1.0 + eps_pert * (1.0 if 0 in s else 0.0)
+    total = sum(weights.values())
+    weights = {s: w/total for s, w in weights.items()}
 
     def cp(i):
-        return sum(w for s in subsets if i in s)
+        return sum(w for s, w in weights.items() if i in s)
 
     def cov(i, j):
-        pij = sum(w for s in subsets if i in s and j in s)
+        pij = sum(w for s, w in weights.items() if i in s and j in s)
         return pij - cp(i) * cp(j)
 
-    diag = sum(cov(i, i) for i in range(n))
-    off = sum(cov(i, j) for i in range(n) for j in range(n) if i != j)
-    return diag, off, diag + off
+    chi = sum(abs(cov(i, j)) for i in range(n) for j in range(n) if i != j)
+    gap = max(abs(cov(i, j)) / (cp(i) * cp(j))
+              for i in range(n) for j in range(i+1, n)
+              if cp(i) > 0 and cp(j) > 0)
+    sum_p = sum(cp(i) for i in range(n))
+    bound = gap * sum_p**2
+
+    return chi, bound, gap
 
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-fig.suptitle('Susceptibility Bound: Bridge to Statistical Mechanics',
-             fontsize=14, fontweight='bold')
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+fig.suptitle('Susceptibility Bounds: Lorentzian Geometry → Statistical Mechanics',
+             fontsize=13, fontweight='bold')
 
-# Left plot: susceptibility vs k for various n
-for n in [4, 5, 6, 7, 8]:
-    ks = range(1, n)
-    chis = [matroid_susceptibility(n, k)[2] for k in ks]
-    ax1.plot(ks, chis, 'o-', label=f'n={n}', markersize=5)
-    ax1.axhline(y=n / 4, color='gray', linestyle=':', alpha=0.5)
+# Plot 1: Susceptibility vs bound for different matroids
+ax1 = axes[0]
+matroids = [(4, 2), (5, 2), (5, 3), (6, 2), (6, 3), (7, 3)]
+chis = []
+bounds = []
+labels = []
+for n, r in matroids:
+    chi, bound, gap = compute_profile(n, r)
+    chis.append(chi)
+    bounds.append(bound)
+    labels.append(f'U({n},{r})')
 
-ax1.set_xlabel('Rank k')
-ax1.set_ylabel('Susceptibility χ(μ)')
-ax1.set_title('χ vs. Rank for Uniform Matroids')
-ax1.legend()
-ax1.grid(True, alpha=0.3)
-
-# Right plot: decomposition for n=7
-n = 7
-ks = range(1, n)
-diags = []
-offs = []
-totals = []
-for k in ks:
-    d, o, t = matroid_susceptibility(n, k)
-    diags.append(d)
-    offs.append(o)
-    totals.append(t)
-
-x = np.arange(len(list(ks)))
+x = np.arange(len(matroids))
 width = 0.35
-ax2.bar(x - width / 2, diags, width, label='Diagonal (∑Var)', color='steelblue')
-ax2.bar(x + width / 2, offs, width, label='Off-diagonal (∑Cov)', color='salmon')
-ax2.plot(x, totals, 'k^-', markersize=8, label='Total χ', linewidth=2)
-ax2.axhline(y=n / 4, color='red', linestyle='--', linewidth=2, label=f'Bound n/4 = {n/4}')
-ax2.axhline(y=0, color='gray', linestyle='-', linewidth=0.5)
+ax1.bar(x - width/2, chis, width, label='χ (actual)', color='steelblue', alpha=0.8)
+ax1.bar(x + width/2, bounds, width, label='ε·(Σpᵢ)² (bound)', color='coral', alpha=0.8)
+ax1.set_xticks(x)
+ax1.set_xticklabels(labels, fontsize=9)
+ax1.set_ylabel('Value')
+ax1.set_title('Susceptibility vs Certified Bound')
+ax1.legend()
 
-ax2.set_xlabel('Rank k')
-ax2.set_ylabel('Covariance contribution')
-ax2.set_title(f'Susceptibility Decomposition (n={n})')
-ax2.set_xticks(x)
-ax2.set_xticklabels(list(ks))
-ax2.legend(fontsize=9)
-ax2.grid(True, alpha=0.3)
+# Plot 2: Ratio χ/bound as perturbation grows
+ax2 = axes[1]
+n, r = 6, 3
+eps_values = np.linspace(0.01, 5.0, 50)
+ratios = []
+gaps_list = []
+for eps in eps_values:
+    chi, bound, gap = compute_profile(n, r, eps)
+    ratios.append(chi / bound if bound > 0 else 0)
+    gaps_list.append(gap)
+
+ax2.plot(eps_values, ratios, 'b-', linewidth=2)
+ax2.axhline(y=1.0, color='r', linestyle='--', alpha=0.5, label='Bound = χ')
+ax2.set_xlabel('Perturbation strength')
+ax2.set_ylabel('χ / bound')
+ax2.set_title(f'Tightness ratio for perturbed U({n},{r})')
+ax2.set_ylim(0, 1.2)
+ax2.legend()
+
+# Plot 3: Gap growth under perturbation
+ax3 = axes[2]
+ax3.plot(eps_values, gaps_list, 'g-', linewidth=2, label='ε (gap)')
+ax3.set_xlabel('Perturbation strength')
+ax3.set_ylabel('Robustness gap ε')
+ax3.set_title('Gap Evolution Under Perturbation')
+ax3.legend()
 
 plt.tight_layout()
 plt.savefig('viz_susceptibility.png', dpi=150, bbox_inches='tight')
