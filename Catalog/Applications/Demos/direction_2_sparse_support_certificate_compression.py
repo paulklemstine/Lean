@@ -1,572 +1,418 @@
 """
-applications.py — Real-world applications of support-compressed certificate counting.
+applications.py — Real-World Applications of Support-Compressed Lorentzian Recognition
 
-Demonstrates practical use cases:
-1. Network reliability via graphic matroid compression
-2. Combinatorial optimization: efficient Lorentzian certification
-3. Partition function sparsity analysis
-
-Each example shows how the theoretical results translate into computational savings.
+Demonstrates how support compression applies to:
+1. Network reliability polynomial certification
+2. Graph coloring polynomial analysis
+3. Partition function complexity estimation
 """
 
 from itertools import combinations
-from math import comb
-import time
+from math import comb, factorial
+from typing import List, Set, FrozenSet, Tuple, Dict
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Utility: BasisFamily (self-contained)
-# ──────────────────────────────────────────────────────────────────────
+# ─── Matroid infrastructure (self-contained) ─────────────────────────────────
 
 class BasisFamily:
-    def __init__(self, n, r, bases):
-        self.n = n
-        self.r = r
-        self.bases = frozenset(frozenset(B) for B in bases)
+    def __init__(self, ground_set, bases):
+        self.ground_set = sorted(ground_set)
+        self.bases = bases
+        self.rank = len(next(iter(bases))) if bases else 0
 
-    def indep_count(self, k):
-        return sum(1 for S in combinations(range(self.n), k)
-                   if any(frozenset(S) <= B for B in self.bases))
+    def is_independent(self, I):
+        return any(I <= B for B in self.bases)
 
-    def leaf_count(self):
-        return self.indep_count(self.r - 2) if self.r >= 2 else 0
+    def independent_sets_of_size(self, k):
+        return [frozenset(s) for s in combinations(self.ground_set, k)
+                if self.is_independent(frozenset(s))]
 
-    def ambient_count(self):
-        return comb(self.n, self.r - 2) if self.r >= 2 else 0
-
-    def active_vars(self):
-        return frozenset().union(*self.bases) if self.bases else frozenset()
+    def active_variables(self):
+        return set().union(*self.bases) if self.bases else set()
 
 
-def uniform_matroid(n, r):
-    return BasisFamily(n, r, [frozenset(S) for S in combinations(range(n), r)])
-
-
-def is_forest(nv, edges, indices):
-    parent = list(range(nv))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
+def graphic_matroid(n_verts, edges):
+    E = list(range(len(edges)))
+    def find(p, x):
+        while p[x] != x: p[x] = p[p[x]]; x = p[x]
         return x
-    for idx in indices:
-        u, v = edges[idx]
-        pu, pv = find(u), find(v)
-        if pu == pv:
-            return False
-        parent[pu] = pv
-    return True
+    def union(p, rk, x, y):
+        rx, ry = find(p, x), find(p, y)
+        if rx == ry: return False
+        if rk[rx] < rk[ry]: rx, ry = ry, rx
+        p[ry] = rx
+        if rk[rx] == rk[ry]: rk[rx] += 1
+        return True
+    def is_forest(subset):
+        p = list(range(n_verts)); rk = [0]*n_verts
+        for i in subset:
+            if not union(p, rk, edges[i][0], edges[i][1]): return False
+        return True
+    p = list(range(n_verts)); rk = [0]*n_verts
+    rank = sum(1 for i, (u,v) in enumerate(edges) if union(p, rk, u, v))
+    ref_comps = len({find(p, v) for v in range(n_verts)})
+    bases = set()
+    for subset in combinations(E, rank):
+        if is_forest(subset):
+            p2 = list(range(n_verts)); rk2 = [0]*n_verts
+            for i in subset: union(p2, rk2, edges[i][0], edges[i][1])
+            if len({find(p2, v) for v in range(n_verts)}) == ref_comps:
+                bases.add(frozenset(subset))
+    return BasisFamily(E, bases)
 
 
-def graphic_matroid(nv, edges):
-    ne = len(edges)
-    max_r = 0
-    for k in range(ne + 1):
-        for S in combinations(range(ne), k):
-            if is_forest(nv, edges, S):
-                max_r = max(max_r, k)
-    bases = [frozenset(S) for S in combinations(range(ne), max_r)
-             if is_forest(nv, edges, S)]
-    return BasisFamily(ne, max_r, bases)
+# ─── Application 1: Network Reliability ─────────────────────────────────────
 
+def network_reliability_analysis():
+    """Analyze Lorentzian certification complexity for network reliability.
 
-# ──────────────────────────────────────────────────────────────────────
-# Application 1: Network Reliability Analysis
-# ──────────────────────────────────────────────────────────────────────
+    The reliability polynomial of a graph G counts the probability that the
+    network remains connected when each edge fails independently. Its basis
+    generating polynomial is exactly the graphic matroid's basis polynomial.
 
-def app_network_reliability():
+    Support compression tells us the exact certification complexity.
     """
-    Network reliability polynomials are closely related to basis generating
-    polynomials of graphic matroids. The certificate complexity for proving
-    log-concavity of reliability coefficients is controlled by the number
-    of forests, not the number of edge subsets.
-    """
-    print("=" * 70)
-    print("APPLICATION 1: Network Reliability Certificate Compression")
-    print("=" * 70)
-    print()
-    print("Network reliability polynomials relate to graphic matroid basis")
-    print("polynomials. Lorentzian certification cost = #{forests of size r-2}.")
-    print()
+    print("\n" + "="*65)
+    print("  APPLICATION 1: NETWORK RELIABILITY")
+    print("  Certification complexity for reliability polynomials")
+    print("="*65)
 
     networks = {
-        "Ring topology (C_5)": (5, [(i, (i+1) % 5) for i in range(5)]),
-        "Star topology (K_{1,5})": (6, [(0, i) for i in range(1, 6)]),
-        "Mesh 2x3": (6, [(0,1),(1,2),(3,4),(4,5),(0,3),(1,4),(2,5)]),
-        "Full mesh (K_4)": (4, [(i,j) for i in range(4) for j in range(i+1,4)]),
+        "Ring network (5 nodes)": (5, [(i, (i+1)%5) for i in range(5)]),
+        "Star network (hub + 4)": (5, [(0, i) for i in range(1, 5)]),
+        "Mesh 2×3 grid": (6, [(0,1),(1,2),(3,4),(4,5),(0,3),(1,4),(2,5)]),
+        "Complete K_4": (4, [(i,j) for i in range(4) for j in range(i+1,4)]),
     }
-
-    print(f"{'Network':<25} {'Edges':<7} {'Rank':<6} {'Ambient':<10} {'Forests':<10} {'Savings':<8}")
-    print("-" * 66)
 
     for name, (nv, edges) in networks.items():
         M = graphic_matroid(nv, edges)
-        if M.r < 2:
-            continue
-        ambient = M.ambient_count()
-        actual = M.leaf_count()
-        savings = f"{(1 - actual/ambient)*100:.1f}%" if ambient > 0 else "N/A"
-        print(f"{name:<25} {len(edges):<7} {M.r:<6} {ambient:<10} {actual:<10} {savings:<8}")
+        r = M.rank
+        n = len(M.ground_set)
+        k = max(r - 2, 0)
+        actual = len(M.independent_sets_of_size(k)) if r >= 2 else 1
+        ambient = comb(n, k) if r >= 2 else 1
 
-    print()
-    print("Key insight: sparse networks have far fewer forests than edge subsets,")
-    print("making Lorentzian certification dramatically cheaper.")
-    print()
+        print(f"\n  {name}:")
+        print(f"    Edges: {n}, Rank: {r}, Bases (spanning trees): {len(M.bases)}")
+        print(f"    Certification leaves: {actual} / {ambient} ambient")
+        print(f"    → {actual/ambient*100:.1f}% of naive cost needed")
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Application 2: Combinatorial Optimization — Matroid Intersection
-# ──────────────────────────────────────────────────────────────────────
+# ─── Application 2: Sparse Graph Families ───────────────────────────────────
 
-def app_matroid_certification():
+def sparse_graph_scaling():
+    """Show how compression scales for increasingly sparse graphs.
+
+    For path graphs (maximally sparse connected), the basis polynomial
+    has minimal support, yielding maximum compression.
     """
-    When certifying that a matroid basis polynomial is Lorentzian,
-    the naive algorithm examines C(n, r-2) derivative branches.
-    Support compression reduces this to the independent-set count.
+    print("\n" + "="*65)
+    print("  APPLICATION 2: SPARSE GRAPH SCALING")
+    print("  Compression improves as graphs become sparser")
+    print("="*65)
+
+    print(f"\n  {'Graph':<20} {'|E|':>5} {'rank':>5} {'Leaves':>8} {'Ambient':>8} {'Ratio':>8}")
+    print(f"  {'─'*20} {'─'*5} {'─'*5} {'─'*8} {'─'*8} {'─'*8}")
+
+    for n in range(4, 9):
+        # Path graph
+        edges = [(i, i+1) for i in range(n-1)]
+        M = graphic_matroid(n, edges)
+        r = M.rank
+        ne = len(M.ground_set)
+        k = max(r - 2, 0)
+        actual = len(M.independent_sets_of_size(k)) if r >= 2 else 1
+        ambient = comb(ne, k) if r >= 2 else 1
+        ratio = actual / ambient if ambient > 0 else 0
+        print(f"  Path P_{n:<14} {ne:>5} {r:>5} {actual:>8} {ambient:>8} {ratio:>8.4f}")
+
+    for n in range(4, 7):
+        # Complete graph
+        edges = [(i, j) for i in range(n) for j in range(i+1, n)]
+        M = graphic_matroid(n, edges)
+        r = M.rank
+        ne = len(M.ground_set)
+        k = max(r - 2, 0)
+        actual = len(M.independent_sets_of_size(k)) if r >= 2 else 1
+        ambient = comb(ne, k) if r >= 2 else 1
+        ratio = actual / ambient if ambient > 0 else 0
+        print(f"  Complete K_{n:<11} {ne:>5} {r:>5} {actual:>8} {ambient:>8} {ratio:>8.4f}")
+
+
+# ─── Application 3: Complexity Prediction ────────────────────────────────────
+
+def complexity_prediction():
+    """Predict Lorentzian certification complexity from matroid parameters.
+
+    The exact formula: cost = |{I ⊆ E : |I| = r-2, I independent}|
+    Bounds:  cost ≤ C(ω, r-2)  where ω = |active variables|
     """
-    print("=" * 70)
-    print("APPLICATION 2: Lorentzian Certification Cost Reduction")
-    print("=" * 70)
-    print()
-    print("Comparing naive vs compressed Lorentzian certification cost")
-    print("for various matroid families.")
-    print()
+    print("\n" + "="*65)
+    print("  APPLICATION 3: COMPLEXITY PREDICTION")
+    print("  From matroid parameters to certification cost")
+    print("="*65)
 
-    # Restricted matroids: bases only use a subset of ground set elements
-    print("--- Restricted matroids (bases on subset of ground set) ---")
-    print(f"{'Description':<35} {'n':<5} {'r':<4} {'Ambient':<10} {'Actual':<10} {'Ratio':<8}")
-    print("-" * 72)
-
-    for active_k in [4, 6, 8]:
-        for n in [15, 20, 30]:
-            r = 3
-            bases = [frozenset(S) for S in combinations(range(active_k), r)]
-            F = BasisFamily(n, r, bases)
-            ambient = comb(n, r - 2)
-            actual = F.leaf_count()
-            ratio = actual / ambient if ambient > 0 else 0
-            desc = f"U_{{{r},{active_k}}} embedded in [{n}]"
-            print(f"{desc:<35} {n:<5} {r:<4} {ambient:<10} {actual:<10} {ratio:<8.3f}")
-
-    print()
-    print("When bases use only k << n variables, certification cost drops")
-    print("from O(n^{r-2}) to O(k^{r-2}). This is Theorem 4 in action.")
-    print()
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Application 3: Partition Function Sparsity
-# ──────────────────────────────────────────────────────────────────────
-
-def app_partition_function():
-    """
-    Basis generating polynomials are partition functions for combinatorial
-    ensembles. Support compression means physically meaningful partition
-    functions admit efficient certification because thermodynamically
-    relevant states are geometrically sparse.
-    """
-    print("=" * 70)
-    print("APPLICATION 3: Partition Function Sparsity Analysis")
-    print("=" * 70)
-    print()
-    print("Matroid basis polynomials are partition functions for hard-core")
-    print("combinatorial ensembles. The 'thermodynamic complexity' of")
-    print("Lorentzian certification is controlled by independent sets.")
-    print()
-
-    # Compare partition function complexity for different matroids of same rank
-    print("Same rank r=4, different structure:")
-    print(f"{'Matroid':<30} {'n':<5} {'#Bases':<10} {'Ambient':<10} {'Leaves':<10} {'Density':<8}")
-    print("-" * 73)
-
+    # Compare predicted vs actual for various matroids
     examples = [
-        ("U_{4,6} (dense)", uniform_matroid(6, 4)),
-        ("U_{4,8} (moderate)", uniform_matroid(8, 4)),
-        ("U_{4,10} (sparse)", uniform_matroid(10, 4)),
+        ("U_{3,8}", 3, list(range(8)),
+         {frozenset(s) for s in combinations(range(8), 3)}),
+        ("U_{4,6}", 4, list(range(6)),
+         {frozenset(s) for s in combinations(range(6), 4)}),
     ]
 
-    for name, F in examples:
-        ambient = F.ambient_count()
-        actual = F.leaf_count()
-        density = len(F.bases) / comb(F.n, F.r)
-        print(f"{name:<30} {F.n:<5} {len(F.bases):<10} {ambient:<10} {actual:<10} {density:<8.3f}")
+    for name, r, E, bases in examples:
+        M = BasisFamily(E, bases)
+        k = r - 2
+        actual = len(M.independent_sets_of_size(k))
+        omega = len(M.active_variables())
+        bound_active = comb(omega, k)
+        bound_ambient = comb(len(E), k)
 
-    # Add graphic matroid examples
-    for nv in [4, 5]:
-        edges = [(i,j) for i in range(nv) for j in range(i+1, nv)]
-        G = graphic_matroid(nv, edges)
-        if G.r >= 2:
-            ambient = G.ambient_count()
-            actual = G.leaf_count()
-            density = len(G.bases) / comb(G.n, G.r) if comb(G.n, G.r) > 0 else 0
-            name = f"Graphic K_{nv}"
-            print(f"{name:<30} {G.n:<5} {len(G.bases):<10} {ambient:<10} {actual:<10} {density:<8.3f}")
-
-    print()
-    print("Support compression is most impactful when the basis density")
-    print("(fraction of r-subsets that are bases) is small — precisely")
-    print("the regime relevant for statistical physics applications.")
-    print()
+        print(f"\n  {name}:")
+        print(f"    Predicted (C(n,r-2)):    {bound_ambient}")
+        print(f"    Active bound (C(ω,r-2)): {bound_active}")
+        print(f"    Actual:                  {actual}")
+        print(f"    Savings:                 {(1 - actual/bound_ambient)*100:.1f}% vs ambient")
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Main
-# ──────────────────────────────────────────────────────────────────────
+def main():
+    print("╔" + "═"*63 + "╗")
+    print("║  APPLICATIONS OF SUPPORT-COMPRESSED LORENTZIAN RECOGNITION   ║")
+    print("╚" + "═"*63 + "╝")
+
+    network_reliability_analysis()
+    sparse_graph_scaling()
+    complexity_prediction()
+
+    print("\n" + "═"*65)
+    print("  All applications demonstrated successfully.")
+    print("═"*65)
+
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════╗")
-    print("║  Applications of Support-Compressed Certificate Counting       ║")
-    print("╚══════════════════════════════════════════════════════════════════╝")
-    print()
-
-    app_network_reliability()
-    app_matroid_certification()
-    app_partition_function()
-
-    print("All applications demonstrated successfully.")
+    main()
 
 
 """
-demo.py — Interactive demonstration of sparse-support certificate compression
-for matroid basis polynomials.
+demo.py — Interactive Demonstration of Sparse-Support Certificate Compression
 
-Computes and compares:
-  - Naive ambient leaf counts
-  - Compressed (independent-set) leaf counts
-  - Exact counts for uniform / graphic / transversal examples
-  - Empirical compression ratios and timings
+Computes and compares naive vs. compressed Lorentzian recognition complexity
+for uniform, graphic, and transversal matroids.
+
+Usage:
+    python demo.py
 """
 
 from itertools import combinations
 from math import comb
+from typing import List, Set, FrozenSet, Tuple, Dict
 import time
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Inline matroid implementations (self-contained)
-# ──────────────────────────────────────────────────────────────────────
+# ─── Inline implementations (self-contained) ────────────────────────────────
 
-def uniform_bases(n, r):
-    """All r-element subsets of {0,...,n-1}."""
-    return [frozenset(S) for S in combinations(range(n), r)]
+class BasisFamily:
+    def __init__(self, ground_set, bases):
+        self.ground_set = sorted(ground_set)
+        self.bases = bases
+        self.rank = len(next(iter(bases))) if bases else 0
+
+    def is_independent(self, I):
+        return any(I <= B for B in self.bases)
+
+    def independent_sets_of_size(self, k):
+        return [frozenset(s) for s in combinations(self.ground_set, k)
+                if self.is_independent(frozenset(s))]
+
+    def active_variables(self):
+        return set().union(*self.bases) if self.bases else set()
 
 
-def is_forest(n_vertices, edges, edge_indices):
-    """Check if selected edges form a forest."""
-    parent = list(range(n_vertices))
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
+def uniform_matroid(r, n):
+    E = list(range(n))
+    return BasisFamily(E, {frozenset(s) for s in combinations(E, r)})
+
+
+def graphic_matroid(n_verts, edges):
+    E = list(range(len(edges)))
+
+    def find(p, x):
+        while p[x] != x: p[x] = p[p[x]]; x = p[x]
         return x
-    def union(x, y):
-        px, py = find(x), find(y)
-        if px == py: return False
-        parent[px] = py
+
+    def union(p, rk, x, y):
+        rx, ry = find(p, x), find(p, y)
+        if rx == ry: return False
+        if rk[rx] < rk[ry]: rx, ry = ry, rx
+        p[ry] = rx
+        if rk[rx] == rk[ry]: rk[rx] += 1
         return True
-    return all(union(edges[i][0], edges[i][1]) for i in edge_indices)
+
+    def is_forest(subset):
+        p = list(range(n_verts)); rk = [0]*n_verts
+        for i in subset:
+            if not union(p, rk, edges[i][0], edges[i][1]): return False
+        return True
+
+    # Find rank
+    p = list(range(n_verts)); rk = [0]*n_verts
+    rank = sum(1 for i, (u,v) in enumerate(edges) if union(p, rk, u, v))
+    ref_comps = len({find(p, v) for v in range(n_verts)})
+
+    bases = set()
+    for subset in combinations(E, rank):
+        if is_forest(subset):
+            p2 = list(range(n_verts)); rk2 = [0]*n_verts
+            for i in subset: union(p2, rk2, edges[i][0], edges[i][1])
+            if len({find(p2, v) for v in range(n_verts)}) == ref_comps:
+                bases.add(frozenset(subset))
+
+    return BasisFamily(E, bases)
 
 
-def graphic_bases(n_vertices, edges):
-    """Bases of the graphic matroid (maximum spanning forests)."""
-    n_edges = len(edges)
-    max_size = 0
-    for k in range(n_edges + 1):
-        for S in combinations(range(n_edges), k):
-            if is_forest(n_vertices, edges, S):
-                max_size = max(max_size, k)
-    return max_size, [
-        frozenset(S) for S in combinations(range(n_edges), max_size)
-        if is_forest(n_vertices, edges, S)
-    ]
+def analyze(M, name):
+    n = len(M.ground_set)
+    r = M.rank
+    ambient = comb(n, r - 2) if r >= 2 else 1
+    omega = len(M.active_variables())
+    active_bound = comb(omega, r - 2) if r >= 2 else 1
+
+    t0 = time.time()
+    k = max(r - 2, 0)
+    actual = len(M.independent_sets_of_size(k)) if r >= 2 else 1
+    elapsed = time.time() - t0
+
+    ratio = actual / ambient if ambient > 0 else 0
+
+    print(f"\n{'='*65}")
+    print(f"  {name}")
+    print(f"{'='*65}")
+    print(f"  |E| = {n},  rank = {r},  |bases| = {len(M.bases)}")
+    print(f"  Active variables ω = {omega}")
+    print(f"  ───────────────────────────────────────────────")
+    print(f"  Ambient leaf count  C(n, r-2) = C({n},{r-2}) = {ambient}")
+    print(f"  Active variable bound C(ω,r-2) = C({omega},{r-2}) = {active_bound}")
+    print(f"  Actual leaf count (indep {k}-sets):  {actual}")
+    print(f"  Compression ratio:  {ratio:.6f}")
+    print(f"  Computation time:   {elapsed:.6f}s")
+    return {"name": name, "n": n, "r": r, "ambient": ambient,
+            "actual": actual, "ratio": ratio, "omega": omega}
 
 
-def count_indep_sets(n, r, bases, k):
-    """Count k-element subsets of {0,...,n-1} contained in some basis."""
-    return sum(1 for S in combinations(range(n), k) if any(frozenset(S) <= B for B in bases))
+def main():
+    print("╔" + "═"*63 + "╗")
+    print("║  SPARSE-SUPPORT CERTIFICATE COMPRESSION — DEMONSTRATION      ║")
+    print("║  Lorentzian Recognition via Support Geometry                  ║")
+    print("╚" + "═"*63 + "╝")
 
+    # ── Section 1: Uniform Matroids ──────────────────────────────────────
+    print("\n" + "─"*65)
+    print("  SECTION 1: UNIFORM MATROIDS U_{r,n}")
+    print("  Every (r-2)-subset is independent → leaf count = C(n, r-2)")
+    print("─"*65)
 
-def compression_stats(name, n, r, bases):
-    """Compute compression statistics for a matroid."""
-    if r < 2:
-        return {"name": name, "n": n, "r": r, "bases": len(bases),
-                "ambient": 0, "actual": 0, "ratio": "N/A"}
-
-    t0 = time.perf_counter()
-    actual = count_indep_sets(n, r, bases, r - 2)
-    elapsed = time.perf_counter() - t0
-
-    ambient = comb(n, r - 2)
-    active = len(set().union(*bases)) if bases else 0
-    active_bound = comb(active, r - 2)
-
-    return {
-        "name": name, "n": n, "r": r, "bases": len(bases),
-        "ambient": ambient, "actual": actual,
-        "active_vars": active, "active_bound": active_bound,
-        "ratio": actual / ambient if ambient > 0 else 0,
-        "time_ms": elapsed * 1000,
-    }
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Demo 1: Uniform Matroids
-# ──────────────────────────────────────────────────────────────────────
-
-def demo_uniform():
-    print("=" * 70)
-    print("DEMO 1: Uniform Matroids U_{r,n}")
-    print("=" * 70)
-    print()
-    print("Theorem: For U_{r,n}, the number of nonzero quadratic leaves")
-    print("equals C(n, r-2). Every (r-2)-subset is independent.")
-    print()
-    print(f"{'(n,r)':<12} {'Ambient C(n,r-2)':<18} {'Actual Leaves':<16} {'Match?':<8}")
-    print("-" * 54)
-
-    for n, r in [(5,3), (6,3), (7,4), (8,4), (8,5), (10,5), (10,6), (12,4)]:
-        bases = uniform_bases(n, r)
-        actual = count_indep_sets(n, r, bases, r - 2)
+    results = []
+    for r, n in [(3, 5), (4, 7), (5, 8), (3, 10), (4, 10), (5, 10)]:
+        M = uniform_matroid(r, n)
+        res = analyze(M, f"Uniform U_{{{r},{n}}}")
         expected = comb(n, r - 2)
-        match = "✓" if actual == expected else "✗"
-        print(f"({n},{r}){'':<7} {expected:<18} {actual:<16} {match}")
+        assert res["actual"] == expected, f"Expected {expected}, got {res['actual']}"
+        print(f"  ✓ Verified: actual = C({n},{r-2}) = {expected}")
+        results.append(res)
 
-    print()
+    # ── Section 2: Graphic Matroids ──────────────────────────────────────
+    print("\n" + "─"*65)
+    print("  SECTION 2: GRAPHIC MATROIDS")
+    print("  Bases = spanning forests; indep sets = forests")
+    print("─"*65)
 
+    # Path graph P_5: vertices 0-4, edges 0-1, 1-2, 2-3, 3-4
+    path_edges = [(i, i+1) for i in range(4)]
+    M_path = graphic_matroid(5, path_edges)
+    res = analyze(M_path, "Path P_5 (graphic matroid)")
+    results.append(res)
 
-# ──────────────────────────────────────────────────────────────────────
-# Demo 2: Graphic Matroids
-# ──────────────────────────────────────────────────────────────────────
+    # Cycle C_5: vertices 0-4, edges forming a 5-cycle
+    cycle_edges = [(i, (i+1) % 5) for i in range(5)]
+    M_cycle = graphic_matroid(5, cycle_edges)
+    res = analyze(M_cycle, "Cycle C_5 (graphic matroid)")
+    results.append(res)
 
-def demo_graphic():
-    print("=" * 70)
-    print("DEMO 2: Graphic Matroids — Leaves = Forests of Size r-2")
-    print("=" * 70)
-    print()
+    # Complete graph K_4
+    k4_edges = [(i, j) for i in range(4) for j in range(i+1, 4)]
+    M_k4 = graphic_matroid(4, k4_edges)
+    res = analyze(M_k4, "Complete K_4 (graphic matroid)")
+    results.append(res)
 
-    graphs = [
-        ("Path P_4", 4, [(0,1),(1,2),(2,3)]),
-        ("Cycle C_4", 4, [(0,1),(1,2),(2,3),(3,0)]),
-        ("K_4 complete", 4, [(0,1),(0,2),(0,3),(1,2),(1,3),(2,3)]),
-        ("Star K_{1,4}", 5, [(0,1),(0,2),(0,3),(0,4)]),
-        ("K_{3,3}", 6, [(0,3),(0,4),(0,5),(1,3),(1,4),(1,5),(2,3),(2,4),(2,5)]),
-        ("Petersen-sub", 5, [(0,1),(0,2),(0,3),(1,2),(1,4),(2,4),(3,4)]),
-    ]
+    # Complete graph K_5
+    k5_edges = [(i, j) for i in range(5) for j in range(i+1, 5)]
+    M_k5 = graphic_matroid(5, k5_edges)
+    res = analyze(M_k5, "Complete K_5 (graphic matroid)")
+    results.append(res)
 
-    print(f"{'Graph':<18} {'n_edges':<9} {'r':<5} {'#Bases':<9} {'Ambient':<10} {'Actual':<9} {'Ratio':<8}")
-    print("-" * 68)
+    # Tree on 6 vertices (star)
+    star_edges = [(0, i) for i in range(1, 6)]
+    M_star = graphic_matroid(6, star_edges)
+    res = analyze(M_star, "Star S_5 (graphic matroid)")
+    results.append(res)
 
-    for name, nv, edges in graphs:
-        r, bases = graphic_bases(nv, edges)
-        if r < 2:
-            print(f"{name:<18} {len(edges):<9} {r:<5} {len(bases):<9} {'N/A':<10} {'N/A':<9} {'N/A':<8}")
-            continue
-        stats = compression_stats(name, len(edges), r, bases)
-        print(f"{name:<18} {len(edges):<9} {r:<5} {len(bases):<9} "
-              f"{stats['ambient']:<10} {stats['actual']:<9} {stats['ratio']:<8.3f}")
+    # ── Section 3: Compression Summary ───────────────────────────────────
+    print("\n" + "─"*65)
+    print("  COMPRESSION SUMMARY")
+    print("─"*65)
+    print(f"  {'Matroid':<30} {'Ambient':>8} {'Actual':>8} {'Ratio':>10}")
+    print(f"  {'─'*30} {'─'*8} {'─'*8} {'─'*10}")
+    for r in results:
+        print(f"  {r['name']:<30} {r['ambient']:>8} {r['actual']:>8} {r['ratio']:>10.4f}")
 
-    print()
+    # ── Section 4: Theorem Verification ──────────────────────────────────
+    print("\n" + "─"*65)
+    print("  THEOREM VERIFICATION")
+    print("─"*65)
 
+    # Verify Theorem 3: uniform matroid closed form
+    print("\n  Theorem 3: Uniform matroid leaf count = C(n, r-2)")
+    for r, n in [(3, 6), (4, 8), (5, 9), (3, 12)]:
+        M = uniform_matroid(r, n)
+        k = r - 2
+        actual = len(M.independent_sets_of_size(k))
+        expected = comb(n, k)
+        status = "✓" if actual == expected else "✗"
+        print(f"    {status} U_{{{r},{n}}}: actual={actual}, C({n},{k})={expected}")
 
-# ──────────────────────────────────────────────────────────────────────
-# Demo 3: Compression Ratios
-# ──────────────────────────────────────────────────────────────────────
+    # Verify Theorem 4: active variable bound
+    print("\n  Theorem 4: Leaf count ≤ C(ω, r-2)")
+    for name, M in [("Path P_5", graphic_matroid(5, path_edges)),
+                     ("Cycle C_5", graphic_matroid(5, cycle_edges)),
+                     ("K_4", graphic_matroid(4, k4_edges))]:
+        r = M.rank
+        k = r - 2
+        actual = len(M.independent_sets_of_size(k))
+        omega = len(M.active_variables())
+        bound = comb(omega, k)
+        status = "✓" if actual <= bound else "✗"
+        print(f"    {status} {name}: actual={actual} ≤ C({omega},{k})={bound}")
 
-def demo_compression():
-    print("=" * 70)
-    print("DEMO 3: Support Compression Ratios")
-    print("=" * 70)
-    print()
-    print("Showing how the ratio actual/ambient decreases for sparse matroids.")
-    print()
+    print("\n" + "═"*65)
+    print("  All demonstrations complete.")
+    print("═"*65)
 
-    # Path graphs P_n for increasing n
-    print("Path graphs P_n (very sparse, cyclomatic complexity 0):")
-    print(f"{'n_edges':<10} {'r':<5} {'Ambient':<10} {'Actual':<9} {'Ratio':<8}")
-    print("-" * 42)
-
-    for nv in [4, 5, 6, 7, 8]:
-        edges = [(i, i+1) for i in range(nv - 1)]
-        r, bases = graphic_bases(nv, edges)
-        if r < 2:
-            continue
-        ne = len(edges)
-        actual = count_indep_sets(ne, r, bases, r - 2)
-        ambient = comb(ne, r - 2)
-        ratio = actual / ambient if ambient > 0 else 0
-        print(f"{ne:<10} {r:<5} {ambient:<10} {actual:<9} {ratio:<8.3f}")
-
-    print()
-
-    # Complete graphs K_n
-    print("Complete graphs K_n (dense, many bases):")
-    print(f"{'n_vert':<10} {'n_edges':<10} {'r':<5} {'#Bases':<9} {'Ambient':<10} {'Actual':<9} {'Ratio':<8}")
-    print("-" * 62)
-
-    for nv in [3, 4, 5]:
-        edges = [(i, j) for i in range(nv) for j in range(i+1, nv)]
-        r, bases = graphic_bases(nv, edges)
-        if r < 2:
-            continue
-        ne = len(edges)
-        actual = count_indep_sets(ne, r, bases, r - 2)
-        ambient = comb(ne, r - 2)
-        ratio = actual / ambient if ambient > 0 else 0
-        print(f"{nv:<10} {ne:<10} {r:<5} {len(bases):<9} {ambient:<10} {actual:<9} {ratio:<8.3f}")
-
-    print()
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Demo 4: Active Variable Bound
-# ──────────────────────────────────────────────────────────────────────
-
-def demo_active_bound():
-    print("=" * 70)
-    print("DEMO 4: Active Variable Compression Bound")
-    print("=" * 70)
-    print()
-    print("Theorem: indep_count(k) ≤ C(|active_vars|, k)")
-    print("When only k << n variables appear in bases, this is much smaller.")
-    print()
-
-    # Create a matroid on n=20 elements but only using variables 0..5
-    n = 20
-    r = 4
-    # Bases use only the first 8 elements
-    small_bases = [frozenset(S) for S in combinations(range(8), r)]
-    stats = compression_stats("Restricted U_{4,8} in [20]", n, r, small_bases)
-
-    print(f"n = {n}, r = {r}")
-    print(f"Bases use only variables 0..7 ({stats['active_vars']} active variables)")
-    print(f"Ambient bound C(20, 2)  = {stats['ambient']}")
-    print(f"Active bound  C(8, 2)   = {stats['active_bound']}")
-    print(f"Actual count            = {stats['actual']}")
-    print(f"Compression ratio       = {stats['ratio']:.3f}")
-    print()
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Demo 5: Timing Comparison
-# ──────────────────────────────────────────────────────────────────────
-
-def demo_timing():
-    print("=" * 70)
-    print("DEMO 5: Timing — Naive vs Support-Compressed Counting")
-    print("=" * 70)
-    print()
-
-    test_cases = [
-        ("U_{3,8}", 8, 3, uniform_bases(8, 3)),
-        ("U_{4,8}", 8, 4, uniform_bases(8, 4)),
-        ("U_{3,10}", 10, 3, uniform_bases(10, 3)),
-        ("U_{4,10}", 10, 4, uniform_bases(10, 4)),
-    ]
-
-    print(f"{'Matroid':<12} {'Naive Count':<14} {'Compressed':<14} {'Naive(ms)':<12} {'Compr(ms)':<12} {'Speedup':<8}")
-    print("-" * 72)
-
-    for name, n, r, bases in test_cases:
-        # Naive: enumerate all C(n, r-2) subsets
-        t0 = time.perf_counter()
-        naive = sum(1 for S in combinations(range(n), r-2) if any(frozenset(S) <= B for B in bases))
-        t1 = time.perf_counter()
-        naive_ms = (t1 - t0) * 1000
-
-        # Compressed: same algorithm but emphasizing the support check
-        t0 = time.perf_counter()
-        compressed = count_indep_sets(n, r, bases, r - 2)
-        t1 = time.perf_counter()
-        compr_ms = (t1 - t0) * 1000
-
-        assert naive == compressed
-        speedup = naive_ms / compr_ms if compr_ms > 0 else float('inf')
-
-        print(f"{name:<12} {naive:<14} {compressed:<14} {naive_ms:<12.2f} {compr_ms:<12.2f} {speedup:<8.1f}x")
-
-    print()
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Demo 6: Conjecture Testing
-# ──────────────────────────────────────────────────────────────────────
-
-def demo_conjecture():
-    print("=" * 70)
-    print("DEMO 6: Exchange-Compressed Leaf Growth Conjecture")
-    print("=" * 70)
-    print()
-    print("Conjecture: For rank-r matroids on n elements,")
-    print("  #nonzero leaves = #{independent (r-2)-sets} ≤ C(n, r-2)")
-    print("with equality iff M is the uniform matroid.")
-    print()
-
-    # Test: for all graphic matroids we compute, check actual ≤ ambient
-    graphs = [
-        ("P_4", 4, [(i,i+1) for i in range(3)]),
-        ("P_5", 5, [(i,i+1) for i in range(4)]),
-        ("C_4", 4, [(0,1),(1,2),(2,3),(3,0)]),
-        ("C_5", 5, [(0,1),(1,2),(2,3),(3,4),(4,0)]),
-        ("K_4", 4, [(i,j) for i in range(4) for j in range(i+1,4)]),
-        ("K_5", 5, [(i,j) for i in range(5) for j in range(i+1,5)]),
-    ]
-
-    all_pass = True
-    print(f"{'Graph':<12} {'r':<5} {'Actual':<10} {'Ambient':<10} {'≤ ?':<6}")
-    print("-" * 43)
-
-    for name, nv, edges in graphs:
-        r, bases = graphic_bases(nv, edges)
-        if r < 2:
-            continue
-        ne = len(edges)
-        actual = count_indep_sets(ne, r, bases, r - 2)
-        ambient = comb(ne, r - 2)
-        ok = actual <= ambient
-        all_pass = all_pass and ok
-        print(f"{name:<12} {r:<5} {actual:<10} {ambient:<10} {'✓' if ok else '✗':<6}")
-
-    print()
-    print(f"Conjecture holds for all tested cases: {'✓' if all_pass else '✗'}")
-    print()
-
-
-# ──────────────────────────────────────────────────────────────────────
-# Main
-# ──────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print()
-    print("╔══════════════════════════════════════════════════════════════════╗")
-    print("║  Sparse-Support Certificate Compression for Matroid Basis      ║")
-    print("║  Polynomials — Interactive Demonstration                       ║")
-    print("╚══════════════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_uniform()
-    demo_graphic()
-    demo_compression()
-    demo_active_bound()
-    demo_timing()
-    demo_conjecture()
-
-    print("All demonstrations complete.")
+    main()
 
 
 """
-Visualization: Compression Ratio Heatmap for Certificate Complexity
+Visualization: Compression Ratio Heatmap for Uniform Matroids
 
-Shows how the ratio (actual leaves / ambient leaves) varies with
-matroid parameters n (ground set size) and r (rank) for the uniform matroid.
-For uniform matroids, every (r-2)-subset is independent, so the ratio is
-always 1.0. But for restricted matroids (bases using only k < n variables),
-the compression ratio C(k,r-2)/C(n,r-2) drops dramatically.
+Visualizes the ratio of actual quadratic leaves to ambient leaf count
+for uniform matroids U_{r,n} across different values of r and n.
+For uniform matroids, every (r-2)-subset is independent, so the ratio
+is always 1.0 — this serves as the baseline against which sparse
+matroids show compression.
 
-This heatmap shows the compression ratio for a matroid whose bases use
-only k=8 active variables, embedded in ground sets of various sizes n,
-for different ranks r. The plot reveals how support geometry compresses
-the certificate complexity.
+The heatmap shows C(n, r-2) values, illustrating how certification
+complexity grows with n and r.
 """
 
 import numpy as np
@@ -574,253 +420,299 @@ import matplotlib.pyplot as plt
 from math import comb
 
 # Parameters
-k_active = 8  # number of active variables
-n_values = list(range(8, 31))  # ground set sizes
-r_values = list(range(3, 9))   # ranks
+n_values = list(range(4, 16))
+r_values = list(range(3, 10))
 
-# Compute compression ratios
-ratios = np.zeros((len(r_values), len(n_values)))
-
+# Compute leaf counts
+data = np.zeros((len(r_values), len(n_values)))
 for i, r in enumerate(r_values):
     for j, n in enumerate(n_values):
-        if r - 2 > min(k_active, n) or r > n:
-            ratios[i, j] = np.nan
+        if r <= n:
+            data[i, j] = comb(n, r - 2)
         else:
-            ambient = comb(n, r - 2)
-            compressed = comb(min(k_active, n), r - 2)
-            ratios[i, j] = compressed / ambient if ambient > 0 else 1.0
+            data[i, j] = 0
 
-# Create figure
-fig, ax = plt.subplots(figsize=(12, 6))
-
-# Plot heatmap
-im = ax.imshow(ratios, aspect='auto', cmap='RdYlGn',
-               vmin=0, vmax=1,
-               extent=[n_values[0]-0.5, n_values[-1]+0.5,
-                       r_values[-1]+0.5, r_values[0]-0.5])
+# Create heatmap
+fig, ax = plt.subplots(figsize=(12, 7))
+im = ax.imshow(data, cmap='YlOrRd', aspect='auto', interpolation='nearest')
 
 # Labels
-ax.set_xlabel('Ground Set Size n', fontsize=13)
-ax.set_ylabel('Rank r', fontsize=13)
-ax.set_title(f'Certificate Compression Ratio: C({k_active}, r−2) / C(n, r−2)\n'
-             f'Active Variables k = {k_active}', fontsize=14)
+ax.set_xticks(range(len(n_values)))
+ax.set_xticklabels(n_values)
+ax.set_yticks(range(len(r_values)))
+ax.set_yticklabels(r_values)
+ax.set_xlabel('Ground Set Size (n)', fontsize=13)
+ax.set_ylabel('Rank (r)', fontsize=13)
+ax.set_title('Quadratic Leaf Count C(n, r−2) for Uniform Matroids\n'
+             '(Baseline for Support Compression)', fontsize=14)
 
-# Colorbar
-cbar = plt.colorbar(im, ax=ax, shrink=0.8)
-cbar.set_label('Compression Ratio (actual / ambient)', fontsize=11)
+# Add text annotations
+for i in range(len(r_values)):
+    for j in range(len(n_values)):
+        val = int(data[i, j])
+        if val > 0:
+            color = 'white' if val > data.max() * 0.6 else 'black'
+            ax.text(j, i, str(val), ha='center', va='center',
+                    fontsize=8, color=color, fontweight='bold')
 
-# Annotate cells with values
-for i, r in enumerate(r_values):
-    for j, n in enumerate(n_values):
-        if not np.isnan(ratios[i, j]):
-            color = 'white' if ratios[i, j] < 0.3 else 'black'
-            ax.text(n, r, f'{ratios[i,j]:.2f}',
-                    ha='center', va='center', fontsize=7, color=color)
-
-# Set ticks
-ax.set_xticks(n_values[::2])
-ax.set_yticks(r_values)
-
+plt.colorbar(im, ax=ax, label='Number of Quadratic Leaves')
 plt.tight_layout()
 plt.savefig('viz_compression_heatmap.png', dpi=150, bbox_inches='tight')
 print("Saved viz_compression_heatmap.png")
 
 
 """
-Visualization: Leaf Count Growth Curves
+Visualization: Compression Comparison Across Graph Families
 
-Plots the growth of nonzero quadratic leaves as a function of the ground
-set size n, for several matroid families. Compares:
-  - Uniform matroid U_{r,n}: leaves = C(n, r-2) (maximum possible)
-  - Restricted matroid (k active variables): leaves = C(k, r-2) (constant!)
-  - The gap between them shows the power of support compression.
+Compares the actual quadratic leaf count (= independent (r-2)-set count)
+against the ambient worst case C(n, r-2) for different graph families.
+Shows how graph structure determines certification complexity.
 
-This visualization makes the key theorem tangible: for matroids whose
-bases use only a small fraction of the ground set, certification
-complexity stays bounded even as n grows.
+Key insight: sparse graphs (paths, cycles) often match the ambient bound,
+while dense graphs with many dependencies can show genuine compression.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
+from itertools import combinations
 from math import comb
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-# ── Left panel: Fixed rank r=4 ──
+def graphic_matroid_leaves(n_verts, edges):
+    """Compute leaf count for a graphic matroid."""
+    E = list(range(len(edges)))
+
+    def find(p, x):
+        while p[x] != x: p[x] = p[p[x]]; x = p[x]
+        return x
+
+    def union(p, rk, x, y):
+        rx, ry = find(p, x), find(p, y)
+        if rx == ry: return False
+        if rk[rx] < rk[ry]: rx, ry = ry, rx
+        p[ry] = rx
+        if rk[rx] == rk[ry]: rk[rx] += 1
+        return True
+
+    def is_forest(subset):
+        p = list(range(n_verts)); rk = [0]*n_verts
+        for i in subset:
+            if not union(p, rk, edges[i][0], edges[i][1]): return False
+        return True
+
+    p = list(range(n_verts)); rk = [0]*n_verts
+    rank = sum(1 for i, (u,v) in enumerate(edges) if union(p, rk, u, v))
+    ref_comps = len({find(p, v) for v in range(n_verts)})
+
+    bases = set()
+    for subset in combinations(E, rank):
+        if is_forest(subset):
+            p2 = list(range(n_verts)); rk2 = [0]*n_verts
+            for i in subset: union(p2, rk2, edges[i][0], edges[i][1])
+            if len({find(p2, v) for v in range(n_verts)}) == ref_comps:
+                bases.add(frozenset(subset))
+
+    k = max(rank - 2, 0)
+    actual = 0
+    for s in combinations(E, k):
+        fs = frozenset(s)
+        if any(fs <= B for B in bases):
+            actual += 1
+
+    ambient = comb(len(E), k) if rank >= 2 else 1
+    return len(E), rank, actual, ambient, len(bases)
+
+
+# Compute data for different graph families
+ns = list(range(4, 8))
+
+path_data = []
+cycle_data = []
+complete_data = []
+
+for n in ns:
+    # Path
+    edges = [(i, i+1) for i in range(n-1)]
+    ne, r, actual, ambient, nb = graphic_matroid_leaves(n, edges)
+    path_data.append((n, ne, r, actual, ambient))
+
+    # Cycle
+    edges = [(i, (i+1) % n) for i in range(n)]
+    ne, r, actual, ambient, nb = graphic_matroid_leaves(n, edges)
+    cycle_data.append((n, ne, r, actual, ambient))
+
+    # Complete
+    edges = [(i, j) for i in range(n) for j in range(i+1, n)]
+    ne, r, actual, ambient, nb = graphic_matroid_leaves(n, edges)
+    complete_data.append((n, ne, r, actual, ambient))
+
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+# Plot 1: Absolute leaf counts
 ax = axes[0]
-r = 4
-n_range = np.arange(r, 26)
-
-# Uniform matroid (upper bound)
-uniform_leaves = [comb(n, r-2) for n in n_range]
-ax.plot(n_range, uniform_leaves, 'b-o', markersize=4, linewidth=2,
-        label=f'Uniform U_{{{r},n}}: C(n,{r-2})')
-
-# Restricted matroids with different active variable counts
-for k, color, marker in [(6, 'green', 's'), (8, 'orange', '^'), (10, 'red', 'D')]:
-    restricted = [comb(min(k, n), r-2) for n in n_range]
-    ax.plot(n_range, restricted, f'{color[0]}--{marker}', markersize=4, linewidth=1.5,
-            label=f'Restricted (k={k}): C({k},{r-2})={comb(k,r-2)}',
-            color=color)
-
-ax.set_xlabel('Ground Set Size n', fontsize=12)
-ax.set_ylabel('Nonzero Quadratic Leaves', fontsize=12)
-ax.set_title(f'Leaf Count Growth (rank r = {r})', fontsize=13)
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-ax.set_yscale('log')
-
-# ── Right panel: Varying rank ──
-ax = axes[1]
-n = 20
-
-r_range = np.arange(3, 12)
-
-# Ambient bound
-ambient = [comb(n, r-2) for r in r_range]
-ax.bar(r_range - 0.2, ambient, width=0.35, color='steelblue', alpha=0.7,
-       label=f'Ambient C({n}, r−2)')
-
-# Restricted (k=8 active vars)
-k = 8
-restricted = [comb(min(k, n), r-2) if r-2 <= k else 0 for r in r_range]
-ax.bar(r_range + 0.2, restricted, width=0.35, color='coral', alpha=0.7,
-       label=f'Compressed C({k}, r−2)')
-
-ax.set_xlabel('Rank r', fontsize=12)
-ax.set_ylabel('Leaf Count', fontsize=12)
-ax.set_title(f'Ambient vs Compressed (n={n}, k={k} active)', fontsize=13)
+x = ns
+ax.plot(x, [d[3] for d in path_data], 'o-', label='Path $P_n$', linewidth=2, markersize=8)
+ax.plot(x, [d[3] for d in cycle_data], 's-', label='Cycle $C_n$', linewidth=2, markersize=8)
+ax.plot(x, [d[3] for d in complete_data], '^-', label='Complete $K_n$', linewidth=2, markersize=8)
+ax.set_xlabel('Number of Vertices', fontsize=12)
+ax.set_ylabel('Quadratic Leaf Count', fontsize=12)
+ax.set_title('Actual Leaf Counts', fontsize=13)
 ax.legend(fontsize=10)
-ax.set_xticks(r_range)
-ax.grid(True, alpha=0.3, axis='y')
 ax.set_yscale('log')
+ax.grid(True, alpha=0.3)
 
+# Plot 2: Ambient vs Actual
+ax = axes[1]
+for data, label, marker in [(path_data, 'Path', 'o'), (cycle_data, 'Cycle', 's'),
+                              (complete_data, 'Complete', '^')]:
+    ax.plot(x, [d[4] for d in data], f'{marker}--', alpha=0.4, label=f'{label} (ambient)')
+    ax.plot(x, [d[3] for d in data], f'{marker}-', label=f'{label} (actual)')
+ax.set_xlabel('Number of Vertices', fontsize=12)
+ax.set_ylabel('Count', fontsize=12)
+ax.set_title('Ambient vs. Actual', fontsize=13)
+ax.legend(fontsize=8, ncol=2)
+ax.set_yscale('log')
+ax.grid(True, alpha=0.3)
+
+# Plot 3: Compression ratios
+ax = axes[2]
+ax.plot(x, [d[3]/d[4] if d[4] > 0 else 1 for d in path_data],
+        'o-', label='Path $P_n$', linewidth=2, markersize=8)
+ax.plot(x, [d[3]/d[4] if d[4] > 0 else 1 for d in cycle_data],
+        's-', label='Cycle $C_n$', linewidth=2, markersize=8)
+ax.plot(x, [d[3]/d[4] if d[4] > 0 else 1 for d in complete_data],
+        '^-', label='Complete $K_n$', linewidth=2, markersize=8)
+ax.set_xlabel('Number of Vertices', fontsize=12)
+ax.set_ylabel('Compression Ratio (actual/ambient)', fontsize=12)
+ax.set_title('Compression by Graph Family', fontsize=13)
+ax.axhline(y=1.0, color='gray', linestyle=':', alpha=0.5, label='No compression')
+ax.legend(fontsize=10)
+ax.set_ylim(0, 1.1)
+ax.grid(True, alpha=0.3)
+
+plt.suptitle('Support Compression for Graphic Matroids', fontsize=15, y=1.02)
 plt.tight_layout()
-plt.savefig('viz_leaf_growth.png', dpi=150, bbox_inches='tight')
-print("Saved viz_leaf_growth.png")
+plt.savefig('viz_graph_comparison.png', dpi=150, bbox_inches='tight')
+print("Saved viz_graph_comparison.png")
 
 
 """
 Visualization: Recursion Tree Pruning by Support Geometry
 
-Illustrates the central insight: when recognizing a matroid basis polynomial
-as Lorentzian, the derivative recursion tree is pruned by the matroid's
-independent-set structure. Branches that would exist in the naive algorithm
-are killed by the support geometry.
+Illustrates how support geometry prunes the Lorentzian recognition
+recursion tree. Shows a comparison between naive (all branches) and
+support-compressed (surviving branches only) for a small example.
 
-This visualization shows a concrete example: a small matroid with bases
-{0,1,2} and {0,3,4} on ground set [5]. The recursion tree for the degree-3
-basis polynomial has potential branches for all 1-element subsets (r-2=1),
-but only the independent ones ({0}, {1}, {2}, {3}, {4}) survive.
+The key insight: branches die when the accumulated derivative index
+cannot extend to any support element (basis). For matroids, this is
+exactly the independence test.
 """
 
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-import numpy as np
+from math import comb
+from itertools import combinations
 
 
-fig, ax = plt.subplots(figsize=(14, 8))
+def draw_tree_comparison():
+    """Draw a comparison of naive vs pruned recursion trees for a small example."""
 
-# ── Define the matroid ──
-# Bases: {0,1,2} and {0,3,4}
-# Independent 1-sets (r-2=1): {0}, {1}, {2}, {3}, {4} — all survive!
-# But for a different matroid, some might not.
+    fig, axes = plt.subplots(1, 2, figsize=(14, 8))
 
-# Let's use a more interesting example:
-# Ground set [6], rank 3
-# Bases: {0,1,2}, {0,1,3}, {0,2,3}, {1,2,3}  (these are all 3-subsets of {0,1,2,3})
-# Independent 1-sets: subsets of some basis = any singleton from {0,1,2,3}
-# Elements 4,5 are NOT in any basis, so {4} and {5} are NOT independent
+    # Example: polynomial with support = {{0,1,2}, {0,1,3}, {1,2,3}} on 4 variables
+    # This is like a rank-3 matroid on ground set {0,1,2,3}
+    # degree = 3, so we need derivatives of order 1 (degree 3 - 2 = 1)
+    # surviving 1-sets: {0}, {1}, {2}, {3} — all appear in some basis
+    # ambient 1-sets: {0}, {1}, {2}, {3} — same (n=4, k=1)
 
-bases = [{0,1,2}, {0,1,3}, {0,2,3}, {1,2,3}]
-n = 6
-r = 3
-all_singletons = [{i} for i in range(n)]
-indep_singletons = [S for S in all_singletons if any(S <= B for B in bases)]
-dep_singletons = [S for S in all_singletons if not any(S <= B for B in bases)]
+    # For a more interesting example, consider rank-4 on 6 elements
+    # with bases = {{0,1,2,3}, {0,1,2,4}, {0,1,3,4}, {0,2,3,4}, {1,2,3,4}}
+    # derivative order = 2
+    # ambient 2-subsets: C(6,2) = 15
+    # surviving 2-subsets: those contained in some basis
 
-# ── Draw the tree ──
+    bases = [{0,1,2,3}, {0,1,2,4}, {0,1,3,4}, {0,2,3,4}, {1,2,3,4}]
+    n, r = 6, 4
+    k = r - 2  # = 2
 
-# Root node
-root_x, root_y = 7, 7.5
-ax.add_patch(plt.Circle((root_x, root_y), 0.4, color='#2C3E50', zorder=5))
-ax.text(root_x, root_y, 'B_M', ha='center', va='center', fontsize=11,
-        fontweight='bold', color='white', zorder=6)
-ax.text(root_x, root_y + 0.7, 'Basis Generating\nPolynomial (deg 3)',
-        ha='center', va='center', fontsize=9, color='#2C3E50')
+    all_subsets = list(combinations(range(n), k))
+    surviving = [s for s in all_subsets if any(set(s) <= b for b in bases)]
+    dead = [s for s in all_subsets if not any(set(s) <= b for b in bases)]
 
-# Level 1: All possible derivative directions
-y_level1 = 5.0
-x_positions = np.linspace(1.5, 12.5, n)
+    # Left panel: Naive tree (all branches)
+    ax = axes[0]
+    ax.set_title(f'Naive Recursion Tree\n({len(all_subsets)} branches, all explored)',
+                 fontsize=13, fontweight='bold')
+    ax.set_xlim(-0.5, len(all_subsets) - 0.5)
+    ax.set_ylim(-0.5, 2.5)
+    ax.set_axis_off()
 
-for idx, i in enumerate(range(n)):
-    x = x_positions[idx]
-    S = {i}
-    is_indep = S in indep_singletons
+    # Root
+    ax.plot(len(all_subsets)/2 - 0.5, 2.2, 'ko', markersize=15)
+    ax.text(len(all_subsets)/2 - 0.5, 2.4, f'$B_M(x)$, deg={r}',
+            ha='center', fontsize=11, fontweight='bold')
 
-    # Draw edge from root
-    color = '#27AE60' if is_indep else '#E74C3C'
-    linestyle = '-' if is_indep else '--'
-    alpha = 1.0 if is_indep else 0.4
+    # Leaves
+    for i, s in enumerate(all_subsets):
+        is_surv = s in surviving
+        color = '#2ecc71' if is_surv else '#e74c3c'
+        ax.plot(i, 0, 'o', markersize=10, color=color, zorder=5)
+        ax.plot([len(all_subsets)/2 - 0.5, i], [2.2, 0.2], '-',
+                color='gray', alpha=0.3, linewidth=0.8)
+        label = '{' + ','.join(map(str, s)) + '}'
+        ax.text(i, -0.3, label, ha='center', fontsize=6, rotation=45)
 
-    ax.plot([root_x, x], [root_y - 0.4, y_level1 + 0.35],
-            color=color, linewidth=2, linestyle=linestyle, alpha=alpha, zorder=3)
+    ax.text(len(all_subsets)/2 - 0.5, 1.2,
+            f'All C({n},{k}) = {len(all_subsets)} derivative branches',
+            ha='center', fontsize=10, style='italic', color='gray')
 
-    # Draw node
-    if is_indep:
-        ax.add_patch(plt.Circle((x, y_level1), 0.35, color='#27AE60', zorder=5))
-        ax.text(x, y_level1, f'∂_{i}', ha='center', va='center',
-                fontsize=10, color='white', fontweight='bold', zorder=6)
-        # Label
-        ax.text(x, y_level1 - 0.6, f'{{{i}}} ⊆ basis\n✓ survives',
-                ha='center', va='center', fontsize=7, color='#27AE60')
+    # Right panel: Pruned tree (only surviving)
+    ax = axes[1]
+    ax.set_title(f'Support-Compressed Tree\n({len(surviving)} surviving, {len(dead)} pruned)',
+                 fontsize=13, fontweight='bold')
+    ax.set_xlim(-0.5, len(all_subsets) - 0.5)
+    ax.set_ylim(-0.5, 2.5)
+    ax.set_axis_off()
 
-        # Level 2: Quadratic leaves (the actual certificate checks)
-        y_level2 = 2.5
-        ax.add_patch(mpatches.FancyBboxPatch(
-            (x - 0.5, y_level2 - 0.3), 1.0, 0.6,
-            boxstyle="round,pad=0.1", facecolor='#EAF2E3',
-            edgecolor='#27AE60', linewidth=1.5, zorder=4))
-        ax.text(x, y_level2, 'Quadratic\nLeaf ✓', ha='center', va='center',
-                fontsize=7, color='#27AE60', fontweight='bold', zorder=5)
-        ax.plot([x, x], [y_level1 - 0.35, y_level2 + 0.3],
-                color='#27AE60', linewidth=1.5, zorder=3)
-    else:
-        ax.add_patch(plt.Circle((x, y_level1), 0.35, color='#E74C3C',
-                                alpha=0.4, zorder=5))
-        ax.text(x, y_level1, f'∂_{i}', ha='center', va='center',
-                fontsize=10, color='white', fontweight='bold', zorder=6, alpha=0.6)
-        # X mark
-        ax.text(x, y_level1 - 0.6, f'{{{i}}} ⊄ any basis\n✗ pruned!',
-                ha='center', va='center', fontsize=7, color='#E74C3C')
+    # Root
+    ax.plot(len(all_subsets)/2 - 0.5, 2.2, 'ko', markersize=15)
+    ax.text(len(all_subsets)/2 - 0.5, 2.4, f'$B_M(x)$, deg={r}',
+            ha='center', fontsize=11, fontweight='bold')
 
-# ── Legend and annotations ──
-ax.text(7, 1.2,
-        f'Bases: {{0,1,2}}, {{0,1,3}}, {{0,2,3}}, {{1,2,3}}   |   '
-        f'Ground set: [6]   |   Rank: 3\n'
-        f'Ambient leaf count: C(6,1) = 6   |   '
-        f'Actual (independent) leaves: {len(indep_singletons)}   |   '
-        f'Pruned: {len(dep_singletons)}',
-        ha='center', va='center', fontsize=10,
-        bbox=dict(boxstyle='round,pad=0.5', facecolor='#F8F9FA',
-                  edgecolor='#BDC3C7', linewidth=1.5))
+    # Only surviving leaves
+    positions = np.linspace(1, len(all_subsets) - 2, len(surviving))
+    for i, (pos, s) in enumerate(zip(positions, surviving)):
+        ax.plot(pos, 0, 'o', markersize=12, color='#2ecc71', zorder=5)
+        ax.plot([len(all_subsets)/2 - 0.5, pos], [2.2, 0.2], '-',
+                color='#2ecc71', alpha=0.6, linewidth=1.5)
+        label = '{' + ','.join(map(str, s)) + '}'
+        ax.text(pos, -0.3, label, ha='center', fontsize=7, rotation=45)
 
-# Legend
-legend_elements = [
-    mpatches.Patch(facecolor='#27AE60', label='Surviving branch (S independent)'),
-    mpatches.Patch(facecolor='#E74C3C', alpha=0.4, label='Pruned branch (S dependent)'),
-]
-ax.legend(handles=legend_elements, loc='upper left', fontsize=10,
-          framealpha=0.9)
+    # Dead branches (faded X marks)
+    dead_positions = np.linspace(0.5, len(all_subsets) - 1.5, len(dead))
+    for i, (pos, s) in enumerate(zip(dead_positions, dead)):
+        ax.plot(pos, 0.8, 'x', markersize=8, color='#e74c3c', alpha=0.4,
+                markeredgewidth=2, zorder=5)
 
-ax.set_xlim(0, 14)
-ax.set_ylim(0.5, 9)
-ax.set_aspect('equal')
-ax.axis('off')
-ax.set_title('Recursion Tree Pruning by Matroid Support Geometry\n'
-             'Only independent subsets produce nonzero derivative branches',
-             fontsize=14, fontweight='bold', pad=10)
+    ax.text(len(all_subsets)/2 - 0.5, 1.2,
+            f'Only {len(surviving)} independent {k}-sets survive',
+            ha='center', fontsize=10, style='italic', color='#27ae60')
 
-plt.tight_layout()
-plt.savefig('viz_recursion_tree.png', dpi=150, bbox_inches='tight')
-print("Saved viz_recursion_tree.png")
+    # Legend
+    legend_elements = [
+        mpatches.Patch(color='#2ecc71', label='Surviving (independent set)'),
+        mpatches.Patch(color='#e74c3c', label='Pruned (dependent set)'),
+    ]
+    fig.legend(handles=legend_elements, loc='lower center', ncol=2,
+               fontsize=11, bbox_to_anchor=(0.5, -0.02))
+
+    plt.suptitle('Lorentzian Recognition: Support Compression Prunes the Recursion Tree',
+                 fontsize=15, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig('viz_recursion_tree.png', dpi=150, bbox_inches='tight')
+    print("Saved viz_recursion_tree.png")
+
+
+draw_tree_comparison()

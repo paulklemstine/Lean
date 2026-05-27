@@ -1,298 +1,310 @@
 """
-algorithms.py — Support-Compressed Certificate Counting for Matroid Basis Polynomials
+algorithms.py — Support-Compressed Lorentzian Recognition Algorithms
 
-Implements the core algorithms from the formalized theory:
-1. Basis generating polynomial construction
-2. Derivative survival testing
-3. Support-compressed leaf counting
-4. Naive vs compressed comparison
-
-All algorithms operate on matroid basis families represented as sets of frozensets.
+Implements the key algorithms from the sparse-support certificate compression theory:
+1. Naive ambient leaf counting (worst case)
+2. Support-compressed leaf counting (using support geometry)
+3. Matroid-specific counting (independent set enumeration)
+4. Uniform, graphic, and transversal matroid specializations
 """
 
-from __future__ import annotations
 from itertools import combinations
 from math import comb
-from typing import FrozenSet, Set, Collection
+from typing import List, Set, FrozenSet, Tuple, Optional, Dict
 import time
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Core Data Structures
-# ──────────────────────────────────────────────────────────────────────
+# ─── Core Data Structures ───────────────────────────────────────────────────
 
 class BasisFamily:
-    """A matroid-like structure: a nonempty collection of r-element subsets of {0,...,n-1}.
+    """A matroid represented by its collection of bases.
 
     Attributes:
-        n: size of the ground set
-        r: common cardinality of all bases
-        bases: frozenset of frozensets, each of size r
+        ground_set: The ground set elements (list of integers).
+        bases: Set of frozensets, each a basis.
+        rank: Common cardinality of all bases.
     """
 
-    def __init__(self, n: int, r: int, bases: Collection[FrozenSet[int]]):
-        self.n = n
-        self.r = r
-        self.bases = frozenset(bases)
-        assert len(self.bases) > 0, "Basis family must be nonempty"
-        for B in self.bases:
-            assert len(B) == r, f"Basis {B} has size {len(B)}, expected {r}"
-            assert all(0 <= i < n for i in B), f"Basis {B} has elements outside [0, {n})"
+    def __init__(self, ground_set: List[int], bases: Set[FrozenSet[int]]):
+        self.ground_set = sorted(ground_set)
+        self.bases = bases
+        if bases:
+            self.rank = len(next(iter(bases)))
+            assert all(len(b) == self.rank for b in bases), "Bases must be equicardinal"
+        else:
+            self.rank = 0
 
-    def is_indep(self, I: FrozenSet[int]) -> bool:
+    def is_independent(self, I: FrozenSet[int]) -> bool:
         """Check if I is independent (contained in some basis)."""
         return any(I <= B for B in self.bases)
 
-    def indep_sets(self, k: int) -> list[FrozenSet[int]]:
-        """Return all independent sets of size k."""
+    def independent_sets_of_size(self, k: int) -> List[FrozenSet[int]]:
+        """Enumerate all independent sets of size k."""
         return [
-            frozenset(S) for S in combinations(range(self.n), k)
-            if self.is_indep(frozenset(S))
+            frozenset(s)
+            for s in combinations(self.ground_set, k)
+            if self.is_independent(frozenset(s))
         ]
 
-    def indep_count(self, k: int) -> int:
-        """Count independent sets of size k."""
-        return len(self.indep_sets(k))
+    def active_variables(self) -> Set[int]:
+        """Union of all elements appearing in any basis."""
+        return set().union(*self.bases) if self.bases else set()
 
-    def active_vars(self) -> FrozenSet[int]:
-        """Variables appearing in at least one basis."""
-        result: set[int] = set()
-        for B in self.bases:
-            result |= B
-        return frozenset(result)
-
-    def active_var_count(self) -> int:
-        """Number of active variables."""
-        return len(self.active_vars())
-
-    def support_compressed_leaf_count(self) -> int:
-        """The certificate complexity: number of independent (r-2)-sets."""
-        if self.r < 2:
-            return 0
-        return self.indep_count(self.r - 2)
-
-    def ambient_leaf_count(self) -> int:
-        """Naive ambient worst-case: C(n, r-2)."""
-        if self.r < 2:
-            return 0
-        return comb(self.n, self.r - 2)
-
-    def compression_ratio(self) -> float:
-        """Ratio of actual/ambient leaf count."""
-        ambient = self.ambient_leaf_count()
-        if ambient == 0:
-            return 0.0
-        return self.support_compressed_leaf_count() / ambient
+    def __repr__(self):
+        return f"BasisFamily(rank={self.rank}, |E|={len(self.ground_set)}, |B|={len(self.bases)})"
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Standard Matroid Constructors
-# ──────────────────────────────────────────────────────────────────────
+# ─── Matroid Constructors ────────────────────────────────────────────────────
 
-def uniform_matroid(n: int, r: int) -> BasisFamily:
+def uniform_matroid(r: int, n: int) -> BasisFamily:
     """Uniform matroid U_{r,n}: every r-element subset is a basis.
 
-    >>> F = uniform_matroid(5, 3)
-    >>> F.support_compressed_leaf_count() == comb(5, 1)
-    True
+    Args:
+        r: Rank.
+        n: Size of ground set {0, ..., n-1}.
+
+    Returns:
+        BasisFamily representing U_{r,n}.
     """
-    bases = [frozenset(S) for S in combinations(range(n), r)]
-    return BasisFamily(n, r, bases)
+    E = list(range(n))
+    bases = {frozenset(s) for s in combinations(E, r)}
+    return BasisFamily(E, bases)
 
 
-def graphic_matroid(n_vertices: int, edges: list[tuple[int, int]]) -> BasisFamily:
+def graphic_matroid(n_vertices: int, edges: List[Tuple[int, int]]) -> BasisFamily:
     """Graphic matroid of a graph: bases are spanning forests.
 
     Args:
-        n_vertices: number of vertices (labeled 0..n_vertices-1)
-        edges: list of (u, v) edges (0-indexed)
+        n_vertices: Number of vertices.
+        edges: List of (u, v) edges.
 
     Returns:
-        BasisFamily on ground set = edges, with bases = spanning forests of max size.
+        BasisFamily where bases are spanning forests (maximal acyclic edge subsets).
     """
-    n_edges = len(edges)
+    E = list(range(len(edges)))
 
-    def is_forest(edge_indices: Collection[int]) -> bool:
-        """Check if the selected edges form a forest (no cycles)."""
+    def find(parent, x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(parent, rank_arr, x, y):
+        rx, ry = find(parent, x), find(parent, y)
+        if rx == ry:
+            return False
+        if rank_arr[rx] < rank_arr[ry]:
+            rx, ry = ry, rx
+        parent[ry] = rx
+        if rank_arr[rx] == rank_arr[ry]:
+            rank_arr[rx] += 1
+        return True
+
+    def is_forest(edge_subset):
         parent = list(range(n_vertices))
-
-        def find(x: int) -> int:
-            while parent[x] != x:
-                parent[x] = parent[parent[x]]
-                x = parent[x]
-            return x
-
-        def union(x: int, y: int) -> bool:
-            px, py = find(x), find(y)
-            if px == py:
+        rank_arr = [0] * n_vertices
+        for idx in edge_subset:
+            u, v = edges[idx]
+            if not union(parent, rank_arr, u, v):
                 return False
-            parent[px] = py
-            return True
+        return True
 
-        return all(union(edges[i][0], edges[i][1]) for i in edge_indices)
+    def is_spanning_forest(edge_subset):
+        if not is_forest(edge_subset):
+            return False
+        parent = list(range(n_vertices))
+        rank_arr = [0] * n_vertices
+        for idx in edge_subset:
+            u, v = edges[idx]
+            union(parent, rank_arr, u, v)
+        components = len({find(parent, v) for v in range(n_vertices)})
+        return True  # maximal forest has n_vertices - components edges
 
-    # Find maximum forest size
-    max_forest = 0
-    for k in range(n_edges + 1):
-        for S in combinations(range(n_edges), k):
-            if is_forest(S):
-                max_forest = max(max_forest, k)
+    # Find the rank (size of any maximal forest)
+    # Use greedy to find one spanning forest
+    parent = list(range(n_vertices))
+    rank_arr = [0] * n_vertices
+    forest = []
+    for i, (u, v) in enumerate(edges):
+        if union(parent, rank_arr, u, v):
+            forest.append(i)
+    rank = len(forest)
 
-    bases = [
-        frozenset(S) for S in combinations(range(n_edges), max_forest)
-        if is_forest(S)
-    ]
+    # Enumerate all forests of size = rank
+    bases = set()
+    for subset in combinations(E, rank):
+        if is_forest(subset):
+            # Check it's a maximal forest (same number of components)
+            parent2 = list(range(n_vertices))
+            rank_arr2 = [0] * n_vertices
+            for idx in subset:
+                u, v = edges[idx]
+                union(parent2, rank_arr2, u, v)
+            comps = len({find(parent2, v) for v in range(n_vertices)})
+            parent3 = list(range(n_vertices))
+            rank_arr3 = [0] * n_vertices
+            for idx in forest:
+                u, v = edges[idx]
+                union(parent3, rank_arr3, u, v)
+            comps_ref = len({find(parent3, v) for v in range(n_vertices)})
+            if comps == comps_ref:
+                bases.add(frozenset(subset))
 
-    if not bases:
-        # Fallback: single empty basis for edgeless graph
-        bases = [frozenset()]
-        max_forest = 0
-
-    return BasisFamily(n_edges, max_forest, bases)
+    return BasisFamily(E, bases)
 
 
-def transversal_matroid(n_left: int, n_right: int,
-                         edges: list[tuple[int, int]]) -> BasisFamily:
+def transversal_matroid(n_left: int, neighbors: Dict[int, List[int]]) -> BasisFamily:
     """Transversal matroid from a bipartite graph.
 
-    Bases are maximum matchings (as sets of left vertices matched).
-
     Args:
-        n_left: number of left vertices
-        n_right: number of right vertices
-        edges: list of (left_vertex, right_vertex) pairs
+        n_left: Number of left vertices {0, ..., n_left-1}.
+        neighbors: For each left vertex, list of right vertices it connects to.
+
+    Returns:
+        BasisFamily where bases are maximal matchable subsets of left vertices.
     """
-    # Find all matchings by brute force
-    def max_matchings() -> tuple[int, list[FrozenSet[int]]]:
-        """Find all maximum matchings, return (size, list of matched left vertex sets)."""
-        best_size = 0
-        results: list[FrozenSet[int]] = []
+    E = list(range(n_left))
+    right_vertices = set()
+    for nbrs in neighbors.values():
+        right_vertices.update(nbrs)
 
-        def backtrack(idx: int, matched_left: set[int],
-                      matched_right: set[int]) -> None:
-            nonlocal best_size, results
-            current_size = len(matched_left)
+    def find_matching(subset):
+        """Find if subset of left vertices has a perfect matching (Hall's condition)."""
+        # Use augmenting paths
+        match_right = {}
+        def augment(u, visited):
+            for v in neighbors.get(u, []):
+                if v not in visited:
+                    visited.add(v)
+                    if v not in match_right or augment(match_right[v], visited):
+                        match_right[v] = u
+                        return True
+            return False
 
-            if current_size > best_size:
-                best_size = current_size
-                results = [frozenset(matched_left)]
-            elif current_size == best_size and current_size > 0:
-                results.append(frozenset(matched_left))
+        match_right.clear()
+        count = 0
+        for u in subset:
+            if augment(u, set()):
+                count += 1
+        return count == len(subset)
 
-            if idx >= len(edges):
-                return
+    # Find rank = size of maximum matching
+    rank = 0
+    for k in range(n_left, 0, -1):
+        found = False
+        for subset in combinations(E, k):
+            if find_matching(subset):
+                rank = k
+                found = True
+                break
+        if found:
+            break
 
-            for i in range(idx, len(edges)):
-                l, r = edges[i]
-                if l not in matched_left and r not in matched_right:
-                    matched_left.add(l)
-                    matched_right.add(r)
-                    backtrack(i + 1, matched_left, matched_right)
-                    matched_left.remove(l)
-                    matched_right.remove(r)
+    # Enumerate all bases (matchable subsets of size rank)
+    bases = set()
+    for subset in combinations(E, rank):
+        if find_matching(subset):
+            bases.add(frozenset(subset))
 
-        backtrack(0, set(), set())
-        return best_size, results
-
-    r, bases = max_matchings()
-    if not bases:
-        bases = [frozenset()]
-        r = 0
-
-    return BasisFamily(n_left, r, set(bases))
+    return BasisFamily(E, bases)
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Derivative Survival Algorithm
-# ──────────────────────────────────────────────────────────────────────
+# ─── Leaf Counting Algorithms ────────────────────────────────────────────────
 
-def derivative_survives(bases: Collection[FrozenSet[int]],
-                         S: FrozenSet[int]) -> bool:
-    """Check if the iterated derivative ∂_S(B_M) is nonzero.
+def naive_ambient_leaf_count(n: int, r: int) -> int:
+    """Worst-case ambient leaf count: C(n + r - 3, r - 2).
 
-    By the derivative survival theorem, this is equivalent to
-    S being independent (contained in some basis).
-
-    Time: O(|bases| · |S|) — just a subset check per basis.
+    For multiindices α with |α| = r-2 over n variables.
+    For multiaffine case, this is C(n, r-2).
     """
-    return any(S <= B for B in bases)
+    return comb(n, r - 2)
 
 
-def count_nonzero_leaves_naive(n: int, r: int,
-                                 bases: Collection[FrozenSet[int]]) -> int:
-    """Count nonzero quadratic leaves by checking all C(n, r-2) candidates.
+def support_compressed_leaf_count(M: BasisFamily) -> int:
+    """Count nonzero quadratic leaves using support geometry.
 
-    This is the naive approach: enumerate all (r-2)-subsets and test each.
+    Returns the number of (rank-2)-element subsets that are independent.
+    This is the exact complexity of Lorentzian recognition for the basis polynomial.
     """
+    r = M.rank
     if r < 2:
-        return 0
+        return 1 if r >= 0 else 0
+    k = r - 2
+    return len(M.independent_sets_of_size(k))
+
+
+def active_variable_bound(M: BasisFamily) -> int:
+    """Upper bound using active variable count: C(omega, r-2)."""
+    omega = len(M.active_variables())
+    return comb(omega, M.rank - 2)
+
+
+def count_from_support_direct(bases: Set[FrozenSet[int]], ground_set: List[int], r: int) -> int:
+    """Count surviving derivatives directly from support without matroid structure.
+
+    For each (r-2)-subset α, check if α ⊆ β for some basis β.
+    """
+    k = r - 2
     count = 0
-    for S in combinations(range(n), r - 2):
-        if derivative_survives(bases, frozenset(S)):
+    for alpha in combinations(ground_set, k):
+        alpha_set = frozenset(alpha)
+        if any(alpha_set <= beta for beta in bases):
             count += 1
     return count
 
 
-def count_nonzero_leaves_compressed(F: BasisFamily) -> int:
-    """Count nonzero quadratic leaves using support compression.
+# ─── Analysis Functions ──────────────────────────────────────────────────────
 
-    Equivalent to count_nonzero_leaves_naive but emphasizes the
-    support-geometric interpretation.
+def compression_analysis(M: BasisFamily, name: str = "") -> Dict:
+    """Complete compression analysis for a matroid.
+
+    Returns dict with ambient bound, actual count, compression ratio, etc.
     """
-    return F.support_compressed_leaf_count()
+    n = len(M.ground_set)
+    r = M.rank
 
+    t0 = time.time()
+    ambient = naive_ambient_leaf_count(n, r)
+    t_ambient = time.time() - t0
 
-# ──────────────────────────────────────────────────────────────────────
-# Benchmark Utilities
-# ──────────────────────────────────────────────────────────────────────
+    t0 = time.time()
+    actual = support_compressed_leaf_count(M)
+    t_actual = time.time() - t0
 
-def benchmark_matroid(name: str, F: BasisFamily) -> dict:
-    """Compute all relevant statistics for a matroid.
+    omega = len(M.active_variables())
+    active_bound = active_variable_bound(M)
 
-    Returns dict with:
-        name, n, r, num_bases, ambient_count, actual_count,
-        active_vars, active_bound, ratio, time_ms
-    """
-    t0 = time.perf_counter()
-    actual = F.support_compressed_leaf_count()
-    t1 = time.perf_counter()
-
-    ambient = F.ambient_leaf_count()
-    active = F.active_var_count()
-    active_bound = comb(active, F.r - 2) if F.r >= 2 else 0
+    ratio = actual / ambient if ambient > 0 else 0
 
     return {
         "name": name,
-        "n": F.n,
-        "r": F.r,
-        "num_bases": len(F.bases),
-        "ambient_count": ambient,
-        "actual_count": actual,
-        "active_vars": active,
+        "n": n,
+        "rank": r,
+        "num_bases": len(M.bases),
+        "ambient_leaf_count": ambient,
+        "actual_leaf_count": actual,
+        "active_variables": omega,
         "active_bound": active_bound,
-        "ratio": actual / ambient if ambient > 0 else 0.0,
-        "time_ms": (t1 - t0) * 1000,
+        "compression_ratio": ratio,
+        "time_ambient": t_ambient,
+        "time_actual": t_actual,
     }
 
 
-if __name__ == "__main__":
-    # Quick self-test
-    F = uniform_matroid(6, 3)
-    assert F.support_compressed_leaf_count() == comb(6, 1) == 6
-    print(f"U_{{3,6}}: leaf count = {F.support_compressed_leaf_count()}, "
-          f"expected C(6,1) = 6 ✓")
-
-    F = uniform_matroid(8, 4)
-    assert F.support_compressed_leaf_count() == comb(8, 2) == 28
-    print(f"U_{{4,8}}: leaf count = {F.support_compressed_leaf_count()}, "
-          f"expected C(8,2) = 28 ✓")
-
-    # Graphic matroid of a path on 4 vertices
-    path_edges = [(0, 1), (1, 2), (2, 3)]
-    G = graphic_matroid(4, path_edges)
-    stats = benchmark_matroid("Path_4", G)
-    print(f"Path_4: actual={stats['actual_count']}, "
-          f"ambient={stats['ambient_count']}, "
-          f"ratio={stats['ratio']:.3f}")
-
-    print("\nAll self-tests passed.")
+def print_analysis(result: Dict):
+    """Pretty-print a compression analysis result."""
+    print(f"\n{'=' * 60}")
+    print(f"  {result['name']}")
+    print(f"{'=' * 60}")
+    print(f"  Ground set size (n):        {result['n']}")
+    print(f"  Rank (r):                   {result['rank']}")
+    print(f"  Number of bases:            {result['num_bases']}")
+    print(f"  Active variables (ω):       {result['active_variables']}")
+    print(f"  ─────────────────────────────────────────")
+    print(f"  Ambient leaf count C(n,r-2):  {result['ambient_leaf_count']}")
+    print(f"  Active bound C(ω,r-2):        {result['active_bound']}")
+    print(f"  Actual leaf count:            {result['actual_leaf_count']}")
+    print(f"  Compression ratio:            {result['compression_ratio']:.4f}")
+    print(f"  ─────────────────────────────────────────")
+    print(f"  Time (ambient):             {result['time_ambient']:.6f}s")
+    print(f"  Time (actual):              {result['time_actual']:.6f}s")
