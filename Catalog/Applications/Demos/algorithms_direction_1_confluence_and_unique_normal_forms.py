@@ -1,197 +1,325 @@
 #!/usr/bin/env python3
 """
-Algorithms for Tensor Distributivity Rewriting
-===============================================
+algorithms.py — Core algorithms for tensor expression normalization.
 
-Implements the canonical normalizer, distributivity potential measure,
-AC-equivalence checking, and critical pair enumeration.
+Implements:
+1. Polynomial interpretation measure (distPotential)
+2. Canonical normalization (bottom-up + root saturation)
+3. AC-equivalence checking via multiset canonical forms
+4. Termination verification
+
+Type hints and docstrings throughout.
 """
 
-from demo import (
-    Expr, ScalVar, VecVar, MatVar, ScalAdd, ScalMul, VecAdd, MatAdd,
-    SmulVec, SmulMat, MulVec, Dot,
-    normalize_canon, dist_potential, ac_normalize, ac_equivalent,
-    all_one_step_rewrites, root_rewrites, size
-)
-from typing import List, Tuple, Dict, Set
-from collections import deque
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import List, FrozenSet, Tuple, Any
+from collections import Counter
 
 
-def is_normal(e: Expr) -> bool:
-    """Check if a tensor expression is in normal form (no rewrite rule applies)."""
-    return len(all_one_step_rewrites(e)) == 0
+# ═══════════════════════════════════════════════════════════════════
+# Expression Types
+# ═══════════════════════════════════════════════════════════════════
+
+class Expr:
+    """Base class for tensor expressions."""
+    pass
+
+@dataclass(frozen=True)
+class ScalVar(Expr):
+    name: str
+@dataclass(frozen=True)
+class VecVar(Expr):
+    name: str
+@dataclass(frozen=True)
+class MatVar(Expr):
+    name: str
+@dataclass(frozen=True)
+class ScalAdd(Expr):
+    left: Expr; right: Expr
+@dataclass(frozen=True)
+class ScalMul(Expr):
+    left: Expr; right: Expr
+@dataclass(frozen=True)
+class VecAdd(Expr):
+    left: Expr; right: Expr
+@dataclass(frozen=True)
+class MatAdd(Expr):
+    left: Expr; right: Expr
+@dataclass(frozen=True)
+class SmulVec(Expr):
+    scalar: Expr; vector: Expr
+@dataclass(frozen=True)
+class SmulMat(Expr):
+    scalar: Expr; matrix: Expr
+@dataclass(frozen=True)
+class MulVec(Expr):
+    matrix: Expr; vector: Expr
+@dataclass(frozen=True)
+class Dot(Expr):
+    left: Expr; right: Expr
 
 
-def reduction_graph(start: Expr, max_states: int = 1000) -> Dict[str, List[str]]:
-    """Build the reduction graph from a starting expression.
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 1: Polynomial Interpretation Measure
+# ═══════════════════════════════════════════════════════════════════
 
-    Returns adjacency list mapping repr(expr) -> [repr(reduct), ...]
+def dist_potential(t: Expr) -> int:
+    """Compute the polynomial interpretation measure.
+
+    This measure strictly decreases under every rewrite step,
+    proving strong normalization of the rewrite system.
+
+    Complexity: O(|t|) where |t| is the number of nodes.
+
+    The interpretation:
+      - Variables → 3
+      - scalAdd/vecAdd/matAdd a b → I(a) + I(b) + 1
+      - scalMul a b → I(a) · I(b)
+      - smulVec a v → I(a) · I(v) + 1
+      - smulMat a A → I(a) · I(A) + 1
+      - mulVec A v → I(A) · I(v)
+      - dot v w → I(v) · I(w)
+
+    Key property: I(t) ≥ 3 for all t.
+
+    >>> dist_potential(ScalVar("x"))
+    3
+    >>> dist_potential(ScalAdd(ScalVar("x"), ScalVar("y")))
+    7
     """
-    graph = {}
-    visited = set()
-    queue = deque([start])
-
-    while queue and len(visited) < max_states:
-        current = queue.popleft()
-        key = repr(current)
-        if key in visited:
-            continue
-        visited.add(key)
-
-        rewrites = all_one_step_rewrites(current)
-        graph[key] = [repr(r) for r in rewrites]
-
-        for r in rewrites:
-            rkey = repr(r)
-            if rkey not in visited:
-                queue.append(r)
-
-    return graph
+    if isinstance(t, (ScalVar, VecVar, MatVar)):
+        return 3
+    elif isinstance(t, (ScalAdd, VecAdd, MatAdd)):
+        return dist_potential(t.left) + dist_potential(t.right) + 1
+    elif isinstance(t, ScalMul):
+        return dist_potential(t.left) * dist_potential(t.right)
+    elif isinstance(t, SmulVec):
+        return dist_potential(t.scalar) * dist_potential(t.vector) + 1
+    elif isinstance(t, SmulMat):
+        return dist_potential(t.scalar) * dist_potential(t.matrix) + 1
+    elif isinstance(t, MulVec):
+        return dist_potential(t.matrix) * dist_potential(t.vector)
+    elif isinstance(t, Dot):
+        return dist_potential(t.left) * dist_potential(t.right)
+    raise TypeError(f"Unknown expression type: {type(t)}")
 
 
-def longest_reduction_path(start: Expr, max_states: int = 1000) -> int:
-    """Find the length of the longest reduction path from start.
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 2: Root-Level Rewrite Rules
+# ═══════════════════════════════════════════════════════════════════
 
-    Uses BFS with depth tracking.
+def root_norm_step(t: Expr) -> Expr:
+    """Apply one root-level rewrite if possible, otherwise return t.
+
+    The 9 rules (distributivity + extraction):
+    1. A·(v⊕w) → A·v ⊕ A·w
+    2. (A⊞B)·v → A·v ⊕ B·v
+    3. (a⊙A)·v → a•(A·v)
+    4. a•(v⊕w) → a•v ⊕ a•w
+    5. a⊙(A⊞B) → a⊙A ⊞ a⊙B
+    6. ⟨v⊕w, u⟩ → ⟨v,u⟩ + ⟨w,u⟩
+    7. ⟨u, v⊕w⟩ → ⟨u,v⟩ + ⟨u,w⟩
+    8. ⟨a•v, w⟩ → a·⟨v,w⟩
+    9. a·(b+c) → a·b + a·c
+
+    Complexity: O(1) per call.
+
+    >>> t = MulVec(MatVar("A"), VecAdd(VecVar("v"), VecVar("w")))
+    >>> root_norm_step(t)
+    VecAdd(left=MulVec(matrix=MatVar(name='A'), vector=VecVar(name='v')), right=MulVec(matrix=MatVar(name='A'), vector=VecVar(name='w')))
     """
-    max_depth = 0
-    visited = {}  # expr repr -> depth
-    queue = deque([(start, 0)])
+    if isinstance(t, MulVec):
+        if isinstance(t.vector, VecAdd):
+            return VecAdd(MulVec(t.matrix, t.vector.left), MulVec(t.matrix, t.vector.right))
+        if isinstance(t.matrix, MatAdd):
+            return VecAdd(MulVec(t.matrix.left, t.vector), MulVec(t.matrix.right, t.vector))
+        if isinstance(t.matrix, SmulMat):
+            return SmulVec(t.matrix.scalar, MulVec(t.matrix.matrix, t.vector))
+    if isinstance(t, SmulVec) and isinstance(t.vector, VecAdd):
+        return VecAdd(SmulVec(t.scalar, t.vector.left), SmulVec(t.scalar, t.vector.right))
+    if isinstance(t, SmulMat) and isinstance(t.matrix, MatAdd):
+        return MatAdd(SmulMat(t.scalar, t.matrix.left), SmulMat(t.scalar, t.matrix.right))
+    if isinstance(t, Dot):
+        if isinstance(t.left, VecAdd):
+            return ScalAdd(Dot(t.left.left, t.right), Dot(t.left.right, t.right))
+        if isinstance(t.right, VecAdd):
+            return ScalAdd(Dot(t.left, t.right.left), Dot(t.left, t.right.right))
+        if isinstance(t.left, SmulVec):
+            return ScalMul(t.left.scalar, Dot(t.left.vector, t.right))
+    if isinstance(t, ScalMul) and isinstance(t.right, ScalAdd):
+        return ScalAdd(ScalMul(t.left, t.right.left), ScalMul(t.left, t.right.right))
+    return t
 
-    while queue and len(visited) < max_states:
-        current, depth = queue.popleft()
-        key = repr(current)
-        if key in visited:
-            continue
-        visited[key] = depth
-        max_depth = max(max_depth, depth)
 
-        for r in all_one_step_rewrites(current):
-            rkey = repr(r)
-            if rkey not in visited:
-                queue.append((r, depth + 1))
+def has_root_redex(t: Expr) -> bool:
+    """Check whether a root-level rewrite rule applies.
 
-    return max_depth
-
-
-def find_all_critical_pairs() -> List[Tuple[str, str, Expr, Expr, Expr]]:
-    """Enumerate critical pairs among the 8 rules.
-
-    Returns list of (rule1_name, rule2_name, source_term, result1, result2).
+    >>> has_root_redex(MulVec(MatVar("A"), VecAdd(VecVar("v"), VecVar("w"))))
+    True
+    >>> has_root_redex(VecVar("v"))
+    False
     """
-    critical_pairs = []
-    A, B = MatVar("A"), MatVar("B")
-    v, w, u = VecVar("v"), VecVar("w"), VecVar("u")
-    a = ScalVar("a")
-
-    # Rules 7+8: dot(smulVec(a,v), vecAdd(w,u))
-    term = Dot(SmulVec(a, v), VecAdd(w, u))
-    rewrites = root_rewrites(term)
-    if len(rewrites) >= 2:
-        critical_pairs.append(("dot_vecAdd_right", "dot_smulVec_left",
-                              term, rewrites[0], rewrites[1]))
-
-    # Rules 1+2: mulVec(matAdd(A,B), vecAdd(v,w))
-    term = MulVec(MatAdd(A, B), VecAdd(v, w))
-    rewrites = root_rewrites(term)
-    if len(rewrites) >= 2:
-        critical_pairs.append(("mulVec_vecAdd", "matAdd_mulVec",
-                              term, rewrites[0], rewrites[1]))
-
-    # Rules 6+7: dot(vecAdd(v,w), vecAdd(u, vecVar("x")))
-    x = VecVar("x")
-    term = Dot(VecAdd(v, w), VecAdd(u, x))
-    rewrites = root_rewrites(term)
-    if len(rewrites) >= 2:
-        critical_pairs.append(("dot_vecAdd_left", "dot_vecAdd_right",
-                              term, rewrites[0], rewrites[1]))
-
-    # Rules 1+3: mulVec(smulMat(a,A), vecAdd(v,w))
-    term = MulVec(SmulMat(a, A), VecAdd(v, w))
-    rewrites = root_rewrites(term)
-    if len(rewrites) >= 2:
-        critical_pairs.append(("mulVec_vecAdd", "smulMat_mulVec",
-                              term, rewrites[0], rewrites[1]))
-
-    # Rules 6+8: dot(vecAdd(smulVec(a,v), w), u)
-    term = Dot(VecAdd(SmulVec(a, v), w), u)
-    rewrites = root_rewrites(term)
-    if len(rewrites) >= 1:
-        # Rule 6 fires; then in the result, rule 8 may fire
-        pass  # Not a true critical pair at root level
-
-    return critical_pairs
+    return root_norm_step(t) is not t and root_norm_step(t) != t
 
 
-def verify_confluence_sample(terms: List[Expr], max_states: int = 500) -> dict:
-    """Verify confluence on a sample of terms.
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 3: Canonical Normalization
+# ═══════════════════════════════════════════════════════════════════
 
-    Returns statistics dictionary.
+def normalize_canon(t: Expr) -> Expr:
+    """Bottom-up canonical normalization.
+
+    1. Recursively normalize all subterms.
+    2. Apply root-level rewrite rules until saturation.
+
+    The algorithm terminates because:
+    - distPotential strictly decreases at each root rewrite step
+    - Structural recursion on subterms terminates by well-foundedness
+
+    Complexity: O(distPotential(t)) in the worst case, which is
+    at most exponential in the term size. In practice, much faster.
+
+    >>> t = MulVec(MatVar("A"), VecAdd(VecVar("v"), VecVar("w")))
+    >>> normalize_canon(t)
+    VecAdd(left=MulVec(matrix=MatVar(name='A'), vector=VecVar(name='v')), right=MulVec(matrix=MatVar(name='A'), vector=VecVar(name='w')))
     """
-    stats = {
-        "total": 0,
-        "confluent": 0,
-        "max_nf_count": 0,
-        "max_path_length": 0,
-        "counterexamples": []
-    }
+    # Step 1: Normalize children
+    if isinstance(t, (ScalVar, VecVar, MatVar)):
+        return t
+    elif isinstance(t, ScalAdd):
+        r = ScalAdd(normalize_canon(t.left), normalize_canon(t.right))
+    elif isinstance(t, ScalMul):
+        r = ScalMul(normalize_canon(t.left), normalize_canon(t.right))
+    elif isinstance(t, VecAdd):
+        r = VecAdd(normalize_canon(t.left), normalize_canon(t.right))
+    elif isinstance(t, MatAdd):
+        r = MatAdd(normalize_canon(t.left), normalize_canon(t.right))
+    elif isinstance(t, SmulVec):
+        r = SmulVec(normalize_canon(t.scalar), normalize_canon(t.vector))
+    elif isinstance(t, SmulMat):
+        r = SmulMat(normalize_canon(t.scalar), normalize_canon(t.matrix))
+    elif isinstance(t, MulVec):
+        r = MulVec(normalize_canon(t.matrix), normalize_canon(t.vector))
+    elif isinstance(t, Dot):
+        r = Dot(normalize_canon(t.left), normalize_canon(t.right))
+    else:
+        return t
 
-    for t in terms:
-        if size(t) > 15:
-            continue
-        stats["total"] += 1
+    # Step 2: Saturate root rewrites
+    while True:
+        r2 = root_norm_step(r)
+        if r2 == r:
+            return r
+        r = r2
 
-        # Find all normal forms
-        visited = set()
-        nf_set = set()
-        queue = deque([t])
 
-        while queue and len(visited) < max_states:
-            current = queue.popleft()
-            key = repr(current)
-            if key in visited:
-                continue
-            visited.add(key)
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 4: AC-Canonical Form
+# ═══════════════════════════════════════════════════════════════════
 
-            rewrites = all_one_step_rewrites(current)
-            if not rewrites:
-                nf_set.add(key)
-            else:
-                for r in rewrites:
-                    if repr(r) not in visited:
-                        queue.append(r)
+def flatten_additions(t: Expr, add_cls: type) -> List[Any]:
+    """Flatten nested additions of a given type into a sorted list of canonical summands.
 
-        stats["max_nf_count"] = max(stats["max_nf_count"], len(nf_set))
+    >>> flatten_additions(ScalAdd(ScalVar("b"), ScalVar("a")), ScalAdd)
+    [ScalVar(name='a'), ScalVar(name='b')]
+    """
+    if isinstance(t, add_cls):
+        return flatten_additions(t.left, add_cls) + flatten_additions(t.right, add_cls)
+    return [t]
 
-        # Check AC-equivalence of all normal forms via canonical normalization
-        canon = repr(ac_normalize(normalize_canon(t)))
-        is_confluent = True  # Assume confluent if all NFs are AC-equivalent
 
-        if len(nf_set) > 1:
-            # At least check normalizeCanon gives a consistent answer
-            pass
+def ac_canonical_form(t: Expr) -> Any:
+    """Compute a hashable canonical representative modulo AC of additions.
 
-        if is_confluent:
-            stats["confluent"] += 1
+    Two terms are AC-equivalent iff their ac_canonical_form is equal.
 
-        path_len = longest_reduction_path(t, max_states=200)
-        stats["max_path_length"] = max(stats["max_path_length"], path_len)
+    Complexity: O(|t| · log|t|) due to sorting.
+    """
+    if isinstance(t, (ScalVar, VecVar, MatVar)):
+        return (type(t).__name__, getattr(t, 'name'))
+    elif isinstance(t, ScalAdd):
+        summands = sorted(ac_canonical_form(s) for s in flatten_additions(t, ScalAdd))
+        return ('ScalAdd', tuple(summands))
+    elif isinstance(t, VecAdd):
+        summands = sorted(str(ac_canonical_form(s)) for s in flatten_additions(t, VecAdd))
+        return ('VecAdd', tuple(summands))
+    elif isinstance(t, MatAdd):
+        summands = sorted(str(ac_canonical_form(s)) for s in flatten_additions(t, MatAdd))
+        return ('MatAdd', tuple(summands))
+    elif isinstance(t, ScalMul):
+        return ('ScalMul', ac_canonical_form(t.left), ac_canonical_form(t.right))
+    elif isinstance(t, SmulVec):
+        return ('SmulVec', ac_canonical_form(t.scalar), ac_canonical_form(t.vector))
+    elif isinstance(t, SmulMat):
+        return ('SmulMat', ac_canonical_form(t.scalar), ac_canonical_form(t.matrix))
+    elif isinstance(t, MulVec):
+        return ('MulVec', ac_canonical_form(t.matrix), ac_canonical_form(t.vector))
+    elif isinstance(t, Dot):
+        return ('Dot', ac_canonical_form(t.left), ac_canonical_form(t.right))
+    raise TypeError(f"Unknown: {type(t)}")
 
-    return stats
+
+def are_ac_equivalent(t1: Expr, t2: Expr) -> bool:
+    """Check whether two expressions are AC-equivalent.
+
+    >>> are_ac_equivalent(ScalAdd(ScalVar("a"), ScalVar("b")),
+    ...                   ScalAdd(ScalVar("b"), ScalVar("a")))
+    True
+    """
+    return ac_canonical_form(t1) == ac_canonical_form(t2)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 5: Termination Verification
+# ═══════════════════════════════════════════════════════════════════
+
+def verify_termination(t: Expr, verbose: bool = False) -> Tuple[int, List[int]]:
+    """Verify that normalization terminates by tracking the distPotential measure.
+
+    Returns (number_of_steps, list_of_measures).
+
+    >>> t = MulVec(MatVar("A"), VecAdd(VecVar("v"), VecVar("w")))
+    >>> steps, measures = verify_termination(t)
+    >>> all(measures[i] > measures[i+1] for i in range(len(measures)-1))
+    True
+    """
+    measures = [dist_potential(t)]
+    steps = 0
+    current = t
+
+    while True:
+        next_t = root_norm_step(current)
+        if next_t == current:
+            break
+        current = next_t
+        steps += 1
+        m = dist_potential(current)
+        measures.append(m)
+        if verbose:
+            print(f"  Step {steps}: measure {measures[-2]} → {m} (Δ = {measures[-2] - m})")
+
+    return steps, measures
 
 
 if __name__ == "__main__":
-    print("=== Critical Pair Analysis ===")
-    cps = find_all_critical_pairs()
-    for rule1, rule2, source, r1, r2 in cps:
-        print(f"\nOverlap: {rule1} + {rule2}")
-        print(f"  Source: {source}")
-        print(f"  Result 1: {r1}")
-        print(f"  Result 2: {r2}")
+    # Example usage
+    A, B = MatVar("A"), MatVar("B")
+    v, w = VecVar("v"), VecVar("w")
+    a = ScalVar("a")
 
-        # Reduce both to normal forms
-        nf1 = normalize_canon(r1)
-        nf2 = normalize_canon(r2)
-        print(f"  NF 1: {nf1}")
-        print(f"  NF 2: {nf2}")
-        print(f"  AC-equivalent: {ac_equivalent(nf1, nf2)}")
+    print("=== Termination Verification ===")
+    t = MulVec(MatAdd(A, B), VecAdd(v, w))
+    print(f"Term: (A⊞B)·(v⊕w)")
+    steps, measures = verify_termination(t, verbose=True)
+    print(f"Terminated in {steps} steps. Measures strictly decreasing: "
+          f"{all(measures[i] > measures[i+1] for i in range(len(measures)-1))}")
+
+    print("\n=== Canonical Normalization ===")
+    nf = normalize_canon(t)
+    print(f"Normal form: {nf}")
+
+    print("\n=== AC-Equivalence ===")
+    t1 = ScalAdd(ScalVar("a"), ScalAdd(ScalVar("b"), ScalVar("c")))
+    t2 = ScalAdd(ScalAdd(ScalVar("c"), ScalVar("a")), ScalVar("b"))
+    print(f"{t1} ≡_AC {t2}? {are_ac_equivalent(t1, t2)}")

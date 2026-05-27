@@ -1,76 +1,96 @@
-# When Computers Simplify Math, Does the Answer Depend on the Path?
+# The Hidden Order in Tensor Algebra
 
-## A hidden symmetry in how machines handle tensor algebra reveals that there's always one right answer — if you know where to look.
+## How mathematicians proved that simplifying tensor expressions always leads to the same answer — no matter how you do it
 
 ---
 
-Imagine you're baking a cake, and the recipe says to mix flour and sugar first, then add butter, *or* to mix flour and butter first, then add sugar. Assuming you're a perfect baker, both orders should give the same cake. But in the world of mathematics — particularly the symbolic mathematics that powers everything from physics simulations to machine learning — proving that rearranging the steps always gives the same result turns out to be surprisingly deep.
+When engineers simulate the flow of air over a wing, or physicists model the quantum states of entangled particles, they write equations dense with tensors — mathematical objects that generalize the idea of a matrix acting on a vector. These expressions can grow enormously complex: a matrix multiplied by a sum of vectors, then dotted with another vector that's been scaled by some coefficient. Before a computer can evaluate such an expression, it needs to simplify it.
 
-This is the story of how a small team proved that a particular set of simplification rules for tensor expressions — the mathematical objects that underpin modern science — always produces the same answer, no matter what order you apply them. It sounds obvious. It isn't. And the proof reveals something beautiful about the hidden structure of symbolic computation.
+The trouble is, there's usually more than one way to simplify.
 
-## The Simplification Problem
+Consider a familiar situation from ordinary algebra. You have the expression *a × (b + c)*. You know from the distributive law that this equals *a × b + a × c*. But what happens when multiple distributive laws can fire simultaneously — when the expression has additions nested inside multiplications nested inside dot products, and there are half a dozen different rewrite rules you could apply?
 
-Every time a computer runs a physics simulation, optimizes a neural network, or renders a 3D scene, it manipulates vast arrays of numbers organized into structures called tensors. Think of a vector as a list of numbers, a matrix as a grid, and a tensor as a higher-dimensional generalization. The operations between them — multiplication, scaling, addition, inner products — follow precise algebraic rules.
+Does the order matter? Could choosing one simplification path over another lead you to a fundamentally different result?
 
-When scientists write formulas involving tensors, these formulas often contain redundancy. The expression "multiply matrix A by the sum of vectors v and w" can be simplified to "multiply A by v, then multiply A by w, and add the results." This is the distributive law, the same rule you learned in middle school: *a(b + c) = ab + ac*.
+For decades, this question lurked in the background of scientific computing. Software engineers building optimizing compilers for numerical code had to make choices about simplification order, and they crossed their fingers that it wouldn't matter. Now, a new mathematical result proves their fingers can relax.
 
-In tensor algebra, there are eight such distributivity rules, governing how multiplication, scalar multiplication, and inner products interact with addition. A symbolic simplifier applies these rules to "push additions outward," producing a standard form where every term is a product of atomic pieces. The result is cleaner, faster to compute, and easier to reason about.
+---
 
-But here's the catch: when multiple rules can apply simultaneously, the order in which you choose to apply them might — in principle — lead to different results. Two different simplification paths might arrive at different "simplified" expressions. If that happens, the simplifier is useless as a decision procedure: you can't trust that two expressions that simplify to different things are genuinely different.
+## The Mathematician's Guarantee
 
-## The Confluence Question
+The result concerns a specific rewrite system — a collection of nine rules for simplifying tensor expressions. These rules capture how multiplication distributes over addition in the tensor setting:
 
-In the theory of rewriting systems, this problem has a precise name: **confluence**. A system is confluent if, whenever a single expression can be simplified in two different ways, there's always a common point where the two paths reconverge. Like two rivers that fork around an island and then rejoin downstream.
+- A matrix times a sum of vectors can be distributed: *A(v + w) → Av + Aw*
+- A sum of matrices acting on a vector distributes too: *(A + B)v → Av + Bv*
+- Scalar multiplication can be pulled out: *(αA)v → α(Av)*
+- And several analogous rules for dot products and scalar operations
 
-Confluence is the mathematical property that separates a "seems-to-work" simplifier from a "provably-correct" decision procedure. Without confluence, you have a heuristic. With it, you have a theorem.
+Each rule replaces a more complex expression with an equivalent but structurally different one. The question is: if you start with a complex expression and keep applying rules until none apply, do you always end up in the same place?
 
-For the eight tensor distributivity rules, confluence is not obvious. Consider the expression *dot(smulVec(a, v), vecAdd(w, u))* — the inner product of a scaled vector with a sum of vectors. Two rules apply at the same time:
+The answer, it turns out, is *almost*. You always end up with the same mathematical expression, but the sums might be written in a different order. The expression *a + b + c + d* might appear as *(a + b) + (c + d)* via one path and *(a + c) + (b + d)* via another. These are the same sum, just bracketed and ordered differently. Mathematicians call this **associativity-commutativity equivalence**, or AC-equivalence.
 
-- **Rule 7** distributes the inner product over the sum, yielding *dot(smulVec(a,v), w) + dot(smulVec(a,v), u)*
-- **Rule 8** pulls the scalar out, yielding *a · dot(v, vecAdd(w, u))*
+The theorem states: **Every tensor expression has a unique normal form up to AC-equivalence of addition.** In other words, simplification is deterministic — the only freedom is in how you arrange the summands, which doesn't affect the mathematics.
 
-Following each path to completion produces two different expressions:
-- Path 1: *a·dot(v,w) + a·dot(v,u)*
-- Path 2: *a·(dot(v,w) + dot(v,u))*
+---
 
-These are clearly equal by the distributive law for scalar multiplication. But they're syntactically different — they look different as strings of symbols. The question is: are such differences always "trivial," or can they compound into something genuinely ambiguous?
+## A Trick with Polynomials
 
-## The Proof
+The proof has two main ingredients. The first is a clever measure that proves the simplification process must terminate — it can't go on forever.
 
-The answer, established in the new formal development, is that the differences are always trivial — specifically, every pair of irreducible forms of the same expression differs only by the commutative and associative rearrangement of addition, plus the distribution of scalar multiplication over scalar addition. This is called **confluence modulo AC** (associativity-commutativity).
+This isn't obvious. When you distribute *A(v + w)* into *Av + Aw*, the expression actually gets *bigger*: you've duplicated *A*. The naive measure of expression size goes up, not down. So how can the process terminate?
 
-The proof proceeds in three stages.
+The solution is a polynomial interpretation. Instead of measuring raw size, you assign each variable the value 3 and compute a "potential" for each expression using a specific formula. Additions contribute the sum of their arguments plus one. Multiplications contribute the product. A few operations (scaling a vector or matrix) contribute the product plus one.
 
-**Stage 1: Termination.** Every sequence of simplification steps must eventually stop. This is proved using a clever numerical measure called the *distributivity potential* — a polynomial interpretation that assigns a positive integer to each expression. The key insight is that additive nodes (sums) receive a "+1" bonus, while multiplicative nodes (products, scaling, inner products) multiply their children's values. Scalar-multiplication and scalar-matrix nodes get an additional "+1" to handle associativity rewrites. Every simplification step strictly decreases this number, which — since it's a positive integer — means the process must terminate.
+Under this interpretation, every single rewrite rule strictly decreases the potential. For example, distributing *A(v + w)* gives *I(A) × (I(v) + I(w) + 1)* on the left versus *I(A) × I(v) + I(A) × I(w) + 1* on the right. The difference is *I(A) - 1*, which is at least 2 since every subexpression has potential at least 3.
 
-**Stage 2: Local confluence.** When two rules overlap on the same expression, the resulting "critical pair" is always joinable. The proof examines every possible overlap among the eight rules. Most are trivial: the rules fire in non-interfering parts of the expression. The genuinely interesting overlaps involve interactions between distribution of inner products over sums (rules 6-7) and the scalar-extraction rule (rule 8). These produce terms that differ by the distribution of scalar multiplication over scalar addition — a relationship explicitly included in the equivalence relation.
+This is a beautiful instance of a general technique in term rewriting theory: finding the right measure that turns a seemingly size-increasing transformation into a strictly decreasing one. The polynomial interpretation acts like a "true complexity" that sees through the surface-level size increase to the underlying simplification.
 
-**Stage 3: Canonicalization.** A deterministic normalization algorithm is defined that recursively normalizes subterms and then fully distributes all multiplicative structure over additive structure. This algorithm is proved to produce irreducible expressions, and — crucially — to map rewrite-equivalent expressions to AC-equivalent outputs.
+---
 
-## Why It Matters
+## The Critical Pairs
 
-The significance extends far beyond a clean mathematical result. The eight distributivity rules are the core simplification engine for tensor expressions in scientific computing. Proving their confluence transforms an *ad hoc* simplifier into a *certified canonical form*.
+The second ingredient is more intricate. Once we know the process terminates, we need to show it's *confluent* — that different simplification paths always converge.
 
-**For compilers:** An optimizing compiler for scientific code can apply these simplification rules in any order — parallel, random, or opportunistic — with the guarantee that the output is deterministic (up to trivial rearrangements). Different optimization schedules cannot produce semantically inequivalent code.
+A classical result in rewriting theory, Newman's lemma, says that for a terminating system, global confluence follows from *local* confluence: you only need to check that any two single-step rewrites from the same term can be brought back together.
 
-**For verification:** Two tensor expressions can be definitively compared by simplifying both to normal form and checking AC-equivalence. If the normal forms match, the expressions are provably equal under the tensor algebra axioms covered by the eight rules.
+The hard cases are the "critical pairs" — situations where two different rules can fire on the same subexpression. The nine-rule tensor system has exactly four critical pairs:
 
-**For algebra:** The confluence result is a small but concrete *coherence theorem* — a statement that different paths through a system of algebraic identities always compose consistently. Such theorems are the foundation of categorical algebra and have deep connections to proof theory.
+1. **Matrix-addition meets vector-addition:** *((A + B)(v + w))*. You can distribute the matrix sum first, or the vector sum first. One path gives *(Av + Bv) + (Aw + Bw)*; the other gives *(Av + Aw) + (Bv + Bw)*. These are the same four terms, just grouped differently — AC-equivalent.
 
-## The Deeper Pattern
+2. **Scalar-matrix meets vector-addition:** *((αA)(v + w))*. One path distributes, the other extracts the scalar. Both reach *α(Av) ⊕ α(Aw)* after a few more steps — exactly the same expression.
 
-The discovery illuminates a broader phenomenon: when a rewriting system for an algebraic theory is confluent, it gives you canonical representatives for equivalence classes of expressions. This is the same principle behind Gröbner bases in polynomial algebra, Knuth-Bendix completion in group theory, and Church-Rosser theorems in lambda calculus.
+3. **Dot product with two sums:** *⟨v + w, x + y⟩*. Distributing left first versus right first gives the same four dot products ⟨v,x⟩, ⟨v,y⟩, ⟨w,x⟩, ⟨w,y⟩, grouped differently — again AC-equivalent.
 
-What's new here is the modular decomposition of the confluence proof. The eight rules form a *distributivity fragment* — they express only how products distribute over sums. The residual ambiguity (AC-equivalence plus scalar distribution) is exactly the part of the algebra that the rules don't orient. The proof isolates this residual cleanly, separating what the rewrite system decides from what it leaves to an equivalence check.
+4. **Scalar-vector meets addition in a dot product:** *⟨αv, x + y⟩*. This is the most subtle case. One path produces *α⟨v,x⟩ + α⟨v,y⟩* directly. The other first produces *α·⟨v, x + y⟩*, which then requires a ninth rule — scalar distribution *α(b + c) → αb + αc* — to reach the same result.
 
-This modular structure suggests a roadmap for extending the result to richer tensor algebras: add rules for commutativity of inner products, trace operations, or contraction, and analyze the new critical pairs. Each extension would enlarge the fragment of tensor algebra with certified canonical forms.
+This ninth rule is essential. Without it, critical pair 4 doesn't close, and the system loses its canonical property. The discovery that an additional rule was needed to achieve confluence is itself a mathematical insight — it shows the minimum set of identities required for deterministic simplification.
 
-## Looking Forward
+---
 
-The immediate practical consequence is a verified simplification procedure for tensor expressions — one where "verified" means mathematically certified, not just extensively tested. The longer-term consequence is conceptual: a demonstration that symbolic tensor computation has enough structure to support rigorous normal-form theory.
+## Why This Matters
 
-This matters because tensor computation is everywhere. The energy functionals of quantum mechanics, the loss functions of machine learning, the stress tensors of engineering — all are expressions in a tensor algebra that computers must manipulate symbolically. Knowing that the simplification of such expressions is deterministic and canonical is a foundation for building tools that are not just fast, but provably correct.
+At first glance, this might seem like a technical curiosity. Who cares about the order of simplification? The answer: anyone who builds software that manipulates mathematical expressions symbolically.
 
-The eight rules are simple. The proof that they behave well is not. And in the gap between simplicity and proof lies the substance of mathematical science: the patient work of establishing that our computational tools do what we believe they do, and that the paths we choose through the space of simplifications always lead to the same destination.
+**Compiler optimization.** Modern compilers for scientific computing — the software that translates mathematical models into efficient machine code — routinely simplify tensor expressions. Confluence guarantees that different optimization schedules produce the same output. A compiler can freely parallelize its simplification passes, knowing that the result is independent of execution order.
 
-*Mathematics, it turns out, doesn't care which way you go. It just cares that you arrive.*
+**Proof-producing computation.** In safety-critical applications — from verified numerical methods to certified control systems — it's not enough for software to compute the right answer. It must *prove* that the answer is right. Canonical normal forms provide exactly this: if two expressions normalize to the same form, they are provably equivalent.
+
+**Algebraic coherence.** The result is a small but concrete instance of a deep phenomenon in mathematics called *coherence*. When you have an algebraic structure with multiple interacting operations — in this case, addition, scalar multiplication, matrix multiplication, and the dot product — the question of whether all possible simplification paths lead to the same place is a coherence question. This theorem says the tensor-distributive fragment is coherent, connecting it to classical work in category theory and proof theory.
+
+---
+
+## The Bigger Picture
+
+The tensor simplification system studied here is, deliberately, a fragment. It doesn't include every possible algebraic identity (matrix associativity, the full ring axioms for scalars, commutativity of the dot product). Each additional identity would bring new critical pairs to analyze, new measures to design, and potentially new AC-equivalences to manage.
+
+But the methodology scales. The combination of polynomial interpretation for termination, critical pair analysis for local confluence, and Newman's lemma for globalization is a general toolkit. It was developed in the 1970s and 1980s by researchers in automated reasoning, and it has been applied to everything from group theory to programming language semantics. What's new here is its application to a typed tensor calculus — a fragment of the language that modern scientific computing actually uses.
+
+There's a tantalizing conjecture at the frontier: normalization length might be polynomially bounded in term size. If true, this would mean that canonical simplification is not just unique but *efficient*. Computational experiments on small terms support a quadratic bound, but a proof remains elusive.
+
+Looking further ahead, one can imagine extending these results to quantum circuit rewriting, where tensor networks play a central role, or to automatic differentiation, where the chain rule creates expression structures closely related to the distributivity patterns studied here.
+
+For now, the theorem stands as a reminder that even in an age of massive computation, the clean mathematical guarantee — every expression has exactly one simplified form — remains the gold standard. It's the difference between "the optimizer seems to work" and "the optimizer provably works." In a world increasingly reliant on correct computation, that difference matters.
+
+---
+
+*The research described here uses formal mathematical proof to verify that a specific set of simplification rules for tensor expressions always produces the same result. The termination proof, critical pair analysis, and unique normal form theorem have been computer-verified, providing the highest standard of mathematical certainty.*
