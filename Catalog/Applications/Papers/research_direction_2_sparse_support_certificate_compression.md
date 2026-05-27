@@ -1,285 +1,261 @@
-# Support-Compressed Certificate Complexity for Lorentzian Recognition of Matroid Basis Polynomials
+# Sparse-Support Certificate Compression for Matroid Basis Polynomials
 
 ## Abstract
 
-We establish that the number of nonzero quadratic derivative leaves in the recursive Lorentzian recognition of a matroid basis generating polynomial equals the number of independent sets of size $r - 2$, where $r$ is the matroid rank. This replaces the ambient monomial worst-case bound $\binom{n}{r-2}$ with a support-controlled bound governed by the independent-set geometry of the matroid. For uniform matroids we recover the exact count $\binom{n}{r-2}$; for sparse graphic and transversal matroids we demonstrate substantial compression. The results are formalized and machine-verified, and we provide algorithms implementing support-compressed leaf counting with correctness proofs. We further establish that the leaf count is bounded by $\binom{\omega}{r-2}$ where $\omega$ is the number of active variables, yielding immediate speedups for matroids with dead elements.
+We establish that the recursion tree for Lorentzian recognition of matroid basis generating polynomials is isomorphic to the matroid's independent-set complex truncated at rank r−2. Specifically, for a rank-r matroid M on ground set [n], the number of nonzero quadratic derivative leaves of the basis generating polynomial B_M equals the number of independent (r−2)-sets of M. This replaces the ambient worst-case leaf count C(n, r−2) by a support-controlled complexity measure governed by the matroid's combinatorial geometry. We prove exact closed forms for uniform matroids (C(n, r−2)), establish a support compression bound in terms of active variable count, and provide a verified counting algorithm. All results are formalized in Lean 4 with complete machine-checked proofs.
 
-**Keywords:** Lorentzian polynomials, matroid basis polynomial, certificate complexity, independent sets, support compression, M-convexity.
-
----
+**Keywords:** Lorentzian polynomials, matroid basis generating polynomial, M-convexity, certificate complexity, support compression, independent set enumeration
 
 ## 1. Introduction
 
 ### 1.1 Background
 
-Brändén and Huh [BH20] introduced Lorentzian polynomials as a broad generalization of stable and log-concave polynomials. A homogeneous polynomial $p$ of degree $d$ in $n$ variables with nonneg coefficients is Lorentzian if and only if every iterated partial derivative of order $d - 2$ yields a quadratic form with at most one positive eigenvalue (the "Lorentzian signature" condition). This recursive characterization provides a complete certificate for Lorentzianity, but the naive size of the certificate—the number of derivative leaves to check—scales as the number of multiindices of weight $d - 2$, which can be as large as $\binom{n + d - 4}{d - 2}$ in general, or $\binom{n}{d-2}$ in the multiaffine case.
+Lorentzian polynomials, introduced by Brändén and Huh [BH20], provide a powerful framework for establishing log-concavity and related inequalities in combinatorics. A homogeneous polynomial f of degree r with nonneg coefficients is *Lorentzian* if every iterated partial derivative of degree r−2 yields a quadratic form with at most one positive eigenvalue. Verification of this property requires examining all degree-(r−2) derivative branches — a recursion tree whose naive size is C(n, r−2), where n is the number of variables.
 
-### 1.2 Matroid Basis Polynomials
+For matroid basis generating polynomials — which are always Lorentzian [BH20, Theorem 3.10] — this certification cost can be reduced by exploiting the polynomial's support structure. This paper develops the theory of *support-compressed certificate counting* and proves that the effective certification cost is controlled by the matroid's independent-set geometry.
 
-For a matroid $M$ of rank $r$ on ground set $[n] = \{0, 1, \ldots, n-1\}$, the basis generating polynomial is
+### 1.2 Main Contributions
 
-$$B_M(x_0, \ldots, x_{n-1}) = \sum_{B \in \mathcal{B}(M)} \prod_{i \in B} x_i$$
+1. **Derivative Survival Criterion (Theorem 1):** For the basis generating polynomial B_M of a matroid M, the iterated derivative ∂_S B_M is nonzero if and only if S is independent in M.
 
-where $\mathcal{B}(M)$ is the set of bases of $M$. This polynomial is homogeneous of degree $r$, multiaffine, and has all coefficients equal to 0 or 1. Brändén and Huh proved that $B_M$ is Lorentzian for every matroid $M$.
+2. **Leaf Count Identity (Theorem 2):** The number of nonzero quadratic derivative leaves equals the number of independent (r−2)-sets: #{I ⊆ [n] : |I| = r−2, I independent in M}.
 
-### 1.3 Main Contribution
+3. **Uniform Matroid Closed Form (Theorem 3):** For U_{r,n}, the leaf count is exactly C(n, r−2).
 
-We prove that for matroid basis polynomials, the recursive Lorentzian recognition tree is secretly the independent-set complex of the matroid. Specifically:
+4. **Support Compression Bound (Theorem 4):** For any matroid, the leaf count is at most C(k, r−2), where k is the number of active variables (those appearing in at least one basis).
 
-1. **Support Criterion (Theorem 1):** A derivative $\partial^\alpha B_M$ is nonzero iff $\text{supp}(\alpha)$ is independent in $M$.
-2. **Leaf Count Identity (Theorem 2):** The number of nonzero quadratic leaves equals $|\{I \subseteq [n] : |I| = r-2, I \text{ independent}\}|$.
-3. **Uniform Matroid (Theorem 3):** For $U_{r,n}$, the count is exactly $\binom{n}{r-2}$.
-4. **Active Variable Bound (Theorem 4):** The count is at most $\binom{\omega}{r-2}$ where $\omega$ = number of active variables.
+5. **Verified Algorithm:** A combinatorial counting algorithm that computes certificate complexity from basis data without polynomial differentiation, with formal correctness proof.
 
-### 1.4 Related Work
+### 1.3 Related Work
 
-The theory of Lorentzian polynomials was developed in [BH20]. M-convexity and discrete convex analysis originate in the work of Murota [Mur03]. Support analysis for polynomial positivity has been studied in the context of Newton polytopes [Ree23] and amoeba theory. Our contribution is specific to the recursive certification procedure and its connection to matroid independence.
+- Brändén–Huh [BH20] introduced Lorentzian polynomials and proved that matroid basis polynomials are Lorentzian.
+- Murota [Mur03] developed discrete convex analysis and M-convex sets, which characterize Lorentzian polynomial supports.
+- Anari–Liu–Oveis Gharan–Vinzant [ALOGV18] proved log-concavity of matroid basis polynomial coefficients via connections to completely log-concave polynomials.
 
----
+Our contribution is orthogonal: we analyze the *computational complexity* of Lorentzian certification, not the Lorentzian property itself.
 
 ## 2. Definitions and Notation
 
 ### 2.1 Matroid Basics
 
-A **matroid** $M$ on ground set $E$ consists of a nonempty collection $\mathcal{B}$ of subsets of $E$ (called **bases**) satisfying the exchange axiom: for any $B_1, B_2 \in \mathcal{B}$ and $x \in B_1 \setminus B_2$, there exists $y \in B_2 \setminus B_1$ such that $(B_1 \setminus \{x\}) \cup \{y\} \in \mathcal{B}$.
+A *matroid* M = (E, B) consists of a finite ground set E and a nonempty family B of *bases* — subsets of E all having the same cardinality r (the *rank*), satisfying the basis exchange axiom. A subset I ⊆ E is *independent* if I ⊆ B for some basis B ∈ B.
 
-All bases have the same cardinality, called the **rank** $r$. A set $I \subseteq E$ is **independent** if $I \subseteq B$ for some basis $B$.
+We work with the abstraction of a *basis family*: a nonempty collection of r-element subsets of [n] = {0, ..., n−1}.
 
-### 2.2 Basis Family Abstraction
+### 2.2 Basis Generating Polynomial
 
-We formalize matroids using a `BasisFamily` structure:
+For a basis family F with bases B, the *basis generating polynomial* is:
+
+$$B_F(x_1, \ldots, x_n) = \sum_{B \in \mathcal{B}} \prod_{i \in B} x_i$$
+
+This is homogeneous of degree r, multiaffine (each variable appears with exponent ≤ 1), and has all coefficients equal to 0 or 1.
+
+### 2.3 Indicator Finsupp
+
+We encode sets as indicator functions: for S ⊆ [n], define `indicatorFinsupp(S) : [n] →₀ ℕ` by:
+
+$$\text{indicatorFinsupp}(S)(i) = \begin{cases} 1 & \text{if } i \in S \\ 0 & \text{otherwise} \end{cases}$$
+
+This is injective (Lemma `indicatorFinsupp_injective`).
+
+### 2.4 Iterated Partial Derivatives
+
+We define `derivByList vars f` as the sequential application of partial derivatives ∂/∂x_i for each i in the list `vars`:
 
 ```
-BasisFamily(n, r):
-  bases: Finset(Finset(Fin n))       -- collection of bases
-  bases_card: ∀ B ∈ bases, |B| = r   -- uniform cardinality
-  bases_nonempty: bases ≠ ∅           -- nonemptiness
+derivByList [] f = f
+derivByList (i :: rest) f = derivByList rest (∂f/∂x_i)
 ```
 
-Independence is defined as: `IsIndep(I) ⟺ ∃ B ∈ bases, I ⊆ B`.
+Since partial derivatives of polynomials commute, the result is independent of the ordering of `vars`.
 
-### 2.3 Leaf Counting
+### 2.5 Certificate Complexity
 
-The **independent $k$-set count** of a basis family $F$ is
+The *support-compressed leaf count* of a basis family F of rank r is:
 
-$$\text{indepCount}(F, k) = |\{I \in \binom{[n]}{k} : F.\text{IsIndep}(I)\}|$$
+$$\text{SCLC}(F) = |\{I \subseteq [n] : |I| = r-2,\ I \text{ is independent in } F\}|$$
 
-The **nonzero quadratic leaf count** is $\text{indepCount}(F, r-2)$.
-
-### 2.4 Active Variables
-
-The **active variable set** is $\text{activeVars}(F) = \bigcup_{B \in \text{bases}} B$.
-
----
+The *ambient leaf count* is C(n, r−2).
 
 ## 3. Main Results
 
-### 3.1 Theorem 1: Support Criterion for Derivative Survival
+### 3.1 Monomial Derivative Lemmas
 
-**Theorem (derivative_nonzero_iff_indep).** *Let $F$ be a basis family of rank $r$ on $[n]$. For any set $I \subseteq [n]$ with $|I| = r-2$, the derivative $\partial^I B_F$ is nonzero if and only if $I$ is independent in $F$.*
+**Lemma (pderiv_indicatorMonomial_mem).** If i ∈ B, then:
+$$\frac{\partial}{\partial x_i} \mathbf{x}^{\text{ind}(B)} = \mathbf{x}^{\text{ind}(B \setminus \{i\})}$$
 
-**Proof sketch.** The polynomial $B_F = \sum_{B \in \text{bases}} \prod_{i \in B} x_i$ is a sum of square-free monomials with coefficient 1. For a multiindex $\alpha$ (here, the indicator of $I$):
+**Lemma (pderiv_indicatorMonomial_nmem).** If i ∉ B, then:
+$$\frac{\partial}{\partial x_i} \mathbf{x}^{\text{ind}(B)} = 0$$
 
-1. $\partial^\alpha(x^B) = 0$ unless $\text{supp}(\alpha) \subseteq B$ (i.e., $I \subseteq B$), since differentiating $x_i$ when $i \notin B$ gives zero.
-2. When $I \subseteq B$, $\partial^\alpha(x^B) = x^{B \setminus I}$, a monomial of degree 2.
-3. For distinct bases $B_1, B_2$ with $I \subseteq B_1, B_2$, the residual monomials $x^{B_1 \setminus I}$ and $x^{B_2 \setminus I}$ are distinct (since $B_1 \neq B_2$).
-4. Since all coefficients are positive (equal to 1), no cancellation occurs.
-5. Therefore $\partial^\alpha B_F \neq 0$ iff $\exists B \in \text{bases}: I \subseteq B$, which is exactly $F.\text{IsIndep}(I)$. $\square$
+*Proof.* By Mathlib's `MvPolynomial.pderiv_monomial`, the derivative of monomial(β, c) by x_i is monomial(β − e_i, c · β(i)). For the indicator β = ind(B), β(i) = 1 if i ∈ B (giving coefficient 1) and β(i) = 0 if i ∉ B (giving coefficient 0, hence the zero polynomial). The index β − e_i = ind(B \ {i}) when i ∈ B.
 
-### 3.2 Theorem 2: Leaf Count = Independent Set Count
+### 3.2 Iterated Derivative of Indicator Monomials
 
-**Theorem (leafCount_eq_indep_count).** *For a basis family $F$ of rank $r$,*
-$$|\{\text{nonzero quadratic leaves of } B_F\}| = \text{indepCount}(F, r-2).$$
+**Theorem (derivByList_indicatorMonomial_subset).** For a nodup list `vars` with `vars.toFinset ⊆ B`:
+$$\partial_{\text{vars}} \mathbf{x}^{\text{ind}(B)} = \mathbf{x}^{\text{ind}(B \setminus \text{vars.toFinset})}$$
 
-This follows directly from Theorem 1: the bijection sends each nonzero leaf (indexed by a derivative direction $\alpha$ with $|\alpha| = r-2$) to the corresponding independent $(r-2)$-set $\text{supp}(\alpha)$.
+**Theorem (derivByList_indicatorMonomial_not_subset).** For a nodup list `vars` with `vars.toFinset ⊄ B`:
+$$\partial_{\text{vars}} \mathbf{x}^{\text{ind}(B)} = 0$$
 
-### 3.3 Theorem 3: Uniform Matroid Closed Form
+*Proof.* By induction on the list. At each step, if the current variable i is in the remaining basis, apply `pderiv_indicatorMonomial_mem` to reduce; if not, the monomial becomes zero and stays zero.
 
-**Theorem (leafCount_uniformMatroid).** *For the uniform matroid $U_{r,n}$ with $2 \leq r \leq n$,*
-$$\text{indepCount}(U_{r,n}, r-2) = \binom{n}{r-2}.$$
+### 3.3 Theorem 1: Derivative Survival Criterion
 
-**Proof.** In $U_{r,n}$, every subset of size $\leq r$ is independent (since every $r$-subset is a basis). Since $r - 2 \leq r$, every $(r-2)$-element subset is independent. The count is therefore the total number of $(r-2)$-element subsets of $[n]$, which is $\binom{n}{r-2}$. $\square$
+**Theorem (derivByList_basisGenPoly_ne_zero_iff).** For a basis family with bases B and a nodup variable list `vars`:
 
-This is the worst case: no compression occurs because every derivative direction survives.
+$$\partial_{\text{vars}} B_F \neq 0 \iff \exists B \in \mathcal{B},\ \text{vars.toFinset} \subseteq B$$
 
-### 3.4 Theorem 4: Active Variable Bound
+*Proof sketch.*
+1. By linearity (`derivByList_sum`), distribute the derivative across the sum: $\partial_{\text{vars}} B_F = \sum_{B \in \mathcal{B}} \partial_{\text{vars}} \mathbf{x}^{\text{ind}(B)}$.
+2. Each term is either $\mathbf{x}^{\text{ind}(B \setminus S)}$ (if S ⊆ B) or 0 (otherwise).
+3. The surviving terms have *distinct* exponent vectors: if B₁ ≠ B₂ and S ⊆ B₁ ∩ B₂, then B₁ \ S ≠ B₂ \ S, hence ind(B₁ \ S) ≠ ind(B₂ \ S) by injectivity of `indicatorFinsupp`.
+4. A sum of distinct monomials with coefficient 1 is nonzero iff at least one term survives.
+5. Therefore the derivative is nonzero iff ∃ B ∈ B with S ⊆ B, i.e., S is independent.
 
-**Theorem (indepCount_le_active_choose).** *For any basis family $F$ of rank $r$ on $[n]$,*
-$$\text{indepCount}(F, k) \leq \binom{|\text{activeVars}(F)|}{k}.$$
+### 3.4 Theorem 2: Leaf Count = Independent Set Count
 
-**Proof.** Every independent set $I$ satisfies $I \subseteq \text{activeVars}(F)$ (since $I \subseteq B$ for some basis $B$, and $B \subseteq \text{activeVars}$). Therefore the independent $k$-sets form a subset of $\binom{\text{activeVars}}{k}$, giving the bound. $\square$
+By Theorem 1, the set of (r−2)-element subsets S for which ∂_S B_F ≠ 0 is precisely the family of independent (r−2)-sets. Therefore:
 
-**Corollary.** If the matroid has $n - \omega$ dead elements (elements in no basis), then the leaf count drops from $\binom{n}{r-2}$ to at most $\binom{\omega}{r-2}$.
+$$\#\{\text{nonzero quadratic leaves}\} = \#\{I \subseteq [n] : |I| = r-2,\ I \text{ independent}\} = \text{SCLC}(F)$$
 
-### 3.5 Theorem 5: Ambient Upper Bound
+### 3.5 Theorem 3: Uniform Matroid Closed Form
 
-**Theorem (indepCount_le_choose).** *For any basis family $F$ of rank $r$ on $[n]$,*
-$$\text{indepCount}(F, r-2) \leq \binom{n}{r-2}.$$
+**Theorem (leafCount_uniformMatroid).** For the uniform matroid U_{r,n} with 2 ≤ r ≤ n:
 
-**Proof.** The independent $(r-2)$-sets form a subset of all $(r-2)$-element subsets of $[n]$. $\square$
+$$\text{SCLC}(U_{r,n}) = \binom{n}{r-2}$$
 
-### 3.6 Finsupp Bridge: Domination = Support Containment
+*Proof.* In U_{r,n}, every r-element subset is a basis. Therefore every subset of size ≤ r is independent. In particular, every (r−2)-element subset is independent, so the independent (r−2)-sets are exactly all (r−2)-element subsets of [n], of which there are C(n, r−2).
 
-**Theorem (multiaffine_le_iff_support_subset).** *For multiaffine finsupps $\alpha, \beta : \text{Fin}\,n \to \mathbb{N}$ (i.e., all values $\leq 1$),*
-$$\alpha \leq \beta \iff \text{supp}(\alpha) \subseteq \text{supp}(\beta).$$
+### 3.6 Theorem 4: Support Compression Bound
 
-This bridges the finsupp-based polynomial derivative theory with the set-based matroid theory.
+**Theorem (indepCount_le_active_choose).** For any basis family F of rank r on [n]:
 
----
+$$\text{SCLC}(F) \leq \binom{|\text{active}(F)|}{r-2}$$
+
+where active(F) = ∪_{B ∈ B} B is the set of variables appearing in at least one basis.
+
+*Proof.* Every independent set is a subset of some basis, hence a subset of active(F). Therefore every independent (r−2)-set is an (r−2)-element subset of active(F), and there are at most C(|active(F)|, r−2) such subsets.
+
+**Corollary.** If bases use only k ≪ n variables, then SCLC(F) ≤ C(k, r−2) ≪ C(n, r−2).
 
 ## 4. Algorithms
 
 ### 4.1 Support-Compressed Leaf Counting
 
-**Algorithm: CountNonzeroQuadraticLeaves**
+**Algorithm 1: CountNonzeroQuadraticLeaves**
 
 ```
 Input: Basis family F = (n, r, bases)
 Output: Number of nonzero quadratic leaves
 
-1. If r < 2, return 1
-2. count ← 0
-3. For each I ∈ C([n], r-2):     // enumerate (r-2)-subsets
-4.   If ∃ B ∈ bases: I ⊆ B:      // test independence
-5.     count ← count + 1
-6. Return count
+1. For each (r-2)-subset S of [n]:
+   a. For each basis B in bases:
+      - If S ⊆ B: mark S as independent; break
+   b. If S is independent: increment counter
+2. Return counter
 ```
 
-**Complexity:**
-- Time: $O\left(\binom{n}{r-2} \cdot |\text{bases}| \cdot r\right)$
-- Space: $O(r)$ (streaming)
+**Complexity:** O(C(n, r−2) · |bases| · r) time, O(1) extra space.
 
-**Correctness:** Proved as `countNonzeroQuadraticLeaves_correct` in Lean 4.
+**Correctness:** By Theorem 1, this counts exactly the nonzero derivative branches.
 
-### 4.2 Active Variable Optimization
+### 4.2 Optimized Version for Sparse Matroids
 
-For matroids with dead elements, first compute $\omega = |\text{activeVars}|$ and enumerate $(r-2)$-subsets of active variables only:
+When the active variable set is small:
 
 ```
-1. active ← ∪_{B ∈ bases} B
-2. For each I ∈ C(active, r-2):   // only active variables
-3.   Test independence and count
+Input: Basis family F = (n, r, bases)
+Output: Number of nonzero quadratic leaves
+
+1. Compute active = ∪_B B
+2. For each (r-2)-subset S of active:
+   a. Test S ⊆ B for some B
+3. Return count
 ```
 
-This reduces the enumeration from $\binom{n}{r-2}$ to $\binom{\omega}{r-2}$.
-
-### 4.3 Graphic Matroid Specialization
-
-For graphic matroids, independence = acyclicity (forest property). The independence test reduces to cycle detection via union-find:
-
-```
-Input: Graph G = (V, E), edge subset I
-Output: Is I a forest?
-
-1. Initialize union-find on V
-2. For each edge (u,v) ∈ I:
-3.   If find(u) = find(v): return False   // cycle detected
-4.   Union(u, v)
-5. Return True
-```
-
-Time per test: $O(|I| \cdot \alpha(|V|))$ where $\alpha$ is the inverse Ackermann function.
-
----
+**Complexity:** O(C(|active|, r−2) · |bases| · r).
 
 ## 5. Computational Experiments
 
 ### 5.1 Uniform Matroids
 
-| $n$ | $r$ | Ambient $\binom{n}{r-2}$ | Compressed | Ratio |
-|-----|-----|--------------------------|------------|-------|
-| 5   | 3   | 5                        | 5          | 1.000 |
-| 6   | 4   | 15                       | 15         | 1.000 |
-| 8   | 4   | 28                       | 28         | 1.000 |
-| 10  | 5   | 120                      | 120        | 1.000 |
+| (n, r) | Ambient C(n,r−2) | Actual Leaves | Ratio |
+|---------|-----------------|---------------|-------|
+| (5, 3)  | 5               | 5             | 1.000 |
+| (8, 4)  | 28              | 28            | 1.000 |
+| (10, 5) | 120             | 120           | 1.000 |
+| (12, 4) | 66              | 66            | 1.000 |
 
-Confirms Theorem 3: ratio is always 1 for uniform matroids.
+As predicted by Theorem 3, the ratio is always 1.0 for uniform matroids.
 
-### 5.2 Graphic Matroids
+### 5.2 Restricted Matroids (Support Compression)
 
-| Graph   | $m$ | $r$ | Ambient | Compressed | Ratio |
-|---------|-----|-----|---------|------------|-------|
-| Path P4 | 3   | 3   | 3       | 3          | 1.000 |
-| Cycle C4| 4   | 3   | 4       | 4          | 1.000 |
-| K4      | 6   | 3   | 6       | 6          | 1.000 |
-| Path P6 | 5   | 5   | 10      | 10         | 1.000 |
-| Cycle C6| 6   | 5   | 15      | 13         | 0.867 |
-| K5      | 10  | 4   | 45      | 45         | 1.000 |
+Embedding U_{r,k} in [n] with k active variables out of n:
 
-Sparse graphs show compression when the rank is large relative to the edge count.
+| k | n  | r | Ambient C(n,r−2) | Actual C(k,r−2) | Ratio |
+|---|----|----|-----------------|-----------------|-------|
+| 8 | 15 | 3  | 15              | 8               | 0.533 |
+| 8 | 20 | 3  | 20              | 8               | 0.400 |
+| 8 | 30 | 3  | 30              | 8               | 0.267 |
+| 6 | 20 | 4  | 190             | 15              | 0.079 |
+| 8 | 20 | 4  | 190             | 28              | 0.147 |
+| 8 | 30 | 4  | 435             | 28              | 0.064 |
 
-### 5.3 Compression Trends
+The compression ratio C(k,r−2)/C(n,r−2) decreases as n grows, demonstrating Theorem 4.
 
-For path graphs $P_n$:
-- $m = n-1$ edges, rank $r = n-1$
-- Every $(r-2)$-subset of edges is a forest (paths have no cycles)
-- Compression ratio = 1.0 (no compression for paths)
+### 5.3 Graphic Matroids
 
-For complete graphs $K_n$:
-- $m = \binom{n}{2}$ edges, rank $r = n-1$
-- Compression ratio depends on the fraction of $(r-2)$-edge subsets that are forests
-- For large $n$, most small edge subsets are forests, so compression is modest
+| Graph | Edges | Rank | Ambient | Leaves | Ratio |
+|-------|-------|------|---------|--------|-------|
+| Path P_4 | 3 | 3 | 3 | 3 | 1.000 |
+| Cycle C_4 | 4 | 3 | 4 | 4 | 1.000 |
+| K_4 | 6 | 3 | 6 | 6 | 1.000 |
+| K_{3,3} | 9 | 5 | 84 | 84 | 1.000 |
 
-The strongest compression occurs for dense graphs with high rank, where many $(r-2)$-subsets contain cycles.
-
----
+For graphic matroids with rank close to edge count, most subsets are forests (independent), yielding ratios near 1.0. The compression becomes significant for graphs with high cyclomatic complexity.
 
 ## 6. Discussion
 
-### 6.1 Significance
+### 6.1 Algorithmic Implications
 
-The main contribution is conceptual: Lorentzian certification complexity for matroid polynomials is not an algebraic quantity but a combinatorial one. This opens the door to:
+The derivative survival theorem transforms Lorentzian certification from a symbolic-algebraic problem to a combinatorial one. Instead of computing polynomial derivatives (which involves coefficient arithmetic), we test subset containment in a matroid. This is:
 
-1. **Matroid-theoretic complexity bounds:** Using matroid structure theory (minors, duality, connectivity) to bound certification costs.
-2. **Efficient algorithms:** Replacing symbolic differentiation with combinatorial enumeration.
-3. **Modular certification:** Decomposing matroids and certifying pieces independently.
+- **Simpler**: No polynomial arithmetic needed.
+- **Faster**: For sparse matroids, the search space is vastly smaller.
+- **More informative**: The independent-set structure reveals *why* certain branches survive.
 
-### 6.2 Limitations
+### 6.2 Structural Implications
 
-- The current formalization works at the combinatorial level, defining derivative survival through support containment rather than through the polynomial API. A full end-to-end connection to MvPolynomial differentiation would strengthen the result.
-- The algorithms enumerate all $(r-2)$-subsets, which is still exponential. For practical large-scale applications, more sophisticated enumeration or sampling strategies would be needed.
+The identification of the recursion tree with the independent-set complex has deeper consequences:
 
-### 6.3 Connection to M-Convexity
+1. **Matroid invariant**: The nonzero leaf count is a matroid invariant — it depends only on the matroid, not on any particular representation.
 
-The basis indicator vectors of a matroid form an M-convex set (by the exchange axiom). The Newton support of the basis polynomial inherits this structure. The derivative survival criterion can be rephrased as: a derivative direction survives iff it lies in the lower shadow of the M-convex support. This connects our work to discrete convex analysis [Mur03] and suggests further compression via the geometry of M-convex sets.
+2. **Monotonicity**: Adding bases can only increase the leaf count (more independent sets). Deleting bases can only decrease it.
 
----
+3. **Extremality**: The uniform matroid maximizes the leaf count among all rank-r matroids on [n].
+
+### 6.3 Limitations
+
+1. The current formalization works with basis families rather than full Mathlib matroids. Bridging to `Mathlib.Order.Matroid` is straightforward but requires additional API work.
+
+2. The compression is most dramatic when the matroid has few active variables relative to n. For matroids where all variables are active (e.g., uniform matroids), there is no compression.
+
+3. We do not address the computational cost of the individual quadratic checks (Hessian eigenvalue analysis), only their number.
 
 ## 7. Future Work
 
-1. **End-to-end polynomial formalization:** Connect the combinatorial support criterion to the MvPolynomial derivative API, providing a complete chain from polynomial nonvanishing to matroid independence.
+1. **Graphic matroid specialization**: Prove that for graphic matroids, the leaf count equals the number of forests of size r−2. This connects to Kirchhoff's matrix tree theorem and algebraic graph theory.
 
-2. **Graphic matroid specialization:** Prove that for graphic matroids of graph $G$, the leaf count equals the number of forests of size $r-2$ in $G$, connecting to Kirchhoff's matrix-tree theorem and its generalizations.
+2. **Complexity bounds from matroid structure**: Derive tighter bounds on independent (r−2)-set counts from matroid parameters (girth, connectivity, minor structure).
 
-3. **Compositional certificates:** Develop theory for how certificate complexity behaves under matroid operations (direct sum, 2-sum, duality).
+3. **Extension to M-convex supports**: The derivative survival criterion holds for any polynomial with positive coefficients and M-convex support. Extend the certificate compression theory to general Lorentzian polynomials.
 
-4. **Sampling-based certification:** Replace exhaustive enumeration with randomized sampling, using the independent-set structure to guide importance sampling.
-
-5. **Extension to valuated matroids:** Generalize to tropical geometry settings where the basis polynomial has non-uniform coefficients.
-
----
+4. **Algorithmic exploitation**: Design algorithms that certify Lorentzianity in time proportional to the compressed leaf count rather than the ambient count.
 
 ## References
 
-- [BH20] Brändén, P. and Huh, J. "Lorentzian Polynomials." *Annals of Mathematics*, 192(3):821–891, 2020.
-- [Mur03] Murota, K. *Discrete Convex Analysis.* SIAM Monographs on Discrete Mathematics and Applications, 2003.
-- [Oxl11] Oxley, J. *Matroid Theory.* Oxford University Press, 2nd edition, 2011.
-- [Ree23] Reeves, A. "Newton polytopes and polynomial support structures." *J. Algebraic Combinatorics*, 2023.
-
----
-
-## Appendix: Formal Verification
-
-All main theorems have been formalized and machine-verified in Lean 4 with the Mathlib library. The formalization includes:
-
-- `BasisFamily` structure and `IsIndep` predicate
-- `uniformBasisFamily` definition with nonemptiness proof
-- `uniform_all_indep`: every small subset is independent in $U_{r,n}$
-- `leafCount_uniformMatroid`: exact count $\binom{n}{r-2}$ for uniform matroids
-- `indep_subset_active`: independent sets use only active variables
-- `indepCount_le_active_choose`: active variable bound $\binom{\omega}{r-2}$
-- `indepCount_le_choose`: ambient bound $\binom{n}{r-2}$
-- `multiaffine_le_iff_support_subset`: finsupp bridge theorem
-- `countNonzeroQuadraticLeaves_correct`: algorithm correctness
-
-All proofs compile without `sorry` and use only standard axioms (propext, Classical.choice, Quot.sound).
+- [ALOGV18] N. Anari, S. Liu, S. Oveis Gharan, C. Vinzant. Log-concave polynomials II: High-dimensional walks and an FPRAS for counting bases of a matroid. *STOC*, 2019.
+- [BH20] P. Brändén, J. Huh. Lorentzian polynomials. *Annals of Mathematics*, 192(3):821–891, 2020.
+- [Mur03] K. Murota. *Discrete Convex Analysis*. SIAM, 2003.
+- [Oxl11] J. Oxley. *Matroid Theory*, 2nd edition. Oxford University Press, 2011.
+- [Sch03] A. Schrijver. *Combinatorial Optimization*. Springer, 2003.
