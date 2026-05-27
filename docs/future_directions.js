@@ -161,101 +161,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T00:26:36.199585+00:00"
   },
   {
-    "id": "fd_0813",
-    "title": "Direction 1: Confluence and Unique Normal Forms",
-    "description": "**Conjecture:** The 8-rule distributivity fragment defined in `TensorSortedRewrite.lean` is confluent modulo associativity-commutativity of scalar addition, i.e., any two reduction sequences from the same term yield syntactically equal normal forms up to AC-equivalence of `scalAdd`.\n\n**Test:** Enumerate all tensor terms of depth \u2264 5 with 3 scalar, 3 vector, and 2 matrix variables. For each term, compute all possible reduction sequences (using breadth-first enumeration of rule applications). Check that all terminal forms are AC-equivalent. A single counterexample \u2014 two irreducible forms that differ by more than scalar-addition reordering \u2014 refutes the conjecture. Run over \u211a for exact arithmetic.\n\n**Impact:** Confluence implies that normalization is deterministic up to AC, which is essential for using the rewrite system as a certified decision procedure. Without confluence, different simplification strategies could produce different \"simplified\" forms, undermining trust in automated preprocessing.\n\n**Catalog References:** `Pythagorean/TensorSortedRewrite.lean` \u2014 `TensorRewrite`, `normStep`, `normStep_sound_*`.\n\n**Proof Strategy:** Define a weight function that strictly decreases under each oriented rule (the current `tensorWeight` increases, but a redex-counting measure should decrease). Prove local confluence by showing all critical pairs are joinable. Apply Newman's lemma (termination + local confluence \u2192 confluence).\n\n**Domain Bridges:** Term rewriting theory \u2192 optimization preprocessing \u2192 compiler correctness for scientific code.\n\n**Lineage:** Extends Theorem 1 (one-step soundness) and Theorem 6 (normStep soundness) toward a complete decision procedure.\n\n**Ambition:** Medium \u2014 requires careful critical pair analysis but builds on well-understood rewriting theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c1bdccd8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:54:40.932722+00:00"
-  },
-  {
-    "id": "fd_0839",
-    "title": "Direction 5: Dynamic Lorentzian Certificates and Online Sampling",
-    "description": "**Conjecture:** When a Lorentzian polynomial f changes by a rank-1 update (adding a single monomial term), the certificate tree can be updated in O(n^(d\u22123) \u00b7 n\u00b2) time \u2014 a factor of n cheaper than rebuilding from scratch \u2014 and the Markov chain can be \"warm-started\" with mixing time O(n \u00b7 log n) from the previous stationary distribution.\n\n**Test:** Implement dynamic certificate maintenance for the generating polynomial of a matroid as elements are added/deleted. Measure (a) certificate update time vs. rebuild time, (b) warm-start mixing time vs. cold-start mixing time, for graphic matroids of growing graphs (n = 10, 20, 50, 100 vertices, adding one edge at a time).\n\n**Impact:** Would make certificate-guided sampling practical for streaming and online settings, where the underlying polynomial evolves over time.\n\n**Catalog References:** `Pythagorean/CertificateSampling.lean` \u2014 `certificate_verification_complexity`, `certificateDepth`; `Catalog/FINAL/Bridges/LorentzianRecognition.lean` \u2014 `pderiv_isHomogeneous_degree_pred`\n\n**Proof Strategy:** A rank-1 update to f changes only O(n^(d\u22123)) leaves of the certificate tree (those whose multiindex overlaps the updated monomial). Recompute eigenvalues only at affected leaves. For warm-starting, bound the total variation distance between old and new stationary distributions using the \u2113\u2081 change in coefficients, then apply the mixing time bound with this as the initial distance.\n\n**Domain Bridges:** Online algorithms (streaming computation), dynamic graph algorithms, stochastic optimization (follow-the-regularized-leader)\n\n**Lineage:** Extends `certificate_verification_complexity` to the dynamic setting\n\n**Ambition:** Solid extension \u2014 the key ideas (lazy updates, warm starts) are well-known in MCMC; the novelty is combining them with certificate structure.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "1f8fa3a8",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T02:11:10.263299+00:00"
-  },
-  {
-    "id": "fd_0858",
-    "title": "Direction 1: Lorentzian-to-Coefficient Bridge via Bivariate Specialization",
-    "description": "**Conjecture**: For every homogeneous polynomial $P$ of degree $d$ with nonnegative coefficients and recursive Lorentzian depth $k$ (as defined by `IsRecursivelyLorentzian` in `Catalog/Pythagorean/LorentzianRecognitionComplete.lean`), every bivariate specialization $P(x, y) = \\sum a_m x^m y^{d-m}$ with $a_m > 0$ yields a coefficient sequence that is $\\min(k, d-2)$-fold log-concave in the sense of `KFoldLogConcave` (from `Catalog/Pythagorean/HigherOrderLogConcavity.lean`).\n\n**Test**: Extract bivariate specialization coefficients from explicit Lorentzian polynomials (products of linear forms, matroid basis generating polynomials for uniform matroids, Kirchhoff polynomials of small graphs). Compute iterated ratio sequences and verify log-concavity at each depth. A single family with Lorentzian depth $k \\geq 2$ whose coefficient sequence fails 2-fold log-concavity disproves the conjecture.\n\n**Impact**: This would be the flagship theorem connecting algebraic geometry (Hessian spectral signatures) to discrete analysis (ratio sequence concavity). It would turn the abstract recognition algorithm in `LorentzianRecognitionComplete.lean` into a concrete inequality machine for coefficient sequences.\n\n**The key insight is** that the Lorentzian Hessian condition at each differentiation level translates, via the reversed Cauchy\u2013Schwarz inequality (already formalized as `lorentzian_reversed_cauchy_schwarz`), into a ratio-sequence inequality that propagates one level of the k-fold hierarchy.\n\n**Why now?** The existing Catalog contains both the recursive Lorentzian predicate and the k-fold log-concavity definitions. The reversed Cauchy\u2013Schwarz theorem provides the exact algebraic bridge needed. What remains is to formalize the coefficient extraction from bivariate specialization and verify the inequality chain at each recursive level.\n\n**Catalog References**: `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (IsRecursivelyLorentzian, lorentzian_reversed_cauchy_schwarz), `Catalog/Pythagorean/HigherOrderLogConcavity.lean` (KFoldLogConcave, KFoldLogConcave.ratio)\n\n**Proof Strategy**: Define `coeffOfBivariateHomogeneous` as the coefficient extractor. For degree-2, the reversed Cauchy\u2013Schwarz directly gives log-concavity. Induct on Lorentzian depth: each differentiation step reduces degree by 1 and Lorentzian depth by 1, while the coefficient sequence's ratio inherits the Lorentzian inequality from the derivative polynomial.\n\n**Domain Bridges**: Algebraic geometry \u2192 discrete combinatorics \u2192 sampling algorithms\n\n**Lineage**: Extends `recursivelyLorentzian_iff_brandenHuh` and `lorentzian_reversed_cauchy_schwarz`\n\n**Ambition**: Grand challenge \u2014 would establish a new theorem class connecting two major theories.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "56c2f88c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T14:24:15.293101+00:00"
-  },
-  {
-    "id": "fd_0870",
-    "title": "Direction 3: Topological Quantum Error Correction from Gauge Theory",
-    "description": "**Conjecture:** The mass gap \u0394 of a lattice gauge theory with gauge group G determines the code distance d of the corresponding Kitaev quantum double model: d = \u03a9(\u0394 \u00b7 L) where L is the linear system size. The Dynkin diagram classification of G therefore classifies topological quantum codes.\n\n**Test:** For gauge groups \u2124\u2082 (toric code), S\u2083 (non-abelian), and SU(2) (continuous), compute the code distance of the quantum double on an L\u00d7L torus for L = 4, 8, 16 and verify the scaling d \u221d \u0394 \u00b7 L.\n\n**Impact:** Would provide a systematic framework for designing topological quantum memories with guaranteed protection times, directly applicable to quantum computing hardware.\n\n**Catalog References:**\n- `Physics/YangMillsMassGap.lean`: `total_plaquette_energy_gauge_invariant`, `plaquette_transport`\n- `Physics/ToricCode.lean`: `quantum_singleton_bound`\n\n**Proof Strategy:** (A) Construct the quantum double Hamiltonian H = -\u2211_v A_v - \u2211_p B_p from the lattice gauge field. (B) Show the spectral gap of H equals the mass gap of the gauge theory using `class_fn_gauge_invariant`. (C) Prove that the code distance satisfies d \u2265 \u0394 \u00b7 L using the exponential decay theorem (`spectral_gap_implies_correlation_decay`). (D) Use `plaquette_transport` to transfer results between isomorphic gauge groups.\n\n**Domain Bridges:** Gauge theory \u2192 Quantum error correction \u2192 Condensed matter physics (topological order)\n\n**Lineage:** Extends `plaquette_transport` (Dynkin invariance) to quantum codes.\n\n**Ambition:** Solid extension with high practical impact \u2014 directly connects to quantum computing.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "6a88b92d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T15:29:21.854833+00:00"
-  },
-  {
-    "id": "fd_0886",
-    "title": "Direction 4: Statistical Physics of Random Transversals and Phase Transitions",
-    "description": "**Conjecture:** For random d-uniform hypergraphs on n vertices with m = c\u00b7n edges (c > 0 constant), the ratio \u03c4*(H)/n undergoes a phase transition at c = c*(d), and the integrality gap \u03c4(H)/\u03c4*(H) concentrates around a value strictly less than d for c above the transition, approaching d only at the critical density.\n\n**Test:** For d=3 and n=100, sweep c from 0.1 to 5.0. For each c, generate 100 random instances, solve the LP and find integral optima (or bound via rounding), and compute the empirical integrality gap distribution. Plot mean and variance of the gap as a function of c. A phase transition appears as a sharp change in the gap curve.\n\n**Impact:** Would establish the first rigorous connection between random hypergraph transversal theory and statistical physics phase transitions. The gap behavior at criticality could reveal universality classes for covering problems.\n\n**Catalog References:**\n- `Catalog/Pythagorean/HypergraphTransversal.lean`: `integrality_gap_upper`, `uniform_integrality_gap`\n- `Catalog/Pythagorean/WeightedHypergraphTransversal.lean`: `weighted_threshold_cost_bound`\n\n**Proof Strategy:** Use the second moment method to show concentration of \u03c4*/n. Apply the cavity method (heuristically) to predict the phase transition threshold c*(d). Formalize the upper bound d\u00b7\u03c4* and show it is not tight in the random setting by constructing a better rounding scheme that exploits randomness.\n\n**Domain Bridges:** Statistical physics (replica method, spin glasses), random constraint satisfaction, coding theory (LDPC codes as hypergraph covers)\n\n**Lineage:** Connects the deterministic integrality gap bound to the probabilistic theory of random CSPs, where phase transitions in satisfiability and covering have been predicted by physics but rarely proved.\n\n**Ambition:** Grand challenge \u2014 would bridge formal combinatorics and statistical physics via the integrality gap.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b9d16ed0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T16:39:08.918006+00:00"
-  },
-  {
     "id": "fd_0890",
     "title": "Direction 3: Tropical Shadows of Lorentzian Stability",
     "description": "**Conjecture:** The tropicalization of the Lorentzian stability radius (infimum of coefficient perturbations destroying Lorentzianity) equals the minimum tropical spectral gap across tropical quadratic leaves.\n\n**Test:** Compute tropical quadratic leaves for small examples (complete graphs, uniform matroids). Compare the tropical spectral gap to the log of the exact stability radius. If they differ by more than O(log n), the conjecture fails.\n\n**Impact:** Would provide a purely combinatorial proxy for the numerical stability radius, computable in polynomial time without eigenvalue decomposition. This could enable Lorentzian certification for polynomials with millions of variables.\n\n**Catalog References:** `Pythagorean/LorentzianStability.lean` \u2014 `UniformSpectralMargin`; `Catalog/Tropical/` \u2014 various tropical geometry files\n\n**Proof Strategy:** Use the Maslov dequantization: take the limit of log(stability_radius(t\u1d45 \u00b7 f)) / log(t) as t \u2192 \u221e. Show this limit equals the tropical spectral gap via the tropical eigenvalue theory of Akian, Gaubert, and Guterman.\n\n**Domain Bridges:** Tropical geometry, max-plus algebra, combinatorial optimization\n\n**Lineage:** Builds on both the stability theory (this work) and tropical Lorentzian theory.\n\n**Ambition:** Grand challenge \u2014 would create a new bridge between numerical stability and tropical geometry. \u2605\u2605\u2605\u2605\u2605\n\n---",
@@ -490,10 +395,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "940a799a",
     "timestamp": "2026-05-25T20:01:51.853060+00:00"
   },
   {
@@ -550,10 +455,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "354ccda2",
-    "consumed_by_exp_id": "fec0cc1f",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:49:45.129187+00:00"
   },
   {
@@ -1018,25 +923,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T04:11:16.674461+00:00"
   },
   {
-    "id": "fd_1325",
-    "title": "Direction 1: Sharp Exponent Law and Lower Bounds",
-    "description": "**Conjecture**: The exponent $d - k$ in the bound $T \\leq C \\cdot d^{d-k} \\cdot D$ is generically sharp. For each fixed $k < d$, there exist exchange families $S \\subseteq \\mathbb{Z}^d$ and objectives $f$ with depth-$k$ certificates such that $T(x_0) \\geq c \\cdot d^{d-k-1} \\cdot D$ for some $c > 0$ and some starting point $x_0$.\n\n**Test**: Construct explicit adversarial exchange families for $d \\in \\{4, \\ldots, 12\\}$ with controlled depth. Run descent and verify that step counts grow as $\\Theta(d^{d-k})$ with dimension. A failure (sublinear growth) would indicate the bound can be improved.\n\n**Impact**: Resolving the sharpness question determines whether certificate depth is a *tight* complexity parameter or merely an upper bound. A tight bound would establish the theory as optimal; a gap would motivate the search for better parameters.\n\n**Catalog References**: \n- `Catalog/Pythagorean/ExchangeDescent.lean`: `exchangeDescent_length_bound` (the |S| bound to improve upon)\n- `Pythagorean/DepthSensitiveExchangeDescent.lean`: `exchangeDescent_depth_bound_poly`, `depthCertificate_runtime_monotone`\n\n**Proof Strategy**: For lower bounds, construct \"layered\" exchange families where depth-$k$ certificates force traversal through $d^{d-k}$ potential layers. Use the shell decomposition (Strategy B from the paper) to show each layer requires $\\Omega(D/d^k)$ steps to cross.\n\n**Domain Bridges**: Connects to computational complexity (tight lower bounds) and algebraic combinatorics (explicit matroid constructions).\n\n**Lineage**: Extends the upper bound theory in `exchangeDescent_depth_bound_poly` to a matching lower bound.\n\n**Ambition**: Grand challenge \u2014 requires novel adversarial constructions that may reveal deep structure in exchange families.\n\n**The key insight is** that sharpness of the $d^{d-k}$ exponent would establish certificate depth as the *exact* discrete analogue of the condition number, not merely an approximate one.\n\n**Why now?** The formal verification of the upper bound provides the precise target for lower bound constructions. The computational infrastructure (demo.py) enables systematic testing of candidate adversarial families.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "4d0d5d0f",
-    "consumed_by_exp_id": "147eb4db",
-    "timestamp": "2026-05-27T07:12:33.861186+00:00"
-  },
-  {
     "id": "fd_1328",
     "title": "Direction 4: Spectral Theory of Exchange Graphs",
     "description": "**Conjecture**: The spectral gap of the exchange graph Laplacian on $S$ (where edges connect points related by exchange steps) is bounded below by $\\Omega(\\delta_k / D)$, where $\\delta_k$ is the depth-$k$ decrement. This connects certificate depth to mixing times of random walks on exchange structures.\n\n**Test**: Compute the Laplacian spectrum of exchange graphs for small examples. Correlate the spectral gap with the observed descent speed and the certificate depth. Test whether deeper certificates consistently yield larger spectral gaps.\n\n**Impact**: Would establish certificate depth as a unified parameter controlling both deterministic descent (this paper) and randomized sampling (Markov chain mixing).\n\n**Catalog References**:\n- `Pythagorean/DepthSensitiveExchangeDescent.lean`: `depthDecrement_mono`, `depthCertificate_runtime_monotone`\n- `Catalog/Pythagorean/HigherOrderLogConcavity.lean`: `logConcaveN_mul`\n\n**Proof Strategy**: Relate the potential decrease per step ($\\delta_k$) to a Cheeger-type isoperimetric inequality on the exchange graph. Use the log-concavity structure to bound the isoperimetric constant.\n\n**Domain Bridges**: Spectral graph theory \u2194 Markov chains \u2194 discrete optimization. Connects to Anari et al.'s work on high-dimensional walks using log-concavity.\n\n**Lineage**: Extends the deterministic descent bounds to a probabilistic setting.\n\n**Ambition**: Grand challenge \u2014 spectral gaps are notoriously hard to compute and bound.\n\n**The key insight is** that the potential decrease $\\delta_k$ already measures a kind of \"expansion\" of the objective landscape, which should be related to spectral expansion of the underlying graph.\n\n**Why now?** The connection between log-concavity and spectral gaps is well-established in the continuous case (Bakry\u2013\u00c9mery theory). The formal framework for certificate depth provides the discrete structure needed to attempt the transfer.\n\n---",
@@ -1049,10 +935,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "4d0d5d0f",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b86762ea",
     "timestamp": "2026-05-27T07:12:34.010924+00:00"
   },
   {
@@ -1169,10 +1055,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e4837868",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8987e0ea",
     "timestamp": "2026-05-27T12:07:55.419765+00:00"
   },
   {
@@ -1308,10 +1194,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46f40501",
     "timestamp": "2026-05-27T12:50:23.737119+00:00"
   },
   {
@@ -1505,10 +1391,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ec2aa218",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eedf1ad8",
     "timestamp": "2026-05-27T15:24:35.839293+00:00"
   },
   {
@@ -1592,25 +1478,61 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T15:25:01.724433+00:00"
   },
   {
-    "id": "fd_1448",
-    "title": "Direction 1: Smith Normal Form for Rational Metric Graphs",
-    "description": "**Conjecture:** For a metric graph \u0393 with rational edge lengths \u2113_e \u2208 \u211a_{>0}, the reduced Laplacian minor (deleting one row and column from the weighted Laplacian scaled to integer entries) has a Smith normal form whose diagonal entries are the invariant factors of the *finite* part of the tropical Jacobian J(\u0393). Moreover, the number of spanning trees (weighted by length) equals the determinant of this minor.\n\n**Test:** Implement exact rational arithmetic Smith normal form computation for cycle graphs C_n with rational edge lengths. Verify that the product of invariant factors equals the weighted tree number. Compare with the numerical SVD-based computation from `algorithms.py`. Discrepancies beyond numerical precision would disprove the conjecture.\n\n**Impact:** This would give an *exact* arithmetic characterization of the tropical Jacobian for rational metric graphs, eliminating all floating-point concerns. It would also provide a bridge to the chip-firing literature, where integer lattice computations are standard.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` (weighted Laplacian properties)\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean` (graphLaplacian, laplacianPrincipalMinor)\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (discrete chip-firing)\n\n**Proof Strategy:** Scale edge lengths to a common denominator to obtain integer conductances. Apply the Kirchhoff Matrix Tree Theorem for weighted graphs. The Smith normal form of the integer Laplacian minor gives the group structure of Z^{n-1}/Im(L), which is isomorphic to the critical group.\n\n**Domain Bridges:** Algebraic graph theory \u2194 Number theory \u2194 Tropical geometry\n\n**Lineage:** Extends `graphLaplacian` and `laplacianPrincipalMinor` from Defs.lean to the weighted (metric) setting.\n\n**Ambition:** \u2605\u2605\u2605 (Solid extension \u2014 the integer case is well-understood; the rational metric case requires new formalization)\n\n---",
+    "id": "fd_1454",
+    "title": "Direction 1: Character Sum Bounds for S_n via Moment Kernel Decomposition",
+    "description": "**Conjecture:** For fixed k \u2265 1, the expected k-th excess moment over random generating pairs (\u03c3, \u03c4) in S_n satisfies\n\n$$\\mathbb{E}_{\\sigma,\\tau}[\\delta_{2k}(\\sigma, \\tau)] = O(1/n)$$\n\nwhere $\\delta_{2k} = \\text{momentKernel}(\\sigma, \\tau, 2k) - \\mu_{F_2}^{(2k)}(e)$.\n\n**Test:** Compute the average excess moment for random pairs in S_n for n = 5, ..., 12 and verify the 1/n decay rate by regression. The formalized conjugation invariance theorem (`closedWordCount_conj_invariant` in `Pythagorean/CayleyExpander/MomentMethod.lean`) reduces the average to a sum over conjugacy classes, making the computation tractable.\n\n**The key insight is** that the moment kernel decomposes over irreducible representations of S_n, and the dominant correction comes from the standard (n-1)-dimensional representation, which contributes O(1/n) by character orthogonality. The conjugation invariance theorem already certified in our framework is the first step toward formalizing this decomposition.\n\n**Why now?** The trace identity and conjugation invariance are the two prerequisites for the character decomposition, and both are now machine-verified. The character theory of S_n is partially available in Mathlib, making the formal bridge feasible within the next cycle.\n\n**Impact:** A formal proof of the 1/n decay would be the first rigorous moment bound for random Cayley graphs on S_n, directly advancing the Random Cayley Expander Conjecture.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethod.lean` (closedWordCount_conj_invariant, momentKernel_conj_invariant), `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (trace_pow_eq_closedWordCount, spectral_moment_eq_return_prob).\n\n**Proof Strategy:** Decompose the moment kernel using the Peter-Weyl theorem for finite groups. The conjugation invariance reduces the problem to character sums. Bound each irreducible contribution using known character bounds for S_n (e.g., Roichman's bounds).\n\n**Domain Bridges:** Representation theory of S_n \u2192 asymptotic combinatorics \u2192 probability theory.\n\n**Lineage:** Builds directly on Theorems 1, 3, and 6 of the current work.\n\n**Ambition:** Grand challenge \u2014 would resolve the conjecture for fixed moments.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Geometry",
       "Computation",
-      "Tropical",
-      "Cryptography",
+      "Physics",
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be453c44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:03:48.605918+00:00"
+  },
+  {
+    "id": "fd_1455",
+    "title": "Direction 2: Free Probability and Asymptotic Freeness of Random Permutations",
+    "description": "**Conjecture:** The empirical spectral distribution of the normalized adjacency operator of Cay(S_n, {\u03c3, \u03c3\u207b\u00b9, \u03c4, \u03c4\u207b\u00b9}) converges in moments to the Kesten-McKay distribution (the spectral measure of the 4-regular tree) as n \u2192 \u221e, for random generating pairs.\n\n**Test:** For n = 5, ..., 10, compute moments up to order 8 and compare with the Kesten-McKay moments. The backtrack-free counting theorem (`card_backtrackFree_words` in `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean`) gives the tree-like baseline; compare with empirical data.\n\n**The key insight is** that the convergence to the Kesten-McKay law is equivalent to asymptotic freeness of the generators \u03c3 and \u03c4 in the sense of Voiculescu's free probability theory. The moment method provides the combinatorial interface: each moment is a sum over words, and freeness means that only non-crossing partition contributions survive in the limit.\n\n**Why now?** The moment kernel framework and backtrack-free counting are the exact combinatorial objects that appear in free probability. The bridge between walk counting on groups and non-crossing partitions is a well-understood analogy that can now be formalized.\n\n**Impact:** Establishing asymptotic freeness for random permutations would unify the Random Cayley Expander Conjecture with the broader program of random matrix universality. It would show that random Cayley graphs on S_n exhibit the same spectral behavior as random regular graphs\u2014a deep structural insight.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (card_backtrackFree_words, trace_pow_eq_closedWordCount), `Pythagorean/CayleyExpander/MomentMethod.lean` (momentKernel_le_one).\n\n**Proof Strategy:** Formalize the Kesten-McKay distribution and its moments. Show that the relation-driven corrections to the moment kernel vanish by bounding the number of non-tree-like closed walks that involve \"deep\" relations in S_n.\n\n**Domain Bridges:** Free probability \u2192 random matrix theory \u2192 quantum information.\n\n**Lineage:** Extends the backtrack-free counting theorem toward asymptotic spectral analysis.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting connection between discrete group theory and continuous random matrix theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
     "status": "in_progress",
     "research_mode": "prove",
-    "source_exp_id": "c6eef6ce",
-    "consumed_by_exp_id": "ace12b72",
-    "timestamp": "2026-05-27T15:25:01.378044+00:00"
+    "source_exp_id": "be453c44",
+    "consumed_by_exp_id": "085c03f4",
+    "timestamp": "2026-05-27T16:03:48.671488+00:00"
+  },
+  {
+    "id": "fd_1456",
+    "title": "Direction 3: Quantum Channel Mixing via Cayley Moment Bounds",
+    "description": "**Conjecture:** The purity of the k-fold quantum channel $\\Phi_{\\sigma,\\tau}^k$ (the completely positive map induced by the random walk step on S_n) decays as $\\text{tr}(\\Phi^k(\\rho)^2) \\leq 1/n! + C_k \\cdot (1 - \\lambda)^k$ where $\\lambda$ is the spectral gap, and the moment kernel directly controls the purity decay.\n\n**Test:** Implement the quantum channel $\\Phi$ for small S_n (n = 3, 4) as a superoperator on density matrices, and verify that purity decay matches the moment kernel predictions from `spectral_moment_eq_return_prob`.\n\n**The key insight is** that the spectral moment = return probability theorem (`spectral_moment_eq_return_prob` in our formalization) is literally a purity calculation for the associated quantum channel. The normalized adjacency operator is a bistochastic quantum channel, and tr(\u0100^m) computes the m-th moment of its spectrum, which controls the rate at which quantum states approach the maximally mixed state.\n\n**Why now?** Quantum computing demands explicit mixing time bounds for random circuits. Our certified moment framework provides the exact mathematical objects needed. The bridge from group walks to quantum channels is a functor that can be formalized.\n\n**Impact:** Certified mixing bounds for quantum channels on symmetric groups would have immediate applications in quantum algorithm design, random circuit sampling, and quantum error correction.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (spectral_moment_eq_return_prob, momentKernel_le_one, free_group_moment_two_lower).\n\n**Proof Strategy:** Formalize the quantum channel associated to a Cayley graph walk. Show that purity = (1/|G|) \u00b7 tr(\u0100^{2k}) and apply the moment-kernel bounds.\n\n**Domain Bridges:** Quantum information \u2192 spectral graph theory \u2192 representation theory.\n\n**Lineage:** Direct application of Theorem 6 (cross-domain bridge).\n\n**Ambition:** Solid extension \u2014 immediate applications with existing infrastructure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be453c44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:03:48.729875+00:00"
   },
   {
     "id": "fd_0806",
@@ -2108,61 +2030,85 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T14:12:46.483587+00:00"
   },
   {
-    "id": "fd_1454",
-    "title": "Direction 1: Character Sum Bounds for S_n via Moment Kernel Decomposition",
-    "description": "**Conjecture:** For fixed k \u2265 1, the expected k-th excess moment over random generating pairs (\u03c3, \u03c4) in S_n satisfies\n\n$$\\mathbb{E}_{\\sigma,\\tau}[\\delta_{2k}(\\sigma, \\tau)] = O(1/n)$$\n\nwhere $\\delta_{2k} = \\text{momentKernel}(\\sigma, \\tau, 2k) - \\mu_{F_2}^{(2k)}(e)$.\n\n**Test:** Compute the average excess moment for random pairs in S_n for n = 5, ..., 12 and verify the 1/n decay rate by regression. The formalized conjugation invariance theorem (`closedWordCount_conj_invariant` in `Pythagorean/CayleyExpander/MomentMethod.lean`) reduces the average to a sum over conjugacy classes, making the computation tractable.\n\n**The key insight is** that the moment kernel decomposes over irreducible representations of S_n, and the dominant correction comes from the standard (n-1)-dimensional representation, which contributes O(1/n) by character orthogonality. The conjugation invariance theorem already certified in our framework is the first step toward formalizing this decomposition.\n\n**Why now?** The trace identity and conjugation invariance are the two prerequisites for the character decomposition, and both are now machine-verified. The character theory of S_n is partially available in Mathlib, making the formal bridge feasible within the next cycle.\n\n**Impact:** A formal proof of the 1/n decay would be the first rigorous moment bound for random Cayley graphs on S_n, directly advancing the Random Cayley Expander Conjecture.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethod.lean` (closedWordCount_conj_invariant, momentKernel_conj_invariant), `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (trace_pow_eq_closedWordCount, spectral_moment_eq_return_prob).\n\n**Proof Strategy:** Decompose the moment kernel using the Peter-Weyl theorem for finite groups. The conjugation invariance reduces the problem to character sums. Bound each irreducible contribution using known character bounds for S_n (e.g., Roichman's bounds).\n\n**Domain Bridges:** Representation theory of S_n \u2192 asymptotic combinatorics \u2192 probability theory.\n\n**Lineage:** Builds directly on Theorems 1, 3, and 6 of the current work.\n\n**Ambition:** Grand challenge \u2014 would resolve the conjecture for fixed moments.\n\n---",
+    "id": "fd_1479",
+    "title": "Closing the Single-Power Gap",
+    "description": "Conjecture: For every fixed `k \u2265 0`, there exists `c_k > 0` such that for infinitely many `d`, some depth-`k` exchange family in dimension `d` has worst-case descent length at least `c_k \u00b7 d^{d-k}` (matching the upper bound exactly, not just `d^{d-k-1}`).\n\nTest: Construct increasingly refined adversarial families for `d = 4, ..., 20` with fixed `k = 0, 1, 2`. Compute worst-case descent lengths and fit the growth rate. If `T(d,k) / d^{d-k}` converges to a positive constant, the conjecture holds. If `T(d,k) / d^{d-k-1}` converges instead, the lower bound is tight and the upper bound can be improved.\n\nImpact: Resolves the central open question of the current theory. If the upper bound is tight, certificate depth is the exact complexity exponent. If not, there exists a finer invariant \u2014 a \"certificate depth 2.0\" \u2014 waiting to be discovered.",
     "domains": [
       "Pythagorean",
-      "Algebra",
       "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
+      "MachineLearning"
     ],
-    "priority_score": 0.7999999999999999,
+    "priority_score": 0.8,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "be453c44",
+    "source_exp_id": "147eb4db",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T16:03:48.605918+00:00"
+    "timestamp": "2026-05-27T16:40:30.004231+00:00"
   },
   {
-    "id": "fd_1455",
-    "title": "Direction 2: Free Probability and Asymptotic Freeness of Random Permutations",
-    "description": "**Conjecture:** The empirical spectral distribution of the normalized adjacency operator of Cay(S_n, {\u03c3, \u03c3\u207b\u00b9, \u03c4, \u03c4\u207b\u00b9}) converges in moments to the Kesten-McKay distribution (the spectral measure of the 4-regular tree) as n \u2192 \u221e, for random generating pairs.\n\n**Test:** For n = 5, ..., 10, compute moments up to order 8 and compare with the Kesten-McKay moments. The backtrack-free counting theorem (`card_backtrackFree_words` in `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean`) gives the tree-like baseline; compare with empirical data.\n\n**The key insight is** that the convergence to the Kesten-McKay law is equivalent to asymptotic freeness of the generators \u03c3 and \u03c4 in the sense of Voiculescu's free probability theory. The moment method provides the combinatorial interface: each moment is a sum over words, and freeness means that only non-crossing partition contributions survive in the limit.\n\n**Why now?** The moment kernel framework and backtrack-free counting are the exact combinatorial objects that appear in free probability. The bridge between walk counting on groups and non-crossing partitions is a well-understood analogy that can now be formalized.\n\n**Impact:** Establishing asymptotic freeness for random permutations would unify the Random Cayley Expander Conjecture with the broader program of random matrix universality. It would show that random Cayley graphs on S_n exhibit the same spectral behavior as random regular graphs\u2014a deep structural insight.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (card_backtrackFree_words, trace_pow_eq_closedWordCount), `Pythagorean/CayleyExpander/MomentMethod.lean` (momentKernel_le_one).\n\n**Proof Strategy:** Formalize the Kesten-McKay distribution and its moments. Show that the relation-driven corrections to the moment kernel vanish by bounding the number of non-tree-like closed walks that involve \"deep\" relations in S_n.\n\n**Domain Bridges:** Free probability \u2192 random matrix theory \u2192 quantum information.\n\n**Lineage:** Extends the backtrack-free counting theorem toward asymptotic spectral analysis.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting connection between discrete group theory and continuous random matrix theory.\n\n---",
+    "id": "fd_1480",
+    "title": "Certificate Depth as a Matroid Invariant",
+    "description": "Conjecture: For matroid base exchange families, the certificate depth `k` is determined by the matroid's Tutte polynomial evaluated at specific points. Specifically, `k = d - 1` for Boolean matroids and `k = 1` for uniform matroids of fixed rank.\n\nTest: Compute certificate depth for explicit matroid families: uniform matroids `U(r, n)`, graphic matroids of complete graphs, and transversal matroids. Check whether `k` correlates with known matroid invariants (connectivity, girth, characteristic polynomial roots).\n\nImpact: Would establish certificate depth as a matroid-theoretic quantity, connecting the exchange descent complexity theory to the rich algebraic theory of matroids (Lorentzian polynomials, Hodge theory for matroids).",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
+      "Physics"
     ],
-    "priority_score": 0.7999999999999999,
+    "priority_score": 0.8,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "be453c44",
+    "source_exp_id": "147eb4db",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T16:03:48.671488+00:00"
+    "timestamp": "2026-05-27T16:40:30.062802+00:00"
   },
   {
-    "id": "fd_1456",
-    "title": "Direction 3: Quantum Channel Mixing via Cayley Moment Bounds",
-    "description": "**Conjecture:** The purity of the k-fold quantum channel $\\Phi_{\\sigma,\\tau}^k$ (the completely positive map induced by the random walk step on S_n) decays as $\\text{tr}(\\Phi^k(\\rho)^2) \\leq 1/n! + C_k \\cdot (1 - \\lambda)^k$ where $\\lambda$ is the spectral gap, and the moment kernel directly controls the purity decay.\n\n**Test:** Implement the quantum channel $\\Phi$ for small S_n (n = 3, 4) as a superoperator on density matrices, and verify that purity decay matches the moment kernel predictions from `spectral_moment_eq_return_prob`.\n\n**The key insight is** that the spectral moment = return probability theorem (`spectral_moment_eq_return_prob` in our formalization) is literally a purity calculation for the associated quantum channel. The normalized adjacency operator is a bistochastic quantum channel, and tr(\u0100^m) computes the m-th moment of its spectrum, which controls the rate at which quantum states approach the maximally mixed state.\n\n**Why now?** Quantum computing demands explicit mixing time bounds for random circuits. Our certified moment framework provides the exact mathematical objects needed. The bridge from group walks to quantum channels is a functor that can be formalized.\n\n**Impact:** Certified mixing bounds for quantum channels on symmetric groups would have immediate applications in quantum algorithm design, random circuit sampling, and quantum error correction.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (spectral_moment_eq_return_prob, momentKernel_le_one, free_group_moment_two_lower).\n\n**Proof Strategy:** Formalize the quantum channel associated to a Cayley graph walk. Show that purity = (1/|G|) \u00b7 tr(\u0100^{2k}) and apply the moment-kernel bounds.\n\n**Domain Bridges:** Quantum information \u2192 spectral graph theory \u2192 representation theory.\n\n**Lineage:** Direct application of Theorem 6 (cross-domain bridge).\n\n**Ambition:** Solid extension \u2014 immediate applications with existing infrastructure.\n\n---",
+    "id": "fd_1481",
+    "title": "Average-Case Descent Bounds",
+    "description": "Conjecture: For random exchange families on `[0, M]^d` with i.i.d. log-concave objective components, the expected descent length is `\u0398(d^{(d-k)/2})` \u2014 the square root of the worst case.\n\nTest: Generate 1000 random exchange families for each `(d, k)` with `d \u2208 {4, ..., 10}`. Run exchange descent from random start points. Fit the expected step count to `d^\u03b1` and estimate `\u03b1` as a function of `d - k`.\n\nImpact: Would provide practical guidance: if average-case is much better than worst-case, practitioners can rely on descent methods even when certificate depth is low.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "147eb4db",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:40:30.122941+00:00"
+  },
+  {
+    "id": "fd_1482",
+    "title": "Circuit Depth Lower Bounds from Layer Profiles",
+    "description": "Conjecture: The exchange descent problem with depth-`k` certificate in dimension `d` requires Boolean circuits of depth at least `(d - k - 1) \u00b7 log d` to solve.\n\nTest: Encode small instances (d = 4, 5, 6) as Boolean satisfiability problems and measure the depth of the smallest Boolean circuit that computes the optimal descent step. Compare with the layer profile prediction.\n\nImpact: Would connect exchange descent complexity to the central open questions of computational complexity theory (circuit depth lower bounds, the P vs NC question).",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
+      "Computation"
     ],
-    "priority_score": 0.7999999999999999,
+    "priority_score": 0.8,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "be453c44",
+    "source_exp_id": "147eb4db",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T16:03:48.729875+00:00"
+    "timestamp": "2026-05-27T16:40:30.181006+00:00"
+  },
+  {
+    "id": "fd_1483",
+    "title": "Energy Landscape Metastability",
+    "description": "Conjecture: For spin systems on lattices with `d` components and interaction structure of \"depth\" `k`, the metastable relaxation time is at least `d^{d-k-1}` steps of any local dynamics.\n\nTest: Simulate Ising/Potts models on small lattices with controlled interaction structure. Measure relaxation times from metastable states. Fit to the predicted `d^{d-k-1}` scaling.\n\nImpact: Would provide a rigorous framework for predicting metastability in physical systems from structural properties of the interaction Hamiltonian.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Cryptography"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "147eb4db",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:40:30.251712+00:00"
   },
   {
     "id": "seed_032",

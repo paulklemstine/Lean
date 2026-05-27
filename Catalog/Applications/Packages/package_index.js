@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Discrete Optimization / Computational Complexity",
     "date": "2026-05-27T16:40:26Z",
     "exp_id": "147eb4db",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.689036,
+    "quality": "partial",
     "pkg_num": 178
   },
   {
@@ -5171,8 +5171,8 @@ window.PACKAGE_GRAPH = {
       "shape": "cube",
       "date": "2026-05-27T16:40:26Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.689036,
+      "quality": "partial"
     }
   ],
   "edges": [
