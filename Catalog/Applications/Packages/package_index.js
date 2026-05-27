@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Algebraic Combinatorics / Discrete Optimization",
     "date": "2026-05-27T12:56:38Z",
     "exp_id": "cc55aee4",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7208818181818182,
+    "quality": "substantial",
     "pkg_num": 166
   },
   {
@@ -4823,8 +4823,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-27T12:56:38Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7208818181818182,
+      "quality": "substantial"
     }
   ],
   "edges": [

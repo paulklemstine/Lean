@@ -723,5 +723,9 @@
   "e4837868": "direction_1_full_group_isomorphism_via_smith_norma.json",
   "599ed649": "direction_1_sharp_constants_and_eigenvalue_interla.json",
   "05e24005": "direction_4_robust_log_concavity_for_quantum_many_.json",
-  "7e0c9f23": "direction_1_full_wreath_product_phase_transition.json"
+  "7e0c9f23": "direction_1_full_wreath_product_phase_transition.json",
+  "96bc3b32": "direction_1_confluence_and_unique_normal_forms.json",
+  "5bd845bb": "direction_5_tropical_spectral_certificates_for_neu.json",
+  "7a9ed9f9": "direction_2_critical_exponents_for_finite_size_sus.json",
+  "cc55aee4": "direction_3_valuated_matroid_extension_and_tropica.json"
 }
