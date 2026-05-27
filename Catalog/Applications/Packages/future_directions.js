@@ -550,10 +550,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "354ccda2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fec0cc1f",
     "timestamp": "2026-05-25T21:49:45.129187+00:00"
   },
   {
@@ -730,10 +730,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "878e52b6",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T00:07:30.309357+00:00"
   },
   {
@@ -1531,27 +1531,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T15:24:36.058680+00:00"
   },
   {
-    "id": "fd_1448",
-    "title": "Direction 1: Smith Normal Form for Rational Metric Graphs",
-    "description": "**Conjecture:** For a metric graph \u0393 with rational edge lengths \u2113_e \u2208 \u211a_{>0}, the reduced Laplacian minor (deleting one row and column from the weighted Laplacian scaled to integer entries) has a Smith normal form whose diagonal entries are the invariant factors of the *finite* part of the tropical Jacobian J(\u0393). Moreover, the number of spanning trees (weighted by length) equals the determinant of this minor.\n\n**Test:** Implement exact rational arithmetic Smith normal form computation for cycle graphs C_n with rational edge lengths. Verify that the product of invariant factors equals the weighted tree number. Compare with the numerical SVD-based computation from `algorithms.py`. Discrepancies beyond numerical precision would disprove the conjecture.\n\n**Impact:** This would give an *exact* arithmetic characterization of the tropical Jacobian for rational metric graphs, eliminating all floating-point concerns. It would also provide a bridge to the chip-firing literature, where integer lattice computations are standard.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` (weighted Laplacian properties)\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean` (graphLaplacian, laplacianPrincipalMinor)\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (discrete chip-firing)\n\n**Proof Strategy:** Scale edge lengths to a common denominator to obtain integer conductances. Apply the Kirchhoff Matrix Tree Theorem for weighted graphs. The Smith normal form of the integer Laplacian minor gives the group structure of Z^{n-1}/Im(L), which is isomorphic to the critical group.\n\n**Domain Bridges:** Algebraic graph theory \u2194 Number theory \u2194 Tropical geometry\n\n**Lineage:** Extends `graphLaplacian` and `laplacianPrincipalMinor` from Defs.lean to the weighted (metric) setting.\n\n**Ambition:** \u2605\u2605\u2605 (Solid extension \u2014 the integer case is well-understood; the rational metric case requires new formalization)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "c6eef6ce",
-    "consumed_by_exp_id": "ace12b72",
-    "timestamp": "2026-05-27T15:25:01.378044+00:00"
-  },
-  {
     "id": "fd_1449",
     "title": "Direction 2: N\u00e9ron Component Groups via Tropical Jacobians",
     "description": "**Conjecture (Grand Challenge):** For a semistable curve X over a discretely valued field K with dual graph \u0393, Baker's specialization lemma gives a surjection sp: J(X)(K) \u2192 J(\u0393). The canonical kernel generators of \u0393 provide *explicit coordinates* on the component group \u03a6_J of the N\u00e9ron model of J(X), and the Smith normal form of the canonical kernel lattice computes |\u03a6_J| = det(L_red).\n\n**Test:** For hyperelliptic curves of genus 2 with known N\u00e9ron models (tabulated in the literature), compute the tropical Jacobian of the dual graph and compare the invariant factors with the known component group structure. A mismatch would indicate either a gap in the specialization map or an error in the dual graph computation.\n\n**Impact:** This would make the N\u00e9ron component group \u2014 a central object in arithmetic geometry \u2014 *computationally accessible* through elementary linear algebra on the dual graph. Currently, computing \u03a6_J requires sophisticated p-adic methods.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` (weighted Laplacian kernel, PSD)\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelDefs.lean` (RestrictedLaplacianImage)\n\n**Proof Strategy:** Use Baker's specialization lemma [BN07] combined with Raynaud's theorem on N\u00e9ron models. The key step is showing that the canonical kernel lattice generators map to generators of the period lattice of J(X)(K) under specialization.\n\n**Domain Bridges:** Tropical geometry \u2194 Arithmetic geometry \u2194 p-adic analysis\n\n**Lineage:** Extends the canonical kernel correspondence to arithmetic applications.\n\n**Ambition:** \u2605\u2605\u2605\u2605\u2605 (Grand challenge \u2014 connects to deep results in arithmetic geometry)\n\n---",
@@ -1564,7 +1543,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c6eef6ce",
@@ -1585,7 +1564,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c6eef6ce",
@@ -1605,12 +1584,33 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c6eef6ce",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T15:25:01.724433+00:00"
+  },
+  {
+    "id": "fd_1448",
+    "title": "Direction 1: Smith Normal Form for Rational Metric Graphs",
+    "description": "**Conjecture:** For a metric graph \u0393 with rational edge lengths \u2113_e \u2208 \u211a_{>0}, the reduced Laplacian minor (deleting one row and column from the weighted Laplacian scaled to integer entries) has a Smith normal form whose diagonal entries are the invariant factors of the *finite* part of the tropical Jacobian J(\u0393). Moreover, the number of spanning trees (weighted by length) equals the determinant of this minor.\n\n**Test:** Implement exact rational arithmetic Smith normal form computation for cycle graphs C_n with rational edge lengths. Verify that the product of invariant factors equals the weighted tree number. Compare with the numerical SVD-based computation from `algorithms.py`. Discrepancies beyond numerical precision would disprove the conjecture.\n\n**Impact:** This would give an *exact* arithmetic characterization of the tropical Jacobian for rational metric graphs, eliminating all floating-point concerns. It would also provide a bridge to the chip-firing literature, where integer lattice computations are standard.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` (weighted Laplacian properties)\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean` (graphLaplacian, laplacianPrincipalMinor)\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (discrete chip-firing)\n\n**Proof Strategy:** Scale edge lengths to a common denominator to obtain integer conductances. Apply the Kirchhoff Matrix Tree Theorem for weighted graphs. The Smith normal form of the integer Laplacian minor gives the group structure of Z^{n-1}/Im(L), which is isomorphic to the critical group.\n\n**Domain Bridges:** Algebraic graph theory \u2194 Number theory \u2194 Tropical geometry\n\n**Lineage:** Extends `graphLaplacian` and `laplacianPrincipalMinor` from Defs.lean to the weighted (metric) setting.\n\n**Ambition:** \u2605\u2605\u2605 (Solid extension \u2014 the integer case is well-understood; the rational metric case requires new formalization)\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "c6eef6ce",
+    "consumed_by_exp_id": "ace12b72",
+    "timestamp": "2026-05-27T15:25:01.378044+00:00"
   },
   {
     "id": "fd_0806",
@@ -2106,6 +2106,63 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T14:12:46.483587+00:00"
+  },
+  {
+    "id": "fd_1454",
+    "title": "Direction 1: Character Sum Bounds for S_n via Moment Kernel Decomposition",
+    "description": "**Conjecture:** For fixed k \u2265 1, the expected k-th excess moment over random generating pairs (\u03c3, \u03c4) in S_n satisfies\n\n$$\\mathbb{E}_{\\sigma,\\tau}[\\delta_{2k}(\\sigma, \\tau)] = O(1/n)$$\n\nwhere $\\delta_{2k} = \\text{momentKernel}(\\sigma, \\tau, 2k) - \\mu_{F_2}^{(2k)}(e)$.\n\n**Test:** Compute the average excess moment for random pairs in S_n for n = 5, ..., 12 and verify the 1/n decay rate by regression. The formalized conjugation invariance theorem (`closedWordCount_conj_invariant` in `Pythagorean/CayleyExpander/MomentMethod.lean`) reduces the average to a sum over conjugacy classes, making the computation tractable.\n\n**The key insight is** that the moment kernel decomposes over irreducible representations of S_n, and the dominant correction comes from the standard (n-1)-dimensional representation, which contributes O(1/n) by character orthogonality. The conjugation invariance theorem already certified in our framework is the first step toward formalizing this decomposition.\n\n**Why now?** The trace identity and conjugation invariance are the two prerequisites for the character decomposition, and both are now machine-verified. The character theory of S_n is partially available in Mathlib, making the formal bridge feasible within the next cycle.\n\n**Impact:** A formal proof of the 1/n decay would be the first rigorous moment bound for random Cayley graphs on S_n, directly advancing the Random Cayley Expander Conjecture.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethod.lean` (closedWordCount_conj_invariant, momentKernel_conj_invariant), `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (trace_pow_eq_closedWordCount, spectral_moment_eq_return_prob).\n\n**Proof Strategy:** Decompose the moment kernel using the Peter-Weyl theorem for finite groups. The conjugation invariance reduces the problem to character sums. Bound each irreducible contribution using known character bounds for S_n (e.g., Roichman's bounds).\n\n**Domain Bridges:** Representation theory of S_n \u2192 asymptotic combinatorics \u2192 probability theory.\n\n**Lineage:** Builds directly on Theorems 1, 3, and 6 of the current work.\n\n**Ambition:** Grand challenge \u2014 would resolve the conjecture for fixed moments.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be453c44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:03:48.605918+00:00"
+  },
+  {
+    "id": "fd_1455",
+    "title": "Direction 2: Free Probability and Asymptotic Freeness of Random Permutations",
+    "description": "**Conjecture:** The empirical spectral distribution of the normalized adjacency operator of Cay(S_n, {\u03c3, \u03c3\u207b\u00b9, \u03c4, \u03c4\u207b\u00b9}) converges in moments to the Kesten-McKay distribution (the spectral measure of the 4-regular tree) as n \u2192 \u221e, for random generating pairs.\n\n**Test:** For n = 5, ..., 10, compute moments up to order 8 and compare with the Kesten-McKay moments. The backtrack-free counting theorem (`card_backtrackFree_words` in `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean`) gives the tree-like baseline; compare with empirical data.\n\n**The key insight is** that the convergence to the Kesten-McKay law is equivalent to asymptotic freeness of the generators \u03c3 and \u03c4 in the sense of Voiculescu's free probability theory. The moment method provides the combinatorial interface: each moment is a sum over words, and freeness means that only non-crossing partition contributions survive in the limit.\n\n**Why now?** The moment kernel framework and backtrack-free counting are the exact combinatorial objects that appear in free probability. The bridge between walk counting on groups and non-crossing partitions is a well-understood analogy that can now be formalized.\n\n**Impact:** Establishing asymptotic freeness for random permutations would unify the Random Cayley Expander Conjecture with the broader program of random matrix universality. It would show that random Cayley graphs on S_n exhibit the same spectral behavior as random regular graphs\u2014a deep structural insight.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (card_backtrackFree_words, trace_pow_eq_closedWordCount), `Pythagorean/CayleyExpander/MomentMethod.lean` (momentKernel_le_one).\n\n**Proof Strategy:** Formalize the Kesten-McKay distribution and its moments. Show that the relation-driven corrections to the moment kernel vanish by bounding the number of non-tree-like closed walks that involve \"deep\" relations in S_n.\n\n**Domain Bridges:** Free probability \u2192 random matrix theory \u2192 quantum information.\n\n**Lineage:** Extends the backtrack-free counting theorem toward asymptotic spectral analysis.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting connection between discrete group theory and continuous random matrix theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be453c44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:03:48.671488+00:00"
+  },
+  {
+    "id": "fd_1456",
+    "title": "Direction 3: Quantum Channel Mixing via Cayley Moment Bounds",
+    "description": "**Conjecture:** The purity of the k-fold quantum channel $\\Phi_{\\sigma,\\tau}^k$ (the completely positive map induced by the random walk step on S_n) decays as $\\text{tr}(\\Phi^k(\\rho)^2) \\leq 1/n! + C_k \\cdot (1 - \\lambda)^k$ where $\\lambda$ is the spectral gap, and the moment kernel directly controls the purity decay.\n\n**Test:** Implement the quantum channel $\\Phi$ for small S_n (n = 3, 4) as a superoperator on density matrices, and verify that purity decay matches the moment kernel predictions from `spectral_moment_eq_return_prob`.\n\n**The key insight is** that the spectral moment = return probability theorem (`spectral_moment_eq_return_prob` in our formalization) is literally a purity calculation for the associated quantum channel. The normalized adjacency operator is a bistochastic quantum channel, and tr(\u0100^m) computes the m-th moment of its spectrum, which controls the rate at which quantum states approach the maximally mixed state.\n\n**Why now?** Quantum computing demands explicit mixing time bounds for random circuits. Our certified moment framework provides the exact mathematical objects needed. The bridge from group walks to quantum channels is a functor that can be formalized.\n\n**Impact:** Certified mixing bounds for quantum channels on symmetric groups would have immediate applications in quantum algorithm design, random circuit sampling, and quantum error correction.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (spectral_moment_eq_return_prob, momentKernel_le_one, free_group_moment_two_lower).\n\n**Proof Strategy:** Formalize the quantum channel associated to a Cayley graph walk. Show that purity = (1/|G|) \u00b7 tr(\u0100^{2k}) and apply the moment-kernel bounds.\n\n**Domain Bridges:** Quantum information \u2192 spectral graph theory \u2192 representation theory.\n\n**Lineage:** Direct application of Theorem 6 (cross-domain bridge).\n\n**Ambition:** Solid extension \u2014 immediate applications with existing infrastructure.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "be453c44",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:03:48.729875+00:00"
   },
   {
     "id": "seed_032",

@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1950 of the highest-quality
+A curated collection of 1951 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1950
+Total files: 1951
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -527,6 +527,7 @@ import FINAL.Bridges.MinPlusHarmonicAnalysis
 import FINAL.Bridges.MinPlusVerificationCore
 import FINAL.Bridges.Minimality
 import FINAL.Bridges.ModularScatteringDuality
+import FINAL.Bridges.MomentMethodAdvanced
 import FINAL.Bridges.MoonshineCodingTheory
 import FINAL.Bridges.MorseInequalities
 import FINAL.Bridges.MultiClassCertificationBridge
