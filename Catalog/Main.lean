@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1916 of the highest-quality
+A curated collection of 1919 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1916
+Total files: 1919
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -325,6 +325,7 @@ import FINAL.Bridges.CategoricalBridges
 import FINAL.Bridges.CategoricalTropicalUltrametric
 import FINAL.Bridges.CategorifiedShannonTheory
 import FINAL.Bridges.CausalClosure
+import FINAL.Bridges.CertifiedDPPSampling
 import FINAL.Bridges.CertifiedRadiusResiduated
 import FINAL.Bridges.ChainRule
 import FINAL.Bridges.Characters
@@ -615,6 +616,7 @@ import FINAL.Bridges.StoneChuClosureDuality
 import FINAL.Bridges.StoneDualityMLAdvanced
 import FINAL.Bridges.StoneDualityMLCore
 import FINAL.Bridges.StoneWeierstrassTropicalPolytope
+import FINAL.Bridges.StrongRayleighSpectralGap
 import FINAL.Bridges.SubgroupUniversality
 import FINAL.Bridges.SubmodularCurvature
 import FINAL.Bridges.SumcheckSoundness
@@ -1499,6 +1501,7 @@ import FINAL.Pythagorean.DepthStability
 import FINAL.Pythagorean.DerivComplexity
 import FINAL.Pythagorean.DerivativeNormalizer
 import FINAL.Pythagorean.DescentTheory
+import FINAL.Pythagorean.DeterminantalStability
 import FINAL.Pythagorean.DiagonalObstruction
 import FINAL.Pythagorean.DiffClosure
 import FINAL.Pythagorean.DiophantineCertifiedOptimization

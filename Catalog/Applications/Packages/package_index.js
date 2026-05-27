@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Algebraic Combinatorics / Mathematical Physics",
     "date": "2026-05-27T04:12:18Z",
     "exp_id": "3696c4be",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6895192000000001,
+    "quality": "partial",
     "pkg_num": 139
   },
   {
@@ -4040,8 +4040,8 @@ window.PACKAGE_GRAPH = {
       "shape": "diamond",
       "date": "2026-05-27T04:12:18Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6895192000000001,
+      "quality": "partial"
     }
   ],
   "edges": [

@@ -682,5 +682,9 @@
   "2217051e": "direction_5_determinantal_complexity_and_matroid_r.json",
   "26108723": "direction_1_intrinsically_typed_higher_order_rewri.json",
   "175f456d": "direction_2_universality_of_hybrid_walks__general_.json",
-  "a8f3ced3": "direction_4_shadow_complexity_as_an_arithmetic_cir.json"
+  "a8f3ced3": "direction_4_shadow_complexity_as_an_arithmetic_cir.json",
+  "f44ba709": "direction_5_certified_dpp_sampling_with_lorentzian.json",
+  "19908b05": "direction_2_anti_cancellation_for_aggregated_deriv.json",
+  "a00cd422": "direction_3_strong_rayleigh_property_and_spectral_.json",
+  "3696c4be": "direction_1_real_stability_of_determinantal_polyno.json"
 }
