@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1953 of the highest-quality
+A curated collection of 1954 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1953
+Total files: 1954
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -534,6 +534,7 @@ import FINAL.Bridges.MultiClassCertificationBridge
 import FINAL.Bridges.Network
 import FINAL.Bridges.NeuralBirkhoffDecomposition
 import FINAL.Bridges.NeuralProofMining
+import FINAL.Bridges.NewtonGirardGeneral
 import FINAL.Bridges.NoetherianFeatureConvergence
 import FINAL.Bridges.NonArchimedeanComputation
 import FINAL.Bridges.NonGroupComparison

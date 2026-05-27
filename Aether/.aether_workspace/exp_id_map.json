@@ -744,5 +744,7 @@
   "302e596c": "direction_1_universal_support_tutte_polynomial.json",
   "878e52b6": "direction_2_quantitative_exchange_descent_bounds_v.json",
   "ace12b72": "direction_1_smith_normal_form_for_rational_metric_.json",
-  "147eb4db": "direction_1_sharp_exponent_law_and_lower_bounds.json"
+  "147eb4db": "direction_1_sharp_exponent_law_and_lower_bounds.json",
+  "dbcfb2f4": "direction_1_quantitative_gap_interpolation_under_b.json",
+  "e72818c6": "direction_1_complete_newtongirard_and_higher_order.json"
 }

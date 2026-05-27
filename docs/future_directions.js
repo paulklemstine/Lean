@@ -266,10 +266,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "39acdddf",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -395,10 +395,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "940a799a",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T20:01:51.853060+00:00"
   },
   {
@@ -654,10 +654,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "abb48be4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd920969",
     "timestamp": "2026-05-26T02:33:38.976648+00:00"
   },
   {
@@ -1023,26 +1023,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T08:27:46.927552+00:00"
   },
   {
-    "id": "fd_1374",
-    "title": "Direction 1: Quantitative Gap Interpolation Under Bounded Pair Codegree",
-    "description": "**Conjecture:** For every integer d \u2265 3 and real \u03b1 \u2208 (0, 1), there exists \u03b5 = \u03b5(d, \u03b1) > 0 such that if H is a d-uniform hypergraph on n vertices with max pair codegree K \u2264 \u03b1 \u00b7 n^{1/(d-1)}, then \u03c4(H) \u2264 (d \u2212 \u03b5) \u00b7 \u03c4*(H).\n\n**Test:** Formalize the rounding argument with an explicit \u03b5(d, K) expression. Computationally, sweep K by generating random hypergraphs conditioned on bounded pair codegree and measure the empirical gap. If the predicted \u03b5 matches to within 10%, the conjecture is validated.\n\n**Impact:** This would give the first explicit interpolation formula between gap = 1 (vertex-disjoint, K = 0) and gap = d (adversarial, K unbounded). It would immediately yield improved approximation guarantees for random covering instances in any density regime where codegrees are controlled.\n\n**Catalog References:** `Catalog/Pythagorean/HypergraphTransversal.lean` (integrality_gap_upper, uniform_integrality_gap), `Catalog/Pythagorean/RandomTransversalThermodynamics.lean` (pairCodegree_le_one_of_disjoint, disjoint_has_low_overlap)\n\n**Proof Strategy:** Strategy A from the main development \u2014 deterministic pseudorandom rounding via threshold decomposition. Define a layered threshold scheme where vertices with x(v) \u2265 1/(d\u22121) are included unconditionally, and vertices in [1/d, 1/(d\u22121)] are included with probability depending on local codegree. Bound the expected uncovered edge count using the pair codegree bound and a union-bound argument. Repair greedily; the repair cost is O(K \u00b7 \u03c4*) which is sub-linear for K \u226a n.\n\n**Domain Bridges:** Approximation algorithms (improved factor), probabilistic combinatorics (codegree conditions), statistical physics (order parameter quantification)\n\n**Lineage:** Extends vertex_disjoint_integrality_gap_one from gap = 1 at K = 0 to a continuous function \u03b5(d, K).\n\n**Ambition:** Grand challenge \u2014 would resolve the main conjecture for a broad class of random hypergraphs.\n\n**The key insight is** that the rounding improvement is controlled by the same codegree statistics that govern local weak convergence of random hypergraph neighborhoods \u2014 connecting the optimization problem to the structural theory of random graphs.\n\n**Why now?** The vertex-disjoint case is fully formalized, providing the base case. The threshold rounding infrastructure from the catalog supports the layered scheme. The pair codegree definition is in place. What remains is the probabilistic repair analysis, which is within reach of current Lean formalization capabilities combined with explicit combinatorial bounds.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "3020679e",
-    "consumed_by_exp_id": "dbcfb2f4",
-    "timestamp": "2026-05-27T10:18:44.784960+00:00"
-  },
-  {
     "id": "fd_1382",
     "title": "Direction 1: Non-Separated Extensions via Overlapping Support Theory",
     "description": "**Conjecture**: For an arbitrary nonempty vertex subset $S \\subseteq V(G)$ (not necessarily separated), the canonical kernel quotient is isomorphic to the Laplacian cokernel $\\mathbb{Z}^{|S|}/\\mathrm{Im}(L_S)$, with the isomorphism tracked through a non-trivial SNF decomposition. The off-diagonal entries of $L_S$ encode the \"interaction terms\" between overlapping harmonic generators, and the SNF basis change diagonalizes these interactions.\n\n**Test**: Enumerate all connected graphs with $n \\leq 7$ and all nonempty subsets $S$ (not just separated ones). Compute $L_S$, its SNF, and verify that the invariant factors match the canonical kernel quotient structure. Check whether the transition matrices satisfy the TracksCanonicalGens predicate. A single failure would refute the conjecture.\n\n**Impact**: This would extend the tropical-critical correspondence from independent sets to arbitrary vertex subsets, covering the full graph Jacobian rather than just its restriction to separated sets. It would make the correspondence a complete structural theorem rather than a partial one.\n\n**Catalog References**: \n- `Catalog/Pythagorean/TropicalBridge/SNFCorrespondence.lean` \u2014 `SeparatedSet`, `restrictedLapMat`, `LaplacianCokernel`\n- `Catalog/Pythagorean/TropicalBridge/TropicalKernelRigidity.lean` \u2014 `TropProjEquiv`, `disjoint_support_unique_up_to_tropProjEquiv`\n- `Catalog/Pythagorean/TropicalBridge/Defs.lean` \u2014 `graphLaplacian`, `firingIndependentOn`\n\n**Proof Strategy**: Decompose the restricted Laplacian $L_S = D + N$ where $D$ is the diagonal part (vertex degrees) and $N$ encodes adjacencies within $S$. Show that the SNF of $L_S$ can be computed by iteratively eliminating off-diagonal entries using unimodular row/column operations, tracking how each operation transforms the canonical generators.\n\n**Domain Bridges**: Algebraic graph theory \u2194 computational linear algebra; tropical geometry \u2194 matroid theory (the independence condition generalizes from matroids to arbitrary sets).\n\n**Lineage**: Directly extends `restrictedLap_sep_offdiag` and `cokernel_sep_cyclic` from the current work.\n\n**Ambition**: \u2605\u2605\u2605 (Solid extension \u2014 well within reach with current technology)\n\n---",
@@ -1318,25 +1298,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T13:37:04.718863+00:00"
   },
   {
-    "id": "fd_1443",
-    "title": "Direction 1: Complete Newton\u2013Girard and Higher-Order Entropy Surrogates",
-    "description": "**Conjecture:** The Newton\u2013Girard identity p\u2096 = \u2211_{j=0}^{k-2} (-1)^j e_{j+1} p_{k-1-j} + (-1)^{k-1} k e\u2096 holds for all k \u2264 m, and combined with polynomial approximation of h_\u03b1 on compact subintervals, yields entropy surrogates with error O(\u03b4^N) where \u03b4 is the spectral gap and N is the truncation order.\n\n**Test:** Formally prove Newton\u2013Girard for general k (via generating function coefficient extraction or induction on m with the ESP recurrence). Then construct degree-N polynomial approximations to h_\u03b1 on [\u03b4, 1\u2212\u03b4] and verify that the resulting entropy surrogates converge.\n\n**Impact:** Completes the algebraic engine: every polynomial spectral statistic becomes computable from elementary symmetric data, enabling arbitrarily accurate entropy estimation without diagonalization.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `powerSum_one_eq`, `powerSum_two_eq`, `powerSum_three_eq`, `newton_girard_k1`, `newton_girard_k2`, `newton_girard_k3`.\n\n**Proof Strategy:** Define E(t) = \u220f(1 + \u03bc\u1d62t) as a polynomial, compute E'(t)/E(t) = \u2211 \u03bc\u1d62/(1+\u03bc\u1d62t), expand as formal power series, and equate coefficients. The Lean formalization would use `Polynomial.coeff` extraction.\n\n**Domain Bridges:** Algebraic combinatorics \u2192 approximation theory \u2192 quantum information.\n\n**Lineage:** Extends the k \u2264 3 cases proved here; builds on `esymmCoeff_succ_eq` (ESP recurrence).\n\n**Ambition:** Solid extension \u2014 technically challenging but conceptually clear.\n\n*The key insight is* that Newton\u2013Girard converts the nonlinear entropy problem into a linear algebra problem in the polynomial ring, and that this conversion is universal in the number of variables.\n\n*Why now?* The ESP recurrence (`esymmCoeff_succ_eq`) and zero-tail lemma (`esymmCoeff_zero_succ`) are now formally available, providing the key ingredients for an inductive proof.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ec2aa218",
-    "consumed_by_exp_id": "e72818c6",
-    "timestamp": "2026-05-27T15:24:27.678691+00:00"
-  },
-  {
     "id": "fd_1444",
     "title": "Direction 2: Newton Ratios as Algebraic Order Parameters for Quantum Phases",
     "description": "**Conjecture:** For free-fermion systems at half-filling, the Newton ratio profile \u03c1\u2096 = e\u2096\u00b2/(e\u2096\u208b\u2081e\u2096\u208a\u2081) undergoes a qualitative change at quantum phase transitions: in gapless phases, max|log \u03c1\u2096| grows logarithmically with subsystem size; in gapped phases, it saturates to a finite value determined by the gap.\n\n**Test:** Compute Newton ratio profiles for the SSH model (topological insulator) across the topological phase transition. If log \u03c1\u2096 shows a discontinuous derivative at the critical point, the conjecture is supported. If it varies smoothly, the conjecture needs refinement.\n\n**Impact:** Would establish Newton ratios as a new class of algebraic order parameters for quantum phases, complementing traditional diagnostics like entanglement entropy and string order parameters.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `esymm_newton_inequality`, `newtonDefect_nonneg`, `NewtonRatioProfile`.\n\n**Proof Strategy:** Combine asymptotic analysis of Toeplitz determinants (for correlation matrices of free fermions) with the Fisher\u2013Hartwig conjecture to extract the large-m behavior of e\u2096 and hence \u03c1\u2096.\n\n**Domain Bridges:** Lorentzian geometry (log-concavity) \u2192 condensed matter physics (phase transitions) \u2192 random matrix theory (Toeplitz asymptotics).\n\n**Lineage:** Extends the Newton ratio profile concept introduced here; builds on the computational evidence in `demo.py`.\n\n**Ambition:** Grand challenge \u2014 requires connecting formal algebraic structures to asymptotic physics.\n\n*The key insight is* that Newton's inequality is not just a constraint but a diagnostic: how *tightly* the inequality is satisfied carries physical information about the quantum phase.\n\n*Why now?* The formal definition of `NewtonRatioProfile` and the proof of `esymm_newton_inequality` provide the mathematical foundation; the computational demos show the phase sensitivity.\n\n---",
@@ -1535,6 +1496,87 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T16:03:48.729875+00:00"
   },
   {
+    "id": "fd_1479",
+    "title": "Closing the Single-Power Gap",
+    "description": "Conjecture: For every fixed `k \u2265 0`, there exists `c_k > 0` such that for infinitely many `d`, some depth-`k` exchange family in dimension `d` has worst-case descent length at least `c_k \u00b7 d^{d-k}` (matching the upper bound exactly, not just `d^{d-k-1}`).\n\nTest: Construct increasingly refined adversarial families for `d = 4, ..., 20` with fixed `k = 0, 1, 2`. Compute worst-case descent lengths and fit the growth rate. If `T(d,k) / d^{d-k}` converges to a positive constant, the conjecture holds. If `T(d,k) / d^{d-k-1}` converges instead, the lower bound is tight and the upper bound can be improved.\n\nImpact: Resolves the central open question of the current theory. If the upper bound is tight, certificate depth is the exact complexity exponent. If not, there exists a finer invariant \u2014 a \"certificate depth 2.0\" \u2014 waiting to be discovered.",
+    "domains": [
+      "Pythagorean",
+      "Computation",
+      "MachineLearning"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "147eb4db",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:40:30.004231+00:00"
+  },
+  {
+    "id": "fd_1480",
+    "title": "Certificate Depth as a Matroid Invariant",
+    "description": "Conjecture: For matroid base exchange families, the certificate depth `k` is determined by the matroid's Tutte polynomial evaluated at specific points. Specifically, `k = d - 1` for Boolean matroids and `k = 1` for uniform matroids of fixed rank.\n\nTest: Compute certificate depth for explicit matroid families: uniform matroids `U(r, n)`, graphic matroids of complete graphs, and transversal matroids. Check whether `k` correlates with known matroid invariants (connectivity, girth, characteristic polynomial roots).\n\nImpact: Would establish certificate depth as a matroid-theoretic quantity, connecting the exchange descent complexity theory to the rich algebraic theory of matroids (Lorentzian polynomials, Hodge theory for matroids).",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "147eb4db",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:40:30.062802+00:00"
+  },
+  {
+    "id": "fd_1481",
+    "title": "Average-Case Descent Bounds",
+    "description": "Conjecture: For random exchange families on `[0, M]^d` with i.i.d. log-concave objective components, the expected descent length is `\u0398(d^{(d-k)/2})` \u2014 the square root of the worst case.\n\nTest: Generate 1000 random exchange families for each `(d, k)` with `d \u2208 {4, ..., 10}`. Run exchange descent from random start points. Fit the expected step count to `d^\u03b1` and estimate `\u03b1` as a function of `d - k`.\n\nImpact: Would provide practical guidance: if average-case is much better than worst-case, practitioners can rely on descent methods even when certificate depth is low.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "147eb4db",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:40:30.122941+00:00"
+  },
+  {
+    "id": "fd_1482",
+    "title": "Circuit Depth Lower Bounds from Layer Profiles",
+    "description": "Conjecture: The exchange descent problem with depth-`k` certificate in dimension `d` requires Boolean circuits of depth at least `(d - k - 1) \u00b7 log d` to solve.\n\nTest: Encode small instances (d = 4, 5, 6) as Boolean satisfiability problems and measure the depth of the smallest Boolean circuit that computes the optimal descent step. Compare with the layer profile prediction.\n\nImpact: Would connect exchange descent complexity to the central open questions of computational complexity theory (circuit depth lower bounds, the P vs NC question).",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "147eb4db",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:40:30.181006+00:00"
+  },
+  {
+    "id": "fd_1483",
+    "title": "Energy Landscape Metastability",
+    "description": "Conjecture: For spin systems on lattices with `d` components and interaction structure of \"depth\" `k`, the metastable relaxation time is at least `d^{d-k-1}` steps of any local dynamics.\n\nTest: Simulate Ising/Potts models on small lattices with controlled interaction structure. Measure relaxation times from metastable states. Fit to the predicted `d^{d-k-1}` scaling.\n\nImpact: Would provide a rigorous framework for predicting metastability in physical systems from structural properties of the interaction Hamiltonian.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Cryptography"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "147eb4db",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T16:40:30.251712+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1565,6 +1607,103 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1484",
+    "title": "Direction 1: Strict Sub-d Integrality Gap Without Capping",
+    "description": "**Conjecture**: For every d \u2265 3 and K \u2265 1, there exists \u03b5(d,K) > 0 and n\u2080(d,K) such that every d-uniform hypergraph H on n \u2265 n\u2080 vertices with \u0394\u2082(H) \u2264 K satisfies \u03c4(H) \u2264 (d \u2212 \u03b5(d,K)) \u00b7 \u03c4*(H). The predicted form is \u03b5(d,K) = c_d/(K+1) where c_d \u2248 1/(2d).\n\n**Test**: Generate random d-uniform hypergraphs conditioned on \u0394\u2082 \u2264 K for d = 3,4,5 and K = 1,2,5,10 with n = 50,100,500,1000. Compute exact \u03c4 (via ILP) and \u03c4* (via LP). Plot the ratio \u03c4/\u03c4* as a function of n for each (d,K). The conjecture predicts convergence to a value \u2264 d \u2212 c_d/(K+1). A disproof would show the ratio clustering near d for some bounded K.\n\n**Impact**: This would be the first integrality gap bound where the approximation factor depends on local overlap geometry rather than just uniformity. It would immediately impact:\n- Approximation algorithms for structured set cover instances\n- Competitive analysis of online covering with bounded overlap\n- Lower bounds in proof complexity for covering formulations\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (Theorem `integrality_gap_strict_of_capped`), `Catalog/Pythagorean/HypergraphTransversal.lean` (classical bounds).\n\n**Proof Strategy**: Use layered threshold rounding: set S\u2081 = {v : x(v) \u2265 1/(d-1)}, then bound the repair cost of uncovered edges using the pair codegree bound. The key lemma is that under \u0394\u2082 \u2264 K, the graph of \"uncovered edge\" adjacencies has bounded chromatic number, allowing a greedy repair with O(K) additional vertices per uncovered edge class.\n\n**Domain Bridges**: Approximation algorithms, polyhedral combinatorics, proof complexity.\n\n**Lineage**: Extends `integrality_gap_improved_capped` by removing the capping assumption.\n\n**Ambition**: Grand challenge \u2014 would open a new subfield of \"overlap-sensitive approximation.\"\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dbcfb2f4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T17:24:45.367460+00:00"
+  },
+  {
+    "id": "fd_1485",
+    "title": "Direction 2: Algorithmic Overlap-Adaptive Rounding",
+    "description": "**Conjecture**: There exists a polynomial-time rounding algorithm that, given a d-uniform hypergraph H with \u0394\u2082(H) \u2264 K and an optimal fractional transversal x*, outputs an integer transversal of size at most (d \u2212 \u03a9(1/K)) \u00b7 \u03c4*(H) + O(K). This algorithm does NOT require knowing K in advance \u2014 it adaptively estimates the overlap profile from the LP solution.\n\n**Test**: Implement the adaptive algorithm. Compare its output size to: (a) classical threshold rounding, (b) randomized rounding, (c) the LP relaxation value, on random instances with K = 1,2,5,10 and d = 3,4,5. The conjecture predicts consistent improvement over (a) and (b) for small K.\n\n**Impact**: First approximation algorithm with overlap-adaptive guarantees. Would influence:\n- Column generation methods for large-scale set cover\n- Online scheduling with bounded resource sharing\n- Network design with diversity constraints\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (energy bound, threshold results), `Catalog/Pythagorean/WeightedHypergraphTransversal.lean` (weighted rounding).\n\n**Proof Strategy**: Use the pair-overlap energy E(x) as a \"diagnostic\" \u2014 compute E(x*)/||x*||\u2081\u00b2 to estimate the effective overlap parameter. If this ratio is small, use an aggressive threshold (1/(d-1)); if large, fall back to 1/d. The energy bound guarantees that the effective overlap is at most K, even if K is unknown.\n\n**Domain Bridges**: Algorithm design, operations research, online optimization.\n\n**Lineage**: Builds on `pairOverlapEnergy_le_of_pairCodegreeBounded` as the diagnostic tool.\n\n**Ambition**: Solid extension \u2014 directly implementable and testable.\n\n**The key insight is** that the pair-overlap energy serves as a computable proxy for the unobserved codegree parameter, enabling adaptive algorithm design without structural assumptions.\n\n**Why now?** The formal verification of the energy bound provides a rigorous foundation for algorithm design that was previously available only as heuristic intuition.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dbcfb2f4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T17:24:45.431739+00:00"
+  },
+  {
+    "id": "fd_1486",
+    "title": "Direction 3: Statistical Physics of Covering Polytopes",
+    "description": "**Conjecture**: The partition function Z(\u03b2) = \u03a3_{S transversal} exp(\u2212\u03b2|S|) of the covering system undergoes a phase transition at \u03b2_c = ln(d\u22121) + O(1/(K+1)) when \u0394\u2082(H) \u2264 K. Below \u03b2_c, the Gibbs measure concentrates on transversals of size \u2248 \u03c4*\u00b7(d \u2212 \u03a9(1/K)); above \u03b2_c, it concentrates on the minimum transversal.\n\n**Test**: For random 3-uniform hypergraphs with \u0394\u2082 \u2264 K, estimate Z(\u03b2) via Monte Carlo simulation (Metropolis algorithm on the transversal indicator). Plot the free energy f(\u03b2) = \u2212(1/n)\u00b7ln Z(\u03b2) and identify the phase transition. Compare the critical \u03b2_c to the predicted formula.\n\n**Impact**: Would establish a rigorous connection between:\n- LP duality for covering (algebraic structure)\n- Gibbs measures on covering configurations (probabilistic structure)\n- Phase transitions in random combinatorial optimization\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (free energy coercivity), `Catalog/Pythagorean/FracTransversalConcentration.lean` (concentration bounds).\n\n**Proof Strategy**: Use the coercivity theorem as a warm-start: F(x) \u2265 0 implies the free energy is bounded below. Then develop a cluster expansion around the fractional optimum, using the energy bound to control higher-order terms. The pair codegree bound ensures the cluster expansion converges (weak coupling regime).\n\n**Domain Bridges**: Statistical physics, random constraint satisfaction, mean-field theory.\n\n**Lineage**: Extends `cover_free_energy_coercive` to the full Gibbs measure framework.\n\n**Ambition**: Grand challenge \u2014 would create a new interface between optimization and physics.\n\n**The key insight is** that the coercivity theorem is the zeroth-order term of a cluster expansion, and the energy bound controls the convergence radius.\n\n**Why now?** Formal verification of the free energy bound enables rigorous cluster expansion analysis that would otherwise be heuristic.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dbcfb2f4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T17:24:45.553550+00:00"
+  },
+  {
+    "id": "fd_1487",
+    "title": "Direction 4: Error-Correcting Codes from Bounded-Codegree Coverings",
+    "description": "**Conjecture**: For d \u2265 3 and K \u2265 1, the minimum transversal of a d-uniform hypergraph with \u0394\u2082 \u2264 K defines a binary code with minimum distance \u2265 d/(K+1) and rate \u2265 1 \u2212 (d\u2212\u03b5)\u00b7\u03c4*/n, where \u03b5 = \u03b5(d,K) > 0. In particular, bounded codegree covering systems yield codes that exceed the Gilbert-Varshamov bound when K is sufficiently small relative to d.\n\n**Test**: Construct explicit d-uniform hypergraphs with \u0394\u2082 \u2264 K (e.g., from Steiner systems or randomized constructions). Compute the minimum transversal and treat it as a codeword. Measure the minimum Hamming distance between transversals and compare to the GV bound.\n\n**Impact**: Would provide:\n- New constructions of LDPC-like codes from hypergraph covering\n- Connections between coding-theoretic distance and combinatorial overlap\n- A covering-based framework for code design\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (codegree bounds), `Catalog/Pythagorean/HypergraphTransversal.lean` (transversal theory).\n\n**Proof Strategy**: The minimum distance between two distinct transversals S\u2081, S\u2082 is |S\u2081 \u0394 S\u2082|. Under bounded codegree, the symmetric difference is large because the edges \"force\" transversals to spread out. Use the energy bound to show that concentrated transversals have high overlap energy, contradicting optimality.\n\n**Domain Bridges**: Coding theory, information theory, combinatorial design.\n\n**Lineage**: Uses `pairCodegree_le_one_of_pairwiseDisjoint` as the K=1 base case (Steiner systems).\n\n**Ambition**: Solid extension \u2014 connects two well-established fields through a new lens.\n\n**The key insight is** that bounded pair codegree forces transversals to be \"spread out,\" which is precisely the property needed for good error-correcting codes.\n\n**Why now?** The formal connection between codegree and energy opens a quantitative bridge to coding theory that was not previously available.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dbcfb2f4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T17:24:45.619179+00:00"
+  },
+  {
+    "id": "fd_1488",
+    "title": "Direction 5: Sparse Biological Interaction Networks",
+    "description": "**Conjecture**: In protein-protein interaction networks modeled as d-uniform hypergraphs (where edges represent protein complexes), the pair codegree \u0394\u2082 is bounded by O(log n) where n is the number of proteins. Consequently, the drug target selection problem (minimum hitting set of essential complexes) admits an approximation ratio of d \u2212 \u03a9(1/log n), significantly better than the worst-case d factor.\n\n**Test**: Analyze real PPI databases (BioGRID, STRING) for pair codegree distribution. For the top 1000 protein complexes, compute \u0394\u2082 and compare to log n. Then solve the hitting set LP, apply threshold rounding, and compare to the ILP solution. The conjecture predicts a gap ratio significantly below d.\n\n**Impact**: Would provide:\n- Rigorous approximation guarantees for drug target identification\n- Structural characterization of biological network overlap\n- Principled algorithms for essential gene prediction\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (all main theorems).\n\n**Proof Strategy**: Biological networks are known to have bounded degree distributions (scale-free with bounded average degree). Under degree bounds, the pair codegree is bounded by the product of individual degrees divided by the number of edges \u2014 which gives O(log n) in typical scale-free networks.\n\n**Domain Bridges**: Computational biology, network science, drug discovery.\n\n**Lineage**: Applies `integrality_gap_improved_capped` to biological network instances.\n\n**Ambition**: Solid extension \u2014 directly applicable to existing datasets.\n\n**The key insight is** that biological networks have naturally bounded pair codegree due to evolutionary pressure against redundant interactions, making them ideal candidates for overlap-sensitive optimization.\n\n**Why now?** Large-scale PPI databases are now available, and the formal guarantees from this work provide the first rigorous framework for overlap-adaptive analysis of biological covering problems.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "dbcfb2f4",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-27T17:24:45.684727+00:00"
   },
   {
     "id": "seed_013",
@@ -2028,87 +2167,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T14:12:46.483587+00:00"
-  },
-  {
-    "id": "fd_1479",
-    "title": "Closing the Single-Power Gap",
-    "description": "Conjecture: For every fixed `k \u2265 0`, there exists `c_k > 0` such that for infinitely many `d`, some depth-`k` exchange family in dimension `d` has worst-case descent length at least `c_k \u00b7 d^{d-k}` (matching the upper bound exactly, not just `d^{d-k-1}`).\n\nTest: Construct increasingly refined adversarial families for `d = 4, ..., 20` with fixed `k = 0, 1, 2`. Compute worst-case descent lengths and fit the growth rate. If `T(d,k) / d^{d-k}` converges to a positive constant, the conjecture holds. If `T(d,k) / d^{d-k-1}` converges instead, the lower bound is tight and the upper bound can be improved.\n\nImpact: Resolves the central open question of the current theory. If the upper bound is tight, certificate depth is the exact complexity exponent. If not, there exists a finer invariant \u2014 a \"certificate depth 2.0\" \u2014 waiting to be discovered.",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "MachineLearning"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "147eb4db",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T16:40:30.004231+00:00"
-  },
-  {
-    "id": "fd_1480",
-    "title": "Certificate Depth as a Matroid Invariant",
-    "description": "Conjecture: For matroid base exchange families, the certificate depth `k` is determined by the matroid's Tutte polynomial evaluated at specific points. Specifically, `k = d - 1` for Boolean matroids and `k = 1` for uniform matroids of fixed rank.\n\nTest: Compute certificate depth for explicit matroid families: uniform matroids `U(r, n)`, graphic matroids of complete graphs, and transversal matroids. Check whether `k` correlates with known matroid invariants (connectivity, girth, characteristic polynomial roots).\n\nImpact: Would establish certificate depth as a matroid-theoretic quantity, connecting the exchange descent complexity theory to the rich algebraic theory of matroids (Lorentzian polynomials, Hodge theory for matroids).",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "147eb4db",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T16:40:30.062802+00:00"
-  },
-  {
-    "id": "fd_1481",
-    "title": "Average-Case Descent Bounds",
-    "description": "Conjecture: For random exchange families on `[0, M]^d` with i.i.d. log-concave objective components, the expected descent length is `\u0398(d^{(d-k)/2})` \u2014 the square root of the worst case.\n\nTest: Generate 1000 random exchange families for each `(d, k)` with `d \u2208 {4, ..., 10}`. Run exchange descent from random start points. Fit the expected step count to `d^\u03b1` and estimate `\u03b1` as a function of `d - k`.\n\nImpact: Would provide practical guidance: if average-case is much better than worst-case, practitioners can rely on descent methods even when certificate depth is low.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "147eb4db",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T16:40:30.122941+00:00"
-  },
-  {
-    "id": "fd_1482",
-    "title": "Circuit Depth Lower Bounds from Layer Profiles",
-    "description": "Conjecture: The exchange descent problem with depth-`k` certificate in dimension `d` requires Boolean circuits of depth at least `(d - k - 1) \u00b7 log d` to solve.\n\nTest: Encode small instances (d = 4, 5, 6) as Boolean satisfiability problems and measure the depth of the smallest Boolean circuit that computes the optimal descent step. Compare with the layer profile prediction.\n\nImpact: Would connect exchange descent complexity to the central open questions of computational complexity theory (circuit depth lower bounds, the P vs NC question).",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "147eb4db",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T16:40:30.181006+00:00"
-  },
-  {
-    "id": "fd_1483",
-    "title": "Energy Landscape Metastability",
-    "description": "Conjecture: For spin systems on lattices with `d` components and interaction structure of \"depth\" `k`, the metastable relaxation time is at least `d^{d-k-1}` steps of any local dynamics.\n\nTest: Simulate Ising/Potts models on small lattices with controlled interaction structure. Measure relaxation times from metastable states. Fit to the predicted `d^{d-k-1}` scaling.\n\nImpact: Would provide a rigorous framework for predicting metastability in physical systems from structural properties of the interaction Hamiltonian.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Cryptography"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "147eb4db",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T16:40:30.251712+00:00"
   },
   {
     "id": "seed_032",
