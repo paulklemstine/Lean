@@ -1,856 +1,944 @@
-#!/usr/bin/env python3
 """
 Applications of Sheaf-Theoretic Tropical Persistence
+=====================================================
 
-Demonstrates real-world applications of the constructible sheaf framework:
-1. Network resilience analysis via sheaf jumps
-2. Sensor network coverage monitoring
-3. Social network community detection through tropical filtrations
+Real-world applications of the sheaf-theoretic framework:
+1. Network analysis: detecting phase transitions in dynamic networks
+2. Sensor coverage: tracking coverage changes in sensor networks
+3. Social network evolution: community formation events
 """
 
-from typing import List, Tuple, Dict, Set
-from dataclasses import dataclass
+from typing import List, Dict, Tuple, Set
+from collections import defaultdict
 import math
+import random
 
 
-# ─── Core Types (self-contained) ─────────────────────────────────────────
+# ─── Core infrastructure (self-contained) ───────────────────────────
 
-@dataclass
 class Graph:
-    n: int
-    edges: List[Tuple[int, int]]
+    def __init__(self, vertices: Set[int], edges: List[Tuple[int, int]]):
+        self.vertices = vertices
+        self.edges = edges
+        self._adj: Dict[int, Set[int]] = defaultdict(set)
+        for u, v in edges:
+            self._adj[u].add(v)
+            self._adj[v].add(u)
 
     def degree(self, v: int) -> int:
-        return sum(1 for (a, b) in self.edges if a == v or b == v)
-
-    def neighbors(self, v: int) -> Set[int]:
-        result = set()
-        for (a, b) in self.edges:
-            if a == v: result.add(b)
-            elif b == v: result.add(a)
-        return result
+        return len(self._adj[v])
 
 
-def critical_values(entrance_times: List[float]) -> List[float]:
-    return sorted(set(entrance_times))
+class VertexFiltration:
+    def __init__(self, entrance_times: Dict[int, float]):
+        self.entrance_times = entrance_times
+        self._critical_values = sorted(set(entrance_times.values()))
+
+    @property
+    def critical_values(self) -> List[float]:
+        return self._critical_values
+
+    def active_vertices(self, t: float) -> Set[int]:
+        return {v for v, ft in self.entrance_times.items() if ft <= t}
+
+    def fiber(self, c: float) -> Set[int]:
+        return {v for v, ft in self.entrance_times.items() if ft == c}
+
+    def sup_distance(self, other: 'VertexFiltration') -> float:
+        return max(abs(self.entrance_times[v] - other.entrance_times[v])
+                   for v in self.entrance_times)
 
 
-def active_vertices(entrance_times: List[float], t: float) -> List[int]:
-    return [v for v, fv in enumerate(entrance_times) if fv <= t]
+def sheaf_jump(G: Graph, filt: VertexFiltration, c: float) -> int:
+    return sum(G.degree(v) + 1 for v in filt.fiber(c))
 
 
-def sheaf_jump(graph: Graph, entrance_times: List[float], c: float) -> int:
-    entering = [v for v, fv in enumerate(entrance_times) if fv == c]
-    return sum(graph.degree(v) + 1 for v in entering)
+def sheaf_event_profile(G: Graph, filt: VertexFiltration, t: float) -> int:
+    return sum(sheaf_jump(G, filt, c) for c in filt.critical_values if c <= t)
 
 
-def sheaf_event_profile(graph: Graph, entrance_times: List[float], t: float) -> int:
-    crit = critical_values(entrance_times)
-    return sum(sheaf_jump(graph, entrance_times, c) for c in crit if c <= t)
+def connected_components(vertices: Set[int],
+                        edges: List[Tuple[int, int]]) -> int:
+    """Count connected components via union-find."""
+    if not vertices:
+        return 0
+    parent = {v: v for v in vertices}
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for u, v in edges:
+        if u in vertices and v in vertices:
+            pu, pv = find(u), find(v)
+            if pu != pv:
+                parent[pu] = pv
+    return len(set(find(v) for v in vertices))
 
 
-def euler_char(graph: Graph, entrance_times: List[float], t: float) -> int:
-    active = set(active_vertices(entrance_times, t))
-    V = len(active)
-    E = sum(1 for (a, b) in graph.edges if a in active and b in active)
-    return V - E
+# ─── Application 1: Network Phase Transitions ──────────────────────
 
-
-# ─── Application 1: Network Resilience Analysis ──────────────────────────
-
-def network_resilience_analysis():
+def network_phase_transition_analysis():
     """
-    Analyze network resilience by interpreting sheaf jumps as vulnerability indicators.
+    Analyze phase transitions in a growing network using sheaf jumps.
 
-    A network's nodes fail sequentially (modeled by a filtration). Large sheaf jumps
-    at a critical threshold indicate that the failing node was a hub — its removal
-    causes a large change in the network's tropical invariant.
-
-    This application uses the constructibility theorem: between failures, all
-    network invariants remain stable.
+    Model: vertices represent nodes in a network that come online at
+    different times. Large sheaf jumps indicate phase transitions where
+    the network structure changes significantly.
     """
-    print("\n" + "=" * 60)
-    print("  APPLICATION 1: Network Resilience Analysis")
-    print("=" * 60 + "\n")
+    print("=" * 60)
+    print("APPLICATION 1: Network Phase Transition Detection")
+    print("=" * 60)
 
-    # Model a small infrastructure network (e.g., power grid topology)
-    # Hub-and-spoke with some cross-links
-    n = 10
-    edges = [
-        (0, 1), (0, 2), (0, 3),  # Hub 0
-        (1, 4), (1, 5),          # Branch from 1
-        (2, 5), (2, 6),          # Branch from 2
-        (3, 6), (3, 7),          # Branch from 3
-        (4, 8), (5, 8),          # Cross-link
-        (6, 9), (7, 9),          # Cross-link
-        (8, 9),                  # Back edge
-    ]
-    G = Graph(n, edges)
+    # Build a network with clear phase transitions
+    n = 20
+    random.seed(42)
+    vertices = set(range(n))
 
-    # Failure order: periphery fails first, hubs fail last
-    # (resilience ordering — most critical nodes protected longest)
-    failure_times = [9.0, 6.0, 7.0, 8.0, 1.0, 2.0, 3.0, 4.0, 0.0, 5.0]
+    # Create edges: dense clusters connected by bridges
+    edges = []
+    # Cluster 1: vertices 0-6 (dense)
+    for i in range(7):
+        for j in range(i + 1, 7):
+            if random.random() < 0.6:
+                edges.append((i, j))
+    # Cluster 2: vertices 7-13 (dense)
+    for i in range(7, 14):
+        for j in range(i + 1, 14):
+            if random.random() < 0.6:
+                edges.append((i, j))
+    # Bridge: vertex 14 connects clusters
+    edges.append((6, 14))
+    edges.append((14, 7))
+    # Cluster 3: vertices 15-19
+    for i in range(15, 20):
+        for j in range(i + 1, 20):
+            if random.random() < 0.5:
+                edges.append((i, j))
+    edges.append((13, 15))
 
-    print("Network: 10-node infrastructure graph")
-    print(f"Failure times: {failure_times}")
-    print(f"Failure order: {[failure_times.index(i) for i in range(n)]}")
-    print()
+    G = Graph(vertices, edges)
 
-    crit = critical_values(failure_times)
-    print("Sheaf Jump Analysis (vulnerability indicators):")
-    print(f"{'Time':>6} {'Failing Node':>14} {'Deg':>5} {'Jump':>6} {'Cum Profile':>13} {'χ':>4}")
-    print("-" * 52)
+    # Filtration: vertices enter at their index time
+    filt = VertexFiltration({i: float(i) for i in range(n)})
 
-    for c in crit:
-        entering = [v for v, fv in enumerate(failure_times) if fv == c]
-        j = sheaf_jump(G, failure_times, c)
-        cum = sheaf_event_profile(G, failure_times, c)
-        chi = euler_char(G, failure_times, c)
-        for v in entering:
-            d = G.degree(v)
-            vulnerability = "⚠ HIGH" if j >= 4 else "  low"
-            print(f"{c:6.0f} {v:14d} {d:5d} {j:6d} {cum:13d} {chi:4d}  {vulnerability}")
+    print(f"\nNetwork: {n} vertices, {len(edges)} edges")
+    print(f"Critical values: {filt.critical_values}")
 
-    print("\nInterpretation: Large sheaf jumps identify critical infrastructure nodes.")
-    print("The constructibility theorem guarantees stability between failure events.")
+    print(f"\n{'Time':>6} | {'Active':>6} | {'Components':>10} | {'Jump':>5} | {'Profile':>8} | {'Phase':>8}")
+    print("-" * 60)
+
+    prev_profile = 0
+    for c in filt.critical_values:
+        active = filt.active_vertices(c)
+        active_edges = [(u, v) for u, v in edges if u in active and v in active]
+        comps = connected_components(active, edges)
+        j = sheaf_jump(G, filt, c)
+        profile = sheaf_event_profile(G, filt, c)
+
+        # Detect phase transitions: large jumps relative to average
+        avg_jump = profile / (c + 1) if c >= 0 else 0
+        phase = "⚡ TRANS" if j > avg_jump * 1.5 and c > 0 else ""
+
+        print(f"{c:>6.0f} | {len(active):>6} | {comps:>10} | {j:>5} | {profile:>8} | {phase:>8}")
+        prev_profile = profile
+
+    # Identify the strongest phase transitions
+    jumps = [(c, sheaf_jump(G, filt, c)) for c in filt.critical_values]
+    jumps.sort(key=lambda x: x[1], reverse=True)
+    print(f"\nTop 3 phase transitions (by sheaf jump):")
+    for c, j in jumps[:3]:
+        v = int(c)
+        print(f"  t={c}: jump={j} (vertex {v}, degree={G.degree(v)})")
 
 
-# ─── Application 2: Sensor Network Coverage ──────────────────────────────
+# ─── Application 2: Sensor Coverage Analysis ───────────────────────
 
 def sensor_coverage_analysis():
     """
-    Model sensor network activation as a tropical filtration.
+    Track coverage changes in a sensor network using constructible sheaf theory.
 
-    Sensors activate at different times (sunrise, scheduled activation, etc.).
-    The sheaf jump at each activation time measures the coverage contribution
-    of the activating sensor. The cumulative profile tracks total coverage capacity.
+    Model: sensors activate at different times. The sheaf tracks
+    how coverage (active sensors and their connections) evolves.
+    Constructibility means coverage is stable between activation events.
     """
-    print("\n" + "=" * 60)
-    print("  APPLICATION 2: Sensor Network Coverage Monitoring")
-    print("=" * 60 + "\n")
+    print(f"\n{'='*60}")
+    print("APPLICATION 2: Sensor Coverage Analysis")
+    print("=" * 60)
 
     # Grid-like sensor network
-    # 3x3 grid
-    n = 9
-    edges = [
-        (0, 1), (1, 2),         # Row 0
-        (3, 4), (4, 5),         # Row 1
-        (6, 7), (7, 8),         # Row 2
-        (0, 3), (3, 6),         # Col 0
-        (1, 4), (4, 7),         # Col 1
-        (2, 5), (5, 8),         # Col 2
-    ]
-    G = Graph(n, edges)
+    grid_size = 4
+    vertices = set()
+    edges = []
+    for i in range(grid_size):
+        for j in range(grid_size):
+            v = i * grid_size + j
+            vertices.add(v)
+            if j < grid_size - 1:
+                edges.append((v, v + 1))
+            if i < grid_size - 1:
+                edges.append((v, v + grid_size))
 
-    # Activation times (staggered for energy efficiency)
-    activation = [0.0, 0.5, 1.0, 0.5, 1.0, 1.5, 1.0, 1.5, 2.0]
+    G = Graph(vertices, edges)
 
-    print("Sensor grid (3x3):")
-    print("  0 - 1 - 2")
-    print("  |   |   |")
-    print("  3 - 4 - 5")
-    print("  |   |   |")
-    print("  6 - 7 - 8")
-    print(f"\nActivation times: {activation}")
+    # Activation times: center sensors activate first, periphery later
+    center = (grid_size - 1) / 2
+    activation = {}
+    for i in range(grid_size):
+        for j in range(grid_size):
+            v = i * grid_size + j
+            dist = abs(i - center) + abs(j - center)
+            activation[v] = dist
 
-    crit = critical_values(activation)
-    print(f"\nCritical activation times: {crit}")
-    print(f"\nCoverage buildup:")
-    print(f"{'Time':>6} {'Active Sensors':>20} {'Coverage (profile)':>20} {'χ':>5}")
-    print("-" * 55)
+    filt = VertexFiltration(activation)
+    print(f"\nSensor grid: {grid_size}x{grid_size} = {len(vertices)} sensors")
+    print(f"Activation order: center-out (Manhattan distance)")
+    print(f"Critical values: {filt.critical_values}")
 
-    for c in crit:
-        active = active_vertices(activation, c)
-        profile = sheaf_event_profile(G, activation, c)
-        chi = euler_char(G, activation, c)
-        print(f"{c:6.1f} {str(active):>20} {profile:20d} {chi:5d}")
+    print(f"\n{'Phase':>6} | {'Sensors':>7} | {'Coverage':>8} | {'Jump':>5} | {'Components':>10}")
+    print("-" * 52)
 
-    print("\nThe sheaf event profile grows monotonically, reflecting increasing")
-    print("network capacity. Euler characteristic tracks connectivity.")
+    for c in filt.critical_values:
+        active = filt.active_vertices(c)
+        comps = connected_components(active, edges)
+        j = sheaf_jump(G, filt, c)
+        coverage_pct = len(active) / len(vertices) * 100
+        print(f"{c:>6.0f} | {len(active):>7} | {coverage_pct:>7.0f}% | {j:>5} | {comps:>10}")
+
+    # Stability analysis: perturbations
+    print(f"\n--- Stability under sensor timing jitter ---")
+    random.seed(123)
+    for eps in [0.1, 0.3, 0.5]:
+        perturbed = {v: activation[v] + random.uniform(-eps, eps) for v in vertices}
+        filt2 = VertexFiltration(perturbed)
+        max_diff = 0
+        for t_val in range(int(max(activation.values())) + 2):
+            t = float(t_val)
+            p1 = sheaf_event_profile(G, filt, t)
+            p2 = sheaf_event_profile(G, filt2, t)
+            max_diff = max(max_diff, abs(p1 - p2))
+        print(f"  ε={eps}: sup_dist={filt.sup_distance(filt2):.3f}, max profile diff={max_diff}")
 
 
-# ─── Application 3: Community Evolution ──────────────────────────────────
+# ─── Application 3: Community Formation ─────────────────────────────
 
-def community_evolution():
+def community_formation_analysis():
     """
-    Track community structure evolution in a social network.
+    Track community formation in a social network using Möbius inversion.
 
-    As new members join (filtration), the sheaf jumps quantify the structural
-    impact of each new member. High-degree members joining cause large jumps.
+    The Möbius-like formula decomposes the global profile into local contributions,
+    revealing which community formation events contribute most to network complexity.
     """
-    print("\n" + "=" * 60)
-    print("  APPLICATION 3: Social Network Community Evolution")
-    print("=" * 60 + "\n")
+    print(f"\n{'='*60}")
+    print("APPLICATION 3: Community Formation via Möbius Inversion")
+    print("=" * 60)
 
-    # Two communities with a bridge
-    n = 8
-    edges = [
-        # Community A (dense)
-        (0, 1), (0, 2), (1, 2), (0, 3), (1, 3), (2, 3),
-        # Community B (dense)
-        (4, 5), (4, 6), (5, 6), (4, 7), (5, 7), (6, 7),
-        # Bridge
-        (3, 4),
-    ]
-    G = Graph(n, edges)
+    # Social network: two communities with a bridge
+    n = 12
+    vertices = set(range(n))
+    edges = []
 
-    # Members join over time
-    join_times = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0]
+    # Community A: {0,1,2,3,4}
+    for i in range(5):
+        for j in range(i + 1, 5):
+            edges.append((i, j))
 
-    print("Social network: Two communities (A={0,1,2,3}, B={4,5,6,7})")
-    print(f"Bridge: 3-4")
-    print(f"Join times: {join_times}")
+    # Community B: {5,6,7,8,9}
+    for i in range(5, 10):
+        for j in range(i + 1, 10):
+            edges.append((i, j))
 
-    crit = critical_values(join_times)
-    print(f"\nCommunity evolution:")
-    print(f"{'Time':>6} {'New Member':>12} {'Degree':>8} {'Jump':>6} "
-          f"{'Profile':>9} {'χ':>4} {'Phase':>12}")
-    print("-" * 63)
+    # Bridges
+    edges.append((4, 5))  # Bridge between A and B
+    edges.append((9, 10))  # Extension to {10, 11}
+    edges.append((10, 11))
 
-    for c in crit:
-        entering = [v for v, fv in enumerate(join_times) if fv == c]
-        j = sheaf_jump(G, join_times, c)
-        profile = sheaf_event_profile(G, join_times, c)
-        chi = euler_char(G, join_times, c)
+    G = Graph(vertices, edges)
+    filt = VertexFiltration({i: float(i) for i in range(n)})
 
-        for v in entering:
-            d = G.degree(v)
-            if v <= 3:
-                phase = "Community A"
-            elif v == 4:
-                phase = "Bridge!"
-            else:
-                phase = "Community B"
-            print(f"{c:6.0f} {v:12d} {d:8d} {j:6d} {profile:9d} {chi:4d} {phase:>12}")
+    print(f"\nSocial network: {n} people, {len(edges)} connections")
+    print(f"Communities: A={{0-4}}, B={{5-9}}, extension={{10-11}}")
 
-    # Stability experiment: perturb join times
-    print("\n--- Stability under perturbation ---")
-    perturbed = [t + 0.2 * math.sin(t) for t in join_times]
-    eps = max(abs(a - b) for a, b in zip(join_times, perturbed))
-    print(f"Perturbed times: {[f'{t:.2f}' for t in perturbed]}")
-    print(f"Sup distance: ε = {eps:.4f}")
+    # Compute Möbius inversion
+    crits = filt.critical_values
+    print(f"\n--- Möbius Inversion: Profile Decomposition ---")
+    print(f"{'Interval':>15} | {'Jump':>5} | {'Cumulative':>10} | {'Description':>20}")
+    print("-" * 60)
 
-    # Check interleaving
-    interleaved = True
-    for t_test in [float(i) * 0.5 for i in range(20)]:
-        p1 = sheaf_event_profile(G, join_times, t_test)
-        p2 = sheaf_event_profile(G, perturbed, t_test + eps)
-        if p1 > p2:
-            interleaved = False
-            break
-    print(f"ε-interleaving verified: {'✓' if interleaved else '✗'}")
+    cumulative = 0
+    for i, c in enumerate(crits):
+        j = sheaf_jump(G, filt, c)
+        cumulative += j
+        v = int(c)
+        desc = f"vertex {v} (deg={G.degree(v)})"
+        if v <= 4:
+            desc += " [comm A]"
+        elif v <= 9:
+            desc += " [comm B]"
+        else:
+            desc += " [extension]"
 
+        s_str = f"({crits[i-1]:.0f}, {c:.0f}]" if i > 0 else f"(-∞, {c:.0f}]"
+        print(f"{s_str:>15} | {j:>5} | {cumulative:>10} | {desc:>20}")
+
+    # Verify telescoping
+    total_profile = sheaf_event_profile(G, filt, float(n))
+    print(f"\nTotal profile (computed): {total_profile}")
+    print(f"Cumulative jumps: {cumulative}")
+    print(f"Match: {'✓' if total_profile == cumulative else '✗'}")
+
+
+# ─── Main ────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  Applications of Sheaf-Theoretic Tropical Persistence   ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    network_resilience_analysis()
+    network_phase_transition_analysis()
     sensor_coverage_analysis()
-    community_evolution()
+    community_formation_analysis()
+    print(f"\n{'='*60}")
+    print("All applications completed.")
+    print("=" * 60)
 
-    print(f"\n{'=' * 60}")
-    print("  All applications completed successfully.")
-    print(f"{'=' * 60}")
 
-
-#!/usr/bin/env python3
 """
-Sheaf-Theoretic Tropical Persistence — Interactive Demo
+Sheaf-Theoretic Tropical Persistence: Interactive Demo
+=====================================================
 
-Demonstrates the constructible sheaf structure on tropical graph filtrations
-for path graphs and cycle graphs. Shows:
+Demonstrates the core theorems on path graphs and cycle graphs:
 1. Critical thresholds and stalk values
-2. Sheaf jump profiles
-3. Cumulative sheaf event profile vs. direct tropical event profile
-4. Comparison validating the recovery theorem
+2. Sheaf jump computation
+3. Cumulative jump profile = event profile
+4. Constructibility (locally constant between critical values)
+5. Stability under perturbation
 """
 
 import numpy as np
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
-# ─── Graph Definitions ───────────────────────────────────────────────────
+
+# ─── Graph definitions ───────────────────────────────────────────────
 
 def path_graph_adj(n: int) -> List[Tuple[int, int]]:
-    """Adjacency list for path graph P_n on vertices {0, ..., n-1}."""
-    return [(i, i + 1) for i in range(n - 1)]
+    """Edges of the path graph P_{n+1} on vertices {0, ..., n}."""
+    return [(i, i + 1) for i in range(n)]
+
 
 def cycle_graph_adj(n: int) -> List[Tuple[int, int]]:
-    """Adjacency list for cycle graph C_n on vertices {0, ..., n-1}."""
-    edges = [(i, (i + 1) % n) for i in range(n)]
-    return edges
+    """Edges of the cycle graph C_n on vertices {0, ..., n-1}. Requires n >= 3."""
+    assert n >= 3
+    return [(i, (i + 1) % n) for i in range(n)]
 
-def degree(n: int, edges: List[Tuple[int, int]], v: int) -> int:
+
+def degree(edges: List[Tuple[int, int]], v: int) -> int:
     """Degree of vertex v in the graph."""
     return sum(1 for (a, b) in edges if a == v or b == v)
 
-# ─── Tropical Filtration ─────────────────────────────────────────────────
 
-def default_filtration(n: int) -> List[float]:
-    """Default filtration: vertex i enters at time i."""
-    return [float(i) for i in range(n)]
+# ─── Filtration and active sets ──────────────────────────────────────
 
-def random_filtration(n: int, seed: int = 42) -> List[float]:
-    """Random filtration for perturbation experiments."""
-    rng = np.random.default_rng(seed)
-    return sorted(rng.uniform(0, n, size=n).tolist())
+def active_vertices(filt: Dict[int, float], t: float) -> set:
+    """Vertices whose entrance time is ≤ t."""
+    return {v for v, ft in filt.items() if ft <= t}
 
-# ─── Core Sheaf Computations ─────────────────────────────────────────────
 
-def critical_values(filt: List[float]) -> List[float]:
-    """Critical values = sorted unique entrance times."""
-    return sorted(set(filt))
-
-def active_vertices(filt: List[float], t: float) -> List[int]:
-    """Vertices active at threshold t."""
-    return [v for v, fv in enumerate(filt) if fv <= t]
-
-def tropical_event_profile(n: int, edges: List[Tuple[int, int]],
-                           filt: List[float], t: float) -> int:
-    """Direct computation of tropical event profile at threshold t."""
+def tropical_event_profile(edges: List[Tuple[int, int]],
+                            filt: Dict[int, float],
+                            t: float) -> int:
+    """Cumulative degree-weighted event profile at threshold t."""
     active = active_vertices(filt, t)
-    return sum(degree(n, edges, v) + 1 for v in active)
+    return sum(degree(edges, v) + 1 for v in active)
 
-def sheaf_jump(n: int, edges: List[Tuple[int, int]],
-               filt: List[float], c: float) -> int:
-    """Sheaf jump at critical value c: sum of (deg(v)+1) for v entering at c."""
-    entering = [v for v, fv in enumerate(filt) if fv == c]
-    return sum(degree(n, edges, v) + 1 for v in entering)
 
-def sheaf_event_profile(n: int, edges: List[Tuple[int, int]],
-                        filt: List[float], t: float) -> int:
-    """Cumulative sheaf jump profile up to threshold t."""
-    crit = critical_values(filt)
-    return sum(sheaf_jump(n, edges, filt, c) for c in crit if c <= t)
+# ─── Sheaf constructions ────────────────────────────────────────────
 
-def active_edge_count(n: int, edges: List[Tuple[int, int]],
-                      filt: List[float], t: float) -> int:
-    """Number of active edges at threshold t."""
-    active = set(active_vertices(filt, t))
-    return sum(1 for (a, b) in edges if a in active and b in active)
+def critical_values(filt: Dict[int, float]) -> List[float]:
+    """Sorted critical values (entrance times)."""
+    return sorted(set(filt.values()))
 
-def euler_characteristic(n: int, edges: List[Tuple[int, int]],
-                         filt: List[float], t: float) -> int:
-    """Euler characteristic of active subgraph: |V| - |E|."""
-    V = len(active_vertices(filt, t))
-    E = active_edge_count(n, edges, filt, t)
-    return V - E
 
-# ─── Constructibility Check ──────────────────────────────────────────────
+def sheaf_jump(edges: List[Tuple[int, int]],
+               filt: Dict[int, float],
+               c: float) -> int:
+    """Sheaf jump at critical value c: sum of (degree(v) + 1) for vertices entering at time c."""
+    return sum(degree(edges, v) + 1 for v, ft in filt.items() if ft == c)
 
-def verify_constructibility(n: int, edges: List[Tuple[int, int]],
-                            filt: List[float]) -> bool:
-    """Verify that the event profile is constant between critical values."""
-    crit = critical_values(filt)
-    for i in range(len(crit) - 1):
-        # Check midpoint between consecutive critical values
-        mid = (crit[i] + crit[i + 1]) / 2
-        # Profile at crit[i] and mid should be equal
-        p_crit = tropical_event_profile(n, edges, filt, crit[i])
-        p_mid = tropical_event_profile(n, edges, filt, mid)
-        if p_crit != p_mid:
-            return False
-    return True
 
-# ─── Stability Check ─────────────────────────────────────────────────────
+def cumulative_sheaf_jump(edges: List[Tuple[int, int]],
+                          filt: Dict[int, float],
+                          t: float) -> int:
+    """Cumulative sheaf jump up to threshold t."""
+    crits = critical_values(filt)
+    return sum(sheaf_jump(edges, filt, c) for c in crits if c <= t)
 
-def verify_interleaving(n: int, edges: List[Tuple[int, int]],
-                        filt1: List[float], filt2: List[float],
-                        epsilon: float) -> Tuple[bool, float]:
-    """
-    Verify ε-interleaving: profile_f(t) ≤ profile_g(t+ε) for all t.
-    Returns (success, max_violation).
-    """
-    # Check that filtrations are ε-close
-    actual_dist = max(abs(f1 - f2) for f1, f2 in zip(filt1, filt2))
 
-    # Test interleaving at a fine grid
-    t_values = np.linspace(-1, n + 1, 1000)
-    max_violation = 0.0
-    success = True
-    for t in t_values:
-        p1 = sheaf_event_profile(n, edges, filt1, t)
-        p2_shifted = sheaf_event_profile(n, edges, filt2, t + epsilon)
-        if p1 > p2_shifted:
-            success = False
-            max_violation = max(max_violation, p1 - p2_shifted)
-    return success, max_violation
+def stalk_rank(filt: Dict[int, float], t: float) -> int:
+    """Stalk rank = |active vertices at t|."""
+    return len(active_vertices(filt, t))
 
-# ─── Demo Functions ───────────────────────────────────────────────────────
 
-def demo_path_graph(n: int = 6):
-    """Full demo for path graph P_n."""
+def singular_support(edges: List[Tuple[int, int]],
+                     filt: Dict[int, float]) -> List[float]:
+    """Critical values where sheaf jump is nonzero."""
+    return [c for c in critical_values(filt) if sheaf_jump(edges, filt, c) != 0]
+
+
+def higher_sheaf_jump(filt: Dict[int, float], c: float) -> int:
+    """Higher sheaf jump: counts simultaneous vertex entrances above 1."""
+    fiber = [v for v, ft in filt.items() if ft == c]
+    return max(0, len(fiber) - 1)
+
+
+# ─── Demo 1: Path Graph ─────────────────────────────────────────────
+
+def demo_path_graph(n: int = 5):
+    """Demonstrate sheaf constructions on path graph P_{n+1}."""
     print(f"\n{'='*60}")
-    print(f"  PATH GRAPH P_{n} — Sheaf-Theoretic Analysis")
-    print(f"{'='*60}\n")
-
-    edges = path_graph_adj(n)
-    filt = default_filtration(n)
-    crit = critical_values(filt)
-
-    print(f"Vertices: {list(range(n))}")
-    print(f"Edges: {edges}")
-    print(f"Filtration: {filt}")
-    print(f"Critical values: {crit}")
-    print()
-
-    # Sheaf jump profile
-    print("Sheaf Jump Profile:")
-    print(f"{'Threshold':>12} {'Jump':>8} {'Cum. Jump':>12} {'Direct Profile':>16}")
-    print("-" * 52)
-    cum = 0
-    for c in crit:
-        j = sheaf_jump(n, edges, filt, c)
-        cum += j
-        direct = tropical_event_profile(n, edges, filt, c)
-        print(f"{c:12.1f} {j:8d} {cum:12d} {direct:16d}")
-
-    # Verify recovery theorem
-    print(f"\n✓ Recovery Theorem Verified: cumulative jump = direct profile")
-    for c in crit:
-        assert sheaf_event_profile(n, edges, filt, c) == \
-               tropical_event_profile(n, edges, filt, c), \
-               f"Recovery failed at t={c}"
-
-    # Constructibility
-    is_constructible = verify_constructibility(n, edges, filt)
-    print(f"✓ Constructibility Verified: {is_constructible}")
-
-    # Euler characteristic
-    print(f"\nEuler Characteristic Profile:")
-    for c in crit:
-        chi = euler_characteristic(n, edges, filt, c)
-        print(f"  χ(t={c:.0f}) = {chi}")
-
-    # Active vertex count
-    print(f"\nActive Vertex Count (= stalk cardinality):")
-    for c in crit:
-        av = active_vertices(filt, c)
-        print(f"  |F(t={c:.0f})| = {len(av)}  (vertices: {av})")
-
-
-def demo_cycle_graph(n: int = 6):
-    """Full demo for cycle graph C_n."""
-    print(f"\n{'='*60}")
-    print(f"  CYCLE GRAPH C_{n} — Sheaf-Theoretic Analysis")
-    print(f"{'='*60}\n")
-
-    edges = cycle_graph_adj(n)
-    filt = default_filtration(n)
-    crit = critical_values(filt)
-
-    print(f"Vertices: {list(range(n))}")
-    print(f"Edges: {edges}")
-    print(f"Filtration: {filt}")
-    print(f"Critical values: {crit}")
-    print()
-
-    # Sheaf jump profile
-    print("Sheaf Jump Profile:")
-    print(f"{'Threshold':>12} {'Jump':>8} {'Cum. Jump':>12} {'Direct Profile':>16}")
-    print("-" * 52)
-    cum = 0
-    for c in crit:
-        j = sheaf_jump(n, edges, filt, c)
-        cum += j
-        direct = tropical_event_profile(n, edges, filt, c)
-        print(f"{c:12.1f} {j:8d} {cum:12d} {direct:16d}")
-
-    # Recovery theorem
-    for c in crit:
-        assert sheaf_event_profile(n, edges, filt, c) == \
-               tropical_event_profile(n, edges, filt, c)
-    print(f"\n✓ Recovery Theorem Verified")
-
-    # Constructibility
-    is_constructible = verify_constructibility(n, edges, filt)
-    print(f"✓ Constructibility Verified: {is_constructible}")
-
-    # Compare with path graph: cycle has extra edge creating cycle obstruction
-    print(f"\nCycle vs Path Comparison:")
-    path_edges = path_graph_adj(n)
-    for c in crit:
-        jp = sheaf_jump(n, path_edges, filt, c)
-        jc = sheaf_jump(n, edges, filt, c)
-        print(f"  t={c:.0f}: path_jump={jp}, cycle_jump={jc}, "
-              f"diff={jc - jp}")
-
-
-def demo_stability(n: int = 5):
-    """Demo stability via sheaf interleaving."""
-    print(f"\n{'='*60}")
-    print(f"  STABILITY VIA SHEAF INTERLEAVING — P_{n}")
-    print(f"{'='*60}\n")
-
-    edges = path_graph_adj(n)
-    filt1 = default_filtration(n)
-    filt2 = [f + 0.3 * np.sin(i) for i, f in enumerate(filt1)]
-
-    epsilon = max(abs(f1 - f2) for f1, f2 in zip(filt1, filt2))
-    print(f"Filtration 1: {[f'{f:.2f}' for f in filt1]}")
-    print(f"Filtration 2: {[f'{f:.2f}' for f in filt2]}")
-    print(f"Sup distance: ε = {epsilon:.4f}")
-
-    # Verify interleaving
-    success_fwd, viol_fwd = verify_interleaving(n, edges, filt1, filt2, epsilon)
-    success_bwd, viol_bwd = verify_interleaving(n, edges, filt2, filt1, epsilon)
-    print(f"\nForward interleaving (f₁ ≤ f₂ shifted): {'✓' if success_fwd else '✗'}")
-    print(f"Backward interleaving (f₂ ≤ f₁ shifted): {'✓' if success_bwd else '✗'}")
-
-    # Show profiles at sample points
-    t_samples = np.linspace(-0.5, n + 0.5, 20)
-    print(f"\n{'t':>8} {'P₁(t)':>8} {'P₂(t)':>8} {'P₂(t+ε)':>10} {'P₁≤P₂(t+ε)?':>14}")
-    print("-" * 54)
-    for t in t_samples:
-        p1 = sheaf_event_profile(n, edges, filt1, t)
-        p2 = sheaf_event_profile(n, edges, filt2, t)
-        p2s = sheaf_event_profile(n, edges, filt2, t + epsilon)
-        ok = "✓" if p1 <= p2s else "✗"
-        print(f"{t:8.2f} {p1:8d} {p2:8d} {p2s:10d} {ok:>14}")
-
-
-def demo_stalk_constancy():
-    """Demonstrate stalk constancy between critical values."""
-    print(f"\n{'='*60}")
-    print(f"  CONSTRUCTIBILITY: Stalk Constancy Demo")
-    print(f"{'='*60}\n")
-
-    n = 5
-    edges = path_graph_adj(n)
-    filt = default_filtration(n)
-    crit = critical_values(filt)
-
-    print("Testing that active sets are identical between critical values:\n")
-    for i in range(len(crit) - 1):
-        c_lo, c_hi = crit[i], crit[i + 1]
-        # Test at multiple points in (c_lo, c_hi)
-        test_points = np.linspace(c_lo + 0.01, c_hi - 0.01, 5)
-        av_ref = set(active_vertices(filt, c_lo))
-        all_equal = True
-        for t in test_points:
-            av_t = set(active_vertices(filt, t))
-            if av_t != av_ref:
-                all_equal = False
-                break
-        status = "✓ CONSTANT" if all_equal else "✗ CHANGED"
-        print(f"  Interval ({c_lo:.0f}, {c_hi:.0f}): {status}")
-        print(f"    Stalk = {sorted(av_ref)}")
-        print(f"    Profile value = {tropical_event_profile(n, edges, filt, c_lo)}")
-        print()
-
-
-if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  Sheaf-Theoretic Tropical Persistence — Full Demo       ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    demo_path_graph(6)
-    demo_cycle_graph(6)
-    demo_stability(5)
-    demo_stalk_constancy()
-
-    print(f"\n{'='*60}")
-    print("  All demonstrations completed successfully.")
+    print(f"DEMO 1: Path Graph P_{n+1} (vertices 0..{n})")
     print(f"{'='*60}")
 
+    edges = path_graph_adj(n)
+    # Natural filtration: vertex i enters at time i
+    filt = {i: float(i) for i in range(n + 1)}
 
-#!/usr/bin/env python3
+    crits = critical_values(filt)
+    print(f"\nCritical values: {crits}")
+    print(f"Singular support: {singular_support(edges, filt)}")
+    print(f"\n{'Threshold':>10} | {'Active':>8} | {'Stalk':>6} | {'EventProf':>10} | {'CumJump':>8} | {'Match':>5}")
+    print("-" * 65)
+
+    # Test at various thresholds including between critical values
+    test_thresholds = sorted(set(
+        [c - 0.5 for c in crits] + crits + [c + 0.5 for c in crits] + [-1.0, n + 1.0]
+    ))
+
+    for t in test_thresholds:
+        active = active_vertices(filt, t)
+        sr = stalk_rank(filt, t)
+        ep = tropical_event_profile(edges, filt, t)
+        cj = cumulative_sheaf_jump(edges, filt, t)
+        match = "✓" if ep == cj else "✗"
+        print(f"{t:>10.1f} | {str(active):>8} | {sr:>6} | {ep:>10} | {cj:>8} | {match:>5}")
+
+    print(f"\n--- Sheaf Jumps at Critical Values ---")
+    for c in crits:
+        j = sheaf_jump(edges, filt, c)
+        hj = higher_sheaf_jump(filt, c)
+        v = int(c)
+        d = degree(edges, v)
+        print(f"  c={c}: jump={j} (vertex {v}, degree={d}, weight={d+1}), higher_jump={hj}")
+
+    # Verify Theorem: sheaf jump ≤ 3 for path graphs
+    print(f"\n--- Theorem Verification: sheafJump ≤ 3 ---")
+    all_ok = all(sheaf_jump(edges, filt, c) <= 3 for c in crits)
+    print(f"  All jumps ≤ 3: {all_ok}")
+
+    # Verify constructibility: profile constant between critical values
+    print(f"\n--- Constructibility Check ---")
+    for i in range(len(crits) - 1):
+        s = (crits[i] + crits[i + 1]) / 2 - 0.1
+        t = (crits[i] + crits[i + 1]) / 2 + 0.1
+        ep_s = tropical_event_profile(edges, filt, s)
+        ep_t = tropical_event_profile(edges, filt, t)
+        print(f"  Between c={crits[i]} and c={crits[i+1]}: profile({s:.1f})={ep_s}, profile({t:.1f})={ep_t}, constant={ep_s==ep_t}")
+
+
+# ─── Demo 2: Cycle Graph ────────────────────────────────────────────
+
+def demo_cycle_graph(n: int = 6):
+    """Demonstrate sheaf constructions on cycle graph C_n."""
+    print(f"\n{'='*60}")
+    print(f"DEMO 2: Cycle Graph C_{n} (vertices 0..{n-1})")
+    print(f"{'='*60}")
+
+    edges = cycle_graph_adj(n)
+    filt = {i: float(i) for i in range(n)}
+
+    crits = critical_values(filt)
+    print(f"\nCritical values: {crits}")
+    print(f"Singular support: {singular_support(edges, filt)}")
+
+    print(f"\n{'Threshold':>10} | {'Stalk':>6} | {'EventProf':>10} | {'CumJump':>8} | {'Match':>5}")
+    print("-" * 55)
+
+    test_thresholds = sorted(set(
+        [c - 0.5 for c in crits] + crits + [c + 0.5 for c in crits] + [-1.0, n + 0.5]
+    ))
+
+    for t in test_thresholds:
+        sr = stalk_rank(filt, t)
+        ep = tropical_event_profile(edges, filt, t)
+        cj = cumulative_sheaf_jump(edges, filt, t)
+        match = "✓" if ep == cj else "✗"
+        print(f"{t:>10.1f} | {sr:>6} | {ep:>10} | {cj:>8} | {match:>5}")
+
+    print(f"\n--- Sheaf Jumps ---")
+    for c in crits:
+        j = sheaf_jump(edges, filt, c)
+        hj = higher_sheaf_jump(filt, c)
+        v = int(c)
+        d = degree(edges, v)
+        print(f"  c={c}: jump={j}, vertex {v}, degree={d}, higher_jump={hj}")
+
+    # Verify higher jump vanishing (injective filtration)
+    print(f"\n--- Higher Jump Vanishing (injective filtration) ---")
+    all_zero = all(higher_sheaf_jump(filt, c) == 0 for c in crits)
+    print(f"  All higher jumps = 0: {all_zero}")
+
+
+# ─── Demo 3: Stability ──────────────────────────────────────────────
+
+def demo_stability(n: int = 5, epsilon: float = 0.3):
+    """Demonstrate stability of sheaf event profiles under perturbation."""
+    print(f"\n{'='*60}")
+    print(f"DEMO 3: Stability (path P_{n+1}, ε={epsilon})")
+    print(f"{'='*60}")
+
+    edges = path_graph_adj(n)
+    filt1 = {i: float(i) for i in range(n + 1)}
+
+    # Perturbed filtration
+    np.random.seed(42)
+    perturbation = {i: np.random.uniform(-epsilon, epsilon) for i in range(n + 1)}
+    filt2 = {i: filt1[i] + perturbation[i] for i in range(n + 1)}
+
+    sup_dist = max(abs(filt1[v] - filt2[v]) for v in filt1)
+    print(f"\nSup distance: {sup_dist:.4f}")
+    print(f"Perturbation bound ε: {epsilon}")
+
+    print(f"\n{'t':>6} | {'Prof1':>6} | {'Prof2':>6} | {'Prof2(t+ε)':>11} | {'Interleaved':>11}")
+    print("-" * 55)
+
+    for t_int in range(-1, n + 3):
+        t = float(t_int) * 0.5
+        p1 = cumulative_sheaf_jump(edges, filt1, t)
+        p2 = cumulative_sheaf_jump(edges, filt2, t)
+        p2_shift = cumulative_sheaf_jump(edges, filt2, t + epsilon)
+        interleaved = p1 <= p2_shift
+        print(f"{t:>6.1f} | {p1:>6} | {p2:>6} | {p2_shift:>11} | {'✓' if interleaved else '✗':>11}")
+
+    # Verify interleaving both directions
+    print(f"\n--- Full Interleaving Check ---")
+    thresholds = np.linspace(-1, n + 1, 100)
+    fwd_ok = all(
+        cumulative_sheaf_jump(edges, filt1, t) <= cumulative_sheaf_jump(edges, filt2, t + epsilon)
+        for t in thresholds
+    )
+    bwd_ok = all(
+        cumulative_sheaf_jump(edges, filt2, t) <= cumulative_sheaf_jump(edges, filt1, t + epsilon)
+        for t in thresholds
+    )
+    print(f"  Forward interleaving (f1 ≤ f2 shifted): {fwd_ok}")
+    print(f"  Backward interleaving (f2 ≤ f1 shifted): {bwd_ok}")
+
+
+# ─── Demo 4: Möbius Inversion ───────────────────────────────────────
+
+def demo_mobius_inversion(n: int = 5):
+    """Demonstrate the Möbius-like inversion formula."""
+    print(f"\n{'='*60}")
+    print(f"DEMO 4: Möbius Inversion Formula (path P_{n+1})")
+    print(f"{'='*60}")
+
+    edges = path_graph_adj(n)
+    filt = {i: float(i) for i in range(n + 1)}
+    crits = critical_values(filt)
+
+    print(f"\nVerifying: profile(t) - profile(s) = Σ jumps in (s,t]")
+    print(f"\n{'s':>4} | {'t':>4} | {'Δprofile':>9} | {'Σjumps':>8} | {'Match':>5}")
+    print("-" * 40)
+
+    for i in range(len(crits)):
+        for j in range(i, len(crits)):
+            s = crits[i] - 0.5 if i == 0 else crits[i]
+            t = crits[j]
+            prof_s = cumulative_sheaf_jump(edges, filt, s)
+            prof_t = cumulative_sheaf_jump(edges, filt, t)
+            delta = prof_t - prof_s
+            jump_sum = sum(
+                sheaf_jump(edges, filt, c)
+                for c in crits if s < c <= t
+            )
+            match = "✓" if delta == jump_sum else "✗"
+            print(f"{s:>4.1f} | {t:>4.1f} | {delta:>9} | {jump_sum:>8} | {match:>5}")
+
+
+# ─── Main ────────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    demo_path_graph(5)
+    demo_cycle_graph(6)
+    demo_stability(5, 0.3)
+    demo_mobius_inversion(5)
+    print("\n" + "=" * 60)
+    print("All demos completed successfully.")
+    print("=" * 60)
+
+
 """
-Visualization: Constructibility of the Tropical Kernel Sheaf
+Visualization: Constructible Sheaf on the Threshold Line
+=========================================================
 
-Shows the active subgraph evolving through the filtration, with the
-constructibility property highlighted: between critical values, the
-active subgraph (and all its invariants) remain constant.
+Visualizes the core mathematical concept: the tropical event profile
+as a constructible sheaf, with jumps at critical values and constant
+stalks between them. Shows path graph and cycle graph side by side.
 
-Produces a multi-panel figure showing the active subgraph at each
-critical threshold and in between.
-
-This visualizes: activeVerts_eq_of_sameCritGap
+Uses matplotlib to produce a static PNG.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import numpy as np
+import matplotlib.patches as mpatches
+from collections import defaultdict
+from typing import List, Tuple, Dict, Set
 
 
-def path_graph_edges(n):
-    return [(i, i+1) for i in range(n-1)]
+# ─── Self-contained graph/filtration infrastructure ──────────────────
 
-def degree(n, edges, v):
-    return sum(1 for (a,b) in edges if a == v or b == v)
+def path_edges(n: int) -> List[Tuple[int, int]]:
+    return [(i, i + 1) for i in range(n)]
 
+def cycle_edges(n: int) -> List[Tuple[int, int]]:
+    return [(i, (i + 1) % n) for i in range(n)]
 
-n = 6
-edges = path_graph_edges(n)
-filt = list(range(n))
+def degree(edges: List[Tuple[int, int]], v: int) -> int:
+    return sum(1 for (a, b) in edges if a == v or b == v)
 
-# Create figure: show active graph at t = -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, ...
-thresholds = [-0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
-crit_set = set(filt)
+def sheaf_jump(edges: List[Tuple[int, int]], filt: Dict[int, float], c: float) -> int:
+    return sum(degree(edges, v) + 1 for v, ft in filt.items() if ft == c)
 
-fig, axes = plt.subplots(3, 4, figsize=(16, 10))
-
-for idx, t in enumerate(thresholds):
-    row, col = idx // 4, idx % 4
-    ax = axes[row][col]
-
-    is_critical = t in crit_set
-    is_between = not is_critical and t > -1
-
-    # Active vertices
-    active = [v for v, fv in enumerate(filt) if fv <= t]
-    active_set = set(active)
-
-    # Draw all vertices
-    positions = {v: (v * 1.5, 0) for v in range(n)}
-    for v in range(n):
-        x, y = positions[v]
-        if v in active_set:
-            ax.plot(x, y, 'o', markersize=20, color='#2c3e50', zorder=5)
-            ax.text(x, y, str(v), ha='center', va='center',
-                   color='white', fontsize=10, fontweight='bold', zorder=6)
-        else:
-            ax.plot(x, y, 'o', markersize=20, color='#bdc3c7', zorder=5)
-            ax.text(x, y, str(v), ha='center', va='center',
-                   color='#7f8c8d', fontsize=10, zorder=6)
-
-    # Draw edges
-    for (a, b) in edges:
-        xa, ya = positions[a]
-        xb, yb = positions[b]
-        if a in active_set and b in active_set:
-            ax.plot([xa, xb], [ya, yb], '-', color='#2c3e50', linewidth=2.5, zorder=3)
-        else:
-            ax.plot([xa, xb], [ya, yb], '-', color='#ecf0f1', linewidth=1.5, zorder=2)
-
-    # Profile value
-    profile = sum(degree(n, edges, v) + 1 for v in active)
-
-    # Styling
-    if is_critical:
-        ax.set_facecolor('#ffeaa7')
-        title_color = '#e74c3c'
-        label = f't = {t:.0f} (CRITICAL)'
-    elif is_between:
-        ax.set_facecolor('#dfe6e9')
-        title_color = '#27ae60'
-        label = f't = {t:.1f} (between)'
-    else:
-        ax.set_facecolor('#f5f6fa')
-        title_color = '#636e72'
-        label = f't = {t:.1f}'
-
-    ax.set_title(label, fontsize=10, fontweight='bold', color=title_color)
-    ax.text(0.02, 0.95, f'Profile = {profile}', transform=ax.transAxes,
-           fontsize=9, verticalalignment='top',
-           bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-
-    ax.set_xlim(-1, (n-1)*1.5 + 1)
-    ax.set_ylim(-1.5, 1.5)
-    ax.set_aspect('equal')
-    ax.axis('off')
-
-fig.suptitle('Constructibility: Active Subgraph is Constant Between Critical Values\n'
-            '(Yellow = critical threshold, Gray = between critical values)',
-            fontsize=14, fontweight='bold', y=1.02)
-
-plt.tight_layout()
-plt.savefig('viz_constructibility.png', dpi=150, bbox_inches='tight')
-print("Saved viz_constructibility.png")
+def cum_profile(edges: List[Tuple[int, int]], filt: Dict[int, float], t: float) -> int:
+    crits = sorted(set(filt.values()))
+    return sum(sheaf_jump(edges, filt, c) for c in crits if c <= t)
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Constructible Sheaf Profile for Tropical Persistence
+# ─── Main visualization ─────────────────────────────────────────────
 
-Visualizes the main result — the tropical event profile as a step function
-with jumps at critical values (entrance times). Shows:
-- Top: Sheaf jump profile (bar chart at critical values)
-- Bottom: Cumulative sheaf event profile = tropical event profile (step function)
-- Vertical lines marking the singular support (critical values)
-
-This visualizes the core theorem: tropEvtProfile_eq_cumSheafJump
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def path_graph_edges(n):
-    return [(i, i+1) for i in range(n-1)]
-
-def cycle_graph_edges(n):
-    return [(i, (i+1) % n) for i in range(n)]
-
-def degree(n, edges, v):
-    return sum(1 for (a,b) in edges if a == v or b == v)
-
-def sheaf_jump(n, edges, filt, c):
-    entering = [v for v, fv in enumerate(filt) if fv == c]
-    return sum(degree(n, edges, v) + 1 for v in entering)
-
-def sheaf_event_profile(n, edges, filt, t):
-    crit = sorted(set(filt))
-    return sum(sheaf_jump(n, edges, filt, c) for c in crit if c <= t)
-
-
-# Parameters
-n = 8
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-for col, (graph_name, edge_fn) in enumerate([("Path Graph P₈", path_graph_edges),
-                                               ("Cycle Graph C₈", cycle_graph_edges)]):
-    edges = edge_fn(n)
-    filt = list(range(n))
-    crit = sorted(set(filt))
+# --- Path Graph P_6 ---
+n_path = 5
+edges_p = path_edges(n_path)
+filt_p = {i: float(i) for i in range(n_path + 1)}
+crits_p = sorted(set(filt_p.values()))
 
-    # Sheaf jumps
-    jumps = [sheaf_jump(n, edges, filt, c) for c in crit]
+# Panel 1: Sheaf profile (step function)
+ax1 = axes[0, 0]
+t_range = [c - 0.5 for c in crits_p] + crits_p + [c + 0.5 for c in crits_p]
+t_range = sorted(set(t_range + [-1.0, n_path + 1.0]))
+t_range = [t for t in t_range if -1.5 <= t <= n_path + 1.5]
+profiles_p = [cum_profile(edges_p, filt_p, t) for t in t_range]
 
-    # Top: Bar chart of jumps
-    ax_top = axes[0][col]
-    colors = ['#e74c3c' if j >= 3 else '#3498db' for j in jumps]
-    ax_top.bar(crit, jumps, width=0.6, color=colors, edgecolor='black', alpha=0.8)
-    ax_top.set_ylabel('Sheaf Jump', fontsize=12)
-    ax_top.set_title(f'{graph_name} — Sheaf Jumps at Critical Values', fontsize=13, fontweight='bold')
-    ax_top.set_xlabel('Threshold t', fontsize=11)
-    for i, (c, j) in enumerate(zip(crit, jumps)):
-        ax_top.text(c, j + 0.1, str(j), ha='center', va='bottom', fontsize=10, fontweight='bold')
+ax1.step(t_range, profiles_p, where='post', color='#2196F3', linewidth=2, label='Sheaf Event Profile')
+for c in crits_p:
+    j = sheaf_jump(edges_p, filt_p, c)
+    y = cum_profile(edges_p, filt_p, c)
+    ax1.plot(c, y, 'o', color='#F44336', markersize=8, zorder=5)
+    ax1.annotate(f'+{j}', (c, y), textcoords="offset points",
+                xytext=(5, 10), fontsize=9, color='#F44336', fontweight='bold')
 
-    # Vertical lines for singular support
-    for c in crit:
-        ax_top.axvline(x=c, color='gray', linestyle=':', alpha=0.3)
+ax1.set_xlabel('Threshold t', fontsize=11)
+ax1.set_ylabel('Profile Value', fontsize=11)
+ax1.set_title('Path Graph P₆: Constructible Sheaf Profile', fontsize=12, fontweight='bold')
+ax1.legend(fontsize=10)
+ax1.grid(True, alpha=0.3)
+ax1.set_xlim(-1.5, n_path + 1.5)
 
-    # Bottom: Step function of cumulative profile
-    ax_bot = axes[1][col]
-    t_range = np.linspace(-0.5, n + 0.5, 500)
-    profile = [sheaf_event_profile(n, edges, filt, t) for t in t_range]
+# Panel 2: Sheaf jumps (bar chart)
+ax2 = axes[0, 1]
+jumps_p = [sheaf_jump(edges_p, filt_p, c) for c in crits_p]
+colors_p = ['#4CAF50' if j <= 2 else '#FF9800' for j in jumps_p]
+ax2.bar(crits_p, jumps_p, width=0.6, color=colors_p, edgecolor='black', linewidth=0.5)
+ax2.axhline(y=3, color='red', linestyle='--', alpha=0.5, label='Bound (≤3)')
+for i, (c, j) in enumerate(zip(crits_p, jumps_p)):
+    ax2.text(c, j + 0.1, str(j), ha='center', fontsize=10, fontweight='bold')
+ax2.set_xlabel('Critical Value', fontsize=11)
+ax2.set_ylabel('Sheaf Jump', fontsize=11)
+ax2.set_title('Path Graph P₆: Sheaf Jumps (Singular Support)', fontsize=12, fontweight='bold')
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3, axis='y')
 
-    ax_bot.plot(t_range, profile, color='#2c3e50', linewidth=2.5)
-    ax_bot.fill_between(t_range, profile, alpha=0.15, color='#3498db')
+# --- Cycle Graph C_6 ---
+n_cycle = 6
+edges_c = cycle_edges(n_cycle)
+filt_c = {i: float(i) for i in range(n_cycle)}
+crits_c = sorted(set(filt_c.values()))
 
-    # Mark critical values with dots
-    crit_profile = [sheaf_event_profile(n, edges, filt, c) for c in crit]
-    ax_bot.scatter(crit, crit_profile, color='#e74c3c', s=60, zorder=5, edgecolors='black')
+# Panel 3: Sheaf profile (step function)
+ax3 = axes[1, 0]
+t_range_c = sorted(set(
+    [c - 0.5 for c in crits_c] + crits_c + [c + 0.5 for c in crits_c] + [-1.0, n_cycle + 0.5]
+))
+t_range_c = [t for t in t_range_c if -1.5 <= t <= n_cycle + 0.5]
+profiles_c = [cum_profile(edges_c, filt_c, t) for t in t_range_c]
 
-    # Vertical lines
-    for c in crit:
-        ax_bot.axvline(x=c, color='gray', linestyle=':', alpha=0.3)
+ax3.step(t_range_c, profiles_c, where='post', color='#9C27B0', linewidth=2, label='Sheaf Event Profile')
+for c in crits_c:
+    j = sheaf_jump(edges_c, filt_c, c)
+    y = cum_profile(edges_c, filt_c, c)
+    ax3.plot(c, y, 'o', color='#F44336', markersize=8, zorder=5)
+    ax3.annotate(f'+{j}', (c, y), textcoords="offset points",
+                xytext=(5, 10), fontsize=9, color='#F44336', fontweight='bold')
 
-    ax_bot.set_ylabel('Cumulative Profile', fontsize=12)
-    ax_bot.set_xlabel('Threshold t', fontsize=11)
-    ax_bot.set_title(f'{graph_name} — Sheaf Event Profile (Step Function)', fontsize=13, fontweight='bold')
+ax3.set_xlabel('Threshold t', fontsize=11)
+ax3.set_ylabel('Profile Value', fontsize=11)
+ax3.set_title('Cycle Graph C₆: Constructible Sheaf Profile', fontsize=12, fontweight='bold')
+ax3.legend(fontsize=10)
+ax3.grid(True, alpha=0.3)
 
-    # Annotate: "constructible = constant between jumps"
-    if col == 0:
-        ax_bot.annotate('Constructible:\nconstant between\ncritical values',
-                       xy=(2.5, sheaf_event_profile(n, edges, filt, 2.5)),
-                       xytext=(4, 5),
-                       fontsize=9, fontweight='bold', color='#27ae60',
-                       arrowprops=dict(arrowstyle='->', color='#27ae60'))
+# Panel 4: Stalk rank evolution
+ax4 = axes[1, 1]
+stalk_ranks_p = [len({v for v, ft in filt_p.items() if ft <= t}) for t in t_range]
+stalk_ranks_c = [len({v for v, ft in filt_c.items() if ft <= t}) for t in t_range_c]
 
-plt.suptitle('Constructible Sheaf Structure of Tropical Persistence',
-            fontsize=15, fontweight='bold', y=1.02)
+ax4.step(t_range, stalk_ranks_p, where='post', color='#2196F3', linewidth=2, label='Path P₆')
+ax4.step(t_range_c, stalk_ranks_c, where='post', color='#9C27B0', linewidth=2, label='Cycle C₆')
+ax4.set_xlabel('Threshold t', fontsize=11)
+ax4.set_ylabel('Stalk Rank (|Active Vertices|)', fontsize=11)
+ax4.set_title('Stalk Rank: Constructible Step Functions', fontsize=12, fontweight='bold')
+ax4.legend(fontsize=10)
+ax4.grid(True, alpha=0.3)
+
 plt.tight_layout()
-plt.savefig('viz_sheaf_profile.png', dpi=150, bbox_inches='tight')
-print("Saved viz_sheaf_profile.png")
+plt.savefig('sheaf_visualization.png', dpi=150, bbox_inches='tight')
+print("Saved: sheaf_visualization.png")
 
 
-#!/usr/bin/env python3
 """
-Visualization: Sheaf-Theoretic Stability via Interleaving
+Visualization: Sheaf-Theoretic Stability
+=========================================
 
-Visualizes the stability theorem: if two filtrations are ε-close, their
-sheaf event profiles are ε-interleaved. Shows:
-- Original and perturbed sheaf profiles
-- The ε-shifted envelope demonstrating interleaving
-- The stability corridor
+Visualizes the stability theorem: when two filtrations are ε-close,
+their sheaf event profiles are ε-interleaved. Shows the original
+and perturbed profiles with the interleaving bands.
 
-This visualizes: sheafEvtProfile_stability
+Uses matplotlib to produce a static PNG.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import numpy as np
-import math
+import matplotlib.patches as mpatches
+import random
+from typing import List, Tuple, Dict
 
 
-def path_graph_edges(n):
-    return [(i, i+1) for i in range(n-1)]
+# ─── Self-contained infrastructure ──────────────────────────────────
 
-def degree(n, edges, v):
-    return sum(1 for (a,b) in edges if a == v or b == v)
+def path_edges(n: int) -> List[Tuple[int, int]]:
+    return [(i, i + 1) for i in range(n)]
 
-def sheaf_jump(n, edges, filt, c):
-    entering = [v for v, fv in enumerate(filt) if abs(fv - c) < 1e-10]
-    return sum(degree(n, edges, v) + 1 for v in entering)
+def degree(edges: List[Tuple[int, int]], v: int) -> int:
+    return sum(1 for (a, b) in edges if a == v or b == v)
 
-def sheaf_event_profile(n, edges, filt, t):
-    crit = sorted(set(filt))
-    return sum(sheaf_jump(n, edges, filt, c) for c in crit if c <= t + 1e-10)
+def sheaf_jump(edges: List[Tuple[int, int]], filt: Dict[int, float], c: float) -> int:
+    return sum(degree(edges, v) + 1 for v, ft in filt.items() if ft == c)
 
+def cum_profile(edges: List[Tuple[int, int]], filt: Dict[int, float], t: float) -> int:
+    crits = sorted(set(filt.values()))
+    return sum(sheaf_jump(edges, filt, c) for c in crits if c <= t)
+
+
+# ─── Setup ───────────────────────────────────────────────────────────
 
 n = 7
-edges = path_graph_edges(n)
-filt1 = [float(i) for i in range(n)]
-filt2 = [float(i) + 0.4 * math.sin(i * 1.5) for i in range(n)]
-epsilon = max(abs(a - b) for a, b in zip(filt1, filt2))
+edges = path_edges(n)
+filt1 = {i: float(i) for i in range(n + 1)}
 
-t_range = np.linspace(-1, n + 1, 1000)
+random.seed(42)
+epsilon = 0.5
+filt2 = {i: filt1[i] + random.uniform(-epsilon, epsilon) for i in range(n + 1)}
+actual_eps = max(abs(filt1[v] - filt2[v]) for v in filt1)
 
-prof1 = [sheaf_event_profile(n, edges, filt1, t) for t in t_range]
-prof2 = [sheaf_event_profile(n, edges, filt2, t) for t in t_range]
-prof1_shifted = [sheaf_event_profile(n, edges, filt1, t + epsilon) for t in t_range]
-prof2_shifted = [sheaf_event_profile(n, edges, filt2, t + epsilon) for t in t_range]
+# Sample points
+t_vals = [i * 0.1 for i in range(-15, n * 10 + 20)]
 
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 9))
+prof1 = [cum_profile(edges, filt1, t) for t in t_vals]
+prof2 = [cum_profile(edges, filt2, t) for t in t_vals]
+prof2_shifted = [cum_profile(edges, filt2, t + actual_eps) for t in t_vals]
+prof1_shifted = [cum_profile(edges, filt1, t + actual_eps) for t in t_vals]
 
-# Top plot: Both profiles with interleaving envelope
-ax1.plot(t_range, prof1, color='#2c3e50', linewidth=2.5, label='Profile f₁ (original)')
-ax1.plot(t_range, prof2, color='#e74c3c', linewidth=2.5, label='Profile f₂ (perturbed)')
-ax1.plot(t_range, prof2_shifted, color='#e74c3c', linewidth=1.5, linestyle='--',
-         alpha=0.6, label=f'Profile f₂(t+ε)')
-ax1.fill_between(t_range, prof1, prof2_shifted, alpha=0.1, color='#27ae60',
-                 label='Interleaving corridor')
+# ─── Plot ────────────────────────────────────────────────────────────
 
-for c in sorted(set(filt1)):
-    ax1.axvline(x=c, color='#3498db', linestyle=':', alpha=0.2)
-for c in sorted(set(filt2)):
-    ax1.axvline(x=c, color='#e74c3c', linestyle=':', alpha=0.2)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
+# Left panel: profiles with interleaving
+ax1.plot(t_vals, prof1, color='#2196F3', linewidth=2.5, label='Original filtration f₁')
+ax1.plot(t_vals, prof2, color='#F44336', linewidth=2.5, label='Perturbed filtration f₂')
+ax1.plot(t_vals, prof2_shifted, color='#F44336', linewidth=1, linestyle='--',
+         alpha=0.5, label=f'f₂(t + ε)')
+ax1.plot(t_vals, prof1_shifted, color='#2196F3', linewidth=1, linestyle='--',
+         alpha=0.5, label=f'f₁(t + ε)')
+
+# Shade interleaving region
+ax1.fill_between(t_vals, prof1, prof2_shifted, alpha=0.1, color='green')
+
+ax1.set_xlabel('Threshold t', fontsize=12)
 ax1.set_ylabel('Sheaf Event Profile', fontsize=12)
-ax1.set_xlabel('Threshold t', fontsize=11)
-ax1.set_title(f'Sheaf-Theoretic Stability: ε-Interleaving (ε = {epsilon:.3f})',
-             fontsize=14, fontweight='bold')
-ax1.legend(fontsize=10, loc='upper left')
+ax1.set_title(f'Stability: ε-Interleaving (ε = {actual_eps:.3f})', fontsize=13, fontweight='bold')
+ax1.legend(fontsize=9, loc='upper left')
+ax1.grid(True, alpha=0.3)
+ax1.set_xlim(-1, n + 1)
 
-# Bottom plot: Profile difference and bound
-diff = [abs(p1 - p2) for p1, p2 in zip(prof1, prof2)]
-ax2.fill_between(t_range, diff, alpha=0.3, color='#e74c3c')
-ax2.plot(t_range, diff, color='#e74c3c', linewidth=2, label='|P₁(t) - P₂(t)|')
+# Right panel: profile difference
+diffs = [abs(p1 - p2) for p1, p2 in zip(prof1, prof2)]
+max_shift_bound = [max(cum_profile(edges, filt2, t + actual_eps) - cum_profile(edges, filt2, t),
+                       cum_profile(edges, filt1, t + actual_eps) - cum_profile(edges, filt1, t))
+                   for t in t_vals]
 
-# Show that the difference is bounded by the max possible shift
-max_diff = max(diff)
-ax2.axhline(y=max_diff, color='#2c3e50', linestyle='--', linewidth=1.5,
-           label=f'Max difference = {max_diff}')
+ax2.fill_between(t_vals, 0, max_shift_bound, alpha=0.2, color='orange', label='Stability bound')
+ax2.plot(t_vals, diffs, color='#4CAF50', linewidth=2, label='|Profile₁ - Profile₂|')
+ax2.plot(t_vals, max_shift_bound, color='orange', linewidth=1, linestyle='--', alpha=0.7)
 
+ax2.set_xlabel('Threshold t', fontsize=12)
 ax2.set_ylabel('Profile Difference', fontsize=12)
-ax2.set_xlabel('Threshold t', fontsize=11)
-ax2.set_title('Profile Difference Under Perturbation', fontsize=14, fontweight='bold')
+ax2.set_title('Sheaf-Theoretic Stability Bound', fontsize=13, fontweight='bold')
 ax2.legend(fontsize=10)
-
-# Add annotation
-ax2.annotate(f'Stability: profiles are\nε-interleaved with ε={epsilon:.3f}',
-            xy=(n/2, max_diff * 0.7),
-            fontsize=11, fontweight='bold', color='#27ae60',
-            ha='center',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='#eafaf1', alpha=0.8))
+ax2.grid(True, alpha=0.3)
+ax2.set_xlim(-1, n + 1)
 
 plt.tight_layout()
-plt.savefig('viz_stability.png', dpi=150, bbox_inches='tight')
-print("Saved viz_stability.png")
+plt.savefig('stability_visualization.png', dpi=150, bbox_inches='tight')
+print("Saved: stability_visualization.png")
+
+
+"""
+Visualization: Critical Stratification and Singular Support
+=============================================================
+
+Visualizes the critical stratification of the threshold line,
+showing how the sheaf is constructible: constant on open strata
+with jumps only at critical values (the singular support).
+
+Uses matplotlib to produce a static PNG.
+"""
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from typing import List, Tuple, Dict
+
+
+# ─── Self-contained infrastructure ──────────────────────────────────
+
+def path_edges(n: int) -> List[Tuple[int, int]]:
+    return [(i, i + 1) for i in range(n)]
+
+def cycle_edges(n: int) -> List[Tuple[int, int]]:
+    return [(i, (i + 1) % n) for i in range(n)]
+
+def degree(edges: List[Tuple[int, int]], v: int) -> int:
+    return sum(1 for (a, b) in edges if a == v or b == v)
+
+def sheaf_jump(edges: List[Tuple[int, int]], filt: Dict[int, float], c: float) -> int:
+    return sum(degree(edges, v) + 1 for v, ft in filt.items() if ft == c)
+
+def active_verts(filt: Dict[int, float], t: float) -> set:
+    return {v for v, ft in filt.items() if ft <= t}
+
+def euler_char(edges: List[Tuple[int, int]], filt: Dict[int, float], t: float) -> int:
+    active = active_verts(filt, t)
+    ae = sum(1 for u, v in edges if u in active and v in active)
+    return len(active) - ae
+
+
+# ─── Setup ───────────────────────────────────────────────────────────
+
+n = 6
+edges = path_edges(n)
+filt = {i: float(i) for i in range(n + 1)}
+crits = sorted(set(filt.values()))
+
+fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+
+# ─── Panel 1: Critical Stratification ───────────────────────────────
+
+ax1 = axes[0]
+
+# Draw the threshold line
+ax1.axhline(y=0, color='black', linewidth=1)
+
+# Draw open strata (green bars)
+for i in range(len(crits) - 1):
+    ax1.fill_between([crits[i], crits[i+1]], -0.15, 0.15,
+                     color='#4CAF50', alpha=0.3)
+    ax1.plot([(crits[i] + crits[i+1])/2], [0], 's',
+            color='#4CAF50', markersize=10, zorder=5)
+
+# Draw critical strata (red dots)
+for c in crits:
+    j = sheaf_jump(edges, filt, c)
+    ax1.plot(c, 0, 'o', color='#F44336', markersize=12, zorder=6)
+    ax1.annotate(f'c={int(c)}\njump={j}',
+                (c, 0), textcoords="offset points",
+                xytext=(0, 20), fontsize=9, ha='center',
+                color='#F44336', fontweight='bold')
+
+# Arrow indicating singular support
+ax1.annotate('', xy=(-0.5, -0.3), xytext=(n + 0.5, -0.3),
+            arrowprops=dict(arrowstyle='<->', color='purple', lw=1.5))
+ax1.text(n/2, -0.45, 'Singular Support = Critical Values',
+        ha='center', fontsize=10, color='purple', style='italic')
+
+ax1.set_xlim(-1, n + 1)
+ax1.set_ylim(-0.6, 0.6)
+ax1.set_xlabel('Threshold t', fontsize=11)
+ax1.set_title('Critical Stratification of the Threshold Line',
+             fontsize=13, fontweight='bold')
+ax1.set_yticks([])
+
+legend_elements = [
+    mpatches.Patch(color='#F44336', alpha=0.8, label='Critical strata (jumps)'),
+    mpatches.Patch(color='#4CAF50', alpha=0.3, label='Open strata (sheaf constant)')
+]
+ax1.legend(handles=legend_elements, fontsize=10, loc='upper left')
+
+# ─── Panel 2: Stalk Data at Each Stratum ────────────────────────────
+
+ax2 = axes[1]
+
+t_range = []
+stalk_data = []
+for i, c in enumerate(crits):
+    if i > 0:
+        t_mid = (crits[i-1] + c) / 2
+        t_range.append(t_mid)
+        stalk_data.append(len(active_verts(filt, t_mid)))
+    t_range.append(c)
+    stalk_data.append(len(active_verts(filt, c)))
+
+# Add endpoints
+t_range_ext = [-0.5] + t_range + [n + 0.5]
+stalk_ext = [0] + stalk_data + [stalk_data[-1]]
+
+ax2.step(t_range_ext, stalk_ext, where='post', color='#2196F3', linewidth=2.5)
+
+for c in crits:
+    sr = len(active_verts(filt, c))
+    ax2.plot(c, sr, 'o', color='#F44336', markersize=8, zorder=5)
+
+ax2.set_xlabel('Threshold t', fontsize=11)
+ax2.set_ylabel('Stalk Rank', fontsize=11)
+ax2.set_title('Stalk Rank = |Active Vertices| (Constructible Step Function)',
+             fontsize=13, fontweight='bold')
+ax2.grid(True, alpha=0.3)
+ax2.set_xlim(-1, n + 1)
+
+# ─── Panel 3: Euler Characteristic ──────────────────────────────────
+
+ax3 = axes[2]
+
+t_fine = [i * 0.05 for i in range(-20, (n + 1) * 20 + 10)]
+euler_vals = [euler_char(edges, filt, t) for t in t_fine]
+
+ax3.step(t_fine, euler_vals, where='post', color='#FF9800', linewidth=2.5)
+
+for c in crits:
+    ec = euler_char(edges, filt, c)
+    ax3.plot(c, ec, 'o', color='#F44336', markersize=8, zorder=5)
+
+ax3.set_xlabel('Threshold t', fontsize=11)
+ax3.set_ylabel('Euler Characteristic', fontsize=11)
+ax3.set_title('Euler Characteristic χ(t) = |V_active| - |E_active| (Also Constructible)',
+             fontsize=13, fontweight='bold')
+ax3.grid(True, alpha=0.3)
+ax3.set_xlim(-1, n + 1)
+ax3.axhline(y=1, color='gray', linestyle=':', alpha=0.5)
+
+plt.tight_layout()
+plt.savefig('stratification_visualization.png', dpi=150, bbox_inches='tight')
+print("Saved: stratification_visualization.png")

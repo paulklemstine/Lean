@@ -1,346 +1,331 @@
-# Sheaf-Theoretic Tropical Persistence: Constructibility, Recovery, and Stability
+# Sheaf-Theoretic Tropical Persistence: Constructible Sheaves on the Threshold Line
 
 ## Abstract
 
-We introduce a constructible sheaf framework for tropical persistence on finite graph filtrations. Given a finite simple graph *G* and a vertex filtration (entrance-time function), we define a tropical rank sheaf on the threshold parameter line whose stalks encode degree-weighted invariants of the active subgraph. We prove four main theorems: (1) **Constructibility** — the active vertex set is constant between consecutive entrance times, making the sheaf constructible with singular support equal to the entrance times; (2) **Recovery** — the tropical event profile equals the cumulative sum of sheaf jumps at critical values; (3) **Stability** — ε-close filtrations yield ε-interleaved sheaf profiles, so stability is a consequence of functoriality; (4) **Cross-domain bridge** — the Euler characteristic of the active subgraph is itself a constructible function of the threshold. All theorems are formally verified in Lean 4 with Mathlib, using only standard axioms. We provide algorithms, computational experiments on path and cycle graphs, and identify connections to microlocal analysis, Möbius inversion, and the six-functor formalism.
+We establish that the tropical event profile of a finite graph filtration is the global-section trace of a constructible sheaf on the threshold parameter line. We define the tropical rank sheaf, prove its constructibility away from finitely many critical thresholds, and show that the event profile decomposes as a cumulative sum of sheaf jumps — a Möbius-like inversion formula on the critical poset. Stability of the event profile under filtration perturbations is derived as a consequence of sheaf functoriality rather than ad hoc estimation. All results are formalized and machine-verified in Lean 4 with the Mathlib library. We provide concrete computations for path and cycle graphs and discuss connections to microlocal analysis, poset sheaves, and persistent homology.
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Topological data analysis (TDA) studies the persistent homology of filtered topological spaces, extracting "barcode" invariants that track the birth and death of topological features across a filtration parameter. The stability theorem of Cohen-Steiner, Edelsbrunner, and Harer [1] shows that persistence barcodes are Lipschitz-stable under perturbations of the input. This stability is proved by an ad hoc interleaving argument.
+Persistence theory assigns to a filtered topological space a barcode or persistence diagram that captures the birth and death of topological features across a filtration parameter. The foundational stability theorem of Cohen-Steiner, Edelsbrunner, and Harer [CEH07] shows that small perturbations of the filtration produce controlled changes in the barcode.
 
-In tropical geometry, Baker and Norine [2] established a Riemann-Roch theorem for finite graphs, and subsequent work by Develin, Santos, and Sturmfels [3] developed tropical matrix rank theory. These tools provide algebraic invariants for graphs that parallel classical algebraic geometry in a combinatorial setting.
+In the tropical setting, Baker and Norine [BN07] introduced divisor theory on finite graphs, establishing a Riemann-Roch theorem that parallels the classical theory for algebraic curves. The tropical kernel dimension of a graph — the rank of the reduced Laplacian in tropical linear algebra — provides an analogue of the genus-related invariants from algebraic geometry.
 
-The present work bridges these two domains by showing that the tropical persistence data of a graph filtration — specifically, the degree-weighted event profile — is the decategorified trace of a **constructible sheaf** on the threshold parameter line. This identification:
+When a graph is equipped with a vertex filtration (entrance times), the tropical kernel dimension becomes a function of the threshold parameter, producing a *tropical event profile*. Previous work established stability of this profile and decomposition into cycle-rank and visibility components [Stability.lean, FiltrationPersistence.lean].
 
-- converts the event profile from a computed quantity into a *functorial invariant*,
-- explains stability as a consequence of sheaf interleaving (functoriality) rather than a standalone estimate,
-- opens connections to constructible sheaf theory, microlocal analysis, and derived categories.
+### 1.2 Contributions
 
-### 1.2 Summary of contributions
+We introduce the **tropical rank sheaf** — a constructible presheaf on the threshold line whose stalks encode the active subgraph data at each threshold — and prove four main theorems:
 
-1. **New structures:** `TropRankSheaf`, a constructible presheaf on ℝ with values in ℤ; `TropKernelData`, a type-valued sheaf with restriction maps satisfying functoriality.
+1. **Constructibility** (Theorem 3.1): The tropical rank sheaf is locally constant on each open interval between consecutive critical values.
 
-2. **Theorem 1 (Constructibility):** The active vertex set `activeVerts f t` is constant on each interval between consecutive critical values.
+2. **Profile Recovery** (Theorem 4.1): The tropical event profile equals the cumulative sum of sheaf jumps across critical thresholds.
 
-3. **Theorem 2 (Recovery):** `tropEvtProfile G f t = sheafEvtProfile G f t` for all thresholds `t`.
+3. **Sheaf Stability** (Theorem 5.1): ε-close filtrations produce ε-interleaved sheaf event profiles, with stability following from functoriality.
 
-4. **Theorem 3 (Stability):** For ε-close filtrations, `sheafEvtProfile G f t ≤ sheafEvtProfile G g (t + ε)`.
+4. **Cross-Domain Bridge** (Theorem 6.1): The Euler characteristic of the active subgraph is also constructible, connecting tropical persistence to combinatorial topology.
 
-5. **Theorem 4 (Cross-domain):** The Euler characteristic `activeEulerChar G f t` is constructible.
+Additionally, we prove:
+- Path graph sheaf jumps are bounded by 3 (Theorem 7.1)
+- Higher sheaf jumps vanish for injective filtrations (Theorem 7.2)
+- A Möbius-like inversion formula decomposes profile differences into interval jump sums (Theorem 4.2)
 
-6. **Computational verification** on path and cycle graphs.
+### 1.3 Formalization
 
-### 1.3 Related work
+All definitions and theorems are formalized in Lean 4 using the Mathlib library. The formalization spans two files:
+- `SheafPersistence.lean`: Core definitions, constructibility, profile recovery, stability, kernel data sheaf, Euler characteristic bridge
+- `SheafAdvanced.lean`: Stability bounds, poset sheaf structure, Möbius inversion, path/cycle graph computations, singular support
 
-- **Persistent homology:** Edelsbrunner, Letscher, Zomorodian [4]; Zomorodian, Carlsson [5].
-- **Stability theorems:** Cohen-Steiner, Edelsbrunner, Harer [1]; Chazal et al. [6].
-- **Persistent sheaves:** Curry [7]; Kashiwara, Schapira [8].
-- **Tropical graph theory:** Baker, Norine [2]; Gathmann, Kerber [9].
-- **Constructible sheaves:** Kashiwara, Schapira [10]; Schapira [11].
+## 2. Definitions and Notation
 
-## 2. Definitions and Setup
+### 2.1 Vertex Filtrations
 
-### 2.1 Graph filtrations
+**Definition 2.1** (Vertex Filtration). A *vertex filtration* on a finite graph G = (V, E) is a function f: V → ℝ assigning an entrance time to each vertex.
 
-Let *V* be a finite type with `[Fintype V]` and `[DecidableEq V]`. A **vertex filtration** is a function `f : V → ℝ` assigning an entrance time to each vertex. The **active vertex set** at threshold *t* is:
-
+**Definition 2.2** (Active Vertices). The *active vertex set* at threshold t is:
 ```
-activeVerts f t := {v ∈ V | f(v) ≤ t}
+activeVerts(f, t) = { v ∈ V : f(v) ≤ t }
 ```
 
-### 2.2 Critical values
-
-The **critical values** of a filtration are the image of *f*:
-
+**Definition 2.3** (Critical Values). The *critical values* of f are:
 ```
-critVals f := {f(v) | v ∈ V}
+critVals(f) = { f(v) : v ∈ V }
 ```
 
-This is a finite subset of ℝ, and the active vertex set can only change at these values.
+### 2.2 Tropical Event Profile
 
-### 2.3 Same critical gap
-
-Two thresholds *s ≤ t* lie in the **same critical gap** if no critical value lies in the half-open interval (s, t]:
-
+**Definition 2.4** (Tropical Event Profile). The *tropical event profile* at threshold t is:
 ```
-sameCritGap crit s t := s ≤ t ∧ ∀ c ∈ crit, ¬(s < c ∧ c ≤ t)
+tropEvtProfile(G, f, t) = Σ_{v ∈ activeVerts(f,t)} (deg(v) + 1)
 ```
 
-### 2.4 Tropical event profile
+This degree-weighted count captures the maximum possible dimension change each vertex can contribute to the tropical kernel.
 
-Given a simple graph `G` on *V* with decidable adjacency, the **tropical event profile** at threshold *t* is:
+### 2.3 Sheaf Constructions
 
+**Definition 2.5** (Sheaf Jump). The *sheaf jump* at critical value c is:
 ```
-tropEvtProfile G f t := Σ_{v ∈ activeVerts f t} (deg_G(v) + 1)
-```
-
-### 2.5 Sheaf jump
-
-The **sheaf jump** at a critical value *c* measures the degree-weighted contribution of vertices entering at exactly time *c*:
-
-```
-sheafJump G f c := Σ_{v : f(v) = c} (deg_G(v) + 1)
+sheafJump(G, f, c) = Σ_{v : f(v) = c} (deg(v) + 1)
 ```
 
-### 2.6 Sheaf event profile
-
-The **sheaf event profile** is the cumulative sum of sheaf jumps:
-
+**Definition 2.6** (Sheaf Event Profile). The *sheaf event profile* is:
 ```
-sheafEvtProfile G f t := Σ_{c ∈ critVals(f), c ≤ t} sheafJump G f c
+sheafEvtProfile(G, f, t) = Σ_{c ∈ critVals(f), c ≤ t} sheafJump(G, f, c)
 ```
 
-## 3. The Tropical Rank Sheaf
-
-### 3.1 Definition
-
-A **tropical rank sheaf** on *V* consists of:
-
+**Definition 2.7** (Same Critical Gap). Two thresholds s, t lie in the *same critical gap* of a finite set C if s ≤ t and no element of C lies in (s, t]:
 ```
-structure TropRankSheaf (V) where
-  graph : SimpleGraph V
-  filt : V → ℝ
-  rankAt : ℝ → ℤ
-  critical : Finset ℝ
-  mono : Monotone rankAt
-  locConst : ∀ {s t}, sameCritGap critical s t → rankAt s = rankAt t
+sameCritGap(C, s, t) ⟺ s ≤ t ∧ ∀ c ∈ C, ¬(s < c ∧ c ≤ t)
 ```
 
-The fields encode: (1) monotonicity of the rank function (as the active set grows, the profile grows), and (2) local constancy away from the critical set (constructibility).
+**Definition 2.8** (Tropical Rank Sheaf). A *tropical rank sheaf* on V consists of:
+- A graph G and filtration f
+- A rank function rankAt: ℝ → ℤ
+- A critical set C ⊆ ℝ (finite)
+- Monotonicity: rankAt is monotone
+- Local constancy: rankAt(s) = rankAt(t) whenever sameCritGap(C, s, t)
 
-### 3.2 Construction
-
-The function `mkTropRankSheaf G f` constructs a tropical rank sheaf from any graph and filtration, with `rankAt := tropEvtProfile G f` and `critical := critVals f`. The monotonicity proof uses `Finset.sum_le_sum_of_subset_of_nonneg` applied to the monotone growth of active vertex sets. The local constancy proof uses `activeVerts_eq_of_sameCritGap`.
-
-### 3.3 Type-valued kernel sheaf
-
-For finer structural analysis, we define the **tropical kernel data** at threshold *t* as the subtype `{v : V // f(v) ≤ t}`, with restriction maps `kernelRestriction f (hst : s ≤ t)` given by the canonical inclusion. These satisfy:
-
-- **Identity:** `kernelRestriction f (le_refl t) = id`
-- **Composition:** `kernelRestriction f (le_trans hrs hst) = kernelRestriction f hst ∘ kernelRestriction f hrs`
-
-making `TropKernelData f` a covariant functor from `(ℝ, ≤)` to `Type`.
-
-## 4. Main Results
-
-### 4.1 Theorem 1: Constructibility
-
-**Theorem** (`activeVerts_eq_of_sameCritGap`). *If `sameCritGap (critVals f) s t` holds, then `activeVerts f s = activeVerts f t`.*
-
-*Proof sketch.* The forward direction (s ≤ t implies active at s → active at t) is immediate from monotonicity. For the reverse, suppose v is active at t but not at s. Then s < f(v) ≤ t, and f(v) ∈ critVals f (as the image of v), contradicting the gap condition. □
-
-**Corollary** (`tropEvtProfile_const_between_critical`). *The tropical event profile is constant between consecutive critical values.*
-
-**Corollary** (`tropKernelData_equiv_of_sameCritGap`). *Between critical values, the kernel data stalks are equivalent: `TropKernelData f s ≃ TropKernelData f t`.*
-
-This equivalence is constructed via `Equiv.subtypeEquiv (Equiv.refl V)`, using the proof that the predicate `f(v) ≤ s ↔ f(v) ≤ t` holds in the gap.
-
-### 4.2 Theorem 2: Recovery
-
-**Theorem** (`tropEvtProfile_eq_cumSheafJump`). *For all t, `tropEvtProfile G f t = sheafEvtProfile G f t`.*
-
-*Proof sketch.* We decompose the active vertex set as a disjoint union of fibers:
-
+**Definition 2.9** (Singular Support). The *singular support* of the sheaf is:
 ```
-activeVerts f t = ⋃_{c ∈ critVals(f), c ≤ t} {v | f(v) = c}
+singularSupport(G, f) = { c ∈ critVals(f) : sheafJump(G, f, c) ≠ 0 }
 ```
 
-This is proved in `activeVerts_eq_biUnion`. The fibers at distinct critical values are disjoint (`fibers_pairwiseDisjoint`). By `Finset.sum_biUnion`, the sum over the union equals the sum of sums over fibers, which is exactly the cumulative sheaf jump. □
+### 2.4 Kernel Data Sheaf
 
-**Corollary** (`sheafEvtProfile_eq_rankSheaf`). *The sheaf event profile equals the rank function of the constructed rank sheaf.*
-
-This theorem is the central result. It identifies the persistence observable (a direct computation) with a constructible-sheaf invariant (a cumulative jump formula), establishing that the two viewpoints are provably equivalent.
-
-### 4.3 Theorem 3: Stability
-
-**Theorem** (`sheafEvtProfile_stability`). *If `∀ v, |f(v) - g(v)| ≤ ε`, then for all t, `sheafEvtProfile G f t ≤ sheafEvtProfile G g (t + ε)`.*
-
-*Proof sketch.* By the recovery theorem, it suffices to prove the interleaving for `tropEvtProfile`. The key lemma is `activeVerts_subset_close`: if f(v) ≤ t and |f(v) - g(v)| ≤ ε, then g(v) ≤ t + ε. This gives `activeVerts f t ⊆ activeVerts g (t + ε)`. The result follows from `Finset.sum_le_sum_of_subset_of_nonneg` applied to the non-negative summand `deg(v) + 1`. □
-
-**Theorem** (`sheafEvtProfile_stability_both`). *The interleaving holds symmetrically: both `P_f(t) ≤ P_g(t + ε)` and `P_g(t) ≤ P_f(t + ε)`.*
-
-The conceptual significance is that stability is a *consequence of functoriality*: the sheaf construction `f ↦ mkTropRankSheaf G f` is "continuous" (Lipschitz with respect to the sup-norm on filtrations and the interleaving distance on sheaves). No ad hoc argument is needed.
-
-### 4.4 Theorem 4: Cross-domain Bridge
-
-**Theorem** (`activeEulerChar_const_between_critical`). *The Euler characteristic `χ(t) = |activeVerts f t| - |active edges at t|` is constant between consecutive critical values.*
-
-*Proof.* Immediate from `activeVerts_eq_of_sameCritGap`, since the Euler characteristic depends only on the active vertex set (which determines the active edge set). □
-
-This connects tropical persistence to combinatorial topology: the Euler characteristic forms its own constructible function on the threshold line, with the same singular support as the rank sheaf.
-
-### 4.5 Additional results
-
-- **Jump at critical value** (`tropEvtProfile_jump_at_critical`): If no critical value lies in (s, c) and every vertex has f(v) ≤ s or f(v) ≥ c, then the profile jump equals the sheaf jump: `P(c) - P(s) = sheafJump G f c`.
-
-- **Total jump formula** (`total_sheafJump_eq_total_profile`): When all vertices are active, the total sheaf jump equals the total profile.
-
-- **Zero below critical** (`tropEvtProfile_below_all_critical`): Below all entrance times, the profile is zero.
-
-- **Path graph example** (`activeVerts_pathFilt_card`): For the standard filtration on P_{n+1}, the number of active vertices at threshold k is k+1.
-
-## 5. Algorithms
-
-### Algorithm 1: Sheaf Jump Computation
-
+**Definition 2.10** (Tropical Kernel Data). The *tropical kernel data* at threshold t is the subtype:
 ```
-Input: Graph G = (V, E), filtration f : V → ℝ
-Output: List of (critical_value, jump, cumulative) triples
-
-1. Sort unique entrance times → crit = [c₁, ..., cₖ]
-2. For each cᵢ:
-   a. entering ← {v ∈ V : f(v) = cᵢ}
-   b. jump ← Σ_{v ∈ entering} (deg(v) + 1)
-   c. cumulative += jump
-3. Return [(cᵢ, jumpᵢ, cumulativeᵢ)]
+TropKernelData(f, t) = { v : V // f(v) ≤ t }
 ```
 
-**Complexity:** O(n log n + n · average_degree) = O(n log n + |E|).
+This is a Type-valued presheaf with restriction maps given by inclusion.
 
-### Algorithm 2: Constructibility Verification
+## 3. Constructibility
 
+### Theorem 3.1 (Constructibility of Active Vertex Sets)
+
+*For any vertex filtration f with critical values C = critVals(f), the active vertex set is constant on each critical gap:*
 ```
-Input: Graph G, filtration f, sample count k
-Output: True/False
-
-1. crit ← sorted unique entrance times
-2. For each interval (cᵢ, cᵢ₊₁):
-   a. ref ← activeVerts(f, cᵢ)
-   b. For k sample points t in (cᵢ, cᵢ₊₁):
-      - If activeVerts(f, t) ≠ ref: return False
-3. Return True
+sameCritGap(C, s, t) ⟹ activeVerts(f, s) = activeVerts(f, t)
 ```
 
-### Algorithm 3: Stability Verification
+**Proof sketch.** If v ∈ activeVerts(f, s), then f(v) ≤ s ≤ t, so v ∈ activeVerts(f, t). Conversely, if v ∈ activeVerts(f, t) but v ∉ activeVerts(f, s), then s < f(v) ≤ t, placing f(v) ∈ C strictly between s and t — contradicting the gap condition. □
 
+### Corollary 3.2 (Constructibility of Profile and Euler Characteristic)
+
+The tropical event profile, stalk rank, and Euler characteristic are all constant on each critical gap. This is the constructibility package:
 ```
-Input: Graph G, filtrations f₁, f₂
-Output: (ε, interleaving_holds)
-
-1. ε ← max_v |f₁(v) - f₂(v)|
-2. crit ← union of critical values of f₁ and f₂
-3. For each c ∈ crit:
-   a. If P₁(c) > P₂(c + ε): return (ε, False)
-   b. If P₂(c) > P₁(c + ε): return (ε, False)
-4. Return (ε, True)
+sameCritGap(C, s, t) ⟹
+  stalkRank(f, s) = stalkRank(f, t) ∧
+  tropEvtProfile(G, f, s) = tropEvtProfile(G, f, t) ∧
+  activeEulerChar(G, f, s) = activeEulerChar(G, f, t)
 ```
 
-## 6. Computational Experiments
+### Theorem 3.3 (Kernel Data Equivalence)
 
-### 6.1 Path graph P₆
+Between critical values, the kernel data stalks are canonically equivalent:
+```
+sameCritGap(critVals(f), s, t) ⟹ TropKernelData(f, s) ≃ TropKernelData(f, t)
+```
 
-| Threshold | Entering | Degree | Jump | Cumulative | Euler χ |
-|-----------|----------|--------|------|------------|---------|
-| 0 | {0} | 1 | 2 | 2 | 1 |
-| 1 | {1} | 2 | 3 | 5 | 1 |
-| 2 | {2} | 2 | 3 | 8 | 1 |
-| 3 | {3} | 2 | 3 | 11 | 1 |
-| 4 | {4} | 2 | 3 | 14 | 1 |
-| 5 | {5} | 1 | 2 | 16 | 1 |
+This equivalence is constructed as a subtype equivalence over the identity on V, using the same argument as Theorem 3.1.
 
-**Observations:**
-- Euler characteristic is constantly 1 (trees have χ = 1).
-- Endpoint vertices have jump 2 (degree 1 + 1); interior vertices have jump 3 (degree 2 + 1).
-- Recovery theorem verified: cumulative = direct profile at all thresholds.
+## 4. Profile Recovery
 
-### 6.2 Cycle graph C₆
+### Theorem 4.1 (Event Profile = Cumulative Sheaf Jumps)
 
-| Threshold | Jump | Cumulative | Euler χ |
-|-----------|------|------------|---------|
-| 0 | 3 | 3 | 1 |
-| 1 | 3 | 6 | 1 |
-| 2 | 3 | 9 | 1 |
-| 3 | 3 | 12 | 1 |
-| 4 | 3 | 15 | 1 |
-| 5 | 3 | 18 | 0 |
+*The tropical event profile is the cumulative sum of sheaf jumps:*
+```
+tropEvtProfile(G, f, t) = sheafEvtProfile(G, f, t)
+                        = Σ_{c ∈ critVals(f), c ≤ t} sheafJump(G, f, c)
+```
 
-**Observations:**
-- All vertices have degree 2, so every jump is 3.
-- Euler characteristic drops from 1 to 0 when the closing edge completes the cycle at the last threshold.
-- The total profile is 18 = 6 × 3 (uniform jumps).
+**Proof sketch.** The active vertex set decomposes as a disjoint union of fibers over critical values:
+```
+activeVerts(f, t) = ⊔_{c ∈ critVals(f), c ≤ t} { v : f(v) = c }
+```
+The fibers at distinct critical values are disjoint (since f(v) is unique for each v). The sum over the disjoint union equals the sum of sums over fibers. □
 
-### 6.3 Stability experiment
+This theorem is the fundamental bridge: it identifies the persistence observable (event profile) with a sheaf-theoretic construction (cumulative jump).
 
-For P₅ with original filtration [0, 1, 2, 3, 4] and perturbed filtration [0.00, 1.25, 2.27, 3.04, 3.77]:
-- Sup distance: ε = 0.273
-- Forward interleaving verified: P₁(t) ≤ P₂(t + ε) for all t ✓
-- Backward interleaving verified: P₂(t) ≤ P₁(t + ε) for all t ✓
+### Theorem 4.2 (Möbius Inversion Formula)
 
-## 7. Discussion
+*The profile difference over an interval (s, t] equals the sum of sheaf jumps in that interval:*
+```
+sheafEvtProfile(G, f, t) - sheafEvtProfile(G, f, s)
+  = Σ_{c ∈ critVals(f), s < c ≤ t} sheafJump(G, f, c)
+```
 
-### 7.1 Conceptual significance
+**Proof.** Decompose the filter `{c : c ≤ t}` as the disjoint union of `{c : c ≤ s}` and `{c : s < c ≤ t}`, then take the difference of the corresponding sums. □
 
-The identification of the tropical event profile with a constructible sheaf invariant is conceptually significant for several reasons:
+## 5. Stability
 
-1. **Functoriality explains stability.** The stability theorem is not an accident or a computational coincidence. It follows from the general principle that functorial constructions respect continuous (Lipschitz) maps. The sheaf construction `f ↦ mkTropRankSheaf G f` is a functor from filtrations (with sup-norm) to constructible sheaves (with interleaving distance).
+### Theorem 5.1 (Sheaf Interleaving)
 
-2. **Singular support = entrance times.** The critical values of the filtration are precisely the singular support of the constructible sheaf. This connects tropical persistence to the microlocal theory of Kashiwara and Schapira, where the singular support of a sheaf encodes the "directions of non-propagation."
+*If f and g are ε-close filtrations (|f(v) - g(v)| ≤ ε for all v), then their sheaf event profiles are ε-interleaved:*
+```
+sheafEvtProfile(G, f, t) ≤ sheafEvtProfile(G, g, t + ε)
+sheafEvtProfile(G, g, t) ≤ sheafEvtProfile(G, f, t + ε)
+```
 
-3. **Recovery = global-sections formula.** The cumulative jump formula is a discrete analogue of computing global sections of a pushforward sheaf. In the continuous setting, this would be an instance of the projection formula in derived categories.
+**Proof.** By the ε-closeness condition, activeVerts(f, t) ⊆ activeVerts(g, t + ε). Since each term in the sum is non-negative, the sum over a subset is ≤ the sum over the superset. The symmetric statement follows by swapping f and g. □
 
-### 7.2 Connections to other domains
+### Theorem 5.2 (Pointwise Difference Bound)
 
-**Microlocal analysis.** The singular support of the tropical rank sheaf (the set of entrance times) is a 1-dimensional analogue of the microsupport of a constructible sheaf on a manifold. The jump data at each critical value corresponds to the "microlocal stalk" of the sheaf at that singular point.
+*Under the same conditions:*
+```
+|sheafEvtProfile(G, f, t) - sheafEvtProfile(G, g, t)|
+  ≤ max(sheafEvtProfile(G, g, t+ε) - sheafEvtProfile(G, g, t),
+        sheafEvtProfile(G, f, t+ε) - sheafEvtProfile(G, f, t))
+```
 
-**Möbius inversion.** The cumulative jump formula `P(t) = Σ_{c ≤ t} J(c)` is an instance of summation over a poset (the critical values with their natural ordering). The inverse formula `J(c) = P(c) - P(c⁻)` is a Möbius inversion on the poset of critical strata.
+This converts interleaving into a concrete pointwise bound controlled by the local growth rate of the profiles.
 
-**Incidence algebras.** The jump function `J` and profile function `P` are related by convolution with the zeta function of the critical poset. This connects tropical persistence to the theory of incidence algebras.
+### Remark (Functoriality)
 
-### 7.3 Limitations
+The stability theorem is a *consequence* of the functorial nature of the sheaf construction. The map
+```
+(G, f) ↦ mkTropRankSheaf(G, f)
+```
+sends ε-morphisms of filtrations to ε-interleavings of constructible sheaves. In categorical language, this is a functor from the ε-thickened category of filtrations to the interleaving category of constructible sheaves on ℝ.
 
-The current framework treats only vertex filtrations on finite graphs with real-valued entrance times. Extensions to:
-- edge filtrations,
-- multiparameter filtrations,
-- infinite graphs,
-- and derived/higher-categorical settings
+## 6. Cross-Domain Bridge
 
-are natural next steps but require additional mathematical infrastructure.
+### Theorem 6.1 (Euler Characteristic is Constructible)
 
-## 8. Future Work
+*The Euler characteristic χ(t) = |activeVerts(f,t)| - |activeEdges(f,t)| is constant between critical values:*
+```
+sameCritGap(critVals(f), s, t) ⟹ activeEulerChar(G, f, s) = activeEulerChar(G, f, t)
+```
 
-1. **Higher sheaf invariants.** Define analogues of higher cohomology for the tropical rank sheaf and study whether they detect finer network features.
+This connects tropical persistence to classical constructible function theory. The Euler characteristic is a *constructible function* in the sense of Kashiwara-Schapira [KS90], and its jumps at critical values encode topological transitions (component mergers, cycle creation).
 
-2. **Multiparameter persistence.** Extend the constructible sheaf framework to filtrations indexed by ℝⁿ, using the theory of constructible sheaves on higher-dimensional parameter spaces.
+### Connection to Microlocal Analysis
 
-3. **Derived tropical persistence.** Construct a derived category of tropical sheaves and study pushforwards, pullbacks, and Euler characteristics in this setting.
+The singular support of the tropical rank sheaf — the set of critical values where sheafJump ≠ 0 — is the one-dimensional analogue of the microsupport in the Kashiwara-Schapira theory. For a constructible sheaf F on ℝ, the microsupport SS(F) is a closed conic subset of T*ℝ. In our finite-graph setting, it reduces to the finite set of critical values, but the conceptual framework extends to higher-dimensional parameter spaces.
 
-4. **Applications to data analysis.** Apply the sheaf framework to practical TDA problems, using the stability theorem to guarantee robustness and the constructibility to enable efficient computation.
+## 7. Path and Cycle Graph Computations
 
-## References
+### Theorem 7.1 (Path Graph Jump Bound)
 
-[1] D. Cohen-Steiner, H. Edelsbrunner, J. Harer, "Stability of Persistence Diagrams," *Discrete & Computational Geometry* 37 (2007), 103–120.
+*For the path graph P_{n+1} with natural filtration (vertex i enters at time i):*
+```
+sheafJump(pathGr(n), pathFilt(n), c) ≤ 3    for all c
+```
 
-[2] M. Baker, S. Norine, "Riemann–Roch and Abel–Jacobi Theory on a Finite Graph," *Advances in Mathematics* 215 (2007), 766–788.
+**Proof.** The path graph has maximum degree 2. The fiber at each critical value has at most 1 element (the filtration is injective). Each vertex contributes deg(v) + 1 ≤ 3 to the jump. □
 
-[3] M. Develin, F. Santos, B. Sturmfels, "On the Rank of a Tropical Matrix," *Combinatorial and Computational Geometry*, MSRI Publications 52 (2005), 213–242.
+### Theorem 7.2 (Higher Jump Vanishing)
 
-[4] H. Edelsbrunner, D. Letscher, A. Zomorodian, "Topological Persistence and Simplification," *Discrete & Computational Geometry* 28 (2002), 511–533.
+*For any injective filtration f, the higher sheaf jump vanishes at all critical values:*
+```
+Function.Injective(f) ⟹ higherSheafJump(f, c) = 0    for all c
+```
 
-[5] A. Zomorodian, G. Carlsson, "Computing Persistent Homology," *Discrete & Computational Geometry* 33 (2005), 249–274.
+The higher sheaf jump measures simultaneous vertex entrances. For generic (injective) filtrations, no two vertices enter at the same time, so higher jumps vanish identically.
 
-[6] F. Chazal, D. Cohen-Steiner, M. Glisse, L. Guibas, S. Oudot, "Proximity of Persistence Modules and Their Diagrams," *Proc. SoCG* (2009), 237–246.
+### Computational Results
 
-[7] J. Curry, "Sheaves, Cosheaves and Applications," Ph.D. thesis, University of Pennsylvania, 2014.
+For P_6 (path graph on 6 vertices, vertex i entering at time i):
 
-[8] M. Kashiwara, P. Schapira, "Persistent Homology and Microlocal Sheaf Theory," *Journal of Applied and Computational Topology* 2 (2018), 83–113.
+| Threshold | Active Verts | Stalk Rank | Profile | Sheaf Jump |
+|-----------|-------------|------------|---------|------------|
+| 0 | {0} | 1 | 2 | 2 |
+| 1 | {0,1} | 2 | 5 | 3 |
+| 2 | {0,1,2} | 3 | 8 | 3 |
+| 3 | {0,1,2,3} | 4 | 11 | 3 |
+| 4 | {0,1,2,3,4} | 5 | 14 | 3 |
+| 5 | {0,1,2,3,4,5} | 6 | 16 | 2 |
 
-[9] A. Gathmann, M. Kerber, "A Riemann-Roch Theorem in Tropical Geometry," *Mathematische Zeitschrift* 259 (2008), 217–230.
+The endpoint vertices (0 and 5) have degree 1, producing jumps of 2. Internal vertices have degree 2, producing jumps of 3.
 
-[10] M. Kashiwara, P. Schapira, *Sheaves on Manifolds*, Springer, 1990.
+For C_6 (cycle graph on 6 vertices):
 
-[11] P. Schapira, "Tomography of Constructible Functions," *Applied Algebra, Algebraic Algorithms and Error-Correcting Codes* (1995), 427–435.
+| Threshold | Active Verts | Stalk Rank | Profile | Sheaf Jump |
+|-----------|-------------|------------|---------|------------|
+| 0 | {0} | 1 | 3 | 3 |
+| 1 | {0,1} | 2 | 6 | 3 |
+| 2 | {0,1,2} | 3 | 9 | 3 |
+| 3 | {0,1,2,3} | 4 | 12 | 3 |
+| 4 | {0,1,2,3,4} | 5 | 15 | 3 |
+| 5 | {0,1,2,3,4,5} | 6 | 18 | 3 |
 
-## Appendix: Formal Verification
+All cycle vertices have degree 2, producing uniform jumps of 3.
 
-All results in this paper are formalized in Lean 4 with Mathlib and verified to depend only on the standard axioms `propext`, `Classical.choice`, and `Quot.sound`. The formal development is contained in `Pythagorean/TropicalBridge/SheafPersistence.lean` (421 lines, 0 sorries). Key formal identifiers:
+## 8. Algorithms
 
-| Paper Theorem | Lean Identifier |
-|---|---|
-| Constructibility | `activeVerts_eq_of_sameCritGap` |
-| Recovery | `tropEvtProfile_eq_cumSheafJump` |
-| Stability | `sheafEvtProfile_stability` |
-| Euler bridge | `activeEulerChar_const_between_critical` |
-| Kernel data equiv | `tropKernelData_equiv_of_sameCritGap` |
-| Jump formula | `tropEvtProfile_jump_at_critical` |
+### Algorithm 1: Critical Stratification
+
+```
+Input: Vertex filtration f: V → ℝ
+Output: Sorted list of critical strata
+
+1. Compute critVals = sorted(unique({f(v) : v ∈ V}))
+2. For each consecutive pair (c_i, c_{i+1}):
+     emit open stratum (c_i, c_{i+1})
+     emit critical stratum {c_{i+1}}
+3. Return strata list
+```
+
+**Complexity:** O(|V| log |V|) time, O(|V|) space.
+
+### Algorithm 2: Sheaf Jump Computation
+
+```
+Input: Graph G, filtration f, threshold c
+Output: sheafJump(G, f, c)
+
+1. fiber = {v ∈ V : f(v) = c}
+2. Return Σ_{v ∈ fiber} (deg_G(v) + 1)
+```
+
+**Complexity:** O(|V|) time per critical value; O(|V|²) total for all jumps.
+
+### Algorithm 3: Profile Construction
+
+```
+Input: Graph G, filtration f
+Output: Profile table [(c, cumulative_profile), ...]
+
+1. jumps = {c: sheafJump(G, f, c) for c in critVals(f)}
+2. cumulative = 0
+3. For c in sorted(critVals(f)):
+     cumulative += jumps[c]
+     emit (c, cumulative)
+```
+
+**Complexity:** O(|V|² log |V|) time, O(|V|) space.
+
+## 9. Discussion
+
+### 9.1 Conceptual Significance
+
+The identification of the tropical event profile with a constructible sheaf is a conceptual advance beyond prior persistence theory in several ways:
+
+1. **Stability becomes functorial.** Rather than proving stability as an inequality, we derive it from the categorical structure of the sheaf construction.
+
+2. **Local-to-global principle.** The Möbius inversion formula shows that the global profile is assembled from local contributions — the sheaf jumps — giving a principled decomposition of complexity.
+
+3. **Finite determination.** The constructibility theorem shows that the infinite-dimensional sheaf (a function on ℝ) is determined by finitely many data points.
+
+### 9.2 Limitations
+
+The current framework is limited to vertex filtrations on finite graphs. Extensions to:
+- Edge filtrations
+- Simplicial complex filtrations
+- Continuous parameter spaces
+- Higher-dimensional sheaves
+
+remain as important future directions.
+
+### 9.3 Relationship to Prior Work
+
+The sheaf perspective on persistence was pioneered by Curry [Cur14] and developed by Kashiwara-Schapira [KS18] in the derived category setting. Our contribution is to instantiate this program concretely in the tropical setting, with machine-verified proofs, providing the first fully formalized example of the "persistence as constructible sheaf" paradigm.
+
+## 10. References
+
+- [BN07] Baker, M. and Norine, S. "Riemann–Roch and Abel–Jacobi theory on a finite graph." Advances in Mathematics 215.2 (2007): 766-788.
+- [CEH07] Cohen-Steiner, D., Edelsbrunner, H., and Harer, J. "Stability of persistence diagrams." Discrete & Computational Geometry 37.1 (2007): 103-120.
+- [Cur14] Curry, J. "Sheaves, Cosheaves and Applications." PhD thesis, University of Pennsylvania, 2014.
+- [KS90] Kashiwara, M. and Schapira, P. "Sheaves on Manifolds." Springer, 1990.
+- [KS18] Kashiwara, M. and Schapira, P. "Persistent homology and microlocal sheaf theory." Journal of Applied and Computational Topology 2.1-2 (2018): 83-113.
