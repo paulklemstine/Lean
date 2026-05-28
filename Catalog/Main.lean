@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2003 of the highest-quality
+A curated collection of 2005 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2003
+Total files: 2005
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1512,6 +1512,7 @@ import FINAL.Pythagorean.CertificatePhaseTransition
 import FINAL.Pythagorean.CertificatePosetWQO
 import FINAL.Pythagorean.CertificateProductGrowth
 import FINAL.Pythagorean.CertificateSampling
+import FINAL.Pythagorean.CharacterSumBounds
 import FINAL.Pythagorean.ChipFiringCorrespondence
 import FINAL.Pythagorean.ChurchRosser
 import FINAL.Pythagorean.CircleMethodDensity
@@ -1604,6 +1605,7 @@ import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.IteratedShadowGeometry
 import FINAL.Pythagorean.KeplerEccentricity
 import FINAL.Pythagorean.KnuthBendixCompletion
+import FINAL.Pythagorean.KruskalKatonaMI
 import FINAL.Pythagorean.KruskalKatonaSupport
 import FINAL.Pythagorean.LagrangeFourSquare
 import FINAL.Pythagorean.LargeDeviationPressure

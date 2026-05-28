@@ -677,10 +677,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "80ad73ef",
     "timestamp": "2026-05-26T21:53:04.887954+00:00"
   },
   {
@@ -824,25 +824,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T15:25:01.447437+00:00"
   },
   {
-    "id": "fd_1454",
-    "title": "Direction 1: Character Sum Bounds for S_n via Moment Kernel Decomposition",
-    "description": "**Conjecture:** For fixed k \u2265 1, the expected k-th excess moment over random generating pairs (\u03c3, \u03c4) in S_n satisfies\n\n$$\\mathbb{E}_{\\sigma,\\tau}[\\delta_{2k}(\\sigma, \\tau)] = O(1/n)$$\n\nwhere $\\delta_{2k} = \\text{momentKernel}(\\sigma, \\tau, 2k) - \\mu_{F_2}^{(2k)}(e)$.\n\n**Test:** Compute the average excess moment for random pairs in S_n for n = 5, ..., 12 and verify the 1/n decay rate by regression. The formalized conjugation invariance theorem (`closedWordCount_conj_invariant` in `Pythagorean/CayleyExpander/MomentMethod.lean`) reduces the average to a sum over conjugacy classes, making the computation tractable.\n\n**The key insight is** that the moment kernel decomposes over irreducible representations of S_n, and the dominant correction comes from the standard (n-1)-dimensional representation, which contributes O(1/n) by character orthogonality. The conjugation invariance theorem already certified in our framework is the first step toward formalizing this decomposition.\n\n**Why now?** The trace identity and conjugation invariance are the two prerequisites for the character decomposition, and both are now machine-verified. The character theory of S_n is partially available in Mathlib, making the formal bridge feasible within the next cycle.\n\n**Impact:** A formal proof of the 1/n decay would be the first rigorous moment bound for random Cayley graphs on S_n, directly advancing the Random Cayley Expander Conjecture.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethod.lean` (closedWordCount_conj_invariant, momentKernel_conj_invariant), `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (trace_pow_eq_closedWordCount, spectral_moment_eq_return_prob).\n\n**Proof Strategy:** Decompose the moment kernel using the Peter-Weyl theorem for finite groups. The conjugation invariance reduces the problem to character sums. Bound each irreducible contribution using known character bounds for S_n (e.g., Roichman's bounds).\n\n**Domain Bridges:** Representation theory of S_n \u2192 asymptotic combinatorics \u2192 probability theory.\n\n**Lineage:** Builds directly on Theorems 1, 3, and 6 of the current work.\n\n**Ambition:** Grand challenge \u2014 would resolve the conjecture for fixed moments.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "be453c44",
-    "consumed_by_exp_id": "a03e75f9",
-    "timestamp": "2026-05-27T16:03:48.605918+00:00"
-  },
-  {
     "id": "fd_1479",
     "title": "Closing the Single-Power Gap",
     "description": "Conjecture: For every fixed `k \u2265 0`, there exists `c_k > 0` such that for infinitely many `d`, some depth-`k` exchange family in dimension `d` has worst-case descent length at least `c_k \u00b7 d^{d-k}` (matching the upper bound exactly, not just `d^{d-k-1}`).\n\nTest: Construct increasingly refined adversarial families for `d = 4, ..., 20` with fixed `k = 0, 1, 2`. Compute worst-case descent lengths and fit the growth rate. If `T(d,k) / d^{d-k}` converges to a positive constant, the conjecture holds. If `T(d,k) / d^{d-k-1}` converges instead, the lower bound is tight and the upper bound can be improved.\n\nImpact: Resolves the central open question of the current theory. If the upper bound is tight, certificate depth is the exact complexity exponent. If not, there exists a finer invariant \u2014 a \"certificate depth 2.0\" \u2014 waiting to be discovered.",
@@ -872,10 +853,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b4df6162",
     "timestamp": "2026-05-27T17:24:45.367460+00:00"
   },
   {
@@ -1038,10 +1019,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "36b3d470",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "81631717",
     "timestamp": "2026-05-28T03:11:12.401718+00:00"
   },
   {
@@ -1064,26 +1045,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "36b3d470",
     "consumed_by_exp_id": "c6ae898d",
     "timestamp": "2026-05-28T03:11:12.578612+00:00"
-  },
-  {
-    "id": "fd_1682",
-    "title": "Direction 1: Full Kruskal\u2013Katona Theory for Multi-Index Families",
-    "description": "**Conjecture:** There exists a total order $\\prec$ on $\\mathbb{N}^n$ (a multi-index colex order) such that for every $d$ and $m$, the initial segment of $\\prec$ among degree-$d$ multi-indices minimizes the one-step shadow among all families of size $m$.\n\n**Test:** Enumerate all families of size $m \\le 10$ in degree $d \\le 4$ with $n \\le 4$ variables. Check whether the colex-initial segment always achieves the minimum shadow. A single counterexample refutes the conjecture; universal confirmation up to these bounds provides strong evidence.\n\n**Impact:** This would extend the classical KK theorem from uniform set families to the full multi-index lattice, providing exact computable KK bounds for non-squarefree polynomial supports. This is essential for the shadow-gap program beyond the squarefree regime.\n\n**Catalog References:**\n- `Catalog/Pythagorean/IteratedShadowGeometry.lean`: `kthShadow`, `mem_kthShadow_iff`\n- `Catalog/Bridges/Catalog/Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_elemSymm_eq`\n\n**Proof Strategy:** The key insight is that the classical proof of KK uses a \"compression\" operator that pushes a family toward the initial segment while not increasing the shadow. For multi-indices, define compression $C_{ij}$: for each $\\alpha$ with $\\alpha(i) > 0$ and room to increment $\\alpha(j)$, replace $\\alpha$ with the compressed version. Prove that each compression does not increase the shadow (by an injection argument on shadow witnesses), then show that the limit of iterated compressions is the colex-initial segment.\n\n**Why now?** The formal infrastructure for multi-index shadows (definitions, membership lemmas, semigroup laws) is now in place. The missing piece is the compression machinery, which is a finite combinatorial argument amenable to proof automation.\n\n**Domain Bridges:** Extremal combinatorics \u2192 algebraic complexity (via explicit KK bounds for polynomial supports).\n\n**Lineage:** Extends Kruskal (1963), Katona (1968), Clements\u2013Lindstr\u00f6m (1969).\n\n**Ambition:** Grand challenge \u2014 would establish a foundational tool for the entire shadow-gap program.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d74bda34",
-    "consumed_by_exp_id": "92678f69",
-    "timestamp": "2026-05-28T06:14:18.830443+00:00"
   },
   {
     "id": "fd_1683",
@@ -1268,26 +1229,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T09:50:28.931327+00:00"
   },
   {
-    "id": "fd_1769",
-    "title": "Direction 3: Circuit Lower Bounds from Shadow Profile Decay",
-    "description": "**Conjecture:** If $f$ is a polynomial computed by an algebraic circuit of size $s$, then the shadow profile of $\\text{Supp}(f)$ satisfies $a_k \\geq a_0 \\cdot (s / d)^{-k}$ for some constant depending on the circuit model, where $d$ is the degree.\n\n**Test:** Compute shadow profiles for families of polynomials known to require large circuits (e.g., determinant, permanent, iterated matrix multiplication) and compare with the conjectured lower bound. A disproof is a polynomial with exponential circuit complexity but rapidly decaying shadow profile.\n\n**Impact:** Would provide a new combinatorial invariant for algebraic complexity theory, potentially usable for proving circuit lower bounds via a \"shadow complexity\" argument.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/IteratedShadowGeometry.lean` (shadow profile definition, monotonicity), `Catalog/Bridges/Catalog/Pythagorean/SupportCompression.lean` (support compression bounds).\n\n**Proof Strategy:** For a circuit of size $s$, the support at each gate is a function of the input supports. Use the shadow monotonicity theorem to track how the profile evolves through the circuit, and show that small circuits cannot produce profiles with specific shapes.\n\n**Domain Bridges:** Algebraic complexity theory \u2194 Combinatorial shadow geometry \u2194 Support compression.\n\n**Lineage:** Extends the support compression bounds from matroid settings to general circuits.\n\n**Ambition:** Grand challenge \u2014 any progress toward circuit lower bounds is significant.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "396e12d9",
-    "consumed_by_exp_id": "4cc7892a",
-    "timestamp": "2026-05-28T10:27:11.881596+00:00"
-  },
-  {
     "id": "fd_1770",
     "title": "Direction 4: Exchange-Axiom Characterization of Log-Concave Shadow Profiles",
     "description": "**Conjecture:** The discrete exchange property (Definition 3.4 in the main paper) is equivalent to shadow log-concavity for homogeneous support sets: $S$ satisfies exchange if and only if $|\\text{Shadow}_k(S)|$ is log-concave in $k$.\n\n**Test:** Systematically generate all support sets in $\\leq 5$ variables with $|S| \\leq 15$ and degree $\\leq 6$. For each, compute both the exchange property and the shadow log-concavity. Report any set that satisfies one but not the other.\n\n**Impact:** Would establish a clean equivalence between an algebraic property (exchange) and a combinatorial inequality (log-concavity), providing a new characterization of M-convex sets.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/IteratedShadowGeometry.lean` (IsDiscreteExchangeFamily definition, kthShadow), `Catalog/Bridges/Catalog/Pythagorean/SupportCompression.lean` (exchange property in matroid context).\n\n**Proof Strategy:** Forward direction (exchange \u2192 LC): prove by the injection method, showing that the shadow map Shadow_k \u2192 Shadow_{k+1} has controlled fibers when exchange holds. Reverse direction (LC \u2192 exchange): attempt a contrapositive argument showing that exchange failure creates a \"dip\" in the profile.\n\n**Domain Bridges:** Matroid theory \u2194 Discrete convex analysis \u2194 Shadow combinatorics.\n\n**Lineage:** Directly extends the main theorems of this paper.\n\n**Ambition:** Solid extension \u2014 natural next step in the theory.\n\n---",
@@ -1403,21 +1344,62 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T11:39:09.140621+00:00"
   },
   {
-    "id": "fd_1791",
-    "title": "Direction 2: Entropy-Dimension Duality and the Polynomial Freiman-Ruzsa Conjecture",
-    "description": "**Conjecture:** The Polynomial Freiman-Ruzsa conjecture (recently proved by Gowers-Green-Manners-Tao) can be re-derived from pseudofinite dimension theory via the entropy-dimension correspondence. Specifically: if $\\dim(A + A) \\leq \\dim(A) + \\delta$ in $\\mathbb{F}_2^n$ (the $K = 2^\\delta$ approximate subgroup condition), then $A$ is covered by $2^{O(\\delta)}$ cosets of a subspace $V$ with $\\dim(V) \\leq \\dim(A) + O(\\delta)$.\n\n**Test:** Formalize the entropy-dimension identity (dim = H/log|G|) and verify that Tao's entropy-based proof steps translate to dimension inequalities. Compute explicit bounds for small $\\mathbb{F}_2^n$ (n = 5, 6, 7, 8).\n\n**Impact:** Would provide a new proof pathway for PFR via model-theoretic dimension, potentially with better constants. Bridges additive combinatorics to model theory.\n\n**Catalog References:** `Pythagorean/PseudofiniteDimension.lean` (entropy correspondence, coset bound)\n\n**Proof Strategy:** Translate Tao's sumset entropy inequality $H(A+B) \\leq H(A) + H(B) - H(A \\cap B)$ into dimension language. Use the coset cover bound to extract structural conclusions.\n\n**Domain Bridges:** Information theory \u2194 model theory \u2194 additive combinatorics\n\n**Lineage:** Extends the dimension-entropy correspondence from our current work.\n\n**Ambition:** Paradigm-shifting \u2014 connects two major recent breakthroughs (PFR proof and pseudofinite dimension).\n\n---",
+    "id": "fd_1800",
+    "title": "Direction 1: Sharp Principal-Series Operator Norm via Kloosterman Sums",
+    "description": "**Conjecture**: For every certified pair (g, h) in GL\u2082(\ud835\udd3d_q) with g Singer-like, and every principal series representation \u03c0(\u03c7\u2081, \u03c7\u2082) with \u03c7\u2081 \u2260 \u03c7\u2082, the operator norm of M_\u03c0(S) satisfies\n$$\\|M_{\\pi(\\chi_1, \\chi_2)}(S)\\| \\leq 1 - \\frac{1}{2q} + O(q^{-3/2})$$\nwith the leading-order term coming from Kloosterman sums evaluated at the eigenvalues of g in \ud835\udd3d_{q\u00b2}.\n\n**Test**: For q \u2208 {11, 13, 17, 19, 23, 29, 31}, directly compute the operator norm of M_\u03c0(S) on the (q\u22121)-dimensional induced representation space for all principal series \u03c0. Compare with the predicted asymptotic 1 \u2212 1/(2q). A deviation of more than O(q^{\u22123/2}) would refine the conjecture.\n\n**Impact**: This would give the **sharp constant** in the spectral gap: \u03b3(S) \u2265 1/(2q), matching the Ramanujan bound for GL\u2082. It would also connect certified expanders to the arithmetic of Kloosterman sums, creating a bridge to analytic number theory.\n\n**The key insight is** that Singer-like elements in GL\u2082(\ud835\udd3d_q) act on the principal series through their eigenvalues in the quadratic extension \ud835\udd3d_{q\u00b2}, and the resulting character sums are precisely Kloosterman sums, whose cancellation is controlled by the Weil bound.\n\n**Why now?** The familywise framework established here reduces the problem to a single family (principal series), and recent work on Kloosterman sum formalization in Lean (via the Weil bound project) provides the necessary analytical tools.\n\n**Catalog References**: `Catalog/Pythagorean/GL2SpectralDecomposition.lean` \u2014 `spectral_radius_eq_principal_if_dominates`, `abstract_spectral_gap_lower_bound`\n\n**Proof Strategy**: Realize the principal series as functions on P\u00b9(\ud835\udd3d_q), compute the matrix coefficients of M_\u03c0(S) as sums over \ud835\udd3d_q involving characters, identify these as Kloosterman sums, apply the Weil bound.\n\n**Domain Bridges**: Analytic number theory (Kloosterman sums), algebraic geometry (Weil bound)\n\n**Lineage**: This direction descends from the abstract spectral gap framework (Theorem 9) and the principal-series dominance theorem (Theorem 8).\n\n**Ambition**: Grand challenge \u2014 would establish the sharp Ramanujan-type bound for certified GL\u2082 expanders.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
+      "Geometry",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "951d1d02",
+    "source_exp_id": "b2a4e38f",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T11:39:09.213949+00:00"
+    "timestamp": "2026-05-28T12:18:36.484704+00:00"
+  },
+  {
+    "id": "fd_1801",
+    "title": "Direction 2: Extension to GL_n(\ud835\udd3d_q) \u2014 Higher-Rank Familywise Decomposition",
+    "description": "**Conjecture**: For GL_n(\ud835\udd3d_q) with n \u2265 3, the nontrivial spectral radius of a certified Cayley operator is controlled by the family of representations parabolically induced from the minimal (Borel) subgroup \u2014 the direct analog of the principal series. The \"deeper\" cuspidal families gain cancellation of order q^{\u2212(n\u22121)/2} relative to the principal series.\n\n**Test**: For GL\u2083(\ud835\udd3d\u2085), enumerate certified pairs (g with irreducible charpoly of degree 3), compute operator norms for the principal series and cuspidal families, verify that principal series dominates.\n\n**Impact**: This would establish the boundary-dominance principle for arbitrary rank, opening the door to explicit expander constructions in all finite linear groups.\n\n**The key insight is** that the Bernstein\u2013Zelevinsky classification of irreducible representations of GL_n organizes them by \"cuspidal support,\" and the representations with simplest (Borel) cuspidal support \u2014 the principal series \u2014 have the least oscillatory matrix coefficients.\n\n**Why now?** The formalization of the GL\u2082 case provides the template. The Bernstein\u2013Zelevinsky classification is well-documented and the combinatorial structure is accessible to formalization.\n\n**Catalog References**: `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 `eq_bot_or_top_of_charpoly_irreducible` (works for any n), `Catalog/Pythagorean/GL2SpectralDecomposition.lean` \u2014 `GL2RepFamily`, `familywise_spectral_gap_of_bounds`\n\n**Proof Strategy**: Define GL_n analogues of GL2RepFamily using parabolic induction data. Generalize the invariant subspace theorem (already works for arbitrary dimension). Use the Jacquet module theory to bound operator norms family by family.\n\n**Domain Bridges**: Automorphic forms (Langlands program), algebraic combinatorics (symmetric functions)\n\n**Lineage**: Direct generalization of the GL\u2082 framework.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if boundary dominance holds in full generality.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b2a4e38f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:18:36.586229+00:00"
+  },
+  {
+    "id": "fd_1802",
+    "title": "Direction 3: Quantum Circuit Certification from GL\u2082 Spectral Gaps",
+    "description": "**Conjecture**: For every certified pair (g, h) in GL\u2082(\ud835\udd3d_q), the quantum channel\n$$\\Phi(\\rho) = \\frac{1}{4}(U_g \\rho U_g^\\dagger + U_{g^{-1}} \\rho U_{g^{-1}}^\\dagger + U_h \\rho U_h^\\dagger + U_{h^{-1}} \\rho U_{h^{-1}}^\\dagger)$$\nwhere U_g is the natural unitary representation of g on \u2102^{q\u00b2}, achieves \u03b5-approximate unitary 2-design after O(q log(q/\u03b5)) applications.\n\n**Test**: For q = 5, 7, construct the quantum channel explicitly, compute the diamond-norm distance to the Haar channel after t iterations, verify the predicted convergence rate.\n\n**Impact**: Would provide the first **deterministically certified quantum scrambling circuits** with provable mixing time, directly applicable to quantum error correction and quantum cryptography.\n\n**The key insight is** that the spectral gap of the classical Cayley walk directly bounds the diamond-norm contraction of the associated quantum channel, and certified pairs give deterministic quantum circuits without randomness.\n\n**Why now?** The classical spectral gap theory (Theorem 6, exponential mixing) provides the contraction bound. Recent developments in quantum information theory make the connection to approximate designs precise.\n\n**Catalog References**: `Catalog/Pythagorean/GL2SpectralDecomposition.lean` \u2014 `certified_gl2_mixing_bound`, `quantum_mixing_decay`\n\n**Proof Strategy**: Use the representation-theoretic decomposition to bound the diamond norm of the quantum channel. Apply the certified spectral gap to get the convergence rate. Formalize the connection between classical spectral gap and quantum design depth.\n\n**Domain Bridges**: Quantum information theory, quantum cryptography, quantum error correction\n\n**Lineage**: Builds on the quantum mixing connection (Section 13 of the Lean file).\n\n**Ambition**: Solid extension with direct practical applications.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b2a4e38f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:18:36.683716+00:00"
   },
   {
     "id": "fd_0806",
@@ -1450,64 +1432,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1800",
-    "title": "Direction 1: Sharp Principal-Series Operator Norm via Kloosterman Sums",
-    "description": "**Conjecture**: For every certified pair (g, h) in GL\u2082(\ud835\udd3d_q) with g Singer-like, and every principal series representation \u03c0(\u03c7\u2081, \u03c7\u2082) with \u03c7\u2081 \u2260 \u03c7\u2082, the operator norm of M_\u03c0(S) satisfies\n$$\\|M_{\\pi(\\chi_1, \\chi_2)}(S)\\| \\leq 1 - \\frac{1}{2q} + O(q^{-3/2})$$\nwith the leading-order term coming from Kloosterman sums evaluated at the eigenvalues of g in \ud835\udd3d_{q\u00b2}.\n\n**Test**: For q \u2208 {11, 13, 17, 19, 23, 29, 31}, directly compute the operator norm of M_\u03c0(S) on the (q\u22121)-dimensional induced representation space for all principal series \u03c0. Compare with the predicted asymptotic 1 \u2212 1/(2q). A deviation of more than O(q^{\u22123/2}) would refine the conjecture.\n\n**Impact**: This would give the **sharp constant** in the spectral gap: \u03b3(S) \u2265 1/(2q), matching the Ramanujan bound for GL\u2082. It would also connect certified expanders to the arithmetic of Kloosterman sums, creating a bridge to analytic number theory.\n\n**The key insight is** that Singer-like elements in GL\u2082(\ud835\udd3d_q) act on the principal series through their eigenvalues in the quadratic extension \ud835\udd3d_{q\u00b2}, and the resulting character sums are precisely Kloosterman sums, whose cancellation is controlled by the Weil bound.\n\n**Why now?** The familywise framework established here reduces the problem to a single family (principal series), and recent work on Kloosterman sum formalization in Lean (via the Weil bound project) provides the necessary analytical tools.\n\n**Catalog References**: `Catalog/Pythagorean/GL2SpectralDecomposition.lean` \u2014 `spectral_radius_eq_principal_if_dominates`, `abstract_spectral_gap_lower_bound`\n\n**Proof Strategy**: Realize the principal series as functions on P\u00b9(\ud835\udd3d_q), compute the matrix coefficients of M_\u03c0(S) as sums over \ud835\udd3d_q involving characters, identify these as Kloosterman sums, apply the Weil bound.\n\n**Domain Bridges**: Analytic number theory (Kloosterman sums), algebraic geometry (Weil bound)\n\n**Lineage**: This direction descends from the abstract spectral gap framework (Theorem 9) and the principal-series dominance theorem (Theorem 8).\n\n**Ambition**: Grand challenge \u2014 would establish the sharp Ramanujan-type bound for certified GL\u2082 expanders.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b2a4e38f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T12:18:36.484704+00:00"
-  },
-  {
-    "id": "fd_1801",
-    "title": "Direction 2: Extension to GL_n(\ud835\udd3d_q) \u2014 Higher-Rank Familywise Decomposition",
-    "description": "**Conjecture**: For GL_n(\ud835\udd3d_q) with n \u2265 3, the nontrivial spectral radius of a certified Cayley operator is controlled by the family of representations parabolically induced from the minimal (Borel) subgroup \u2014 the direct analog of the principal series. The \"deeper\" cuspidal families gain cancellation of order q^{\u2212(n\u22121)/2} relative to the principal series.\n\n**Test**: For GL\u2083(\ud835\udd3d\u2085), enumerate certified pairs (g with irreducible charpoly of degree 3), compute operator norms for the principal series and cuspidal families, verify that principal series dominates.\n\n**Impact**: This would establish the boundary-dominance principle for arbitrary rank, opening the door to explicit expander constructions in all finite linear groups.\n\n**The key insight is** that the Bernstein\u2013Zelevinsky classification of irreducible representations of GL_n organizes them by \"cuspidal support,\" and the representations with simplest (Borel) cuspidal support \u2014 the principal series \u2014 have the least oscillatory matrix coefficients.\n\n**Why now?** The formalization of the GL\u2082 case provides the template. The Bernstein\u2013Zelevinsky classification is well-documented and the combinatorial structure is accessible to formalization.\n\n**Catalog References**: `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 `eq_bot_or_top_of_charpoly_irreducible` (works for any n), `Catalog/Pythagorean/GL2SpectralDecomposition.lean` \u2014 `GL2RepFamily`, `familywise_spectral_gap_of_bounds`\n\n**Proof Strategy**: Define GL_n analogues of GL2RepFamily using parabolic induction data. Generalize the invariant subspace theorem (already works for arbitrary dimension). Use the Jacquet module theory to bound operator norms family by family.\n\n**Domain Bridges**: Automorphic forms (Langlands program), algebraic combinatorics (symmetric functions)\n\n**Lineage**: Direct generalization of the GL\u2082 framework.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if boundary dominance holds in full generality.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b2a4e38f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T12:18:36.586229+00:00"
-  },
-  {
-    "id": "fd_1802",
-    "title": "Direction 3: Quantum Circuit Certification from GL\u2082 Spectral Gaps",
-    "description": "**Conjecture**: For every certified pair (g, h) in GL\u2082(\ud835\udd3d_q), the quantum channel\n$$\\Phi(\\rho) = \\frac{1}{4}(U_g \\rho U_g^\\dagger + U_{g^{-1}} \\rho U_{g^{-1}}^\\dagger + U_h \\rho U_h^\\dagger + U_{h^{-1}} \\rho U_{h^{-1}}^\\dagger)$$\nwhere U_g is the natural unitary representation of g on \u2102^{q\u00b2}, achieves \u03b5-approximate unitary 2-design after O(q log(q/\u03b5)) applications.\n\n**Test**: For q = 5, 7, construct the quantum channel explicitly, compute the diamond-norm distance to the Haar channel after t iterations, verify the predicted convergence rate.\n\n**Impact**: Would provide the first **deterministically certified quantum scrambling circuits** with provable mixing time, directly applicable to quantum error correction and quantum cryptography.\n\n**The key insight is** that the spectral gap of the classical Cayley walk directly bounds the diamond-norm contraction of the associated quantum channel, and certified pairs give deterministic quantum circuits without randomness.\n\n**Why now?** The classical spectral gap theory (Theorem 6, exponential mixing) provides the contraction bound. Recent developments in quantum information theory make the connection to approximate designs precise.\n\n**Catalog References**: `Catalog/Pythagorean/GL2SpectralDecomposition.lean` \u2014 `certified_gl2_mixing_bound`, `quantum_mixing_decay`\n\n**Proof Strategy**: Use the representation-theoretic decomposition to bound the diamond norm of the quantum channel. Apply the certified spectral gap to get the convergence rate. Formalize the connection between classical spectral gap and quantum design depth.\n\n**Domain Bridges**: Quantum information theory, quantum cryptography, quantum error correction\n\n**Lineage**: Builds on the quantum mixing connection (Section 13 of the Lean file).\n\n**Ambition**: Solid extension with direct practical applications.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "b2a4e38f",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T12:18:36.683716+00:00"
   },
   {
     "id": "seed_013",
@@ -1732,21 +1656,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T03:07:22.429094+00:00"
   },
   {
-    "id": "fd_0857",
-    "title": "Persistent Homology Detects Arithmetic Mirror Symmetry via Primewise Frobenius B",
-    "description": "Conjecture: There exists a canonical construction assigning to each smooth projective Calabi\u2013Yau variety X over Q a family of filtered complexes K_p(X) for good primes p such that if X and Y form a mirror pair, then for a density-1 set of primes p their primewise persistence landscapes agree after an explicit degree-reversal transform induced by Hodge duality, while for non-mirror Calabi\u2013Yau varieties this agreement fails on a positive-density set of primes. Test: Compute K_p(X) from point-count/Frobenius data for known mirror families and compare transformed persistence landscapes across many good primes; confirmation is density-1 agreement for mirrors and systematic disagreement for controls. Refutation is failure on known mirror pairs or widespread false positives among non-mirrors. Impact: This would create a new arithmetic-topological invariant for mirror symmetry, linking p-adic/\u00e9tale data, persistent homology, and enumerative geometry, and could provide a computable signature for detecting hidden mirror partners.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T03:08:57.522301+00:00"
-  },
-  {
     "id": "fd_0901",
     "title": "Algorithmic Independence of Primewise Persistence Profiles",
     "description": "Conjecture: There exists an explicit arithmetic family of filtered chain complexes C(N) over Z, computable from N in polynomial time, such that for infinitely many cutoffs N the collection of primewise barcode summary vectors B_p(C(N)) (for p <= polylog N) is pairwise algorithmically independent in the following testable sense: no predictor running in time poly(log N) and given {B_q(C(N)) : q != p, q <= polylog N} can recover B_p(C(N)) with advantage exceeding o(1) over the empirical base rate. Test: instantiate a canonical family C(N) (e.g. from arithmetic lattices, modular-symbol complexes, or filtered congruence complexes), compute B_p across many primes, and evaluate whether cross-prime prediction accuracy provably/empirically stays at chance while within-prime structure remains highly nontrivial. Refutation occurs if a uniform low-complexity predictor consistently reconstructs one prime's persistence from the others. Impact: This would reveal a new form of arithmetic pseudorandomness visible only through topological summaries, suggesting persistence as a probe of hidden independence phenomena across primes and enabling topology-based randomness tests for arithmetic objects.",
@@ -1835,21 +1744,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T07:51:52.030067+00:00"
-  },
-  {
-    "id": "fd_1343",
-    "title": "Derived Zeta Reconstruction from Primewise Persistent Torsion",
-    "description": "Conjecture: There exists a functorial assignment from every smooth projective variety X over Q to a filtered integral chain complex C(X) such that, for all but finitely many good primes p, the p-primary persistence barcode of C(X) at filtration scale p determines the multiset of Frobenius eigenvalue p-adic valuations on each \u00e9tale cohomology group H^i_et(X_{Qbar}, Q_l), and hence determines the local zeta factor Z(X/F_p,t) up to finitely many explicitly bounded ambiguities. Test: Compute the construction for benchmark families (elliptic curves, K3 surfaces, hypersurfaces with known point counts) and check whether independently computed primewise barcodes reconstruct the correct local zeta factors for a density-1 set of primes; a single infinite family with systematically non-reconstructible zeta data refutes the conjecture. Impact: This would create a new topological-computational interface for arithmetic geometry, turning persistence invariants into a probe of Frobenius spectra and potentially enabling data-driven recovery of motivic and L-function information from combinatorial models.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T07:52:22.669578+00:00"
   },
   {
     "id": "fd_1429",
@@ -2002,21 +1896,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T03:48:38.722447+00:00"
   },
   {
-    "id": "fd_1678",
-    "title": "Motivic Stabilization of Primewise Persistent Signatures",
-    "description": "Conjecture: There exists a functorial assignment X \u21a6 C_p(X) from smooth projective varieties X over Q to finite filtered chain complexes over F_p such that if two varieties X,Y have isomorphic Chow motives over Q, then for all but finitely many good primes p their primewise persistence diagrams are identical; conversely, there exists an explicit pair of non-isomorphic varieties with identical zeta functions at a density-1 set of primes but different persistence diagrams for infinitely many p. Test: Construct C_p(X) from reductions mod p using algebraic correspondences or Frobenius-weight filtrations, then compare persistence diagrams on known motivically equivalent pairs and on arithmetic lookalikes (e.g. zeta-equivalent but non-motivically equivalent examples). Confirmation requires eventual equality in the first class and infinitely many separating primes in the second; failure of either refutes the conjecture. Impact: This would make persistent homology a genuinely new arithmetic invariant, finer than point-count data yet structured enough to detect motivic information, potentially opening a bridge between TDA, motives, and arithmetic geometry.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T05:33:36.226237+00:00"
-  },
-  {
     "id": "fd_1679",
     "title": "Prime-Threshold Percolation Law for Torsion Emergence in Random Simplicial Compl",
     "description": "Conjecture: For each fixed dimension d >= 2, there exists a universal scaling exponent alpha_d and a nonconstant prime-response profile Phi_d such that in the Linial\u2013Meshulam process Y_d(n,p), if p = c n^{-alpha_d}, then for every fixed prime ell the probability that H_{d-1}(Y_d(n,p); Z) contains nontrivial ell-primary torsion converges to Phi_d(c^{v_ell(n!)} / ell) along an infinite subsequence of n. In particular, different primes exhibit genuinely different torsion-onset windows after the same global rescaling, not explainable by the rational homology threshold alone. Test: Simulate Y_d(n,p) near known rational-homology critical windows, compute Smith normal forms of boundary maps, and estimate the onset probability of ell-primary torsion separately for several primes ell; the conjecture is supported if these curves collapse to prime-dependent nontrivial limits and refuted if a single prime-independent scaling law fits all torsion data. Impact: This would reveal a new arithmetic universality class in random topology, separating integral-topological phase transitions from field-coefficient phase transitions and giving the first quantitative law for how specific primes enter random torsion.",
@@ -2137,6 +2016,36 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T11:04:47.896691+00:00"
   },
   {
+    "id": "fd_1805",
+    "title": "Profinite Reconstruction Threshold from Prime-by-Prime Finite Quotient Persisten",
+    "description": "Conjecture: There exists an explicit functorial construction sending every finitely generated residually finite group G to a family of finite filtered simplicial complexes K_p(G,N), indexed by primes p and quotient-depth parameter N, such that if two groups G and H satisfy barcode equality for all sufficiently large p and all N, then their profinite completions are isomorphic; moreover, there exists a finitely generated pair G,H with matching barcodes for every fixed finite set of primes but different profinite completions. Test: Implement K_p(G,N) from presentations via finite p-group and mixed finite quotient towers, compute persistent homology barcodes across p,N for known families with subtle finite-quotient behavior (e.g. arithmetic groups, 3-manifold groups, nilpotent and virtually free groups), and check whether barcode coincidence tracks profinite equivalence and whether finite-prime agreement can fail to determine it. A single counterexample to the reconstruction claim refutes the first part; a proof or exhaustive positive evidence on broad classes supports it. Impact: This would create a new topological-computational interface for profinite group theory, potentially giving computable invariants for distinguishing groups via their finite quotients and linking persistent homology with anabelian-style reconstruction phenomena.",
+    "domains": [
+      "Geometric Group Theory",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:55:04.181043+00:00"
+  },
+  {
+    "id": "fd_1806",
+    "title": "Arithmetic Universality Barrier for Primewise Persistent Encodings",
+    "description": "Conjecture: There exists a natural class C of functorial assignments X \u21a6 {K_p(X)} from smooth projective varieties over Q to finite filtered chain complexes over F_p, satisfying bounded local complexity and compatibility with products and finite correspondences, such that no assignment in C can determine the full Hasse\u2013Weil zeta function of X from the collection of primewise persistent barcodes at a density-1 set of primes unless it already determines all l-adic Betti numbers and Frobenius characteristic polynomials. Test: Formalize axioms for C and attempt reconstruction on explicit non-isomorphic varieties with matching low-complexity primewise persistence data; confirmation comes from proving an obstruction theorem or constructing counterexample pairs, refutation comes from an explicit reconstruction algorithm within C recovering zeta functions beyond cohomological data. Impact: This would sharply separate what persistent-homological arithmetic encodings can and cannot capture, turning many current positive conjectures into a coherent program with clear universality limits.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:55:38.029549+00:00"
+  },
+  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2149,6 +2058,78 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
+  },
+  {
+    "id": "fd_1807",
+    "title": "Extending the framework",
+    "description": "from formulas to algebraic branching programs (ABPs) and general circuits, where the key challenge is handling fan-out.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4cc7892a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:56:17.805930+00:00"
+  },
+  {
+    "id": "fd_1808",
+    "title": "Proving lower bounds",
+    "description": "by computing shadow complexity of specific polynomials (permanent, determinant) and showing it exceeds $2^s$ for small $s$.",
+    "domains": [
+      "Computation"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4cc7892a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:56:17.884271+00:00"
+  },
+  {
+    "id": "fd_1809",
+    "title": "Connecting to information theory",
+    "description": "through the shadow entropy power inequality analogy.",
+    "domains": [
+      "Bridges"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4cc7892a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:56:17.959205+00:00"
+  },
+  {
+    "id": "fd_1810",
+    "title": "Bridging to tropical geometry",
+    "description": "where shadows become tropical projections.",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4cc7892a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:56:18.036514+00:00"
+  },
+  {
+    "id": "fd_1811",
+    "title": "Exploring the equality case",
+    "description": "of the convolution inequality to characterize extremal support structures.",
+    "domains": [
+      "Algebra"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4cc7892a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:56:18.115366+00:00"
   },
   {
     "id": "seed_007",

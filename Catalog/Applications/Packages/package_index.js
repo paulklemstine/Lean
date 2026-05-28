@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Complexity Theory / Combinatorics",
     "date": "2026-05-28T12:56:08Z",
     "exp_id": "4cc7892a",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6992263999999999,
+    "quality": "partial",
     "pkg_num": 244
   },
   {
@@ -7085,8 +7085,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-28T12:56:08Z",
       "hue": 95,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6992263999999999,
+      "quality": "partial"
     }
   ],
   "edges": [
