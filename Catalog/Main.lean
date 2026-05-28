@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2019 of the highest-quality
+A curated collection of 2022 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2019
+Total files: 2022
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -315,6 +315,7 @@ import FINAL.Bridges.BisimulationMetric
 import FINAL.Bridges.BooleanThermodynamicEliminationDuality
 import FINAL.Bridges.BordaRobustness
 import FINAL.Bridges.BottleneckUpgrade
+import FINAL.Bridges.BoundedHOCompletionBeta
 import FINAL.Bridges.BranchComplexity
 import FINAL.Bridges.BreakthroughDirections
 import FINAL.Bridges.Bridge
@@ -1470,6 +1471,7 @@ import FINAL.Pythagorean.ApproxGaussianEntropy
 import FINAL.Pythagorean.ApproxSubgroupTheorems
 import FINAL.Pythagorean.ArithmeticPhaseClassification
 import FINAL.Pythagorean.ArithmeticTDAPipeline
+import FINAL.Pythagorean.AssignmentGapExtension
 import FINAL.Pythagorean.AsymptoticCompactness
 import FINAL.Pythagorean.Basic
 import FINAL.Pythagorean.BerggrenCA
@@ -1715,6 +1717,7 @@ import FINAL.Pythagorean.SubgroupRenormalization
 import FINAL.Pythagorean.SubstAlgebra
 import FINAL.Pythagorean.SunflowerPruning
 import FINAL.Pythagorean.SupportMinorTheory
+import FINAL.Pythagorean.SupportRigidityCircuitBounds
 import FINAL.Pythagorean.SupportTuttePolynomial
 import FINAL.Pythagorean.TensorExtractionOptimality
 import FINAL.Pythagorean.TensorSortedRewrite

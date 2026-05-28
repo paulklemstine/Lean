@@ -249,10 +249,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "b0c5ef34",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:40:03.296660+00:00"
   },
   {
@@ -338,10 +338,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "e1b326de",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T20:01:51.853060+00:00"
   },
   {
@@ -576,10 +576,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "21d69cc6",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "efa65a5f",
     "timestamp": "2026-05-26T09:39:15.046719+00:00"
   },
   {
@@ -597,10 +597,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1fb257b2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce4c226e",
     "timestamp": "2026-05-26T13:05:51.445505+00:00"
   },
   {
@@ -616,10 +616,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "550b5c8b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4d194a8",
     "timestamp": "2026-05-26T21:18:02.967940+00:00"
   },
   {
@@ -898,26 +898,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T06:15:00.271482+00:00"
   },
   {
-    "id": "fd_1688",
-    "title": "Direction 2: Assignment Gap Extension (All Permutations)",
-    "description": "**Conjecture:** Define the full assignment gap as:\n```\nassignmentGap(W) = max_\u03c3 \u03a3\u1d62 W(i,\u03c3(i)) - max_{\u03c3\u2260id} \u03a3\u1d62 W(i,\u03c3(i))\n```\nThen assignmentGap(W) = tropMargin(W) for generic matrices, and the phase transition for assignmentGap exhibits the same \u221a(log n) universality as tropMargin.\n\n**Test:** For random 6\u00d76 matrices, compute both tropMargin and assignmentGap by enumerating all 720 permutations. Measure the fraction of matrices where they disagree. The conjecture predicts this fraction vanishes as n \u2192 \u221e.\n\n**Impact:** Would extend tropical universality from transposition competitors to the full combinatorial optimization landscape, connecting to the theory of random assignment problems (M\u00e9zard-Parisi).\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (signalGap, tropMargin_nonneg_of_signalGap_large)\n\n**Proof Strategy:** Show that for a generic matrix, the optimal non-identity permutation is always a transposition (by a dimension-counting argument on the set where a 3-cycle or longer permutation dominates). Then tropMargin = assignmentGap for generic matrices, and the universality follows.\n\n**Domain Bridges:** Combinatorial optimization (assignment problem), algebraic geometry (tropical varieties), probability (random assignment)\n\n**Lineage:** Extends signalGap definition and tropMargin_nonpos_of_noise_overwhelms\n\n**Ambition:** Solid extension \u2014 technically challenging but conceptually clear path\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "69370675",
-    "consumed_by_exp_id": "e51690e3",
-    "timestamp": "2026-05-28T06:15:00.347688+00:00"
-  },
-  {
     "id": "fd_1689",
     "title": "Direction 3: Tropical Margin Dynamics Under Matrix Flows",
     "description": "**Conjecture:** Under the Dyson Brownian motion W(t) = W(0) + \u221at \u00b7 G where G is i.i.d. Gaussian, the tropical margin satisfies:\n```\ntropMargin(W(t)) = tropMargin(W(0)) + O(\u221a(t \u00b7 log n))\n```\nand the hitting time \u03c4\u2080 = inf{t : tropMargin(W(t)) = 0} concentrates around t* = (tropMargin(W(0)))\u00b2 / (C\u00b2 \u00b7 log n).\n\n**Test:** Simulate the Dyson dynamics for 5\u00d75 matrices with various initial conditions. Track tropMargin(W(t)) and measure \u03c4\u2080. Plot \u03c4\u2080 vs. initial margin squared / log(n). The conjecture predicts linear scaling.\n\n**Impact:** Would create a dynamical theory of tropical phase transitions, analogous to the Dyson dynamics for eigenvalues but for the combinatorial observable.\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (tropMargin_lipschitz, tropMargin_signalGap_perturbation)\n\n**Proof Strategy:** Use the Lipschitz bound to control tropMargin increments. The Gaussian increment at each step has \u2016\u03b4W\u2016\u221e ~ \u221a(\u03b4t \u00b7 log n). By the perturbation theorem, |\u03b4(tropMargin)| \u2264 4\u221a(\u03b4t \u00b7 log n). This gives a bounded-increment martingale, and optional stopping yields the hitting time concentration.\n\n**Domain Bridges:** Stochastic calculus (martingale methods), statistical mechanics (relaxation times), dynamical systems\n\n**Lineage:** Builds on tropMargin_lipschitz and the Lipschitz martingale framework\n\n**Ambition:** Grand challenge \u2014 requires fusion of dynamical and combinatorial methods\n\n---",
@@ -1121,26 +1101,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T14:11:26.628158+00:00"
   },
   {
-    "id": "fd_1824",
-    "title": "Direction 3: Support Rigidity Lower Bounds for Structured Arithmetic Circuits",
-    "description": "**Conjecture:** There exists a family of multilinear polynomials $\\{p_n\\}$ with $\\text{supp}(p_n) = \\Omega(n^2)$ such that any depth-3 arithmetic circuit computing $p_n$ with nonneg-coefficient intermediate polynomials requires $\\Omega(n^2)$ multiplication gates. The proof should use the anti-cancellation theorem to show that positive Hessian operators cannot reduce support below the shadow size.\n\n**Test:** Construct explicit polynomial families (e.g., matroid basis polynomials of graphic matroids) and compute their minimum Hessian shadow sizes under all positive weight matrices. Verify computationally that the shadow size is $\\Omega(n^2)$ for $n \\leq 20$.\n\n**Impact:** Would be the first application of Lorentzian/Hodge-theoretic structure to arithmetic circuit lower bounds, even in a restricted (nonneg coefficient) setting. Could inspire new approaches to the VP vs VNP problem.\n\n**Catalog References:** `Pythagorean/LorentzianAggregateAntiCancel.lean` (support exactness), `Catalog/Bridges/Catalog/Speculative/AutoResearch/AntiCancellationLorentzian.lean`.\n\n**Proof Strategy:** Show that for graphic matroid polynomials, every positive Hessian operator preserves a shadow of size $\\Omega(n^2)$. This follows from the anti-cancellation theorem combined with a counting argument on the number of \"reachable\" monomials.\n\n**Domain Bridges:** Arithmetic circuit complexity \u2194 Combinatorial Hodge theory \u2194 Matroid theory.\n\n**Lineage:** Applies the support exactness theorem to the complexity-theoretic framework.\n\n**Ambition:** Grand challenge \u2014 connects deep pure math to a central open problem in TCS.\n\n**The key insight is** that support rigidity under Hessian aggregation is a *monotone* complexity measure: it can only decrease under circuit operations, so a high initial shadow size implies a high circuit complexity.\n\n**Why now?** The formal verification of anti-cancellation provides the first rigorous tool for support tracking through differential operators; prior approaches were heuristic.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "57cfb68b",
-    "consumed_by_exp_id": "1875933b",
-    "timestamp": "2026-05-28T14:11:26.718951+00:00"
-  },
-  {
     "id": "fd_1825",
     "title": "Direction 4: Lorentzian Anti-Cancellation in Statistical Physics",
     "description": "**Conjecture:** For the partition function $Z = \\sum_\\sigma \\exp(-\\beta H(\\sigma))$ of a ferromagnetic Ising model on a graph $G$, the associated \"multivariate partition polynomial\" (with variables indexing spins) is Lorentzian when $\\beta > 0$. The anti-cancellation theorem then implies that the observable support of any positive second-order susceptibility operator equals its aggregate shadow \u2014 meaning no physical observable is accidentally hidden by thermal averaging.\n\n**Test:** Compute the multivariate partition polynomial for the Ising model on small graphs ($K_4$, $K_5$, Petersen graph) at various temperatures. Verify Lorentzian conditions (Newton inequalities along all slices). Compute the Hessian shadow under the susceptibility matrix $\\chi_{ij} = \\partial_i \\partial_j \\ln Z$ and verify support exactness.\n\n**Impact:** Would establish a formal connection between Lorentzian polynomial theory and equilibrium statistical mechanics. The anti-cancellation theorem would guarantee that physical susceptibilities cannot accidentally vanish \u2014 a form of \"no hidden correlations\" for ferromagnetic systems.\n\n**Catalog References:** `Pythagorean/LorentzianAggregateAntiCancel.lean`, `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean`.\n\n**Proof Strategy:** The Lee\u2013Yang theorem guarantees that the partition function of a ferromagnetic Ising model has all roots on the unit circle, implying a form of stability. Use the Br\u00e4nd\u00e9n\u2013Huh characterization to show that stability implies the Lorentzian condition. Then apply the anti-cancellation theorem.\n\n**Domain Bridges:** Statistical physics \u2194 Combinatorial Hodge theory \u2194 Probability theory.\n\n**Lineage:** Connects the Lorentzian framework to the classical Lee\u2013Yang theory.\n\n**Ambition:** Grand challenge \u2014 would unify two major mathematical physics traditions.\n\n**The key insight is** that the Lee\u2013Yang property (real-stability) is strictly stronger than the Lorentzian condition, so ferromagnetic partition functions are automatically in the anti-cancellation regime.\n\n**Why now?** Recent breakthroughs by Anari, Liu, Oveis Gharan, and Vinzant have established the Lorentzian framework for strongly Rayleigh measures, which are closely related to ferromagnetic partition functions. The formal infrastructure is ready for cross-pollination.\n\n---",
@@ -1154,10 +1114,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "57cfb68b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37e69c75",
     "timestamp": "2026-05-28T14:11:26.812761+00:00"
   },
   {
@@ -1193,10 +1153,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7968ebde",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a56098b",
     "timestamp": "2026-05-28T15:57:05.143458+00:00"
   },
   {
@@ -1399,6 +1359,48 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "e1720480",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T18:30:31.692076+00:00"
+  },
+  {
+    "id": "fd_1886",
+    "title": "Direction 1: Partition Matroid Spectral Stability",
+    "description": "**Conjecture:** For the partition matroid $M = U_{r_1, n_1} \\oplus \\cdots \\oplus U_{r_k, n_k}$, the Lorentzian spectral gap is the minimum of the individual block gaps, and the stability radius decomposes as a minimum over blocks.\n\n**Test:** Compute the leaf Hessians of the partition matroid generating polynomial for small $(n_i, r_i)$ triples. Verify that the minimum eigenvalue gap across all leaves equals $\\min_i \\text{gap}(U_{r_i, n_i}) = 1$. If the gaps differ from 1, the conjecture refines to a block-structure formula.\n\n**Impact:** Partition matroids are the next most natural family after uniform matroids and appear in scheduling, resource allocation, and constraint satisfaction. An explicit spectral stability theorem would immediately yield certified perturbation budgets for algorithms operating on these structures.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: `lorentzian_stability_radius_exists`, `hasAtMostOnePositiveEigenvalue_of_gapped_perturbation`\n- `Catalog/Pythagorean/UniformMatroidLorentzianStability.lean`: `uniform_leaf_has_gapped_signature`, `uniform_stability_lower_bound`\n\n**Proof Strategy:** The generating polynomial of a direct sum is a product: $f_{M_1 \\oplus M_2} = f_{M_1} \\cdot f_{M_2}$. Quadratic leaves of the product involve one leaf from each factor plus cross terms. Analyze the Hessian block structure: it should be block-diagonal (from individual factors) plus a rank-deficient cross term. The spectral gap of the block-diagonal part is the minimum of individual gaps; the cross term is perturbative.\n\n**Domain Bridges:** Optimization (block-structured semidefinite programs), probability (negative association for partition matroids), coding theory (matroid-based codes with block structure).\n\n**Lineage:** Direct extension of the uniform matroid stability theorem, using the product structure of direct sum generating polynomials.\n\n**Ambition:** Solid extension \u2014 the mathematical framework is in place, and the main challenge is handling the cross terms in the Hessian block decomposition.\n\n**The key insight is** that direct sums decompose the Hessian into block-diagonal form, and the spectral gap of a block-diagonal matrix is the minimum of the block gaps.\n\n**Why now?** The exact spectral computation for the uniform case provides the building block, and the generic perturbation theorem from the catalog handles the cross-term perturbation.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bf323aae",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T19:09:44.380389+00:00"
+  },
+  {
+    "id": "fd_1887",
+    "title": "Direction 2: Lorentzian Condition Numbers and Certified Sampling",
+    "description": "**Conjecture:** There exists a computable **Lorentzian condition number** $\\kappa(f)$ for any Lorentzian polynomial $f$ such that: (i) sampling algorithms for $f$ converge at rate $1/\\kappa(f)$, and (ii) $f + \\delta$ remains Lorentzian whenever the coefficient perturbation satisfies $\\|\\delta\\|_\\infty < 1/\\kappa(f)$.\n\n**Test:** For uniform matroids, verify that $\\kappa(e_r) = m^2$ (matching the entry-norm stability radius $1/m^2$). For random log-concave polynomials, compute $\\kappa$ numerically and correlate with MCMC mixing time estimates.\n\n**Impact:** This would create a quantitative bridge between algebraic combinatorics and algorithm design. Practitioners using Lorentzian-polynomial-based samplers could read off the perturbation budget directly from the condition number, without needing to understand spectral theory.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: `LorentzianConditionNumber`, `certifyStability_sound`\n- `Catalog/Pythagorean/UniformMatroidLorentzianStability.lean`: `uniform_matroid_stability_radius`, `hessian_entry_bound_from_coeff_perturbation`\n\n**Proof Strategy:** Define $\\kappa(f) = \\max_\\alpha \\|H_\\alpha\\|_{\\text{op}} / \\text{gap}(H_\\alpha)$ where the max is over all quadratic leaf Hessians $H_\\alpha$. The stability radius is then $1/\\kappa(f)$ in operator norm. The entry-norm radius involves an additional $m^2$ factor from the entry-to-operator-norm conversion. Connect to mixing time via the Bakry\u2013\u00c9mery criterion adapted to discrete log-concave distributions.\n\n**Domain Bridges:** Algorithm design (MCMC sampling guarantees), numerical analysis (condition number theory), machine learning (certified robustness of generative models using log-concave distributions).\n\n**Lineage:** Builds on the spectral margin structure and the certified stability checker from the catalog.\n\n**Ambition:** Solid extension with high practical impact \u2014 the mathematical ingredients are mostly available, but the sampling connection requires new analysis.\n\n**The key insight is** that the spectral gap of the leaf Hessian controls both the stability radius (how much noise is tolerable) and the mixing time (how fast algorithms converge), unifying numerical and algorithmic aspects.\n\n**Why now?** The exact gap computation for uniform matroids validates the concept, and the growing use of Lorentzian-polynomial-based samplers in practice creates demand for quantitative robustness certificates.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bf323aae",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T19:09:44.483512+00:00"
   },
   {
     "id": "fd_0806",

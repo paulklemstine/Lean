@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Higher-Order Rewriting Theory / Typed Lambda Calculus",
     "date": "2026-05-28T19:10:58Z",
     "exp_id": "e1b326de",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.567390582278481,
+    "quality": "partial",
     "pkg_num": 264
   },
   {
@@ -7665,8 +7665,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-28T19:10:58Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.567390582278481,
+      "quality": "partial"
     }
   ],
   "edges": [
