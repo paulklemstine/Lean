@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fcd58d33",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -209,10 +209,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "35af0f61",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -812,10 +812,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f43533d0",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f7968947",
     "timestamp": "2026-05-28T01:19:07.597078+00:00"
   },
   {
@@ -897,27 +897,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "69370675",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T06:15:00.424598+00:00"
-  },
-  {
-    "id": "fd_1716",
-    "title": "Direction 2: $p$-Adic Tropical Witnesses and Arithmetic Invariants",
-    "description": "**Conjecture:** For a polynomial $p \\in \\mathbb{Q}[x_1, \\ldots, x_n]$ and a prime $q$, define the $q$-adic tropical leaf witness as:\n\n$$W_{\\mathrm{trop}}^{(q)}(p, A) := \\sum_{a \\in A} \\sum_{\\alpha \\in \\mathrm{supp}(\\partial_a^2 L_A)} |v_q(c_\\alpha)|$$\n\nwhere $v_q$ is the $q$-adic valuation. Then:\n\n$$\\log |W_{\\mathrm{spec}}(p, A)| \\leq C(A) \\cdot \\max_q W_{\\mathrm{trop}}^{(q)}(p, A)$$\n\nfor some explicit constant $C(A)$ depending on the subsystem size.\n\n**Test:** For DPP polynomials with rational entries, compute $W_{\\mathrm{trop}}^{(q)}$ for primes $q = 2, 3, 5, 7, 11$ and compare against $\\log W_{\\mathrm{spec}}$. A single counterexample (where the inequality fails for all tested primes) would refute the conjecture.\n\n**Impact:** This would establish *arithmetic tropical witnesses* \u2014 invariants that capture number-theoretic structure invisible to the archimedean absolute value. It would connect the theory to $p$-adic geometry, Berkovich spaces, and arithmetic intersection theory.\n\n**Catalog References:**\n- `Pythagorean/TropicalLeafWitnesses/Defs.lean` \u2014 `tropCoeff`, `tropSupport`\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `dppPartitionFunction`\n\n**Proof Strategy:** Formalize $p$-adic valuations as instances of `IsKrullValuation`. Use the product formula $\\prod_v |x|_v = 1$ to relate archimedean and non-archimedean witnesses.\n\n**Domain Bridges:** Number theory ($p$-adic valuations) \u2194 Tropical geometry \u2194 Spectral theory\n\n**Lineage:** Extends `tropCoeff` definition to non-archimedean valuations.\n\n**Ambition:** \ud83d\udd2d Grand challenge \u2014 requires deep arithmetic input.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0a042263",
-    "consumed_by_exp_id": "6927c8b3",
-    "timestamp": "2026-05-28T08:02:38.997972+00:00"
   },
   {
     "id": "fd_1787",
@@ -1179,25 +1158,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "7968ebde",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T15:57:05.300366+00:00"
-  },
-  {
-    "id": "fd_1846",
-    "title": "Direction 5: Proof Complexity of Lorentzian Certificates (Grand Challenge)",
-    "description": "**Conjecture**: Lorentzian derivative trees and resolution proof trees obey parallel lower bounds. Specifically, if a homogeneous polynomial is not Lorentzian, the minimum-size certificate of non-Lorentzianity (a \"bad\" derivative branch) corresponds to a resolution refutation of a derived Boolean formula, and size lower bounds for resolution proofs transfer to size lower bounds for non-Lorentzian certificates.\n\n**Test**: For the Pigeonhole Principle formulas PHP(n, n-1) (known to require exponential resolution proofs), construct the associated Lorentzian encoding and verify that the minimum non-Lorentzian certificate also has exponential size.\n\n**Impact**: Would create a formal bridge between proof complexity and algebraic positivity, potentially importing decades of lower bound techniques from propositional proof theory into Hodge-theoretic complexity.\n\n**Catalog References**: `Pythagorean/LorentzianHardness.lean` \u2014 `boolean_assignment_multiindex_lower_bound`, `CNFFormula`, `branchToMultiindex`; `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `RecursiveLorentzianCertificate`.\n\n**Proof Strategy**: Define a \"Lorentzian resolution system\" where inference steps correspond to derivative operations and contradictions correspond to Hessians with forbidden eigenvalue signatures. Show this system p-simulates (or is p-simulated by) standard resolution.\n\n**Domain Bridges**: Proof complexity \u2194 algebraic combinatorics \u2194 Hodge theory \u2194 computational complexity.\n\n**Lineage**: Extends the Boolean encoding bridge (Theorem C) from representing assignments to representing proofs.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting.\n\n> **The key insight is** that a Lorentzian derivative tree *is* a proof tree \u2014 each node verifies a local condition (Hessian signature), and the tree's completeness certifies a global property (Lorentzianity). This structural parallel with resolution proofs is not accidental but reflects a deep correspondence between algebraic positivity and propositional satisfiability.\n\n> **Why now?** The formalization of derivative branches and their connection to Boolean assignments provides the first rigorous framework for stating and testing this correspondence. The `branchToMultiindex` function and `CNFFormula` structure give the exact combinatorial interface needed.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7968ebde",
-    "consumed_by_exp_id": "727470ff",
-    "timestamp": "2026-05-28T15:57:05.384976+00:00"
   },
   {
     "id": "fd_1847",
@@ -2069,41 +2029,34 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T19:32:30.694451+00:00"
   },
   {
-    "id": "fd_1901",
-    "title": "Direction 1: Shadow Rigidity for the Permanent",
-    "description": "**Conjecture:** Any polynomial-size algebraic circuit family {C_n} computing the n\u00d7n permanent satisfies B(C_n) \u2265 n^{\u03a9(log n)}, where B is the cancellation budget.\n\n**Test:** \n1. Enumerate all circuits of size \u2264 20 computing perm\u2083 (using brute-force search over circuit DAGs with 3\u00d73 matrix variables as leaves).\n2. Compute the exact cancellation budget for each.\n3. Determine whether the minimum budget over all circuits grows faster than polynomial in n for n = 3, 4, 5.\n4. Compare to the budget achieved by the best known det\u2083 circuits.\n\n**Impact:** A proof would separate permanent from determinant using a purely combinatorial invariant, potentially circumventing the natural proof barrier of Razborov\u2013Rudich (since shadow deficit is a global structural property, not a gate-by-gate restriction). Even partial results \u2014 say, superlinear budget lower bounds for restricted circuit classes \u2014 would be significant.\n\n**Catalog References:** `Pythagorean/CircuitLowerBounds/CancellationShadow.lean` (shadow_deficit_le, CancelCircuit.add_gate_deficit, CancelCircuit.shadow_le_envelope)\n\n**Proof Strategy:** Strategy B from the main text \u2014 use Kruskal\u2013Katona lower envelopes to show that if the permanent's support has large shadow, and the monotone envelope cannot be too large (by circuit size), then the budget must compensate. The key sub-lemma: for multilinear degree-n support families of size n! in n\u00b2 variables, the KK minimum shadow is \u03a9(n \u00b7 n!), while the monotone envelope of a size-s circuit has shadow \u2264 O(s\u00b2 \u00b7 n\u00b2). If s = poly(n), the gap is factorial, requiring superpolynomial budget.\n\n**Domain Bridges:** Connects to computational complexity (VP vs VNP), algebraic geometry (Newton polytope vertex structure of permanent), and representation theory (sign representations of S_n).\n\n**Lineage:** Builds directly on Theorems 2 and 3 of this work, plus the KK bounds from KruskalKatonaSupport.lean.\n\n**Ambition:** Grand challenge \u2014 would be a major breakthrough in algebraic complexity theory.\n\n---",
+    "id": "fd_1912",
+    "title": "Persistent Homology of Modular Continued-Fraction Dynamics Detects Quadratic Irr",
+    "description": "Conjecture: There exists an explicit functor assigning to each real number x in (0,1) given by an oracle for its continued-fraction digits, and each prime p, a finite filtered graph or simplicial complex K_p(x,N) built from the first N convergents modulo p, such that x is quadratic irrational if and only if, for every sufficiently large prime p outside a zero-density exceptional set, the primewise barcode statistics of K_p(x,N) are eventually periodic in N with period bounded independently of p. Test: Construct K_p(x,N) from convergents q_n/p_n mod p and compare barcode sequences as N grows for quadratic irrationals versus cubic irrationals, e, pi-like constants, and random reals; confirmation is uniform eventual periodicity only in the quadratic irrational case, refutation is a non-quadratic example with the same periodic persistence signature or a quadratic irrational lacking it. Impact: This would create a topological/dynamical characterization of algebraic degree 2, linking Diophantine approximation, automata-like periodicity, and primewise topological invariants, and could open a new route to detecting algebraicity from finite modular data.",
     "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
+      "Number Theory",
+      "Topological Data Analysis"
     ],
-    "priority_score": 0.7999999999999999,
+    "priority_score": 0.8,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "e24d8d3f",
+    "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T19:32:05.136488+00:00"
+    "timestamp": "2026-05-28T19:57:26.686875+00:00"
   },
   {
-    "id": "fd_1902",
-    "title": "Direction 2: Additive Combinatorial Bounds on Cancellation Multiplicity",
-    "description": "**Conjecture:** For any decomposition f = h\u2081 + h\u2082 + \u00b7\u00b7\u00b7 + h_k where each h_i is a product of linear forms, the total cancellation across all addition gates satisfies \u2211 |Cancel(partial_sum_i, h_{i+1})| \u2265 \u03a9(|supp(f)|) when f has \"spread\" support (no two monomials share more than half their variables).\n\n**Test:**\n1. For the 3\u00d73 permanent, enumerate all decompositions as sums of \u2264 6 products of linear forms.\n2. Compute the total cancellation for each decomposition.\n3. Test whether the minimum total cancellation grows with n for the n\u00d7n permanent.\n\n**Impact:** Would provide the first connection between *decomposition complexity* (related to Waring rank) and *cancellation structure*, bridging algebraic complexity and additive combinatorics.\n\n**Catalog References:** `Pythagorean/CircuitLowerBounds/CancellationShadow.lean` (cancel_card_bound, poly_shadow_deficit)\n\n**Proof Strategy:** Strategy C \u2014 treat supports as sets in (\u2124_\u22650)^n and use Pl\u00fcnnecke\u2013Ruzsa type inequalities. The spread condition ensures that pairwise Minkowski sums have limited overlap, forcing cancellation to be distributed across many terms. Key lemma: if supp(h_i) are \"sumset-independent\" (|supp(h_i) + supp(h_j)| \u2248 |supp(h_i)| \u00b7 |supp(h_j)|), then cancellation at each step requires coefficient coincidences bounded by the sumset structure.\n\n**Domain Bridges:** Additive combinatorics (Pl\u00fcnnecke\u2013Ruzsa, Freiman's theorem), communication complexity (multiparty number-on-forehead), information theory (entropy of coefficient distributions).\n\n**Lineage:** Extends the cross-domain bridge theorem (cancel_card_bound) with sumset-theoretic tools.\n\n**Ambition:** Solid extension \u2014 the individual lemmas should be provable with existing tools, though the full conjecture is open.\n\n---",
+    "id": "fd_1918",
+    "title": "p-adic Stability Radius Governs Integral Persistence Reconstruction",
+    "description": "Conjecture: For every finite filtered chain complex C over Z with boundary matrices of total bit-size N, there exists a computable arithmetic invariant R(C) = sup_p p^{-vp(det M_C)} built from a finite set of Smith-minor valuations of the boundary maps, such that any filtered chain complex D with matching primewise persistence data for all primes p <= N^c and bottleneck distance < R(C)/10 in every such prime-local barcode must be integrally filtered-chain equivalent to C. Test: Compute R(C) explicitly for broad families (random filtered complexes, clique/flag complexes, arithmetic examples), then search for counterexamples D with identical small-prime persistence but distinct integral homotopy type; the conjecture is refuted by one such family and supported if reconstruction always succeeds once the prime cutoff exceeds the predicted threshold. Impact: This would turn scattered primewise persistence information into a sharp arithmetic reconstruction principle, giving the first quantitative boundary between local barcode data that is sufficient versus insufficient to recover global integral topology.",
     "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
+      "Topological Data Analysis",
+      "Arithmetic Topology"
     ],
-    "priority_score": 0.7999999999999999,
+    "priority_score": 0.8,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "e24d8d3f",
+    "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T19:32:05.228846+00:00"
+    "timestamp": "2026-05-28T19:57:56.338721+00:00"
   },
   {
     "id": "seed_032",
@@ -2118,6 +2071,20 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
+  },
+  {
+    "id": "fd_1919",
+    "title": "\"Why now?\"",
+    "description": "The formal verification of energy positivity and the bilinear form structure ensures that the kernel matrix is non-degenerate (after removing the constant mode), which is the essential condition for the determinant formula to hold.",
+    "domains": [
+      "Physics"
+    ],
+    "priority_score": 0.75,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ce4c226e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T19:58:25.943481+00:00"
   },
   {
     "id": "seed_007",

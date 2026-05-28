@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2023 of the highest-quality
+A curated collection of 2024 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2023
+Total files: 2024
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -522,6 +522,7 @@ import FINAL.Bridges.LorentzianGroundState
 import FINAL.Bridges.LorentzianHardnessLowerBounds
 import FINAL.Bridges.LorentzianInformation
 import FINAL.Bridges.LorentzianNewton
+import FINAL.Bridges.LorentzianProofComplexity
 import FINAL.Bridges.LorentzianRecognition
 import FINAL.Bridges.LorentzianSmoothedAnalysis
 import FINAL.Bridges.LowDegreeTesting
