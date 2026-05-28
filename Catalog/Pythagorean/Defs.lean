@@ -5,146 +5,135 @@ Released under Apache 2.0 license.
 import Mathlib
 
 /-!
-# Valuated Matroid Depth: Core Definitions
+# Certified Floating-Point Lorentzian Recognition: Core Definitions
 
-This file introduces the **directional depth filtration** for multivariate functions
-`f : (α → ℕ) → ℝ`, building a higher-order curvature hierarchy that refines
-classical M-convexity and tropical convexity notions.
-
-## Mathematical Overview
-
-Given a finite type `α` and a function `f : (α → ℕ) → ℝ`, we define:
-
-1. **Directional log-concavity**: `f(m + eᵢ)² ≥ f(m) · f(m + 2eᵢ)` for all `m` and `i`.
-2. **Ratio transform**: `Rᵢf(m) = f(m + eᵢ) / f(m)`, the discrete logarithmic derivative.
-3. **Directional depth**: recursively, `f` has depth ≥ k+1 if it has directional
-   log-concavity and all ratio transforms `Rᵢf` have depth ≥ k.
-
-The depth filtration
-  `depth 0 ⊃ depth 1 ⊃ depth 2 ⊃ ⋯`
-provides a strictly finer invariant than first-order log-concavity alone.
+This file introduces the foundational definitions for a **quantitative decision theory**
+of Lorentzian polynomial recognition under coefficient uncertainty. The key idea is to
+treat Lorentzianity not as a brittle symbolic property, but as a spectrally
+margin-certified geometric phase.
 
 ## Main Definitions
 
-* `MultiDirLogConcave` — multivariate directional log-concavity
-* `ratioTransform` — the ratio transform operator Rᵢ
-* `DirectionalDepthAtLeast` — recursive depth filtration
-* `HasExactDepth` — a function has exactly depth k
-* `degreeSlice` — the degree slice predicate
-* `exchangeMove` — the exchange operation on multiindices
-* `ExchangeClosedSupport` — exchange-closed support property
-* `IsSupermodular` — supermodularity for functions on multiindices
+* `FPBox` — A floating-point coefficient box representing interval uncertainty
+* `CertifiedDecision` — A three-valued decision type (yes/no/unknown)
+* `QuadForm`, `sqNorm` — Quadratic form and squared norm
+* `HasGappedSignature` — Gapped Lorentzian signature with spectral margin
+* `HasLorentzianSignature` — At-most-one positive eigenvalue condition
+* `QuadFormBound` — Bound on quadratic form norm
+* `RobustLorentzianOnBox` — Uniform Lorentzianity on a coefficient box
+* `HasObstruction` — Quantitative non-Lorentzianity obstruction
+* `LorentzianCertificate` — Certificate structure for numerical verification
 
 ## References
 
-* Murota, "Discrete Convex Analysis", SIAM, 2003
 * Brändén–Huh, "Lorentzian Polynomials", Annals of Mathematics, 2020
 -/
 
+open Finset BigOperators Matrix
+
 noncomputable section
 
-open Finset BigOperators Function
+namespace CertifiedLorentzian
 
-namespace ValuatedMatroidDepth
+/-! ## Core Linear Algebra -/
 
-variable {α : Type*} [Fintype α] [DecidableEq α]
+/-- The quadratic form induced by a matrix A: Q_A(x) = ∑ᵢ ∑ⱼ A(i,j) x(i) x(j). -/
+def QuadForm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (x : Fin n → ℝ) : ℝ :=
+  ∑ i, ∑ j, A i j * x i * x j
 
-/-! ## Degree Slices and Multiindex Operations -/
+/-- Squared Euclidean norm. -/
+def sqNorm {n : ℕ} (v : Fin n → ℝ) : ℝ := ∑ i, v i ^ 2
 
-/-- The **degree slice** predicate: `m` has total degree `d`. -/
-def degreeSlice (d : ℕ) (m : α → ℕ) : Prop :=
-  ∑ i, m i = d
+/-- A bound on the quadratic form: |Q_A(v)| ≤ c · ‖v‖² for all v. -/
+def QuadFormBound {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (c : ℝ) : Prop :=
+  ∀ v : Fin n → ℝ, |QuadForm A v| ≤ c * sqNorm v
 
-/-- Shift a multiindex by adding `eᵢ = Pi.single i 1`. -/
-def shiftUp (m : α → ℕ) (i : α) : α → ℕ := m + Pi.single i 1
+/-- Gapped Lorentzian signature with margin ε. -/
+def HasGappedSignature {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (ε : ℝ) : Prop :=
+  ∃ w : Fin n → ℝ, ∀ v : Fin n → ℝ,
+    (∑ i, w i * v i = 0) → QuadForm A v ≤ -ε * sqNorm v
 
-/-- Shift a multiindex by adding `2 · eᵢ`. -/
-def shiftUp2 (m : α → ℕ) (i : α) : α → ℕ := m + Pi.single i 1 + Pi.single i 1
+/-- A matrix has at most one positive eigenvalue (Lorentzian signature). -/
+def HasLorentzianSignature {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : Prop :=
+  ∃ w : Fin n → ℝ, ∀ v : Fin n → ℝ,
+    (∑ i, w i * v i = 0) → QuadForm A v ≤ 0
 
-omit [Fintype α] in
-@[simp]
-theorem shiftUp_apply (m : α → ℕ) (i j : α) :
-    shiftUp m i j = m j + if j = i then 1 else 0 := by
-  simp [shiftUp, Pi.add_apply, Pi.single_apply]
+/-- Quantitative obstruction to Lorentzianity: for every candidate witness w,
+    there exists v ⊥ w with Q(v) ≥ obs · ‖v‖² and ‖v‖ > 0. -/
+def HasObstruction {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (obs : ℝ) : Prop :=
+  ∀ w : Fin n → ℝ, ∃ v : Fin n → ℝ,
+    (∑ i, w i * v i = 0) ∧ QuadForm A v ≥ obs * sqNorm v ∧ sqNorm v > 0
 
-omit [Fintype α] in
-@[simp]
-theorem shiftUp2_apply (m : α → ℕ) (i j : α) :
-    shiftUp2 m i j = m j + if j = i then 2 else 0 := by
-  simp [shiftUp2, Pi.add_apply, Pi.single_apply]
-  split <;> omega
+/-! ## Floating-Point Box -/
 
-/-! ## Core Predicates -/
+/-- A floating-point coefficient box: center ± radius for each coordinate. -/
+structure FPBox (ι : Type*) where
+  center : ι → ℝ
+  radius : ι → ℝ
+  radius_nonneg : ∀ i, 0 ≤ radius i
 
-/-- **Multivariate directional log-concavity**: for every direction `i` and
-    every multiindex `m`, `f(m + eᵢ)² ≥ f(m) · f(m + 2eᵢ)`. -/
-def MultiDirLogConcave (f : (α → ℕ) → ℝ) : Prop :=
-  ∀ (i : α) (m : α → ℕ), f (shiftUp m i) ^ 2 ≥ f m * f (shiftUp2 m i)
+/-- Membership in an FPBox. -/
+def FPBox.mem {ι : Type*} (B : FPBox ι) (a : ι → ℝ) : Prop :=
+  ∀ i, |a i - B.center i| ≤ B.radius i
 
-/-- **Mixed log-concavity**: the stronger multivariate condition that for all
-    directions `i, j` (possibly equal) and every multiindex `m`,
-    `f(m + eᵢ) · f(m + eⱼ) ≥ f(m) · f(m + eᵢ + eⱼ)`. When `i = j` this
-    reduces to the single-direction condition. This is the natural multivariate
-    generalization corresponding to Lorentzian polynomial theory. -/
-def MixedLogConcave (f : (α → ℕ) → ℝ) : Prop :=
-  ∀ (i j : α) (m : α → ℕ),
-    f (m + Pi.single i 1) * f (m + Pi.single j 1) ≥
-    f m * f (m + Pi.single i 1 + Pi.single j 1)
+/-! ## Certified Decision -/
 
-omit [Fintype α] in
-/-- Mixed log-concavity implies single-direction log-concavity. -/
-theorem MixedLogConcave.toMultiDir {f : (α → ℕ) → ℝ}
-    (hf : MixedLogConcave f) : MultiDirLogConcave f := by
-  intro i m
-  have h := hf i i m
-  simp only [shiftUp, shiftUp2]
-  nlinarith [h]
+/-- A three-valued certified decision. -/
+inductive CertifiedDecision
+  | yes
+  | no
+  | unknown
+  deriving DecidableEq, Repr
 
-/-- The **ratio transform** in direction `i`: `Rᵢf(m) = f(m + eᵢ) / f(m)`. -/
-def ratioTransform (i : α) (f : (α → ℕ) → ℝ) : (α → ℕ) → ℝ :=
-  fun m => f (shiftUp m i) / f m
+/-! ## Robust Recognition -/
 
-/-- **Directional depth at least `k`**: a recursive definition.
-    - Depth ≥ 0: trivially true.
-    - Depth ≥ k+1: directionally log-concave AND every ratio transform
-      `Rᵢf` has depth ≥ k. -/
-def DirectionalDepthAtLeast : ℕ → ((α → ℕ) → ℝ) → Prop
-  | 0, _ => True
-  | k + 1, f => MultiDirLogConcave f ∧ ∀ i : α, DirectionalDepthAtLeast k (ratioTransform i f)
+/-- Every coefficient vector in a box produces a matrix with Lorentzian signature. -/
+def RobustLorentzianOnBox {n : ℕ} {ι : Type*} (B : FPBox ι)
+    (toMatrix : (ι → ℝ) → Matrix (Fin n) (Fin n) ℝ) : Prop :=
+  ∀ a, B.mem a → HasLorentzianSignature (toMatrix a)
 
-/-- A function has **exact depth** `k` if it has depth ≥ k but not depth ≥ k+1. -/
-def HasExactDepth (k : ℕ) (f : (α → ℕ) → ℝ) : Prop :=
-  DirectionalDepthAtLeast k f ∧ ¬ DirectionalDepthAtLeast (k + 1) f
+/-- No coefficient vector in a box produces a matrix with Lorentzian signature. -/
+def RobustNonLorentzianOnBox {n : ℕ} {ι : Type*} (B : FPBox ι)
+    (toMatrix : (ι → ℝ) → Matrix (Fin n) (Fin n) ℝ) : Prop :=
+  ∀ a, B.mem a → ¬HasLorentzianSignature (toMatrix a)
 
-/-- A function has **infinite depth** if it has depth ≥ k for all k. -/
-def HasInfiniteDepth (f : (α → ℕ) → ℝ) : Prop :=
-  ∀ k, DirectionalDepthAtLeast k f
+/-! ## Energy Functionals (Cross-Domain Bridge) -/
 
-/-! ## Exchange Operations -/
+/-- Energy decay functional on orthogonal complement. -/
+def energyDecayFunctional {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
+    (w v : Fin n → ℝ) : ℝ :=
+  if (∑ i, w i * v i = 0) then QuadForm A v else 0
 
-/-- The **exchange move**: given multiindex `m`, increment coordinate `i` and
-    decrement coordinate `j` (when `m j > 0`). Uses `Nat` subtraction. -/
-def exchangeMove (m : α → ℕ) (i j : α) : α → ℕ :=
-  fun k => if k = i then m k + 1 else if k = j then m k - 1 else m k
+/-- Positive norm functional on orthogonal complement. -/
+def positiveNormFunctional {n : ℕ} (w v : Fin n → ℝ) : ℝ :=
+  if (∑ i, w i * v i = 0) then sqNorm v else 0
 
-/-- **Exchange-closed support**: for any two multiindices on the same degree
-    slice with positive `f`-value, if `m i < n i` then there exists `j` with `n j < m j`
-    such that the exchange move also has positive `f`-value. -/
-def ExchangeClosedSupport (f : (α → ℕ) → ℝ) (d : ℕ) : Prop :=
-  ∀ ⦃m n : α → ℕ⦄, degreeSlice d m → degreeSlice d n →
-    0 < f m → 0 < f n →
-    ∀ ⦃i : α⦄, m i < n i →
-      ∃ j, n j < m j ∧ 0 < f (exchangeMove m i j)
+/-! ## Certificate Structure -/
 
-/-! ## Supermodularity -/
+/-- A **LorentzianCertificate** bundles a witness direction, spectral gap,
+    and certification proof. -/
+structure LorentzianCertificate (n : ℕ) where
+  witness : Fin n → ℝ
+  gap : ℝ
+  gap_pos : 0 < gap
+  certMatrix : Matrix (Fin n) (Fin n) ℝ
+  certified : ∀ v : Fin n → ℝ,
+    (∑ i, witness i * v i = 0) → QuadForm certMatrix v ≤ -gap * sqNorm v
 
-/-- **Supermodularity** for functions on multiindices: for all `m` and distinct `i ≠ j`,
-    `g(m + eᵢ + eⱼ) + g(m) ≥ g(m + eᵢ) + g(m + eⱼ)`. -/
-def IsSupermodular (g : (α → ℕ) → ℝ) : Prop :=
-  ∀ (i j : α) (m : α → ℕ), i ≠ j →
-    g (m + Pi.single i 1 + Pi.single j 1) + g m ≥
-    g (m + Pi.single i 1) + g (m + Pi.single j 1)
+/-! ## Fundamental Lemmas -/
 
-end ValuatedMatroidDepth
+theorem sqNorm_nonneg {n : ℕ} (v : Fin n → ℝ) : 0 ≤ sqNorm v :=
+  Finset.sum_nonneg fun i _ => sq_nonneg (v i)
 
-end
+theorem quadForm_add {n : ℕ} (A E : Matrix (Fin n) (Fin n) ℝ) (v : Fin n → ℝ) :
+    QuadForm (A + E) v = QuadForm A v + QuadForm E v := by
+  simp only [QuadForm, Matrix.add_apply, add_mul, Finset.sum_add_distrib]
+
+theorem hasLorentzianSignature_of_gapped {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
+    {ε : ℝ} (hε : 0 ≤ ε) (hgap : HasGappedSignature A ε) :
+    HasLorentzianSignature A := by
+  obtain ⟨w, hw⟩ := hgap
+  exact ⟨w, fun v hv => le_trans (hw v hv)
+    (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos_of_nonneg hε) (sqNorm_nonneg v))⟩
+
+end CertifiedLorentzian
