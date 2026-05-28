@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Representation Theory / Expander Graphs / Symplectic Groups",
     "date": "2026-05-28T15:57:55Z",
     "exp_id": "192e6c12",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6513288524590164,
+    "quality": "partial",
     "pkg_num": 255
   },
   {
@@ -7404,8 +7404,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-28T15:57:55Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6513288524590164,
+      "quality": "partial"
     }
   ],
   "edges": [

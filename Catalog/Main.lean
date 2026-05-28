@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2011 of the highest-quality
+A curated collection of 2013 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2011
+Total files: 2013
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -525,6 +525,7 @@ import FINAL.Bridges.LorentzianRecognition
 import FINAL.Bridges.LorentzianSmoothedAnalysis
 import FINAL.Bridges.LowDegreeTesting
 import FINAL.Bridges.LowerEnvelope
+import FINAL.Bridges.MConvexCompression
 import FINAL.Bridges.MarginCosheaf
 import FINAL.Bridges.MaslovDequantizationRobustness
 import FINAL.Bridges.MatrixGroupGrowth
@@ -1688,6 +1689,7 @@ import FINAL.Pythagorean.SharpGOEConstants
 import FINAL.Pythagorean.SharpKAMThreshold
 import FINAL.Pythagorean.SharpPerturbationScale
 import FINAL.Pythagorean.SharpThresholdConcentration
+import FINAL.Pythagorean.Sp2nExpansion
 import FINAL.Pythagorean.SpacetimeLattice
 import FINAL.Pythagorean.SparseLorentzianCertificates
 import FINAL.Pythagorean.SpectralBounds
