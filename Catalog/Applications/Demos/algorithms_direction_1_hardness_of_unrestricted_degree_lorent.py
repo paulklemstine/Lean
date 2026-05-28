@@ -2,473 +2,411 @@
 """
 Algorithms for Lorentzian Recognition Complexity Analysis
 
-Implements:
+Implements the key algorithms from the research paper:
 1. Multiindex enumeration and counting
-2. Boolean-to-multiindex injection
-3. Derivative branch tree exploration
-4. Quadratic leaf Hessian computation
-5. Lorentzian signature testing
-6. CNF-to-polynomial encoding (candidate)
-7. Certificate size computation
-
-All algorithms include docstrings, type hints, and complexity analysis.
+2. Derivative tree construction  
+3. Hessian signature testing
+4. Certificate complexity estimation
+5. SAT-to-branch encoding
 """
 
-import numpy as np
-from math import comb
-from itertools import product
-from typing import List, Tuple, Dict, Optional, Generator
-from functools import lru_cache
+import math
+import itertools
+from typing import List, Tuple, Dict, Optional, Set
+from dataclasses import dataclass
 
 
-# =============================================================================
+# ============================================================
 # Algorithm 1: Multiindex Enumeration
-# =============================================================================
+# ============================================================
 
-def enumerate_multiindices(n: int, d: int) -> Generator[Tuple[int, ...], None, None]:
+def enumerate_multiindices(n: int, d: int) -> List[Tuple[int, ...]]:
+    """Enumerate all weak compositions of d into n parts.
+    
+    Complexity: O(C(n+d-1, d)) time and space.
+    
+    Args:
+        n: Number of variables (parts)
+        d: Total weight (sum)
+    
+    Returns:
+        List of tuples, each a multiindex alpha with sum(alpha) = d.
+    
+    Examples:
+        >>> enumerate_multiindices(2, 2)
+        [(0, 2), (1, 1), (2, 0)]
+        >>> len(enumerate_multiindices(3, 3))
+        10
     """
-    Enumerate all multiindices α ∈ ℕ^n with |α| = d.
+    if n == 0:
+        return [()] if d == 0 else []
+    if n == 1:
+        return [(d,)]
+    result = []
+    for first in range(d + 1):
+        for rest in enumerate_multiindices(n - 1, d - first):
+            result.append((first,) + rest)
+    return result
 
-    Uses recursive generation (stars-and-bars).
 
-    Pseudocode:
-        MULTIINDICES(n, d):
-            if n = 1: yield (d,)
-            else:
-                for k = 0 to d:
-                    for α' in MULTIINDICES(n-1, d-k):
-                        yield (k,) + α'
-
-    Time:  O(C(n+d-1, d)) per enumeration
-    Space: O(n) stack depth
-
+def count_multiindices(n: int, d: int) -> int:
+    """Count weak compositions of d into n parts.
+    
+    Formula: C(n+d-1, d)
+    
+    Complexity: O(min(n, d)) time, O(1) space.
+    
     Args:
         n: Number of variables
-        d: Weight (sum of components)
-
-    Yields:
-        Tuples of length n summing to d
+        d: Total weight
+    
+    Returns:
+        Number of multiindices = C(n+d-1, d)
     """
-    if n == 1:
-        yield (d,)
-    elif n > 1:
-        for k in range(d + 1):
-            for rest in enumerate_multiindices(n - 1, d - k):
-                yield (k,) + rest
+    return math.comb(n + d - 1, d)
 
 
-def multiindex_count_exact(n: int, d: int) -> int:
-    """
-    Exact count of multiindices: C(n+d-1, d).
+# ============================================================
+# Algorithm 2: Binary Multiindex Enumeration
+# ============================================================
 
-    Time:  O(min(n, d))
-    Space: O(1)
-    """
-    return comb(n + d - 1, d)
-
-
-# =============================================================================
-# Algorithm 2: Boolean-to-Multiindex Injection
-# =============================================================================
-
-def bool_to_multiindex(m: int, b: Tuple[bool, ...]) -> Tuple[int, ...]:
-    """
-    Inject b ∈ {0,1}^m into a multiindex α ∈ ℕ^{m+1} with |α| = m.
-
-    Construction:
-        α[0] = m - count_true(b)
-        α[i+1] = int(b[i])  for i = 0, ..., m-1
-
-    Pseudocode:
-        BOOL_TO_MULTIINDEX(m, b):
-            ct ← COUNT(b, true)
-            α[0] ← m - ct
-            for i = 0 to m-1:
-                α[i+1] ← int(b[i])
-            return α
-
-    Properties:
-        - Weight preservation: |α| = m
-        - Injectivity: b recoverable from α[1:m+1]
-
-    Time:  O(m)
-    Space: O(m)
-
+def enumerate_binary_multiindices(n: int, d: int) -> List[Tuple[int, ...]]:
+    """Enumerate {0,1}-valued multiindices of weight d in n variables.
+    
+    These correspond to d-element subsets of {0,...,n-1} and hence
+    to Boolean assignments with exactly d true variables.
+    
+    Complexity: O(C(n, d) * n) time and space.
+    
     Args:
-        m: Dimension of Boolean space
-        b: Boolean tuple of length m
-
+        n: Number of variables
+        d: Weight (number of 1s)
+    
     Returns:
-        Multiindex tuple of length m+1 with weight m
+        List of binary tuples with exactly d ones.
     """
-    ct = sum(1 for x in b if x)
-    return (m - ct,) + tuple(int(x) for x in b)
+    if d > n or d < 0:
+        return []
+    result = []
+    for subset in itertools.combinations(range(n), d):
+        alpha = tuple(1 if i in subset else 0 for i in range(n))
+        result.append(alpha)
+    return result
 
 
-def multiindex_to_bool(m: int, alpha: Tuple[int, ...]) -> Optional[Tuple[bool, ...]]:
+# ============================================================
+# Algorithm 3: Derivative Tree Construction
+# ============================================================
+
+@dataclass
+class DerivativeNode:
+    """Node in the derivative tree of a polynomial.
+    
+    Each node represents a partial derivative of the original polynomial.
+    The derivative_sequence records which variables were differentiated.
     """
-    Inverse of bool_to_multiindex (when valid).
-
-    Time:  O(m)
-    Space: O(m)
-
-    Returns:
-        Boolean tuple if alpha is in the image, None otherwise
-    """
-    if len(alpha) != m + 1:
-        return None
-    b = tuple(x == 1 for x in alpha[1:])
-    if all(x in (0, 1) for x in alpha[1:]):
-        expected_slack = m - sum(1 for x in b if x)
-        if alpha[0] == expected_slack:
-            return b
-    return None
+    derivative_sequence: Tuple[int, ...]  # sequence of variable indices
+    remaining_degree: int
+    children: List['DerivativeNode']
+    is_quadratic_leaf: bool
+    
+    def size(self) -> int:
+        """Total number of nodes in this subtree."""
+        return 1 + sum(c.size() for c in self.children)
+    
+    def leaf_count(self) -> int:
+        """Number of quadratic leaves in this subtree."""
+        if self.is_quadratic_leaf:
+            return 1
+        return sum(c.leaf_count() for c in self.children)
 
 
-def verify_injection(m: int) -> bool:
-    """
-    Verify that bool_to_multiindex is injective for given m.
-
-    Time:  O(2^m · m)
-    Space: O(2^m · m)
-    """
-    images = set()
-    for b in product([False, True], repeat=m):
-        alpha = bool_to_multiindex(m, b)
-        if alpha in images:
-            return False
-        images.add(alpha)
-        if sum(alpha) != m:
-            return False
-    return len(images) == 2 ** m
-
-
-# =============================================================================
-# Algorithm 3: Derivative Branch Tree
-# =============================================================================
-
-class DerivativeBranch:
-    """
-    Represents a branch in the derivative tree of a polynomial.
-
-    A branch is specified by a multiindex α = (α₁, ..., αₙ) indicating
-    how many times to differentiate with respect to each variable.
-
-    Attributes:
-        multiindex: The differentiation orders
-        depth: Total differentiation depth = |α|
-        is_leaf: Whether this is a quadratic leaf (depth = d-2)
-    """
-
-    def __init__(self, multiindex: Tuple[int, ...], target_depth: int):
-        self.multiindex = multiindex
-        self.depth = sum(multiindex)
-        self.is_leaf = (self.depth == target_depth)
-
-    def __repr__(self):
-        return f"Branch(α={self.multiindex}, depth={self.depth}, leaf={self.is_leaf})"
-
-
-def build_derivative_tree(n: int, d: int) -> List[DerivativeBranch]:
-    """
-    Build the complete derivative tree for degree-d, n-variable recognition.
-
-    Pseudocode:
-        DERIVATIVE_TREE(n, d):
-            leaves ← []
-            for α in MULTIINDICES(n, d-2):
-                leaves.append(Branch(α, d-2))
-            return leaves
-
-    Time:  O(C(n+d-3, d-2))
-    Space: O(C(n+d-3, d-2))
-
+def build_derivative_tree(n: int, d: int, max_depth: Optional[int] = None) -> DerivativeNode:
+    """Build the full derivative tree for a degree-d polynomial in n variables.
+    
+    The tree has depth d-2 (differentiating until degree 2 remains).
+    Each internal node has n children (one per variable direction).
+    Quadratic leaves are where Hessian signature is checked.
+    
+    Complexity: O(n^(d-2)) nodes, which is the point — exponential in d.
+    
+    WARNING: This grows very fast! Use max_depth to limit expansion.
+    
     Args:
         n: Number of variables
         d: Degree of polynomial
-
+        max_depth: Maximum tree depth to expand (None = full)
+    
     Returns:
-        List of all leaf branches
+        Root of the derivative tree.
+    """
+    def build(seq: Tuple[int, ...], remaining: int, depth: int) -> DerivativeNode:
+        if remaining <= 2:
+            return DerivativeNode(
+                derivative_sequence=seq,
+                remaining_degree=remaining,
+                children=[],
+                is_quadratic_leaf=True
+            )
+        if max_depth is not None and depth >= max_depth:
+            return DerivativeNode(
+                derivative_sequence=seq,
+                remaining_degree=remaining,
+                children=[],
+                is_quadratic_leaf=False
+            )
+        children = []
+        for var in range(n):
+            child = build(seq + (var,), remaining - 1, depth + 1)
+            children.append(child)
+        return DerivativeNode(
+            derivative_sequence=seq,
+            remaining_degree=remaining,
+            children=children,
+            is_quadratic_leaf=False
+        )
+    
+    return build((), d, 0)
+
+
+def count_distinct_leaves(n: int, d: int) -> int:
+    """Count distinct quadratic leaves (accounting for derivative commutativity).
+    
+    Due to commutativity of mixed partials, many derivative sequences
+    lead to the same result. The number of distinct leaves equals
+    the number of multiindices of weight d-2 in n variables.
+    
+    Complexity: O(min(n, d)) time.
+    
+    Args:
+        n: Number of variables
+        d: Degree of polynomial
+    
+    Returns:
+        Number of distinct quadratic leaves = C(n+d-3, d-2)
     """
     if d < 2:
-        return [DerivativeBranch((0,) * n, 0)]
-
-    target = d - 2
-    leaves = []
-    for alpha in enumerate_multiindices(n, target):
-        leaves.append(DerivativeBranch(alpha, target))
-    return leaves
+        return 1
+    return count_multiindices(n, d - 2)
 
 
-# =============================================================================
-# Algorithm 4: Hessian Computation for Quadratic Polynomials
-# =============================================================================
+# ============================================================
+# Algorithm 4: Hessian Signature Testing
+# ============================================================
 
-def compute_hessian(coeffs: Dict[Tuple[int, ...], float], n: int) -> np.ndarray:
+def compute_hessian_diagonal(diagonal_entries: List[float]) -> List[List[float]]:
+    """Compute Hessian matrix for a diagonal quadratic form.
+    
+    For Q(x) = sum_i d_i * x_i^2, the Hessian is 2 * diag(d).
+    
+    Args:
+        diagonal_entries: The coefficients d_i
+    
+    Returns:
+        Hessian matrix (2D list)
     """
-    Compute the Hessian matrix of a polynomial from its coefficients.
-
-    For a quadratic polynomial f = Σ c_α x^α, the Hessian H_{ij} is
-    the coefficient of the monomial obtained by differentiating twice.
-
-    H[i][j] = coefficient of ∂²f/∂xᵢ∂xⱼ evaluated at 0
-            = 2·c_{eᵢ+eⱼ} if i≠j, = 2·c_{2eᵢ} if i=j
-
-    Time:  O(n²)
-    Space: O(n²)
-    """
-    H = np.zeros((n, n))
-    for alpha, coeff in coeffs.items():
-        if sum(alpha) != 2:
-            continue
-        for i in range(n):
-            for j in range(n):
-                ei_ej = list(alpha)
-                if ei_ej[i] > 0:
-                    factor_i = ei_ej[i]
-                    ei_ej[i] -= 1
-                    if ei_ej[j] > 0:
-                        factor_j = ei_ej[j]
-                        H[i][j] += coeff * factor_i * factor_j
-                    ei_ej[i] += 1
+    n = len(diagonal_entries)
+    H = [[0.0] * n for _ in range(n)]
+    for i in range(n):
+        H[i][i] = 2.0 * diagonal_entries[i]
     return H
 
 
-def check_lorentzian_signature(H: np.ndarray, tol: float = 1e-10) -> Tuple[bool, int]:
+def check_lorentzian_signature_diagonal(diagonal: List[float]) -> Dict:
+    """Check if a diagonal matrix has Lorentzian signature.
+    
+    A diagonal matrix has Lorentzian signature iff at most one
+    diagonal entry is positive. This is the exact characterization
+    proved in our formal development.
+    
+    Complexity: O(n) time.
+    
+    Args:
+        diagonal: Diagonal entries of the matrix
+    
+    Returns:
+        Dict with 'is_lorentzian', 'positive_count', 'witness_direction'
     """
-    Check if a symmetric matrix has Lorentzian signature (≤1 positive eigenvalue).
+    n = len(diagonal)
+    positive_indices = [i for i, d in enumerate(diagonal) if d > 0]
+    positive_count = len(positive_indices)
+    
+    result = {
+        'is_lorentzian': positive_count <= 1,
+        'positive_count': positive_count,
+        'positive_indices': positive_indices,
+    }
+    
+    if positive_count <= 1:
+        # Witness: standard basis vector at the positive entry (or any if none)
+        if positive_indices:
+            witness = [0.0] * n
+            witness[positive_indices[0]] = 1.0
+        else:
+            witness = [1.0] + [0.0] * (n - 1) if n > 0 else []
+        result['witness_direction'] = witness
+    else:
+        # Obstruction: two positive entries prevent Lorentzian signature
+        i, j = positive_indices[0], positive_indices[1]
+        result['obstruction'] = (i, j)
+    
+    return result
 
-    Pseudocode:
-        LORENTZIAN_CHECK(H):
-            eigenvalues ← EIGVALSH(H)
-            pos_count ← COUNT(eigenvalues > 0)
-            return pos_count ≤ 1
 
-    Time:  O(n³) for eigenvalue decomposition
-    Space: O(n²)
+# ============================================================
+# Algorithm 5: Certificate Complexity Bounds
+# ============================================================
+
+def certificate_complexity_bounds(n: int, d: int) -> Dict:
+    """Compute upper and lower bounds on certificate complexity.
+    
+    Upper bound: n^(d-2) from catalog's quadratic_leaf_count_le
+    Lower bound: C(n, d-2) from our multiindex_count_ge_choose
+    Exponential lower: 2^k when n = 2k and d = k + 2
+    
+    Args:
+        n: Number of variables
+        d: Degree
+    
+    Returns:
+        Dict with bounds and analysis
     """
-    eigenvalues = np.linalg.eigvalsh(H)
-    pos_count = int(np.sum(eigenvalues > tol))
-    return pos_count <= 1, pos_count
+    if d < 2:
+        return {
+            'leaves': 1,
+            'upper_bound': 1,
+            'lower_bound': 1,
+            'ratio': 1.0,
+            'is_exponential_regime': False,
+        }
+    
+    k = d - 2
+    leaves = count_multiindices(n, k)
+    upper = n ** k if n > 0 else 0
+    lower = math.comb(n, k) if k <= n else 0
+    
+    # Check if we're in the exponential regime
+    is_exp = (k >= 2 and n >= 2 * k)
+    exp_lower = 2 ** (n // 2) if is_exp else None
+    
+    return {
+        'n': n,
+        'd': d,
+        'derivative_depth': k,
+        'exact_leaves': leaves,
+        'upper_bound_n_pow_k': upper,
+        'lower_bound_choose': lower,
+        'exponential_lower': exp_lower,
+        'upper_lower_ratio': upper / lower if lower > 0 else float('inf'),
+        'is_exponential_regime': is_exp,
+    }
 
 
-# =============================================================================
-# Algorithm 5: CNF Formula Operations
-# =============================================================================
+# ============================================================
+# Algorithm 6: SAT-to-Branch Encoding
+# ============================================================
 
+@dataclass
 class CNFFormula:
-    """
-    A CNF (Conjunctive Normal Form) Boolean formula.
-
-    Each clause is a list of (variable_index, polarity) pairs.
-    """
-
-    def __init__(self, num_vars: int, clauses: List[List[Tuple[int, bool]]]):
-        self.num_vars = num_vars
-        self.clauses = clauses
-
+    """A CNF formula over n Boolean variables."""
+    num_vars: int
+    clauses: List[List[Tuple[int, bool]]]  # List of clauses, each a list of (var, polarity)
+    
     def evaluate(self, assignment: Tuple[bool, ...]) -> bool:
-        """
-        Evaluate the formula under a given assignment.
-
-        Time:  O(total literals)
-        Space: O(1)
-        """
+        """Check if assignment satisfies the formula."""
         for clause in self.clauses:
             if not any(assignment[v] == p for v, p in clause):
                 return False
         return True
-
-    def is_satisfiable(self) -> Tuple[bool, Optional[Tuple[bool, ...]]]:
-        """
-        Brute-force satisfiability check.
-
-        Time:  O(2^n · m · k) where m=clauses, k=max clause size
-        Space: O(n)
-        """
-        for assignment in product([False, True], repeat=self.num_vars):
-            if self.evaluate(assignment):
-                return True, assignment
-        return False, None
-
-    def find_obstruction(self, assignment: Tuple[bool, ...]) -> Optional[int]:
-        """
-        Find the first unsatisfied clause for a given assignment.
-
-        Time:  O(m · k)
-        Space: O(1)
-        """
-        for idx, clause in enumerate(self.clauses):
-            if not any(assignment[v] == p for v, p in clause):
-                return idx
+    
+    def brute_force_solve(self) -> Optional[Tuple[bool, ...]]:
+        """Find a satisfying assignment by brute force."""
+        for bits in itertools.product([False, True], repeat=self.num_vars):
+            if self.evaluate(bits):
+                return bits
         return None
-
-    def verify_obstruction_duality(self) -> bool:
+    
+    def count_satisfying(self) -> int:
+        """Count satisfying assignments."""
+        count = 0
+        for bits in itertools.product([False, True], repeat=self.num_vars):
+            if self.evaluate(bits):
+                count += 1
+        return count
+    
+    def branch_obstruction_map(self) -> Dict[Tuple[int, ...], bool]:
+        """Map each binary multiindex to whether it's 'obstructed'.
+        
+        An assignment is obstructed if it does NOT satisfy the formula.
+        This is the core of the SAT-branch correspondence:
+        obstructed branches ↔ unsatisfied assignments.
         """
-        Verify the sat-obstruction duality theorem:
-        ¬Satisfiable ↔ ∀τ, isObstructed(τ)
-
-        Time:  O(2^n · m · k)
-        """
-        is_sat, _ = self.is_satisfiable()
-        all_obstructed = all(
-            self.find_obstruction(tau) is not None
-            for tau in product([False, True], repeat=self.num_vars)
-        )
-        return is_sat != all_obstructed  # Duality: sat ↔ ¬all_obstructed
+        result = {}
+        for bits in itertools.product([False, True], repeat=self.num_vars):
+            alpha = tuple(1 if b else 0 for b in bits)
+            result[alpha] = not self.evaluate(bits)
+        return result
 
 
-# =============================================================================
-# Algorithm 6: Certificate Size Computation
-# =============================================================================
-
-def certificate_complexity(n: int, d: int) -> Dict[str, int]:
+def sat_to_branch_analysis(formula: CNFFormula) -> Dict:
+    """Analyze the SAT-to-branch correspondence for a CNF formula.
+    
+    Returns detailed analysis of how the formula maps to
+    derivative tree branch structure.
     """
-    Compute certificate complexity bounds for Lorentzian recognition.
-
-    Pseudocode:
-        CERTIFICATE_BOUNDS(n, d):
-            exact ← MULTIINDEX_COUNT(n, d-2)
-            upper ← n^(d-2)
-            lower ← 2^(d-2) if n ≥ d-1 else 1
-            return {exact, upper, lower}
-
-    Time:  O(1) for bounds, O(min(n, d)) for exact
-    Space: O(1)
-    """
-    if d < 2:
-        return {"exact": 1, "upper": 1, "lower": 1}
-
-    exact = multiindex_count_exact(n, d - 2)
-    upper = n ** (d - 2)
-    # Lower bound from injection: if n ≥ (d-2)+1, then ≥ 2^(d-2)
-    if n >= d - 1:
-        lower = 2 ** (d - 2)
-    else:
-        lower = 1
-
-    return {"exact": exact, "upper": upper, "lower": lower}
-
-
-def growth_rate_analysis(max_m: int = 12) -> List[Dict]:
-    """
-    Analyze growth rates along the phase transition diagonal.
-
-    Returns data for each m: the exact count, bounds, and ratios.
-    """
-    results = []
-    for m in range(1, max_m + 1):
-        n, d = m + 1, m + 2
-        exact = multiindex_count_exact(n, d - 2)
-        lower = 2 ** m
-        upper = (m + 1) ** m
-        central_binom = comb(2 * m, m)
-
-        results.append({
-            "m": m,
-            "n": n,
-            "d": d,
-            "exact": exact,
-            "lower_2m": lower,
-            "upper_nm": upper,
-            "central_binomial": central_binom,
-            "ratio_exact_lower": exact / lower,
-            "log2_exact": np.log2(exact),
-        })
-    return results
-
-
-# =============================================================================
-# Algorithm 7: Spectral Obstruction Finder
-# =============================================================================
-
-def find_spectral_obstruction(A: np.ndarray, tol: float = 1e-10) -> Optional[Dict]:
-    """
-    Find a spectral obstruction proving A is non-Lorentzian.
-
-    If A has ≥2 positive eigenvalues, returns two orthogonal directions
-    with positive quadratic form, certifying the spectral obstruction.
-
-    Pseudocode:
-        FIND_OBSTRUCTION(A):
-            eigenvalues, eigenvectors ← EIGH(A)
-            pos_indices ← {i : eigenvalues[i] > 0}
-            if |pos_indices| < 2: return None
-            i, j ← first two elements of pos_indices
-            return (eigenvectors[:,i], eigenvectors[:,j])
-
-    Time:  O(n³)
-    Space: O(n²)
-    """
-    eigenvalues, eigenvectors = np.linalg.eigh(A)
-    pos_indices = np.where(eigenvalues > tol)[0]
-
-    if len(pos_indices) < 2:
-        return None
-
-    i, j = pos_indices[0], pos_indices[1]
-    v1 = eigenvectors[:, i]
-    v2 = eigenvectors[:, j]
-
+    total_assignments = 2 ** formula.num_vars
+    satisfying = formula.count_satisfying()
+    obstruction_map = formula.branch_obstruction_map()
+    obstructed = sum(1 for v in obstruction_map.values() if v)
+    
     return {
-        "eigenvalue_1": float(eigenvalues[i]),
-        "eigenvalue_2": float(eigenvalues[j]),
-        "direction_1": v1,
-        "direction_2": v2,
-        "quad_form_1": float(v1 @ A @ v1),
-        "quad_form_2": float(v2 @ A @ v2),
-        "orthogonality": float(np.abs(v1 @ v2)),
+        'num_vars': formula.num_vars,
+        'num_clauses': len(formula.clauses),
+        'total_assignments': total_assignments,
+        'satisfying_count': satisfying,
+        'obstructed_count': obstructed,
+        'is_satisfiable': satisfying > 0,
+        'all_obstructed': obstructed == total_assignments,
+        'obstruction_density': obstructed / total_assignments,
     }
 
 
-# =============================================================================
-# Main: Run all algorithms with examples
-# =============================================================================
+# ============================================================
+# Usage Examples
+# ============================================================
 
 if __name__ == "__main__":
-    print("Algorithms for Lorentzian Recognition Complexity")
-    print("=" * 50)
-
-    # Algorithm 1: Multiindex enumeration
-    print("\n1. Multiindex enumeration (n=3, d=2):")
-    for alpha in enumerate_multiindices(3, 2):
-        print(f"   {alpha}")
-    print(f"   Count: {multiindex_count_exact(3, 2)}")
-
-    # Algorithm 2: Boolean injection
-    print("\n2. Boolean injection verification:")
-    for m in range(1, 8):
-        valid = verify_injection(m)
-        count = multiindex_count_exact(m + 1, m)
-        print(f"   m={m}: injection valid={valid}, "
-              f"|multiindices|={count}, 2^m={2**m}")
-
-    # Algorithm 5: CNF operations
-    print("\n5. CNF satisfiability:")
+    print("=== Algorithm Demonstrations ===\n")
+    
+    # 1. Multiindex counting
+    print("1. Multiindex counting:")
+    for n, d in [(3, 2), (4, 3), (5, 2)]:
+        exact = count_multiindices(n, d)
+        binary = math.comb(n, d) if d <= n else 0
+        print(f"   n={n}, d={d}: total={exact}, binary={binary}, "
+              f"ratio={exact/binary:.2f}" if binary > 0 else f"   n={n}, d={d}: total={exact}")
+    
+    # 2. Certificate complexity
+    print("\n2. Certificate complexity bounds:")
+    for n, d in [(6, 5), (8, 6), (10, 7), (20, 12)]:
+        bounds = certificate_complexity_bounds(n, d)
+        print(f"   n={n}, d={d}: leaves={bounds['exact_leaves']}, "
+              f"upper={bounds['upper_bound_n_pow_k']}, lower={bounds['lower_bound_choose']}")
+    
+    # 3. Diagonal Lorentzian testing
+    print("\n3. Diagonal Lorentzian signature:")
+    for diag in [[3, -1, -2], [2, 3, -1], [-1, -2, -3]]:
+        result = check_lorentzian_signature_diagonal(diag)
+        print(f"   diag={diag}: Lorentzian={result['is_lorentzian']}")
+    
+    # 4. SAT-branch analysis
+    print("\n4. SAT-branch correspondence:")
     phi = CNFFormula(3, [
         [(0, True), (1, True)],
         [(1, False), (2, True)],
-        [(0, False), (2, False)],
     ])
-    is_sat, witness = phi.is_satisfiable()
-    print(f"   Formula satisfiable: {is_sat}")
-    if witness:
-        print(f"   Witness: {witness}")
-    print(f"   Duality verified: {phi.verify_obstruction_duality()}")
-
-    # Algorithm 6: Certificate complexity
-    print("\n6. Certificate complexity analysis:")
-    for result in growth_rate_analysis(10):
-        print(f"   m={result['m']}: exact={result['exact']}, "
-              f"lower={result['lower_2m']}, upper={result['upper_nm']}, "
-              f"ratio={result['ratio_exact_lower']:.2f}")
-
-    # Algorithm 7: Spectral obstruction
-    print("\n7. Spectral obstruction:")
-    A = np.array([[3, 1, 0], [1, 2, 0], [0, 0, -1]], dtype=float)
-    obs = find_spectral_obstruction(A)
-    if obs:
-        print(f"   Obstruction found!")
-        print(f"   Eigenvalues: {obs['eigenvalue_1']:.3f}, {obs['eigenvalue_2']:.3f}")
-        print(f"   Q(v1)={obs['quad_form_1']:.3f}, Q(v2)={obs['quad_form_2']:.3f}")
-        print(f"   Orthogonality: {obs['orthogonality']:.2e}")
+    analysis = sat_to_branch_analysis(phi)
+    print(f"   Formula: {len(phi.clauses)} clauses, {phi.num_vars} vars")
+    print(f"   Satisfying: {analysis['satisfying_count']}/{analysis['total_assignments']}")
+    print(f"   Obstructed branches: {analysis['obstructed_count']}")
+    print(f"   Obstruction density: {analysis['obstruction_density']:.2%}")
