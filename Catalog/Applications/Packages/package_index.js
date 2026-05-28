@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Statistical Physics / Machine Learning",
     "date": "2026-05-28T05:34:43Z",
     "exp_id": "79586e0d",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7252246511627907,
+    "quality": "substantial",
     "pkg_num": 216
   },
   {
@@ -6273,8 +6273,8 @@ window.PACKAGE_GRAPH = {
       "shape": "sphere_rings",
       "date": "2026-05-28T05:34:43Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7252246511627907,
+      "quality": "substantial"
     }
   ],
   "edges": [

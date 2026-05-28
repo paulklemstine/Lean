@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1980 of the highest-quality
+A curated collection of 1981 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1980
+Total files: 1981
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1644,6 +1644,7 @@ import FINAL.Pythagorean.QuotientSections
 import FINAL.Pythagorean.RankBoundedEML
 import FINAL.Pythagorean.RecursiveMajorityDepthRigidity
 import FINAL.Pythagorean.ReflectionPositivity
+import FINAL.Pythagorean.RobustCertificateCompilation
 import FINAL.Pythagorean.RootSeparatedDecomposition
 import FINAL.Pythagorean.SL2Defs
 import FINAL.Pythagorean.SL2Generation

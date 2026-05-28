@@ -401,26 +401,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-25T21:13:09.706179+00:00"
   },
   {
-    "id": "fd_0951",
-    "title": "Direction 3: Sheaf-Theoretic Tropical Persistence",
-    "description": "**Conjecture:** The tropical persistence barcode can be realized as the derived pushforward of a constructible sheaf on the real line, valued in the category of tropical semimodules. The stability theorem then follows from the properness of the pushforward and the continuity of the derived functor, providing a conceptual explanation for the degree-dependent constant.\n\n**Test:** Construct the sheaf explicitly for path graphs and cycle graphs. Verify that the stalk at each point t equals the tropical kernel dimension. Check that the derived pushforward reproduces the event profile.\n\n**Impact:** This would connect tropical persistence to the rapidly developing theory of persistent sheaves (Curry, Kashiwara\u2013Schapira), opening access to powerful tools from algebraic geometry and microlocal analysis. It would also suggest natural higher-dimensional generalizations.\n\n**Catalog References:** `Pythagorean/TropicalBridge/Stability.lean` (tropicalEventProfile, TPB), `Catalog/Pythagorean/TropicalBridge/FiltrationPersistence.lean` (TropicalFiltration)\n\n**Proof Strategy:** Define the sheaf F on \u211d with stalks F_t = tropical kernel of G[activeVertices(f,t)]. The restriction maps are the natural inclusions. Constructibility follows from the finite number of critical values (entrance times). The pushforward to a point gives the global sections, which encode the barcode.\n\n**Domain Bridges:** Sheaf theory, derived categories, algebraic geometry, microlocal analysis\n\n**Lineage:** Conceptual reformulation of the entire stability framework\n\n**Ambition:** Grand challenge \u2014 would place tropical persistence in the mainstream of modern geometry\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "834b245c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T21:13:42.015713+00:00"
-  },
-  {
     "id": "fd_0965",
     "title": "Direction 1: Tight Lorentzian Stability Radii for Matroid Families",
     "description": "**Conjecture:** For the uniform matroid $U_{r,n}$, the exact Lorentzian stability radius (maximum coefficient perturbation preserving Lorentzianity of the generating polynomial) is $\\Theta(\\binom{n}{r}^{-1} \\cdot \\lambda_{\\min}^{\\text{gap}})$, where $\\lambda_{\\min}^{\\text{gap}}$ is the minimum normalized Hessian eigengap across all quadratic leaves.\n\n**Test:** Compute the exact stability radius for $U_{r,n}$ with $n \\leq 15$ by binary search over perturbation magnitudes, checking Lorentzianity via eigenvalue computation on all $\\binom{n}{2}$ quadratic leaves. Compare to the predicted formula. Discrepancies of more than 10% in the ratio would refute the conjecture.\n\n**Impact:** Tight stability radii would replace the conservative factor-of-2 bound in `certifyNoisySLC` with optimal constants, potentially doubling the effective robustness radius for practical applications.\n\n**Catalog References:** `Catalog/Pythagorean/RobustLorentzianSampling.lean` (Theorem `residual_gap_of_perturbation`); `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (Theorem `lorentzian_stability_radius_exists`).\n\n**Proof Strategy:** For the upper bound, construct explicit perturbation families that destroy Lorentzianity at the predicted threshold. For the lower bound, use the Hessian eigenvalue structure of the elementary symmetric polynomial to compute the exact quadratic form bound implied by coefficient perturbation.\n\n**Domain Bridges:** Combinatorial optimization (matroid intersection algorithms), algebraic combinatorics (Schur positivity and symmetric function theory).\n\n**Lineage:** Direct extension of `residual_gap_of_perturbation` from this cycle. The uniform matroid case is the canonical test bed.\n\n**Ambition:** Solid extension \u2014 this is a concrete computation grounded in existing theory, but the exact formula would be new and useful.\n\n---",
@@ -780,27 +760,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T03:33:16.871764+00:00"
   },
   {
-    "id": "fd_1275",
-    "title": "Direction 3: Infinite Groups and Amenability",
-    "description": "**Conjecture:** For amenable groups with polynomial growth (e.g., nilpotent groups), the locality-protection principle extends to asymptotic spectral gaps of F\u00f8lner sequences: the isoperimetric profile is invariant under bounded augmentation of the generating set.\n\n**Test:** For the discrete Heisenberg group H_3(\u2124) (a non-abelian nilpotent group of growth degree 4), compute the spectral gap of the Cayley graph restricted to balls of radius R, for both local and hybrid generators. Verify that the ratio remains bounded as R \u2192 \u221e.\n\n**Impact:** This would extend the locality-protection principle from finite groups to the rich world of infinite finitely generated groups, connecting to Varopoulos's theory of random walks on groups and the Coulhon\u2013Saloff-Coste heat kernel estimates. A positive result would show that the diffusive exponent (determined by the growth rate) is truly a quasi-isometric invariant.\n\n**Catalog References:**\n- `Catalog/Pythagorean/CayleyExpander/HybridLocalGlobal.lean` \u2014 finite group framework\n\n**Proof Strategy:** Use F\u00f8lner set approximation and the finite-group comparison theorem applied to increasing subgroups. The key challenge is controlling boundary effects as the F\u00f8lner sets grow.\n\n**Domain Bridges:** Geometric group theory (growth and isoperimetric profiles), harmonic analysis on nilpotent groups\n\n**Lineage:** Generalization from finite to infinite groups\n\n**Ambition:** Grand challenge \u2014 bridges to deep open questions in geometric group theory\n\n**\"The key insight is...\"** that polynomial growth groups have a well-defined \"diffusion exponent\" related to their growth degree, and our comparison method should preserve this exponent.\n\n**\"Why now?\"** The formal comparison infrastructure provides a template that can be adapted to truncated groups (finite quotients of infinite groups).\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "175f456d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T03:33:16.917986+00:00"
-  },
-  {
     "id": "fd_1280",
     "title": "Direction 2: Non-Cancellation Certificates and Coefficient-Aware Bounds",
     "description": "**Conjecture:** For polynomials over fields of characteristic zero with generic coefficients, the support of the Hessian entries equals the second shadow exactly (no cancellation). This non-cancellation property can be certified by a formal Jacobian condition on the coefficient matrix, yielding coefficient-aware lower bounds that are strictly stronger than support-only bounds.\n\n**Test:** Formalize the connection between `WeightedSupportShadow.nonzeroQuadLeafSet_eq_shadow` and the shadow complexity lower bound. Show that for polynomials with nonzero coefficients, the lower bound applies to actual polynomial circuits (not just support circuits).\n\n**Impact:** Bridges the gap between the combinatorial support model and actual polynomial computation, making the lower bounds applicable to real arithmetic circuits.\n\n**Catalog References:**\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `nonzeroQuadLeafSet_eq_shadow`, `coeff_pderiv_pderiv_ne_zero_iff`\n\n**Proof Strategy:** Use `coeff_pderiv_pderiv_ne_zero_iff` to show that individual Hessian coefficients are nonzero iff the ancestor coefficient is nonzero. Combine with the support circuit model to lift the lower bound from support circuits to actual arithmetic circuits under a genericity assumption.\n\n**Domain Bridges:** Connects to algebraic geometry (generic points, Zariski topology) and commutative algebra (non-vanishing of resultants).\n\n**The key insight is** that the non-cancellation property of individual second derivatives \u2014 each output coefficient is a nonzero scalar multiple of exactly one input \u2014 converts support-level bounds into coefficient-level bounds without loss.\n\n**Why now?** The non-cancellation theorem is already formally verified in `WeightedSupportShadow.lean`; the remaining work is to formalize the circuit model connection.\n\n**Lineage:** Directly extends `nonzeroQuadLeafSet_eq_shadow` to complexity conclusions.\n\n**Ambition:** \ud83d\udfe1 Solid extension with potential for \ud83d\udd34 breakthrough if it yields new bounds on standard arithmetic circuits.\n\n---",
@@ -855,10 +814,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e4837868",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f89e32c",
     "timestamp": "2026-05-27T12:07:55.474050+00:00"
   },
   {
@@ -952,10 +911,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8596d6a6",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a042263",
     "timestamp": "2026-05-27T13:37:04.658423+00:00"
   },
   {
@@ -1147,10 +1106,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "78306251",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8a13d6f6",
     "timestamp": "2026-05-27T19:12:47.193133+00:00"
   },
   {
@@ -1269,10 +1228,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33b7a398",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54a2ca0c",
     "timestamp": "2026-05-28T00:37:30.808390+00:00"
   },
   {
@@ -1293,26 +1252,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "8f59c0ed",
     "consumed_by_exp_id": "69370675",
     "timestamp": "2026-05-28T00:39:49.343434+00:00"
-  },
-  {
-    "id": "fd_1585",
-    "title": "Direction 2: Defect Localization and Energy Landscapes in the Critical Window",
-    "description": "**Conjecture.** In the critical window (\u03bc_off \u2212 \u03bc_diag) \u2248 c\u00b7\u03c3\u221a(log n), the witness pair (i*, j*) achieving the tropical margin is, with high probability, unique (up to symmetry) and carried by the pair whose noise fluctuation is the most extreme. Moreover, the energy landscape of diagExSlack values has a gap between the minimum and the second-smallest value that grows as \u221a(log n).\n\n**Test.** For n \u2208 {20, 50, 100, 200}, sample 10,000 critical-window matrices. Track (a) the fraction of samples where the witness pair is unique, (b) the distribution of the gap between the two smallest diagExSlack values, (c) the empirical correlation between the witness pair and the entry of W \u2212 meanModel with the largest absolute value. If uniqueness fraction \u2192 1 and gap \u2192 \u221e, localization holds.\n\n**Impact.** Defect localization would connect tropical phase transitions to the theory of extremes in disordered systems (spin glasses, random energy models, branching random walks). It would also make the certified algorithm's witness output physically interpretable: the instability lives at a specific, identifiable location.\n\n**Catalog References.**\n- `Pythagorean/TropicalPhaseTransition.lean`: `tropMargin_witness`\n- `Catalog/Pythagorean/TropicalLorentzianShadows.lean`: `tropical_gap_certificate_exists`\n\n**Proof Strategy.** Model each diagExSlack(W, i, j) as \u03bc + \u03c3\u00b7Z_{ij} where Z_{ij} are correlated Gaussians. The minimum of n\u00b2 correlated Gaussians has a known localization theory (Chatterjee, 2014). Compute the covariance matrix of the {Z_{ij}} explicitly and apply the second-moment method to the indicator of near-minimality.\n\n**Domain Bridges.** Spin glasses, random energy models, extreme-value theory, disordered systems.\n\n**Lineage.** Extends `tropMargin_witness` (Theorem 3.7) and Conjecture 6.2 (extremal pair sparsity).\n\n**Ambition.** Solid extension \u2014 the tools are largely in place, and the computational protocol is immediately executable.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "8f59c0ed",
-    "consumed_by_exp_id": "79586e0d",
-    "timestamp": "2026-05-28T00:39:49.413929+00:00"
   },
   {
     "id": "fd_1594",
@@ -1355,24 +1294,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "f43533d0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T01:19:07.666079+00:00"
-  },
-  {
-    "id": "fd_1597",
-    "title": "Direction 4: Exchange-Axiom Characterization of Shadow Log-Concavity",
-    "description": "**Conjecture:** The discrete exchange property (Definition 2.4) is *necessary and sufficient* for shadow log-concavity among homogeneous support sets. That is, a homogeneous support $S$ has log-concave shadow profile if and only if $S$ is a discrete exchange family.\n\n**Test:** Systematically enumerate all subsets of $\\{0,1\\}^n$ of a fixed cardinality (representing multiaffine supports) for $n \\leq 7$. For each, check both the exchange property and shadow log-concavity. Report any discrepancies.\n\n**The key insight is** that the exchange property is the finite-set analogue of M-convexity, and M-convex sets are precisely the supports of matroid-theoretic objects. If the exchange property characterizes log-concavity, it would give a clean combinatorial criterion for when the shadow profile is well-behaved.\n\n**Why now?** The computational experiments in this work test the conjecture in one direction (exchange \u27f9 log-concavity) but not the converse. A systematic enumeration for small $n$ would resolve the question computationally for low dimensions.\n\n**Impact:** Would provide the first purely combinatorial characterization of when shadow profiles are log-concave, without reference to polynomial coefficients.\n\n**Catalog References:** `Pythagorean/IteratedShadowGeometry.lean` (IsDiscreteExchangeFamily, kthShadow), `Bridges/Catalog/Pythagorean/SupportCompression.lean` (nonzeroDerivativeLeafSet_eq_indep).\n\n**Proof Strategy:** For necessity, construct explicit non-exchange supports with non-log-concave profiles. For sufficiency, use the exchange axiom to construct injection maps between shadow levels, proving the log-concavity inequality.\n\n**Domain Bridges:** Matroid theory, discrete convex analysis, combinatorial optimization.\n\n**Lineage:** Directly extends the exchange family definition and computational experiments from this work.\n\n**Ambition:** Solid extension \u2014 would close a natural question opened by the conjecture.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f43533d0",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T01:19:07.803412+00:00"
   },
   {
     "id": "fd_1599",
@@ -1488,7 +1409,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "77cabe0b",
@@ -1506,31 +1427,12 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "77cabe0b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T04:56:23.267505+00:00"
-  },
-  {
-    "id": "fd_1665",
-    "title": "Direction 3: Bounded Quantifier Transfer for NIP Combinatorics",
-    "description": "**Conjecture:** The bounded quantifier language is expressive enough to capture the NIP (Not the Independence Property) condition: a formula \u03c6(x, y) has NIP iff for every definable family of instances, the VC dimension is bounded. This condition transfers through ultraproducts via `los_boundedRestrictedFormula`.\n\n**Test:** Implement VC dimension computation for polynomial formulas over finite fields F_p. Verify that NIP formulas (e.g., linear order on F_p) have bounded VC dimension, while IP formulas (e.g., bipartite graph formulas) have unbounded VC dimension. Check that the NIP property is preserved under ultraproduct for 10 random families of polynomial formulas.\n\n**Impact:** NIP is the central dividing line in modern model theory. Formalizing NIP transfer would connect the bounded quantifier framework to the vast body of work on NIP theories, including definable types, honest definitions, and Shelah's classification.\n\n**Catalog References:** `Pythagorean/BoundedPseudofiniteTransfer.lean` \u2014 `BoundedRestrictedFormula`, `los_boundedRestrictedFormula`\n\n**Proof Strategy:** Express \"the VC dimension of \u03c6 is at most d\" as a bounded formula: \u00ac\u2203 x\u2081,...,x_{d+1} \u2208 D, \u2200 S \u2286 {1,...,d+1}, \u2203 y, \u2227\u1d62\u2208S \u03c6(x\u1d62,y) \u2227 \u2227\u1d62\u2209S \u00ac\u03c6(x\u1d62,y). This is a bounded formula with quantifier depth d+2. Apply `los_boundedRestrictedFormula`.\n\n**Domain Bridges:** Model theory \u2194 machine learning (VC dimension = PAC learnability), model theory \u2194 combinatorics (Sauer-Shelah lemma)\n\n**Lineage:** Extends `BoundedRestrictedFormula` to capture classification-theoretic properties\n\n**Ambition:** Grand challenge \u2014 connecting the bounded quantifier framework to Shelah's classification program.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.9999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "77cabe0b",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T04:56:23.347212+00:00"
   },
   {
     "id": "fd_0806",
@@ -2042,36 +1944,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T00:40:32.501826+00:00"
   },
   {
-    "id": "fd_1655",
-    "title": "Prime-to-Prime Renormalization Operator for Arithmetic Persistence",
-    "description": "Conjecture: There exists an explicit renormalization operator R on prime-indexed persistence signatures attached to an arithmetic object (e.g. elliptic curves, varieties, or rational maps) such that for generic objects in a fixed motivic family, the sequence of signatures across primes p, p^2, p^3 viewed through R converges to a family-dependent fixed point, while objects with exceptional arithmetic structure (CM, extra endomorphisms, hidden isogenies, atypical monodromy) fail to converge or converge to a different universality class. Test: Construct a concrete prime-indexed persistence signature for one arithmetic family, compute it over many good primes and prime powers, fit the induced flow under R, and check whether generic members exhibit stable fixed-point behavior while exceptional members are statistically separated. Refutation occurs if no operator yields stable family-level universality or if exceptional objects are indistinguishable from generic ones. Impact: This would introduce a genuine renormalization-group framework for arithmetic topology, giving a new way to classify hidden structure by dynamical flows on persistence data rather than by isolated invariants.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T03:47:36.856141+00:00"
-  },
-  {
-    "id": "fd_1656",
-    "title": "Prime-Shift Stability Law for Arithmetic Persistent Signatures",
-    "description": "Conjecture: There exists an explicit arithmetic object family A (for example a non-CM elliptic curve over Q or a hyperelliptic curve family) and a functorial construction of prime-indexed filtered complexes K_p(A) such that the resulting persistence signatures S_p satisfy a quantitative prime-shift correlation law: for every fixed nonzero integer h, the empirical correlation Corr(S_p, S_{p+h}) over good primes p up to X converges to a limit C_A(h), and C_A(h) is identically zero if and only if the underlying Frobenius data are equidistributed with no hidden deterministic coupling beyond the standard local statistics. Test: compute S_p for large prime ranges and several families A, estimate Corr(S_p, S_{p+h}) for fixed h, and compare against null models preserving one-prime marginals but destroying cross-prime dependence; confirmation is persistent nontrivial limiting structure in C_A(h), while refutation is decay to zero indistinguishable from the null model for all tested families and shifts. Impact: this would turn persistent homology into a detector of cross-prime arithmetic memory, opening a new route to studying subtle inter-prime dependencies invisible to classical one-prime statistics such as Sato-Tate histograms or isolated mod-p invariants.",
-    "domains": [
-      "Arithmetic Geometry",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T03:48:08.260865+00:00"
-  },
-  {
     "id": "fd_1662",
     "title": "Prime-Periodic Persistence in Elliptic Divisibility Sequences",
     "description": "Conjecture: There exists an elliptic curve E/Q and a non-torsion point P in E(Q) such that the family of finite filtered complexes built from the prime-factor incidence structure of the elliptic divisibility sequence D_n = denom(x([n]P)) has a genuinely periodic mod-l persistent barcode for infinitely many auxiliary primes l, with period depending on the order of P modulo l; moreover this periodicity fails for a density-1 set of non-CM curves. Test: Explicitly construct complexes from divisibility hypergraphs of {D_1,...,D_N}, compute mod-l persistent homology as N grows, and check whether barcode statistics become eventually periodic in N for infinitely many l in the predicted family, versus no such infinite periodic family for generic non-CM curves. Refutation occurs if no such curve-point pair exhibits infinite prime-indexed periodic barcode behavior, or if the same behavior is generic rather than exceptional. Impact: This would create a new bridge between arithmetic dynamics on elliptic curves, divisibility sequences, and topological invariants, potentially giving a topological detector for hidden algebraic group structure and exceptional reduction behavior.",
@@ -2085,6 +1957,51 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T03:48:38.722447+00:00"
+  },
+  {
+    "id": "fd_1678",
+    "title": "Motivic Stabilization of Primewise Persistent Signatures",
+    "description": "Conjecture: There exists a functorial assignment X \u21a6 C_p(X) from smooth projective varieties X over Q to finite filtered chain complexes over F_p such that if two varieties X,Y have isomorphic Chow motives over Q, then for all but finitely many good primes p their primewise persistence diagrams are identical; conversely, there exists an explicit pair of non-isomorphic varieties with identical zeta functions at a density-1 set of primes but different persistence diagrams for infinitely many p. Test: Construct C_p(X) from reductions mod p using algebraic correspondences or Frobenius-weight filtrations, then compare persistence diagrams on known motivically equivalent pairs and on arithmetic lookalikes (e.g. zeta-equivalent but non-motivically equivalent examples). Confirmation requires eventual equality in the first class and infinitely many separating primes in the second; failure of either refutes the conjecture. Impact: This would make persistent homology a genuinely new arithmetic invariant, finer than point-count data yet structured enough to detect motivic information, potentially opening a bridge between TDA, motives, and arithmetic geometry.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T05:33:36.226237+00:00"
+  },
+  {
+    "id": "fd_1679",
+    "title": "Prime-Threshold Percolation Law for Torsion Emergence in Random Simplicial Compl",
+    "description": "Conjecture: For each fixed dimension d >= 2, there exists a universal scaling exponent alpha_d and a nonconstant prime-response profile Phi_d such that in the Linial\u2013Meshulam process Y_d(n,p), if p = c n^{-alpha_d}, then for every fixed prime ell the probability that H_{d-1}(Y_d(n,p); Z) contains nontrivial ell-primary torsion converges to Phi_d(c^{v_ell(n!)} / ell) along an infinite subsequence of n. In particular, different primes exhibit genuinely different torsion-onset windows after the same global rescaling, not explainable by the rational homology threshold alone. Test: Simulate Y_d(n,p) near known rational-homology critical windows, compute Smith normal forms of boundary maps, and estimate the onset probability of ell-primary torsion separately for several primes ell; the conjecture is supported if these curves collapse to prime-dependent nontrivial limits and refuted if a single prime-independent scaling law fits all torsion data. Impact: This would reveal a new arithmetic universality class in random topology, separating integral-topological phase transitions from field-coefficient phase transitions and giving the first quantitative law for how specific primes enter random torsion.",
+    "domains": [
+      "Random Topology",
+      "Algebraic Topology"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T05:34:26.065542+00:00"
+  },
+  {
+    "id": "fd_1680",
+    "title": "Primewise Persistent Homology Distinguishes Isospectral but Nonisometric Arithme",
+    "description": "Conjecture: There exists an explicit infinite family of pairs of compact arithmetic hyperbolic manifolds (or graphs) M_n, N_n that are Laplace-isospectral but nonisometric, together with a functorial construction assigning to each good prime p a finite filtered simplicial complex K_p(M), such that the collection of prime-indexed persistence barcodes of K_p(M_n) differs from that of K_p(N_n) for a positive-density set of primes p. Test: Construct Sunada-type isospectral pairs, define K_p from reduction/mod-p congruence orbits, geodesic-length residue data, or Hecke correspondences, and compute whether barcode distributions separate the pair on infinitely many or positive-density primes; refuted if all such computable primewise persistence invariants agree across every tested family. Impact: This would show that prime-sensitive topological invariants can detect hidden arithmetic structure invisible to classical spectra, opening a new route beyond spectral geometry toward arithmetic manifold identification.",
+    "domains": [
+      "Spectral Geometry",
+      "Arithmetic Topology"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T05:35:00.011801+00:00"
   },
   {
     "id": "seed_032",
