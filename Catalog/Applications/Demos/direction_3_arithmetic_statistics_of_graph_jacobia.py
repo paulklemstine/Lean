@@ -1,916 +1,1343 @@
-#!/usr/bin/env python3
 """
-applications.py — Real-World Applications of Cohen-Lenstra Graph Jacobian Theory
+Applications of Graph Jacobian Arithmetic Statistics
 
-Demonstrates practical applications connecting:
-1. Network reliability analysis via spanning tree enumeration
-2. Cryptographic group generation from random graphs
-3. Error-correcting code design via Jacobian structure
-4. Chip-firing dynamics simulation
+This module demonstrates real-world applications of the theorems proved in
+Catalog/Pythagorean/GraphJacobians/ArithmeticStatistics.lean:
+
+1. **Network Vulnerability Analysis**: Using Jacobian invariant factors
+   to detect structural bottlenecks in communication networks.
+
+2. **Error-Correcting Code Design**: The Jacobian structure determines
+   the performance of graph-based LDPC codes.
+
+3. **Sandpile Dynamics Prediction**: Prime-power moments predict the
+   recurrence structure of chip-firing/sandpile configurations.
 """
 
 import numpy as np
+from math import gcd, lcm
+from functools import reduce
 from typing import List, Tuple, Dict
-import math
+from collections import Counter
 
 
-def cohen_lenstra_moment(p: int, k: int) -> float:
-    """Cohen-Lenstra moment ∏_{i=1}^{k} (1 - p^{-i})^{-1}."""
-    result = 1.0
-    for i in range(1, k + 1):
-        result /= (1.0 - p ** (-i))
-    return result
-
+# ============================================================
+# Core algorithms (inlined for self-containment)
+# ============================================================
 
 def graph_laplacian(adj: np.ndarray) -> np.ndarray:
-    """Compute the Laplacian matrix of a graph from its adjacency matrix."""
-    degrees = np.sum(adj, axis=1)
-    return np.diag(degrees) - adj
+    return np.diag(adj.sum(axis=1)) - adj
 
+def reduced_laplacian(L: np.ndarray, v: int = 0) -> np.ndarray:
+    idx = [i for i in range(L.shape[0]) if i != v]
+    return L[np.ix_(idx, idx)]
 
-def spanning_tree_count(adj: np.ndarray) -> int:
-    """Count spanning trees via Kirchhoff's theorem."""
-    n = adj.shape[0]
+def smith_normal_form(M: np.ndarray) -> List[int]:
+    M = M.copy().astype(int)
+    n, m = M.shape
+    r = min(n, m)
+    for col in range(r):
+        pf = False
+        for i in range(col, n):
+            for j in range(col, m):
+                if M[i, j] != 0:
+                    M[[col, i]] = M[[i, col]]
+                    M[:, [col, j]] = M[:, [j, col]]
+                    pf = True; break
+            if pf: break
+        if not pf: break
+        changed = True
+        while changed:
+            changed = False
+            if M[col, col] < 0: M[col] = -M[col]
+            for i in range(col+1, n):
+                if M[i, col] != 0:
+                    q = M[i, col] // M[col, col]
+                    M[i] -= q * M[col]
+                    if M[i, col] != 0:
+                        if abs(M[i, col]) < abs(M[col, col]):
+                            M[[col, i]] = M[[i, col]]
+                        changed = True
+            for j in range(col+1, m):
+                if M[col, j] != 0:
+                    q = M[col, j] // M[col, col]
+                    M[:, j] -= q * M[:, col]
+                    if M[col, j] != 0:
+                        if abs(M[col, j]) < abs(M[col, col]):
+                            M[:, [col, j]] = M[:, [j, col]]
+                        changed = True
+            for i in range(col+1, n):
+                for j in range(col+1, m):
+                    if M[i, j] % M[col, col] != 0:
+                        M[i] += M[col]; changed = True; break
+                if changed: break
+    return [abs(int(M[i, i])) for i in range(r) if M[i, i] != 0]
+
+def jacobian_factors(adj: np.ndarray) -> List[int]:
     L = graph_laplacian(adj)
-    reduced = L[:n-1, :n-1].astype(float)
-    return abs(int(round(np.linalg.det(reduced))))
-
-
-# ============================================================
-# Application 1: Network Reliability Analysis
-# ============================================================
-
-def network_reliability_analysis(adj: np.ndarray, edge_failure_prob: float = 0.1) -> Dict:
-    """
-    Analyze network reliability using the Jacobian structure.
-
-    The number of spanning trees is a measure of network redundancy.
-    The Jacobian structure (via SNF) reveals the algebraic connectivity
-    pattern — groups with many small invariant factors are more
-    "uniformly connected" than those with one large factor.
-
-    Args:
-        adj: Adjacency matrix of the network
-        edge_failure_prob: Probability of each edge failing
-
-    Returns:
-        Dictionary with reliability metrics
-    """
-    n = adj.shape[0]
-    num_edges = int(np.sum(adj) // 2)
-    num_trees = spanning_tree_count(adj)
-
-    # Reliability polynomial approximation (first-order)
-    # R(p) ≈ num_trees * (1-p)^{n-1} * p^{num_edges - (n-1)}
-    # where p = edge_failure_prob
-    q = 1 - edge_failure_prob
-    reliability_lower = num_trees * (q ** (n - 1)) * (edge_failure_prob ** max(0, num_edges - (n - 1)))
-
-    # Algebraic connectivity: second-smallest eigenvalue of Laplacian
-    L = graph_laplacian(adj)
-    eigenvalues = sorted(np.linalg.eigvalsh(L.astype(float)))
-    algebraic_connectivity = eigenvalues[1] if len(eigenvalues) > 1 else 0
-
-    return {
-        'num_vertices': n,
-        'num_edges': num_edges,
-        'spanning_trees': num_trees,
-        'algebraic_connectivity': algebraic_connectivity,
-        'reliability_estimate': min(1.0, reliability_lower),
-        'redundancy_ratio': num_trees / max(1, n ** (n - 2)),  # Compare to K_n
-    }
-
-
-# ============================================================
-# Application 2: Cryptographic Group Generation
-# ============================================================
-
-def generate_cryptographic_group(n: int, target_order_bits: int = 128,
-                                 seed: int = None) -> Dict:
-    """
-    Generate a finite abelian group suitable for cryptographic use
-    by constructing a random graph and taking its Jacobian.
-
-    The Cohen-Lenstra heuristics predict that for large n, the
-    Jacobian will have good cryptographic properties (large cyclic
-    component, no small factors).
-
-    Args:
-        n: Number of vertices (controls group order)
-        target_order_bits: Desired bit length of group order
-        seed: Random seed
-
-    Returns:
-        Dictionary with group parameters
-    """
-    if seed is not None:
-        np.random.seed(seed)
-
-    best_order = 0
-    best_adj = None
-
-    # Try several random graphs, keep the one with largest Jacobian
-    for _ in range(20):
-        adj = np.zeros((n, n), dtype=int)
-        for i in range(n):
-            for j in range(i + 1, n):
-                if np.random.random() < 0.5:
-                    adj[i, j] = 1
-                    adj[j, i] = 1
-
-        order = spanning_tree_count(adj)
-        if order > best_order:
-            best_order = order
-            best_adj = adj
-
-    if best_adj is None:
-        return {'success': False}
-
-    order_bits = math.floor(math.log2(best_order)) + 1 if best_order > 0 else 0
-
-    return {
-        'success': True,
-        'group_order': best_order,
-        'order_bits': order_bits,
-        'target_bits': target_order_bits,
-        'sufficient': order_bits >= target_order_bits,
-        'graph_vertices': n,
-    }
-
-
-# ============================================================
-# Application 3: Chip-Firing Simulation
-# ============================================================
-
-def chip_firing_simulation(adj: np.ndarray, initial_config: np.ndarray,
-                           sink: int = 0, max_steps: int = 10000) -> Dict:
-    """
-    Simulate the abelian sandpile model (chip-firing) on a graph.
-
-    Starting from an initial chip configuration, fire unstable
-    vertices until reaching a stable (critical) configuration.
-
-    The set of critical configurations forms the Jacobian group
-    under chip-firing equivalence.
-
-    Args:
-        adj: Adjacency matrix
-        initial_config: Initial chip counts per vertex
-        sink: Index of the sink vertex
-        max_steps: Maximum firing steps
-
-    Returns:
-        Dictionary with simulation results
-    """
-    n = adj.shape[0]
-    config = initial_config.copy().astype(int)
-    degrees = np.sum(adj, axis=1).astype(int)
-
-    firings = np.zeros(n, dtype=int)
-    steps = 0
-
-    while steps < max_steps:
-        # Find unstable non-sink vertex
-        unstable = None
-        for v in range(n):
-            if v != sink and config[v] >= degrees[v]:
-                unstable = v
-                break
-
-        if unstable is None:
-            break  # Stable configuration reached
-
-        # Fire the unstable vertex
-        v = unstable
-        config[v] -= degrees[v]
-        for w in range(n):
-            if adj[v, w]:
-                config[w] += 1
-        firings[v] += 1
-        steps += 1
-
-    is_stable = all(config[v] < degrees[v] for v in range(n) if v != sink)
-
-    return {
-        'final_config': config,
-        'is_stable': is_stable,
-        'total_firings': int(np.sum(firings)),
-        'steps': steps,
-        'firing_vector': firings,
-    }
-
-
-# ============================================================
-# Application 4: Error-Correcting Code Parameters
-# ============================================================
-
-def jacobian_code_parameters(adj: np.ndarray) -> Dict:
-    """
-    Compute parameters of the linear code associated with a graph's Jacobian.
-
-    The cycle space of a graph defines a binary linear code.
-    The Jacobian structure determines the code's algebraic properties
-    over various finite fields.
-
-    Args:
-        adj: Adjacency matrix
-
-    Returns:
-        Code parameters dictionary
-    """
-    n = adj.shape[0]
-    num_edges = int(np.sum(adj) // 2)
-
-    # Code parameters
-    k = num_edges - n + 1  # Dimension (number of independent cycles)
-    num_trees = spanning_tree_count(adj)
-
-    # Minimum distance estimate (lower bound)
-    # For cycle codes, min distance ≥ girth of graph
-    min_degree = min(int(np.sum(adj[i])) for i in range(n)) if n > 0 else 0
-
-    return {
-        'block_length': num_edges,
-        'dimension': max(0, k),
-        'rate': k / num_edges if num_edges > 0 else 0,
-        'spanning_trees': num_trees,
-        'min_degree': min_degree,
-        'num_codewords_estimate': num_trees,
-    }
-
-
-# ============================================================
-# Main demonstration
-# ============================================================
-
-if __name__ == "__main__":
-    np.random.seed(42)
-
-    print("╔" + "═"*58 + "╗")
-    print("║  Applications of Graph Jacobian Arithmetic Statistics   ║")
-    print("╚" + "═"*58 + "╝")
-
-    # Build example graphs
-    # Petersen graph adjacency matrix
-    petersen = np.zeros((10, 10), dtype=int)
-    outer = [(0,1),(1,2),(2,3),(3,4),(4,0)]
-    inner = [(5,7),(7,9),(9,6),(6,8),(8,5)]
-    spokes = [(0,5),(1,6),(2,7),(3,8),(4,9)]
-    for i, j in outer + inner + spokes:
-        petersen[i, j] = 1
-        petersen[j, i] = 1
-
-    # Complete graph K_5
-    k5 = np.ones((5, 5), dtype=int) - np.eye(5, dtype=int)
-
-    # Cycle graph C_8
-    c8 = np.zeros((8, 8), dtype=int)
-    for i in range(8):
-        c8[i, (i+1) % 8] = 1
-        c8[(i+1) % 8, i] = 1
-
-    print("\n=== Application 1: Network Reliability ===")
-    for name, adj in [("Petersen", petersen), ("K_5", k5), ("C_8", c8)]:
-        result = network_reliability_analysis(adj)
-        print(f"\n  {name} graph:")
-        print(f"    Vertices: {result['num_vertices']}, Edges: {result['num_edges']}")
-        print(f"    Spanning trees: {result['spanning_trees']}")
-        print(f"    Algebraic connectivity: {result['algebraic_connectivity']:.4f}")
-        print(f"    Redundancy ratio: {result['redundancy_ratio']:.6f}")
-
-    print("\n\n=== Application 2: Cryptographic Group Generation ===")
-    for n in [10, 15, 20]:
-        result = generate_cryptographic_group(n, target_order_bits=32, seed=42)
-        print(f"\n  n={n}: |Jac| = {result['group_order']} "
-              f"({result['order_bits']} bits)")
-
-    print("\n\n=== Application 3: Chip-Firing Simulation ===")
-    adj = k5.copy()
-    initial = np.array([10, 5, 3, 8, 2])
-    result = chip_firing_simulation(adj, initial, sink=0)
-    print(f"  K_5 with initial config {list(initial)}:")
-    print(f"    Final config: {list(result['final_config'])}")
-    print(f"    Stable: {result['is_stable']}")
-    print(f"    Total firings: {result['total_firings']}")
-
-    print("\n\n=== Application 4: Error-Correcting Codes ===")
-    for name, adj in [("Petersen", petersen), ("K_5", k5)]:
-        result = jacobian_code_parameters(adj)
-        print(f"\n  {name} code:")
-        print(f"    Block length: {result['block_length']}")
-        print(f"    Dimension: {result['dimension']}")
-        print(f"    Rate: {result['rate']:.4f}")
-        print(f"    Codewords estimate: {result['spanning_trees']}")
-
-    print("\n\n=== Cohen-Lenstra Predictions vs Graph Data ===")
-    print("  Comparing Jacobian p-divisibility for random graphs")
-    print("  with Cohen-Lenstra moment predictions:")
-    for p in [3, 5, 7]:
-        m = cohen_lenstra_moment(p, 1)
-        print(f"\n  p={p}: predicted Pr[p | |Jac|] = {m:.4f} "
-              f"(= {p}/{p-1})")
-
-
-#!/usr/bin/env python3
-"""
-demo.py — Cohen-Lenstra Heuristics for Graph Jacobians
-
-Demonstrates the conjecture that the distribution of invariant factors
-of random graph Jacobians converges to the Cohen-Lenstra distribution.
-
-Tests the prediction: For odd prime p and k ≥ 1,
-  Pr[p^k | |Jac(G)|] → ∏_{i=1}^{k} (1 - p^{-i})^{-1}
-as the number of vertices n → ∞ in Erdős-Rényi G(n, 1/2).
-"""
-
-import numpy as np
-from collections import defaultdict
-import time
-
-
-def cohen_lenstra_prediction(p: int, k: int) -> float:
-    """
-    Cohen-Lenstra prediction: the moment ∏_{i=1}^{k} (1 - p^{-i})^{-1}.
-
-    For k=1: p/(p-1)
-    For k=2: p/(p-1) * p^2/(p^2-1)
-    """
-    product = 1.0
-    for i in range(1, k + 1):
-        product /= (1.0 - p ** (-i))
-    return product
-
-
-def random_graph_laplacian(n: int, prob: float = 0.5) -> np.ndarray:
-    """
-    Generate the Laplacian matrix of a random Erdős-Rényi graph G(n, prob).
-
-    Returns the n×n integer Laplacian matrix L where:
-    - L[i,j] = -1 if edge (i,j) exists
-    - L[i,i] = degree of vertex i
-    """
-    # Generate upper triangle of adjacency matrix
-    adj = np.zeros((n, n), dtype=int)
+    Ls = reduced_laplacian(L)
+    factors = smith_normal_form(Ls)
+    return sorted([f for f in factors if f > 1])
+
+def prime_power_moment(factors, q, k):
+    qk = q**k; r = 1
+    for d in factors: r *= gcd(d, qk)
+    return r
+
+def q_profile(factors, q):
+    prof = []; j = 1
+    while True:
+        c = sum(1 for d in factors if d % (q**j) == 0)
+        if c == 0: break
+        prof.append(c); j += 1
+    return prof
+
+def group_exponent(factors):
+    if not factors: return 1
+    return reduce(lcm, factors)
+
+def padic_val(n, p):
+    if n == 0: return 999
+    v = 0
+    while n % p == 0: v += 1; n //= p
+    return v
+
+def erdos_renyi(n, p, rng=None):
+    if rng is None: rng = np.random.default_rng()
+    upper = np.zeros((n, n), dtype=int)
     for i in range(n):
-        for j in range(i + 1, n):
-            if np.random.random() < prob:
-                adj[i, j] = 1
-                adj[j, i] = 1
+        for j in range(i+1, n):
+            if rng.random() < p: upper[i,j] = 1
+    return upper + upper.T
 
-    # Laplacian = D - A
-    degrees = np.sum(adj, axis=1)
-    laplacian = np.diag(degrees) - adj
-    return laplacian
+def is_connected(adj):
+    n = adj.shape[0]
+    vis = {0}; q = [0]
+    while q:
+        v = q.pop(0)
+        for u in range(n):
+            if adj[v,u] and u not in vis:
+                vis.add(u); q.append(u)
+    return len(vis) == n
 
 
-def reduced_laplacian_det(laplacian: np.ndarray) -> int:
+# ============================================================
+# Application 1: Network Vulnerability via Jacobian Structure
+# ============================================================
+
+def network_vulnerability_score(adj: np.ndarray) -> Dict:
     """
-    Compute the determinant of the reduced Laplacian (delete last row/col).
-    This equals |Jac(G)| = number of spanning trees by Kirchhoff's theorem.
+    Analyze network vulnerability using Jacobian arithmetic invariants.
+
+    The invariant factors of the graph Jacobian encode how "evenly"
+    connectivity is distributed. A network with many small invariant
+    factors is more resilient; one dominated by a single large factor
+    has structural bottlenecks.
+
+    Uses Theorem D: the exponent (= last invariant factor in divisibility
+    order) measures the worst-case amplification of perturbations.
+
+    Returns:
+        Dictionary with vulnerability metrics.
     """
-    n = laplacian.shape[0]
-    if n <= 1:
-        return 0
-    reduced = laplacian[:n-1, :n-1]
-    det = int(round(np.linalg.det(reduced.astype(float))))
-    return abs(det)
+    factors = jacobian_factors(adj)
+    if not factors:
+        return {'vulnerability': 0, 'factors': [], 'exponent': 1,
+                'spanning_trees': 1}
+
+    n = adj.shape[0]
+    exp = group_exponent(factors)
+    order = reduce(lambda a, b: a*b, factors, 1)
+
+    # Vulnerability score: ratio of exponent to geometric mean
+    geo_mean = order ** (1.0 / len(factors))
+    vulnerability = exp / geo_mean if geo_mean > 0 else float('inf')
+
+    # 2-primary depth: how many times 2 divides the exponent
+    depth_2 = padic_val(exp, 2) if exp > 0 else 0
+
+    # Number of spanning trees (= |Jac(G)| = det of reduced Laplacian)
+    L = graph_laplacian(adj)
+    Ls = reduced_laplacian(L)
+    num_trees = abs(int(round(np.linalg.det(Ls.astype(float)))))
+
+    return {
+        'n': n,
+        'factors': factors,
+        'exponent': exp,
+        'jacobian_order': order,
+        'num_spanning_trees': num_trees,
+        'vulnerability_ratio': vulnerability,
+        '2_primary_depth': depth_2,
+        'num_invariant_factors': len(factors),
+    }
 
 
-def is_connected_laplacian(laplacian: np.ndarray) -> bool:
-    """Check if the graph is connected by examining the Laplacian's rank."""
-    n = laplacian.shape[0]
-    if n <= 1:
-        return True
-    eigenvalues = np.linalg.eigvalsh(laplacian.astype(float))
-    # Connected iff exactly one zero eigenvalue
-    num_zero = np.sum(np.abs(eigenvalues) < 1e-6)
-    return num_zero == 1
+# ============================================================
+# Application 2: Sandpile Recurrence via Moments
+# ============================================================
 
-
-def test_cohen_lenstra_conjecture(
-    n_values: list,
-    p_values: list,
-    k_values: list,
-    num_samples: int = 5000,
-    verbose: bool = True
-) -> dict:
+def sandpile_recurrence_analysis(adj: np.ndarray) -> Dict:
     """
-    Test the Cohen-Lenstra conjecture for graph Jacobians.
+    Analyze sandpile/chip-firing recurrence using prime-power moments.
 
-    For each (n, p, k), generates random G(n, 1/2) graphs, computes
-    |Jac(G)| = det(reduced Laplacian), and checks if p^k divides it.
+    The chip-firing game on a graph has recurrent configurations that
+    form the graph Jacobian group. The prime-power moments M_{q,k}
+    (Theorem B) count how many configurations have period dividing q^k
+    under the q-primary component of the dynamics.
 
-    Returns dict mapping (n, p, k) -> {empirical, predicted, error}.
+    Returns:
+        Dictionary with sandpile recurrence metrics.
     """
-    results = {}
+    factors = jacobian_factors(adj)
+    if not factors:
+        factors = [1]
 
-    for n in n_values:
-        if verbose:
-            print(f"\n{'='*60}")
-            print(f"Testing n = {n} vertices ({num_samples} samples)")
-            print(f"{'='*60}")
+    exp = group_exponent(factors)
+    order = reduce(lambda a, b: a*b, factors, 1)
 
-        # Generate all graphs for this n
-        jacobian_orders = []
-        connected_count = 0
-        t0 = time.time()
+    # Compute moments for small primes
+    moment_data = {}
+    for q in [2, 3, 5, 7]:
+        moments = []
+        for k in range(1, 6):
+            m = prime_power_moment(factors, q, k)
+            moments.append(m)
+            if m == order:  # saturated
+                break
+        moment_data[q] = moments
 
-        for _ in range(num_samples):
-            L = random_graph_laplacian(n)
-            if is_connected_laplacian(L):
-                det = reduced_laplacian_det(L)
-                if det > 0:
-                    jacobian_orders.append(det)
-                    connected_count += 1
+    # q-profiles
+    profiles = {}
+    for q in [2, 3, 5, 7]:
+        profiles[q] = q_profile(factors, q)
 
-        elapsed = time.time() - t0
-        if verbose:
-            print(f"  Connected graphs: {connected_count}/{num_samples} "
-                  f"({elapsed:.1f}s)")
+    # Verify Theorem C: profile recovery
+    recovery_ok = {}
+    for q in [2, 3, 5]:
+        ok = True
+        max_j = max(padic_val(d, q) for d in factors) + 1
+        for j in range(1, max_j + 1):
+            lhs = sum(1 for d in factors if d % (q**j) == 0)
+            s1 = sum(min(padic_val(d, q), j) for d in factors)
+            s0 = sum(min(padic_val(d, q), j-1) for d in factors)
+            if lhs != s1 - s0:
+                ok = False
+        recovery_ok[q] = ok
 
-        for p in p_values:
-            for k in k_values:
-                pk = p ** k
-                count = sum(1 for order in jacobian_orders if order % pk == 0)
-                if connected_count > 0:
-                    empirical = count / connected_count
-                else:
-                    empirical = 0.0
-                predicted = cohen_lenstra_prediction(p, k)
-                error = abs(empirical - predicted)
+    return {
+        'factors': factors,
+        'exponent': exp,
+        'order': order,
+        'moments': moment_data,
+        'profiles': profiles,
+        'profile_recovery_verified': recovery_ok,
+    }
 
-                results[(n, p, k)] = {
-                    'empirical': empirical,
-                    'predicted': predicted,
-                    'error': error,
-                    'samples': connected_count
+
+# ============================================================
+# Application 3: Random Network Ensemble Analysis
+# ============================================================
+
+def ensemble_analysis(n: int, p: float, num_samples: int = 200,
+                      seed: int = 42) -> Dict:
+    """
+    Analyze an ensemble of random G(n,p) graphs for Cohen–Lenstra statistics.
+
+    This implements the computational falsification test for the CL-ER conjecture:
+    generate random graphs, compute Jacobian statistics, and compare to
+    Cohen–Lenstra predictions.
+
+    Uses Theorems A-F to compute all relevant observables.
+
+    Returns:
+        Dictionary with ensemble statistics and CL comparison.
+    """
+    rng = np.random.default_rng(seed)
+    primes = [2, 3, 5]
+
+    all_factors = []
+    exponents = []
+    moment_samples = {q: {k: [] for k in range(1, 4)} for q in primes}
+    profile_samples = {q: [] for q in primes}
+
+    collected = 0
+    for _ in range(num_samples * 5):
+        A = erdos_renyi(n, p, rng)
+        if not is_connected(A):
+            continue
+
+        factors = jacobian_factors(A)
+        if not factors:
+            factors = [1]
+
+        all_factors.append(factors)
+        exponents.append(group_exponent(factors))
+
+        for q in primes:
+            for k in range(1, 4):
+                moment_samples[q][k].append(prime_power_moment(factors, q, k))
+            profile_samples[q].append(q_profile(factors, q))
+
+        collected += 1
+        if collected >= num_samples:
+            break
+
+    # Cohen-Lenstra predictions
+    cl_predictions = {}
+    for q in primes:
+        cl_predictions[q] = {}
+        for k in range(1, 4):
+            cl_val = 1.0
+            for j in range(1, k+1):
+                cl_val *= q**j / (q**j - 1)
+            cl_predictions[q][k] = cl_val
+
+    # Empirical statistics
+    emp_stats = {}
+    for q in primes:
+        emp_stats[q] = {}
+        for k in range(1, 4):
+            data = moment_samples[q][k]
+            if data:
+                emp_stats[q][k] = {
+                    'mean': np.mean(data),
+                    'std': np.std(data),
+                    'cl_prediction': cl_predictions[q][k],
+                    'ratio': np.mean(data) / cl_predictions[q][k],
                 }
 
-                if verbose:
-                    print(f"  p={p}, k={k}: empirical={empirical:.4f}, "
-                          f"predicted={predicted:.4f}, "
-                          f"|error|={error:.4f}")
-
-    return results
-
-
-def display_convergence_analysis(results: dict, p_values: list, k_values: list):
-    """Analyze whether errors decrease with n (evidence for convergence)."""
-    print(f"\n{'='*60}")
-    print("CONVERGENCE ANALYSIS")
-    print(f"{'='*60}")
-
-    n_values = sorted(set(n for n, _, _ in results.keys()))
-
-    for p in p_values:
-        for k in k_values:
-            print(f"\n  p={p}, k={k}:")
-            prev_error = None
-            for n in n_values:
-                key = (n, p, k)
-                if key in results:
-                    r = results[key]
-                    trend = ""
-                    if prev_error is not None:
-                        if r['error'] < prev_error:
-                            trend = " ↓ (converging)"
-                        else:
-                            trend = " ↑ (diverging)"
-                    print(f"    n={n:4d}: error={r['error']:.4f}{trend}")
-                    prev_error = r['error']
+    return {
+        'n': n,
+        'p': p,
+        'collected': collected,
+        'empirical_stats': emp_stats,
+        'cl_predictions': cl_predictions,
+        'exponent_stats': {
+            'mean': np.mean(exponents),
+            'median': np.median(exponents),
+            'max': max(exponents),
+        },
+    }
 
 
-def demonstrate_moment_values():
-    """Show specific Cohen-Lenstra moment values (matching Lean proofs)."""
-    print("\n" + "="*60)
-    print("COHEN-LENSTRA MOMENT VALUES (verified in Lean)")
-    print("="*60)
+if __name__ == '__main__':
+    print("=" * 70)
+    print("APPLICATION 1: Network Vulnerability Analysis")
+    print("=" * 70)
 
-    test_cases = [
-        (3, 1, "3/2 = 1.5"),
-        (5, 1, "5/4 = 1.25"),
-        (3, 2, "27/16 = 1.6875"),
-        (7, 1, "7/6 ≈ 1.1667"),
-        (2, 1, "2/1 = 2.0"),
+    # Compare different network topologies
+    for name, adj in [
+        ("Ring (C8)", (lambda: (lambda A: (
+            [setattr(A, '__', None) or A.__setitem__((i, (i+1)%8), 1) or A.__setitem__(((i+1)%8, i), 1) for i in range(8)],
+            A
+        )[-1])(np.zeros((8,8), dtype=int)))()),
+        ("Complete (K8)", np.ones((8,8), dtype=int) - np.eye(8, dtype=int)),
+    ]:
+        result = network_vulnerability_score(adj.astype(int))
+        print(f"\n  {name}:")
+        print(f"    Jacobian factors: {result['factors']}")
+        print(f"    Exponent: {result['exponent']}")
+        print(f"    Spanning trees: {result['num_spanning_trees']}")
+        print(f"    Vulnerability ratio: {result['vulnerability_ratio']:.3f}")
+
+    # Simple ring graph
+    A_ring = np.zeros((8, 8), dtype=int)
+    for i in range(8):
+        A_ring[i, (i+1) % 8] = A_ring[(i+1) % 8, i] = 1
+    result = network_vulnerability_score(A_ring)
+    print(f"\n  Ring (C8) [clean]:")
+    print(f"    Jacobian factors: {result['factors']}")
+    print(f"    Exponent: {result['exponent']}")
+    print(f"    Vulnerability ratio: {result['vulnerability_ratio']:.3f}")
+
+    print("\n" + "=" * 70)
+    print("APPLICATION 2: Sandpile Recurrence")
+    print("=" * 70)
+
+    # Petersen graph
+    P = np.zeros((10, 10), dtype=int)
+    for (u, v) in [(i, (i+1)%5) for i in range(5)] + \
+                   [(5+i, 5+(i+2)%5) for i in range(5)] + \
+                   [(i, 5+i) for i in range(5)]:
+        P[u, v] = P[v, u] = 1
+
+    result = sandpile_recurrence_analysis(P)
+    print(f"\n  Petersen graph:")
+    print(f"    Invariant factors: {result['factors']}")
+    print(f"    Exponent: {result['exponent']}")
+    print(f"    Order: {result['order']}")
+    print(f"    Moments: {result['moments']}")
+    print(f"    Profiles: {result['profiles']}")
+    print(f"    Profile recovery: {result['profile_recovery_verified']}")
+
+    print("\n" + "=" * 70)
+    print("APPLICATION 3: Ensemble Analysis for Cohen–Lenstra")
+    print("=" * 70)
+
+    for n in [10, 15, 20]:
+        result = ensemble_analysis(n, 0.5, num_samples=100)
+        print(f"\n  G({n}, 0.5), {result['collected']} samples:")
+        for q in [2, 3, 5]:
+            if q in result['empirical_stats']:
+                s = result['empirical_stats'][q].get(1, {})
+                if s:
+                    print(f"    q={q}: E[M_{{q,1}}]={s['mean']:.3f} "
+                          f"(CL={s['cl_prediction']:.3f}, ratio={s['ratio']:.3f})")
+
+
+"""
+Demo: Arithmetic Statistics of Graph Jacobians
+
+Interactive demonstration of the theorems connecting graph Jacobians
+to Cohen–Lenstra arithmetic statistics via Smith normal form.
+
+This demo:
+1. Generates random G(n,p) graphs
+2. Computes Jacobian invariant factors via reduced Laplacian SNF
+3. Verifies Theorems A-F on concrete examples
+4. Compares empirical Jacobian statistics to Cohen-Lenstra predictions
+5. Plots empirical histograms vs reference distributions
+
+Dependencies: numpy, matplotlib
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from math import gcd, lcm
+from functools import reduce
+from collections import Counter
+from typing import List, Tuple, Dict
+
+
+# ============================================================
+# Core algorithms (self-contained)
+# ============================================================
+
+def graph_laplacian(adj: np.ndarray) -> np.ndarray:
+    return np.diag(adj.sum(axis=1)) - adj
+
+def reduced_laplacian(L: np.ndarray, v: int = 0) -> np.ndarray:
+    idx = [i for i in range(L.shape[0]) if i != v]
+    return L[np.ix_(idx, idx)]
+
+def smith_normal_form(M: np.ndarray) -> List[int]:
+    M = M.copy().astype(int)
+    n, m = M.shape
+    r = min(n, m)
+    for col in range(r):
+        pf = False
+        for i in range(col, n):
+            for j in range(col, m):
+                if M[i, j] != 0:
+                    M[[col, i]] = M[[i, col]]
+                    M[:, [col, j]] = M[:, [j, col]]
+                    pf = True; break
+            if pf: break
+        if not pf: break
+        changed = True
+        while changed:
+            changed = False
+            if M[col, col] < 0: M[col] = -M[col]
+            for i in range(col+1, n):
+                if M[i, col] != 0:
+                    q = M[i, col] // M[col, col]
+                    M[i] -= q * M[col]
+                    if M[i, col] != 0:
+                        if abs(M[i, col]) < abs(M[col, col]):
+                            M[[col, i]] = M[[i, col]]
+                        changed = True
+            for j in range(col+1, m):
+                if M[col, j] != 0:
+                    q = M[col, j] // M[col, col]
+                    M[:, j] -= q * M[:, col]
+                    if M[col, j] != 0:
+                        if abs(M[col, j]) < abs(M[col, col]):
+                            M[:, [col, j]] = M[:, [j, col]]
+                        changed = True
+            for i in range(col+1, n):
+                for j in range(col+1, m):
+                    if M[i, j] % M[col, col] != 0:
+                        M[i] += M[col]; changed = True; break
+                if changed: break
+    return [abs(int(M[i, i])) for i in range(r) if M[i, i] != 0]
+
+def jacobian_factors(adj: np.ndarray) -> List[int]:
+    L = graph_laplacian(adj)
+    Ls = reduced_laplacian(L)
+    factors = smith_normal_form(Ls)
+    return sorted([f for f in factors if f > 1])
+
+def erdos_renyi(n, p, rng=None):
+    if rng is None: rng = np.random.default_rng()
+    upper = np.zeros((n, n), dtype=int)
+    for i in range(n):
+        for j in range(i+1, n):
+            if rng.random() < p: upper[i,j] = 1
+    return upper + upper.T
+
+def is_connected(adj):
+    n = adj.shape[0]
+    vis = {0}; q = [0]
+    while q:
+        v = q.pop(0)
+        for u in range(n):
+            if adj[v,u] and u not in vis:
+                vis.add(u); q.append(u)
+    return len(vis) == n
+
+def prime_power_moment(factors, q, k):
+    qk = q**k; r = 1
+    for d in factors: r *= gcd(d, qk)
+    return r
+
+def q_profile(factors, q):
+    prof = []; j = 1
+    while True:
+        c = sum(1 for d in factors if d % (q**j) == 0)
+        if c == 0: break
+        prof.append(c); j += 1
+    return prof
+
+def group_exponent(factors):
+    if not factors: return 1
+    return reduce(lcm, factors)
+
+def padic_val(n, p):
+    if n == 0: return 999
+    v = 0
+    while n % p == 0: v += 1; n //= p
+    return v
+
+def cl_expected_moment(q, k):
+    r = 1.0
+    for j in range(1, k+1): r *= q**j / (q**j - 1)
+    return r
+
+
+# ============================================================
+# Demo functions
+# ============================================================
+
+def demo_theorem_verification():
+    """Verify all theorems on concrete examples."""
+    print("=" * 60)
+    print("DEMO 1: Theorem Verification on Concrete Examples")
+    print("=" * 60)
+
+    # Example groups
+    examples = [
+        ("ℤ/6ℤ", [6]),
+        ("ℤ/2ℤ × ℤ/6ℤ", [2, 6]),
+        ("ℤ/4ℤ × ℤ/12ℤ × ℤ/36ℤ", [4, 12, 36]),
+        ("ℤ/2ℤ × ℤ/2ℤ × ℤ/2ℤ", [2, 2, 2]),
+        ("ℤ/30ℤ", [30]),
     ]
 
-    for p, k, expected in test_cases:
-        val = cohen_lenstra_prediction(p, k)
-        print(f"  M({p}, {k}) = {val:.6f}  (expected: {expected})")
+    for name, factors in examples:
+        print(f"\n--- {name}, factors = {factors} ---")
+        exp = group_exponent(factors)
+        print(f"  Exponent = {exp}")
+
+        # Theorem A: q^k | exp ⟺ ∃ i, q^k | d_i
+        for q in [2, 3, 5]:
+            for k in [1, 2, 3]:
+                qk = q ** k
+                dvd_exp = (exp % qk == 0)
+                dvd_factor = any(d % qk == 0 for d in factors)
+                status = "✓" if dvd_exp == dvd_factor else "✗"
+                if dvd_exp or dvd_factor:
+                    print(f"  Thm A: {q}^{k}={qk} | exp={exp}? {dvd_exp}  "
+                          f"∃ factor? {dvd_factor}  {status}")
+
+        # Theorem B: M_{q,k} = ∏ gcd(d_i, q^k)
+        for q in [2, 3]:
+            for k in [1, 2]:
+                m = prime_power_moment(factors, q, k)
+                prod_gcd = 1
+                for d in factors:
+                    prod_gcd *= gcd(d, q**k)
+                status = "✓" if m == prod_gcd else "✗"
+                print(f"  Thm B: M_{{{q},{k}}} = {m} = ∏gcd = {prod_gcd}  {status}")
+
+        # Theorem C: Profile recovery
+        for q in [2, 3, 5]:
+            prof = q_profile(factors, q)
+            if prof:
+                max_j = len(prof) + 1
+                ok = True
+                for j in range(1, max_j + 1):
+                    lhs = sum(1 for d in factors if d % (q**j) == 0)
+                    s1 = sum(min(padic_val(d, q), j) for d in factors)
+                    s0 = sum(min(padic_val(d, q), j-1) for d in factors)
+                    rhs = s1 - s0
+                    if lhs != rhs:
+                        ok = False
+                print(f"  Thm C: {q}-profile = {prof}, recovery: {'✓' if ok else '✗'}")
+
+        # Theorem D: In divisibility order, exp = last factor
+        is_div_ordered = all(factors[i] % factors[i-1] == 0
+                           for i in range(1, len(factors)))
+        if is_div_ordered:
+            print(f"  Thm D: Divisibility order ✓, exp = last = {factors[-1]}  "
+                  f"{'✓' if exp == factors[-1] else '✗'}")
+
+        # Theorem E: Moment monotonicity
+        for q in [2, 3]:
+            m1 = prime_power_moment(factors, q, 1)
+            m2 = prime_power_moment(factors, q, 2)
+            m3 = prime_power_moment(factors, q, 3)
+            ok = (m2 % m1 == 0) and (m3 % m2 == 0)
+            print(f"  Thm E: M_{{{q},1}}={m1} | M_{{{q},2}}={m2} | M_{{{q},3}}={m3}  "
+                  f"{'✓' if ok else '✗'}")
+
+        # Theorem F: Profile monotonicity
+        for q in [2, 3]:
+            prof = q_profile(factors, q)
+            if len(prof) >= 2:
+                ok = all(prof[i] <= prof[i-1] for i in range(1, len(prof)))
+                print(f"  Thm F: {q}-profile = {prof}, monotone: {'✓' if ok else '✗'}")
 
 
-def demonstrate_bosonic_partition():
-    """Show the bosonic partition function connection."""
-    print("\n" + "="*60)
-    print("BOSONIC PARTITION FUNCTION CONNECTION")
-    print("="*60)
-    print("  The Cohen-Lenstra moment ∏(1 - p^{-i})^{-1}")
-    print("  equals the partition function of a bosonic system")
-    print("  with energy levels log(p), 2·log(p), 3·log(p), ...")
-    print()
+def demo_graph_jacobians():
+    """Compute Jacobians of small named graphs."""
+    print("\n" + "=" * 60)
+    print("DEMO 2: Jacobians of Named Graphs")
+    print("=" * 60)
 
-    for p in [2, 3, 5]:
-        print(f"  p = {p}:")
-        for k in range(1, 6):
-            moment = cohen_lenstra_prediction(p, k)
-            print(f"    Z_{p}({k}) = {moment:.6f}")
-        print()
+    # Complete graphs K_n
+    for n in [3, 4, 5, 6]:
+        A = np.ones((n, n), dtype=int) - np.eye(n, dtype=int)
+        factors = jacobian_factors(A)
+        exp = group_exponent(factors) if factors else 1
+        order = reduce(lambda a, b: a*b, factors, 1)
+        print(f"  K_{n}: Jac ≅ {'×'.join(f'ℤ/{d}ℤ' for d in factors) if factors else 'trivial'}"
+              f"  |Jac| = {order}  exp = {exp}")
 
+    # Cycle graphs C_n
+    for n in [3, 4, 5, 6, 7, 8]:
+        A = np.zeros((n, n), dtype=int)
+        for i in range(n):
+            A[i, (i+1) % n] = 1
+            A[(i+1) % n, i] = 1
+        factors = jacobian_factors(A)
+        print(f"  C_{n}: Jac ≅ {'×'.join(f'ℤ/{d}ℤ' for d in factors) if factors else 'trivial'}")
 
-if __name__ == "__main__":
-    np.random.seed(42)
-
-    print("╔" + "═"*58 + "╗")
-    print("║  Cohen-Lenstra Heuristics for Graph Jacobians — Demo    ║")
-    print("╚" + "═"*58 + "╝")
-
-    # 1. Show moment values
-    demonstrate_moment_values()
-
-    # 2. Show bosonic partition function connection
-    demonstrate_bosonic_partition()
-
-    # 3. Test the conjecture
-    print("\n" + "="*60)
-    print("TESTING COHEN-LENSTRA CONJECTURE FOR GRAPH JACOBIANS")
-    print("="*60)
-    print("Conjecture: Pr[p^k | |Jac(G(n,1/2))|] → ∏(1 - p^{-i})^{-1}")
-
-    results = test_cohen_lenstra_conjecture(
-        n_values=[8, 12, 16, 20],
-        p_values=[3, 5, 7],
-        k_values=[1, 2],
-        num_samples=2000
-    )
-
-    # 4. Convergence analysis
-    display_convergence_analysis(results, [3, 5, 7], [1, 2])
-
-    print("\n" + "="*60)
-    print("CONCLUSION")
-    print("="*60)
-    print("  If errors decrease with n, this supports the conjecture.")
-    print("  If errors increase or plateau, the conjecture may be false.")
-    print("  Full verification requires n = 50-100+ (computationally heavy).")
+    # Petersen graph
+    P = np.zeros((10, 10), dtype=int)
+    outer = [(i, (i+1)%5) for i in range(5)]
+    inner = [(5+i, 5+(i+2)%5) for i in range(5)]
+    spokes = [(i, 5+i) for i in range(5)]
+    for (u, v) in outer + inner + spokes:
+        P[u, v] = P[v, u] = 1
+    factors = jacobian_factors(P)
+    exp = group_exponent(factors) if factors else 1
+    order = reduce(lambda a, b: a*b, factors, 1)
+    print(f"  Petersen: Jac ≅ {'×'.join(f'ℤ/{d}ℤ' for d in factors)}"
+          f"  |Jac| = {order}  exp = {exp}")
 
 
-#!/usr/bin/env python3
+def demo_cohen_lenstra_comparison():
+    """Compare random graph Jacobian statistics to Cohen–Lenstra predictions."""
+    print("\n" + "=" * 60)
+    print("DEMO 3: Cohen–Lenstra Comparison for G(n, 1/2)")
+    print("=" * 60)
+
+    rng = np.random.default_rng(42)
+    primes = [2, 3, 5]
+
+    for n in [8, 12, 16, 20]:
+        print(f"\n  n = {n}:")
+        moments_data = {q: {k: [] for k in range(1, 4)} for q in primes}
+        collected = 0
+        for _ in range(500):
+            A = erdos_renyi(n, 0.5, rng)
+            if not is_connected(A):
+                continue
+            factors = jacobian_factors(A)
+            if not factors:
+                factors = [1]
+            for q in primes:
+                for k in range(1, 4):
+                    moments_data[q][k].append(prime_power_moment(factors, q, k))
+            collected += 1
+
+        for q in primes:
+            print(f"    q = {q}:")
+            for k in range(1, 4):
+                if moments_data[q][k]:
+                    emp = np.mean(moments_data[q][k])
+                    cl = cl_expected_moment(q, k)
+                    ratio = emp / cl if cl > 0 else float('inf')
+                    print(f"      k={k}: E[M_{{q,k}}] = {emp:.4f}  "
+                          f"CL = {cl:.4f}  ratio = {ratio:.4f}")
+
+
+def demo_plots():
+    """Generate visualization plots."""
+    print("\n" + "=" * 60)
+    print("DEMO 4: Generating Plots")
+    print("=" * 60)
+
+    rng = np.random.default_rng(42)
+
+    # Collect data for multiple n values
+    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+    fig.suptitle('Graph Jacobian Statistics vs Cohen–Lenstra Predictions',
+                 fontsize=14, fontweight='bold')
+
+    for col, q in enumerate([2, 3, 5]):
+        moments_by_n = {}
+        for n in [10, 15, 20, 30]:
+            moments = []
+            for _ in range(300):
+                A = erdos_renyi(n, 0.5, rng)
+                if not is_connected(A):
+                    continue
+                factors = jacobian_factors(A)
+                if not factors:
+                    factors = [1]
+                moments.append(prime_power_moment(factors, q, 1))
+            moments_by_n[n] = moments
+
+        # Plot 1: Histogram of M_{q,1}
+        ax = axes[0, col]
+        for n in [10, 20, 30]:
+            if moments_by_n[n]:
+                vals = moments_by_n[n]
+                max_val = max(vals)
+                bins = range(0, min(max_val + 2, 50))
+                ax.hist(vals, bins=bins, alpha=0.5, density=True, label=f'n={n}')
+        ax.axvline(cl_expected_moment(q, 1), color='red', linestyle='--',
+                   linewidth=2, label=f'CL E[M]={cl_expected_moment(q, 1):.2f}')
+        ax.set_title(f'Distribution of M_{{{q},1}}')
+        ax.set_xlabel(f'M_{{{q},1}}')
+        ax.set_ylabel('Density')
+        ax.legend(fontsize=8)
+
+        # Plot 2: Convergence of E[M_{q,k}] to CL
+        ax = axes[1, col]
+        n_values = [8, 10, 12, 15, 20, 25, 30]
+        for k in [1, 2]:
+            empirical_means = []
+            for n in n_values:
+                moms = []
+                for _ in range(200):
+                    A = erdos_renyi(n, 0.5, rng)
+                    if not is_connected(A):
+                        continue
+                    factors = jacobian_factors(A)
+                    if not factors: factors = [1]
+                    moms.append(prime_power_moment(factors, q, k))
+                empirical_means.append(np.mean(moms) if moms else 0)
+            ax.plot(n_values, empirical_means, 'o-', label=f'k={k} empirical')
+            ax.axhline(cl_expected_moment(q, k), color='red' if k==1 else 'blue',
+                      linestyle='--', alpha=0.7, label=f'k={k} CL={cl_expected_moment(q,k):.2f}')
+        ax.set_title(f'Convergence to CL for q={q}')
+        ax.set_xlabel('n (graph size)')
+        ax.set_ylabel(f'E[M_{{{q},k}}]')
+        ax.legend(fontsize=8)
+
+    plt.tight_layout()
+    plt.savefig('jacobian_statistics.png', dpi=150, bbox_inches='tight')
+    print("  Saved: jacobian_statistics.png")
+
+    # Plot q-profile distributions
+    fig2, axes2 = plt.subplots(1, 3, figsize=(15, 5))
+    fig2.suptitle('q-Primary Profile Distributions for G(20, 0.5)',
+                  fontsize=14, fontweight='bold')
+
+    rng2 = np.random.default_rng(123)
+    for col, q in enumerate([2, 3, 5]):
+        q_ranks = []
+        for _ in range(500):
+            A = erdos_renyi(20, 0.5, rng2)
+            if not is_connected(A):
+                continue
+            factors = jacobian_factors(A)
+            if not factors: factors = [1]
+            prof = q_profile(factors, q)
+            q_ranks.append(prof[0] if prof else 0)
+
+        ax = axes2[col]
+        if q_ranks:
+            counter = Counter(q_ranks)
+            vals = sorted(counter.keys())
+            freqs = [counter[v] / len(q_ranks) for v in vals]
+            ax.bar(vals, freqs, alpha=0.7, color='steelblue')
+        ax.set_title(f'{q}-rank distribution')
+        ax.set_xlabel(f'{q}-rank')
+        ax.set_ylabel('Frequency')
+
+    plt.tight_layout()
+    plt.savefig('q_profile_distributions.png', dpi=150, bbox_inches='tight')
+    print("  Saved: q_profile_distributions.png")
+
+
+if __name__ == '__main__':
+    demo_theorem_verification()
+    demo_graph_jacobians()
+    demo_cohen_lenstra_comparison()
+    demo_plots()
+    print("\n" + "=" * 60)
+    print("All demos completed successfully!")
+    print("=" * 60)
+
+
 """
-Visualization: Cohen-Lenstra Convergence for Graph Jacobians
+Visualization: Invariant Factor Profile Heatmap
 
-Plots the empirical p-divisibility frequency of random graph Jacobians
-versus the Cohen-Lenstra prediction, showing convergence as n → ∞.
-This visualizes the central conjecture of the research.
+This script generates a heatmap showing the distribution of q-primary
+invariant factor profiles across random graph ensembles. Each cell shows
+the frequency of a particular (q-rank, max q-valuation) pair,
+revealing the internal structure of random graph Jacobians.
+
+SELF-CONTAINED: All algorithms are inlined (no local imports).
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from math import gcd
+from collections import Counter
 
 
-def cohen_lenstra_moment(p, k):
-    result = 1.0
-    for i in range(1, k + 1):
-        result /= (1.0 - p ** (-i))
-    return result
+# Inlined algorithms
+def graph_laplacian(adj):
+    return np.diag(adj.sum(axis=1)) - adj
 
+def reduced_laplacian(L, v=0):
+    idx = [i for i in range(L.shape[0]) if i != v]
+    return L[np.ix_(idx, idx)]
 
-def random_graph_jacobian_order(n, prob=0.5):
-    adj = np.zeros((n, n), dtype=int)
+def smith_normal_form(M):
+    M = M.copy().astype(int)
+    n, m = M.shape; r = min(n, m)
+    for col in range(r):
+        pf = False
+        for i in range(col, n):
+            for j in range(col, m):
+                if M[i,j] != 0:
+                    M[[col,i]] = M[[i,col]]; M[:,[col,j]] = M[:,[j,col]]
+                    pf = True; break
+            if pf: break
+        if not pf: break
+        ch = True
+        while ch:
+            ch = False
+            if M[col,col] < 0: M[col] = -M[col]
+            for i in range(col+1, n):
+                if M[i,col] != 0:
+                    q = M[i,col]//M[col,col]; M[i] -= q*M[col]
+                    if M[i,col] != 0:
+                        if abs(M[i,col]) < abs(M[col,col]): M[[col,i]] = M[[i,col]]
+                        ch = True
+            for j in range(col+1, m):
+                if M[col,j] != 0:
+                    q = M[col,j]//M[col,col]; M[:,j] -= q*M[:,col]
+                    if M[col,j] != 0:
+                        if abs(M[col,j]) < abs(M[col,col]): M[:,[col,j]] = M[:,[j,col]]
+                        ch = True
+            for i in range(col+1, n):
+                brk = False
+                for j in range(col+1, m):
+                    if M[i,j] % M[col,col] != 0:
+                        M[i] += M[col]; ch = True; brk = True; break
+                if brk: break
+    return [abs(int(M[i,i])) for i in range(r) if M[i,i] != 0]
+
+def jacobian_factors(adj):
+    L = graph_laplacian(adj); Ls = reduced_laplacian(L)
+    return sorted([f for f in smith_normal_form(Ls) if f > 1])
+
+def erdos_renyi(n, p, rng):
+    upper = np.zeros((n,n), dtype=int)
     for i in range(n):
-        for j in range(i + 1, n):
-            if np.random.random() < prob:
-                adj[i, j] = 1
-                adj[j, i] = 1
-    degrees = np.sum(adj, axis=1)
-    L = np.diag(degrees) - adj
-    reduced = L[:n-1, :n-1].astype(float)
-    eigenvalues = np.linalg.eigvalsh(L.astype(float))
-    if np.sum(np.abs(eigenvalues) < 1e-6) != 1:
-        return None  # Not connected
-    det = abs(int(round(np.linalg.det(reduced))))
-    return det if det > 0 else None
+        for j in range(i+1, n):
+            if rng.random() < p: upper[i,j] = 1
+    return upper + upper.T
 
+def is_connected(adj):
+    n = adj.shape[0]; vis = {0}; queue = [0]
+    while queue:
+        v = queue.pop(0)
+        for u in range(n):
+            if adj[v,u] and u not in vis: vis.add(u); queue.append(u)
+    return len(vis) == n
 
-np.random.seed(42)
-
-n_values = [8, 10, 14, 18, 22]
-primes = [3, 5, 7]
-num_samples = 1500
-
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-for idx, p in enumerate(primes):
-    ax = axes[idx]
-    empirical_k1 = []
-    empirical_k2 = []
-
-    for n in n_values:
-        orders = []
-        for _ in range(num_samples):
-            order = random_graph_jacobian_order(n)
-            if order is not None:
-                orders.append(order)
-
-        if orders:
-            freq_k1 = sum(1 for o in orders if o % p == 0) / len(orders)
-            freq_k2 = sum(1 for o in orders if o % (p**2) == 0) / len(orders)
-        else:
-            freq_k1 = 0
-            freq_k2 = 0
-
-        empirical_k1.append(freq_k1)
-        empirical_k2.append(freq_k2)
-
-    pred_k1 = cohen_lenstra_moment(p, 1)
-    pred_k2 = cohen_lenstra_moment(p, 2)
-
-    ax.plot(n_values, empirical_k1, 'bo-', linewidth=2, markersize=8,
-            label=f'Empirical (k=1)')
-    ax.axhline(y=pred_k1, color='b', linestyle='--', alpha=0.7,
-               label=f'CL prediction (k=1): {pred_k1:.4f}')
-
-    ax.plot(n_values, empirical_k2, 'rs-', linewidth=2, markersize=8,
-            label=f'Empirical (k=2)')
-    ax.axhline(y=pred_k2, color='r', linestyle='--', alpha=0.7,
-               label=f'CL prediction (k=2): {pred_k2:.4f}')
-
-    ax.set_xlabel('Number of vertices n', fontsize=12)
-    ax.set_ylabel(f'Pr[{p}^k | |Jac(G)|]', fontsize=12)
-    ax.set_title(f'p = {p}', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=8, loc='best')
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, max(pred_k1, max(empirical_k1)) * 1.3)
-
-fig.suptitle('Cohen-Lenstra Convergence for Random Graph Jacobians\n'
-             f'G(n, 1/2), {num_samples} samples per point',
-             fontsize=14, fontweight='bold', y=1.02)
-
-plt.tight_layout()
-plt.savefig('convergence_plot.png', dpi=150, bbox_inches='tight')
-print("Saved convergence_plot.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Distribution of Graph Jacobian Orders
-
-Shows the distribution of |Jac(G)| for random Erdős-Rényi graphs
-and highlights the p-divisibility patterns predicted by Cohen-Lenstra.
-"""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-
-
-def random_graph_jacobian_order(n, prob=0.5):
-    """Compute |Jac(G)| for a random G(n, prob) graph."""
-    adj = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        for j in range(i + 1, n):
-            if np.random.random() < prob:
-                adj[i, j] = 1
-                adj[j, i] = 1
-    degrees = np.sum(adj, axis=1)
-    L = np.diag(degrees) - adj
-    eigenvalues = np.linalg.eigvalsh(L.astype(float))
-    if np.sum(np.abs(eigenvalues) < 1e-6) != 1:
-        return None
-    reduced = L[:n-1, :n-1].astype(float)
-    det = abs(int(round(np.linalg.det(reduced))))
-    return det if det > 0 else None
-
-
-def cohen_lenstra_moment(p, k):
-    result = 1.0
-    for i in range(1, k + 1):
-        result /= (1.0 - p ** (-i))
-    return result
-
-
-np.random.seed(123)
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
-# Panel 1 & 2: Distribution of log|Jac(G)| for n=10 and n=16
-for idx, n in enumerate([10, 16]):
-    ax = axes[0, idx]
-    orders = []
-    for _ in range(3000):
-        order = random_graph_jacobian_order(n)
-        if order is not None and order > 0:
-            orders.append(order)
-
-    log_orders = [np.log10(o) for o in orders if o > 0]
-
-    ax.hist(log_orders, bins=40, density=True, alpha=0.7, color='steelblue',
-            edgecolor='navy', linewidth=0.5)
-    ax.set_xlabel('log₁₀ |Jac(G)|', fontsize=12)
-    ax.set_ylabel('Density', fontsize=12)
-    ax.set_title(f'G({n}, 1/2): Jacobian Order Distribution',
-                 fontsize=13, fontweight='bold')
-
-    mean_log = np.mean(log_orders)
-    std_log = np.std(log_orders)
-    ax.axvline(x=mean_log, color='red', linestyle='--', linewidth=2,
-               label=f'Mean: {mean_log:.2f}')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-# Panel 3: p-divisibility bar chart
-ax = axes[1, 0]
-n = 16
-orders = []
-for _ in range(5000):
-    order = random_graph_jacobian_order(n)
-    if order is not None and order > 0:
-        orders.append(order)
-
-primes = [2, 3, 5, 7, 11]
-bar_width = 0.35
-x = np.arange(len(primes))
-
-empirical_freqs = []
-predicted_freqs = []
-for p in primes:
-    emp = sum(1 for o in orders if o % p == 0) / len(orders)
-    pred = cohen_lenstra_moment(p, 1)
-    empirical_freqs.append(emp)
-    predicted_freqs.append(pred)
-
-bars1 = ax.bar(x - bar_width/2, empirical_freqs, bar_width,
-               label='Empirical', color='steelblue', alpha=0.8)
-bars2 = ax.bar(x + bar_width/2, predicted_freqs, bar_width,
-               label='Cohen-Lenstra', color='coral', alpha=0.8)
-
-ax.set_xlabel('Prime p', fontsize=12)
-ax.set_ylabel('Pr[p | |Jac(G)|]', fontsize=12)
-ax.set_title(f'p-Divisibility: Empirical vs. Predicted (n={n})',
-             fontsize=13, fontweight='bold')
-ax.set_xticks(x)
-ax.set_xticklabels([str(p) for p in primes])
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3, axis='y')
-
-# Panel 4: Valuation profile for a specific graph
-ax = axes[1, 1]
-
-# Use the Petersen graph
-petersen_adj = np.zeros((10, 10), dtype=int)
-outer = [(0,1),(1,2),(2,3),(3,4),(4,0)]
-inner = [(5,7),(7,9),(9,6),(6,8),(8,5)]
-spokes = [(0,5),(1,6),(2,7),(3,8),(4,9)]
-for i, j in outer + inner + spokes:
-    petersen_adj[i, j] = 1
-    petersen_adj[j, i] = 1
-
-petersen_order = random_graph_jacobian_order(10, 0)  # Not random
-# Petersen graph has 2000 spanning trees
-# Manually compute for illustration
-L = np.diag(np.sum(petersen_adj, axis=1)) - petersen_adj
-reduced = L[:9, :9].astype(float)
-petersen_det = abs(int(round(np.linalg.det(reduced))))
-
-# Show factorization structure
-primes_to_check = [2, 3, 5, 7, 11, 13]
-valuations = []
-temp = petersen_det
-for p in primes_to_check:
+def padic_val(n, p):
+    if n == 0: return 0
     v = 0
-    t = temp
-    while t > 0 and t % p == 0:
-        t //= p
-        v += 1
-    valuations.append(v)
-
-colors = plt.cm.Set2(np.linspace(0, 1, len(primes_to_check)))
-bars = ax.bar(range(len(primes_to_check)), valuations, color=colors,
-              edgecolor='black', linewidth=0.5)
-ax.set_xlabel('Prime p', fontsize=12)
-ax.set_ylabel('v_p(|Jac|)', fontsize=12)
-ax.set_title(f'Petersen Graph: |Jac| = {petersen_det}\nPrime Factorization Profile',
-             fontsize=13, fontweight='bold')
-ax.set_xticks(range(len(primes_to_check)))
-ax.set_xticklabels([str(p) for p in primes_to_check])
-ax.grid(True, alpha=0.3, axis='y')
-
-fig.suptitle('Arithmetic Statistics of Graph Jacobians',
-             fontsize=15, fontweight='bold', y=1.02)
-
-plt.tight_layout()
-plt.savefig('jacobian_distribution.png', dpi=150, bbox_inches='tight')
-print("Saved jacobian_distribution.png")
+    while n % p == 0: v += 1; n //= p
+    return v
 
 
-#!/usr/bin/env python3
+# ============================================================
+# Data collection
+# ============================================================
+
+rng = np.random.default_rng(42)
+n_graph = 20
+p_edge = 0.5
+num_samples = 300
+
+# For each prime, collect (q-rank, max_valuation) pairs
+prime_data = {}
+for q in [2, 3, 5]:
+    pairs = []
+    collected = 0
+    for _ in range(num_samples * 5):
+        A = erdos_renyi(n_graph, p_edge, rng)
+        if not is_connected(A): continue
+        fac = jacobian_factors(A)
+        if not fac: fac = [1]
+
+        # q-rank = number of factors divisible by q
+        q_rank = sum(1 for d in fac if d % q == 0)
+        # max q-valuation
+        max_val = max(padic_val(d, q) for d in fac) if fac else 0
+        pairs.append((q_rank, max_val))
+
+        collected += 1
+        if collected >= num_samples: break
+    prime_data[q] = pairs
+
+
+# ============================================================
+# Plotting
+# ============================================================
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+fig.suptitle(f'q-Primary Profile Distribution of Graph Jacobians\n'
+             f'G({n_graph}, {p_edge}), {num_samples} samples per prime',
+             fontsize=14, fontweight='bold')
+
+for col, q in enumerate([2, 3, 5]):
+    ax = axes[col]
+    pairs = prime_data[q]
+
+    if not pairs:
+        ax.set_title(f'q = {q}: No data')
+        continue
+
+    # Create heatmap
+    max_rank = max(r for r, v in pairs) + 1
+    max_val = max(v for r, v in pairs) + 1
+
+    heatmap = np.zeros((max_val, max_rank))
+    for r, v in pairs:
+        heatmap[v, r] += 1
+    heatmap /= len(pairs)
+
+    im = ax.imshow(heatmap, cmap='YlOrRd', aspect='auto', origin='lower',
+                   interpolation='nearest')
+
+    ax.set_xlabel(f'{q}-rank (# factors divisible by {q})', fontsize=11)
+    ax.set_ylabel(f'Max {q}-adic valuation', fontsize=11)
+    ax.set_title(f'Prime q = {q}', fontsize=13, fontweight='bold')
+
+    # Add text annotations
+    for i in range(min(max_val, 8)):
+        for j in range(min(max_rank, 12)):
+            if i < heatmap.shape[0] and j < heatmap.shape[1]:
+                val = heatmap[i, j]
+                if val > 0.005:
+                    color = 'white' if val > 0.15 else 'black'
+                    ax.text(j, i, f'{val:.2f}', ha='center', va='center',
+                            fontsize=8, color=color, fontweight='bold')
+
+    fig.colorbar(im, ax=ax, label='Frequency', shrink=0.8)
+
+plt.tight_layout(rect=[0, 0, 1, 0.92])
+plt.savefig('viz_invariant_factor_heatmap.png', dpi=150, bbox_inches='tight')
+print("Saved: viz_invariant_factor_heatmap.png")
+
+
 """
-Visualization: Bosonic Partition Function — Arithmetic Statistics Bridge
+Visualization: Graph Jacobian Arithmetic Statistics vs Cohen–Lenstra Predictions
 
-Shows the identity between Cohen-Lenstra moments, bosonic partition functions,
-and integer partition generating functions. This visualizes the cross-domain
-theorem connecting number theory, statistical mechanics, and combinatorics.
+This script generates a comprehensive visualization showing:
+1. Top row: Histograms of prime-power moments M_{q,1} for q=2,3,5
+   across different graph sizes, compared to Cohen–Lenstra expected values.
+2. Bottom row: Convergence of empirical E[M_{q,k}] to CL predictions
+   as graph size n increases.
+
+The plots demonstrate the CL-ER conjecture: random graph Jacobians
+asymptotically obey Cohen–Lenstra statistics.
+
+SELF-CONTAINED: All algorithms are inlined (no local imports).
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from math import gcd
+from functools import reduce
 
 
-def cohen_lenstra_moment(p, k):
-    """∏_{i=1}^{k} (1 - p^{-i})^{-1}"""
-    result = 1.0
-    for i in range(1, k + 1):
-        result /= (1.0 - p ** (-i))
-    return result
+# ============================================================
+# Inlined core algorithms
+# ============================================================
+
+def graph_laplacian(adj):
+    return np.diag(adj.sum(axis=1)) - adj
+
+def reduced_laplacian(L, v=0):
+    idx = [i for i in range(L.shape[0]) if i != v]
+    return L[np.ix_(idx, idx)]
+
+def smith_normal_form(M):
+    M = M.copy().astype(int)
+    n, m = M.shape
+    r = min(n, m)
+    for col in range(r):
+        pf = False
+        for i in range(col, n):
+            for j in range(col, m):
+                if M[i, j] != 0:
+                    M[[col, i]] = M[[i, col]]
+                    M[:, [col, j]] = M[:, [j, col]]
+                    pf = True; break
+            if pf: break
+        if not pf: break
+        ch = True
+        while ch:
+            ch = False
+            if M[col, col] < 0: M[col] = -M[col]
+            for i in range(col+1, n):
+                if M[i, col] != 0:
+                    q = M[i, col] // M[col, col]
+                    M[i] -= q * M[col]
+                    if M[i, col] != 0:
+                        if abs(M[i, col]) < abs(M[col, col]):
+                            M[[col, i]] = M[[i, col]]
+                        ch = True
+            for j in range(col+1, m):
+                if M[col, j] != 0:
+                    q = M[col, j] // M[col, col]
+                    M[:, j] -= q * M[:, col]
+                    if M[col, j] != 0:
+                        if abs(M[col, j]) < abs(M[col, col]):
+                            M[:, [col, j]] = M[:, [j, col]]
+                        ch = True
+            for i in range(col+1, n):
+                brk = False
+                for j in range(col+1, m):
+                    if M[i, j] % M[col, col] != 0:
+                        M[i] += M[col]; ch = True; brk = True; break
+                if brk: break
+    return [abs(int(M[i, i])) for i in range(r) if M[i, i] != 0]
+
+def jacobian_factors(adj):
+    L = graph_laplacian(adj)
+    Ls = reduced_laplacian(L)
+    fac = smith_normal_form(Ls)
+    return sorted([f for f in fac if f > 1])
+
+def erdos_renyi(n, p, rng):
+    upper = np.zeros((n, n), dtype=int)
+    for i in range(n):
+        for j in range(i+1, n):
+            if rng.random() < p: upper[i,j] = 1
+    return upper + upper.T
+
+def is_connected(adj):
+    n = adj.shape[0]
+    vis = {0}; queue = [0]
+    while queue:
+        v = queue.pop(0)
+        for u in range(n):
+            if adj[v,u] and u not in vis:
+                vis.add(u); queue.append(u)
+    return len(vis) == n
+
+def prime_power_moment(factors, q, k):
+    qk = q**k; r = 1
+    for d in factors: r *= gcd(d, qk)
+    return r
+
+def cl_expected_moment(q, k):
+    r = 1.0
+    for j in range(1, k+1): r *= q**j / (q**j - 1)
+    return r
 
 
-def partition_count(n, k):
-    """Number of partitions of n into at most k parts (dynamic programming)."""
-    dp = [[0] * (k + 1) for _ in range(n + 1)]
-    for j in range(k + 1):
-        dp[0][j] = 1
-    for i in range(1, n + 1):
-        for j in range(1, k + 1):
-            dp[i][j] = dp[i][j-1]
-            if i >= j:
-                dp[i][j] += dp[i-j][j]
-    return dp[n][k]
+# ============================================================
+# Data collection
+# ============================================================
+
+rng = np.random.default_rng(42)
+primes = [2, 3, 5]
+n_values_hist = [10, 20, 30]
+n_values_conv = [8, 10, 12, 15, 18, 22, 26, 30]
+num_samples = 200
+
+# Collect histogram data
+hist_data = {q: {n: [] for n in n_values_hist} for q in primes}
+for n in n_values_hist:
+    collected = 0
+    for _ in range(num_samples * 5):
+        A = erdos_renyi(n, 0.5, rng)
+        if not is_connected(A): continue
+        fac = jacobian_factors(A)
+        if not fac: fac = [1]
+        for q in primes:
+            hist_data[q][n].append(prime_power_moment(fac, q, 1))
+        collected += 1
+        if collected >= num_samples: break
+
+# Collect convergence data
+conv_data = {q: {k: [] for k in [1, 2]} for q in primes}
+for n in n_values_conv:
+    moments_n = {q: {k: [] for k in [1, 2]} for q in primes}
+    collected = 0
+    for _ in range(num_samples * 5):
+        A = erdos_renyi(n, 0.5, rng)
+        if not is_connected(A): continue
+        fac = jacobian_factors(A)
+        if not fac: fac = [1]
+        for q in primes:
+            for k in [1, 2]:
+                moments_n[q][k].append(prime_power_moment(fac, q, k))
+        collected += 1
+        if collected >= num_samples: break
+
+    for q in primes:
+        for k in [1, 2]:
+            data = moments_n[q][k]
+            conv_data[q][k].append(np.mean(data) if data else 0)
 
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+# ============================================================
+# Plotting
+# ============================================================
 
-# Panel 1: Cohen-Lenstra moments for various primes
-ax = axes[0, 0]
-k_range = range(1, 12)
-for p in [2, 3, 5, 7, 11]:
-    moments = [cohen_lenstra_moment(p, k) for k in k_range]
-    ax.plot(list(k_range), moments, 'o-', linewidth=2, markersize=6,
-            label=f'p = {p}')
-ax.set_xlabel('k (number of factors)', fontsize=12)
-ax.set_ylabel('M(p, k)', fontsize=12)
-ax.set_title('Cohen-Lenstra Moments ∏(1 - p⁻ⁱ)⁻¹', fontsize=13, fontweight='bold')
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-ax.set_yscale('log')
+fig, axes = plt.subplots(2, 3, figsize=(16, 11))
+fig.suptitle('Graph Jacobian Statistics vs Cohen–Lenstra Predictions\n'
+             'Random Erdős–Rényi Graphs G(n, 1/2)',
+             fontsize=15, fontweight='bold', y=0.98)
 
-# Panel 2: Partition function connection
-ax = axes[0, 1]
-q_vals = np.linspace(0.1, 0.9, 100)
-for k in [1, 2, 3, 5, 10]:
-    gen_func = np.array([np.prod([1/(1 - q**i) for i in range(1, k+1)])
-                         for q in q_vals])
-    ax.plot(q_vals, gen_func, linewidth=2, label=f'k = {k}')
-ax.set_xlabel('q', fontsize=12)
-ax.set_ylabel('∏(1 - qⁱ)⁻¹', fontsize=12)
-ax.set_title('Partition Generating Functions', fontsize=13, fontweight='bold')
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-ax.set_yscale('log')
+colors = ['#2196F3', '#4CAF50', '#FF9800']
+cl_color = '#E91E63'
 
-# Panel 3: Heatmap of moments M(p, k)
-ax = axes[1, 0]
-primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-k_range_heat = range(1, 8)
-moment_matrix = np.array([[cohen_lenstra_moment(p, k) for k in k_range_heat]
-                           for p in primes])
-im = ax.imshow(np.log10(moment_matrix), aspect='auto', cmap='YlOrRd',
-               interpolation='nearest')
-ax.set_xticks(range(len(list(k_range_heat))))
-ax.set_xticklabels([str(k) for k in k_range_heat])
-ax.set_yticks(range(len(primes)))
-ax.set_yticklabels([str(p) for p in primes])
-ax.set_xlabel('k', fontsize=12)
-ax.set_ylabel('Prime p', fontsize=12)
-ax.set_title('log₁₀ M(p,k) — Moment Heatmap', fontsize=13, fontweight='bold')
-plt.colorbar(im, ax=ax, label='log₁₀(moment)')
+for col, q in enumerate(primes):
+    # Top: Histograms
+    ax = axes[0, col]
+    for idx, n in enumerate(n_values_hist):
+        data = hist_data[q][n]
+        if data:
+            max_val = int(np.percentile(data, 95)) + 2
+            bins = np.arange(0.5, max_val + 1.5, 1)
+            ax.hist(data, bins=bins, alpha=0.5, density=True,
+                    color=colors[idx], label=f'n={n}', edgecolor='white')
 
-# Panel 4: Convergence of partial products
-ax = axes[1, 1]
-for p in [2, 3, 5]:
-    k_max = 30
-    partial_prods = [cohen_lenstra_moment(p, k) for k in range(1, k_max + 1)]
-    # The infinite product converges to ∏_{i=1}^∞ (1 - p^{-i})^{-1}
-    limit = cohen_lenstra_moment(p, 50)  # Approximation of limit
-    ratios = [pp / limit for pp in partial_prods]
-    ax.plot(range(1, k_max + 1), ratios, 'o-', markersize=4, linewidth=1.5,
-            label=f'p = {p} (limit ≈ {limit:.4f})')
+    cl_val = cl_expected_moment(q, 1)
+    ax.axvline(cl_val, color=cl_color, linestyle='--', linewidth=2.5,
+               label=f'CL E[M]={cl_val:.2f}')
+    ax.set_title(f'Prime q = {q}: Distribution of M_{{q,1}}', fontsize=12)
+    ax.set_xlabel(f'M_{{{q},1}}  (= ∏ gcd(dᵢ, {q}))', fontsize=10)
+    ax.set_ylabel('Density', fontsize=10)
+    ax.legend(fontsize=9, framealpha=0.9)
+    ax.set_xlim(left=0)
 
-ax.axhline(y=1.0, color='black', linestyle=':', alpha=0.5)
-ax.set_xlabel('k (truncation level)', fontsize=12)
-ax.set_ylabel('M(p,k) / M(p,∞)', fontsize=12)
-ax.set_title('Convergence to Infinite Product', fontsize=13, fontweight='bold')
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-ax.set_ylim(0.5, 1.05)
+    # Bottom: Convergence
+    ax2 = axes[1, col]
+    markers = ['o', 's']
+    line_colors = ['#1565C0', '#C62828']
+    for kidx, k in enumerate([1, 2]):
+        means = conv_data[q][k]
+        cl_k = cl_expected_moment(q, k)
+        ax2.plot(n_values_conv, means, markers[kidx] + '-',
+                 color=line_colors[kidx], markersize=6, linewidth=1.5,
+                 label=f'k={k}: empirical', alpha=0.9)
+        ax2.axhline(cl_k, color=line_colors[kidx], linestyle='--',
+                    linewidth=1.5, alpha=0.6,
+                    label=f'k={k}: CL = {cl_k:.3f}')
 
-fig.suptitle('The Arithmetic–Physics–Combinatorics Bridge\n'
-             'Cohen-Lenstra Moments = Bosonic Partition Functions = Partition Generating Functions',
-             fontsize=14, fontweight='bold', y=1.02)
+    ax2.set_title(f'q = {q}: Convergence of E[M_{{q,k}}]', fontsize=12)
+    ax2.set_xlabel('Graph size n', fontsize=10)
+    ax2.set_ylabel(f'E[M_{{{q},k}}]', fontsize=10)
+    ax2.legend(fontsize=9, framealpha=0.9)
 
-plt.tight_layout()
-plt.savefig('partition_bridge.png', dpi=150, bbox_inches='tight')
-print("Saved partition_bridge.png")
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.savefig('viz_jacobian_statistics.png', dpi=150, bbox_inches='tight')
+print("Saved: viz_jacobian_statistics.png")
+
+
+"""
+Visualization: Moment Convergence Curves
+
+This script visualizes the convergence of prime-power moments E[M_{q,k}]
+to Cohen–Lenstra predictions as graph size n → ∞, for multiple edge
+probabilities p. This directly tests the CL-ER conjecture.
+
+The x-axis is graph size n, the y-axis is the ratio E_empirical / E_CL.
+Convergence to 1.0 supports the conjecture.
+
+SELF-CONTAINED: All algorithms are inlined (no local imports).
+"""
+
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from math import gcd
+
+
+# Inlined algorithms
+def graph_laplacian(adj):
+    return np.diag(adj.sum(axis=1)) - adj
+
+def reduced_laplacian(L, v=0):
+    idx = [i for i in range(L.shape[0]) if i != v]
+    return L[np.ix_(idx, idx)]
+
+def smith_normal_form(M):
+    M = M.copy().astype(int)
+    n, m = M.shape; r = min(n, m)
+    for col in range(r):
+        pf = False
+        for i in range(col, n):
+            for j in range(col, m):
+                if M[i,j] != 0:
+                    M[[col,i]] = M[[i,col]]; M[:,[col,j]] = M[:,[j,col]]
+                    pf = True; break
+            if pf: break
+        if not pf: break
+        ch = True
+        while ch:
+            ch = False
+            if M[col,col] < 0: M[col] = -M[col]
+            for i in range(col+1, n):
+                if M[i,col] != 0:
+                    q = M[i,col]//M[col,col]; M[i] -= q*M[col]
+                    if M[i,col] != 0:
+                        if abs(M[i,col]) < abs(M[col,col]): M[[col,i]] = M[[i,col]]
+                        ch = True
+            for j in range(col+1, m):
+                if M[col,j] != 0:
+                    q = M[col,j]//M[col,col]; M[:,j] -= q*M[:,col]
+                    if M[col,j] != 0:
+                        if abs(M[col,j]) < abs(M[col,col]): M[:,[col,j]] = M[:,[j,col]]
+                        ch = True
+            for i in range(col+1, n):
+                brk = False
+                for j in range(col+1, m):
+                    if M[i,j] % M[col,col] != 0:
+                        M[i] += M[col]; ch = True; brk = True; break
+                if brk: break
+    return [abs(int(M[i,i])) for i in range(r) if M[i,i] != 0]
+
+def jacobian_factors(adj):
+    L = graph_laplacian(adj); Ls = reduced_laplacian(L)
+    return sorted([f for f in smith_normal_form(Ls) if f > 1])
+
+def erdos_renyi(n, p, rng):
+    upper = np.zeros((n,n), dtype=int)
+    for i in range(n):
+        for j in range(i+1, n):
+            if rng.random() < p: upper[i,j] = 1
+    return upper + upper.T
+
+def is_connected(adj):
+    n = adj.shape[0]; vis = {0}; queue = [0]
+    while queue:
+        v = queue.pop(0)
+        for u in range(n):
+            if adj[v,u] and u not in vis: vis.add(u); queue.append(u)
+    return len(vis) == n
+
+def prime_power_moment(factors, q, k):
+    qk = q**k; r = 1
+    for d in factors: r *= gcd(d, qk)
+    return r
+
+def cl_expected_moment(q, k):
+    r = 1.0
+    for j in range(1, k+1): r *= q**j / (q**j - 1)
+    return r
+
+
+# ============================================================
+# Data collection
+# ============================================================
+
+n_values = [6, 8, 10, 12, 15, 18, 22, 26, 30]
+p_values = [0.3, 0.5, 0.7]
+primes = [2, 3, 5]
+num_samples = 150
+
+# ratios[p_val][q][k] = list of ratios (one per n)
+ratios = {p_val: {q: {k: [] for k in [1, 2, 3]}
+          for q in primes} for p_val in p_values}
+
+for p_val in p_values:
+    rng = np.random.default_rng(42)
+    for n in n_values:
+        moment_sums = {q: {k: [] for k in [1, 2, 3]} for q in primes}
+        collected = 0
+        for _ in range(num_samples * 10):
+            A = erdos_renyi(n, p_val, rng)
+            if not is_connected(A): continue
+            fac = jacobian_factors(A)
+            if not fac: fac = [1]
+            for q in primes:
+                for k in [1, 2, 3]:
+                    moment_sums[q][k].append(prime_power_moment(fac, q, k))
+            collected += 1
+            if collected >= num_samples: break
+
+        for q in primes:
+            for k in [1, 2, 3]:
+                data = moment_sums[q][k]
+                cl = cl_expected_moment(q, k)
+                ratio = np.mean(data) / cl if data and cl > 0 else 0
+                ratios[p_val][q][k].append(ratio)
+
+
+# ============================================================
+# Plotting
+# ============================================================
+
+fig, axes = plt.subplots(3, 3, figsize=(16, 14))
+fig.suptitle('Convergence of E[M_{q,k}] / E_{CL}[M_{q,k}] → 1\n'
+             'Testing the Cohen–Lenstra Conjecture for Erdős–Rényi Graphs',
+             fontsize=15, fontweight='bold', y=0.99)
+
+p_colors = {'0.3': '#1976D2', '0.5': '#388E3C', '0.7': '#E64A19'}
+p_markers = {'0.3': 'o', '0.5': 's', '0.7': '^'}
+
+for row, q in enumerate(primes):
+    for col, k in enumerate([1, 2, 3]):
+        ax = axes[row, col]
+
+        for p_val in p_values:
+            data = ratios[p_val][q][k]
+            pkey = str(p_val)
+            ax.plot(n_values[:len(data)], data,
+                    p_markers[pkey] + '-',
+                    color=p_colors[pkey],
+                    markersize=6, linewidth=1.5,
+                    label=f'p = {p_val}', alpha=0.85)
+
+        # Reference line at 1.0
+        ax.axhline(1.0, color='red', linestyle='--', linewidth=2, alpha=0.5,
+                   label='CL prediction')
+
+        # Shaded region ±10%
+        ax.axhspan(0.9, 1.1, alpha=0.08, color='green')
+
+        ax.set_title(f'q = {q}, k = {k}', fontsize=12, fontweight='bold')
+        ax.set_xlabel('Graph size n', fontsize=10)
+        ax.set_ylabel('Ratio E[M] / E_CL[M]', fontsize=10)
+        ax.legend(fontsize=8, loc='best')
+        ax.set_ylim(0.3, 2.5)
+        ax.grid(True, alpha=0.3)
+
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.savefig('viz_moment_convergence.png', dpi=150, bbox_inches='tight')
+print("Saved: viz_moment_convergence.png")
