@@ -1,72 +1,75 @@
 """
 Visualization: Leaf Count Growth Curves
 
-Plots the growth of nonzero quadratic leaves as a function of the ground
-set size n, for several matroid families. Compares:
-  - Uniform matroid U_{r,n}: leaves = C(n, r-2) (maximum possible)
-  - Restricted matroid (k active variables): leaves = C(k, r-2) (constant!)
-  - The gap between them shows the power of support compression.
+Plots the growth of quadratic leaf counts as a function of ground set
+size n for different matroid families:
+- Uniform matroid (worst case): C(n, r-2)
+- Single-basis family (best case): C(r, 2)
+- Active-variable bound: C(omega, r-2)
 
-This visualization makes the key theorem tangible: for matroids whose
-bases use only a small fraction of the ground set, certification
-complexity stays bounded even as n grows.
+Demonstrates the separation between ambient and compressed complexity.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 from math import comb
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+# Parameters
+r = 5  # Fixed rank
+n_range = list(range(r, 26))
 
-# ── Left panel: Fixed rank r=4 ──
-ax = axes[0]
-r = 4
-n_range = np.arange(r, 26)
+# Compute leaf counts for each family
+uniform_leaves = [comb(n, r - 2) for n in n_range]
+single_leaves = [comb(r, 2)] * len(n_range)  # Always C(r, 2) = 10
 
-# Uniform matroid (upper bound)
-uniform_leaves = [comb(n, r-2) for n in n_range]
-ax.plot(n_range, uniform_leaves, 'b-o', markersize=4, linewidth=2,
-        label=f'Uniform U_{{{r},n}}: C(n,{r-2})')
+# Two-basis (disjoint): active vars = 2r, so bound = C(2r, r-2)
+two_basis_bound = [comb(min(2*r, n), r - 2) for n in n_range]
 
-# Restricted matroids with different active variable counts
-for k, color, marker in [(6, 'green', 's'), (8, 'orange', '^'), (10, 'red', 'D')]:
-    restricted = [comb(min(k, n), r-2) for n in n_range]
-    ax.plot(n_range, restricted, f'{color[0]}--{marker}', markersize=4, linewidth=1.5,
-            label=f'Restricted (k={k}): C({k},{r-2})={comb(k,r-2)}',
-            color=color)
+# Sparse matroid: active vars ~ sqrt(n) * r
+sparse_leaves = [comb(min(int(np.sqrt(n) * r / 2), n), r - 2) for n in n_range]
 
-ax.set_xlabel('Ground Set Size n', fontsize=12)
-ax.set_ylabel('Nonzero Quadratic Leaves', fontsize=12)
-ax.set_title(f'Leaf Count Growth (rank r = {r})', fontsize=13)
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-ax.set_yscale('log')
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-# ── Right panel: Varying rank ──
-ax = axes[1]
-n = 20
+# Linear scale
+ax1.plot(n_range, uniform_leaves, 'o-', color='#e74c3c', linewidth=2.5,
+         markersize=5, label=f'Uniform U(r,n): C(n, {r-2})')
+ax1.plot(n_range, two_basis_bound, 's-', color='#3498db', linewidth=2,
+         markersize=5, label=f'2 Disjoint Bases: C(min(2r,n), {r-2})')
+ax1.plot(n_range, sparse_leaves, '^-', color='#2ecc71', linewidth=2,
+         markersize=5, label=f'Sparse: C(√n·r/2, {r-2})')
+ax1.plot(n_range, single_leaves, 'D-', color='#9b59b6', linewidth=2,
+         markersize=5, label=f'Single Basis: C(r, 2) = {comb(r, 2)}')
 
-r_range = np.arange(3, 12)
+ax1.set_xlabel('Ground Set Size (n)', fontsize=13)
+ax1.set_ylabel('Quadratic Leaf Count', fontsize=13)
+ax1.set_title(f'Leaf Count Growth (rank r = {r})', fontsize=14)
+ax1.legend(fontsize=10, loc='upper left')
+ax1.grid(True, alpha=0.3)
 
-# Ambient bound
-ambient = [comb(n, r-2) for r in r_range]
-ax.bar(r_range - 0.2, ambient, width=0.35, color='steelblue', alpha=0.7,
-       label=f'Ambient C({n}, r−2)')
+# Log scale
+ax2.semilogy(n_range, uniform_leaves, 'o-', color='#e74c3c', linewidth=2.5,
+             markersize=5, label=f'Uniform: C(n, {r-2})')
+ax2.semilogy(n_range, two_basis_bound, 's-', color='#3498db', linewidth=2,
+             markersize=5, label=f'2 Disjoint Bases')
+ax2.semilogy(n_range, sparse_leaves, '^-', color='#2ecc71', linewidth=2,
+             markersize=5, label=f'Sparse')
+ax2.semilogy(n_range, single_leaves, 'D-', color='#9b59b6', linewidth=2,
+             markersize=5, label=f'Single Basis: {comb(r, 2)}')
 
-# Restricted (k=8 active vars)
-k = 8
-restricted = [comb(min(k, n), r-2) if r-2 <= k else 0 for r in r_range]
-ax.bar(r_range + 0.2, restricted, width=0.35, color='coral', alpha=0.7,
-       label=f'Compressed C({k}, r−2)')
+# Shade the compression gap
+ax2.fill_between(n_range, single_leaves, uniform_leaves,
+                  alpha=0.1, color='gray', label='Compression gap')
 
-ax.set_xlabel('Rank r', fontsize=12)
-ax.set_ylabel('Leaf Count', fontsize=12)
-ax.set_title(f'Ambient vs Compressed (n={n}, k={k} active)', fontsize=13)
-ax.legend(fontsize=10)
-ax.set_xticks(r_range)
-ax.grid(True, alpha=0.3, axis='y')
-ax.set_yscale('log')
+ax2.set_xlabel('Ground Set Size (n)', fontsize=13)
+ax2.set_ylabel('Quadratic Leaf Count (log scale)', fontsize=13)
+ax2.set_title(f'Compression Gap (rank r = {r})', fontsize=14)
+ax2.legend(fontsize=10, loc='upper left')
+ax2.grid(True, alpha=0.3)
+
+plt.suptitle('Support-Compressed Certificate Complexity\n'
+             'Gap between ambient worst case and support-controlled cost',
+             fontsize=15, y=1.02)
 
 plt.tight_layout()
-plt.savefig('viz_leaf_growth.png', dpi=150, bbox_inches='tight')
-print("Saved viz_leaf_growth.png")
+plt.savefig('leaf_growth.png', dpi=150, bbox_inches='tight')
+print("Saved leaf_growth.png")

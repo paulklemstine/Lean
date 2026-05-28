@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Lorentzian Polynomials / Matroid Theory / Discrete Convex Analysis",
     "date": "2026-05-28T16:36:56Z",
     "exp_id": "29a14ac4",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7820910880829015,
+    "quality": "substantial",
     "pkg_num": 257
   },
   {
@@ -7462,8 +7462,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-28T16:36:56Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7820910880829015,
+      "quality": "substantial"
     }
   ],
   "edges": [

@@ -1,312 +1,183 @@
+#!/usr/bin/env python3
 """
-Algorithms for Hessian Descent Certificate Checking
+algorithms.py — Algorithmic implementations for Hessian Descent Certificate Theory
 
-Implements the coefficient-level certificate verification for Lorentzian polynomials,
-translating the spectral condition on Hessian matrices into discrete coefficient inequalities.
+Implements the core algorithms for checking Lorentzian polynomial properties
+through discrete coefficient inequalities rather than spectral computation.
 
-The central algorithm checks:
-1. Mixed directional log-concavity: c(m+2e_i)*c(m+2e_j) <= c(m+e_i+e_j)^2
-2. Axis directional log-concavity: c(m+2e_i)*c(m) <= c(m+e_i)^2
-3. Exchange-closed support: matroid-style basis exchange
-
-References:
-    Brändén-Huh, "Lorentzian Polynomials", Annals of Mathematics, 2020
-    Murota, "Discrete Convex Analysis", SIAM, 2003
+Key algorithms:
+  - check_hessian_descent_certificate: O(n^2 * M) certificate checker
+  - check_lorentzian_eigenvalue: O(n^3) spectral checker (for comparison)
+  - generate_derivative_leaves: compute all quadratic derivative leaves
+  - verify_full_descent: check certificate at all derivative levels
 """
 
-from __future__ import annotations
 import numpy as np
-from itertools import combinations_with_replacement, product
-from typing import Dict, Tuple, List, Optional
-from collections import defaultdict
+from typing import Dict, Tuple, List, Optional, Set
+from itertools import combinations_with_replacement
 
 
-# ─── Multi-index Utilities ────────────────────────────────────────────
+def multiindices(n: int, d: int) -> List[Tuple[int, ...]]:
+    """Generate all multi-indices (α₁,...,αₙ) with Σαᵢ = d.
 
-def multi_indices(n: int, d: int) -> List[Tuple[int, ...]]:
-    """Generate all multi-indices alpha in N^n with |alpha| = d."""
+    Time: O(C(n+d-1, d)) — the number of such indices.
+    Space: O(n * C(n+d-1, d)).
+
+    Args:
+        n: number of variables
+        d: total degree
+
+    Returns:
+        List of tuples, each summing to d.
+
+    Example:
+        >>> multiindices(2, 2)
+        [(0, 2), (1, 1), (2, 0)]
+    """
     if n == 0:
         return [()] if d == 0 else []
     if n == 1:
         return [(d,)]
     result = []
-    for k in range(d + 1):
-        for rest in multi_indices(n - 1, d - k):
-            result.append((k,) + rest)
+    for first in range(d + 1):
+        for rest in multiindices(n - 1, d - first):
+            result.append((first,) + rest)
     return result
 
 
-def unit_vector(n: int, i: int) -> Tuple[int, ...]:
-    """Return the i-th standard basis vector e_i in N^n."""
-    return tuple(1 if j == i else 0 for j in range(n))
+def check_mixed_lc(coeffs: Dict[Tuple, float], n: int, d: int,
+                   tol: float = 1e-10) -> Tuple[bool, Optional[str]]:
+    """Check mixed directional log-concavity for polynomial coefficients.
 
+    For every multi-index α of degree d-2 and every pair i, j:
+        c(α + eᵢ + eᵢ) · c(α + eⱼ + eⱼ) ≤ c(α + eᵢ + eⱼ)²
 
-def add_tuples(*tuples: Tuple[int, ...]) -> Tuple[int, ...]:
-    """Coordinate-wise addition of multi-indices."""
-    return tuple(sum(x) for x in zip(*tuples))
-
-
-def sub_tuples(a: Tuple[int, ...], b: Tuple[int, ...]) -> Optional[Tuple[int, ...]]:
-    """Coordinate-wise subtraction; returns None if result has negative entries."""
-    result = tuple(ai - bi for ai, bi in zip(a, b))
-    if any(x < 0 for x in result):
-        return None
-    return result
-
-
-# ─── Polynomial Representation ────────────────────────────────────────
-
-class HomogeneousPolynomial:
-    """A homogeneous polynomial of degree d in n variables.
-
-    Represented as a dictionary from multi-index tuples to real coefficients.
-    Only nonzero coefficients are stored.
-
-    Attributes:
-        n: Number of variables.
-        d: Degree of homogeneity.
-        coeffs: Dictionary mapping multi-indices to coefficients.
-    """
-
-    def __init__(self, n: int, d: int, coeffs: Dict[Tuple[int, ...], float]):
-        self.n = n
-        self.d = d
-        self.coeffs = {k: v for k, v in coeffs.items() if abs(v) > 1e-15}
-
-    def coeff(self, alpha: Tuple[int, ...]) -> float:
-        """Get coefficient at multi-index alpha."""
-        return self.coeffs.get(alpha, 0.0)
-
-    def support(self) -> List[Tuple[int, ...]]:
-        """Return the support (multi-indices with nonzero coefficient)."""
-        return list(self.coeffs.keys())
-
-    def has_positive_coefficients(self) -> bool:
-        """Check if all coefficients in support are positive."""
-        return all(v > 0 for v in self.coeffs.values())
-
-    def partial_derivative(self, var: int) -> 'HomogeneousPolynomial':
-        """Compute ∂f/∂x_var."""
-        if self.d == 0:
-            return HomogeneousPolynomial(self.n, 0, {})
-        new_coeffs: Dict[Tuple[int, ...], float] = {}
-        for alpha, c in self.coeffs.items():
-            if alpha[var] > 0:
-                new_alpha = list(alpha)
-                factor = new_alpha[var]
-                new_alpha[var] -= 1
-                new_alpha_t = tuple(new_alpha)
-                new_coeffs[new_alpha_t] = new_coeffs.get(new_alpha_t, 0.0) + c * factor
-        return HomogeneousPolynomial(self.n, max(0, self.d - 1), new_coeffs)
-
-    def iterated_derivative(self, alpha: Tuple[int, ...]) -> 'HomogeneousPolynomial':
-        """Compute the iterated partial derivative ∂^alpha f."""
-        result = self
-        for var in range(self.n):
-            for _ in range(alpha[var]):
-                result = result.partial_derivative(var)
-        return result
-
-    def hessian_matrix(self) -> np.ndarray:
-        """Compute the Hessian matrix (constant term of ∂²f/∂x_i∂x_j)."""
-        H = np.zeros((self.n, self.n))
-        for i in range(self.n):
-            for j in range(self.n):
-                df_ij = self.partial_derivative(j).partial_derivative(i)
-                zero_idx = tuple(0 for _ in range(self.n))
-                H[i, j] = df_ij.coeff(zero_idx)
-        return H
-
-    def evaluate(self, x: np.ndarray) -> float:
-        """Evaluate the polynomial at point x."""
-        result = 0.0
-        for alpha, c in self.coeffs.items():
-            term = c
-            for var, exp in enumerate(alpha):
-                term *= x[var] ** exp
-            result += term
-        return result
-
-    @staticmethod
-    def random_positive(n: int, d: int, seed: Optional[int] = None) -> 'HomogeneousPolynomial':
-        """Generate a random homogeneous polynomial with positive coefficients."""
-        rng = np.random.default_rng(seed)
-        indices = multi_indices(n, d)
-        coeffs = {idx: rng.uniform(0.1, 5.0) for idx in indices}
-        return HomogeneousPolynomial(n, d, coeffs)
-
-    def __repr__(self) -> str:
-        terms = []
-        for alpha, c in sorted(self.coeffs.items()):
-            var_parts = []
-            for i, a in enumerate(alpha):
-                if a > 0:
-                    var_parts.append(f"x{i}^{a}" if a > 1 else f"x{i}")
-            term = f"{c:.4f}" + ("*" + "*".join(var_parts) if var_parts else "")
-            terms.append(term)
-        return " + ".join(terms) if terms else "0"
-
-
-# ─── Certificate Checking ─────────────────────────────────────────────
-
-def check_mixed_directional_log_concavity(
-    poly: HomogeneousPolynomial, tol: float = 1e-10
-) -> Tuple[bool, List[str]]:
-    """Check mixed directional log-concavity on coefficients.
-
-    For every m with |m| = d-2 and every pair i, j:
-        c(m + 2e_i) * c(m + 2e_j) <= c(m + e_i + e_j)^2
+    Time complexity: O(n² · |{α : |α| = d-2}|) = O(n² · C(n+d-3, d-2))
+    Space complexity: O(|coeffs|)
 
     Args:
-        poly: Homogeneous polynomial to check.
-        tol: Numerical tolerance.
+        coeffs: polynomial coefficients indexed by multi-index tuples
+        n: number of variables
+        d: total degree
+        tol: numerical tolerance
 
     Returns:
-        (passed, violations): Boolean and list of violation descriptions.
-
-    Time complexity: O(N * n^2) where N = |{m : |m| = d-2}|, n = num vars.
-    Space complexity: O(N * n^2) for storing results.
+        (passed, violation_msg) where violation_msg describes the first failure
     """
-    if poly.d < 2:
-        return True, []
+    if d < 2:
+        return True, None
 
-    violations = []
-    leaf_indices = multi_indices(poly.n, poly.d - 2)
+    def get(idx):
+        return coeffs.get(tuple(idx), 0.0)
 
-    for m in leaf_indices:
-        for i in range(poly.n):
-            for j in range(i, poly.n):
-                ei = unit_vector(poly.n, i)
-                ej = unit_vector(poly.n, j)
+    for alpha in multiindices(n, d - 2):
+        alpha_list = list(alpha)
+        for i in range(n):
+            for j in range(i, n):  # symmetry: only check i ≤ j
+                idx_ii = alpha_list.copy()
+                idx_ii[i] += 2
+                idx_jj = alpha_list.copy()
+                idx_jj[j] += 2
+                idx_ij = alpha_list.copy()
+                idx_ij[i] += 1
+                idx_ij[j] += 1
 
-                # c(m + 2e_i)
-                c_ii = poly.coeff(add_tuples(m, ei, ei))
-                # c(m + 2e_j)
-                c_jj = poly.coeff(add_tuples(m, ej, ej))
-                # c(m + e_i + e_j)
-                c_ij = poly.coeff(add_tuples(m, ei, ej))
-
-                lhs = c_ii * c_jj
-                rhs = c_ij ** 2
+                lhs = get(idx_ii) * get(idx_jj)
+                rhs = get(idx_ij) ** 2
 
                 if lhs > rhs + tol:
-                    violations.append(
-                        f"m={m}, i={i}, j={j}: "
-                        f"c(m+2e{i})*c(m+2e{j})={lhs:.6f} > c(m+e{i}+e{j})^2={rhs:.6f}"
-                    )
-
-    return len(violations) == 0, violations
+                    return False, (f"Violation at α={alpha}, i={i}, j={j}: "
+                                   f"{get(idx_ii):.6f}*{get(idx_jj):.6f} = {lhs:.6f} > "
+                                   f"{get(idx_ij):.6f}² = {rhs:.6f}")
+    return True, None
 
 
-def check_axis_directional_log_concavity(
-    poly: HomogeneousPolynomial, tol: float = 1e-10
-) -> Tuple[bool, List[str]]:
-    """Check axis directional log-concavity on coefficients.
+def check_axis_lc(coeffs: Dict[Tuple, float], n: int, d: int,
+                  tol: float = 1e-10) -> Tuple[bool, Optional[str]]:
+    """Check axis directional log-concavity.
 
-    For every m with |m| = d-2 and every direction i:
-        c(m + 2e_i) * c(m) <= c(m + e_i)^2
+    For every α and direction i:
+        c(α + 2eᵢ) · c(α) ≤ c(α + eᵢ)²
 
-    Time complexity: O(N * n) where N = |{m : |m| = d-2}|.
+    Time complexity: O(n · Σ_{k=0}^{d} |{α : |α| = k}|) = O(n · C(n+d, d+1))
+
+    Args:
+        coeffs: polynomial coefficients
+        n: number of variables
+        d: total degree
+        tol: numerical tolerance
+
+    Returns:
+        (passed, violation_msg)
     """
-    if poly.d < 2:
-        return True, []
+    def get(idx):
+        return coeffs.get(tuple(idx), 0.0)
 
-    violations = []
-    leaf_indices = multi_indices(poly.n, poly.d - 2)
+    for deg in range(d - 1):
+        for alpha in multiindices(n, deg):
+            alpha_list = list(alpha)
+            for i in range(n):
+                if deg + 2 > d:
+                    continue
+                idx_1 = alpha_list.copy()
+                idx_1[i] += 1
+                idx_2 = alpha_list.copy()
+                idx_2[i] += 2
 
-    for m in leaf_indices:
-        for i in range(poly.n):
-            ei = unit_vector(poly.n, i)
-            c_2i = poly.coeff(add_tuples(m, ei, ei))
-            c_0 = poly.coeff(m)
-            c_i = poly.coeff(add_tuples(m, ei))
+                c0 = get(alpha_list)
+                c1 = get(idx_1)
+                c2 = get(idx_2)
 
-            lhs = c_2i * c_0
-            rhs = c_i ** 2
-
-            if lhs > rhs + tol:
-                violations.append(
-                    f"m={m}, i={i}: c(m+2e{i})*c(m)={lhs:.6f} > c(m+e{i})^2={rhs:.6f}"
-                )
-
-    return len(violations) == 0, violations
+                if c2 * c0 > c1 ** 2 + tol:
+                    return False, (f"Violation at α={alpha}, i={i}: "
+                                   f"{c2:.6f}*{c0:.6f} > {c1:.6f}²")
+    return True, None
 
 
-def check_exchange_support(
-    poly: HomogeneousPolynomial, tol: float = 1e-15
-) -> Tuple[bool, List[str]]:
-    """Check exchange-closed support property.
+def check_exchange_support(coeffs: Dict[Tuple, float], n: int, d: int,
+                           tol: float = 1e-12) -> Tuple[bool, Optional[str]]:
+    """Check exchange-closed support (M-convexity).
 
-    For every α, β in support with same degree, if α_i > β_i for some i,
-    then there exists j with β_j > α_j and c(α + e_j - e_i) ≠ 0.
+    For α, β in support with α(i) > β(i), ∃ j with β(j) > α(j) and
+    α - eᵢ + eⱼ in support.
 
-    Time complexity: O(|supp|^2 * n^2).
+    Time complexity: O(|supp|² · n²) in the worst case.
+
+    Args:
+        coeffs: polynomial coefficients
+        n: number of variables
+        d: total degree
+        tol: threshold for "in support"
+
+    Returns:
+        (passed, violation_msg)
     """
-    violations = []
-    supp = poly.support()
+    support = [k for k, v in coeffs.items()
+               if abs(v) > tol and sum(k) == d]
 
-    for alpha in supp:
-        for beta in supp:
-            for i in range(poly.n):
+    for alpha in support:
+        for beta in support:
+            for i in range(n):
                 if alpha[i] > beta[i]:
                     found = False
-                    for j in range(poly.n):
-                        if beta[j] > alpha[j]:
-                            exchanged = list(alpha)
-                            exchanged[i] -= 1
-                            exchanged[j] += 1
-                            if abs(poly.coeff(tuple(exchanged))) > tol:
+                    for j in range(n):
+                        if beta[j] > alpha[j] and alpha[i] >= 1:
+                            new = list(alpha)
+                            new[i] -= 1
+                            new[j] += 1
+                            if tuple(new) in coeffs and abs(coeffs[tuple(new)]) > tol:
                                 found = True
                                 break
                     if not found:
-                        violations.append(
-                            f"α={alpha}, β={beta}, i={i}: no valid exchange partner"
-                        )
-
-    return len(violations) == 0, violations
-
-
-def check_hessian_signature(poly: HomogeneousPolynomial) -> Tuple[bool, int]:
-    """Check if the Hessian has at most one positive eigenvalue.
-
-    Returns:
-        (passed, num_positive_eigenvalues).
-    """
-    H = poly.hessian_matrix()
-    eigenvalues = np.linalg.eigvalsh(H)
-    num_positive = np.sum(eigenvalues > 1e-10)
-    return num_positive <= 1, int(num_positive)
-
-
-def check_all_quadratic_leaves(poly: HomogeneousPolynomial) -> Tuple[bool, List[str]]:
-    """Check that all degree-2 derivative leaves have Lorentzian Hessian.
-
-    This is the recursive Lorentzian condition: for each multi-index α
-    with |α| = d-2, the iterated derivative ∂^α f has Hessian with
-    at most one positive eigenvalue.
-
-    Time complexity: O(C(n+d-3, d-2) * n^3) where n^3 is for eigenvalue computation.
-    """
-    if poly.d < 2:
-        return True, []
-
-    violations = []
-    leaf_indices = multi_indices(poly.n, poly.d - 2)
-
-    for alpha in leaf_indices:
-        leaf = poly.iterated_derivative(alpha)
-        passed, num_pos = check_hessian_signature(leaf)
-        if not passed:
-            violations.append(
-                f"α={alpha}: leaf has {num_pos} positive eigenvalues"
-            )
-
-    return len(violations) == 0, violations
+                        return False, (f"Exchange failure: α={alpha}, β={beta}, "
+                                       f"i={i}, no valid j found")
+    return True, None
 
 
 def check_hessian_descent_certificate(
-    poly: HomogeneousPolynomial, tol: float = 1e-10
-) -> Dict[str, Tuple[bool, List[str]]]:
+    coeffs: Dict[Tuple, float], n: int, d: int,
+    tol: float = 1e-10
+) -> Dict[str, any]:
     """Full Hessian descent certificate check.
 
     Checks all three conditions:
@@ -314,104 +185,191 @@ def check_hessian_descent_certificate(
     2. Axis directional log-concavity
     3. Exchange-closed support
 
-    Also checks the spectral condition for comparison.
+    Pseudocode:
+        FUNCTION CheckCertificate(f, n, d):
+            FOR each α with |α| = d-2:
+                FOR each pair (i, j):
+                    IF c(α+2eᵢ)·c(α+2eⱼ) > c(α+eᵢ+eⱼ)²:
+                        RETURN FAIL("mixed LC")
+            FOR each α, each i:
+                IF c(α+2eᵢ)·c(α) > c(α+eᵢ)²:
+                    RETURN FAIL("axis LC")
+            FOR each (α, β) in supp × supp:
+                FOR each i with α(i) > β(i):
+                    IF no j with β(j) > α(j) and α-eᵢ+eⱼ ∈ supp:
+                        RETURN FAIL("exchange")
+            RETURN PASS
 
-    Args:
-        poly: Homogeneous polynomial with positive coefficients.
-        tol: Numerical tolerance.
-
-    Returns:
-        Dictionary with check names mapping to (passed, violations/info).
-
-    Time complexity: O(N*n^2 + |supp|^2*n^2 + N*n^3)
-        where N = number of degree-(d-2) multi-indices.
-    Space complexity: O(N*n^2).
-    """
-    results = {}
-
-    results["positive_coefficients"] = (
-        poly.has_positive_coefficients(),
-        [] if poly.has_positive_coefficients() else ["Has non-positive coefficients"]
-    )
-
-    results["mixed_log_concavity"] = check_mixed_directional_log_concavity(poly, tol)
-    results["axis_log_concavity"] = check_axis_directional_log_concavity(poly, tol)
-    results["exchange_support"] = check_exchange_support(poly, tol)
-    results["spectral_condition"] = check_all_quadratic_leaves(poly)
-
-    return results
-
-
-# ─── Lorentzian Polynomial Generators ─────────────────────────────────
-
-def product_of_linear_forms(n: int, d: int, seed: Optional[int] = None) -> HomogeneousPolynomial:
-    """Generate a Lorentzian polynomial as a product of linear forms.
-
-    Products of linear forms with positive coefficients are always Lorentzian.
-    This provides ground truth for testing.
-
-    Args:
-        n: Number of variables.
-        d: Degree.
-        seed: Random seed.
+    Time: O(n² · C(n+d-3,d-2) + |supp|² · n²)
+    Space: O(|coeffs|)
 
     Returns:
-        Homogeneous polynomial that is guaranteed Lorentzian.
+        Dict with keys: 'passed', 'mixed_lc', 'axis_lc', 'exchange', 'details'
     """
-    rng = np.random.default_rng(seed)
-    # Start with the polynomial 1
-    coeffs: Dict[Tuple[int, ...], float] = {tuple(0 for _ in range(n)): 1.0}
+    result = {
+        'passed': False,
+        'mixed_lc': False,
+        'axis_lc': False,
+        'exchange': False,
+        'details': []
+    }
 
-    for _ in range(d):
-        # Random linear form with positive coefficients
-        linear_coeffs = rng.uniform(0.5, 3.0, size=n)
-        new_coeffs: Dict[Tuple[int, ...], float] = {}
-        for alpha, c in coeffs.items():
-            for var in range(n):
-                new_alpha = list(alpha)
-                new_alpha[var] += 1
-                new_alpha_t = tuple(new_alpha)
-                new_coeffs[new_alpha_t] = new_coeffs.get(new_alpha_t, 0.0) + c * linear_coeffs[var]
-        coeffs = new_coeffs
+    mlc_ok, mlc_msg = check_mixed_lc(coeffs, n, d, tol)
+    result['mixed_lc'] = mlc_ok
+    if mlc_msg:
+        result['details'].append(mlc_msg)
 
-    return HomogeneousPolynomial(n, d, coeffs)
+    alc_ok, alc_msg = check_axis_lc(coeffs, n, d, tol)
+    result['axis_lc'] = alc_ok
+    if alc_msg:
+        result['details'].append(alc_msg)
+
+    exch_ok, exch_msg = check_exchange_support(coeffs, n, d, tol)
+    result['exchange'] = exch_ok
+    if exch_msg:
+        result['details'].append(exch_msg)
+
+    result['passed'] = mlc_ok and alc_ok and exch_ok
+    return result
 
 
-def elementary_symmetric(n: int, d: int) -> HomogeneousPolynomial:
-    """The d-th elementary symmetric polynomial in n variables.
+def check_lorentzian_eigenvalue(A: np.ndarray, tol: float = 1e-10) -> Dict[str, any]:
+    """Spectral Lorentzian check (for comparison).
 
-    e_d(x_1, ..., x_n) = sum_{|S|=d} prod_{i in S} x_i
+    Computes eigenvalues and checks at most one is positive.
 
-    Elementary symmetric polynomials are Lorentzian.
+    Time: O(n³) for eigenvalue decomposition.
+    Space: O(n²).
+
+    Args:
+        A: symmetric matrix
+        tol: tolerance for positive eigenvalue
+
+    Returns:
+        Dict with eigenvalues, Lorentzian status, number of positive eigenvalues
     """
-    coeffs: Dict[Tuple[int, ...], float] = {}
-    for subset in combinations_with_replacement(range(n), d):
-        alpha = [0] * n
-        for var in subset:
-            alpha[var] += 1
-        alpha_t = tuple(alpha)
-        if max(alpha) <= 1:  # multi-affine condition
-            coeffs[alpha_t] = 1.0
-    return HomogeneousPolynomial(n, d, coeffs)
+    eigenvalues = np.sort(np.linalg.eigvalsh(A))[::-1]
+    n_positive = np.sum(eigenvalues > tol)
+
+    return {
+        'eigenvalues': eigenvalues,
+        'is_lorentzian': n_positive <= 1,
+        'n_positive': int(n_positive),
+        'largest_eigenvalue': float(eigenvalues[0]),
+        'second_largest': float(eigenvalues[1]) if len(eigenvalues) > 1 else None
+    }
 
 
+def generate_derivative_leaves(coeffs: Dict[Tuple, float], n: int, d: int
+                                ) -> List[Dict[Tuple, float]]:
+    """Generate all quadratic derivative leaves of a degree-d polynomial.
+
+    Each leaf is obtained by differentiating d-2 times.
+    The leaf is itself a degree-2 polynomial.
+
+    Time: O(C(n+d-3, d-2) · n² · d)
+
+    Args:
+        coeffs: polynomial coefficients
+        n: number of variables
+        d: total degree
+
+    Returns:
+        List of (alpha, leaf_coeffs) where alpha is the differentiation multi-index
+    """
+    if d < 2:
+        return [coeffs]
+
+    leaves = []
+    for alpha in multiindices(n, d - 2):
+        # Compute the quadratic leaf: derivative of order alpha
+        leaf = {}
+        for beta in multiindices(n, 2):
+            # The coefficient of x^beta in D^alpha f
+            # equals (alpha+beta)! / beta! * c(alpha+beta)
+            full_idx = tuple(a + b for a, b in zip(alpha, beta))
+            if full_idx in coeffs:
+                # Multinomial coefficient
+                factor = 1.0
+                for k in range(n):
+                    for m in range(alpha[k]):
+                        factor *= (beta[k] + alpha[k] - m)
+                leaf[beta] = coeffs[full_idx] * factor
+        leaves.append((alpha, leaf))
+
+    return leaves
+
+
+def verify_full_descent(coeffs: Dict[Tuple, float], n: int, d: int
+                        ) -> Dict[str, any]:
+    """Verify the Hessian descent certificate at all derivative levels.
+
+    Checks that every quadratic derivative leaf satisfies the mixed LC condition.
+
+    Time: O(C(n+d-3, d-2) · n²)
+    """
+    if d < 2:
+        return {'passed': True, 'n_leaves': 0, 'failures': []}
+
+    leaves = generate_derivative_leaves(coeffs, n, d)
+    failures = []
+
+    for alpha, leaf_coeffs in leaves:
+        mlc_ok, msg = check_mixed_lc(leaf_coeffs, n, 2)
+        if not mlc_ok:
+            failures.append({'alpha': alpha, 'message': msg})
+
+    return {
+        'passed': len(failures) == 0,
+        'n_leaves': len(leaves),
+        'failures': failures
+    }
+
+
+# Example usage
 if __name__ == "__main__":
-    print("=== Algorithms Module ===")
-    print("\nExample: Product of linear forms (n=3, d=3)")
-    f = product_of_linear_forms(3, 3, seed=42)
-    print(f"Polynomial: {f}")
-    results = check_hessian_descent_certificate(f)
-    for name, (passed, info) in results.items():
-        status = "PASS" if passed else "FAIL"
-        print(f"  {name}: {status}")
-        if not passed and info:
-            for v in info[:3]:
-                print(f"    {v}")
+    print("=== Algorithm Demonstrations ===\n")
 
-    print("\nExample: Random polynomial (n=3, d=3)")
-    g = HomogeneousPolynomial.random_positive(3, 3, seed=17)
-    print(f"Polynomial: {g}")
-    results = check_hessian_descent_certificate(g)
-    for name, (passed, info) in results.items():
-        status = "PASS" if passed else "FAIL"
-        print(f"  {name}: {status}")
+    # Example 1: Rank-1 quadratic (always Lorentzian)
+    print("Example 1: Rank-1 quadratic u = [1, 2, 3]")
+    u = np.array([1.0, 2.0, 3.0])
+    A = np.outer(u, u)
+    coeffs = {}
+    n = 3
+    for i in range(n):
+        idx = [0] * n; idx[i] = 2
+        coeffs[tuple(idx)] = A[i, i]
+    for i in range(n):
+        for j in range(i + 1, n):
+            idx = [0] * n; idx[i] = 1; idx[j] = 1
+            coeffs[tuple(idx)] = 2 * A[i, j]
+
+    cert = check_hessian_descent_certificate(coeffs, n, 2)
+    spec = check_lorentzian_eigenvalue(A)
+    print(f"  Certificate: {cert['passed']}")
+    print(f"  Spectral: {spec['is_lorentzian']}")
+    print(f"  Eigenvalues: {np.round(spec['eigenvalues'], 4)}")
+    print()
+
+    # Example 2: Counterexample matrix
+    print("Example 2: Counterexample matrix [[1,1,1],[1,1,-1],[1,-1,1]]")
+    A2 = np.array([[1, 1, 1], [1, 1, -1], [1, -1, 1]], dtype=float)
+    spec2 = check_lorentzian_eigenvalue(A2)
+    print(f"  Spectral: {spec2['is_lorentzian']}")
+    print(f"  Eigenvalues: {np.round(spec2['eigenvalues'], 4)}")
+    print(f"  #positive: {spec2['n_positive']}")
+    print()
+
+    # Example 3: Higher degree polynomial
+    print("Example 3: Degree-4 polynomial in 3 variables")
+    coeffs4 = {}
+    for alpha in multiindices(3, 4):
+        # Lorentzian-compatible coefficients (products of linear forms)
+        c = 1.0
+        for v in alpha:
+            c *= (v + 1)
+        coeffs4[alpha] = c
+    descent = verify_full_descent(coeffs4, 3, 4)
+    print(f"  Full descent check: {descent['passed']}")
+    print(f"  Number of leaves: {descent['n_leaves']}")
+    print(f"  Failures: {len(descent['failures'])}")

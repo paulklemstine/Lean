@@ -855,5 +855,9 @@
   "670b8a89": "direction_2_lee_yang_zero_stability_under_coupling.json",
   "873da85c": "direction_1_universal_m_convex_compression_theorem.json",
   "7968ebde": "direction_1_hardness_of_unrestricted_degree_lorent.json",
-  "192e6c12": "direction_1_general_symplectic_groups_sp_q.json"
+  "192e6c12": "direction_1_general_symplectic_groups_sp_q.json",
+  "4d322aa9": "direction_1_strongly_rayleigh_extension.json",
+  "c1090538": "direction_1_lorentzian_equivalence_via_hessian_des.json",
+  "bfac302f": "direction_1_closure_of_k1_valuated_exchange_under_.json",
+  "29a14ac4": "direction_2_sparse_support_certificate_compression.json"
 }

@@ -97,10 +97,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54b6db2b",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -229,10 +229,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5872574",
     "timestamp": "2026-05-25T18:39:32.525739+00:00"
   },
   {
@@ -597,10 +597,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "1fb257b2",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb0ca85b",
     "timestamp": "2026-05-26T13:05:51.445505+00:00"
   },
   {
@@ -676,10 +676,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a8f3ced3",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7a00ed5d",
     "timestamp": "2026-05-27T03:33:47.282680+00:00"
   },
   {
@@ -716,10 +716,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "e4837868",
-    "consumed_by_exp_id": "cb27cde3",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T12:07:55.522801+00:00"
   },
   {
@@ -776,26 +776,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "147eb4db",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T16:40:30.004231+00:00"
-  },
-  {
-    "id": "fd_1511",
-    "title": "Direction 1: Closure of K=1 Valuated Exchange under Differentiation",
-    "description": "**Conjecture.** For every homogeneous polynomial p with nonnegative coefficients and M-convex support, if ValuatedExchange(p, 1) holds, then ValuatedExchange(\u2202_i p, 1) holds for all variables i.\n\n**Test.** Exhaustive computational search over weighted uniform matroid polynomials U(d, n) for n \u2264 7, d \u2264 4, with 10,000 random weight vectors per configuration. Any counterexample refutes the conjecture; survival through this regime provides strong evidence. Additionally, attempt formal proof for U(d, n) with d = 2 (degree-2 case) using the fact that derivatives are linear and Theorem 5 (`valuatedExchange_of_linear_nonneg`) already handles linear support.\n\n**Impact.** If true, this establishes K=1 valuated exchange as a closed cone property under differentiation, paralleling the Br\u00e4nd\u00e9n\u2013Huh closure theorem for Lorentzian polynomials. This would position valuated exchange as a new fundamental positivity condition in algebraic combinatorics, potentially providing simpler proofs of log-concavity results that currently require the full Lorentzian machinery.\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorems 1\u20135), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian characterization).\n\n**Proof Strategy.** For the degree-2 case: prove that all derivatives of degree-2 M-convex-support polynomials have linear single-variable support, then apply Theorem 5. For general degree: use the product factorization (Theorem 3) to reduce the derivative exchange inequality to the original exchange inequality times a computable rescaling factor, then bound the rescaling factor.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 Lorentzian polynomial theory; if K=1 exchange equals Lorentzianity for homogeneous polynomials, this provides a new characterization of Lorentzian polynomials.\n\n**Lineage.** Extends `valuatedExchange_of_linear_nonneg` and `pderiv_coeff_product_eq`.\n\n**Ambition.** Grand challenge \u2014 would constitute a new characterization theorem in algebraic combinatorics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "78306251",
-    "consumed_by_exp_id": "bfac302f",
-    "timestamp": "2026-05-27T19:12:46.907197+00:00"
   },
   {
     "id": "fd_1513",
@@ -858,26 +838,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "f43533d0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T01:19:07.666079+00:00"
-  },
-  {
-    "id": "fd_1599",
-    "title": "Direction 1: Strongly Rayleigh Extension",
-    "description": "**Conjecture:** Every strongly Rayleigh measure on 2^[n] admits a Lorentzian Hessian certificate computable from its generating polynomial's resolvent data.\n\n**Test:** Implement the certificate computation for strongly Rayleigh measures beyond DPPs (e.g., balanced matroids, uniform distributions on bases of regular matroids). Check whether the resolvent Hessian has at most one positive eigenvalue. A strongly Rayleigh measure whose Hessian has two or more positive eigenvalues would refute the conjecture.\n\n**Impact:** Strongly Rayleigh measures are the broadest class known to satisfy negative dependence. Extending the certificate to this class would make Lorentzian verification possible for measures arising from matroid theory, graph theory, and log-concave polynomials \u2014 far beyond the DPP setting.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `IsDPPLorentzian` and `dpp_partition_function_lorentzian`\n- `Pythagorean/LorentzianCertificate.lean` \u2014 `LorentzianHessianCertificate` and `dpp_hessian_conditional_neg_semidef`\n\n**Proof Strategy:** The key insight is that strongly Rayleigh measures have real stable generating polynomials, and the resolvent structure should extend via the Borcea-Br\u00e4nd\u00e9n theory. The main technical challenge is that the generating polynomial may not factor as det(I + diag(x)K) for any PSD K. Strategy: express the Hessian through the polynomial's own second derivatives (not through a kernel), and prove conditional NSD using the real stability condition directly.\n\n**Domain Bridges:** Combinatorics (matroid theory) \u2194 Analysis (real stable polynomials) \u2194 Computation (certificate algorithms)\n\n**Lineage:** Builds directly on the resolvent Hessian certificate and extends it from DPPs to the full strongly Rayleigh class.\n\n**Ambition:** Grand challenge \u2014 would unify Lorentzian polynomial theory with computational certificate verification for all negatively dependent measures.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d72eb6e1",
-    "consumed_by_exp_id": "4d322aa9",
-    "timestamp": "2026-05-28T01:19:29.003380+00:00"
   },
   {
     "id": "fd_1683",
@@ -1278,6 +1238,164 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "57cfb68b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T14:11:26.812761+00:00"
+  },
+  {
+    "id": "fd_1842",
+    "title": "Direction 1: Complete SAT-to-Lorentzian Reduction (Grand Challenge)",
+    "description": "**Conjecture**: There exists a polynomial-time computable map from CNF formulas \u03c6 to homogeneous polynomials P_\u03c6 with nonneg integer coefficients such that P_\u03c6 is Lorentzian if and only if \u03c6 is unsatisfiable. This would establish coNP-hardness of unrestricted-degree Lorentzian recognition.\n\n**Test**: For each 3-SAT instance on \u2264 6 variables, compute P_\u03c6 and verify the Lorentzian \u2194 unsatisfiable equivalence by exhaustive Hessian checking. A single counterexample disproves the conjecture.\n\n**Impact**: The first complexity-hardness result for a Hodge-theoretic positivity predicate. Would transform the field's understanding of what \"algebraic positivity\" means computationally.\n\n**Catalog References**: `Pythagorean/LorentzianHardness.lean` \u2014 `boolean_assignment_multiindex_lower_bound`, `assignmentToMultiindex_injective`; `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `IsRecursivelyLorentzian`, `hessianMatrix`.\n\n**Proof Strategy**: Use the Boolean-to-multiindex encoding (Theorem C) as the assignment layer. Construct P_\u03c6 so that: (a) clause constraints appear as coefficient conditions on specific monomials, (b) unsatisfied assignments produce Hessians with two positive eigenvalues. The key algebraic challenge is designing the monomial structure so the Hessian sign condition at leaf \u03b1 detects whether the assignment encoded by \u03b1 satisfies all clauses.\n\n**Domain Bridges**: Computational complexity (Cook\u2013Levin theory) \u2194 algebraic combinatorics (Lorentzian polynomials) \u2194 spectral theory (Hessian eigenvalues).\n\n**Lineage**: Builds directly on Theorems B and C of this cycle.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting.\n\n> **The key insight is** that the Boolean-to-multiindex injection we've proved provides the combinatorial backbone of a SAT reduction; what remains is the algebraic design of coefficient patterns that make Hessian signatures detect clause satisfaction.\n\n> **Why now?** The formalization of the multiindex-assignment correspondence makes the reduction structure precise for the first time, reducing the problem from \"design a reduction from scratch\" to \"design a polynomial with specified Hessian behavior at known points.\"\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7968ebde",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T15:57:05.064782+00:00"
+  },
+  {
+    "id": "fd_1843",
+    "title": "Direction 2: Spectral Embedding \u2014 Matrix Positivity to Lorentzian Leaves",
+    "description": "**Conjecture**: For any n\u00d7n symmetric rational matrix A, there exists a homogeneous polynomial P_A in n+2 variables such that P_A is Lorentzian if and only if A has at most one positive eigenvalue. The construction should be polynomial-time computable.\n\n**Test**: For random 4\u00d74 symmetric matrices, compute P_A and verify the eigenvalue-Lorentzian equivalence against numerical eigenvalue decomposition.\n\n**Impact**: Creates a second reduction route to hardness (from matrix spectral problems) and connects Lorentzian theory to semialgebraic geometry and semidefinite programming.\n\n**Catalog References**: `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `HasAtMostOnePositiveEigenvalue`, `QuadForm`, `hessianMatrix`; `Pythagorean/LorentzianHardness.lean` \u2014 `multiindex_count_exponential_lower`.\n\n**Proof Strategy**: Embed the matrix A into the Hessian of a carefully constructed quartic polynomial. The degree-2 derivative leaves of this quartic are quadratics whose Hessians are translates of A. If A has two positive eigenvalues, some leaf fails the Lorentzian condition.\n\n**Domain Bridges**: Spectral graph theory \u2194 Lorentzian polynomials \u2194 semidefinite programming.\n\n**Lineage**: Extends the tangent-space negativity theorem from the catalog.\n\n**Ambition**: Solid extension \u2014 builds a new reduction route.\n\n> **The key insight is** that the Hessian matrix of a Lorentzian polynomial's degree-2 leaf *is* the spectral object being tested, so embedding a target matrix into a leaf Hessian is algebraically natural \u2014 it's the reverse direction of the recognition procedure.\n\n> **Why now?** The catalog's formalization of `hessianMatrix` and `HasAtMostOnePositiveEigenvalue` provides the exact interface needed for a spectral embedding theorem.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7968ebde",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T15:57:05.143458+00:00"
+  },
+  {
+    "id": "fd_1844",
+    "title": "Direction 3: Parameterized Complexity by Treewidth and Support Size",
+    "description": "**Conjecture**: Lorentzian recognition is fixed-parameter tractable when parameterized by both degree d and the treewidth of the variable interaction graph (the graph where variables i and j are adjacent if some monomial involves both x_i and x_j). Specifically, for treewidth w and degree d, recognition can be decided in time O(n \u00b7 w^d).\n\n**Test**: Construct polynomial families with treewidth 2 (path-structured variable interactions) and verify that the Hessian checks factorize along the tree decomposition, reducing the effective leaf count.\n\n**Impact**: Would show that the hardness barrier is not just about degree but about the *interaction complexity* of variables, connecting Lorentzian recognition to structural graph theory.\n\n**Catalog References**: `Pythagorean/LorentzianHardness.lean` \u2014 `multiindex_count_exponential_lower`, `leaf_count_exponential_lower`; `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `quadratic_leaf_count_le`.\n\n**Proof Strategy**: For tree-structured polynomials, the Hessian at each leaf decomposes into independent blocks corresponding to subtrees. Use dynamic programming on the tree decomposition to count only the O(w^d) \"non-redundant\" leaves.\n\n**Domain Bridges**: Parameterized complexity theory \u2194 structural graph theory \u2194 algebraic combinatorics.\n\n**Lineage**: Refines the upper bound from the catalog and the lower bound from this cycle.\n\n**Ambition**: Solid extension \u2014 maps the complexity landscape.\n\n> **The key insight is** that the exponential blowup in our lower bounds requires variables that interact globally (as in the binary-to-multiindex injection); restricting interactions to a tree should recover tractability, exactly as it does for constraint satisfaction problems.\n\n> **Why now?** The explicit lower bound constructions reveal *where* the combinatorial explosion comes from (high-interaction multiindices), making it possible to identify structural parameters that tame it.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7968ebde",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T15:57:05.219278+00:00"
+  },
+  {
+    "id": "fd_1845",
+    "title": "Direction 4: Average-Case Lorentzian Recognition and Random Polynomials",
+    "description": "**Conjecture**: For random homogeneous polynomials with i.i.d. nonneg coefficients, Lorentzian recognition can be decided in expected polynomial time for any fixed degree, and the probability of Lorentzianity undergoes a sharp threshold as the coefficient distribution varies.\n\n**Test**: Sample 1000 random degree-6 homogeneous polynomials in 10 variables with coefficients drawn from Poisson(\u03bb) for various \u03bb. Measure the fraction that are Lorentzian and the average certificate size.\n\n**Impact**: Would show that worst-case hardness does not preclude efficient average-case algorithms, potentially enabling practical Lorentzian recognition for naturally occurring polynomials.\n\n**Catalog References**: `Pythagorean/LorentzianHardness.lean` \u2014 `ExponentialCertificateBarrierConjecture`; `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `lorentzian_reversed_cauchy_schwarz`.\n\n**Proof Strategy**: Use the reversed Cauchy\u2013Schwarz inequality (from the catalog) to derive concentration bounds. For \"generic\" coefficients, the Hessian eigenvalues at each leaf are well-separated, allowing early termination of the spectral test.\n\n**Domain Bridges**: Probability theory \u2194 random matrix theory \u2194 algebraic combinatorics.\n\n**Lineage**: Motivated by the gap between worst-case lower bounds (this cycle) and practical recognition.\n\n**Ambition**: Solid extension \u2014 addresses practical relevance.\n\n> **The key insight is** that random polynomials have coefficient patterns that are far from the adversarial constructions needed for our lower bounds, so the *typical* certificate complexity may be much smaller than the worst case.\n\n> **Why now?** The explicit lower bound families we construct are highly structured; understanding how generic polynomials differ will reveal whether the hardness barrier is ubiquitous or pathological.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7968ebde",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T15:57:05.300366+00:00"
+  },
+  {
+    "id": "fd_1846",
+    "title": "Direction 5: Proof Complexity of Lorentzian Certificates (Grand Challenge)",
+    "description": "**Conjecture**: Lorentzian derivative trees and resolution proof trees obey parallel lower bounds. Specifically, if a homogeneous polynomial is not Lorentzian, the minimum-size certificate of non-Lorentzianity (a \"bad\" derivative branch) corresponds to a resolution refutation of a derived Boolean formula, and size lower bounds for resolution proofs transfer to size lower bounds for non-Lorentzian certificates.\n\n**Test**: For the Pigeonhole Principle formulas PHP(n, n-1) (known to require exponential resolution proofs), construct the associated Lorentzian encoding and verify that the minimum non-Lorentzian certificate also has exponential size.\n\n**Impact**: Would create a formal bridge between proof complexity and algebraic positivity, potentially importing decades of lower bound techniques from propositional proof theory into Hodge-theoretic complexity.\n\n**Catalog References**: `Pythagorean/LorentzianHardness.lean` \u2014 `boolean_assignment_multiindex_lower_bound`, `CNFFormula`, `branchToMultiindex`; `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `RecursiveLorentzianCertificate`.\n\n**Proof Strategy**: Define a \"Lorentzian resolution system\" where inference steps correspond to derivative operations and contradictions correspond to Hessians with forbidden eigenvalue signatures. Show this system p-simulates (or is p-simulated by) standard resolution.\n\n**Domain Bridges**: Proof complexity \u2194 algebraic combinatorics \u2194 Hodge theory \u2194 computational complexity.\n\n**Lineage**: Extends the Boolean encoding bridge (Theorem C) from representing assignments to representing proofs.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting.\n\n> **The key insight is** that a Lorentzian derivative tree *is* a proof tree \u2014 each node verifies a local condition (Hessian signature), and the tree's completeness certifies a global property (Lorentzianity). This structural parallel with resolution proofs is not accidental but reflects a deep correspondence between algebraic positivity and propositional satisfiability.\n\n> **Why now?** The formalization of derivative branches and their connection to Boolean assignments provides the first rigorous framework for stating and testing this correspondence. The `branchToMultiindex` function and `CNFFormula` structure give the exact combinatorial interface needed.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7968ebde",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T15:57:05.384976+00:00"
+  },
+  {
+    "id": "fd_1847",
+    "title": "Direction 1: Higher-Order Tensor Certificates for Ultra-Log-Concavity",
+    "description": "**Conjecture:** For a degree-$d$ multiaffine real stable polynomial $g$ with nonneg coefficients, define the order-$k$ certificate tensor:\n$$T^{(k)}_{g,x}(u_1, \\ldots, u_k) = \\sum_{j=0}^{k} (-1)^j \\binom{k}{j} g(x)^{k-j-1} \\left(\\prod_{\\ell=1}^{j} D_{u_\\ell} g(x)\\right) D_{u_{j+1}} \\cdots D_{u_k} g(x)$$\nThen for $k \\leq d$, $T^{(k)}$ has a definite sign pattern controlled by $(-1)^k$, generalizing the $k=2$ NSD result.\n\n**Test:** Compute $T^{(3)}$ and $T^{(4)}$ for uniform matroid polynomials $U_{r,n}$ with $n \\leq 8$ and verify the alternating sign pattern on random positive points. A single violation refutes the conjecture.\n\n**Impact:** Would establish ultra-log-concavity (Mason's conjecture strength) directly from real stability, bypassing the Alexandrov-Fenchel machinery. This could resolve open problems about independent set sequences of matroids.\n\n**Catalog References:** `Catalog/Pythagorean/StronglyRayleighCertificate.lean` (Theorem `certMatrix_quadForm_decomposition`), `Catalog/Pythagorean/HessianLorentzianGap.lean` (log-Hessian formalism).\n\n**Proof Strategy:** Induction on $k$ using the recursive structure of the directional Rayleigh inequality. The base case $k=2$ is our NSD theorem. The inductive step requires a new \"iterated Rayleigh inequality\" that may follow from the characterization of real stable polynomials as limits of products of linear forms.\n\n**Domain Bridges:** Combinatorics (Mason's conjecture) \u2194 Differential geometry (higher curvature tensors) \u2194 Algebraic geometry (Hodge-Riemann relations).\n\n**Lineage:** Extends the core NSD theorem from `StronglyRayleighCertificate.lean`.\n\n**Ambition:** Grand challenge \u2014 would resolve a major open problem in combinatorics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4d322aa9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T16:34:02.173795+00:00"
+  },
+  {
+    "id": "fd_1848",
+    "title": "Direction 2: Spectral Gap Bounds from Certificate Eigenvalues",
+    "description": "**Conjecture:** For a strongly Rayleigh measure $\\mu$ on $2^{[n]}$ with generating polynomial $g$, the spectral gap $\\gamma$ of the natural Glauber dynamics satisfies:\n$$\\gamma \\geq \\frac{\\min_i |\\lambda_{\\min}(M_g(\\mathbf{1}))|}{n \\cdot g(\\mathbf{1})^2}$$\nwhere $\\lambda_{\\min}$ is the smallest eigenvalue of the certificate matrix at the all-ones point.\n\n**Test:** Compare the certificate-based bound with the actual spectral gap (computed by eigendecomposition of the transition matrix) for DPPs with random 5\u00d75 kernels and uniform matroids $U_{r,n}$ with $n \\leq 7$.\n\n**Impact:** Would provide the first non-trivial mixing time bounds derived purely from polynomial invariants, applicable to all strongly Rayleigh distributions without case-specific analysis.\n\n**Catalog References:** `Catalog/Pythagorean/StronglyRayleighCertificate.lean` (definitions of `lorentzianCertMatrix`, `ConditionalNSD`), `Catalog/Pythagorean/HessianLorentzianGap.lean` (`HasHessianLorentzianGap`).\n\n**Proof Strategy:** Relate the certificate eigenvalues to the modified log-Sobolev constant via the identity $M_g/g^2 = \\mathrm{Hess}(\\log g)$. Use the Bakry-\u00c9mery criterion with the log-Hessian as the curvature tensor.\n\n**Domain Bridges:** Probability (mixing times) \u2194 Spectral theory (eigenvalue gaps) \u2194 Information geometry (Fisher information).\n\n**Lineage:** Extends `HasHessianLorentzianGap` from `HessianLorentzianGap.lean` with quantitative bounds.\n\n**Ambition:** Solid extension \u2014 builds directly on existing results with clear applications.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4d322aa9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T16:34:02.254671+00:00"
+  },
+  {
+    "id": "fd_1851",
+    "title": "Direction 5: Fermionic Correlations and Quantum Certificate Transfer",
+    "description": "**Conjecture:** For a system of $n$ fermions with density matrix $\\rho$, the correlation matrix $C_{ij} = \\mathrm{Tr}(\\rho \\, c_i^\\dagger c_j)$ generates a strongly Rayleigh polynomial $g_C(z) = \\det(I + \\mathrm{diag}(z) \\cdot C)$. The certificate matrix $M_{g_C}(x)$ at $x = \\mathbf{1}$ equals (up to normalization) the connected two-point correlation function $\\langle n_i n_j \\rangle - \\langle n_i \\rangle \\langle n_j \\rangle$, providing a direct bridge from quantum correlations to the Lorentzian certificate.\n\n**The key insight is** that fermionic systems are inherently determinantal, so the DPP machinery applies. But the certificate framework extends to **interacting fermion systems** where the effective one-body density matrix $C$ is only approximately PSD, and the generating polynomial is only approximately real stable.\n\n**Why now?** Recent advances in tensor network methods and quantum simulation make it feasible to extract effective one-body density matrices from interacting systems. Our certificate theory provides the mathematical framework to certify negative dependence properties of these approximate descriptions.\n\n**Test:** Compute the certificate matrix from the one-body density matrix of small Hubbard model systems (exact diagonalization for $n \\leq 8$ sites) and verify NSD. Measure the certificate violation as a function of interaction strength $U/t$.\n\n**Impact:** Would connect formal certificate theory to quantum many-body physics, providing rigorous bounds on correlation structure that are currently obtained only through numerical approximation.\n\n**Catalog References:** `Catalog/Pythagorean/StronglyRayleighCertificate.lean` (certificate framework), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (DPP spectral bridge).\n\n**Proof Strategy:** For non-interacting fermions ($U=0$), the connection is exact via Wick's theorem. For weak interactions, use perturbation theory in $U$ and the stability of the certificate under small polynomial perturbations.\n\n**Domain Bridges:** Quantum physics (fermionic systems) \u2194 Probability (DPPs and strong Rayleigh) \u2194 Spectral theory (certificate eigenvalues).\n\n**Lineage:** Extends DPP theory from `DPPLorentzian.lean` to quantum systems.\n\n**Ambition:** Grand challenge \u2014 bridges formal mathematics to frontier physics.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "4d322aa9",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T16:34:03.284063+00:00"
   },
   {
     "id": "fd_0806",
@@ -1995,102 +2113,5 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.336768+00:00"
-  },
-  {
-    "id": "fd_1842",
-    "title": "Direction 1: Complete SAT-to-Lorentzian Reduction (Grand Challenge)",
-    "description": "**Conjecture**: There exists a polynomial-time computable map from CNF formulas \u03c6 to homogeneous polynomials P_\u03c6 with nonneg integer coefficients such that P_\u03c6 is Lorentzian if and only if \u03c6 is unsatisfiable. This would establish coNP-hardness of unrestricted-degree Lorentzian recognition.\n\n**Test**: For each 3-SAT instance on \u2264 6 variables, compute P_\u03c6 and verify the Lorentzian \u2194 unsatisfiable equivalence by exhaustive Hessian checking. A single counterexample disproves the conjecture.\n\n**Impact**: The first complexity-hardness result for a Hodge-theoretic positivity predicate. Would transform the field's understanding of what \"algebraic positivity\" means computationally.\n\n**Catalog References**: `Pythagorean/LorentzianHardness.lean` \u2014 `boolean_assignment_multiindex_lower_bound`, `assignmentToMultiindex_injective`; `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `IsRecursivelyLorentzian`, `hessianMatrix`.\n\n**Proof Strategy**: Use the Boolean-to-multiindex encoding (Theorem C) as the assignment layer. Construct P_\u03c6 so that: (a) clause constraints appear as coefficient conditions on specific monomials, (b) unsatisfied assignments produce Hessians with two positive eigenvalues. The key algebraic challenge is designing the monomial structure so the Hessian sign condition at leaf \u03b1 detects whether the assignment encoded by \u03b1 satisfies all clauses.\n\n**Domain Bridges**: Computational complexity (Cook\u2013Levin theory) \u2194 algebraic combinatorics (Lorentzian polynomials) \u2194 spectral theory (Hessian eigenvalues).\n\n**Lineage**: Builds directly on Theorems B and C of this cycle.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting.\n\n> **The key insight is** that the Boolean-to-multiindex injection we've proved provides the combinatorial backbone of a SAT reduction; what remains is the algebraic design of coefficient patterns that make Hessian signatures detect clause satisfaction.\n\n> **Why now?** The formalization of the multiindex-assignment correspondence makes the reduction structure precise for the first time, reducing the problem from \"design a reduction from scratch\" to \"design a polynomial with specified Hessian behavior at known points.\"\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7968ebde",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T15:57:05.064782+00:00"
-  },
-  {
-    "id": "fd_1843",
-    "title": "Direction 2: Spectral Embedding \u2014 Matrix Positivity to Lorentzian Leaves",
-    "description": "**Conjecture**: For any n\u00d7n symmetric rational matrix A, there exists a homogeneous polynomial P_A in n+2 variables such that P_A is Lorentzian if and only if A has at most one positive eigenvalue. The construction should be polynomial-time computable.\n\n**Test**: For random 4\u00d74 symmetric matrices, compute P_A and verify the eigenvalue-Lorentzian equivalence against numerical eigenvalue decomposition.\n\n**Impact**: Creates a second reduction route to hardness (from matrix spectral problems) and connects Lorentzian theory to semialgebraic geometry and semidefinite programming.\n\n**Catalog References**: `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `HasAtMostOnePositiveEigenvalue`, `QuadForm`, `hessianMatrix`; `Pythagorean/LorentzianHardness.lean` \u2014 `multiindex_count_exponential_lower`.\n\n**Proof Strategy**: Embed the matrix A into the Hessian of a carefully constructed quartic polynomial. The degree-2 derivative leaves of this quartic are quadratics whose Hessians are translates of A. If A has two positive eigenvalues, some leaf fails the Lorentzian condition.\n\n**Domain Bridges**: Spectral graph theory \u2194 Lorentzian polynomials \u2194 semidefinite programming.\n\n**Lineage**: Extends the tangent-space negativity theorem from the catalog.\n\n**Ambition**: Solid extension \u2014 builds a new reduction route.\n\n> **The key insight is** that the Hessian matrix of a Lorentzian polynomial's degree-2 leaf *is* the spectral object being tested, so embedding a target matrix into a leaf Hessian is algebraically natural \u2014 it's the reverse direction of the recognition procedure.\n\n> **Why now?** The catalog's formalization of `hessianMatrix` and `HasAtMostOnePositiveEigenvalue` provides the exact interface needed for a spectral embedding theorem.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7968ebde",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T15:57:05.143458+00:00"
-  },
-  {
-    "id": "fd_1844",
-    "title": "Direction 3: Parameterized Complexity by Treewidth and Support Size",
-    "description": "**Conjecture**: Lorentzian recognition is fixed-parameter tractable when parameterized by both degree d and the treewidth of the variable interaction graph (the graph where variables i and j are adjacent if some monomial involves both x_i and x_j). Specifically, for treewidth w and degree d, recognition can be decided in time O(n \u00b7 w^d).\n\n**Test**: Construct polynomial families with treewidth 2 (path-structured variable interactions) and verify that the Hessian checks factorize along the tree decomposition, reducing the effective leaf count.\n\n**Impact**: Would show that the hardness barrier is not just about degree but about the *interaction complexity* of variables, connecting Lorentzian recognition to structural graph theory.\n\n**Catalog References**: `Pythagorean/LorentzianHardness.lean` \u2014 `multiindex_count_exponential_lower`, `leaf_count_exponential_lower`; `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `quadratic_leaf_count_le`.\n\n**Proof Strategy**: For tree-structured polynomials, the Hessian at each leaf decomposes into independent blocks corresponding to subtrees. Use dynamic programming on the tree decomposition to count only the O(w^d) \"non-redundant\" leaves.\n\n**Domain Bridges**: Parameterized complexity theory \u2194 structural graph theory \u2194 algebraic combinatorics.\n\n**Lineage**: Refines the upper bound from the catalog and the lower bound from this cycle.\n\n**Ambition**: Solid extension \u2014 maps the complexity landscape.\n\n> **The key insight is** that the exponential blowup in our lower bounds requires variables that interact globally (as in the binary-to-multiindex injection); restricting interactions to a tree should recover tractability, exactly as it does for constraint satisfaction problems.\n\n> **Why now?** The explicit lower bound constructions reveal *where* the combinatorial explosion comes from (high-interaction multiindices), making it possible to identify structural parameters that tame it.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7968ebde",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T15:57:05.219278+00:00"
-  },
-  {
-    "id": "fd_1845",
-    "title": "Direction 4: Average-Case Lorentzian Recognition and Random Polynomials",
-    "description": "**Conjecture**: For random homogeneous polynomials with i.i.d. nonneg coefficients, Lorentzian recognition can be decided in expected polynomial time for any fixed degree, and the probability of Lorentzianity undergoes a sharp threshold as the coefficient distribution varies.\n\n**Test**: Sample 1000 random degree-6 homogeneous polynomials in 10 variables with coefficients drawn from Poisson(\u03bb) for various \u03bb. Measure the fraction that are Lorentzian and the average certificate size.\n\n**Impact**: Would show that worst-case hardness does not preclude efficient average-case algorithms, potentially enabling practical Lorentzian recognition for naturally occurring polynomials.\n\n**Catalog References**: `Pythagorean/LorentzianHardness.lean` \u2014 `ExponentialCertificateBarrierConjecture`; `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `lorentzian_reversed_cauchy_schwarz`.\n\n**Proof Strategy**: Use the reversed Cauchy\u2013Schwarz inequality (from the catalog) to derive concentration bounds. For \"generic\" coefficients, the Hessian eigenvalues at each leaf are well-separated, allowing early termination of the spectral test.\n\n**Domain Bridges**: Probability theory \u2194 random matrix theory \u2194 algebraic combinatorics.\n\n**Lineage**: Motivated by the gap between worst-case lower bounds (this cycle) and practical recognition.\n\n**Ambition**: Solid extension \u2014 addresses practical relevance.\n\n> **The key insight is** that random polynomials have coefficient patterns that are far from the adversarial constructions needed for our lower bounds, so the *typical* certificate complexity may be much smaller than the worst case.\n\n> **Why now?** The explicit lower bound families we construct are highly structured; understanding how generic polynomials differ will reveal whether the hardness barrier is ubiquitous or pathological.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7968ebde",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T15:57:05.300366+00:00"
-  },
-  {
-    "id": "fd_1846",
-    "title": "Direction 5: Proof Complexity of Lorentzian Certificates (Grand Challenge)",
-    "description": "**Conjecture**: Lorentzian derivative trees and resolution proof trees obey parallel lower bounds. Specifically, if a homogeneous polynomial is not Lorentzian, the minimum-size certificate of non-Lorentzianity (a \"bad\" derivative branch) corresponds to a resolution refutation of a derived Boolean formula, and size lower bounds for resolution proofs transfer to size lower bounds for non-Lorentzian certificates.\n\n**Test**: For the Pigeonhole Principle formulas PHP(n, n-1) (known to require exponential resolution proofs), construct the associated Lorentzian encoding and verify that the minimum non-Lorentzian certificate also has exponential size.\n\n**Impact**: Would create a formal bridge between proof complexity and algebraic positivity, potentially importing decades of lower bound techniques from propositional proof theory into Hodge-theoretic complexity.\n\n**Catalog References**: `Pythagorean/LorentzianHardness.lean` \u2014 `boolean_assignment_multiindex_lower_bound`, `CNFFormula`, `branchToMultiindex`; `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `RecursiveLorentzianCertificate`.\n\n**Proof Strategy**: Define a \"Lorentzian resolution system\" where inference steps correspond to derivative operations and contradictions correspond to Hessians with forbidden eigenvalue signatures. Show this system p-simulates (or is p-simulated by) standard resolution.\n\n**Domain Bridges**: Proof complexity \u2194 algebraic combinatorics \u2194 Hodge theory \u2194 computational complexity.\n\n**Lineage**: Extends the Boolean encoding bridge (Theorem C) from representing assignments to representing proofs.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting.\n\n> **The key insight is** that a Lorentzian derivative tree *is* a proof tree \u2014 each node verifies a local condition (Hessian signature), and the tree's completeness certifies a global property (Lorentzianity). This structural parallel with resolution proofs is not accidental but reflects a deep correspondence between algebraic positivity and propositional satisfiability.\n\n> **Why now?** The formalization of derivative branches and their connection to Boolean assignments provides the first rigorous framework for stating and testing this correspondence. The `branchToMultiindex` function and `CNFFormula` structure give the exact combinatorial interface needed.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7968ebde",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T15:57:05.384976+00:00"
   }
 ];

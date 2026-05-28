@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2013 of the highest-quality
+A curated collection of 2016 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2013
+Total files: 2016
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1595,6 +1595,7 @@ import FINAL.Pythagorean.HelfgottGrowth
 import FINAL.Pythagorean.HelfgottSL2
 import FINAL.Pythagorean.HennessyMilner
 import FINAL.Pythagorean.HessianDescent
+import FINAL.Pythagorean.HessianDescentEquivalence
 import FINAL.Pythagorean.HeterogeneityGapConjecture
 import FINAL.Pythagorean.HigherDefectTheory
 import FINAL.Pythagorean.HigherDimGhost
@@ -1691,6 +1692,7 @@ import FINAL.Pythagorean.SharpPerturbationScale
 import FINAL.Pythagorean.SharpThresholdConcentration
 import FINAL.Pythagorean.Sp2nExpansion
 import FINAL.Pythagorean.SpacetimeLattice
+import FINAL.Pythagorean.SparseLeafCompression
 import FINAL.Pythagorean.SparseLorentzianCertificates
 import FINAL.Pythagorean.SpectralBounds
 import FINAL.Pythagorean.SpectralCompression
@@ -1701,6 +1703,7 @@ import FINAL.Pythagorean.SpectralSparsity
 import FINAL.Pythagorean.SpectralTropicalEntropy
 import FINAL.Pythagorean.Spectrum
 import FINAL.Pythagorean.StrongNormBisimulation
+import FINAL.Pythagorean.StronglyRayleighCertificate
 import FINAL.Pythagorean.SubgroupMoebius
 import FINAL.Pythagorean.SubgroupMoebiusAsymp
 import FINAL.Pythagorean.SubgroupPressureConcentration
