@@ -815,5 +815,7 @@
   "0a042263": "direction_1_tropical_leaf_witnesses_and_valuative_.json",
   "1c1b6e76": "direction_5_lorentzian_certificates_for_quantum_ld.json",
   "2ceea89e": "direction_1_spectral_stability_for_graphic_matroid.json",
-  "6e2fd8a1": "direction_4_positive_temperature_extension_softmax.json"
+  "6e2fd8a1": "direction_4_positive_temperature_extension_softmax.json",
+  "563955fc": "direction_1_lorentzian_equivalence_via_hessian_des.json",
+  "03aeb2cb": "direction_5_tropical_margin_for_structured_non_ind.json"
 }

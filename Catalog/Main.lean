@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1991 of the highest-quality
+A curated collection of 1992 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1991
+Total files: 1992
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1581,6 +1581,7 @@ import FINAL.Pythagorean.HarmonicMusicTheory
 import FINAL.Pythagorean.HelfgottGrowth
 import FINAL.Pythagorean.HelfgottSL2
 import FINAL.Pythagorean.HennessyMilner
+import FINAL.Pythagorean.HessianDescent
 import FINAL.Pythagorean.HeterogeneityGapConjecture
 import FINAL.Pythagorean.HigherDefectTheory
 import FINAL.Pythagorean.HigherDimGhost

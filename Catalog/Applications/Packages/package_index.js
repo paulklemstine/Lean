@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Random Matrix Theory",
     "date": "2026-05-28T08:40:11Z",
     "exp_id": "03aeb2cb",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.6749263414634146,
+    "quality": "partial",
     "pkg_num": 227
   },
   {
@@ -6592,8 +6592,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-28T08:40:11Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.6749263414634146,
+      "quality": "partial"
     }
   ],
   "edges": [

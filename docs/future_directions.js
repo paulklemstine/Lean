@@ -77,10 +77,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af495cf0",
     "timestamp": "2026-05-24T23:11:24.506271+00:00"
   },
   {
@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "35f20969",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -713,10 +713,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "396e12d9",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T21:53:04.887954+00:00"
   },
   {
@@ -753,10 +753,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "175f456d",
-    "consumed_by_exp_id": "cc554401",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T03:33:16.871764+00:00"
   },
   {
@@ -1409,7 +1409,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "0a042263",
@@ -1432,7 +1432,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "0a042263",
@@ -1453,7 +1453,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "0a042263",
@@ -1475,7 +1475,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "0a042263",
@@ -1513,26 +1513,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1691",
-    "title": "Direction 5: Tropical Margin for Structured (Non-Independent) Matrices",
-    "description": "**Conjecture:** For Wigner-type matrices W where W_{ij} = W_{ji} and entries above the diagonal are independent sub-Gaussian, the tropical margin phase transition occurs at the same \u221a(log n) scale with the same universality properties.\n\n**Test:** Generate symmetric Gaussian, Rademacher, and uniform matrices of sizes n = 8, 12, 16. Compare P(tropMargin \u2265 0) curves after \u221a(log n) scaling. The conjecture predicts collapse analogous to the independent case, but with a different centering sequence due to the symmetry constraint.\n\n**Impact:** Would extend tropical universality to the most physically natural matrix ensembles (symmetric = time-reversal invariant systems), connecting to Wigner's original program.\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (tropMargin_entrywise_replacement_bound, telescoping_bound)\n\n**Proof Strategy:** The symmetry constraint W_{ij} = W_{ji} introduces dependencies, but each exchange slack diagExSlack(W,i,j) = 2W_{ij} - W_{ii} - W_{jj} involves at most 3 independent entries. The Lipschitz bound still holds, and the telescoping replacement can be adapted to replace symmetric pairs simultaneously. The main challenge is that the extreme-value theory for correlated maxima may shift the centering.\n\n**Domain Bridges:** Random matrix theory (Wigner ensembles), physics (time-reversal symmetry), graph theory (random symmetric graphs)\n\n**Lineage:** Extends tropMargin_lipschitz and telescoping_bound to structured matrices\n\n**Ambition:** Solid extension \u2014 clear path but requires careful handling of dependencies",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "69370675",
-    "consumed_by_exp_id": "03aeb2cb",
-    "timestamp": "2026-05-28T06:15:00.579732+00:00"
   },
   {
     "id": "seed_013",
@@ -2115,6 +2095,47 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T07:27:35.868270+00:00"
+  },
+  {
+    "id": "fd_1730",
+    "title": "Direction 1: Complete Characterization via Derivative Descent",
+    "description": "**Conjecture:** For homogeneous polynomials with positive coefficients of degree d in n variables, the Hessian descent certificate (mixed directional log-concavity + axis log-concavity + exchange-closed support at ALL derivative levels k = 0, 1, ..., d\u22122) is equivalent to recursive Lorentzianity.\n\n**Test:** Implement exhaustive search over positive integer coefficients for n \u2264 4, d \u2264 5. Check all derivative leaves for the certificate conditions and compare with eigenvalue-based Lorentzian testing. A single counterexample disproves the conjecture; 10\u2076 confirming instances would provide strong evidence.\n\n**Impact:** If true, this would convert Lorentzian recognition from a spectral problem (O(n\u00b3 per leaf)) to a combinatorial one (checking coefficient products), with implications for algorithmic matroid theory, Hodge theory, and optimization.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `IsRecursivelyLorentzian`, `recursivelyLorentzian_iff_brandenHuh`\n- `HessianDescent.lean` \u2014 `MixedDirectionalLogConcave`, `HasExchangeSupport`, `LorentzianHessianDescentConjecture`\n\n**Proof Strategy:** Induction on degree d. Base case d = 2 is our Theorem B (dim_two_equivalence). Inductive step: show that if f satisfies the certificate, then every partial derivative \u2202f/\u2202x\u1d62 satisfies the certificate at degree d\u22121. The key lemma is that mixed LC of f implies a form of mixed LC for \u2202f/\u2202x\u1d62, using the derivative-coefficient formula c_\u2202f(\u03b1) = (\u03b1(i)+1)\u00b7c_f(\u03b1+e\u1d62).\n\n**Domain Bridges:** Discrete convex analysis (M-convexity), matroid theory (basis exchange), algebraic geometry (Hodge-Riemann relations)\n\n**Lineage:** Builds directly on Br\u00e4nd\u00e9n\u2013Huh (2020) Theorem 2.25 and the recursive characterization in `LorentzianRecognitionComplete.lean`\n\n**Ambition:** Grand challenge \u2014 would unify spectral and combinatorial approaches to Lorentzianity\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "563955fc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T08:39:51.634452+00:00"
+  },
+  {
+    "id": "fd_1731",
+    "title": "Direction 2: Tropical Geometry Bridge via Newton Polytopes",
+    "description": "**Conjecture:** The exchange-closed support condition on the Newton polytope of a Lorentzian polynomial is equivalent to the polytope being a generalized permutohedron (a Minkowski sum of simplices), and this tropical characterization is equivalent to the polynomial being a valuation of a matroid.\n\n**Test:** For n \u2264 5, d \u2264 6, compute Newton polytopes of Lorentzian polynomials and check whether they are generalized permutohedra. Conversely, start from generalized permutohedra and check if polynomials supported on their integer points can be Lorentzian.\n\n**Impact:** Would establish a direct bridge between Lorentzian polynomial theory and tropical geometry, enabling:\n- Tropical algorithms for Lorentzian recognition\n- New proofs of matroid-theoretic results via tropical methods\n- Connections to the work of Adiprasito, Huh, and Katz on Hodge theory for matroids\n\n**Catalog References:**\n- `HessianDescent.lean` \u2014 `HasExchangeSupport`\n- `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `SupportSatisfiesExchange`\n\n**Proof Strategy:** Use the theory of valuated matroids and the characterization of generalized permutohedra as polymatroids. Show that exchange-closed support + mixed LC implies the polytope is a generalized permutohedron via the work of Postnikov on positive Grassmannians.\n\n**Domain Bridges:** Tropical geometry, polyhedral combinatorics, algebraic geometry\n\n**Lineage:** Extends the Br\u00e4nd\u00e9n\u2013Huh connection between Lorentzian polynomials and matroids\n\n**Ambition:** Extension \u2014 connects two well-developed theories\n\n**The key insight is** that the exchange property on support is precisely the defining condition for M-convex sets, which in turn correspond to integer points of generalized permutohedra.\n\n**Why now?** The tropical geometry of Lorentzian polynomials has not been systematically explored, and our computational tools make it feasible to test the conjecture empirically.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "563955fc",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T08:39:51.732425+00:00"
   },
   {
     "id": "seed_032",
