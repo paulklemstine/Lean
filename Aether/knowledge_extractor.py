@@ -2725,35 +2725,28 @@ Research mode: {concept.research_mode}
                     except Exception:
                         pass
             if fd_text:
-                # Parse into individual structured directions (not one monolithic blob)
-                fd_added, _synth = fd_manager.add_directions_from_text(
-                    text=fd_text,
+                # Use the entire future_directions text as one single entry
+                title_line = ""
+                for line in fd_text.split("\n"):
+                    line = line.strip()
+                    if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
+                        title_line = line[:80]
+                        break
+                if not title_line:
+                    title_line = f"Future directions from cycle {job.job_id[:8]}"
+                fd = FutureDirection(
+                    id=fd_manager._next_id(),
+                    title=title_line,
+                    description=fd_text,
                     source_exp_id=job.job_id,
-                    source_path=str(job.project_dir) if job.project_dir else "unknown",
+                    source_path=str(job.project_dir) if job.project_dir else "future_directions_md",
+                    domains=fd_manager._infer_domains(fd_text),
+                    depth_estimate=3,
+                    priority_score=0.75,
                 )
-                if fd_added == 0:
-                    # Fallback: if structured parsing finds nothing, add as single entry
-                    title_line = ""
-                    for line in fd_text.split("\n"):
-                        line = line.strip()
-                        if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
-                            title_line = line[:80]
-                            break
-                    if not title_line:
-                        title_line = f"Future directions from cycle {job.job_id[:8]}"
-                    fd = FutureDirection(
-                        id=f"fd_{len(fd_manager._directions):04d}",
-                        title=title_line,
-                        description=fd_text,
-                        source_exp_id=job.job_id,
-                        source_path="future_directions_md",
-                        domains=fd_manager._infer_domains(fd_text),
-                        depth_estimate=3,
-                        priority_score=0.75,
-                    )
-                    fd_manager.add_direction(fd)
-                    fd_added = 1
-                print(f"[Cycle] Added {fd_added} future direction(s) from cycle {job.job_id}")
+                fd_manager.add_direction(fd)
+                fd_added = 1
+                print(f"[Cycle] Added 1 future direction from cycle {job.job_id}")
             else:
                 print(f"[Cycle] No future directions found for cycle {job.job_id}")
             # Mark the consumed direction as completed
@@ -2918,35 +2911,28 @@ Research mode: {concept.research_mode}
                                     except Exception:
                                         pass
                             if fd_text:
-                                # Parse into individual structured directions
-                                fd_added, _synth = fd_manager.add_directions_from_text(
-                                    text=fd_text,
+                                # Use the entire future_directions text as one single entry
+                                title_line = ""
+                                for line in fd_text.split("\n"):
+                                    line = line.strip()
+                                    if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
+                                        title_line = line[:80]
+                                        break
+                                if not title_line:
+                                    title_line = f"Future directions from cycle {job.job_id[:8]}"
+                                fd = FutureDirection(
+                                    id=fd_manager._next_id(),
+                                    title=title_line,
+                                    description=fd_text,
                                     source_exp_id=job.job_id,
-                                    source_path=str(job.project_dir) if job.project_dir else "unknown",
+                                    source_path=str(job.project_dir) if job.project_dir else "future_directions_md",
+                                    domains=fd_manager._infer_domains(fd_text),
+                                    depth_estimate=3,
+                                    priority_score=0.75,
                                 )
-                                if fd_added == 0:
-                                    # Fallback: if structured parsing finds nothing, add as single entry
-                                    title_line = ""
-                                    for line in fd_text.split("\n"):
-                                        line = line.strip()
-                                        if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
-                                            title_line = line[:80]
-                                            break
-                                    if not title_line:
-                                        title_line = f"Future directions from cycle {job.job_id[:8]}"
-                                    fd = FutureDirection(
-                                        id=f"fd_{len(fd_manager._directions):04d}",
-                                        title=title_line,
-                                        description=fd_text,
-                                        source_exp_id=job.job_id,
-                                        source_path="future_directions_md",
-                                        domains=fd_manager._infer_domains(fd_text),
-                                        depth_estimate=3,
-                                        priority_score=0.75,
-                                    )
-                                    fd_manager.add_direction(fd)
-                                    fd_added = 1
-                                print(f"[Continuous] Added {fd_added} future direction(s) from cycle {job.job_id}")
+                                fd_manager.add_direction(fd)
+                                fd_added = 1
+                                print(f"[Continuous] Added 1 future direction from cycle {job.job_id}")
                             else:
                                 print(f"[Continuous] No future directions found for cycle {job.job_id}")
                             for d in fd_manager._directions:
