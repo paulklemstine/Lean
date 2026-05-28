@@ -5,16 +5,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 # Cycle-Birth Concentration — Definitions
 
 Foundational definitions for the theory of cycle-birth distributions
-in weighted graph filtrations. These support theorems establishing
-concentration and universality of tropical critical values.
+in weighted graph filtrations. These definitions support the main theorems
+establishing concentration and universality of tropical critical values.
 
 ## Main Definitions
 
 * `FiltStep` — A single edge-insertion step recording weight and connectivity status.
-* `WFiltration` — A complete weighted graph filtration.
-* `cycleBirthWeights` — The list of edge weights at which cycle births occur.
+* `WFiltration` — A complete weighted graph filtration (vertices + ordered edge insertions).
+* `cycleBirthWeights` — The multiset of edge weights at which cycle births occur.
 * `cycleBirthCountLE` — Cumulative counting function for cycle births ≤ threshold.
-* `HasBoundedDifferences` — Bounded-differences property for concentration.
+* `empiricalCycleBirthCDF` — Normalized empirical CDF of cycle-birth times.
+* `HasBoundedDifferences` — Abstract bounded-differences property for concentration.
 -/
 
 import Mathlib
@@ -36,30 +37,37 @@ structure FiltStep where
 
 /-! ### Weighted Filtration -/
 
-/-- A weighted graph filtration: vertex count + ordered edge insertions. -/
+/-- A weighted graph filtration: vertex count + ordered edge insertions.
+    Each step records the edge weight and whether the endpoints were
+    already in the same connected component at the time of insertion. -/
 structure WFiltration where
   numVerts : ℕ
   steps : List FiltStep
 
-/-- Number of cycle-birth events. -/
+/-- Number of cycle-birth events (edges creating cycles). -/
 def WFiltration.cycleCount (F : WFiltration) : ℕ :=
   F.steps.countP (·.sameComponent)
 
-/-- Number of merge events. -/
+/-- Number of merge events (edges connecting components). -/
 def WFiltration.mergeCount (F : WFiltration) : ℕ :=
   F.steps.countP (fun s => !s.sameComponent)
 
 /-! ### Cycle-Birth Multiset and Counting -/
 
-/-- The list of edge weights at which cycle births occur. -/
+/-- **Cycle-birth weight list.**
+    The list of edge weights at which cycle births occur.
+    These are the **tropical critical values** of the filtration. -/
 def WFiltration.cycleBirthWeights (F : WFiltration) : List ℚ :=
   (F.steps.filter (·.sameComponent)).map (·.weight)
 
-/-- Cumulative cycle-birth counting function: number of cycle births with weight ≤ t. -/
+/-- **Cumulative cycle-birth counting function.**
+    `cycleBirthCountLE F t` = number of cycle births with weight ≤ t.
+    This is the **tropical spectral counting function**. -/
 def WFiltration.cycleBirthCountLE (F : WFiltration) (t : ℚ) : ℕ :=
   F.steps.countP (fun s => s.sameComponent && decide (s.weight ≤ t))
 
-/-- Empirical cycle-birth CDF. -/
+/-- **Empirical cycle-birth CDF.**
+    Normalizes the counting function by total cycle count. -/
 noncomputable def WFiltration.empiricalCycleBirthCDF (F : WFiltration) (t : ℚ) : ℚ :=
   if F.cycleCount = 0 then 0
   else (F.cycleBirthCountLE t : ℚ) / (F.cycleCount : ℚ)
@@ -77,19 +85,24 @@ def WFiltration.flags (F : WFiltration) : List Bool :=
 
 /-! ### Bounded Differences -/
 
-/-- A function on Boolean vectors has bounded differences with constant c. -/
+/-- A function on Boolean vectors has bounded differences with constant `c`.
+    This is the hypothesis needed for McDiarmid's inequality.
+    If `f` satisfies bounded differences with constant 1 in each coordinate,
+    then: P(|f(X) - E[f(X)]| ≥ r) ≤ 2·exp(-2r²/m). -/
 def HasBoundedDifferences (m : ℕ) (f : (Fin m → Bool) → ℤ) (c : ℕ) : Prop :=
   ∀ (x : Fin m → Bool) (i : Fin m) (b : Bool),
     |f x - f (Function.update x i b)| ≤ c
 
 /-! ### Worked Examples -/
 
-/-- Triangle: 3 vertices, weights 1,2,3. First two merge, third creates cycle. -/
+/-- Triangle filtration: 3 vertices, edges with weights 1, 2, 3.
+    First two edges merge, third creates a cycle. -/
 def triangleFiltration : WFiltration where
   numVerts := 3
   steps := [⟨1, false⟩, ⟨2, false⟩, ⟨3, true⟩]
 
-/-- K₄: 4 vertices, weights 1..6. First 3 merge, last 3 create cycles. -/
+/-- K₄ filtration: 4 vertices, edges with weights 1..6.
+    First 3 edges form spanning tree (merges), last 3 create cycles. -/
 def k4Filtration : WFiltration where
   numVerts := 4
   steps := [⟨1, false⟩, ⟨2, false⟩, ⟨3, false⟩, ⟨4, true⟩, ⟨5, true⟩, ⟨6, true⟩]
