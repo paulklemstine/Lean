@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2008 of the highest-quality
+A curated collection of 2009 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2008
+Total files: 2009
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -325,6 +325,7 @@ import FINAL.Bridges.CanonicalPathBisimulation
 import FINAL.Bridges.Caratheodory
 import FINAL.Bridges.CartesianFootprintBound
 import FINAL.Bridges.CategoricalBridges
+import FINAL.Bridges.CategoricalCoherence
 import FINAL.Bridges.CategoricalTropicalUltrametric
 import FINAL.Bridges.CategorifiedShannonTheory
 import FINAL.Bridges.CausalClosure
