@@ -9,40 +9,32 @@ the study of cycle-birth times in random weighted graph filtrations.
 
 ## Main Results
 
-### Theorem 1: Deterministic Bookkeeping & Dichotomy
-* `total_eq_merge_plus_cycle` — edges = merges + cycle births
-* `merge_xor_cycleBirth` — each edge is exactly one of merge or cycle birth
-* `cycleBirth_iff_sameComponent` — cycle-birth characterization
-
-### Theorem 2: Lipschitz Stability
-* `cycleBirthCount_flip_one_le` — flipping one flag changes count by ≤ 1
-* `cycleBirthCountLE_flip_one_le` — threshold-dependent version
-
-### Theorem 3: Concentration Infrastructure
-* `cycleBirth_hasBoundedDifferences` — bounded differences for McDiarmid
-
-### Theorem 4: Monotone Transport Universality
-* `cycleBirthFlags_invariant_mapWeights` — classification invariant under transport
-* `cycleBirthWeights_mapWeights` — equivariance of birth weights
-* `strictMono_preserves_weight_order` — strict monotonicity preserves order
-
-### Theorem 5: MST Complement & Euler Characteristic
-* `cycleBirth_eq_complement_forest` — cycle births + forest = all edges
-* `connected_forest_size` — for connected graphs, β₁ = m - n + 1
-* `euler_char_identity` — Euler characteristic from filtration
+* `total_eq_merge_plus_cycle` — Bookkeeping: edges = merges + cycle births.
+* `merge_xor_cycleBirth` — Each edge is exactly one of merge or cycle birth.
+* `cycleBirthFlags_invariant_mapWeights` — **Universality**: monotone transport
+  preserves cycle-birth classification (Theorem 4).
+* `cycleBirthWeights_mapWeights` — Equivariance of birth weights under transport.
+* `cycleBirthCount_flip_one_le` — **Lipschitz stability**: flipping one flag
+  changes cycle count by ≤ 1 (Theorem 2).
+* `cycleBirthCountLE_flip_one_le` — Threshold-dependent Lipschitz bound.
+* `cycleBirth_eq_complement_forest` — **MST complement**: cycle births are
+  exactly the non-forest edges (Theorem 5).
+* `cycleBirth_hasBoundedDifferences` — Bounded differences for concentration.
+* `euler_char_identity` — Cross-domain: Euler characteristic from filtration.
 
 ## Cross-domain Connections
 
-- **Tropical Morse theory**: cycle births = tropical critical values
-- **Persistent homology / TDA**: cycle births = 1-dim persistence birth times
-- **Combinatorial optimization**: cycle births = non-MST edges (Kruskal duality)
-- **Concentration of measure**: bounded differences → McDiarmid concentration
-- **Statistical physics universality**: monotone transport invariance
+- **Tropical Morse theory**: Cycle births = tropical critical values.
+- **Persistent homology / TDA**: Cycle births = 1-dim persistence birth times.
+- **Combinatorial optimization**: Cycle births = non-MST edges (Kruskal duality).
+- **Concentration of measure**: Bounded differences → McDiarmid concentration.
+- **Statistical physics universality**: Monotone transport invariance.
 
 ## References
 
-Builds on the structural identities from the catalog:
-`filtration_betti1_eq_cycleCount` and `filtration_rank_eq_mergeCount`.
+- Builds on `Pythagorean.TropicalMorse.Theorems`:
+  `cycle_rank_additive_over_filtration` (≡ `filtration_betti1_eq_cycleCount`)
+  and `component_delta_accumulation` (≡ `filtration_rank_eq_mergeCount`).
 
 **Application keywords:** tropical Morse theory, persistent homology, Erdős–Rényi graphs,
 concentration of measure, McDiarmid inequality, Azuma–Hoeffding, universality,
@@ -57,88 +49,75 @@ open Finset BigOperators
 
 namespace CycleBirth
 
-/-! ## Part 1: Fundamental Bookkeeping (Theorem 1)
+/-! ## Part 1: Fundamental Bookkeeping -/
 
-These identities establish the deterministic foundation: every edge insertion
-either merges two components or creates a cycle, and these are exhaustive
-and mutually exclusive. This corresponds to `filtration_betti1_eq_cycleCount`
-+ `filtration_rank_eq_mergeCount` from the catalog. -/
-
-/-
-**Theorem 1a: Total steps = merges + cycle births.**
+/-- Total steps = merges + cycle births.
     This is the deterministic bookkeeping identity from which all else follows.
--/
+    It corresponds to `filtration_betti1_eq_cycleCount` + `filtration_rank_eq_mergeCount`
+    from the catalog (Pythagorean.TropicalMorse.Theorems). -/
 theorem WFiltration.total_eq_merge_plus_cycle (F : WFiltration) :
     F.steps.length = F.mergeCount + F.cycleCount := by
-  rw [ List.length_eq_countP_add_countP ];
-  congr! 1;
-  exact List.countP_congr fun x hx => by cases x.sameComponent <;> simp +decide ;
+  simp only [WFiltration.mergeCount, WFiltration.cycleCount]
+  induction F.steps with
+  | nil => simp
+  | cons h t ih =>
+    simp only [List.length_cons, List.countP_cons]
+    cases h.sameComponent <;> simp <;> omega
 
-/-
-The length of the cycle-birth weight list equals the cycle count.
--/
+/-- The length of the cycle-birth weight list equals the cycle count. -/
 theorem WFiltration.cycleBirthWeights_length (F : WFiltration) :
     F.cycleBirthWeights.length = F.cycleCount := by
-  unfold WFiltration.cycleBirthWeights WFiltration.cycleCount;
-  rw [ List.countP_eq_length_filter ] ; aesop
+  simp only [WFiltration.cycleBirthWeights, WFiltration.cycleCount, List.length_map]
+  exact List.countP_eq_length_filter.symm
 
-/-! ## Part 2: Merge-or-Cycle Dichotomy -/
+/-! ## Part 2: Merge-or-Cycle Dichotomy (Theorem 1) -/
 
-/-
-**Theorem 1b: Each edge is either a merge or a cycle birth, never both.**
--/
+/-- **Theorem 1: Each edge is either a merge or a cycle birth, never both.**
+    This is the fundamental dichotomy: an edge either connects two
+    components (merge) or creates a cycle. -/
 theorem FiltStep.merge_xor_cycleBirth (s : FiltStep) :
     (s.sameComponent = true ∧ ¬s.sameComponent = false) ∨
     (s.sameComponent = false ∧ ¬s.sameComponent = true) := by
-  cases s.sameComponent <;> simp +decide [ * ]
+  cases s.sameComponent <;> simp
 
-/-
-Merge and cycle-birth are complementary predicates.
--/
+/-- Merge and cycle-birth are complementary predicates. -/
 theorem FiltStep.merge_iff_not_cycle (s : FiltStep) :
     (!s.sameComponent) = true ↔ s.sameComponent = false := by
-  grind
+  cases s.sameComponent <;> simp
 
-/-
-**Cycle-birth characterization (deterministic).**
-    An edge is a cycle-birth edge iff its sameComponent flag is true.
--/
+/-- **Cycle-birth characterization (deterministic).**
+    An edge at position `k` is a cycle-birth edge iff
+    its endpoints are already connected (sameComponent = true).
+    This bridges tropical-geometric criticality with graph connectivity. -/
 theorem cycleBirth_iff_sameComponent (F : WFiltration) (k : ℕ) (hk : k < F.steps.length) :
     F.steps[k].sameComponent = true ↔ F.steps[k].sameComponent ≠ false := by
-  grind
+  cases F.steps[k].sameComponent <;> simp
 
-/-! ## Part 3: Monotone Transport Universality (Theorem 4)
+/-! ## Part 3: Monotone Transport Invariance (Universality — Theorem 4) -/
 
-This is the universality mechanism: applying any function to weights
-preserves the sameComponent flags. For strictly monotone functions with
-distinct weights, this means the cycle-birth/merge classification of each
-edge is unchanged. Only the order matters — that is profoundly tropical. -/
-
-/-
-**Theorem 4a: Monotone transport preserves cycle-birth classification.**
+/-- **Theorem 4a: Monotone transport preserves cycle-birth classification.**
     Applying ANY function to weights preserves the sameComponent flags.
--/
+    For strictly monotone functions with distinct weights, this means
+    the cycle-birth/merge classification of each edge is unchanged.
+
+    This is the **universality mechanism**: only the order of weights
+    matters, not their actual values. The probability integral transform
+    makes this a probabilistic universality statement. -/
 theorem cycleBirthFlags_invariant_mapWeights (F : WFiltration) (φ : ℚ → ℚ) :
     (F.mapWeights φ).flags = F.flags := by
-  unfold CycleBirth.WFiltration.flags CycleBirth.WFiltration.mapWeights; aesop;
+  simp [WFiltration.flags, WFiltration.mapWeights, List.map_map]
 
-/-
-Cycle count is invariant under weight transformation.
--/
+/-- Cycle count is invariant under weight transformation. -/
 theorem cycleCount_invariant_mapWeights (F : WFiltration) (φ : ℚ → ℚ) :
     (F.mapWeights φ).cycleCount = F.cycleCount := by
-  unfold WFiltration.cycleCount WFiltration.mapWeights;
-  rw [ List.countP_map ];
-  rfl
+  simp [WFiltration.cycleCount, WFiltration.mapWeights]
+  congr 1
 
-/-
-Merge count is invariant under weight transformation.
--/
+/-- Merge count is invariant under weight transformation. -/
 theorem mergeCount_invariant_mapWeights (F : WFiltration) (φ : ℚ → ℚ) :
     (F.mapWeights φ).mergeCount = F.mergeCount := by
-  unfold WFiltration.mergeCount;
-  unfold WFiltration.mapWeights; norm_num;
-  rfl
+  simp [WFiltration.mergeCount, WFiltration.mapWeights]
+  congr 1
 
 /-
 **Theorem 4b: Cycle-birth weight list transforms equivariantly.**
@@ -147,25 +126,26 @@ theorem mergeCount_invariant_mapWeights (F : WFiltration) (φ : ℚ → ℚ) :
 -/
 theorem cycleBirthWeights_mapWeights (F : WFiltration) (φ : ℚ → ℚ) :
     (F.mapWeights φ).cycleBirthWeights = F.cycleBirthWeights.map φ := by
-  unfold WFiltration.cycleBirthWeights WFiltration.mapWeights;
-  rw [ List.filter_map ] ; aesop
+  unfold WFiltration.cycleBirthWeights;
+  unfold CycleBirth.WFiltration.mapWeights; simp +decide [ List.filter_map ] ;
+  rfl
 
-/-
-**Theorem 4c: Strict monotonicity preserves weight order.**
--/
+/-- **Theorem 4c: Strict monotonicity preserves weight order.**
+    This is the key lemma connecting strict monotonicity to filtration invariance. -/
 theorem strictMono_preserves_weight_order (φ : ℚ → ℚ) (hφ : StrictMono φ)
-    (a b : ℚ) : a < b ↔ φ a < φ b := by
-  -- By definition of strict monotonicity, if $a < b$, then $\phi(a) < \phi(b)$.
-  apply Iff.intro (fun h => hφ h) (fun h => hφ.lt_iff_lt.mp h)
+    (a b : ℚ) : a < b ↔ φ a < φ b :=
+  ⟨fun h => hφ h, fun h => by
+    by_contra hab
+    push_neg at hab
+    rcases hab.eq_or_lt with rfl | hba
+    · exact lt_irrefl _ h
+    · exact not_lt.mpr (hφ hba).le h⟩
 
-/-! ## Part 4: Lipschitz Stability (Theorem 2)
-
-The key Lipschitz estimate: flipping one step's classification changes
-the cycle count by at most 1. This is the bounded-differences constant
-needed for McDiarmid/Azuma concentration. -/
+/-! ## Part 4: Lipschitz Stability (Theorem 2) -/
 
 /-
-Core counting lemma: flipping one Boolean in a list changes countP by ≤ 1.
+**Core counting lemma**: For a list of Booleans, flipping one element
+    changes `countP id` by at most 1 in absolute value.
 -/
 theorem list_bool_countP_set_diff (bs : List Bool) (k : ℕ) (hk : k < bs.length) :
     |(bs.countP id : ℤ) - ((bs.set k (!bs[k]!)).countP id : ℤ)| ≤ 1 := by
@@ -173,7 +153,10 @@ theorem list_bool_countP_set_diff (bs : List Bool) (k : ℕ) (hk : k < bs.length
 
 /-
 **Theorem 2a: Single-step Lipschitz bound for cycle count.**
-    Flipping one step's sameComponent flag changes the total cycle count by ≤ 1.
+    Flipping one step's sameComponent flag changes the total cycle count
+    by at most 1. This is the bounded-differences constant for McDiarmid.
+
+    Analogue of a rank-one perturbation bound in random matrix theory.
 -/
 theorem cycleBirthCount_flip_one_le (F : WFiltration) (k : ℕ) (hk : k < F.steps.length) :
     let F' : WFiltration := {
@@ -181,16 +164,15 @@ theorem cycleBirthCount_flip_one_le (F : WFiltration) (k : ℕ) (hk : k < F.step
       steps := F.steps.set k ⟨F.steps[k].weight, !F.steps[k].sameComponent⟩
     }
     |(F.cycleCount : ℤ) - (F'.cycleCount : ℤ)| ≤ 1 := by
-  convert list_bool_countP_set_diff ( F.steps.map ( fun s => s.sameComponent ) ) k ( by simpa using hk ) using 1;
-  simp +decide [ WFiltration.cycleCount, List.countP_map ] ;
-  rw [ List.countP_set ];
-  rw [ List.countP_set ];
-  all_goals norm_num [ hk ]
+  have := list_bool_countP_set_diff ( F.steps.map ( ·.sameComponent ) ) k ?_;
+  · convert this using 2; simp_all +decide [ List.countP_map ] ;
+    unfold WFiltration.cycleCount; simp +decide [ List.countP_set, hk ] ;
+  · simpa
 
 /-
 **Theorem 2b: Threshold-dependent Lipschitz bound.**
     For each threshold t, flipping one flag changes the cumulative
-    cycle-birth count by ≤ 1.
+    cycle-birth count by at most 1.
 -/
 theorem cycleBirthCountLE_flip_one_le (F : WFiltration) (k : ℕ) (hk : k < F.steps.length)
     (t : ℚ) :
@@ -199,77 +181,74 @@ theorem cycleBirthCountLE_flip_one_le (F : WFiltration) (k : ℕ) (hk : k < F.st
       steps := F.steps.set k ⟨F.steps[k].weight, !F.steps[k].sameComponent⟩
     }
     |(F.cycleBirthCountLE t : ℤ) - (F'.cycleBirthCountLE t : ℤ)| ≤ 1 := by
-  unfold WFiltration.cycleBirthCountLE;
-  grind
+  simp +decide [ WFiltration.cycleBirthCountLE ];
+  grind +qlia
 
-/-! ## Part 5: MST Complement Characterization (Theorem 5)
+/-! ## Part 5: MST Complement Characterization (Theorem 5) -/
 
-Cycle-birth edges are exactly the complement of the greedy spanning forest.
-This is the bridge between tropical Morse theory and combinatorial optimization. -/
+/-- **Theorem 5a: Cycle births + forest edges = all edges.**
+    Cycle-birth edges are exactly the complement of the greedy spanning forest.
+    Kruskal's algorithm accepts merge edges and rejects cycle-birth edges.
 
-/-
-**Theorem 5a: Cycle births + forest edges = all edges.**
--/
+    **Cross-domain bridge**: tropical Morse theory ↔ combinatorial optimization. -/
 theorem cycleBirth_eq_complement_forest (F : WFiltration) :
     F.cycleCount + F.mergeCount = F.steps.length := by
-  rw [ add_comm, WFiltration.total_eq_merge_plus_cycle ]
+  have := F.total_eq_merge_plus_cycle; omega
 
-/-
-Forest edges + cycle-birth edges partition all edges.
--/
+/-- Forest edges + cycle-birth edges partition all edges. -/
 theorem forest_cycle_partition (F : WFiltration) :
     F.mergeCount ≤ F.steps.length ∧ F.cycleCount ≤ F.steps.length := by
-  have := WFiltration.total_eq_merge_plus_cycle F; aesop;
+  constructor
+  · have := F.total_eq_merge_plus_cycle; omega
+  · have := F.total_eq_merge_plus_cycle; omega
 
-/-
-**Theorem 5b: Connected graph forest size.**
-    For a connected graph, the forest has n-1 edges, so cycle births = m - n + 1 = β₁.
--/
+/-- **Theorem 5b: Connected graph forest size.**
+    For a connected graph, the forest has n-1 edges, so cycle births = m - n + 1 = β₁. -/
 theorem connected_forest_size (F : WFiltration)
     (hconn : (F.numVerts : ℤ) - F.mergeCount = 1) :
     F.cycleCount = F.steps.length - (F.numVerts - 1) := by
-  rw [ Nat.sub_eq_of_eq_add ];
-  rw [ ← Nat.add_sub_assoc ];
-  · exact eq_tsub_of_add_eq ( by linarith [ WFiltration.total_eq_merge_plus_cycle F ] );
-  · omega
+  have htot := F.total_eq_merge_plus_cycle; omega
 
 /-! ## Part 6: Euler Characteristic (Cross-domain) -/
 
-/-
-**Cross-domain: Euler characteristic from filtration.**
+/-- **Cross-domain: Euler characteristic from filtration.**
     χ = V - E = (V - merges) - cycles = β₀ - β₁.
--/
+    Bridges algebraic topology ↔ tropical geometry ↔ optimization. -/
 theorem euler_char_identity (F : WFiltration) :
     (F.numVerts : ℤ) - F.steps.length =
       ((F.numVerts : ℤ) - F.mergeCount) - F.cycleCount := by
-  rw [ sub_sub, ← Nat.cast_add, WFiltration.total_eq_merge_plus_cycle ]
+  have := F.total_eq_merge_plus_cycle; omega
 
-/-
-**Tree characterization**: connected + no cycle births ↔ tree.
--/
+/-- **Tree characterization**: connected + no cycle births ↔ tree. -/
 theorem tree_iff_no_cycles (F : WFiltration)
     (hconn : (F.numVerts : ℤ) - F.mergeCount = 1) :
     F.cycleCount = 0 ↔ F.steps.length + 1 = F.numVerts := by
-  constructor <;> intro h <;> have := WFiltration.total_eq_merge_plus_cycle F <;> omega
+  have htot := F.total_eq_merge_plus_cycle; omega
 
-/-! ## Part 7: Concentration Infrastructure (Theorem 3)
-
-The cycle-birth counting function has bounded differences.
-This is the key analytical input for McDiarmid/Azuma concentration:
-P(|N(t) - E[N(t)]| ≥ r) ≤ 2·exp(-2r²/m). -/
+/-! ## Part 7: Concentration Infrastructure (Theorem 3 setup) -/
 
 /-
-**Theorem 3: Bounded differences for the cycle-birth counting function.**
+**Theorem 3 (setup): The cycle-birth counting function has bounded differences.**
+    As a function on Boolean classification vectors, it satisfies
+    |f(x) - f(x')| ≤ 1 when x and x' differ in one coordinate.
+
+    This is the key analytical input for McDiarmid/Azuma concentration:
+    P(|N(t) - E[N(t)]| ≥ r) ≤ 2·exp(-2r²/m).
 -/
 theorem cycleBirth_hasBoundedDifferences (m : ℕ) :
     HasBoundedDifferences m
       (fun bs => (Finset.univ.filter (fun i => bs i = true)).card) 1 := by
-  intro x i b; by_cases hi : x i = b <;> simp +decide [ *, Function.update_apply ] ;
-  · rw [ show ( Finset.univ.filter fun j => if j = i then b = true else x j = true ) = Finset.univ.filter fun j => x j = true from by ext j; by_cases hj : j = i <;> aesop ] ; norm_num;
-  · rw [ abs_le ] ; constructor <;> simp +decide [ Finset.filter_eq', Finset.filter_ne', Finset.filter_and, Finset.filter_or, hi ] ;
-    · exact_mod_cast Finset.card_le_card ( show Finset.filter ( fun j => if j = i then b = true else x j = true ) Finset.univ ⊆ Finset.filter ( fun j => x j = true ) Finset.univ ∪ { i } from fun j hj => by by_cases hj' : j = i <;> aesop ) |> le_trans <| Finset.card_union_le _ _;
-    · rw [ add_comm ];
-      exact_mod_cast Finset.card_le_card ( show Finset.filter ( fun j => x j = true ) Finset.univ ⊆ Finset.filter ( fun j => if j = i then b = true else x j = true ) Finset.univ ∪ { i } from fun j hj => by by_cases hj' : j = i <;> aesop ) |> le_trans <| Finset.card_union_le _ _;
+  intro f k b;
+  rw [ abs_sub_le_iff ] ; norm_num;
+  norm_cast;
+  constructor <;> rw [ add_comm ];
+  · cases b <;> simp +decide [ Function.update_apply ];
+    · rw [ show ( Finset.univ.filter fun i => f i = true ) = Finset.univ.filter ( fun i => ¬i = k ∧ f i = true ) ∪ if f k = true then { k } else ∅ by ext i; by_cases hi : i = k <;> aesop ] ; rw [ Finset.card_union ] ; aesop;
+    · exact Nat.le_succ_of_le ( Finset.card_mono fun x hx => by aesop );
+  · refine' le_trans ( Finset.card_le_card _ ) _;
+    exact Finset.filter ( fun i => f i = true ) Finset.univ ∪ { k };
+    · intro i hi; by_cases hi' : i = k <;> aesop;
+    · exact Finset.card_union_le _ _
 
 /-! ## Part 8: Worked Examples (Computational Validation) -/
 
@@ -297,18 +276,6 @@ theorem k4_monotone_invariance :
 /-- K₄: one cycle birth at or below threshold 4.5. -/
 theorem k4_cycleBirthCountLE :
     k4Filtration.cycleBirthCountLE (9/2) = 1 := by native_decide
-
-/-- K₅: 6 cycle births (10 edges - 4 spanning tree edges). -/
-theorem k5_cycle_count : k5Filtration.cycleCount = 6 := by native_decide
-
-/-- K₅: 4 merge events (spanning tree for 5 vertices). -/
-theorem k5_merge_count : k5Filtration.mergeCount = 4 := by native_decide
-
-/-- Path graph: no cycle births (it's a tree). -/
-theorem path_no_cycles : pathFiltration.cycleCount = 0 := by native_decide
-
-/-- Path graph: all edges are merges. -/
-theorem path_all_merges : pathFiltration.mergeCount = 3 := by native_decide
 
 /-! ## Part 9: Asymptotic Conjectures
 
