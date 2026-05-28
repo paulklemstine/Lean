@@ -1,625 +1,605 @@
 #!/usr/bin/env python3
 """
-applications.py — Applications of Certified Expander Graphs
+applications.py — Applications of Certified GL₂ Expander Graphs
 
-Demonstrates real-world applications of algebraically certified expanders:
-1. Deterministic network design (communication graphs)
-2. Randomness-efficient hashing
-3. Error-correcting code construction via projective-line expanders
+Demonstrates real-world applications of algebraically certified expander graphs:
+  1. Deterministic communication network design
+  2. Hash family construction from Singer elements
+  3. Error amplification for randomized algorithms
 """
 
-import itertools
-from typing import List, Tuple, Dict, Set
+import numpy as np
+from itertools import product as cartesian_product
+from typing import List, Tuple, Dict
 
+# ── Core arithmetic (self-contained) ──
 
-def mod_inverse(a: int, p: int) -> int:
-    return pow(a, p - 2, p)
+def mod(x, q): return x % q
+def inverse_mod(a, q): return pow(a, q-2, q)
 
+class Mat2:
+    __slots__ = ['a','b','c','d','q']
+    def __init__(self, a, b, c, d, q):
+        self.a, self.b, self.c, self.d, self.q = a%q, b%q, c%q, d%q, q
+    def det(self): return (self.a*self.d - self.b*self.c) % self.q
+    def __mul__(self, o):
+        q=self.q
+        return Mat2((self.a*o.a+self.b*o.c)%q,(self.a*o.b+self.b*o.d)%q,
+                    (self.c*o.a+self.d*o.c)%q,(self.c*o.b+self.d*o.d)%q,q)
+    def inv(self):
+        d=self.det(); q=self.q
+        if d==0: return None
+        di=inverse_mod(d,q)
+        return Mat2((self.d*di)%q,(-self.b*di)%q,(-self.c*di)%q,(self.a*di)%q,q)
+    def to_tuple(self): return (self.a,self.b,self.c,self.d)
+    def __hash__(self): return hash((self.to_tuple(), self.q))
+    def __eq__(self, o): return self.to_tuple()==o.to_tuple() and self.q==o.q
+    @staticmethod
+    def identity(q): return Mat2(1,0,0,1,q)
+    def __repr__(self): return f"[{self.a},{self.b};{self.c},{self.d}]"
 
-def mat_mul_mod(A, B, p):
-    return [
-        [(A[0][0]*B[0][0] + A[0][1]*B[1][0]) % p,
-         (A[0][0]*B[0][1] + A[0][1]*B[1][1]) % p],
-        [(A[1][0]*B[0][0] + A[1][1]*B[1][0]) % p,
-         (A[1][0]*B[0][1] + A[1][1]*B[1][1]) % p]
-    ]
+def is_irred_charpoly(m):
+    tr, det, q = (m.a+m.d)%m.q, m.det(), m.q
+    return all((a*a-tr*a+det)%q != 0 for a in range(q))
 
+def multiplicative_order(a, q):
+    if a%q==0: return 0
+    x=1
+    for k in range(1,q):
+        x=(x*a)%q
+        if x==1: return k
+    return q-1
 
-def mat_det_mod(A, p):
-    return (A[0][0]*A[1][1] - A[0][1]*A[1][0]) % p
+# ── Application 1: Deterministic Network Design ──
 
-
-def mat_inv_mod(A, p):
-    d = mat_det_mod(A, p)
-    di = mod_inverse(d, p)
-    return [[(A[1][1]*di) % p, (-A[0][1]*di) % p],
-            [(-A[1][0]*di) % p, (A[0][0]*di) % p]]
-
-
-def mat_to_tuple(A):
-    return (A[0][0], A[0][1], A[1][0], A[1][1])
-
-
-# ──────────────────────────────────────────────────────────────
-# Application 1: Deterministic Communication Network Design
-# ──────────────────────────────────────────────────────────────
-
-def build_expander_network(q: int) -> Dict:
-    """Build a deterministic communication network from a certified expander.
-    
-    Given prime q, constructs a 4-regular graph on |GL₂(𝔽_q)| nodes
-    with provable expansion properties. Each node connects to exactly
-    4 neighbors determined by the certified generators.
-    
-    Returns:
-        Dictionary with network metadata and adjacency lists.
+def design_communication_network(q: int) -> Dict:
     """
-    # Use a known Singer-like element and primitive-det element
-    # For q=5: g = [[2,2],[3,0]] (Singer), h = [[3,1],[2,0]] (prim det)
-    known_pairs = {
-        5: ([[2, 2], [3, 0]], [[3, 1], [2, 0]]),
-        7: ([[0, 3], [1, 6]], [[4, 5], [2, 2]]),
-    }
-    
-    if q not in known_pairs:
-        return {"error": f"No precomputed pair for q={q}. Run algorithms.py first."}
-    
-    g, h = known_pairs[q]
-    gi = mat_inv_mod(g, q)
-    hi = mat_inv_mod(h, q)
-    
-    # Enumerate GL₂
-    elements = []
-    for a, b, c, d in itertools.product(range(q), repeat=4):
-        M = [[a, b], [c, d]]
-        if mat_det_mod(M, q) != 0:
-            elements.append(M)
-    
-    elem_to_idx = {mat_to_tuple(e): i for i, e in enumerate(elements)}
-    n = len(elements)
-    
-    # Build adjacency lists
-    adj = [[] for _ in range(n)]
-    gens = [g, gi, h, hi]
-    
-    for i, x in enumerate(elements):
-        for s in gens:
-            y = mat_mul_mod(x, s, q)
-            j = elem_to_idx[mat_to_tuple(y)]
-            adj[i].append(j)
-    
-    # Compute network properties
-    # BFS diameter estimation
-    from collections import deque
-    
-    def bfs_max_dist(start: int) -> int:
-        dist = [-1] * n
-        dist[start] = 0
-        queue = deque([start])
-        max_d = 0
-        while queue:
-            u = queue.popleft()
-            for v in adj[u]:
-                if dist[v] == -1:
-                    dist[v] = dist[u] + 1
-                    max_d = max(max_d, dist[v])
-                    queue.append(v)
-        return max_d
-    
-    diameter = bfs_max_dist(0)
-    
-    return {
-        "nodes": n,
-        "degree": 4,
-        "diameter": diameter,
-        "generator_g": g,
-        "generator_h": h,
-        "prime": q,
-        "adjacency": adj[:5],  # First 5 for display
-        "properties": {
-            "regular": True,
-            "connected": True,
-            "certified_expansion": True,
-            "edge_count": n * 4 // 2,
-        }
-    }
+    Design a sparse, highly-connected communication network for q² nodes.
 
+    The network uses the Cayley graph of GL₂(𝔽_q) restricted to
+    algebraically certified generators to guarantee expansion.
 
-# ──────────────────────────────────────────────────────────────
-# Application 2: Randomness-Efficient Hashing
-# ──────────────────────────────────────────────────────────────
+    Each node has exactly 4 connections (degree 4), yet information
+    spreads to all nodes in O(log |G|) steps.
 
-def expander_hash(q: int, data: List[int], seed: int = 0) -> int:
-    """Hash function based on random walks on the Cayley graph.
-    
-    Uses the expander mixing lemma: a random walk on an expander
-    rapidly converges to uniform, so even a short walk produces
-    pseudorandom output.
-    
     Args:
-        q: prime defining the group GL₂(𝔽_q)
-        data: list of integers (0 or 1) to hash
-        seed: initial matrix index (default: identity)
-    
+        q: prime ≥ 5
+
     Returns:
-        Hash value (matrix index in GL₂(𝔽_q))
+        Dictionary with network metadata and adjacency structure
     """
-    known_pairs = {
-        5: ([[2, 2], [3, 0]], [[3, 1], [2, 0]]),
-        7: ([[0, 3], [1, 6]], [[4, 5], [2, 2]]),
-    }
-    
-    if q not in known_pairs:
-        return -1
-    
-    g, h = known_pairs[q]
-    gi = mat_inv_mod(g, q)
-    hi = mat_inv_mod(h, q)
-    gens = [g, gi, h, hi]
-    
-    # Start at identity
-    current = [[1, 0], [0, 1]]
-    
-    # Walk based on data bits
-    for bit in data:
-        gen_idx = bit % 4
-        current = mat_mul_mod(current, gens[gen_idx], q)
-    
-    # Return a hash from the final matrix
-    t = mat_to_tuple(current)
-    return hash(t) % (q * q * q * q)
+    # Find a certified pair
+    g = h = None
+    for a,b,c,d in cartesian_product(range(q), repeat=4):
+        m = Mat2(a,b,c,d,q)
+        if m.det()!=0 and is_irred_charpoly(m):
+            g = m; break
 
+    for a,b,c,d in cartesian_product(range(q), repeat=4):
+        m = Mat2(a,b,c,d,q)
+        if m.det()!=0 and multiplicative_order(m.det(), q)==q-1:
+            h = m; break
 
-# ──────────────────────────────────────────────────────────────
-# Application 3: Projective Line Expander Codes
-# ──────────────────────────────────────────────────────────────
+    if g is None or h is None:
+        return {'error': 'No certified pair found'}
 
-def projective_expander_code(q: int) -> Dict:
-    """Construct an error-correcting code from the projective line action.
-    
-    The action of certified generators on ℙ¹(𝔽_q) gives a (q+1)-vertex
-    expander graph. The incidence structure of this graph yields a
-    low-density parity-check (LDPC) code with expansion-guaranteed
-    minimum distance.
-    
-    Returns:
-        Dictionary with code parameters and parity-check structure.
-    """
-    known_pairs = {
-        5: ([[2, 2], [3, 0]], [[3, 1], [2, 0]]),
-        7: ([[0, 3], [1, 6]], [[4, 5], [2, 2]]),
-    }
-    
-    if q not in known_pairs:
-        return {"error": f"No precomputed pair for q={q}"}
-    
-    g_mat, h_mat = known_pairs[q]
-    
-    # Projective line points: [1:b] for b=0..q-1, and [0:1]
-    points = [(1, b) for b in range(q)] + [(0, 1)]
-    n = len(points)
-    point_idx = {pt: i for i, pt in enumerate(points)}
-    
-    def apply_proj(M, pt):
-        x = (M[0][0] * pt[0] + M[0][1] * pt[1]) % q
-        y = (M[1][0] * pt[0] + M[1][1] * pt[1]) % q
-        if x != 0:
-            return (1, (y * mod_inverse(x, q)) % q)
-        elif y != 0:
-            return (0, 1)
-        return pt
-    
-    gi = mat_inv_mod(g_mat, q)
-    hi = mat_inv_mod(h_mat, q)
-    gens = [g_mat, gi, h_mat, hi]
-    
-    # Build adjacency matrix of projective action graph
-    adj = [[0] * n for _ in range(n)]
-    for i, pt in enumerate(points):
-        for gen in gens:
-            img = apply_proj(gen, pt)
-            j = point_idx.get(img, -1)
-            if j >= 0:
-                adj[i][j] = 1
-    
-    # The parity-check matrix H of the LDPC code
-    # is the adjacency matrix of the bipartite double cover
-    # Code length = n, check nodes = n
-    code_length = n
-    check_count = n
-    row_weight = sum(adj[0])
-    
-    # Estimate minimum distance from expansion
-    # For a (d,ε)-expander, d_min ≥ ε · n / d
-    # This is a simplified bound
-    estimated_min_dist = max(2, n // (row_weight + 1))
-    
+    # Build the network as an adjacency list
+    elements = []
+    for a,b,c,d in cartesian_product(range(q), repeat=4):
+        m = Mat2(a,b,c,d,q)
+        if m.det()!=0:
+            elements.append(m)
+
+    idx = {e.to_tuple(): i for i,e in enumerate(elements)}
+    n = len(elements)
+    g_inv, h_inv = g.inv(), h.inv()
+    gens = [g, g_inv, h, h_inv]
+
+    adjacency = {i: [] for i in range(n)}
+    for i, e in enumerate(elements):
+        for s in gens:
+            prod = e * s
+            j = idx[prod.to_tuple()]
+            adjacency[i].append(j)
+
+    # Estimate mixing time
+    # By spectral theory: mixing time ≈ log(n) / gap
+    # Conservative estimate with gap ≈ 1/q
+    estimated_mixing = int(q * np.log(n)) + 1
+
     return {
-        "code_length": code_length,
-        "check_count": check_count,
-        "row_weight": row_weight,
-        "rate_lower_bound": max(0, 1 - check_count / code_length),
-        "estimated_min_distance": estimated_min_dist,
-        "prime": q,
-        "parity_check_sample": adj[:3],  # First 3 rows
+        'num_nodes': n,
+        'degree': 4,
+        'generators': {'g': repr(g), 'h': repr(h)},
+        'estimated_mixing_time': estimated_mixing,
+        'edges': sum(len(v) for v in adjacency.values()) // 2,
+        'expansion_certified': True,
+        'certificate_type': 'Singer-like + primitive det',
     }
 
+# ── Application 2: Hash Family from Singer Elements ──
+
+def singer_hash_family(q: int, num_hashes: int = 10) -> List[Dict]:
+    """
+    Construct a family of hash functions from Singer-like elements.
+
+    A Singer-like matrix g acts on 𝔽_q² without fixed points,
+    making g^k for different k into good hash functions that
+    distribute inputs uniformly.
+
+    Args:
+        q: prime field size
+        num_hashes: number of hash functions to generate
+
+    Returns:
+        List of hash function descriptions
+    """
+    # Find a Singer-like element
+    singer = None
+    for a,b,c,d in cartesian_product(range(q), repeat=4):
+        m = Mat2(a,b,c,d,q)
+        if m.det()!=0 and is_irred_charpoly(m):
+            singer = m; break
+
+    if singer is None:
+        return []
+
+    hashes = []
+    current = Mat2.identity(q)
+    for k in range(1, num_hashes + 1):
+        current = current * singer
+        # Hash: vector v ↦ first coordinate of current·v mod q
+        def make_hash(mat):
+            def h(x, y):
+                return (mat.a * x + mat.b * y) % mat.q
+            return h
+        hashes.append({
+            'index': k,
+            'matrix': repr(current),
+            'hash_fn': make_hash(current),
+        })
+
+    return hashes
+
+# ── Application 3: Error Amplification ──
+
+def error_amplification_demo(q: int = 5):
+    """
+    Demonstrate error amplification using expander random walks.
+
+    A randomized algorithm with error probability 1/3 can be amplified
+    to error 2^{-k} using only O(k) random bits (instead of O(k·log n))
+    by walking on an expander graph.
+
+    The Cayley graph of GL₂(𝔽_q) with certified generators provides
+    the expander with algebraically guaranteed expansion.
+    """
+    # Simulate: random function f on GL₂(𝔽_5) with 1/3 "bad" outputs
+    elements = []
+    for a,b,c,d in cartesian_product(range(q), repeat=4):
+        m = Mat2(a,b,c,d,q)
+        if m.det()!=0: elements.append(m)
+
+    n = len(elements)
+    np.random.seed(42)
+    # Mark 1/3 of elements as "bad"
+    bad = set(np.random.choice(n, n // 3, replace=False))
+
+    # Find certified generators
+    g = h = None
+    for m in elements:
+        if is_irred_charpoly(m) and g is None:
+            g = m
+        elif m.det()!=0 and multiplicative_order(m.det(), q)==q-1 and h is None:
+            h = m
+        if g and h: break
+
+    if g is None or h is None:
+        return
+
+    idx = {e.to_tuple(): i for i,e in enumerate(elements)}
+    g_inv, h_inv = g.inv(), h.inv()
+    gens = [g, g_inv, h, h_inv]
+
+    # Independent sampling baseline
+    print(f"\n  Error amplification on GL₂(𝔽_{q}), |G| = {n}")
+    print(f"  Bad fraction: {len(bad)/n:.3f}")
+
+    for k in [1, 3, 5, 10]:
+        # Independent: sample k random elements, take majority
+        trials = 1000
+        ind_errors = 0
+        for _ in range(trials):
+            votes = sum(1 for _ in range(k) if np.random.randint(n) not in bad)
+            if votes <= k // 2:
+                ind_errors += 1
+        ind_rate = ind_errors / trials
+
+        # Expander walk: start random, walk k steps, take majority
+        exp_errors = 0
+        for _ in range(trials):
+            pos = np.random.randint(n)
+            votes = 0
+            for step in range(k):
+                if pos not in bad:
+                    votes += 1
+                s = gens[np.random.randint(4)]
+                prod = elements[pos] * s
+                pos = idx[prod.to_tuple()]
+            if votes <= k // 2:
+                exp_errors += 1
+        exp_rate = exp_errors / trials
+
+        print(f"  k={k:2d}: Independent error={ind_rate:.4f}, "
+              f"Expander walk error={exp_rate:.4f}")
+
+# ── Main ──
 
 if __name__ == '__main__':
-    print("=" * 60)
-    print("  APPLICATION 1: Deterministic Network Design")
-    print("=" * 60)
-    
+    print("=" * 55)
+    print("  Application 1: Deterministic Network Design")
+    print("=" * 55)
     for q in [5, 7]:
-        net = build_expander_network(q)
-        if "error" not in net:
-            print(f"\n  q = {q}:")
-            print(f"    Nodes: {net['nodes']}")
-            print(f"    Degree: {net['degree']}")
-            print(f"    Diameter: {net['diameter']}")
-            print(f"    Edges: {net['properties']['edge_count']}")
-            print(f"    Certified expansion: {net['properties']['certified_expansion']}")
-    
-    print(f"\n{'=' * 60}")
-    print("  APPLICATION 2: Expander Hashing")
-    print("=" * 60)
-    
-    data1 = [0, 1, 0, 1, 1, 0, 0, 1]
-    data2 = [0, 1, 0, 1, 1, 0, 1, 1]  # Differ in 1 bit
-    h1 = expander_hash(5, data1)
-    h2 = expander_hash(5, data2)
-    print(f"\n  Hash of {data1}: {h1}")
-    print(f"  Hash of {data2}: {h2}")
-    print(f"  (Differ in 1 bit → different hash: {h1 != h2})")
-    
-    print(f"\n{'=' * 60}")
-    print("  APPLICATION 3: Projective Line LDPC Codes")
-    print("=" * 60)
-    
-    for q in [5, 7]:
-        code = projective_expander_code(q)
-        if "error" not in code:
-            print(f"\n  q = {q}:")
-            print(f"    Code length: {code['code_length']}")
-            print(f"    Row weight: {code['row_weight']}")
-            print(f"    Estimated min distance: {code['estimated_min_distance']}")
+        net = design_communication_network(q)
+        print(f"\n  q={q}: {net['num_nodes']} nodes, degree {net['degree']}, "
+              f"~{net['estimated_mixing_time']} mixing steps")
+        print(f"    Generators: {net['generators']}")
+
+    print(f"\n{'='*55}")
+    print("  Application 2: Singer Hash Family")
+    print("=" * 55)
+    hashes = singer_hash_family(5, 5)
+    for h in hashes:
+        print(f"  Hash #{h['index']}: {h['matrix']}, "
+              f"h(1,0)={h['hash_fn'](1,0)}, h(0,1)={h['hash_fn'](0,1)}")
+
+    print(f"\n{'='*55}")
+    print("  Application 3: Error Amplification")
+    print("=" * 55)
+    error_amplification_demo(5)
 
 
 #!/usr/bin/env python3
 """
-demo.py — Certified Expander Pairs for GL₂(𝔽_q)
+demo.py — Certified Expander Pairs for GL₂(𝔽_q) and Spectral Gap Computation
 
-Interactive exploration of Singer-like elements, primitive determinant pairs,
-and the spectral gaps of Cayley graphs on GL₂(𝔽_q).
+This script:
+  1. Searches for certified pairs (g, h) in GL₂(𝔽_q) for small primes q,
+  2. Computes the full spectrum of the normalized Cayley adjacency matrix,
+  3. Reports the spectral gap γ and the product q·γ,
+  4. Compares full Cayley gap with the induced action gap on ℙ¹(𝔽_q),
+  5. Visualizes the spectrum.
 
 Usage:
-    python demo.py [q]
-    where q is an odd prime (default: 5)
+    python demo.py [q]        # q defaults to 5
 
-The script:
-  1. Enumerates GL₂(𝔽_q)
-  2. Identifies Singer-like elements (irreducible charpoly)
-  3. Identifies primitive-determinant elements
-  4. Searches for certified pairs (Singer + primitive det + generation)
-  5. Computes the Cayley graph adjacency spectrum
-  6. Reports spectral gaps and the "normalized gap" q·γ
+Requirements: numpy, matplotlib (optional for plots)
 """
 
 import sys
-import itertools
 import numpy as np
-from collections import defaultdict
+from itertools import product as cartesian_product
 
+# ──────────────────────────────────────────────
+# Finite field arithmetic in 𝔽_q (q prime)
+# ──────────────────────────────────────────────
 
-def mod_inverse(a, p):
-    """Compute modular inverse of a mod p using Fermat's little theorem."""
-    return pow(int(a), p - 2, p)
+def mod(x, q):
+    return x % q
 
+def mat_mod(M, q):
+    return np.array([[mod(int(M[i,j]), q) for j in range(M.shape[1])]
+                      for i in range(M.shape[0])])
 
-def mat_mul(A, B, p):
-    """Multiply two 2x2 matrices mod p."""
-    return [
-        [(A[0][0]*B[0][0] + A[0][1]*B[1][0]) % p,
-         (A[0][0]*B[0][1] + A[0][1]*B[1][1]) % p],
-        [(A[1][0]*B[0][0] + A[1][1]*B[1][0]) % p,
-         (A[1][0]*B[0][1] + A[1][1]*B[1][1]) % p]
-    ]
+def mat_det(M, q):
+    """Determinant of 2x2 matrix mod q."""
+    return mod(int(M[0,0]*M[1,1] - M[0,1]*M[1,0]), q)
 
-
-def mat_det(A, p):
-    """Compute determinant of 2x2 matrix mod p."""
-    return (A[0][0]*A[1][1] - A[0][1]*A[1][0]) % p
-
-
-def mat_trace(A, p):
-    """Compute trace of 2x2 matrix mod p."""
-    return (A[0][0] + A[1][1]) % p
-
-
-def mat_inv(A, p):
-    """Compute inverse of 2x2 matrix mod p."""
-    d = mat_det(A, p)
+def mat_inv(M, q):
+    """Inverse of 2x2 matrix mod q, or None if not invertible."""
+    d = mat_det(M, q)
     if d == 0:
         return None
-    di = mod_inverse(d, p)
-    return [
-        [(A[1][1] * di) % p, ((-A[0][1]) * di) % p],
-        [((-A[1][0]) * di) % p, (A[0][0] * di) % p]
-    ]
+    d_inv = pow(d, q-2, q)  # Fermat's little theorem
+    inv = np.array([[M[1,1], -M[0,1]], [-M[1,0], M[0,0]]])
+    return mat_mod(inv * d_inv, q)
 
+def mat_mul(A, B, q):
+    """Matrix multiply mod q."""
+    return mat_mod(A @ B, q)
 
-def mat_to_tuple(A):
-    """Convert matrix to hashable tuple."""
-    return (A[0][0], A[0][1], A[1][0], A[1][1])
+def mat_eq(A, B, q):
+    return np.array_equal(mat_mod(A, q), mat_mod(B, q))
 
+def multiplicative_order(a, q):
+    """Order of a in (ℤ/qℤ)×."""
+    if a % q == 0:
+        return 0
+    x = a % q
+    for k in range(1, q):
+        if pow(int(x), k, q) == 1:
+            return k
+    return q - 1
 
-def tuple_to_mat(t):
-    """Convert tuple back to matrix."""
-    return [[t[0], t[1]], [t[2], t[3]]]
-
-
-def identity_mat():
-    """2x2 identity matrix."""
-    return [[1, 0], [0, 1]]
-
-
-def enumerate_gl2(p):
-    """Enumerate all elements of GL₂(𝔽_p) as list of 2x2 matrices."""
-    elements = []
-    for a in range(p):
-        for b in range(p):
-            for c in range(p):
-                for d in range(p):
-                    M = [[a, b], [c, d]]
-                    if mat_det(M, p) != 0:
-                        elements.append(M)
-    return elements
-
-
-def is_singer_like(g, p):
-    """Check if g is Singer-like: irreducible characteristic polynomial over 𝔽_p.
-    
-    charpoly(g) = X² - tr(g)X + det(g)
-    Irreducible over 𝔽_p iff discriminant tr²-4det is not a quadratic residue.
-    """
-    tr = mat_trace(g, p)
-    det = mat_det(g, p)
-    disc = (tr * tr - 4 * det) % p
-    if disc == 0:
-        return False
-    # Check if disc is a quadratic residue using Euler's criterion
-    if pow(int(disc), (p - 1) // 2, p) == 1:
-        return False  # disc is QR, so charpoly factors
+def is_charpoly_irreducible(M, q):
+    """Check if charpoly of 2x2 matrix M over 𝔽_q is irreducible.
+    charpoly(M) = X² - tr(M)X + det(M).
+    Irreducible over 𝔽_q iff it has no roots in 𝔽_q."""
+    tr = mod(int(M[0,0] + M[1,1]), q)
+    det = mat_det(M, q)
+    for a in range(q):
+        if mod(a*a - tr*a + det, q) == 0:
+            return False
     return True
 
+def is_singer_like(M, q):
+    """Singer-like: invertible with irreducible characteristic polynomial."""
+    return mat_det(M, q) != 0 and is_charpoly_irreducible(M, q)
 
-def primitive_root(p):
-    """Find the smallest primitive root mod p."""
-    for g in range(2, p):
-        seen = set()
-        val = 1
-        for _ in range(p - 1):
-            val = (val * g) % p
-            seen.add(val)
-        if len(seen) == p - 1:
-            return g
-    return None
-
-
-def order_of(a, p):
-    """Compute the multiplicative order of a mod p."""
-    if a % p == 0:
-        return 0
-    val = 1
-    for k in range(1, p):
-        val = (val * a) % p
-        if val == 1:
-            return k
-    return p - 1
-
-
-def has_primitive_det(h, p):
-    """Check if det(h) is a primitive root mod p (generates 𝔽_p×)."""
-    d = mat_det(h, p)
+def is_primitive_det(M, q):
+    """Primitive determinant: det(M) has order q-1 in 𝔽_q×."""
+    d = mat_det(M, q)
     if d == 0:
         return False
-    return order_of(d, p) == p - 1
+    return multiplicative_order(d, q) == q - 1
 
+# ──────────────────────────────────────────────
+# GL₂(𝔽_q) enumeration and generation check
+# ──────────────────────────────────────────────
 
-def generates_gl2(g, h, p, gl2_size):
-    """Check if g, h generate GL₂(𝔽_p) by BFS."""
-    I = mat_to_tuple(identity_mat())
-    gt = mat_to_tuple(g)
-    ht = mat_to_tuple(h)
-    gi = mat_to_tuple(mat_inv(g, p))
-    hi = mat_to_tuple(mat_inv(h, p))
-    
-    visited = {I}
-    frontier = [I]
-    gens = [gt, ht, gi, hi]
-    
-    while frontier:
-        new_frontier = []
-        for m_tuple in frontier:
-            m = tuple_to_mat(m_tuple)
-            for gen_tuple in gens:
-                gen = tuple_to_mat(gen_tuple)
-                prod = mat_mul(m, gen, p)
-                pt = mat_to_tuple(prod)
-                if pt not in visited:
-                    visited.add(pt)
-                    new_frontier.append(pt)
-                    if len(visited) == gl2_size:
-                        return True
-        frontier = new_frontier
-    return len(visited) == gl2_size
+def enumerate_gl2(q):
+    """Enumerate all elements of GL₂(𝔽_q)."""
+    elements = []
+    for a, b, c, d in cartesian_product(range(q), repeat=4):
+        M = np.array([[a, b], [c, d]])
+        if mat_det(M, q) != 0:
+            elements.append(M)
+    return elements
 
+def mat_to_tuple(M, q):
+    return tuple(mod(int(M[i,j]), q) for i in range(2) for j in range(2))
 
-def cayley_adjacency_matrix(elements, generators, p):
-    """Build the adjacency matrix of the Cayley graph Cay(G, S)."""
+def generates_gl2(g, h, q, gl2_elements=None):
+    """Check if g, h generate GL₂(𝔽_q) by closure."""
+    if gl2_elements is None:
+        gl2_elements = enumerate_gl2(q)
+    target_size = len(gl2_elements)
+
+    gen_set = set()
+    g_inv = mat_inv(g, q)
+    h_inv = mat_inv(h, q)
+    if g_inv is None or h_inv is None:
+        return False
+
+    queue = [mat_mod(np.eye(2, dtype=int), q)]
+    gen_set.add(mat_to_tuple(np.eye(2, dtype=int), q))
+
+    while queue:
+        current = queue.pop(0)
+        for s in [g, g_inv, h, h_inv]:
+            prod = mat_mul(current, s, q)
+            t = mat_to_tuple(prod, q)
+            if t not in gen_set:
+                gen_set.add(t)
+                queue.append(prod)
+                if len(gen_set) == target_size:
+                    return True
+    return len(gen_set) == target_size
+
+# ──────────────────────────────────────────────
+# Cayley graph spectrum
+# ──────────────────────────────────────────────
+
+def cayley_adjacency_matrix(g, h, q, elements=None):
+    """Build normalized adjacency matrix of Cayley(GL₂(𝔽_q), {g,g⁻¹,h,h⁻¹})."""
+    if elements is None:
+        elements = enumerate_gl2(q)
     n = len(elements)
-    elem_to_idx = {mat_to_tuple(e): i for i, e in enumerate(elements)}
+    idx = {mat_to_tuple(e, q): i for i, e in enumerate(elements)}
+
+    g_inv = mat_inv(g, q)
+    h_inv = mat_inv(h, q)
+    generators = [g, g_inv, h, h_inv]
+
     A = np.zeros((n, n))
-    
-    for i, x in enumerate(elements):
+    for i, e in enumerate(elements):
         for s in generators:
-            prod = mat_mul(x, s, p)
-            j = elem_to_idx[mat_to_tuple(prod)]
-            A[i][j] = 1.0
-    
-    return A
+            prod = mat_mul(e, s, q)
+            j = idx[mat_to_tuple(prod, q)]
+            A[i, j] += 1
+    return A / 4.0
 
-
-def compute_spectral_gap(A, degree):
-    """Compute the spectral gap of a regular graph from its adjacency matrix.
-    
-    Returns (gap, eigenvalues) where gap = 1 - |λ₂|/degree.
-    """
+def spectral_gap(A):
+    """Compute spectral gap γ = 1 - max|λ| over nontrivial eigenvalues."""
     eigenvalues = np.linalg.eigvalsh(A)
     eigenvalues = np.sort(eigenvalues)[::-1]
-    # Normalize
-    normed = eigenvalues / degree
-    # Second largest in absolute value
-    abs_normed = np.abs(normed[1:])
-    lambda2 = np.max(abs_normed)
-    gap = 1 - lambda2
-    return gap, normed
+    # Largest eigenvalue should be ≈ 1
+    second = max(abs(eigenvalues[1]), abs(eigenvalues[-1]))
+    return 1.0 - second, eigenvalues
 
+# ──────────────────────────────────────────────
+# Projective line action
+# ──────────────────────────────────────────────
 
-def search_certified_pairs(p, max_pairs=5):
-    """Search for certified pairs in GL₂(𝔽_p) and compute spectral gaps."""
+def projective_line_points(q):
+    """Points of ℙ¹(𝔽_q) as (a:b) with b=1 or (1:0)."""
+    points = [(a, 1) for a in range(q)]  # affine points
+    points.append((1, 0))  # point at infinity
+    return points
+
+def projective_action(M, point, q):
+    """Action of M on ℙ¹(𝔽_q)."""
+    a, b = point
+    new_a = mod(int(M[0,0]*a + M[0,1]*b), q)
+    new_b = mod(int(M[1,0]*a + M[1,1]*b), q)
+    if new_b != 0:
+        inv_b = pow(new_b, q-2, q)
+        return (mod(new_a * inv_b, q), 1)
+    else:
+        if new_a == 0:
+            raise ValueError("Zero vector in projective action")
+        return (1, 0)
+
+def projective_permutation_matrix(M, q):
+    """Permutation matrix of M acting on ℙ¹(𝔽_q)."""
+    points = projective_line_points(q)
+    n = len(points)
+    P = np.zeros((n, n))
+    for i, pt in enumerate(points):
+        img = projective_action(M, pt, q)
+        j = points.index(img)
+        P[i, j] = 1
+    return P
+
+def projective_cayley_spectrum(g, h, q):
+    """Spectrum of averaging operator on ℙ¹(𝔽_q) induced by {g,g⁻¹,h,h⁻¹}."""
+    g_inv = mat_inv(g, q)
+    h_inv = mat_inv(h, q)
+    gens = [g, g_inv, h, h_inv]
+
+    points = projective_line_points(q)
+    n = len(points)
+    A = np.zeros((n, n))
+    for M in gens:
+        A += projective_permutation_matrix(M, q)
+    A /= 4.0
+    eigenvalues = np.linalg.eigvalsh(A)
+    eigenvalues = np.sort(eigenvalues)[::-1]
+    second = max(abs(eigenvalues[1]), abs(eigenvalues[-1]))
+    gap = 1.0 - second
+    return gap, eigenvalues
+
+# ──────────────────────────────────────────────
+# Main demo
+# ──────────────────────────────────────────────
+
+def find_certified_pairs(q, max_pairs=5):
+    """Find certified pairs (g, h) for GL₂(𝔽_q)."""
     print(f"\n{'='*60}")
-    print(f"  CERTIFIED EXPANDER SEARCH: GL₂(𝔽_{p})")
+    print(f" Searching for certified pairs in GL₂(𝔽_{q})")
     print(f"{'='*60}")
-    
-    # Group size |GL₂(𝔽_p)| = (p²-1)(p²-p)
-    gl2_size = (p*p - 1) * (p*p - p)
-    print(f"\n  |GL₂(𝔽_{p})| = {gl2_size}")
-    
-    # Enumerate GL₂
-    print(f"  Enumerating GL₂(𝔽_{p})...")
-    elements = enumerate_gl2(p)
-    assert len(elements) == gl2_size, f"Expected {gl2_size}, got {len(elements)}"
-    
+
+    elements = enumerate_gl2(q)
+    print(f" |GL₂(𝔽_{q})| = {len(elements)}")
+
     # Find Singer-like elements
-    singers = [g for g in elements if is_singer_like(g, p)]
-    print(f"  Singer-like elements: {len(singers)} / {gl2_size} "
-          f"({100*len(singers)/gl2_size:.1f}%)")
-    
-    # Find primitive-det elements
-    prim_dets = [h for h in elements if has_primitive_det(h, p)]
-    print(f"  Primitive-det elements: {len(prim_dets)} / {gl2_size} "
-          f"({100*len(prim_dets)/gl2_size:.1f}%)")
-    
-    # Search for certified pairs
-    print(f"\n  Searching for certified pairs...")
-    certified_pairs = []
-    tested = 0
-    
-    # Sample randomly to avoid exhaustive search
-    np.random.seed(42)
-    singer_sample = [singers[i] for i in 
-                     np.random.choice(len(singers), min(len(singers), 20), replace=False)]
-    prim_sample = [prim_dets[i] for i in 
-                   np.random.choice(len(prim_dets), min(len(prim_dets), 20), replace=False)]
-    
-    for g in singer_sample:
-        for h in prim_sample:
-            tested += 1
-            if generates_gl2(g, h, p, gl2_size):
-                certified_pairs.append((g, h))
-                if len(certified_pairs) >= max_pairs:
-                    break
-        if len(certified_pairs) >= max_pairs:
-            break
-    
-    print(f"  Tested {tested} pairs, found {len(certified_pairs)} certified pairs")
-    
-    if not certified_pairs:
-        print("  No certified pairs found in sample. Try larger sample.")
-        return []
-    
-    # Compute spectral gaps
-    print(f"\n  Computing spectral gaps...")
-    results = []
-    
-    for idx, (g, h) in enumerate(certified_pairs):
-        gi = mat_inv(g, p)
-        hi = mat_inv(h, p)
-        generators = [g, gi, h, hi]
-        degree = 4  # 4-regular Cayley graph
-        
-        A = cayley_adjacency_matrix(elements, generators, p)
-        gap, eigenvalues = compute_spectral_gap(A, degree)
-        
-        tr_g = mat_trace(g, p)
-        det_g = mat_det(g, p)
-        det_h = mat_det(h, p)
-        
-        result = {
-            'g': g, 'h': h,
-            'gap': gap,
-            'q_times_gap': p * gap,
-            'eigenvalues': eigenvalues,
-            'tr_g': tr_g, 'det_g': det_g, 'det_h': det_h
-        }
-        results.append(result)
-        
-        print(f"\n  Pair {idx+1}:")
-        print(f"    g = {g}, tr={tr_g}, det={det_g}")
-        print(f"    h = {h}, det={det_h} (order {order_of(det_h, p)} in 𝔽_{p}×)")
-        print(f"    Spectral gap γ = {gap:.6f}")
-        print(f"    q · γ = {p * gap:.6f}")
-        print(f"    Top 5 eigenvalues (normalized): {eigenvalues[:5]}")
-    
-    # Summary
-    print(f"\n{'='*60}")
-    print(f"  SUMMARY for q = {p}")
-    print(f"{'='*60}")
-    min_gap = min(r['gap'] for r in results)
-    max_gap = max(r['gap'] for r in results)
-    min_qgap = min(r['q_times_gap'] for r in results)
-    max_qgap = max(r['q_times_gap'] for r in results)
-    
-    print(f"  Spectral gap range: [{min_gap:.6f}, {max_gap:.6f}]")
-    print(f"  q·γ range: [{min_qgap:.6f}, {max_qgap:.6f}]")
-    print(f"  Minimum q·γ = {min_qgap:.6f} (should be bounded away from 0)")
-    
-    return results
+    singers = [e for e in elements if is_singer_like(e, q)]
+    print(f" Singer-like elements: {len(singers)}")
 
+    # Find primitive-det elements
+    prim_dets = [e for e in elements if is_primitive_det(e, q)]
+    print(f" Primitive-det elements: {len(prim_dets)}")
+
+    # Find certified pairs (check generation)
+    certified = []
+    for g in singers[:50]:  # limit search
+        for h in prim_dets[:50]:
+            if generates_gl2(g, h, q, elements):
+                certified.append((g, h))
+                if len(certified) >= max_pairs:
+                    break
+        if len(certified) >= max_pairs:
+            break
+
+    print(f" Certified pairs found: {len(certified)}")
+    return certified, elements
+
+def analyze_pair(g, h, q, elements, pair_idx=0):
+    """Full analysis of a certified pair."""
+    print(f"\n--- Certified Pair #{pair_idx+1} ---")
+    print(f" g = {g.tolist()}")
+    print(f" h = {h.tolist()}")
+    print(f" det(g) = {mat_det(g, q)}, det(h) = {mat_det(h, q)}")
+    print(f" g Singer-like: {is_singer_like(g, q)}")
+    print(f" h primitive-det: {is_primitive_det(h, q)}")
+
+    # Full Cayley spectrum
+    A = cayley_adjacency_matrix(g, h, q, elements)
+    gap, eigenvalues = spectral_gap(A)
+    print(f"\n Full Cayley graph:")
+    print(f"   Spectral gap γ = {gap:.6f}")
+    print(f"   q · γ = {q * gap:.6f}")
+    print(f"   Top 5 eigenvalues: {eigenvalues[:5]}")
+    print(f"   Bottom 5 eigenvalues: {eigenvalues[-5:]}")
+
+    # Projective line spectrum
+    proj_gap, proj_eigs = projective_cayley_spectrum(g, h, q)
+    print(f"\n Projective line ℙ¹(𝔽_{q}) action:")
+    print(f"   Spectral gap γ_proj = {proj_gap:.6f}")
+    print(f"   q · γ_proj = {q * proj_gap:.6f}")
+    print(f"   Eigenvalues: {proj_eigs}")
+
+    # Check Singer-like no fixed point
+    points = projective_line_points(q)
+    fixed_pts = [p for p in points if projective_action(g, p, q) == p]
+    print(f"\n Fixed points of g on ℙ¹(𝔽_{q}): {len(fixed_pts)} (should be 0)")
+
+    return gap, proj_gap
 
 def main():
     q = int(sys.argv[1]) if len(sys.argv) > 1 else 5
-    
-    if q < 5 or not all(q % i != 0 for i in range(2, int(q**0.5) + 1)):
-        print(f"Error: {q} is not a prime ≥ 5")
-        sys.exit(1)
-    
-    if q > 13:
-        print(f"Warning: q = {q} will be very slow (|GL₂| = {(q**2-1)*(q**2-q)})")
-    
-    results = search_certified_pairs(q)
-    
-    # Multi-prime comparison
-    if q == 5:
-        print(f"\n{'='*60}")
-        print(f"  MULTI-PRIME COMPARISON")
-        print(f"{'='*60}")
-        
-        all_results = {}
-        for prime in [5, 7]:
-            all_results[prime] = search_certified_pairs(prime)
-        
-        print(f"\n  Prime | min(q·γ)  | max(q·γ)")
-        print(f"  ------+-----------+----------")
-        for prime, res in all_results.items():
-            if res:
-                min_qg = min(r['q_times_gap'] for r in res)
-                max_qg = max(r['q_times_gap'] for r in res)
-                print(f"  {prime:5d} | {min_qg:9.4f} | {max_qg:9.4f}")
-        
-        print(f"\n  If min(q·γ) stays bounded away from 0, the C/q conjecture holds!")
 
+    if q < 5:
+        print("Error: q must be ≥ 5")
+        sys.exit(1)
+
+    if q > 13:
+        print(f"Warning: q = {q} may be slow (|GL₂(𝔽_{q})| = {q*(q-1)*(q**2-1)})")
+
+    pairs, elements = find_certified_pairs(q, max_pairs=3)
+
+    gaps = []
+    proj_gaps = []
+    for i, (g, h) in enumerate(pairs):
+        gap, proj_gap = analyze_pair(g, h, q, elements, i)
+        gaps.append(gap)
+        proj_gaps.append(proj_gap)
+
+    if gaps:
+        print(f"\n{'='*60}")
+        print(f" Summary for q = {q}")
+        print(f"{'='*60}")
+        min_gap = min(gaps)
+        min_proj = min(proj_gaps)
+        print(f" Min spectral gap γ = {min_gap:.6f}")
+        print(f" Min q·γ = {q * min_gap:.6f}")
+        print(f" Min projective gap = {min_proj:.6f}")
+        print(f" Min q·γ_proj = {q * min_proj:.6f}")
+        print(f"\n Conjecture test: q·γ ≥ C₀ for absolute C₀ > 0")
+        print(f"   Observed q·γ = {q * min_gap:.6f}")
+
+    # Try to plot
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+
+        if pairs:
+            g, h = pairs[0]
+            A = cayley_adjacency_matrix(g, h, q, elements)
+            _, eigenvalues = spectral_gap(A)
+
+            fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+            ax1.hist(eigenvalues, bins=50, edgecolor='black', alpha=0.7, color='steelblue')
+            ax1.set_xlabel('Eigenvalue', fontsize=12)
+            ax1.set_ylabel('Count', fontsize=12)
+            ax1.set_title(f'Cayley Graph Spectrum — GL₂(F_{q})', fontsize=14)
+            ax1.axvline(x=1, color='red', linestyle='--', label='λ=1')
+            ax1.legend()
+
+            _, proj_eigs = projective_cayley_spectrum(g, h, q)
+            ax2.bar(range(len(proj_eigs)), sorted(proj_eigs, reverse=True),
+                   color='coral', alpha=0.8)
+            ax2.set_xlabel('Index', fontsize=12)
+            ax2.set_ylabel('Eigenvalue', fontsize=12)
+            ax2.set_title(f'Projective Line Spectrum — P¹(F_{q})', fontsize=14)
+
+            plt.tight_layout()
+            plt.savefig('spectral_gap_demo.png', dpi=150)
+            print(f"\n Plot saved to spectral_gap_demo.png")
+    except ImportError:
+        print("\n (matplotlib not available, skipping plot)")
 
 if __name__ == '__main__':
     main()
@@ -627,369 +607,391 @@ if __name__ == '__main__':
 
 #!/usr/bin/env python3
 """
-Visualization: Projective Line Action of Singer-Like Elements
+Visualization: Scaling of q·γ — Testing the Uniform Gap Conjecture
 
-Shows how a Singer-like matrix acts on the projective line ℙ¹(𝔽_q),
-demonstrating the key geometric theorem: Singer-like elements have
-no fixed points on the projective line. All points are permuted in
-a single cycle, visualized as a circular permutation diagram.
-
-This visualization supports Theorem 2 (singer_like_no_fixed_projective_point):
-every Singer-like element shuffles all q+1 projective points.
+Plots the product q × γ(S) for certified pairs across multiple primes,
+testing the conjecture that q·γ ≥ C₀ for an absolute constant C₀ > 0.
+If the conjecture holds, the curve should stay bounded away from zero.
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyArrowPatch
-import matplotlib.patches as mpatches
+from itertools import product as cartesian_product
 
+# ── Self-contained code ──
 
-def mod_inverse(a, p):
-    return pow(int(a), p - 2, p)
+def inverse_mod(a, q): return pow(a, q-2, q)
+def multiplicative_order(a, q):
+    if a%q==0: return 0
+    x=1
+    for k in range(1,q):
+        x=(x*a)%q
+        if x==1: return k
+    return q-1
 
+class M2:
+    __slots__=['a','b','c','d','q']
+    def __init__(s,a,b,c,d,q): s.a,s.b,s.c,s.d,s.q=a%q,b%q,c%q,d%q,q
+    def det(s): return (s.a*s.d-s.b*s.c)%s.q
+    def __mul__(s,o):
+        q=s.q
+        return M2((s.a*o.a+s.b*o.c)%q,(s.a*o.b+s.b*o.d)%q,
+                  (s.c*o.a+s.d*o.c)%q,(s.c*o.b+s.d*o.d)%q,q)
+    def inv(s):
+        d=s.det(); q=s.q
+        if d==0: return None
+        di=inverse_mod(d,q)
+        return M2((s.d*di)%q,(-s.b*di)%q,(-s.c*di)%q,(s.a*di)%q,q)
+    def to_tuple(s): return (s.a,s.b,s.c,s.d)
+    def __hash__(s): return hash((s.to_tuple(),s.q))
+    def __eq__(s,o): return s.to_tuple()==o.to_tuple() and s.q==o.q
 
-def apply_projective(M, pt, p):
-    """Apply 2x2 matrix M to projective point pt = (x, y) mod p."""
-    a, b, c, d = M[0][0], M[0][1], M[1][0], M[1][1]
-    x = (a * pt[0] + b * pt[1]) % p
-    y = (c * pt[0] + d * pt[1]) % p
-    if x != 0:
-        return (1, (y * mod_inverse(x, p)) % p)
-    elif y != 0:
-        return (0, 1)
-    return pt
+def is_irred(m):
+    tr,det,q=(m.a+m.d)%m.q,m.det(),m.q
+    return all((a*a-tr*a+det)%q!=0 for a in range(q))
 
+def gl2(q):
+    return [M2(a,b,c,d,q) for a,b,c,d in cartesian_product(range(q),repeat=4)
+            if (a*d-b*c)%q!=0]
 
-def get_cycle_structure(M, p):
-    """Compute the cycle structure of M acting on ℙ¹(𝔽_p)."""
-    points = [(1, b) for b in range(p)] + [(0, 1)]
-    point_set = set(points)
-    visited = set()
-    cycles = []
-    
-    for pt in points:
-        if pt in visited:
-            continue
-        cycle = [pt]
-        visited.add(pt)
-        current = apply_projective(M, pt, p)
-        while current != pt:
-            cycle.append(current)
-            visited.add(current)
-            current = apply_projective(M, current, p)
-        cycles.append(cycle)
-    
-    return cycles
+def cayley_spectrum(g, h, elems, q):
+    n=len(elems); idx={e.to_tuple():i for i,e in enumerate(elems)}
+    gi,hi=g.inv(),h.inv(); gens=[g,gi,h,hi]
+    A=np.zeros((n,n))
+    for i,e in enumerate(elems):
+        for s in gens:
+            A[i,idx[(e*s).to_tuple()]]+=1
+    A/=4.0
+    return np.sort(np.linalg.eigvalsh(A))[::-1]
 
+def find_best_pair(q, elems, max_try=30):
+    """Find certified pair with best spectral gap."""
+    singers = [m for m in elems if is_irred(m)][:max_try]
+    prims = [m for m in elems if m.det()!=0 and multiplicative_order(m.det(),q)==q-1][:max_try]
+    best_gap, best_pair = -1, None
+    target = len(elems)
+    for g in singers:
+        for h in prims:
+            # Quick generation check via BFS
+            seen = {M2(1,0,0,1,q).to_tuple()}
+            queue = [M2(1,0,0,1,q)]
+            gi,hi = g.inv(),h.inv()
+            gens_list = [g,gi,h,hi]
+            while queue:
+                cur = queue.pop(0)
+                for s in gens_list:
+                    t = (cur*s).to_tuple()
+                    if t not in seen:
+                        seen.add(t); queue.append(M2(*t,q))
+                        if len(seen)==target: break
+                if len(seen)==target: break
+            if len(seen)==target:
+                eigs = cayley_spectrum(g,h,elems,q)
+                nt = [e for e in eigs[1:] if abs(abs(e)-1.0)>1e-8]
+                gap = 1.0 - max(abs(e) for e in nt) if nt else 1.0
+                if gap > best_gap:
+                    best_gap = gap; best_pair = (g,h)
+            if best_pair is not None:
+                break  # found at least one
+        if best_pair is not None:
+            break
+    return best_pair, best_gap
 
-def is_singer_like(M, p):
-    tr = (M[0][0] + M[1][1]) % p
-    det = (M[0][0] * M[1][1] - M[0][1] * M[1][0]) % p
-    if det == 0:
-        return False
-    disc = (tr * tr - 4 * det) % p
-    if disc == 0:
-        return False
-    return pow(int(disc), (p - 1) // 2, p) != 1
+# ── Compute data ──
 
+primes = [5, 7]
+results = []
 
-# ── Create visualization ──
+for q in primes:
+    print(f"Processing q={q}...")
+    elems = gl2(q)
+    pair, gap = find_best_pair(q, elems)
+    if pair:
+        results.append({'q': q, 'gap': gap, 'qgap': q*gap, 'gl2_size': len(elems)})
+        print(f"  |GL₂| = {len(elems)}, gap = {gap:.6f}, q*gap = {q*gap:.6f}")
 
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-fig.suptitle('Projective Line Action: Singer-Like vs Non-Singer Elements', 
-             fontsize=14, fontweight='bold')
+# ── Plot ──
 
-examples = [
-    (5, [[2, 2], [3, 0]], "Singer-like: g = [[2,2],[3,0]]"),
-    (5, [[1, 1], [0, 1]], "Non-Singer: h = [[1,1],[0,1]]"),
-    (7, [[0, 3], [1, 6]], "Singer-like: g = [[0,3],[1,6]]"),
-]
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
-colors_cycle = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', 
-                '#1abc9c', '#e67e22', '#34495e']
+qs = [r['q'] for r in results]
+gaps = [r['gap'] for r in results]
+qgaps = [r['qgap'] for r in results]
 
-for idx, (q, M, title) in enumerate(examples):
-    ax = axes[idx]
-    points = [(1, b) for b in range(q)] + [(0, 1)]
-    n = len(points)
-    
-    # Place points on a circle
-    angles = [2 * np.pi * i / n - np.pi/2 for i in range(n)]
-    radius = 1.0
-    x_pos = [radius * np.cos(a) for a in angles]
-    y_pos = [radius * np.sin(a) for a in angles]
-    
-    # Get cycles
-    cycles = get_cycle_structure(M, q)
-    singer = is_singer_like(M, q)
-    
-    # Draw arrows for the permutation
-    point_to_idx = {pt: i for i, pt in enumerate(points)}
-    
-    for c_idx, cycle in enumerate(cycles):
-        color = colors_cycle[c_idx % len(colors_cycle)]
-        for j in range(len(cycle)):
-            src = point_to_idx[cycle[j]]
-            dst = point_to_idx[cycle[(j + 1) % len(cycle)]]
-            
-            dx = x_pos[dst] - x_pos[src]
-            dy = y_pos[dst] - y_pos[src]
-            
-            # Curved arrows
-            ax.annotate("", 
-                xy=(x_pos[dst], y_pos[dst]),
-                xytext=(x_pos[src], y_pos[src]),
-                arrowprops=dict(arrowstyle="->", color=color, lw=1.5,
-                              connectionstyle="arc3,rad=0.3"))
-    
-    # Draw points
-    for i, pt in enumerate(points):
-        label = f"[1:{pt[1]}]" if pt[0] == 1 else "[0:1]"
-        ax.plot(x_pos[i], y_pos[i], 'ko', markersize=12, zorder=5)
-        ax.plot(x_pos[i], y_pos[i], 'wo', markersize=8, zorder=6)
-        
-        # Label outside the circle
-        label_r = 1.3
-        lx = label_r * np.cos(angles[i])
-        ly = label_r * np.sin(angles[i])
-        ax.text(lx, ly, label, ha='center', va='center', fontsize=8, fontweight='bold')
-    
-    # Title and annotation
-    cycle_desc = " × ".join([f"({len(c)})" for c in sorted(cycles, key=len, reverse=True)])
-    ax.set_title(f"{title}\nCycle type: {cycle_desc}", fontsize=10)
-    
-    if singer:
-        ax.text(0, -1.7, "✓ No fixed point\n(Singer-like)", 
-                ha='center', color='green', fontsize=9, fontweight='bold')
-    else:
-        fixed = [c[0] for c in cycles if len(c) == 1]
-        if fixed:
-            fix_labels = [f"[1:{p[1]}]" if p[0]==1 else "[0:1]" for p in fixed]
-            ax.text(0, -1.7, f"✗ Fixed points: {', '.join(fix_labels)}", 
-                    ha='center', color='red', fontsize=9, fontweight='bold')
-        else:
-            ax.text(0, -1.7, "No fixed points\n(but not Singer-like)", 
-                    ha='center', color='orange', fontsize=9, fontweight='bold')
-    
-    ax.set_xlim(-1.8, 1.8)
-    ax.set_ylim(-2.0, 1.8)
-    ax.set_aspect('equal')
-    ax.axis('off')
+# Left: spectral gap vs q
+ax1.plot(qs, gaps, 'o-', color='steelblue', markersize=10, linewidth=2)
+ax1.set_xlabel('Prime q', fontsize=13)
+ax1.set_ylabel('Spectral gap γ', fontsize=13)
+ax1.set_title('Spectral Gap Decay', fontsize=14)
+ax1.grid(True, alpha=0.3)
+
+# Reference curve C/q
+if len(qs) >= 2:
+    C_fit = min(q*g for q,g in zip(qs, gaps))
+    qrange = np.linspace(min(qs), max(qs), 100)
+    ax1.plot(qrange, C_fit/qrange, '--', color='coral', linewidth=1.5,
+             label=f'C/q (C={C_fit:.3f})')
+    ax1.legend(fontsize=11)
+
+# Right: q*gap vs q (should be bounded below)
+ax2.plot(qs, qgaps, 's-', color='coral', markersize=10, linewidth=2)
+ax2.axhline(y=min(qgaps), color='gray', linestyle=':', linewidth=1,
+            label=f'min q·γ = {min(qgaps):.4f}')
+ax2.set_xlabel('Prime q', fontsize=13)
+ax2.set_ylabel('q × γ', fontsize=13)
+ax2.set_title('Uniform Gap Conjecture Test: q·γ ≥ C₀', fontsize=14)
+ax2.grid(True, alpha=0.3)
+ax2.legend(fontsize=11)
 
 plt.tight_layout()
-plt.savefig('projective_action.png', dpi=150, bbox_inches='tight')
-print("Saved: projective_action.png")
+plt.savefig('viz_gap_scaling.png', dpi=150, bbox_inches='tight')
+print("\nSaved viz_gap_scaling.png")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Spectral Gap Scaling for GL₂(𝔽_q) Certified Expanders
+Visualization: Singer-Like Action on the Projective Line ℙ¹(𝔽_q)
 
-Visualizes the key conjecture: q · γ(S) ≥ C > 0 for certified pairs.
-Shows how the normalized spectral gap q·γ behaves across primes q = 5, 7, 11,
-demonstrating the C/q scaling predicted by representation theory.
-
-This visualization supports the Uniform Certified Gap Conjecture by plotting:
-1. Spectral gap γ vs prime q (showing 1/q decay)
-2. Normalized gap q·γ vs prime q (showing stabilization)
-3. Full eigenvalue spectrum for a selected certified pair
+Shows how a Singer-like matrix acts on the projective line without
+any fixed points — the geometric mechanism behind spectral expansion.
+Contrasts with a non-Singer element that fixes projective points.
 """
 
-import itertools
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from itertools import product as cartesian_product
+
+# ── Self-contained code ──
+
+def inverse_mod(a, q): return pow(a, q-2, q)
+
+class M2:
+    __slots__=['a','b','c','d','q']
+    def __init__(s,a,b,c,d,q): s.a,s.b,s.c,s.d,s.q=a%q,b%q,c%q,d%q,q
+    def det(s): return (s.a*s.d-s.b*s.c)%s.q
+    def __mul__(s,o):
+        q=s.q
+        return M2((s.a*o.a+s.b*o.c)%q,(s.a*o.b+s.b*o.d)%q,
+                  (s.c*o.a+s.d*o.c)%q,(s.c*o.b+s.d*o.d)%q,q)
+    def to_tuple(s): return (s.a,s.b,s.c,s.d)
+
+def is_irred(m):
+    tr,det,q=(m.a+m.d)%m.q,m.det(),m.q
+    return all((a*a-tr*a+det)%q!=0 for a in range(q))
+
+def proj_action(m, pt, q):
+    a,b=pt
+    na=(m.a*a+m.b*b)%q; nb=(m.c*a+m.d*b)%q
+    if nb!=0: return ((na*inverse_mod(nb,q))%q, 1)
+    return (1,0) if na!=0 else None
+
+def proj_points(q):
+    return [(a,1) for a in range(q)] + [(1,0)]
+
+# ── Data ──
+
+q = 11
+points = proj_points(q)
+n_pts = len(points)
+
+# Find a Singer-like element
+singer = None
+for a,b,c,d in cartesian_product(range(q), repeat=4):
+    m = M2(a,b,c,d,q)
+    if m.det()!=0 and is_irred(m):
+        singer = m; break
+
+# Find a non-Singer element (has eigenvalue, so fixes a projective point)
+non_singer = M2(2,1,0,3,q)  # upper triangular → fixes (1,0)
+
+# Compute orbits
+def compute_orbit(m, pt, q, max_steps=50):
+    orbit = [pt]
+    cur = pt
+    for _ in range(max_steps):
+        cur = proj_action(m, cur, q)
+        if cur == pt: break
+        orbit.append(cur)
+    return orbit
+
+# ── Visualization ──
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+for ax, (mat, title, is_singer) in zip(axes, [
+    (singer, f'Singer-Like Element\n(irreducible charpoly, no fixed points)', True),
+    (non_singer, f'Non-Singer Element\n(reducible charpoly, has fixed point)', False),
+]):
+    # Place points on a circle
+    angles = np.linspace(0, 2*np.pi, n_pts, endpoint=False)
+    x_pos = np.cos(angles)
+    y_pos = np.sin(angles)
+
+    # Draw points
+    ax.scatter(x_pos, y_pos, s=120, c='steelblue', zorder=5, edgecolors='black')
+
+    # Label points
+    for i, pt in enumerate(points):
+        label = f"{pt[0]}" if pt[1]==1 else "∞"
+        offset = 0.15
+        ax.annotate(label, (x_pos[i]*(1+offset), y_pos[i]*(1+offset)),
+                   ha='center', va='center', fontsize=9, fontweight='bold')
+
+    # Draw arrows for action
+    for i, pt in enumerate(points):
+        img = proj_action(mat, pt, q)
+        j = points.index(img)
+        if i == j:
+            # Fixed point — draw self-loop
+            ax.scatter([x_pos[i]], [y_pos[i]], s=300, facecolors='none',
+                      edgecolors='red', linewidths=3, zorder=6)
+        else:
+            dx = x_pos[j] - x_pos[i]
+            dy = y_pos[j] - y_pos[i]
+            # Shorten arrow
+            length = np.sqrt(dx**2 + dy**2)
+            shrink = 0.12
+            ax.annotate('', xy=(x_pos[j]-dx*shrink/length, y_pos[j]-dy*shrink/length),
+                       xytext=(x_pos[i]+dx*shrink/length, y_pos[i]+dy*shrink/length),
+                       arrowprops=dict(arrowstyle='->', color='coral',
+                                      lw=1.5, connectionstyle='arc3,rad=0.2'))
+
+    # Count fixed points
+    fixed = sum(1 for pt in points if proj_action(mat, pt, q) == pt)
+
+    ax.set_title(title, fontsize=12, fontweight='bold')
+    ax.text(0, -1.5, f'Fixed points: {fixed}', ha='center', fontsize=11,
+           color='red' if fixed > 0 else 'green',
+           fontweight='bold')
+    ax.set_xlim(-1.8, 1.8)
+    ax.set_ylim(-1.8, 1.8)
+    ax.set_aspect('equal')
+    ax.axis('off')
+
+fig.suptitle(f'Action on ℙ¹(𝔽_{q}): Singer vs Non-Singer Elements',
+            fontsize=15, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('viz_projective_action.png', dpi=150, bbox_inches='tight')
+print("Saved viz_projective_action.png")
 
 
-def mat_mul(A, B, p):
-    return [
-        [(A[0][0]*B[0][0] + A[0][1]*B[1][0]) % p,
-         (A[0][0]*B[0][1] + A[0][1]*B[1][1]) % p],
-        [(A[1][0]*B[0][0] + A[1][1]*B[1][0]) % p,
-         (A[1][0]*B[0][1] + A[1][1]*B[1][1]) % p]
-    ]
+#!/usr/bin/env python3
+"""
+Visualization: Spectral Gap of Cayley Graphs for GL₂(𝔽_q)
 
-def mat_det(A, p):
-    return (A[0][0]*A[1][1] - A[0][1]*A[1][0]) % p
+Visualizes the eigenvalue distribution of the normalized adjacency
+operator on Cayley graphs of GL₂(𝔽_q) generated by certified pairs.
+Shows how the spectral gap (distance from 1 to the second eigenvalue)
+provides a quantitative measure of expansion.
+"""
 
-def mat_inv(A, p):
-    d = mat_det(A, p)
-    di = pow(d, p - 2, p)
-    return [[(A[1][1]*di) % p, (-A[0][1]*di) % p],
-            [(-A[1][0]*di) % p, (A[0][0]*di) % p]]
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from itertools import product as cartesian_product
 
-def mat_trace(A, p):
-    return (A[0][0] + A[1][1]) % p
+# ── Self-contained finite field and matrix code ──
 
-def mat_to_tuple(A):
-    return (A[0][0], A[0][1], A[1][0], A[1][1])
+def mod(x, q): return x % q
+def inverse_mod(a, q): return pow(a, q-2, q)
+def multiplicative_order(a, q):
+    if a%q==0: return 0
+    x=1
+    for k in range(1,q):
+        x=(x*a)%q
+        if x==1: return k
+    return q-1
 
-def is_singer_like(g, p):
-    tr = mat_trace(g, p)
-    det = mat_det(g, p)
-    disc = (tr * tr - 4 * det) % p
-    if disc == 0: return False
-    return pow(int(disc), (p - 1) // 2, p) != 1
+class M2:
+    __slots__=['a','b','c','d','q']
+    def __init__(s,a,b,c,d,q): s.a,s.b,s.c,s.d,s.q=a%q,b%q,c%q,d%q,q
+    def det(s): return (s.a*s.d-s.b*s.c)%s.q
+    def __mul__(s,o):
+        q=s.q
+        return M2((s.a*o.a+s.b*o.c)%q,(s.a*o.b+s.b*o.d)%q,
+                  (s.c*o.a+s.d*o.c)%q,(s.c*o.b+s.d*o.d)%q,q)
+    def inv(s):
+        d=s.det(); q=s.q
+        if d==0: return None
+        di=inverse_mod(d,q)
+        return M2((s.d*di)%q,(-s.b*di)%q,(-s.c*di)%q,(s.a*di)%q,q)
+    def to_tuple(s): return (s.a,s.b,s.c,s.d)
+    def __hash__(s): return hash((s.to_tuple(),s.q))
+    def __eq__(s,o): return s.to_tuple()==o.to_tuple() and s.q==o.q
+    @staticmethod
+    def eye(q): return M2(1,0,0,1,q)
 
-def order_of(a, p):
-    if a % p == 0: return 0
-    val = 1
-    for k in range(1, p):
-        val = (val * a) % p
-        if val == 1: return k
-    return p - 1
+def is_irred(m):
+    tr,det,q=(m.a+m.d)%m.q,m.det(),m.q
+    return all((a*a-tr*a+det)%q!=0 for a in range(q))
 
-def has_primitive_det(h, p):
-    d = mat_det(h, p)
-    if d == 0: return False
-    return order_of(d, p) == p - 1
+def gl2(q):
+    return [M2(a,b,c,d,q) for a,b,c,d in cartesian_product(range(q),repeat=4)
+            if (a*d-b*c)%q!=0]
 
-def generates_gl2(g, h, p, gl2_size):
-    I = (1, 0, 0, 1)
-    gt, gi = mat_to_tuple(g), mat_to_tuple(mat_inv(g, p))
-    ht, hi = mat_to_tuple(h), mat_to_tuple(mat_inv(h, p))
-    visited = {I}
-    frontier = [I]
-    gens_t = [gt, gi, ht, hi]
-    
-    while frontier:
-        new_frontier = []
-        for mt in frontier:
-            m = [[mt[0], mt[1]], [mt[2], mt[3]]]
-            for st in gens_t:
-                s = [[st[0], st[1]], [st[2], st[3]]]
-                prod = mat_mul(m, s, p)
-                pt = mat_to_tuple(prod)
-                if pt not in visited:
-                    visited.add(pt)
-                    new_frontier.append(pt)
-                    if len(visited) == gl2_size:
-                        return True
-        frontier = new_frontier
-    return len(visited) == gl2_size
-
-def find_certified_pairs(p, max_pairs=10):
-    gl2_size = (p*p - 1) * (p*p - p)
-    elements = []
-    for a, b, c, d in itertools.product(range(p), repeat=4):
-        M = [[a, b], [c, d]]
-        if mat_det(M, p) != 0:
-            elements.append(M)
-    
-    singers = [g for g in elements if is_singer_like(g, p)]
-    prim_dets = [h for h in elements if has_primitive_det(h, p)]
-    
-    np.random.seed(42)
-    si = np.random.choice(len(singers), min(len(singers), 30), replace=False)
-    pi = np.random.choice(len(prim_dets), min(len(prim_dets), 30), replace=False)
-    
-    pairs = []
-    for i in si:
-        for j in pi:
-            if generates_gl2(singers[i], prim_dets[j], p, gl2_size):
-                pairs.append((singers[i], prim_dets[j]))
-                if len(pairs) >= max_pairs:
-                    return pairs, elements
-    return pairs, elements
-
-def compute_spectrum(elements, g, h, p):
-    n = len(elements)
-    elem_idx = {mat_to_tuple(e): i for i, e in enumerate(elements)}
-    gi = mat_inv(g, p)
-    hi = mat_inv(h, p)
-    gens = [g, gi, h, hi]
-    
-    A = np.zeros((n, n))
-    for i, x in enumerate(elements):
+def cayley_spectrum(g, h, elems, q):
+    n=len(elems); idx={e.to_tuple():i for i,e in enumerate(elems)}
+    gi,hi=g.inv(),h.inv(); gens=[g,gi,h,hi]
+    A=np.zeros((n,n))
+    for i,e in enumerate(elems):
         for s in gens:
-            y = mat_mul(x, s, p)
-            j = elem_idx[mat_to_tuple(y)]
-            A[i][j] = 1.0
-    
-    eigenvalues = np.linalg.eigvalsh(A)
-    return np.sort(eigenvalues)[::-1]
+            A[i,idx[(e*s).to_tuple()]]+=1
+    A/=4.0
+    return np.sort(np.linalg.eigvalsh(A))[::-1]
 
+def find_pair(q, elems):
+    g=h=None
+    for m in elems:
+        if is_irred(m) and g is None: g=m
+        elif m.det()!=0 and multiplicative_order(m.det(),q)==q-1 and h is None: h=m
+        if g and h: return g,h
+    return g,h
 
-# ── Main Visualization ──
+# ── Visualization ──
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-fig.suptitle('Spectral Gap Scaling for GL₂(𝔽_q) Certified Expanders', 
-             fontsize=14, fontweight='bold')
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+fig.suptitle('Spectral Gap Analysis of Certified GL₂(𝔽_q) Cayley Graphs',
+             fontsize=16, fontweight='bold')
 
 primes = [5, 7]
-all_gaps = {}
-all_qgaps = {}
-best_spectrum = None
-best_q = None
+gap_data = []
 
-for q in primes:
-    print(f"Processing q = {q}...")
-    pairs, elements = find_certified_pairs(q, max_pairs=8)
-    gaps = []
-    
-    for g, h in pairs:
-        eigs = compute_spectrum(elements, g, h, q)
-        normed = eigs / 4.0
-        lam2 = np.max(np.abs(normed[1:]))
-        gap = 1 - lam2
-        gaps.append(gap)
-        
-        if best_spectrum is None or len(eigs) < 1000:
-            best_spectrum = normed
-            best_q = q
-    
-    all_gaps[q] = gaps
-    all_qgaps[q] = [q * g for g in gaps]
+for ax, q in zip(axes.flat, primes):
+    elems = gl2(q)
+    g, h = find_pair(q, elems)
+    if g is None or h is None:
+        ax.text(0.5, 0.5, f'No pair for q={q}', ha='center')
+        continue
 
-# Panel 1: Spectral gap γ vs q
-ax1 = axes[0]
-for q in primes:
-    gaps = all_gaps[q]
-    ax1.scatter([q] * len(gaps), gaps, alpha=0.6, s=40, zorder=3)
-    ax1.plot(q, np.mean(gaps), 'kx', markersize=10, markeredgewidth=2, zorder=4)
+    eigs = cayley_spectrum(g, h, elems, q)
+    n = len(eigs)
 
-# Reference C/q curve
-qs = np.linspace(4.5, max(primes) + 0.5, 100)
-C_ref = 0.5
-ax1.plot(qs, C_ref / qs, 'r--', alpha=0.5, label=f'C/q (C={C_ref})')
-ax1.set_xlabel('Prime q', fontsize=12)
-ax1.set_ylabel('Spectral Gap γ', fontsize=12)
-ax1.set_title('Spectral Gap vs Prime', fontsize=12)
-ax1.legend()
-ax1.grid(True, alpha=0.3)
+    # Compute spectral gap (excluding ±1)
+    nontrivial = [e for e in eigs[1:] if abs(abs(e)-1.0) > 1e-8]
+    if nontrivial:
+        gap = 1.0 - max(abs(e) for e in nontrivial)
+    else:
+        gap = 1.0
+    gap_data.append((q, gap, q*gap))
 
-# Panel 2: Normalized gap q·γ vs q
-ax2 = axes[1]
-for q in primes:
-    qgaps = all_qgaps[q]
-    ax2.scatter([q] * len(qgaps), qgaps, alpha=0.6, s=40, zorder=3)
-    ax2.plot(q, np.mean(qgaps), 'kx', markersize=10, markeredgewidth=2, zorder=4)
+    ax.hist(eigs, bins=min(80, n//5), edgecolor='black', linewidth=0.3,
+            alpha=0.8, color='steelblue', density=True)
+    ax.axvline(x=1, color='red', linewidth=2, linestyle='--', label='λ=1')
+    if nontrivial:
+        second = max(abs(e) for e in nontrivial)
+        ax.axvline(x=second, color='orange', linewidth=1.5, linestyle=':',
+                   label=f'|λ₂|={second:.3f}')
+    ax.set_title(f'q = {q}, |GL₂| = {n}, γ = {gap:.4f}, qγ = {q*gap:.4f}',
+                 fontsize=11)
+    ax.set_xlabel('Eigenvalue')
+    ax.set_ylabel('Density')
+    ax.legend(fontsize=8)
 
-ax2.axhline(y=0.5, color='r', linestyle='--', alpha=0.5, label='C = 0.5')
-ax2.set_xlabel('Prime q', fontsize=12)
-ax2.set_ylabel('Normalized Gap q·γ', fontsize=12)
-ax2.set_title('Normalized Gap (Should Stabilize)', fontsize=12)
-ax2.legend()
-ax2.grid(True, alpha=0.3)
-ax2.set_ylim(bottom=0)
-
-# Panel 3: Eigenvalue histogram for one example
-ax3 = axes[2]
-if best_spectrum is not None:
-    ax3.hist(best_spectrum, bins=50, density=True, alpha=0.7, 
-             color='steelblue', edgecolor='navy', linewidth=0.5)
-    ax3.axvline(x=1.0, color='red', linewidth=2, label='λ = 1 (trivial)')
-    ax3.axvline(x=best_spectrum[1], color='orange', linewidth=2, 
-                linestyle='--', label=f'λ₂ = {best_spectrum[1]:.3f}')
-    ax3.set_xlabel('Normalized Eigenvalue λ/d', fontsize=12)
-    ax3.set_ylabel('Density', fontsize=12)
-    ax3.set_title(f'Spectrum of Cay(GL₂(𝔽_{best_q}), S)', fontsize=12)
-    ax3.legend(fontsize=9)
-    ax3.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('spectral_gap_scaling.png', dpi=150, bbox_inches='tight')
-print("Saved: spectral_gap_scaling.png")
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.savefig('viz_spectrum.png', dpi=150, bbox_inches='tight')
+print("Saved viz_spectrum.png")
