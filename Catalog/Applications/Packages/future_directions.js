@@ -245,10 +245,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "3d942a0e",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -319,10 +319,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "563955fc",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T19:29:17.881900+00:00"
   },
   {
@@ -1113,25 +1113,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T19:12:47.193133+00:00"
   },
   {
-    "id": "fd_1516",
-    "title": "Direction 1: Sharp Perturbation Scale via Cauchy-Schwarz Improvement",
-    "description": "**Conjecture:** For the coupling perturbation problem, the safe entrywise perturbation scale can be improved from \u03b5/(2n\u00b2) to \u03b5/(2n) by using the sharp quadratic form bound from `LorentzianSharpStability.lean`.\n\n**Test:** Prove that the sharp Cauchy-Schwarz inequality |Q_E(v)| \u2264 n\u00b7B\u00b7\u2016v\u2016\u00b2 (Theorem `quadFormBound_of_entry_bound_sharp` from the catalog) directly implies certified_robustness_preserves_signature with tolerance \u03b5/(2n) instead of \u03b5/(2n\u00b2). Computationally, verify that for complete graphs K_n with n up to 20, the empirical threshold for signature destruction scales as \u0398(1/n) rather than \u0398(1/n\u00b2).\n\n**Impact:** An n-fold improvement in the certified safe perturbation scale. For a 100-spin system, this increases the tolerance from ~5\u00d710\u207b\u2075\u03b5 to ~5\u00d710\u207b\u00b3\u03b5, making the certificate practically useful for real materials.\n\nThe key insight is that the existing proof in `IsingPartitionStability.lean` uses the n\u00b2 quadratic form bound (`quadFormBound_of_entry_bound`) while the sharp catalog result achieves n. Replacing one lemma propagates through the entire robustness chain.\n\nWhy now? The sharp bound `quadFormBound_of_entry_bound_sharp` is already proved in `Catalog/Pythagorean/LorentzianSharpStability.lean`. The only barrier is connecting the two files, which requires a straightforward import and substitution.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` \u2014 `quadFormBound_of_entry_bound_sharp`, `stability_law_sharp`\n\n**Proof Strategy:** Import the sharp bound, substitute it in the proof of `certified_robustness_preserves_signature`, and propagate the improved constant through `combined_robustness`.\n\n**Domain Bridges:** Numerical linear algebra (operator norm bounds), experimental physics (measurement tolerance)\n\n**Lineage:** Direct improvement of Theorem 3.8 in this work\n\n**Ambition:** Solid extension \u2014 straightforward but impactful\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "00a34fc1",
-    "consumed_by_exp_id": "fb142071",
-    "timestamp": "2026-05-27T19:49:58.667166+00:00"
-  },
-  {
     "id": "fd_1517",
     "title": "Direction 2: Lee-Yang Zero Stability Under Coupling Noise",
     "description": "**Conjecture:** If the coupling matrix of an Ising model has gapped Lorentzian signature, then the Lee-Yang zeros of the partition function (viewed as a polynomial in e^{\u03b2h}) are stable under coupling perturbations: each zero moves by at most O(\u03b2n\u00b2\u03b4) in the complex plane.\n\n**Test:** For K_n models with n \u2208 {4, 6, 8, 10}, compute the Lee-Yang zeros of Z(e^{\u03b2h}) before and after coupling perturbation. Plot zero displacement vs \u03b4 and verify O(\u03b2n\u00b2\u03b4) scaling. Test whether the zeros remain on the unit circle (Lee-Yang theorem) under small perturbations.\n\n**Impact:** Would connect three deep mathematical threads: Lorentzian polynomials, Lee-Yang theory, and perturbation theory of polynomial roots. A rigorous Lee-Yang zero stability theorem would have immediate implications for the theory of phase transitions in disordered systems.\n\nThe key insight is that Lee-Yang zeros are roots of a univariate specialization of the partition polynomial, and Lorentzian structure constrains root locations via the half-plane property. Perturbation of coefficients (which our coupling perturbation induces) should yield controlled root movement by Rouch\u00e9-type arguments.\n\nWhy now? The covariance form identity (Theorem 3.6) provides the precise relationship between coupling perturbation and coefficient perturbation of the partition polynomial. The log-Lipschitz bound (Theorem 3.4) gives the quantitative control needed for Rouch\u00e9's theorem.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` \u2014 spectral stability results; `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `reversed_cauchy_schwarz_of_gapped`\n\n**Proof Strategy:** Express the partition function as a univariate polynomial in z = e^{\u03b2h}. Use the log-Lipschitz bound to control coefficient perturbation. Apply Rouch\u00e9's theorem on appropriate contours to bound zero displacement.\n\n**Domain Bridges:** Complex analysis (Rouch\u00e9's theorem), phase transition theory (Lee-Yang circle theorem), random matrix theory\n\n**Lineage:** Extension of Theorems 3.4 and 3.6\n\n**Ambition:** Grand challenge \u2014 would unify three major mathematical frameworks\n\n---",
@@ -1207,32 +1188,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "33b7a398",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T00:37:30.664027+00:00"
-  },
-  {
-    "id": "fd_1572",
-    "title": "Direction 3: Lorentzian Condition Numbers for Association Schemes (Grand Challenge)",
-    "description": "**Conjecture**: For any polynomial whose coefficient support has the structure of an association scheme (Johnson scheme, Hamming scheme, etc.), the Lorentzian stability radius is determined by the minimum eigenvalue ratio across the scheme's eigenmatrix:\n$$\\rho = \\frac{1}{\\max_k \\frac{|p_k(1)|}{|p_k(j_{\\min})|}}$$\nwhere $p_k$ are the scheme's eigenpolynomials and $j_{\\min}$ is the class minimizing the ratio.\n\n**Test**: For the Johnson scheme $J(n, 2)$ (which governs $e_2$), verify that the formula reproduces the known gap of 1. For $J(n, 3)$ (governing $e_3$), compute the predicted gap and compare to empirical binary search.\n\n**Impact**: This would unify Lorentzian stability theory with the algebraic theory of association schemes, creating a systematic framework for computing stability radii for all highly symmetric combinatorial structures.\n\n**Catalog References**:\n- `Pythagorean/UniformMatroidLorentzian.lean` \u2014 `uniform_leaf_hessian_decomposition` (the two-eigenvalue structure)\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`\n\n**Proof Strategy**: (1) Decompose the quadratic leaf space under the scheme's automorphism group. (2) Use the scheme's eigenmatrix to diagonalize all leaf Hessians simultaneously. (3) Read off the minimum spectral gap from the eigenmatrix entries. (4) Verify matching instability witnesses using idempotent perturbations.\n\n**Domain Bridges**: Association schemes (Delsarte theory), coding theory (distance distributions), algebraic combinatorics (spherical designs), quantum information (entanglement witnesses).\n\n**Lineage**: Generalizes the uniform matroid result from $S_m$-symmetry to arbitrary association scheme symmetry.\n\n**Ambition**: Grand challenge \u2014 would create an entirely new bridge between two deep algebraic theories.\n\n**The key insight is** that the two-eigenvalue structure of the uniform matroid leaf Hessian is not accidental but reflects the fact that $J - I$ is an element of the Bose\u2013Mesner algebra of the trivial association scheme on $m$ points; for richer schemes, the leaf Hessians decompose according to the scheme's idempotents.\n\n**Why now?** The uniform matroid case has demonstrated that spectral decomposition is the right language. Association schemes provide the natural algebraic framework for extending this to all symmetric combinatorial objects. The Lean formalization infrastructure is ready to verify new cases.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33b7a398",
-    "consumed_by_exp_id": "54a2ca0c",
-    "timestamp": "2026-05-28T00:37:30.808390+00:00"
+    "consumed_by_exp_id": "2ceea89e",
+    "timestamp": "2026-05-28T00:37:30.664027+00:00"
   },
   {
     "id": "fd_1594",
@@ -2136,10 +2096,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "69370675",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e2fd8a1",
     "timestamp": "2026-05-28T06:15:00.501744+00:00"
   },
   {
@@ -2189,5 +2149,47 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.336768+00:00"
+  },
+  {
+    "id": "fd_1693",
+    "title": "Direction 2: Non-Affine Eigenvalue Flows and Nonlinear Stability",
+    "description": "**Conjecture:** When eigenvalues \u03b8_j(t) depend polynomially (not affinely) on the perturbation parameter, the stability radius equals the smallest positive root of any nontrivial eigenvalue function: \u03c1 = min_{j\u22651} min{t > 0 : \u03b8_j(t) = 0}.\n\n**Test:** For degree-2 eigenvalue flows \u03b8_j(t) = a_j + b_j t + c_j t\u00b2 with randomly generated coefficients satisfying \u03b8_j(0) < 0 and some \u03b8_j(t) > 0 for large t, compute the stability radius by root-finding and compare with binary search on the actual Hessian eigenvalues.\n\n**Impact:** Extends the spectral formula beyond the affine case, covering quadratic and higher-order perturbation families arising in trust-region optimization and polynomial homotopy continuation.\n\n**Catalog References:**\n- `Catalog/Pythagorean/SchemeLorentzian/Theorems.lean` \u2014 `eigenvalue_neg_before_vanishing`, `eigenvalue_pos_after_vanishing`\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`\n\n**Proof Strategy:** Replace the affine vanishing time t_j = -a_j/b_j with the smallest positive root of \u03b8_j(t). The key lemma is that \u03b8_j changes sign at the root (by continuity) and the stability radius is the minimum such root. Use the intermediate value theorem and careful monotonicity arguments.\n\n**Domain Bridges:** Numerical algebraic geometry (polynomial root-finding) \u2194 Lorentzian stability; optimization (trust regions) \u2194 spectral analysis.\n\n**Lineage:** Directly extends the affine eigenvalue theory (Theorems 3.3\u20133.6).\n\n**Ambition:** Solid extension \u2014 mathematically clean and computationally testable.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "54a2ca0c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:50:39.985346+00:00"
+  },
+  {
+    "id": "fd_1695",
+    "title": "Direction 4: Certified Spectral Algorithms for Lorentzian Optimization",
+    "description": "**Conjecture:** The spectral stability radius provides a computable *trust region* for Lorentzian polynomial optimization: within the ball of radius \u03c1 around a certified Lorentzian point, all polynomials remain Lorentzian and log-concavity-based sampling algorithms converge.\n\n**Test:** Implement a trust-region Newton method for maximizing a Lorentzian polynomial over a polytope, using the spectral stability radius as the trust-region size. Compare convergence rates against standard methods on matroid intersection and log-concave sampling benchmarks.\n\n**Impact:** Would provide the first numerically certified optimization algorithm for Lorentzian polynomials, with convergence guarantees derived from spectral data rather than ad hoc step-size rules.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `hasAtMostOnePositiveEigenvalue_of_gapped_perturbation`, `certifyStability_sound`\n- `Catalog/Pythagorean/SchemeLorentzian/Defs.lean` \u2014 `schemeStabilityRadius`\n\n**Proof Strategy:** Use the certified stability check (Algorithm 2) as an oracle within a trust-region framework. The key insight is that the spectral gap provides a natural trust-region radius that adapts to the local geometry. Prove convergence by showing the trust region contracts at a controlled rate.\n\n**Domain Bridges:** Numerical optimization (trust regions, convergence theory) \u2194 Lorentzian polynomials; certified computation \u2194 spectral analysis.\n\n**Lineage:** Extends the certified stability checker from the catalog.\n\n**Ambition:** Solid extension \u2014 immediately applicable and algorithmically impactful.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "54a2ca0c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:50:45.692556+00:00"
   }
 ];
