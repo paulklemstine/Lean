@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Complexity Theory / Extremal Combinatorics",
     "date": "2026-05-28T03:48:25Z",
     "exp_id": "3a9ea178",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7280750159066809,
+    "quality": "substantial",
     "pkg_num": 210
   },
   {
@@ -6099,8 +6099,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-28T03:48:25Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7280750159066809,
+      "quality": "substantial"
     }
   ],
   "edges": [

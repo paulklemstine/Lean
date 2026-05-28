@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1974 of the highest-quality
+A curated collection of 1977 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1974
+Total files: 1977
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -616,6 +616,7 @@ import FINAL.Bridges.SatakeEMLBridge
 import FINAL.Bridges.Search
 import FINAL.Bridges.SemanticQuotientExtraction
 import FINAL.Bridges.Separation
+import FINAL.Bridges.ShadowDecay
 import FINAL.Bridges.SharpExponentLowerBounds
 import FINAL.Bridges.SheafObstruction
 import FINAL.Bridges.SheafPersistence
@@ -1537,6 +1538,7 @@ import FINAL.Pythagorean.DiffClosure
 import FINAL.Pythagorean.DiophantineCertifiedOptimization
 import FINAL.Pythagorean.DirectedCyclePressure
 import FINAL.Pythagorean.DirectionalLogConcavity
+import FINAL.Pythagorean.DoubleScalingLimit
 import FINAL.Pythagorean.Duality
 import FINAL.Pythagorean.DynamicSpectralGap
 import FINAL.Pythagorean.DynamicalSquaring
@@ -1559,6 +1561,7 @@ import FINAL.Pythagorean.FiltrationPersistence
 import FINAL.Pythagorean.FiveDirections
 import FINAL.Pythagorean.Foundations
 import FINAL.Pythagorean.FracTransversalConcentration
+import FINAL.Pythagorean.FunctorialLocalization
 import FINAL.Pythagorean.GeodesicInvariants
 import FINAL.Pythagorean.GrowthRegimeTrichotomy
 import FINAL.Pythagorean.HOCriticalPairs

@@ -394,10 +394,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2b6d84b4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "73fd0b15",
     "timestamp": "2026-05-25T21:13:09.706179+00:00"
   },
   {
@@ -556,10 +556,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "7e5283ed",
-    "consumed_by_exp_id": "d39468e7",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T23:33:37.973936+00:00"
   },
   {
@@ -634,10 +634,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b0b26cee",
-    "consumed_by_exp_id": "04104c70",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T07:14:49.805352+00:00"
   },
   {
@@ -654,10 +654,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "42d710f5",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5ed97fbb",
     "timestamp": "2026-05-26T08:59:20.810965+00:00"
   },
   {
@@ -712,10 +712,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "550b5c8b",
-    "consumed_by_exp_id": "c86ab002",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T21:18:02.967940+00:00"
   },
   {
@@ -992,10 +992,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8596d6a6",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fc0cc70c",
     "timestamp": "2026-05-27T13:37:04.718863+00:00"
   },
   {
@@ -1174,25 +1174,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T19:12:47.048620+00:00"
   },
   {
-    "id": "fd_1514",
-    "title": "Direction 4: Hodge-Theoretic Interpretation of Valuated Exchange",
-    "description": "**Conjecture.** The valuated exchange property with K = 1 is equivalent to the Hodge\u2013Riemann relations in degree 1 for the associated toric variety. Specifically, the four-point inequality coeff(a)\u00b7coeff(b) \u2264 coeff(a')\u00b7coeff(b') on exchange squares corresponds to the mixed Hodge\u2013Riemann bilinear relations restricted to the span of the exchange directions.\n\n**Test.** Prove the equivalence for the simplest nontrivial case: homogeneous degree-2 polynomials on Fin n. In this case, the polynomial determines a symmetric bilinear form, and the Hodge\u2013Riemann relation reduces to the Cauchy\u2013Schwarz inequality. The exchange squares should correspond to specific 2\u00d72 minors of the coefficient matrix.\n\n**Impact.** This would provide the first direct, constructive connection between the exchange axiom of discrete convex analysis and the Hodge theory of algebraic geometry, potentially simplifying proofs of the Hodge conjecture for matroids (Adiprasito\u2013Huh\u2013Katz).\n\n**Catalog References.** `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Hessian signature = Lorentzian), `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorem 4, log-concavity bridge).\n\n**Proof Strategy.** For degree-2: express the exchange inequality as a statement about 2\u00d72 minors of the coefficient matrix, then relate to the signature condition in `LorentzianRecognitionComplete.lean`. For higher degree: use iterated differentiation to reduce to degree 2 and apply the transport identity.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Algebraic geometry \u2194 Combinatorial Hodge theory.\n\n**Lineage.** Extends `valuatedExchange_logConcave_on_ray` and `recursivelyLorentzian_iff_brandenHuh`.\n\n**Ambition.** Grand challenge \u2014 would connect three major areas of mathematics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "78306251",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T19:12:47.115604+00:00"
-  },
-  {
     "id": "fd_1515",
     "title": "Direction 5: Entropy Monotonicity under Derivative Transport",
     "description": "**Conjecture.** For Lorentzian polynomials with M-convex support, the Shannon entropy of the normalized coefficient distribution is monotonically non-increasing under partial differentiation: H(\u2202_i p / ||\u2202_i p||\u2081) \u2264 H(p / ||p||\u2081).\n\n**The key insight is** that the coefficient transport identity introduces a coordinate-dependent rescaling (m_i + 1) that concentrates mass toward lower-degree monomials, reducing entropy. This is analogous to the concentration of measure phenomenon in high-dimensional probability.\n\n**Why now?** The coefficient transport identity (Theorem 1) provides the exact formula for how coefficients transform, making entropy computations tractable. Combined with the nonnegativity preservation (Theorem 2), we can normalize coefficients to probability distributions at each derivative level.\n\n**Test.** Compute entropy at each derivative level for random weighted uniform matroid polynomials. Verify monotonicity computationally for n \u2264 7. Attempt a formal proof using the transport identity and convexity of the entropy function.\n\n**Impact.** Entropy monotonicity would provide a new invariant for the derivative tower of Lorentzian polynomials, with applications to information-theoretic bounds in combinatorics and statistical mechanics (partition function analysis).\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorems 1\u20132).\n\n**Proof Strategy.** Express H(\u2202_i p) in terms of original coefficients via the transport identity. Use the log-sum inequality and the convexity of x log x to bound the entropy change.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Information theory \u2194 Statistical physics.\n\n**Lineage.** Extends `coeff_pderiv_transport` and `coeff_pderiv_nonneg`.\n\n**Ambition.** Solid extension \u2014 computable entropy bounds from formal coefficient identities.",
@@ -1250,23 +1231,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "00a34fc1",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T19:49:58.734781+00:00"
-  },
-  {
-    "id": "fd_1521",
-    "title": "Direction 1: Differential \u03bb-Calculus Normalization via Typed Stratification",
-    "description": "**Conjecture:** The STTC confluence result, combined with strong normalization of the simply-typed \u03bb-calculus, implies strong normalization for the typed differential \u03bb-calculus fragment with scalars and vectors. Specifically, if we interpret the STTC distributivity rules as the Leibniz rule for differentiation, then every typed differential \u03bb-term has a unique normal form modulo AC.\n\n**Test:** Formalize the connection between STTC distributivity and the Ehrhard-Regnier differential \u03bb-calculus. Define a type-preserving translation from differential \u03bb-terms to STTC terms and show that it commutes with reduction. If the translation preserves normalization, strong normalization of STTC (which follows from confluence + type-theoretic termination) transfers to the differential fragment.\n\n**Impact:** Strong normalization for the typed differential \u03bb-calculus has been an open problem since Ehrhard and Regnier's 2003 paper. A positive result would close a 20-year gap in proof theory and provide the first cut-elimination theorem for differential linear logic with function types.\n\n**Catalog References:**\n- `Catalog/Pythagorean/STTCConfluence.lean`: Type-level separation theorem, distributivity rules\n- `Catalog/Pythagorean/ChurchRosser.lean`: Church-Rosser for untyped \u03b2-reduction (base case)\n- `Catalog/Pythagorean/HOCriticalPairs.lean`: Critical pair infrastructure for higher-order systems\n\n**Proof Strategy:** Use the STTC type hierarchy as a measure for a decreasing diagrams argument. \u03b2-steps decrease the type level of the active redex, while dist-steps (= differentiation steps) operate at level 0. The well-ordering of \u2115 ensures termination of the combined system.\n\n**Domain Bridges:** Proof theory (cut elimination), automatic differentiation (correctness of AD), denotational semantics (coherence spaces)\n\n**Lineage:** Extends Ehrhard-Regnier (2003), Vaux (2007), Tranquilli (2009)\n\n**Ambition:** Grand challenge \u2014 would resolve a foundational open problem in linear logic\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "46f40501",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T20:26:10.892515+00:00"
   },
   {
     "id": "fd_1536",
@@ -1384,10 +1348,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8f59c0ed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "79586e0d",
     "timestamp": "2026-05-28T00:39:49.413929+00:00"
   },
   {
@@ -1431,25 +1395,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "f43533d0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T01:19:07.666079+00:00"
-  },
-  {
-    "id": "fd_1596",
-    "title": "Direction 3: Circuit Lower Bounds from Derivative Shadow Decay",
-    "description": "**Conjecture:** If a polynomial $f$ of degree $d$ in $n$ variables is computed by an algebraic circuit of size $s$, then the shadow profile satisfies $|\\text{Sh}_k(\\text{supp}(f))| \\leq s \\cdot \\binom{n+d-k}{n}$ for all $k$. Moreover, there exist explicit polynomials (e.g., the permanent) where the shadow profile decays much slower than any polynomial circuit output could allow.\n\n**Test:** Compute shadow profiles for the permanent, determinant, and elementary symmetric polynomials in $n \\leq 8$ variables. Compare decay rates. Identify polynomials where the shadow decay is anomalously slow relative to the circuit upper bound.\n\n**The key insight is** that circuits can only produce polynomials with structured supports (outputs of bounded-depth composition of sparse operations), while the shadow profile of a \"random\" polynomial decays at the maximal rate. A separation between these rates would yield circuit lower bounds.\n\n**Why now?** The exact shadow theorem reduces the derivative complexity of a polynomial to a purely combinatorial quantity (the shadow profile), which is much easier to bound than the algebraic quantity (the actual derivative).\n\n**Impact:** Would provide a new approach to algebraic circuit lower bounds via support geometry.\n\n**Catalog References:** `Pythagorean/IteratedShadowGeometry.lean` (mem_kthShadow_iff_exists_iteratedDerivative), `Bridges/Catalog/Pythagorean/SupportCompression.lean` (supportCompressedLeafCount_le_active_choose).\n\n**Proof Strategy:** Use the shadow theorem to express derivative complexity as shadow size. Bound shadow sizes for circuit outputs using structural induction on circuit depth.\n\n**Domain Bridges:** Algebraic complexity theory, circuit complexity, sparse polynomial identity testing.\n\n**Lineage:** Extends the support compression results of SupportCompression.lean from quadratic to arbitrary order.\n\n**Ambition:** Grand challenge \u2014 circuit lower bounds are a central open problem.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f43533d0",
-    "consumed_by_exp_id": "3a9ea178",
-    "timestamp": "2026-05-28T01:19:07.736279+00:00"
   },
   {
     "id": "fd_1597",
@@ -1512,23 +1457,46 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T01:57:02.515048+00:00"
   },
   {
-    "id": "fd_1605",
-    "title": "Direction 2: Arithmetic Graph Jacobians and Arakelov Theory",
-    "description": "**Conjecture:** For a finite graph G over \u2124, the order of the critical group (sandpile group) Jac(G) equals the reduced Laplacian determinant det(L_red), and this integer invariant admits an Arakelov-theoretic interpretation as the self-intersection number of the canonical divisor on the associated arithmetic surface.\n\n**Test:** Compute |Jac(G)| and det(L_red) for all graphs on \u2264 8 vertices and verify equality. Then compute the Arakelov intersection pairing for the corresponding Mumford curves (if available) and compare with the graph-theoretic prediction.\n\n**Impact:** Would establish a formal bridge from graph combinatorics to arithmetic geometry, making the chip-firing group a certified invariant of an arithmetic surface. This would connect the GFF partition function to heights and arithmetic degrees.\n\n**Catalog References:**\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` \u2014 `FiringEquivalentOn`, `RestrictedLaplacianImage`\n- `Catalog/Pythagorean/TropicalBridge/GaussianFreeField.lean` \u2014 `effectiveResistance_eq_pseudoinverse_quadratic`\n\n**Proof Strategy:** Use the Smith normal form of the Laplacian to compute the critical group structure. Relate this to the N\u00e9ron model of the Jacobian of the associated Mumford curve via Raynaud's theorem.\n\n**Domain Bridges:** Combinatorics \u2194 Arithmetic geometry \u2194 Number theory\n\n**Lineage:** Builds on `harmonicKernel` and chip-firing equivalence from the canonical kernel theorems.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting connection between combinatorial chip-firing and Arakelov geometry.\n\n---",
+    "id": "fd_1639",
+    "title": "Direction 1: The Lorentzian CondNSD Conjecture",
+    "description": "**Conjecture:** For every homogeneous multilinear polynomial p with nonneg coefficients that is Lorentzian (Br\u00e4nd\u00e9n\u2013Huh), and with p(1) > 0, the logarithmic Hessian \u2202\u00b2(log p)|_{x=1} is conditionally negative semidefinite.\n\n**Test:** Systematically verify on:\n- Basis generating polynomials of all matroids on \u2264 8 elements (using matroid enumeration databases).\n- Random Lorentzian polynomials generated by the Br\u00e4nd\u00e9n\u2013Huh closure operations (products, convolutions, projections).\n- Volume polynomials of polytopes (which are Lorentzian by the Hodge\u2013Riemann relations).\nA single positive eigenvalue on the zero-sum subspace disproves the conjecture.\n\n**Impact:** If true, this would establish CondNSD as the geometric characterization of the Lorentzian class at the generating function level, providing a new spectral certificate for negative dependence that is checkable in O(n\u00b3) time. If false, the counterexample would reveal the precise boundary between geometric and non-geometric negative dependence.\n\n**Catalog References:** `Catalog/Pythagorean/ResolventGeometry.lean` (CondNegSemidef definition, negSemidefForm_neg_outer_sum, productLogHessian_condNegSemidef), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (IsDPPLorentzian definition, dpp_partition_function_lorentzian conjecture).\n\n**Proof Strategy:** For degree-2 Lorentzian polynomials, the Hessian IS the coefficient matrix (up to normalization), and Lorentzianity directly implies at most one positive eigenvalue. The log-Hessian at 1 subtracts a rank-1 positive term (the outer product of marginals), which should push the spectrum negative on zero-sum vectors. For higher degrees, use induction on degree via the derivative operator: if \u2202_e p is Lorentzian for all e, the Hessian of log p decomposes into a sum of lower-degree Hessians plus correction terms. The key lemma would be: \"CondNSD is preserved under the Br\u00e4nd\u00e9n\u2013Huh closure operations.\"\n\n**Domain Bridges:** Algebraic geometry (Hodge\u2013Riemann relations for polytope volumes), combinatorial optimization (matroid intersection), probability theory (strong Rayleigh measures).\n\n**Lineage:** Extends `productLogHessian_condNegSemidef` from the product-of-linear-forms case to the full Lorentzian closure.\n\n**Ambition:** Grand challenge \u2014 would unify the algebraic (Lorentzian) and geometric (curvature) theories of negative dependence.\n\nThe key insight is that the CondNSD property should be preserved under the three Lorentzian closure operations (multiplication by nonneg scalars, partial differentiation, and certain linear changes of variables), making it an inductive property of the Lorentzian class.\n\nWhy now? The formal infrastructure for CondNSD verification (definitions, closure properties, certificate framework) is now in place, and the computational pipeline can test thousands of instances systematically. The Br\u00e4nd\u00e9n\u2013Huh theory provides the inductive structure needed for the proof.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
-      "Tropical",
+      "Computation",
+      "Physics",
       "Bridges",
-      "Logic"
+      "Logic",
+      "Speculative"
     ],
     "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "a674ae13",
+    "source_exp_id": "36b3d470",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T01:57:02.592700+00:00"
+    "timestamp": "2026-05-28T03:11:12.401718+00:00"
+  },
+  {
+    "id": "fd_1641",
+    "title": "Direction 3: Information Geometry of Repulsive Measures",
+    "description": "**Conjecture:** The log-Hessian \u2202\u00b2(log p)|_{x=1} of a generating polynomial, restricted to the zero-sum subspace, defines a Riemannian metric (the \"repulsion metric\") on the space of perturbation directions. For DPPs, this metric is isometric to the effective resistance metric of the resolvent graph with edge weights L_{ij}\u00b2.\n\n**Test:** For DPPs on \u2264 10 elements, compute the effective resistance matrix from the resolvent L and compare with the pseudoinverse of the log-Hessian restricted to zero-sum vectors. Verify the isometry numerically. For products of linear forms, compute the repulsion metric and compare with the Fisher information metric of the associated exponential family.\n\n**Impact:** Would establish a precise dictionary between negative dependence and information geometry, enabling the transfer of powerful tools (Cram\u00e9r-Rao bounds, natural gradient methods, geodesic convexity) to combinatorial probability. Could lead to new entropy inequalities for repulsive measures.\n\n**Catalog References:** `Catalog/Pythagorean/ResolventGeometry.lean` (dppResolventHessian, condNegSemidef_of_hadamard_sq), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (dppPartitionFunction, dpp_partitionFunction_eval_ones).\n\n**Proof Strategy:** For DPPs, use the resolvent formula H_{ij} = -L_{ij}\u00b2 to compute the pseudoinverse of H on the zero-sum subspace explicitly in terms of L. The effective resistance R_{ij} = (e_i - e_j)^T L^+ (e_i - e_j) where L^+ is the pseudoinverse. Show that the two metrics agree up to a constant factor by expressing both in terms of the spectral decomposition of L.\n\n**Domain Bridges:** Information geometry (Fisher metric, natural gradient), statistical physics (susceptibility matrices, fluctuation-dissipation relations), network science (effective resistance, commute times).\n\n**Lineage:** Extends `dppResolventHessian_symm` and the resolvent formula to a full geometric structure.\n\n**Ambition:** Grand challenge \u2014 would create a new interface between information geometry and combinatorial probability.\n\nThe key insight is that the log-Hessian is the **susceptibility matrix** of the generating measure (in statistical physics language), and CondNSD is the statement that the system has **repulsive response**: perturbing one variable's weight decreases others' inclusion probabilities. The effective resistance metric quantifies this repulsion geometrically.\n\nWhy now? The resolvent formula H = -L\u00b2 is now formally verified, providing the explicit connection between Hessian geometry and resolvent structure. Information geometry has matured as a field with powerful tools (Amari, Ay et al.), but has not been systematically applied to discrete repulsive measures. The formal infrastructure makes it possible to verify the geometric identities rigorously.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "36b3d470",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T03:11:12.578612+00:00"
   },
   {
     "id": "fd_0806",
@@ -1561,48 +1529,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1639",
-    "title": "Direction 1: The Lorentzian CondNSD Conjecture",
-    "description": "**Conjecture:** For every homogeneous multilinear polynomial p with nonneg coefficients that is Lorentzian (Br\u00e4nd\u00e9n\u2013Huh), and with p(1) > 0, the logarithmic Hessian \u2202\u00b2(log p)|_{x=1} is conditionally negative semidefinite.\n\n**Test:** Systematically verify on:\n- Basis generating polynomials of all matroids on \u2264 8 elements (using matroid enumeration databases).\n- Random Lorentzian polynomials generated by the Br\u00e4nd\u00e9n\u2013Huh closure operations (products, convolutions, projections).\n- Volume polynomials of polytopes (which are Lorentzian by the Hodge\u2013Riemann relations).\nA single positive eigenvalue on the zero-sum subspace disproves the conjecture.\n\n**Impact:** If true, this would establish CondNSD as the geometric characterization of the Lorentzian class at the generating function level, providing a new spectral certificate for negative dependence that is checkable in O(n\u00b3) time. If false, the counterexample would reveal the precise boundary between geometric and non-geometric negative dependence.\n\n**Catalog References:** `Catalog/Pythagorean/ResolventGeometry.lean` (CondNegSemidef definition, negSemidefForm_neg_outer_sum, productLogHessian_condNegSemidef), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (IsDPPLorentzian definition, dpp_partition_function_lorentzian conjecture).\n\n**Proof Strategy:** For degree-2 Lorentzian polynomials, the Hessian IS the coefficient matrix (up to normalization), and Lorentzianity directly implies at most one positive eigenvalue. The log-Hessian at 1 subtracts a rank-1 positive term (the outer product of marginals), which should push the spectrum negative on zero-sum vectors. For higher degrees, use induction on degree via the derivative operator: if \u2202_e p is Lorentzian for all e, the Hessian of log p decomposes into a sum of lower-degree Hessians plus correction terms. The key lemma would be: \"CondNSD is preserved under the Br\u00e4nd\u00e9n\u2013Huh closure operations.\"\n\n**Domain Bridges:** Algebraic geometry (Hodge\u2013Riemann relations for polytope volumes), combinatorial optimization (matroid intersection), probability theory (strong Rayleigh measures).\n\n**Lineage:** Extends `productLogHessian_condNegSemidef` from the product-of-linear-forms case to the full Lorentzian closure.\n\n**Ambition:** Grand challenge \u2014 would unify the algebraic (Lorentzian) and geometric (curvature) theories of negative dependence.\n\nThe key insight is that the CondNSD property should be preserved under the three Lorentzian closure operations (multiplication by nonneg scalars, partial differentiation, and certain linear changes of variables), making it an inductive property of the Lorentzian class.\n\nWhy now? The formal infrastructure for CondNSD verification (definitions, closure properties, certificate framework) is now in place, and the computational pipeline can test thousands of instances systematically. The Br\u00e4nd\u00e9n\u2013Huh theory provides the inductive structure needed for the proof.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "36b3d470",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T03:11:12.401718+00:00"
-  },
-  {
-    "id": "fd_1641",
-    "title": "Direction 3: Information Geometry of Repulsive Measures",
-    "description": "**Conjecture:** The log-Hessian \u2202\u00b2(log p)|_{x=1} of a generating polynomial, restricted to the zero-sum subspace, defines a Riemannian metric (the \"repulsion metric\") on the space of perturbation directions. For DPPs, this metric is isometric to the effective resistance metric of the resolvent graph with edge weights L_{ij}\u00b2.\n\n**Test:** For DPPs on \u2264 10 elements, compute the effective resistance matrix from the resolvent L and compare with the pseudoinverse of the log-Hessian restricted to zero-sum vectors. Verify the isometry numerically. For products of linear forms, compute the repulsion metric and compare with the Fisher information metric of the associated exponential family.\n\n**Impact:** Would establish a precise dictionary between negative dependence and information geometry, enabling the transfer of powerful tools (Cram\u00e9r-Rao bounds, natural gradient methods, geodesic convexity) to combinatorial probability. Could lead to new entropy inequalities for repulsive measures.\n\n**Catalog References:** `Catalog/Pythagorean/ResolventGeometry.lean` (dppResolventHessian, condNegSemidef_of_hadamard_sq), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (dppPartitionFunction, dpp_partitionFunction_eval_ones).\n\n**Proof Strategy:** For DPPs, use the resolvent formula H_{ij} = -L_{ij}\u00b2 to compute the pseudoinverse of H on the zero-sum subspace explicitly in terms of L. The effective resistance R_{ij} = (e_i - e_j)^T L^+ (e_i - e_j) where L^+ is the pseudoinverse. Show that the two metrics agree up to a constant factor by expressing both in terms of the spectral decomposition of L.\n\n**Domain Bridges:** Information geometry (Fisher metric, natural gradient), statistical physics (susceptibility matrices, fluctuation-dissipation relations), network science (effective resistance, commute times).\n\n**Lineage:** Extends `dppResolventHessian_symm` and the resolvent formula to a full geometric structure.\n\n**Ambition:** Grand challenge \u2014 would create a new interface between information geometry and combinatorial probability.\n\nThe key insight is that the log-Hessian is the **susceptibility matrix** of the generating measure (in statistical physics language), and CondNSD is the statement that the system has **repulsive response**: perturbing one variable's weight decreases others' inclusion probabilities. The effective resistance metric quantifies this repulsion geometrically.\n\nWhy now? The resolvent formula H = -L\u00b2 is now formally verified, providing the explicit connection between Hessian geometry and resolvent structure. Information geometry has matured as a field with powerful tools (Amari, Ay et al.), but has not been systematically applied to discrete repulsive measures. The formal infrastructure makes it possible to verify the geometric identities rigorously.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "36b3d470",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T03:11:12.578612+00:00"
   },
   {
     "id": "seed_013",
@@ -1947,36 +1873,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T07:52:22.669578+00:00"
   },
   {
-    "id": "fd_1399",
-    "title": "Persistent Prime-Mixing Threshold for Integral Chain Complexes",
-    "description": "Conjecture: There exists a universal constant c > 0 and an explicit family of finite filtered chain complexes C_N over Z such that for every set of primes P with |P \u2229 [1, c log N]| = o(log N), the collection of mod-p persistence barcodes {Bar(C_N; F_p) : p in P} does not determine the integral persistence module of C_N, but the full set of barcodes for all primes p <= c log N does determine it up to filtered chain homotopy. Test: Construct candidate families C_N with controlled torsion spread across many small primes, then algorithmically compare reconstruction success from truncated prime sets versus all primes up to c log N; confirmation requires a sharp threshold phenomenon in recoverability, refutation occurs if either substantially fewer primes always suffice or even all primes up to c log N fail generically. Impact: This would reveal a genuine information-theoretic phase transition in how arithmetic data is distributed across primes, giving the first quantitative law for when local mod-p topological observations assemble into global integral structure.",
-    "domains": [
-      "Algebraic Topology",
-      "Arithmetic Combinatorics"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T12:09:29.272030+00:00"
-  },
-  {
-    "id": "fd_1405",
-    "title": "Prime-Independence Threshold for Reconstructing Integral Persistent Homotopy Typ",
-    "description": "Conjecture: There exists a dimension-dependent function N(d) such that for any finite simply connected filtered CW complexes X and Y of dimension at most d, if for every prime p <= N(d) the mod-p persistent cohomology Steenrod-module data of X and Y are isomorphic (including persistence maps and cup products), then X and Y have the same integral persistent homotopy type up to filtered rational equivalence and identical p-primary Postnikov invariants for all primes p. Test: Compute or construct pairs of filtered complexes in low dimensions with matching mod-p persistent Steenrod data for all small primes; confirmation requires that no counterexample exists below the predicted threshold and that reconstruction algorithms recover the same Postnikov tower, while any explicit pair with matching data but differing integral persistent homotopy refutes the conjecture. Impact: This would create a finite-prime blueprint for recovering deep integral homotopy information from computable persistent invariants, linking TDA, unstable homotopy theory, and arithmetic localization in a genuinely new way.",
-    "domains": [
-      "Algebraic Topology",
-      "Topological Data Analysis"
-    ],
-    "priority_score": 0.8,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "pi_brainstorm",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T12:10:22.420690+00:00"
-  },
-  {
     "id": "fd_1429",
     "title": "Chromatic Stabilization of Primewise Persistent Homology",
     "description": "Conjecture: For every finite filtered CW complex X of dimension d, there exists a finite chromatic height h = h(X) such that for all primes p outside a density-0 exceptional set, the p-primary persistent homology barcode of X is functorially determined by the first h pages of the Adams spectral sequence of X localized at p; equivalently, beyond bounded chromatic height no new barcode intervals appear for almost all primes. Test: Compute, for explicit families of spaces/filtered complexes with known unstable and stable homotopy data (Moore spaces, lens spaces, configuration spaces, moment-angle complexes), the p-primary persistence barcodes across many primes and compare them to invariants predicted from truncated Adams spectral sequence data. The conjecture is refuted by a family where infinitely many chromatic heights contribute genuinely new barcode intervals for a positive-density set of primes; it is supported if barcode complexity uniformly stabilizes after bounded height and reconstruction succeeds for almost all p. Impact: This would create a bridge between persistent homology and chromatic homotopy theory, suggesting that primewise topological data admits a finite-height compression principle and enabling new algorithms for arithmetic-topological inference from spectral data.",
@@ -2110,6 +2006,70 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T00:40:32.501826+00:00"
+  },
+  {
+    "id": "fd_1655",
+    "title": "Prime-to-Prime Renormalization Operator for Arithmetic Persistence",
+    "description": "Conjecture: There exists an explicit renormalization operator R on prime-indexed persistence signatures attached to an arithmetic object (e.g. elliptic curves, varieties, or rational maps) such that for generic objects in a fixed motivic family, the sequence of signatures across primes p, p^2, p^3 viewed through R converges to a family-dependent fixed point, while objects with exceptional arithmetic structure (CM, extra endomorphisms, hidden isogenies, atypical monodromy) fail to converge or converge to a different universality class. Test: Construct a concrete prime-indexed persistence signature for one arithmetic family, compute it over many good primes and prime powers, fit the induced flow under R, and check whether generic members exhibit stable fixed-point behavior while exceptional members are statistically separated. Refutation occurs if no operator yields stable family-level universality or if exceptional objects are indistinguishable from generic ones. Impact: This would introduce a genuine renormalization-group framework for arithmetic topology, giving a new way to classify hidden structure by dynamical flows on persistence data rather than by isolated invariants.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T03:47:36.856141+00:00"
+  },
+  {
+    "id": "fd_1656",
+    "title": "Prime-Shift Stability Law for Arithmetic Persistent Signatures",
+    "description": "Conjecture: There exists an explicit arithmetic object family A (for example a non-CM elliptic curve over Q or a hyperelliptic curve family) and a functorial construction of prime-indexed filtered complexes K_p(A) such that the resulting persistence signatures S_p satisfy a quantitative prime-shift correlation law: for every fixed nonzero integer h, the empirical correlation Corr(S_p, S_{p+h}) over good primes p up to X converges to a limit C_A(h), and C_A(h) is identically zero if and only if the underlying Frobenius data are equidistributed with no hidden deterministic coupling beyond the standard local statistics. Test: compute S_p for large prime ranges and several families A, estimate Corr(S_p, S_{p+h}) for fixed h, and compare against null models preserving one-prime marginals but destroying cross-prime dependence; confirmation is persistent nontrivial limiting structure in C_A(h), while refutation is decay to zero indistinguishable from the null model for all tested families and shifts. Impact: this would turn persistent homology into a detector of cross-prime arithmetic memory, opening a new route to studying subtle inter-prime dependencies invisible to classical one-prime statistics such as Sato-Tate histograms or isolated mod-p invariants.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T03:48:08.260865+00:00"
+  },
+  {
+    "id": "fd_1662",
+    "title": "Prime-Periodic Persistence in Elliptic Divisibility Sequences",
+    "description": "Conjecture: There exists an elliptic curve E/Q and a non-torsion point P in E(Q) such that the family of finite filtered complexes built from the prime-factor incidence structure of the elliptic divisibility sequence D_n = denom(x([n]P)) has a genuinely periodic mod-l persistent barcode for infinitely many auxiliary primes l, with period depending on the order of P modulo l; moreover this periodicity fails for a density-1 set of non-CM curves. Test: Explicitly construct complexes from divisibility hypergraphs of {D_1,...,D_N}, compute mod-l persistent homology as N grows, and check whether barcode statistics become eventually periodic in N for infinitely many l in the predicted family, versus no such infinite periodic family for generic non-CM curves. Refutation occurs if no such curve-point pair exhibits infinite prime-indexed periodic barcode behavior, or if the same behavior is generic rather than exceptional. Impact: This would create a new bridge between arithmetic dynamics on elliptic curves, divisibility sequences, and topological invariants, potentially giving a topological detector for hidden algebraic group structure and exceptional reduction behavior.",
+    "domains": [
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T03:48:38.722447+00:00"
+  },
+  {
+    "id": "fd_1657",
+    "title": "Direction 1: Kruskal\u2013Katona Optimal Shadow Bounds for Circuit Supports",
+    "description": "**Conjecture:** For any polynomial $f$ of degree $d$ in $n$ variables computed by an algebraic circuit of size $s$, the support $\\mathrm{supp}(f)$ satisfies the Kruskal\u2013Katona inequality: there exists an initial segment $\\mathcal{I}$ of the colex order on $\\mathbb{N}^n$ with $|\\mathcal{I}| = |\\mathrm{supp}(f)|$ such that $|\\mathrm{Sh}_1(\\mathrm{supp}(f))| \\geq |\\mathrm{Sh}_1(\\mathcal{I})|$. Moreover, for circuit-generated supports, the gap between $|\\mathrm{Sh}_1(\\mathrm{supp}(f))|$ and the Kruskal\u2013Katona minimum is at most polynomial in $s$.\n\n**Test:** Compute $|\\mathrm{Sh}_1|$ for permanent supports of sizes $m = 3, 4, 5$ and compare with the Kruskal\u2013Katona lower bound for families of size $m!$. If permanent supports exceed the KK minimum by a superpolynomial factor in $m$, this provides evidence for a new lower bound route.\n\n**Impact:** This would give the first circuit lower bound method that exploits extremal set theory directly. The Kruskal\u2013Katona theorem is one of the deepest results in extremal combinatorics, and connecting it to circuit complexity would open an entirely new proof technique.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_elemSymm_eq`, `shadowProfile_elemSymm`\n- `Pythagorean/IteratedShadowGeometry.lean`: `mem_kthShadow_iff_exists_iteratedDerivative`\n\n**Proof Strategy:** Formalize the Kruskal\u2013Katona theorem for integer multi-index shadows (extending from the classical set-family version). Then prove that circuit operations preserve the KK-gap invariant under addition (subadditivity) and bound the gap under multiplication (Minkowski sum analysis).\n\n**Domain Bridges:** Extremal combinatorics \u2192 algebraic complexity \u2192 discrete optimization (LP relaxations of shadow bounds).\n\n**Lineage:** Builds directly on `shadowProfile_elemSymm` and `shadowProfile_union_le`.\n\n**Ambition:** *Grand challenge.* A successful Kruskal\u2013Katona circuit barrier would be the first genuine lower bound from extremal set theory, potentially complementing all existing methods.\n\n**The key insight is** that the Kruskal\u2013Katona theorem provides *optimal* lower bounds on shadow sizes, and circuit-computable supports may be provably far from the optimizers (initial segments), creating an exploitable gap.\n\n**Why now?** The exact shadow theorem for elementary symmetric supports (`kthShadow_elemSymm_eq`) shows that the shadow framework correctly interfaces with uniform set families. The natural next step is to import the full power of extremal set theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3a9ea178",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T03:48:29.819385+00:00"
   },
   {
     "id": "seed_032",
