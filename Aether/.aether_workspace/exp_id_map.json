@@ -781,5 +781,10 @@
   "7550d9c2": "direction_1_uniform_spectral_gap_bound_for_gl_q.json",
   "a674ae13": "direction_3_gaussian_free_field_lattice_periodicit.json",
   "b1b631e9": "direction_1_hardness_of_unrestricted_degree_lorent.json",
-  "eed45bf9": "direction_3_sheaf_theoretic_tropical_persistence.json"
+  "eed45bf9": "direction_3_sheaf_theoretic_tropical_persistence.json",
+  "56c1428c": "direction_2_heterogeneitygap_conjecture.json",
+  "253959a1": "direction_4_extension_to_potts_models_and_determin.json",
+  "07a69de8": "direction_2_equality_saturation_and_e_graph_extrac.json",
+  "018581d1": "direction_4_certified_floating_point_lorentzian_re.json",
+  "14bea7a1": "direction_2_quantitative_exchange_descent_bounds_v.json"
 }

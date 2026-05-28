@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1972 of the highest-quality
+A curated collection of 1974 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1972
+Total files: 1974
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -562,6 +562,7 @@ import FINAL.Bridges.PersistentProofHomology
 import FINAL.Bridges.PhaseTransition
 import FINAL.Bridges.PluckerFourPoint
 import FINAL.Bridges.PolynomialInterpolationEquiv
+import FINAL.Bridges.PottsLorentzianStability
 import FINAL.Bridges.PredicateTransport
 import FINAL.Bridges.PrimeClosureLocale
 import FINAL.Bridges.PrimeCongruenceGeneralizationDuality
@@ -1672,6 +1673,7 @@ import FINAL.Pythagorean.SubstAlgebra
 import FINAL.Pythagorean.SunflowerPruning
 import FINAL.Pythagorean.SupportMinorTheory
 import FINAL.Pythagorean.SupportTuttePolynomial
+import FINAL.Pythagorean.TensorExtractionOptimality
 import FINAL.Pythagorean.TensorSortedRewrite
 import FINAL.Pythagorean.Theorems
 import FINAL.Pythagorean.TorsionBarcodeStability

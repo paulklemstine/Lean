@@ -59,10 +59,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "c25f3c65",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:11:24.492421+00:00"
   },
   {
@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "16f397b6",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -339,10 +339,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87e6b569",
     "timestamp": "2026-05-25T19:29:17.914245+00:00"
   },
   {
@@ -578,7 +578,7 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "14bea7a1",
+    "consumed_by_exp_id": "730ebd2e",
     "timestamp": "2026-05-26T00:07:30.309357+00:00"
   },
   {
@@ -712,10 +712,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "550b5c8b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "525fad82",
     "timestamp": "2026-05-26T21:18:02.967940+00:00"
   },
   {
@@ -853,10 +853,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e18f2436",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "77cabe0b",
     "timestamp": "2026-05-27T08:27:03.925234+00:00"
   },
   {
@@ -918,24 +918,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "05e24005",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T12:09:20.912162+00:00"
-  },
-  {
-    "id": "fd_1407",
-    "title": "Direction 2: Equality Saturation and E-Graph Extraction for Tensor Normal Forms",
-    "description": "**Conjecture:** The normalizeCanon algorithm is optimal in the following sense: among all representations of a tensor expression's normal form modulo AC, the one produced by normalizeCanon minimizes the number of distinct subexpressions (maximal sharing). Equivalently, the e-graph saturation of the AC-equivalence class has normalizeCanon's output as the smallest extraction.\n\n**Test:** Implement an e-graph representation of tensor expressions. Saturate with the AC axioms + scalMul-scalAdd distribution. Extract the smallest term. Compare with normalizeCanon output on 1000 randomly generated terms of size 5-20. Measure the sharing ratio (number of unique subterms / total term size).\n\n**Impact:** This bridges the formal rewriting theory to the practical equality saturation paradigm used in systems like egg (Willsey et al., 2021) and Metatheory.jl. A positive result would make normalizeCanon the extraction function for a tensor e-graph optimizer. A negative result would identify cases where sharing-aware normalization improves on syntactic normalization.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean` (normalizeCanon), `Catalog/Pythagorean/EqualitySaturationExtraction.lean`.\n\n**Proof Strategy:** Define a cost model on TensorExpr (number of constructor applications). Prove normalizeCanon is locally optimal: no single AC rearrangement reduces cost. Then attempt global optimality by analyzing the structure of AC-equivalence classes.\n\n**Domain Bridges:** Compiler optimization (phase ordering), algebraic combinatorics (Catalan numbers for binary tree shapes).\n\n**Lineage:** Direct extension of normalizeCanon's completeness theorem.\n\n**Ambition:** Solid extension \u2014 connects two active research communities (rewriting theory and equality saturation).\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "07a69de8",
-    "timestamp": "2026-05-27T12:50:23.787470+00:00"
   },
   {
     "id": "fd_1408",
@@ -1270,26 +1252,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T19:49:58.734781+00:00"
   },
   {
-    "id": "fd_1519",
-    "title": "Direction 4: Extension to Potts Models and Determinantal Spin Systems",
-    "description": "**Conjecture:** The robustness theory extends to q-state Potts models with q > 2, where the coupling matrix is replaced by a higher-order interaction tensor, and the Lorentzian condition generalizes to a multi-linear signature condition.\n\n**Test:** Formalize the 3-state Potts partition function. For small systems (n \u2264 6), compute the partition function under coupling perturbation and verify log-Lipschitz bounds with the appropriate scaling (expected: \u03b2n\u00b2(q-1)\u03b4 for q states).\n\n**Impact:** Would extend the Lorentzian robustness framework beyond the binary Ising case to the much richer world of multi-state spin systems, covering applications in image segmentation, community detection, and protein folding.\n\nThe key insight is that the Potts partition function can be expressed in terms of a generating polynomial in q variables per site (one per state), and the Lorentzian condition on this higher-dimensional polynomial should control stability via the same spectral gap mechanism.\n\nWhy now? The Lorentzian polynomial theory already encompasses multivariate polynomials of arbitrary degree. The challenge is formulating the appropriate \"gapped signature\" condition for the higher-order case and proving the analogous quadratic form bounds.\n\n**Catalog References:** `Catalog/Pythagorean/LorentzianSharpStability.lean` \u2014 general n-dimensional bounds; `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 multi-leaf stability\n\n**Proof Strategy:** Define the Potts partition function as a sum over q^n configurations. Prove energy bounds by extending spinVal to q states. Apply the existing quadratic form machinery to the enlarged coupling structure.\n\n**Domain Bridges:** Computer vision (Potts model for segmentation), network science (community detection), biophysics (protein modeling)\n\n**Lineage:** Generalization of all theorems in this work\n\n**Ambition:** Solid extension \u2014 technically demanding but conceptually straightforward\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "00a34fc1",
-    "consumed_by_exp_id": "253959a1",
-    "timestamp": "2026-05-27T19:49:58.872640+00:00"
-  },
-  {
     "id": "fd_1521",
     "title": "Direction 1: Differential \u03bb-Calculus Normalization via Typed Stratification",
     "description": "**Conjecture:** The STTC confluence result, combined with strong normalization of the simply-typed \u03bb-calculus, implies strong normalization for the typed differential \u03bb-calculus fragment with scalars and vectors. Specifically, if we interpret the STTC distributivity rules as the Leibniz rule for differentiation, then every typed differential \u03bb-term has a unique normal form modulo AC.\n\n**Test:** Formalize the connection between STTC distributivity and the Ehrhard-Regnier differential \u03bb-calculus. Define a type-preserving translation from differential \u03bb-terms to STTC terms and show that it commutes with reduction. If the translation preserves normalization, strong normalization of STTC (which follows from confluence + type-theoretic termination) transfers to the differential fragment.\n\n**Impact:** Strong normalization for the typed differential \u03bb-calculus has been an open problem since Ehrhard and Regnier's 2003 paper. A positive result would close a 20-year gap in proof theory and provide the first cut-elimination theorem for differential linear logic with function types.\n\n**Catalog References:**\n- `Catalog/Pythagorean/STTCConfluence.lean`: Type-level separation theorem, distributivity rules\n- `Catalog/Pythagorean/ChurchRosser.lean`: Church-Rosser for untyped \u03b2-reduction (base case)\n- `Catalog/Pythagorean/HOCriticalPairs.lean`: Critical pair infrastructure for higher-order systems\n\n**Proof Strategy:** Use the STTC type hierarchy as a measure for a decreasing diagrams argument. \u03b2-steps decrease the type level of the active redex, while dist-steps (= differentiation steps) operate at level 0. The well-ordering of \u2115 ensures termination of the combined system.\n\n**Domain Bridges:** Proof theory (cut elimination), automatic differentiation (correctness of AD), denotational semantics (coherence spaces)\n\n**Lineage:** Extends Ehrhard-Regnier (2003), Vaux (2007), Tranquilli (2009)\n\n**Ambition:** Grand challenge \u2014 would resolve a foundational open problem in linear logic\n\n---",
@@ -1390,28 +1352,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T00:37:30.808390+00:00"
   },
   {
-    "id": "fd_1573",
-    "title": "Direction 4: Certified Floating-Point Lorentzian Recognition",
-    "description": "**Conjecture**: There exists a polynomial-time algorithm that, given a polynomial $f$ with floating-point coefficients and a bound $\\epsilon$ on the rounding error, either:\n(a) certifies that $f$ is Lorentzian, or\n(b) certifies that $f$ is not Lorentzian, or\n(c) reports that the determination requires precision beyond $\\epsilon$.\n\nThe algorithm's failure region (case c) has volume at most $O(\\epsilon)$ in coefficient space.\n\n**Test**: Implement the algorithm for bivariate polynomials of degree $\\leq 10$ using interval arithmetic. Compare the failure rate against the $O(\\epsilon)$ prediction.\n\n**Impact**: This would make Lorentzian polynomial recognition practical for numerical computation, with applications in optimization, sampling, and machine learning.\n\n**Catalog References**:\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `certifyStability_sound`\n- `Pythagorean/UniformMatroidLorentzian.lean` \u2014 `quadFormBound_of_entry_bound`\n\n**Proof Strategy**: (1) Use the stability radius to define \"definitely Lorentzian\" and \"definitely not Lorentzian\" regions. (2) Implement eigenvalue computation with rigorous error bounds (Gershgorin circles or verified linear algebra). (3) Analyze the volume of the indeterminate region using the spectral margin as a proxy.\n\n**Domain Bridges**: Numerical analysis (interval arithmetic, verified computation), computer science (certification and zero-knowledge proofs), control theory (robust stability certificates).\n\n**Lineage**: Applies the stability theorems to the practical problem of numerical Lorentzian recognition.\n\n**Ambition**: Solid extension with high practical impact \u2014 bridges theory to implementation.\n\n**The key insight is** that the gapped signature framework provides a natural \"certificate of correctness\" for numerical Lorentzian recognition: if the computed spectral gap exceeds the rounding error, the answer is certified.\n\n**Why now?** The quantitative stability theorems provide the mathematical foundation. Modern interval arithmetic libraries (e.g., MPFI, Arb) can provide the rigorous error bounds. The demand for certified computation in safety-critical applications is growing.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "33b7a398",
-    "consumed_by_exp_id": "018581d1",
-    "timestamp": "2026-05-28T00:37:30.885136+00:00"
-  },
-  {
     "id": "fd_1584",
     "title": "Direction 1: Sharp Threshold Universality Beyond Gaussian Ensembles",
     "description": "**Conjecture.** The finite-size scaling collapse of P(tropMargin(W) \u2265 0) at the scale \u03c3\u221a(log n) holds not just for Gaussian ensembles but for any ensemble with independent, sub-Gaussian entries with matched means and variances. Moreover, the profile function \u03a6 is universal and independent of the entry distribution.\n\n**Test.** Generate symmetric random matrices with (a) Rademacher \u00b11 entries, (b) uniform entries, (c) exponential entries (appropriately centered and scaled), with diagonal/off-diagonal mean separation. Plot P(tropMargin \u2265 0) vs. the scaled parameter for n \u2208 {10, 20, 50, 100}. If the curves collapse onto the same profile as Gaussian, universality holds. Heavy-tailed distributions (e.g., Cauchy entries) should break universality \u2014 this failure mode is equally informative.\n\n**Impact.** Universality would establish the tropical margin phase transition as a canonical phenomenon in random matrix theory, comparable to the Tracy\u2013Widom universality of the largest eigenvalue. It would extend the practical scope of certified stability to non-Gaussian noise models.\n\n**Catalog References.**\n- `Pythagorean/TropicalPhaseTransition.lean`: `tropMargin_lipschitz`, `tropMargin_lower_bound_signal_noise`\n\n**Proof Strategy.** Use the Lipschitz theorem (`tropMargin_lipschitz`) to reduce universality to concentration: since tropMargin is 4-Lipschitz in the sup-norm, any ensemble with the same sup-norm tail behavior as Gaussian gives the same threshold. Apply the Lindeberg replacement strategy: replace entries one at a time, bounding the total change using the Lipschitz constant. The \u221a(log n) scaling comes from the maximum of n\u00b2 sub-Gaussian random variables, which is universal by classical extreme-value theory.\n\n**Domain Bridges.** Extreme value theory, sub-Gaussian concentration, universality phenomena in random matrix theory.\n\n**Lineage.** Extends `tropMargin_lipschitz` (Theorem 2) and the conjectured scaling from Section 6.1 of the research paper.\n\n**Ambition.** Grand challenge \u2014 proving universality would place tropical stability alongside random graph thresholds and random SAT as a canonical sharp-threshold phenomenon.\n\n---",
@@ -1505,10 +1445,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f43533d0",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3a9ea178",
     "timestamp": "2026-05-28T01:19:07.736279+00:00"
   },
   {
@@ -1564,7 +1504,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a674ae13",
@@ -1583,7 +1523,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a674ae13",

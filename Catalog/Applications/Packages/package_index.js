@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Discrete Optimization / Algebraic Combinatorics",
     "date": "2026-05-28T02:33:42Z",
     "exp_id": "14bea7a1",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7046504,
+    "quality": "substantial",
     "pkg_num": 207
   },
   {
@@ -6012,8 +6012,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-28T02:33:42Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7046504,
+      "quality": "substantial"
     }
   ],
   "edges": [
