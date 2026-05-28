@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1988 of the highest-quality
+A curated collection of 1991 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1988
+Total files: 1991
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -512,6 +512,7 @@ import FINAL.Bridges.Logic
 import FINAL.Bridges.LongestCommonValuedPrefix
 import FINAL.Bridges.LorentzianBivariateBridge
 import FINAL.Bridges.LorentzianBivariateNewBridge
+import FINAL.Bridges.LorentzianDistanceCertificate
 import FINAL.Bridges.LorentzianGroundState
 import FINAL.Bridges.LorentzianHardnessLowerBounds
 import FINAL.Bridges.LorentzianInformation
@@ -565,6 +566,7 @@ import FINAL.Bridges.PersistentProofHomology
 import FINAL.Bridges.PhaseTransition
 import FINAL.Bridges.PluckerFourPoint
 import FINAL.Bridges.PolynomialInterpolationEquiv
+import FINAL.Bridges.PositiveTemperatureTropical
 import FINAL.Bridges.PottsLorentzianStability
 import FINAL.Bridges.PredicateTransport
 import FINAL.Bridges.PrimeClosureLocale
@@ -635,6 +637,7 @@ import FINAL.Bridges.Spectral
 import FINAL.Bridges.SpectralApplications
 import FINAL.Bridges.SpectralCrypto
 import FINAL.Bridges.SpectralFingerprints
+import FINAL.Bridges.SpectralLorentzianStability
 import FINAL.Bridges.SpectralPhaseTransitions
 import FINAL.Bridges.SpectralProofSpace
 import FINAL.Bridges.SpectralRealization

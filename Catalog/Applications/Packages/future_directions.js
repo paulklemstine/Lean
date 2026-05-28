@@ -415,10 +415,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "66b7e664",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.908872+00:00"
   },
   {
@@ -713,10 +713,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "396e12d9",
     "timestamp": "2026-05-26T21:53:04.887954+00:00"
   },
   {
@@ -753,10 +753,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "175f456d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc554401",
     "timestamp": "2026-05-27T03:33:16.871764+00:00"
   },
   {
@@ -821,26 +821,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T12:07:55.522801+00:00"
   },
   {
-    "id": "fd_1398",
-    "title": "Direction 5: Lorentzian Certificates for Quantum LDPC Code Distance",
-    "description": "**Conjecture:** For quantum LDPC codes with good distance (d = \u03a9(n)), the generating polynomial of the ground-space measurement distribution has Lorentzian gap \u03a9(1/poly(n)). Conversely, if the Lorentzian gap decays faster than any polynomial, the code distance is sublinear.\n\n**Test:** Construct measurement distributions for known good quantum LDPC codes (hypergraph product codes, balanced product codes) on small instances. Compute the Lorentzian gap surrogate and check whether it scales polynomially with system size. Compare with codes of poor distance (repetition code, surface code with punctures).\n\n**Impact:** Would provide an efficiently checkable classical certificate for quantum code quality. Currently, determining the distance of a quantum code is QMA-hard in general; a Lorentzian certificate would give polynomial-time checkable evidence. This would have immediate applications to quantum error correction engineering.\n\n**Catalog References:**\n- `Catalog/Pythagorean/QuantumLorentzianBridge.lean`: `minMass`, `event_prob_ratio_bound`\n- `Catalog/Pythagorean/CertificateComplexity.lean`\n- `Catalog/Pythagorean/CertificateExpanders.lean`\n\n**Proof Strategy:** Relate code distance to anti-concentration of the code ground space. Use the weight enumerator polynomial (a generating polynomial for the distance distribution) and show its Lorentzian properties. Connect to the boundary mass through the Hamming graph adjacency of the code.\n\n**Domain Bridges:** Quantum error correction \u2194 Lorentzian polynomials \u2194 coding theory \u2194 graph expansion \u2194 computational complexity\n\n**Lineage:** Applies the boundary mass and anti-concentration theorems to the quantum coding setting.\n\n**Ambition:** Solid extension with high practical impact",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "05e24005",
-    "consumed_by_exp_id": "1c1b6e76",
-    "timestamp": "2026-05-27T12:09:20.912162+00:00"
-  },
-  {
     "id": "fd_1408",
     "title": "Direction 3: Quantum Circuit Rewriting via Tensor Distributivity",
     "description": "**Conjecture:** The tensor distributivity rewrite system, when instantiated with matrices from SU(2)\u2297SU(2) (2-qubit gates), produces a confluent modulo AC normal form for quantum circuits on 2 qubits, where AC-equivalence corresponds to commutativity of parallel gates.\n\n**Test:** Represent 2-qubit quantum circuits as tensor expressions: gates are matrices, state vectors are vec, composition is mulVec. Enumerate all 2-qubit circuits of depth \u2264 5 using {CNOT, H, T} gate set. Apply distributivity rules (distributing controlled gates over superpositions). Check confluence by BFS.\n\n**Impact:** Quantum circuit optimization currently relies on ad hoc peephole rules. A confluent rewrite system would provide canonical circuit forms, enabling deterministic circuit comparison and certified optimization. **The key insight is** that distributivity in the tensor algebra precisely corresponds to the linearity of quantum mechanics \u2014 distributing a unitary over a superposition is the algebraic content of quantum parallelism.\n\n**Why now?** The tensor rewriting infrastructure formalized here provides the first machine-verified foundation for relating term rewriting to quantum circuit simplification. Quantum computing hardware is reaching the scale where certified optimization matters.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean`, `Catalog/Pythagorean/TensorSortedRewrite.lean`.\n\n**Proof Strategy:** Instantiate the 3-sorted tensor calculus with \u2102\u00b2-valued vectors and 2\u00d72 complex matrices. Verify that the 8 rules remain sound. Analyze critical pairs specific to the quantum gate basis.\n\n**Domain Bridges:** Quantum computing (circuit optimization), category theory (compact closed categories for quantum protocols).\n\n**Lineage:** Novel application of the confluence theorem to a new domain.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if it leads to a general confluence theory for quantum circuit rewriting.\n\n---",
@@ -860,27 +840,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T12:50:23.836779+00:00"
   },
   {
-    "id": "fd_1421",
-    "title": "Direction 1: Tropical Leaf Witnesses and Valuative Invariants",
-    "description": "**Conjecture:** For a Lorentzian polynomial $p$ with coefficients in a valued field, the tropicalization of the derivative leaf $L_A$ produces a tropical polynomial whose Newton polytope encodes a \"tropical leaf witness\" \u2014 a piecewise-linear invariant of the subsystem $A$ that approximates the spectral witness in a controlled sense. Specifically, the maximum of the tropical Hessian (the tropical analogue of the mixed Hessian at ones) should bound the logarithm of the positive spectral witness from above.\n\n**Test:** Implement the tropicalization pipeline for DPP polynomials over $\\mathbb{Q}$ with $p$-adic valuations. For $n = 6, 8$, compare the tropical leaf witness (computed via Newton polytope analysis) against the real spectral witness for all subsets of size 3 and 4. A single counterexample where the tropical bound fails would refute the conjecture.\n\n**Impact:** This would create the first bridge between **tropical geometry** and **quantum entanglement witnesses**, uniting two of the most active areas of contemporary mathematics. Tropical methods are combinatorially explicit \u2014 they replace optimization over continuous spectra with finite polyhedral computations \u2014 offering a path to combinatorial certificates of multipartite entanglement.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/MultiModeLorentzianWitnesses.lean` (definitions of `derivativeLeaf`, `leafWitness`), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (DPP polynomial construction).\n\n**Proof Strategy:** Define the tropical mixed Hessian as the matrix of second tropical derivatives (min-plus convolution). Prove the bounding inequality by comparing the tropical evaluation (which corresponds to the leading-order term in the $t \\to 0$ limit of a family $p_t$ with $\\text{val}(p_t) = \\text{trop}(p)$) against the spectral radius. Use Kapranov's theorem to connect tropical roots to the asymptotic behavior of eigenvalues.\n\n**Domain Bridges:** Tropical geometry \u2194 Quantum information, Polyhedral combinatorics \u2194 Spectral theory.\n\n**Lineage:** Extends the coefficient-to-minor bridge (Theorem 6.1 in the research paper) to the tropical setting.\n\n**Ambition:** Grand challenge. If successful, this opens a fundamentally new computational paradigm for entanglement certification \u2014 replacing eigenvalue decomposition with polyhedral enumeration.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "8596d6a6",
-    "consumed_by_exp_id": "0a042263",
-    "timestamp": "2026-05-27T13:37:04.658423+00:00"
-  },
-  {
     "id": "fd_1444",
     "title": "Direction 2: Newton Ratios as Algebraic Order Parameters for Quantum Phases",
     "description": "**Conjecture:** For free-fermion systems at half-filling, the Newton ratio profile \u03c1\u2096 = e\u2096\u00b2/(e\u2096\u208b\u2081e\u2096\u208a\u2081) undergoes a qualitative change at quantum phase transitions: in gapless phases, max|log \u03c1\u2096| grows logarithmically with subsystem size; in gapped phases, it saturates to a finite value determined by the gap.\n\n**Test:** Compute Newton ratio profiles for the SSH model (topological insulator) across the topological phase transition. If log \u03c1\u2096 shows a discontinuous derivative at the critical point, the conjecture is supported. If it varies smoothly, the conjecture needs refinement.\n\n**Impact:** Would establish Newton ratios as a new class of algebraic order parameters for quantum phases, complementing traditional diagnostics like entanglement entropy and string order parameters.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `esymm_newton_inequality`, `newtonDefect_nonneg`, `NewtonRatioProfile`.\n\n**Proof Strategy:** Combine asymptotic analysis of Toeplitz determinants (for correlation matrices of free fermions) with the Fisher\u2013Hartwig conjecture to extract the large-m behavior of e\u2096 and hence \u03c1\u2096.\n\n**Domain Bridges:** Lorentzian geometry (log-concavity) \u2192 condensed matter physics (phase transitions) \u2192 random matrix theory (Toeplitz asymptotics).\n\n**Lineage:** Extends the Newton ratio profile concept introduced here; builds on the computational evidence in `demo.py`.\n\n**Ambition:** Grand challenge \u2014 requires connecting formal algebraic structures to asymptotic physics.\n\n*The key insight is* that Newton's inequality is not just a constraint but a diagnostic: how *tightly* the inequality is satisfied carries physical information about the quantum phase.\n\n*Why now?* The formal definition of `NewtonRatioProfile` and the proof of `esymm_newton_inequality` provide the mathematical foundation; the computational demos show the phase sensitivity.\n\n---",
@@ -894,10 +853,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ec2aa218",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "40ff2470",
     "timestamp": "2026-05-27T15:24:27.753806+00:00"
   },
   {
@@ -915,10 +874,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ec2aa218",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3102f0ea",
     "timestamp": "2026-05-27T15:24:35.519993+00:00"
   },
   {
@@ -1117,27 +1076,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T22:19:22.514222+00:00"
   },
   {
-    "id": "fd_1570",
-    "title": "Direction 1: Spectral Stability for Graphic Matroids",
-    "description": "**Conjecture**: For a graphic matroid $M(G)$ on a graph $G$ with $n$ edges and spanning tree polynomial $T_G$, the Lorentzian stability radius is controlled by the algebraic connectivity $\\lambda_2(L_G)$ of the graph Laplacian:\n$$\\rho(M(G)) \\asymp \\frac{\\lambda_2(L_G)}{n}$$\nwhere the implicit constant depends only on the rank and nullity of $G$.\n\n**Test**: Compute the empirical stability radius for complete graphs $K_n$ ($n \\leq 10$), cycle graphs $C_n$, and path graphs $P_n$ via binary search over random perturbations. Compare to $\\lambda_2(L_G)/n$ and test whether the ratio converges to a constant for each graph family.\n\n**Impact**: This would connect Lorentzian stability to the most developed branch of spectral graph theory, importing decades of results on Cheeger constants, expander graphs, and Fiedler vectors into the Lorentzian framework.\n\n**Catalog References**:\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`\n- `Catalog/Pythagorean/LorentzianSharpStability.lean` \u2014 sharp stability constants\n\n**Proof Strategy**: (1) Identify the quadratic leaves of $T_G$ as certain 2-sums of edge variables. (2) Show the Hessian of each leaf is a principal submatrix of the graph Laplacian. (3) Use Cauchy interlacing to bound the spectral gap of each leaf by $\\lambda_2(L_G)$. (4) Apply the perturbation framework from `LorentzianStability.lean`.\n\n**Domain Bridges**: Spectral graph theory (Cheeger inequality, expander mixing lemma), algebraic graph theory (Laplacian eigenvalues), network science (robustness of network flows).\n\n**Lineage**: Extends the uniform matroid result (where $G = K_n$ and $\\lambda_2 = n$) to arbitrary graphs.\n\n**Ambition**: Paradigm-extending \u2014 connects two major theories (Lorentzian polynomials and spectral graph theory) that have developed independently.\n\n**The key insight is** that the uniform matroid leaf Hessian $J - I$ is secretly the adjacency matrix of $K_m$, and its spectral gap is the graph spectral gap; for graphic matroids, the relevant matrix should be a principal submatrix of the graph Laplacian.\n\n**Why now?** The machinery is in place: the perturbation framework (`hasAtMostOnePositiveEigenvalue_of_gapped_perturbation`) is formalized and verified, and the entry-to-quadratic-form bound (`quadFormBound_of_entry_bound`) gives the conversion factor. What's missing is the identification of leaf Hessians with graph-theoretic matrices for general graphs.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "33b7a398",
-    "consumed_by_exp_id": "2ceea89e",
-    "timestamp": "2026-05-28T00:37:30.664027+00:00"
-  },
-  {
     "id": "fd_1594",
     "title": "Direction 1: Shadow Inequalities for Lorentzian Polynomials",
     "description": "**Conjecture:** If $f$ is a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh), then its support $S = \\text{supp}(f)$ satisfies the shadow log-concavity inequality $|\\text{Sh}_k(S)|^2 \\geq |\\text{Sh}_{k-1}(S)| \\cdot |\\text{Sh}_{k+1}(S)|$ for all admissible $k$.\n\n**Test:** Implement the Lorentzian polynomial verification algorithm (checking that all second-order partial derivatives have alternating sign Hessians) for polynomials with supports drawn from matroid bases, products of simplices, and Schur polynomial supports up to $n = 8$ variables and degree $\\leq 10$. Verify shadow log-concavity for each confirmed Lorentzian polynomial.\n\n**The key insight is** that Lorentzian polynomials already satisfy coefficient-level log-concavity, and the shadow profile is a coarser invariant (support-level rather than coefficient-level), so the conjecture amounts to showing that log-concavity \"descends\" from coefficients to support sizes \u2014 a phenomenon that should follow from the coefficient transport formula if the descending factorial scalars are sufficiently well-behaved.\n\n**Why now?** The coefficient transport formula (Theorem 3.1) provides the exact algebraic bridge between support-level and coefficient-level properties. Previous work on Lorentzian polynomials lacked this explicit multi-index transport law.\n\n**Impact:** Would establish a new, elementary route to combinatorial log-concavity that bypasses Hodge theory.\n\n**Catalog References:** `Pythagorean/IteratedShadowGeometry.lean` (coeff_iteratedPDeriv, descFactorial_prod_pos), `Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (coeff_pderiv_pderiv).\n\n**Proof Strategy:** Use the coefficient transport formula to relate shadow sizes to sums of products of descending factorials weighted by coefficients. Apply the Cauchy\u2013Schwarz inequality or FKG inequality on the resulting sums.\n\n**Domain Bridges:** Lorentzian polynomial theory, algebraic combinatorics, Hodge theory.\n\n**Lineage:** Extends Br\u00e4nd\u00e9n\u2013Huh (2020) from coefficient log-concavity to support-level log-concavity.\n\n**Ambition:** Grand challenge \u2014 would unify support geometry with Lorentzian algebra.\n\n---",
@@ -1312,7 +1250,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "d74bda34",
@@ -1330,7 +1268,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "d74bda34",
@@ -1350,7 +1288,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "d74bda34",
@@ -1369,12 +1307,180 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "d74bda34",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T06:14:19.083806+00:00"
+  },
+  {
+    "id": "fd_1687",
+    "title": "Direction 1: Full Probabilistic Universality via Lindeberg Comparison",
+    "description": "**Conjecture:** For any centered, variance-one, independent sub-Gaussian entry model with parameter \u03c3, there exists a centering sequence a_n and scale b_n ~ \u221a(log n) such that\n```\nP(tropMargin(W_n) \u2265 0) = \u03a6((\u03bc - a_n) / b_n) + o(1)\n```\nwhere \u03a6 is a universal profile function independent of the entry distribution.\n\n**Test:** Generate n\u00d7n matrices with Gaussian, Rademacher, uniform, and exponential entries for n = 10, 20, 50, 100. After centering and \u221a(log n) scaling, fit the empirical P(tropMargin \u2265 0) curves. Measure the Kolmogorov-Smirnov distance between all sub-Gaussian pairs. The conjecture is falsified if the KS distance remains bounded away from zero as n \u2192 \u221e.\n\n**Impact:** Would establish the first formal universality theorem for a non-spectral random matrix observable, opening a new universality class.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalPhaseTransition.lean` (tropMargin_lipschitz, tropMargin_lower_bound_signal_noise), `Pythagorean/TropicalUniversality.lean` (telescoping_bound, tropMargin_entrywise_replacement_bound)\n\n**Proof Strategy:** Use the telescoping replacement bound to replace entries one at a time from distribution \u03bc to distribution \u03bd. Each replacement step contributes at most 4|entry change| to the margin difference. By Lindeberg's method, the cumulative effect is controlled by the third-moment matching condition. The key technical challenge is bounding the remainder term using the sub-Gaussian tail control from SubGaussianEntryModel.\n\n**Domain Bridges:** Probability theory (Lindeberg method), extreme-value theory (Gumbel convergence)\n\n**Lineage:** Extends tropMargin_telescoping_bound and tropMargin_entrywise_replacement_bound\n\n**Ambition:** Grand challenge \u2014 would require novel probabilistic machinery adapted to the tropical setting\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "69370675",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:15:00.271482+00:00"
+  },
+  {
+    "id": "fd_1688",
+    "title": "Direction 2: Assignment Gap Extension (All Permutations)",
+    "description": "**Conjecture:** Define the full assignment gap as:\n```\nassignmentGap(W) = max_\u03c3 \u03a3\u1d62 W(i,\u03c3(i)) - max_{\u03c3\u2260id} \u03a3\u1d62 W(i,\u03c3(i))\n```\nThen assignmentGap(W) = tropMargin(W) for generic matrices, and the phase transition for assignmentGap exhibits the same \u221a(log n) universality as tropMargin.\n\n**Test:** For random 6\u00d76 matrices, compute both tropMargin and assignmentGap by enumerating all 720 permutations. Measure the fraction of matrices where they disagree. The conjecture predicts this fraction vanishes as n \u2192 \u221e.\n\n**Impact:** Would extend tropical universality from transposition competitors to the full combinatorial optimization landscape, connecting to the theory of random assignment problems (M\u00e9zard-Parisi).\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (signalGap, tropMargin_nonneg_of_signalGap_large)\n\n**Proof Strategy:** Show that for a generic matrix, the optimal non-identity permutation is always a transposition (by a dimension-counting argument on the set where a 3-cycle or longer permutation dominates). Then tropMargin = assignmentGap for generic matrices, and the universality follows.\n\n**Domain Bridges:** Combinatorial optimization (assignment problem), algebraic geometry (tropical varieties), probability (random assignment)\n\n**Lineage:** Extends signalGap definition and tropMargin_nonpos_of_noise_overwhelms\n\n**Ambition:** Solid extension \u2014 technically challenging but conceptually clear path\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "69370675",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:15:00.347688+00:00"
+  },
+  {
+    "id": "fd_1689",
+    "title": "Direction 3: Tropical Margin Dynamics Under Matrix Flows",
+    "description": "**Conjecture:** Under the Dyson Brownian motion W(t) = W(0) + \u221at \u00b7 G where G is i.i.d. Gaussian, the tropical margin satisfies:\n```\ntropMargin(W(t)) = tropMargin(W(0)) + O(\u221a(t \u00b7 log n))\n```\nand the hitting time \u03c4\u2080 = inf{t : tropMargin(W(t)) = 0} concentrates around t* = (tropMargin(W(0)))\u00b2 / (C\u00b2 \u00b7 log n).\n\n**Test:** Simulate the Dyson dynamics for 5\u00d75 matrices with various initial conditions. Track tropMargin(W(t)) and measure \u03c4\u2080. Plot \u03c4\u2080 vs. initial margin squared / log(n). The conjecture predicts linear scaling.\n\n**Impact:** Would create a dynamical theory of tropical phase transitions, analogous to the Dyson dynamics for eigenvalues but for the combinatorial observable.\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (tropMargin_lipschitz, tropMargin_signalGap_perturbation)\n\n**Proof Strategy:** Use the Lipschitz bound to control tropMargin increments. The Gaussian increment at each step has \u2016\u03b4W\u2016\u221e ~ \u221a(\u03b4t \u00b7 log n). By the perturbation theorem, |\u03b4(tropMargin)| \u2264 4\u221a(\u03b4t \u00b7 log n). This gives a bounded-increment martingale, and optional stopping yields the hitting time concentration.\n\n**Domain Bridges:** Stochastic calculus (martingale methods), statistical mechanics (relaxation times), dynamical systems\n\n**Lineage:** Builds on tropMargin_lipschitz and the Lipschitz martingale framework\n\n**Ambition:** Grand challenge \u2014 requires fusion of dynamical and combinatorial methods\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "69370675",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:15:00.424598+00:00"
+  },
+  {
+    "id": "fd_1693",
+    "title": "Direction 2: Non-Affine Eigenvalue Flows and Nonlinear Stability",
+    "description": "**Conjecture:** When eigenvalues \u03b8_j(t) depend polynomially (not affinely) on the perturbation parameter, the stability radius equals the smallest positive root of any nontrivial eigenvalue function: \u03c1 = min_{j\u22651} min{t > 0 : \u03b8_j(t) = 0}.\n\n**Test:** For degree-2 eigenvalue flows \u03b8_j(t) = a_j + b_j t + c_j t\u00b2 with randomly generated coefficients satisfying \u03b8_j(0) < 0 and some \u03b8_j(t) > 0 for large t, compute the stability radius by root-finding and compare with binary search on the actual Hessian eigenvalues.\n\n**Impact:** Extends the spectral formula beyond the affine case, covering quadratic and higher-order perturbation families arising in trust-region optimization and polynomial homotopy continuation.\n\n**Catalog References:**\n- `Catalog/Pythagorean/SchemeLorentzian/Theorems.lean` \u2014 `eigenvalue_neg_before_vanishing`, `eigenvalue_pos_after_vanishing`\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`\n\n**Proof Strategy:** Replace the affine vanishing time t_j = -a_j/b_j with the smallest positive root of \u03b8_j(t). The key lemma is that \u03b8_j changes sign at the root (by continuity) and the stability radius is the minimum such root. Use the intermediate value theorem and careful monotonicity arguments.\n\n**Domain Bridges:** Numerical algebraic geometry (polynomial root-finding) \u2194 Lorentzian stability; optimization (trust regions) \u2194 spectral analysis.\n\n**Lineage:** Directly extends the affine eigenvalue theory (Theorems 3.3\u20133.6).\n\n**Ambition:** Solid extension \u2014 mathematically clean and computationally testable.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "54a2ca0c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:50:39.985346+00:00"
+  },
+  {
+    "id": "fd_1716",
+    "title": "Direction 2: $p$-Adic Tropical Witnesses and Arithmetic Invariants",
+    "description": "**Conjecture:** For a polynomial $p \\in \\mathbb{Q}[x_1, \\ldots, x_n]$ and a prime $q$, define the $q$-adic tropical leaf witness as:\n\n$$W_{\\mathrm{trop}}^{(q)}(p, A) := \\sum_{a \\in A} \\sum_{\\alpha \\in \\mathrm{supp}(\\partial_a^2 L_A)} |v_q(c_\\alpha)|$$\n\nwhere $v_q$ is the $q$-adic valuation. Then:\n\n$$\\log |W_{\\mathrm{spec}}(p, A)| \\leq C(A) \\cdot \\max_q W_{\\mathrm{trop}}^{(q)}(p, A)$$\n\nfor some explicit constant $C(A)$ depending on the subsystem size.\n\n**Test:** For DPP polynomials with rational entries, compute $W_{\\mathrm{trop}}^{(q)}$ for primes $q = 2, 3, 5, 7, 11$ and compare against $\\log W_{\\mathrm{spec}}$. A single counterexample (where the inequality fails for all tested primes) would refute the conjecture.\n\n**Impact:** This would establish *arithmetic tropical witnesses* \u2014 invariants that capture number-theoretic structure invisible to the archimedean absolute value. It would connect the theory to $p$-adic geometry, Berkovich spaces, and arithmetic intersection theory.\n\n**Catalog References:**\n- `Pythagorean/TropicalLeafWitnesses/Defs.lean` \u2014 `tropCoeff`, `tropSupport`\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `dppPartitionFunction`\n\n**Proof Strategy:** Formalize $p$-adic valuations as instances of `IsKrullValuation`. Use the product formula $\\prod_v |x|_v = 1$ to relate archimedean and non-archimedean witnesses.\n\n**Domain Bridges:** Number theory ($p$-adic valuations) \u2194 Tropical geometry \u2194 Spectral theory\n\n**Lineage:** Extends `tropCoeff` definition to non-archimedean valuations.\n\n**Ambition:** \ud83d\udd2d Grand challenge \u2014 requires deep arithmetic input.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0a042263",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T08:02:38.997972+00:00"
+  },
+  {
+    "id": "fd_1717",
+    "title": "Direction 3: Submodularity and Valuated Matroid Structure",
+    "description": "**Conjecture:** For DPP polynomials $Z_K$ with PSD kernel $K$, the tropical leaf witness $A \\mapsto W_{\\mathrm{trop}}(Z_K, A)$ is a submodular set function:\n\n$$W_{\\mathrm{trop}}(Z_K, A) + W_{\\mathrm{trop}}(Z_K, B) \\geq W_{\\mathrm{trop}}(Z_K, A \\cap B) + W_{\\mathrm{trop}}(Z_K, A \\cup B)$$\n\nIf true, this would imply that the tropical witness can be optimized by greedy algorithms, and that it defines a *valuated matroid* on the ground set.\n\n**Test:** Generate 100 random PSD kernels of sizes $n = 4, 5, 6$. For each, compute $W_{\\mathrm{trop}}(A)$ for all $2^n$ subsets and verify the submodularity inequality for all $2^{2n}$ pairs $(A, B)$.\n\n**Impact:** This would connect the tropical leaf witness to the rich theory of submodular optimization, matroid intersection, and discrete convex analysis. It would enable efficient (greedy, $O(n^2)$) computation of optimal subsystems \u2014 those with maximum tropical witness.\n\n**Catalog References:**\n- `Pythagorean/TropicalLeafWitnesses/Defs.lean` \u2014 `IsSubmodularOn`, `dppTropicalLeafWitness`\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `DPPKernel`, `dpp_pairwise_negative_dependence`\n\n**Proof Strategy:** Use the Cauchy-Binet formula to express principal minors of $K$ as sums of squared minors of factor matrices. Show that the $L^1$ norm of derivatives inherits submodularity from the log-submodularity of determinants.\n\n**Domain Bridges:** Matroid theory \u2194 Combinatorial optimization \u2194 Tropical geometry \u2194 Machine learning (DPP diversity)\n\n**Lineage:** Builds on `dpp_pairwise_negative_dependence` and computational evidence from `demo.py`.\n\n**Ambition:** \ud83d\udd2c Solid extension \u2014 computationally verified, proof strategy is clear.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0a042263",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T08:02:39.081771+00:00"
+  },
+  {
+    "id": "fd_1718",
+    "title": "Direction 4: Tropical Entanglement Certificates",
+    "description": "**Conjecture:** For multipartite quantum states whose density matrix coefficients define a polynomial, the tropical leaf witness provides a device-independent certificate for genuine multipartite entanglement. Specifically, if $W_{\\mathrm{trop}}(p, A) > 0$ for all proper subsets $A$ of the parties, then the state exhibits genuine multipartite entanglement.\n\n**Test:** Construct the GHZ state and W-state polynomials for $n = 3, 4$ parties. Compute tropical leaf witnesses for all bipartitions and tripartitions. Verify that entangled states have nonzero witnesses while separable states have zero witnesses.\n\n**Impact:** This would establish the first formal connection between tropical geometry and quantum information. It would provide a new class of entanglement witnesses that are *computationally cheap* (coefficient sums) and *formally certifiable* (machine-verified bounds).\n\n**Catalog References:**\n- `Pythagorean/TropicalLeafWitnesses/Theorems.lean` \u2014 `leafWitness_le_tropicalLeafWitness`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/MultiModeLorentzianWitnesses.lean` \u2014 `leafWitness`, `mixedHessianAtOnes`\n\n**Proof Strategy:** Define quantum state polynomials as MvPolynomials with complex coefficients. Extend the tropical-spectral bridge to the complex case using $|c|$ instead of the real absolute value. Show that separable states produce zero tropical witnesses.\n\n**Domain Bridges:** Quantum information \u2194 Tropical geometry \u2194 Spectral theory \u2194 Entanglement detection\n\n**Lineage:** Extends `leafWitness` to quantum states; builds on the spectral witness interpretation.\n\n**Ambition:** \ud83d\udd2d Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0a042263",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T08:02:39.164744+00:00"
+  },
+  {
+    "id": "fd_1719",
+    "title": "Direction 5: Fully Tropical Lorentzian Theory",
+    "description": "**Conjecture:** There exists a purely tropical characterization of Lorentzian polynomials: a polynomial $p$ with nonneg coefficients is Lorentzian if and only if its tropicalization $\\mathrm{Trop}(p)$ satisfies a tropical concavity condition on every 2-dimensional restriction.\n\nThe key insight is that the Br\u00e4nd\u00e9n-Huh Lorentzian condition (at most one positive eigenvalue of the Hessian) should correspond to a tropical condition on second differences of coefficient valuations.\n\n**Why now?** The tropical-spectral bridge theorem shows that coefficient data controls spectral data. The converse \u2014 that tropical concavity implies Lorentzian structure \u2014 would complete the circle and establish a full equivalence.\n\n**Test:** For random Lorentzian polynomials (products of linear forms with nonneg coefficients), verify the tropical concavity condition. For known non-Lorentzian polynomials, verify it fails.\n\n**Impact:** This would create a complete *tropical Lorentzian theory* \u2014 a combinatorial characterization of a class of polynomials whose current definition requires checking eigenvalue constraints. It would reduce Lorentzian recognition from a spectral problem to a polyhedral one.\n\n**Catalog References:**\n- `Pythagorean/TropicalLeafWitnesses/Defs.lean` \u2014 `tropicalMixedHessian`\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `IsDPPLorentzian`\n\n**Proof Strategy:** Define tropical concavity as a condition on `tropCoeff`: for all $i, j$ and all $\\alpha$, $2 \\cdot \\mathrm{tropCoeff}(\\alpha) \\leq \\mathrm{tropCoeff}(\\alpha + e_i) + \\mathrm{tropCoeff}(\\alpha - e_i)$ (tropical Hessian nonpositivity). Prove that Lorentzian implies tropical concavity using the evaluation bound. The converse is the hard direction, likely requiring ultrametric structure.\n\n**Domain Bridges:** Tropical geometry \u2194 Hodge theory \u2194 Combinatorial algebraic geometry \u2194 Optimization theory\n\n**Lineage:** Ultimate goal of the tropical leaf witness program.\n\n**Ambition:** \ud83d\udd2d Grand challenge \u2014 would unify tropical and spectral characterizations of Lorentzian polynomials.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "0a042263",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T08:02:39.251164+00:00"
   },
   {
     "id": "fd_0806",
@@ -1407,66 +1513,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1687",
-    "title": "Direction 1: Full Probabilistic Universality via Lindeberg Comparison",
-    "description": "**Conjecture:** For any centered, variance-one, independent sub-Gaussian entry model with parameter \u03c3, there exists a centering sequence a_n and scale b_n ~ \u221a(log n) such that\n```\nP(tropMargin(W_n) \u2265 0) = \u03a6((\u03bc - a_n) / b_n) + o(1)\n```\nwhere \u03a6 is a universal profile function independent of the entry distribution.\n\n**Test:** Generate n\u00d7n matrices with Gaussian, Rademacher, uniform, and exponential entries for n = 10, 20, 50, 100. After centering and \u221a(log n) scaling, fit the empirical P(tropMargin \u2265 0) curves. Measure the Kolmogorov-Smirnov distance between all sub-Gaussian pairs. The conjecture is falsified if the KS distance remains bounded away from zero as n \u2192 \u221e.\n\n**Impact:** Would establish the first formal universality theorem for a non-spectral random matrix observable, opening a new universality class.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalPhaseTransition.lean` (tropMargin_lipschitz, tropMargin_lower_bound_signal_noise), `Pythagorean/TropicalUniversality.lean` (telescoping_bound, tropMargin_entrywise_replacement_bound)\n\n**Proof Strategy:** Use the telescoping replacement bound to replace entries one at a time from distribution \u03bc to distribution \u03bd. Each replacement step contributes at most 4|entry change| to the margin difference. By Lindeberg's method, the cumulative effect is controlled by the third-moment matching condition. The key technical challenge is bounding the remainder term using the sub-Gaussian tail control from SubGaussianEntryModel.\n\n**Domain Bridges:** Probability theory (Lindeberg method), extreme-value theory (Gumbel convergence)\n\n**Lineage:** Extends tropMargin_telescoping_bound and tropMargin_entrywise_replacement_bound\n\n**Ambition:** Grand challenge \u2014 would require novel probabilistic machinery adapted to the tropical setting\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "69370675",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:15:00.271482+00:00"
-  },
-  {
-    "id": "fd_1688",
-    "title": "Direction 2: Assignment Gap Extension (All Permutations)",
-    "description": "**Conjecture:** Define the full assignment gap as:\n```\nassignmentGap(W) = max_\u03c3 \u03a3\u1d62 W(i,\u03c3(i)) - max_{\u03c3\u2260id} \u03a3\u1d62 W(i,\u03c3(i))\n```\nThen assignmentGap(W) = tropMargin(W) for generic matrices, and the phase transition for assignmentGap exhibits the same \u221a(log n) universality as tropMargin.\n\n**Test:** For random 6\u00d76 matrices, compute both tropMargin and assignmentGap by enumerating all 720 permutations. Measure the fraction of matrices where they disagree. The conjecture predicts this fraction vanishes as n \u2192 \u221e.\n\n**Impact:** Would extend tropical universality from transposition competitors to the full combinatorial optimization landscape, connecting to the theory of random assignment problems (M\u00e9zard-Parisi).\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (signalGap, tropMargin_nonneg_of_signalGap_large)\n\n**Proof Strategy:** Show that for a generic matrix, the optimal non-identity permutation is always a transposition (by a dimension-counting argument on the set where a 3-cycle or longer permutation dominates). Then tropMargin = assignmentGap for generic matrices, and the universality follows.\n\n**Domain Bridges:** Combinatorial optimization (assignment problem), algebraic geometry (tropical varieties), probability (random assignment)\n\n**Lineage:** Extends signalGap definition and tropMargin_nonpos_of_noise_overwhelms\n\n**Ambition:** Solid extension \u2014 technically challenging but conceptually clear path\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "69370675",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:15:00.347688+00:00"
-  },
-  {
-    "id": "fd_1689",
-    "title": "Direction 3: Tropical Margin Dynamics Under Matrix Flows",
-    "description": "**Conjecture:** Under the Dyson Brownian motion W(t) = W(0) + \u221at \u00b7 G where G is i.i.d. Gaussian, the tropical margin satisfies:\n```\ntropMargin(W(t)) = tropMargin(W(0)) + O(\u221a(t \u00b7 log n))\n```\nand the hitting time \u03c4\u2080 = inf{t : tropMargin(W(t)) = 0} concentrates around t* = (tropMargin(W(0)))\u00b2 / (C\u00b2 \u00b7 log n).\n\n**Test:** Simulate the Dyson dynamics for 5\u00d75 matrices with various initial conditions. Track tropMargin(W(t)) and measure \u03c4\u2080. Plot \u03c4\u2080 vs. initial margin squared / log(n). The conjecture predicts linear scaling.\n\n**Impact:** Would create a dynamical theory of tropical phase transitions, analogous to the Dyson dynamics for eigenvalues but for the combinatorial observable.\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (tropMargin_lipschitz, tropMargin_signalGap_perturbation)\n\n**Proof Strategy:** Use the Lipschitz bound to control tropMargin increments. The Gaussian increment at each step has \u2016\u03b4W\u2016\u221e ~ \u221a(\u03b4t \u00b7 log n). By the perturbation theorem, |\u03b4(tropMargin)| \u2264 4\u221a(\u03b4t \u00b7 log n). This gives a bounded-increment martingale, and optional stopping yields the hitting time concentration.\n\n**Domain Bridges:** Stochastic calculus (martingale methods), statistical mechanics (relaxation times), dynamical systems\n\n**Lineage:** Builds on tropMargin_lipschitz and the Lipschitz martingale framework\n\n**Ambition:** Grand challenge \u2014 requires fusion of dynamical and combinatorial methods\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "69370675",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:15:00.424598+00:00"
   },
   {
     "id": "fd_1691",
@@ -2069,67 +2115,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T07:27:35.868270+00:00"
-  },
-  {
-    "id": "fd_1690",
-    "title": "Direction 4: Positive Temperature Extension (Softmax Margin)",
-    "description": "**Conjecture:** Define the softmax margin at inverse temperature \u03b2:\n```\nsoftMargin_\u03b2(W) = (1/\u03b2) \u00b7 log(\u03a3\u1d62 exp(\u03b2 \u00b7 diagExSlack(W, i, j)))\u207b\u00b9\n```\nAs \u03b2 \u2192 \u221e, softMargin_\u03b2 \u2192 tropMargin. For finite \u03b2, the softmax margin exhibits a smoothed phase transition with the same \u221a(log n) critical scale but with a width that scales as 1/\u03b2.\n\n**Test:** Compute softMargin_\u03b2 for \u03b2 = 1, 2, 5, 10, \u221e and n = 8, comparing transition curves. The conjecture predicts convergence to the sharp tropical transition as \u03b2 \u2192 \u221e, with width ~ 1/\u03b2.\n\n**Impact:** Would bridge tropical geometry (\u03b2 = \u221e) to classical analysis (\u03b2 finite), connecting to the Maslov dequantization program and neural network softmax layers.\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (tropMargin definitions), `Catalog/MachineLearning/TropicalChebyshevRadius.lean`\n\n**Proof Strategy:** Use the log-sum-exp approximation: max(x\u2081,...,x_k) - 1/\u03b2 \u00b7 log(k) \u2264 (1/\u03b2)\u00b7log(\u03a3 exp(\u03b2x\u1d62)) \u2264 max(x\u2081,...,x_k). This gives uniform convergence softMargin_\u03b2 \u2192 tropMargin as \u03b2 \u2192 \u221e. The smoothed transition width follows from the Lipschitz constant of softMargin_\u03b2, which is O(1/\u03b2) better than the tropical constant.\n\n**Domain Bridges:** Statistical mechanics (partition functions), information theory (rate-distortion), neural networks (softmax temperature)\n\n**Lineage:** Extends all tropical margin results to the finite-temperature regime\n\n**Ambition:** Solid extension \u2014 builds naturally on existing infrastructure\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Bridges",
-      "MachineLearning",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "69370675",
-    "consumed_by_exp_id": "6e2fd8a1",
-    "timestamp": "2026-05-28T06:15:00.501744+00:00"
-  },
-  {
-    "id": "fd_1693",
-    "title": "Direction 2: Non-Affine Eigenvalue Flows and Nonlinear Stability",
-    "description": "**Conjecture:** When eigenvalues \u03b8_j(t) depend polynomially (not affinely) on the perturbation parameter, the stability radius equals the smallest positive root of any nontrivial eigenvalue function: \u03c1 = min_{j\u22651} min{t > 0 : \u03b8_j(t) = 0}.\n\n**Test:** For degree-2 eigenvalue flows \u03b8_j(t) = a_j + b_j t + c_j t\u00b2 with randomly generated coefficients satisfying \u03b8_j(0) < 0 and some \u03b8_j(t) > 0 for large t, compute the stability radius by root-finding and compare with binary search on the actual Hessian eigenvalues.\n\n**Impact:** Extends the spectral formula beyond the affine case, covering quadratic and higher-order perturbation families arising in trust-region optimization and polynomial homotopy continuation.\n\n**Catalog References:**\n- `Catalog/Pythagorean/SchemeLorentzian/Theorems.lean` \u2014 `eigenvalue_neg_before_vanishing`, `eigenvalue_pos_after_vanishing`\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`\n\n**Proof Strategy:** Replace the affine vanishing time t_j = -a_j/b_j with the smallest positive root of \u03b8_j(t). The key lemma is that \u03b8_j changes sign at the root (by continuity) and the stability radius is the minimum such root. Use the intermediate value theorem and careful monotonicity arguments.\n\n**Domain Bridges:** Numerical algebraic geometry (polynomial root-finding) \u2194 Lorentzian stability; optimization (trust regions) \u2194 spectral analysis.\n\n**Lineage:** Directly extends the affine eigenvalue theory (Theorems 3.3\u20133.6).\n\n**Ambition:** Solid extension \u2014 mathematically clean and computationally testable.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "54a2ca0c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:50:39.985346+00:00"
-  },
-  {
-    "id": "fd_1697",
-    "title": "Direction 1: Tropical Hodge Decomposition and Harmonic Representatives",
-    "description": "**Conjecture:** For any metrized graph \u0393 = (V, E, \u2113) with cycle basis C, the edge space \u211d^|E| admits a certified orthogonal decomposition with respect to the \u2113-weighted inner product \u27e8u,v\u27e9_\u2113 = \u03a3\u2091 \u2113\u2091 u\u2091 v\u2091:\n\n\u211d^|E| = Im(C\u211d) \u2295_\u2113 Ker(C\u211d\u1d40 diag(\u2113))\n\nwhere Im(C\u211d) is the cycle space and Ker(C\u211d\u1d40 diag(\u2113)) is the \u2113-weighted cut space. The period matrix Q governs the Gram matrix of the cycle-space projection.\n\n**Test:** For graphs with |E| \u2264 10, verify computationally that:\n1. The two subspaces are \u2113-orthogonal\n2. Their dimensions sum to |E|\n3. The projection onto Im(C\u211d) is given by C\u211d(C\u211d\u1d40 diag(\u2113) C\u211d)\u207b\u00b9 C\u211d\u1d40 diag(\u2113)\n4. The projected Gram matrix equals Q\n\n**Impact:** A formally verified tropical Hodge decomposition would be the first step toward a constructive tropical Hodge theory. It would provide algorithmic decomposition of flows into harmonic and exact components, with applications to network analysis and discrete exterior calculus.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetrizedJacobian.lean`: `periodMatrix_energy_decomposition` (the Pythagorean theorem is a shadow of this decomposition)\n- `Catalog/Pythagorean/TropicalBridge/Stability.lean`: tropical persistence stability framework\n\n**Proof Strategy:** Strategy B (bilinear form / Gram matrix) from the main development. Define the \u2113-weighted inner product on \u211d^|E|, prove Im(C\u211d) and Ker(C\u211d\u1d40 diag(\u2113)) are orthogonal complements, then derive the projection formula. The energy decomposition theorem already provides the key identity.\n\n**Domain Bridges:** Discrete exterior calculus, finite element methods, computational electromagnetics\n\n**Lineage:** Extends `periodMatrix_energy_decomposition` from a per-vector identity to a full subspace decomposition\n\n**Ambition:** \ud83d\udfe1 Solid extension \u2014 builds directly on proven results with clear path\n\n**The key insight is** that the Pythagorean energy decomposition (Theorem 4.5) is not merely an inequality but a reflection of a deeper orthogonal decomposition of the edge space, and the period matrix is the Gram matrix of the harmonic projection.\n\n**Why now?** The energy decomposition and stability theorems provide the exact algebraic identities needed. The \u2113-weighted inner product framework is already implicit in the proofs; making it explicit is a natural next step.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "2f89e32c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T07:24:46.132304+00:00"
   },
   {
     "id": "seed_032",
