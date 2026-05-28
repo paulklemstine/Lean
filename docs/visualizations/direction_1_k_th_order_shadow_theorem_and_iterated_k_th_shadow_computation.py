@@ -1,195 +1,288 @@
 """
-Algorithms for Iterated Shadow Geometry.
+Algorithms for Iterated Shadow Geometry of Polynomial Supports.
 
-Implements core algorithms for computing k-th shadows of multi-index support sets,
-derivative shadow profiles, and testing log-concavity / exchange properties.
+Implements core algorithms for computing k-th shadows, derivative shadow profiles,
+and testing exchange/log-concavity properties of multi-index support sets.
 
-All algorithms operate on multi-indices represented as tuples of non-negative integers.
+All algorithms operate on supports represented as sets of tuples (multi-indices).
 """
 
-from itertools import product as iproduct
-from math import comb, factorial
-from functools import reduce
-from typing import FrozenSet, Set, Tuple, List, Dict, Optional
+from itertools import combinations_with_replacement, product
 from collections import defaultdict
+from typing import Set, Tuple, List, Dict, Optional
+from math import comb, prod as math_prod
+from functools import reduce
 
 
-# --- Core Types ---
-
-MultiIndex = tuple  # tuple of non-negative ints, length = number of variables
-
-
-def total_mass(sigma: MultiIndex) -> int:
-    """Sum of all entries of a multi-index."""
-    return sum(sigma)
+# Type aliases
+MultiIndex = Tuple[int, ...]
+Support = Set[MultiIndex]
 
 
-def desc_factorial(n: int, k: int) -> int:
-    """Descending factorial: n * (n-1) * ... * (n-k+1). Returns 0 if k > n."""
-    if k > n or k < 0:
-        return 0
-    result = 1
-    for i in range(k):
-        result *= (n - i)
+def mass(tau: MultiIndex) -> int:
+    """Total mass (sum of coordinates) of a multi-index."""
+    return sum(tau)
+
+
+def multi_indices_of_mass(n: int, k: int) -> List[MultiIndex]:
+    """
+    Enumerate all multi-indices in n variables with total mass k.
+    
+    Uses stars-and-bars enumeration.
+    
+    Time complexity: O(C(n+k-1, k)) — the number of such multi-indices.
+    Space complexity: O(C(n+k-1, k) * n) for storing results.
+    
+    Args:
+        n: Number of variables (dimension).
+        k: Total mass (sum of coordinates).
+    
+    Returns:
+        List of all n-tuples of non-negative integers summing to k.
+    
+    Example:
+        >>> multi_indices_of_mass(2, 2)
+        [(2, 0), (1, 1), (0, 2)]
+    """
+    if n == 0:
+        return [()] if k == 0 else []
+    if n == 1:
+        return [(k,)]
+    result = []
+    for first in range(k, -1, -1):
+        for rest in multi_indices_of_mass(n - 1, k - first):
+            result.append((first,) + rest)
     return result
 
 
-def multi_desc_factorial(alpha: MultiIndex, tau: MultiIndex) -> int:
-    """Product of descending factorials: prod_i descFactorial(alpha[i], tau[i])."""
-    result = 1
-    for a, t in zip(alpha, tau):
-        result *= desc_factorial(a, t)
-    return result
+def leq(tau: MultiIndex, alpha: MultiIndex) -> bool:
+    """Check if tau <= alpha coordinatewise."""
+    return all(t <= a for t, a in zip(tau, alpha))
 
 
-# --- k-th Shadow Computation ---
-
-def enumerate_sub_indices(alpha: MultiIndex, k: int) -> Set[MultiIndex]:
-    """
-    Enumerate all multi-indices beta <= alpha with total_mass(alpha - beta) = k.
-
-    This gives all elements of the k-th shadow contributed by a single alpha.
-
-    Time complexity: O(product of (alpha[i]+1) for each i), pruned by mass constraint.
-    """
-    n = len(alpha)
-    results = set()
-
-    def backtrack(pos: int, remaining_mass: int, current: list):
-        if pos == n:
-            if remaining_mass == 0:
-                results.add(tuple(current))
-            return
-        # tau[pos] can range from 0 to min(alpha[pos], remaining_mass)
-        for t in range(min(alpha[pos], remaining_mass) + 1):
-            current.append(alpha[pos] - t)
-            backtrack(pos + 1, remaining_mass - t, current)
-            current.pop()
-
-    backtrack(0, k, [])
-    return results
+def sub(alpha: MultiIndex, tau: MultiIndex) -> MultiIndex:
+    """Subtract multi-indices coordinatewise (truncated at 0)."""
+    return tuple(max(a - t, 0) for a, t in zip(alpha, tau))
 
 
-def kth_shadow(S: Set[MultiIndex], k: int) -> Set[MultiIndex]:
+def add(alpha: MultiIndex, tau: MultiIndex) -> MultiIndex:
+    """Add multi-indices coordinatewise."""
+    return tuple(a + t for a, t in zip(alpha, tau))
+
+
+def kth_shadow(S: Support, k: int) -> Support:
     """
     Compute the k-th shadow of a support set S.
-
-    Shadow_k(S) = {beta : exists alpha in S, beta <= alpha, |alpha - beta| = k}
-
+    
+    The k-th shadow consists of all multi-indices obtainable by subtracting
+    a multi-index of total mass k from an element of S, subject to the
+    coordinatewise ordering constraint.
+    
+    Algorithm:
+        For each α ∈ S, enumerate all τ with |τ| = k and τ ≤ α,
+        and add α - τ to the result.
+    
+    Time complexity: O(|S| * C(n+k-1, k)) where n is the dimension.
+    Space complexity: O(|result|).
+    
     Args:
-        S: Set of multi-indices (all same dimension)
-        k: Shadow depth (non-negative integer)
-
+        S: Support set (set of multi-indices).
+        k: Shadow depth.
+    
     Returns:
-        Set of multi-indices in the k-th shadow
-
-    Time complexity: O(|S| * max_binomial_coefficients)
-    Space complexity: O(|shadow|)
+        The k-th shadow as a set of multi-indices.
+    
+    Example:
+        >>> S = {(2, 1)}
+        >>> kth_shadow(S, 1)
+        {(1, 1), (2, 0)}
     """
-    shadow = set()
+    if not S:
+        return set()
+    n = len(next(iter(S)))
+    result = set()
+    taus = multi_indices_of_mass(n, k)
     for alpha in S:
-        shadow.update(enumerate_sub_indices(alpha, k))
-    return shadow
+        for tau in taus:
+            if leq(tau, alpha):
+                result.add(sub(alpha, tau))
+    return result
 
 
-def shadow_profile(S: Set[MultiIndex], max_k: Optional[int] = None) -> List[int]:
+def shadow_profile(S: Support, max_k: Optional[int] = None) -> List[int]:
     """
-    Compute the derivative shadow profile: k -> |Shadow_k(S)|.
-
+    Compute the derivative shadow profile: k ↦ |Shadow_k(S)|.
+    
     Args:
-        S: Support set
-        max_k: Maximum k to compute (default: max total mass in S)
-
+        S: Support set.
+        max_k: Maximum shadow depth to compute (default: max total degree in S).
+    
     Returns:
-        List where entry i is |Shadow_i(S)|
+        List where index k gives |Shadow_k(S)|.
+    
+    Example:
+        >>> S = {(2, 2)}
+        >>> shadow_profile(S)
+        [1, 2, 3, 2, 1]
     """
     if not S:
         return [0]
     if max_k is None:
-        max_k = max(total_mass(alpha) for alpha in S)
+        max_k = max(mass(alpha) for alpha in S)
     return [len(kth_shadow(S, k)) for k in range(max_k + 1)]
 
 
-# --- Iterated Derivative Support ---
-
-def iterated_pderiv_support(f_support: Set[MultiIndex], tau: MultiIndex) -> Set[MultiIndex]:
+def ascending_factorial_product(beta: MultiIndex, tau: MultiIndex) -> int:
     """
-    Compute the support of D^tau(f), given the support of f.
-
-    In characteristic zero, coeff_beta(D^tau f) != 0 iff coeff_{beta+tau}(f) != 0.
-    So supp(D^tau f) = {alpha - tau : alpha in supp(f), tau <= alpha}.
-
+    Compute the scalar factor in the coefficient transport formula:
+    ∏_i ∏_{j=0}^{τ_i - 1} (β_i + j + 1)
+    
+    This equals ∏_i (β_i + 1)(β_i + 2)...(β_i + τ_i).
+    
     Args:
-        f_support: Support of polynomial f
-        tau: Multi-index for differentiation
-
+        beta: Target multi-index.
+        tau: Derivative multi-index.
+    
     Returns:
-        Support of D^tau(f)
+        The ascending factorial product (always a positive integer).
+    """
+    result = 1
+    for bi, ti in zip(beta, tau):
+        for j in range(ti):
+            result *= (bi + j + 1)
+    return result
+
+
+def coeff_iterated_pderiv(f_coeffs: Dict[MultiIndex, float], beta: MultiIndex,
+                           tau: MultiIndex) -> float:
+    """
+    Compute coeff_β(∂^τ f) using the coefficient transport formula.
+    
+    Uses the proven formula:
+    coeff_β(∂^τ f) = (∏_i ascFact(β_i+1, τ_i)) * coeff_{β+τ}(f)
+    
+    Args:
+        f_coeffs: Dictionary mapping multi-indices to coefficients of f.
+        beta: Target multi-index.
+        tau: Derivative multi-index.
+    
+    Returns:
+        The coefficient value.
+    """
+    alpha = add(beta, tau)
+    c = f_coeffs.get(alpha, 0.0)
+    return ascending_factorial_product(beta, tau) * c
+
+
+def derivative_support(f_coeffs: Dict[MultiIndex, float],
+                        tau: MultiIndex) -> Support:
+    """
+    Compute the support of ∂^τ f using the coefficient transport formula.
+    
+    Args:
+        f_coeffs: Polynomial coefficients.
+        tau: Derivative multi-index.
+    
+    Returns:
+        Support of the derivative.
     """
     result = set()
-    for alpha in f_support:
-        if all(t <= a for a, t in zip(alpha, tau)):
-            beta = tuple(a - t for a, t in zip(alpha, tau))
+    for alpha in f_coeffs:
+        if f_coeffs[alpha] == 0:
+            continue
+        # beta = alpha - tau (if tau <= alpha)
+        if leq(tau, alpha):
+            beta = sub(alpha, tau)
             result.add(beta)
     return result
 
 
-def all_derivative_supports_union(f_support: Set[MultiIndex], k: int) -> Set[MultiIndex]:
+def all_derivative_supports_union(f_coeffs: Dict[MultiIndex, float],
+                                   k: int) -> Support:
     """
-    Compute the union of supports of all D^tau(f) where |tau| = k.
-
-    By the exact k-th shadow theorem, this equals Shadow_k(supp(f)).
-
+    Compute the union of supports of all k-th order mixed partial derivatives.
+    
+    This is ⋃_{|τ|=k} Supp(∂^τ f).
+    
     Args:
-        f_support: Support of polynomial f
-        k: Total derivative order
-
+        f_coeffs: Polynomial coefficients.
+        k: Derivative order.
+    
     Returns:
-        Union of all k-th order derivative supports
+        Union of all k-th order derivative supports.
     """
-    n = len(next(iter(f_support))) if f_support else 0
+    n = len(next(iter(f_coeffs)))
     result = set()
-
-    # Enumerate all tau with total_mass = k and tau <= some alpha in f_support
-    for alpha in f_support:
-        for beta in enumerate_sub_indices(alpha, k):
-            tau = tuple(a - b for a, b in zip(alpha, beta))
-            result.add(beta)
-
+    for tau in multi_indices_of_mass(n, k):
+        result |= derivative_support(f_coeffs, tau)
     return result
 
 
-# --- Exchange Family Detection ---
-
-def is_discrete_exchange_family(S: Set[MultiIndex]) -> bool:
+def is_log_concave(seq: List[int]) -> bool:
     """
-    Check whether S satisfies the discrete symmetric exchange property.
-
-    For all alpha, beta in S and every coordinate i where beta[i] < alpha[i],
-    there exists j where alpha[j] < beta[j] such that
-    alpha - e_i + e_j is in S.
-
+    Test if a sequence is log-concave: a_k^2 >= a_{k-1} * a_{k+1} for all k.
+    
     Args:
-        S: Set of multi-indices
-
+        seq: Sequence of non-negative integers.
+    
     Returns:
-        True if S is a discrete exchange family
+        True if the sequence is log-concave.
     """
-    S_frozen = frozenset(S)
-    n = len(next(iter(S))) if S else 0
+    for k in range(1, len(seq) - 1):
+        if seq[k] ** 2 < seq[k-1] * seq[k+1]:
+            return False
+    return True
 
-    for alpha in S:
-        for beta in S:
+
+def is_ratio_monotone(seq: List[int]) -> bool:
+    """
+    Test if a_k/a_{k-1} is non-increasing (stronger than log-concavity).
+    
+    Args:
+        seq: Sequence of positive integers.
+    
+    Returns:
+        True if the ratio sequence is non-increasing.
+    """
+    for k in range(2, len(seq) - 1):
+        if seq[k-1] == 0 or seq[k] == 0:
+            continue
+        # Check: a_{k+1}/a_k <= a_k/a_{k-1}
+        # Equivalent to: a_{k+1} * a_{k-1} <= a_k^2
+        if seq[k+1] * seq[k-1] > seq[k] ** 2:
+            return False
+    return True
+
+
+def is_discrete_exchange_family(S: Support) -> bool:
+    """
+    Test if S satisfies the discrete exchange property (M-convexity proxy).
+    
+    For all α, β ∈ S and all i with α_i > β_i,
+    there exists j with β_j > α_j such that α - e_i + e_j ∈ S.
+    
+    Args:
+        S: Support set.
+    
+    Returns:
+        True if S satisfies the exchange property.
+    """
+    S_set = set(S)
+    if not S_set:
+        return True
+    n = len(next(iter(S_set)))
+    for alpha in S_set:
+        for beta in S_set:
             for i in range(n):
-                if beta[i] < alpha[i]:
-                    # Need to find j with alpha[j] < beta[j] and alpha - e_i + e_j in S
+                if alpha[i] > beta[i]:
                     found = False
                     for j in range(n):
-                        if alpha[j] < beta[j]:
+                        if beta[j] > alpha[j]:
+                            # Compute alpha - e_i + e_j
                             candidate = list(alpha)
                             candidate[i] -= 1
                             candidate[j] += 1
-                            if tuple(candidate) in S_frozen:
+                            if tuple(candidate) in S_set:
                                 found = True
                                 break
                     if not found:
@@ -197,175 +290,112 @@ def is_discrete_exchange_family(S: Set[MultiIndex]) -> bool:
     return True
 
 
-# --- Log-Concavity Testing ---
-
-def is_log_concave(seq: List[int]) -> bool:
+def matroid_basis_support(n: int, r: int,
+                          bases: Optional[List[Tuple[int, ...]]] = None) -> Support:
     """
-    Check whether a sequence is log-concave: a_k^2 >= a_{k-1} * a_{k+1}.
-
+    Generate the support of a matroid basis generating polynomial.
+    
+    For the uniform matroid U_{r,n}, the bases are all r-element subsets of {0,...,n-1}.
+    The support consists of indicator multi-indices (0/1 entries) for each basis.
+    
     Args:
-        seq: Sequence of non-negative integers
-
+        n: Ground set size.
+        r: Rank.
+        bases: Optional list of bases (as tuples of elements). 
+               If None, uses uniform matroid.
+    
     Returns:
-        True if the sequence is log-concave
+        Support set.
     """
-    for k in range(1, len(seq) - 1):
-        if seq[k] ** 2 < seq[k - 1] * seq[k + 1]:
-            return False
-    return True
+    if bases is None:
+        bases = list(combinations_with_replacement(range(n), r))
+        bases = [b for b in product(range(n), repeat=r)
+                 if len(set(b)) == r and b == tuple(sorted(b))]
+        # Use combinations properly
+        from itertools import combinations
+        bases = list(combinations(range(n), r))
+    
+    support = set()
+    for basis in bases:
+        idx = [0] * n
+        for elem in basis:
+            idx[elem] += 1
+        support.add(tuple(idx))
+    return support
 
 
-def is_ratio_monotone(seq: List[int]) -> bool:
+def generalized_permutahedron_support(n: int, degree: int) -> Support:
     """
-    Check the stronger ratio-monotonicity: a_{k+1}/a_k <= a_k/a_{k-1}
-    (when denominators are nonzero).
-
+    Generate a generalized permutahedral support: all permutations of a 
+    fixed composition.
+    
     Args:
-        seq: Sequence of non-negative integers
-
+        n: Dimension.
+        degree: Total degree.
+    
     Returns:
-        True if ratios are non-increasing
-    """
-    for k in range(1, len(seq) - 1):
-        if seq[k - 1] > 0 and seq[k] > 0:
-            # Check a_{k+1} * a_{k-1} <= a_k^2
-            if seq[k + 1] * seq[k - 1] > seq[k] ** 2:
-                return False
-    return True
-
-
-# --- Support Generators ---
-
-def simplex_support(n: int, d: int) -> Set[MultiIndex]:
-    """
-    Generate the support of a generic dense polynomial of degree d in n variables.
-    This is the set of all multi-indices with total mass <= d.
-    """
-    result = set()
-
-    def gen(pos, remaining):
-        if pos == n:
-            result.add(tuple([0] * 0))  # placeholder
-            return
-        if pos == n - 1:
-            for v in range(remaining + 1):
-                yield v
-        else:
-            for v in range(remaining + 1):
-                for rest in gen_tuple(pos + 1, remaining - v, n):
-                    yield (v,) + rest
-
-    def gen_tuple(pos, remaining, n):
-        if pos == n:
-            yield ()
-            return
-        for v in range(remaining + 1):
-            for rest in gen_tuple(pos + 1, remaining - v, n):
-                yield (v,) + rest
-
-    return set(gen_tuple(0, d, n))
-
-
-def homogeneous_support(n: int, d: int) -> Set[MultiIndex]:
-    """
-    Generate the support of a generic homogeneous polynomial of degree d in n vars.
-    """
-    def gen(pos, remaining, n):
-        if pos == n - 1:
-            yield (remaining,)
-            return
-        for v in range(remaining + 1):
-            for rest in gen(pos + 1, remaining - v, n):
-                yield (v,) + rest
-
-    if n == 0:
-        return {()} if d == 0 else set()
-    return set(gen(0, d, n))
-
-
-def uniform_matroid_support(n: int, r: int) -> Set[MultiIndex]:
-    """
-    Generate the support of the basis generating polynomial of U_{r,n}.
-    These are all 0-1 vectors of length n with exactly r ones.
-    """
-    from itertools import combinations
-    result = set()
-    for combo in combinations(range(n), r):
-        vec = [0] * n
-        for i in combo:
-            vec[i] = 1
-        result.add(tuple(vec))
-    return result
-
-
-def permutahedron_support(n: int) -> Set[MultiIndex]:
-    """
-    Generate the support corresponding to all permutations of (0,1,...,n-1).
-    This is a generalized permutahedron support.
+        Support set (symmetric under coordinate permutations).
     """
     from itertools import permutations
-    return set(permutations(range(n)))
+    # Start with a specific composition and take all permutations
+    base = [0] * n
+    remaining = degree
+    for i in range(n):
+        base[i] = min(remaining, degree // n + (1 if i < degree % n else 0))
+        remaining -= base[i]
+    
+    support = set()
+    for perm in permutations(base):
+        support.add(perm)
+    return support
 
 
-# --- Verified Shadow Computation ---
-
-def verify_shadow_theorem(S: Set[MultiIndex], k: int) -> Dict:
+def verify_shadow_theorem(f_coeffs: Dict[MultiIndex, float], k: int) -> bool:
     """
-    Verify the k-th shadow theorem computationally:
-    Shadow_k(S) should equal the union of supports of all D^tau(f)
-    with |tau| = k, for any generic polynomial f with support S.
-
-    Returns a dict with verification results.
+    Verify the k-th Shadow Theorem: that the k-th shadow of Supp(f) equals
+    the union of supports of all k-th order derivatives of f.
+    
+    Args:
+        f_coeffs: Polynomial coefficients.
+        k: Shadow depth.
+    
+    Returns:
+        True if the shadow theorem holds (should always be True for nonzero
+        coefficients in characteristic zero).
     """
-    shadow = kth_shadow(S, k)
-    deriv_union = all_derivative_supports_union(S, k)
-
-    return {
-        "k": k,
-        "shadow_size": len(shadow),
-        "deriv_union_size": len(deriv_union),
-        "match": shadow == deriv_union,
-        "shadow": shadow,
-        "deriv_union": deriv_union,
-    }
-
-
-def verify_semigroup_law(S: Set[MultiIndex], a: int, b: int) -> Dict:
-    """
-    Verify Shadow_b(Shadow_a(S)) = Shadow_{a+b}(S).
-    """
-    lhs = kth_shadow(kth_shadow(S, a), b)
-    rhs = kth_shadow(S, a + b)
-
-    return {
-        "a": a,
-        "b": b,
-        "lhs_size": len(lhs),
-        "rhs_size": len(rhs),
-        "match": lhs == rhs,
-    }
+    support = {m for m, c in f_coeffs.items() if c != 0}
+    shadow = kth_shadow(support, k)
+    deriv_union = all_derivative_supports_union(f_coeffs, k)
+    return shadow == deriv_union
 
 
 if __name__ == "__main__":
     # Quick self-test
-    print("=== Algorithms Self-Test ===")
-
-    # Test with uniform matroid U_{3,5}
-    S = uniform_matroid_support(5, 3)
-    print(f"\nUniform matroid U_{{3,5}}: |S| = {len(S)}")
-
+    print("=== Algorithm Self-Tests ===")
+    
+    # Test 1: mass
+    assert mass((2, 1, 3)) == 6
+    print("✓ mass computation")
+    
+    # Test 2: multi_indices_of_mass
+    assert len(multi_indices_of_mass(3, 2)) == 6  # C(4,2)
+    print("✓ multi-index enumeration")
+    
+    # Test 3: kth_shadow
+    S = {(2, 2)}
     profile = shadow_profile(S)
-    print(f"Shadow profile: {profile}")
-    print(f"Log-concave: {is_log_concave(profile)}")
-    print(f"Exchange family: {is_discrete_exchange_family(S)}")
-
-    # Verify shadow theorem
+    assert profile == [1, 2, 3, 2, 1], f"Got {profile}"
+    print(f"✓ shadow profile of {{(2,2)}}: {profile}")
+    
+    # Test 4: log-concavity
+    assert is_log_concave([1, 2, 3, 2, 1])
+    assert not is_log_concave([1, 3, 2, 3, 1])
+    print("✓ log-concavity test")
+    
+    # Test 5: shadow theorem verification
+    f = {(2, 2): 1.0, (3, 0): 2.0, (0, 3): -1.0}
     for k in range(4):
-        result = verify_shadow_theorem(S, k)
-        print(f"Shadow theorem k={k}: match={result['match']}, size={result['shadow_size']}")
-
-    # Verify semigroup law
-    for a in range(3):
-        for b in range(3):
-            result = verify_semigroup_law(S, a, b)
-            print(f"Semigroup law a={a}, b={b}: match={result['match']}")
+        assert verify_shadow_theorem(f, k), f"Shadow theorem failed at k={k}"
+    print("✓ shadow theorem verification")
+    
+    print("\nAll self-tests passed!")

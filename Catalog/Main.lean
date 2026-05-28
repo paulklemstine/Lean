@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1995 of the highest-quality
+A curated collection of 1998 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1995
+Total files: 1998
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -545,6 +545,7 @@ import FINAL.Bridges.NewtonInteractingFermions
 import FINAL.Bridges.NoetherianFeatureConvergence
 import FINAL.Bridges.NonArchimedeanComputation
 import FINAL.Bridges.NonGroupComparison
+import FINAL.Bridges.NonlinearSpectralStability
 import FINAL.Bridges.NucleusSheafReconstruction
 import FINAL.Bridges.ObserverRateDistortion
 import FINAL.Bridges.OperadAlgebraCode
@@ -740,6 +741,7 @@ import FINAL.Bridges.TropicalOneWayKernelDuality
 import FINAL.Bridges.TropicalOneWayMinors
 import FINAL.Bridges.TropicalOperadicKernelDuality
 import FINAL.Bridges.TropicalPersistenceRealizationDuality
+import FINAL.Bridges.TropicalPersistenceStability
 import FINAL.Bridges.TropicalPersistentHomology
 import FINAL.Bridges.TropicalPerturbationAmplification
 import FINAL.Bridges.TropicalPhylogenetics
@@ -1579,6 +1581,7 @@ import FINAL.Pythagorean.HOCriticalPairs
 import FINAL.Pythagorean.HardnessLocalization
 import FINAL.Pythagorean.HardnessLocalizationDuality
 import FINAL.Pythagorean.HarmonicMusicTheory
+import FINAL.Pythagorean.HarmonicSectorFactorization
 import FINAL.Pythagorean.HelfgottGrowth
 import FINAL.Pythagorean.HelfgottSL2
 import FINAL.Pythagorean.HennessyMilner

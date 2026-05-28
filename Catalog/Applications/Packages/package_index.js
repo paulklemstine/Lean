@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Topological Data Analysis",
     "date": "2026-05-28T10:28:18Z",
     "exp_id": "dae7d582",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7836221818181819,
+    "quality": "substantial",
     "pkg_num": 235
   },
   {
@@ -6824,8 +6824,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-28T10:28:18Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7836221818181819,
+      "quality": "substantial"
     }
   ],
   "edges": [
