@@ -1,344 +1,365 @@
 #!/usr/bin/env python3
 """
-Algorithms for Certified Expander Synthesis in GL₂(𝔽_q)
+algorithms.py — Certified Expander Synthesis for GL₂(𝔽_q)
 
-Implements:
-1. Singer-like matrix detection via charpoly irreducibility
-2. Primitive determinant certification
-3. Subgroup generation testing
-4. Spectral gap computation for Cayley graphs
-5. Certified pair search algorithm
+Implements the certified expander synthesis algorithm:
+  Input: prime q ≥ 5
+  Output: certified pair (g, h) with algebraic proof of expansion
+
+Key algorithms:
+  1. Singer-like element finder (irreducible charpoly detection)
+  2. Primitive root finder (determinant certificate)
+  3. Generation tester (BFS-based)
+  4. Spectral gap computer (eigenvalue method)
+  5. Certified expander synthesizer (full pipeline)
 """
 
-import numpy as np
-from itertools import product
 from typing import List, Tuple, Optional, Dict
+import itertools
 
 
-class GF:
-    """Arithmetic in 𝔽_q for prime q."""
+class FiniteFieldMatrix:
+    """2x2 matrix over 𝔽_p with arithmetic operations."""
     
-    def __init__(self, q: int):
-        self.q = q
+    def __init__(self, entries: List[List[int]], p: int):
+        self.a, self.b = entries[0][0] % p, entries[0][1] % p
+        self.c, self.d = entries[1][0] % p, entries[1][1] % p
+        self.p = p
     
-    def add(self, a: int, b: int) -> int:
-        return (a + b) % self.q
+    def __repr__(self) -> str:
+        return f"[[{self.a}, {self.b}], [{self.c}, {self.d}]] (mod {self.p})"
     
-    def mul(self, a: int, b: int) -> int:
-        return (a * b) % self.q
+    def __eq__(self, other) -> bool:
+        return (self.a, self.b, self.c, self.d, self.p) == (other.a, other.b, other.c, other.d, other.p)
     
-    def inv(self, a: int) -> Optional[int]:
-        if a % self.q == 0:
+    def __hash__(self) -> int:
+        return hash((self.a, self.b, self.c, self.d, self.p))
+    
+    @property
+    def det(self) -> int:
+        return (self.a * self.d - self.b * self.c) % self.p
+    
+    @property
+    def trace(self) -> int:
+        return (self.a + self.d) % self.p
+    
+    def __mul__(self, other: 'FiniteFieldMatrix') -> 'FiniteFieldMatrix':
+        p = self.p
+        return FiniteFieldMatrix([
+            [(self.a * other.a + self.b * other.c) % p,
+             (self.a * other.b + self.b * other.d) % p],
+            [(self.c * other.a + self.d * other.c) % p,
+             (self.c * other.b + self.d * other.d) % p]
+        ], p)
+    
+    def inverse(self) -> Optional['FiniteFieldMatrix']:
+        """Compute matrix inverse mod p."""
+        d = self.det
+        if d == 0:
             return None
-        return pow(a, self.q - 2, self.q)
+        di = pow(d, self.p - 2, self.p)
+        return FiniteFieldMatrix([
+            [(self.d * di) % self.p, ((-self.b) * di) % self.p],
+            [((-self.c) * di) % self.p, (self.a * di) % self.p]
+        ], self.p)
     
-    def neg(self, a: int) -> int:
-        return (-a) % self.q
+    @staticmethod
+    def identity(p: int) -> 'FiniteFieldMatrix':
+        return FiniteFieldMatrix([[1, 0], [0, 1]], p)
+    
+    def to_list(self) -> List[List[int]]:
+        return [[self.a, self.b], [self.c, self.d]]
 
 
-class Mat2GF:
-    """2×2 matrices over 𝔽_q."""
-    
-    def __init__(self, q: int):
-        self.q = q
-        self.gf = GF(q)
-    
-    def det(self, M: list) -> int:
-        return (M[0][0] * M[1][1] - M[0][1] * M[1][0]) % self.q
-    
-    def mul(self, A: list, B: list) -> list:
-        q = self.q
-        return [
-            [(A[0][0]*B[0][0] + A[0][1]*B[1][0]) % q,
-             (A[0][0]*B[0][1] + A[0][1]*B[1][1]) % q],
-            [(A[1][0]*B[0][0] + A[1][1]*B[1][0]) % q,
-             (A[1][0]*B[0][1] + A[1][1]*B[1][1]) % q]
-        ]
-    
-    def inv(self, M: list) -> Optional[list]:
-        d = self.det(M)
-        di = self.gf.inv(d)
-        if di is None:
-            return None
-        q = self.q
-        return [
-            [(M[1][1] * di) % q, ((-M[0][1]) * di) % q],
-            [((-M[1][0]) * di) % q, (M[0][0] * di) % q]
-        ]
-    
-    def identity(self) -> list:
-        return [[1, 0], [0, 1]]
-    
-    def trace(self, M: list) -> int:
-        return (M[0][0] + M[1][1]) % self.q
-    
-    def charpoly(self, M: list) -> Tuple[int, int]:
-        """Returns (det, -trace) coefficients of X² + c1·X + c0."""
-        return (self.det(M), self.gf.neg(self.trace(M)))
-    
-    def to_tuple(self, M: list) -> tuple:
-        return (M[0][0], M[0][1], M[1][0], M[1][1])
-
-
-def is_irreducible_quadratic(c0: int, c1: int, q: int) -> bool:
-    """Check if X² + c1·X + c0 is irreducible over 𝔽_q.
-    
-    A quadratic is irreducible iff it has no roots in 𝔽_q.
-    Equivalently, its discriminant c1² - 4·c0 is a non-square in 𝔽_q.
-    
-    Complexity: O(q) by root enumeration, O(log q) via Legendre symbol.
-    """
-    for x in range(q):
-        if (x * x + c1 * x + c0) % q == 0:
-            return False
+def is_prime(n: int) -> bool:
+    """Primality test."""
+    if n < 2: return False
+    if n < 4: return True
+    if n % 2 == 0: return False
+    for i in range(3, int(n**0.5) + 1, 2):
+        if n % i == 0: return False
     return True
 
 
-def multiplicative_order(a: int, q: int) -> int:
-    """Compute the multiplicative order of a in (ℤ/qℤ)×.
-    
-    Complexity: O(q) worst case, O(√q) with baby-step giant-step.
-    """
-    if a % q == 0:
+def quadratic_residue_test(a: int, p: int) -> bool:
+    """Check if a is a quadratic residue mod p using Euler's criterion."""
+    if a % p == 0:
+        return True  # 0 is considered a QR
+    return pow(a % p, (p - 1) // 2, p) == 1
+
+
+def multiplicative_order(a: int, p: int) -> int:
+    """Compute the multiplicative order of a mod p."""
+    if a % p == 0:
         return 0
-    x = a % q
-    for k in range(1, q):
-        if x == 1:
+    val = 1
+    for k in range(1, p):
+        val = (val * a) % p
+        if val == 1:
             return k
-        x = (x * a) % q
-    return q - 1
+    return p - 1
 
 
-def is_singer_like(M: list, q: int) -> bool:
-    """Test if M is Singer-like: det(M) ≠ 0 and charpoly(M) irreducible.
+class SingerLikeCertificate:
+    """Certificate that a matrix is Singer-like.
     
-    A Singer-like matrix in GL₂(𝔽_q) generates a nonsplit torus,
-    acting without fixed points on ℙ¹(𝔽_q).
+    A matrix g ∈ GL₂(𝔽_q) is Singer-like if its characteristic polynomial
+    X² - tr(g)X + det(g) is irreducible over 𝔽_q.
     
-    Args:
-        M: 2×2 matrix over 𝔽_q
-        q: prime field order
-    
-    Returns:
-        True if M has irreducible characteristic polynomial
+    This is equivalent to: the discriminant tr²-4det is NOT a quadratic
+    residue modulo q.
     """
-    mat = Mat2GF(q)
-    if mat.det(M) == 0:
-        return False
-    c0, c1 = mat.charpoly(M)
-    return is_irreducible_quadratic(c0, c1, q)
+    
+    def __init__(self, matrix: FiniteFieldMatrix, discriminant: int, is_non_residue: bool):
+        self.matrix = matrix
+        self.discriminant = discriminant
+        self.is_non_residue = is_non_residue
+    
+    @staticmethod
+    def check(g: FiniteFieldMatrix) -> Optional['SingerLikeCertificate']:
+        """Algorithm 1: Singer-like detection.
+        
+        Time complexity: O(log p) for the quadratic residue test.
+        
+        Returns a certificate if g is Singer-like, None otherwise.
+        """
+        p = g.p
+        if g.det == 0:
+            return None
+        
+        disc = (g.trace * g.trace - 4 * g.det) % p
+        if disc == 0:
+            return None  # repeated eigenvalue
+        
+        if not quadratic_residue_test(disc, p):
+            return SingerLikeCertificate(g, disc, True)
+        return None
 
 
-def is_primitive_det(M: list, q: int) -> bool:
-    """Test if det(M) is a primitive root of 𝔽_q×.
+class PrimitiveDetCertificate:
+    """Certificate that det(h) is a primitive root mod q.
     
-    This ensures the generated subgroup covers all determinant classes,
-    preventing the pair from being trapped in SL₂ or a determinant subgroup.
-    
-    Args:
-        M: 2×2 matrix over 𝔽_q
-        q: prime field order
-    
-    Returns:
-        True if det(M) generates (𝔽_q)×
+    This means det(h) generates the full multiplicative group (𝔽_q)ˣ,
+    preventing the subgroup generated by (g,h) from being trapped in a
+    determinant-restricted subgroup.
     """
-    mat = Mat2GF(q)
-    d = mat.det(M)
-    if d == 0:
-        return False
-    return multiplicative_order(d, q) == q - 1
+    
+    def __init__(self, matrix: FiniteFieldMatrix, det_order: int):
+        self.matrix = matrix
+        self.det_order = det_order
+    
+    @staticmethod
+    def check(h: FiniteFieldMatrix) -> Optional['PrimitiveDetCertificate']:
+        """Algorithm 2: Primitive determinant detection.
+        
+        Time complexity: O(q) worst case for order computation.
+        For practical purposes, O(log q) using factorization.
+        """
+        p = h.p
+        d = h.det
+        if d == 0:
+            return None
+        
+        order = multiplicative_order(d, p)
+        if order == p - 1:
+            return PrimitiveDetCertificate(h, order)
+        return None
 
 
-def generates_gl2(g: list, h: list, q: int) -> bool:
-    """Test if {g, h} generates GL₂(𝔽_q) by breadth-first closure.
+class GenerationCertificate:
+    """Certificate that {g, h} generates GL₂(𝔽_q).
     
-    Complexity: O(|GL₂(𝔽_q)|) = O(q⁴) time and space.
-    
-    Args:
-        g, h: 2×2 matrices over 𝔽_q
-        q: prime field order
-    
-    Returns:
-        True if the subgroup generated by g, h is all of GL₂(𝔽_q)
+    Verified by BFS: starting from the identity, multiply by g, g⁻¹, h, h⁻¹
+    and check that all |GL₂(𝔽_q)| elements are reached.
     """
-    mat = Mat2GF(q)
-    gl2_size = (q * q - 1) * (q * q - q)
     
-    seen = set()
-    seen.add(mat.to_tuple(mat.identity()))
-    queue = [mat.identity()]
+    def __init__(self, g: FiniteFieldMatrix, h: FiniteFieldMatrix,
+                 group_size: int, diameter: int):
+        self.g = g
+        self.h = h
+        self.group_size = group_size
+        self.diameter = diameter
     
-    gi = mat.inv(g)
-    hi = mat.inv(h)
-    gens = [x for x in [g, h, gi, hi] if x is not None]
-    
-    idx = 0
-    while idx < len(queue) and len(seen) < gl2_size:
-        current = queue[idx]
-        idx += 1
-        for gen in gens:
-            prod = mat.mul(current, gen)
-            t = mat.to_tuple(prod)
-            if t not in seen:
-                seen.add(t)
-                queue.append(prod)
-    
-    return len(seen) == gl2_size
+    @staticmethod
+    def check(g: FiniteFieldMatrix, h: FiniteFieldMatrix) -> Optional['GenerationCertificate']:
+        """Algorithm 3: Generation test by BFS.
+        
+        Time complexity: O(|G| · |S|) = O(q⁴ · 4) = O(q⁴).
+        Space complexity: O(|G|) = O(q⁴).
+        """
+        p = g.p
+        group_size = (p*p - 1) * (p*p - p)
+        
+        gi = g.inverse()
+        hi = h.inverse()
+        if gi is None or hi is None:
+            return None
+        
+        I = FiniteFieldMatrix.identity(p)
+        visited = {I}
+        frontier = [I]
+        gens = [g, gi, h, hi]
+        diameter = 0
+        
+        while frontier:
+            new_frontier = []
+            diameter += 1
+            for m in frontier:
+                for gen in gens:
+                    prod = m * gen
+                    if prod not in visited:
+                        visited.add(prod)
+                        new_frontier.append(prod)
+                        if len(visited) == group_size:
+                            return GenerationCertificate(g, h, group_size, diameter)
+            frontier = new_frontier
+        
+        if len(visited) == group_size:
+            return GenerationCertificate(g, h, group_size, diameter)
+        return None
 
 
-def find_certified_pairs(q: int, max_pairs: int = 10) -> List[Tuple[list, list]]:
-    """Find certified pairs (g, h) in GL₂(𝔽_q).
+class CertifiedExpanderPair:
+    """A fully certified expander pair with all three algebraic certificates.
     
-    Algorithm:
-    1. Enumerate Singer-like matrices (irreducible charpoly)
-    2. Enumerate primitive-det matrices
-    3. Test generation for candidate pairs
-    
-    Args:
-        q: prime field order (must be odd prime ≥ 5)
-        max_pairs: maximum number of pairs to find
-    
-    Returns:
-        List of certified pairs (g, h)
+    This is the output of the synthesis algorithm: a pair (g, h) together with
+    machine-checkable proofs that:
+    1. g is Singer-like (irreducible charpoly)
+    2. h has primitive determinant
+    3. {g, h} generates GL₂(𝔽_q)
     """
-    pairs = []
     
-    # Step 1: Find Singer-like matrices
+    def __init__(self, singer_cert: SingerLikeCertificate,
+                 prim_det_cert: PrimitiveDetCertificate,
+                 gen_cert: GenerationCertificate):
+        self.singer = singer_cert
+        self.primitive_det = prim_det_cert
+        self.generation = gen_cert
+        self.q = singer_cert.matrix.p
+    
+    def __repr__(self) -> str:
+        return (f"CertifiedExpanderPair(q={self.q}, "
+                f"g={self.singer.matrix}, h={self.primitive_det.matrix}, "
+                f"diameter={self.generation.diameter})")
+
+
+def synthesize_certified_expander(q: int, verbose: bool = True) -> Optional[CertifiedExpanderPair]:
+    """Algorithm 4: Certified Expander Synthesis.
+    
+    Input: prime q ≥ 5
+    Output: CertifiedExpanderPair or None
+    
+    Time complexity: O(q⁴ · T_gen) where T_gen = O(q⁴) for BFS.
+    Total: O(q⁸) worst case, but typically much faster due to early termination.
+    
+    The algorithm:
+    1. Enumerate candidates for g (Singer-like) and h (primitive det)
+    2. For each candidate pair, test generation
+    3. Return the first certified pair found
+    """
+    if not is_prime(q) or q < 5:
+        raise ValueError(f"q must be a prime ≥ 5, got {q}")
+    
+    if verbose:
+        print(f"Synthesizing certified expander for GL₂(𝔽_{q})...")
+        print(f"  Group size: |GL₂(𝔽_{q})| = {(q*q-1)*(q*q-q)}")
+    
+    # Phase 1: Find Singer-like elements
     singers = []
-    for a, b, c, d in product(range(q), repeat=4):
-        M = [[a, b], [c, d]]
-        if is_singer_like(M, q):
-            singers.append(M)
+    for a, b, c, d in itertools.product(range(q), repeat=4):
+        g = FiniteFieldMatrix([[a, b], [c, d]], q)
+        cert = SingerLikeCertificate.check(g)
+        if cert is not None:
+            singers.append(cert)
     
-    # Step 2: Find primitive-det matrices
+    if verbose:
+        print(f"  Singer-like elements found: {len(singers)}")
+    
+    # Phase 2: Find primitive-det elements
     prim_dets = []
-    for a, b, c, d in product(range(q), repeat=4):
-        M = [[a, b], [c, d]]
-        if is_primitive_det(M, q):
-            prim_dets.append(M)
+    for a, b, c, d in itertools.product(range(q), repeat=4):
+        h = FiniteFieldMatrix([[a, b], [c, d]], q)
+        cert = PrimitiveDetCertificate.check(h)
+        if cert is not None:
+            prim_dets.append(cert)
     
-    # Step 3: Test generation
-    for g in singers:
-        for h in prim_dets:
-            if generates_gl2(g, h, q):
-                pairs.append((g, h))
-                if len(pairs) >= max_pairs:
-                    return pairs
+    if verbose:
+        print(f"  Primitive-det elements found: {len(prim_dets)}")
     
-    return pairs
+    # Phase 3: Test generation for candidate pairs
+    tested = 0
+    for s_cert in singers[:50]:  # Limit search
+        for p_cert in prim_dets[:50]:
+            tested += 1
+            gen_cert = GenerationCertificate.check(s_cert.matrix, p_cert.matrix)
+            if gen_cert is not None:
+                result = CertifiedExpanderPair(s_cert, p_cert, gen_cert)
+                if verbose:
+                    print(f"  Found certified pair after testing {tested} pairs!")
+                    print(f"  {result}")
+                return result
+    
+    if verbose:
+        print(f"  No certified pair found after {tested} tests")
+    return None
 
 
-def cayley_adjacency_matrix(q: int, g: list, h: list) -> np.ndarray:
-    """Build the normalized adjacency matrix of Cay(GL₂(𝔽_q), S).
+def compute_projective_action_gap(g: FiniteFieldMatrix, h: FiniteFieldMatrix) -> float:
+    """Compute the spectral gap of the induced action on ℙ¹(𝔽_q).
     
-    S = {g, g⁻¹, h, h⁻¹} is the symmetric generating set.
-    The normalized adjacency operator is A = (1/4) Σ_{s∈S} λ(s).
+    Points of ℙ¹(𝔽_q) are represented as [a:b] with (a,b) ≠ (0,0),
+    identified up to scalar.
     
-    Args:
-        q: prime field order
-        g, h: generators
-    
-    Returns:
-        Normalized adjacency matrix (n × n where n = |GL₂(𝔽_q)|)
+    Returns the spectral gap of the (q+1)-vertex graph.
     """
-    mat = Mat2GF(q)
+    try:
+        import numpy as np
+    except ImportError:
+        return -1.0
     
-    # Enumerate GL₂(𝔽_q)
-    elts = []
-    for a, b, c, d in product(range(q), repeat=4):
-        M = [[a, b], [c, d]]
-        if mat.det(M) != 0:
-            elts.append(M)
+    p = g.p
+    # Enumerate projective points: [1:b] for b=0..p-1, and [0:1]
+    points = [(1, b) for b in range(p)] + [(0, 1)]
+    n = len(points)  # q + 1
     
-    n = len(elts)
-    elt_to_idx = {mat.to_tuple(M): i for i, M in enumerate(elts)}
+    def apply_mat(M: FiniteFieldMatrix, pt: Tuple[int, int]) -> Tuple[int, int]:
+        x = (M.a * pt[0] + M.b * pt[1]) % p
+        y = (M.c * pt[0] + M.d * pt[1]) % p
+        if x != 0:
+            yi = (y * pow(x, p - 2, p)) % p
+            return (1, yi)
+        elif y != 0:
+            return (0, 1)
+        else:
+            return pt  # shouldn't happen for invertible M
     
-    gi = mat.inv(g)
-    hi = mat.inv(h)
+    point_to_idx = {pt: i for i, pt in enumerate(points)}
+    
+    gi = g.inverse()
+    hi = h.inverse()
     gens = [g, gi, h, hi]
     
     A = np.zeros((n, n))
-    for i, M in enumerate(elts):
+    for i, pt in enumerate(points):
         for gen in gens:
-            prod = mat.mul(M, gen)
-            j = elt_to_idx[mat.to_tuple(prod)]
-            A[i, j] += 1.0
+            img = apply_mat(gen, pt)
+            j = point_to_idx.get(img, -1)
+            if j >= 0:
+                A[i][j] = 1.0
     
-    return A / 4.0
-
-
-def spectral_gap(A: np.ndarray) -> Tuple[float, np.ndarray]:
-    """Compute the spectral gap of a normalized adjacency matrix.
-    
-    The spectral gap is γ = 1 - max{|λ| : λ nontrivial eigenvalue of A}.
-    For connected 4-regular graphs, the largest eigenvalue is 1.
-    
-    Args:
-        A: normalized adjacency matrix
-    
-    Returns:
-        (gap, eigenvalues) where gap is the spectral gap
-    """
     eigenvalues = np.linalg.eigvalsh(A)
     eigenvalues = np.sort(eigenvalues)[::-1]
-    
-    lambda1 = eigenvalues[0]
-    lambda2 = max(abs(eigenvalues[1]), abs(eigenvalues[-1]))
-    gap = lambda1 - lambda2
-    
-    return gap, eigenvalues
-
-
-def certified_expander_search(q: int) -> Dict:
-    """Complete certified expander search for GL₂(𝔽_q).
-    
-    This is the verified algorithm: given prime q ≥ 5, it:
-    1. Finds certified pairs with algebraic certificates
-    2. Computes spectral gaps numerically
-    3. Returns proof-carrying witnesses
-    
-    Args:
-        q: prime field order
-    
-    Returns:
-        Dictionary with certified pair data and spectral gap bounds
-    """
-    result = {
-        'q': q,
-        'gl2_order': (q*q - 1) * (q*q - q),
-        'pairs': [],
-        'min_gap': float('inf'),
-        'min_q_gap': float('inf'),
-    }
-    
-    pairs = find_certified_pairs(q, max_pairs=5)
-    
-    for g, h in pairs:
-        mat = Mat2GF(q)
-        A = cayley_adjacency_matrix(q, g, h)
-        gap, eigs = spectral_gap(A)
-        
-        pair_data = {
-            'g': g,
-            'h': h,
-            'g_charpoly': mat.charpoly(g),
-            'h_det': mat.det(h),
-            'h_det_order': multiplicative_order(mat.det(h), q),
-            'spectral_gap': gap,
-            'q_times_gap': q * gap,
-            'second_eigenvalue': float(eigs[1]),
-        }
-        result['pairs'].append(pair_data)
-        result['min_gap'] = min(result['min_gap'], gap)
-        result['min_q_gap'] = min(result['min_q_gap'], q * gap)
-    
-    return result
+    degree = 4.0
+    normed = eigenvalues / degree
+    lambda2 = np.max(np.abs(normed[1:]))
+    return 1 - lambda2
 
 
 if __name__ == '__main__':
-    for q in [5, 7]:
-        result = certified_expander_search(q)
-        print(f"\nq = {q}: |GL₂| = {result['gl2_order']}")
-        print(f"  Found {len(result['pairs'])} certified pairs")
-        print(f"  Min spectral gap: {result['min_gap']:.6f}")
-        print(f"  Min q·γ: {result['min_q_gap']:.6f}")
+    # Example usage
+    for q in [5, 7, 11]:
+        pair = synthesize_certified_expander(q)
+        if pair:
+            proj_gap = compute_projective_action_gap(pair.singer.matrix, pair.primitive_det.matrix)
+            print(f"  Projective action gap on ℙ¹(𝔽_{q}): {proj_gap:.6f}")
+            print()
