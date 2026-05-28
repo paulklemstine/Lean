@@ -1,22 +1,24 @@
 """
-Visualization: Concentration of Cycle-Birth CDFs
+Visualization: Concentration of Cycle-Birth Distributions
 
-Shows how empirical cycle-birth CDFs from independent random graph trials
-converge as n grows. Multiple trials at each n are overlaid, demonstrating
-that the spread (measured by KS distance) shrinks with increasing n.
+Illustrates how empirical cycle-birth CDFs concentrate as graph size n grows.
+Multiple independent trials of G(n,p) with uniform edge weights produce
+empirical CDFs that cluster more tightly for larger n, demonstrating
+the concentration phenomenon predicted by the McDiarmid/Azuma bound
+(Theorem 3).
 
-This visualizes the concentration phenomenon established by Theorem 3
-(cycleBirth_hasBoundedDifferences → McDiarmid concentration).
+This is the visual analogue of the tropical spectral law: just as
+the eigenvalue distribution of a random matrix concentrates to the
+semicircle law, the cycle-birth distribution concentrates to a
+deterministic tropical spectral measure.
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib
 
 
-# ---- Inlined algorithms ----
-
+# Self-contained implementations
 class UnionFind:
     def __init__(self, n):
         self.parent = list(range(n))
@@ -36,62 +38,65 @@ class UnionFind:
         if self.rank[rx] == self.rank[ry]:
             self.rank[rx] += 1
         return True
+    def connected(self, x, y):
+        return self.find(x) == self.find(y)
 
 
-def get_cycle_births(n, p, rng):
-    edges = []
-    for i in range(n):
-        for j in range(i+1, n):
-            if rng.random() < p:
-                edges.append((i, j, rng.random()))
+def compute_births(n, edges):
     sorted_edges = sorted(edges, key=lambda e: e[2])
     uf = UnionFind(n)
-    cb = []
+    births = []
     for u, v, w in sorted_edges:
-        if not uf.union(u, v):
-            cb.append(w)
-    return cb
+        if uf.connected(u, v):
+            births.append(w)
+        else:
+            uf.union(u, v)
+    return births
 
 
-# ---- Main visualization ----
+def sample_gnp(n, p, rng):
+    edges = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            if rng.random() < p:
+                edges.append((i, j, rng.random()))
+    return edges
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-fig.suptitle('Concentration of Cycle-Birth CDFs in G(n, 0.15)',
-             fontsize=16, fontweight='bold')
 
-ns = [50, 100, 200, 500]
+# Parameters
 p = 0.15
+sizes = [30, 100, 300]
 num_trials = 15
-rng = np.random.default_rng(42)
+rng = np.random.default_rng(2025)
 
-for idx, (ax, n) in enumerate(zip(axes.flat, ns)):
-    grid = np.linspace(0, 1, 500)
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+colors = ['#2196F3', '#FF9800', '#4CAF50']
 
+for idx, n in enumerate(sizes):
+    ax = axes[idx]
     for trial in range(num_trials):
-        cb = get_cycle_births(n, p, np.random.default_rng(rng.integers(0, 2**32)))
-        if cb:
-            sorted_cb = np.sort(cb)
-            cdf = np.searchsorted(sorted_cb, grid, side='right') / len(sorted_cb)
-            alpha = 0.3 if num_trials > 5 else 0.6
-            ax.plot(grid, cdf, alpha=alpha, linewidth=0.8, color='steelblue')
+        edges = sample_gnp(n, p, rng)
+        births = compute_births(n, edges)
+        if births:
+            sorted_b = np.sort(births)
+            cdf_y = np.arange(1, len(sorted_b) + 1) / len(sorted_b)
+            ax.step(sorted_b, cdf_y, alpha=0.4, linewidth=1.2,
+                    color=colors[idx])
 
-    ax.set_title(f'n = {n}', fontsize=13, fontweight='bold')
-    ax.set_xlabel('Weight threshold t', fontsize=10)
-    ax.set_ylabel('Empirical CDF F̂(t)', fontsize=10)
+    ax.set_title(f'n = {n}', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Edge Weight', fontsize=11)
+    ax.set_ylabel('Empirical CDF', fontsize=11)
     ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
+    ax.set_ylim(0, 1.05)
     ax.grid(True, alpha=0.3)
 
-    # Add annotation about spread
-    if idx == 0:
-        ax.annotate('Wide spread\n(low concentration)',
-                    xy=(0.5, 0.5), fontsize=9, ha='center',
-                    bbox=dict(boxstyle='round', fc='lightyellow', alpha=0.8))
-    elif idx == 3:
-        ax.annotate('Tight convergence\n(high concentration)',
-                    xy=(0.5, 0.5), fontsize=9, ha='center',
-                    bbox=dict(boxstyle='round', fc='lightgreen', alpha=0.8))
+    # Add concentration annotation
+    ax.text(0.05, 0.92, f'{num_trials} trials', transform=ax.transAxes,
+            fontsize=9, color='gray')
 
+fig.suptitle('Concentration of Cycle-Birth CDFs as n → ∞\n'
+             'G(n, 0.15) with Uniform[0,1] edge weights',
+             fontsize=14, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('viz_concentration.png', dpi=150, bbox_inches='tight')
-print("Saved viz_concentration.png")
+plt.savefig('concentration_plot.png', dpi=150, bbox_inches='tight')
+print("Saved concentration_plot.png")

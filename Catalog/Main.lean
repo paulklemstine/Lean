@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1985 of the highest-quality
+A curated collection of 1988 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1985
+Total files: 1988
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -419,6 +419,7 @@ import FINAL.Bridges.EMLZetaSemantics
 import FINAL.Bridges.EntanglementEntropy
 import FINAL.Bridges.EntropyBounds
 import FINAL.Bridges.EntropyClosureSeparation
+import FINAL.Bridges.EntropyMonotonicity
 import FINAL.Bridges.EnvelopeCanonical
 import FINAL.Bridges.EulerianTrail
 import FINAL.Bridges.Examples
@@ -524,6 +525,7 @@ import FINAL.Bridges.MaslovDequantizationRobustness
 import FINAL.Bridges.MatrixGroupGrowth
 import FINAL.Bridges.MatroidCertificatePhaseTransition
 import FINAL.Bridges.MatroidQuantumCertificates
+import FINAL.Bridges.MetrizedJacobian
 import FINAL.Bridges.MinEntropy
 import FINAL.Bridges.MinPlusAlgebra
 import FINAL.Bridges.MinPlusHarmonicAnalysis
@@ -1511,6 +1513,7 @@ import FINAL.Pythagorean.CompressionProduct
 import FINAL.Pythagorean.CompressionSpectrumStructure
 import FINAL.Pythagorean.CompressionStability
 import FINAL.Pythagorean.Compute
+import FINAL.Pythagorean.Concentration
 import FINAL.Pythagorean.ConcreteTermAlgebra
 import FINAL.Pythagorean.ConfigGraphPathwidth
 import FINAL.Pythagorean.Configurations

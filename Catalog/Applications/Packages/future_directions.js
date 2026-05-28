@@ -415,10 +415,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "66b7e664",
     "timestamp": "2026-05-25T22:25:38.908872+00:00"
   },
   {
@@ -801,26 +801,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T07:51:41.534995+00:00"
   },
   {
-    "id": "fd_1383",
-    "title": "Direction 2: Metrized Graphs and Continuous Tropical Curves",
-    "description": "**Conjecture**: For a metrized graph $(G, \\ell)$ with edge lengths $\\ell : E \\to \\mathbb{R}_{>0}$, the constructive SNF correspondence extends to a correspondence between the *continuous* tropical Jacobian $\\mathrm{Jac}(\\Gamma)$ (a real torus of dimension equal to the genus) and a suitable weighted Laplacian cokernel, with the invariant factors replaced by lattice invariants of the period matrix.\n\n**The key insight is** that the discrete graph Laplacian is a combinatorial shadow of the continuous Laplacian on the metrized graph, and the SNF decomposition should \"deform\" continuously as edge lengths vary.\n\n**Why now?** The catalog already has foundational definitions for graph Laplacians (`graphLaplacian` in Defs.lean) and the TropicalBridge framework handles both discrete and tropical objects. The new SNF correspondence provides the algebraic spine needed to track invariants through the continuous deformation.\n\n**Test**: Implement a numerical computation of the period matrix of a metrized graph for small examples (genus \u2264 3). Compare the lattice invariants (successive minima, Hermite normal form) with the discrete SNF invariant factors in the limit of uniform edge lengths. Check whether the two agree up to a computable correction factor.\n\n**Impact**: This would establish the tropical-critical correspondence at the level of tropical curves, connecting to the Baker-Norine Riemann-Roch theorem and the theory of divisors on metric graphs.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/SNFCorrespondence.lean` \u2014 `SmithNFData`, `restrictedLapMat`\n- `Catalog/Pythagorean/TropicalBridge/Stability.lean` \u2014 stability results for tropical structures\n\n**Proof Strategy**: Define a weighted Laplacian $L_\\ell$ with entries $-1/\\ell(e)$ for edges and appropriate diagonal terms. Show that as edge lengths vary, the SNF invariant factors change in a controlled way (lower semicontinuity of divisibility).\n\n**Domain Bridges**: Tropical geometry \u2194 algebraic geometry; discrete math \u2194 analysis on metric spaces.\n\n**Lineage**: Extends the discrete `restrictedLap_sep_det` to the continuous setting.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new analytical tools)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e4837868",
-    "consumed_by_exp_id": "2f89e32c",
-    "timestamp": "2026-05-27T12:07:55.474050+00:00"
-  },
-  {
     "id": "fd_1384",
     "title": "Direction 3: Arithmetic Statistics of Graph Jacobians",
     "description": "**Conjecture**: The distribution of invariant factors of the graph Jacobian, over the ensemble of random Erd\u0151s-R\u00e9nyi graphs $G(n, p)$, converges to the Cohen-Lenstra distribution as $n \\to \\infty$ for appropriate scaling of $p$.\n\n**The key insight is** that the SNF correspondence converts the question about tropical-harmonic structure into a question about random integer matrices, where powerful tools from random matrix theory and arithmetic statistics apply.\n\n**Why now?** The catalog already contains a Cohen-Lenstra module (`Catalog/Pythagorean/CohenLenstra/`) and the new SNF correspondence provides the bridge needed to connect graph Jacobian computations to Cohen-Lenstra predictions.\n\n**Test**: Generate 10,000 random graphs $G(n, 1/2)$ for $n = 10, 20, 50, 100$. Compute the distribution of the largest invariant factor $d_1$ (the exponent of the critical group). Compare with the Cohen-Lenstra prediction $\\Pr[p^k \\mid d_1] = \\prod_{i=1}^k (1 - p^{-i})^{-1}$ for primes $p$.\n\n**Impact**: This would establish a new bridge between combinatorial probability and number-theoretic statistics, showing that the \"random\" behavior of graph invariants mirrors the \"random\" behavior of ideal class groups.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/SNFCorrespondence.lean` \u2014 `SmithNFData.invariantFactors`\n- `Catalog/Pythagorean/CohenLenstra/Defs.lean` \u2014 Cohen-Lenstra distributions\n\n**Proof Strategy**: Use the moment method: compute the expected number of elements of order $p^k$ in $\\mathrm{Jac}(G(n,p))$ and show convergence to the Cohen-Lenstra moments.\n\n**Domain Bridges**: Combinatorial probability \u2194 number theory; random matrix theory \u2194 tropical geometry.\n\n**Lineage**: Bridges the CohenLenstra catalog module to the TropicalBridge framework.\n\n**Ambition**: \u2605\u2605\u2605\u2605\u2605 (Paradigm-shifting \u2014 connects two major research programs)\n\n---",
@@ -878,23 +858,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "96bc3b32",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T12:50:23.836779+00:00"
-  },
-  {
-    "id": "fd_1410",
-    "title": "Direction 5: Automated Critical Pair Analysis for Many-Sorted Rewrite Systems",
-    "description": "**Conjecture:** There exists an efficient algorithm (polynomial in the number of rules \u00d7 term depth) that, given a many-sorted rewrite system, automatically enumerates all critical pairs and checks joinability modulo a specified equational theory (AC, distributivity, etc.).\n\n**Test:** Implement the algorithm for the tensor calculus. Input: the 8 rules + sort discipline. Output: complete list of critical pairs with joinability witnesses. Verify that the output matches the manual analysis in this paper. Then apply to extensions with 12, 16, 20 rules (adding trace, transpose, Kronecker product operations).\n\n**Impact:** This would automate the most labor-intensive part of confluence proofs, enabling rapid exploration of rewrite system extensions. **The key insight is** that the sort discipline dramatically prunes the space of possible overlaps \u2014 most term overlaps are sort-incorrect and can be eliminated without evaluation.\n\n**Why now?** The manual critical pair analysis in this work revealed the essential overlap between rules 7 and 8. Automating this process would have caught it immediately and would scale to the larger systems needed for practical tensor optimization.\n\n**Catalog References:** `Catalog/Pythagorean/TensorConfluence.lean` (manual critical pair analysis), `Catalog/Pythagorean/KnuthBendixCompletion.lean`.\n\n**Proof Strategy:** Adapt the Knuth-Bendix completion algorithm to many-sorted signatures with AC-theories. The key technical contribution would be efficient unification modulo AC in the sorted setting.\n\n**Domain Bridges:** Automated reasoning (completion procedures), programming language design (type-directed optimization).\n\n**Lineage:** Methodological extension \u2014 automating the proof technique rather than extending the mathematical content.\n\n**Ambition:** Solid extension with high practical impact.",
-    "domains": [
-      "Pythagorean",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "96bc3b32",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-27T12:50:23.934307+00:00"
   },
   {
     "id": "fd_1421",
@@ -1046,10 +1009,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c714b45e",
     "timestamp": "2026-05-27T17:24:45.553550+00:00"
   },
   {
@@ -1091,26 +1054,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "78306251",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T19:12:47.048620+00:00"
-  },
-  {
-    "id": "fd_1515",
-    "title": "Direction 5: Entropy Monotonicity under Derivative Transport",
-    "description": "**Conjecture.** For Lorentzian polynomials with M-convex support, the Shannon entropy of the normalized coefficient distribution is monotonically non-increasing under partial differentiation: H(\u2202_i p / ||\u2202_i p||\u2081) \u2264 H(p / ||p||\u2081).\n\n**The key insight is** that the coefficient transport identity introduces a coordinate-dependent rescaling (m_i + 1) that concentrates mass toward lower-degree monomials, reducing entropy. This is analogous to the concentration of measure phenomenon in high-dimensional probability.\n\n**Why now?** The coefficient transport identity (Theorem 1) provides the exact formula for how coefficients transform, making entropy computations tractable. Combined with the nonnegativity preservation (Theorem 2), we can normalize coefficients to probability distributions at each derivative level.\n\n**Test.** Compute entropy at each derivative level for random weighted uniform matroid polynomials. Verify monotonicity computationally for n \u2264 7. Attempt a formal proof using the transport identity and convexity of the entropy function.\n\n**Impact.** Entropy monotonicity would provide a new invariant for the derivative tower of Lorentzian polynomials, with applications to information-theoretic bounds in combinatorics and statistical mechanics (partition function analysis).\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorems 1\u20132).\n\n**Proof Strategy.** Express H(\u2202_i p) in terms of original coefficients via the transport identity. Use the log-sum inequality and the convexity of x log x to bound the entropy change.\n\n**Domain Bridges.** Discrete convex analysis \u2194 Information theory \u2194 Statistical physics.\n\n**Lineage.** Extends `coeff_pderiv_transport` and `coeff_pderiv_nonneg`.\n\n**Ambition.** Solid extension \u2014 computable entropy bounds from formal coefficient identities.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "78306251",
-    "consumed_by_exp_id": "8a13d6f6",
-    "timestamp": "2026-05-27T19:12:47.193133+00:00"
   },
   {
     "id": "fd_1517",
@@ -1357,6 +1300,83 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T04:56:23.267505+00:00"
   },
   {
+    "id": "fd_1682",
+    "title": "Direction 1: Full Kruskal\u2013Katona Theory for Multi-Index Families",
+    "description": "**Conjecture:** There exists a total order $\\prec$ on $\\mathbb{N}^n$ (a multi-index colex order) such that for every $d$ and $m$, the initial segment of $\\prec$ among degree-$d$ multi-indices minimizes the one-step shadow among all families of size $m$.\n\n**Test:** Enumerate all families of size $m \\le 10$ in degree $d \\le 4$ with $n \\le 4$ variables. Check whether the colex-initial segment always achieves the minimum shadow. A single counterexample refutes the conjecture; universal confirmation up to these bounds provides strong evidence.\n\n**Impact:** This would extend the classical KK theorem from uniform set families to the full multi-index lattice, providing exact computable KK bounds for non-squarefree polynomial supports. This is essential for the shadow-gap program beyond the squarefree regime.\n\n**Catalog References:**\n- `Catalog/Pythagorean/IteratedShadowGeometry.lean`: `kthShadow`, `mem_kthShadow_iff`\n- `Catalog/Bridges/Catalog/Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_elemSymm_eq`\n\n**Proof Strategy:** The key insight is that the classical proof of KK uses a \"compression\" operator that pushes a family toward the initial segment while not increasing the shadow. For multi-indices, define compression $C_{ij}$: for each $\\alpha$ with $\\alpha(i) > 0$ and room to increment $\\alpha(j)$, replace $\\alpha$ with the compressed version. Prove that each compression does not increase the shadow (by an injection argument on shadow witnesses), then show that the limit of iterated compressions is the colex-initial segment.\n\n**Why now?** The formal infrastructure for multi-index shadows (definitions, membership lemmas, semigroup laws) is now in place. The missing piece is the compression machinery, which is a finite combinatorial argument amenable to proof automation.\n\n**Domain Bridges:** Extremal combinatorics \u2192 algebraic complexity (via explicit KK bounds for polynomial supports).\n\n**Lineage:** Extends Kruskal (1963), Katona (1968), Clements\u2013Lindstr\u00f6m (1969).\n\n**Ambition:** Grand challenge \u2014 would establish a foundational tool for the entire shadow-gap program.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d74bda34",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:14:18.830443+00:00"
+  },
+  {
+    "id": "fd_1683",
+    "title": "Direction 2: Cancellation-Aware Shadow Bounds for General Circuits",
+    "description": "**Conjecture:** For any (non-monotone) algebraic circuit $C$ of size $s$ computing a polynomial $f$, there exists a shadow bound $|\\mathrm{Sh}_1(\\mathrm{supp}(f))| \\le g(s, n, d)$ where $g$ is polynomial in $s$ and depends on the cancellation pattern.\n\n**Test:** Construct small non-monotone circuits for polynomials with known support (e.g., determinant of 3\u00d73 and 4\u00d74 matrices). Compute the actual shadow and verify the bound. Check whether the permanent's shadow exceeds the bound for circuits of the expected size.\n\n**Impact:** This would extend the shadow-gap framework from monotone to general circuits, the regime where P vs. NP type separations live.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/KruskalKatonaSupport.lean`: `card_oneShadow_union_le`, `shadow_bound_of_supportCircuit`\n\n**Proof Strategy:** The key insight is that cancellation in $f + g$ can only *reduce* the support: $\\mathrm{supp}(f + g) \\subseteq \\mathrm{supp}(f) \\cup \\mathrm{supp}(g)$. So the monotone shadow bound is still an upper bound on the shadow of the actual support. The challenge is to prove *lower* bounds showing that the actual shadow cannot be too small. One approach: use the fact that if $f$ has few terms, then $\\mathrm{supp}(f)$ is \"small\" in a KK sense, constraining the shadow from below.\n\n**Why now?** The monotone case is proved. The next step is to handle the gap between $\\mathrm{supp}(f + g)$ and $\\mathrm{supp}(f) \\cup \\mathrm{supp}(g)$ by bounding how much cancellation can reduce the shadow.\n\n**Domain Bridges:** Algebraic complexity \u2192 additive combinatorics (cancellation patterns as sumset structure).\n\n**Lineage:** Builds on the shadow subadditivity theorem (this work) and Baur\u2013Strassen (1983).\n\n**Ambition:** Solid extension \u2014 directly builds on proved theorems.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d74bda34",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:14:18.922140+00:00"
+  },
+  {
+    "id": "fd_1684",
+    "title": "Direction 3: Shadow Isoperimetry for Newton Polytopes",
+    "description": "**Conjecture:** Among all finite subsets $S \\subseteq \\mathbb{N}^n$ with $|S| = m$ and Newton polytope volume $V$, the minimum shadow size satisfies:\n\n$$|\\mathrm{Sh}_1(S)| \\ge c \\cdot m^{(n-1)/n}$$\n\nfor a constant $c$ depending on $n$ and $V$, analogous to the lattice isoperimetric inequality.\n\n**Test:** For $n = 2, 3$, enumerate families of size $m \\le 50$ with prescribed Newton polytope (e.g., simplex, cube, cross-polytope). Compute the shadow and check against the conjectured bound. Plot shadow size vs. polytope volume.\n\n**Impact:** This would provide a geometric lower bound on shadows, independent of degree constraints. It connects the shadow-gap program to the rich theory of lattice point geometry and Ehrhart theory.\n\n**Catalog References:**\n- `Catalog/Bridges/Catalog/Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_subset_degreeSimplex`, `degreeSimplex_card`\n\n**Proof Strategy:** The key insight is that the one-step shadow is a discrete analogue of the inner parallel body of the Newton polytope. For convex lattice polytopes, the number of interior lattice points is controlled by the Ehrhart polynomial. A discrete isoperimetric inequality on the lattice should relate the shadow size to the surface area of the Newton polytope, which in turn relates to the volume by the classical isoperimetric inequality.\n\n**Why now?** The shadow operator is now formally defined on multi-index families, and the connection to Newton polytopes is established through the degree-simplex containment theorems. The missing link is a discrete isoperimetric inequality on the integer lattice, which is an active area of research in combinatorial geometry.\n\n**Domain Bridges:** Algebraic complexity \u2192 convex geometry \u2192 Ehrhart theory.\n\n**Lineage:** Builds on Bollob\u00e1s\u2013Leader lattice isoperimetry, Barvinok's lattice point theory.\n\n**Ambition:** Grand challenge \u2014 would establish a deep geometric foundation for shadow bounds.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d74bda34",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:14:19.002387+00:00"
+  },
+  {
+    "id": "fd_1685",
+    "title": "Direction 4: Entropy Production Under Differentiation",
+    "description": "**Conjecture:** Define the **shadow entropy** of a family $S$ as $H(S) = \\log |\\mathrm{Sh}_1(S)| - \\log |S|$. For polynomials computed by circuits of size $s$:\n\n$$H(\\mathrm{supp}(f)) \\le O(\\log s)$$\n\nwhile for the permanent:\n\n$$H(\\mathrm{PermSupp}(m)) \\ge \\Omega(\\log m)$$\n\n**Test:** Compute $H$ for all circuits of size $\\le 8$ in $n \\le 4$ variables. Verify the logarithmic bound. Compare with the permanent's entropy for $m = 2, \\ldots, 6$.\n\n**Impact:** An information-theoretic formulation would connect the shadow-gap program to communication complexity, information complexity, and the entropy method in combinatorics.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/KruskalKatonaSupport.lean`: `card_oneShadow_le_mul_card`\n\n**Proof Strategy:** The key insight is that the bound $|\\mathrm{Sh}_1(S)| \\le n \\cdot |S|$ gives $H(S) \\le \\log n$ universally. For circuits, the multiplicative structure should constrain $H$ more tightly. Each add gate increases $|S|$ additively; each mul gate increases it multiplicatively. The entropy $H$ should decompose along the circuit DAG, giving a bound in terms of circuit depth and width.\n\n**Why now?** The general bound $|\\mathrm{Sh}_1| \\le n|S|$ is proved. The circuit bound theorem provides the recursive structure needed for an entropy decomposition. The connection to statistical physics (support as microcanonical ensemble, shadow as accessible states) provides physical intuition.\n\n**Domain Bridges:** Algebraic complexity \u2192 information theory \u2192 statistical physics.\n\n**Lineage:** Builds on entropy methods in combinatorics (Shearer's lemma, entropy compression).\n\n**Ambition:** Solid extension with speculative connections to physics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d74bda34",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:14:19.083806+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1389,86 +1409,30 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
   },
   {
-    "id": "fd_1682",
-    "title": "Direction 1: Full Kruskal\u2013Katona Theory for Multi-Index Families",
-    "description": "**Conjecture:** There exists a total order $\\prec$ on $\\mathbb{N}^n$ (a multi-index colex order) such that for every $d$ and $m$, the initial segment of $\\prec$ among degree-$d$ multi-indices minimizes the one-step shadow among all families of size $m$.\n\n**Test:** Enumerate all families of size $m \\le 10$ in degree $d \\le 4$ with $n \\le 4$ variables. Check whether the colex-initial segment always achieves the minimum shadow. A single counterexample refutes the conjecture; universal confirmation up to these bounds provides strong evidence.\n\n**Impact:** This would extend the classical KK theorem from uniform set families to the full multi-index lattice, providing exact computable KK bounds for non-squarefree polynomial supports. This is essential for the shadow-gap program beyond the squarefree regime.\n\n**Catalog References:**\n- `Catalog/Pythagorean/IteratedShadowGeometry.lean`: `kthShadow`, `mem_kthShadow_iff`\n- `Catalog/Bridges/Catalog/Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_elemSymm_eq`\n\n**Proof Strategy:** The key insight is that the classical proof of KK uses a \"compression\" operator that pushes a family toward the initial segment while not increasing the shadow. For multi-indices, define compression $C_{ij}$: for each $\\alpha$ with $\\alpha(i) > 0$ and room to increment $\\alpha(j)$, replace $\\alpha$ with the compressed version. Prove that each compression does not increase the shadow (by an injection argument on shadow witnesses), then show that the limit of iterated compressions is the colex-initial segment.\n\n**Why now?** The formal infrastructure for multi-index shadows (definitions, membership lemmas, semigroup laws) is now in place. The missing piece is the compression machinery, which is a finite combinatorial argument amenable to proof automation.\n\n**Domain Bridges:** Extremal combinatorics \u2192 algebraic complexity (via explicit KK bounds for polynomial supports).\n\n**Lineage:** Extends Kruskal (1963), Katona (1968), Clements\u2013Lindstr\u00f6m (1969).\n\n**Ambition:** Grand challenge \u2014 would establish a foundational tool for the entire shadow-gap program.\n\n---",
+    "id": "fd_1687",
+    "title": "Direction 1: Full Probabilistic Universality via Lindeberg Comparison",
+    "description": "**Conjecture:** For any centered, variance-one, independent sub-Gaussian entry model with parameter \u03c3, there exists a centering sequence a_n and scale b_n ~ \u221a(log n) such that\n```\nP(tropMargin(W_n) \u2265 0) = \u03a6((\u03bc - a_n) / b_n) + o(1)\n```\nwhere \u03a6 is a universal profile function independent of the entry distribution.\n\n**Test:** Generate n\u00d7n matrices with Gaussian, Rademacher, uniform, and exponential entries for n = 10, 20, 50, 100. After centering and \u221a(log n) scaling, fit the empirical P(tropMargin \u2265 0) curves. Measure the Kolmogorov-Smirnov distance between all sub-Gaussian pairs. The conjecture is falsified if the KS distance remains bounded away from zero as n \u2192 \u221e.\n\n**Impact:** Would establish the first formal universality theorem for a non-spectral random matrix observable, opening a new universality class.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalPhaseTransition.lean` (tropMargin_lipschitz, tropMargin_lower_bound_signal_noise), `Pythagorean/TropicalUniversality.lean` (telescoping_bound, tropMargin_entrywise_replacement_bound)\n\n**Proof Strategy:** Use the telescoping replacement bound to replace entries one at a time from distribution \u03bc to distribution \u03bd. Each replacement step contributes at most 4|entry change| to the margin difference. By Lindeberg's method, the cumulative effect is controlled by the third-moment matching condition. The key technical challenge is bounding the remainder term using the sub-Gaussian tail control from SubGaussianEntryModel.\n\n**Domain Bridges:** Probability theory (Lindeberg method), extreme-value theory (Gumbel convergence)\n\n**Lineage:** Extends tropMargin_telescoping_bound and tropMargin_entrywise_replacement_bound\n\n**Ambition:** Grand challenge \u2014 would require novel probabilistic machinery adapted to the tropical setting\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
-      "Cryptography",
+      "Tropical",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "d74bda34",
+    "source_exp_id": "69370675",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:14:18.830443+00:00"
+    "timestamp": "2026-05-28T06:15:00.271482+00:00"
   },
   {
-    "id": "fd_1683",
-    "title": "Direction 2: Cancellation-Aware Shadow Bounds for General Circuits",
-    "description": "**Conjecture:** For any (non-monotone) algebraic circuit $C$ of size $s$ computing a polynomial $f$, there exists a shadow bound $|\\mathrm{Sh}_1(\\mathrm{supp}(f))| \\le g(s, n, d)$ where $g$ is polynomial in $s$ and depends on the cancellation pattern.\n\n**Test:** Construct small non-monotone circuits for polynomials with known support (e.g., determinant of 3\u00d73 and 4\u00d74 matrices). Compute the actual shadow and verify the bound. Check whether the permanent's shadow exceeds the bound for circuits of the expected size.\n\n**Impact:** This would extend the shadow-gap framework from monotone to general circuits, the regime where P vs. NP type separations live.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/KruskalKatonaSupport.lean`: `card_oneShadow_union_le`, `shadow_bound_of_supportCircuit`\n\n**Proof Strategy:** The key insight is that cancellation in $f + g$ can only *reduce* the support: $\\mathrm{supp}(f + g) \\subseteq \\mathrm{supp}(f) \\cup \\mathrm{supp}(g)$. So the monotone shadow bound is still an upper bound on the shadow of the actual support. The challenge is to prove *lower* bounds showing that the actual shadow cannot be too small. One approach: use the fact that if $f$ has few terms, then $\\mathrm{supp}(f)$ is \"small\" in a KK sense, constraining the shadow from below.\n\n**Why now?** The monotone case is proved. The next step is to handle the gap between $\\mathrm{supp}(f + g)$ and $\\mathrm{supp}(f) \\cup \\mathrm{supp}(g)$ by bounding how much cancellation can reduce the shadow.\n\n**Domain Bridges:** Algebraic complexity \u2192 additive combinatorics (cancellation patterns as sumset structure).\n\n**Lineage:** Builds on the shadow subadditivity theorem (this work) and Baur\u2013Strassen (1983).\n\n**Ambition:** Solid extension \u2014 directly builds on proved theorems.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d74bda34",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:14:18.922140+00:00"
-  },
-  {
-    "id": "fd_1684",
-    "title": "Direction 3: Shadow Isoperimetry for Newton Polytopes",
-    "description": "**Conjecture:** Among all finite subsets $S \\subseteq \\mathbb{N}^n$ with $|S| = m$ and Newton polytope volume $V$, the minimum shadow size satisfies:\n\n$$|\\mathrm{Sh}_1(S)| \\ge c \\cdot m^{(n-1)/n}$$\n\nfor a constant $c$ depending on $n$ and $V$, analogous to the lattice isoperimetric inequality.\n\n**Test:** For $n = 2, 3$, enumerate families of size $m \\le 50$ with prescribed Newton polytope (e.g., simplex, cube, cross-polytope). Compute the shadow and check against the conjectured bound. Plot shadow size vs. polytope volume.\n\n**Impact:** This would provide a geometric lower bound on shadows, independent of degree constraints. It connects the shadow-gap program to the rich theory of lattice point geometry and Ehrhart theory.\n\n**Catalog References:**\n- `Catalog/Bridges/Catalog/Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_subset_degreeSimplex`, `degreeSimplex_card`\n\n**Proof Strategy:** The key insight is that the one-step shadow is a discrete analogue of the inner parallel body of the Newton polytope. For convex lattice polytopes, the number of interior lattice points is controlled by the Ehrhart polynomial. A discrete isoperimetric inequality on the lattice should relate the shadow size to the surface area of the Newton polytope, which in turn relates to the volume by the classical isoperimetric inequality.\n\n**Why now?** The shadow operator is now formally defined on multi-index families, and the connection to Newton polytopes is established through the degree-simplex containment theorems. The missing link is a discrete isoperimetric inequality on the integer lattice, which is an active area of research in combinatorial geometry.\n\n**Domain Bridges:** Algebraic complexity \u2192 convex geometry \u2192 Ehrhart theory.\n\n**Lineage:** Builds on Bollob\u00e1s\u2013Leader lattice isoperimetry, Barvinok's lattice point theory.\n\n**Ambition:** Grand challenge \u2014 would establish a deep geometric foundation for shadow bounds.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d74bda34",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:14:19.002387+00:00"
-  },
-  {
-    "id": "fd_1685",
-    "title": "Direction 4: Entropy Production Under Differentiation",
-    "description": "**Conjecture:** Define the **shadow entropy** of a family $S$ as $H(S) = \\log |\\mathrm{Sh}_1(S)| - \\log |S|$. For polynomials computed by circuits of size $s$:\n\n$$H(\\mathrm{supp}(f)) \\le O(\\log s)$$\n\nwhile for the permanent:\n\n$$H(\\mathrm{PermSupp}(m)) \\ge \\Omega(\\log m)$$\n\n**Test:** Compute $H$ for all circuits of size $\\le 8$ in $n \\le 4$ variables. Verify the logarithmic bound. Compare with the permanent's entropy for $m = 2, \\ldots, 6$.\n\n**Impact:** An information-theoretic formulation would connect the shadow-gap program to communication complexity, information complexity, and the entropy method in combinatorics.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/KruskalKatonaSupport.lean`: `card_oneShadow_le_mul_card`\n\n**Proof Strategy:** The key insight is that the bound $|\\mathrm{Sh}_1(S)| \\le n \\cdot |S|$ gives $H(S) \\le \\log n$ universally. For circuits, the multiplicative structure should constrain $H$ more tightly. Each add gate increases $|S|$ additively; each mul gate increases it multiplicatively. The entropy $H$ should decompose along the circuit DAG, giving a bound in terms of circuit depth and width.\n\n**Why now?** The general bound $|\\mathrm{Sh}_1| \\le n|S|$ is proved. The circuit bound theorem provides the recursive structure needed for an entropy decomposition. The connection to statistical physics (support as microcanonical ensemble, shadow as accessible states) provides physical intuition.\n\n**Domain Bridges:** Algebraic complexity \u2192 information theory \u2192 statistical physics.\n\n**Lineage:** Builds on entropy methods in combinatorics (Shearer's lemma, entropy compression).\n\n**Ambition:** Solid extension with speculative connections to physics.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d74bda34",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:14:19.083806+00:00"
-  },
-  {
-    "id": "fd_1686",
-    "title": "Direction 5: Compressed Support Semirings",
-    "description": "**Conjecture:** Define a **support semiring** as a semiring whose elements are finite subsets of $\\mathbb{N}^n$, with addition = union and multiplication = Minkowski sum. The shadow operator $\\mathrm{Sh}_1$ is a derivation on this semiring in a suitable sense:\n\n$$\\mathrm{Sh}_1(A \\oplus B) \\supseteq \\mathrm{Sh}_1(A) \\oplus B \\cup A \\oplus \\mathrm{Sh}_1(B)$$\n\nA **compressed support semiring** restricts to KK-compressed families (colex-initial segments), and the shadow on this sub-semiring has optimal behavior.\n\n**Test:** Verify the \"derivation inequality\" for all pairs $(A, B)$ with $|A|, |B| \\le 10$ in $n \\le 3$ variables. Check whether the inequality is tight for compressed families.\n\n**Impact:** This would provide an algebraic framework for shadow complexity, allowing techniques from semiring theory and tropical algebra to be applied to circuit lower bounds.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/KruskalKatonaSupport.lean`: `map_add_mem_oneShadow_supportMul`, `supportMul`\n\n**Proof Strategy:** The key insight is that the proved theorem `map_add_mem_oneShadow_supportMul` already establishes one direction of the derivation inequality ($\\mathrm{Sh}_1(A) \\oplus B \\subseteq \\mathrm{Sh}_1(A \\oplus B)$). The other direction ($A \\oplus \\mathrm{Sh}_1(B) \\subseteq \\mathrm{Sh}_1(A \\oplus B)$) follows by symmetry of the Minkowski sum. Combining both gives the full derivation inequality. The compressed sub-semiring requires showing that compression commutes with Minkowski addition \u2014 a nontrivial combinatorial result.\n\n**Why now?** The Minkowski shadow theorem is proved. The derivation inequality is a direct consequence. The compressed sub-semiring construction requires the full multi-index KK theory (Direction 1) but can be developed in parallel.\n\n**Domain Bridges:** Algebraic complexity \u2192 algebra (semiring theory) \u2192 tropical geometry.\n\n**Lineage:** Builds on tropical semirings, support theory of polynomial multiplication.\n\n**Ambition:** Solid extension with grand-challenge potential if combined with Direction 1.",
+    "id": "fd_1688",
+    "title": "Direction 2: Assignment Gap Extension (All Permutations)",
+    "description": "**Conjecture:** Define the full assignment gap as:\n```\nassignmentGap(W) = max_\u03c3 \u03a3\u1d62 W(i,\u03c3(i)) - max_{\u03c3\u2260id} \u03a3\u1d62 W(i,\u03c3(i))\n```\nThen assignmentGap(W) = tropMargin(W) for generic matrices, and the phase transition for assignmentGap exhibits the same \u221a(log n) universality as tropMargin.\n\n**Test:** For random 6\u00d76 matrices, compute both tropMargin and assignmentGap by enumerating all 720 permutations. Measure the fraction of matrices where they disagree. The conjecture predicts this fraction vanishes as n \u2192 \u221e.\n\n**Impact:** Would extend tropical universality from transposition competitors to the full combinatorial optimization landscape, connecting to the theory of random assignment problems (M\u00e9zard-Parisi).\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (signalGap, tropMargin_nonneg_of_signalGap_large)\n\n**Proof Strategy:** Show that for a generic matrix, the optimal non-identity permutation is always a transposition (by a dimension-counting argument on the set where a 3-cycle or longer permutation dominates). Then tropMargin = assignmentGap for generic matrices, and the universality follows.\n\n**Domain Bridges:** Combinatorial optimization (assignment problem), algebraic geometry (tropical varieties), probability (random assignment)\n\n**Lineage:** Extends signalGap definition and tropMargin_nonpos_of_noise_overwhelms\n\n**Ambition:** Solid extension \u2014 technically challenging but conceptually clear path\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
@@ -1481,9 +1445,48 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "d74bda34",
+    "source_exp_id": "69370675",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:14:19.164372+00:00"
+    "timestamp": "2026-05-28T06:15:00.347688+00:00"
+  },
+  {
+    "id": "fd_1689",
+    "title": "Direction 3: Tropical Margin Dynamics Under Matrix Flows",
+    "description": "**Conjecture:** Under the Dyson Brownian motion W(t) = W(0) + \u221at \u00b7 G where G is i.i.d. Gaussian, the tropical margin satisfies:\n```\ntropMargin(W(t)) = tropMargin(W(0)) + O(\u221a(t \u00b7 log n))\n```\nand the hitting time \u03c4\u2080 = inf{t : tropMargin(W(t)) = 0} concentrates around t* = (tropMargin(W(0)))\u00b2 / (C\u00b2 \u00b7 log n).\n\n**Test:** Simulate the Dyson dynamics for 5\u00d75 matrices with various initial conditions. Track tropMargin(W(t)) and measure \u03c4\u2080. Plot \u03c4\u2080 vs. initial margin squared / log(n). The conjecture predicts linear scaling.\n\n**Impact:** Would create a dynamical theory of tropical phase transitions, analogous to the Dyson dynamics for eigenvalues but for the combinatorial observable.\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (tropMargin_lipschitz, tropMargin_signalGap_perturbation)\n\n**Proof Strategy:** Use the Lipschitz bound to control tropMargin increments. The Gaussian increment at each step has \u2016\u03b4W\u2016\u221e ~ \u221a(\u03b4t \u00b7 log n). By the perturbation theorem, |\u03b4(tropMargin)| \u2264 4\u221a(\u03b4t \u00b7 log n). This gives a bounded-increment martingale, and optional stopping yields the hitting time concentration.\n\n**Domain Bridges:** Stochastic calculus (martingale methods), statistical mechanics (relaxation times), dynamical systems\n\n**Lineage:** Builds on tropMargin_lipschitz and the Lipschitz martingale framework\n\n**Ambition:** Grand challenge \u2014 requires fusion of dynamical and combinatorial methods\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "69370675",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:15:00.424598+00:00"
+  },
+  {
+    "id": "fd_1691",
+    "title": "Direction 5: Tropical Margin for Structured (Non-Independent) Matrices",
+    "description": "**Conjecture:** For Wigner-type matrices W where W_{ij} = W_{ji} and entries above the diagonal are independent sub-Gaussian, the tropical margin phase transition occurs at the same \u221a(log n) scale with the same universality properties.\n\n**Test:** Generate symmetric Gaussian, Rademacher, and uniform matrices of sizes n = 8, 12, 16. Compare P(tropMargin \u2265 0) curves after \u221a(log n) scaling. The conjecture predicts collapse analogous to the independent case, but with a different centering sequence due to the symmetry constraint.\n\n**Impact:** Would extend tropical universality to the most physically natural matrix ensembles (symmetric = time-reversal invariant systems), connecting to Wigner's original program.\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (tropMargin_entrywise_replacement_bound, telescoping_bound)\n\n**Proof Strategy:** The symmetry constraint W_{ij} = W_{ji} introduces dependencies, but each exchange slack diagExSlack(W,i,j) = 2W_{ij} - W_{ii} - W_{jj} involves at most 3 independent entries. The Lipschitz bound still holds, and the telescoping replacement can be adapted to replace symmetric pairs simultaneously. The main challenge is that the extreme-value theory for correlated maxima may shift the centering.\n\n**Domain Bridges:** Random matrix theory (Wigner ensembles), physics (time-reversal symmetry), graph theory (random symmetric graphs)\n\n**Lineage:** Extends tropMargin_lipschitz and telescoping_bound to structured matrices\n\n**Ambition:** Solid extension \u2014 clear path but requires careful handling of dependencies",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "69370675",
+    "consumed_by_exp_id": "03aeb2cb",
+    "timestamp": "2026-05-28T06:15:00.579732+00:00"
   },
   {
     "id": "seed_013",
@@ -2023,64 +2026,49 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T05:35:00.011801+00:00"
   },
   {
-    "id": "fd_1687",
-    "title": "Direction 1: Full Probabilistic Universality via Lindeberg Comparison",
-    "description": "**Conjecture:** For any centered, variance-one, independent sub-Gaussian entry model with parameter \u03c3, there exists a centering sequence a_n and scale b_n ~ \u221a(log n) such that\n```\nP(tropMargin(W_n) \u2265 0) = \u03a6((\u03bc - a_n) / b_n) + o(1)\n```\nwhere \u03a6 is a universal profile function independent of the entry distribution.\n\n**Test:** Generate n\u00d7n matrices with Gaussian, Rademacher, uniform, and exponential entries for n = 10, 20, 50, 100. After centering and \u221a(log n) scaling, fit the empirical P(tropMargin \u2265 0) curves. Measure the Kolmogorov-Smirnov distance between all sub-Gaussian pairs. The conjecture is falsified if the KS distance remains bounded away from zero as n \u2192 \u221e.\n\n**Impact:** Would establish the first formal universality theorem for a non-spectral random matrix observable, opening a new universality class.\n\n**Catalog References:** `Catalog/Pythagorean/TropicalPhaseTransition.lean` (tropMargin_lipschitz, tropMargin_lower_bound_signal_noise), `Pythagorean/TropicalUniversality.lean` (telescoping_bound, tropMargin_entrywise_replacement_bound)\n\n**Proof Strategy:** Use the telescoping replacement bound to replace entries one at a time from distribution \u03bc to distribution \u03bd. Each replacement step contributes at most 4|entry change| to the margin difference. By Lindeberg's method, the cumulative effect is controlled by the third-moment matching condition. The key technical challenge is bounding the remainder term using the sub-Gaussian tail control from SubGaussianEntryModel.\n\n**Domain Bridges:** Probability theory (Lindeberg method), extreme-value theory (Gumbel convergence)\n\n**Lineage:** Extends tropMargin_telescoping_bound and tropMargin_entrywise_replacement_bound\n\n**Ambition:** Grand challenge \u2014 would require novel probabilistic machinery adapted to the tropical setting\n\n---",
+    "id": "fd_1702",
+    "title": "Persistent Homology Phase Diagram for Proof Search Complexity",
+    "description": "Conjecture: There exists an explicit family of finitely presented theorem-proving/search spaces (for example, bounded-resolution SAT instances or Knuth\u2013Bendix completion states) such that the persistence barcode of the associated state-space complex exhibits a sharp topological phase transition exactly at the algorithmic hardness threshold: specifically, in the family, median runtime becomes superpolynomial if and only if a normalized 1-dimensional persistence statistic (such as total H1 bar length divided by number of states) exceeds a fixed constant c. Test: Construct the state graph/complex for parametrized benchmark families, compute persistence across the control parameter, and check whether the proposed barcode statistic changes sharply at the same parameter where empirical proof-search/runtime complexity jumps; a counterexample family with decoupled transitions refutes it. Impact: This would give a falsifiable topological order parameter for computational hardness, linking topology, logic, and complexity, and could enable topology-guided automated theorem proving and hardness prediction.",
     "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
+      "Computational Complexity",
+      "Topological Data Analysis"
     ],
-    "priority_score": 0.7999999999999999,
+    "priority_score": 0.8,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "69370675",
+    "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:15:00.271482+00:00"
+    "timestamp": "2026-05-28T07:25:04.784356+00:00"
   },
   {
-    "id": "fd_1688",
-    "title": "Direction 2: Assignment Gap Extension (All Permutations)",
-    "description": "**Conjecture:** Define the full assignment gap as:\n```\nassignmentGap(W) = max_\u03c3 \u03a3\u1d62 W(i,\u03c3(i)) - max_{\u03c3\u2260id} \u03a3\u1d62 W(i,\u03c3(i))\n```\nThen assignmentGap(W) = tropMargin(W) for generic matrices, and the phase transition for assignmentGap exhibits the same \u221a(log n) universality as tropMargin.\n\n**Test:** For random 6\u00d76 matrices, compute both tropMargin and assignmentGap by enumerating all 720 permutations. Measure the fraction of matrices where they disagree. The conjecture predicts this fraction vanishes as n \u2192 \u221e.\n\n**Impact:** Would extend tropical universality from transposition competitors to the full combinatorial optimization landscape, connecting to the theory of random assignment problems (M\u00e9zard-Parisi).\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (signalGap, tropMargin_nonneg_of_signalGap_large)\n\n**Proof Strategy:** Show that for a generic matrix, the optimal non-identity permutation is always a transposition (by a dimension-counting argument on the set where a 3-cycle or longer permutation dominates). Then tropMargin = assignmentGap for generic matrices, and the universality follows.\n\n**Domain Bridges:** Combinatorial optimization (assignment problem), algebraic geometry (tropical varieties), probability (random assignment)\n\n**Lineage:** Extends signalGap definition and tropMargin_nonpos_of_noise_overwhelms\n\n**Ambition:** Solid extension \u2014 technically challenging but conceptually clear path\n\n---",
+    "id": "fd_1708",
+    "title": "Tropical Monodromy Spectrum from Prime Reductions of Integer Polynomials",
+    "description": "Conjecture: There exists an explicit functor assigning to each squarefree polynomial f(x) in Z[x] of degree d at least 5 a finite filtered simplicial complex K_p(f) for every good prime p, built only from the collision/merger pattern of roots of f mod p^k across k, such that the distribution of persistent barcodes of K_p(f) over primes p determines the Galois group of f over Q up to isomorphism for all transitive subgroups of S_d outside a finite exceptional list. Test: Compute K_p(f) for large benchmark families with known Galois groups (e.g. S_d, A_d, D_d, Frobenius groups, solvable transitive groups), estimate barcode-distribution invariants across primes, and check whether non-isomorphic Galois groups become statistically separable; refutation occurs if infinitely many distinct Galois groups produce indistinguishable barcode laws under the construction. Impact: This would create a new topological-combinatorial probe of arithmetic monodromy, linking p-adic root geometry, persistence, and inverse Galois diagnostics in a way not captured by point counts or Frobenius traces alone.",
     "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
+      "Algebraic Number Theory",
+      "Topological Data Analysis"
     ],
-    "priority_score": 0.7999999999999999,
+    "priority_score": 0.8,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "69370675",
+    "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:15:00.347688+00:00"
+    "timestamp": "2026-05-28T07:26:58.980809+00:00"
   },
   {
-    "id": "fd_1689",
-    "title": "Direction 3: Tropical Margin Dynamics Under Matrix Flows",
-    "description": "**Conjecture:** Under the Dyson Brownian motion W(t) = W(0) + \u221at \u00b7 G where G is i.i.d. Gaussian, the tropical margin satisfies:\n```\ntropMargin(W(t)) = tropMargin(W(0)) + O(\u221a(t \u00b7 log n))\n```\nand the hitting time \u03c4\u2080 = inf{t : tropMargin(W(t)) = 0} concentrates around t* = (tropMargin(W(0)))\u00b2 / (C\u00b2 \u00b7 log n).\n\n**Test:** Simulate the Dyson dynamics for 5\u00d75 matrices with various initial conditions. Track tropMargin(W(t)) and measure \u03c4\u2080. Plot \u03c4\u2080 vs. initial margin squared / log(n). The conjecture predicts linear scaling.\n\n**Impact:** Would create a dynamical theory of tropical phase transitions, analogous to the Dyson dynamics for eigenvalues but for the combinatorial observable.\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (tropMargin_lipschitz, tropMargin_signalGap_perturbation)\n\n**Proof Strategy:** Use the Lipschitz bound to control tropMargin increments. The Gaussian increment at each step has \u2016\u03b4W\u2016\u221e ~ \u221a(\u03b4t \u00b7 log n). By the perturbation theorem, |\u03b4(tropMargin)| \u2264 4\u221a(\u03b4t \u00b7 log n). This gives a bounded-increment martingale, and optional stopping yields the hitting time concentration.\n\n**Domain Bridges:** Stochastic calculus (martingale methods), statistical mechanics (relaxation times), dynamical systems\n\n**Lineage:** Builds on tropMargin_lipschitz and the Lipschitz martingale framework\n\n**Ambition:** Grand challenge \u2014 requires fusion of dynamical and combinatorial methods\n\n---",
+    "id": "fd_1714",
+    "title": "Primewise Persistence Recovers the Formal Group Height of K3 Surfaces",
+    "description": "Conjecture: There exists an explicit functorial construction sending a polarized K3 surface X over a number field to a family of finite filtered chain complexes C_p(X) over F_p, defined for all good ordinary and supersingular primes p, such that the asymptotic primewise barcode statistics of C_p(X) determine the formal Brauer group height h(X_p) for a density-1 set of primes p. In particular, primes with finite height h produce one universal barcode regime, while supersingular primes (height infinity) produce a sharply different regime detectable by a computable statistic with error o(1) as p grows. Test: Compute the complexes for explicit K3 families with known reduction behavior (e.g. diagonal quartics, Kummer surfaces, singular K3s), compare barcode statistics against independently computed formal Brauer heights, and check whether a uniform classifier separates finite-height from supersingular reduction and further refines finite heights when known. Refutation occurs if no such statistic can distinguish these classes beyond random chance on explicit benchmark families. Impact: This would create a new bridge between arithmetic geometry, p-adic deformation invariants, and topological data analysis, potentially yielding a combinatorial probe of subtle reduction phenomena that are currently accessible only through deep crystalline/cohomological methods.",
     "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
+      "Arithmetic Geometry",
+      "Topological Data Analysis"
     ],
-    "priority_score": 0.7999999999999999,
+    "priority_score": 0.8,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "69370675",
+    "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:15:00.424598+00:00"
+    "timestamp": "2026-05-28T07:27:35.868270+00:00"
   },
   {
     "id": "fd_1690",
@@ -2103,24 +2091,45 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T06:15:00.501744+00:00"
   },
   {
-    "id": "fd_1691",
-    "title": "Direction 5: Tropical Margin for Structured (Non-Independent) Matrices",
-    "description": "**Conjecture:** For Wigner-type matrices W where W_{ij} = W_{ji} and entries above the diagonal are independent sub-Gaussian, the tropical margin phase transition occurs at the same \u221a(log n) scale with the same universality properties.\n\n**Test:** Generate symmetric Gaussian, Rademacher, and uniform matrices of sizes n = 8, 12, 16. Compare P(tropMargin \u2265 0) curves after \u221a(log n) scaling. The conjecture predicts collapse analogous to the independent case, but with a different centering sequence due to the symmetry constraint.\n\n**Impact:** Would extend tropical universality to the most physically natural matrix ensembles (symmetric = time-reversal invariant systems), connecting to Wigner's original program.\n\n**Catalog References:** `Pythagorean/TropicalUniversality.lean` (tropMargin_entrywise_replacement_bound, telescoping_bound)\n\n**Proof Strategy:** The symmetry constraint W_{ij} = W_{ji} introduces dependencies, but each exchange slack diagExSlack(W,i,j) = 2W_{ij} - W_{ii} - W_{jj} involves at most 3 independent entries. The Lipschitz bound still holds, and the telescoping replacement can be adapted to replace symmetric pairs simultaneously. The main challenge is that the extreme-value theory for correlated maxima may shift the centering.\n\n**Domain Bridges:** Random matrix theory (Wigner ensembles), physics (time-reversal symmetry), graph theory (random symmetric graphs)\n\n**Lineage:** Extends tropMargin_lipschitz and telescoping_bound to structured matrices\n\n**Ambition:** Solid extension \u2014 clear path but requires careful handling of dependencies",
+    "id": "fd_1693",
+    "title": "Direction 2: Non-Affine Eigenvalue Flows and Nonlinear Stability",
+    "description": "**Conjecture:** When eigenvalues \u03b8_j(t) depend polynomially (not affinely) on the perturbation parameter, the stability radius equals the smallest positive root of any nontrivial eigenvalue function: \u03c1 = min_{j\u22651} min{t > 0 : \u03b8_j(t) = 0}.\n\n**Test:** For degree-2 eigenvalue flows \u03b8_j(t) = a_j + b_j t + c_j t\u00b2 with randomly generated coefficients satisfying \u03b8_j(0) < 0 and some \u03b8_j(t) > 0 for large t, compute the stability radius by root-finding and compare with binary search on the actual Hessian eigenvalues.\n\n**Impact:** Extends the spectral formula beyond the affine case, covering quadratic and higher-order perturbation families arising in trust-region optimization and polynomial homotopy continuation.\n\n**Catalog References:**\n- `Catalog/Pythagorean/SchemeLorentzian/Theorems.lean` \u2014 `eigenvalue_neg_before_vanishing`, `eigenvalue_pos_after_vanishing`\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`\n\n**Proof Strategy:** Replace the affine vanishing time t_j = -a_j/b_j with the smallest positive root of \u03b8_j(t). The key lemma is that \u03b8_j changes sign at the root (by continuity) and the stability radius is the minimum such root. Use the intermediate value theorem and careful monotonicity arguments.\n\n**Domain Bridges:** Numerical algebraic geometry (polynomial root-finding) \u2194 Lorentzian stability; optimization (trust regions) \u2194 spectral analysis.\n\n**Lineage:** Directly extends the affine eigenvalue theory (Theorems 3.3\u20133.6).\n\n**Ambition:** Solid extension \u2014 mathematically clean and computationally testable.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Geometry",
       "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "54a2ca0c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T06:50:39.985346+00:00"
+  },
+  {
+    "id": "fd_1697",
+    "title": "Direction 1: Tropical Hodge Decomposition and Harmonic Representatives",
+    "description": "**Conjecture:** For any metrized graph \u0393 = (V, E, \u2113) with cycle basis C, the edge space \u211d^|E| admits a certified orthogonal decomposition with respect to the \u2113-weighted inner product \u27e8u,v\u27e9_\u2113 = \u03a3\u2091 \u2113\u2091 u\u2091 v\u2091:\n\n\u211d^|E| = Im(C\u211d) \u2295_\u2113 Ker(C\u211d\u1d40 diag(\u2113))\n\nwhere Im(C\u211d) is the cycle space and Ker(C\u211d\u1d40 diag(\u2113)) is the \u2113-weighted cut space. The period matrix Q governs the Gram matrix of the cycle-space projection.\n\n**Test:** For graphs with |E| \u2264 10, verify computationally that:\n1. The two subspaces are \u2113-orthogonal\n2. Their dimensions sum to |E|\n3. The projection onto Im(C\u211d) is given by C\u211d(C\u211d\u1d40 diag(\u2113) C\u211d)\u207b\u00b9 C\u211d\u1d40 diag(\u2113)\n4. The projected Gram matrix equals Q\n\n**Impact:** A formally verified tropical Hodge decomposition would be the first step toward a constructive tropical Hodge theory. It would provide algorithmic decomposition of flows into harmonic and exact components, with applications to network analysis and discrete exterior calculus.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetrizedJacobian.lean`: `periodMatrix_energy_decomposition` (the Pythagorean theorem is a shadow of this decomposition)\n- `Catalog/Pythagorean/TropicalBridge/Stability.lean`: tropical persistence stability framework\n\n**Proof Strategy:** Strategy B (bilinear form / Gram matrix) from the main development. Define the \u2113-weighted inner product on \u211d^|E|, prove Im(C\u211d) and Ker(C\u211d\u1d40 diag(\u2113)) are orthogonal complements, then derive the projection formula. The energy decomposition theorem already provides the key identity.\n\n**Domain Bridges:** Discrete exterior calculus, finite element methods, computational electromagnetics\n\n**Lineage:** Extends `periodMatrix_energy_decomposition` from a per-vector identity to a full subspace decomposition\n\n**Ambition:** \ud83d\udfe1 Solid extension \u2014 builds directly on proven results with clear path\n\n**The key insight is** that the Pythagorean energy decomposition (Theorem 4.5) is not merely an inequality but a reflection of a deeper orthogonal decomposition of the edge space, and the period matrix is the Gram matrix of the harmonic projection.\n\n**Why now?** The energy decomposition and stability theorems provide the exact algebraic identities needed. The \u2113-weighted inner product framework is already implicit in the proofs; making it explicit is a natural next step.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
       "Tropical",
+      "Physics",
       "Bridges",
       "Logic"
     ],
     "priority_score": 0.7999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "69370675",
+    "source_exp_id": "2f89e32c",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:15:00.579732+00:00"
+    "timestamp": "2026-05-28T07:24:46.132304+00:00"
   },
   {
     "id": "seed_032",
@@ -2149,47 +2158,5 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.336768+00:00"
-  },
-  {
-    "id": "fd_1693",
-    "title": "Direction 2: Non-Affine Eigenvalue Flows and Nonlinear Stability",
-    "description": "**Conjecture:** When eigenvalues \u03b8_j(t) depend polynomially (not affinely) on the perturbation parameter, the stability radius equals the smallest positive root of any nontrivial eigenvalue function: \u03c1 = min_{j\u22651} min{t > 0 : \u03b8_j(t) = 0}.\n\n**Test:** For degree-2 eigenvalue flows \u03b8_j(t) = a_j + b_j t + c_j t\u00b2 with randomly generated coefficients satisfying \u03b8_j(0) < 0 and some \u03b8_j(t) > 0 for large t, compute the stability radius by root-finding and compare with binary search on the actual Hessian eigenvalues.\n\n**Impact:** Extends the spectral formula beyond the affine case, covering quadratic and higher-order perturbation families arising in trust-region optimization and polynomial homotopy continuation.\n\n**Catalog References:**\n- `Catalog/Pythagorean/SchemeLorentzian/Theorems.lean` \u2014 `eigenvalue_neg_before_vanishing`, `eigenvalue_pos_after_vanishing`\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `lorentzian_stability_radius_exists`\n\n**Proof Strategy:** Replace the affine vanishing time t_j = -a_j/b_j with the smallest positive root of \u03b8_j(t). The key lemma is that \u03b8_j changes sign at the root (by continuity) and the stability radius is the minimum such root. Use the intermediate value theorem and careful monotonicity arguments.\n\n**Domain Bridges:** Numerical algebraic geometry (polynomial root-finding) \u2194 Lorentzian stability; optimization (trust regions) \u2194 spectral analysis.\n\n**Lineage:** Directly extends the affine eigenvalue theory (Theorems 3.3\u20133.6).\n\n**Ambition:** Solid extension \u2014 mathematically clean and computationally testable.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "54a2ca0c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:50:39.985346+00:00"
-  },
-  {
-    "id": "fd_1695",
-    "title": "Direction 4: Certified Spectral Algorithms for Lorentzian Optimization",
-    "description": "**Conjecture:** The spectral stability radius provides a computable *trust region* for Lorentzian polynomial optimization: within the ball of radius \u03c1 around a certified Lorentzian point, all polynomials remain Lorentzian and log-concavity-based sampling algorithms converge.\n\n**Test:** Implement a trust-region Newton method for maximizing a Lorentzian polynomial over a polytope, using the spectral stability radius as the trust-region size. Compare convergence rates against standard methods on matroid intersection and log-concave sampling benchmarks.\n\n**Impact:** Would provide the first numerically certified optimization algorithm for Lorentzian polynomials, with convergence guarantees derived from spectral data rather than ad hoc step-size rules.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` \u2014 `hasAtMostOnePositiveEigenvalue_of_gapped_perturbation`, `certifyStability_sound`\n- `Catalog/Pythagorean/SchemeLorentzian/Defs.lean` \u2014 `schemeStabilityRadius`\n\n**Proof Strategy:** Use the certified stability check (Algorithm 2) as an oracle within a trust-region framework. The key insight is that the spectral gap provides a natural trust-region radius that adapts to the local geometry. Prove convergence by showing the trust region contracts at a controlled rate.\n\n**Domain Bridges:** Numerical optimization (trust regions, convergence theory) \u2194 Lorentzian polynomials; certified computation \u2194 spectral analysis.\n\n**Lineage:** Extends the certified stability checker from the catalog.\n\n**Ambition:** Solid extension \u2014 immediately applicable and algorithmically impactful.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "54a2ca0c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T06:50:45.692556+00:00"
   }
 ];
