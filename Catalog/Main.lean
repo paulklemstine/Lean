@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1977 of the highest-quality
+A curated collection of 1978 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1977
+Total files: 1978
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -461,6 +461,7 @@ import FINAL.Bridges.HeterogeneityGapTheory
 import FINAL.Bridges.HierarchicalRobustness
 import FINAL.Bridges.HigherOrderCompletion
 import FINAL.Bridges.HigherOrderEqSat
+import FINAL.Bridges.HigherQuantumLDPC
 import FINAL.Bridges.HigherSimplicial
 import FINAL.Bridges.HilbertPolyaOperator
 import FINAL.Bridges.HilbertVCCorrespondence

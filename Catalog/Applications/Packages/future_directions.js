@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e12146c2",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -339,10 +339,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9cf0d212",
     "timestamp": "2026-05-25T19:29:17.914245+00:00"
   },
   {
@@ -394,10 +394,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2b6d84b4",
-    "consumed_by_exp_id": "73fd0b15",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:13:09.706179+00:00"
   },
   {
@@ -414,10 +414,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "834b245c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "35c0d5da",
     "timestamp": "2026-05-25T21:13:42.015713+00:00"
   },
   {
@@ -654,10 +654,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "42d710f5",
-    "consumed_by_exp_id": "5ed97fbb",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T08:59:20.810965+00:00"
   },
   {
@@ -1531,6 +1531,25 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
   },
   {
+    "id": "fd_1657",
+    "title": "Direction 1: Kruskal\u2013Katona Optimal Shadow Bounds for Circuit Supports",
+    "description": "**Conjecture:** For any polynomial $f$ of degree $d$ in $n$ variables computed by an algebraic circuit of size $s$, the support $\\mathrm{supp}(f)$ satisfies the Kruskal\u2013Katona inequality: there exists an initial segment $\\mathcal{I}$ of the colex order on $\\mathbb{N}^n$ with $|\\mathcal{I}| = |\\mathrm{supp}(f)|$ such that $|\\mathrm{Sh}_1(\\mathrm{supp}(f))| \\geq |\\mathrm{Sh}_1(\\mathcal{I})|$. Moreover, for circuit-generated supports, the gap between $|\\mathrm{Sh}_1(\\mathrm{supp}(f))|$ and the Kruskal\u2013Katona minimum is at most polynomial in $s$.\n\n**Test:** Compute $|\\mathrm{Sh}_1|$ for permanent supports of sizes $m = 3, 4, 5$ and compare with the Kruskal\u2013Katona lower bound for families of size $m!$. If permanent supports exceed the KK minimum by a superpolynomial factor in $m$, this provides evidence for a new lower bound route.\n\n**Impact:** This would give the first circuit lower bound method that exploits extremal set theory directly. The Kruskal\u2013Katona theorem is one of the deepest results in extremal combinatorics, and connecting it to circuit complexity would open an entirely new proof technique.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_elemSymm_eq`, `shadowProfile_elemSymm`\n- `Pythagorean/IteratedShadowGeometry.lean`: `mem_kthShadow_iff_exists_iteratedDerivative`\n\n**Proof Strategy:** Formalize the Kruskal\u2013Katona theorem for integer multi-index shadows (extending from the classical set-family version). Then prove that circuit operations preserve the KK-gap invariant under addition (subadditivity) and bound the gap under multiplication (Minkowski sum analysis).\n\n**Domain Bridges:** Extremal combinatorics \u2192 algebraic complexity \u2192 discrete optimization (LP relaxations of shadow bounds).\n\n**Lineage:** Builds directly on `shadowProfile_elemSymm` and `shadowProfile_union_le`.\n\n**Ambition:** *Grand challenge.* A successful Kruskal\u2013Katona circuit barrier would be the first genuine lower bound from extremal set theory, potentially complementing all existing methods.\n\n**The key insight is** that the Kruskal\u2013Katona theorem provides *optimal* lower bounds on shadow sizes, and circuit-computable supports may be provably far from the optimizers (initial segments), creating an exploitable gap.\n\n**Why now?** The exact shadow theorem for elementary symmetric supports (`kthShadow_elemSymm_eq`) shows that the shadow framework correctly interfaces with uniform set families. The natural next step is to import the full power of extremal set theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "3a9ea178",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T03:48:29.819385+00:00"
+  },
+  {
     "id": "seed_013",
     "title": "Odd Perfect Numbers",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
@@ -2051,25 +2070,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T03:48:38.722447+00:00"
-  },
-  {
-    "id": "fd_1657",
-    "title": "Direction 1: Kruskal\u2013Katona Optimal Shadow Bounds for Circuit Supports",
-    "description": "**Conjecture:** For any polynomial $f$ of degree $d$ in $n$ variables computed by an algebraic circuit of size $s$, the support $\\mathrm{supp}(f)$ satisfies the Kruskal\u2013Katona inequality: there exists an initial segment $\\mathcal{I}$ of the colex order on $\\mathbb{N}^n$ with $|\\mathcal{I}| = |\\mathrm{supp}(f)|$ such that $|\\mathrm{Sh}_1(\\mathrm{supp}(f))| \\geq |\\mathrm{Sh}_1(\\mathcal{I})|$. Moreover, for circuit-generated supports, the gap between $|\\mathrm{Sh}_1(\\mathrm{supp}(f))|$ and the Kruskal\u2013Katona minimum is at most polynomial in $s$.\n\n**Test:** Compute $|\\mathrm{Sh}_1|$ for permanent supports of sizes $m = 3, 4, 5$ and compare with the Kruskal\u2013Katona lower bound for families of size $m!$. If permanent supports exceed the KK minimum by a superpolynomial factor in $m$, this provides evidence for a new lower bound route.\n\n**Impact:** This would give the first circuit lower bound method that exploits extremal set theory directly. The Kruskal\u2013Katona theorem is one of the deepest results in extremal combinatorics, and connecting it to circuit complexity would open an entirely new proof technique.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_elemSymm_eq`, `shadowProfile_elemSymm`\n- `Pythagorean/IteratedShadowGeometry.lean`: `mem_kthShadow_iff_exists_iteratedDerivative`\n\n**Proof Strategy:** Formalize the Kruskal\u2013Katona theorem for integer multi-index shadows (extending from the classical set-family version). Then prove that circuit operations preserve the KK-gap invariant under addition (subadditivity) and bound the gap under multiplication (Minkowski sum analysis).\n\n**Domain Bridges:** Extremal combinatorics \u2192 algebraic complexity \u2192 discrete optimization (LP relaxations of shadow bounds).\n\n**Lineage:** Builds directly on `shadowProfile_elemSymm` and `shadowProfile_union_le`.\n\n**Ambition:** *Grand challenge.* A successful Kruskal\u2013Katona circuit barrier would be the first genuine lower bound from extremal set theory, potentially complementing all existing methods.\n\n**The key insight is** that the Kruskal\u2013Katona theorem provides *optimal* lower bounds on shadow sizes, and circuit-computable supports may be provably far from the optimizers (initial segments), creating an exploitable gap.\n\n**Why now?** The exact shadow theorem for elementary symmetric supports (`kthShadow_elemSymm_eq`) shows that the shadow framework correctly interfaces with uniform set families. The natural next step is to import the full power of extremal set theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3a9ea178",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T03:48:29.819385+00:00"
   },
   {
     "id": "seed_032",
