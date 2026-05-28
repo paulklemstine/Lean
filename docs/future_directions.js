@@ -338,10 +338,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "c5793c2c",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T20:01:51.853060+00:00"
   },
   {
@@ -962,24 +962,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T20:27:17.556195+00:00"
   },
   {
-    "id": "fd_1557",
-    "title": "Direction 1: Sharp Representation-Theoretic Bounds via GL\u2082 Decomposition",
-    "description": "**Conjecture:** For every prime q \u2265 5 and every certified pair (g, h) in GL\u2082(\ud835\udd3d_q), the spectral gap satisfies \u03b3(S) \u2265 C/q where C = 1/2 \u2212 \u03b5 for any \u03b5 > 0 and sufficiently large q. Moreover, the worst-case eigenvalue comes from the principal series representation family.\n\n**Test:** Decompose the averaging operator on each of the four representation families of GL\u2082(\ud835\udd3d_q) \u2014 (i) one-dimensional determinant twists, (ii) principal series, (iii) Steinberg twists, (iv) cuspidal representations \u2014 and compute the operator norm on each family for q \u2208 {5, 7, 11, 13, 17, 19, 23}. If the principal series consistently dominates (giving the largest nontrivial eigenvalue), the conjecture is supported. If cuspidal representations dominate for some q, the conjecture needs revision.\n\n**Impact:** A proof would give the first broad family of 4-regular explicit expanders for GL\u2082 with algebraic certificates and a sharp uniform bound. This would bypass Bourgain\u2013Gamburd's probabilistic method with a deterministic, certificate-driven alternative.\n\n**Catalog References:**\n- `Catalog/Pythagorean/UniformSpectralGap.lean`: `singerLike_no_eigenvalue\u2082`, `singerLike_no_invariant_line\u2082`, `GL2Cert.harmonic_meanzero_eq_zero`\n- `Catalog/Algebra/MatrixGroupGeneration.lean`: `eq_bot_or_top_of_charpoly_irreducible`\n- `Catalog/Pythagorean/CertificateExpanders.lean`: `harmonic_meanzero_eq_zero`, `certified_pair_harmonic_trivial`\n\n**Proof Strategy:** For each representation family \u03c1, bound \u2016(1/4)(\u03c1(g)+\u03c1(g\u207b\u00b9)+\u03c1(h)+\u03c1(h\u207b\u00b9))\u2016 using:\n- Principal series: Singer-like g acts on induced representations from the Borel subgroup; its matrix coefficients are character sums bounded by Weil's theorem.\n- Cuspidal: Use the explicit character table of GL\u2082(\ud835\udd3d_q) and Deligne-style bounds on character sums.\n- Steinberg: The unique irreducible quotient of dimension q; Singer-like action gives O(1/\u221aq) bounds.\n- One-dimensional: Primitive det ensures non-triviality on determinant characters.\n\n**Domain Bridges:** Automorphic forms (character sum bounds via Weil), number theory (Deligne's theorem on character sums), spectral graph theory (eigenvalue\u2013expansion connection).\n\n**The key insight is** that each representation family of GL\u2082(\ud835\udd3d_q) responds to exactly one of the three certification conditions, and the family-wise bounds combine to a uniform gap.\n\n**Why now?** The formal verification of the harmonic maximum principle and Singer eigenvalue exclusion provides the foundational infrastructure. The explicit character table of GL\u2082(\ud835\udd3d_q) is classical and well-documented, making formalization feasible.\n\n**Lineage:** Extends `certified_pair_gap_pos` from qualitative (\u03b3 > 0) to quantitative (\u03b3 \u2265 C/q).\n\n**Ambition:** Grand challenge \u2014 would establish a new paradigm for explicit expander construction.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "209e0d92",
-    "consumed_by_exp_id": "b2a4e38f",
-    "timestamp": "2026-05-27T22:19:22.514222+00:00"
-  },
-  {
     "id": "fd_1594",
     "title": "Direction 1: Shadow Inequalities for Lorentzian Polynomials",
     "description": "**Conjecture:** If $f$ is a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh), then its support $S = \\text{supp}(f)$ satisfies the shadow log-concavity inequality $|\\text{Sh}_k(S)|^2 \\geq |\\text{Sh}_{k-1}(S)| \\cdot |\\text{Sh}_{k+1}(S)|$ for all admissible $k$.\n\n**Test:** Implement the Lorentzian polynomial verification algorithm (checking that all second-order partial derivatives have alternating sign Hessians) for polynomials with supports drawn from matroid bases, products of simplices, and Schur polynomial supports up to $n = 8$ variables and degree $\\leq 10$. Verify shadow log-concavity for each confirmed Lorentzian polynomial.\n\n**The key insight is** that Lorentzian polynomials already satisfy coefficient-level log-concavity, and the shadow profile is a coarser invariant (support-level rather than coefficient-level), so the conjecture amounts to showing that log-concavity \"descends\" from coefficients to support sizes \u2014 a phenomenon that should follow from the coefficient transport formula if the descending factorial scalars are sufficiently well-behaved.\n\n**Why now?** The coefficient transport formula (Theorem 3.1) provides the exact algebraic bridge between support-level and coefficient-level properties. Previous work on Lorentzian polynomials lacked this explicit multi-index transport law.\n\n**Impact:** Would establish a new, elementary route to combinatorial log-concavity that bypasses Hodge theory.\n\n**Catalog References:** `Pythagorean/IteratedShadowGeometry.lean` (coeff_iteratedPDeriv, descFactorial_prod_pos), `Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (coeff_pderiv_pderiv).\n\n**Proof Strategy:** Use the coefficient transport formula to relate shadow sizes to sums of products of descending factorials weighted by coefficients. Apply the Cauchy\u2013Schwarz inequality or FKG inequality on the resulting sums.\n\n**Domain Bridges:** Lorentzian polynomial theory, algebraic combinatorics, Hodge theory.\n\n**Lineage:** Extends Br\u00e4nd\u00e9n\u2013Huh (2020) from coefficient log-concavity to support-level log-concavity.\n\n**Ambition:** Grand challenge \u2014 would unify support geometry with Lorentzian algebra.\n\n---",
@@ -1077,10 +1059,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "36b3d470",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c6ae898d",
     "timestamp": "2026-05-28T03:11:12.578612+00:00"
   },
   {
@@ -1135,10 +1117,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d74bda34",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f056eff",
     "timestamp": "2026-05-28T06:14:19.002387+00:00"
   },
   {
@@ -1357,10 +1339,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ad17ca4a",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57cfb68b",
     "timestamp": "2026-05-28T11:04:38.605729+00:00"
   },
   {
@@ -1413,7 +1395,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "951d1d02",
@@ -1430,7 +1412,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "951d1d02",
@@ -1468,6 +1450,64 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1800",
+    "title": "Direction 1: Sharp Principal-Series Operator Norm via Kloosterman Sums",
+    "description": "**Conjecture**: For every certified pair (g, h) in GL\u2082(\ud835\udd3d_q) with g Singer-like, and every principal series representation \u03c0(\u03c7\u2081, \u03c7\u2082) with \u03c7\u2081 \u2260 \u03c7\u2082, the operator norm of M_\u03c0(S) satisfies\n$$\\|M_{\\pi(\\chi_1, \\chi_2)}(S)\\| \\leq 1 - \\frac{1}{2q} + O(q^{-3/2})$$\nwith the leading-order term coming from Kloosterman sums evaluated at the eigenvalues of g in \ud835\udd3d_{q\u00b2}.\n\n**Test**: For q \u2208 {11, 13, 17, 19, 23, 29, 31}, directly compute the operator norm of M_\u03c0(S) on the (q\u22121)-dimensional induced representation space for all principal series \u03c0. Compare with the predicted asymptotic 1 \u2212 1/(2q). A deviation of more than O(q^{\u22123/2}) would refine the conjecture.\n\n**Impact**: This would give the **sharp constant** in the spectral gap: \u03b3(S) \u2265 1/(2q), matching the Ramanujan bound for GL\u2082. It would also connect certified expanders to the arithmetic of Kloosterman sums, creating a bridge to analytic number theory.\n\n**The key insight is** that Singer-like elements in GL\u2082(\ud835\udd3d_q) act on the principal series through their eigenvalues in the quadratic extension \ud835\udd3d_{q\u00b2}, and the resulting character sums are precisely Kloosterman sums, whose cancellation is controlled by the Weil bound.\n\n**Why now?** The familywise framework established here reduces the problem to a single family (principal series), and recent work on Kloosterman sum formalization in Lean (via the Weil bound project) provides the necessary analytical tools.\n\n**Catalog References**: `Catalog/Pythagorean/GL2SpectralDecomposition.lean` \u2014 `spectral_radius_eq_principal_if_dominates`, `abstract_spectral_gap_lower_bound`\n\n**Proof Strategy**: Realize the principal series as functions on P\u00b9(\ud835\udd3d_q), compute the matrix coefficients of M_\u03c0(S) as sums over \ud835\udd3d_q involving characters, identify these as Kloosterman sums, apply the Weil bound.\n\n**Domain Bridges**: Analytic number theory (Kloosterman sums), algebraic geometry (Weil bound)\n\n**Lineage**: This direction descends from the abstract spectral gap framework (Theorem 9) and the principal-series dominance theorem (Theorem 8).\n\n**Ambition**: Grand challenge \u2014 would establish the sharp Ramanujan-type bound for certified GL\u2082 expanders.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b2a4e38f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:18:36.484704+00:00"
+  },
+  {
+    "id": "fd_1801",
+    "title": "Direction 2: Extension to GL_n(\ud835\udd3d_q) \u2014 Higher-Rank Familywise Decomposition",
+    "description": "**Conjecture**: For GL_n(\ud835\udd3d_q) with n \u2265 3, the nontrivial spectral radius of a certified Cayley operator is controlled by the family of representations parabolically induced from the minimal (Borel) subgroup \u2014 the direct analog of the principal series. The \"deeper\" cuspidal families gain cancellation of order q^{\u2212(n\u22121)/2} relative to the principal series.\n\n**Test**: For GL\u2083(\ud835\udd3d\u2085), enumerate certified pairs (g with irreducible charpoly of degree 3), compute operator norms for the principal series and cuspidal families, verify that principal series dominates.\n\n**Impact**: This would establish the boundary-dominance principle for arbitrary rank, opening the door to explicit expander constructions in all finite linear groups.\n\n**The key insight is** that the Bernstein\u2013Zelevinsky classification of irreducible representations of GL_n organizes them by \"cuspidal support,\" and the representations with simplest (Borel) cuspidal support \u2014 the principal series \u2014 have the least oscillatory matrix coefficients.\n\n**Why now?** The formalization of the GL\u2082 case provides the template. The Bernstein\u2013Zelevinsky classification is well-documented and the combinatorial structure is accessible to formalization.\n\n**Catalog References**: `Catalog/Algebra/MatrixGroupGeneration.lean` \u2014 `eq_bot_or_top_of_charpoly_irreducible` (works for any n), `Catalog/Pythagorean/GL2SpectralDecomposition.lean` \u2014 `GL2RepFamily`, `familywise_spectral_gap_of_bounds`\n\n**Proof Strategy**: Define GL_n analogues of GL2RepFamily using parabolic induction data. Generalize the invariant subspace theorem (already works for arbitrary dimension). Use the Jacquet module theory to bound operator norms family by family.\n\n**Domain Bridges**: Automorphic forms (Langlands program), algebraic combinatorics (symmetric functions)\n\n**Lineage**: Direct generalization of the GL\u2082 framework.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting if boundary dominance holds in full generality.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b2a4e38f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:18:36.586229+00:00"
+  },
+  {
+    "id": "fd_1802",
+    "title": "Direction 3: Quantum Circuit Certification from GL\u2082 Spectral Gaps",
+    "description": "**Conjecture**: For every certified pair (g, h) in GL\u2082(\ud835\udd3d_q), the quantum channel\n$$\\Phi(\\rho) = \\frac{1}{4}(U_g \\rho U_g^\\dagger + U_{g^{-1}} \\rho U_{g^{-1}}^\\dagger + U_h \\rho U_h^\\dagger + U_{h^{-1}} \\rho U_{h^{-1}}^\\dagger)$$\nwhere U_g is the natural unitary representation of g on \u2102^{q\u00b2}, achieves \u03b5-approximate unitary 2-design after O(q log(q/\u03b5)) applications.\n\n**Test**: For q = 5, 7, construct the quantum channel explicitly, compute the diamond-norm distance to the Haar channel after t iterations, verify the predicted convergence rate.\n\n**Impact**: Would provide the first **deterministically certified quantum scrambling circuits** with provable mixing time, directly applicable to quantum error correction and quantum cryptography.\n\n**The key insight is** that the spectral gap of the classical Cayley walk directly bounds the diamond-norm contraction of the associated quantum channel, and certified pairs give deterministic quantum circuits without randomness.\n\n**Why now?** The classical spectral gap theory (Theorem 6, exponential mixing) provides the contraction bound. Recent developments in quantum information theory make the connection to approximate designs precise.\n\n**Catalog References**: `Catalog/Pythagorean/GL2SpectralDecomposition.lean` \u2014 `certified_gl2_mixing_bound`, `quantum_mixing_decay`\n\n**Proof Strategy**: Use the representation-theoretic decomposition to bound the diamond norm of the quantum channel. Apply the certified spectral gap to get the convergence rate. Formalize the connection between classical spectral gap and quantum design depth.\n\n**Domain Bridges**: Quantum information theory, quantum cryptography, quantum error correction\n\n**Lineage**: Builds on the quantum mixing connection (Section 13 of the Lean file).\n\n**Ambition**: Solid extension with direct practical applications.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "b2a4e38f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T12:18:36.683716+00:00"
   },
   {
     "id": "seed_013",

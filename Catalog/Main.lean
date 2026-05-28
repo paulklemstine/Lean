@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2001 of the highest-quality
+A curated collection of 2003 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2001
+Total files: 2003
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -440,6 +440,7 @@ import FINAL.Bridges.FreeProbabilityEdge
 import FINAL.Bridges.FullEMLDiffClosure
 import FINAL.Bridges.FunctorialDecoding
 import FINAL.Bridges.G2CharacterSheafCertificate
+import FINAL.Bridges.GL2SpectralDecomposition
 import FINAL.Bridges.GL3KemenyRobustness
 import FINAL.Bridges.GL3SatakeAbstainRobustness
 import FINAL.Bridges.GL3TopCycleRobustness
@@ -1631,6 +1632,7 @@ import FINAL.Pythagorean.NeuralProofGuidance
 import FINAL.Pythagorean.NewResearchTheorems
 import FINAL.Pythagorean.NewTheorems
 import FINAL.Pythagorean.NewtonEntropyHierarchy
+import FINAL.Pythagorean.NewtonErosion
 import FINAL.Pythagorean.NoiseStabilityTheorems
 import FINAL.Pythagorean.NonAbelianPhaseClassification
 import FINAL.Pythagorean.NormalizationBisimDistance

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Geometry / Convex Geometry / Polynomial Algebra",
     "date": "2026-05-28T12:19:18Z",
     "exp_id": "8406d734",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7500827692307693,
+    "quality": "substantial",
     "pkg_num": 241
   },
   {
@@ -6998,8 +6998,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-28T12:19:18Z",
       "hue": 89,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7500827692307693,
+      "quality": "substantial"
     }
   ],
   "edges": [
