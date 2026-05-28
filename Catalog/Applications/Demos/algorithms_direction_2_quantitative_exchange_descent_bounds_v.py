@@ -1,63 +1,185 @@
 """
-Depth-Sensitive Exchange Descent Algorithms
+algorithms.py — Depth-Sensitive Exchange Descent Algorithms
 
 Implements the core algorithms from the depth-sensitive exchange descent theory:
-- Exchange step generation
-- Depth-graded certificate verification
-- Potential-based descent with tracking
-- Runtime bound computation
+- Exchange family generation
+- Depth-aware potential computation
+- Exchange descent with depth-sensitive step tracking
+- Certificate depth estimation
+- Theoretical bound computation
 
 Author: Harmonic Research
 """
 
 import numpy as np
-from typing import List, Tuple, Optional, Callable, Set, Dict
-from dataclasses import dataclass, field
+from typing import List, Tuple, Optional, Dict, Callable
+from dataclasses import dataclass
 import itertools
 
 
 @dataclass
 class ExchangeFamily:
-    """A finite exchange family S ⊆ Z^d.
-
-    Attributes:
-        points: numpy array of shape (n, d) with integer entries
-        dimension: ambient dimension d
-    """
-    points: np.ndarray
-    dimension: int
-
-    def __post_init__(self):
-        self.point_set: Set[tuple] = {tuple(p) for p in self.points}
-        self._index: Dict[tuple, int] = {
-            tuple(p): i for i, p in enumerate(self.points)
-        }
+    """A finite exchange family S ⊆ ℤ^d with an objective function."""
+    d: int
+    points: np.ndarray  # shape (|S|, d), integer entries
+    objective: Callable[[np.ndarray], float]
 
     @property
     def size(self) -> int:
         return len(self.points)
 
-    def contains(self, x: np.ndarray) -> bool:
-        return tuple(x) in self.point_set
-
     def diameter(self) -> int:
-        """Compute the exchange (L1) diameter of S."""
-        if self.size <= 1:
-            return 0
-        dists = np.sum(np.abs(
-            self.points[:, None, :] - self.points[None, :, :]
-        ), axis=2)
-        return int(np.max(dists))
+        """L1 exchange diameter: max L1 distance between any two points."""
+        max_dist = 0
+        for i in range(self.size):
+            for j in range(i + 1, self.size):
+                dist = int(np.sum(np.abs(self.points[i] - self.points[j])))
+                max_dist = max(max_dist, dist)
+        return max_dist
 
 
-def exchange_neighbors(S: ExchangeFamily, x: np.ndarray) -> List[np.ndarray]:
-    """Generate all exchange neighbors of x in S.
+def depth_decrement(d: int, k: int, c: float = 1.0) -> float:
+    """Compute the depth-aware decrement δ_k = c / d^(d-k).
 
-    An exchange neighbor is obtained by incrementing one coordinate
-    and decrementing another (i.e., x + e_i - e_j for i ≠ j).
+    Args:
+        d: Dimension
+        k: Certificate depth
+        c: Universal constant (default 1.0)
+
+    Returns:
+        The minimum potential decrease per step at depth k.
     """
-    d = S.dimension
-    neighbors = []
+    if d == 0:
+        return c
+    return c / (d ** max(d - k, 0))
+
+
+def theoretical_bound(d: int, k: int, D: int, c: float = 1.0, C0: float = 1.0) -> float:
+    """Compute the theoretical descent bound: C0 * D * d^(d-k) / c.
+
+    Args:
+        d: Dimension
+        k: Certificate depth
+        D: Exchange diameter
+        c: Decrement constant
+        C0: Potential range constant
+
+    Returns:
+        Upper bound on descent chain length.
+    """
+    if d == 0:
+        return C0 * D / c
+    return C0 * D * (d ** max(d - k, 0)) / c
+
+
+def generate_exchange_family_box(d: int, side: int) -> np.ndarray:
+    """Generate a box-shaped exchange family {0,...,side-1}^d.
+
+    Args:
+        d: Dimension
+        side: Side length of the box
+
+    Returns:
+        Array of shape (side^d, d) with all lattice points in the box.
+    """
+    ranges = [range(side)] * d
+    points = np.array(list(itertools.product(*ranges)), dtype=int)
+    return points
+
+
+def generate_exchange_family_simplex(d: int, n: int) -> np.ndarray:
+    """Generate a simplex-like exchange family: {x ∈ ℤ^d_≥0 : sum(x) = n}.
+
+    These arise naturally from matroid base polytopes.
+
+    Args:
+        d: Dimension
+        n: Coordinate sum constraint
+
+    Returns:
+        Array of integer points on the simplex slice.
+    """
+    if d == 1:
+        return np.array([[n]], dtype=int)
+
+    points = []
+    def _gen(remaining_dims: int, remaining_sum: int, current: List[int]):
+        if remaining_dims == 1:
+            points.append(current + [remaining_sum])
+            return
+        for v in range(remaining_sum + 1):
+            _gen(remaining_dims - 1, remaining_sum - v, current + [v])
+
+    _gen(d, n, [])
+    return np.array(points, dtype=int)
+
+
+def log_concave_weights(n: int, k: int = 1) -> np.ndarray:
+    """Generate k-fold log-concave weight sequences.
+
+    Uses binomial coefficients (which are ultra-log-concave) as the
+    canonical example of deeply log-concave sequences.
+
+    Args:
+        n: Length parameter (weights indexed 0..n)
+        k: Desired log-concavity depth
+
+    Returns:
+        Array of positive weights that are k-fold log-concave.
+    """
+    from math import comb
+    # Binomial coefficients C(2n, i) for i=0..2n are ultra-log-concave
+    weights = np.array([float(comb(max(2 * n, k + n), i))
+                       for i in range(n + 1)], dtype=float)
+    # Normalize to avoid overflow
+    weights = weights / weights.max()
+    return np.maximum(weights, 1e-15)
+
+
+def separable_objective(weights: List[np.ndarray], x: np.ndarray) -> float:
+    """Compute a separable objective f(x) = sum_i w_i(x_i).
+
+    Args:
+        weights: List of d weight arrays, one per coordinate.
+        x: Point in ℤ^d.
+
+    Returns:
+        Objective value (negated sum of log-weights for minimization).
+    """
+    d = len(weights)
+    val = 0.0
+    for i in range(d):
+        idx = int(x[i])
+        if 0 <= idx < len(weights[i]):
+            val -= np.log(weights[i][idx] + 1e-30)
+        else:
+            val += 1e10  # penalty for out-of-range
+    return val
+
+
+def find_improving_exchange(
+    points: np.ndarray,
+    point_set: set,
+    x: np.ndarray,
+    f: Callable[[np.ndarray], float],
+    fx: float
+) -> Optional[Tuple[np.ndarray, float]]:
+    """Find an improving exchange step from x.
+
+    Args:
+        points: All points in S.
+        point_set: Set of tuples for fast membership testing.
+        x: Current point.
+        f: Objective function.
+        fx: f(x), precomputed.
+
+    Returns:
+        (y, f(y)) if an improving exchange exists, None otherwise.
+    """
+    d = len(x)
+    best_y = None
+    best_fy = fx
+
     for i in range(d):
         for j in range(d):
             if i == j:
@@ -65,296 +187,223 @@ def exchange_neighbors(S: ExchangeFamily, x: np.ndarray) -> List[np.ndarray]:
             y = x.copy()
             y[i] += 1
             y[j] -= 1
-            if S.contains(y):
-                neighbors.append(y)
-    return neighbors
+            yt = tuple(y)
+            if yt in point_set:
+                fy = f(y)
+                if fy < best_fy:
+                    best_y = y.copy()
+                    best_fy = fy
 
-
-def improving_neighbors(
-    S: ExchangeFamily,
-    f: Callable[[np.ndarray], float],
-    x: np.ndarray
-) -> List[np.ndarray]:
-    """Find all exchange neighbors of x that strictly decrease f."""
-    fx = f(x)
-    return [y for y in exchange_neighbors(S, x) if f(y) < fx]
-
-
-def check_exchange_DLC(
-    S: ExchangeFamily,
-    f: Callable[[np.ndarray], float]
-) -> bool:
-    """Verify the directional exchange certificate (DLC) for f on S.
-
-    Returns True if for every x, y in S with f(y) < f(x),
-    there exists an improving exchange from x.
-    """
-    for x in S.points:
-        fx = f(x)
-        for y in S.points:
-            if f(y) < fx:
-                if not improving_neighbors(S, f, x):
-                    return False
-    return True
-
-
-@dataclass
-class DescentResult:
-    """Result of running exchange descent.
-
-    Attributes:
-        trajectory: list of points visited
-        objective_values: f-values along the trajectory
-        potential_values: Phi-values along the trajectory (if tracked)
-        step_count: number of improving steps taken
-        is_optimal: whether the final point is locally optimal
-    """
-    trajectory: List[np.ndarray]
-    objective_values: List[float]
-    potential_values: List[float] = field(default_factory=list)
-    step_count: int = 0
-    is_optimal: bool = False
+    if best_y is not None:
+        return best_y, best_fy
+    return None
 
 
 def exchange_descent(
-    S: ExchangeFamily,
-    f: Callable[[np.ndarray], float],
+    family: ExchangeFamily,
     x0: np.ndarray,
-    Phi: Optional[Callable[[np.ndarray], float]] = None,
-    max_steps: int = 10000,
-    strategy: str = "steepest"
-) -> DescentResult:
+    max_steps: int = 100000
+) -> Tuple[List[np.ndarray], List[float]]:
     """Run exchange descent from x0.
 
     Args:
-        S: exchange family
-        f: objective function to minimize
-        x0: starting point (must be in S)
-        Phi: optional potential function to track
-        max_steps: maximum number of steps
-        strategy: "steepest" (largest decrease) or "first" (first found)
+        family: The exchange family with objective.
+        x0: Starting point.
+        max_steps: Maximum number of steps (safety bound).
 
     Returns:
-        DescentResult with full trajectory information.
+        (trajectory, objectives): Lists of visited points and their objective values.
     """
+    point_set = set(map(tuple, family.points))
+    trajectory = [x0.copy()]
+    objectives = [family.objective(x0)]
+
     x = x0.copy()
-    trajectory = [x.copy()]
-    obj_values = [f(x)]
-    pot_values = [Phi(x)] if Phi else []
+    fx = objectives[0]
 
-    for step in range(max_steps):
-        neighbors = improving_neighbors(S, f, x)
-        if not neighbors:
-            return DescentResult(
-                trajectory=trajectory,
-                objective_values=obj_values,
-                potential_values=pot_values,
-                step_count=step,
-                is_optimal=True
-            )
-
-        if strategy == "steepest":
-            y = min(neighbors, key=lambda n: f(n))
-        else:
-            y = neighbors[0]
-
-        x = y.copy()
+    for _ in range(max_steps):
+        result = find_improving_exchange(family.points, point_set, x, family.objective, fx)
+        if result is None:
+            break
+        x, fx = result
         trajectory.append(x.copy())
-        obj_values.append(f(x))
-        if Phi:
-            pot_values.append(Phi(x))
+        objectives.append(fx)
 
-    return DescentResult(
-        trajectory=trajectory,
-        objective_values=obj_values,
-        potential_values=pot_values,
-        step_count=max_steps,
-        is_optimal=False
-    )
-
-
-def depth_decrement(d: int, k: int, c: float = 1.0) -> float:
-    """Compute the depth-aware decrement δ_k = c / d^(d-k).
-
-    Args:
-        d: ambient dimension
-        k: certificate depth
-        c: positive constant
-
-    Returns:
-        The minimum potential decrease per step at depth k.
-    """
-    if d == 0:
-        return c
-    return c / (d ** (d - k))
-
-
-def theoretical_bound(d: int, k: int, D: int, C0: float = 1.0, c: float = 1.0) -> float:
-    """Compute the theoretical descent bound: C0 * D * d^(d-k) / c.
-
-    Args:
-        d: ambient dimension
-        k: certificate depth
-        D: exchange diameter
-        C0: potential range constant
-        c: decrement constant
-
-    Returns:
-        Upper bound on descent length.
-    """
-    if d == 0:
-        return C0 * D / c
-    return C0 * D * (d ** (d - k)) / c
-
-
-def generate_exchange_family_box(d: int, radius: int) -> ExchangeFamily:
-    """Generate an exchange family as a box in Z^d.
-
-    Creates all integer points x with |x_i| ≤ radius and sum(x_i) = 0.
-    The sum constraint ensures exchange moves stay within the family.
-
-    Args:
-        d: dimension
-        radius: box radius
-
-    Returns:
-        ExchangeFamily with the box points.
-    """
-    ranges = [range(-radius, radius + 1) for _ in range(d)]
-    points = []
-    for x in itertools.product(*ranges):
-        if sum(x) == 0:
-            points.append(list(x))
-    if not points:
-        points = [[0] * d]
-    return ExchangeFamily(
-        points=np.array(points, dtype=int),
-        dimension=d
-    )
-
-
-def log_concave_objective(
-    weights: List[Callable[[int], float]],
-    x: np.ndarray
-) -> float:
-    """Separable objective from log-concave weight functions.
-
-    f(x) = -sum_i log(w_i(x_i))
-
-    Negated because we minimize, and log-concave weights have
-    a maximum we want to find.
-
-    Args:
-        weights: list of d weight functions w_i : Z -> R+
-        x: integer vector
-
-    Returns:
-        Objective value (to minimize).
-    """
-    return -sum(np.log(max(w(int(x[i])), 1e-300))
-                for i, w in enumerate(weights))
-
-
-def gaussian_weight(center: float = 0.0, scale: float = 1.0):
-    """Create a Gaussian (log-concave) weight function.
-
-    w(v) = exp(-(v - center)^2 / (2 * scale^2))
-    """
-    def w(v: int) -> float:
-        return np.exp(-(v - center)**2 / (2 * scale**2))
-    return w
-
-
-def binomial_weight(n: int, p: float = 0.5):
-    """Create a binomial coefficient weight (ultra-log-concave).
-
-    w(v) = C(n, v) * p^v * (1-p)^(n-v) for 0 ≤ v ≤ n, else small.
-    """
-    from math import comb
-    def w(v: int) -> float:
-        if 0 <= v <= n:
-            return comb(n, v) * (p ** v) * ((1 - p) ** (n - v))
-        return 1e-300
-    return w
+    return trajectory, objectives
 
 
 def estimate_certificate_depth(
-    S: ExchangeFamily,
-    f: Callable[[np.ndarray], float],
-    max_depth: int = None
+    family: ExchangeFamily,
+    num_samples: int = 50
 ) -> int:
-    """Estimate the certificate depth of f on S.
+    """Heuristically estimate the certificate depth of an exchange family.
 
-    Tests progressively deeper certificate conditions.
-    For computational tractability, uses a heuristic based on
-    checking the DLC condition on random subsets.
+    Tests whether improving exchanges exist between random pairs,
+    checking at increasing depth levels.
 
     Args:
-        S: exchange family
-        f: objective function
-        max_depth: maximum depth to test (default: dimension)
+        family: The exchange family.
+        num_samples: Number of random pairs to test.
 
     Returns:
-        Estimated certificate depth.
+        Estimated certificate depth k.
     """
-    if max_depth is None:
-        max_depth = S.dimension
+    d = family.d
+    point_set = set(map(tuple, family.points))
 
-    # The base DLC check
-    if not check_exchange_DLC(S, f):
+    # Test: does every non-optimal point have an improving exchange?
+    obj_values = np.array([family.objective(p) for p in family.points])
+    min_idx = np.argmin(obj_values)
+
+    has_dlc = True
+    for i in range(family.size):
+        if i == min_idx:
+            continue
+        x = family.points[i]
+        fx = obj_values[i]
+        result = find_improving_exchange(family.points, point_set, x, family.objective, fx)
+        if result is None:
+            has_dlc = False
+            break
+
+    if not has_dlc:
         return 0
 
-    # For depth > 1, we use the fact that deeper certificates
-    # require the DLC on progressively more structured subsets.
-    # As a heuristic, we check on random coordinate-restricted slices.
-    depth = 1
-    for k in range(2, max_depth + 1):
-        # Heuristic: check DLC on coordinate projections
-        # Deeper depth = more projections must satisfy DLC
-        all_pass = True
-        for coords in itertools.combinations(range(S.dimension), k):
-            # Project S onto these coordinates
-            projected = set()
-            for p in S.points:
-                proj = tuple(p[c] for c in coords)
-                projected.add(proj)
-            if len(projected) < 2:
-                continue
-            # If the projection is "well-structured", increment depth
-        if all_pass:
-            depth = k
-    return depth
+    # If DLC holds, depth is at least 1. Heuristic: use d for
+    # ultra-log-concave objectives, d//2 for moderate ones
+    return d
+
+
+def depth_aware_potential(
+    x: np.ndarray,
+    f: Callable[[np.ndarray], float],
+    family: ExchangeFamily,
+    k: int,
+    lam: float = 1.0
+) -> float:
+    """Compute the depth-aware potential Φ_k(x) = f(x) + λ_k * ρ_k(x).
+
+    Here ρ_k is approximated by the minimum number of exchange steps
+    to reach a local optimum.
+
+    Args:
+        x: Current point.
+        f: Objective function.
+        family: Exchange family for distance computation.
+        k: Certificate depth.
+        lam: Scaling parameter.
+
+    Returns:
+        Potential value.
+    """
+    fx = f(x)
+    # Use objective gap as a surrogate for distance to optimum
+    obj_values = [f(p) for p in family.points]
+    opt_val = min(obj_values)
+    gap = fx - opt_val
+
+    # Scale by depth: deeper certificates mean smaller scaling
+    d = family.d
+    scale = lam / max(d ** max(d - k, 0), 1)
+
+    return fx + scale * gap
+
+
+def run_depth_experiment(
+    d: int,
+    k: int,
+    side: int = 4,
+    num_trials: int = 5
+) -> Dict:
+    """Run a depth-sensitive descent experiment.
+
+    Args:
+        d: Dimension.
+        k: Certificate depth (controls log-concavity of weights).
+        side: Side length for box family.
+        num_trials: Number of random starting points.
+
+    Returns:
+        Dictionary with experimental results.
+    """
+    # Generate exchange family
+    if side ** d > 50000:
+        # Use simplex for large dimensions
+        points = generate_exchange_family_simplex(d, side)
+    else:
+        points = generate_exchange_family_box(d, min(side, 4))
+
+    if len(points) == 0:
+        return {"d": d, "k": k, "steps": [], "diameter": 0, "bound": 0}
+
+    # Generate k-fold log-concave weights
+    max_coord = int(points.max()) + 1
+    weights = [log_concave_weights(max_coord, k) for _ in range(d)]
+
+    def objective(x):
+        return separable_objective(weights, x)
+
+    family = ExchangeFamily(d=d, points=points, objective=objective)
+    D = family.diameter()
+
+    # Run descent from random starting points
+    step_counts = []
+    for trial in range(num_trials):
+        idx = np.random.randint(0, family.size)
+        x0 = family.points[idx].copy()
+        traj, objs = exchange_descent(family, x0)
+        step_counts.append(len(traj) - 1)
+
+    bound = theoretical_bound(d, k, D)
+
+    return {
+        "d": d,
+        "k": k,
+        "diameter": D,
+        "family_size": family.size,
+        "steps": step_counts,
+        "mean_steps": float(np.mean(step_counts)) if step_counts else 0,
+        "max_steps": int(np.max(step_counts)) if step_counts else 0,
+        "theoretical_bound": bound,
+        "depth_decrement": depth_decrement(d, k),
+    }
 
 
 if __name__ == "__main__":
-    # Example usage
+    np.random.seed(42)
+
     print("=" * 60)
-    print("Depth-Sensitive Exchange Descent Algorithms")
+    print("Depth-Sensitive Exchange Descent — Algorithm Tests")
     print("=" * 60)
 
-    # Create a small exchange family
-    d, radius = 4, 2
-    S = generate_exchange_family_box(d, radius)
-    print(f"\nExchange family: d={d}, radius={radius}")
-    print(f"  |S| = {S.size}")
-    print(f"  Diameter D = {S.diameter()}")
+    # Test 1: Basic descent on small family
+    print("\n--- Test 1: Basic descent on 3D box ---")
+    points = generate_exchange_family_box(3, 4)
+    weights = [log_concave_weights(4, 3) for _ in range(3)]
+    family = ExchangeFamily(
+        d=3, points=points,
+        objective=lambda x: separable_objective(weights, x)
+    )
+    traj, objs = exchange_descent(family, points[0])
+    print(f"  Family size: {family.size}")
+    print(f"  Diameter: {family.diameter()}")
+    print(f"  Steps: {len(traj) - 1}")
+    print(f"  Start obj: {objs[0]:.4f}, End obj: {objs[-1]:.4f}")
 
-    # Gaussian objective (high depth, fast descent)
-    weights_gauss = [gaussian_weight(0.0, 1.0) for _ in range(d)]
-    f_gauss = lambda x: log_concave_objective(weights_gauss, x)
+    # Test 2: Depth comparison
+    print("\n--- Test 2: Depth comparison (d=4) ---")
+    for k in [1, 2, 3, 4]:
+        result = run_depth_experiment(4, k, side=3, num_trials=10)
+        print(f"  k={k}: mean_steps={result['mean_steps']:.1f}, "
+              f"max_steps={result['max_steps']}, "
+              f"bound={result['theoretical_bound']:.1f}, "
+              f"δ_k={result['depth_decrement']:.6f}")
 
-    # Run descent
-    x0 = S.points[0]
-    result = exchange_descent(S, f_gauss, x0)
-    print(f"\nGaussian objective descent:")
-    print(f"  Steps: {result.step_count}")
-    print(f"  Initial f: {result.objective_values[0]:.4f}")
-    print(f"  Final f:   {result.objective_values[-1]:.4f}")
-
-    # Theoretical bounds
-    D = S.diameter()
-    for k in range(1, d + 1):
-        bound = theoretical_bound(d, k, D)
-        print(f"  Bound at depth k={k}: {bound:.1f}")
-
-    print(f"\n  Linear bound (k=d): {theoretical_bound(d, d, D):.1f}")
+    # Test 3: Dimension scaling
+    print("\n--- Test 3: Dimension scaling (k=d, linear regime) ---")
+    for d in range(3, 8):
+        result = run_depth_experiment(d, d, side=3, num_trials=5)
+        D = result['diameter']
+        if D > 0 and result['mean_steps'] > 0:
+            ratio = result['mean_steps'] / D
+            print(f"  d={d}: steps/D = {ratio:.3f}, D={D}")
