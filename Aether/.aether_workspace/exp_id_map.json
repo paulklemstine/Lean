@@ -893,5 +893,9 @@
   "a0bcb77f": "direction_3_arithmetic_statistics_of_graph_jacobia.json",
   "a5048e13": "lehmers_mahler_measure_problem.json",
   "92b77109": "direction_2_functorial_localization_of_persistence.json",
-  "67a8a470": "direction_1_lorentzian_closure_under_edge_multipli.json"
+  "67a8a470": "direction_1_lorentzian_closure_under_edge_multipli.json",
+  "44a490ac": "direction_1_partition_matroid_spectral_stability.json",
+  "61d0d828": "direction_2_lorentzian_condition_numbers_and_certi.json",
+  "4bb846ce": "direction_3_tropical_shadows_of_lorentzian_stabili.json",
+  "929047ba": "direction_2_tropical_differential_entropy_via_newt.json"
 }

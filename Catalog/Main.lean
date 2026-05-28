@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2034 of the highest-quality
+A curated collection of 2038 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2034
+Total files: 2038
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -518,6 +518,7 @@ import FINAL.Bridges.LongestCommonValuedPrefix
 import FINAL.Bridges.LorentzianBivariateBridge
 import FINAL.Bridges.LorentzianBivariateNewBridge
 import FINAL.Bridges.LorentzianComplexityBarrier
+import FINAL.Bridges.LorentzianConditionNumber
 import FINAL.Bridges.LorentzianDistanceCertificate
 import FINAL.Bridges.LorentzianGroundState
 import FINAL.Bridges.LorentzianHardnessLowerBounds
@@ -573,6 +574,7 @@ import FINAL.Bridges.OverlapClassRigidity
 import FINAL.Bridges.PadicOperadicNetworks
 import FINAL.Bridges.PadicQuantumInformation
 import FINAL.Bridges.Pareto
+import FINAL.Bridges.PartitionMatroidStability
 import FINAL.Bridges.PersistentProofHomology
 import FINAL.Bridges.PhaseTransition
 import FINAL.Bridges.PluckerFourPoint
@@ -786,6 +788,7 @@ import FINAL.Bridges.TropicalSatakeTop2Margin
 import FINAL.Bridges.TropicalScatteringOneWayDuality
 import FINAL.Bridges.TropicalScatteringRecognitionDuality
 import FINAL.Bridges.TropicalSeparationClassifier
+import FINAL.Bridges.TropicalShadowEntropy
 import FINAL.Bridges.TropicalShannonCode
 import FINAL.Bridges.TropicalSpectralCertificates
 import FINAL.Bridges.TropicalSpectralDuality
@@ -1751,6 +1754,7 @@ import FINAL.Pythagorean.TropicalMConvexity
 import FINAL.Pythagorean.TropicalMarkov
 import FINAL.Pythagorean.TropicalPAdicBerggren
 import FINAL.Pythagorean.TropicalPhaseTransition
+import FINAL.Pythagorean.TropicalShadows
 import FINAL.Pythagorean.TropicalSpectralMatroid
 import FINAL.Pythagorean.TropicalTensorDistributivity
 import FINAL.Pythagorean.TypeComplexityBounds

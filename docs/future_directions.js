@@ -77,10 +77,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6994231",
     "timestamp": "2026-05-24T23:11:24.506271+00:00"
   },
   {
@@ -419,10 +419,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "243a6673",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e6db5e11",
     "timestamp": "2026-05-25T23:33:15.543578+00:00"
   },
   {
@@ -637,10 +637,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c559d0f2",
     "timestamp": "2026-05-26T21:53:04.887954+00:00"
   },
   {
@@ -796,27 +796,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "78306251",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T19:12:47.048620+00:00"
-  },
-  {
-    "id": "fd_1595",
-    "title": "Direction 2: Tropical Differential Entropy via Newton Shadows",
-    "description": "**Conjecture:** For a polynomial $f$ with Newton polytope $P$, define the **tropical shadow entropy** as $H_k = \\log |\\text{Sh}_k(\\text{supp}(f))|$. Then $H_k$ is a concave function of $k$, and the derivative $\\Delta H_k = H_{k+1} - H_k$ measures the information loss per differentiation step in the tropical sense.\n\n**Test:** Compute $H_k$ for random sparse polynomials with supports drawn from lattice points of known polytopes (simplices, cubes, cross-polytopes, Birkhoff polytopes) up to dimension 6. Plot $H_k$ against $k$ and test concavity. Compare $\\Delta H_k$ with the surface-to-volume ratio of the level-$k$ section of $P$.\n\n**The key insight is** that the shadow operator is the discrete analogue of the Minkowski subtraction of a ball from a convex body, and entropy concavity would be the discrete analogue of the Brunn\u2013Minkowski inequality.\n\n**Why now?** The semigroup law (Theorem 3.5) provides the formal foundation for treating the shadow as a flow, which is the prerequisite for defining rates of change and entropy-like quantities.\n\n**Impact:** Would create a new information-theoretic perspective on Newton polytopes, with applications to coding theory and optimization.\n\n**Catalog References:** `Pythagorean/IteratedShadowGeometry.lean` (kthShadow_add, shadow_profile).\n\n**Proof Strategy:** Use the semigroup law to express $H_{a+b}$ in terms of $H_a$ and $H_b$. Apply lattice-point counting estimates (Ehrhart theory) to bound shadow sizes in terms of polytope volumes.\n\n**Domain Bridges:** Tropical geometry, information theory, convex geometry.\n\n**Lineage:** New direction inspired by the semigroup structure.\n\n**Ambition:** Solid extension \u2014 connects two established areas through a new invariant.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f43533d0",
-    "consumed_by_exp_id": "929047ba",
-    "timestamp": "2026-05-28T01:19:07.666079+00:00"
   },
   {
     "id": "fd_1685",
@@ -1205,48 +1184,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T17:54:29.471886+00:00"
   },
   {
-    "id": "fd_1886",
-    "title": "Direction 1: Partition Matroid Spectral Stability",
-    "description": "**Conjecture:** For the partition matroid $M = U_{r_1, n_1} \\oplus \\cdots \\oplus U_{r_k, n_k}$, the Lorentzian spectral gap is the minimum of the individual block gaps, and the stability radius decomposes as a minimum over blocks.\n\n**Test:** Compute the leaf Hessians of the partition matroid generating polynomial for small $(n_i, r_i)$ triples. Verify that the minimum eigenvalue gap across all leaves equals $\\min_i \\text{gap}(U_{r_i, n_i}) = 1$. If the gaps differ from 1, the conjecture refines to a block-structure formula.\n\n**Impact:** Partition matroids are the next most natural family after uniform matroids and appear in scheduling, resource allocation, and constraint satisfaction. An explicit spectral stability theorem would immediately yield certified perturbation budgets for algorithms operating on these structures.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: `lorentzian_stability_radius_exists`, `hasAtMostOnePositiveEigenvalue_of_gapped_perturbation`\n- `Catalog/Pythagorean/UniformMatroidLorentzianStability.lean`: `uniform_leaf_has_gapped_signature`, `uniform_stability_lower_bound`\n\n**Proof Strategy:** The generating polynomial of a direct sum is a product: $f_{M_1 \\oplus M_2} = f_{M_1} \\cdot f_{M_2}$. Quadratic leaves of the product involve one leaf from each factor plus cross terms. Analyze the Hessian block structure: it should be block-diagonal (from individual factors) plus a rank-deficient cross term. The spectral gap of the block-diagonal part is the minimum of individual gaps; the cross term is perturbative.\n\n**Domain Bridges:** Optimization (block-structured semidefinite programs), probability (negative association for partition matroids), coding theory (matroid-based codes with block structure).\n\n**Lineage:** Direct extension of the uniform matroid stability theorem, using the product structure of direct sum generating polynomials.\n\n**Ambition:** Solid extension \u2014 the mathematical framework is in place, and the main challenge is handling the cross terms in the Hessian block decomposition.\n\n**The key insight is** that direct sums decompose the Hessian into block-diagonal form, and the spectral gap of a block-diagonal matrix is the minimum of the block gaps.\n\n**Why now?** The exact spectral computation for the uniform case provides the building block, and the generic perturbation theorem from the catalog handles the cross-term perturbation.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "bf323aae",
-    "consumed_by_exp_id": "44a490ac",
-    "timestamp": "2026-05-28T19:09:44.380389+00:00"
-  },
-  {
-    "id": "fd_1887",
-    "title": "Direction 2: Lorentzian Condition Numbers and Certified Sampling",
-    "description": "**Conjecture:** There exists a computable **Lorentzian condition number** $\\kappa(f)$ for any Lorentzian polynomial $f$ such that: (i) sampling algorithms for $f$ converge at rate $1/\\kappa(f)$, and (ii) $f + \\delta$ remains Lorentzian whenever the coefficient perturbation satisfies $\\|\\delta\\|_\\infty < 1/\\kappa(f)$.\n\n**Test:** For uniform matroids, verify that $\\kappa(e_r) = m^2$ (matching the entry-norm stability radius $1/m^2$). For random log-concave polynomials, compute $\\kappa$ numerically and correlate with MCMC mixing time estimates.\n\n**Impact:** This would create a quantitative bridge between algebraic combinatorics and algorithm design. Practitioners using Lorentzian-polynomial-based samplers could read off the perturbation budget directly from the condition number, without needing to understand spectral theory.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: `LorentzianConditionNumber`, `certifyStability_sound`\n- `Catalog/Pythagorean/UniformMatroidLorentzianStability.lean`: `uniform_matroid_stability_radius`, `hessian_entry_bound_from_coeff_perturbation`\n\n**Proof Strategy:** Define $\\kappa(f) = \\max_\\alpha \\|H_\\alpha\\|_{\\text{op}} / \\text{gap}(H_\\alpha)$ where the max is over all quadratic leaf Hessians $H_\\alpha$. The stability radius is then $1/\\kappa(f)$ in operator norm. The entry-norm radius involves an additional $m^2$ factor from the entry-to-operator-norm conversion. Connect to mixing time via the Bakry\u2013\u00c9mery criterion adapted to discrete log-concave distributions.\n\n**Domain Bridges:** Algorithm design (MCMC sampling guarantees), numerical analysis (condition number theory), machine learning (certified robustness of generative models using log-concave distributions).\n\n**Lineage:** Builds on the spectral margin structure and the certified stability checker from the catalog.\n\n**Ambition:** Solid extension with high practical impact \u2014 the mathematical ingredients are mostly available, but the sampling connection requires new analysis.\n\n**The key insight is** that the spectral gap of the leaf Hessian controls both the stability radius (how much noise is tolerable) and the mixing time (how fast algorithms converge), unifying numerical and algorithmic aspects.\n\n**Why now?** The exact gap computation for uniform matroids validates the concept, and the growing use of Lorentzian-polynomial-based samplers in practice creates demand for quantitative robustness certificates.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "bf323aae",
-    "consumed_by_exp_id": "61d0d828",
-    "timestamp": "2026-05-28T19:09:44.483512+00:00"
-  },
-  {
     "id": "fd_1927",
     "title": "Direction 3: Phase Transition Detection via Hessian Rank Degeneration",
     "description": "**Conjecture:** The critical temperature \u03b2_c of the ferromagnetic Ising model on a sequence of growing graphs (e.g., boxes in Z^d) can be detected as the value of \u03b2 where the multiaffine Hessian of the partition polynomial undergoes a rank transition: the number of eigenvalues exceeding a threshold changes discontinuously (in the infinite-volume limit).\n\n**Test:** For the Ising model on L \u00d7 L square lattices (L = 3, 4, 5, 6), compute the Hessian eigenvalue distribution at \u03b2 values bracketing the known critical point \u03b2_c = ln(1+\u221a2)/2. Track the fraction of eigenvalues above various thresholds and test for finite-size scaling consistent with a rank transition.\n\n**Impact:** Would provide a novel algebraic criterion for phase transitions, distinct from the standard thermodynamic (free energy singularity) and probabilistic (correlation length divergence) criteria. Could lead to algorithms for detecting phase transitions from finite-size polynomial data.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianAggregateAntiCancel.lean` \u2014 Hessian structure\n- `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean` \u2014 spectral gap degradation near criticality\n\n**Proof Strategy:** Use the Newton inequality threshold (Theorem 7) as a prototype: for two spins, the threshold \u03b2_c = ln 2 / J is exact. For general graphs, establish that the threshold for the first Newton inequality failure converges to the true critical temperature as graph size grows.\n\n**Domain Bridges:** Statistical physics \u2194 Random matrix theory \u2194 Spectral graph theory\n\n**Lineage:** Extends Theorem 7 (levelWeight\u2082_newton_iff) from two spins to general graphs.\n\n**Ambition:** grand_challenge \u2014 Would create a new algebraic approach to critical phenomena.\n\n---",
@@ -1303,11 +1240,94 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "fcd58d33",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6642742",
     "timestamp": "2026-05-28T21:46:22.088675+00:00"
+  },
+  {
+    "id": "fd_1957",
+    "title": "Direction 4: Quantum Error Correction via Torsion Channel Codes",
+    "description": "**Conjecture:** The primewise decomposition of torsion persistence provides a natural framework for constructing quantum error-correcting codes with arithmetic structure. Specifically, a persistence module with torsion at multiple primes can be used to construct a *prime-channel code* where errors at different primes are corrected independently, analogous to the use of Chinese Remainder Theorem codes in classical coding theory.\n\n**The key insight is** that prime localization decomposes the torsion signal into independent channels (proved as `prime_channel_independence`), and independent channels are exactly what error-correcting codes need: errors in one channel don't affect others.\n\n**Why now?** The localization framework provides the mathematical infrastructure to construct and analyze these codes. The interleaving stability theorem guarantees that small perturbations (errors) at the code level produce small changes in the decoded signal.\n\n**Test:** Construct a toy code using $\\mathbb{Z}/6\\mathbb{Z} \\cong \\mathbb{Z}/2 \\oplus \\mathbb{Z}/3$ as the alphabet. Encode a message in the 2-channel and 3-channel independently. Introduce random errors and decode using the localization projection. Measure the error-correction rate.\n\n**Impact:** This would bridge quantum information theory and topological data analysis via the arithmetic structure of persistence modules. If the codes have good parameters, it would be of practical interest for quantum computing.\n\n**Catalog References:**\n- `Catalog/Pythagorean/FunctorialLocalization.lean` \u2014 `localized_witness_improvement`, `GlobTorDet_iff_exists_prime`\n- `Catalog/Pythagorean/PrimewiseTorsionStability.lean` \u2014 `prime_channel_independence`\n\n**Proof Strategy:** Define the code space as a tensor product of prime-channel persistence modules. Use the interleaving stability bound as the minimum distance of the code. Apply the localization functor as the decoding map.\n\n**Domain Bridges:** Quantum error correction \u2194 commutative algebra \u2194 topological data analysis.\n\n**Lineage:** Builds on Theorem 4 (witness improvement) and prime channel independence.\n\n**Ambition:** Grand challenge \u2014 speculative but with concrete testable predictions.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "92b77109",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T22:21:38.329974+00:00"
+  },
+  {
+    "id": "fd_1959",
+    "title": "Direction 1: Spectral Stability for Graphic Matroids via Kirchhoff Hessians",
+    "description": "**Conjecture:** The quadratic leaves of the Kirchhoff polynomial (basis generating polynomial of the cycle matroid of a graph $G$) have Hessian spectral gap bounded below by the algebraic connectivity $\\lambda_2(G)$ of the graph Laplacian.\n\n**The key insight is** that the Kirchhoff polynomial $\\tau(x) = \\sum_{T \\text{ spanning tree}} \\prod_{e \\in T} x_e$ encodes all spanning trees, and its quadratic leaves should inherit spectral properties from the graph's connectivity structure. Unlike partition matroids, which decompose into independent blocks, graphic matroids have cycles creating complex dependencies \u2014 but the Laplacian eigenvalues might still control the leaf Hessian spectrum.\n\n**Test:** Compute quadratic leaf Hessians for complete graphs $K_n$ ($n = 3, \\ldots, 8$), cycle graphs $C_n$, and grid graphs. For each, compare the minimum negative eigenvalue of all leaf Hessians to $\\lambda_2(G)$. If the ratio is bounded below by a universal constant, the conjecture stands.\n\n**Impact:** Would extend certified spectral stability from block-decomposable (partition) matroids to the most important non-decomposable family, opening applications in network reliability, electrical flow computation, and random spanning tree sampling.\n\n**Catalog References:**\n- `Catalog/Pythagorean/PartitionMatroidStability.lean` (leaf classification method)\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (perturbation framework)\n\n**Proof Strategy:** Strategy A \u2014 explicit Hessian computation using the matrix-tree theorem and Cauchy-Binet formula. The quadratic leaves of the Kirchhoff polynomial should relate to minors of the edge-vertex incidence matrix, connecting leaf spectra to graph Laplacian spectra via Schur complements.\n\n**Domain Bridges:** Network engineering (fault tolerance), statistical physics (random cluster model), machine learning (graph neural network expressivity).\n\n**Lineage:** Direct extension of partition matroid theory to non-decomposable matroids.\n\n**Ambition:** Grand challenge \u2014 would unify spectral graph theory with Lorentzian polynomial theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "44a490ac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T23:28:59.182504+00:00"
+  },
+  {
+    "id": "fd_1960",
+    "title": "Direction 2: Weighted Perturbation Theory for Rank-Deficient Leaves",
+    "description": "**Conjecture:** For two-block bilinear leaves with kernel dimension $k = n_1 + n_2 - 2$, there exists a weighted norm $\\|\\cdot\\|_W$ such that the two-block Hessian has gapped signature with gap $\\gamma > 0$ under $\\|v\\|_W$, with $\\gamma = 2 n_1 n_2 / (n_1 + n_2)$ (the harmonic mean).\n\n**The key insight is** that the zero spectral gap for two-block leaves (when $n_1 + n_2 > 2$) is an artifact of using the Euclidean norm. The rank-2 Hessian concentrates its action on a 2-dimensional subspace; a norm that weights this subspace more heavily would recover a positive gap. The harmonic mean $2n_1 n_2/(n_1+n_2)$ is the natural candidate because it balances the block sizes.\n\n**Test:** For two-block Hessians with $(n_1, n_2) \\in \\{(1,2), (2,2), (2,3), (3,3), (5,5)\\}$, compute the optimal weight matrix $W$ that maximizes the gap in the definition $Q_H(v) \\leq -\\gamma \\cdot v^T W v$ on $w_W^\\perp$. Verify whether $\\gamma = 2n_1 n_2/(n_1+n_2)$ is achievable.\n\n**Impact:** Would complete the quantitative stability theory for partition matroids by providing certified perturbation radii for *all* leaf types, not just single-block leaves.\n\n**Catalog References:**\n- `Catalog/Pythagorean/PartitionMatroidStability.lean` (two-block Hessian structure)\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (`HasGappedSignature`)\n\n**Proof Strategy:** Optimize over positive-definite weight matrices $W$. The optimal $W$ should be block-diagonal with entries $1/n_1$ on block 1 and $1/n_2$ on block 2, making the weighted Cauchy-Schwarz bound tight.\n\n**Domain Bridges:** Optimization (weighted SDP relaxations), statistics (weighted covariance estimation), signal processing (whitening transforms).\n\n**Lineage:** Fills the gap identified in the current partition matroid theory.\n\n**Ambition:** Solid extension \u2014 completes the quantitative picture for partition matroids.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "44a490ac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T23:28:59.322294+00:00"
+  },
+  {
+    "id": "fd_1961",
+    "title": "Direction 3: Lorentzian Product Calculus \u2014 A General Spectral Composition Law",
+    "description": "**Conjecture:** If $f$ and $g$ are Lorentzian polynomials on disjoint variable sets with quadratic-leaf spectral gaps $\\varepsilon_f$ and $\\varepsilon_g$, then every quadratic leaf of $fg$ has at most one positive eigenvalue, and single-factor leaves have gap $\\min(\\varepsilon_f, \\varepsilon_g)$.\n\n**The key insight is** that our partition matroid classification (single-block vs. two-block) is really a theorem about products of polynomials on disjoint variable sets. The same dichotomy should hold for *any* Lorentzian product: leaves are either single-factor (inheriting the gap from one factor) or cross-factor (bilinear, with at most one positive eigenvalue).\n\n**Test:** Take $f = e_2(x_1, x_2, x_3)$ and $g = x_1^2 + x_2^2 + x_1 x_2$ (a non-symmetric Lorentzian polynomial on disjoint variables). Compute all quadratic leaves of $fg$ and verify the spectral gap predictions.\n\n**Impact:** Would establish a general product rule for Lorentzian spectral stability, applicable far beyond matroids \u2014 to strongly log-concave distributions, hyperbolic polynomials, and any compositional algebraic structure.\n\n**Catalog References:**\n- `Catalog/Pythagorean/PartitionMatroidStability.lean` (prototype: partition = product of elementary symmetric)\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean` (perturbation stability)\n\n**Proof Strategy:** Generalize the leaf classification from integer-valued residual degrees to the product setting. The key step is showing that cross-factor leaves factor as (linear in factor 1) \u00d7 (linear in factor 2), hence have rank-2 Hessians.\n\n**Domain Bridges:** Algebraic geometry (hyperbolic polynomials), quantum information (entanglement witnesses), control theory (stability of interconnected systems).\n\n**Lineage:** Grand generalization of partition matroid theory to arbitrary Lorentzian products.\n\n**Ambition:** Grand challenge \u2014 would be a foundational result in Lorentzian polynomial theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "44a490ac",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T23:28:59.421709+00:00"
   },
   {
     "id": "fd_0806",
@@ -2042,47 +2062,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T19:57:56.338721+00:00"
-  },
-  {
-    "id": "fd_1954",
-    "title": "Direction 1: Derived Localization and Higher Tor Persistence",
-    "description": "**Conjecture:** For persistence modules $F$ valued in chain complexes of abelian groups, the derived localization $\\mathbb{L}L_p(F)$ produces higher Tor terms $\\text{Tor}_i^{\\mathbb{Z}}(F, \\mathbb{Z}_{(p)})$ that measure the obstruction to primewise stability being an *equality* (rather than just a bound). Specifically, the failure of the natural map $H_*(L_p(F)) \\to L_p(H_*(F))$ to be an isomorphism is controlled by $\\text{Tor}_1$.\n\n**Test:** Formalize the derived base change spectral sequence for a concrete persistence module built from a simplicial complex with known torsion (e.g., $\\mathbb{RP}^2$). Compute $\\text{Tor}_1$ explicitly and verify that it measures the discrepancy between chain-level and homology-level localization.\n\n**Impact:** This would connect persistence stability to the Grothendieck spectral sequence and establish a bridge between computational topology and derived algebraic geometry. The higher Tor terms could serve as new persistence invariants capturing information invisible to ordinary barcodes.\n\n**Catalog References:**\n- `Catalog/Pythagorean/FunctorialLocalization.lean` \u2014 `localized_preserves_interleaving`, `pTorBirth_eq_globTorBirth_localized`\n- `Catalog/Pythagorean/PrimewiseTorsionStability.lean` \u2014 `pTorsionBirthSet_deltaClose`\n\n**Proof Strategy:** Define chain-level persistence modules as functors to $\\text{Ch}(\\mathbf{Ab})$. Construct $\\mathbb{L}L_p$ using flat resolutions of $\\mathbb{Z}_{(p)}$ (trivially: $\\mathbb{Z}_{(p)}$ is flat over $\\mathbb{Z}$, so $\\text{Tor}_i = 0$ for $i \\geq 1$ in the standard case). The interesting direction is when we replace $\\mathbb{Z}_{(p)}$ by non-flat quotients like $\\mathbb{Z}/p$ \u2014 then the Tor terms are nontrivial and carry persistence information.\n\n**Domain Bridges:** Derived algebraic geometry \u2194 topological data analysis; homological algebra \u2194 computational topology.\n\n**Lineage:** Builds directly on Theorem 1 (localized_preserves_interleaving) by extending from the abelian category level to the derived category.\n\n**Ambition:** Grand challenge \u2014 establishing derived persistence would open an entirely new computational and theoretical toolkit for TDA.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "92b77109",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T22:21:38.006841+00:00"
-  },
-  {
-    "id": "fd_1957",
-    "title": "Direction 4: Quantum Error Correction via Torsion Channel Codes",
-    "description": "**Conjecture:** The primewise decomposition of torsion persistence provides a natural framework for constructing quantum error-correcting codes with arithmetic structure. Specifically, a persistence module with torsion at multiple primes can be used to construct a *prime-channel code* where errors at different primes are corrected independently, analogous to the use of Chinese Remainder Theorem codes in classical coding theory.\n\n**The key insight is** that prime localization decomposes the torsion signal into independent channels (proved as `prime_channel_independence`), and independent channels are exactly what error-correcting codes need: errors in one channel don't affect others.\n\n**Why now?** The localization framework provides the mathematical infrastructure to construct and analyze these codes. The interleaving stability theorem guarantees that small perturbations (errors) at the code level produce small changes in the decoded signal.\n\n**Test:** Construct a toy code using $\\mathbb{Z}/6\\mathbb{Z} \\cong \\mathbb{Z}/2 \\oplus \\mathbb{Z}/3$ as the alphabet. Encode a message in the 2-channel and 3-channel independently. Introduce random errors and decode using the localization projection. Measure the error-correction rate.\n\n**Impact:** This would bridge quantum information theory and topological data analysis via the arithmetic structure of persistence modules. If the codes have good parameters, it would be of practical interest for quantum computing.\n\n**Catalog References:**\n- `Catalog/Pythagorean/FunctorialLocalization.lean` \u2014 `localized_witness_improvement`, `GlobTorDet_iff_exists_prime`\n- `Catalog/Pythagorean/PrimewiseTorsionStability.lean` \u2014 `prime_channel_independence`\n\n**Proof Strategy:** Define the code space as a tensor product of prime-channel persistence modules. Use the interleaving stability bound as the minimum distance of the code. Apply the localization functor as the decoding map.\n\n**Domain Bridges:** Quantum error correction \u2194 commutative algebra \u2194 topological data analysis.\n\n**Lineage:** Builds on Theorem 4 (witness improvement) and prime channel independence.\n\n**Ambition:** Grand challenge \u2014 speculative but with concrete testable predictions.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "92b77109",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T22:21:38.329974+00:00"
   },
   {
     "id": "seed_032",
