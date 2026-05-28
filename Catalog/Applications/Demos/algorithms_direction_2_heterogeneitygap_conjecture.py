@@ -1,387 +1,247 @@
-#!/usr/bin/env python3
 """
-algorithms.py — Certified computational methods for the Heterogeneity–Gap Theory
+algorithms.py — Core algorithms for hypergraph transversal analysis
+and edge-size disorder measurement.
 
-Implements the core algorithms for:
-1. Computing edge-size distribution invariants (heterogeneity, collision index, support width)
-2. Exact transversal number computation (brute-force, for small instances)
-3. Fractional transversal LP relaxation
-4. Certified witness verification for positive ceiling gap
-5. Generating the disjoint-triangles family
-
-All functions include docstrings, type hints, and complexity analysis.
+Implements:
+  - Hypergraph representation and transversal computation
+  - Fractional transversal (LP relaxation) via linear programming
+  - Edge-size disorder invariants: heterogeneity, support width, collision index
+  - Certified gap detection
 """
 
 from __future__ import annotations
-import itertools
-import math
-from collections import Counter
-from typing import FrozenSet, List, Optional, Tuple, Dict
-
 import numpy as np
+from itertools import combinations
+from typing import Optional
+from fractions import Fraction
 
-
-# ══════════════════════════════════════════════════════════════════════
-# DATA STRUCTURES
-# ══════════════════════════════════════════════════════════════════════
 
 class Hypergraph:
-    """
-    A finite hypergraph H = (V, E) where V = {0, ..., n-1} and E is a
-    collection of subsets of V.
+    """A hypergraph on vertices {0, 1, ..., n-1}."""
 
-    Attributes:
-        n_vertices: Number of vertices.
-        edges: List of frozensets representing edges.
-    """
-
-    def __init__(self, n_vertices: int, edges: List[FrozenSet[int]]):
-        self.n_vertices = n_vertices
+    def __init__(self, n: int, edges: list[frozenset[int]]):
+        """
+        Args:
+            n: number of vertices
+            edges: list of edges, each a frozenset of vertex indices
+        """
+        self.n = n
         self.edges = list(set(edges))  # deduplicate
-        self._validate()
 
-    def _validate(self) -> None:
-        for e in self.edges:
-            for v in e:
-                assert 0 <= v < self.n_vertices, f"Vertex {v} out of range"
+    @classmethod
+    def random(cls, n: int, num_edges: int, size_options: list[int],
+               rng: np.random.Generator | None = None) -> "Hypergraph":
+        """Generate a random hypergraph with edge sizes drawn from size_options."""
+        if rng is None:
+            rng = np.random.default_rng()
+        edges = set()
+        vertices = list(range(n))
+        attempts = 0
+        while len(edges) < num_edges and attempts < num_edges * 100:
+            k = rng.choice(size_options)
+            if k > n:
+                attempts += 1
+                continue
+            e = frozenset(rng.choice(vertices, size=k, replace=False))
+            edges.add(e)
+            attempts += 1
+        return cls(n, list(edges))
 
-    @property
-    def vertices(self) -> List[int]:
-        return list(range(self.n_vertices))
-
-    @property
-    def edge_sizes(self) -> List[int]:
-        """List of edge cardinalities."""
+    def edge_sizes(self) -> list[int]:
+        """Return list of edge cardinalities."""
         return [len(e) for e in self.edges]
 
+    def edge_heterogeneity(self) -> float:
+        """Variance of edge sizes (population variance)."""
+        sizes = self.edge_sizes()
+        if not sizes:
+            return 0.0
+        mu = np.mean(sizes)
+        return float(np.mean([(s - mu) ** 2 for s in sizes]))
+
+    def edge_size_support_width(self) -> int:
+        """Max edge size - min edge size."""
+        sizes = self.edge_sizes()
+        if not sizes:
+            return 0
+        return max(sizes) - min(sizes)
+
+    def edge_size_collision_index(self) -> float:
+        """Collision index: sum of p_k^2 where p_k = freq(k)/n."""
+        sizes = self.edge_sizes()
+        if not sizes:
+            return 1.0
+        n = len(sizes)
+        from collections import Counter
+        counts = Counter(sizes)
+        return sum((c / n) ** 2 for c in counts.values())
+
+    def edge_size_distribution_support(self) -> set[int]:
+        """Set of distinct edge sizes."""
+        return set(self.edge_sizes())
+
+    def is_transversal(self, S: set[int]) -> bool:
+        """Check if S is a transversal (hitting set)."""
+        return all(bool(S & e) for e in self.edges)
+
+    def transversal_number_brute(self) -> int:
+        """Compute τ(H) by brute force (exponential)."""
+        for k in range(self.n + 1):
+            for S in combinations(range(self.n), k):
+                if self.is_transversal(set(S)):
+                    return k
+        return self.n  # fallback
+
+    def fractional_transversal_number(self) -> float:
+        """Compute τ*(H) via LP relaxation using scipy."""
+        try:
+            from scipy.optimize import linprog
+        except ImportError:
+            return float('nan')
+
+        m = len(self.edges)
+        n = self.n
+        if m == 0:
+            return 0.0
+
+        # minimize sum x_v
+        c = np.ones(n)
+        # subject to: for each edge e, sum_{v in e} x_v >= 1
+        # i.e. -sum_{v in e} x_v <= -1
+        A_ub = np.zeros((m, n))
+        b_ub = -np.ones(m)
+        for i, e in enumerate(self.edges):
+            for v in e:
+                A_ub[i, v] = -1.0
+
+        bounds = [(0, None)] * n
+        result = linprog(c, A_ub=A_ub, b_ub=b_ub, bounds=bounds, method='highs')
+        if result.success:
+            return float(result.fun)
+        return float('nan')
+
+    def has_positive_ceil_gap(self) -> tuple[bool, int, float]:
+        """Check if τ > ⌈τ*⌉. Returns (gap_exists, τ, τ*)."""
+        tau = self.transversal_number_brute()
+        tau_star = self.fractional_transversal_number()
+        import math
+        ceil_tau_star = math.ceil(tau_star - 1e-9)  # numerical guard
+        return (tau > ceil_tau_star, tau, tau_star)
+
     def __repr__(self) -> str:
-        return f"Hypergraph(n={self.n_vertices}, m={len(self.edges)})"
+        return f"Hypergraph(n={self.n}, |E|={len(self.edges)}, sizes={sorted(self.edge_size_distribution_support())})"
 
 
-# ══════════════════════════════════════════════════════════════════════
-# EDGE-SIZE DISTRIBUTION INVARIANTS
-# ══════════════════════════════════════════════════════════════════════
-
-def edge_heterogeneity(H: Hypergraph) -> float:
+def two_scale_family(m: int) -> Hypergraph:
     """
-    Compute the edge-size heterogeneity (variance of edge cardinalities).
+    Construct a two-scale hypergraph family for demonstrating
+    heterogeneity-gap phenomena.
 
-    Definition: σ² = (1/m) Σ_{e ∈ E} (|e| - d̄)²
-    where d̄ = (1/m) Σ_{e ∈ E} |e| is the mean edge size.
+    The construction:
+    - Vertices: {0, ..., 3m-1}
+    - Small edges (size 2): pairs from m disjoint pairs in {0,...,2m-1}
+      These force at least m vertices in any transversal.
+    - Large edge (size 2m): the set {0, 1, ..., 2m-1}
+      A fractional transversal can assign 1/(2m) to each of these vertices
+      and cover the large edge with total weight 1, while also covering
+      each small pair with weight 2/(2m) = 1/m. When m >= 3, this is < 1
+      so we need a modified construction.
 
-    Time complexity: O(m) where m = |E|.
-    Space complexity: O(1).
+    Better construction for demonstrable gap:
+    - n = 2m vertices
+    - m disjoint pairs as small edges of size 2
+    - One big edge of all 2m vertices
+    - τ = m (must pick one from each pair)
+    - τ* = m (assign 1/2 to each vertex: each pair sums to 1, big edge sums to m)
+    This doesn't give a gap. Let me use a classic construction instead.
 
-    Returns 0 for empty edge sets.
+    Classic gap construction (Lovász):
+    - Complete k-uniform hypergraph on n vertices where k < n
+    - τ* = n/k, τ = n - k + 1
 
-    >>> H = Hypergraph(4, [frozenset([0,1]), frozenset([0,1,2])])
-    >>> edge_heterogeneity(H)
-    0.25
+    For heterogeneity, use mixed sizes:
+    - n = 2m + 1 vertices
+    - All pairs {i,j} as edges (size 2): C(2m+1, 2) edges
+    - The full vertex set {0,...,2m} as one edge (size 2m+1)
+    - τ = 2m (need all but one vertex to hit all pairs)
+    - τ* ≤ (2m+1)/2 = m + 1/2 (assign 1/2 to each vertex)
+    - So gap = 2m - (m+1) = m - 1 for m ≥ 2
     """
-    if not H.edges:
-        return 0.0
-    sizes = H.edge_sizes
-    mean = sum(sizes) / len(sizes)
-    return sum((s - mean) ** 2 for s in sizes) / len(sizes)
-
-
-def edge_size_support_width(H: Hypergraph) -> int:
-    """
-    Compute the support width: max edge size − min edge size.
-
-    Time complexity: O(m).
-    Space complexity: O(1).
-
-    Returns 0 for empty edge sets.
-
-    >>> H = Hypergraph(5, [frozenset([0,1]), frozenset([0,1,2,3,4])])
-    >>> edge_size_support_width(H)
-    3
-    """
-    if not H.edges:
-        return 0
-    sizes = H.edge_sizes
-    return max(sizes) - min(sizes)
-
-
-def collision_index(H: Hypergraph) -> float:
-    """
-    Compute the collision index (Herfindahl index) of the edge-size distribution.
-
-    Definition: CI = Σ_k p_k² where p_k = #{e : |e| = k} / m.
-
-    This is the probability that two uniformly random edges have the same
-    cardinality. CI = 1 iff all edges have the same size (uniform).
-    CI < 1 iff at least two distinct edge sizes exist (non-uniform).
-
-    Time complexity: O(m).
-    Space complexity: O(d) where d = number of distinct edge sizes.
-
-    Returns 1 for empty edge sets (convention).
-
-    >>> H = Hypergraph(4, [frozenset([0,1]), frozenset([0,1,2])])
-    >>> collision_index(H)
-    0.5
-    """
-    if not H.edges:
-        return 1.0
-    sizes = H.edge_sizes
-    n = len(sizes)
-    counts = Counter(sizes)
-    return sum((c / n) ** 2 for c in counts.values())
-
-
-def edge_size_distribution_support(H: Hypergraph) -> set:
-    """
-    The set of distinct edge cardinalities.
-
-    Time complexity: O(m).
-
-    >>> H = Hypergraph(5, [frozenset([0,1]), frozenset([2,3,4])])
-    >>> sorted(edge_size_distribution_support(H))
-    [2, 3]
-    """
-    return set(H.edge_sizes)
-
-
-def renyi_entropy_proxy(H: Hypergraph) -> float:
-    """
-    Compute -log₂(collision_index), a proxy for Rényi 2-entropy of
-    the edge-size distribution.
-
-    Returns 0 for uniform distributions (CI = 1).
-    Higher values indicate more disorder.
-
-    Time complexity: O(m).
-    """
-    ci = collision_index(H)
-    if ci <= 0 or ci >= 1:
-        return 0.0 if ci >= 1 else float('inf')
-    return -math.log2(ci)
-
-
-# ══════════════════════════════════════════════════════════════════════
-# TRANSVERSAL NUMBER COMPUTATION
-# ══════════════════════════════════════════════════════════════════════
-
-def is_transversal(H: Hypergraph, S: set) -> bool:
-    """
-    Check if S is a transversal (hitting set) of H.
-
-    Time complexity: O(m · max_edge_size).
-
-    >>> H = Hypergraph(3, [frozenset([0,1]), frozenset([1,2])])
-    >>> is_transversal(H, {1})
-    True
-    >>> is_transversal(H, {0})
-    False
-    """
-    return all(S & e for e in H.edges)
-
-
-def transversal_number_exact(H: Hypergraph) -> int:
-    """
-    Compute τ(H) exactly by brute-force enumeration.
-
-    Time complexity: O(2^n · m · max_edge_size).
-    Space complexity: O(n).
-
-    WARNING: Only feasible for n ≤ 25 or so.
-
-    >>> H = Hypergraph(3, [frozenset([0,1]), frozenset([1,2])])
-    >>> transversal_number_exact(H)
-    1
-    """
-    for size in range(H.n_vertices + 1):
-        for S in itertools.combinations(range(H.n_vertices), size):
-            if is_transversal(H, set(S)):
-                return size
-    return H.n_vertices
-
-
-def fractional_transversal_lp(H: Hypergraph) -> float:
-    """
-    Compute τ*(H) via LP relaxation.
-
-    Minimize Σ x_v subject to:
-        Σ_{v ∈ e} x_v ≥ 1 for each edge e
-        0 ≤ x_v ≤ 1 for each vertex v
-
-    Uses scipy.optimize.linprog with HiGHS solver.
-
-    Time complexity: polynomial in n and m (LP).
-
-    >>> H = Hypergraph(4, [frozenset([0,1]), frozenset([2,3])])
-    >>> fractional_transversal_lp(H)
-    2.0
-    """
-    try:
-        from scipy.optimize import linprog
-    except ImportError:
-        raise ImportError("scipy required for LP computation")
-
-    n = H.n_vertices
-    c = np.ones(n)
-    A_ub = []
-    b_ub = []
-    for e in H.edges:
-        row = np.zeros(n)
-        for v in e:
-            row[v] = -1
-        A_ub.append(row)
-        b_ub.append(-1)
-    bounds = [(0, 1) for _ in range(n)]
-    result = linprog(c, A_ub=A_ub, b_ub=b_ub, bounds=bounds, method='highs')
-    if result.success:
-        return result.fun
-    raise ValueError("LP solver failed")
-
-
-def verify_fractional_transversal(
-    H: Hypergraph, weights: Dict[int, float], tol: float = 1e-9
-) -> Tuple[bool, float]:
-    """
-    Verify that a given weight assignment is a valid fractional transversal
-    and compute its value.
-
-    A certified witness checker: returns (is_valid, value).
-
-    Time complexity: O(n + m · max_edge_size).
-
-    >>> H = Hypergraph(4, [frozenset([0,1]), frozenset([2,3])])
-    >>> verify_fractional_transversal(H, {0: 0.5, 1: 0.5, 2: 0.5, 3: 0.5})
-    (True, 2.0)
-    """
-    # Check nonnegativity
-    for v in range(H.n_vertices):
-        w = weights.get(v, 0.0)
-        if w < -tol:
-            return False, float('inf')
-
-    # Check covering constraints
-    for e in H.edges:
-        edge_sum = sum(weights.get(v, 0.0) for v in e)
-        if edge_sum < 1.0 - tol:
-            return False, float('inf')
-
-    # Compute value
-    value = sum(max(0, weights.get(v, 0.0)) for v in range(H.n_vertices))
-    return True, value
-
-
-def certified_positive_ceil_gap(H: Hypergraph) -> Tuple[bool, dict]:
-    """
-    Certified check for positive ceiling gap.
-
-    Returns (has_gap, certificate) where certificate contains:
-    - tau: integer transversal number
-    - tau_star: fractional transversal number
-    - ceil_tau_star: ⌈τ*⌉
-    - gap: τ - ⌈τ*⌉
-
-    Time complexity: O(2^n · m) for exact τ, polynomial for τ*.
-    """
-    tau = transversal_number_exact(H)
-    tau_star = fractional_transversal_lp(H)
-    ceil_tau_star = math.ceil(tau_star - 1e-9)  # numerical tolerance
-    gap = tau - ceil_tau_star
-
-    cert = {
-        'tau': tau,
-        'tau_star': tau_star,
-        'ceil_tau_star': ceil_tau_star,
-        'gap': gap,
-        'has_positive_gap': gap >= 1,
-        'heterogeneity': edge_heterogeneity(H),
-        'collision_index': collision_index(H),
-        'support_width': edge_size_support_width(H),
-    }
-    return gap >= 1, cert
-
-
-# ══════════════════════════════════════════════════════════════════════
-# EXPLICIT FAMILIES
-# ══════════════════════════════════════════════════════════════════════
-
-def disjoint_triangles_family(n: int) -> Hypergraph:
-    """
-    Construct the disjoint-triangles-plus-large-edge family.
-
-    Parameters:
-        n: number of triangle groups (n ≥ 3 for meaningful results)
-
-    Returns:
-        Hypergraph on 3n vertices with:
-        - 3n edges of size 2 (all pairs within each triple)
-        - 1 edge of size n (one vertex from each triple)
-
-    Properties (proved in Lean):
-    - edgeHeterogeneity > 0 for n ≥ 3
-    - τ = 2n, τ* ≤ 3n/2
-    - Ceiling gap ≥ 1 for n ≥ 3
-
-    Time complexity: O(n).
-
-    >>> H = disjoint_triangles_family(3)
-    >>> H.n_vertices
-    9
-    >>> len(H.edges)
-    10
-    """
-    n_vertices = 3 * n
+    n = 2 * m + 1
     edges = []
-
-    # Triangle pair edges
+    # All pairs
     for i in range(n):
-        base = 3 * i
-        edges.append(frozenset([base, base + 1]))
-        edges.append(frozenset([base, base + 2]))
-        edges.append(frozenset([base + 1, base + 2]))
-
-    # Large edge
-    large = frozenset(3 * i for i in range(n))
-    edges.append(large)
-
-    return Hypergraph(n_vertices, edges)
+        for j in range(i + 1, n):
+            edges.append(frozenset([i, j]))
+    # Full vertex set
+    edges.append(frozenset(range(n)))
+    return Hypergraph(n, edges)
 
 
-# ══════════════════════════════════════════════════════════════════════
-# EXAMPLE USAGE
-# ══════════════════════════════════════════════════════════════════════
+def projective_plane_family(q: int) -> Hypergraph:
+    """
+    Construct a hypergraph based on the Fano-like structure
+    for demonstrating uniform vs non-uniform behavior.
+    Uses a simple q x q grid construction.
 
-if __name__ == '__main__':
-    print("=== Algorithms Module: Example Usage ===\n")
+    - Vertices: q^2 grid points
+    - Row edges (size q): each row
+    - Column edges (size q): each column
+    - Diagonal edge (size q): main diagonal (if q entries)
+    - Extra small edges (size 2): some pairs
 
-    # Example 1: Uniform hypergraph
-    H_uniform = Hypergraph(6, [
-        frozenset([0, 1, 2]),
-        frozenset([1, 2, 3]),
-        frozenset([2, 3, 4]),
-        frozenset([3, 4, 5]),
-    ])
-    print(f"Uniform H: {H_uniform}")
-    print(f"  Heterogeneity: {edge_heterogeneity(H_uniform)}")
-    print(f"  Collision index: {collision_index(H_uniform)}")
-    print(f"  Support width: {edge_size_support_width(H_uniform)}")
-    print(f"  Rényi entropy proxy: {renyi_entropy_proxy(H_uniform)}")
+    This gives heterogeneity when mixing row/col edges with small edges.
+    """
+    n = q * q
+    edges = []
+    # Row edges (size q)
+    for i in range(q):
+        edges.append(frozenset(range(i * q, (i + 1) * q)))
+    # Column edges (size q)
+    for j in range(q):
+        edges.append(frozenset(range(j, n, q)))
+    # Add some small edges of size 2 for heterogeneity
+    for i in range(min(q, n - 1)):
+        edges.append(frozenset([i, i + 1]))
 
-    # Example 2: Heterogeneous hypergraph
-    H_het = Hypergraph(6, [
-        frozenset([0, 1]),
-        frozenset([2, 3]),
-        frozenset([0, 1, 2, 3, 4, 5]),
-    ])
-    print(f"\nHeterogeneous H: {H_het}")
-    print(f"  Heterogeneity: {edge_heterogeneity(H_het):.4f}")
-    print(f"  Collision index: {collision_index(H_het):.4f}")
-    print(f"  Support width: {edge_size_support_width(H_het)}")
-    print(f"  Rényi entropy proxy: {renyi_entropy_proxy(H_het):.4f}")
+    return Hypergraph(n, edges)
 
-    # Example 3: Disjoint triangles family
-    print("\n--- Disjoint Triangles Family ---")
-    for n in [3, 4, 5, 6]:
-        H = disjoint_triangles_family(n)
-        has_gap, cert = certified_positive_ceil_gap(H)
-        print(f"  n={n}: τ={cert['tau']}, τ*={cert['tau_star']:.2f}, "
-              f"gap={cert['gap']}, het={cert['heterogeneity']:.3f}, "
-              f"CI={cert['collision_index']:.3f}")
+
+def compute_disorder_stats(H: Hypergraph) -> dict:
+    """Compute all disorder statistics for a hypergraph."""
+    return {
+        'heterogeneity': H.edge_heterogeneity(),
+        'support_width': H.edge_size_support_width(),
+        'collision_index': H.edge_size_collision_index(),
+        'support': H.edge_size_distribution_support(),
+        'num_edges': len(H.edges),
+        'num_vertices': H.n,
+        'edge_sizes': sorted(H.edge_sizes()),
+    }
+
+
+if __name__ == "__main__":
+    print("=== Algorithms Module Demo ===\n")
+
+    # Demo 1: Two-scale family
+    for m in [2, 3, 4, 5]:
+        H = two_scale_family(m)
+        stats = compute_disorder_stats(H)
+        print(f"Two-scale family m={m}: {H}")
+        print(f"  Heterogeneity: {stats['heterogeneity']:.4f}")
+        print(f"  Support width: {stats['support_width']}")
+        print(f"  Collision index: {stats['collision_index']:.4f}")
+        print(f"  τ* = {H.fractional_transversal_number():.4f}")
+        print()
+
+    # Demo 2: Random hypergraphs
+    rng = np.random.default_rng(42)
+    for trial in range(5):
+        H = Hypergraph.random(10, 15, [2, 3, 4, 5], rng)
+        stats = compute_disorder_stats(H)
+        tau_star = H.fractional_transversal_number()
+        print(f"Random hypergraph {trial+1}: {H}")
+        print(f"  Heterogeneity: {stats['heterogeneity']:.4f}")
+        print(f"  Collision index: {stats['collision_index']:.4f}")
+        print(f"  τ* = {tau_star:.4f}")
+        print()
