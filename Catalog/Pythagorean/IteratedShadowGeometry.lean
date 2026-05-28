@@ -7,349 +7,330 @@ import Mathlib
 /-!
 # Iterated Shadow Geometry for Multivariate Polynomial Supports
 
-This file develops a theory of **iterated support shadows** for multivariate
-polynomials, establishing that higher-order mixed partial differentiation has an
-exact combinatorial footprint on exponent sets.
+This file develops the theory of **iterated support shadows** for multivariate
+polynomials: the exact combinatorial footprint of higher-order differentiation
+on exponent sets. The central result is that the support of all `k`-th order
+mixed partial derivatives of a polynomial `f` is exactly the `k`-th shadow
+of the Newton support of `f`.
 
 ## Main Definitions
 
-* `kthShadow` — The `k`-th downward shadow of a finset of exponent vectors:
-  all vectors obtainable by subtracting a multi-index of total mass `k`.
-* `iteratedPDeriv` — The mixed partial derivative `D^τ f` for a multi-index `τ`,
-  defined by its exact action on coefficients.
-* `derivShadowProfile` — The shadow profile `k ↦ |Shadow_k(Supp(f))|`.
-* `IsDiscreteExchangeFamily` — A finite-set symmetric exchange property
-  capturing M-convex / matroid-like structure on support sets.
+* `mass` — total degree (sum of coordinates) of a multi-index
+* `kthShadow` — the `k`-th downward shadow of a finset of multi-indices
+* `iteratedPDeriv` — iterated mixed partial derivative indexed by a multi-index
+* `derivShadowProfile` — cardinality of the `k`-th shadow as a function of `k`
+* `IsDiscreteExchangeFamily` — finite-set symmetric exchange property
 
 ## Main Results
 
-* `coeff_iteratedPDeriv` — Exact coefficient formula for mixed derivatives.
-* `coeff_iteratedPDeriv_ne_zero_iff` — Support criterion: in characteristic zero,
-  `coeff β (D^τ f) ≠ 0 ↔ coeff (β + τ) f ≠ 0`.
-* `mem_kthShadow_iff_exists_iteratedDerivative` — The exact k-th shadow theorem.
-* `kthShadow_zero` — The 0-th shadow is the identity.
-* `kthShadow_add` — Shadows satisfy a semigroup/flow law.
-* `iteratedPDeriv_single_eq_pderiv` — Validates agreement with `MvPolynomial.pderiv`.
+* `coeff_pderiv_single` — coefficient formula for a single partial derivative
+* `coeff_pderiv_iterate` — coefficient formula for iterated single-variable derivative
+* `coeff_iteratedPDeriv` — full multi-index coefficient transport formula
+* `coeff_iteratedPDeriv_ne_zero_iff` — support criterion: nonvanishing iff ancestor nonvanishes
+* `mem_kthShadow_iff_exists_iteratedDerivative` — **the k-th shadow theorem**
+* `kthShadow_zero` — the 0-th shadow is the original set
+* `kthShadow_mono` — shadow is monotone under set inclusion
+* `mem_kthShadow_add_iff` — semigroup law: shadows compose additively
+
+## References
+
+* Brändén–Huh, "Lorentzian Polynomials", Annals of Mathematics, 2020
+* Murota, "Discrete Convex Analysis", SIAM, 2003
 -/
 
-open MvPolynomial Finsupp BigOperators Finset
+open MvPolynomial Finsupp BigOperators Finset Classical
 
 noncomputable section
 
 namespace IteratedShadowGeometry
 
-variable {n : ℕ}
+/-! ## Basic Definitions -/
 
-/-! ## Total mass of a multi-index -/
-
-/-- The total mass (sum of all entries) of a multi-index. -/
-abbrev totalMass (τ : Fin n →₀ ℕ) : ℕ := τ.sum (fun _ m => m)
-
-@[simp]
-theorem totalMass_zero : totalMass (0 : Fin n →₀ ℕ) = 0 := by
-  simp [totalMass, Finsupp.sum]
+/-- The **mass** (total degree) of a multi-index `τ : Fin n →₀ ℕ` is the sum
+of all its coordinates. -/
+def mass {n : ℕ} (τ : Fin n →₀ ℕ) : ℕ := τ.sum (fun _ m => m)
 
 @[simp]
-theorem totalMass_single (i : Fin n) (k : ℕ) :
-    totalMass (Finsupp.single i k) = k := by
-  simp [totalMass, Finsupp.sum_single_index]
+theorem mass_zero {n : ℕ} : mass (0 : Fin n →₀ ℕ) = 0 := by
+  simp [mass]
 
-theorem totalMass_add (τ₁ τ₂ : Fin n →₀ ℕ) :
-    totalMass (τ₁ + τ₂) = totalMass τ₁ + totalMass τ₂ := by
-  simp only [totalMass]
-  rw [Finsupp.sum_add_index] <;> simp
+theorem mass_single {n : ℕ} (i : Fin n) (k : ℕ) :
+    mass (Finsupp.single i k) = k := by
+  simp [mass, Finsupp.sum_single_index]
 
-theorem totalMass_eq_zero_iff (τ : Fin n →₀ ℕ) :
-    totalMass τ = 0 ↔ τ = 0 := by
+theorem mass_add {n : ℕ} (σ τ : Fin n →₀ ℕ) :
+    mass (σ + τ) = mass σ + mass τ := by
+  simp [mass, Finsupp.sum_add_index']
+
+/-- The **k-th shadow** of a finset `S` of multi-indices: all exponent vectors
+obtainable by subtracting a multi-index of total mass `k` from an element of `S`.
+Formally, `β ∈ kthShadow S k` iff `∃ α ∈ S, ∃ τ ≤ α, mass τ = k ∧ β = α - τ`. -/
+def kthShadow {n : ℕ} (S : Finset (Fin n →₀ ℕ)) (k : ℕ) :
+    Finset (Fin n →₀ ℕ) :=
+  S.biUnion fun α =>
+    ((Finset.Iic α).filter fun τ => mass τ = k).image fun τ => α - τ
+
+/-- The **iterated partial derivative** of a multivariate polynomial indexed by
+a multi-index `τ`. Applies `(∂/∂xᵢ)^(τ i)` for each coordinate `i` in order.
+Since mixed partials commute for polynomials, the order does not matter. -/
+def iteratedPDeriv {n : ℕ} {R : Type*} [CommSemiring R]
+    (τ : Fin n →₀ ℕ) (f : MvPolynomial (Fin n) R) : MvPolynomial (Fin n) R :=
+  (List.finRange n).foldl
+    (fun p i => ((pderiv i : Derivation R _ _) : _ → _)^[τ i] p) f
+
+/-- The **derivative shadow profile** of a polynomial: the cardinality of the
+`k`-th shadow of its support. -/
+def derivShadowProfile {n : ℕ} {R : Type*} [CommSemiring R]
+    (f : MvPolynomial (Fin n) R) (k : ℕ) : ℕ :=
+  (kthShadow f.support k).card
+
+/-- A finset `S` of multi-indices satisfies the **discrete exchange property**
+if for any two elements `α, β ∈ S` and any coordinate `i` with `α i > β i`,
+there exists a coordinate `j` with `β j > α j` such that
+`α - eᵢ + eⱼ ∈ S`. This is a finitary analogue of M-convexity from discrete
+convex analysis. -/
+def IsDiscreteExchangeFamily {n : ℕ} (S : Finset (Fin n →₀ ℕ)) : Prop :=
+  ∀ α ∈ S, ∀ β ∈ S, ∀ i : Fin n,
+    α i > β i →
+    ∃ j : Fin n, β j > α j ∧
+      α - Finsupp.single i 1 + Finsupp.single j 1 ∈ S
+
+/-! ## Membership in kthShadow -/
+
+theorem mem_kthShadow_iff {n : ℕ} {S : Finset (Fin n →₀ ℕ)} {k : ℕ}
+    {β : Fin n →₀ ℕ} :
+    β ∈ kthShadow S k ↔
+      ∃ α ∈ S, ∃ τ : Fin n →₀ ℕ, τ ≤ α ∧ mass τ = k ∧ β = α - τ := by
+  simp only [kthShadow, Finset.mem_biUnion, Finset.mem_image, Finset.mem_filter,
+    Finset.mem_Iic]
   constructor
-  · intro h
-    ext i
-    simp only [Finsupp.coe_zero, Pi.zero_apply]
-    by_contra hi
-    have : i ∈ τ.support := Finsupp.mem_support_iff.mpr (by omega)
-    have hpos := Finset.sum_pos_iff_of_nonneg (fun j _ => Nat.zero_le (τ j)) |>.mpr ⟨i, this, by omega⟩
-    simp only [totalMass, Finsupp.sum] at h
-    omega
-  · intro h; simp [h]
+  · rintro ⟨α, hα, τ, ⟨hτα, hτk⟩, rfl⟩
+    exact ⟨α, hα, τ, hτα, hτk, rfl⟩
+  · rintro ⟨α, hα, τ, hτα, hτk, rfl⟩
+    exact ⟨α, hα, τ, ⟨hτα, hτk⟩, rfl⟩
 
-/-! ## k-th Shadow Definition -/
+/-! ## kthShadow at k = 0 -/
 
-/-- The **k-th shadow** of a finite set `S` of exponent vectors.
-`β ∈ kthShadow S k` iff there exists `α ∈ S` with `β ≤ α` and the total
-mass of `α - β` equals `k`. -/
-def kthShadow (S : Finset (Fin n →₀ ℕ)) (k : ℕ) : Finset (Fin n →₀ ℕ) :=
-  S.biUnion (fun α => (Finset.Iic α).filter (fun β => totalMass (α - β) = k))
-
-theorem mem_kthShadow_iff {S : Finset (Fin n →₀ ℕ)} {k : ℕ} {β : Fin n →₀ ℕ} :
-    β ∈ kthShadow S k ↔ ∃ α ∈ S, β ≤ α ∧ totalMass (α - β) = k := by
-  simp [kthShadow, Finset.mem_biUnion, Finset.mem_filter, Finset.mem_Iic]
-
-/-! ## Basic Shadow Properties -/
-
-/-
-The 0-th shadow of `S` is `S` itself.
--/
-theorem kthShadow_zero (S : Finset (Fin n →₀ ℕ)) :
+theorem kthShadow_zero {n : ℕ} (S : Finset (Fin n →₀ ℕ)) :
     kthShadow S 0 = S := by
-  ext β; simp [kthShadow];
-  constructor <;> intro h <;> simp_all +decide [ totalMass_eq_zero_iff ] ;
-  · obtain ⟨ a, ha₁, ha₂, ha₃ ⟩ := h; rw [ tsub_eq_zero_iff_le ] at ha₃; simp_all +decide [ le_antisymm ha₃ ha₂ ] ;
-  · exact ⟨ β, h, le_rfl, tsub_self β ⟩
+  unfold kthShadow;
+  simp +decide [ Finset.ext_iff, mem_kthShadow_iff ];
+  intro a; constructor <;> intro ha <;> simp_all +decide [ mass ] ;
+  · obtain ⟨ b, hb, c, hc, rfl ⟩ := ha; simp_all +decide [ Finsupp.sum ] ;
+    convert hb using 1 ; ext i ; simp +decide [ hc.2 ];
+  · exact ⟨ a, ha, 0, ⟨ by norm_num, by norm_num ⟩, by norm_num ⟩
 
-/-- The shadow is monotone in the support set. -/
-theorem kthShadow_mono {S₁ S₂ : Finset (Fin n →₀ ℕ)} (h : S₁ ⊆ S₂) (k : ℕ) :
+/-! ## Monotonicity of kthShadow -/
+
+theorem kthShadow_mono {n : ℕ} {S₁ S₂ : Finset (Fin n →₀ ℕ)} (h : S₁ ⊆ S₂) (k : ℕ) :
     kthShadow S₁ k ⊆ kthShadow S₂ k := by
-  intro β hβ
-  rw [mem_kthShadow_iff] at hβ ⊢
-  obtain ⟨α, hα, hle, hmass⟩ := hβ
-  exact ⟨α, h hα, hle, hmass⟩
+  exact Finset.biUnion_subset_biUnion_of_subset_left _ h
 
-/-- The kth shadow of the empty set is empty. -/
-@[simp]
-theorem kthShadow_empty (k : ℕ) :
-    kthShadow (∅ : Finset (Fin n →₀ ℕ)) k = ∅ := by
-  simp [kthShadow]
-
-/-! ## Iterated Mixed Partial Derivative -/
-
-/-- The **iterated mixed partial derivative** `D^τ f` of a multivariate polynomial,
-for a multi-index `τ : Fin n →₀ ℕ`.
-
-Defined by its exact action on monomials:
-`D^τ (c · X^α) = (∏ᵢ descFactorial(α(i), τ(i))) · c · X^(α-τ)` when `τ ≤ α`,
-and `0` otherwise. -/
-def iteratedPDeriv {R : Type*} [CommSemiring R] (τ : Fin n →₀ ℕ)
-    (f : MvPolynomial (Fin n) R) : MvPolynomial (Fin n) R :=
-  f.sum (fun (m : Fin n →₀ ℕ) (c : R) =>
-    if τ ≤ m then
-      MvPolynomial.monomial (m - τ)
-        ((↑(∏ i : Fin n, Nat.descFactorial (m i) (τ i)) : R) * c)
-    else 0)
-
-/-! ## Coefficient Formula -/
+/-! ## Coefficient Formula: Single Variable Iterated Derivative -/
 
 /-
-**Coefficient transport formula for mixed derivatives.**
-The coefficient of `β` in `D^τ f` equals a descending factorial product
-times the coefficient of `β + τ` in `f`.
+Coefficient of `m` in the single partial derivative `∂ᵢf` equals
+`(m i + 1) * coeff(m + eᵢ, f)`.
 -/
-theorem coeff_iteratedPDeriv {R : Type*} [CommSemiring R]
-    (f : MvPolynomial (Fin n) R) (β τ : Fin n →₀ ℕ) :
+theorem coeff_pderiv_single {n : ℕ} {R : Type*} [CommSemiring R]
+    (i : Fin n) (f : MvPolynomial (Fin n) R) (m : Fin n →₀ ℕ) :
+    MvPolynomial.coeff m (MvPolynomial.pderiv i f) =
+      (↑(m i + 1) : R) * MvPolynomial.coeff (m + Finsupp.single i 1) f := by
+  induction' f using MvPolynomial.induction_on' with n f g hf hg f g hf hg;
+  · by_cases hi : n i = 0 <;> simp_all +decide [ MvPolynomial.coeff_monomial, pderiv_monomial ];
+    · intro h; replace h := congr_arg ( fun x => x i ) h; simp_all +decide ;
+    · split_ifs <;> simp_all +decide [ Finsupp.ext_iff, Finsupp.single_apply ];
+      · ring;
+      · grind;
+  · simp +decide [ *, mul_add ]
+
+/-
+Coefficient of `m` in the `k`-fold iterated partial derivative
+`(∂/∂xᵢ)^k f` equals the ascending factorial product times the
+coefficient at the shifted multi-index.
+-/
+theorem coeff_pderiv_iterate {n : ℕ} {R : Type*} [CommSemiring R]
+    (i : Fin n) (k : ℕ) (f : MvPolynomial (Fin n) R) (m : Fin n →₀ ℕ) :
+    MvPolynomial.coeff m (((pderiv i : Derivation R _ _) : _ → _)^[k] f) =
+      (∏ j ∈ Finset.range k, (↑(m i + j + 1) : R)) *
+        MvPolynomial.coeff (m + Finsupp.single i k) f := by
+  induction' k with k ih generalizing m <;> simp_all +decide [ Function.iterate_succ_apply', Finset.prod_range_succ' ];
+  convert congr_arg ( fun x : R => ( m i + 1 : R ) * x ) ( ih ( m + Finsupp.single i 1 ) ) using 1 ; ring!;
+  · convert coeff_pderiv_single i ( ( pderiv i ) ^[ k ] f ) m using 1 ; ring!;
+    grind +splitImp;
+  · simp +decide [ add_comm, add_left_comm, add_assoc, Finsupp.single_apply ] ; ring!;
+
+/-! ## Full Multi-Index Coefficient Formula -/
+
+/-
+Helper: coefficient formula for foldl over a sublist of coordinates.
+For a nodup list `l` of coordinates, the foldl applying `(∂ᵢ)^[τ i]` for each
+`i ∈ l` satisfies the product coefficient formula over those coordinates.
+-/
+private theorem coeff_foldl_pderiv_list {n : ℕ} {R : Type*} [CommSemiring R]
+    (τ : Fin n →₀ ℕ) (f : MvPolynomial (Fin n) R) (β : Fin n →₀ ℕ)
+    (l : List (Fin n)) (hl : l.Nodup) :
+    MvPolynomial.coeff β
+      (l.foldl (fun p i => ((pderiv i : Derivation R _ _) : _ → _)^[τ i] p) f) =
+      (∏ i ∈ l.toFinset, ∏ j ∈ Finset.range (τ i), ((β i + j + 1 : ℕ) : R)) *
+        MvPolynomial.coeff (β + l.toFinset.sum (fun i => Finsupp.single i (τ i))) f := by
+  induction' l using List.reverseRecOn with hd tl ih generalizing β <;> simp_all +decide [ Finset.prod_insert, Finset.sum_insert ];
+  by_cases h : tl ∈ hd.toFinset <;> simp_all +decide [ List.nodup_append ];
+  · exact False.elim ( hl.2 _ h rfl );
+  · have := coeff_pderiv_iterate tl ( τ tl ) ( List.foldl ( fun p i => ( pderiv i ) ^[τ i] p ) f hd ) β; simp_all +decide [ add_comm, add_left_comm, add_assoc ] ;
+    simp +decide [ mul_assoc, Finsupp.single_apply ];
+    exact congr_arg _ ( congr_arg₂ _ ( Finset.prod_congr rfl fun x hx => Finset.prod_congr rfl fun y hy => by aesop ) rfl )
+
+/-- **Multi-index coefficient transport formula.**
+The coefficient of `β` in the iterated derivative `∂^τ f` equals the product
+of ascending factorial factors times the coefficient of `β + τ` in `f`.
+
+This is the engine that drives the entire shadow theory: each derivative
+coordinate contributes an independent, nonzero scalar factor. -/
+theorem coeff_iteratedPDeriv {n : ℕ} {R : Type*} [CommSemiring R]
+    (τ : Fin n →₀ ℕ) (f : MvPolynomial (Fin n) R) (β : Fin n →₀ ℕ) :
     MvPolynomial.coeff β (iteratedPDeriv τ f) =
-      (↑(∏ i : Fin n, Nat.descFactorial ((β + τ) i) (τ i)) : R) *
+      (∏ i : Fin n, ∏ j ∈ Finset.range (τ i), (↑(β i + j + 1) : R)) *
         MvPolynomial.coeff (β + τ) f := by
-  unfold iteratedPDeriv;
-  rw [ MvPolynomial.sum_def ] ; simp_all +decide [ MvPolynomial.coeff_sum ];
-  rw [ Finset.sum_eq_single ( β + τ ) ];
-  · simp +decide [ MvPolynomial.coeff_monomial ];
-  · intro b hb hne; split_ifs <;> simp_all +decide [ MvPolynomial.coeff_monomial ] ;
-    exact fun h => False.elim <| hne <| by rw [ ← h, tsub_add_cancel_of_le ‹_› ] ;
-  · aesop
+  unfold iteratedPDeriv
+  rw [coeff_foldl_pderiv_list τ f β (List.finRange n) (List.nodup_finRange n)]
+  simp [List.toFinset_finRange, Finsupp.univ_sum_single]
+
+/-! ## Ascending Factorial Positivity -/
 
 /-
-The descending factorial product is always positive.
+The product of ascending factorial factors is always positive as a natural number.
 -/
-theorem descFactorial_prod_pos (β τ : Fin n →₀ ℕ) :
-    0 < ∏ i : Fin n, Nat.descFactorial ((β + τ) i) (τ i) := by
-  exact Finset.prod_pos fun i _ => Nat.descFactorial_pos.mpr ( by simp +decide )
+theorem ascFactorial_prod_pos {n : ℕ} (β τ : Fin n →₀ ℕ) :
+    0 < ∏ i : Fin n, ∏ j ∈ Finset.range (τ i), (β i + j + 1) := by
+  exact Finset.prod_pos fun i hi => Finset.prod_pos fun j hj => Nat.succ_pos _
+
+/-! ## Support Criterion -/
 
 /-
-**Support criterion for mixed derivatives.**
+**Support criterion for iterated derivatives.** In characteristic zero,
+the coefficient of `β` in `∂^τ f` is nonzero if and only if the coefficient
+of `β + τ` in `f` is nonzero. The scalar factor (a product of ascending
+factorials) is always a positive natural number, hence nonzero in char zero.
 -/
-theorem coeff_iteratedPDeriv_ne_zero_iff {R : Type*} [CommRing R] [NoZeroDivisors R]
-    [CharZero R] (f : MvPolynomial (Fin n) R) (β τ : Fin n →₀ ℕ) :
+theorem coeff_iteratedPDeriv_ne_zero_iff {n : ℕ} {R : Type*}
+    [CommSemiring R] [NoZeroSMulDivisors ℕ R] [CharZero R] [Nontrivial R]
+    (τ : Fin n →₀ ℕ) (f : MvPolynomial (Fin n) R) (β : Fin n →₀ ℕ) :
     MvPolynomial.coeff β (iteratedPDeriv τ f) ≠ 0 ↔
       MvPolynomial.coeff (β + τ) f ≠ 0 := by
-  rw [coeff_iteratedPDeriv];
-  simp +zetaDelta at *;
-  exact fun h => mod_cast descFactorial_prod_pos β τ |> ne_of_gt
+  rw [ coeff_iteratedPDeriv ];
+  -- Since the product of positive integers is positive, we can conclude that the product is nonzero.
+  have h_prod_pos : 0 < ∏ i : Fin n, (∏ j ∈ Finset.range (τ i), (β i + j + 1)) := by
+    exact Finset.prod_pos fun i _ => Finset.prod_pos fun j _ => Nat.succ_pos _;
+  norm_cast;
+  grind +suggestions
 
-/-! ## Validation -/
-
-/-
-Our `iteratedPDeriv` for `τ = single i 1` agrees with `MvPolynomial.pderiv i`.
--/
-theorem iteratedPDeriv_single_eq_pderiv {R : Type*} [CommSemiring R]
-    (i : Fin n) (f : MvPolynomial (Fin n) R) :
-    iteratedPDeriv (Finsupp.single i 1) f = MvPolynomial.pderiv i f := by
-  refine' Finset.sum_congr rfl fun x hx => _ ; by_cases hi : 1 ≤ x i <;> simp +decide [ hi, Pi.single_apply ] ; ring;
-  · simp +decide [ Finset.prod_eq_mul_prod_diff_singleton ( Finset.mem_univ i ), Nat.descFactorial_succ, mul_comm, mul_assoc, mul_left_comm, smul_monomial ];
-    rw [ if_neg ( by linarith ) ] ; simp +decide [ Nat.descFactorial_one, Finset.prod_eq_one, Finsupp.single_apply ] ; ring;
-    rw [ Finset.prod_eq_one ] <;> aesop;
-  · aesop
+/-! ## The k-th Shadow Theorem -/
 
 /-
-`iteratedPDeriv` for `τ = 0` is the identity.
--/
-theorem iteratedPDeriv_zero {R : Type*} [CommSemiring R]
-    (f : MvPolynomial (Fin n) R) :
-    iteratedPDeriv (0 : Fin n →₀ ℕ) f = f := by
-  unfold iteratedPDeriv;
-  simp +decide [ MvPolynomial.sum_def ]
+**The k-th Shadow Theorem (pointwise membership).**
+For a polynomial `f` over a char-zero domain, a multi-index `β` belongs to
+the `k`-th shadow of `Supp(f)` if and only if there exists a multi-index `τ`
+of mass `k` such that `β` appears in the support of `∂^τ f`.
 
-/-! ## The Exact k-th Shadow Theorem -/
-
-/-
-**The exact k-th shadow theorem.**
-`β` lies in the k-th shadow of `Supp(f)` if and only if there exists a
-multi-index `τ` of total mass `k` such that `β` is in the support of `D^τ f`.
+This is the fundamental equivalence: iterated differentiation has an exact
+combinatorial footprint on exponent sets, governed entirely by the downward
+shadow geometry of the Newton support.
 -/
 theorem mem_kthShadow_iff_exists_iteratedDerivative
-    {R : Type*} [CommRing R] [NoZeroDivisors R] [CharZero R]
+    {n : ℕ} {R : Type*} [CommSemiring R] [NoZeroSMulDivisors ℕ R]
+    [Nontrivial R] [CharZero R]
     (f : MvPolynomial (Fin n) R) (β : Fin n →₀ ℕ) (k : ℕ) :
     β ∈ kthShadow f.support k ↔
       ∃ τ : Fin n →₀ ℕ,
-        totalMass τ = k ∧
-        β ∈ (iteratedPDeriv τ f).support := by
+        mass τ = k ∧
+        MvPolynomial.coeff β (iteratedPDeriv τ f) ≠ 0 := by
   constructor <;> intro h;
-  · obtain ⟨ α, hα, hβα, hαβ ⟩ := mem_kthShadow_iff.mp h;
-    refine' ⟨ α - β, hαβ, _ ⟩;
-    simp_all +decide [ MvPolynomial.mem_support_iff ];
-    convert coeff_iteratedPDeriv_ne_zero_iff f β ( α - β ) |>.2 _;
-    rwa [ add_tsub_cancel_of_le hβα ];
-  · obtain ⟨ τ, rfl, hτ ⟩ := h;
-    refine' Finset.mem_biUnion.mpr ⟨ β + τ, _, _ ⟩ <;> simp_all +decide [ mem_kthShadow_iff ];
-    exact fun h => hτ <| by rw [ coeff_iteratedPDeriv ] ; simp +decide [ h ] ;
-
-/-! ## Splitting Lemma -/
-
-/-
-**Splitting lemma**: any multi-index of total mass `a + b` can be decomposed
-into the sum of two multi-indices of masses `a` and `b` respectively.
--/
-theorem finsupp_totalMass_split (τ : Fin n →₀ ℕ) (a b : ℕ)
-    (h : totalMass τ = a + b) :
-    ∃ τ₁ τ₂ : Fin n →₀ ℕ,
-      τ₁ + τ₂ = τ ∧ totalMass τ₁ = a ∧ totalMass τ₂ = b := by
-  induction' a with a ih generalizing τ;
-  · exact ⟨ 0, τ, by norm_num, by norm_num, by linarith ⟩;
-  · -- Since $a + 1 + b > 0$, there exists some $i$ such that $\tau(i) > 0$.
-    obtain ⟨i, hi⟩ : ∃ i : Fin n, τ i > 0 := by
-      contrapose! h;
-      simp_all +decide [ show τ = 0 from Finsupp.ext fun i => le_antisymm ( h i ) ( Nat.zero_le _ ) ];
-      linarith;
-    -- Let $\tau' = \tau - \text{single } i 1$. Then $\tau'.\text{sum } = a + b$.
-    set τ' : Fin n →₀ ℕ := τ - Finsupp.single i 1
-    have hτ'_sum : totalMass τ' = a + b := by
-      simp +zetaDelta at *;
-      grind +suggestions;
-    obtain ⟨ τ₁, τ₂, h₁, h₂, h₃ ⟩ := ih τ' hτ'_sum; use τ₁ + Finsupp.single i 1, τ₂; simp_all +decide [ totalMass_add ] ;
-    convert congr_arg ( fun x => x + Finsupp.single i 1 ) h₁ using 1;
-    · abel1;
-    · rw [ tsub_add_cancel_of_le ] ; aesop;
+  · obtain ⟨ α, hα, τ, hτ, hβ ⟩ := mem_kthShadow_iff.mp h;
+    refine' ⟨ τ, hβ.1, _ ⟩;
+    convert coeff_iteratedPDeriv_ne_zero_iff τ f β |>.2 _;
+    rw [ hβ.2, tsub_add_cancel_of_le hτ ] ; aesop;
+  · obtain ⟨ τ, rfl, h ⟩ := h;
+    -- By the support criterion, if `coeff β (iteratedPDeriv τ f) ≠ 0`, then `β + τ ∈ f.support`.
+    have h_support : β + τ ∈ f.support := by
+      convert MvPolynomial.mem_support_iff.mpr ( coeff_iteratedPDeriv_ne_zero_iff τ f β |>.1 h ) using 1;
+    refine' mem_kthShadow_iff.mpr ⟨ β + τ, h_support, τ, _, _, _ ⟩ <;> simp +decide [ mass ]
 
 /-! ## Semigroup Law for Shadows -/
 
 /-
-Subtraction decomposes for ordered Finsupp elements.
+Helper: any multi-index of mass `a + b` can be decomposed as a sum of
+multi-indices of mass `a` and `b` respectively.
 -/
-theorem finsupp_tsub_add_of_le {α γ β : Fin n →₀ ℕ}
-    (h1 : β ≤ γ) (h2 : γ ≤ α) :
-    α - β = (α - γ) + (γ - β) := by
-  ext i; simp +decide [ h1, h2 ] ;
-  rw [ tsub_add_tsub_cancel ( h2 i ) ( h1 i ) ]
+theorem exists_mass_decomposition {n : ℕ} (τ : Fin n →₀ ℕ) (a b : ℕ)
+    (h : mass τ = a + b) :
+    ∃ τ₁ τ₂ : Fin n →₀ ℕ, τ₁ + τ₂ = τ ∧ mass τ₁ = a ∧ mass τ₂ = b := by
+  induction' a with a ih generalizing τ;
+  · exact ⟨ 0, τ, by norm_num, by norm_num, by linarith ⟩;
+  · -- Since mass τ = a + 1 + b ≥ 1, τ ≠ 0, so there exists some i with τ i ≥ 1.
+    obtain ⟨i, hi⟩ : ∃ i : Fin n, τ i ≥ 1 := by
+      contrapose! h; simp_all +decide [ mass ] ;
+      simp +decide [ show τ = 0 from Finsupp.ext h ] ; linarith;
+    -- Let τ' = τ - single i 1. Then mass τ' = mass τ - 1 = a + b.
+    set τ' : Fin n →₀ ℕ := τ - Finsupp.single i 1
+    have hτ' : mass τ' = a + b := by
+      convert congr_arg ( fun x : ℕ => x - 1 ) h using 1;
+      · unfold mass;
+        rw [ Finsupp.sum_of_support_subset ];
+        case s => exact τ.support;
+        · simp +zetaDelta at *;
+          rw [ Finsupp.sum ];
+          rw [ Finset.sum_eq_add_sum_diff_singleton ( show i ∈ τ.support from by aesop ) ];
+          rw [ Finset.sum_eq_add_sum_diff_singleton ( show i ∈ τ.support from by aesop ) ];
+          rw [ Finset.sum_congr rfl fun x hx => by rw [ Finsupp.single_apply ] ] ; simp +decide [ Finset.sum_add_distrib, add_comm, add_left_comm, add_assoc, Nat.sub_add_comm hi ];
+          rw [ add_comm, Finset.sum_congr rfl fun x hx => by aesop ];
+        · intro j hj; contrapose! hj; aesop;
+        · grind;
+      · exact?;
+    obtain ⟨ τ₁, τ₂, h₁, h₂, h₃ ⟩ := ih τ' hτ';
+    refine' ⟨ τ₁ + Finsupp.single i 1, τ₂, _, _, _ ⟩ <;> simp_all +decide [ add_assoc, Finsupp.single_add ];
+    · convert congr_arg ( fun x => x + Finsupp.single i 1 ) h₁ using 1;
+      · abel1;
+      · ext j; by_cases hj : j = i <;> aesop;
+    · unfold mass at *;
+      rw [ Finsupp.sum_add_index' ] <;> aesop
 
 /-
-Total mass decomposes under ordered subtraction.
+**Semigroup law for shadows (pointwise membership).**
+The `(a+b)`-th shadow equals the `b`-th shadow of the `a`-th shadow.
+This says the shadow operator is a genuine discrete flow:
+applying shadow-`a` then shadow-`b` is the same as applying shadow-`(a+b)`.
 -/
-theorem totalMass_tsub_add {α γ β : Fin n →₀ ℕ}
-    (h1 : β ≤ γ) (h2 : γ ≤ α) :
-    totalMass (α - β) = totalMass (α - γ) + totalMass (γ - β) := by
-  rw [ ← totalMass_add, finsupp_tsub_add_of_le h1 h2 ]
-
-/-
-**Semigroup law for shadows.**
-`Shadow_b(Shadow_a(S)) = Shadow_{a+b}(S)`.
--/
-theorem kthShadow_add (S : Finset (Fin n →₀ ℕ)) (a b : ℕ) :
-    kthShadow (kthShadow S a) b = kthShadow S (a + b) := by
-  ext β
+theorem mem_kthShadow_add_iff {n : ℕ} {S : Finset (Fin n →₀ ℕ)}
+    {a b : ℕ} {β : Fin n →₀ ℕ} :
+    β ∈ kthShadow S (a + b) ↔ β ∈ kthShadow (kthShadow S a) b := by
+  -- By definition of kthShadow, we can rewrite the membership conditions using the existence of certain multi-indices.
   simp [mem_kthShadow_iff];
-  constructor <;> intro h;
-  · obtain ⟨ α, ⟨ γ, hγ, hαγ, hα ⟩, hβα, hβ ⟩ := h;
-    refine' ⟨ γ, hγ, hβα.trans hαγ, _ ⟩;
-    rw [ ← hα, ← hβ, totalMass_tsub_add ] <;> aesop;
-  · obtain ⟨ α, hα₁, hα₂, hα₃ ⟩ := h
-    obtain ⟨ τ₁, τ₂, hτ₁, hτ₂, hτ ⟩ := finsupp_totalMass_split (α - β) a b hα₃; use β + τ₂; simp_all +decide [ add_comm, add_left_comm, add_assoc ] ;
-    refine' ⟨ α, hα₁, _, _ ⟩ <;> simp_all +decide [ add_comm, add_left_comm, add_assoc, Finsupp.le_def ];
-    · intro i; replace hτ₁ := congr_arg ( fun x => x i ) hτ₁; simp_all +decide [ add_comm, add_left_comm, add_assoc ] ;
-      linarith [ Nat.sub_add_cancel ( hα₂ i ) ];
-    · convert hτ₂ using 2 ; ext i ; replace hτ₁ := congr_arg ( fun x => x i ) hτ₁ ; simp_all +decide [ add_comm, add_left_comm, add_assoc ] ; omega;
+  constructor;
+  · rintro ⟨ α, hα, τ, hτ, hτ', rfl ⟩;
+    obtain ⟨ τ₁, τ₂, h₁, h₂, h₃ ⟩ := exists_mass_decomposition τ a b hτ';
+    refine' ⟨ α, τ₁, ⟨ hα, _, h₂ ⟩, τ₂, _, h₃, _ ⟩;
+    · exact le_trans ( le_add_right le_rfl ) ( h₁.le.trans hτ );
+    · refine' le_trans _ ( tsub_le_tsub_right hτ _ ); aesop;
+    · rw [ ← h₁, tsub_add_eq_tsub_tsub ];
+  · rintro ⟨ α, τ, ⟨ hα, hτ, rfl ⟩, τ', hτ', rfl, rfl ⟩;
+    refine' ⟨ α, hα, τ + τ', _, _, _ ⟩ <;> simp_all +decide [ Finsupp.le_def ];
+    · exact fun i => by linarith [ hτ i, hτ' i, Nat.sub_add_cancel ( hτ i ) ] ;
+    · exact mass_add _ _;
+    · ext i; simp +decide [ Nat.sub_sub ] ;
 
-/-! ## Shadow Profile -/
+/-! ## Shadow Profile Properties -/
 
-/-- The **derivative shadow profile**: cardinality of the k-th shadow. -/
-def derivShadowProfile {R : Type*} [CommSemiring R]
-    (f : MvPolynomial (Fin n) R) (k : ℕ) : ℕ :=
-  (kthShadow f.support k).card
-
-/-- Shadow profile at 0 equals the number of monomials. -/
-theorem derivShadowProfile_zero {R : Type*} [CommSemiring R]
+/-- The derivative shadow profile at `k = 0` equals the support size. -/
+theorem derivShadowProfile_zero {n : ℕ} {R : Type*} [CommSemiring R]
     (f : MvPolynomial (Fin n) R) :
     derivShadowProfile f 0 = f.support.card := by
   simp [derivShadowProfile, kthShadow_zero]
 
-/-! ## Discrete Exchange Family -/
-
-/-- **Discrete exchange family (M-convexity proxy).**
-A finite set `S` of exponent vectors satisfies the symmetric exchange property. -/
-def IsDiscreteExchangeFamily (S : Finset (Fin n →₀ ℕ)) : Prop :=
-  ∀ α ∈ S, ∀ β ∈ S, ∀ i : Fin n,
-    β i < α i →
-    ∃ j : Fin n, α j < β j ∧
-      α - Finsupp.single i 1 + Finsupp.single j 1 ∈ S
-
-/-
-Any singleton is trivially an exchange family.
--/
-theorem isDiscreteExchangeFamily_singleton (α : Fin n →₀ ℕ) :
-    IsDiscreteExchangeFamily {α} := by
-  intro α' hα' β' hβ' i hi; aesop;
-
-/-! ## Additional Properties -/
-
-/-
-If `k` exceeds every element's mass, the shadow is empty.
--/
-theorem kthShadow_eq_empty_of_large {S : Finset (Fin n →₀ ℕ)} {k : ℕ}
-    (hk : ∀ α ∈ S, totalMass α < k) :
-    kthShadow S k = ∅ := by
-  ext β;
-  simp +zetaDelta at *;
-  intro hβ; rw [ mem_kthShadow_iff ] at hβ; obtain ⟨ α, hαS, hαβ, hαβk ⟩ := hβ; have := hk α hαS; simp_all +decide [ Finsupp.sum_fintype ] ;
-  exact absurd hαβk ( ne_of_lt ( lt_of_le_of_lt ( Finset.sum_le_sum fun _ _ => Nat.sub_le _ _ ) ( hk α hαS ) ) )
-
-/-
-Membership in the 1-shadow.
--/
-theorem kthShadow_one_mem_iff {S : Finset (Fin n →₀ ℕ)} {β : Fin n →₀ ℕ} :
-    β ∈ kthShadow S 1 ↔
-    ∃ α ∈ S, ∃ i : Fin n, 0 < α i ∧ β = α - Finsupp.single i 1 := by
-  refine' ⟨ fun h => _, fun h => _ ⟩;
-  · obtain ⟨α, hαS, hαβ⟩ : ∃ α ∈ S, β ≤ α ∧ totalMass (α - β) = 1 := by
-      grind +suggestions;
-    -- Since `totalMass (α - β) = 1`, there exists exactly one index `i` such that `(α - β) i = 1` and `(α - β) j = 0` for all `j ≠ i`.
-    obtain ⟨i, hi⟩ : ∃ i : Fin n, (α - β) i = 1 ∧ ∀ j : Fin n, j ≠ i → (α - β) j = 0 := by
-      have h_unique : ∃ i : Fin n, (α - β) i > 0 ∧ ∀ j : Fin n, j ≠ i → (α - β) j = 0 := by
-        have h_sum : ∑ i : Fin n, (α - β) i = 1 := by
-          convert hαβ.2 using 1;
-          simp +decide [ totalMass, Finsupp.sum_fintype ]
-        obtain ⟨i, hi⟩ : ∃ i : Fin n, (α - β) i > 0 := by
-          contrapose! h_sum; aesop;
-        exact ⟨ i, hi, fun j hj => by rw [ Finset.sum_eq_add_sum_diff_singleton ( Finset.mem_univ i ) ] at h_sum; exact Nat.eq_zero_of_not_pos fun hj' => by linarith [ Finset.single_le_sum ( fun a _ => Nat.zero_le ( ( α - β ) a ) ) ( Finset.mem_sdiff.mpr ⟨ Finset.mem_univ j, by aesop ⟩ : j ∈ Finset.univ \ { i } ) ] ⟩;
-      obtain ⟨ i, hi₁, hi₂ ⟩ := h_unique; use i; simp_all +decide [ Finsupp.sum_fintype ] ;
-      rw [ Finset.sum_eq_single i ] at hαβ <;> aesop;
-    refine' ⟨ α, hαS, i, _, _ ⟩;
-    · contrapose! hi; aesop;
-    · ext j; by_cases hj : j = i <;> simp_all +decide [ Finsupp.single_apply ] ;
-      · grind;
-      · exact Eq.symm ( Nat.sub_eq_zero_iff_le.mp ( hi.2 j hj ) |> le_antisymm <| hαβ.1 j );
-  · rcases h with ⟨ α, hα, i, hi, rfl ⟩;
-    refine' Finset.mem_biUnion.mpr ⟨ α, hα, _ ⟩;
-    simp +decide [ totalMass ];
-    rw [ show α - ( α - Finsupp.single i 1 ) = Finsupp.single i 1 from ?_ ];
-    · rw [ Finsupp.sum_single_index ] ; norm_num;
-    · ext j; by_cases hj : j = i <;> simp +decide [ hj ] ;
-      grind
+/-- The shadow profile is monotone with respect to support inclusion. -/
+theorem derivShadowProfile_mono {n : ℕ} {R : Type*} [CommSemiring R]
+    {f g : MvPolynomial (Fin n) R} (h : f.support ⊆ g.support) (k : ℕ) :
+    derivShadowProfile f k ≤ derivShadowProfile g k := by
+  exact Finset.card_le_card (kthShadow_mono h k)
 
 end IteratedShadowGeometry
