@@ -11,10 +11,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5048e13",
     "timestamp": "2026-05-24T22:37:54.484135+00:00"
   },
   {
@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "fcd58d33",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -209,10 +209,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "35af0f61",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:32.465513+00:00"
   },
   {
@@ -359,10 +359,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f6d2983",
     "timestamp": "2026-05-25T22:25:38.908872+00:00"
   },
   {
@@ -616,10 +616,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "550b5c8b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "06373e59",
     "timestamp": "2026-05-26T21:18:02.967940+00:00"
   },
   {
@@ -716,10 +716,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "e4837868",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a0bcb77f",
     "timestamp": "2026-05-27T12:07:55.522801+00:00"
   },
   {
@@ -1062,26 +1062,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T14:11:26.628158+00:00"
   },
   {
-    "id": "fd_1825",
-    "title": "Direction 4: Lorentzian Anti-Cancellation in Statistical Physics",
-    "description": "**Conjecture:** For the partition function $Z = \\sum_\\sigma \\exp(-\\beta H(\\sigma))$ of a ferromagnetic Ising model on a graph $G$, the associated \"multivariate partition polynomial\" (with variables indexing spins) is Lorentzian when $\\beta > 0$. The anti-cancellation theorem then implies that the observable support of any positive second-order susceptibility operator equals its aggregate shadow \u2014 meaning no physical observable is accidentally hidden by thermal averaging.\n\n**Test:** Compute the multivariate partition polynomial for the Ising model on small graphs ($K_4$, $K_5$, Petersen graph) at various temperatures. Verify Lorentzian conditions (Newton inequalities along all slices). Compute the Hessian shadow under the susceptibility matrix $\\chi_{ij} = \\partial_i \\partial_j \\ln Z$ and verify support exactness.\n\n**Impact:** Would establish a formal connection between Lorentzian polynomial theory and equilibrium statistical mechanics. The anti-cancellation theorem would guarantee that physical susceptibilities cannot accidentally vanish \u2014 a form of \"no hidden correlations\" for ferromagnetic systems.\n\n**Catalog References:** `Pythagorean/LorentzianAggregateAntiCancel.lean`, `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean`.\n\n**Proof Strategy:** The Lee\u2013Yang theorem guarantees that the partition function of a ferromagnetic Ising model has all roots on the unit circle, implying a form of stability. Use the Br\u00e4nd\u00e9n\u2013Huh characterization to show that stability implies the Lorentzian condition. Then apply the anti-cancellation theorem.\n\n**Domain Bridges:** Statistical physics \u2194 Combinatorial Hodge theory \u2194 Probability theory.\n\n**Lineage:** Connects the Lorentzian framework to the classical Lee\u2013Yang theory.\n\n**Ambition:** Grand challenge \u2014 would unify two major mathematical physics traditions.\n\n**The key insight is** that the Lee\u2013Yang property (real-stability) is strictly stronger than the Lorentzian condition, so ferromagnetic partition functions are automatically in the anti-cancellation regime.\n\n**Why now?** Recent breakthroughs by Anari, Liu, Oveis Gharan, and Vinzant have established the Lorentzian framework for strongly Rayleigh measures, which are closely related to ferromagnetic partition functions. The formal infrastructure is ready for cross-pollination.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "57cfb68b",
-    "consumed_by_exp_id": "37e69c75",
-    "timestamp": "2026-05-28T14:11:26.812761+00:00"
-  },
-  {
     "id": "fd_1842",
     "title": "Direction 1: Complete SAT-to-Lorentzian Reduction (Grand Challenge)",
     "description": "**Conjecture**: There exists a polynomial-time computable map from CNF formulas \u03c6 to homogeneous polynomials P_\u03c6 with nonneg integer coefficients such that P_\u03c6 is Lorentzian if and only if \u03c6 is unsatisfiable. This would establish coNP-hardness of unrestricted-degree Lorentzian recognition.\n\n**Test**: For each 3-SAT instance on \u2264 6 variables, compute P_\u03c6 and verify the Lorentzian \u2194 unsatisfiable equivalence by exhaustive Hessian checking. A single counterexample disproves the conjecture.\n\n**Impact**: The first complexity-hardness result for a Hodge-theoretic positivity predicate. Would transform the field's understanding of what \"algebraic positivity\" means computationally.\n\n**Catalog References**: `Pythagorean/LorentzianHardness.lean` \u2014 `boolean_assignment_multiindex_lower_bound`, `assignmentToMultiindex_injective`; `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `IsRecursivelyLorentzian`, `hessianMatrix`.\n\n**Proof Strategy**: Use the Boolean-to-multiindex encoding (Theorem C) as the assignment layer. Construct P_\u03c6 so that: (a) clause constraints appear as coefficient conditions on specific monomials, (b) unsatisfied assignments produce Hessians with two positive eigenvalues. The key algebraic challenge is designing the monomial structure so the Hessian sign condition at leaf \u03b1 detects whether the assignment encoded by \u03b1 satisfies all clauses.\n\n**Domain Bridges**: Computational complexity (Cook\u2013Levin theory) \u2194 algebraic combinatorics (Lorentzian polynomials) \u2194 spectral theory (Hessian eigenvalues).\n\n**Lineage**: Builds directly on Theorems B and C of this cycle.\n\n**Ambition**: Grand challenge \u2014 paradigm-shifting.\n\n> **The key insight is** that the Boolean-to-multiindex injection we've proved provides the combinatorial backbone of a SAT reduction; what remains is the algebraic design of coefficient patterns that make Hessian signatures detect clause satisfaction.\n\n> **Why now?** The formalization of the multiindex-assignment correspondence makes the reduction structure precise for the first time, reducing the problem from \"design a reduction from scratch\" to \"design a polynomial with specified Hessian behavior at known points.\"\n\n---",
@@ -1099,26 +1079,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "7968ebde",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T15:57:05.064782+00:00"
-  },
-  {
-    "id": "fd_1843",
-    "title": "Direction 2: Spectral Embedding \u2014 Matrix Positivity to Lorentzian Leaves",
-    "description": "**Conjecture**: For any n\u00d7n symmetric rational matrix A, there exists a homogeneous polynomial P_A in n+2 variables such that P_A is Lorentzian if and only if A has at most one positive eigenvalue. The construction should be polynomial-time computable.\n\n**Test**: For random 4\u00d74 symmetric matrices, compute P_A and verify the eigenvalue-Lorentzian equivalence against numerical eigenvalue decomposition.\n\n**Impact**: Creates a second reduction route to hardness (from matrix spectral problems) and connects Lorentzian theory to semialgebraic geometry and semidefinite programming.\n\n**Catalog References**: `Catalog/Bridges/LorentzianRecognition.lean` \u2014 `HasAtMostOnePositiveEigenvalue`, `QuadForm`, `hessianMatrix`; `Pythagorean/LorentzianHardness.lean` \u2014 `multiindex_count_exponential_lower`.\n\n**Proof Strategy**: Embed the matrix A into the Hessian of a carefully constructed quartic polynomial. The degree-2 derivative leaves of this quartic are quadratics whose Hessians are translates of A. If A has two positive eigenvalues, some leaf fails the Lorentzian condition.\n\n**Domain Bridges**: Spectral graph theory \u2194 Lorentzian polynomials \u2194 semidefinite programming.\n\n**Lineage**: Extends the tangent-space negativity theorem from the catalog.\n\n**Ambition**: Solid extension \u2014 builds a new reduction route.\n\n> **The key insight is** that the Hessian matrix of a Lorentzian polynomial's degree-2 leaf *is* the spectral object being tested, so embedding a target matrix into a leaf Hessian is algebraically natural \u2014 it's the reverse direction of the recognition procedure.\n\n> **Why now?** The catalog's formalization of `hessianMatrix` and `HasAtMostOnePositiveEigenvalue` provides the exact interface needed for a spectral embedding theorem.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "7968ebde",
-    "consumed_by_exp_id": "2a56098b",
-    "timestamp": "2026-05-28T15:57:05.143458+00:00"
   },
   {
     "id": "fd_1844",
@@ -1355,6 +1315,49 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1925",
+    "title": "Direction 1: Lorentzian Closure Under Edge Multiplication",
+    "description": "**Conjecture:** For every finite graph G with non-negative couplings J \u2265 0 and \u03b2 \u2265 0, the multiaffine sector of the partition polynomial \u2014 viewed as a function of the field variables \u2014 satisfies the Lorentzian condition: all iterated directional derivatives down to degree 2 yield quadratic forms with at most one positive eigenvalue, provided the directional derivatives use vectors in the positive orthant.\n\n**Test:** Compute the Hessian eigenvalues after specializing n-2 variables to positive values for complete graphs K_3 through K_7, triangle-free graphs, and random graphs, at multiple coupling strengths. A single configuration yielding two positive eigenvalues at a positive specialization point disproves the conjecture.\n\n**Impact:** If true, this would establish the full Lorentzian structure of ferromagnetic partition polynomials, completing the bridge between Lee-Yang stability theory and Br\u00e4nd\u00e9n-Huh Lorentzian geometry. It would give structural proofs of log-concavity results for specialized coefficient sequences.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianAggregateAntiCancel.lean` \u2014 anti-cancellation engine\n- `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean` \u2014 Lorentzian gap certificates\n\n**Proof Strategy:** Strategy B from the current work: decompose the partition polynomial as a product of edge factors, prove each edge factor is Lorentzian (using the multiaffine Hessian signature result for two variables), then apply Lorentzian closure under products / polarized compositions. The key missing ingredient is a formalized Lorentzian closure theorem for multiaffine products.\n\n**Domain Bridges:** Statistical physics \u2194 Combinatorial Hodge theory \u2194 Algebraic geometry\n\n**Lineage:** Extends Theorems 2 and 3 of the current work from two spins to general graphs.\n\n**Ambition:** grand_challenge \u2014 Would establish a complete Lorentzian theory of partition functions.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "37e69c75",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T20:34:24.776436+00:00"
+  },
+  {
+    "id": "fd_1927",
+    "title": "Direction 3: Phase Transition Detection via Hessian Rank Degeneration",
+    "description": "**Conjecture:** The critical temperature \u03b2_c of the ferromagnetic Ising model on a sequence of growing graphs (e.g., boxes in Z^d) can be detected as the value of \u03b2 where the multiaffine Hessian of the partition polynomial undergoes a rank transition: the number of eigenvalues exceeding a threshold changes discontinuously (in the infinite-volume limit).\n\n**Test:** For the Ising model on L \u00d7 L square lattices (L = 3, 4, 5, 6), compute the Hessian eigenvalue distribution at \u03b2 values bracketing the known critical point \u03b2_c = ln(1+\u221a2)/2. Track the fraction of eigenvalues above various thresholds and test for finite-size scaling consistent with a rank transition.\n\n**Impact:** Would provide a novel algebraic criterion for phase transitions, distinct from the standard thermodynamic (free energy singularity) and probabilistic (correlation length divergence) criteria. Could lead to algorithms for detecting phase transitions from finite-size polynomial data.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianAggregateAntiCancel.lean` \u2014 Hessian structure\n- `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean` \u2014 spectral gap degradation near criticality\n\n**Proof Strategy:** Use the Newton inequality threshold (Theorem 7) as a prototype: for two spins, the threshold \u03b2_c = ln 2 / J is exact. For general graphs, establish that the threshold for the first Newton inequality failure converges to the true critical temperature as graph size grows.\n\n**Domain Bridges:** Statistical physics \u2194 Random matrix theory \u2194 Spectral graph theory\n\n**Lineage:** Extends Theorem 7 (levelWeight\u2082_newton_iff) from two spins to general graphs.\n\n**Ambition:** grand_challenge \u2014 Would create a new algebraic approach to critical phenomena.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "37e69c75",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T20:34:24.933104+00:00"
   },
   {
     "id": "seed_013",
@@ -2071,20 +2074,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
-  },
-  {
-    "id": "fd_1919",
-    "title": "\"Why now?\"",
-    "description": "The formal verification of energy positivity and the bilinear form structure ensures that the kernel matrix is non-degenerate (after removing the constant mode), which is the essential condition for the determinant formula to hold.",
-    "domains": [
-      "Physics"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ce4c226e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T19:58:25.943481+00:00"
   },
   {
     "id": "seed_007",

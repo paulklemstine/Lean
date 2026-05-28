@@ -1,377 +1,352 @@
 #!/usr/bin/env python3
 """
-Algorithms for Wreath Product Double Scaling Analysis
+Algorithms for wreath-product subgroup pressure analysis.
 
-Implements the computational methods from the research paper:
-- Wreath defect computation
-- Critical exponent estimation
-- Data collapse analysis
-- Regime classification
+Implements:
+1. Wreath defect computation
+2. Rescaled defect and relevance ratio
+3. Critical exponent search via data collapse
+4. Model pressure functions for testing
 
-All algorithms have documented complexity and correspond to
-formally verified Lean definitions.
+All functions have type hints and docstrings.
 """
 
-import numpy as np
-from typing import Tuple, List, Optional, Dict
 import math
+from typing import List, Tuple, Optional, Callable
 
 
-# ──────────────────────────────────────────────────────────────────
-# Algorithm 1: Wreath Defect Computation
-# ──────────────────────────────────────────────────────────────────
+# ============================================================
+# Core Definitions
+# ============================================================
 
-def compute_wreath_defect(
-    beta_symm: callable,
-    beta_wreath: callable,
-    k: int,
-    m: int
-) -> float:
-    """Compute the wreath defect Δ(k,m) = β_W(k,m) - m·β(S_k).
-
-    Corresponds to the Lean definition:
-        def WreathDefect (betaSymm : ℕ → ℝ) (betaW : ℕ → ℕ → ℝ) (k m : ℕ) : ℝ :=
-          betaW k m - (m : ℝ) * betaSymm k
-
-    Args:
-        beta_symm: Function ℕ → ℝ giving symmetric group pressure exponent
-        beta_wreath: Function ℕ × ℕ → ℝ giving wreath product pressure exponent
-        k: Base group parameter (rank of S_k)
-        m: Multiplicity parameter (number of copies)
-
-    Returns:
-        The wreath defect Δ(k,m)
-
-    Time complexity: O(T_β) where T_β is the cost of evaluating β_W and β_S
-    Space complexity: O(1)
-
-    Example:
-        >>> def bs(k): return k * math.log(max(k, 2))
-        >>> def bw(k, m): return m * bs(k) + m / k**2
-        >>> compute_wreath_defect(bs, bw, 10, 5)
-        0.05
+def wreath_defect(beta_symm: float, beta_wreath: float, m: int) -> float:
     """
-    return beta_wreath(k, m) - m * beta_symm(k)
+    Compute the wreath defect Delta(k, m) = beta_W(k, m) - m * beta(S_k).
 
+    Parameters
+    ----------
+    beta_symm : float
+        Symmetric group pressure beta(S_k).
+    beta_wreath : float
+        Wreath product pressure beta_W(k, m).
+    m : int
+        Multiplicity parameter.
 
-def compute_wreath_defect_polynomial_model(
-    k: int,
-    m: int,
-    C: float = 1.0,
-    p: float = 1.0,
-    q: float = 2.0
-) -> float:
-    """Compute wreath defect under polynomial model.
+    Returns
+    -------
+    float
+        The wreath defect.
 
-    Model: Δ(k,m) = C · m^p / k^q
-
-    This is the canonical model used in Theorem 1 of the paper.
-
-    Args:
-        k: Base group parameter
-        m: Multiplicity parameter
-        C: Amplitude constant (C ≥ 0)
-        p: Multiplicity exponent (p > 0)
-        q: Decay exponent (q > 0)
-
-    Returns:
-        Model wreath defect
-
-    Time complexity: O(1)
+    Example
+    -------
+    >>> wreath_defect(1.0, 2.5, 2)
+    0.5
     """
-    if k == 0:
+    return beta_wreath - m * beta_symm
+
+
+def rescaled_defect(delta: float, k: int, m: int, alpha: float) -> float:
+    """
+    Compute the rescaled defect R_alpha(k, m) = k^alpha / m * Delta(k, m).
+
+    Parameters
+    ----------
+    delta : float
+        The wreath defect Delta(k, m).
+    k : int
+        Base group parameter.
+    m : int
+        Multiplicity parameter.
+    alpha : float
+        Candidate critical exponent.
+
+    Returns
+    -------
+    float
+        The rescaled defect. Returns 0.0 if m == 0.
+
+    Example
+    -------
+    >>> rescaled_defect(0.5, 10, 100, 2.0)
+    0.5
+    """
+    if m == 0:
         return 0.0
-    return C * (m ** p) / (k ** q)
+    return (k ** alpha) / m * delta
 
 
-# ──────────────────────────────────────────────────────────────────
-# Algorithm 2: Critical Exponent Estimation
-# ──────────────────────────────────────────────────────────────────
-
-def estimate_critical_exponent(
-    defect_data: List[Tuple[int, int, float]],
-    method: str = "least_squares"
-) -> Tuple[float, float, float]:
-    """Estimate critical exponent α_c = q/p from defect measurements.
-
-    Given triples (k_i, m_i, Δ_i), fit the model |Δ| = C · m^p / k^q
-    to estimate p, q, and hence α_c = q/p.
-
-    Args:
-        defect_data: List of (k, m, defect) measurements
-        method: Estimation method ("least_squares" or "log_regression")
-
-    Returns:
-        Tuple (alpha_c, p_est, q_est) with estimated critical exponent
-        and individual power-law exponents
-
-    Time complexity: O(n) where n = len(defect_data)
-    Space complexity: O(n)
-
-    Algorithm:
-        1. Take logarithms: log|Δ| = log(C) + p·log(m) - q·log(k)
-        2. Solve the linear regression problem
-        3. Return α_c = q_est / p_est
-
-    Example:
-        >>> data = [(k, k, 1.0/k**2) for k in range(5, 50)]
-        >>> alpha_c, p, q = estimate_critical_exponent(data)
-        >>> abs(alpha_c - 2.0) < 0.1  # Should be close to q/p = 2/1
-        True
+def relevance_ratio(delta: float, k: int, m: int, alpha: float) -> float:
     """
-    if len(defect_data) < 3:
-        raise ValueError("Need at least 3 data points")
+    Compute the relevance ratio Phi_alpha(k, m) = |Delta| / (m / k^alpha).
 
-    # Filter out zero/negative defects
-    valid = [(k, m, d) for k, m, d in defect_data if k > 0 and m > 0 and abs(d) > 1e-15]
-    if len(valid) < 3:
-        raise ValueError("Insufficient valid data points")
+    This is the scaling-dimension observable: when Phi -> 0, the
+    perturbation is irrelevant at exponent alpha.
 
-    # Log-linear regression: log|Δ| = log(C) + p·log(m) - q·log(k)
-    n = len(valid)
-    log_defects = np.array([math.log(abs(d)) for _, _, d in valid])
-    log_m = np.array([math.log(m) for _, m, _ in valid])
-    log_k = np.array([math.log(k) for k, _, _ in valid])
+    Parameters
+    ----------
+    delta : float
+        The wreath defect.
+    k : int
+        Base group parameter.
+    m : int
+        Multiplicity parameter.
+    alpha : float
+        Scaling exponent.
 
-    # Design matrix [1, log(m), -log(k)]
-    A = np.column_stack([np.ones(n), log_m, -log_k])
+    Returns
+    -------
+    float
+        The relevance ratio. Returns 0.0 if m == 0.
 
-    # Least squares solution
-    result, _, _, _ = np.linalg.lstsq(A, log_defects, rcond=None)
-    log_C, p_est, q_est = result
-
-    alpha_c = q_est / p_est if abs(p_est) > 1e-10 else float('inf')
-
-    return alpha_c, p_est, q_est
-
-
-def estimate_critical_exponent_bisection(
-    defect_fn: callable,
-    k_range: Tuple[int, int] = (10, 1000),
-    alpha_range: Tuple[float, float] = (0.5, 5.0),
-    tol: float = 0.01,
-    n_samples: int = 20
-) -> float:
-    """Estimate critical exponent by bisection on scaling collapse quality.
-
-    For each candidate α, compute the variance of the rescaled defect
-    R_α(k, m(k)) across different k values with m(k) = ⌊k^α⌋.
-    The optimal α minimizes this variance (best collapse).
-
-    Args:
-        defect_fn: Function (k, m) → Δ(k,m)
-        k_range: Range of k values to test
-        alpha_range: Search interval for α
-        tol: Convergence tolerance
-        n_samples: Number of k values to sample
-
-    Returns:
-        Estimated critical exponent
-
-    Time complexity: O(n_samples · log((α_max - α_min) / tol))
-    Space complexity: O(n_samples)
+    Example
+    -------
+    >>> relevance_ratio(0.5, 10, 100, 2.0)
+    0.5
     """
-    k_values = np.linspace(k_range[0], k_range[1], n_samples, dtype=int)
-    k_values = np.unique(k_values)
-
-    def collapse_variance(alpha: float) -> float:
-        rescaled = []
-        for k in k_values:
-            m = max(1, int(k ** alpha))
-            delta = defect_fn(k, m)
-            if m > 0 and k > 0:
-                R = (k ** alpha / m) * delta
-                rescaled.append(R)
-        if len(rescaled) < 2:
-            return float('inf')
-        return np.var(rescaled)
-
-    # Bisection: find α that minimizes collapse variance
-    lo, hi = alpha_range
-    while hi - lo > tol:
-        mid1 = lo + (hi - lo) / 3
-        mid2 = hi - (hi - lo) / 3
-        if collapse_variance(mid1) < collapse_variance(mid2):
-            hi = mid2
-        else:
-            lo = mid1
-
-    return (lo + hi) / 2
+    if m == 0:
+        return 0.0
+    denominator = m / (k ** alpha)
+    if denominator == 0:
+        return float('inf')
+    return abs(delta) / denominator
 
 
-# ──────────────────────────────────────────────────────────────────
-# Algorithm 3: Regime Classification
-# ──────────────────────────────────────────────────────────────────
+# ============================================================
+# Model Pressure Functions
+# ============================================================
 
-def classify_regime(
-    k: int,
-    m: int,
-    alpha_c: float,
-    threshold_low: float = 0.1,
-    threshold_high: float = 10.0
-) -> str:
-    """Classify the perturbation regime for given (k, m).
+def model_beta_symm(k: int) -> float:
+    """
+    Model symmetric group pressure: beta(S_k) = log(k).
 
-    Corresponds to the Lean inductive type:
-        inductive PerturbationRegime
-        | irrelevant  -- m ≪ k^α_c
-        | marginal    -- m ≍ k^α_c
-        | relevant    -- m ≫ k^α_c
+    Parameters
+    ----------
+    k : int
+        Group parameter.
 
-    Args:
-        k: Base group parameter
-        m: Multiplicity parameter
-        alpha_c: Critical exponent
-        threshold_low: Below this ratio → irrelevant
-        threshold_high: Above this ratio → relevant
-
-    Returns:
-        One of "irrelevant", "marginal", "relevant"
-
-    Time complexity: O(1)
+    Returns
+    -------
+    float
+        Model pressure value.
     """
     if k <= 0:
-        return "marginal"
-    ratio = m / (k ** alpha_c)
-    if ratio < threshold_low:
-        return "irrelevant"
-    elif ratio > threshold_high:
-        return "relevant"
-    else:
-        return "marginal"
+        return 0.0
+    return math.log(k)
 
 
-# ──────────────────────────────────────────────────────────────────
-# Algorithm 4: Data Collapse Analysis
-# ──────────────────────────────────────────────────────────────────
-
-def data_collapse_analysis(
-    defect_fn: callable,
-    k_values: List[int],
-    m_multipliers: List[float],
-    alpha_candidates: List[float]
-) -> Dict[float, float]:
-    """Perform data collapse analysis for multiple candidate exponents.
-
-    For each α, compute the rescaled defect R_α(k, λ·k^α) for multiple
-    k values and λ values, then measure how well the curves collapse.
-
-    Quality of collapse is measured by the coefficient of variation
-    of R_α across different k for each fixed λ.
-
-    Args:
-        defect_fn: Function (k, m) → Δ(k,m)
-        k_values: List of k values to test
-        m_multipliers: List of λ values (m = ⌊λ·k^α⌋)
-        alpha_candidates: List of candidate exponents to test
-
-    Returns:
-        Dictionary mapping α → collapse quality score (lower is better)
-
-    Time complexity: O(|α_candidates| · |k_values| · |m_multipliers|)
+def model_beta_wreath(k: int, m: int, C: float = 0.5,
+                       a: int = 1, b: int = 2) -> float:
     """
-    scores = {}
+    Model wreath product pressure with polynomial defect:
+    beta_W(k, m) = m * log(k) + C * m^a / k^b
+
+    The critical exponent is alpha_c = b/a.
+
+    Parameters
+    ----------
+    k : int
+        Base group parameter.
+    m : int
+        Multiplicity parameter.
+    C : float
+        Defect amplitude.
+    a : int
+        Defect power in m.
+    b : int
+        Defect power in k.
+
+    Returns
+    -------
+    float
+        Model wreath product pressure.
+    """
+    if k <= 0:
+        return 0.0
+    return m * math.log(k) + C * (m ** a) / (k ** b)
+
+
+# ============================================================
+# Critical Exponent Search
+# ============================================================
+
+def search_critical_exponent(
+    data: List[Tuple[int, int, float, float]],
+    alpha_candidates: List[float],
+) -> Tuple[float, float]:
+    """
+    Search for the critical exponent by data collapse.
+
+    For each candidate alpha, compute the rescaled defect for all
+    data points and measure the variance. The alpha with minimum
+    variance gives the best collapse.
+
+    Parameters
+    ----------
+    data : list of (k, m, beta_wreath, beta_symm)
+        Observed pressure data.
+    alpha_candidates : list of float
+        Candidate exponents to test.
+
+    Returns
+    -------
+    (best_alpha, min_variance) : tuple
+        The best-fit exponent and its variance.
+
+    Example
+    -------
+    >>> data = [(k, k, model_beta_wreath(k, k), model_beta_symm(k))
+    ...         for k in range(3, 20)]
+    >>> best, var = search_critical_exponent(data, [0.5, 1.0, 1.5, 2.0, 2.5])
+    """
+    best_alpha = alpha_candidates[0]
+    min_variance = float('inf')
 
     for alpha in alpha_candidates:
-        total_cv = 0.0
-        n_valid = 0
+        r_values = []
+        for k, m, bw, bs in data:
+            delta = wreath_defect(bs, bw, m)
+            r = rescaled_defect(delta, k, m, alpha)
+            r_values.append(r)
 
-        for lam in m_multipliers:
-            rescaled_values = []
-            for k in k_values:
-                m = max(1, int(lam * k ** alpha))
-                delta = defect_fn(k, m)
-                if m > 0 and k > 0:
-                    R = (k ** alpha / m) * delta
-                    rescaled_values.append(R)
+        if len(r_values) < 2:
+            continue
 
-            if len(rescaled_values) >= 2:
-                mean = np.mean(rescaled_values)
-                std = np.std(rescaled_values)
-                cv = std / abs(mean) if abs(mean) > 1e-10 else std
-                total_cv += cv
-                n_valid += 1
+        mean_r = sum(r_values) / len(r_values)
+        variance = sum((r - mean_r) ** 2 for r in r_values) / len(r_values)
 
-        scores[alpha] = total_cv / n_valid if n_valid > 0 else float('inf')
+        if variance < min_variance:
+            min_variance = variance
+            best_alpha = alpha
 
-    return scores
+    return best_alpha, min_variance
 
 
-# ──────────────────────────────────────────────────────────────────
-# Algorithm 5: Subcritical Convergence Rate
-# ──────────────────────────────────────────────────────────────────
-
-def subcritical_convergence_rate(
-    C: float,
-    p: float,
-    q: float,
-    m_exponent: float,
-    k_values: List[int]
-) -> List[Tuple[int, float]]:
-    """Compute convergence rate of defect in subcritical regime.
-
-    For m(k) = k^β with β < q/p (subcritical), compute:
-        |Δ(k, m(k))| ≤ C · k^{pβ - q}
-
-    The defect decays as k^{pβ - q} with pβ - q < 0 in the
-    subcritical regime.
-
-    Args:
-        C: Amplitude constant
-        p: Multiplicity exponent
-        q: Decay exponent
-        m_exponent: The exponent β in m(k) = k^β
-        k_values: List of k values
-
-    Returns:
-        List of (k, bound) pairs showing the decay
-
-    Convergence rate: O(k^{pβ - q})
+def classify_regime(m: int, k: int, alpha_c: float,
+                    tolerance: float = 0.1) -> str:
     """
-    alpha_c = q / p if p > 0 else float('inf')
-    decay_rate = p * m_exponent - q
+    Classify the perturbation regime for given (k, m) and critical exponent.
 
-    results = []
-    for k in k_values:
-        m = max(1, int(k ** m_exponent))
-        bound = C * m ** p / k ** q
-        results.append((k, bound))
+    Parameters
+    ----------
+    m : int
+        Multiplicity parameter.
+    k : int
+        Base group parameter.
+    alpha_c : float
+        Critical exponent.
+    tolerance : float
+        Window around alpha_c for marginal classification.
 
-    return results
+    Returns
+    -------
+    str
+        One of 'irrelevant', 'marginal', 'relevant'.
 
+    Example
+    -------
+    >>> classify_regime(5, 100, 2.0)
+    'irrelevant'
+    >>> classify_regime(10000, 100, 2.0)
+    'relevant'
+    """
+    if k <= 0:
+        return 'marginal'
+
+    ratio = math.log(m + 1) / (alpha_c * math.log(k + 1))
+
+    if ratio < 1 - tolerance:
+        return 'irrelevant'
+    elif ratio > 1 + tolerance:
+        return 'relevant'
+    else:
+        return 'marginal'
+
+
+# ============================================================
+# Defect Envelope Verification
+# ============================================================
+
+def verify_polynomial_bound(
+    beta_symm_fn: Callable[[int], float],
+    beta_wreath_fn: Callable[[int, int], float],
+    k_range: range,
+    m_range_fn: Callable[[int], range],
+    C: float,
+    a: int,
+    b: int,
+) -> Tuple[bool, Optional[Tuple[int, int, float]]]:
+    """
+    Verify that |Delta(k,m)| <= C * m^a / k^b for all k, m in given ranges.
+
+    Returns
+    -------
+    (valid, counterexample) : tuple
+        valid is True if the bound holds everywhere.
+        counterexample is None if valid, else (k, m, |Delta|).
+
+    Example
+    -------
+    >>> valid, _ = verify_polynomial_bound(
+    ...     model_beta_symm, model_beta_wreath,
+    ...     range(3, 20), lambda k: range(1, k*k),
+    ...     0.5, 1, 2)
+    >>> valid
+    True
+    """
+    for k in k_range:
+        for m in m_range_fn(k):
+            bs = beta_symm_fn(k)
+            bw = beta_wreath_fn(k, m)
+            delta = wreath_defect(bs, bw, m)
+            bound = C * (m ** a) / (k ** b)
+            if abs(delta) > bound + 1e-12:  # small tolerance for floats
+                return False, (k, m, abs(delta))
+    return True, None
+
+
+# ============================================================
+# Example usage
+# ============================================================
 
 if __name__ == "__main__":
-    print("Algorithm Demonstrations")
-    print("=" * 60)
+    print("Algorithms for Wreath-Product Critical Phenomena")
+    print("=" * 50)
 
-    # Demo 1: Wreath defect computation
-    print("\n1. Wreath Defect (Polynomial Model)")
-    for k in [5, 10, 20, 50, 100]:
-        for m in [k, k**2]:
-            delta = compute_wreath_defect_polynomial_model(k, m)
-            print(f"   k={k:>3}, m={m:>5}: Δ = {delta:.6f}")
+    # Example 1: Compute wreath defect
+    k, m = 10, 5
+    bs = model_beta_symm(k)
+    bw = model_beta_wreath(k, m)
+    delta = wreath_defect(bs, bw, m)
+    print(f"\nExample 1: k={k}, m={m}")
+    print(f"  beta_symm = {bs:.4f}")
+    print(f"  beta_wreath = {bw:.4f}")
+    print(f"  wreath_defect = {delta:.6f}")
 
-    # Demo 2: Critical exponent estimation
-    print("\n2. Critical Exponent Estimation")
+    # Example 2: Search for critical exponent
     data = []
-    for k in range(5, 100):
-        for m_mult in [1, 2, 5]:
+    for k in range(3, 30):
+        for m_mult in [1, 2, 5, 10]:
             m = m_mult * k
-            delta = compute_wreath_defect_polynomial_model(k, m, C=1.0, p=1.0, q=2.0)
-            data.append((k, m, delta))
-    alpha_c, p_est, q_est = estimate_critical_exponent(data)
-    print(f"   Estimated: α_c = {alpha_c:.4f}, p = {p_est:.4f}, q = {q_est:.4f}")
-    print(f"   True:      α_c = 2.0000, p = 1.0000, q = 2.0000")
+            bw = model_beta_wreath(k, m)
+            bs = model_beta_symm(k)
+            data.append((k, m, bw, bs))
 
-    # Demo 3: Regime classification
-    print("\n3. Regime Classification (α_c = 2.0)")
-    for k, m in [(10, 1), (10, 100), (10, 10000), (100, 10), (100, 10000)]:
-        regime = classify_regime(k, m, 2.0)
-        print(f"   k={k:>3}, m={m:>5}: {regime}")
+    alphas = [i * 0.25 for i in range(1, 13)]
+    best, var = search_critical_exponent(data, alphas)
+    print(f"\nExample 2: Critical exponent search")
+    print(f"  Best alpha = {best:.2f}")
+    print(f"  Variance = {var:.6f}")
 
-    # Demo 4: Subcritical convergence
-    print("\n4. Subcritical Convergence Rate")
-    k_vals = [10, 50, 100, 500, 1000]
-    rates = subcritical_convergence_rate(1.0, 1.0, 2.0, 1.5, k_vals)
-    for k, bound in rates:
-        print(f"   k={k:>4}: |Δ| ≤ {bound:.8f}")
+    # Example 3: Verify polynomial bound
+    valid, cex = verify_polynomial_bound(
+        model_beta_symm, model_beta_wreath,
+        range(3, 20), lambda k: range(1, k * k),
+        0.5, 1, 2)
+    print(f"\nExample 3: Polynomial bound verification")
+    print(f"  Bound holds: {valid}")
+
+    # Example 4: Regime classification
+    print(f"\nExample 4: Regime classification (alpha_c = 2.0)")
+    for k, m in [(100, 5), (100, 100), (100, 10000)]:
+        regime = classify_regime(m, k, 2.0)
+        print(f"  k={k}, m={m}: {regime}")
