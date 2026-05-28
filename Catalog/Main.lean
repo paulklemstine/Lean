@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2017 of the highest-quality
+A curated collection of 2018 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2017
+Total files: 2018
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1644,6 +1644,7 @@ import FINAL.Pythagorean.NewtonEntropyHierarchy
 import FINAL.Pythagorean.NewtonErosion
 import FINAL.Pythagorean.NoiseStabilityTheorems
 import FINAL.Pythagorean.NonAbelianPhaseClassification
+import FINAL.Pythagorean.NonCancellationCertificate
 import FINAL.Pythagorean.NormalizationBisimDistance
 import FINAL.Pythagorean.O31_Generators
 import FINAL.Pythagorean.OpenQuestions

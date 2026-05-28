@@ -338,10 +338,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "461e08e3",
     "timestamp": "2026-05-25T20:01:51.853060+00:00"
   },
   {
@@ -359,10 +359,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "bf323aae",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.908872+00:00"
   },
   {
@@ -851,10 +851,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d74bda34",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e24d8d3f",
     "timestamp": "2026-05-28T06:14:18.922140+00:00"
   },
   {
@@ -1390,6 +1390,68 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1862",
+    "title": "Direction 1: Higher-Order Shadow Certificates and Iterated Differentiation",
+    "description": "**Conjecture:** For any polynomial p over \u211a and any k \u2265 1, the k-th order shadow (obtained by subtracting k unit basis vectors from support elements) exactly predicts the support of k-th order partial derivatives, with a corresponding k-th order non-cancellation certificate that is generic on shadow-closed supports.\n\n**Test:** Implement k-th order shadow computation for k = 3, 4 on random sparse polynomials in 3-5 variables. Verify predicted vs actual supports for all k-th partial derivatives. Search for a counterexample where a generic coefficient assignment violates the k-th order certificate.\n\n**Impact:** Higher-order shadows capture more refined structural information about polynomials. If the certificate extends to all orders, the full Taylor expansion structure of a polynomial is combinatorially determined by its support \u2014 a dramatic strengthening of the current second-order result.\n\n**Catalog References:**\n- `Pythagorean/NonCancellationCertificate.lean`: `coeff_pderiv_eq`, `coeff_pderiv_pderiv_ne_zero_iff`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `nonzeroQuadLeafSet_eq_shadow`\n\n**Proof Strategy:** Induction on k. The base case k = 2 is the current work. For the inductive step, apply `coeff_pderiv_eq` once more and verify that the new scalar factor (involving (\u03b2(i_k) + 1)) is nonzero over \u211a. The key insight is that each additional derivative introduces exactly one new positive-integer scalar factor, preserving the one-ancestor property.\n\n**Domain Bridges:** Combinatorics (shadow growth rates), Analysis (Taylor remainder estimates), Complexity theory (depth-k circuit lower bounds)\n\n**Lineage:** Extends the exact support realization theorem from order 2 to arbitrary order.\n\n**Ambition:** Solid extension \u2014 directly builds on established techniques.\n\n**Why now?** The coefficient transport formula (`coeff_pderiv_eq`) has been formally verified for arbitrary order, providing the inductive base case. Extending to k-th order is a natural next step that the existing infrastructure directly supports.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7a00ed5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T17:54:29.077276+00:00"
+  },
+  {
+    "id": "fd_1864",
+    "title": "Direction 3: Tropical Shadow Duality and Newton Polytope Preservation",
+    "description": "**Conjecture:** Under the non-cancellation certificate, the Newton polytope of each Hessian entry \u2202\u1d62\u2202\u2c7cp equals the \"shadow polytope\" \u2014 the convex hull of quadLeafSet(supp(p), i, j). More precisely, there is a tropical-algebraic duality: the support shadow operation corresponds exactly to tropicalization of the derivative, and the certificate guarantees that this tropical operation faithfully represents the algebraic one.\n\n**Test:** For polynomials in 3-4 variables with 10-30 support elements, compute Newton polytopes of all Hessian entries and compare to shadow polytopes. Test whether vertex sets match (not just containment). Explore whether the duality extends to mixed volumes and intersection theory.\n\n**Impact:** This would establish a rigorous connection between tropical geometry and algebraic complexity, creating a tropical lower-bound method for arithmetic circuits. Tropical methods are computationally efficient (polyhedral computation vs algebraic computation), so this duality would make complexity analysis more tractable.\n\n**Catalog References:**\n- `Pythagorean/NonCancellationCertificate.lean`: `quadLeafSet`, `hessian_support_eq_quadLeafSet`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `QuadraticShadow`, `computeQuadShadow`\n\n**Proof Strategy:** The key insight is that Newton polytope = convex hull of support, and we already know the support exactly (Theorem 3). So the Newton polytope equality follows immediately from the exact support realization. The deeper content is the tropical interpretation: under the tropical semiring (min, +), differentiation becomes subtraction, and the shadow is the tropical derivative. Formalize this connection using tropical polynomial theory.\n\n**Domain Bridges:** Tropical geometry (tropicalization, tropical intersection theory), Convex geometry (Newton polytopes, mixed volumes), Algebraic geometry (Bernstein-Kushnirenko theorem)\n\n**Lineage:** Extends the support-level results to polytope-level geometry.\n\n**Ambition:** Solid extension with grand-challenge potential if tropical lower bounds are developed.\n\n**Why now?** The exact support realization theorem provides the algebraic foundation. Tropical geometry tools (polymake, OSCAR) are now mature enough to compute tropical derivatives systematically, enabling computational verification of the duality.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7a00ed5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T17:54:29.270864+00:00"
+  },
+  {
+    "id": "fd_1866",
+    "title": "Direction 5: Positive-Characteristic Obstruction Classification",
+    "description": "**Conjecture:** Over a field of characteristic p, the set of exponents where the Hessian scalar factor vanishes is exactly {\u03b2 : p | (\u03b2(i) + 1) or p | ((\u03b2 + e\u1d62)(j) + 1)}, and the discrepancy between predicted and actual Hessian support is controlled by this set. More precisely, the \"failure set\" of the non-cancellation certificate in characteristic p has size O(|S| / p), and the certificate holds fully for supports contained in the \"p-small\" regime where all exponents are < p.\n\n**Test:** For characteristics p = 2, 3, 5, 7, 11, generate random polynomials with maximum degree d = 1,...,20 and compute the failure rate (fraction of predicted support elements that actually vanish). Plot failure rate vs d/p. Verify the O(|S|/p) prediction.\n\n**Impact:** This would provide a precise quantitative understanding of when and why characteristic-zero techniques fail in positive characteristic, and identify the \"safe\" regime where they still apply. This is relevant to both theoretical complexity (circuits over finite fields) and practical applications (polynomial computation in cryptography).\n\n**Catalog References:**\n- `Pythagorean/NonCancellationCertificate.lean`: `hessianScalar_pos`, `hessianScalar_ne_zero`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `coeff_pderiv_pderiv_ne_zero_iff`\n\n**Proof Strategy:** The key insight is that the Hessian scalar factor (\u03b2(i) + 1)\u00b7((\u03b2 + e\u1d62)(j) + 1) is a product of two terms, each of which vanishes mod p iff the corresponding natural number is divisible by p. Count the number of \u03b2 in the shadow where this happens. For uniformly distributed exponents in [0, d]^n, the fraction with p | (\u03b2(i) + 1) is approximately 1/p, giving the O(|S|/p) bound.\n\n**Domain Bridges:** Number theory (characteristic p phenomena, Frobenius), Cryptography (polynomial evaluation over finite fields), Coding theory (Reed-Solomon structure)\n\n**Lineage:** Characterizes the boundary of the current theory.\n\n**Ambition:** Solid extension with connections to number theory.\n\n**Why now?** The characteristic-zero theory is now formally established. Understanding exactly where it breaks in positive characteristic is the natural next step, and computational experiments can immediately test the conjectured quantitative bounds.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7a00ed5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T17:54:29.471886+00:00"
   },
   {
     "id": "seed_013",

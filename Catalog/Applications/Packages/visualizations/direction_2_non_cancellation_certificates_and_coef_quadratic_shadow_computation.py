@@ -2,179 +2,214 @@
 """
 Algorithms for Non-Cancellation Certificates and Shadow Computation
 
-This module implements:
-1. Quadratic shadow computation (O(|S| · n²) time)
-2. Non-cancellation certificate verification
-3. Shadow-closure test
-4. Hessian support prediction and verification
-5. Complexity measure computation
+This module implements the core algorithms from the research paper:
+1. Quadratic shadow computation
+2. Per-variable-pair leaf set computation
+3. Non-cancellation certificate verification
+4. Shadow complexity computation
+5. Hessian nonzero count computation
+6. Shadow-closure check and closure computation
 
-All algorithms work with sparse representations over rational arithmetic.
+All algorithms work with sparse polynomial representations over ℚ.
 
-Type hints and docstrings follow NumPy conventions.
+Time complexity: O(|S| · n²) for shadow computation where |S| = support size, n = #variables
+Space complexity: O(|shadow|)
 """
 
 from fractions import Fraction
-from typing import Dict, FrozenSet, List, Optional, Set, Tuple
-from itertools import product as cartesian_product
-from collections import defaultdict
+from typing import Dict, Tuple, Set, List, Optional, FrozenSet
+from itertools import product as iter_product
+
+# ─── Type Definitions ─────────────────────────────────────────────
+
+Exponent = Tuple[int, ...]
+Polynomial = Dict[Exponent, Fraction]
 
 
-# ─────────────────────────────────────────────────────────
-# Type Aliases
-# ─────────────────────────────────────────────────────────
-Exponent = Tuple[int, ...]  # Immutable exponent vector
-SupportSet = FrozenSet[Exponent]
-CoefficientMap = Dict[Exponent, Fraction]
+# ─── Core Shadow Algorithms ───────────────────────────────────────
 
-
-# ─────────────────────────────────────────────────────────
-# Algorithm 1: Quadratic Shadow Computation
-# ─────────────────────────────────────────────────────────
-
-def compute_quadratic_shadow(support: Set[Exponent], n_vars: int) -> Set[Exponent]:
+def compute_quadratic_shadow(
+    support: Set[Exponent],
+    n_vars: int
+) -> Set[Exponent]:
     """
-    Compute the quadratic shadow Sh₂(S) of a support set S.
+    Compute the quadratic shadow of a support set.
 
-    The quadratic shadow is the set of all exponent vectors β such that
-    β + eᵢ + eⱼ ∈ S for some variables i, j.
+    The quadratic shadow Sh₂(S) consists of all exponent vectors β
+    such that there exist α ∈ S and variables i, j with α = β + eᵢ + eⱼ.
+    Equivalently, β is obtained by subtracting two (possibly equal) unit
+    basis vectors from some element of S.
 
-    Parameters
-    ----------
-    support : Set[Exponent]
-        The support set S (finite set of exponent vectors).
-    n_vars : int
-        Number of variables.
+    Args:
+        support: Set of exponent vectors (tuples of non-negative integers)
+        n_vars: Number of variables
 
-    Returns
-    -------
-    Set[Exponent]
-        The quadratic shadow Sh₂(S).
+    Returns:
+        The quadratic shadow as a set of exponent vectors
 
-    Complexity
-    ----------
-    Time: O(|S| · n²)
-    Space: O(|Sh₂(S)|)
+    Time complexity: O(|S| · n²)
+    Space complexity: O(|shadow|)
 
-    Examples
-    --------
-    >>> S = {(3, 0), (0, 3)}
-    >>> compute_quadratic_shadow(S, 2)
-    {(1, 0), (0, 1)}
+    Example:
+        >>> S = {(2, 0), (1, 1), (0, 2)}
+        >>> compute_quadratic_shadow(S, 2)
+        {(0, 0)}
     """
-    shadow = set()
+    shadow: Set[Exponent] = set()
     for alpha in support:
         for i in range(n_vars):
             if alpha[i] < 1:
                 continue
-            # Subtract e_i
+            # Subtract eᵢ
             alpha_minus_ei = list(alpha)
             alpha_minus_ei[i] -= 1
             for j in range(n_vars):
                 if alpha_minus_ei[j] < 1:
                     continue
-                # Subtract e_j
+                # Subtract eⱼ
                 beta = list(alpha_minus_ei)
                 beta[j] -= 1
                 shadow.add(tuple(beta))
     return shadow
 
 
-def compute_quad_leaf_set(support: Set[Exponent], n_vars: int,
-                          i: int, j: int) -> Set[Exponent]:
+def compute_quad_leaf_set(
+    support: Set[Exponent],
+    i: int,
+    j: int,
+    n_vars: int
+) -> Set[Exponent]:
     """
-    Compute the per-pair quadratic leaf set for variables (i, j).
+    Compute the per-(i,j) quadratic leaf set.
 
-    This is {β | β + eᵢ + eⱼ ∈ S}.
+    quadLeafSet(S, i, j) = {β | β + eᵢ + eⱼ ∈ S}
 
-    Parameters
-    ----------
-    support : Set[Exponent]
-        The support set S.
-    n_vars : int
-        Number of variables.
-    i, j : int
-        Variable indices.
+    This predicts the support of ∂ᵢ∂ⱼp when supp(p) = S.
 
-    Returns
-    -------
-    Set[Exponent]
-        The per-pair shadow.
+    Args:
+        support: Set of exponent vectors
+        i: First variable index
+        j: Second variable index
+        n_vars: Number of variables
 
-    Complexity
-    ----------
-    Time: O(|S|)
-    Space: O(output size)
+    Returns:
+        The quadratic leaf set for the pair (i, j)
+
+    Time complexity: O(|S|)
+
+    Example:
+        >>> S = {(2, 1), (1, 2)}
+        >>> compute_quad_leaf_set(S, 0, 1, 2)
+        {(1, 0), (0, 1)}
     """
-    result = set()
+    leaf_set: Set[Exponent] = set()
     for alpha in support:
         if alpha[i] < 1:
             continue
-        mid = list(alpha)
-        mid[i] -= 1
-        if mid[j] < 1:
+        alpha_minus_ei = list(alpha)
+        alpha_minus_ei[i] -= 1
+        if alpha_minus_ei[j] < 1:
             continue
-        mid[j] -= 1
-        result.add(tuple(mid))
-    return result
+        beta = list(alpha_minus_ei)
+        beta[j] -= 1
+        leaf_set.add(tuple(beta))
+    return leaf_set
 
 
-# ─────────────────────────────────────────────────────────
-# Algorithm 2: Shadow-Closure Test
-# ─────────────────────────────────────────────────────────
+def hessian_scalar(beta: Exponent, i: int, j: int) -> Fraction:
+    """
+    Compute the Hessian scalar factor for exponent β and variables i, j.
+
+    hessianScalar(β, i, j) = (β(i) + 1) · ((β + eᵢ)(j) + 1)
+
+    This is the multiplicative factor relating the Hessian coefficient
+    to its ancestor coefficient. Over ℚ, this is always positive.
+
+    Args:
+        beta: Exponent vector
+        i: First variable index
+        j: Second variable index
+
+    Returns:
+        The Hessian scalar factor as a Fraction
+
+    Example:
+        >>> hessian_scalar((2, 3), 0, 1)
+        Fraction(12, 1)  # = 3 * 4
+    """
+    factor1 = beta[i] + 1
+    # (β + eᵢ)(j): add 1 to j-th component of β if i == j, else β(j)
+    beta_plus_ei_j = beta[j] + (1 if i == j else 0)
+    factor2 = beta_plus_ei_j + 1
+    return Fraction(factor1 * factor2)
+
+
+# ─── Certificate Algorithms ──────────────────────────────────────
 
 def is_shadow_closed(support: Set[Exponent], n_vars: int) -> bool:
     """
-    Test whether a support set is shadow-closed: Sh₂(S) ⊆ S.
+    Check if a support set is shadow-closed: Sh₂(S) ⊆ S.
 
-    A shadow-closed support guarantees that the non-cancellation
-    certificate holds for any polynomial with that support and
-    all-nonzero coefficients.
+    A shadow-closed support satisfies the structural precondition
+    for the non-cancellation certificate.
 
-    Parameters
-    ----------
-    support : Set[Exponent]
-        The support set S.
-    n_vars : int
-        Number of variables.
+    Args:
+        support: Set of exponent vectors
+        n_vars: Number of variables
 
-    Returns
-    -------
-    bool
-        True if S is shadow-closed.
+    Returns:
+        True if the quadratic shadow is contained in the support
 
-    Complexity
-    ----------
-    Time: O(|S| · n²)
+    Time complexity: O(|S| · n²)
     """
     shadow = compute_quadratic_shadow(support, n_vars)
     return shadow.issubset(support)
 
 
-def find_shadow_closure(support: Set[Exponent], n_vars: int) -> Set[Exponent]:
+def verify_non_cancellation_cert(
+    poly: Polynomial,
+    n_vars: int
+) -> bool:
     """
-    Compute the shadow closure of S: the smallest shadow-closed set containing S.
+    Verify the non-cancellation certificate for a polynomial.
 
-    Iteratively adds shadow elements until fixed point.
+    The certificate holds if for every d in the quadratic shadow of supp(p),
+    coeff(d, p) ≠ 0. This is equivalent to Sh₂(supp(p)) ⊆ supp(p).
 
-    Parameters
-    ----------
-    support : Set[Exponent]
-        Initial support set.
-    n_vars : int
-        Number of variables.
+    Args:
+        poly: Sparse polynomial
+        n_vars: Number of variables
 
-    Returns
-    -------
-    Set[Exponent]
-        The shadow closure of S.
+    Returns:
+        True if the certificate holds
+    """
+    support = set(poly.keys())
+    shadow = compute_quadratic_shadow(support, n_vars)
+    return shadow.issubset(support)
 
-    Complexity
-    ----------
-    Time: O(k · |S_final| · n²) where k is the number of iterations.
+
+def compute_shadow_closure(
+    support: Set[Exponent],
+    n_vars: int,
+    max_iterations: int = 100
+) -> Set[Exponent]:
+    """
+    Compute the shadow closure of a support set.
+
+    Iteratively adds shadow elements until the set becomes shadow-closed.
+    Note: this computes the EXPONENTS that would need nonzero coefficients,
+    not the polynomial itself.
+
+    Args:
+        support: Initial support set
+        n_vars: Number of variables
+        max_iterations: Maximum iterations to prevent infinite loops
+
+    Returns:
+        The shadow closure of the support
     """
     current = set(support)
-    while True:
+    for _ in range(max_iterations):
         shadow = compute_quadratic_shadow(current, n_vars)
         new_elements = shadow - current
         if not new_elements:
@@ -183,351 +218,145 @@ def find_shadow_closure(support: Set[Exponent], n_vars: int) -> Set[Exponent]:
     return current
 
 
-# ─────────────────────────────────────────────────────────
-# Algorithm 3: Non-Cancellation Certificate Verification
-# ─────────────────────────────────────────────────────────
+# ─── Complexity Measures ──────────────────────────────────────────
 
-def verify_certificate(coefficients: CoefficientMap,
-                       n_vars: int) -> Tuple[bool, Optional[Exponent]]:
+def shadow_complexity(support: Set[Exponent], n_vars: int) -> int:
     """
-    Verify the non-cancellation certificate for a polynomial.
+    Compute the shadow complexity of a support set.
 
-    The certificate holds if every exponent in the quadratic shadow
-    of the support also has a nonzero coefficient.
+    This is |Sh₂(S)|, the cardinality of the quadratic shadow.
+    It provides a lower bound on the Hessian nonzero count.
 
-    Parameters
-    ----------
-    coefficients : CoefficientMap
-        Map from exponent vectors to rational coefficients.
-    n_vars : int
-        Number of variables.
+    Args:
+        support: Set of exponent vectors
+        n_vars: Number of variables
 
-    Returns
-    -------
-    Tuple[bool, Optional[Exponent]]
-        (True, None) if certificate holds.
-        (False, witness) if certificate fails, with a witness exponent.
-
-    Complexity
-    ----------
-    Time: O(|S| · n²)
-    """
-    support = {m for m, c in coefficients.items() if c != 0}
-    shadow = compute_quadratic_shadow(support, n_vars)
-
-    for beta in shadow:
-        if coefficients.get(beta, Fraction(0)) == 0:
-            return False, beta
-
-    return True, None
-
-
-# ─────────────────────────────────────────────────────────
-# Algorithm 4: Hessian Support Prediction
-# ─────────────────────────────────────────────────────────
-
-def predict_hessian_support(support: Set[Exponent], n_vars: int,
-                            i: int, j: int) -> Set[Exponent]:
-    """
-    Predict the support of ∂ᵢ∂ⱼp from the support of p alone.
-
-    Over characteristic zero, this prediction is exact (no false positives
-    or false negatives). This is the content of Theorem 1.
-
-    Parameters
-    ----------
-    support : Set[Exponent]
-        The support of p.
-    n_vars : int
-        Number of variables.
-    i, j : int
-        Variable indices for differentiation.
-
-    Returns
-    -------
-    Set[Exponent]
-        The predicted support of ∂ᵢ∂ⱼp.
-
-    Complexity
-    ----------
-    Time: O(|S|)
-    """
-    return compute_quad_leaf_set(support, n_vars, i, j)
-
-
-def compute_actual_hessian_support(coefficients: CoefficientMap,
-                                   n_vars: int,
-                                   i: int, j: int) -> Set[Exponent]:
-    """
-    Compute the actual support of ∂ᵢ∂ⱼp by symbolic differentiation.
-
-    Parameters
-    ----------
-    coefficients : CoefficientMap
-        The polynomial's coefficient map.
-    n_vars : int
-        Number of variables.
-    i, j : int
-        Variable indices.
-
-    Returns
-    -------
-    Set[Exponent]
-        The support of ∂ᵢ∂ⱼp.
-
-    Complexity
-    ----------
-    Time: O(|S|)
-    """
-    result = defaultdict(Fraction)
-
-    for alpha, coeff in coefficients.items():
-        if coeff == 0:
-            continue
-        # First differentiate by j
-        if alpha[j] < 1:
-            continue
-        mid_coeff = coeff * alpha[j]
-        mid = list(alpha)
-        mid[j] -= 1
-
-        # Then differentiate by i
-        if mid[i] < 1:
-            continue
-        out_coeff = mid_coeff * mid[i]
-        mid[i] -= 1
-        beta = tuple(mid)
-        result[beta] += out_coeff
-
-    return {beta for beta, c in result.items() if c != 0}
-
-
-def verify_theorem1(coefficients: CoefficientMap,
-                    n_vars: int) -> Tuple[bool, List[dict]]:
-    """
-    Verify Theorem 1: predicted Hessian support = actual Hessian support
-    for all variable pairs (i, j).
-
-    Parameters
-    ----------
-    coefficients : CoefficientMap
-        The polynomial's coefficient map.
-    n_vars : int
-        Number of variables.
-
-    Returns
-    -------
-    Tuple[bool, List[dict]]
-        (all_match, details) where details has per-pair comparison info.
-    """
-    support = {m for m, c in coefficients.items() if c != 0}
-    all_match = True
-    details = []
-
-    for i in range(n_vars):
-        for j in range(n_vars):
-            predicted = predict_hessian_support(support, n_vars, i, j)
-            actual = compute_actual_hessian_support(coefficients, n_vars, i, j)
-            match = (predicted == actual)
-            if not match:
-                all_match = False
-            details.append({
-                'i': i, 'j': j,
-                'predicted': predicted,
-                'actual': actual,
-                'match': match,
-            })
-
-    return all_match, details
-
-
-# ─────────────────────────────────────────────────────────
-# Algorithm 5: Complexity Measures
-# ─────────────────────────────────────────────────────────
-
-def shadow_lower_bound(support: Set[Exponent], n_vars: int) -> int:
-    """
-    Compute the shadow lower bound: |Sh₂(S)|.
-
-    This is a lower bound on the Hessian sparsity complexity
-    that applies to any polynomial with support S over characteristic zero.
-
-    Parameters
-    ----------
-    support : Set[Exponent]
-        The support set.
-    n_vars : int
-        Number of variables.
-
-    Returns
-    -------
-    int
-        The shadow lower bound.
+    Returns:
+        The shadow complexity
     """
     return len(compute_quadratic_shadow(support, n_vars))
 
 
-def hessian_entry_count(coefficients: CoefficientMap, n_vars: int) -> int:
+def pderiv(poly: Polynomial, var_idx: int, n_vars: int) -> Polynomial:
     """
-    Compute the total Hessian entry count: sum over all (i,j) of |support(∂ᵢ∂ⱼp)|.
+    Compute partial derivative ∂/∂x_{var_idx} of a polynomial.
 
-    Parameters
-    ----------
-    coefficients : CoefficientMap
-        The polynomial.
-    n_vars : int
-        Number of variables.
+    Args:
+        poly: Sparse polynomial over ℚ
+        var_idx: Variable index
+        n_vars: Number of variables
 
-    Returns
-    -------
-    int
-        Total count of nonzero Hessian entries.
+    Returns:
+        The partial derivative
     """
-    total = 0
+    result: Polynomial = {}
+    for exp, coeff in poly.items():
+        d = exp[var_idx]
+        if d == 0:
+            continue
+        new_exp = list(exp)
+        new_exp[var_idx] -= 1
+        new_exp_t = tuple(new_exp)
+        new_coeff = coeff * Fraction(d)
+        if new_coeff != 0:
+            result[new_exp_t] = result.get(new_exp_t, Fraction(0)) + new_coeff
+            if result[new_exp_t] == 0:
+                del result[new_exp_t]
+    return result
+
+
+def hessian_nonzero_count(poly: Polynomial, n_vars: int) -> int:
+    """
+    Compute the Hessian nonzero count of a polynomial.
+
+    This is |⋃_{i,j} supp(∂ᵢ∂ⱼp)|, the number of distinct exponents
+    appearing across all Hessian entries.
+
+    Args:
+        poly: Sparse polynomial over ℚ
+        n_vars: Number of variables
+
+    Returns:
+        The Hessian nonzero count
+    """
+    union: Set[Exponent] = set()
     for i in range(n_vars):
         for j in range(n_vars):
-            total += len(compute_actual_hessian_support(coefficients, n_vars, i, j))
-    return total
+            dp = pderiv(pderiv(poly, j, n_vars), i, n_vars)
+            union.update(dp.keys())
+    return len(union)
 
 
-def shadow_hessian_count(support: Set[Exponent], n_vars: int) -> int:
+def verify_shadow_lower_bound(poly: Polynomial, n_vars: int) -> dict:
     """
-    Compute the shadow-predicted total Hessian entry count.
+    Verify the shadow lower bound theorem for a specific polynomial.
 
-    By Theorem 2, this equals the actual hessian_entry_count over char zero.
-
-    Parameters
-    ----------
-    support : Set[Exponent]
-        The support set.
-    n_vars : int
-        Number of variables.
-
-    Returns
-    -------
-    int
-        Shadow-predicted total.
+    Returns a dictionary with:
+        - shadow_complexity: |Sh₂(supp(p))|
+        - hessian_nonzero_count: |⋃ supp(∂ᵢ∂ⱼp)|
+        - bound_holds: whether the inequality holds
+        - per_entry_exact: whether each (i,j) entry matches prediction
     """
-    total = 0
+    support = set(poly.keys())
+    sc = shadow_complexity(support, n_vars)
+    hnc = hessian_nonzero_count(poly, n_vars)
+
+    per_entry_exact = True
     for i in range(n_vars):
         for j in range(n_vars):
-            total += len(compute_quad_leaf_set(support, n_vars, i, j))
-    return total
+            predicted = compute_quad_leaf_set(support, i, j, n_vars)
+            dp = pderiv(pderiv(poly, j, n_vars), i, n_vars)
+            actual = set(dp.keys())
+            if predicted != actual:
+                per_entry_exact = False
+
+    return {
+        'shadow_complexity': sc,
+        'hessian_nonzero_count': hnc,
+        'bound_holds': sc <= hnc,
+        'per_entry_exact': per_entry_exact,
+    }
 
 
-# ─────────────────────────────────────────────────────────
-# Algorithm 6: Hessian Scalar Analysis
-# ─────────────────────────────────────────────────────────
-
-def hessian_scalar(beta: Exponent, i: int, j: int) -> int:
-    """
-    Compute the derivative scalar factor for ∂ᵢ(∂ⱼ) at exponent β.
-
-    The scalar is ((β + eⱼ)[i] + 1) · (β[j] + 1). Over ℚ this is
-    always nonzero (it's a product of positive integers). Over F_p
-    it may vanish, causing spurious cancellations.
-
-    Parameters
-    ----------
-    beta : Exponent
-        The output exponent.
-    i, j : int
-        Variable indices.
-
-    Returns
-    -------
-    int
-        The scalar factor (always positive over ℤ).
-    """
-    beta_j_plus_1 = beta[j] + 1
-    beta_plus_ej_i = beta[i] + (1 if i == j else 0)
-    return (beta_plus_ej_i + 1) * beta_j_plus_1
-
-
-def find_finite_field_cancellations(support: Set[Exponent],
-                                     n_vars: int,
-                                     characteristic: int) -> List[dict]:
-    """
-    Find all derivative scalar factors that vanish mod p.
-
-    These are the exponent/variable combinations where finite characteristic
-    causes spurious cancellations that don't occur over ℚ.
-
-    Parameters
-    ----------
-    support : Set[Exponent]
-        The support set.
-    n_vars : int
-        Number of variables.
-    characteristic : int
-        The field characteristic (prime).
-
-    Returns
-    -------
-    List[dict]
-        List of cancellation records.
-    """
-    cancellations = []
-    for alpha in support:
-        for i in range(n_vars):
-            if alpha[i] < 1:
-                continue
-            mid = list(alpha)
-            mid[i] -= 1
-            for j in range(n_vars):
-                if mid[j] < 1:
-                    continue
-                beta = list(mid)
-                beta[j] -= 1
-                beta_t = tuple(beta)
-                scalar = hessian_scalar(beta_t, i, j)
-                if scalar % characteristic == 0:
-                    cancellations.append({
-                        'alpha': alpha,
-                        'beta': beta_t,
-                        'i': i, 'j': j,
-                        'scalar': scalar,
-                        'characteristic': characteristic,
-                    })
-    return cancellations
-
-
-# ─────────────────────────────────────────────────────────
-# Example Usage
-# ─────────────────────────────────────────────────────────
+# ─── Example Usage ─────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("=== Algorithm Examples ===\n")
+    print("=== Algorithms Module: Example Usage ===\n")
 
-    # Example 1: Shadow computation
-    S = {(3, 1, 0), (1, 2, 1), (2, 0, 2)}
-    print(f"Support S = {S}")
-    shadow = compute_quadratic_shadow(S, 3)
-    print(f"Quadratic shadow = {shadow}")
-    print(f"Shadow lower bound = {shadow_lower_bound(S, 3)}")
-    print(f"Shadow-closed? {is_shadow_closed(S, 3)}")
+    # Example 1: Simple polynomial x² + xy + y²
+    p = {(2, 0): Fraction(1), (1, 1): Fraction(1), (0, 2): Fraction(1)}
+    print("Polynomial: x² + xy + y²")
+    print(f"  Support: {set(p.keys())}")
+    print(f"  Shadow: {compute_quadratic_shadow(set(p.keys()), 2)}")
+    print(f"  Shadow-closed: {is_shadow_closed(set(p.keys()), 2)}")
+    print(f"  Certificate holds: {verify_non_cancellation_cert(p, 2)}")
+    result = verify_shadow_lower_bound(p, 2)
+    print(f"  Shadow complexity: {result['shadow_complexity']}")
+    print(f"  Hessian nonzero count: {result['hessian_nonzero_count']}")
+    print(f"  Bound holds: {result['bound_holds']}")
+    print(f"  Per-entry exact: {result['per_entry_exact']}")
     print()
 
-    # Example 2: Certificate verification
-    coeffs = {
-        (2, 1): Fraction(3),
-        (1, 2): Fraction(2),
-        (1, 0): Fraction(1),
-        (0, 1): Fraction(1),
-        (0, 0): Fraction(1),
-    }
-    ok, witness = verify_certificate(coeffs, 2)
-    print(f"Certificate for dense poly: {ok}")
+    # Example 2: Polynomial with shadow-closed support
+    # x³ + x²y + xy² + y³ + x² + xy + y² + x + y + 1
+    p2: Polynomial = {}
+    for i in range(4):
+        for j in range(4 - i):
+            p2[(i, j)] = Fraction(i + j + 1)
+    print("Dense polynomial of degree 3 in 2 variables")
+    print(f"  Support size: {len(p2)}")
+    print(f"  Shadow-closed: {is_shadow_closed(set(p2.keys()), 2)}")
+    result2 = verify_shadow_lower_bound(p2, 2)
+    print(f"  Shadow complexity: {result2['shadow_complexity']}")
+    print(f"  Hessian nonzero count: {result2['hessian_nonzero_count']}")
+    print(f"  Per-entry exact: {result2['per_entry_exact']}")
     print()
 
-    # Example 3: Theorem 1 verification
-    ok, details = verify_theorem1(coeffs, 2)
-    print(f"Theorem 1 verification: {ok}")
-    for d in details:
-        print(f"  ∂_{d['i']}∂_{d['j']}: match={d['match']}")
-    print()
-
-    # Example 4: Finite field analysis
-    S2 = {(4, 0), (0, 4), (2, 2)}
-    cancellations = find_finite_field_cancellations(S2, 2, 2)
-    print(f"F_2 cancellations for x^4 + y^4 + x²y²: {len(cancellations)} found")
+    # Example 3: Hessian scalar values
+    print("Hessian scalar examples:")
+    for beta in [(0, 0), (1, 0), (0, 1), (2, 3)]:
+        for i in range(2):
+            for j in range(2):
+                s = hessian_scalar(beta, i, j)
+                print(f"  β={beta}, i={i}, j={j}: scalar = {s} "
+                      f"({'> 0 ✓' if s > 0 else 'ZERO ✗'})")
