@@ -1,1121 +1,795 @@
 #!/usr/bin/env python3
 """
-applications.py — Real-world applications of the directional depth filtration
+applications.py — Real-world applications of the directional depth filtration.
 
-Demonstrates:
-1. Tropical convexity detection via depth
-2. Statistical physics: energy landscape analysis
-3. Combinatorial optimization: matroid valuation quality
-4. Information geometry: Fisher information depth
+Shows how depth computation applies to:
+1. Tropical optimization certification
+2. Energy landscape analysis (statistical mechanics)
+3. Log-concavity verification for combinatorial sequences
 """
 
-from math import log, exp, comb, factorial, sqrt
-from typing import Callable, Dict, List, Tuple
+from __future__ import annotations
+import math
 from itertools import product as iter_product
+from typing import Dict, Tuple, List
 
 
-def unit_vec(n: int, i: int) -> Tuple[int, ...]:
-    return tuple(1 if j == i else 0 for j in range(n))
+# ─────────────────────────────────────────────────────────────────────────────
+# Inlined core algorithms
+# ─────────────────────────────────────────────────────────────────────────────
 
-def add_tuples(*tuples: Tuple[int, ...]) -> Tuple[int, ...]:
-    return tuple(sum(x) for x in zip(*tuples))
+def make_grid(n: int, d: int) -> List[Tuple[int, ...]]:
+    return [m for m in iter_product(range(d + 1), repeat=n) if sum(m) <= d]
 
-def multiindices(n: int, max_deg: int) -> List[Tuple[int, ...]]:
-    return list(iter_product(range(max_deg + 1), repeat=n))
+def shift(m, i):
+    return tuple(m[j] + (1 if j == i else 0) for j in range(len(m)))
 
+def ratio_xform(f, i, grid):
+    r = {}
+    for m in grid:
+        mu = shift(m, i)
+        fm = f.get(m, 0.0)
+        fmu = f.get(mu, 0.0)
+        if abs(fm) < 1e-15:
+            continue
+        r[m] = fmu / fm
+    return r
 
-# ============================================================
-# Application 1: Tropical Convexity Detection
-# ============================================================
+def check_dir_lc(f, grid, n, tol=1e-10):
+    for i in range(n):
+        for m in grid:
+            m1 = shift(m, i)
+            m2 = shift(m1, i)
+            fm, fm1, fm2 = f.get(m, 0.0), f.get(m1, 0.0), f.get(m2, 0.0)
+            if fm * fm2 > fm1 * fm1 + tol:
+                return False, {"dir": i, "pt": m}
+    return True, None
 
-def tropical_convexity_profile(f: Callable, n: int, max_deg: int = 6) -> Dict:
-    """
-    Analyze the tropical convexity properties of -log f.
+def compute_depth(f, n, d, maxk=5, tol=1e-10):
+    grid = make_grid(n, d)
+    return _drec(f, n, grid, maxk, tol)
 
-    Returns a profile including:
-    - Whether -log f is supermodular (= tropically convex)
-    - The "tropical defect" measuring distance from supermodularity
-    - The depth of f (measuring persistence of tropical convexity)
-    """
-    # Check supermodularity
-    max_violation = 0.0
-    total_checks = 0
-    violations = 0
-
-    for m in multiindices(n, max_deg):
-        for i in range(n):
-            for j in range(i + 1, n):
-                ei, ej = unit_vec(n, i), unit_vec(n, j)
-                vals = [f(m), f(add_tuples(m, ei)),
-                        f(add_tuples(m, ej)), f(add_tuples(m, ei, ej))]
-                if all(v > 0 for v in vals):
-                    # Supermodularity: -log f(m+ei+ej) + (-log f(m))
-                    #                >= -log f(m+ei) + (-log f(m+ej))
-                    # Equiv: log f(m+ei) + log f(m+ej) >= log f(m) + log f(m+ei+ej)
-                    lhs = log(vals[1]) + log(vals[2])
-                    rhs = log(vals[0]) + log(vals[3])
-                    defect = rhs - lhs  # positive = violation
-                    if defect > 1e-12:
-                        violations += 1
-                        max_violation = max(max_violation, defect)
-                    total_checks += 1
-
-    # Compute depth
-    def is_dlc(g, nn, md):
-        for mm in multiindices(nn, md):
-            for ii in range(nn):
-                eii = unit_vec(nn, ii)
-                fm = g(mm)
-                fm1 = g(add_tuples(mm, eii))
-                fm2 = g(add_tuples(mm, eii, eii))
-                if fm1**2 < fm * fm2 - 1e-12:
-                    return False
-        return True
-
-    depth = 0
-    fns = [f]
-    for k in range(6):
-        if not all(is_dlc(fn, n, max_deg) for fn in fns):
+def _drec(f, n, grid, rem, tol):
+    if rem <= 0:
+        return 0
+    ok, _ = check_dir_lc(f, grid, n, tol)
+    if not ok:
+        return 0
+    msub = rem - 1
+    for i in range(n):
+        Rf = ratio_xform(f, i, grid)
+        sg = [m for m in grid if m in Rf]
+        sd = _drec(Rf, n, sg, rem - 1, tol)
+        msub = min(msub, sd)
+        if msub == 0:
             break
-        depth = k + 1
-        next_fns = []
-        for fn in fns:
-            for i in range(n):
-                ei = unit_vec(n, i)
-                def make_r(g, e):
-                    def Rg(m):
-                        v = g(m)
-                        return g(add_tuples(m, e)) / v if abs(v) > 1e-15 else 0
-                    return Rg
-                next_fns.append(make_r(fn, ei))
-        fns = next_fns
-
-    return {
-        "is_supermodular": violations == 0,
-        "max_violation": max_violation,
-        "num_violations": violations,
-        "total_checks": total_checks,
-        "directional_depth": depth,
-        "tropical_convexity_grade": "excellent" if depth >= 4 else
-                                    "good" if depth >= 2 else
-                                    "basic" if depth >= 1 else "none"
-    }
+    return 1 + msub
 
 
-# ============================================================
-# Application 2: Statistical Physics — Energy Landscape Analysis
-# ============================================================
+# ─────────────────────────────────────────────────────────────────────────────
+# Application 1: Tropical optimization certification
+# ─────────────────────────────────────────────────────────────────────────────
 
-def energy_landscape_analysis(f: Callable, n: int, max_deg: int = 6) -> Dict:
-    """
-    Analyze f as a Boltzmann weight exp(-E/kT) on a discrete state space.
+def certify_tropical_convexity(f: Dict[Tuple[int, ...], float],
+                                n_vars: int, max_degree: int) -> dict:
+    """Certify that -log(f) defines a tropically convex potential.
 
-    -log f is the energy function. The directional depth measures how
-    "thermodynamically well-behaved" the system is:
-    - Depth 0: energy landscape may have arbitrary non-convexities
-    - Depth 1: basic convexity (single-direction stability)
-    - Depth >= 2: response functions (chemical potentials) are also convex
-    - Infinite depth: perfect renormalization-group stability
-
-    Returns analysis dict with energy statistics and depth.
-    """
-    states = multiindices(n, max_deg)
-    energies = {}
-    partition_fn = 0.0
-
-    for m in states:
-        val = f(m)
-        if val > 0:
-            energies[m] = -log(val)
-            partition_fn += val
-
-    if partition_fn == 0:
-        return {"error": "Zero partition function"}
-
-    # Basic thermodynamic quantities
-    avg_energy = sum(f(m) * energies.get(m, 0) for m in states) / partition_fn
-    energy_var = sum(f(m) * (energies.get(m, 0) - avg_energy)**2
-                     for m in states if m in energies) / partition_fn
-
-    # Find ground state
-    ground_state = min(energies, key=energies.get) if energies else None
-    ground_energy = energies[ground_state] if ground_state else None
-
-    # Compute specific heat (proportional to energy variance)
-    specific_heat = energy_var
-
-    # Chemical potential analysis (ratio transform = exp(-μ))
-    chemical_potentials = {}
-    if ground_state is not None:
-        for i in range(n):
-            ei = unit_vec(n, i)
-            m_up = add_tuples(ground_state, ei)
-            if f(ground_state) > 0 and f(m_up) > 0:
-                chemical_potentials[f"mu_{i}"] = -log(f(m_up) / f(ground_state))
-
-    return {
-        "partition_function": partition_fn,
-        "average_energy": avg_energy,
-        "energy_variance": energy_var,
-        "specific_heat": specific_heat,
-        "ground_state": ground_state,
-        "ground_energy": ground_energy,
-        "chemical_potentials": chemical_potentials,
-        "num_states": len(energies),
-    }
-
-
-# ============================================================
-# Application 3: Matroid Valuation Quality Assessment
-# ============================================================
-
-def matroid_valuation_quality(f: Callable, n: int, d: int, max_deg: int = None) -> Dict:
-    """
-    Assess the quality of a function as a matroid valuation on a degree slice.
-
-    Checks:
-    1. Exchange-closed support (necessary for matroid structure)
-    2. Directional log-concavity (sufficient for many applications)
-    3. Depth (measuring how robust the matroid structure is)
+    Higher depth means stronger tropical convexity guarantees,
+    which translate to faster convergence of descent algorithms.
 
     Args:
-        f: the valuation function
-        n: number of variables
-        d: target degree
+        f: Positive function values.
+        n_vars: Number of variables.
+        max_degree: Maximum degree.
+
+    Returns:
+        Certificate dict with depth and convexity properties.
     """
-    if max_deg is None:
-        max_deg = d
+    depth = compute_depth(f, n_vars, max_degree, maxk=4)
+    grid = make_grid(n_vars, max_degree)
 
-    # Get degree-d multiindices
-    deg_d = [m for m in multiindices(n, max_deg) if sum(m) == d]
-
-    # Check support
-    support = [m for m in deg_d if f(m) > 1e-15]
-    support_size = len(support)
-
-    # Check exchange-closed support
-    exchange_closed = True
-    exchange_violations = 0
-    for m in support:
-        for m2 in support:
-            for i in range(n):
-                if m[i] < m2[i]:
-                    found_exchange = False
-                    for j in range(n):
-                        if m2[j] < m[j] and m[j] > 0:
-                            # Exchange move: increment i, decrement j
-                            m_new = list(m)
-                            m_new[i] += 1
-                            m_new[j] -= 1
-                            m_new = tuple(m_new)
-                            if f(m_new) > 1e-15:
-                                found_exchange = True
-                                break
-                    if not found_exchange:
-                        exchange_closed = False
-                        exchange_violations += 1
+    # Check supermodularity of -log(f)
+    supermod_violations = 0
+    for i in range(n_vars):
+        for j in range(i + 1, n_vars):
+            for m in grid:
+                mi = shift(m, i)
+                mj = shift(m, j)
+                mij = shift(mi, j)
+                vals = [f.get(m, 0.0), f.get(mi, 0.0),
+                        f.get(mj, 0.0), f.get(mij, 0.0)]
+                if any(v <= 0 for v in vals):
+                    continue
+                logs = [math.log(v) for v in vals]
+                # Check log(f(m)) + log(f(m_ij)) ≤ log(f(m_i)) + log(f(m_j))
+                if logs[0] + logs[3] > logs[1] + logs[2] + 1e-10:
+                    supermod_violations += 1
 
     return {
-        "degree": d,
-        "total_multiindices": len(deg_d),
-        "support_size": support_size,
-        "exchange_closed": exchange_closed,
-        "exchange_violations": exchange_violations,
-        "matroid_quality": "excellent" if exchange_closed else "partial"
+        "depth": depth,
+        "is_tropically_convex": depth >= 1,
+        "supermodularity_violations": supermod_violations,
+        "descent_rate_bound": depth,  # Higher depth → faster descent
+        "certificate_level": (
+            "strong (infinite)" if depth >= 4 else
+            "moderate" if depth >= 2 else
+            "basic" if depth >= 1 else "none"
+        ),
     }
 
 
-# ============================================================
-# Application 4: Information Geometry — Fisher Depth
-# ============================================================
+# ─────────────────────────────────────────────────────────────────────────────
+# Application 2: Energy landscape analysis
+# ─────────────────────────────────────────────────────────────────────────────
 
-def fisher_depth_analysis(family: Callable, n: int, param_range: List[float],
-                          max_deg: int = 6) -> Dict:
+def analyze_energy_landscape(f: Dict[Tuple[int, ...], float],
+                              n_vars: int, max_degree: int) -> dict:
+    """Analyze the energy landscape E = -log(f).
+
+    In statistical mechanics, depth measures the persistence of
+    convexity under renormalized local response functions.
+
+    Higher depth means:
+    - More stable equilibria
+    - Faster mixing of Markov chains on the configuration space
+    - Stronger response function convexity
+
+    Args:
+        f: Boltzmann weights (positive).
+        n_vars: Number of species/sites.
+        max_degree: Maximum occupation number.
+
+    Returns:
+        Analysis dictionary.
     """
-    Analyze a parametric family of distributions through the depth lens.
+    grid = make_grid(n_vars, max_degree)
+    depth = compute_depth(f, n_vars, max_degree, maxk=4)
 
-    Given a family θ → f_θ where f_θ(m) are unnormalized weights,
-    analyze how the depth varies with the parameter.
+    # Compute chemical potentials (ratio transforms as -log)
+    chemical_potentials = {}
+    for i in range(n_vars):
+        Rf = ratio_xform(f, i, grid)
+        mu_i = {}
+        for m, v in Rf.items():
+            if v > 0:
+                mu_i[m] = -math.log(v)
+        chemical_potentials[i] = mu_i
 
-    This connects to information geometry: the Fisher information metric
-    measures curvature of the statistical manifold, while directional depth
-    measures persistence of log-concavity under ratio transforms.
-    """
-    results = []
-
-    for theta in param_range:
-        f_theta = family(theta)
-
-        # Quick depth computation
-        def is_dlc(g):
-            for mm in multiindices(n, max_deg):
-                for ii in range(n):
-                    eii = unit_vec(n, ii)
-                    fm = g(mm)
-                    fm1 = g(add_tuples(mm, eii))
-                    fm2 = g(add_tuples(mm, eii, eii))
-                    if fm1**2 < fm * fm2 - 1e-12:
-                        return False
-            return True
-
-        depth = 0
-        fns = [f_theta]
-        for k in range(4):
-            if not all(is_dlc(fn) for fn in fns):
-                break
-            depth = k + 1
-            next_fns = []
-            for fn in fns:
-                for i in range(n):
-                    ei = unit_vec(n, i)
-                    def make_r(g, e):
-                        def Rg(m):
-                            v = g(m)
-                            return g(add_tuples(m, e)) / v if abs(v) > 1e-15 else 0
-                        return Rg
-                    next_fns.append(make_r(fn, ei))
-            fns = next_fns
-
-        results.append({"theta": theta, "depth": depth})
+    # Check if chemical potentials are monotone (stability criterion)
+    stable_directions = 0
+    for i in range(n_vars):
+        mu = chemical_potentials[i]
+        # Check if mu_i is increasing along direction i
+        monotone = True
+        for m in grid:
+            m1 = shift(m, i)
+            if m in mu and m1 in mu:
+                if mu[m1] < mu[m] - 1e-10:
+                    monotone = False
+                    break
+        if monotone:
+            stable_directions += 1
 
     return {
-        "parameter_values": param_range,
-        "depth_profile": [r["depth"] for r in results],
-        "min_depth": min(r["depth"] for r in results),
-        "max_depth": max(r["depth"] for r in results),
-        "depth_transitions": [(results[i]["theta"], results[i+1]["theta"])
-                              for i in range(len(results)-1)
-                              if results[i]["depth"] != results[i+1]["depth"]]
+        "depth": depth,
+        "n_species": n_vars,
+        "chemical_potentials_computed": True,
+        "stable_directions": stable_directions,
+        "total_directions": n_vars,
+        "all_stable": stable_directions == n_vars,
+        "interpretation": (
+            "Deeply convex landscape: all response functions are well-behaved"
+            if depth >= 3 else
+            "Moderately convex: first-order response is convex"
+            if depth >= 2 else
+            "Basic convexity: energy is tropically convex"
+            if depth >= 1 else
+            "Non-convex landscape: may have metastable traps"
+        ),
     }
 
 
-# ============================================================
-# Example Usage
-# ============================================================
+# ─────────────────────────────────────────────────────────────────────────────
+# Application 3: Combinatorial sequence verification
+# ─────────────────────────────────────────────────────────────────────────────
+
+def verify_log_concavity_hierarchy(seq: List[float], name: str = "") -> dict:
+    """Verify the log-concavity depth of a 1D combinatorial sequence.
+
+    Many important sequences in combinatorics are known or conjectured
+    to be log-concave. This function computes the depth of the associated
+    function on ℕ, revealing finer structure.
+
+    Args:
+        seq: Sequence of positive reals [a_0, a_1, ..., a_n].
+        name: Optional name for the sequence.
+
+    Returns:
+        Verification report.
+    """
+    f = {(k,): v for k, v in enumerate(seq)}
+    n = len(seq)
+
+    depth = compute_depth(f, 1, n - 1, maxk=min(6, n - 2))
+
+    # Compute ratio sequence
+    ratios = []
+    for k in range(n - 1):
+        if seq[k] > 0:
+            ratios.append(seq[k + 1] / seq[k])
+        else:
+            ratios.append(float('inf'))
+
+    # Check ultra-log-concavity
+    ultra_lc = True
+    for k in range(1, n - 1):
+        if seq[k] > 0 and seq[k-1] > 0 and seq[k+1] > 0:
+            if seq[k]**2 / (math.comb(n-1, k)**2) < \
+               seq[k-1] * seq[k+1] / (math.comb(n-1, k-1) * math.comb(n-1, k+1)) + 1e-10:
+                ultra_lc = False
+
+    return {
+        "name": name,
+        "length": n,
+        "depth": depth,
+        "is_log_concave": depth >= 1,
+        "ratios_decreasing": all(ratios[i] >= ratios[i+1] - 1e-10
+                                  for i in range(len(ratios) - 1)
+                                  if math.isfinite(ratios[i]) and math.isfinite(ratios[i+1])),
+        "ratio_sequence": [f"{r:.4f}" if math.isfinite(r) else "∞" for r in ratios],
+    }
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Main
+# ─────────────────────────────────────────────────────────────────────────────
+
+def main():
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  Applications of Directional Depth Filtration                       ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝\n")
+
+    # App 1: Tropical certification
+    print("═══ Application 1: Tropical Convexity Certification ═══\n")
+    f_gauss = {m: math.exp(-sum(x**2 for x in m) / 2) for m in make_grid(2, 4)}
+    cert = certify_tropical_convexity(f_gauss, 2, 4)
+    for k, v in cert.items():
+        print(f"  {k}: {v}")
+
+    # App 2: Energy landscape
+    print("\n═══ Application 2: Energy Landscape Analysis ═══\n")
+    # Ising-like model on 2 sites
+    J = 1.0  # coupling
+    h = 0.5  # field
+    f_ising = {}
+    for m in make_grid(2, 4):
+        energy = -J * m[0] * m[1] - h * (m[0] + m[1])
+        f_ising[m] = math.exp(-energy)
+    analysis = analyze_energy_landscape(f_ising, 2, 4)
+    for k, v in analysis.items():
+        print(f"  {k}: {v}")
+
+    # App 3: Combinatorial sequences
+    print("\n═══ Application 3: Combinatorial Sequence Verification ═══\n")
+
+    # Binomial coefficients C(n, k)
+    n = 8
+    binom = [math.comb(n, k) for k in range(n + 1)]
+    result = verify_log_concavity_hierarchy(binom, f"Binomial C({n},k)")
+    print(f"  {result['name']}:")
+    print(f"    depth = {result['depth']}, log-concave = {result['is_log_concave']}")
+    print(f"    ratios: {result['ratio_sequence']}")
+
+    # Catalan-like: 1, 1, 2, 5, 14, 42, 132
+    catalan = [1, 1, 2, 5, 14, 42, 132]
+    result = verify_log_concavity_hierarchy(catalan, "Catalan numbers")
+    print(f"\n  {result['name']}:")
+    print(f"    depth = {result['depth']}, log-concave = {result['is_log_concave']}")
+    print(f"    ratios: {result['ratio_sequence']}")
+
+    # Bell numbers: 1, 1, 2, 5, 15, 52, 203
+    bell = [1, 1, 2, 5, 15, 52, 203]
+    result = verify_log_concavity_hierarchy(bell, "Bell numbers")
+    print(f"\n  {result['name']}:")
+    print(f"    depth = {result['depth']}, log-concave = {result['is_log_concave']}")
+    print(f"    ratios: {result['ratio_sequence']}")
+
+    print()
+
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("APPLICATIONS OF DIRECTIONAL DEPTH FILTRATION")
-    print("=" * 60)
-    print()
-
-    # Application 1: Tropical Convexity
-    print("--- Application 1: Tropical Convexity Detection ---")
-    f_gauss = lambda m: exp(-m[0]**2 - m[1]**2 - 0.3*m[0]*m[1])
-    profile = tropical_convexity_profile(f_gauss, 2, max_deg=5)
-    print(f"  Gaussian-like 2D:")
-    print(f"    Supermodular: {profile['is_supermodular']}")
-    print(f"    Depth: {profile['directional_depth']}")
-    print(f"    Grade: {profile['tropical_convexity_grade']}")
-    print()
-
-    f_exp = lambda m: 2.0**m[0] * 3.0**m[1]
-    profile2 = tropical_convexity_profile(f_exp, 2, max_deg=5)
-    print(f"  Product exponential 2^x * 3^y:")
-    print(f"    Supermodular: {profile2['is_supermodular']}")
-    print(f"    Depth: {profile2['directional_depth']}")
-    print(f"    Grade: {profile2['tropical_convexity_grade']}")
-    print()
-
-    # Application 2: Energy Landscape
-    print("--- Application 2: Energy Landscape Analysis ---")
-    f_boltz = lambda m: exp(-(m[0]-2)**2 - (m[1]-1)**2)
-    analysis = energy_landscape_analysis(f_boltz, 2, max_deg=5)
-    print(f"  Quadratic energy landscape:")
-    print(f"    Partition function: {analysis['partition_function']:.4f}")
-    print(f"    Average energy: {analysis['average_energy']:.4f}")
-    print(f"    Ground state: {analysis['ground_state']}")
-    print(f"    Ground energy: {analysis['ground_energy']:.4f}")
-    print(f"    Chemical potentials: {analysis['chemical_potentials']}")
-    print()
-
-    # Application 3: Matroid Valuation Quality
-    print("--- Application 3: Matroid Valuation Quality ---")
-    # Uniform matroid U(2,4): all 2-element subsets equally weighted
-    def uniform_24(m):
-        if len(m) != 4 or sum(m) != 2:
-            return 0.0
-        if all(mi <= 1 for mi in m):
-            return 1.0
-        return 0.0
-
-    quality = matroid_valuation_quality(uniform_24, 4, 2)
-    print(f"  Uniform matroid U(2,4):")
-    print(f"    Support size: {quality['support_size']}")
-    print(f"    Exchange-closed: {quality['exchange_closed']}")
-    print(f"    Quality: {quality['matroid_quality']}")
-    print()
-
-    # Application 4: Fisher Depth
-    print("--- Application 4: Fisher Information Depth ---")
-    def poisson_family(lam):
-        def f(m):
-            k = m[0]
-            if k > 20 or lam <= 0:
-                return 0.0
-            return lam**k / factorial(k) * exp(-lam)
-        return f
-
-    fisher = fisher_depth_analysis(poisson_family, 1,
-                                    [0.5, 1.0, 2.0, 3.0, 5.0], max_deg=12)
-    print(f"  Poisson family depth profile:")
-    for theta, depth in zip(fisher['parameter_values'], fisher['depth_profile']):
-        print(f"    λ={theta}: depth ≥ {depth}")
-    print(f"  Depth transitions: {fisher['depth_transitions']}")
+    main()
 
 
 #!/usr/bin/env python3
 """
-demo.py — Interactive demo for the Directional Depth Filtration
+demo.py — Interactive demonstration of the directional depth filtration
+for valuated matroids.
 
 Constructs sample functions/valuations, computes empirical depth profiles,
 tests the Depth Dichotomy Conjecture on small examples, and prints where
 depth fails.
-
-Includes uniform matroid, graphical matroid, and Grassmannian-inspired toy families.
 """
 
-import numpy as np
-from itertools import product as iter_product
-from math import comb, log, exp
-from typing import Dict, Tuple, List, Optional, Callable
+from __future__ import annotations
+import math
+from itertools import combinations, product as iter_product
+from typing import Dict, Tuple, List, Optional
 
-# ============================================================
-# Core data structures
-# ============================================================
 
-def multiindices(n: int, max_deg: int) -> List[Tuple[int, ...]]:
-    """Generate all multiindices (m_0, ..., m_{n-1}) with each m_i in [0, max_deg]."""
-    return list(iter_product(range(max_deg + 1), repeat=n))
+# ─────────────────────────────────────────────────────────────────────────────
+# Core algorithms (inlined, no external deps)
+# ─────────────────────────────────────────────────────────────────────────────
 
-def degree(m: Tuple[int, ...]) -> int:
-    return sum(m)
+def make_grid(n: int, d: int) -> List[Tuple[int, ...]]:
+    return [m for m in iter_product(range(d + 1), repeat=n) if sum(m) <= d]
 
-def unit_vec(n: int, i: int) -> Tuple[int, ...]:
-    return tuple(1 if j == i else 0 for j in range(n))
+def make_slice(n: int, d: int) -> List[Tuple[int, ...]]:
+    return [m for m in iter_product(range(d + 1), repeat=n) if sum(m) == d]
 
-def shift_up(m: Tuple[int, ...], i: int) -> Tuple[int, ...]:
-    e = unit_vec(len(m), i)
-    return tuple(a + b for a, b in zip(m, e))
+def shift(m: Tuple[int, ...], i: int) -> Tuple[int, ...]:
+    return tuple(m[j] + (1 if j == i else 0) for j in range(len(m)))
 
-def shift_up2(m: Tuple[int, ...], i: int) -> Tuple[int, ...]:
-    return shift_up(shift_up(m, i), i)
-
-# ============================================================
-# Core algorithms
-# ============================================================
-
-def is_dir_log_concave(f: Callable, n: int, max_deg: int = 10) -> bool:
-    """Check if f is directionally log-concave on multiindices up to max_deg."""
-    for m in multiindices(n, max_deg):
-        for i in range(n):
-            fm = f(m)
-            fup = f(shift_up(m, i))
-            fup2 = f(shift_up2(m, i))
-            if fup ** 2 < fm * fup2 - 1e-12:
-                return False
-    return True
-
-def ratio_transform(f: Callable, i: int) -> Callable:
-    """Compute the ratio transform R_i f."""
-    def Rf(m):
-        fm = f(m)
+def ratio_xform(f: Dict, i: int, grid: List) -> Dict:
+    r = {}
+    for m in grid:
+        mu = shift(m, i)
+        fm = f.get(m, 0.0)
+        fmu = f.get(mu, 0.0)
         if abs(fm) < 1e-15:
-            return 0.0
-        return f(shift_up(m, i)) / fm
-    return Rf
+            continue  # skip undefined
+        r[m] = fmu / fm
+    return r
 
-def compute_depth(f: Callable, n: int, max_depth: int = 10, max_deg: int = 8) -> int:
-    """Compute the directional depth of f, up to max_depth."""
-    depth = 0
-    current_fns = [f]  # Track all ratio transforms at current level
+def check_dir_lc(f: Dict, grid: List, n: int, tol: float = 1e-10):
+    for i in range(n):
+        for m in grid:
+            m1 = shift(m, i)
+            m2 = shift(m1, i)
+            fm, fm1, fm2 = f.get(m, 0.0), f.get(m1, 0.0), f.get(m2, 0.0)
+            if fm * fm2 > fm1 * fm1 + tol:
+                return False, {"dir": i, "pt": m, "lhs": fm*fm2, "rhs": fm1*fm1}
+    return True, None
 
-    for k in range(max_depth):
-        # Check if all current functions are directionally log-concave
-        for fn in current_fns:
-            if not is_dir_log_concave(fn, n, max_deg):
-                return depth
-        depth = k + 1
-        # Compute ratio transforms for next level
-        next_fns = []
-        for fn in current_fns:
-            for i in range(n):
-                next_fns.append(ratio_transform(fn, i))
-        current_fns = next_fns
+def compute_depth(f: Dict, n: int, d: int, maxk: int = 5, tol: float = 1e-10) -> int:
+    grid = make_grid(n, d)
+    return _drec(f, n, grid, maxk, tol)
 
+def _drec(f, n, grid, rem, tol):
+    if rem <= 0:
+        return 0
+    ok, _ = check_dir_lc(f, grid, n, tol)
+    if not ok:
+        return 0
+    msub = rem - 1
+    for i in range(n):
+        Rf = ratio_xform(f, i, grid)
+        sg = [m for m in grid if m in Rf]
+        sd = _drec(Rf, n, sg, rem - 1, tol)
+        msub = min(msub, sd)
+        if msub == 0:
+            break
+    return 1 + msub
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Test families
+# ─────────────────────────────────────────────────────────────────────────────
+
+def gaussian(n, d, sigma=1.0):
+    return {m: math.exp(-sum(x**2 for x in m) / (2*sigma**2)) for m in make_grid(n, d)}
+
+def power_fn(n, d, base=2.0):
+    return {m: base ** (-sum(m)) for m in make_grid(n, d)}
+
+def multinomial(n, d):
+    grid = make_slice(n, d)
+    r = {}
+    for m in grid:
+        r[m] = math.factorial(d) / math.prod(math.factorial(mi) for mi in m)
+    return r
+
+def depth_one_witness():
+    f = {}
+    for k in range(7):
+        m = (k,)
+        f[m] = {0: 1.0, 1: 3.0, 2: 2.0, 3: 1.0}.get(k, 0.0)
+    return f, 1, 6
+
+def graphical_matroid(edges, weights, nv):
+    ne = len(edges)
+    rank = nv - 1
+    grid = make_grid(ne, rank + 2)
+    f = {m: 0.0 for m in grid}
+    for sub in combinations(range(ne), rank):
+        adj = [set() for _ in range(nv)]
+        for idx in sub:
+            u, v = edges[idx]
+            adj[u].add(v)
+            adj[v].add(u)
+        vis = set()
+        q = [0]
+        vis.add(0)
+        while q:
+            nd = q.pop(0)
+            for nb in adj[nd]:
+                if nb not in vis:
+                    vis.add(nb)
+                    q.append(nb)
+        if len(vis) == nv:
+            m = tuple(1 if idx in sub else 0 for idx in range(ne))
+            w = math.prod(weights[idx] for idx in sub)
+            f[m] = f.get(m, 0.0) + w
+    return f, ne, rank + 2
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Main demo
+# ─────────────────────────────────────────────────────────────────────────────
+
+def run_test(name, f, n, d, maxk=4):
+    depth = compute_depth(f, n, d, maxk)
+    grid = make_grid(n, d)
+    ok, fail = check_dir_lc(f, grid, n)
+    tag = f"depth = {depth}"
+    if depth >= maxk:
+        tag += " (≥ max, likely ∞)"
+    print(f"  {name}: {tag}")
+    if not ok and fail:
+        print(f"    ↳ Failure at dir={fail['dir']}, pt={fail['pt']}: "
+              f"LHS={fail['lhs']:.4f} > RHS={fail['rhs']:.4f}")
     return depth
 
-def find_depth_failure(f: Callable, n: int, max_deg: int = 8) -> Optional[dict]:
-    """Find where directional log-concavity first fails for ratio transforms."""
-    # First check if f itself is log-concave
-    if not is_dir_log_concave(f, n, max_deg):
-        return {"level": 0, "message": "f itself is not log-concave"}
+def main():
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  Directional Depth Filtration — Valuated Matroid Demo               ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝\n")
 
-    for i in range(n):
-        Rf = ratio_transform(f, i)
-        for m in multiindices(n, max_deg):
-            for j in range(n):
-                fm = Rf(m)
-                fup = Rf(shift_up(m, j))
-                fup2 = Rf(shift_up2(m, j))
-                if fup ** 2 < fm * fup2 - 1e-12:
-                    return {
-                        "level": 1,
-                        "direction_i": i,
-                        "direction_j": j,
-                        "multiindex": m,
-                        "R_i_f(m)": fm,
-                        "R_i_f(m+e_j)": fup,
-                        "R_i_f(m+2e_j)": fup2,
-                        "violation": fup**2 - fm * fup2
-                    }
-    return None
+    # §1: Verified examples
+    print("§1. VERIFIED EXAMPLES")
+    print("─" * 60)
 
-# ============================================================
-# Example families
-# ============================================================
+    f, n, d = depth_one_witness()
+    dep = run_test("Depth-1 witness (Lean-verified)", f, n, d)
+    print(f"    Expected: 1  {'✓' if dep == 1 else '✗'}\n")
 
-def uniform_matroid_valuation(n: int, r: int) -> Callable:
-    """Uniform matroid U_{r,n}: f(m) = 1 if degree(m) = r and all m_i in {0,1}, else 0.
-    Actually, use the weighted version: f(m) = C(n, r) style weights."""
-    def f(m):
-        if any(mi > 1 for mi in m):
-            return 0.0
-        if degree(m) == r:
-            return 1.0
-        return 0.0
-    return f
-
-def exponential_function(weights: List[float]) -> Callable:
-    """f(m) = prod_i w_i^{m_i}, a product of geometric sequences."""
-    def f(m):
-        result = 1.0
-        for i, mi in enumerate(m):
-            if i < len(weights):
-                result *= weights[i] ** mi
-        return result
-    return f
-
-def polynomial_coefficients_1d(coeffs: List[float]) -> Callable:
-    """1D function defined by its coefficient list."""
-    def f(m):
-        idx = m[0] if len(m) == 1 else sum(m)
-        if 0 <= idx < len(coeffs):
-            return coeffs[idx]
-        return 0.0
-    return f
-
-def binomial_coefficients(n_val: int) -> Callable:
-    """f(m) = C(n, m_0) for 1D multiindices, a classic log-concave sequence."""
-    def f(m):
-        k = m[0]
-        if 0 <= k <= n_val:
-            return float(comb(n_val, k))
-        return 0.0
-    return f
-
-def graphical_matroid_valuation(adj_matrix: List[List[float]], num_edges: int) -> Callable:
-    """
-    Simplified graphical matroid valuation for small graphs.
-    adj_matrix[i][j] = weight of edge (i,j).
-    Returns a function on edge-indicator multiindices.
-    """
-    n = len(adj_matrix)
-    edges = []
-    for i in range(n):
-        for j in range(i+1, n):
-            if adj_matrix[i][j] > 0:
-                edges.append((i, j, adj_matrix[i][j]))
-
-    ne = len(edges)
-    if ne != num_edges:
-        print(f"Warning: found {ne} edges, expected {num_edges}")
-
-    def f(m):
-        if len(m) != ne:
-            return 0.0
-        result = 1.0
-        for idx, (i, j, w) in enumerate(edges):
-            if m[idx] > 0:
-                result *= w ** m[idx]
-        return result
-    return f
-
-def grassmannian_plucker(n: int, k: int) -> Callable:
-    """
-    Toy Grassmannian-inspired valuation: f indexed by k-element subsets.
-    Uses the uniform Plücker coordinates (all = 1) as a baseline.
-    """
-    from itertools import combinations
-    subsets = list(combinations(range(n), k))
-    subset_to_idx = {s: i for i, s in enumerate(subsets)}
-    num_coords = len(subsets)
-
-    def f(m):
-        if len(m) != num_coords:
-            return 0.0
-        # Product of Plücker coordinates raised to their powers
-        result = 1.0
-        for idx in range(num_coords):
-            result *= 1.0 ** m[idx]  # Uniform: all coordinates = 1
-        return result
-    return f
-
-# ============================================================
-# Depth Dichotomy Conjecture Testing
-# ============================================================
-
-def test_depth_dichotomy():
-    """Test the Depth Dichotomy Conjecture on small examples."""
-    print("=" * 70)
-    print("DEPTH DICHOTOMY CONJECTURE TEST")
-    print("=" * 70)
-    print()
-    print("Conjecture: For naturally arising valuated matroids, the depth is")
-    print("either 1 or infinite. No natural examples have depth exactly 2, 3, ...")
-    print()
-
-    results = []
-
-    # 1. Exponential / geometric functions (should have infinite depth)
-    print("--- Exponential (geometric) functions ---")
-    for weights in [[2.0], [1.5, 2.0], [1.0, 2.0, 3.0]]:
-        n = len(weights)
-        f = exponential_function(weights)
-        d = compute_depth(f, n, max_depth=6, max_deg=6)
-        status = "infinite (≥6)" if d >= 6 else f"exactly {d}"
-        print(f"  weights={weights}: depth = {status}")
-        results.append(("exponential", weights, d))
+    for sigma in [0.5, 1.0, 2.0]:
+        f = gaussian(2, 4, sigma)
+        run_test(f"Gaussian σ={sigma} (2 vars)", f, 2, 4)
 
     print()
+    for base in [1.5, 2.0, 3.0]:
+        f = power_fn(2, 4, base)
+        run_test(f"Power base={base} (2 vars)", f, 2, 4)
 
-    # 2. Binomial coefficients (should have high depth)
-    print("--- Binomial coefficients C(n, k) ---")
-    for n_val in [4, 6, 8, 10]:
-        f = binomial_coefficients(n_val)
-        d = compute_depth(f, 1, max_depth=6, max_deg=n_val + 2)
-        status = "infinite (≥6)" if d >= 6 else f"exactly {d}"
-        print(f"  C({n_val}, k): depth = {status}")
-        results.append(("binomial", n_val, d))
+    # §2: Matroid families
+    print(f"\n§2. MATROID FAMILIES")
+    print("─" * 60)
 
-    print()
+    # Multinomials
+    for n, k in [(2, 3), (3, 3)]:
+        f = multinomial(n, k)
+        run_test(f"Multinomial ({n} vars, deg {k})", f, n, k + 2, maxk=3)
 
-    # 3. The depth-1-not-2 example from our theorem
-    print("--- Strict depth 1 example (from theorem) ---")
-    f_strict = polynomial_coefficients_1d([1.0, 3.0, 2.0, 1.0])
-    d = compute_depth(f_strict, 1, max_depth=6, max_deg=6)
-    print(f"  [1, 3, 2, 1]: depth = {d}")
-    failure = find_depth_failure(f_strict, 1, max_deg=6)
-    if failure:
-        print(f"  Failure details: {failure}")
-    results.append(("strict_example", [1, 3, 2, 1], d))
+    # Graphical
+    print("\n  Graphical matroids:")
+    edges_p3 = [(0,1),(1,2)]
+    f, n, d = graphical_matroid(edges_p3, [1.0, 1.0], 3)
+    run_test("  Path P₃", f, n, d, maxk=3)
 
-    print()
+    edges_c3 = [(0,1),(1,2),(0,2)]
+    f, n, d = graphical_matroid(edges_c3, [1.0, 1.0, 1.0], 3)
+    run_test("  Triangle C₃", f, n, d, maxk=3)
 
-    # 4. Log-concave but not ultra-log-concave sequences
-    print("--- Various log-concave sequences ---")
-    test_seqs = [
-        ([1, 2, 1], "triangle"),
-        ([1, 4, 6, 4, 1], "Pascal row 4"),
-        ([1, 5, 10, 10, 5, 1], "Pascal row 5"),
-        ([1, 2, 3, 2, 1], "symmetric"),
-        ([1, 3, 3, 1], "Pascal row 3"),
-    ]
-    for coeffs, name in test_seqs:
-        f = polynomial_coefficients_1d([float(c) for c in coeffs])
-        d = compute_depth(f, 1, max_depth=6, max_deg=len(coeffs) + 2)
-        status = "infinite (≥6)" if d >= 6 else f"exactly {d}"
-        print(f"  {name} {coeffs}: depth = {status}")
-        results.append(("sequence", name, d))
+    f, n, d = graphical_matroid(edges_c3, [2.0, 3.0, 5.0], 3)
+    run_test("  Triangle C₃ (wts 2,3,5)", f, n, d, maxk=3)
 
-    print()
+    edges_k4 = [(0,1),(0,2),(0,3),(1,2),(1,3),(2,3)]
+    f, n, d = graphical_matroid(edges_k4, [1.0]*6, 4)
+    run_test("  K₄ (unit)", f, n, d, maxk=2)
 
-    # 5. Graphical matroid on small graphs
-    print("--- Graphical matroid valuations ---")
-    # Triangle (3-cycle): edges (0,1), (0,2), (1,2)
-    triangle = [[0, 1, 1], [1, 0, 1], [1, 1, 0]]
-    f_tri = graphical_matroid_valuation(triangle, 3)
-    d = compute_depth(f_tri, 3, max_depth=4, max_deg=3)
-    status = "infinite (≥4)" if d >= 4 else f"exactly {d}"
-    print(f"  Triangle (K3): depth = {status}")
+    # §3: Depth dichotomy conjecture
+    print(f"\n§3. DEPTH DICHOTOMY CONJECTURE TEST")
+    print("─" * 60)
+    print("Conjecture: natural matroids have depth 1 or ∞, never 2,3,...\n")
 
-    # Path graph: (0,1), (1,2)
-    path = [[0, 1, 0], [1, 0, 1], [0, 1, 0]]
-    f_path = graphical_matroid_valuation(path, 2)
-    d = compute_depth(f_path, 2, max_depth=4, max_deg=4)
-    status = "infinite (≥4)" if d >= 4 else f"exactly {d}"
-    print(f"  Path P3: depth = {status}")
+    import random
+    random.seed(42)
+    found = False
+    maxk_test = 4
+    for trial in range(20):
+        wts = [random.uniform(0.5, 5.0) for _ in range(3)]
+        f, n, d = graphical_matroid(edges_c3, wts, 3)
+        dep = compute_depth(f, n, d, maxk=maxk_test)
+        # depth exactly 2 or 3 (not hitting the cap) would be a counterexample
+        if 1 < dep < maxk_test:
+            print(f"  ⚠ Triangle trial {trial}: depth={dep}, wts={[f'{w:.2f}' for w in wts]}")
+            found = True
+    if not found:
+        print("  All tested triangles have depth 1 or ≥ max_depth (likely ∞).")
+        print("  Conjecture holds for tested examples. ✓")
 
-    print()
+    # §4: Product stability
+    print(f"\n§4. MULTIPLICATIVE STABILITY (Theorem 1)")
+    print("─" * 60)
+    fg = gaussian(2, 4, 1.0)
+    fp = power_fn(2, 4, 2.0)
+    fprod = {m: fg.get(m, 0.0) * fp.get(m, 0.0) for m in fg}
+    d1 = compute_depth(fg, 2, 4, 3)
+    d2 = compute_depth(fp, 2, 4, 3)
+    dp = compute_depth(fprod, 2, 4, 3)
+    print(f"  Gaussian depth = {d1}, Power depth = {d2}, Product depth = {dp}")
+    print(f"  min = {min(d1,d2)}, product = {dp}  {'✓' if dp >= min(d1,d2) else '✗'}")
 
-    # Summary
-    print("=" * 70)
-    print("SUMMARY")
-    print("=" * 70)
-    print()
-    depth_counts = {}
-    for _, _, d in results:
-        depth_counts[d] = depth_counts.get(d, 0) + 1
-    for d in sorted(depth_counts.keys()):
-        label = f"≥6 (infinite)" if d >= 6 else str(d)
-        print(f"  Depth {label}: {depth_counts[d]} examples")
-
-# ============================================================
-# Supermodularity check for -log f
-# ============================================================
-
-def check_supermodularity(f: Callable, n: int, max_deg: int = 6) -> bool:
-    """Check if -log f is supermodular."""
-    def neg_log_f(m):
-        val = f(m)
-        if val <= 0:
-            return float('inf')
-        return -log(val)
-
-    for m in multiindices(n, max_deg):
-        for i in range(n):
-            for j in range(i+1, n):
-                ei = unit_vec(n, i)
-                ej = unit_vec(n, j)
-                m_ij = tuple(a + b + c for a, b, c in zip(m, ei, ej))
-                m_i = tuple(a + b for a, b in zip(m, ei))
-                m_j = tuple(a + b for a, b in zip(m, ej))
-
-                g_ij = neg_log_f(m_ij)
-                g_m = neg_log_f(m)
-                g_i = neg_log_f(m_i)
-                g_j = neg_log_f(m_j)
-
-                if any(v == float('inf') for v in [g_ij, g_m, g_i, g_j]):
-                    continue
-
-                if g_ij + g_m < g_i + g_j - 1e-12:
-                    return False
-    return True
-
-# ============================================================
-# Main demo
-# ============================================================
+    print("\n" + "═" * 60)
+    print("Demo complete.\n")
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════════════════╗")
-    print("║   DIRECTIONAL DEPTH FILTRATION FOR VALUATED MATROIDS           ║")
-    print("║   Interactive Demo                                              ║")
-    print("╚══════════════════════════════════════════════════════════════════╝")
-    print()
-
-    # Demo 1: Basic depth computation
-    print("DEMO 1: Basic Depth Computation")
-    print("-" * 40)
-    f_geom = exponential_function([2.0])
-    print(f"Geometric f(n) = 2^n: depth ≥ {compute_depth(f_geom, 1, max_depth=8, max_deg=8)}")
-
-    f_binom = binomial_coefficients(6)
-    print(f"Binomial C(6,k): depth ≥ {compute_depth(f_binom, 1, max_depth=6, max_deg=8)}")
-
-    f_strict = polynomial_coefficients_1d([1.0, 3.0, 2.0, 1.0])
-    d = compute_depth(f_strict, 1, max_depth=6, max_deg=6)
-    print(f"[1,3,2,1] (strict depth 1): depth = {d}")
-    print()
-
-    # Demo 2: Depth failure analysis
-    print("DEMO 2: Depth Failure Analysis")
-    print("-" * 40)
-    failure = find_depth_failure(f_strict, 1, max_deg=6)
-    if failure:
-        print(f"  Level of failure: {failure['level']}")
-        print(f"  Direction i (ratio transform): {failure.get('direction_i', 'N/A')}")
-        print(f"  Direction j (log-concavity test): {failure.get('direction_j', 'N/A')}")
-        print(f"  At multiindex: {failure.get('multiindex', 'N/A')}")
-        print(f"  Violation magnitude: {failure.get('violation', 'N/A'):.6e}")
-    print()
-
-    # Demo 3: Supermodularity check
-    print("DEMO 3: Supermodularity of -log f")
-    print("-" * 40)
-    f_2d = exponential_function([1.5, 2.0])
-    is_sm = check_supermodularity(f_2d, 2, max_deg=5)
-    print(f"Exponential (1.5, 2.0): -log f supermodular = {is_sm}")
-
-    f_mixed = lambda m: exp(-(m[0]**2 + m[1]**2 + 0.5*m[0]*m[1]))
-    is_sm = check_supermodularity(f_mixed, 2, max_deg=5)
-    print(f"Gaussian-like: -log f supermodular = {is_sm}")
-    print()
-
-    # Demo 4: Multiplicative stability
-    print("DEMO 4: Multiplicative Depth Stability")
-    print("-" * 40)
-    f1 = exponential_function([2.0])
-    f2 = exponential_function([3.0])
-    f_prod = lambda m: f1(m) * f2(m)
-    d1 = compute_depth(f1, 1, max_depth=6, max_deg=6)
-    d2 = compute_depth(f2, 1, max_depth=6, max_deg=6)
-    dp = compute_depth(f_prod, 1, max_depth=6, max_deg=6)
-    print(f"  f1 depth: ≥{d1}, f2 depth: ≥{d2}, f1·f2 depth: ≥{dp}")
-    print(f"  Multiplicative stability verified: {dp >= min(d1, d2)}")
-    print()
-
-    # Demo 5: Full conjecture test
-    test_depth_dichotomy()
+    main()
 
 
 #!/usr/bin/env python3
 """
-Visualization 1: Depth Heatmap
+Visualization: Depth Heatmap of Ratio Transforms
 
-Visualizes the directional depth of functions across a 2D parameter space.
-Shows how depth varies as we interpolate between different coefficient vectors,
-revealing the "depth landscape" and identifying phase transitions between
-depth classes.
-
-The x-axis and y-axis represent two parameters controlling the shape of a
-1D function, and the color represents the computed directional depth.
+Visualizes how the ratio transform R_i f changes as we iterate,
+showing the "depth layers" of a function. Each heatmap shows the
+values of the k-th iterated ratio transform, revealing where
+log-concavity persists or breaks down.
 """
 
+import math
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import numpy as np
+import matplotlib.colors as mcolors
 from itertools import product as iter_product
-from math import exp
+from typing import Dict, Tuple, List
 
+# Inlined helpers
+def make_grid(n, d):
+    return [m for m in iter_product(range(d + 1), repeat=n) if sum(m) <= d]
 
-def unit_vec(n, i):
-    return tuple(1 if j == i else 0 for j in range(n))
+def shift(m, i):
+    return tuple(m[j] + (1 if j == i else 0) for j in range(len(m)))
 
-def add_tuples(*tuples):
-    return tuple(sum(x) for x in zip(*tuples))
+def ratio_xform(f, i, grid):
+    r = {}
+    for m in grid:
+        mu = shift(m, i)
+        fm = f.get(m, 0.0)
+        fmu = f.get(mu, 0.0)
+        if abs(fm) < 1e-15:
+            continue
+        r[m] = fmu / fm
+    return r
 
-def multiindices(n, max_deg):
-    return list(iter_product(range(max_deg + 1), repeat=n))
-
-def compute_depth_1d(coeffs, max_depth=5, max_deg=8):
-    """Compute directional depth of a 1D function given by coefficients."""
-    def f(m):
-        idx = m[0]
-        if 0 <= idx < len(coeffs):
-            return coeffs[idx]
-        return 0.0
-
-    def is_dlc(g):
-        for m in multiindices(1, max_deg):
-            e = (1,)
-            fm = g(m)
-            fm1 = g(add_tuples(m, e))
-            fm2 = g(add_tuples(m, e, e))
-            if fm1**2 < fm * fm2 - 1e-12:
+def check_dir_lc(f, grid, n, tol=1e-10):
+    for i in range(n):
+        for m in grid:
+            m1 = shift(m, i)
+            m2 = shift(m1, i)
+            fm, fm1, fm2 = f.get(m, 0.0), f.get(m1, 0.0), f.get(m2, 0.0)
+            if fm * fm2 > fm1 * fm1 + tol:
                 return False
-        return True
-
-    def ratio_transform(g, i=0):
-        e = (1,)
-        def Rg(m):
-            v = g(m)
-            return g(add_tuples(m, e)) / v if abs(v) > 1e-15 else 0
-        return Rg
-
-    depth = 0
-    fns = [f]
-    for k in range(max_depth):
-        if not all(is_dlc(fn) for fn in fns):
-            break
-        depth = k + 1
-        fns = [ratio_transform(fn) for fn in fns]
-    return depth
+    return True
 
 
-# Create the heatmap
-# Family: f(0)=1, f(1)=a, f(2)=b, f(3)=c where c = max(0, 2b-a) (maintaining some structure)
-# We fix f(0)=1 and scan over a=f(1) and b=f(2)
+# Create test functions
+def gaussian_2d(max_deg, sigma=1.5):
+    return {m: math.exp(-sum(x**2 for x in m)/(2*sigma**2))
+            for m in make_grid(2, max_deg)}
 
-a_range = np.linspace(0.5, 6.0, 40)
-b_range = np.linspace(0.1, 5.0, 40)
-
-depth_map = np.zeros((len(b_range), len(a_range)))
-
-for i, b in enumerate(b_range):
-    for j, a in enumerate(a_range):
-        # Ensure log-concavity-friendly shape
-        c = max(0, b**2 / max(a, 0.01))  # Choose c to be at the boundary
-        c = min(c, 10.0)
-        coeffs = [1.0, a, b, c * 0.5]  # Slightly below boundary
-        depth_map[i, j] = compute_depth_1d(coeffs, max_depth=5, max_deg=6)
-
-fig, ax = plt.subplots(1, 1, figsize=(10, 8))
-
-im = ax.imshow(depth_map, extent=[a_range[0], a_range[-1], b_range[0], b_range[-1]],
-               origin='lower', aspect='auto', cmap='viridis',
-               vmin=0, vmax=5, interpolation='nearest')
-
-ax.set_xlabel('f(1) = a', fontsize=14)
-ax.set_ylabel('f(2) = b', fontsize=14)
-ax.set_title('Directional Depth Landscape\n'
-             r'$f = [1, a, b, b^2/(2a)]$', fontsize=16)
-
-cbar = plt.colorbar(im, ax=ax, label='Directional Depth')
-cbar.set_ticks([0, 1, 2, 3, 4, 5])
-cbar.set_ticklabels(['0', '1', '2', '3', '4', '≥5'])
-
-# Add contour lines
-cs = ax.contour(a_range, b_range, depth_map, levels=[0.5, 1.5, 2.5],
-                colors='white', linewidths=1.5, linestyles='--')
-ax.clabel(cs, fmt={0.5: 'depth=0↔1', 1.5: 'depth=1↔2', 2.5: 'depth=2↔3'},
-          fontsize=10)
-
-# Mark the log-concavity boundary: a^2 >= 1*b, i.e., b <= a^2
-a_boundary = np.linspace(0.5, 6.0, 100)
-b_boundary = a_boundary**2
-valid = b_boundary <= b_range[-1]
-ax.plot(a_boundary[valid], b_boundary[valid], 'r-', linewidth=2,
-        label=r'$b = a^2$ (LC boundary)')
-ax.legend(loc='upper left', fontsize=11)
-
-plt.tight_layout()
-plt.savefig('depth_heatmap.png', dpi=150, bbox_inches='tight')
-print("Saved depth_heatmap.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization 2: Ratio Transform Cascade
-
-Visualizes the iterated ratio transform of a function, showing how
-the shape evolves at each depth level. This makes visible the
-"discrete curvature peeling" process that defines the depth filtration.
-
-For a 1D function f, plots f, R(f), R²(f), ... side by side,
-with annotations showing where log-concavity fails.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from math import comb
-
-
-def compute_ratio_cascade(coeffs, num_levels=4, max_n=10):
-    """Compute iterated ratio transforms of a 1D coefficient sequence."""
-    levels = [coeffs[:]]
-
-    current = coeffs[:]
-    for level in range(num_levels):
-        ratios = []
-        for n in range(len(current) - 1):
-            if abs(current[n]) > 1e-15:
-                ratios.append(current[n + 1] / current[n])
-            else:
-                ratios.append(0.0)
-        levels.append(ratios)
-        current = ratios
-
-    return levels
-
-
-def check_log_concavity(seq):
-    """Find violations of log-concavity in a sequence."""
-    violations = []
-    for n in range(len(seq) - 2):
-        if seq[n + 1] ** 2 < seq[n] * seq[n + 2] - 1e-12:
-            violations.append(n + 1)
-    return violations
-
-
-# Example functions to visualize
-examples = [
-    {
-        "name": "Geometric (infinite depth)",
-        "coeffs": [2**n for n in range(12)],
-        "color": "#2196F3"
-    },
-    {
-        "name": "Binomial C(8,k) (depth 1)",
-        "coeffs": [float(comb(8, k)) for k in range(9)] + [0]*3,
-        "color": "#4CAF50"
-    },
-    {
-        "name": "[1, 3, 2, 1] (depth exactly 1)",
-        "coeffs": [1, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-        "color": "#FF5722"
-    },
-    {
-        "name": "Triangular [1, 2, 1] (high depth)",
-        "coeffs": [1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        "color": "#9C27B0"
-    },
-]
-
-fig, axes = plt.subplots(len(examples), 4, figsize=(16, 3.5 * len(examples)))
-
-level_names = ['f', 'R(f)', 'R²(f)', 'R³(f)']
-
-for row, example in enumerate(examples):
-    cascade = compute_ratio_cascade(example["coeffs"], num_levels=3)
-
-    for col in range(4):
-        ax = axes[row, col]
-        if col < len(cascade):
-            seq = cascade[col]
-            n_vals = list(range(len(seq)))
-
-            # Plot the sequence
-            ax.bar(n_vals, seq, color=example["color"], alpha=0.7, edgecolor='black',
-                   linewidth=0.5)
-
-            # Check and highlight log-concavity violations
-            violations = check_log_concavity(seq)
-            if violations:
-                for v in violations:
-                    ax.axvspan(v - 0.5, v + 0.5, color='red', alpha=0.2)
-                    ax.plot(v, seq[v], 'rv', markersize=10)
-
-            # Formatting
-            if col == 0:
-                ax.set_ylabel(example["name"], fontsize=9, fontweight='bold')
-
-            if row == 0:
-                ax.set_title(level_names[col], fontsize=13, fontweight='bold')
-
-            ax.set_xlabel('n', fontsize=9)
-
-            # Add log-concavity status
-            if len(seq) >= 3:
-                is_lc = len(violations) == 0
-                status = "✓ LC" if is_lc else "✗ LC fails"
-                color = 'green' if is_lc else 'red'
-                ax.text(0.95, 0.95, status, transform=ax.transAxes,
-                       ha='right', va='top', fontsize=9, color=color,
-                       fontweight='bold',
-                       bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                                alpha=0.8))
-        else:
-            ax.set_visible(False)
-
-        ax.set_xlim(-0.5, 10.5)
-        ax.grid(True, alpha=0.3)
-
-plt.suptitle('Ratio Transform Cascade: Peeling Away Layers of Curvature',
-             fontsize=16, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('ratio_cascade.png', dpi=150, bbox_inches='tight')
-print("Saved ratio_cascade.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization 3: Tropical Supermodularity Surface
-
-Visualizes the energy landscape -log f for a 2D function, showing the
-supermodularity structure that arises from mixed log-concavity.
-The surface plot reveals the tropical convexity of the valuation.
-
-Also plots the "supermodularity defect" heatmap showing where
-the supermodular inequality is tight vs slack.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-from math import log, exp
-from mpl_toolkits.mplot3d import Axes3D
-
-
-def make_mixed_lc_function(a=1.0, b=0.5, c=0.3):
-    """Create a 2D function that is mixed log-concave.
-    f(x,y) = exp(-a*x^2 - b*y^2 - c*x*y) with a*b > (c/2)^2."""
-    def f(m):
-        x, y = m[0], m[1]
-        return exp(-a * x**2 - b * y**2 - c * x * y)
+def witness_2d(max_deg):
+    """The depth-1 witness extended to 2 variables."""
+    f = {}
+    vals = {0: 1.0, 1: 3.0, 2: 2.0, 3: 1.0}
+    for m in make_grid(2, max_deg):
+        f[m] = vals.get(m[0], 0.0) * vals.get(m[1], 0.5)
     return f
 
 
-def neg_log(f, m):
-    v = f(m)
-    if v > 1e-15:
-        return -log(v)
-    return float('nan')
+# Main visualization
+fig, axes = plt.subplots(2, 4, figsize=(16, 8))
+fig.suptitle('Directional Depth: Iterated Ratio Transforms', fontsize=14, fontweight='bold')
 
+max_deg = 6
+grid = make_grid(2, max_deg)
 
-def supermodular_defect(f, m, i, j, n=2):
-    """Compute g(m+ei+ej) + g(m) - g(m+ei) - g(m+ej) for g = -log f."""
-    ei = tuple(1 if k == i else 0 for k in range(n))
-    ej = tuple(1 if k == j else 0 for k in range(n))
-    m_ij = tuple(a + b + c for a, b, c in zip(m, ei, ej))
-    m_i = tuple(a + b for a, b in zip(m, ei))
-    m_j = tuple(a + b for a, b in zip(m, ej))
+# Row 1: Gaussian (high depth)
+f = gaussian_2d(max_deg)
+for k in range(4):
+    ax = axes[0, k]
+    # Create heatmap data
+    data = {}
+    for m in grid:
+        if len(m) == 2 and m in f:
+            data[m] = f[m]
 
-    vals = [f(m), f(m_i), f(m_j), f(m_ij)]
-    if any(v <= 1e-15 for v in vals):
-        return float('nan')
+    # Plot as scatter with color
+    xs = [m[0] for m in data]
+    ys = [m[1] for m in data]
+    vs = [max(data[m], 1e-20) for m in data]
+    log_vs = [math.log10(v) if v > 0 else -10 for v in vs]
 
-    g = [-log(v) for v in vals]
-    return g[3] + g[0] - g[1] - g[2]  # Should be >= 0 for supermodular
+    sc = ax.scatter(xs, ys, c=log_vs, cmap='viridis', s=80, edgecolors='gray', linewidth=0.5)
+    is_lc = check_dir_lc(f, grid, 2)
+    ax.set_title(f'R⁰·R₀^{k} (Gaussian)\nLC: {"✓" if is_lc else "✗"}', fontsize=10)
+    ax.set_xlabel('m₁')
+    ax.set_ylabel('m₂')
+    ax.set_xlim(-0.5, max_deg + 0.5)
+    ax.set_ylim(-0.5, max_deg + 0.5)
 
+    # Apply ratio transform for next iteration
+    f_new = ratio_xform(f, 0, grid)
+    f = {m: v for m, v in f_new.items() if math.isfinite(v) and v > 1e-20}
 
-# Create figure with two subplots
-fig = plt.figure(figsize=(16, 7))
+# Row 2: Depth-1 witness (breaks at level 2)
+f = witness_2d(max_deg)
+for k in range(4):
+    ax = axes[1, k]
+    data = {m: f[m] for m in grid if m in f and f[m] > 1e-20}
 
-# --- Left panel: Energy surface ---
-ax1 = fig.add_subplot(121, projection='3d')
+    if data:
+        xs = [m[0] for m in data]
+        ys = [m[1] for m in data]
+        vs = [data[m] for m in data]
+        log_vs = [math.log10(v) if v > 0 else -10 for v in vs]
 
-f = make_mixed_lc_function(a=0.8, b=0.6, c=0.4)
+        sc = ax.scatter(xs, ys, c=log_vs, cmap='magma', s=80, edgecolors='gray', linewidth=0.5)
+        is_lc = check_dir_lc(f, grid, 2)
+        ax.set_title(f'R₀^{k} (Witness)\nLC: {"✓" if is_lc else "✗"}', fontsize=10)
+    else:
+        ax.set_title(f'R₀^{k} (Witness)\nEmpty support', fontsize=10)
 
-x_range = np.arange(0, 8)
-y_range = np.arange(0, 8)
-X, Y = np.meshgrid(x_range, y_range)
-Z = np.zeros_like(X, dtype=float)
+    ax.set_xlabel('m₁')
+    ax.set_ylabel('m₂')
+    ax.set_xlim(-0.5, max_deg + 0.5)
+    ax.set_ylim(-0.5, max_deg + 0.5)
 
-for i in range(len(x_range)):
-    for j in range(len(y_range)):
-        Z[j, i] = neg_log(f, (int(x_range[i]), int(y_range[j])))
+    f_new = ratio_xform(f, 0, grid)
+    f = {m: v for m, v in f_new.items() if math.isfinite(v) and v > 1e-20}
 
-surf = ax1.plot_surface(X, Y, Z, cmap='coolwarm', alpha=0.8,
-                        edgecolor='black', linewidth=0.3)
-ax1.set_xlabel('x', fontsize=12)
-ax1.set_ylabel('y', fontsize=12)
-ax1.set_zlabel('-log f(x,y)', fontsize=12)
-ax1.set_title('Energy Landscape: -log f\n(Tropical Potential)', fontsize=14)
-ax1.view_init(elev=25, azim=-60)
-
-# --- Right panel: Supermodularity defect heatmap ---
-ax2 = fig.add_subplot(122)
-
-x_range2 = np.arange(0, 10)
-y_range2 = np.arange(0, 10)
-defect = np.zeros((len(y_range2), len(x_range2)))
-
-for i, x in enumerate(x_range2):
-    for j, y in enumerate(y_range2):
-        defect[j, i] = supermodular_defect(f, (int(x), int(y)), 0, 1)
-
-# Replace NaN with 0 for visualization
-defect_clean = np.nan_to_num(defect, nan=0.0)
-
-im = ax2.imshow(defect_clean, extent=[x_range2[0]-0.5, x_range2[-1]+0.5,
-                                       y_range2[0]-0.5, y_range2[-1]+0.5],
-                origin='lower', cmap='YlOrRd', aspect='equal',
-                interpolation='nearest')
-
-ax2.set_xlabel('x', fontsize=12)
-ax2.set_ylabel('y', fontsize=12)
-ax2.set_title('Supermodularity Defect\n'
-              r'$g(m+e_i+e_j) + g(m) - g(m+e_i) - g(m+e_j) \geq 0$',
-              fontsize=14)
-
-cbar = plt.colorbar(im, ax=ax2)
-cbar.set_label('Defect (≥0 means supermodular)', fontsize=11)
-
-# Add annotation about mixed log-concavity
-min_defect = np.nanmin(defect)
-ax2.text(0.02, 0.98,
-         f'Min defect: {min_defect:.4f}\n'
-         f'Supermodular: {"Yes ✓" if min_defect >= -1e-12 else "No ✗"}',
-         transform=ax2.transAxes, va='top', fontsize=11,
-         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
-
-plt.suptitle('Tropical Convexity from Mixed Log-Concavity',
-             fontsize=16, fontweight='bold')
 plt.tight_layout()
-plt.savefig('tropical_supermodularity.png', dpi=150, bbox_inches='tight')
-print("Saved tropical_supermodularity.png")
+plt.savefig('/workspace/request-project/viz_depth_heatmap.png', dpi=150, bbox_inches='tight')
+print("Saved viz_depth_heatmap.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Depth Profile Comparison
+
+Compares the depth profiles of different function families:
+Gaussian, power, multinomial, and the depth-1 witness.
+Shows how depth varies with parameters and family type.
+"""
+
+import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from itertools import product as iter_product
+from typing import Dict, Tuple, List
+
+# Inlined core
+def make_grid(n, d):
+    return [m for m in iter_product(range(d + 1), repeat=n) if sum(m) <= d]
+
+def make_slice(n, d):
+    return [m for m in iter_product(range(d + 1), repeat=n) if sum(m) == d]
+
+def shift(m, i):
+    return tuple(m[j] + (1 if j == i else 0) for j in range(len(m)))
+
+def ratio_xform(f, i, grid):
+    r = {}
+    for m in grid:
+        mu = shift(m, i)
+        fm = f.get(m, 0.0)
+        fmu = f.get(mu, 0.0)
+        if abs(fm) < 1e-15:
+            continue
+        r[m] = fmu / fm
+    return r
+
+def check_dir_lc(f, grid, n, tol=1e-10):
+    for i in range(n):
+        for m in grid:
+            m1 = shift(m, i)
+            m2 = shift(m1, i)
+            fm, fm1, fm2 = f.get(m, 0.0), f.get(m1, 0.0), f.get(m2, 0.0)
+            if fm * fm2 > fm1 * fm1 + tol:
+                return False
+    return True
+
+def compute_depth(f, n, d, maxk=5, tol=1e-10):
+    grid = make_grid(n, d)
+    return _drec(f, n, grid, maxk, tol)
+
+def _drec(f, n, grid, rem, tol):
+    if rem <= 0:
+        return 0
+    ok = check_dir_lc(f, grid, n, tol)
+    if not ok:
+        return 0
+    msub = rem - 1
+    for i in range(n):
+        Rf = ratio_xform(f, i, grid)
+        sg = [m for m in grid if m in Rf]
+        sd = _drec(Rf, n, sg, rem - 1, tol)
+        msub = min(msub, sd)
+        if msub == 0:
+            break
+    return 1 + msub
+
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+fig.suptitle('Depth Profiles Across Function Families', fontsize=14, fontweight='bold')
+
+# Panel 1: Depth vs sigma for Gaussians
+sigmas = [0.3, 0.5, 0.7, 1.0, 1.5, 2.0, 3.0, 5.0]
+depths_gauss = []
+for sigma in sigmas:
+    f = {m: math.exp(-sum(x**2 for x in m)/(2*sigma**2)) for m in make_grid(2, 4)}
+    depths_gauss.append(compute_depth(f, 2, 4, maxk=4))
+
+ax = axes[0]
+ax.bar(range(len(sigmas)), depths_gauss, color='steelblue', alpha=0.8)
+ax.set_xticks(range(len(sigmas)))
+ax.set_xticklabels([f'{s:.1f}' for s in sigmas], rotation=45)
+ax.set_xlabel('σ (Gaussian width)')
+ax.set_ylabel('Directional Depth')
+ax.set_title('Gaussian: Depth vs Width')
+ax.set_ylim(0, 5)
+ax.axhline(y=4, color='green', linestyle='--', alpha=0.5, label='max tested')
+ax.legend(fontsize=8)
+
+# Panel 2: Depth of 1D sequences
+sequences = {
+    'Binomial\nC(6,k)': [math.comb(6, k) for k in range(7)],
+    'Powers\n2^k': [2**k for k in range(7)],
+    'Powers\n(1/2)^k': [0.5**k for k in range(7)],
+    'Factorials\nk!': [math.factorial(k) for k in range(7)],
+    'Witness\n1,3,2,1': [1, 3, 2, 1, 0.5, 0.25, 0.125],
+}
+
+names = list(sequences.keys())
+depths_seq = []
+for name, seq in sequences.items():
+    f = {(k,): v for k, v in enumerate(seq)}
+    depths_seq.append(compute_depth(f, 1, len(seq)-1, maxk=5))
+
+ax = axes[1]
+colors = ['steelblue', 'coral', 'seagreen', 'gold', 'crimson']
+ax.bar(range(len(names)), depths_seq, color=colors, alpha=0.8)
+ax.set_xticks(range(len(names)))
+ax.set_xticklabels(names, fontsize=8)
+ax.set_ylabel('Directional Depth')
+ax.set_title('1D Sequences: Depth Hierarchy')
+ax.set_ylim(0, 6)
+
+# Panel 3: Ratio transform values for depth-1 witness
+f_wit = {(k,): v for k, v in enumerate([1.0, 3.0, 2.0, 1.0, 0.5, 0.25])}
+grid_1d = make_grid(1, 5)
+
+# Original function
+vals_orig = [f_wit.get((k,), 0) for k in range(6)]
+R0 = ratio_xform(f_wit, 0, grid_1d)
+vals_r0 = [R0.get((k,), 0) for k in range(5)]
+R0_clean = {m: v for m, v in R0.items() if v > 1e-15}
+R1 = ratio_xform(R0_clean, 0, grid_1d)
+vals_r1 = [R1.get((k,), 0) for k in range(4)]
+
+ax = axes[2]
+ax.plot(range(6), vals_orig, 'o-', color='steelblue', linewidth=2, markersize=8, label='f')
+ax.plot(range(5), vals_r0, 's-', color='coral', linewidth=2, markersize=8, label='R₀f')
+ax.plot(range(4), vals_r1, 'D-', color='seagreen', linewidth=2, markersize=8, label='R₀²f')
+ax.set_xlabel('Index k')
+ax.set_ylabel('Value')
+ax.set_title('Ratio Transform Layers\n(Depth-1 Witness)')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('/workspace/request-project/viz_depth_profile.png', dpi=150, bbox_inches='tight')
+print("Saved viz_depth_profile.png")

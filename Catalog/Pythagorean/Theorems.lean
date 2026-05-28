@@ -32,10 +32,7 @@ open Finset BigOperators Function
 
 namespace ValuatedMatroidDepth
 
-variable {α : Type*}
-
-section structural
-variable [Fintype α] [DecidableEq α]
+variable {α : Type*} [DecidableEq α]
 
 /-- Depth ≥ k+1 implies depth ≥ k. -/
 theorem DirectionalDepthAtLeast_of_succ
@@ -48,7 +45,7 @@ theorem DirectionalDepthAtLeast_of_succ
     exact ⟨hf.1, fun i => ih _ (hf.2 i)⟩
 
 /-- Depth is monotone: depth ≥ k and j ≤ k implies depth ≥ j. -/
-theorem DirectionalDepthAtLeast_mono
+theorem DirectionalDepthAtLeast_mono [Fintype α]
     {j k : ℕ} {f : (α → ℕ) → ℝ}
     (hf : DirectionalDepthAtLeast k f)
     (hjk : j ≤ k) :
@@ -59,11 +56,6 @@ theorem DirectionalDepthAtLeast_mono
     rcases Nat.eq_or_lt_of_le hjk with rfl | hjk'
     · exact hf
     · exact ih (DirectionalDepthAtLeast_of_succ k f hf) (Nat.lt_succ_iff.mp hjk')
-
-end structural
-
-section basic
-variable [DecidableEq α]
 
 /-- Depth ≥ 1 implies multivariate directional log-concavity. -/
 theorem DirectionalDepthAtLeast.logConcave
@@ -91,11 +83,6 @@ theorem hasInfiniteDepth_iff (f : (α → ℕ) → ℝ) :
     HasInfiniteDepth f ↔ ∀ k, DirectionalDepthAtLeast k f := by
   rfl
 
-end basic
-
-section main_theorems
-variable [Fintype α] [DecidableEq α]
-
 /-! ## Theorem 1: Multiplicative Depth Stability -/
 
 /-- **Log-concavity of products**: if `f` and `g` are both directionally
@@ -108,11 +95,8 @@ theorem multiDirLogConcave_mul
     (hg : MultiDirLogConcave g) :
     MultiDirLogConcave (fun m => f m * g m) := by
   intro i m
-  have := hf i m
-  have := hg i m
-  simp_all +decide [MultiDirLogConcave]
-  convert mul_le_mul (hf i m) (hg i m) (mul_nonneg (hg_nn _) (hg_nn _)) (sq_nonneg _) using 1
-    <;> ring
+  convert mul_le_mul (hf i m) (hg i m) (mul_nonneg (hg_nn _) (hg_nn _))
+    (mul_nonneg (hf_nn _) (hf_nn _)) using 1 <;> ring!
 
 /-- **Theorem 1 (Multiplicative Depth Stability)**:
     If `f` and `g` each have directional depth at least `k`, and both are everywhere
@@ -120,65 +104,42 @@ theorem multiDirLogConcave_mul
 
     This upgrades first-order log-concavity closure to an entire depth filtration,
     making the depth classes into multiplicative monoids. -/
-theorem directionalDepthAtLeast_mul
+theorem directionalDepthAtLeast_mul [Fintype α]
     (k : ℕ) (f g : (α → ℕ) → ℝ)
     (hf_pos : ∀ m, 0 < f m)
     (hg_pos : ∀ m, 0 < g m)
     (hf : DirectionalDepthAtLeast k f)
     (hg : DirectionalDepthAtLeast k g) :
     DirectionalDepthAtLeast k (fun m => f m * g m) := by
-  induction k generalizing f g with
-  | zero => exact trivial
-  | succ k ih =>
-    constructor
+  induction' k with k ih generalizing f g
+  · trivial
+  · refine ⟨?_, ?_⟩
     · exact multiDirLogConcave_mul f g (fun m => le_of_lt (hf_pos m))
         (fun m => le_of_lt (hg_pos m)) hf.1 hg.1
-    · intro i
-      have hrw : ratioTransform i (fun m => f m * g m) =
-          fun m => ratioTransform i f m * ratioTransform i g m :=
-        ratioTransform_mul i f g
-      rw [hrw]
-      exact ih _ _ (ratioTransform_pos i f hf_pos) (ratioTransform_pos i g hg_pos)
-        (hf.2 i) (hg.2 i)
-
-/-! ## Mixed Log-Concavity Multiplicative Stability -/
-
-/-
-**Mixed log-concavity of products**: if `f` and `g` are both mixed
-    log-concave and everywhere nonneg, then `f · g` is mixed log-concave.
--/
-theorem mixedLogConcave_mul
-    (f g : (α → ℕ) → ℝ)
-    (hf_nn : ∀ m, 0 ≤ f m)
-    (hg_nn : ∀ m, 0 ≤ g m)
-    (hf : MixedLogConcave f)
-    (hg : MixedLogConcave g) :
-    MixedLogConcave (fun m => f m * g m) := by
-  intro i j m;
-  have := hf i j m; have := hg i j m; have := hf j i m; have := hg j i m; simp_all +decide [ mul_assoc, mul_comm, mul_left_comm ] ;
-  convert mul_le_mul ‹f m * f ( m + Pi.single i 1 + Pi.single j 1 ) ≤ f ( m + Pi.single i 1 ) * f ( m + Pi.single j 1 ) › ‹g m * g ( m + Pi.single i 1 + Pi.single j 1 ) ≤ g ( m + Pi.single i 1 ) * g ( m + Pi.single j 1 ) › ( by apply_rules [ mul_nonneg, hf_nn, hg_nn ] ) ( by apply_rules [ mul_nonneg, hf_nn, hg_nn ] ) using 1 <;> ring
+    · exact fun i => by
+        simpa only [ratioTransform_mul] using
+          ih _ _ (ratioTransform_pos i f hf_pos) (ratioTransform_pos i g hg_pos)
+            (hf.2 i) (hg.2 i)
 
 /-! ## Theorem 2: Tropical Bridge -/
 
-/-
-**Theorem 2 (Tropical Bridge)**:
+/-- **Theorem 2 (Tropical Bridge)**:
     If `f` is mixed log-concave and everywhere positive, then `-log f` is
     supermodular. This is the fundamental connection between log-concavity
-    hierarchies and tropical convexity.
-
-    The supermodularity condition `-log f(m+eᵢ+eⱼ) + (-log f(m)) ≥
-    (-log f(m+eᵢ)) + (-log f(m+eⱼ))` is equivalent to
-    `f(m+eᵢ)·f(m+eⱼ) ≥ f(m)·f(m+eᵢ+eⱼ)`, which is exactly
-    mixed log-concavity.
--/
+    hierarchies and tropical convexity. -/
 theorem negLog_supermodular_of_mixedLC
     (f : (α → ℕ) → ℝ)
     (hf_pos : ∀ m, 0 < f m)
     (hf : MixedLogConcave f) :
     IsSupermodular (fun m => - Real.log (f m)) := by
-  intro i j m hij;
-  have := hf i j m;
-  have := Real.log_le_log ( mul_pos ( hf_pos _ ) ( hf_pos _ ) ) this; simp_all +decide [ Real.log_mul, ne_of_gt ] ;
+  intro i j m _hij
+  have h1 := hf i j m
+  have h2 := Real.log_le_log (mul_pos (hf_pos m)
+    (hf_pos (m + Pi.single i 1 + Pi.single j 1))) h1
+  rw [Real.log_mul (ne_of_gt (hf_pos m))
+      (ne_of_gt (hf_pos (m + Pi.single i 1 + Pi.single j 1))),
+    Real.log_mul (ne_of_gt (hf_pos (m + Pi.single i 1)))
+      (ne_of_gt (hf_pos (m + Pi.single j 1)))] at h2
   linarith
 
 /-! ## Theorem 3: Depth Obstruction -/
@@ -191,9 +152,8 @@ theorem not_depth_two_of_ratio_failure
     (f : (α → ℕ) → ℝ)
     (i : α)
     (hfail : ¬ MultiDirLogConcave (ratioTransform i f)) :
-    ¬ DirectionalDepthAtLeast 2 f := by
-  contrapose! hfail
-  exact (hfail.2 i).1
+    ¬ DirectionalDepthAtLeast 2 f :=
+  fun h => hfail (DirectionalDepthAtLeast.logConcave (h.2 i))
 
 /-! ## Theorem 4: Cross-Domain (Statistical Physics / Energy Landscape) -/
 
@@ -205,7 +165,7 @@ theorem not_depth_two_of_ratio_failure
     a local chemical potential / free-energy increment. This theorem says
     depth ≥ 2 with mixed conditions ensures the response function is convex
     in the tropical sense. -/
-theorem ratio_energy_supermodular
+theorem ratio_energy_supermodular [Fintype α]
     (i : α) (f : (α → ℕ) → ℝ)
     (hf_pos : ∀ m, 0 < f m)
     (_hf_depth : DirectionalDepthAtLeast 2 f)
@@ -215,32 +175,29 @@ theorem ratio_energy_supermodular
 
 /-! ## Theorem 5: Hierarchy Strictness -/
 
-/-
-There exists a function with depth ≥ 1 but not depth ≥ 2.
-    We construct an explicit witness on `Fin 2` (two-variable setting).
--/
+/-- There exists a function with depth ≥ 1 but not depth ≥ 2.
+    The witness is an explicit function on `ULift (Fin 2)` that is directionally
+    log-concave but whose ratio transform fails log-concavity. -/
 theorem exists_depth_one_not_depth_two :
     ∃ (α : Type) (_ : Fintype α) (_ : DecidableEq α) (f : (α → ℕ) → ℝ),
       DirectionalDepthAtLeast 1 f ∧ ¬ DirectionalDepthAtLeast 2 f := by
-  refine' ⟨ _, _, _ ⟩;
-  exact Fin 1;
-  · infer_instance;
-  · refine' ⟨ _, _, _, _ ⟩;
-    all_goals try infer_instance;
-    exact fun m => if m 0 = 0 then 1 else if m 0 = 1 then 3 else if m 0 = 2 then 2 else if m 0 = 3 then 1 else 0;
-    · constructor;
-      · intro i m; rcases m0 : m 0 with ( _ | _ | _ | _ | m0 ) <;> simp +decide [ m0 ] ;
-        · fin_cases i ; norm_num;
-        · fin_cases i ; norm_num;
-        · fin_cases i ; norm_num;
-        · fin_cases i ; norm_num;
-        · split_ifs <;> norm_num;
-      · exact fun _ => trivial;
-    · rintro ⟨ h₁, h₂ ⟩;
-      obtain ⟨ h₃, h₄ ⟩ := h₂ 0;
-      specialize h₃ 0 ( fun _ => 0 ) ; norm_num [ shiftUp, shiftUp2, ratioTransform ] at h₃
-
-end main_theorems
+  refine' ⟨_, _, _, _, _, _⟩
+  exact ULift (Fin 2)
+  all_goals try infer_instance
+  · exact fun m => if m 0 = 0 ∧ m 1 = 0 then 1
+      else if m 0 = 1 ∧ m 1 = 0 then 3
+      else if m 0 = 2 ∧ m 1 = 0 then 2
+      else if m 0 = 3 ∧ m 1 = 0 then 1 else 0
+  · constructor
+    · intro i m; fin_cases i <;> simp +decide
+      grind
+    · exact fun _ => trivial
+  · intro h
+    have := h.2 0
+    have := this.1 0 (fun _ => 0)
+    norm_num [ratioTransform] at this
+    simp +decide at this
+    norm_num at this
 
 end ValuatedMatroidDepth
 
