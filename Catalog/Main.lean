@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1970 of the highest-quality
+A curated collection of 1972 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1970
+Total files: 1972
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -449,6 +449,7 @@ import FINAL.Bridges.GaloisCohomologicalConsensus
 import FINAL.Bridges.GaloisDeepLearning
 import FINAL.Bridges.GaloisNeuralCorrespondence
 import FINAL.Bridges.GardenOfEden
+import FINAL.Bridges.GaussianFreeField
 import FINAL.Bridges.GibbsPosterior
 import FINAL.Bridges.GuardedFixedPointIndex
 import FINAL.Bridges.HTreeRobust
@@ -510,6 +511,7 @@ import FINAL.Bridges.LongestCommonValuedPrefix
 import FINAL.Bridges.LorentzianBivariateBridge
 import FINAL.Bridges.LorentzianBivariateNewBridge
 import FINAL.Bridges.LorentzianGroundState
+import FINAL.Bridges.LorentzianHardnessLowerBounds
 import FINAL.Bridges.LorentzianInformation
 import FINAL.Bridges.LorentzianNewton
 import FINAL.Bridges.LorentzianRecognition

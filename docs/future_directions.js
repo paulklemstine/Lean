@@ -59,10 +59,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c25f3c65",
     "timestamp": "2026-05-24T23:11:24.492421+00:00"
   },
   {
@@ -97,10 +97,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "d79d17d9",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "16f397b6",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -575,10 +575,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14bea7a1",
     "timestamp": "2026-05-26T00:07:30.309357+00:00"
   },
   {
@@ -1078,27 +1078,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T15:25:01.447437+00:00"
   },
   {
-    "id": "fd_1450",
-    "title": "Direction 3: Gaussian Free Field Lattice Periodicity",
-    "description": "**Conjecture:** The canonical kernel lattice \u039b_S determines the periodicity structure of the discrete Gaussian free field (GFF) on the metric graph \u0393. Specifically, the partition function of the GFF on \u0393 with periodic boundary conditions factorizes as Z(\u0393) = (2\u03c0)^{g/2} \u00b7 (det L_red)^{-1/2}, where g is the genus and L_red is the reduced Laplacian.\n\n**Test:** Compute the GFF partition function numerically for cycle graphs C_n with various edge lengths, and compare with the determinant formula. Also compute the GFF covariance matrix (= L^+) and verify it equals the effective resistance matrix.\n\n**Impact:** This bridges tropical geometry to statistical mechanics, providing a geometric interpretation of GFF observables. The canonical kernel lattice would acquire physical meaning as the \"configuration space\" of the discrete toroidal model.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` (weightedLaplacian_psd, effective resistance)\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` (harmonicKernel)\n\n**Proof Strategy:** The GFF on a graph with Laplacian L has density \u221d exp(\u2212(1/2) x^T L x). By our Theorem 6, x^T L x = \u03a3 w_e (x_i \u2212 x_j)\u00b2 \u2265 0, so the measure is well-defined on \u211d^n/{constants}. The partition function is the Gaussian integral, giving det(L_red)^{-1/2}.\n\n**Domain Bridges:** Statistical mechanics \u2194 Tropical geometry \u2194 Spectral graph theory\n\n**Lineage:** Builds directly on `weightedLaplacian_psd` from Theorems.lean.\n\n**Ambition:** \u2605\u2605\u2605 (Solid extension \u2014 the connection is well-known informally but not formalized)\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "c6eef6ce",
-    "consumed_by_exp_id": "a674ae13",
-    "timestamp": "2026-05-27T15:25:01.509711+00:00"
-  },
-  {
     "id": "fd_1454",
     "title": "Direction 1: Character Sum Bounds for S_n via Moment Kernel Decomposition",
     "description": "**Conjecture:** For fixed k \u2265 1, the expected k-th excess moment over random generating pairs (\u03c3, \u03c4) in S_n satisfies\n\n$$\\mathbb{E}_{\\sigma,\\tau}[\\delta_{2k}(\\sigma, \\tau)] = O(1/n)$$\n\nwhere $\\delta_{2k} = \\text{momentKernel}(\\sigma, \\tau, 2k) - \\mu_{F_2}^{(2k)}(e)$.\n\n**Test:** Compute the average excess moment for random pairs in S_n for n = 5, ..., 12 and verify the 1/n decay rate by regression. The formalized conjugation invariance theorem (`closedWordCount_conj_invariant` in `Pythagorean/CayleyExpander/MomentMethod.lean`) reduces the average to a sum over conjugacy classes, making the computation tractable.\n\n**The key insight is** that the moment kernel decomposes over irreducible representations of S_n, and the dominant correction comes from the standard (n-1)-dimensional representation, which contributes O(1/n) by character orthogonality. The conjugation invariance theorem already certified in our framework is the first step toward formalizing this decomposition.\n\n**Why now?** The trace identity and conjugation invariance are the two prerequisites for the character decomposition, and both are now machine-verified. The character theory of S_n is partially available in Mathlib, making the formal bridge feasible within the next cycle.\n\n**Impact:** A formal proof of the 1/n decay would be the first rigorous moment bound for random Cayley graphs on S_n, directly advancing the Random Cayley Expander Conjecture.\n\n**Catalog References:** `Pythagorean/CayleyExpander/MomentMethod.lean` (closedWordCount_conj_invariant, momentKernel_conj_invariant), `Pythagorean/CayleyExpander/MomentMethodAdvanced.lean` (trace_pow_eq_closedWordCount, spectral_moment_eq_return_prob).\n\n**Proof Strategy:** Decompose the moment kernel using the Peter-Weyl theorem for finite groups. The conjugation invariance reduces the problem to character sums. Bound each irreducible contribution using known character bounds for S_n (e.g., Roichman's bounds).\n\n**Domain Bridges:** Representation theory of S_n \u2192 asymptotic combinatorics \u2192 probability theory.\n\n**Lineage:** Builds directly on Theorems 1, 3, and 6 of the current work.\n\n**Ambition:** Grand challenge \u2014 would resolve the conjecture for fixed moments.\n\n---",
@@ -1485,7 +1464,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f43533d0",
@@ -1506,7 +1485,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f43533d0",
@@ -1525,7 +1504,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f43533d0",
@@ -1543,12 +1522,73 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f43533d0",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T01:19:07.803412+00:00"
+  },
+  {
+    "id": "fd_1599",
+    "title": "Direction 1: Strongly Rayleigh Extension",
+    "description": "**Conjecture:** Every strongly Rayleigh measure on 2^[n] admits a Lorentzian Hessian certificate computable from its generating polynomial's resolvent data.\n\n**Test:** Implement the certificate computation for strongly Rayleigh measures beyond DPPs (e.g., balanced matroids, uniform distributions on bases of regular matroids). Check whether the resolvent Hessian has at most one positive eigenvalue. A strongly Rayleigh measure whose Hessian has two or more positive eigenvalues would refute the conjecture.\n\n**Impact:** Strongly Rayleigh measures are the broadest class known to satisfy negative dependence. Extending the certificate to this class would make Lorentzian verification possible for measures arising from matroid theory, graph theory, and log-concave polynomials \u2014 far beyond the DPP setting.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `IsDPPLorentzian` and `dpp_partition_function_lorentzian`\n- `Pythagorean/LorentzianCertificate.lean` \u2014 `LorentzianHessianCertificate` and `dpp_hessian_conditional_neg_semidef`\n\n**Proof Strategy:** The key insight is that strongly Rayleigh measures have real stable generating polynomials, and the resolvent structure should extend via the Borcea-Br\u00e4nd\u00e9n theory. The main technical challenge is that the generating polynomial may not factor as det(I + diag(x)K) for any PSD K. Strategy: express the Hessian through the polynomial's own second derivatives (not through a kernel), and prove conditional NSD using the real stability condition directly.\n\n**Domain Bridges:** Combinatorics (matroid theory) \u2194 Analysis (real stable polynomials) \u2194 Computation (certificate algorithms)\n\n**Lineage:** Builds directly on the resolvent Hessian certificate and extends it from DPPs to the full strongly Rayleigh class.\n\n**Ambition:** Grand challenge \u2014 would unify Lorentzian polynomial theory with computational certificate verification for all negatively dependent measures.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "d72eb6e1",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T01:19:29.003380+00:00"
+  },
+  {
+    "id": "fd_1604",
+    "title": "Direction 1: Harmonic-Sector Factorization and the Tropical Partition Function",
+    "description": "**Conjecture:** For a connected metric graph \u0393 with genus g and n vertices, the periodic Gaussian free field partition function factors as:\n\nZ_periodic(\u0393) = Z_pin(\u0393) \u00b7 Z_harm(\u039b_\u0393)\n\nwhere Z_pin = (2\u03c0)^{(n-1)/2} / \u221a(det L_red) depends only on the pinned sector, and Z_harm = vol(\u211d^g / \u039b_\u0393) is determined by the canonical kernel lattice \u039b_\u0393 (the tropical Jacobian torus).\n\n**Test:** Compute Z_periodic, Z_pin, and the lattice covolume for parameterized families of theta graphs \u0398(a,b,c) and verify that Z_periodic / Z_pin depends only on the lattice covolume, not on vertex subdivision or edge length redistribution within the same metric graph.\n\n**Impact:** This would establish the first rigorous factorization of a statistical-mechanical partition function into combinatorial (pinned) and geometric (harmonic) sectors, directly connecting free energy computation to tropical Jacobian geometry. It would make the abstract notion of \"tropical Jacobian\" physically computable.\n\n**Catalog References:**\n- `Catalog/Pythagorean/TropicalBridge/MetricKernel/Theorems.lean` \u2014 `weightedLaplacian_psd`, `weightedLaplacian_row_sum_zero`\n- `Catalog/Pythagorean/TropicalBridge/GaussianFreeField.lean` \u2014 `pinnedGFF_partition_prefactor_pos`, `graphGFFEnergy_add_const`\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` \u2014 `harmonicKernel`\n\n**Proof Strategy:** Define the periodic GFF as the GFF on \u211d^V / \u039b where \u039b is the image of the integer lattice under the Laplacian. Decompose \u211d^V = (ker L)^\u22a5 \u2295 ker L. On (ker L)^\u22a5 the integral is controlled by det L_red (the pinned part). On ker L \u2245 \u211d the periodicity lattice is \u039b_\u0393 (the harmonic part). The factorization follows from Fubini.\n\n**Domain Bridges:** Tropical geometry \u2194 Statistical mechanics \u2194 Spectral graph theory\n\n**Lineage:** Extends `pinnedGFF_partition_prefactor_pos` by decomposing the full periodic partition function.\n\n**Ambition:** Grand challenge \u2014 would unify tropical Jacobian theory with statistical mechanics.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a674ae13",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T01:57:02.515048+00:00"
+  },
+  {
+    "id": "fd_1605",
+    "title": "Direction 2: Arithmetic Graph Jacobians and Arakelov Theory",
+    "description": "**Conjecture:** For a finite graph G over \u2124, the order of the critical group (sandpile group) Jac(G) equals the reduced Laplacian determinant det(L_red), and this integer invariant admits an Arakelov-theoretic interpretation as the self-intersection number of the canonical divisor on the associated arithmetic surface.\n\n**Test:** Compute |Jac(G)| and det(L_red) for all graphs on \u2264 8 vertices and verify equality. Then compute the Arakelov intersection pairing for the corresponding Mumford curves (if available) and compare with the graph-theoretic prediction.\n\n**Impact:** Would establish a formal bridge from graph combinatorics to arithmetic geometry, making the chip-firing group a certified invariant of an arithmetic surface. This would connect the GFF partition function to heights and arithmetic degrees.\n\n**Catalog References:**\n- `Catalog/Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean` \u2014 `FiringEquivalentOn`, `RestrictedLaplacianImage`\n- `Catalog/Pythagorean/TropicalBridge/GaussianFreeField.lean` \u2014 `effectiveResistance_eq_pseudoinverse_quadratic`\n\n**Proof Strategy:** Use the Smith normal form of the Laplacian to compute the critical group structure. Relate this to the N\u00e9ron model of the Jacobian of the associated Mumford curve via Raynaud's theorem.\n\n**Domain Bridges:** Combinatorics \u2194 Arithmetic geometry \u2194 Number theory\n\n**Lineage:** Builds on `harmonicKernel` and chip-firing equivalence from the canonical kernel theorems.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting connection between combinatorial chip-firing and Arakelov geometry.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "a674ae13",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T01:57:02.592700+00:00"
   },
   {
     "id": "fd_0806",
@@ -1581,26 +1621,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1599",
-    "title": "Direction 1: Strongly Rayleigh Extension",
-    "description": "**Conjecture:** Every strongly Rayleigh measure on 2^[n] admits a Lorentzian Hessian certificate computable from its generating polynomial's resolvent data.\n\n**Test:** Implement the certificate computation for strongly Rayleigh measures beyond DPPs (e.g., balanced matroids, uniform distributions on bases of regular matroids). Check whether the resolvent Hessian has at most one positive eigenvalue. A strongly Rayleigh measure whose Hessian has two or more positive eigenvalues would refute the conjecture.\n\n**Impact:** Strongly Rayleigh measures are the broadest class known to satisfy negative dependence. Extending the certificate to this class would make Lorentzian verification possible for measures arising from matroid theory, graph theory, and log-concave polynomials \u2014 far beyond the DPP setting.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `IsDPPLorentzian` and `dpp_partition_function_lorentzian`\n- `Pythagorean/LorentzianCertificate.lean` \u2014 `LorentzianHessianCertificate` and `dpp_hessian_conditional_neg_semidef`\n\n**Proof Strategy:** The key insight is that strongly Rayleigh measures have real stable generating polynomials, and the resolvent structure should extend via the Borcea-Br\u00e4nd\u00e9n theory. The main technical challenge is that the generating polynomial may not factor as det(I + diag(x)K) for any PSD K. Strategy: express the Hessian through the polynomial's own second derivatives (not through a kernel), and prove conditional NSD using the real stability condition directly.\n\n**Domain Bridges:** Combinatorics (matroid theory) \u2194 Analysis (real stable polynomials) \u2194 Computation (certificate algorithms)\n\n**Lineage:** Builds directly on the resolvent Hessian certificate and extends it from DPPs to the full strongly Rayleigh class.\n\n**Ambition:** Grand challenge \u2014 would unify Lorentzian polynomial theory with computational certificate verification for all negatively dependent measures.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "d72eb6e1",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T01:19:29.003380+00:00"
   },
   {
     "id": "fd_1603",

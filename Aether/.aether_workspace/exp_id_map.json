@@ -778,5 +778,8 @@
   "b639c238": "direction_2_universality_for_general_semidirect_pr.json",
   "f43533d0": "direction_1_k_th_order_shadow_theorem_and_iterated.json",
   "d72eb6e1": "direction_3_efficient_lorentzian_certificate_compu.json",
-  "7550d9c2": "direction_1_uniform_spectral_gap_bound_for_gl_q.json"
+  "7550d9c2": "direction_1_uniform_spectral_gap_bound_for_gl_q.json",
+  "a674ae13": "direction_3_gaussian_free_field_lattice_periodicit.json",
+  "b1b631e9": "direction_1_hardness_of_unrestricted_degree_lorent.json",
+  "eed45bf9": "direction_3_sheaf_theoretic_tropical_persistence.json"
 }
