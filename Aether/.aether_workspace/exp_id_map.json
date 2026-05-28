@@ -841,5 +841,8 @@
   "8406d734": "direction_3_tropical_shadow_and_newton_polytope_pr.json",
   "92678f69": "direction_1_full_kruskalkatona_theory_for_multi_in.json",
   "a03e75f9": "direction_1_character_sum_bounds_for_s_n_via_momen.json",
-  "4cc7892a": "direction_3_circuit_lower_bounds_from_shadow_profi.json"
+  "4cc7892a": "direction_3_circuit_lower_bounds_from_shadow_profi.json",
+  "387e8dc9": "direction_3_submodularity_and_valuated_matroid_str.json",
+  "9144e66e": "direction_3_tropical_faithfulness_of_differentiati.json",
+  "c5793c2c": "direction_2_higher_order_critical_pairs_and_knuth_.json"
 }

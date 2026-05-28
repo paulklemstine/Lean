@@ -677,10 +677,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "80ad73ef",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T21:53:04.887954+00:00"
   },
   {
@@ -913,10 +913,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "00a34fc1",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "670b8a89",
     "timestamp": "2026-05-27T19:49:58.734781+00:00"
   },
   {
@@ -998,10 +998,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d72eb6e1",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d322aa9",
     "timestamp": "2026-05-28T01:19:29.003380+00:00"
   },
   {
@@ -1185,29 +1185,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T08:02:38.997972+00:00"
   },
   {
-    "id": "fd_1717",
-    "title": "Direction 3: Submodularity and Valuated Matroid Structure",
-    "description": "**Conjecture:** For DPP polynomials $Z_K$ with PSD kernel $K$, the tropical leaf witness $A \\mapsto W_{\\mathrm{trop}}(Z_K, A)$ is a submodular set function:\n\n$$W_{\\mathrm{trop}}(Z_K, A) + W_{\\mathrm{trop}}(Z_K, B) \\geq W_{\\mathrm{trop}}(Z_K, A \\cap B) + W_{\\mathrm{trop}}(Z_K, A \\cup B)$$\n\nIf true, this would imply that the tropical witness can be optimized by greedy algorithms, and that it defines a *valuated matroid* on the ground set.\n\n**Test:** Generate 100 random PSD kernels of sizes $n = 4, 5, 6$. For each, compute $W_{\\mathrm{trop}}(A)$ for all $2^n$ subsets and verify the submodularity inequality for all $2^{2n}$ pairs $(A, B)$.\n\n**Impact:** This would connect the tropical leaf witness to the rich theory of submodular optimization, matroid intersection, and discrete convex analysis. It would enable efficient (greedy, $O(n^2)$) computation of optimal subsystems \u2014 those with maximum tropical witness.\n\n**Catalog References:**\n- `Pythagorean/TropicalLeafWitnesses/Defs.lean` \u2014 `IsSubmodularOn`, `dppTropicalLeafWitness`\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `DPPKernel`, `dpp_pairwise_negative_dependence`\n\n**Proof Strategy:** Use the Cauchy-Binet formula to express principal minors of $K$ as sums of squared minors of factor matrices. Show that the $L^1$ norm of derivatives inherits submodularity from the log-submodularity of determinants.\n\n**Domain Bridges:** Matroid theory \u2194 Combinatorial optimization \u2194 Tropical geometry \u2194 Machine learning (DPP diversity)\n\n**Lineage:** Builds on `dpp_pairwise_negative_dependence` and computational evidence from `demo.py`.\n\n**Ambition:** \ud83d\udd2c Solid extension \u2014 computationally verified, proof strategy is clear.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0a042263",
-    "consumed_by_exp_id": "387e8dc9",
-    "timestamp": "2026-05-28T08:02:39.081771+00:00"
-  },
-  {
     "id": "fd_1760",
     "title": "Direction 2: Transversal Matroids and Bipartite Matching Complexity",
     "description": "**Conjecture.** For transversal matroids arising from bipartite graphs with bounded degree \u0394, the quadratic leaf count grows as O(n^{r\u22122} \u00b7 \u0394^{O(1)}), where *r* is the rank. This is polynomial in *n* for fixed *r* and \u0394, and dramatically below the ambient bound when the bipartite graph is sparse.\n\n**Test.** Compute leaf counts for transversal matroids from:\n1. Random bipartite graphs with bounded degree \u0394 \u2208 {2, 3, 4}.\n2. Structured bipartite graphs: grids, expanders, Ramanujan bipartite graphs.\n3. Compare with the permanent of the biadjacency matrix (counting perfect matchings).\n\n**Impact.** Opens a route to efficient Lorentzian certification for assignment and scheduling problems, where the underlying combinatorial structure is a bipartite matching.\n\n**Catalog References.**\n- `Pythagorean/SupportCompressionPoly.lean`: `supportCompressedLeafCount_le_active_choose`\n- `Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`\n\n**Proof Strategy.** Bound the number of independent (*r*\u22122)-sets by relating them to partial matchings. Use the Tutte\u2013Berge formula or K\u00f6nig's theorem to control the structure of partial matchings in bounded-degree bipartite graphs.\n\n**Domain Bridges.** Matching theory \u2194 assignment problems \u2194 operations research.\n\n**Lineage.** Builds on the active variable bound (Theorem 4) and the hereditary property.\n\n**Ambition.** \u2605\u2605\u2605\u2606\u2606 \u2014 Solid, with clear practical applications.\n\n---",
@@ -1285,27 +1262,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "ad17ca4a",
     "consumed_by_exp_id": "57cfb68b",
     "timestamp": "2026-05-28T11:04:38.605729+00:00"
-  },
-  {
-    "id": "fd_1786",
-    "title": "Direction 3: Tropical Faithfulness of Differentiation",
-    "description": "**Conjecture:** Over a valued field of characteristic zero, the tropicalization of the derivative map Trop(\u2202\u1d62\u2202\u2c7c) coincides with the combinatorial shadow map on Newton polytopes if and only if the non-cancellation certificate holds at the valuative level. Specifically, the Newton polytope of \u2202\u1d62\u2202\u2c7cp equals the Minkowski difference of the Newton polytope of p with the segment [0, e\u1d62 + e\u2c7c], whenever p satisfies the certificate.\n\n**Test:** Implement Newton polytope computation (convex hull of support) and Minkowski difference for 2D and 3D cases. Compare the Newton polytope of \u2202\u1d62\u2202\u2c7cp with the predicted Minkowski difference for random polynomials. Find examples where the polytope inclusion is strict (certificate fails).\n\n**Impact:** This would establish a formal tropical\u2013algebraic dictionary: the non-cancellation certificate IS the condition for tropical faithfulness of differentiation. This connects to the Kapranov theorem (tropicalization commutes with resultants under genericity) and would provide new tools for tropical intersection theory.\n\n**Catalog References:**\n- `Bridges/Catalog/Speculative/AutoResearch/NonCancellationCertificate.lean` \u2014 certificate definition\n- Tropical geometry modules in the Catalog (if available)\n\n**Proof Strategy:** Use the vertex description of Newton polytopes. The vertices of the Newton polytope of \u2202\u1d62\u2202\u2c7cp are a subset of the per-pair shadow. Under the certificate, every shadow point is in the support, so the Newton polytope has the predicted vertices. The Minkowski difference interpretation follows from the additive structure of the shadow.\n\n**Domain Bridges:** Tropical geometry (tropicalization, faithful tropicalization), algebraic geometry (Newton polytopes, Bernstein's theorem), optimization (polyhedral computation).\n\n**Lineage:** Extends Theorem 1 from a set-level statement to a polyhedral/geometric statement.\n\n**Ambition:** Solid extension with grand-challenge overtones \u2014 the tropical faithfulness connection is new and could open a research program in tropical differentiation theory.\n\n**The key insight is** that the non-cancellation certificate is equivalent to a tropical faithfulness condition: the tropicalization of the derivative map has no \"unexpected zeros\" that would shrink the Newton polytope below its combinatorial prediction.\n\n**Why now?** Tropical geometry has matured to the point where faithfulness conditions are well-understood (cf. work of Gubler, Rabinoff, Werner). The shadow framework provides the first formal connection between faithfulness and differentiation.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ad17ca4a",
-    "consumed_by_exp_id": "9144e66e",
-    "timestamp": "2026-05-28T11:04:38.688248+00:00"
   },
   {
     "id": "fd_1787",
@@ -2046,6 +2002,93 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T12:55:38.029549+00:00"
   },
   {
+    "id": "fd_1812",
+    "title": "Direction 1: Unbounded Higher-Order Completion via Recursive Critical Pair Saturation",
+    "description": "**Conjecture:** For every finite left-linear Miller-pattern rewrite system E that is terminating and has no infinite ascending chain of critical pair sizes, there exists a finite N\u2080 such that `AllCriticalPairsJoinable E N\u2080` implies global confluence of E.\n\n**Test:** Implement recursive critical pair saturation: enumerate critical pairs at increasing bounds N = 1, 2, 3, ..., checking joinability at each level. If the critical pair set stabilizes (no new pairs appear beyond some N\u2080), the conjecture predicts global confluence. Test on the map fusion, CPS, and deforestation benchmarks. Falsify by constructing a terminating Miller-pattern system where new critical pairs appear at every bound.\n\n**Impact:** This would remove the \"bounded\" qualifier from our main theorem, yielding a full higher-order Knuth-Bendix completion procedure. It would be the first decision procedure for confluence of terminating higher-order pattern rewrite systems.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (master_pipeline, localConfluence_from_joinable_pairs), `Pythagorean/HOCriticalPairs.lean` (BetaCriticalPairsUpTo, AllCriticalPairsJoinable)\n\n**Proof Strategy:** Show that in a terminating system, the set of overlap positions is bounded by the termination ordering. Use the well-foundedness of the ordering to prove that critical pair generation eventually stabilizes.\n\n**Domain Bridges:** Connects to automated theorem proving (equational reasoning), universal algebra (finitely presented theories)\n\n**Lineage:** Extends master_pipeline by removing the \"Global\" quantifier from AllCriticalPairsJoinableGlobal\n\n**Ambition:** Grand challenge \u2014 would resolve a 50-year open problem in higher-order rewriting theory\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c5793c2c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T13:33:49.254429+00:00"
+  },
+  {
+    "id": "fd_1813",
+    "title": "Direction 2: Certified Compiler Optimization Passes via Completion Certificates",
+    "description": "**Conjecture:** For the standard optimization rules of a pure functional language compiler (map/fold fusion, \u03b2/\u03b7 reduction, case-of-case, let-floating), the bounded completion certificate at bound N = 100 certifies local confluence, and the certificate can be used to automatically verify that the compiler's optimization pipeline produces unique normal forms.\n\n**Test:** Encode the GHC rewrite rules (RULES pragmas) for list fusion as a Miller-pattern system. Generate a completion certificate at bound 100. Check whether all critical pairs are joinable. If they are, the certificate guarantees that GHC's list fusion optimizations are confluent \u2014 regardless of the order in which they fire.\n\n**Impact:** Would provide the first mathematical guarantee of optimization coherence for a real-world compiler. Currently, GHC's RULES are tested empirically but never proved confluent.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (mkFullCertificate, VerifiedCompletionCertificate, ho_completion_pipeline_sound), `Pythagorean/KnuthBendixCompletion.lean` (normalizer_preserves_semantics)\n\n**Proof Strategy:** Use mkFullCertificate to construct the certificate. Connect to normalizer_preserves_semantics via a denotational semantics for the source language. The certificate + semantics bridge gives end-to-end soundness.\n\n**Domain Bridges:** Compiler verification, functional programming, software engineering\n\n**Lineage:** Builds on coherent_optimization_pipelines and the cross-domain connection to program semantics\n\n**Ambition:** Solid extension \u2014 directly applicable to existing compiler infrastructure\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c5793c2c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T13:33:49.356660+00:00"
+  },
+  {
+    "id": "fd_1814",
+    "title": "Direction 3: Categorical Coherence from Confluent Rewriting",
+    "description": "**Conjecture:** For a finitely presented symmetric monoidal category whose structural isomorphisms are encoded as a Miller-pattern rewrite system, confluence of the system is equivalent to coherence of the category (i.e., all diagrams of structural morphisms commute).\n\n**Test:** Encode Mac Lane's coherence theorem for monoidal categories as a rewrite system: associativity `(A \u2297 B) \u2297 C \u2192 A \u2297 (B \u2297 C)`, unit laws `I \u2297 A \u2192 A` and `A \u2297 I \u2192 A`. Generate critical pairs and check joinability. The coherence theorem predicts all pairs are joinable.\n\n**Impact:** Would create a computational proof of categorical coherence theorems. Currently, coherence proofs are done by hand using graph-theoretic or combinatorial arguments. A completion-based approach would be fully algorithmic.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (equiv_iff_joinable_of_confluent, ho_word_problem_decidable)\n\n**Proof Strategy:** The key insight is that coherence = all diagrams commute = all equational consequences hold = word problem decidable = confluent completion exists. Use equiv_iff_joinable_of_confluent to bridge joinability and equational equivalence.\n\n**Domain Bridges:** Category theory, algebraic topology (higher coherence), quantum computing (categorical quantum mechanics)\n\n**Lineage:** Interprets equiv_iff_joinable_of_confluent as a coherence principle\n\n**Ambition:** Grand challenge \u2014 would unify rewriting theory and categorical coherence\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "c5793c2c",
+    "consumed_by_exp_id": "11f3a672",
+    "timestamp": "2026-05-28T13:33:49.444404+00:00"
+  },
+  {
+    "id": "fd_1815",
+    "title": "Direction 4: Normalization by Rewriting for Dependent Type Theory",
+    "description": "**Conjecture:** The definitional equality of a dependent type theory with a finite set of computation rules (\u03b2, \u03b7, \u03b9 for inductive types) can be decided by higher-order completion modulo \u03b2, provided the computation rules form a confluent Miller-pattern system.\n\n**Test:** Encode the computation rules of the Calculus of Inductive Constructions (CIC) as a higher-order rewrite system. Check whether they satisfy the Miller pattern property. If so, generate a completion certificate and compare with the known decidability of CIC's definitional equality.\n\n**Impact:** Would provide an alternative normalization procedure for proof assistants, potentially faster than the standard approach (normalization by evaluation) for specific type theories. Could also be used to validate that user-defined computation rules preserve decidability of type-checking.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (master_pipeline, unique_nf_existence), `Pythagorean/HOCriticalPairs.lean` (betaStep_closed_under_subst, hoRewrite_closed_under_subst)\n\n**Proof Strategy:** The key insight is that normalization by rewriting is an alternative to normalization by evaluation. Use master_pipeline to show unique normal forms exist, then implement a normalizer that uses the rewrite system to compute normal forms.\n\n**Why now?** Recent interest in extensible type theories (with user-defined reductions) makes confluence checking essential for ensuring type-checking decidability.\n\n**Domain Bridges:** Type theory, proof assistants, programming language design\n\n**Lineage:** Extends unique_nf_existence to typed calculi\n\n**Ambition:** Solid extension \u2014 connects to active research in type theory\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c5793c2c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T13:33:49.534928+00:00"
+  },
+  {
+    "id": "fd_1816",
+    "title": "Direction 5: Higher-Order Superposition with Completion Preprocessing",
+    "description": "**Conjecture:** A higher-order superposition calculus preprocessing step that uses bounded completion to orient equations into rewrite rules achieves significantly better performance on higher-order theorem proving benchmarks than unpreprocessed superposition.\n\n**Test:** Implement a preprocessing phase for a higher-order superposition prover (e.g., Zipperposition or Leo-III) that uses bounded completion certificates to orient equational axioms. Measure the impact on TPTP higher-order benchmark problems.\n\n**Impact:** Would bridge the gap between completion (which is great for equational reasoning but weak for general theorem proving) and superposition (which is great for general reasoning but weak for equational reasoning). The combination should be stronger than either alone.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (ho_completion_pipeline_sound, enumerate_critical_pairs), `Pythagorean/KnuthBendixCompletion.lean` (kb_completion_correct, convergent_decides_word_problem)\n\n**Proof Strategy:** The key insight is that a completion certificate provides oriented rules that can be used as simplification rules in superposition. The certificate guarantees that simplification with these rules is sound and does not lose completeness.\n\n**Why now?** Higher-order automated theorem proving has seen dramatic advances in the last 5 years (Bentkamp et al., 2021), but equational reasoning remains a bottleneck.\n\n**Domain Bridges:** Automated deduction, artificial intelligence, formal verification\n\n**Lineage:** Combines ho_completion_pipeline_sound with first-order completion infrastructure\n\n**Ambition:** Solid extension \u2014 directly implementable with existing prover infrastructure",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c5793c2c",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T13:33:49.625322+00:00"
+  },
+  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2058,21 +2101,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
-  },
-  {
-    "id": "fd_1807",
-    "title": "Extending the framework",
-    "description": "from formulas to algebraic branching programs (ABPs) and general circuits, where the key challenge is handling fan-out.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4cc7892a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T12:56:17.805930+00:00"
   },
   {
     "id": "fd_1808",
@@ -2089,20 +2117,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T12:56:17.884271+00:00"
   },
   {
-    "id": "fd_1809",
-    "title": "Connecting to information theory",
-    "description": "through the shadow entropy power inequality analogy.",
-    "domains": [
-      "Bridges"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4cc7892a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T12:56:17.959205+00:00"
-  },
-  {
     "id": "fd_1810",
     "title": "Bridging to tropical geometry",
     "description": "where shadows become tropical projections.",
@@ -2116,20 +2130,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "4cc7892a",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T12:56:18.036514+00:00"
-  },
-  {
-    "id": "fd_1811",
-    "title": "Exploring the equality case",
-    "description": "of the convolution inequality to characterize extremal support structures.",
-    "domains": [
-      "Algebra"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4cc7892a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T12:56:18.115366+00:00"
   },
   {
     "id": "seed_007",

@@ -1,418 +1,416 @@
 #!/usr/bin/env python3
 """
-Algorithms for Higher-Order Critical Pair Analysis Modulo β
+Algorithms for Higher-Order Critical Pair Analysis and
+Bounded Knuth-Bendix Completion Modulo β
 
 Implements:
-1. Bounded β-critical pair enumeration for Miller-pattern systems
-2. Bounded joinability checking via BFS
-3. Local confluence certification pipeline
+1. Higher-order term algebra with de Bruijn indices
+2. β-normalization with fuel-bounded reduction
+3. Syntactic pattern matching (Miller patterns)
+4. Critical pair enumeration for pattern rewrite systems
+5. Bounded joinability checking
+6. Completion certificate generation
+
+Type hints and docstrings throughout.
 """
 
 from dataclasses import dataclass, field
-from typing import Optional, Dict, List, Set, Tuple
-from collections import deque
+from typing import Optional, Callable, Tuple
+from enum import Enum, auto
 
-# =============================================================================
-# Term Language
-# =============================================================================
 
-@dataclass(frozen=True)
-class Var:
-    """De Bruijn variable."""
-    index: int
-    def __repr__(self): return f"x{self.index}"
-    @property
-    def size(self) -> int: return 1
+# ============================================================================
+# Algorithm 1: Higher-Order Term Representation
+# ============================================================================
 
-@dataclass(frozen=True)
-class Const:
-    """Named constant / function symbol."""
-    name: str
-    def __repr__(self): return self.name
-    @property
-    def size(self) -> int: return 1
+class TermKind(Enum):
+    VAR = auto()
+    APP = auto()
+    LAM = auto()
+
 
 @dataclass(frozen=True)
-class App:
-    """Application."""
-    fun: object
-    arg: object
-    def __repr__(self): return f"({self.fun} {self.arg})"
-    @property
-    def size(self) -> int: return 1 + self.fun.size + self.arg.size
-
-@dataclass(frozen=True)
-class Lam:
-    """Lambda abstraction."""
-    body: object
-    def __repr__(self): return f"(λ.{self.body})"
-    @property
-    def size(self) -> int: return 1 + self.body.size
-
-Term = (Var, Const, App, Lam)
-
-# =============================================================================
-# Algorithm 1: Pattern Matching
-# =============================================================================
-
-def match_pattern(pattern, target, bindings: Optional[Dict] = None) -> Optional[Dict]:
+class HOTerm:
     """
-    First-order-style matching of pattern against target.
+    Higher-order term with de Bruijn indices.
 
-    Args:
-        pattern: Pattern term (may contain variables)
-        target: Ground or partially-ground target term
-        bindings: Current variable bindings
+    Variants:
+      - VAR(i): variable with index i
+      - APP(left, right): application
+      - LAM(body): lambda abstraction (de Bruijn)
 
-    Returns:
-        Updated bindings dict if match succeeds, None otherwise
-
-    Complexity: O(|pattern| + |target|) time
+    Complexity: O(1) construction, O(n) size/traversal.
     """
-    if bindings is None:
-        bindings = {}
+    kind: TermKind
+    var_id: int = 0
+    left: Optional['HOTerm'] = None
+    right: Optional['HOTerm'] = None
+    body: Optional['HOTerm'] = None
 
-    if isinstance(pattern, Var):
-        if pattern.index in bindings:
-            return bindings if bindings[pattern.index] == target else None
-        return {**bindings, pattern.index: target}
+    @staticmethod
+    def var(i: int) -> 'HOTerm':
+        return HOTerm(kind=TermKind.VAR, var_id=i)
 
-    if isinstance(pattern, Const):
-        return bindings if isinstance(target, Const) and target.name == pattern.name else None
+    @staticmethod
+    def app(s: 'HOTerm', t: 'HOTerm') -> 'HOTerm':
+        return HOTerm(kind=TermKind.APP, left=s, right=t)
 
-    if isinstance(pattern, App) and isinstance(target, App):
-        m = match_pattern(pattern.fun, target.fun, bindings)
-        return match_pattern(pattern.arg, target.arg, m) if m else None
+    @staticmethod
+    def lam(body: 'HOTerm') -> 'HOTerm':
+        return HOTerm(kind=TermKind.LAM, body=body)
 
-    if isinstance(pattern, Lam) and isinstance(target, Lam):
-        return match_pattern(pattern.body, target.body, bindings)
+    def size(self) -> int:
+        """Number of constructors. O(n) time."""
+        if self.kind == TermKind.VAR:
+            return 1
+        elif self.kind == TermKind.APP:
+            return 1 + self.left.size() + self.right.size()
+        else:
+            return 1 + self.body.size()
 
+    def is_beta_normal(self) -> bool:
+        """Check if term is in β-normal form. O(n) time."""
+        if self.kind == TermKind.VAR:
+            return True
+        elif self.kind == TermKind.APP:
+            if self.left.kind == TermKind.LAM:
+                return False
+            return self.left.is_beta_normal() and self.right.is_beta_normal()
+        else:
+            return self.body.is_beta_normal()
+
+    def is_closed_at(self, depth: int = 0) -> bool:
+        """Check if term is closed at given binding depth. O(n) time."""
+        if self.kind == TermKind.VAR:
+            return self.var_id < depth
+        elif self.kind == TermKind.APP:
+            return self.left.is_closed_at(depth) and self.right.is_closed_at(depth)
+        else:
+            return self.body.is_closed_at(depth + 1)
+
+    def is_miller_pattern_at(self, depth: int = 0) -> bool:
+        """
+        Check if term is a Miller pattern at given depth.
+
+        A Miller pattern has the property that every free variable
+        occurrence appears applied only to distinct bound variables.
+
+        O(n) time.
+        """
+        if self.kind == TermKind.VAR:
+            return True
+        elif self.kind == TermKind.APP:
+            if self.left.kind == TermKind.VAR and self.left.var_id >= depth:
+                return (self.right.kind == TermKind.VAR and
+                        self.right.var_id < depth)
+            return (self.left.is_miller_pattern_at(depth) and
+                    self.right.is_miller_pattern_at(depth))
+        else:
+            return self.body.is_miller_pattern_at(depth + 1)
+
+    def subterms(self):
+        """Enumerate all subterms. O(n) time, O(n) space."""
+        yield self
+        if self.kind == TermKind.APP:
+            yield from self.left.subterms()
+            yield from self.right.subterms()
+        elif self.kind == TermKind.LAM:
+            yield from self.body.subterms()
+
+    def __repr__(self):
+        if self.kind == TermKind.VAR:
+            return f"x{self.var_id}"
+        elif self.kind == TermKind.APP:
+            return f"({self.left} {self.right})"
+        else:
+            return f"(λ.{self.body})"
+
+
+# ============================================================================
+# Algorithm 2: Substitution and β-Reduction
+# ============================================================================
+
+def rename(rho: Callable[[int], int], term: HOTerm) -> HOTerm:
+    """
+    Apply a variable renaming to a term.
+
+    Pseudocode:
+      rename(ρ, x_i) = x_{ρ(i)}
+      rename(ρ, s t) = (rename(ρ, s)) (rename(ρ, t))
+      rename(ρ, λ.t) = λ.(rename(lift(ρ), t))
+        where lift(ρ)(0) = 0, lift(ρ)(n+1) = ρ(n) + 1
+
+    Time: O(n), Space: O(n)
+    """
+    if term.kind == TermKind.VAR:
+        return HOTerm.var(rho(term.var_id))
+    elif term.kind == TermKind.APP:
+        return HOTerm.app(rename(rho, term.left), rename(rho, term.right))
+    else:
+        lift = lambda n: 0 if n == 0 else rho(n - 1) + 1
+        return HOTerm.lam(rename(lift, term.body))
+
+
+def subst(term: HOTerm, sigma: Callable[[int], HOTerm]) -> HOTerm:
+    """
+    Apply a substitution to a term.
+
+    Pseudocode:
+      subst(x_i, σ) = σ(i)
+      subst(s t, σ) = (subst(s, σ)) (subst(t, σ))
+      subst(λ.t, σ) = λ.(subst(t, lift(σ)))
+        where lift(σ)(0) = x_0, lift(σ)(n+1) = rename(+1, σ(n))
+
+    Time: O(n × |σ|), Space: O(n × |σ|)
+    """
+    if term.kind == TermKind.VAR:
+        return sigma(term.var_id)
+    elif term.kind == TermKind.APP:
+        return HOTerm.app(subst(term.left, sigma), subst(term.right, sigma))
+    else:
+        lift = lambda n: (HOTerm.var(0) if n == 0
+                          else rename(lambda k: k + 1, sigma(n - 1)))
+        return HOTerm.lam(subst(term.body, lift))
+
+
+def beta_contract(body: HOTerm, arg: HOTerm) -> HOTerm:
+    """
+    β-contraction: (λ.body) arg → body[0 := arg].
+
+    Time: O(|body| × |arg|)
+    """
+    single = lambda n: arg if n == 0 else HOTerm.var(n - 1)
+    return subst(body, single)
+
+
+# ============================================================================
+# Algorithm 3: Bounded β-Normalization
+# ============================================================================
+
+def normalize(term: HOTerm, fuel: int = 100) -> Tuple[HOTerm, int]:
+    """
+    Normalize a term by leftmost-outermost β-reduction with fuel bound.
+
+    Returns: (normal_form, steps_taken)
+
+    Pseudocode:
+      1. While fuel > 0:
+         a. Find leftmost-outermost β-redex
+         b. If none found, return (current term, 0)
+         c. Contract the redex
+         d. Decrement fuel
+      2. Return (current term, fuel_used)
+
+    Time: O(fuel × n²) worst case
+    Space: O(n) per step
+    """
+    current = term
+    steps = 0
+    for _ in range(fuel):
+        reduced = _reduce_once(current)
+        if reduced is None:
+            return current, steps
+        current = reduced
+        steps += 1
+    return current, steps
+
+
+def _reduce_once(term: HOTerm) -> Optional[HOTerm]:
+    """One step of leftmost-outermost β-reduction."""
+    if term.kind == TermKind.APP and term.left.kind == TermKind.LAM:
+        return beta_contract(term.left.body, term.right)
+    if term.kind == TermKind.APP:
+        left = _reduce_once(term.left)
+        if left is not None:
+            return HOTerm.app(left, term.right)
+        right = _reduce_once(term.right)
+        if right is not None:
+            return HOTerm.app(term.left, right)
+    if term.kind == TermKind.LAM:
+        body = _reduce_once(term.body)
+        if body is not None:
+            return HOTerm.lam(body)
     return None
 
 
-# =============================================================================
-# Algorithm 2: Substitution Application
-# =============================================================================
-
-def apply_substitution(term, sigma: Dict) -> object:
-    """
-    Apply a substitution (variable -> term mapping) to a term.
-
-    Args:
-        term: The term to substitute into
-        sigma: Dict mapping variable indices to replacement terms
-
-    Returns:
-        The substituted term
-
-    Complexity: O(|term| * max(|sigma(v)|))
-    """
-    if isinstance(term, Var):
-        return sigma.get(term.index, term)
-    if isinstance(term, Const):
-        return term
-    if isinstance(term, App):
-        return App(apply_substitution(term.fun, sigma),
-                   apply_substitution(term.arg, sigma))
-    if isinstance(term, Lam):
-        return Lam(apply_substitution(term.body, sigma))
-    return term
-
-
-# =============================================================================
-# Algorithm 3: One-Step Rewriting
-# =============================================================================
-
-@dataclass
-class RewriteRule:
-    """A rewrite rule with left-hand side and right-hand side."""
-    lhs: object
-    rhs: object
-    name: str = ""
-
-@dataclass
-class RewriteSystem:
-    """A higher-order rewrite system."""
-    rules: List[RewriteRule] = field(default_factory=list)
-    name: str = ""
-
-def one_step_reducts(system: RewriteSystem, term, max_depth: int = 10) -> List:
-    """
-    Compute all one-step reducts of a term under a rewrite system.
-    Includes both β-reduction and rule application.
-
-    Args:
-        system: The rewrite system
-        term: The term to reduce
-        max_depth: Maximum recursion depth
-
-    Returns:
-        List of one-step reducts
-
-    Complexity: O(|term| * |rules| * match_cost) per level
-    """
-    if max_depth <= 0:
-        return []
-
-    results = []
-
-    # β-reduction at root
-    if isinstance(term, App) and isinstance(term.fun, Lam):
-        results.append(apply_substitution(term.fun.body, {0: term.arg}))
-
-    # Rule application at root
-    for rule in system.rules:
-        m = match_pattern(rule.lhs, term)
-        if m is not None:
-            results.append(apply_substitution(rule.rhs, m))
-
-    # Recurse into subterms
-    if isinstance(term, App):
-        for r in one_step_reducts(system, term.fun, max_depth - 1):
-            results.append(App(r, term.arg))
-        for r in one_step_reducts(system, term.arg, max_depth - 1):
-            results.append(App(term.fun, r))
-    elif isinstance(term, Lam):
-        for r in one_step_reducts(system, term.body, max_depth - 1):
-            results.append(Lam(r))
-
-    return results
-
-
-# =============================================================================
+# ============================================================================
 # Algorithm 4: Critical Pair Enumeration
-# =============================================================================
+# ============================================================================
 
-def enumerate_critical_pairs(system: RewriteSystem) -> List[Tuple]:
+@dataclass
+class Rule:
+    """A rewrite rule with a name."""
+    name: str
+    lhs: HOTerm
+    rhs: HOTerm
+
+
+@dataclass
+class CriticalPair:
+    """A critical pair arising from overlapping rule applications."""
+    left: HOTerm
+    right: HOTerm
+    rule1: str
+    rule2: str
+    overlap_size: int
+
+
+def syntactic_overlap(pattern: HOTerm, target: HOTerm) -> bool:
     """
-    Enumerate all critical pairs arising from rule overlaps.
+    Check if two terms could potentially overlap (unify).
 
-    For each pair of rules (r₁, r₂), tries to unify r₂.lhs with
-    subterms of r₁.lhs. When successful, generates a critical pair
-    (r₁.rhs[σ], r₁.lhs[pos←r₂.rhs][σ]).
+    Conservative approximation: variables match anything.
+    Time: O(min(|pattern|, |target|))
+    """
+    if pattern.kind == TermKind.VAR or target.kind == TermKind.VAR:
+        return True
+    if pattern.kind != target.kind:
+        return False
+    if pattern.kind == TermKind.APP:
+        return (syntactic_overlap(pattern.left, target.left) and
+                syntactic_overlap(pattern.right, target.right))
+    if pattern.kind == TermKind.LAM:
+        return syntactic_overlap(pattern.body, target.body)
+    return False
 
-    Args:
-        system: The rewrite system
 
-    Returns:
-        List of (left, right, peak, rule1_name, rule2_name) tuples
+def enumerate_critical_pairs(rules: list, bound: int) -> list:
+    """
+    Enumerate β-critical pairs up to a size bound.
 
-    Complexity: O(|rules|² * max_lhs_size² * unification_cost)
+    Pseudocode:
+      For each pair of rules (r₁, r₂):
+        For each non-variable subterm s of r₁.lhs:
+          If syntactic_overlap(s, r₂.lhs) and combined size ≤ bound:
+            Generate critical pair (r₁.rhs, r₂.rhs)
+
+    Time: O(|rules|² × max_lhs_size × bound)
+    Space: O(|output|)
+
+    Returns: list of CriticalPair objects
     """
     pairs = []
-
-    for r1 in system.rules:
-        for r2 in system.rules:
-            # Root overlap
-            sigma = _unify(r1.lhs, r2.lhs)
-            if sigma is not None:
-                left = apply_substitution(r1.rhs, sigma)
-                right = apply_substitution(r2.rhs, sigma)
-                if left != right:
-                    peak = apply_substitution(r1.lhs, sigma)
-                    pairs.append((left, right, peak, r1.name, r2.name))
-
-            # Non-root overlaps of r2 into r1
-            for pos, sub in _subterms(r1.lhs):
-                if not pos:  # skip root
-                    continue
-                sigma = _unify(sub, r2.lhs)
-                if sigma is not None:
-                    replaced = _replace(r1.lhs, pos, apply_substitution(r2.rhs, sigma))
-                    peak = apply_substitution(r1.lhs, sigma)
-                    left = apply_substitution(r1.rhs, sigma)
-                    right = apply_substitution(replaced, sigma)
-                    if left != right:
-                        pairs.append((left, right, peak, r1.name, r2.name))
-
+    for r1 in rules:
+        for r2 in rules:
+            for sub in r1.lhs.subterms():
+                combined_size = r1.lhs.size() + r2.lhs.size()
+                if (syntactic_overlap(sub, r2.lhs) and
+                        combined_size <= bound):
+                    cp = CriticalPair(
+                        left=r1.rhs,
+                        right=r2.rhs,
+                        rule1=r1.name,
+                        rule2=r2.name,
+                        overlap_size=combined_size
+                    )
+                    pairs.append(cp)
     return pairs
 
 
-def _unify(t1, t2, bindings=None):
-    """Simple first-order unification."""
-    if bindings is None: bindings = {}
-    if isinstance(t1, Var):
-        return {**bindings, t1.index: t2} if t1.index not in bindings else \
-            (_unify(bindings[t1.index], t2, bindings))
-    if isinstance(t2, Var):
-        return {**bindings, t2.index: t1} if t2.index not in bindings else \
-            (_unify(t1, bindings[t2.index], bindings))
-    if isinstance(t1, Const) and isinstance(t2, Const):
-        return bindings if t1.name == t2.name else None
-    if isinstance(t1, App) and isinstance(t2, App):
-        m = _unify(t1.fun, t2.fun, bindings)
-        return _unify(t1.arg, t2.arg, m) if m else None
-    if isinstance(t1, Lam) and isinstance(t2, Lam):
-        return _unify(t1.body, t2.body, bindings)
-    return None
+# ============================================================================
+# Algorithm 5: Bounded Joinability Checker
+# ============================================================================
 
-
-def _subterms(t, pos=()):
-    """Yield (position, subterm) pairs."""
-    yield (pos, t)
-    if isinstance(t, App):
-        yield from _subterms(t.fun, pos + (0,))
-        yield from _subterms(t.arg, pos + (1,))
-    elif isinstance(t, Lam):
-        yield from _subterms(t.body, pos + (0,))
-
-
-def _replace(t, pos, replacement):
-    """Replace subterm at position."""
-    if not pos: return replacement
-    if isinstance(t, App):
-        if pos[0] == 0: return App(_replace(t.fun, pos[1:], replacement), t.arg)
-        return App(t.fun, _replace(t.arg, pos[1:], replacement))
-    if isinstance(t, Lam) and pos[0] == 0:
-        return Lam(_replace(t.body, pos[1:], replacement))
-    return t
-
-
-# =============================================================================
-# Algorithm 5: Bounded Joinability Checker (BFS)
-# =============================================================================
-
-def check_joinability(system: RewriteSystem, s, t,
-                      max_steps: int = 20, max_size: int = 50) -> Tuple[bool, Optional[object]]:
+def try_join(t1: HOTerm, t2: HOTerm, fuel: int = 50) -> Tuple[bool, Optional[HOTerm]]:
     """
-    Check if two terms are joinable by bounded BFS rewriting.
+    Try to join two terms by normalizing both.
 
-    Args:
-        system: The rewrite system
-        s, t: Terms to check for joinability
-        max_steps: Maximum number of rewriting steps
-        max_size: Maximum term size to explore
+    Pseudocode:
+      1. Normalize t1 with given fuel → nf1
+      2. Normalize t2 with given fuel → nf2
+      3. Return (nf1 == nf2, nf1 if joined else None)
 
-    Returns:
-        (True, witness) if joinable, (False, None) otherwise
-
-    Complexity: O(branching^max_steps) worst case, bounded by max_size
+    Time: O(fuel × max(|t1|, |t2|)²)
+    Returns: (is_joinable, common_reduct_or_None)
     """
-    if s == t:
-        return True, s
-
-    reach_s = {repr(s)}
-    reach_t = {repr(t)}
-    front_s = [s]
-    front_t = [t]
-
-    for _ in range(max_steps):
-        new_s = []
-        for term in front_s:
-            for r in one_step_reducts(system, term):
-                key = repr(r)
-                if key in reach_t:
-                    return True, r
-                if key not in reach_s and r.size <= max_size:
-                    reach_s.add(key)
-                    new_s.append(r)
-        front_s = new_s[:30]
-
-        new_t = []
-        for term in front_t:
-            for r in one_step_reducts(system, term):
-                key = repr(r)
-                if key in reach_s:
-                    return True, r
-                if key not in reach_t and r.size <= max_size:
-                    reach_t.add(key)
-                    new_t.append(r)
-        front_t = new_t[:30]
-
-        if not front_s and not front_t:
-            break
-
+    nf1, _ = normalize(t1, fuel)
+    nf2, _ = normalize(t2, fuel)
+    if nf1 == nf2:
+        return True, nf1
     return False, None
 
 
-# =============================================================================
-# Algorithm 6: Local Confluence Certification Pipeline
-# =============================================================================
+# ============================================================================
+# Algorithm 6: Completion Certificate Generation
+# ============================================================================
 
 @dataclass
-class ConfluenceCertificate:
-    """Certificate for bounded local confluence."""
-    system_name: str
-    all_miller: bool
-    critical_pairs: List[Tuple]
+class CompletionCertificate:
+    """
+    A bounded completion certificate for a higher-order rewrite system.
+
+    Fields:
+      - rules: the rewrite system
+      - bound: size bound for analysis
+      - critical_pairs: enumerated critical pairs
+      - all_joinable: whether all pairs are joinable
+      - non_joinable_pairs: first few non-joinable pairs (if any)
+      - is_miller: whether all LHS are Miller patterns
+      - is_locally_confluent: certificate conclusion
+    """
+    rules: list
+    bound: int
+    critical_pairs: list
     all_joinable: bool
-    locally_confluent: bool
-    witnesses: Dict[int, object] = field(default_factory=dict)
+    non_joinable_pairs: list
+    is_miller: bool
+    is_locally_confluent: bool
 
-def certify_local_confluence(system: RewriteSystem) -> ConfluenceCertificate:
+
+def generate_certificate(rules: list, bound: int,
+                          join_fuel: int = 50) -> CompletionCertificate:
     """
-    Full certification pipeline for bounded local confluence.
+    Generate a bounded completion certificate.
 
-    Steps:
-    1. Check Miller pattern property of all LHS
-    2. Enumerate all critical pairs
-    3. Attempt to join each critical pair
-    4. If all join, certify local confluence
+    Pseudocode:
+      1. Check Miller pattern property for all LHS
+      2. Enumerate critical pairs up to bound
+      3. For each critical pair, attempt bounded joining
+      4. Collect results into certificate
 
-    Args:
-        system: The rewrite system to certify
-
-    Returns:
-        ConfluenceCertificate with the certification result
+    Time: O(|rules|² × max_size × bound × join_fuel)
     """
-    # Step 1: Check Miller patterns
-    all_miller = all(
-        _is_beta_normal(r.lhs) for r in system.rules
-    )
+    is_miller = all(r.lhs.is_miller_pattern_at(0) for r in rules)
 
-    # Step 2: Enumerate critical pairs
-    cps = enumerate_critical_pairs(system)
+    cps = enumerate_critical_pairs(rules, bound)
 
-    # Step 3: Check joinability
-    witnesses = {}
+    non_joinable = []
     all_joinable = True
-    for i, (l, r, peak, n1, n2) in enumerate(cps):
-        joined, witness = check_joinability(system, l, r)
-        if joined:
-            witnesses[i] = witness
-        else:
+    for cp in cps:
+        joined, _ = try_join(cp.left, cp.right, join_fuel)
+        if not joined:
             all_joinable = False
+            non_joinable.append(cp)
 
-    # Step 4: Determine local confluence
-    locally_confluent = all_miller and all_joinable
-
-    return ConfluenceCertificate(
-        system_name=system.name,
-        all_miller=all_miller,
+    return CompletionCertificate(
+        rules=rules,
+        bound=bound,
         critical_pairs=cps,
         all_joinable=all_joinable,
-        locally_confluent=locally_confluent,
-        witnesses=witnesses,
+        non_joinable_pairs=non_joinable[:5],
+        is_miller=is_miller,
+        is_locally_confluent=all_joinable
     )
 
 
-def _is_beta_normal(t) -> bool:
-    """Check if a term is in β-normal form."""
-    if isinstance(t, (Var, Const)):
-        return True
-    if isinstance(t, App):
-        if isinstance(t.fun, Lam):
-            return False
-        return _is_beta_normal(t.fun) and _is_beta_normal(t.arg)
-    if isinstance(t, Lam):
-        return _is_beta_normal(t.body)
-    return True
-
-
-# =============================================================================
+# ============================================================================
 # Example Usage
-# =============================================================================
+# ============================================================================
 
 if __name__ == "__main__":
-    # Identity elimination system
-    sys = RewriteSystem(
-        rules=[RewriteRule(App(Const("id"), Var(0)), Var(0), "id-elim")],
-        name="IdentityElim"
+    # Example: β-admin system
+    beta_rule = Rule(
+        name="beta-admin",
+        lhs=HOTerm.app(HOTerm.lam(HOTerm.var(0)), HOTerm.var(1)),
+        rhs=HOTerm.var(1)
     )
 
-    cert = certify_local_confluence(sys)
-    print(f"System: {cert.system_name}")
-    print(f"Miller patterns: {cert.all_miller}")
-    print(f"Critical pairs: {len(cert.critical_pairs)}")
-    print(f"All joinable: {cert.all_joinable}")
-    print(f"Locally confluent: {cert.locally_confluent}")
+    cert = generate_certificate([beta_rule], bound=20)
+
+    print("Completion Certificate:")
+    print(f"  Rules: {len(cert.rules)}")
+    print(f"  Bound: {cert.bound}")
+    print(f"  Critical pairs: {len(cert.critical_pairs)}")
+    print(f"  All joinable: {cert.all_joinable}")
+    print(f"  Miller patterns: {cert.is_miller}")
+    print(f"  Locally confluent: {cert.is_locally_confluent}")

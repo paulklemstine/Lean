@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2005 of the highest-quality
+A curated collection of 2006 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2005
+Total files: 2006
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -710,6 +710,7 @@ import FINAL.Bridges.TropicalDeepLearningTheory
 import FINAL.Bridges.TropicalDuality
 import FINAL.Bridges.TropicalEcosystemDynamics
 import FINAL.Bridges.TropicalFactorCoupling
+import FINAL.Bridges.TropicalFaithfulDifferentiation
 import FINAL.Bridges.TropicalFeedback
 import FINAL.Bridges.TropicalFiniteOptimization
 import FINAL.Bridges.TropicalGaloisCore
