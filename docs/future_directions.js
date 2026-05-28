@@ -118,10 +118,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "e12146c2",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
   },
   {
@@ -339,10 +339,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a1f92284",
-    "consumed_by_exp_id": "9cf0d212",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T19:29:17.914245+00:00"
   },
   {
@@ -414,10 +414,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "834b245c",
-    "consumed_by_exp_id": "35c0d5da",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:13:42.015713+00:00"
   },
   {
@@ -842,24 +842,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T07:51:41.534995+00:00"
   },
   {
-    "id": "fd_1344",
-    "title": "Direction 1: Bounded Quantifier Extension and Verified Hrushovski Stabilizers",
-    "description": "**Conjecture:** The restricted formula language can be extended with bounded existential and universal quantifiers (\u2203 x \u2208 A, \u03c6(x) and \u2200 x \u2208 A, \u03c6(x)) while preserving the inductive \u0141o\u015b theorem. This extended language is sufficient to formalize the core stabilizer argument in Hrushovski's approximate subgroup theory.\n\n**The key insight is** that bounded quantifiers over definable sets reduce to the unbounded case via the `los_exists_bounded` theorem already proved: if the bounding set is definable, then the witness selection can be performed uniformly.\n\n**Why now?** The `los_exists_bounded` theorem (formally verified in `Catalog/Algebra/PseudofiniteTransfer.lean`) provides the existential witness mechanism. Extending the inductive framework requires adding one case to the formula induction, plus a proof that definable set membership is decidable in the germ ring (which follows from `mem_ultraSet_iff_eventually`).\n\n**Test:** Formalize the statement \"\u2203 H \u2264 G definable, [A : A \u2229 H] \u2264 C\" in the extended language and verify that \u0141o\u015b transfers it.\n\n**Impact:** This would enable formal verification of the first nontrivial step in Hrushovski's program, bridging formal logic to geometric group theory.\n\n**Catalog References:** `Catalog/Algebra/PseudofiniteTransfer.lean` (los_exists_bounded, los_restrictedFormula)\n\n**Proof Strategy:** Extend `RestrictedFormula` with a `boundedExists` constructor. The \u0141o\u015b induction case uses `los_exists_bounded` to select witnesses. The key technical challenge is ensuring well-foundedness of the induction with the additional constructor.\n\n**Domain Bridges:** Model theory \u2194 Geometric group theory\n\n**Lineage:** Direct extension of the current framework.\n\n**Ambition:** Solid extension (2\u20133 months to formalize).\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "e18f2436",
-    "consumed_by_exp_id": "77cabe0b",
-    "timestamp": "2026-05-27T08:27:03.925234+00:00"
-  },
-  {
     "id": "fd_1383",
     "title": "Direction 2: Metrized Graphs and Continuous Tropical Curves",
     "description": "**Conjecture**: For a metrized graph $(G, \\ell)$ with edge lengths $\\ell : E \\to \\mathbb{R}_{>0}$, the constructive SNF correspondence extends to a correspondence between the *continuous* tropical Jacobian $\\mathrm{Jac}(\\Gamma)$ (a real torus of dimension equal to the genus) and a suitable weighted Laplacian cokernel, with the invariant factors replaced by lattice invariants of the period matrix.\n\n**The key insight is** that the discrete graph Laplacian is a combinatorial shadow of the continuous Laplacian on the metrized graph, and the SNF decomposition should \"deform\" continuously as edge lengths vary.\n\n**Why now?** The catalog already has foundational definitions for graph Laplacians (`graphLaplacian` in Defs.lean) and the TropicalBridge framework handles both discrete and tropical objects. The new SNF correspondence provides the algebraic spine needed to track invariants through the continuous deformation.\n\n**Test**: Implement a numerical computation of the period matrix of a metrized graph for small examples (genus \u2264 3). Compare the lattice invariants (successive minima, Hermite normal form) with the discrete SNF invariant factors in the limit of uniform edge lengths. Check whether the two agree up to a computable correction factor.\n\n**Impact**: This would establish the tropical-critical correspondence at the level of tropical curves, connecting to the Baker-Norine Riemann-Roch theorem and the theory of divisors on metric graphs.\n\n**Catalog References**:\n- `Catalog/Pythagorean/TropicalBridge/SNFCorrespondence.lean` \u2014 `SmithNFData`, `restrictedLapMat`\n- `Catalog/Pythagorean/TropicalBridge/Stability.lean` \u2014 stability results for tropical structures\n\n**Proof Strategy**: Define a weighted Laplacian $L_\\ell$ with entries $-1/\\ell(e)$ for edges and appropriate diagonal terms. Show that as edge lengths vary, the SNF invariant factors change in a controlled way (lower semicontinuity of divisibility).\n\n**Domain Bridges**: Tropical geometry \u2194 algebraic geometry; discrete math \u2194 analysis on metric spaces.\n\n**Lineage**: Extends the discrete `restrictedLap_sep_det` to the continuous setting.\n\n**Ambition**: \u2605\u2605\u2605\u2605 (Grand challenge \u2014 requires new analytical tools)\n\n---",
@@ -975,28 +957,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "8596d6a6",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T13:37:04.658423+00:00"
-  },
-  {
-    "id": "fd_1422",
-    "title": "Direction 2: Matroid Exchange Properties of Leaf Witnesses",
-    "description": "**Conjecture:** For a Lorentzian polynomial $p$ arising from a matroid (i.e., $p$ is the basis generating polynomial of a matroid $M$), the leaf witnesses satisfy a matroidal exchange inequality: if $A$ and $B$ are subsets of the same size and $a \\in A \\setminus B$, then there exists $b \\in B \\setminus A$ such that\n$$\\text{leafWitness}(p, (A \\setminus \\{a\\}) \\cup \\{b\\}) \\geq \\min(\\text{leafWitness}(p, A), \\text{leafWitness}(p, B)).$$\n\n**The key insight is** that Lorentzian geometry, via the Hodge\u2013Riemann relations on the Chow ring of a matroid, should force the leaf witness function to respect the combinatorial exchange axiom. This would make the leaf witness a \"matroid valuation\" in the sense of Dress and Wenzel.\n\n**Why now?** The connection between Lorentzian polynomials and matroids was established by Br\u00e4nd\u00e9n\u2013Huh [BH20] and deepened by Adiprasito\u2013Huh\u2013Katz [AHK18]. The formal infrastructure for derivative leaves now makes it possible to state and test matroidal properties of the witness function computationally.\n\n**Test:** Generate all matroids on ground sets of size $\\leq 8$ (there are finitely many up to isomorphism). For each matroid, compute the basis generating polynomial, evaluate leaf witnesses for all subsets of each size, and verify the exchange inequality exhaustively.\n\n**Impact:** This would establish leaf witnesses as combinatorial invariants of matroids, not just spectral quantities. It would open connections to matroid valuation theory, tropical linear algebra, and the theory of valuated matroids.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/MultiModeLorentzianWitnesses.lean` (`leafWitness`, `derivativeLeaf`), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (`IsDPPLorentzian`).\n\n**Proof Strategy:** For representable matroids $M$ represented by a matrix $V$, the kernel $K = V^T V$ produces a DPP polynomial. Use the Cauchy\u2013Binet formula to express leaf coefficients in terms of minors of $V$, then apply the Grassmann\u2013Pl\u00fccker relations to establish the exchange inequality. For general matroids, reduce to the representable case via the cryptomorphism between Lorentzian polynomials and matroids.\n\n**Domain Bridges:** Matroid theory \u2194 Lorentzian geometry, Combinatorial optimization \u2194 Spectral analysis.\n\n**Lineage:** Direct extension of the principal minor bridge (`principalMinor_pair`, `cauchy_schwarz_entries`).\n\n**Ambition:** Solid extension. The exchange inequality for degree-2 witnesses is likely provable with existing tools; the general case would be a significant advance.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "8596d6a6",
-    "consumed_by_exp_id": "fc0cc70c",
-    "timestamp": "2026-05-27T13:37:04.718863+00:00"
   },
   {
     "id": "fd_1444",
@@ -1206,10 +1166,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "00a34fc1",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb142071",
     "timestamp": "2026-05-27T19:49:58.667166+00:00"
   },
   {
@@ -1328,10 +1288,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "8f59c0ed",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "69370675",
     "timestamp": "2026-05-28T00:39:49.343434+00:00"
   },
   {
@@ -1499,6 +1459,80 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T03:11:12.578612+00:00"
   },
   {
+    "id": "fd_1657",
+    "title": "Direction 1: Kruskal\u2013Katona Optimal Shadow Bounds for Circuit Supports",
+    "description": "**Conjecture:** For any polynomial $f$ of degree $d$ in $n$ variables computed by an algebraic circuit of size $s$, the support $\\mathrm{supp}(f)$ satisfies the Kruskal\u2013Katona inequality: there exists an initial segment $\\mathcal{I}$ of the colex order on $\\mathbb{N}^n$ with $|\\mathcal{I}| = |\\mathrm{supp}(f)|$ such that $|\\mathrm{Sh}_1(\\mathrm{supp}(f))| \\geq |\\mathrm{Sh}_1(\\mathcal{I})|$. Moreover, for circuit-generated supports, the gap between $|\\mathrm{Sh}_1(\\mathrm{supp}(f))|$ and the Kruskal\u2013Katona minimum is at most polynomial in $s$.\n\n**Test:** Compute $|\\mathrm{Sh}_1|$ for permanent supports of sizes $m = 3, 4, 5$ and compare with the Kruskal\u2013Katona lower bound for families of size $m!$. If permanent supports exceed the KK minimum by a superpolynomial factor in $m$, this provides evidence for a new lower bound route.\n\n**Impact:** This would give the first circuit lower bound method that exploits extremal set theory directly. The Kruskal\u2013Katona theorem is one of the deepest results in extremal combinatorics, and connecting it to circuit complexity would open an entirely new proof technique.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_elemSymm_eq`, `shadowProfile_elemSymm`\n- `Pythagorean/IteratedShadowGeometry.lean`: `mem_kthShadow_iff_exists_iteratedDerivative`\n\n**Proof Strategy:** Formalize the Kruskal\u2013Katona theorem for integer multi-index shadows (extending from the classical set-family version). Then prove that circuit operations preserve the KK-gap invariant under addition (subadditivity) and bound the gap under multiplication (Minkowski sum analysis).\n\n**Domain Bridges:** Extremal combinatorics \u2192 algebraic complexity \u2192 discrete optimization (LP relaxations of shadow bounds).\n\n**Lineage:** Builds directly on `shadowProfile_elemSymm` and `shadowProfile_union_le`.\n\n**Ambition:** *Grand challenge.* A successful Kruskal\u2013Katona circuit barrier would be the first genuine lower bound from extremal set theory, potentially complementing all existing methods.\n\n**The key insight is** that the Kruskal\u2013Katona theorem provides *optimal* lower bounds on shadow sizes, and circuit-computable supports may be provably far from the optimizers (initial segments), creating an exploitable gap.\n\n**Why now?** The exact shadow theorem for elementary symmetric supports (`kthShadow_elemSymm_eq`) shows that the shadow framework correctly interfaces with uniform set families. The natural next step is to import the full power of extremal set theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "3a9ea178",
+    "consumed_by_exp_id": "d74bda34",
+    "timestamp": "2026-05-28T03:48:29.819385+00:00"
+  },
+  {
+    "id": "fd_1663",
+    "title": "Direction 1: Pseudofinite Dimension and Stabilizer Rank Bounds",
+    "description": "**Conjecture:** There exists a well-defined pseudofinite dimension function `dim : DefinableSet \u2192 \u2115` on definable sets in the ultraproduct such that:\n1. `dim` is preserved by definable bijections\n2. `dim(A \u00d7 B) = dim(A) + dim(B)`\n3. If `CoversByLeftCosets A H C`, then `dim(A) \u2264 dim(H) + log\u2082(C)`\n4. The dimension function transfers: `dim` in the ultraproduct equals the eventual normalized log-cardinality\n\n**Test:** Implement dimension computation for definable subsets of (\u2124/p\u2124)\u207f as log_p of cardinality. Verify properties (1)\u2013(3) computationally for p = 2, 3, 5, 7 and n = 1, 2, 3. Check that the dimension bound in (3) is tight by constructing explicit covers.\n\n**Impact:** Pseudofinite dimension is the key invariant in Hrushovski's stabilizer chain argument. Formalizing it would enable the full stabilizer descent: at each step, the stabilizer has strictly smaller dimension, so the chain terminates.\n\n**Catalog References:** `Pythagorean/BoundedPseudofiniteTransfer.lean` \u2014 `los_boundedRestrictedFormula`, `CoversByLeftCosets`, `cosetCover_compose`\n\n**Proof Strategy:** Define dimension as the eventual value of `log|S_i| / log|G_i|` along the ultrafilter. Use `los_boundedRestrictedFormula` to transfer definability. The key lemma is that dimension is well-defined (independent of the choice of definable presentation), which requires the quantifier-free \u0141o\u015b theorem.\n\n**Domain Bridges:** Model theory \u2194 combinatorics (dimension = normalized cardinality), model theory \u2194 algebraic geometry (dimension = Zariski dimension for algebraic groups)\n\n**Lineage:** Extends `los_boundedRestrictedFormula` and `CoversByLeftCosets`\n\n**Ambition:** Grand challenge \u2014 this is the main missing piece for a full formalization of Hrushovski's stabilizer theorem.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "77cabe0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T04:56:23.189467+00:00"
+  },
+  {
+    "id": "fd_1664",
+    "title": "Direction 2: Non-Abelian Product Covering via Ruzsa Calculus",
+    "description": "**Conjecture:** For any group G (not necessarily abelian), if A is covered by C left cosets of a K-approximate subgroup H, then A\u00b7A is covered by f(C, K) left cosets of H, where f(C, K) = C\u00b2 \u00b7 K\u00b3.\n\n**Test:** Enumerate all subsets A of S\u2083, S\u2084, and small matrix groups GL(2, F_p) for p = 2, 3. For each symmetric A with small doubling, compute the optimal coset cover and verify the bound C\u00b2K\u00b3. Search for counterexamples where the bound is exceeded.\n\n**Impact:** Removes the commutativity assumption from `bounded_cover_implies_product_cover`, making the cross-domain bridge applicable to all groups. This is essential for applications to non-abelian approximate groups.\n\n**Catalog References:** `Pythagorean/BoundedPseudofiniteTransfer.lean` \u2014 `bounded_cover_implies_product_cover`, `IsApproxSubgroupProxy`\n\n**Proof Strategy:** Use the Ruzsa covering lemma: if |A\u00b7B| \u2264 K|A|, then B is covered by K translates of A\u00b7A\u207b\u00b9. Apply this with A = H and B = t\u207b\u00b9\u00b7A for each coset representative t. The Ruzsa calculus gives the K\u00b3 factor instead of K.\n\n**Domain Bridges:** Model theory \u2194 additive combinatorics (Ruzsa calculus), model theory \u2194 geometric group theory (non-abelian growth)\n\n**Lineage:** Extends `bounded_cover_implies_product_cover` by removing commutativity\n\n**Ambition:** Solid extension \u2014 the Ruzsa covering lemma is well-understood and the bound K\u00b3 is known.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "77cabe0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T04:56:23.267505+00:00"
+  },
+  {
+    "id": "fd_1665",
+    "title": "Direction 3: Bounded Quantifier Transfer for NIP Combinatorics",
+    "description": "**Conjecture:** The bounded quantifier language is expressive enough to capture the NIP (Not the Independence Property) condition: a formula \u03c6(x, y) has NIP iff for every definable family of instances, the VC dimension is bounded. This condition transfers through ultraproducts via `los_boundedRestrictedFormula`.\n\n**Test:** Implement VC dimension computation for polynomial formulas over finite fields F_p. Verify that NIP formulas (e.g., linear order on F_p) have bounded VC dimension, while IP formulas (e.g., bipartite graph formulas) have unbounded VC dimension. Check that the NIP property is preserved under ultraproduct for 10 random families of polynomial formulas.\n\n**Impact:** NIP is the central dividing line in modern model theory. Formalizing NIP transfer would connect the bounded quantifier framework to the vast body of work on NIP theories, including definable types, honest definitions, and Shelah's classification.\n\n**Catalog References:** `Pythagorean/BoundedPseudofiniteTransfer.lean` \u2014 `BoundedRestrictedFormula`, `los_boundedRestrictedFormula`\n\n**Proof Strategy:** Express \"the VC dimension of \u03c6 is at most d\" as a bounded formula: \u00ac\u2203 x\u2081,...,x_{d+1} \u2208 D, \u2200 S \u2286 {1,...,d+1}, \u2203 y, \u2227\u1d62\u2208S \u03c6(x\u1d62,y) \u2227 \u2227\u1d62\u2209S \u00ac\u03c6(x\u1d62,y). This is a bounded formula with quantifier depth d+2. Apply `los_boundedRestrictedFormula`.\n\n**Domain Bridges:** Model theory \u2194 machine learning (VC dimension = PAC learnability), model theory \u2194 combinatorics (Sauer-Shelah lemma)\n\n**Lineage:** Extends `BoundedRestrictedFormula` to capture classification-theoretic properties\n\n**Ambition:** Grand challenge \u2014 connecting the bounded quantifier framework to Shelah's classification program.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "MachineLearning",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "77cabe0b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T04:56:23.347212+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1529,25 +1563,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1657",
-    "title": "Direction 1: Kruskal\u2013Katona Optimal Shadow Bounds for Circuit Supports",
-    "description": "**Conjecture:** For any polynomial $f$ of degree $d$ in $n$ variables computed by an algebraic circuit of size $s$, the support $\\mathrm{supp}(f)$ satisfies the Kruskal\u2013Katona inequality: there exists an initial segment $\\mathcal{I}$ of the colex order on $\\mathbb{N}^n$ with $|\\mathcal{I}| = |\\mathrm{supp}(f)|$ such that $|\\mathrm{Sh}_1(\\mathrm{supp}(f))| \\geq |\\mathrm{Sh}_1(\\mathcal{I})|$. Moreover, for circuit-generated supports, the gap between $|\\mathrm{Sh}_1(\\mathrm{supp}(f))|$ and the Kruskal\u2013Katona minimum is at most polynomial in $s$.\n\n**Test:** Compute $|\\mathrm{Sh}_1|$ for permanent supports of sizes $m = 3, 4, 5$ and compare with the Kruskal\u2013Katona lower bound for families of size $m!$. If permanent supports exceed the KK minimum by a superpolynomial factor in $m$, this provides evidence for a new lower bound route.\n\n**Impact:** This would give the first circuit lower bound method that exploits extremal set theory directly. The Kruskal\u2013Katona theorem is one of the deepest results in extremal combinatorics, and connecting it to circuit complexity would open an entirely new proof technique.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_elemSymm_eq`, `shadowProfile_elemSymm`\n- `Pythagorean/IteratedShadowGeometry.lean`: `mem_kthShadow_iff_exists_iteratedDerivative`\n\n**Proof Strategy:** Formalize the Kruskal\u2013Katona theorem for integer multi-index shadows (extending from the classical set-family version). Then prove that circuit operations preserve the KK-gap invariant under addition (subadditivity) and bound the gap under multiplication (Minkowski sum analysis).\n\n**Domain Bridges:** Extremal combinatorics \u2192 algebraic complexity \u2192 discrete optimization (LP relaxations of shadow bounds).\n\n**Lineage:** Builds directly on `shadowProfile_elemSymm` and `shadowProfile_union_le`.\n\n**Ambition:** *Grand challenge.* A successful Kruskal\u2013Katona circuit barrier would be the first genuine lower bound from extremal set theory, potentially complementing all existing methods.\n\n**The key insight is** that the Kruskal\u2013Katona theorem provides *optimal* lower bounds on shadow sizes, and circuit-computable supports may be provably far from the optimizers (initial segments), creating an exploitable gap.\n\n**Why now?** The exact shadow theorem for elementary symmetric supports (`kthShadow_elemSymm_eq`) shows that the shadow framework correctly interfaces with uniform set families. The natural next step is to import the full power of extremal set theory.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "3a9ea178",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T03:48:29.819385+00:00"
   },
   {
     "id": "seed_013",

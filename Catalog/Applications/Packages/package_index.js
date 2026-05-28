@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorics / Tropical Geometry / Matroid Theory",
     "date": "2026-05-28T04:57:04Z",
     "exp_id": "fc0cc70c",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7417241059602648,
+    "quality": "substantial",
     "pkg_num": 214
   },
   {
@@ -6215,8 +6215,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star",
       "date": "2026-05-28T04:57:04Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7417241059602648,
+      "quality": "substantial"
     }
   ],
   "edges": [

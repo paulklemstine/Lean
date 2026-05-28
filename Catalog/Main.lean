@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1978 of the highest-quality
+A curated collection of 1980 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1978
+Total files: 1980
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1488,6 +1488,7 @@ import FINAL.Pythagorean.BerggrenWordCubeSpectral
 import FINAL.Pythagorean.BetaEta
 import FINAL.Pythagorean.BoundedBetaDefs
 import FINAL.Pythagorean.BoundedBetaTheorems
+import FINAL.Pythagorean.BoundedPseudofiniteTransfer
 import FINAL.Pythagorean.CRTBottleneck
 import FINAL.Pythagorean.CanonicalPaths
 import FINAL.Pythagorean.CatalogBridge
@@ -1666,6 +1667,7 @@ import FINAL.Pythagorean.SpectralDiracTheory
 import FINAL.Pythagorean.SpectralGap
 import FINAL.Pythagorean.SpectralPseudorandomness
 import FINAL.Pythagorean.SpectralSparsity
+import FINAL.Pythagorean.SpectralTropicalEntropy
 import FINAL.Pythagorean.Spectrum
 import FINAL.Pythagorean.StrongNormBisimulation
 import FINAL.Pythagorean.SubgroupMoebius

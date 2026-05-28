@@ -7,7 +7,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-25T13:51:09Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "direction_3_compositional_witness_synthesis_algori",
@@ -16,7 +16,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T13:51:35Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "direction_2_higher_order_log_concavity_and_partiti",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T14:24:11Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_5_chip_firing_correspondence",
@@ -34,7 +34,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T14:24:33Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1_brauer_manin_obstructions_for_integral",
@@ -52,7 +52,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T15:29:18Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "direction_3_generation_certificates_for_matrix_gro",
@@ -61,7 +61,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T15:29:41Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_3_concentration_of__on_random_hypergraph",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T15:30:03Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_1_tight_spectral_gap_via_lorentzian_stru",
@@ -79,7 +79,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T16:05:19Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "direction_4_relative_tropical_hodge_theorem",
@@ -88,7 +88,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T16:05:40Z",
-      "hue": 92
+      "hue": 179
     },
     {
       "id": "direction_5_weighted_and_multi_objective_extension",
@@ -97,7 +97,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T16:39:05Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_5_numerical_stability_of_lorentzian_reco",
@@ -106,7 +106,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T17:14:28Z",
-      "hue": 275
+      "hue": 314
     },
     {
       "id": "direction_5_phase_transitions_in_generation_probab",
@@ -115,7 +115,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:14:56Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_2_character_expansion_and_strong_couplin",
@@ -124,7 +124,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-25T17:15:32Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "hadamard_matrix_conjecture",
@@ -133,7 +133,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T17:49:47Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "direction_2_filtration_persistence_formula",
@@ -142,7 +142,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T17:57:55Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_4_higher_order_tensor_calculus_with_eins",
@@ -151,7 +151,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:02:50Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "direction_2_hypergraph_transversals_as_tropical_co",
@@ -160,7 +160,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T18:03:18Z",
-      "hue": 92
+      "hue": 112
     },
     {
       "id": "direction_5_tropical_morse_theory_for_network_phas",
@@ -169,7 +169,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T18:39:27Z",
-      "hue": 271
+      "hue": 100
     },
     {
       "id": "direction_5_expander_graphs_from_certificate_pairs",
@@ -178,7 +178,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T18:39:59Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_5_mechanism_design_with_certified_multi_",
@@ -187,7 +187,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T18:40:46Z",
-      "hue": 281
+      "hue": 270
     },
     {
       "id": "direction_3_multivariate_k_fold_log_concavity_and_",
@@ -196,7 +196,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T19:29:15Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_5_higher_order_completion_and_lambda_cal",
@@ -205,7 +205,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:01:45Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "direction_3_compositional_rounding_certificates_fo",
@@ -214,7 +214,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:02:12Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "quantum_error_correction_bounds",
@@ -223,7 +223,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:34:49Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_1_submodular_objectives_and_the_curvatur",
@@ -232,7 +232,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T20:35:13Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_3_weighted_extension",
@@ -241,7 +241,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-25T20:35:34Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "langlands_program_functoriality",
@@ -250,7 +250,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T20:35:56Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "direction_2_mixing_time_bounds_from_concavity_dept",
@@ -259,7 +259,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-25T21:12:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_3_quantum_ground_state_preparation_via_l",
@@ -268,7 +268,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T21:13:06Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_1_stability_theory_for_tropical_persiste",
@@ -277,7 +277,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T21:13:36Z",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "direction_2_universality_of_phase_transition_criti",
@@ -286,7 +286,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T21:49:23Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "direction_5_tropical_morse_theory_as_a_topological",
@@ -295,7 +295,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T21:51:06Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1_sharp_valuation_sensitive_stability_bo",
@@ -331,7 +331,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-25T22:59:02Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_1_m_convexity_closure_under_differentiat",
@@ -340,7 +340,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-25T23:33:12Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "direction_4_information_theoretic_bounds_on_tropic",
@@ -349,7 +349,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-25T23:33:35Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_5_m_convex_optimization_via_directional_",
@@ -367,7 +367,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-26T00:40:11Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_2_certificate_based_quantum_expanders",
@@ -376,7 +376,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T00:40:46Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_2_concentration_of_subgroup_pressure",
@@ -385,7 +385,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T00:41:36Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_5_information_theoretic_universality_via",
@@ -403,7 +403,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T01:20:52Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_2_noise_stability_universality_and_the_a",
@@ -412,7 +412,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-26T01:21:25Z",
-      "hue": 292
+      "hue": 92
     },
     {
       "id": "direction_5_higher_dimensional_tropical_morse_theo",
@@ -421,7 +421,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T01:56:35Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_4_certified_mixing_time_bounds_and_cutof",
@@ -430,7 +430,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-26T01:56:58Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "direction_5_operadic_rewriting_and_homotopical_com",
@@ -439,7 +439,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T01:57:20Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_1_deletion_contraction_duality_for_polyn",
@@ -448,7 +448,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T02:33:36Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "direction_3_black_box_group_recognition_via_charac",
@@ -475,7 +475,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T03:40:26Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_1_lorentzian_polynomial_certificates_for",
@@ -484,7 +484,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T03:40:49Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_2_certificate_density_for_symplectic_and",
@@ -493,7 +493,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T03:41:09Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_1_spectral_tropical_stability__from_conj",
@@ -502,7 +502,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T04:17:31Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_1_sharp_cutoff_for_the_adjacent_transpos",
@@ -520,7 +520,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-26T05:26:33Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "direction_1_quantitative_growth_bounds_for_matrix_",
@@ -529,7 +529,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T06:03:36Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_3_model_theory_of_approximate_subgroups",
@@ -538,7 +538,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T06:04:01Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_4_verified_oe_log_e_implementation_with_",
@@ -547,7 +547,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-26T06:39:08Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_4_entropy_curvature_and_information_theo",
@@ -556,7 +556,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-26T06:39:37Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_3_tropical_morse_spectra_as_quantum_grap",
@@ -565,7 +565,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T07:14:43Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_driven_diffusive_systems_and_tasep_pha",
@@ -574,7 +574,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T07:15:12Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "direction_4_tropical_hodge_theory_via_supermodular",
@@ -583,7 +583,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T07:50:30Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "direction_3_certified_expanders_for_classical_grou",
@@ -592,7 +592,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T08:24:04Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "direction_1_full_k_wl_separation_via_non_uniform_c",
@@ -601,7 +601,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-26T08:24:34Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_3_negative_dependence_and_rapid_mixing_v",
@@ -610,7 +610,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T08:59:38Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "direction_4_energy_landscape_metastability_detecti",
@@ -619,7 +619,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-26T09:00:05Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "direction_1_reflection_positivity_and_perron_frobe",
@@ -628,7 +628,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-26T09:37:59Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_2_uniform_spectral_gaps_for_sp_via_delig",
@@ -637,7 +637,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T09:39:04Z",
-      "hue": 91
+      "hue": 100
     },
     {
       "id": "direction_1_higher_dimensional_tropical_morse_theo",
@@ -646,7 +646,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T10:14:09Z",
-      "hue": 275
+      "hue": 112
     },
     {
       "id": "direction_3_algorithmic_tropical_kernel_computatio",
@@ -655,7 +655,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T10:46:21Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_4_complexity_of_certificate_verification",
@@ -682,7 +682,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T11:22:40Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_5_expander_based_derandomization_in_cert",
@@ -691,7 +691,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-26T11:58:20Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_2_explicit_poincar_constant_and_exponent",
@@ -700,7 +700,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T12:33:23Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_2_chip_firing_canonical_forms_via_tropic",
@@ -709,7 +709,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T13:05:45Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_4_cryptographic_security_bounds_for_perm",
@@ -718,7 +718,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-05-26T13:06:26Z",
-      "hue": 271
+      "hue": 100
     },
     {
       "id": "direction_4_tropical_contraction_and_support_trunc",
@@ -727,7 +727,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T13:07:01Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_4_matroidal_quantum_state_preparation",
@@ -736,7 +736,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T13:07:35Z",
-      "hue": 359
+      "hue": 272
     },
     {
       "id": "direction_1_sharp_dixon_asymptotics_via_mbius_inve",
@@ -745,7 +745,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T13:43:52Z",
-      "hue": 95
+      "hue": 92
     },
     {
       "id": "direction_1_torsion_aware_tropical_morse_theory",
@@ -754,7 +754,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-26T14:17:26Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1_spectral_fingerprints_for_classical_su",
@@ -763,7 +763,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T15:24:45Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_2_lorentzian_condition_numbers_and_smoot",
@@ -772,7 +772,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T15:25:12Z",
-      "hue": 280
+      "hue": 271
     },
     {
       "id": "direction_4_large_deviation_principles_for_generat",
@@ -781,7 +781,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T16:00:43Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_2_exceptional_groups_and_character_sheaf",
@@ -790,7 +790,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T16:01:24Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_2_lorentzian_minor_closure_conjecture",
@@ -808,7 +808,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-26T16:37:14Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_1_canonical_path_poincar_inequality_for_",
@@ -817,7 +817,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T17:12:50Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "direction_3_hecke_operator_comparison_and_building",
@@ -826,7 +826,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T17:13:23Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "direction_1_bounded_treewidth_polynomial_certifica",
@@ -835,7 +835,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T18:22:23Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_4_arithmetic_statistics_via_subgroup_pre",
@@ -844,7 +844,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T18:56:16Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "direction_4_global_stability_as_max_envelope",
@@ -853,7 +853,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T18:56:49Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_1_quantum_2_designs_from_certified_unita",
@@ -862,7 +862,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T18:57:14Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_1_weighted_distance_equality_via_tropica",
@@ -880,7 +880,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T19:35:44Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "direction_1_full_grtnerellis_large_deviation_princ",
@@ -889,7 +889,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T19:36:51Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_2_spectral_decoding_via_tropical_morse_b",
@@ -898,7 +898,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-26T21:16:58Z",
-      "hue": 100
+      "hue": 314
     },
     {
       "id": "direction_5_effective_resistance_and_electrical_fl",
@@ -907,7 +907,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T21:17:25Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "direction_3_pressure_theory_for_almost_simple_grou",
@@ -916,7 +916,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T21:17:42Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "direction_1_wreath_product_perturbation_theory",
@@ -925,7 +925,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-26T21:18:00Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1_non_multiaffine_extension_via_weighted",
@@ -934,7 +934,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-26T21:53:02Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "direction_4_plcker_coordinates_and_fermionic_state",
@@ -952,7 +952,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-26T22:27:11Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "direction_4_tropical_mixing_without_spectral_inter",
@@ -961,7 +961,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-26T22:28:04Z",
-      "hue": 281
+      "hue": 90
     },
     {
       "id": "direction_3_spectral_expansion_for_matrix_groups_a",
@@ -970,7 +970,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T23:04:37Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "direction_1_comparison_theorems_for_non_group_mark",
@@ -979,7 +979,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T23:05:00Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "direction_1_dynamic_spectral_gap_tracking_for_onli",
@@ -997,7 +997,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T23:40:19Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "direction_1_quantitative_helfgott_type_growth_in_g",
@@ -1006,7 +1006,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-26T23:40:38Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_5_continuous_extension_via_discretizatio",
@@ -1015,7 +1015,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T00:15:51Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_certified_expander_codes_with_linear_t",
@@ -1024,7 +1024,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T00:51:04Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "direction_2_lorentzian_polynomials_in_statistical_",
@@ -1033,7 +1033,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-27T00:51:48Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "direction_5_shadow_structure_of_partition_function",
@@ -1042,7 +1042,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-27T02:06:25Z",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "direction_1_primewise_completeness_for_derived_per",
@@ -1051,7 +1051,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T02:06:54Z",
-      "hue": 112
+      "hue": 271
     },
     {
       "id": "direction_1_sharp_goe_constants_via_tracy_widom_tr",
@@ -1060,7 +1060,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-27T02:07:13Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_5_partition_function_phase_transitions_a",
@@ -1069,7 +1069,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T02:07:35Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "direction_1_hessian_based_lorentzian_gap_from_mvpo",
@@ -1078,7 +1078,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T02:07:55Z",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "direction_5_determinantal_complexity_and_matroid_r",
@@ -1096,7 +1096,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T03:32:43Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_2_universality_of_hybrid_walks__general_",
@@ -1105,7 +1105,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T03:33:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_4_shadow_complexity_as_an_arithmetic_cir",
@@ -1114,7 +1114,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-27T03:33:43Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "direction_5_certified_dpp_sampling_with_lorentzian",
@@ -1123,7 +1123,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T04:11:13Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "direction_2_anti_cancellation_for_aggregated_deriv",
@@ -1132,7 +1132,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T04:11:34Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "direction_3_strong_rayleigh_property_and_spectral_",
@@ -1141,7 +1141,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-27T04:11:56Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_1_real_stability_of_determinantal_polyno",
@@ -1150,7 +1150,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-27T04:12:18Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "direction_4_free_probability_and_lorentzian_stabil",
@@ -1159,7 +1159,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T04:49:35Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_5_formal_bgt_structure_theorem",
@@ -1168,7 +1168,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T05:23:33Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "direction_4_high_dimensional_expansion_via_canonic",
@@ -1177,7 +1177,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T05:58:49Z",
-      "hue": 179
+      "hue": 271
     },
     {
       "id": "direction_2_quantum_entanglement_entropy_via_dpp_l",
@@ -1186,7 +1186,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T06:37:51Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "direction_1_lorentzian_to_coefficient_bridge_via_b",
@@ -1195,7 +1195,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T07:12:53Z",
-      "hue": 292
+      "hue": 91
     },
     {
       "id": "jacobian_conjecture",
@@ -1204,7 +1204,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T07:51:00Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_3_tropical_shadows_of_lorentzian_stabili",
@@ -1231,7 +1231,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T08:27:43Z",
-      "hue": 275
+      "hue": 95
     },
     {
       "id": "direction_2_interacting_fermions_and_approximate_g",
@@ -1240,7 +1240,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-27T08:28:06Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_5_spectral_phase_transitions_in_quantum_",
@@ -1249,7 +1249,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T08:28:25Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_3_valuated_matroid_exchange_certificates",
@@ -1258,7 +1258,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T09:06:29Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "direction_4_algorithmic_spectral_certification",
@@ -1267,7 +1267,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T09:06:52Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "direction_4_statistical_physics_of_random_transver",
@@ -1276,7 +1276,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-05-27T10:18:41Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_1_characterization_of_lorentzian_ground_",
@@ -1285,7 +1285,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T10:19:10Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_2_entropic_area_laws_from_strong_log_con",
@@ -1294,7 +1294,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-27T10:57:09Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "direction_1_full_group_isomorphism_via_smith_norma",
@@ -1303,7 +1303,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-27T12:07:51Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_1_sharp_constants_and_eigenvalue_interla",
@@ -1312,7 +1312,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T12:08:40Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "direction_4_robust_log_concavity_for_quantum_many_",
@@ -1321,7 +1321,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-27T12:09:17Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_1_full_wreath_product_phase_transition",
@@ -1330,7 +1330,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T12:10:07Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "direction_5_tropical_spectral_certificates_for_neu",
@@ -1339,7 +1339,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-05-27T12:52:43Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_2_critical_exponents_for_finite_size_sus",
@@ -1348,7 +1348,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T12:54:58Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_3_valuated_matroid_extension_and_tropica",
@@ -1357,7 +1357,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-27T12:56:38Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "direction_3_complexity_theoretic_phase_transition_",
@@ -1375,7 +1375,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T13:37:01Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "direction_3_certified_stream_fusion_via_higher_ord",
@@ -1402,7 +1402,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T14:11:50Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_1_higher_order_entropy_bounds_from_the_f",
@@ -1411,7 +1411,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T15:24:18Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "direction_2_tropical_canonical_forms_on_metric_gra",
@@ -1420,7 +1420,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T15:24:54Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "direction_1_probabilistic_stability__the_1n_law_fo",
@@ -1438,7 +1438,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T15:25:42Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "direction_1_confluence_and_unique_normal_forms",
@@ -1447,7 +1447,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T16:38:30Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_5_dynamic_lorentzian_certificates_and_on",
@@ -1456,7 +1456,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T16:38:56Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "direction_1_smith_normal_form_for_rational_metric_",
@@ -1465,7 +1465,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-27T16:40:01Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "direction_1_sharp_exponent_law_and_lower_bounds",
@@ -1474,7 +1474,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-27T16:40:26Z",
-      "hue": 272
+      "hue": 292
     },
     {
       "id": "direction_1_quantitative_gap_interpolation_under_b",
@@ -1483,7 +1483,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T17:24:41Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1_complete_newtongirard_and_higher_order",
@@ -1501,7 +1501,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T17:58:27Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "direction_4_spectral_theory_of_exchange_graphs",
@@ -1510,7 +1510,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T17:58:57Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "direction_2_free_probability_and_asymptotic_freene",
@@ -1519,7 +1519,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T17:59:16Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "direction_1_non_separated_extensions_via_overlappi",
@@ -1528,7 +1528,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-27T18:35:33Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "direction_4_compressed_sensing_of_many_body_entang",
@@ -1537,7 +1537,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T18:36:13Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_2_concentration_and_universality_of_trop",
@@ -1555,7 +1555,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T19:12:40Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "direction_2_moment_method_attack_on_the_random_cay",
@@ -1564,7 +1564,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T19:13:03Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "direction_2_higher_order_critical_pairs_and_knuth_",
@@ -1573,7 +1573,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T19:49:32Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "direction_4_stability_of_partition_functions_under",
@@ -1582,7 +1582,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T19:49:55Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "direction_1_typed_higher_order_tensor_rewriting_wi",
@@ -1591,7 +1591,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T20:26:07Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "direction_4_tropical_tensor_distributivity_and_min",
@@ -1600,7 +1600,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-27T20:26:32Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "direction_5_newton_hierarchy_for_interacting_fermi",
@@ -1609,7 +1609,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T20:26:54Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_1_universal_support_tutte_polynomial",
@@ -1618,7 +1618,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T21:03:38Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "direction_3_hessian_based_lorentzian_gap_via_mvpol",
@@ -1627,7 +1627,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T21:04:04Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "direction_3_quantum_channel_mixing_via_cayley_mome",
@@ -1636,7 +1636,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T21:39:41Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "direction_3_lorentzian_control_of_glauber_dynamics",
@@ -1645,7 +1645,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-27T21:40:02Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_3_information_theoretic_monotonicity_for",
@@ -1654,7 +1654,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-27T21:40:32Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "direction_2_density_heuristics_via_the_circle_meth",
@@ -1663,7 +1663,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-27T22:19:45Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "direction_1_lorentzian_equivalence_via_hessian_des",
@@ -1681,7 +1681,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-27T23:30:15Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "direction_1_tight_lorentzian_stability_radii_for_m",
@@ -1699,7 +1699,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-28T00:37:54Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "direction_2_tropical_lorentzian_geometry_of_tensor",
@@ -1708,7 +1708,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-28T00:38:24Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_2_algorithmic_overlap_adaptive_rounding",
@@ -1717,7 +1717,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-28T00:38:58Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "direction_4_phase_transitions_in_tropical_stabilit",
@@ -1726,7 +1726,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-05-28T00:39:41Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "direction_2_universality_for_general_semidirect_pr",
@@ -1735,7 +1735,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-28T00:40:17Z",
-      "hue": 314
+      "hue": 90
     },
     {
       "id": "direction_1_k_th_order_shadow_theorem_and_iterated",
@@ -1744,7 +1744,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-28T01:19:03Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "direction_3_efficient_lorentzian_certificate_compu",
@@ -1762,7 +1762,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-28T01:19:58Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "direction_3_gaussian_free_field_lattice_periodicit",
@@ -1771,7 +1771,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-28T01:56:58Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "direction_3_sheaf_theoretic_tropical_persistence",
@@ -1780,7 +1780,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-28T01:57:48Z",
-      "hue": 91
+      "hue": 179
     },
     {
       "id": "direction_2_heterogeneitygap_conjecture",
@@ -1789,7 +1789,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-28T02:31:58Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_4_extension_to_potts_models_and_determin",
@@ -1798,7 +1798,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-28T02:32:32Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "direction_2_equality_saturation_and_e_graph_extrac",
@@ -1816,7 +1816,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-28T02:33:20Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "direction_5_resolvent_geometry_as_a_general_framew",
@@ -1825,7 +1825,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-05-28T03:11:08Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_1_hardness_of_unrestricted_degree_lorent",
@@ -1834,7 +1834,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-05-28T03:11:34Z",
-      "hue": 134
+      "hue": 90
     },
     {
       "id": "direction_2_sparse_support_certificate_compression",
@@ -1843,7 +1843,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-05-28T03:12:06Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "direction_2_functorial_localization_of_persistence",
@@ -1852,7 +1852,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-05-28T03:46:41Z",
-      "hue": 134
+      "hue": 90
     },
     {
       "id": "direction_2_quantitative_exchange_descent_bounds_v",
@@ -1861,7 +1861,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-28T03:47:17Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "direction_3_circuit_lower_bounds_from_derivative_s",
@@ -1870,7 +1870,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-28T03:48:25Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "direction_2_valuated_matroid_theory_via_k_fold_log",
@@ -1888,7 +1888,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-05-28T04:24:08Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "direction_3_higher_dimensional_tropical_morse_theo",
@@ -1897,10 +1897,44 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-05-28T04:24:29Z",
-      "hue": 92
+      "hue": 272
+    },
+    {
+      "id": "direction_1_bounded_quantifier_extension_and_verif",
+      "title": "Bounded Quantifier Extension for Pseudofinite Transfer with Hrushovski Stabilizers",
+      "domain": "Model Theory, Geometric Group Theory, Additive Combinatorics",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-28T04:56:18Z",
+      "hue": 271
+    },
+    {
+      "id": "direction_1_spectral_tropical_entropy_bridge",
+      "title": "Spectral-Tropical Entropy Bridge: Degree Entropy Bounds from Spectral Graph Data",
+      "domain": "Spectral Graph Theory / Information Theory",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-05-28T04:56:42Z",
+      "hue": 91
+    },
+    {
+      "id": "direction_2_matroid_exchange_properties_of_leaf_wi",
+      "title": "Matroid Exchange Properties of Leaf Witnesses: A Hodge-Theoretic Bridge from Lorentzian Polynomials to Valuated Matroids",
+      "domain": "Combinatorics / Tropical Geometry / Matroid Theory",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-05-28T04:57:04Z",
+      "hue": 270
     }
   ],
   "edges": [
+    {
+      "source": "direction_2_pseudofinite_transfer_via_definable_ul",
+      "target": "direction_1_bounded_quantifier_extension_and_verif",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
     {
       "source": "direction_4_matroidal_quantum_state_preparation",
       "target": "direction_1_bounded_treewidth_polynomial_certifica",
@@ -2217,6 +2251,13 @@
       "type": "provenance"
     },
     {
+      "source": "direction_4_information_theoretic_bounds_on_tropic",
+      "target": "direction_1_spectral_tropical_entropy_bridge",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
       "source": "direction_4_tropical_persistent_homology_for_netwo",
       "target": "direction_1_spectral_tropical_stability__from_conj",
       "strength": 1.0,
@@ -2429,6 +2470,13 @@
     {
       "source": "direction_1_deletion_contraction_duality_for_polyn",
       "target": "direction_2_lorentzian_minor_closure_conjecture",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    },
+    {
+      "source": "direction_2_multi_mode_lorentzian_witnesses_via_hi",
+      "target": "direction_2_matroid_exchange_properties_of_leaf_wi",
       "strength": 1.0,
       "label": "inspired by",
       "type": "provenance"
@@ -3130,7 +3178,7 @@
     {
       "domain_a": "Geometry",
       "domain_b": "Tropical",
-      "package_count": 30,
+      "package_count": 31,
       "strength": 1.0
     },
     {
