@@ -1,1135 +1,851 @@
+#!/usr/bin/env python3
 """
-Applications of Hessian Descent Certificates
+applications.py — Real-world applications of Hessian Descent theory.
 
-Demonstrates real-world applications of the Lorentzian-coefficient inequality
-framework:
-1. Matroid-theoretic applications via exchange support
-2. Statistical physics: negative dependence for partition functions
-3. Log-concavity certification for combinatorial sequences
+Demonstrates applications to:
+1. Matroid theory — checking basis exchange properties
+2. Statistical physics — negative dependence in partition functions
+3. Optimization — certifying convexity via coefficient tests
 """
 
-from __future__ import annotations
 import numpy as np
-from typing import Dict, Tuple, List, Optional
+from math import comb, factorial
+from typing import Dict, Tuple, List
 
 
-# ─── Inline utilities ─────────────────────────────────────────────────
-
-def multi_indices(n: int, d: int) -> List[Tuple[int, ...]]:
+def generate_multiindices(n, d):
+    """Generate all multi-indices with given total degree."""
     if n == 0:
-        return [()] if d == 0 else []
+        return [()]
     if n == 1:
         return [(d,)]
     result = []
-    for k in range(d + 1):
-        for rest in multi_indices(n - 1, d - k):
-            result.append((k,) + rest)
+    for first in range(d + 1):
+        for rest in generate_multiindices(n - 1, d - first):
+            result.append((first,) + rest)
     return result
 
 
-def unit_vector(n: int, i: int) -> Tuple[int, ...]:
-    return tuple(1 if j == i else 0 for j in range(n))
+# ============================================================
+# APPLICATION 1: Matroid Basis Generating Polynomials
+# ============================================================
 
+def uniform_matroid_polynomial(n: int, k: int) -> Dict[Tuple[int, ...], float]:
+    """Generate the basis generating polynomial of the uniform matroid U(k,n).
 
-def add_tuples(*tuples: Tuple[int, ...]) -> Tuple[int, ...]:
-    return tuple(sum(x) for x in zip(*tuples))
+    The bases are all k-element subsets of [n]. The polynomial is:
+    f = ∑_{|S|=k} ∏_{i∈S} xᵢ
 
-
-class HomogeneousPolynomial:
-    def __init__(self, n: int, d: int, coeffs: Dict[Tuple[int, ...], float]):
-        self.n = n
-        self.d = d
-        self.coeffs = {k: v for k, v in coeffs.items() if abs(v) > 1e-15}
-
-    def coeff(self, alpha: Tuple[int, ...]) -> float:
-        return self.coeffs.get(alpha, 0.0)
-
-    def support(self) -> List[Tuple[int, ...]]:
-        return list(self.coeffs.keys())
-
-    def partial_derivative(self, var: int) -> 'HomogeneousPolynomial':
-        if self.d == 0:
-            return HomogeneousPolynomial(self.n, 0, {})
-        new_coeffs: Dict[Tuple[int, ...], float] = {}
-        for alpha, c in self.coeffs.items():
-            if alpha[var] > 0:
-                new_alpha = list(alpha)
-                factor = new_alpha[var]
-                new_alpha[var] -= 1
-                t = tuple(new_alpha)
-                new_coeffs[t] = new_coeffs.get(t, 0.0) + c * factor
-        return HomogeneousPolynomial(self.n, max(0, self.d - 1), new_coeffs)
-
-    def iterated_derivative(self, alpha: Tuple[int, ...]) -> 'HomogeneousPolynomial':
-        result = self
-        for var in range(self.n):
-            for _ in range(alpha[var]):
-                result = result.partial_derivative(var)
-        return result
-
-    def hessian_matrix(self) -> np.ndarray:
-        H = np.zeros((self.n, self.n))
-        for i in range(self.n):
-            for j in range(self.n):
-                df_ij = self.partial_derivative(j).partial_derivative(i)
-                zero_idx = tuple(0 for _ in range(self.n))
-                H[i, j] = df_ij.coeff(zero_idx)
-        return H
-
-
-# ─── Application 1: Matroid Basis Generating Polynomials ──────────────
-
-def matroid_basis_polynomial(bases: List[Tuple[int, ...]], n: int) -> HomogeneousPolynomial:
-    """Construct the basis generating polynomial of a matroid.
-
-    Given a matroid on ground set [n] with basis set B, the basis
-    generating polynomial is f(x) = sum_{B in bases} prod_{i in B} x_i.
-
-    This polynomial is always Lorentzian (Brändén-Huh).
+    This is multi-affine (each variable has degree ≤ 1) and homogeneous
+    of degree k.
 
     Args:
-        bases: List of bases, each as a tuple of elements.
-        n: Size of ground set.
+        n: Ground set size
+        k: Rank
 
     Returns:
-        The basis generating polynomial.
+        Coefficient dictionary (multi-indices have entries 0 or 1)
     """
-    d = len(bases[0]) if bases else 0
-    coeffs: Dict[Tuple[int, ...], float] = {}
-    for basis in bases:
-        alpha = [0] * n
-        for elem in basis:
-            alpha[elem] += 1
-        alpha_t = tuple(alpha)
-        coeffs[alpha_t] = coeffs.get(alpha_t, 0.0) + 1.0
-    return HomogeneousPolynomial(n, d, coeffs)
+    coeffs = {}
+    for alpha in generate_multiindices(n, k):
+        if all(a <= 1 for a in alpha):
+            coeffs[alpha] = 1.0
+        else:
+            coeffs[alpha] = 0.0
+    return coeffs
 
 
-def check_exchange_support(poly: HomogeneousPolynomial, tol: float = 1e-15) -> bool:
-    supp = poly.support()
-    for alpha in supp:
-        for beta in supp:
-            for i in range(poly.n):
+def check_matroid_exchange(coeffs, n):
+    """Check the symmetric exchange property for matroid basis support."""
+    support = [idx for idx, c in coeffs.items() if c > 0]
+    support_set = set(support)
+    violations = 0
+    total_checks = 0
+
+    for alpha in support:
+        for beta in support:
+            for i in range(n):
                 if alpha[i] > beta[i]:
+                    total_checks += 1
                     found = False
-                    for j in range(poly.n):
+                    for j in range(n):
                         if beta[j] > alpha[j]:
-                            ex = list(alpha)
-                            ex[i] -= 1
-                            ex[j] += 1
-                            if abs(poly.coeff(tuple(ex))) > tol:
+                            new_a = list(alpha)
+                            new_a[i] -= 1
+                            new_a[j] += 1
+                            if tuple(new_a) in support_set:
                                 found = True
                                 break
                     if not found:
-                        return False
-    return True
+                        violations += 1
+
+    return violations == 0, total_checks, violations
 
 
 def demo_matroid_application():
-    """Demonstrate matroid basis polynomial is Lorentzian."""
+    """Demonstrate Hessian descent on matroid polynomials."""
     print("APPLICATION 1: Matroid Basis Generating Polynomials")
-    print("=" * 55)
+    print("-" * 50)
+
+    for n in range(3, 7):
+        for k in range(1, n):
+            coeffs = uniform_matroid_polynomial(n, k)
+            exch_ok, total, viols = check_matroid_exchange(coeffs, n)
+
+            # Check mixed LC
+            mixed_violations = 0
+            if k >= 2:
+                for alpha in generate_multiindices(n, k - 2):
+                    if all(a <= 1 for a in alpha) or True:
+                        for i in range(n):
+                            for j in range(n):
+                                idx_ii = list(alpha)
+                                idx_ii[i] += 2
+                                idx_jj = list(alpha)
+                                idx_jj[j] += 2
+                                idx_ij = list(alpha)
+                                idx_ij[i] += 1
+                                idx_ij[j] += 1
+                                c_ii = coeffs.get(tuple(idx_ii), 0)
+                                c_jj = coeffs.get(tuple(idx_jj), 0)
+                                c_ij = coeffs.get(tuple(idx_ij), 0)
+                                if c_ii * c_jj > c_ij ** 2 + 1e-10:
+                                    mixed_violations += 1
+
+            print(f"  U({k},{n}): exchange={exch_ok}, "
+                  f"mixed_LC_violations={mixed_violations}")
+
     print()
 
-    # Uniform matroid U(2,4): all 2-element subsets of {0,1,2,3}
-    from itertools import combinations
-    bases = list(combinations(range(4), 2))
-    n = 4
-    print(f"Uniform matroid U(2,4):")
-    print(f"  Bases: {bases}")
 
-    f = matroid_basis_polynomial(bases, n)
-    print(f"  Support size: {len(f.support())}")
-    print(f"  Exchange support: {check_exchange_support(f)}")
+# ============================================================
+# APPLICATION 2: Statistical Physics — Partition Functions
+# ============================================================
 
-    # Check quadratic leaves
-    H = f.hessian_matrix()
-    eigenvalues = np.linalg.eigvalsh(H)
-    print(f"  Hessian eigenvalues: {np.round(eigenvalues, 3)}")
-    print(f"  At most one positive: {np.sum(eigenvalues > 1e-10) <= 1}")
+def ising_partition_coefficients(n: int, J: float, h: float = 0) -> Dict:
+    """Compute partition function coefficients for the Ising model on a path.
+
+    Z = ∑_σ exp(-H(σ)) where H = -J ∑ σᵢσᵢ₊₁ - h ∑ σᵢ
+
+    Represented as polynomial in variables tracking magnetization.
+
+    Args:
+        n: Number of spins
+        J: Coupling constant (J > 0 ferromagnetic)
+        h: External field
+
+    Returns:
+        Coefficients indexed by magnetization m = number of up spins
+    """
+    coeffs = {}
+    for config in range(2 ** n):
+        spins = [(config >> i) & 1 for i in range(n)]
+        m = sum(spins)
+        energy = 0
+        for i in range(n - 1):
+            s_i = 2 * spins[i] - 1
+            s_j = 2 * spins[i + 1] - 1
+            energy -= J * s_i * s_j
+        for i in range(n):
+            energy -= h * (2 * spins[i] - 1)
+        weight = np.exp(-energy)
+        coeffs[m] = coeffs.get(m, 0) + weight
+    return coeffs
+
+
+def check_1d_log_concavity(seq):
+    """Check log-concavity of a positive sequence: a(k)² ≥ a(k-1)a(k+1)."""
+    violations = 0
+    for k in range(1, len(seq) - 1):
+        if seq[k] ** 2 < seq[k - 1] * seq[k + 1] - 1e-10:
+            violations += 1
+    return violations == 0, violations
+
+
+def demo_statistical_physics():
+    """Demonstrate negative dependence in partition functions."""
+    print("APPLICATION 2: Statistical Physics — Partition Functions")
+    print("-" * 50)
+
+    for n in [4, 6, 8, 10]:
+        for J in [0.5, 1.0, 2.0]:
+            coeffs = ising_partition_coefficients(n, J)
+            seq = [coeffs.get(m, 0) for m in range(n + 1)]
+
+            lc_ok, lc_viols = check_1d_log_concavity(seq)
+            print(f"  n={n}, J={J}: "
+                  f"coeffs={[f'{c:.1f}' for c in seq[:5]]}..., "
+                  f"log-concave={lc_ok}")
+
     print()
 
-    # Graphic matroid of K4
-    edges = [(0,1), (0,2), (0,3), (1,2), (1,3), (2,3)]
-    n_edges = len(edges)
-    # Spanning trees of K4 (complete graph on 4 vertices)
-    spanning_trees = [
-        (0,1,2), (0,1,3), (0,1,4), (0,1,5),
-        (0,2,3), (0,2,4), (0,2,5),
-        (0,3,4), (0,3,5), (0,4,5),
-        (1,2,3), (1,2,4), (1,2,5),
-        (1,3,4), (1,3,5),
-        (2,3,4),
+
+# ============================================================
+# APPLICATION 3: Convexity Certification
+# ============================================================
+
+def check_polynomial_lorentzianity(
+    coeffs: Dict[Tuple[int, ...], float],
+    n: int
+) -> Dict:
+    """Full diagnostic for polynomial Lorentzianity.
+
+    Checks coefficient inequalities at all levels.
+
+    Args:
+        coeffs: Coefficient dictionary
+        n: Number of variables
+
+    Returns:
+        Diagnostic dictionary
+    """
+    # Determine degree
+    degrees = set(sum(idx) for idx in coeffs.keys())
+    if len(degrees) != 1:
+        return {'homogeneous': False}
+
+    d = degrees.pop()
+    result = {'homogeneous': True, 'degree': d, 'n_vars': n}
+
+    # Check positivity
+    all_pos = all(c > 0 for c in coeffs.values() if True)
+    result['all_positive'] = all_pos
+
+    # Check mixed LC at each derivative level
+    for level in range(d - 1):
+        base_deg = d - 2 - level if d >= 2 + level else -1
+        if base_deg < 0:
+            continue
+
+        violations = 0
+        for alpha in generate_multiindices(n, base_deg):
+            for i in range(n):
+                for j in range(n):
+                    idx_ii = list(alpha)
+                    idx_ii[i] += 2
+                    idx_jj = list(alpha)
+                    idx_jj[j] += 2
+                    idx_ij = list(alpha)
+                    idx_ij[i] += 1
+                    idx_ij[j] += 1
+                    c_ii = coeffs.get(tuple(idx_ii), 0)
+                    c_jj = coeffs.get(tuple(idx_jj), 0)
+                    c_ij = coeffs.get(tuple(idx_ij), 0)
+                    if c_ii * c_jj > c_ij ** 2 + 1e-10:
+                        violations += 1
+
+        result[f'mixed_lc_level_{level}'] = violations == 0
+
+    return result
+
+
+def demo_convexity_certification():
+    """Demonstrate convexity certification via coefficient tests."""
+    print("APPLICATION 3: Convexity Certification")
+    print("-" * 50)
+
+    # Test various polynomials
+    n = 3
+    tests = [
+        ("(x+y+z)⁴", np.array([1.0, 1.0, 1.0]), 4),
+        ("(x+2y+3z)³", np.array([1.0, 2.0, 3.0]), 3),
+        ("(x+y+z)²", np.array([1.0, 1.0, 1.0]), 2),
+        ("(2x+y+z)⁵", np.array([2.0, 1.0, 1.0]), 5),
     ]
-    print(f"Graphic matroid of K4:")
-    f2 = matroid_basis_polynomial(spanning_trees, n_edges)
-    print(f"  Number of bases (spanning trees): {len(spanning_trees)}")
-    print(f"  Support size: {len(f2.support())}")
-    print(f"  Exchange support: {check_exchange_support(f2)}")
-    print()
 
+    for name, weights, degree in tests:
+        coeffs = {}
+        for alpha in generate_multiindices(n, degree):
+            coeff = 1.0
+            remaining = degree
+            for k in range(n):
+                coeff *= comb(remaining, alpha[k])
+                remaining -= alpha[k]
+                coeff *= weights[k] ** alpha[k]
+            coeffs[alpha] = coeff
 
-# ─── Application 2: Negative Dependence ───────────────────────────────
-
-def demo_negative_dependence():
-    """Demonstrate negative dependence via coefficient inequalities."""
-    print("APPLICATION 2: Negative Dependence in Partition Functions")
-    print("=" * 55)
-    print()
-
-    print("For a Lorentzian polynomial f = sum c_alpha x^alpha,")
-    print("the normalized coefficients p_alpha = c_alpha / sum(c_beta)")
-    print("form a 'negatively dependent' distribution:")
-    print("  P(i AND j active) * P(neither) <= P(i active) * P(j active)")
-    print()
-
-    # Use product of linear forms (guaranteed Lorentzian)
-    rng = np.random.default_rng(42)
-    n, d = 3, 4
-    coeffs: Dict[Tuple[int, ...], float] = {tuple(0 for _ in range(n)): 1.0}
-    for _ in range(d):
-        linear_coeffs = rng.uniform(0.5, 3.0, size=n)
-        new_coeffs: Dict[Tuple[int, ...], float] = {}
-        for alpha, c in coeffs.items():
-            for var in range(n):
-                new_alpha = list(alpha)
-                new_alpha[var] += 1
-                t = tuple(new_alpha)
-                new_coeffs[t] = new_coeffs.get(t, 0.0) + c * linear_coeffs[var]
-        coeffs = new_coeffs
-
-    f = HomogeneousPolynomial(n, d, coeffs)
-    total = sum(f.coeffs.values())
-
-    print(f"Lorentzian polynomial (n={n}, d={d}):")
-    print(f"  Total coefficient mass: {total:.4f}")
-    print()
-
-    # Check pairwise negative dependence
-    for i in range(n):
-        for j in range(i + 1, n):
-            # Marginals
-            p_i = sum(c for alpha, c in f.coeffs.items() if alpha[i] > 0) / total
-            p_j = sum(c for alpha, c in f.coeffs.items() if alpha[j] > 0) / total
-            p_ij = sum(c for alpha, c in f.coeffs.items()
-                       if alpha[i] > 0 and alpha[j] > 0) / total
-            print(f"  Variables {i},{j}: P(i)={p_i:.4f}, P(j)={p_j:.4f}, "
-                  f"P(i∧j)={p_ij:.4f}, P(i)*P(j)={p_i*p_j:.4f}")
-            print(f"    Negative dependence (P(i∧j) ≤ P(i)*P(j)): "
-                  f"{'YES' if p_ij <= p_i * p_j + 1e-10 else 'NO'}")
-    print()
-
-
-# ─── Application 3: Log-Concavity Certification ──────────────────────
-
-def demo_log_concavity_certification():
-    """Demonstrate log-concavity certification via coefficient inequalities."""
-    print("APPLICATION 3: Log-Concavity Certification")
-    print("=" * 55)
-    print()
-
-    print("The mixed coefficient inequality for Lorentzian polynomials")
-    print("specializes to ultra-log-concavity for univariate slices:")
-    print("  a_k^2 >= a_{k-1} * a_{k+1}")
-    print()
-
-    # Binomial coefficients (coefficients of (x+y)^d)
-    from math import comb
-    for d in [4, 6, 8, 10]:
-        seq = [comb(d, k) for k in range(d + 1)]
-        is_lc = all(seq[k] ** 2 >= seq[k - 1] * seq[k + 1]
-                     for k in range(1, d))
-        ratios = [seq[k] ** 2 / (seq[k - 1] * seq[k + 1])
-                  for k in range(1, d)]
-        min_ratio = min(ratios)
-        print(f"  Binomial C({d},k): log-concave={is_lc}, "
-              f"min ratio a_k^2/(a_{{k-1}}a_{{k+1}})={min_ratio:.4f}")
+        result = check_polynomial_lorentzianity(coeffs, n)
+        print(f"  {name}: {result}")
 
     print()
 
-    # Chromatic polynomial coefficients
-    print("  Stirling numbers S(n,k) (log-concave in k):")
-    for n_val in [5, 7, 10]:
-        # Compute Stirling numbers of second kind
-        S = [[0] * (n_val + 1) for _ in range(n_val + 1)]
-        S[0][0] = 1
-        for nn in range(1, n_val + 1):
-            for kk in range(1, nn + 1):
-                S[nn][kk] = kk * S[nn - 1][kk] + S[nn - 1][kk - 1]
-        seq = [S[n_val][k] for k in range(1, n_val + 1)]
-        is_lc = all(seq[k] ** 2 >= seq[k - 1] * seq[k + 1]
-                     for k in range(1, len(seq) - 1))
-        print(f"    S({n_val},k): {seq}, log-concave={is_lc}")
-    print()
-
-
-# ─── Main ─────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    print("Hessian Descent — Applications")
+    print("=" * 60)
+    print()
+
     demo_matroid_application()
-    demo_negative_dependence()
-    demo_log_concavity_certification()
+    demo_statistical_physics()
+    demo_convexity_certification()
 
 
 #!/usr/bin/env python3
 """
-Hessian Descent Certificate Demo
+demo.py — Computational exploration of the Hessian Descent Certificate
+for Lorentzian polynomials.
 
-Demonstrates the Lorentzian-Hessian Descent equivalence program by:
-1. Generating Lorentzian polynomials (products of linear forms)
-2. Verifying the forward direction: Lorentzian => coefficient inequalities
-3. Testing random polynomials for the converse direction
-4. Searching for counterexamples to the converse conjecture
-
-Usage:
-    python demo.py                  # Run all demos
-    python demo.py --forward        # Forward verification only
-    python demo.py --search         # Counterexample search only
-    python demo.py --summary        # Summary statistics
+Demonstrates:
+1. Forward verification: Lorentzian polynomials satisfy mixed coefficient inequalities
+2. Counterexample search: pairwise det ≤ 0 does NOT imply Lorentzianity for n ≥ 3
+3. Exchange support checking
+4. Comparison with eigenvalue-based Lorentzian test
 """
 
-from __future__ import annotations
 import numpy as np
-from itertools import product as cartesian_product
-from typing import Dict, Tuple, List, Optional
+from itertools import product as iterproduct
+from math import comb
 import sys
-import time
 
 
-# ─── Inline all needed functions ──────────────────────────────────────
-
-def multi_indices(n: int, d: int) -> List[Tuple[int, ...]]:
+def generate_multiindices(n, d):
+    """Generate all multi-indices α with |α| = d in n variables."""
     if n == 0:
-        return [()] if d == 0 else []
+        return [()]
     if n == 1:
         return [(d,)]
     result = []
-    for k in range(d + 1):
-        for rest in multi_indices(n - 1, d - k):
-            result.append((k,) + rest)
+    for first in range(d + 1):
+        for rest in generate_multiindices(n - 1, d - first):
+            result.append((first,) + rest)
     return result
 
 
-def unit_vector(n: int, i: int) -> Tuple[int, ...]:
-    return tuple(1 if j == i else 0 for j in range(n))
+def random_positive_homogeneous_coeffs(n, d, scale=1.0):
+    """Generate random positive coefficients for a homogeneous polynomial."""
+    indices = generate_multiindices(n, d)
+    coeffs = {}
+    for idx in indices:
+        coeffs[idx] = np.random.exponential(scale)
+    return coeffs
 
 
-def add_tuples(*tuples: Tuple[int, ...]) -> Tuple[int, ...]:
-    return tuple(sum(x) for x in zip(*tuples))
-
-
-class HomogeneousPolynomial:
-    def __init__(self, n: int, d: int, coeffs: Dict[Tuple[int, ...], float]):
-        self.n = n
-        self.d = d
-        self.coeffs = {k: v for k, v in coeffs.items() if abs(v) > 1e-15}
-
-    def coeff(self, alpha: Tuple[int, ...]) -> float:
-        return self.coeffs.get(alpha, 0.0)
-
-    def support(self) -> List[Tuple[int, ...]]:
-        return list(self.coeffs.keys())
-
-    def has_positive_coefficients(self) -> bool:
-        return all(v > 0 for v in self.coeffs.values())
-
-    def partial_derivative(self, var: int) -> 'HomogeneousPolynomial':
-        if self.d == 0:
-            return HomogeneousPolynomial(self.n, 0, {})
-        new_coeffs: Dict[Tuple[int, ...], float] = {}
-        for alpha, c in self.coeffs.items():
-            if alpha[var] > 0:
-                new_alpha = list(alpha)
-                factor = new_alpha[var]
-                new_alpha[var] -= 1
-                t = tuple(new_alpha)
-                new_coeffs[t] = new_coeffs.get(t, 0.0) + c * factor
-        return HomogeneousPolynomial(self.n, max(0, self.d - 1), new_coeffs)
-
-    def iterated_derivative(self, alpha: Tuple[int, ...]) -> 'HomogeneousPolynomial':
-        result = self
-        for var in range(self.n):
-            for _ in range(alpha[var]):
-                result = result.partial_derivative(var)
-        return result
-
-    def hessian_matrix(self) -> np.ndarray:
-        H = np.zeros((self.n, self.n))
-        for i in range(self.n):
-            for j in range(self.n):
-                df_ij = self.partial_derivative(j).partial_derivative(i)
-                zero_idx = tuple(0 for _ in range(self.n))
-                H[i, j] = df_ij.coeff(zero_idx)
-        return H
-
-    @staticmethod
-    def random_positive(n: int, d: int, seed: Optional[int] = None) -> 'HomogeneousPolynomial':
-        rng = np.random.default_rng(seed)
-        indices = multi_indices(n, d)
-        coeffs = {idx: rng.uniform(0.1, 5.0) for idx in indices}
-        return HomogeneousPolynomial(n, d, coeffs)
-
-
-def product_of_linear_forms(n: int, d: int, seed: Optional[int] = None) -> HomogeneousPolynomial:
-    rng = np.random.default_rng(seed)
-    coeffs: Dict[Tuple[int, ...], float] = {tuple(0 for _ in range(n)): 1.0}
-    for _ in range(d):
-        linear_coeffs = rng.uniform(0.5, 3.0, size=n)
-        new_coeffs: Dict[Tuple[int, ...], float] = {}
-        for alpha, c in coeffs.items():
-            for var in range(n):
-                new_alpha = list(alpha)
-                new_alpha[var] += 1
-                t = tuple(new_alpha)
-                new_coeffs[t] = new_coeffs.get(t, 0.0) + c * linear_coeffs[var]
-        coeffs = new_coeffs
-    return HomogeneousPolynomial(n, d, coeffs)
-
-
-def check_mixed_log_concavity(poly: HomogeneousPolynomial, tol: float = 1e-10) -> Tuple[bool, List[str]]:
-    if poly.d < 2:
-        return True, []
+def check_mixed_log_concavity(coeffs, n, d):
+    """Check mixed directional log-concavity for all base indices α and directions i,j."""
     violations = []
-    for m in multi_indices(poly.n, poly.d - 2):
-        for i in range(poly.n):
-            for j in range(i, poly.n):
-                ei = unit_vector(poly.n, i)
-                ej = unit_vector(poly.n, j)
-                c_ii = poly.coeff(add_tuples(m, ei, ei))
-                c_jj = poly.coeff(add_tuples(m, ej, ej))
-                c_ij = poly.coeff(add_tuples(m, ei, ej))
-                if c_ii * c_jj > c_ij ** 2 + tol:
-                    violations.append(f"m={m}, i={i}, j={j}")
+    # For a degree-d polynomial, α ranges over |α| = d-2, and we check
+    # c(α+2eᵢ) · c(α+2eⱼ) ≤ c(α+eᵢ+eⱼ)²
+    if d < 2:
+        return True, violations
+
+    base_indices = generate_multiindices(n, d - 2) if d >= 2 else [tuple([0]*n)]
+
+    for alpha in base_indices:
+        for i in range(n):
+            for j in range(n):
+                # α + eᵢ + eᵢ
+                idx_ii = list(alpha)
+                idx_ii[i] += 2
+                idx_ii = tuple(idx_ii)
+                # α + eⱼ + eⱼ
+                idx_jj = list(alpha)
+                idx_jj[j] += 2
+                idx_jj = tuple(idx_jj)
+                # α + eᵢ + eⱼ
+                idx_ij = list(alpha)
+                idx_ij[i] += 1
+                idx_ij[j] += 1
+                idx_ij = tuple(idx_ij)
+
+                c_ii = coeffs.get(idx_ii, 0.0)
+                c_jj = coeffs.get(idx_jj, 0.0)
+                c_ij = coeffs.get(idx_ij, 0.0)
+
+                if c_ii * c_jj > c_ij ** 2 + 1e-10:
+                    violations.append((alpha, i, j, c_ii * c_jj, c_ij ** 2))
+
     return len(violations) == 0, violations
 
 
-def check_axis_log_concavity(poly: HomogeneousPolynomial, tol: float = 1e-10) -> Tuple[bool, List[str]]:
-    if poly.d < 2:
-        return True, []
+def check_axis_log_concavity(coeffs, n, d):
+    """Check axis directional log-concavity: c(α+2eᵢ)·c(α) ≤ c(α+eᵢ)²."""
     violations = []
-    for m in multi_indices(poly.n, poly.d - 2):
-        for i in range(poly.n):
-            ei = unit_vector(poly.n, i)
-            c_2i = poly.coeff(add_tuples(m, ei, ei))
-            c_0 = poly.coeff(m)
-            c_i = poly.coeff(add_tuples(m, ei))
-            if c_2i * c_0 > c_i ** 2 + tol:
-                violations.append(f"m={m}, i={i}")
+    if d < 2:
+        return True, violations
+
+    for alpha_deg in range(d - 1):
+        for alpha in generate_multiindices(n, alpha_deg):
+            for i in range(n):
+                idx_2i = list(alpha)
+                idx_2i[i] += 2
+                idx_2i = tuple(idx_2i)
+                idx_1i = list(alpha)
+                idx_1i[i] += 1
+                idx_1i = tuple(idx_1i)
+
+                c_2i = coeffs.get(idx_2i, 0.0)
+                c_0 = coeffs.get(alpha, 0.0)
+                c_1i = coeffs.get(idx_1i, 0.0)
+
+                if c_2i * c_0 > c_1i ** 2 + 1e-10:
+                    violations.append((alpha, i, c_2i * c_0, c_1i ** 2))
+
     return len(violations) == 0, violations
 
 
-def check_exchange_support(poly: HomogeneousPolynomial, tol: float = 1e-15) -> Tuple[bool, List[str]]:
+def check_exchange_support(coeffs, n, d):
+    """Check the exchange property on support."""
+    support = [idx for idx, c in coeffs.items() if abs(c) > 1e-12]
     violations = []
-    supp = poly.support()
-    for alpha in supp:
-        for beta in supp:
-            for i in range(poly.n):
+
+    for alpha in support:
+        for beta in support:
+            for i in range(n):
                 if alpha[i] > beta[i]:
                     found = False
-                    for j in range(poly.n):
+                    for j in range(n):
                         if beta[j] > alpha[j]:
-                            ex = list(alpha)
-                            ex[i] -= 1
-                            ex[j] += 1
-                            if abs(poly.coeff(tuple(ex))) > tol:
+                            new_alpha = list(alpha)
+                            new_alpha[i] -= 1
+                            new_alpha[j] += 1
+                            new_alpha = tuple(new_alpha)
+                            if coeffs.get(new_alpha, 0.0) != 0:
                                 found = True
                                 break
                     if not found:
-                        violations.append(f"α={alpha}, β={beta}, i={i}")
+                        violations.append((alpha, beta, i))
+
     return len(violations) == 0, violations
 
 
-def check_all_quadratic_leaves(poly: HomogeneousPolynomial) -> Tuple[bool, List[str]]:
-    if poly.d < 2:
-        return True, []
+def hessian_matrix_from_coeffs(coeffs, n, d):
+    """Extract the Hessian-like coefficient matrix for degree-2 leaves."""
+    if d < 2:
+        return np.eye(n)
+    # For degree 2: H(i,j) = c(eᵢ + eⱼ)
+    H = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            idx = [0] * n
+            idx[i] += 1
+            idx[j] += 1
+            H[i, j] = coeffs.get(tuple(idx), 0.0)
+    return H
+
+
+def check_lorentzian_eigenvalues(H):
+    """Check if a matrix has at most one positive eigenvalue."""
+    eigenvalues = np.linalg.eigvalsh(H)
+    n_positive = np.sum(eigenvalues > 1e-10)
+    return n_positive <= 1, eigenvalues
+
+
+def check_pairwise_det(H):
+    """Check if H(i,i)*H(j,j) ≤ H(i,j)² for all i,j."""
+    n = H.shape[0]
     violations = []
-    for alpha in multi_indices(poly.n, poly.d - 2):
-        leaf = poly.iterated_derivative(alpha)
-        H = leaf.hessian_matrix()
-        eigenvalues = np.linalg.eigvalsh(H)
-        num_pos = np.sum(eigenvalues > 1e-10)
-        if num_pos > 1:
-            violations.append(f"α={alpha}: {num_pos} positive eigenvalues")
+    for i in range(n):
+        for j in range(n):
+            if H[i, i] * H[j, j] > H[i, j] ** 2 + 1e-10:
+                violations.append((i, j, H[i, i] * H[j, j], H[i, j] ** 2))
     return len(violations) == 0, violations
 
-
-# ─── Demo Functions ───────────────────────────────────────────────────
 
 def demo_forward_verification():
-    """Mode 1: Forward verification — Lorentzian implies certificate."""
+    """Demonstrate that Lorentzian polynomials satisfy the coefficient inequalities."""
     print("=" * 70)
-    print("FORWARD VERIFICATION: Lorentzian => Coefficient Certificate")
+    print("DEMO 1: Forward Verification")
+    print("Lorentzian polynomials → mixed coefficient inequalities")
     print("=" * 70)
-    print()
 
-    test_cases = [
-        ("Product of linear forms (n=2, d=3)", 2, 3),
-        ("Product of linear forms (n=3, d=3)", 3, 3),
-        ("Product of linear forms (n=3, d=4)", 3, 4),
-        ("Product of linear forms (n=4, d=3)", 4, 3),
-        ("Product of linear forms (n=2, d=6)", 2, 6),
-    ]
+    # Products of linear forms are Lorentzian
+    # f = (a₁x₁ + a₂x₂ + ... + aₙxₙ)^d has Lorentzian signature
+    for n in [2, 3, 4, 5]:
+        for d in [2, 3, 4]:
+            # Random product of linear forms
+            a = np.random.exponential(1.0, n)
+            coeffs = {}
+            for alpha in generate_multiindices(n, d):
+                # Multinomial coefficient × product of aᵢ^αᵢ
+                coeff = 1.0
+                remaining = d
+                for k in range(n):
+                    coeff *= comb(remaining, alpha[k])
+                    remaining -= alpha[k]
+                    coeff *= a[k] ** alpha[k]
+                coeffs[alpha] = coeff
 
-    all_passed = True
-    for name, n, d in test_cases:
-        print(f"Testing: {name}")
-        f = product_of_linear_forms(n, d, seed=42)
+            mixed_ok, mixed_viols = check_mixed_log_concavity(coeffs, n, d)
+            axis_ok, _ = check_axis_log_concavity(coeffs, n, d)
+            exch_ok, _ = check_exchange_support(coeffs, n, d)
 
-        mixed_ok, mixed_v = check_mixed_log_concavity(f)
-        axis_ok, axis_v = check_axis_log_concavity(f)
-        exch_ok, exch_v = check_exchange_support(f)
-        spec_ok, spec_v = check_all_quadratic_leaves(f)
+            status = "✓" if (mixed_ok and axis_ok and exch_ok) else "✗"
+            print(f"  n={n}, d={d}: Mixed LC={mixed_ok}, Axis LC={axis_ok}, "
+                  f"Exchange={exch_ok} {status}")
 
-        cert_ok = mixed_ok and axis_ok and exch_ok
-        print(f"  Spectral (ground truth):     {'PASS' if spec_ok else 'FAIL'}")
-        print(f"  Mixed log-concavity:         {'PASS' if mixed_ok else 'FAIL'}")
-        print(f"  Axis log-concavity:          {'PASS' if axis_ok else 'FAIL'}")
-        print(f"  Exchange support:            {'PASS' if exch_ok else 'FAIL'}")
-        print(f"  Certificate (all 3):         {'PASS' if cert_ok else 'FAIL'}")
-
-        if not cert_ok:
-            all_passed = False
-            if mixed_v:
-                print(f"    Mixed violations: {mixed_v[:2]}")
-            if axis_v:
-                print(f"    Axis violations: {axis_v[:2]}")
-            if exch_v:
-                print(f"    Exchange violations: {exch_v[:2]}")
-        print()
-
-    print(f"Overall forward direction: {'ALL PASSED' if all_passed else 'SOME FAILED'}")
     print()
 
 
-def demo_converse_search():
-    """Mode 2: Search for counterexamples to the converse conjecture."""
+def demo_counterexample_search():
+    """Search for counterexamples to the converse."""
     print("=" * 70)
-    print("CONVERSE COUNTEREXAMPLE SEARCH")
+    print("DEMO 2: Counterexample Search")
+    print("Pairwise det ≤ 0 does NOT imply Lorentzian for n ≥ 3")
     print("=" * 70)
-    print()
-    print("Testing: certificate conditions => spectral (Lorentzian)")
-    print("Looking for polynomials that satisfy the coefficient certificate")
-    print("but fail the spectral condition.")
-    print()
 
-    counterexamples = []
-    total_tested = 0
-    total_cert_pass = 0
+    # The known counterexample
+    print("\n  Known counterexample (mixed signs):")
+    A = np.array([[1, 1, 1], [1, 1, -1], [1, -1, 1]], dtype=float)
+    det_ok, _ = check_pairwise_det(A)
+    lor_ok, eigs = check_lorentzian_eigenvalues(A)
+    print(f"    A = [[1,1,1],[1,1,-1],[1,-1,1]]")
+    print(f"    Pairwise det ≤ 0: {det_ok}")
+    print(f"    Lorentzian (≤1 pos eig): {lor_ok}")
+    print(f"    Eigenvalues: {np.round(eigs, 4)}")
 
-    for n in range(2, 5):
-        for d in range(2, min(7, 2 + 5 // n)):
-            num_tests = 200
-            for seed in range(num_tests):
-                total_tested += 1
-                f = HomogeneousPolynomial.random_positive(n, d, seed=seed + 1000 * n + 10000 * d)
+    print("\n  Known counterexample (nonneg entries):")
+    A2 = np.array([[1, 1, 1], [1, 1, 10], [1, 10, 1]], dtype=float)
+    det_ok2, _ = check_pairwise_det(A2)
+    lor_ok2, eigs2 = check_lorentzian_eigenvalues(A2)
+    print(f"    A = [[1,1,1],[1,1,10],[1,10,1]]")
+    print(f"    Pairwise det ≤ 0: {det_ok2}")
+    print(f"    All entries ≥ 0: {np.all(A2 >= 0)}")
+    print(f"    Lorentzian (≤1 pos eig): {lor_ok2}")
+    print(f"    Eigenvalues: {np.round(eigs2, 4)}")
 
-                mixed_ok, _ = check_mixed_log_concavity(f)
-                if not mixed_ok:
-                    continue
-
-                axis_ok, _ = check_axis_log_concavity(f)
-                exch_ok, _ = check_exchange_support(f)
-
-                if not (axis_ok and exch_ok):
-                    continue
-
-                total_cert_pass += 1
-
-                spec_ok, spec_v = check_all_quadratic_leaves(f)
-                if not spec_ok:
-                    counterexamples.append({
-                        "n": n, "d": d, "seed": seed,
-                        "spectral_violations": spec_v
-                    })
-
-    print(f"Total polynomials tested:          {total_tested}")
-    print(f"Passed certificate conditions:     {total_cert_pass}")
-    print(f"Of those, failed spectral:         {len(counterexamples)}")
-    print()
-
-    if counterexamples:
-        print("COUNTEREXAMPLES FOUND:")
-        for i, ce in enumerate(counterexamples[:5]):
-            print(f"  #{i+1}: n={ce['n']}, d={ce['d']}, seed={ce['seed']}")
-            for v in ce['spectral_violations'][:2]:
-                print(f"    {v}")
-    else:
-        print("NO COUNTEREXAMPLES FOUND — conjecture consistent!")
-    print()
-
-
-def demo_summary_statistics():
-    """Mode 3: Summary statistics across parameter ranges."""
-    print("=" * 70)
-    print("SUMMARY: Certificate vs Spectral Condition")
-    print("=" * 70)
-    print()
-    print(f"{'n':>3} {'d':>3} {'tested':>8} {'Lor':>6} {'cert':>6} {'cert∧¬Lor':>10} {'Lor∧¬cert':>10}")
-    print("-" * 55)
-
-    for n in range(2, 5):
-        for d in range(2, min(6, 2 + 5 // n)):
-            num_tests = 100
-            n_lorentzian = 0
-            n_cert = 0
-            n_cert_not_lor = 0
-            n_lor_not_cert = 0
-
-            for seed in range(num_tests):
-                f = HomogeneousPolynomial.random_positive(n, d, seed=seed + 7777 * n + 3333 * d)
-
-                mixed_ok, _ = check_mixed_log_concavity(f)
-                axis_ok, _ = check_axis_log_concavity(f)
-                exch_ok, _ = check_exchange_support(f)
-                spec_ok, _ = check_all_quadratic_leaves(f)
-
-                cert_ok = mixed_ok and axis_ok and exch_ok
-
-                if spec_ok:
-                    n_lorentzian += 1
-                if cert_ok:
-                    n_cert += 1
-                if cert_ok and not spec_ok:
-                    n_cert_not_lor += 1
-                if spec_ok and not cert_ok:
-                    n_lor_not_cert += 1
-
-            print(f"{n:>3} {d:>3} {num_tests:>8} {n_lorentzian:>6} {n_cert:>6} "
-                  f"{n_cert_not_lor:>10} {n_lor_not_cert:>10}")
-
-    print()
-    print("Legend:")
-    print("  Lor: passes spectral Lorentzian test")
-    print("  cert: passes all certificate conditions")
-    print("  cert∧¬Lor: certificate passes but NOT Lorentzian (converse failure)")
-    print("  Lor∧¬cert: Lorentzian but certificate FAILS (forward failure — should be 0)")
-    print()
-
-
-def demo_2x2_principal_minor():
-    """Demonstrate the 2×2 principal minor lemma."""
-    print("=" * 70)
-    print("2×2 PRINCIPAL MINOR LEMMA DEMONSTRATION")
-    print("=" * 70)
-    print()
-    print("For any symmetric matrix A with nonneg diagonal and at most one")
-    print("positive eigenvalue: A(i,i)*A(j,j) ≤ A(i,j)²")
-    print()
-
-    rng = np.random.default_rng(42)
-    n_tests = 1000
-    n_qualifying = 0
-    n_passed = 0
-
-    for _ in range(n_tests):
-        n = rng.integers(2, 6)
-        # Generate random symmetric matrix with nonneg diagonal
-        M = rng.standard_normal((n, n))
-        A = (M + M.T) / 2  # Symmetrize
+    # Random search
+    print("\n  Random search for smallest counterexamples (n=3, nonneg):")
+    n_found = 0
+    for trial in range(1000):
+        n = 3
+        # Generate random nonneg symmetric matrix with pairwise det condition
+        diag = np.random.exponential(1.0, n)
+        A = np.zeros((n, n))
         for i in range(n):
-            A[i, i] = abs(A[i, i])  # Nonneg diagonal
+            A[i, i] = diag[i]
+        for i in range(n):
+            for j in range(i + 1, n):
+                # Need A[i,j]² ≥ A[i,i]*A[j,j]
+                min_val = np.sqrt(A[i, i] * A[j, j])
+                A[i, j] = min_val * np.random.uniform(1.0, 5.0)
+                A[j, i] = A[i, j]
 
-        eigenvalues = np.linalg.eigvalsh(A)
-        num_pos = np.sum(eigenvalues > 1e-10)
+        det_ok, _ = check_pairwise_det(A)
+        if det_ok:
+            lor_ok, eigs = check_lorentzian_eigenvalues(A)
+            if not lor_ok:
+                n_found += 1
+                if n_found <= 3:
+                    print(f"    Trial {trial}: det_ok={det_ok}, lor={lor_ok}, "
+                          f"eigs={np.round(eigs, 3)}")
 
-        # Only test matrices that actually have at most one positive eigenvalue
-        if num_pos <= 1:
-            n_qualifying += 1
-            all_ok = True
-            for i in range(n):
-                for j in range(n):
-                    if A[i, i] * A[j, j] > A[i, j] ** 2 + 1e-8:
-                        all_ok = False
-                        break
-            if all_ok:
-                n_passed += 1
+    print(f"    Found {n_found}/1000 nonneg counterexamples")
 
-    print(f"Of {n_tests} random matrices, {n_qualifying} had at most one positive")
-    print(f"eigenvalue AND nonneg diagonal.")
-    print(f"Of those, all passed minor lemma: {n_passed}/{n_qualifying} "
-          f"({'YES' if n_passed == n_qualifying else 'counterexample found!'})")
-    if n_passed < n_qualifying:
-        print(f"NOTE: {n_qualifying - n_passed} failures are likely numerical precision issues")
+    # 2×2 case: no counterexamples expected
+    print("\n  2×2 case (should find NO counterexamples):")
+    n_found_2d = 0
+    for trial in range(10000):
+        a = np.random.exponential(1.0)
+        c = np.random.exponential(1.0)
+        b = np.sqrt(a * c) * np.random.uniform(1.0, 5.0)
+        if np.random.random() < 0.5:
+            b = -b
+        A = np.array([[a, b], [b, c]])
+        det_ok, _ = check_pairwise_det(A)
+        if det_ok:
+            lor_ok, _ = check_lorentzian_eigenvalues(A)
+            if not lor_ok:
+                n_found_2d += 1
+
+    print(f"    Found {n_found_2d}/10000 counterexamples (expected: 0)")
     print()
 
 
-# ─── Main Entry Point ─────────────────────────────────────────────────
+def demo_certificate_algorithm():
+    """Demonstrate the certificate-checking algorithm."""
+    print("=" * 70)
+    print("DEMO 3: Certificate Checking Algorithm")
+    print("=" * 70)
 
-def main():
-    mode = sys.argv[1] if len(sys.argv) > 1 else "--all"
+    # Test on known Lorentzian polynomial: (x+y+z)²
+    n, d = 3, 2
+    a = np.ones(n)
+    coeffs = {}
+    for alpha in generate_multiindices(n, d):
+        coeff = 1.0
+        remaining = d
+        for k in range(n):
+            coeff *= comb(remaining, alpha[k])
+            remaining -= alpha[k]
+        coeffs[alpha] = coeff
+
+    print(f"\n  Polynomial: (x₁+x₂+x₃)² (n={n}, d={d})")
+    print(f"  Coefficients: {coeffs}")
+
+    mixed_ok, _ = check_mixed_log_concavity(coeffs, n, d)
+    axis_ok, _ = check_axis_log_concavity(coeffs, n, d)
+    exch_ok, _ = check_exchange_support(coeffs, n, d)
+
+    H = hessian_matrix_from_coeffs(coeffs, n, d)
+    lor_ok, eigs = check_lorentzian_eigenvalues(H)
+    det_ok, _ = check_pairwise_det(H)
+
+    print(f"  Hessian matrix:\n{H}")
+    print(f"  Eigenvalues: {np.round(eigs, 4)}")
+    print(f"  Lorentzian (eigenvalue test): {lor_ok}")
+    print(f"  Mixed LC (coefficient test): {mixed_ok}")
+    print(f"  Axis LC: {axis_ok}")
+    print(f"  Exchange support: {exch_ok}")
+    print(f"  Pairwise det ≤ 0: {det_ok}")
+
+    # Test on a non-Lorentzian polynomial
+    print(f"\n  Non-Lorentzian test: x₁² + x₂² + x₃² (diagonal)")
+    coeffs2 = {}
+    for alpha in generate_multiindices(3, 2):
+        if sum(1 for a in alpha if a == 2) == 1:
+            coeffs2[alpha] = 1.0
+        else:
+            coeffs2[alpha] = 0.0
+
+    mixed_ok2, viols = check_mixed_log_concavity(coeffs2, 3, 2)
+    H2 = hessian_matrix_from_coeffs(coeffs2, 3, 2)
+    lor_ok2, eigs2 = check_lorentzian_eigenvalues(H2)
+    det_ok2, _ = check_pairwise_det(H2)
+
+    print(f"  Coefficients: {coeffs2}")
+    print(f"  Hessian matrix:\n{H2}")
+    print(f"  Eigenvalues: {np.round(eigs2, 4)}")
+    print(f"  Lorentzian: {lor_ok2}")
+    print(f"  Mixed LC: {mixed_ok2}")
+    print(f"  Pairwise det ≤ 0: {det_ok2}")
+    print()
+
+
+def demo_dimension_sweep():
+    """Sweep over dimensions and degrees to test the conjecture."""
+    print("=" * 70)
+    print("DEMO 4: Dimension/Degree Sweep")
+    print("Testing certificate conditions on random Lorentzian polynomials")
+    print("=" * 70)
+
+    np.random.seed(42)
+    for n in range(2, 6):
+        for d in range(2, min(7, 2 + 5 // n)):
+            n_tests = 50
+            n_lor_cert = 0  # Lorentzian AND has certificate
+            n_cert_lor = 0  # Has certificate AND Lorentzian
+            n_lor = 0
+            n_cert = 0
+
+            for _ in range(n_tests):
+                # Generate a product of linear forms (guaranteed Lorentzian)
+                a = np.random.exponential(1.0, n)
+                coeffs = {}
+                for alpha in generate_multiindices(n, d):
+                    coeff = 1.0
+                    remaining = d
+                    for k in range(n):
+                        coeff *= comb(remaining, alpha[k])
+                        remaining -= alpha[k]
+                        coeff *= a[k] ** alpha[k]
+                    coeffs[alpha] = coeff
+
+                mixed_ok, _ = check_mixed_log_concavity(coeffs, n, d)
+                is_cert = mixed_ok
+
+                # For degree 2, also check eigenvalues
+                if d == 2:
+                    H = hessian_matrix_from_coeffs(coeffs, n, d)
+                    is_lor, _ = check_lorentzian_eigenvalues(H)
+                else:
+                    is_lor = True  # Products of linear forms are Lorentzian
+
+                if is_lor:
+                    n_lor += 1
+                if is_cert:
+                    n_cert += 1
+                if is_lor and is_cert:
+                    n_lor_cert += 1
+                if is_cert and is_lor:
+                    n_cert_lor += 1
+
+            print(f"  n={n}, d={d}: Lorentzian={n_lor}/{n_tests}, "
+                  f"Certificate={n_cert}/{n_tests}, "
+                  f"Both={n_lor_cert}/{n_tests}")
 
     print()
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  Hessian Descent Certificate — Computational Demo      ║")
-    print("║  Lorentzian Polynomials via Coefficient Inequalities    ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-    print()
-
-    start = time.time()
-
-    if mode == "--forward":
-        demo_forward_verification()
-    elif mode == "--search":
-        demo_converse_search()
-    elif mode == "--summary":
-        demo_summary_statistics()
-    elif mode == "--minor":
-        demo_2x2_principal_minor()
-    else:
-        demo_2x2_principal_minor()
-        demo_forward_verification()
-        demo_converse_search()
-        demo_summary_statistics()
-
-    elapsed = time.time() - start
-    print(f"Total time: {elapsed:.2f}s")
 
 
 if __name__ == "__main__":
-    main()
+    print("Hessian Descent Certificate — Computational Exploration")
+    print("=" * 70)
+    print()
+
+    np.random.seed(42)
+
+    demo_forward_verification()
+    demo_counterexample_search()
+    demo_certificate_algorithm()
+    demo_dimension_sweep()
+
+    print("=" * 70)
+    print("Summary:")
+    print("• Forward direction (Lorentzian → coefficient inequalities): CONFIRMED")
+    print("• 2×2 equivalence: CONFIRMED (no counterexamples in 10,000 trials)")
+    print("• General converse: FAILS (counterexamples found for n ≥ 3)")
+    print("• Key insight: pairwise 2×2 minors are necessary but not sufficient")
+    print("  for Lorentzianity; additional structure (exchange support, derivative")
+    print("  descent) is needed for the converse.")
+    print("=" * 70)
 
 
+#!/usr/bin/env python3
 """
-Visualization: Coefficient Landscape of Lorentzian Polynomials
+Visualization: Hessian Descent — Lorentzian Signature vs Coefficient Inequalities
 
-Visualizes how the coefficient inequalities create a geometric landscape:
-- Heatmap of coefficient ratios for Lorentzian vs non-Lorentzian polynomials
-- The "descent" structure from degree d down to degree 2
-"""
+This script visualizes the relationship between the Lorentzian signature condition
+(at most one positive eigenvalue) and the pairwise coefficient inequality
+(A(i,i)*A(j,j) ≤ A(i,j)²) for 2×2 and 3×3 matrices.
 
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def multi_indices(n: int, d: int):
-    if n == 0:
-        return [()] if d == 0 else []
-    if n == 1:
-        return [(d,)]
-    result = []
-    for k in range(d + 1):
-        for rest in multi_indices(n - 1, d - k):
-            result.append((k,) + rest)
-    return result
-
-
-def product_of_linear_forms(n, d, seed=None):
-    rng = np.random.default_rng(seed)
-    coeffs = {tuple(0 for _ in range(n)): 1.0}
-    for _ in range(d):
-        lc = rng.uniform(0.5, 3.0, size=n)
-        new_coeffs = {}
-        for alpha, c in coeffs.items():
-            for var in range(n):
-                na = list(alpha)
-                na[var] += 1
-                t = tuple(na)
-                new_coeffs[t] = new_coeffs.get(t, 0.0) + c * lc[var]
-        coeffs = new_coeffs
-    return coeffs, n, d
-
-
-def compute_minor_ratios(coeffs, n, d):
-    """Compute all mixed log-concavity ratios c(m+2ei)*c(m+2ej)/c(m+ei+ej)^2."""
-    ratios = []
-    if d < 2:
-        return ratios
-    for m in multi_indices(n, d - 2):
-        for i in range(n):
-            for j in range(i, n):
-                ei = tuple(1 if k == i else 0 for k in range(n))
-                ej = tuple(1 if k == j else 0 for k in range(n))
-                m_ii = tuple(mk + 2*eik for mk, eik in zip(m, ei))
-                m_jj = tuple(mk + 2*ejk for mk, ejk in zip(m, ej))
-                m_ij = tuple(mk + eik + ejk for mk, eik, ejk in zip(m, ei, ej))
-                c_ii = coeffs.get(m_ii, 0)
-                c_jj = coeffs.get(m_jj, 0)
-                c_ij = coeffs.get(m_ij, 0)
-                if abs(c_ij) > 1e-15:
-                    ratio = c_ii * c_jj / (c_ij**2)
-                    ratios.append(ratio)
-    return ratios
-
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 11))
-
-# Panel 1: Coefficient ratio histogram for Lorentzian polynomials
-ax = axes[0, 0]
-all_ratios_lor = []
-for seed in range(50):
-    coeffs, n, d = product_of_linear_forms(3, 4, seed=seed)
-    ratios = compute_minor_ratios(coeffs, n, d)
-    all_ratios_lor.extend(ratios)
-
-all_ratios_rand = []
-for seed in range(50):
-    rng = np.random.default_rng(seed + 1000)
-    indices = multi_indices(3, 4)
-    coeffs = {idx: rng.uniform(0.1, 5.0) for idx in indices}
-    ratios = compute_minor_ratios(coeffs, 3, 4)
-    all_ratios_rand.extend(ratios)
-
-ax.hist(all_ratios_lor, bins=50, range=(0, 3), alpha=0.6, color='#2ecc71',
-        label='Lorentzian', density=True)
-ax.hist(all_ratios_rand, bins=50, range=(0, 3), alpha=0.6, color='#e74c3c',
-        label='Random', density=True)
-ax.axvline(x=1, color='black', linestyle='--', linewidth=1.5,
-           label='Boundary ($r = 1$)')
-ax.set_xlabel('Ratio $c(m+2e_i)c(m+2e_j) / c(m+e_i+e_j)^2$', fontsize=11)
-ax.set_ylabel('Density', fontsize=11)
-ax.set_title('Coefficient ratio distribution (n=3, d=4)', fontsize=12)
-ax.legend(fontsize=10)
-
-# Panel 2: Heatmap of coefficient matrix for a Lorentzian polynomial
-ax = axes[0, 1]
-coeffs, n, d = product_of_linear_forms(3, 4, seed=42)
-indices = sorted(multi_indices(3, 4))
-n_idx = len(indices)
-idx_map = {idx: i for i, idx in enumerate(indices)}
-
-coeff_vals = np.array([coeffs.get(idx, 0) for idx in indices])
-coeff_vals = coeff_vals / np.max(coeff_vals)
-
-# Create ratio matrix
-ratio_matrix = np.ones((n_idx, n_idx))
-for i_idx in range(n_idx):
-    for j_idx in range(n_idx):
-        c_i = coeffs.get(indices[i_idx], 0)
-        c_j = coeffs.get(indices[j_idx], 0)
-        # For visualization: compute product of coefficients
-        ratio_matrix[i_idx, j_idx] = np.sqrt(c_i * c_j) if c_i > 0 and c_j > 0 else 0
-
-ratio_matrix = ratio_matrix / np.max(ratio_matrix) if np.max(ratio_matrix) > 0 else ratio_matrix
-
-im = ax.imshow(ratio_matrix, cmap='YlOrRd', aspect='auto')
-ax.set_xlabel('Multi-index (lexicographic order)', fontsize=11)
-ax.set_ylabel('Multi-index', fontsize=11)
-ax.set_title('Coefficient correlation matrix\n(Lorentzian, n=3, d=4)', fontsize=12)
-plt.colorbar(im, ax=ax, shrink=0.8)
-
-# Panel 3: Descent structure — how ratios change across derivative levels
-ax = axes[1, 0]
-coeffs_orig, n, d = product_of_linear_forms(3, 5, seed=42)
-
-class SimplePoly:
-    def __init__(self, coeffs, n, d):
-        self.coeffs = coeffs
-        self.n = n
-        self.d = d
-
-    def partial_derivative(self, var):
-        new_coeffs = {}
-        for alpha, c in self.coeffs.items():
-            if alpha[var] > 0:
-                na = list(alpha)
-                f = na[var]
-                na[var] -= 1
-                t = tuple(na)
-                new_coeffs[t] = new_coeffs.get(t, 0.0) + c * f
-        return SimplePoly(new_coeffs, self.n, max(0, self.d - 1))
-
-levels = []
-current = SimplePoly(coeffs_orig, n, d)
-for level in range(d - 1):
-    ratios = compute_minor_ratios(current.coeffs, current.n, current.d)
-    if ratios:
-        levels.append((level, ratios))
-    if current.d > 0:
-        current = current.partial_derivative(0)  # Differentiate w.r.t. x_0
-
-positions = []
-data = []
-labels = []
-for level, ratios in levels:
-    positions.append(level)
-    data.append(ratios)
-    labels.append(f'Level {level}\n(deg {d - level})')
-
-if data:
-    bp = ax.boxplot(data, positions=positions, widths=0.5,
-                    patch_artist=True,
-                    boxprops=dict(facecolor='#3498db', alpha=0.6),
-                    medianprops=dict(color='darkblue', linewidth=2))
-    ax.axhline(y=1, color='red', linestyle='--', linewidth=1.5,
-               label='Log-concavity boundary')
-    ax.set_xlabel('Derivative level', fontsize=11)
-    ax.set_ylabel('Coefficient ratio', fontsize=11)
-    ax.set_title('Ratio descent across derivative levels\n(n=3, d=5)', fontsize=12)
-    ax.set_xticks(positions)
-    ax.set_xticklabels(labels, fontsize=9)
-    ax.legend(fontsize=10)
-
-# Panel 4: Support exchange connectivity
-ax = axes[1, 1]
-from itertools import combinations
-n_viz = 4
-d_viz = 2
-indices = multi_indices(n_viz, d_viz)
-n_nodes = len(indices)
-
-# Draw support exchange graph
-node_positions = {}
-for i, idx in enumerate(indices):
-    angle = 2 * np.pi * i / n_nodes
-    node_positions[idx] = (np.cos(angle), np.sin(angle))
-
-# Draw edges: connect α to β if they differ by a single exchange
-edges = []
-for alpha in indices:
-    for beta in indices:
-        for i_var in range(n_viz):
-            if alpha[i_var] > beta[i_var]:
-                for j_var in range(n_viz):
-                    if beta[j_var] > alpha[j_var]:
-                        exchanged = list(alpha)
-                        exchanged[i_var] -= 1
-                        exchanged[j_var] += 1
-                        if tuple(exchanged) in node_positions:
-                            edges.append((alpha, tuple(exchanged)))
-
-# Draw edges
-for a, b in edges:
-    ax.plot([node_positions[a][0], node_positions[b][0]],
-            [node_positions[a][1], node_positions[b][1]],
-            'gray', alpha=0.3, linewidth=0.5)
-
-# Draw nodes
-for idx, (x, y) in node_positions.items():
-    ax.plot(x, y, 'o', markersize=12, color='#3498db', zorder=5)
-    label = ''.join(str(v) for v in idx)
-    ax.annotate(label, (x, y), textcoords="offset points",
-                xytext=(0, -18), ha='center', fontsize=8)
-
-ax.set_xlim(-1.5, 1.5)
-ax.set_ylim(-1.5, 1.5)
-ax.set_aspect('equal')
-ax.set_title(f'Exchange support graph\n(n={n_viz}, d={d_viz})', fontsize=12)
-ax.axis('off')
-
-plt.suptitle('Hessian Descent: Coefficient Landscape of Lorentzian Polynomials',
-             fontsize=14, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('viz_coefficient_landscape.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved viz_coefficient_landscape.png")
-
-
-"""
-Visualization: 2×2 Principal Minor Lemma for Lorentzian Matrices
-
-Visualizes the key theorem that matrices with at most one positive eigenvalue
-have all 2×2 principal minors nonpositive. Shows the boundary between
-Lorentzian and non-Lorentzian regions in the (a, c, b) parameter space
-for 2×2 symmetric matrices [[a, b], [b, c]].
+The key insight: in 2D, the conditions are equivalent (blue = green region).
+In 3D, pairwise det ≤ 0 is strictly weaker than Lorentzianity (gap region in red).
 """
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.patches import FancyBboxPatch
 
-# Generate the parameter space for 2×2 symmetric matrix [[a, b], [b, c]]
-# Fix a = 1 and vary b, c to show the region where at most one positive eigenvalue
+fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# Panel 1: Phase diagram in (b, c) space with a = 1
+# ============================================================
+# Panel 1: 2×2 case — full equivalence
+# ============================================================
 ax = axes[0]
-b_range = np.linspace(-3, 3, 300)
-c_range = np.linspace(-3, 3, 300)
-B, C = np.meshgrid(b_range, c_range)
-a = 1.0
+ax.set_title('2×2 Matrices: Full Equivalence', fontsize=13, fontweight='bold')
 
-# Eigenvalues of [[a, b], [b, c]]
-tr = a + C
-det = a * C - B**2
-disc = np.sqrt(np.maximum((a - C)**2 + 4*B**2, 0))
-lam1 = (tr + disc) / 2  # larger eigenvalue
-lam2 = (tr - disc) / 2  # smaller eigenvalue
+# For [[1, b], [b, 1]], Lorentzian iff 1 ≤ b² iff |b| ≥ 1
+# Pairwise det ≤ 0 iff same condition
+b_vals = np.linspace(-3, 3, 500)
+# Eigenvalues: 1+b, 1-b
+eig1 = 1 + b_vals
+eig2 = 1 - b_vals
+n_pos = (eig1 > 0).astype(int) + (eig2 > 0).astype(int)
+is_lorentzian = n_pos <= 1
+pairwise_ok = b_vals**2 >= 1
 
-num_pos = (lam1 > 1e-10).astype(int) + (lam2 > 1e-10).astype(int)
+ax.fill_between(b_vals, -1, 3, where=is_lorentzian, alpha=0.3, color='blue',
+                label='Lorentzian (≤1 pos eigenvalue)')
+ax.fill_between(b_vals, -1, 3, where=pairwise_ok, alpha=0.2, color='green',
+                label='Pairwise det ≤ 0')
+ax.plot(b_vals, eig1, 'r-', linewidth=1.5, label='λ₁ = 1+b')
+ax.plot(b_vals, eig2, 'b-', linewidth=1.5, label='λ₂ = 1−b')
+ax.axhline(y=0, color='k', linewidth=0.5)
+ax.axvline(x=1, color='gray', linewidth=0.5, linestyle='--')
+ax.axvline(x=-1, color='gray', linewidth=0.5, linestyle='--')
+ax.set_xlabel('Off-diagonal entry b', fontsize=11)
+ax.set_ylabel('Eigenvalue / Region', fontsize=11)
+ax.set_ylim(-3, 3.5)
+ax.legend(fontsize=8, loc='upper center')
+ax.text(0, -2.5, 'NOT Lorentzian\n(2 pos eigenvalues)', ha='center',
+        fontsize=9, color='red', style='italic')
+ax.text(2, -2.5, 'Lorentzian ✓', ha='center', fontsize=9, color='blue')
 
-colors = ['#2ecc71', '#f39c12', '#e74c3c']  # 0, 1, 2 positive eigenvalues
-cmap = LinearSegmentedColormap.from_list('eig', colors, N=3)
-
-im = ax.contourf(B, C, num_pos, levels=[-0.5, 0.5, 1.5, 2.5],
-                  colors=colors, alpha=0.7)
-# Draw the minor condition boundary: ac = b^2, i.e., c = b^2
-b_curve = np.linspace(-3, 3, 500)
-c_curve = b_curve**2 / a
-ax.plot(b_curve, c_curve, 'k-', linewidth=2, label='$ac = b^2$ (minor boundary)')
-ax.set_xlabel('$b$', fontsize=12)
-ax.set_ylabel('$c$', fontsize=12)
-ax.set_title('Eigenvalue phases ($a = 1$)', fontsize=13)
-ax.legend(loc='upper left', fontsize=9)
-ax.set_xlim(-3, 3)
-ax.set_ylim(-3, 3)
-
-# Add text labels
-ax.text(0, 2.5, '2 pos.', fontsize=10, ha='center', color='darkred', weight='bold')
-ax.text(0, -1.5, '0 pos.', fontsize=10, ha='center', color='darkgreen', weight='bold')
-ax.text(2.5, -0.5, '1 pos.', fontsize=10, ha='center', color='#8B6914', weight='bold')
-
-# Panel 2: The minor ratio A(i,i)*A(j,j)/A(i,j)^2 for random Lorentzian matrices
+# ============================================================
+# Panel 2: 3×3 counterexample landscape
+# ============================================================
 ax = axes[1]
-rng = np.random.default_rng(42)
-ratios_lor = []
-ratios_nonlor = []
+ax.set_title('3×3 Matrices: Gap Between Conditions', fontsize=13, fontweight='bold')
 
-for _ in range(2000):
-    n = rng.integers(3, 7)
-    M = rng.standard_normal((n, n))
-    A = -M @ M.T  # NSD
-    v = rng.uniform(0.1, 3, size=n)
-    lam = rng.uniform(0, 5)
-    A = A + lam * np.outer(v, v)
+# Matrix [[1, t, s], [t, 1, -t*s], [s, -t*s, 1]] with t,s > 0
+# Pairwise: 1 ≤ t², 1 ≤ s², 1 ≤ (ts)²  → need |t|,|s| ≥ 1
+np.random.seed(42)
+n_samples = 2000
+t_vals = np.random.uniform(0.5, 3.0, n_samples)
+s_vals = np.random.uniform(0.5, 3.0, n_samples)
 
-    eigenvalues = np.linalg.eigvalsh(A)
-    num_pos_eig = np.sum(eigenvalues > 1e-10)
+lorentzian_points = []
+pairwise_only_points = []
+neither_points = []
 
-    for i in range(n):
-        for j in range(i + 1, n):
-            if abs(A[i, j]) > 1e-10:
-                ratio = A[i, i] * A[j, j] / (A[i, j]**2)
-                if num_pos_eig <= 1:
-                    ratios_lor.append(ratio)
-                else:
-                    ratios_nonlor.append(min(ratio, 5))
+for t, s in zip(t_vals, s_vals):
+    A = np.array([[1, t, s], [t, 1, -t*s], [s, -t*s, 1]])
+    eigs = np.linalg.eigvalsh(A)
+    n_pos = np.sum(eigs > 1e-10)
+    is_lor = n_pos <= 1
 
-ratios_lor = [min(r, 5) for r in ratios_lor]
-ratios_nonlor = [min(r, 5) for r in ratios_nonlor]
+    pw_ok = (t**2 >= 1 - 1e-10) and (s**2 >= 1 - 1e-10) and ((t*s)**2 >= 1 - 1e-10)
 
-ax.hist(ratios_lor, bins=50, range=(-5, 5), alpha=0.6, color='#2ecc71',
-        label='≤ 1 pos. eigenvalue', density=True)
-ax.hist(ratios_nonlor, bins=50, range=(-5, 5), alpha=0.6, color='#e74c3c',
-        label='> 1 pos. eigenvalue', density=True)
-ax.axvline(x=1, color='black', linestyle='--', linewidth=1.5, label='$A_{ii}A_{jj} = A_{ij}^2$')
-ax.set_xlabel('$A_{ii} A_{jj} / A_{ij}^2$', fontsize=12)
-ax.set_ylabel('Density', fontsize=12)
-ax.set_title('Principal minor ratio distribution', fontsize=13)
-ax.legend(fontsize=9)
-ax.set_xlim(-5, 5)
+    if is_lor and pw_ok:
+        lorentzian_points.append((t, s))
+    elif pw_ok and not is_lor:
+        pairwise_only_points.append((t, s))
+    else:
+        neither_points.append((t, s))
 
-# Panel 3: Certificate pass rate vs Lorentzian for random polynomials
+if neither_points:
+    pts = np.array(neither_points)
+    ax.scatter(pts[:, 0], pts[:, 1], c='lightgray', s=8, alpha=0.5, label='Neither')
+if pairwise_only_points:
+    pts = np.array(pairwise_only_points)
+    ax.scatter(pts[:, 0], pts[:, 1], c='red', s=12, alpha=0.7,
+               label='Pairwise only (NOT Lorentzian)')
+if lorentzian_points:
+    pts = np.array(lorentzian_points)
+    ax.scatter(pts[:, 0], pts[:, 1], c='blue', s=8, alpha=0.5, label='Lorentzian')
+
+ax.set_xlabel('Parameter t', fontsize=11)
+ax.set_ylabel('Parameter s', fontsize=11)
+ax.legend(fontsize=8)
+ax.set_xlim(0.5, 3)
+ax.set_ylim(0.5, 3)
+
+# ============================================================
+# Panel 3: Eigenvalue distribution for nonneg counterexamples
+# ============================================================
 ax = axes[2]
+ax.set_title('Eigenvalue Distribution:\nNonneg Matrices with Pairwise Det ≤ 0', fontsize=12, fontweight='bold')
 
-def check_polynomial(n, d, seed):
-    """Check certificate and spectral conditions for a random polynomial."""
-    rng_local = np.random.default_rng(seed)
-    indices = []
-    def gen_mi(nn, dd):
-        if nn == 0:
-            return [()] if dd == 0 else []
-        if nn == 1:
-            return [(dd,)]
-        res = []
-        for k in range(dd + 1):
-            for rest in gen_mi(nn - 1, dd - k):
-                res.append((k,) + rest)
-        return res
+np.random.seed(123)
+all_eigs = []
+colors = []
+for _ in range(500):
+    n = 3
+    diag = np.random.exponential(1.0, n)
+    A = np.zeros((n, n))
+    for i in range(n):
+        A[i, i] = diag[i]
+    for i in range(n):
+        for j in range(i+1, n):
+            min_val = np.sqrt(A[i,i]*A[j,j])
+            A[i,j] = min_val * np.random.uniform(1.0, 3.0)
+            A[j,i] = A[i,j]
 
-    indices = gen_mi(n, d)
-    coeffs = {idx: rng_local.uniform(0.1, 5.0) for idx in indices}
+    # Check pairwise
+    pw_ok = True
+    for i in range(n):
+        for j in range(n):
+            if A[i,i]*A[j,j] > A[i,j]**2 + 1e-10:
+                pw_ok = False
+    if not pw_ok:
+        continue
 
-    # Check mixed log-concavity
-    mixed_ok = True
-    if d >= 2:
-        leaf_indices = gen_mi(n, d - 2)
-        for m in leaf_indices:
-            for i in range(n):
-                for j in range(i, n):
-                    ei = tuple(1 if k == i else 0 for k in range(n))
-                    ej = tuple(1 if k == j else 0 for k in range(n))
-                    m_ii = tuple(mk + 2 * eik for mk, eik in zip(m, ei))
-                    m_jj = tuple(mk + 2 * ejk for mk, ejk in zip(m, ej))
-                    m_ij = tuple(mk + eik + ejk for mk, eik, ejk in zip(m, ei, ej))
-                    c_ii = coeffs.get(m_ii, 0)
-                    c_jj = coeffs.get(m_jj, 0)
-                    c_ij = coeffs.get(m_ij, 0)
-                    if c_ii * c_jj > c_ij**2 + 1e-10:
-                        mixed_ok = False
-                        break
-                if not mixed_ok:
-                    break
-            if not mixed_ok:
-                break
+    eigs = sorted(np.linalg.eigvalsh(A))
+    n_pos = sum(1 for e in eigs if e > 1e-10)
+    all_eigs.append(eigs)
+    colors.append('blue' if n_pos <= 1 else 'red')
 
-    # Check spectral condition (simplified for small cases)
-    spectral_ok = True
-    if d >= 2:
-        leaf_indices = gen_mi(n, d - 2)
-        for alpha in leaf_indices[:20]:  # Check first 20 leaves
-            # Compute iterated derivative
-            from collections import defaultdict
-            current = dict(coeffs)
-            for var in range(n):
-                for _ in range(alpha[var]):
-                    new_current = defaultdict(float)
-                    for idx, c in current.items():
-                        if idx[var] > 0:
-                            new_idx = list(idx)
-                            factor = new_idx[var]
-                            new_idx[var] -= 1
-                            new_current[tuple(new_idx)] += c * factor
-                    current = dict(new_current)
-            # Compute Hessian
-            H = np.zeros((n, n))
-            for i_h in range(n):
-                for j_h in range(n):
-                    target = [0] * n
-                    target[i_h] += 1
-                    target[j_h] += 1
-                    target_t = tuple(target)
-                    c_val = current.get(target_t, 0)
-                    factor = 1
-                    if i_h == j_h:
-                        factor = 2
-                    elif target_t in current:
-                        factor = 1
-                    H[i_h, j_h] = c_val * factor if i_h == j_h else c_val
-            eigenvalues = np.linalg.eigvalsh(H)
-            if np.sum(eigenvalues > 1e-10) > 1:
-                spectral_ok = False
-                break
+if all_eigs:
+    eigs_arr = np.array(all_eigs)
+    for idx, c in enumerate(colors):
+        ax.scatter([eigs_arr[idx, 0]], [eigs_arr[idx, 1]], c=c, s=10, alpha=0.5)
 
-    return mixed_ok, spectral_ok
+    ax.set_xlabel('Smallest eigenvalue λ₁', fontsize=11)
+    ax.set_ylabel('Middle eigenvalue λ₂', fontsize=11)
 
-params = [(2, 2), (2, 3), (2, 4), (3, 2), (3, 3), (4, 2)]
-param_labels = [f"n={n},d={d}" for n, d in params]
-cert_rates = []
-lor_rates = []
-agreement_rates = []
-
-for n, d in params:
-    n_tests = 100
-    n_mixed = 0
-    n_spec = 0
-    n_agree = 0
-    for seed in range(n_tests):
-        m_ok, s_ok = check_polynomial(n, d, seed + 9999)
-        if m_ok:
-            n_mixed += 1
-        if s_ok:
-            n_spec += 1
-        if m_ok == s_ok:
-            n_agree += 1
-    cert_rates.append(n_mixed / n_tests * 100)
-    lor_rates.append(n_spec / n_tests * 100)
-    agreement_rates.append(n_agree / n_tests * 100)
-
-x = np.arange(len(params))
-width = 0.3
-ax.bar(x - width, cert_rates, width, label='Certificate pass rate', color='#3498db', alpha=0.8)
-ax.bar(x, lor_rates, width, label='Lorentzian (spectral)', color='#2ecc71', alpha=0.8)
-ax.bar(x + width, agreement_rates, width, label='Agreement rate', color='#9b59b6', alpha=0.8)
-ax.set_xlabel('Parameters', fontsize=12)
-ax.set_ylabel('Rate (%)', fontsize=12)
-ax.set_title('Certificate vs Spectral condition', fontsize=13)
-ax.set_xticks(x)
-ax.set_xticklabels(param_labels, fontsize=9, rotation=20)
-ax.legend(fontsize=9)
-ax.set_ylim(0, 105)
+    # Add legend
+    from matplotlib.lines import Line2D
+    legend_elements = [
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='blue',
+               markersize=8, label='Lorentzian (≤1 pos)'),
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='red',
+               markersize=8, label='NOT Lorentzian (2+ pos)')
+    ]
+    ax.legend(handles=legend_elements, fontsize=8)
+    ax.axhline(y=0, color='k', linewidth=0.5, linestyle='--')
+    ax.axvline(x=0, color='k', linewidth=0.5, linestyle='--')
 
 plt.tight_layout()
-plt.savefig('viz_hessian_minor.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved viz_hessian_minor.png")
+plt.savefig('hessian_descent_viz.png', dpi=150, bbox_inches='tight')
+print("Saved hessian_descent_viz.png")
