@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Complexity Theory / Arithmetic Circuit Complexity",
     "date": "2026-05-28T11:04:34Z",
     "exp_id": "ad17ca4a",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7758607547169811,
+    "quality": "substantial",
     "pkg_num": 237
   },
   {
@@ -6882,8 +6882,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-28T11:04:34Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7758607547169811,
+      "quality": "substantial"
     }
   ],
   "edges": [

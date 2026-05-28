@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1998 of the highest-quality
+A curated collection of 1999 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1998
+Total files: 1999
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -512,6 +512,7 @@ import FINAL.Bridges.Logic
 import FINAL.Bridges.LongestCommonValuedPrefix
 import FINAL.Bridges.LorentzianBivariateBridge
 import FINAL.Bridges.LorentzianBivariateNewBridge
+import FINAL.Bridges.LorentzianComplexityBarrier
 import FINAL.Bridges.LorentzianDistanceCertificate
 import FINAL.Bridges.LorentzianGroundState
 import FINAL.Bridges.LorentzianHardnessLowerBounds

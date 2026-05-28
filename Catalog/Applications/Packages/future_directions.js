@@ -379,10 +379,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "5db853c7",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.908872+00:00"
   },
   {
@@ -581,7 +581,7 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "b0b26cee",
-    "consumed_by_exp_id": "e5c51140",
+    "consumed_by_exp_id": "605a8609",
     "timestamp": "2026-05-26T07:14:49.805352+00:00"
   },
   {
@@ -699,10 +699,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8406d734",
     "timestamp": "2026-05-26T21:53:04.972544+00:00"
   },
   {
@@ -802,26 +802,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "96bc3b32",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T12:50:23.836779+00:00"
-  },
-  {
-    "id": "fd_1444",
-    "title": "Direction 2: Newton Ratios as Algebraic Order Parameters for Quantum Phases",
-    "description": "**Conjecture:** For free-fermion systems at half-filling, the Newton ratio profile \u03c1\u2096 = e\u2096\u00b2/(e\u2096\u208b\u2081e\u2096\u208a\u2081) undergoes a qualitative change at quantum phase transitions: in gapless phases, max|log \u03c1\u2096| grows logarithmically with subsystem size; in gapped phases, it saturates to a finite value determined by the gap.\n\n**Test:** Compute Newton ratio profiles for the SSH model (topological insulator) across the topological phase transition. If log \u03c1\u2096 shows a discontinuous derivative at the critical point, the conjecture is supported. If it varies smoothly, the conjecture needs refinement.\n\n**Impact:** Would establish Newton ratios as a new class of algebraic order parameters for quantum phases, complementing traditional diagnostics like entanglement entropy and string order parameters.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `esymm_newton_inequality`, `newtonDefect_nonneg`, `NewtonRatioProfile`.\n\n**Proof Strategy:** Combine asymptotic analysis of Toeplitz determinants (for correlation matrices of free fermions) with the Fisher\u2013Hartwig conjecture to extract the large-m behavior of e\u2096 and hence \u03c1\u2096.\n\n**Domain Bridges:** Lorentzian geometry (log-concavity) \u2192 condensed matter physics (phase transitions) \u2192 random matrix theory (Toeplitz asymptotics).\n\n**Lineage:** Extends the Newton ratio profile concept introduced here; builds on the computational evidence in `demo.py`.\n\n**Ambition:** Grand challenge \u2014 requires connecting formal algebraic structures to asymptotic physics.\n\n*The key insight is* that Newton's inequality is not just a constraint but a diagnostic: how *tightly* the inequality is satisfied carries physical information about the quantum phase.\n\n*Why now?* The formal definition of `NewtonRatioProfile` and the proof of `esymm_newton_inequality` provide the mathematical foundation; the computational demos show the phase sensitivity.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ec2aa218",
-    "consumed_by_exp_id": "40ff2470",
-    "timestamp": "2026-05-27T15:24:27.753806+00:00"
   },
   {
     "id": "fd_1449",
@@ -1296,10 +1276,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "0a042263",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "387e8dc9",
     "timestamp": "2026-05-28T08:02:39.081771+00:00"
   },
   {
@@ -1324,92 +1304,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T08:02:39.164744+00:00"
   },
   {
-    "id": "fd_1719",
-    "title": "Direction 5: Fully Tropical Lorentzian Theory",
-    "description": "**Conjecture:** There exists a purely tropical characterization of Lorentzian polynomials: a polynomial $p$ with nonneg coefficients is Lorentzian if and only if its tropicalization $\\mathrm{Trop}(p)$ satisfies a tropical concavity condition on every 2-dimensional restriction.\n\nThe key insight is that the Br\u00e4nd\u00e9n-Huh Lorentzian condition (at most one positive eigenvalue of the Hessian) should correspond to a tropical condition on second differences of coefficient valuations.\n\n**Why now?** The tropical-spectral bridge theorem shows that coefficient data controls spectral data. The converse \u2014 that tropical concavity implies Lorentzian structure \u2014 would complete the circle and establish a full equivalence.\n\n**Test:** For random Lorentzian polynomials (products of linear forms with nonneg coefficients), verify the tropical concavity condition. For known non-Lorentzian polynomials, verify it fails.\n\n**Impact:** This would create a complete *tropical Lorentzian theory* \u2014 a combinatorial characterization of a class of polynomials whose current definition requires checking eigenvalue constraints. It would reduce Lorentzian recognition from a spectral problem to a polyhedral one.\n\n**Catalog References:**\n- `Pythagorean/TropicalLeafWitnesses/Defs.lean` \u2014 `tropicalMixedHessian`\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `IsDPPLorentzian`\n\n**Proof Strategy:** Define tropical concavity as a condition on `tropCoeff`: for all $i, j$ and all $\\alpha$, $2 \\cdot \\mathrm{tropCoeff}(\\alpha) \\leq \\mathrm{tropCoeff}(\\alpha + e_i) + \\mathrm{tropCoeff}(\\alpha - e_i)$ (tropical Hessian nonpositivity). Prove that Lorentzian implies tropical concavity using the evaluation bound. The converse is the hard direction, likely requiring ultrametric structure.\n\n**Domain Bridges:** Tropical geometry \u2194 Hodge theory \u2194 Combinatorial algebraic geometry \u2194 Optimization theory\n\n**Lineage:** Ultimate goal of the tropical leaf witness program.\n\n**Ambition:** \ud83d\udd2d Grand challenge \u2014 would unify tropical and spectral characterizations of Lorentzian polynomials.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0a042263",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T08:02:39.251164+00:00"
-  },
-  {
-    "id": "fd_1740",
-    "title": "Conjugation-Indexed Product Cover",
-    "description": "Conjecture: For any finite group G, K-approximate subgroup H, and set A covered by C left translates of H, the product set A\u00b7A is covered by C\u00b2\u00b7K\u00b7L translates of H, where L = max_{t \u2208 T} [H : H \u2229 t\u207b\u00b9Ht] is the maximal conjugation index over the covering set T.\n\nTest: Compute L for all covering sets in S\u2083, S\u2084, S\u2085 and verify C(A\u00b7A) \u2264 C\u00b2\u00b7K\u00b7L. Search for counterexamples in GL(2, F_p) for p = 2, 3, 5, 7.\n\nImpact: This would be the first product covering theorem for non-abelian groups with bounds depending only on combinatorial parameters (C, K, L), not on |H|. It would unify the abelian case (L=1) with the normal subgroup case (L=1) and the general case.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bd74700e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T09:13:12.854260+00:00"
-  },
-  {
-    "id": "fd_1741",
-    "title": "Non-Abelian Pl\u00fcnnecke-Ruzsa via Covering Calculus",
-    "description": "Conjecture: For a K-approximate subgroup H in any group G, for all n \u2265 1: H^n can be covered by K^(n-1) left translates of H. (Generalization of the triple product cover K\u00b2 bound from n=3 to all n.)\n\nTest: Verify computationally for n = 4, 5, 6 in S\u2083, S\u2084, and GL(2, F\u2083). Check whether the inductive step H^n \u2192 H^(n+1) preserves the K^(n-1) bound.\n\nImpact: This would be a covering-theoretic analog of the Pl\u00fcnnecke-Ruzsa inequality. The standard Pl\u00fcnnecke-Ruzsa gives |H^n| \u2264 K^n\u00b7|H|; our version gives covering number K^(n-1), which is sharper (it doesn't multiply by |H|).",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bd74700e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T09:13:12.933700+00:00"
-  },
-  {
-    "id": "fd_1742",
-    "title": "Expansion Obstruction from Covering Bounds",
-    "description": "Conjecture: In a finite group G with Cayley graph Cay(G, S), if a K-approximate subgroup H has covering number C(A\u00b7A) \u2264 f(C, K) for all A with C(A) \u2264 C, then the spectral gap of Cay(G, S) is bounded below by 1/f(|G|/|H|, K).\n\nTest: Compute spectral gaps of Cayley graphs of S\u2083, S\u2084 with various generating sets. Compare with the covering bounds from the demo.\n\nImpact: This would connect additive combinatorics to spectral graph theory and expander construction, with applications to derandomization and coding theory.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bd74700e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T09:13:13.010547+00:00"
-  },
-  {
-    "id": "fd_1743",
-    "title": "Automated Counterexample Search for Covering Conjectures",
-    "description": "Conjecture: There exists a polynomial-time algorithm that, given a finite group G and parameters (C, K), either certifies that C(A\u00b7A) \u2264 f(C, K) for all A, or produces a counterexample (A, H) violating the bound.\n\nTest: Implement the algorithm for groups up to order 120 (all groups of order \u2264 60 from the Small Groups Library). Catalog all violations of C\u00b2\u00b7K\u00b2 and C\u00b2\u00b7K\u00b3.\n\nImpact: This would create a database of covering phenomena, analogous to the LMFDB for number theory, enabling data-driven conjecture generation in group theory.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bd74700e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T09:13:13.088730+00:00"
-  },
-  {
     "id": "fd_1760",
     "title": "Direction 2: Transversal Matroids and Bipartite Matching Complexity",
     "description": "**Conjecture.** For transversal matroids arising from bipartite graphs with bounded degree \u0394, the quadratic leaf count grows as O(n^{r\u22122} \u00b7 \u0394^{O(1)}), where *r* is the rank. This is polynomial in *n* for fixed *r* and \u0394, and dramatically below the ambient bound when the bipartite graph is sparse.\n\n**Test.** Compute leaf counts for transversal matroids from:\n1. Random bipartite graphs with bounded degree \u0394 \u2208 {2, 3, 4}.\n2. Structured bipartite graphs: grids, expanders, Ramanujan bipartite graphs.\n3. Compare with the permanent of the biadjacency matrix (counting perfect matchings).\n\n**Impact.** Opens a route to efficient Lorentzian certification for assignment and scheduling problems, where the underlying combinatorial structure is a bipartite matching.\n\n**Catalog References.**\n- `Pythagorean/SupportCompressionPoly.lean`: `supportCompressedLeafCount_le_active_choose`\n- `Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`\n\n**Proof Strategy.** Bound the number of independent (*r*\u22122)-sets by relating them to partial matchings. Use the Tutte\u2013Berge formula or K\u00f6nig's theorem to control the structure of partial matchings in bounded-degree bipartite graphs.\n\n**Domain Bridges.** Matching theory \u2194 assignment problems \u2194 operations research.\n\n**Lineage.** Builds on the active variable bound (Theorem 4) and the hereditary property.\n\n**Ambition.** \u2605\u2605\u2605\u2606\u2606 \u2014 Solid, with clear practical applications.\n\n---",
@@ -1429,28 +1323,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "35f20969",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T09:50:28.931327+00:00"
-  },
-  {
-    "id": "fd_1761",
-    "title": "Direction 3: M-Convex Shadow Theory for General Lorentzian Supports",
-    "description": "**Conjecture** (Grand Challenge). For *any* Lorentzian polynomial *f* of degree *d* with M-convex Newton support *S*, the set of surviving degree-(*d*\u22122) derivative indices is exactly the 2-step shadow of *S* in the M-convex lattice. This shadow has size at most O(|S| \u00b7 d\u00b2), independent of the ambient dimension.\n\nThe key insight is that M-convex exchange forces the \"shadow\" (set of elements obtainable by removing 2 units from some support element) to be tightly controlled by the exchange graph's diameter. Lorentzian supports cannot spread arbitrarily \u2014 their exchange geometry constrains them.\n\n**Why now?** The formal verification of the matroid case (Theorems 1\u20133) provides the first rigorous example of this shadow phenomenon. The M-convex exchange property (`IsMConvexExchangeNat`) is already formalized in the catalog. What's missing is the general shadow bound, which would extend support compression from matroids to arbitrary M-convex families.\n\n**Test.**\n1. Construct M-convex sets that are NOT matroid indicator sets (e.g., flow polytope integer points).\n2. Compute shadow sizes and compare with the ambient multiindex count.\n3. Search for counterexamples: M-convex sets where the shadow grows superlinearly in |S|.\n\n**Impact.** A positive resolution would establish that support compression is a *universal* phenomenon for M-convex Lorentzian polynomials, not specific to matroids. This would be a foundational result in discrete convex analysis.\n\n**Catalog References.**\n- `Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`, `NewtonSupport`\n- `Pythagorean/SupportCompressionPoly.lean`: `derivative_nonzero_iff_dominated_support`\n\n**Proof Strategy.** Use the exchange graph of the M-convex set (where two elements are adjacent if they differ by a single exchange). Show that the 2-step shadow is contained in the ball of radius 2 in this graph. Bound the ball size using M-convex structure theorems (Murota 2003, Chapter 4).\n\n**Domain Bridges.** Discrete convex analysis \u2194 tropical geometry \u2194 optimization theory.\n\n**Lineage.** Generalizes the matroid-specific bijection (Theorem 2) to the M-convex setting.\n\n**Ambition.** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if true. Would unify support compression across discrete convex analysis.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "35f20969",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T09:50:29.019958+00:00"
   },
   {
     "id": "fd_1769",
@@ -1522,6 +1394,24 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1777",
+    "title": "Direction 1: Proving the SSH Newton-Order Conjecture via Toeplitz Asymptotics",
+    "description": "**Conjecture.** For the half-filled SSH chain with dimerization $\\delta$ and subsystem size $m$:\n- (Gapped) $\\delta \\neq 0 \\Rightarrow \\sup_m \\mathcal{N}_m(\\delta) < \\infty$.\n- (Critical) $\\delta = 0 \\Rightarrow \\mathcal{N}_m(0) \\geq c \\log m$ for infinitely many $m$.\n\n**Test.** Prove the gapped case using exponential clustering of correlation matrix eigenvalues. For the critical case, derive Fisher\u2013Hartwig asymptotics for the esymm of the SSH spectrum at $\\delta = 0$ and show that the second log-differences of $\\log e_k$ grow without bound.\n\n**Impact.** This would be the first rigorous result connecting purely algebraic invariants (Newton ratios) to quantum phase transitions, opening a new paradigm for phase detection that requires no physical measurement apparatus \u2014 only eigenvalue computation.\n\n**Catalog References.** `Pythagorean/NewtonQuantumOrderParameters.lean`: `newtonRatio_bounded_of_spectral_pinching` (gapped case foundation), `SSHGappedConjecture`, `SSHCriticalConjecture`.\n\n**Proof Strategy.** \n1. For the gapped case: use the spectral pinching theorem with the known result that SSH correlation eigenvalues cluster in $[\\epsilon(\\delta), 1-\\epsilon(\\delta)]$ for $\\delta \\neq 0$.\n2. For the critical case: use Fisher\u2013Hartwig determinant asymptotics to compute $e_k$ asymptotics, then show the Newton ratio profile develops a logarithmic peak.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 Toeplitz determinant theory \u2194 condensed-matter physics.\n\n**Lineage.** Extends `esymm_newton_ineq` and `newtonRatio_bounded_of_spectral_pinching`.\n\n**Ambition.** Grand challenge \u2014 would establish a new paradigm at the intersection of algebra and quantum physics.\n\n**The key insight is** that the spectral pinching theorem already gives the gapped case *if* we can prove the eigenvalue clustering bound, reducing a physics conjecture to a spectral analysis problem.\n\n**Why now?** The Toeplitz determinant machinery (Widom, Basor\u2013Tracy) is mature, and the formalized spectral pinching theorem provides the algebraic bridge.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "40ff2470",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:03:34.260901+00:00"
   },
   {
     "id": "seed_013",
@@ -2104,6 +1994,112 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T07:27:35.868270+00:00"
+  },
+  {
+    "id": "fd_1782",
+    "title": "Prime-Interference Law for Torsion in Arithmetic Random Complexes",
+    "description": "Conjecture: There exists an explicit arithmetic random simplicial-complex model X(N, p) built from reductions modulo N of a fixed algebraic construction such that the p-primary and q-primary persistent torsion birth processes are asymptotically not independent for infinitely many distinct prime pairs (p,q), and their covariance is governed by a universal bilinear form coming from shared Frobenius eigenvalue statistics of the underlying arithmetic source. Test: Construct the model for growing N, compute primewise persistence barcodes simultaneously for many prime pairs, and measure whether the joint law of torsion births deviates from the product law in a stable, model-independent way; confirmation requires reproducible nonzero limiting cross-prime covariance matching the predicted Frobenius-based statistic, while refutation is asymptotic independence or absence of a universal covariance law. Impact: This would reveal a genuinely new cross-prime coupling principle in arithmetic topology, going beyond existing primewise theories, and could provide a new bridge between persistent homology, arithmetic statistics, and motivic-style correlations across primes.",
+    "domains": [
+      "Arithmetic Topology",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:03:44.396940+00:00"
+  },
+  {
+    "id": "fd_1783",
+    "title": "Persistent Homology Detects Zero-Density Exceptional Sets in Prime Number Races",
+    "description": "Conjecture: Let q >= 3 and let A,B be distinct reduced residue classes mod q with unequal Rubinstein-Sarnak bias. For each x, form the step function D_{A,B}(t)=pi(t;q,A)-pi(t;q,B) on t in [2,x], build its sublevel/superlevel persistence diagram after piecewise-linear interpolation and normalization by sqrt(t)/log t, and let M_x(A,B) be the signed barcode mass (total lifetime of positive bars minus negative bars). Then M_x(A,B) converges to a nonzero limit of the same sign as the logarithmic prime race bias, while for unbiased pairs it converges to 0. Test: compute M_x(A,B) for many q and residue pairs up to large x; confirmation is stable sign separation matching known Chebyshev biases and vanishing for unbiased races, while systematic mismatch or non-convergence refutes it. Impact: this would introduce a topological order parameter for subtle distributional asymmetries of primes, potentially giving a new quantitative probe of low-lying zero effects and a bridge between analytic number theory and topological signal analysis.",
+    "domains": [
+      "Analytic Number Theory",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:04:17.028238+00:00"
+  },
+  {
+    "id": "fd_1789",
+    "title": "Persistent Homology Phase Transition for Collatz Preimage Graphs Modulo Primes",
+    "description": "Conjecture: For the accelerated Collatz map T(n) = (3n+1)/2^{v_2(3n+1)} on odd integers, let G_p be the directed graph on F_p^\u00d7 obtained by reducing T modulo an odd prime p and retaining only vertices with well-defined inverse branches. Build the flag complex of the undirected symmetrization of G_p and its filtration by inverse-branch multiplicity. Then there exists a finite set of explicit congruence classes C modulo M such that, for primes p outside a zero-density exceptional set, the persistent H_1 barcode statistics of this filtration depend only on the class of p mod M; moreover at least two classes in C yield asymptotically distinct limiting barcode distributions. Test: Compute G_p and the filtered barcode for primes p up to a large bound, cluster barcode summaries by p mod M, and check whether within-class variance tends to 0 while between-class distances stay bounded away from 0; a single infinite subsequence violating congruence-class concentration refutes the conjecture. Impact: This would reveal hidden arithmetic structure in Collatz dynamics through topological statistics, creating a new bridge between discrete dynamics, modular arithmetic, and TDA, and potentially exposing modular obstructions invisible to standard orbit analysis.",
+    "domains": [
+      "Arithmetic Dynamics",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:04:47.896691+00:00"
+  },
+  {
+    "id": "fd_1785",
+    "title": "Direction 2: Aggregate Anti-Cancellation via Lorentzian Structure",
+    "description": "**Conjecture:** For polynomials with support contained in a matroid basis polytope and coefficients satisfying a Lorentzian sign condition, weighted sums of second derivatives \u03a3 a\u1d62\u2c7c \u2202\u1d62\u2202\u2c7cp have support exactly equal to the union of per-pair shadows \u2014 no cancellation occurs even after aggregation.\n\n**Test:** Implement the Lorentzian polynomial checker from Br\u00e4nd\u00e9n\u2013Huh, compute weighted Hessian sums for Lorentzian polynomials in 3\u20134 variables, and verify support exactness. Search for non-Lorentzian polynomials where aggregate cancellation occurs.\n\n**Impact:** This would be a major advance: combining the characteristic-zero mechanism (no per-pair cancellation) with the Lorentzian positivity mechanism (no inter-pair cancellation) to obtain a complete anti-cancellation guarantee for the full Hessian operator. This is the missing piece for genuine arithmetic circuit lower bounds.\n\n**Catalog References:**\n- `Bridges/Catalog/Speculative/AutoResearch/AntiCancellationLorentzian.lean` \u2014 aggregate anti-cancellation for positive weights\n- `Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` \u2014 per-pair shadow equality\n\n**Proof Strategy:** Use the AntiCancellationLorentzian result for nonneg-coefficient polynomials as a template. Extend to signed coefficients using Lorentzian structure (ultra-log-concavity of coefficient sequences) to control inter-pair cancellation.\n\n**Domain Bridges:** Hodge theory (Lorentzian signature), matroid theory (basis exchange), convex optimization (log-concavity).\n\n**Lineage:** Combines the per-pair result (this file) with the Lorentzian anti-cancellation (AntiCancellationLorentzian.lean).\n\n**Ambition:** Grand challenge \u2014 requires bridging two distinct anti-cancellation mechanisms and may need new mathematical ideas.\n\n**The key insight is** that Lorentzian polynomials have a hidden convexity structure (ultra-log-concavity) that prevents inter-pair cancellation, complementing the characteristic-zero mechanism that prevents intra-pair cancellation.\n\n**Why now?** Both the per-pair and the Lorentzian anti-cancellation results are now formalized. The synthesis is the natural next step and would be the first result combining both mechanisms.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad17ca4a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:04:38.605729+00:00"
+  },
+  {
+    "id": "fd_1786",
+    "title": "Direction 3: Tropical Faithfulness of Differentiation",
+    "description": "**Conjecture:** Over a valued field of characteristic zero, the tropicalization of the derivative map Trop(\u2202\u1d62\u2202\u2c7c) coincides with the combinatorial shadow map on Newton polytopes if and only if the non-cancellation certificate holds at the valuative level. Specifically, the Newton polytope of \u2202\u1d62\u2202\u2c7cp equals the Minkowski difference of the Newton polytope of p with the segment [0, e\u1d62 + e\u2c7c], whenever p satisfies the certificate.\n\n**Test:** Implement Newton polytope computation (convex hull of support) and Minkowski difference for 2D and 3D cases. Compare the Newton polytope of \u2202\u1d62\u2202\u2c7cp with the predicted Minkowski difference for random polynomials. Find examples where the polytope inclusion is strict (certificate fails).\n\n**Impact:** This would establish a formal tropical\u2013algebraic dictionary: the non-cancellation certificate IS the condition for tropical faithfulness of differentiation. This connects to the Kapranov theorem (tropicalization commutes with resultants under genericity) and would provide new tools for tropical intersection theory.\n\n**Catalog References:**\n- `Bridges/Catalog/Speculative/AutoResearch/NonCancellationCertificate.lean` \u2014 certificate definition\n- Tropical geometry modules in the Catalog (if available)\n\n**Proof Strategy:** Use the vertex description of Newton polytopes. The vertices of the Newton polytope of \u2202\u1d62\u2202\u2c7cp are a subset of the per-pair shadow. Under the certificate, every shadow point is in the support, so the Newton polytope has the predicted vertices. The Minkowski difference interpretation follows from the additive structure of the shadow.\n\n**Domain Bridges:** Tropical geometry (tropicalization, faithful tropicalization), algebraic geometry (Newton polytopes, Bernstein's theorem), optimization (polyhedral computation).\n\n**Lineage:** Extends Theorem 1 from a set-level statement to a polyhedral/geometric statement.\n\n**Ambition:** Solid extension with grand-challenge overtones \u2014 the tropical faithfulness connection is new and could open a research program in tropical differentiation theory.\n\n**The key insight is** that the non-cancellation certificate is equivalent to a tropical faithfulness condition: the tropicalization of the derivative map has no \"unexpected zeros\" that would shrink the Newton polytope below its combinatorial prediction.\n\n**Why now?** Tropical geometry has matured to the point where faithfulness conditions are well-understood (cf. work of Gubler, Rabinoff, Werner). The shadow framework provides the first formal connection between faithfulness and differentiation.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad17ca4a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:04:38.688248+00:00"
+  },
+  {
+    "id": "fd_1787",
+    "title": "Direction 4: Shadow-Based Circuit Lower Bounds for the Permanent",
+    "description": "**Conjecture:** The shadow lower bound |Sh\u2082(supp(Perm_n))| grows at least as fast as 2^{n/2}, and the non-cancellation certificate holds for the permanent polynomial Perm_n for all n \u2265 3. Consequently, any arithmetic circuit computing Perm_n has size at least 2^{n/2} / poly(n), improving the best known lower bounds.\n\n**Test:** Compute |Sh\u2082(supp(Perm_n))| for n = 3, 4, 5, 6, 7 and extrapolate the growth rate. Verify the certificate for Perm_n (the support is the set of permutation matrices with coefficients \u00b11; the shadow closure question reduces to a combinatorial property of permutation matrices).\n\n**Impact:** An exponential circuit lower bound for the permanent would resolve a major open problem in computational complexity (Valiant's conjecture, VP \u2260 VNP). Even a new lower bound (improving the current \u03a9(n\u00b2/2) of Shpilka\u2013Wigderson) would be a significant advance.\n\n**Catalog References:**\n- `Algebra/AlgebraicCircuitComplexity.lean` \u2014 circuit complexity definitions\n- `Bridges/Catalog/Speculative/AutoResearch/NonCancellationCertificate.lean` \u2014 certificate and shadow lower bound\n\n**Proof Strategy:** Analyze the combinatorics of permutation supports under the shadow map. The key question is whether |Sh\u2082(Perm_n)| grows exponentially. This is a purely combinatorial question about permutations, independent of the algebraic framework.\n\n**Domain Bridges:** Combinatorics (permutation statistics), computational complexity (VP vs VNP), representation theory (symmetric group).\n\n**Lineage:** Grand-challenge application of the entire framework to the central open problem in algebraic complexity.\n\n**Ambition:** Grand challenge \u2014 this is equivalent to a major open problem. Even partial progress (new lower bounds, tight shadow computation) would be highly significant.\n\n**The key insight is** that the non-cancellation certificate reduces the permanent lower bound problem to a purely combinatorial question about the shadow growth of permutation supports, separating the algebraic difficulty from the combinatorial difficulty.\n\n**Why now?** The certificate framework is now formalized and verified. The combinatorial question about permutation shadows is well-defined and computationally tractable for small n, enabling systematic experimental investigation.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad17ca4a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:04:38.767855+00:00"
   },
   {
     "id": "seed_032",
