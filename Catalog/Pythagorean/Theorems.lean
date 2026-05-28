@@ -75,7 +75,7 @@ theorem ratioTransform_mul (i : α) (f g : (α → ℕ) → ℝ) :
 /-- Ratio transform positivity. -/
 theorem ratioTransform_pos (i : α) (f : (α → ℕ) → ℝ)
     (hf_pos : ∀ m, 0 < f m) :
-    ∀ m, 0 < ratioTransform i f m := fun m =>
+    ∀ m, 0 < ratioTransform i f m := fun _m =>
   div_pos (hf_pos _) (hf_pos _)
 
 /-- Infinite depth is equivalent to depth ≥ k for all k. -/

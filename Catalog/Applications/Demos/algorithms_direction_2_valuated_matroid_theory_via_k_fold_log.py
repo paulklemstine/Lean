@@ -1,473 +1,509 @@
 """
-algorithms.py — Core algorithms for computing directional depth of functions
-on lattice points, implementing the depth filtration theory for valuated matroids.
+algorithms.py — Core algorithms for computing directional depth of discrete functions.
 
-The central algorithm computes the directional depth of a function
-f : (α → ℕ) → ℝ by iterating ratio transforms and checking log-concavity
-at each level.
+Implements the depth filtration theory for valuated matroids: given a function
+f : (α → ℕ) → ℝ on multisets, compute how many times the ratio transform
+preserves directional log-concavity.
+
+Key algorithms:
+  - directional_log_concave: test 1-fold log-concavity
+  - ratio_transform: compute R_i f
+  - directional_depth_at_least: test depth ≥ k
+  - compute_depth: compute exact depth (or detect infinite depth up to a bound)
+  - exchange_closed_support: test exchange closure on a degree slice
+
+All algorithms operate on finite degree slices of bounded total degree.
 """
 
 from __future__ import annotations
+import itertools
+import math
+from typing import Callable, Dict, List, Optional, Tuple
 import numpy as np
-from typing import Callable, Dict, Tuple, List, Optional
-from itertools import product as iter_product
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Core data structures
-# ─────────────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────
+# Type aliases
+# ─────────────────────────────────────────────────────────────────────────
+Multiset = Tuple[int, ...]
+WeightFn = Dict[Multiset, float]
 
-def make_multiindex_grid(n_vars: int, max_degree: int) -> List[Tuple[int, ...]]:
-    """Generate all multi-indices m ∈ ℕ^n with |m| ≤ max_degree.
 
+# ─────────────────────────────────────────────────────────────────────────
+# Combinatorial helpers
+# ─────────────────────────────────────────────────────────────────────────
+
+def degree_slice(n: int, d: int) -> List[Multiset]:
+    """Generate all multisets m ∈ ℕⁿ with ∑ m_i = d.
+    
     Args:
-        n_vars: Number of variables (dimension of α).
-        max_degree: Maximum total degree.
-
+        n: number of coordinates
+        d: total degree
     Returns:
-        List of tuples representing multi-indices.
+        List of tuples representing multisets in the degree-d slice.
 
-    Example:
-        >>> grid = make_multiindex_grid(2, 2)
-        >>> (1, 1) in grid
-        True
+    Complexity: O(C(n+d-1, d)) — the number of multisets.
+    
+    >>> len(degree_slice(3, 2))
+    6
     """
-    return [m for m in iter_product(range(max_degree + 1), repeat=n_vars)
-            if sum(m) <= max_degree]
-
-
-def make_degree_slice(n_vars: int, degree: int) -> List[Tuple[int, ...]]:
-    """Generate all multi-indices on a fixed degree slice.
-
-    Args:
-        n_vars: Number of variables.
-        degree: The fixed total degree d.
-
-    Returns:
-        List of tuples m with sum(m) == degree.
-    """
-    return [m for m in iter_product(range(degree + 1), repeat=n_vars)
-            if sum(m) == degree]
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Ratio transform
-# ─────────────────────────────────────────────────────────────────────────────
-
-def shift_up(m: Tuple[int, ...], i: int) -> Tuple[int, ...]:
-    """Shift multi-index m up by 1 at coordinate i: m + e_i."""
-    return tuple(m[j] + (1 if j == i else 0) for j in range(len(m)))
-
-
-def ratio_transform(f: Dict[Tuple[int, ...], float], i: int,
-                    grid: List[Tuple[int, ...]]) -> Dict[Tuple[int, ...], float]:
-    """Compute the ratio transform R_i f(m) = f(m + e_i) / f(m).
-
-    Args:
-        f: Function values as a dictionary from multi-index to float.
-        i: Direction index.
-        grid: Set of multi-indices to evaluate on.
-
-    Returns:
-        Dictionary of ratio transform values. Division by zero gives inf.
-
-    Example:
-        >>> f = {(0,): 1.0, (1,): 2.0, (2,): 3.0}
-        >>> R = ratio_transform(f, 0, [(0,), (1,)])
-        >>> R[(0,)]
-        2.0
-    """
-    result = {}
-    for m in grid:
-        m_up = shift_up(m, i)
-        fm = f.get(m, 0.0)
-        fm_up = f.get(m_up, 0.0)
-        if abs(fm) < 1e-15:
-            result[m] = float('inf') if fm_up != 0 else 0.0
-        else:
-            result[m] = fm_up / fm
+    if n == 0:
+        return [()] if d == 0 else []
+    if n == 1:
+        return [(d,)]
+    result = []
+    for k in range(d + 1):
+        for rest in degree_slice(n - 1, d - k):
+            result.append((k,) + rest)
     return result
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Log-concavity checks
-# ─────────────────────────────────────────────────────────────────────────────
+def unit_vector(n: int, i: int) -> Multiset:
+    """Standard basis vector e_i in ℕⁿ.
+    
+    >>> unit_vector(3, 1)
+    (0, 1, 0)
+    """
+    return tuple(1 if j == i else 0 for j in range(n))
 
-def check_directional_log_concavity(f: Dict[Tuple[int, ...], float],
-                                      grid: List[Tuple[int, ...]],
-                                      n_vars: int,
-                                      tol: float = 1e-10) -> Tuple[bool, Optional[dict]]:
-    """Check if f is directionally log-concave on the grid.
 
-    For every direction i and point m, checks:
+def add_multisets(m: Multiset, e: Multiset) -> Multiset:
+    """Pointwise addition of multisets.
+    
+    >>> add_multisets((1, 2, 3), (0, 1, 0))
+    (1, 3, 3)
+    """
+    return tuple(a + b for a, b in zip(m, e))
+
+
+def sub_multisets(m: Multiset, e: Multiset) -> Multiset:
+    """Pointwise subtraction (truncating at 0).
+    
+    >>> sub_multisets((1, 2, 0), (0, 1, 1))
+    (1, 1, 0)
+    """
+    return tuple(max(a - b, 0) for a, b in zip(m, e))
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# Weight function utilities
+# ─────────────────────────────────────────────────────────────────────────
+
+def make_weight_fn(f: Callable[[Multiset], float], n: int, max_deg: int) -> WeightFn:
+    """Tabulate f on all multisets up to a given total degree.
+    
+    Args:
+        f: function from multisets to reals
+        n: dimension
+        max_deg: maximum total degree to tabulate
+    
+    Returns:
+        Dictionary mapping multisets to weights.
+    """
+    wf: WeightFn = {}
+    for d in range(max_deg + 1):
+        for m in degree_slice(n, d):
+            wf[m] = f(m)
+    return wf
+
+
+def lookup(wf: WeightFn, m: Multiset) -> float:
+    """Look up weight, defaulting to 0 for missing keys."""
+    return wf.get(m, 0.0)
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# Core algorithms
+# ─────────────────────────────────────────────────────────────────────────
+
+def is_directional_log_concave(wf: WeightFn, n: int) -> bool:
+    """Test whether f is directionally log-concave on its support.
+    
+    Checks: for all i and all m in support,
         f(m) * f(m + 2e_i) ≤ f(m + e_i)²
-
+    
     Args:
-        f: Function values.
-        grid: Multi-indices to check.
-        n_vars: Number of variables.
-        tol: Numerical tolerance.
-
+        wf: weight function (dictionary)
+        n: dimension
+    
     Returns:
-        (True, None) if log-concave, (False, witness) with a failure witness.
-
-    Example:
-        >>> f = {(k,): float(3-k) for k in range(4)}  # 3, 2, 1, 0
-        >>> ok, _ = check_directional_log_concavity(f, [(k,) for k in range(4)], 1)
-        >>> ok
-        True
+        True if directionally log-concave.
+    
+    Complexity: O(|support| * n)
     """
-    for i in range(n_vars):
-        for m in grid:
-            m1 = shift_up(m, i)
-            m2 = shift_up(m1, i)
-            fm = f.get(m, 0.0)
-            fm1 = f.get(m1, 0.0)
-            fm2 = f.get(m2, 0.0)
-            lhs = fm * fm2
-            rhs = fm1 * fm1
-            if lhs > rhs + tol:
-                return False, {"direction": i, "point": m,
-                               "lhs": lhs, "rhs": rhs}
-    return True, None
+    for m, fm in wf.items():
+        for i in range(n):
+            ei = unit_vector(n, i)
+            m1 = add_multisets(m, ei)
+            m2 = add_multisets(m1, ei)
+            f1 = lookup(wf, m1)
+            f2 = lookup(wf, m2)
+            if fm * f2 > f1 * f1 + 1e-12:
+                return False
+    return True
 
 
-def check_mixed_log_concavity(f: Dict[Tuple[int, ...], float],
-                                grid: List[Tuple[int, ...]],
-                                n_vars: int,
-                                tol: float = 1e-10) -> Tuple[bool, Optional[dict]]:
-    """Check if f is mixed log-concave on the grid.
-
-    For every pair of directions i, j and point m, checks:
-        f(m) * f(m + e_i + e_j) ≤ f(m + e_i) * f(m + e_j)
-
+def ratio_transform(wf: WeightFn, n: int, i: int) -> WeightFn:
+    """Compute the ratio transform R_i f.
+    
+    R_i f(m) = f(m + e_i) / f(m), defined as 0 when f(m) = 0.
+    
     Args:
-        f: Function values.
-        grid: Multi-indices to check.
-        n_vars: Number of variables.
-        tol: Numerical tolerance.
-
+        wf: weight function
+        n: dimension
+        i: direction index
+    
     Returns:
-        (True, None) if mixed log-concave, (False, witness) with failure witness.
+        New weight function representing R_i f.
+    
+    Complexity: O(|support|)
     """
-    for i in range(n_vars):
-        for j in range(n_vars):
-            for m in grid:
-                m_i = shift_up(m, i)
-                m_j = shift_up(m, j)
-                m_ij = shift_up(m_i, j)
-                fm = f.get(m, 0.0)
-                fm_ij = f.get(m_ij, 0.0)
-                fm_i = f.get(m_i, 0.0)
-                fm_j = f.get(m_j, 0.0)
-                if fm * fm_ij > fm_i * fm_j + tol:
-                    return False, {"dirs": (i, j), "point": m,
-                                   "lhs": fm * fm_ij, "rhs": fm_i * fm_j}
-    return True, None
+    result: WeightFn = {}
+    ei = unit_vector(n, i)
+    for m, fm in wf.items():
+        if abs(fm) > 1e-15:
+            m1 = add_multisets(m, ei)
+            f1 = lookup(wf, m1)
+            result[m] = f1 / fm
+    return result
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Directional depth computation
-# ─────────────────────────────────────────────────────────────────────────────
-
-def compute_directional_depth(f: Dict[Tuple[int, ...], float],
-                               n_vars: int,
-                               max_degree: int,
-                               max_depth: int = 10,
-                               tol: float = 1e-10) -> int:
-    """Compute the directional depth of function f.
-
-    The depth is the largest k such that f has directional depth ≥ k,
-    defined recursively:
+def directional_depth_at_least(wf: WeightFn, n: int, k: int) -> bool:
+    """Test whether f has directional depth ≥ k.
+    
+    Recursive definition:
       - depth ≥ 0: always true
-      - depth ≥ k+1: f is directionally log-concave AND every ratio
-        transform R_i f has depth ≥ k.
-
+      - depth ≥ k+1: f is dir. log-concave AND every R_i f has depth ≥ k
+    
     Args:
-        f: Function values on multi-indices.
-        n_vars: Number of variables.
-        max_degree: Maximum degree for the grid.
-        max_depth: Maximum depth to check (returns this if all levels pass).
-        tol: Numerical tolerance.
-
+        wf: weight function
+        n: dimension
+        k: depth level to test
+    
     Returns:
-        The computed depth (0 to max_depth).
-
-    Complexity:
-        Time: O(max_depth * n_vars * |grid| * n_vars) per level.
-        Space: O(|grid|) per ratio transform.
-
-    Example:
-        >>> f = {(k,): float(k+1) for k in range(5)}  # 1, 2, 3, 4, 5
-        >>> # This is NOT log-concave: 1*3 = 3 > 4 = 2*2? No: 3 ≤ 4. Check.
-        >>> compute_directional_depth(f, 1, 4)  # Should be at least 1
-        1
+        True if depth ≥ k.
+    
+    Complexity: O(n^k * |support|) — the ratio transform is applied k times.
     """
-    grid = make_multiindex_grid(n_vars, max_degree)
-    return _depth_recursive(f, n_vars, grid, max_degree, max_depth, tol)
+    if k == 0:
+        return True
+    if not is_directional_log_concave(wf, n):
+        return False
+    for i in range(n):
+        ri = ratio_transform(wf, n, i)
+        if not directional_depth_at_least(ri, n, k - 1):
+            return False
+    return True
 
 
-def _depth_recursive(f: Dict[Tuple[int, ...], float],
-                     n_vars: int,
-                     grid: List[Tuple[int, ...]],
-                     max_degree: int,
-                     remaining_depth: int,
-                     tol: float) -> int:
-    """Recursive helper for depth computation."""
-    if remaining_depth <= 0:
-        return 0
-
-    # Check directional log-concavity at this level
-    ok, witness = check_directional_log_concavity(f, grid, n_vars, tol)
-    if not ok:
-        return 0
-
-    # Check all ratio transforms
-    min_sub_depth = remaining_depth - 1
-    for i in range(n_vars):
-        Rf = ratio_transform(f, i, grid)
-        # Filter out infinite values
-        Rf_clean = {m: v for m, v in Rf.items() if np.isfinite(v)}
-        sub_grid = [m for m in grid if m in Rf_clean]
-        sub_depth = _depth_recursive(Rf_clean, n_vars, sub_grid,
-                                     max_degree, remaining_depth - 1, tol)
-        min_sub_depth = min(min_sub_depth, sub_depth)
-
-    return 1 + min_sub_depth
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Supermodularity check
-# ─────────────────────────────────────────────────────────────────────────────
-
-def check_neg_log_supermodular(f: Dict[Tuple[int, ...], float],
-                                grid: List[Tuple[int, ...]],
-                                n_vars: int,
-                                tol: float = 1e-10) -> Tuple[bool, Optional[dict]]:
-    """Check if -log(f) is supermodular on the grid.
-
-    For i ≠ j and all m, checks:
-        -log f(m+e_i) + (-log f(m+e_j)) ≤ -log f(m) + (-log f(m+e_i+e_j))
-
-    This is equivalent to mixed log-concavity of f when f > 0.
-
+def compute_depth(wf: WeightFn, n: int, max_k: int = 10) -> int:
+    """Compute the exact directional depth of f, up to max_k.
+    
+    Returns the largest k such that depth ≥ k holds, or max_k if
+    all levels up to max_k pass (suggesting infinite depth).
+    
     Args:
-        f: Function values (must be positive on the grid).
-        grid: Multi-indices to check.
-        n_vars: Number of variables.
-        tol: Tolerance.
-
+        wf: weight function
+        n: dimension
+        max_k: maximum depth to test
+    
     Returns:
-        (True, None) if supermodular, (False, witness) with failure.
+        Exact depth (or max_k if possibly infinite).
+    
+    Complexity: O(max_k * n^max_k * |support|)
     """
-    for i in range(n_vars):
-        for j in range(n_vars):
-            if i == j:
-                continue
-            for m in grid:
-                m_i = shift_up(m, i)
-                m_j = shift_up(m, j)
-                m_ij = shift_up(m_i, j)
-                vals = [f.get(m, 0.0), f.get(m_i, 0.0),
-                        f.get(m_j, 0.0), f.get(m_ij, 0.0)]
-                if any(v <= 0 for v in vals):
-                    continue
-                log_vals = [np.log(v) for v in vals]
-                # Check: -log f(m_i) + (-log f(m_j)) ≤ -log f(m) + (-log f(m_ij))
-                # i.e. log f(m) + log f(m_ij) ≤ log f(m_i) + log f(m_j)
-                lhs = log_vals[0] + log_vals[3]
-                rhs = log_vals[1] + log_vals[2]
-                if lhs > rhs + tol:
-                    return False, {"dirs": (i, j), "point": m,
-                                   "lhs": lhs, "rhs": rhs}
-    return True, None
+    for k in range(max_k + 1):
+        if not directional_depth_at_least(wf, n, k):
+            return k - 1
+    return max_k
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Exchange property checker
-# ─────────────────────────────────────────────────────────────────────────────
-
-def check_exchange_closed_support(f: Dict[Tuple[int, ...], float],
-                                   degree: int,
-                                   n_vars: int,
-                                   tol: float = 1e-10) -> bool:
-    """Check if f has exchange-closed support on the degree-d slice.
-
-    For any m, n with sum = d, f(m) > 0, f(n) > 0, and i with m[i] < n[i],
-    there exists j with n[j] < m[j] such that f(exchange_move(m, i, j)) > 0.
-
+def find_depth_failure_witness(wf: WeightFn, n: int, k: int) -> Optional[dict]:
+    """Find a witness where depth fails at level k.
+    
+    If depth ≥ k fails, returns a dictionary describing where log-concavity
+    breaks (the direction and multiset).
+    
     Args:
-        f: Function values.
-        degree: The degree d.
-        n_vars: Number of variables.
-        tol: Positivity tolerance.
-
+        wf: weight function
+        n: dimension
+        k: depth level
+    
     Returns:
-        True if exchange-closed, False otherwise.
+        Dictionary with 'level', 'direction', 'multiset', 'values' or None.
     """
-    slice_pts = make_degree_slice(n_vars, degree)
-    pos_pts = [m for m in slice_pts if f.get(m, 0.0) > tol]
+    if k == 0:
+        return None
+    for m, fm in wf.items():
+        for i in range(n):
+            ei = unit_vector(n, i)
+            m1 = add_multisets(m, ei)
+            m2 = add_multisets(m1, ei)
+            f1 = lookup(wf, m1)
+            f2 = lookup(wf, m2)
+            if fm * f2 > f1 * f1 + 1e-12:
+                return {
+                    'level': 0,
+                    'direction': i,
+                    'multiset': m,
+                    'values': (fm, f1, f2),
+                    'violation': fm * f2 - f1 * f1
+                }
+    if k == 1:
+        return None
+    for i in range(n):
+        ri = ratio_transform(wf, n, i)
+        sub_witness = find_depth_failure_witness(ri, n, k - 1)
+        if sub_witness is not None:
+            sub_witness['level'] += 1
+            sub_witness['outer_direction'] = i
+            return sub_witness
+    return None
 
-    for m in pos_pts:
-        for n in pos_pts:
-            for i in range(n_vars):
-                if m[i] >= n[i]:
-                    continue
-                # Need to find j with n[j] < m[j] and exchange move is positive
-                found = False
-                for j in range(n_vars):
-                    if n[j] >= m[j] or m[j] == 0:
-                        continue
-                    # exchange_move: decrease m at j, increase at i
-                    em = list(m)
-                    em[j] -= 1
-                    em[i] += 1
-                    em_t = tuple(em)
-                    if f.get(em_t, 0.0) > tol:
-                        found = True
-                        break
-                if not found:
+
+# ─────────────────────────────────────────────────────────────────────────
+# Exchange-closed support
+# ─────────────────────────────────────────────────────────────────────────
+
+def exchange_closed_support(wf: WeightFn, n: int, d: int) -> bool:
+    """Test whether f has exchange-closed support on the degree-d slice.
+    
+    For all m, n in support ∩ slice(d) with m_i < n_i, there exists j
+    with n_j < m_j and f(exchange(m, i, j)) > 0.
+    
+    Args:
+        wf: weight function
+        n: dimension
+        d: degree
+    
+    Returns:
+        True if exchange-closed.
+    
+    Complexity: O(|slice|² * n²)
+    """
+    slc = degree_slice(n, d)
+    support = [m for m in slc if lookup(wf, m) > 1e-15]
+    
+    for m in support:
+        for nn in support:
+            for i in range(n):
+                if m[i] < nn[i]:
+                    found = False
+                    for j in range(n):
+                        if nn[j] < m[j] and m[j] > 0:
+                            # exchange move: m + e_i - e_j
+                            ex = list(m)
+                            ex[i] += 1
+                            ex[j] -= 1
+                            ex_t = tuple(ex)
+                            if lookup(wf, ex_t) > 1e-15:
+                                found = True
+                                break
+                    if not found:
+                        return False
+    return True
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# Model families
+# ─────────────────────────────────────────────────────────────────────────
+
+def uniform_matroid_valuation(n: int, r: int, max_deg: int = None) -> WeightFn:
+    """Weight function for the uniform matroid U(r, n): f(m) = 1 if
+    m is a 0-1 vector with exactly r ones, else 0.
+    
+    For depth analysis, we extend: f(m) = ∏ C(n_i, m_i) style, but
+    the simplest version is the indicator.
+    
+    >>> wf = uniform_matroid_valuation(3, 2)
+    >>> lookup(wf, (1, 1, 0))
+    1.0
+    """
+    if max_deg is None:
+        max_deg = r
+    wf: WeightFn = {}
+    for d in range(max_deg + 1):
+        for m in degree_slice(n, d):
+            if all(mi <= 1 for mi in m) and sum(m) == r:
+                wf[m] = 1.0
+            else:
+                wf[m] = 0.0
+    return wf
+
+
+def weighted_graphical_matroid(n: int, edges: List[Tuple[int, int]],
+                                weights: List[float],
+                                max_deg: int = None) -> WeightFn:
+    """Weight function from a weighted graph.
+    
+    For a graph G = (V, E) with edge weights w_e, the graphical matroid
+    weight of a set S ⊆ E is ∏_{e ∈ S} w_e if S is a forest, else 0.
+    
+    Here we use a simplified version on ℕⁿ for n = |E|.
+    
+    Args:
+        n: number of edges
+        edges: list of (u, v) pairs
+        weights: edge weights (positive reals)
+        max_deg: max total degree
+    
+    Returns:
+        Weight function.
+    """
+    if max_deg is None:
+        max_deg = n
+    num_vertices = max(max(u, v) for u, v in edges) + 1
+    
+    def is_forest(subset_indices):
+        """Check if selected edges form a forest using union-find."""
+        parent = list(range(num_vertices))
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+        for idx in subset_indices:
+            u, v = edges[idx]
+            ru, rv = find(u), find(v)
+            if ru == rv:
+                return False
+            parent[ru] = rv
+        return True
+    
+    wf: WeightFn = {}
+    for d in range(max_deg + 1):
+        for m in degree_slice(n, d):
+            # Only consider 0-1 vectors (simple matroid)
+            if all(mi <= 1 for mi in m):
+                selected = [i for i, mi in enumerate(m) if mi == 1]
+                if is_forest(selected):
+                    wf[m] = math.prod(weights[i] for i in selected) if selected else 1.0
+                else:
+                    wf[m] = 0.0
+            else:
+                wf[m] = 0.0
+    return wf
+
+
+def gaussian_weight(sigma: float = 1.0) -> Callable[[Multiset], float]:
+    """Gaussian weight function f(m) = exp(-||m||² / (2σ²)).
+    
+    This family has infinite directional depth for all σ > 0.
+    
+    >>> f = gaussian_weight(1.0)
+    >>> f((0, 0, 0))
+    1.0
+    """
+    def f(m: Multiset) -> float:
+        norm_sq = sum(x**2 for x in m)
+        return math.exp(-norm_sq / (2 * sigma**2))
+    return f
+
+
+def geometric_weight(rates: List[float]) -> Callable[[Multiset], float]:
+    """Product-geometric weight: f(m) = ∏ r_i^{m_i}.
+    
+    Has infinite directional depth (ratio transforms are constant).
+    
+    >>> f = geometric_weight([2.0, 3.0])
+    >>> f((1, 2))
+    18.0
+    """
+    def f(m: Multiset) -> float:
+        return math.prod(r**mi for r, mi in zip(rates, m))
+    return f
+
+
+def polynomial_coefficients(coeffs: List[float], n: int, max_deg: int) -> WeightFn:
+    """Weight function from polynomial coefficients.
+    
+    For a univariate polynomial with coefficients coeffs[0], coeffs[1], ...,
+    extended to n variables as the product polynomial.
+    """
+    wf: WeightFn = {}
+    for d in range(max_deg + 1):
+        for m in degree_slice(n, d):
+            val = 1.0
+            for mi in m:
+                if mi < len(coeffs):
+                    val *= coeffs[mi]
+                else:
+                    val *= 0.0
+            wf[m] = val
+    return wf
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# Tropical valuation
+# ─────────────────────────────────────────────────────────────────────────
+
+def tropical_valuation(wf: WeightFn) -> Dict[Multiset, float]:
+    """Compute the tropical valuation v = -log f on the support.
+    
+    Returns -log(f(m)) for positive f(m), infinity for f(m) ≤ 0.
+    
+    >>> wf = {(0,): 1.0, (1,): math.e}
+    >>> v = tropical_valuation(wf)
+    >>> round(v[(1,)], 5)
+    -1.0
+    """
+    result = {}
+    for m, fm in wf.items():
+        if fm > 1e-15:
+            result[m] = -math.log(fm)
+        else:
+            result[m] = float('inf')
+    return result
+
+
+def is_supermodular(val: Dict[Multiset, float], n: int) -> bool:
+    """Test supermodularity of a valuation on ℕⁿ.
+    
+    Checks: for all i ≠ j and all m,
+        v(m + eᵢ) + v(m + eⱼ) ≤ v(m) + v(m + eᵢ + eⱼ)
+    
+    Only checks on the support (finite entries).
+    """
+    for m in val:
+        for i in range(n):
+            for j in range(i + 1, n):
+                ei, ej = unit_vector(n, i), unit_vector(n, j)
+                mi = add_multisets(m, ei)
+                mj = add_multisets(m, ej)
+                mij = add_multisets(mi, ej)
+                vi = val.get(mi, float('inf'))
+                vj = val.get(mj, float('inf'))
+                vij = val.get(mij, float('inf'))
+                vm = val.get(m, float('inf'))
+                if vi + vj > vm + vij + 1e-10:
                     return False
     return True
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Depth profile computation
-# ─────────────────────────────────────────────────────────────────────────────
-
-def compute_depth_profile(f: Dict[Tuple[int, ...], float],
-                           n_vars: int,
-                           max_degree: int,
-                           max_depth: int = 10) -> Dict[str, object]:
-    """Compute a comprehensive depth profile for function f.
-
-    Returns a dictionary with:
-        - 'depth': the computed directional depth
-        - 'is_dir_log_concave': bool
-        - 'is_mixed_log_concave': bool
-        - 'neg_log_supermodular': bool
-        - 'ratio_depths': depth of each R_i f
-
-    Args:
-        f: Function values.
-        n_vars: Number of variables.
-        max_degree: Maximum degree for grid.
-        max_depth: Maximum depth to check.
-
-    Returns:
-        Dictionary with depth profile information.
-    """
-    grid = make_multiindex_grid(n_vars, max_degree)
-
-    depth = compute_directional_depth(f, n_vars, max_degree, max_depth)
-    dir_lc, dir_witness = check_directional_log_concavity(f, grid, n_vars)
-    mix_lc, mix_witness = check_mixed_log_concavity(f, grid, n_vars)
-    sup, sup_witness = check_neg_log_supermodular(f, grid, n_vars)
-
-    ratio_depths = {}
-    for i in range(n_vars):
-        Rf = ratio_transform(f, i, grid)
-        Rf_clean = {m: v for m, v in Rf.items() if np.isfinite(v)}
-        rd = compute_directional_depth(Rf_clean, n_vars, max_degree, max_depth - 1)
-        ratio_depths[i] = rd
-
-    return {
-        'depth': depth,
-        'is_dir_log_concave': dir_lc,
-        'is_mixed_log_concave': mix_lc,
-        'neg_log_supermodular': sup,
-        'ratio_depths': ratio_depths,
-        'dir_failure': dir_witness,
-        'mix_failure': mix_witness,
-        'sup_failure': sup_witness,
-    }
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Example families
-# ─────────────────────────────────────────────────────────────────────────────
-
-def gaussian_function(n_vars: int, max_degree: int,
-                       sigma: float = 1.0) -> Dict[Tuple[int, ...], float]:
-    """Gaussian-type function f(m) = exp(-|m|²/(2σ²)).
-
-    Expected to have infinite depth (all levels log-concave).
-    """
-    grid = make_multiindex_grid(n_vars, max_degree)
-    return {m: np.exp(-sum(x**2 for x in m) / (2 * sigma**2)) for m in grid}
-
-
-def binomial_function(n_vars: int, degree: int) -> Dict[Tuple[int, ...], float]:
-    """Multinomial coefficient function f(m) = d! / (m₁! ... mₙ!).
-
-    Only nonzero on the degree-d slice. Expected to have high depth.
-    """
-    from math import factorial
-    grid = make_degree_slice(n_vars, degree)
-    result = {}
-    for m in grid:
-        result[m] = factorial(degree) / np.prod([factorial(mi) for mi in m])
-    return result
-
-
-def power_function(n_vars: int, max_degree: int,
-                    base: float = 2.0) -> Dict[Tuple[int, ...], float]:
-    """Power function f(m) = base^(-|m|).
-
-    Expected to have infinite depth.
-    """
-    grid = make_multiindex_grid(n_vars, max_degree)
-    return {m: base ** (-sum(m)) for m in grid}
-
-
-def depth_one_witness() -> Tuple[Dict[Tuple[int, ...], float], int, int]:
-    """Construct the explicit witness with depth exactly 1.
-
-    This matches the Lean proof: a function on Fin 2 → ℕ that is
-    directionally log-concave but whose ratio transform fails.
-
-    Returns:
-        (function_dict, n_vars, max_degree)
-    """
-    # f(m) defined on single variable effectively
-    # f(0) = 1, f(1) = 3, f(2) = 2, f(3) = 1, f(k) = 0 for k ≥ 4
-    # Ratio: R(0) = 3, R(1) = 2/3, R(2) = 1/2
-    # R(0)*R(2) = 3/2 > 4/9 = R(1)^2 → NOT log-concave
-    f = {}
-    for m in make_multiindex_grid(1, 6):
-        k = m[0]
-        if k == 0:
-            f[m] = 1.0
-        elif k == 1:
-            f[m] = 3.0
-        elif k == 2:
-            f[m] = 2.0
-        elif k == 3:
-            f[m] = 1.0
-        else:
-            f[m] = 0.0
-    return f, 1, 6
-
-
 if __name__ == "__main__":
-    print("=== Depth Computation Algorithms ===\n")
-
-    # Test the explicit witness
-    f, nv, md = depth_one_witness()
-    depth = compute_directional_depth(f, nv, md, max_depth=5)
-    print(f"Depth-1 witness: depth = {depth}")
-
-    # Gaussian
-    f_gauss = gaussian_function(2, 5)
-    depth_gauss = compute_directional_depth(f_gauss, 2, 5, max_depth=5)
-    print(f"Gaussian (2 vars, σ=1): depth = {depth_gauss}")
-
-    # Binomial
-    f_binom = binomial_function(3, 4)
-    depth_binom = compute_directional_depth(f_binom, 3, 4, max_depth=5)
-    print(f"Multinomial (3 vars, d=4): depth = {depth_binom}")
-
-    # Power
-    f_pow = power_function(2, 5, base=2.0)
-    depth_pow = compute_directional_depth(f_pow, 2, 5, max_depth=5)
-    print(f"Power base 2 (2 vars): depth = {depth_pow}")
+    # Example: Gaussian weight on ℕ³
+    print("=== Gaussian Weight (σ=1) on ℕ³ ===")
+    gw = gaussian_weight(1.0)
+    wf = make_weight_fn(gw, 3, 6)
+    depth = compute_depth(wf, 3, max_k=5)
+    print(f"  Depth ≥ {depth} (expected: high, suggesting infinite)")
+    
+    # Example: Geometric weight
+    print("\n=== Geometric Weight [2, 3, 5] on ℕ³ ===")
+    geo = geometric_weight([2.0, 3.0, 5.0])
+    wf_geo = make_weight_fn(geo, 3, 6)
+    depth_geo = compute_depth(wf_geo, 3, max_k=5)
+    print(f"  Depth ≥ {depth_geo} (expected: high, suggesting infinite)")
+    
+    # Example: Weight with depth exactly 1
+    print("\n=== Custom depth-1 weight on ℕ² ===")
+    # f(m) = (m₁ + 1) * exp(-m₁²) * (m₂ + 1) — has log-concavity but
+    # ratio transform may fail
+    def custom_f(m):
+        return (m[0] + 1) * math.exp(-m[0]**2) * (m[1] + 1)
+    wf_custom = make_weight_fn(custom_f, 2, 8)
+    depth_custom = compute_depth(wf_custom, 2, max_k=5)
+    print(f"  Depth = {depth_custom}")
+    witness = find_depth_failure_witness(wf_custom, 2, depth_custom + 1)
+    if witness:
+        print(f"  Failure witness: {witness}")

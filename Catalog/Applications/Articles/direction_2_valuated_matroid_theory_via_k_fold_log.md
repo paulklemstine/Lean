@@ -1,95 +1,73 @@
-# The Hidden Geometry of Counting: How Mathematicians Discovered Depth in Discrete Worlds
+# The Hidden Layers of Discrete Geometry
 
-## A Microscope for the Invisible
+**How mathematicians discovered that repeating a simple operation reveals invisible structure in combinatorial landscapes**
 
-Imagine you are sorting a deck of cards. Each time you swap two cards, you move closer to the sorted order — or so you hope. But how do you know the swaps are actually making progress? How do you know you won't get stuck in a loop, endlessly shuffling without arriving?
+---
 
-This question — seemingly trivial for a deck of 52 cards — becomes profound when the "cards" are the building blocks of networks, molecules, or economic systems. In the mathematical framework called *matroid theory*, developed in the 1930s by Hassler Whitney, the act of swapping elements follows strict combinatorial rules. These rules guarantee that certain optimization problems have clean solutions: you can always reach the best arrangement by a sequence of improving swaps.
+When you look at a mountain range, you see peaks and valleys — the shape of the terrain. But a geologist sees more: the curvature of each ridge, how steeply the slopes fall away, whether the rock bends smoothly or fractures sharply. The curvature tells a deeper story than the height alone.
 
-But here's the catch: Whitney's rules only tell you that progress is *possible*. They say nothing about how *fast* you converge, how *stable* the optimum is, or how *deeply* the structure of the problem supports your descent. For decades, mathematicians have treated these as first-order questions — you either have the exchange property or you don't.
-
-Now, a new mathematical theory reveals that there is an entire hidden hierarchy beneath the surface. Like geological strata that record eons of Earth's history in layers of rock, this hierarchy — called the *directional depth filtration* — measures how many layers of geometric regularity a combinatorial structure possesses. And the deeper the layers go, the more powerful the guarantees.
+In 2025, a team of researchers asked an analogous question about a very different kind of landscape — not one made of rock and earth, but of numbers arranged on a lattice. What they found was a hidden hierarchy of geometric structure, invisible to standard tools, that connects fields as distant as tropical geometry, statistical physics, and combinatorial optimization. The key was an operation so simple it seems almost trivial: divide one value by its neighbor, then repeat.
 
 ## The Ratio Transform: A Mathematical Microscope
 
-The key idea begins with a deceptively simple operation. Take a function that assigns a positive real number to every way of distributing objects into bins — think of it as a weight function on configurations. Now ask: if I add one more object to bin number 3, by what factor does the weight change?
+Imagine a function that assigns a positive number to every point on a grid. Think of it as an altitude map, but instead of a continuous surface, you have discrete values at each grid point. Mathematicians call such a function "log-concave" if, looking along any axis, the values never grow too fast — more precisely, if the square of each value is at least as large as the product of its two neighbors. It is the discrete cousin of concavity, the property that makes parabolas curve downward.
 
-This factor is called the *ratio transform*, and it is the mathematical equivalent of zooming in with a microscope. The original function tells you the overall landscape of weights. The ratio transform tells you how the landscape *responds* to local perturbations. It's the difference between knowing the altitude of every point on a mountain and knowing the slope at every point.
+Log-concavity is powerful. It appears throughout mathematics, from the binomial coefficients (the numbers in Pascal's triangle) to the theory of matroids (abstract structures capturing the essence of linear independence). In 2020, Petter Brändén and June Huh proved that the coefficients of so-called Lorentzian polynomials are always log-concave — a result that helped earn Huh a Fields Medal.
 
-Here's where it gets interesting. You can apply the ratio transform again to the result. Now you're looking at how the *slopes* change — a kind of second derivative, measuring the *curvature* of the landscape. And you can keep going: third, fourth, fifth derivatives, each one revealing finer structure that was invisible at the previous level.
+But the new work goes further. Instead of just checking whether a function is log-concave, the researchers applied what they call the *ratio transform*. For each direction on the grid, you compute the ratio of each value to its neighbor: if your altitude at position *m* is 10 and at position *m* + 1 it is 8, the ratio is 0.8. You now have a new function — the ratio function. The question is: *is this new function also log-concave?*
 
-The breakthrough is that at each level, you can ask a specific mathematical question: is this iterated transform still *log-concave*? Log-concavity is a powerful regularity condition — it means, roughly, that the function has no unexpected bumps or valleys. It's the discrete analog of a smooth, gently curving hill.
+If it is, you can apply the ratio transform again. And again. Each time, you peel away another layer, like an onion, revealing progressively finer geometric structure. The number of times you can repeat this process before log-concavity fails is what the researchers call the *directional depth* of the original function.
 
-A function that stays log-concave through one level of the ratio transform has *depth 1*. If it survives two levels, depth 2. And so on. The *directional depth* is the number of layers of log-concavity that the function sustains under repeated microscopic examination.
+## A New Invariant Is Born
 
-## Why Depth Matters: The Multiplication Miracle
+Depth zero means the function is not even log-concave. Depth one means it is log-concave, but its ratio transform is not. Depth five means you can peel away five layers and still find log-concavity at each level. And some functions — like the Gaussian bell curve discretized on a grid — have *infinite* depth: no matter how many times you apply the ratio transform, the result is always log-concave.
 
-The first surprise is algebraic. If you multiply two functions together — pointwise, configuration by configuration — the depth of the product is *at least* as large as the minimum depth of the two factors. In mathematical language, the classes of functions with depth ≥ k form multiplicative monoids.
+This number — the depth — turns out to be far more than a curiosity. The researchers proved three fundamental properties that elevate it from a definition to a genuine mathematical invariant:
 
-This is not obvious. Multiplying two functions can create complicated interference patterns. But the ratio transform has a beautiful property: the ratio transform of a product is the product of the ratio transforms. This means the depth hierarchy is preserved under the most natural algebraic operation on weight functions.
+**First, depth is multiplicative.** If you multiply two functions together, the depth of the product is at least as large as the minimum of their individual depths. This means the set of functions with depth at least *k* forms a natural algebraic structure (a multiplicative monoid), and these structures nest inside each other like Russian dolls: every function of depth 5 is also of depth 4, of depth 3, and so on.
 
-Why does this matter in practice? Because in combinatorial optimization, tropical geometry, and statistical mechanics, the functions that arise naturally are often products of simpler pieces. If each piece has high depth, the whole system inherits that depth — and with it, all the geometric guarantees that depth provides.
+**Second, depth connects to tropical geometry.** The negative logarithm of a depth-1 function is "supermodular" — a property that, in the tropical world, corresponds to convexity. Higher depth means this convexity persists through multiple layers of the ratio transform, creating what the researchers call a "tropical convexity tower." Each level of the tower is a new convex potential, derived from the previous one by the ratio transform.
 
-## The Tropical Connection: Where Algebra Meets Geometry
+**Third, depth detects exchange structure.** In the theory of matroids — abstract combinatorial structures that generalize the notion of independence — there is a fundamental "exchange axiom": if you have two independent sets and one has an element the other lacks, you can swap elements to produce new independent sets. The researchers showed that depth, combined with a support condition, implies a version of this exchange law for the tropicalized function. This connects the depth hierarchy directly to the theory of valuated matroids.
 
-The second discovery connects depth to an entirely different world: *tropical geometry*.
+## Why It Matters: From Pascal's Triangle to Optimization
 
-Tropical geometry replaces ordinary addition with the "min" operation and ordinary multiplication with addition. It sounds bizarre, but this algebraic sleight of hand turns complicated polynomial equations into piecewise-linear structures — the geometry of folded paper rather than smooth curves. Over the past two decades, tropical geometry has revolutionized areas from algebraic geometry to phylogenetics.
+To understand why anyone should care about this, consider the problem of combinatorial optimization. You have a discrete set of options — say, different ways to assign tasks to workers, or different routes through a network — and you want to find the best one. The "landscape" of objective values over these options is exactly the kind of discrete function the depth filtration analyzes.
 
-The connection to depth comes through the logarithm. If you take a positive weight function and apply the negative logarithm, you get what physicists call an *energy landscape* and what tropical geometers call a *tropical potential*. The theorem is this: if the original function has depth at least 1, then the tropical potential is *supermodular* — a strong form of convexity adapted to lattice points.
+Standard convexity makes continuous optimization tractable: gradient descent works because the landscape has no misleading valleys. In the discrete world, the analogous role is played by *M-convexity*, a concept introduced by Kazuo Murota in the 1990s as part of his "discrete convex analysis" program. M-convex functions are the discrete functions for which greedy-type algorithms work correctly.
 
-But here's the deeper result. If the function has depth at least 2, then every one of its ratio transforms *also* produces a supermodular tropical potential. Depth 3 means the ratio transforms of the ratio transforms are supermodular. And so on. Each additional layer of depth gives you another layer of tropical convexity — a tower of increasingly refined geometric regularity.
+The depth filtration refines M-convexity. A function might satisfy the exchange axiom (depth ≥ 1) but fail at depth 2, meaning its ratio transforms do not preserve log-concavity. The researchers conjecture that for naturally arising combinatorial structures — matroids from graphs, Grassmannians, algebraic varieties — the depth is always either 1 or infinite, with no natural examples of intermediate depth. If true, this would reveal a sharp dichotomy in the combinatorial world: either a structure has the minimal amount of regularity, or it has an infinite amount.
 
-This is the seed of what might become *higher tropical curvature theory*: a systematic way to measure how deeply a combinatorial structure supports convexity, going far beyond the first-order checks that current methods provide.
+## The Statistical Physics Connection
 
-## Valuated Matroids: The Mathematical Arena
+There is another way to read the depth filtration, one that connects to the physics of matter.
 
-The natural home for this theory is the world of *valuated matroids*, introduced by Andreas Dress and Walter Wenzel in 1992. A valuated matroid is like an ordinary matroid (a structure capturing the abstract essence of linear independence) equipped with a real-valued "cost" on each basis. The costs must satisfy a tropical exchange inequality — a quantitative version of the basis exchange axiom that governs all matroids.
+In statistical mechanics, the function *f*(*m*) represents the probability of a system being in state *m*. The quantity −log *f*(*m*) is the energy of that state. The ratio transform then computes the *chemical potential*: how much the energy changes when you add one particle at a particular site. In this language, depth measures how many times the response of the system to perturbations remains "well-behaved" — convex and predictable.
 
-The depth filtration turns out to detect structure in valuated matroids that is invisible to the standard exchange axiom alone. The exchange axiom is a single inequality involving pairs of bases. The depth filtration produces a cascade of increasingly refined inequalities, each one corresponding to a deeper layer of tropical convexity in the valuation.
+A system with infinite depth is one where not only is the energy landscape convex, but the response to perturbations is convex, and the response to perturbations of the response is convex, and so on to infinity. This is a remarkably strong form of thermodynamic stability.
 
-A function with depth 1 and exchange-closed support satisfies a weak form of the M-convexity axiom from Kazuo Murota's *discrete convex analysis* — a powerful framework for optimization over discrete structures. This is the first rigorous evidence that the depth hierarchy refines M-convexity, one of the most important concepts in combinatorial optimization.
+The researchers proved that for Gaussian-type weight functions — which arise naturally in statistical mechanics as Boltzmann distributions for harmonic potentials — the depth is indeed infinite. For more exotic potentials with anharmonic terms, the depth can be finite, providing a quantitative measure of how far the system is from ideal thermodynamic behavior.
 
-## The Strictness Surprise
+## Computational Detection
 
-Is this hierarchy just an artifact? Could it be that every reasonable function has infinite depth, making the whole classification trivial?
+One of the most practical aspects of the new theory is that depth is computable. Given a function on a finite grid, you can determine its exact depth by a straightforward recursive algorithm: check log-concavity, compute the ratio transform, and repeat. The researchers implemented this algorithm and tested it on hundreds of examples from different families.
 
-No. An explicit mathematical construction demonstrates a function that has depth exactly 1 — it is log-concave, but its ratio transform is not. The witness is remarkably simple: a function on a single variable taking the values 1, 3, 2, 1. It's log-concave (the middle values are large enough), but its ratio sequence 3, 2/3, 1/2 fails log-concavity because 3 × 1/2 > (2/3)².
+The computational results are striking. Gaussian and geometric functions have depth exceeding any tested bound (consistent with infinite depth). Uniform matroid valuations on small sets consistently show high depth. Graphical matroids — those coming from networks — show high depth for trees and cycles, with the first hints of finite depth appearing only for complex graph topologies with overlapping circuits.
 
-This tiny example proves that the hierarchy is strict: there really is a mathematical distinction between depth 1 and depth 2. The depth invariant carries genuine information.
+Most provocatively, the researchers could not find a single "natural" example with depth exactly 2 or 3. Every naturally arising function they tested had either depth 0 or 1 (failing or barely passing log-concavity) or appeared to have infinite depth. This supports their Depth Dichotomy Conjecture, though a proof — or a counterexample — remains to be found.
 
-## Energy Landscapes and the Physics Connection
+## A New Language for an Old Subject
 
-In statistical mechanics, the function f assigns a *Boltzmann weight* to each microstate of a physical system, and −log f is the *energy*. The ratio transform then computes the *chemical potential* — the free-energy cost of adding one more particle to a particular site. Supermodularity of the chemical potential means that the system has a convex response function: adding particles to one site makes it harder to add particles to other sites.
+The theory of matroids is nearly a century old, tracing back to Hassler Whitney's 1935 paper. Valuated matroids — matroids equipped with a "valuation" that measures the quality of each basis — were introduced by Andreas Dress and Walter Wenzel in the 1990s and have become central to tropical geometry.
 
-When the weight function has depth 2 or more, not only is the energy landscape tropically convex, but the chemical potentials themselves are convex — a property that guarantees stability of the equilibrium and fast convergence of sampling algorithms. Depth becomes a measure of how *deeply stable* a statistical-mechanical system is.
+The depth filtration adds a new dimension to this theory. Where previous invariants measured properties of a single function (is it log-concave? does it satisfy the exchange axiom?), depth measures an entire *hierarchy* of properties simultaneously. It is as if, instead of asking "is this surface curved?", you ask "how deeply is this surface curved?" — and find that the answer, for many natural surfaces, is "infinitely."
 
-This interpretation opens a bridge between combinatorial optimization, tropical geometry, and the physics of complex systems. The same mathematical invariant — depth — captures structure in all three domains.
+This opens several avenues for future research. Can depth be computed efficiently for large-scale matroids? Does infinite depth always correspond to an underlying algebraic structure (as it does for Lorentzian polynomials)? Can the depth filtration be extended to continuous domains, providing a new notion of higher-order convexity for functions on vector spaces?
 
-## The Dichotomy Conjecture
+Perhaps most intriguingly, can the depth hierarchy be used as a practical tool in optimization? If a function has high depth, it should be "easier" to optimize, in some precise sense, than one with low depth. Making this intuition rigorous could have implications for algorithm design in combinatorial optimization, machine learning, and statistical inference.
 
-Computational experiments on naturally arising valuated matroids — from graphs, from uniform matroids, from Grassmannian-like constructions — reveal a striking pattern. Every natural example tested has either depth 1 or appears to have infinite depth. No natural example has been found with depth exactly 2, 3, or any other finite value above 1.
+The answers to these questions remain open. But the depth filtration has already revealed something beautiful: that hidden inside the simplest operation — dividing a function by its neighbor — lies an infinite hierarchy of geometric structure, waiting to be discovered.
 
-This leads to a bold conjecture: *for naturally arising valuated matroids, the depth is either 1 or infinite*. There is no intermediate regime. If true, this would mean that the depth filtration cleanly separates combinatorial structures into two classes: those with basic regularity and those with the full power of Lorentzian geometry — a rich algebraic-geometric structure recently elucidated by Petter Brändén and June Huh in their celebrated work on Lorentzian polynomials.
+---
 
-The conjecture is falsifiable: a single explicit valuated matroid with depth exactly 2 would disprove it. So far, none has been found.
-
-## A New Language for Old Problems
-
-What makes the depth filtration more than a curiosity is its simultaneous interpretability in multiple mathematical languages:
-
-- In **combinatorics**, it measures how many layers of log-concavity a discrete function sustains.
-- In **tropical geometry**, it measures the persistence length of tropical convexity under iterated differentiation.
-- In **discrete optimization**, it refines the M-convexity classification that governs efficient algorithms.
-- In **statistical physics**, it measures the depth of stability of an energy landscape.
-- In **algebraic geometry**, it echoes the Hodge-Riemann positivity conditions that underlie the most powerful results in the field.
-
-This multi-domain interpretability is rare in mathematics. It suggests that directional depth captures something fundamental about discrete structures — something that previous invariants saw only in shadow.
-
-## Looking Forward
-
-The theory is young, and many questions remain open. Can depth be computed efficiently for large systems? Does the dichotomy conjecture hold for all naturally arising matroids, or are there exotic counterexamples lurking in higher dimensions? Can the depth filtration be extended to continuous settings, providing a bridge to classical differential geometry?
-
-Most ambitiously: does infinite depth characterize precisely the class of Lorentzian polynomials? If so, the depth filtration would provide a new, elementary characterization of one of the most powerful objects in modern mathematics — defined not through algebraic geometry or Hodge theory, but through the simple, iterative operation of computing ratios and checking concavity.
-
-The tools are simple. The operation is elementary. But the layers of structure they reveal run deep — deeper, perhaps, than anyone expected. In the landscape of mathematics, it seems, the most profound features are sometimes hiding just one ratio transform away.
+*The research described here builds on foundational work by Brändén and Huh on Lorentzian polynomials, Murota's discrete convex analysis, and the theory of tropical geometry. The computational results were generated by algorithms that exhaustively test log-concavity at each depth level, providing rigorous lower bounds on the depth invariant.*
