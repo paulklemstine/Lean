@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1965 of the highest-quality
+A curated collection of 1969 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1965
+Total files: 1969
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1440,6 +1440,7 @@ import FINAL.Physics.VonNeumannEntropy
 import FINAL.Physics.WeightEnumerator
 import FINAL.Physics.YangMillsMassGap
 import FINAL.Pythagorean.AbelianizationTorsion
+import FINAL.Pythagorean.AdaptiveOverlapRounding
 import FINAL.Pythagorean.AdelicPersistentHomology
 import FINAL.Pythagorean.AdvancedFactoringResearch
 import FINAL.Pythagorean.AlgorithmicLatticeDiophantine
@@ -1642,6 +1643,7 @@ import FINAL.Pythagorean.STLCDefs
 import FINAL.Pythagorean.SandwichDefs
 import FINAL.Pythagorean.SandwichGraph
 import FINAL.Pythagorean.SandwichTheorems
+import FINAL.Pythagorean.SemidirectUniversality
 import FINAL.Pythagorean.Separation
 import FINAL.Pythagorean.SeparatorAwareForgetting
 import FINAL.Pythagorean.ShadowCircuitComplexity
@@ -1685,11 +1687,13 @@ import FINAL.Pythagorean.TropicalLorentzianShadows
 import FINAL.Pythagorean.TropicalMConvexity
 import FINAL.Pythagorean.TropicalMarkov
 import FINAL.Pythagorean.TropicalPAdicBerggren
+import FINAL.Pythagorean.TropicalPhaseTransition
 import FINAL.Pythagorean.TropicalSpectralMatroid
 import FINAL.Pythagorean.TropicalTensorDistributivity
 import FINAL.Pythagorean.TypeComplexityBounds
 import FINAL.Pythagorean.TypeComplexityProductsSums
 import FINAL.Pythagorean.TypedCongruenceClosure
+import FINAL.Pythagorean.UniformMatroidLorentzian
 import FINAL.Pythagorean.UniformitySharpness
 import FINAL.Pythagorean.UniversalCertifiedAlgebraicComputation
 import FINAL.Pythagorean.UniversalParent
