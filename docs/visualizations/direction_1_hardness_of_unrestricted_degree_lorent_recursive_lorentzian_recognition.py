@@ -1,52 +1,63 @@
 #!/usr/bin/env python3
 """
-algorithms.py — Algorithms for Lorentzian recognition complexity analysis.
+Algorithms for Lorentzian Polynomial Recognition and Complexity Analysis
 
 Implements:
-1. Derivative tree enumeration for multivariate polynomials
-2. Quadratic leaf counting and Hessian extraction
-3. Lorentzian signature testing via eigenvalue analysis
-4. SAT-to-polynomial reduction
-5. Certificate complexity computation
+1. Multiindex enumeration and counting
+2. Derivative tree construction
+3. Hessian computation and Lorentzian signature checking
+4. Certificate complexity computation
+5. CNF-to-polynomial encoding (experimental)
 
 All algorithms include complexity analysis and example usage.
 """
 
 import numpy as np
-from math import comb, factorial
-from typing import List, Tuple, Dict, Set, Optional, Callable
-from itertools import product as iproduct
-from functools import reduce
+from math import comb
+from typing import List, Tuple, Dict, Optional, Set
+from itertools import product as iter_product
+from functools import lru_cache
 
 
-# ─────────────────────────────────────────────────────────────────────
+# ============================================================
 # Algorithm 1: Multiindex Enumeration
-# ─────────────────────────────────────────────────────────────────────
+# ============================================================
+# Pseudocode:
+#   ENUMERATE-MULTIINDICES(n, d):
+#     if n == 0: return {()} if d == 0 else {}
+#     if n == 1: return {(d,)}
+#     result = {}
+#     for k = 0 to d:
+#       for α' in ENUMERATE-MULTIINDICES(n-1, d-k):
+#         result.add((k,) + α')
+#     return result
+#
+# Time: O(|output|) = O(C(n+d-1, d))
+# Space: O(n * d) for recursion stack
 
 def enumerate_multiindices(n: int, d: int) -> List[Tuple[int, ...]]:
-    """Enumerate all multiindices α ∈ ℕⁿ with |α| = d.
-    
-    Uses a recursive generating algorithm based on stars-and-bars.
-    
-    Time complexity: O(C(n+d-1, d)) — proportional to the output size.
-    Space complexity: O(n · d) for the recursion stack.
-    
+    """
+    Enumerate all multiindices α ∈ ℕ^n with |α| = d.
+
     Args:
         n: Number of variables
-        d: Weight (total degree)
-    
+        d: Total weight
+
     Returns:
-        List of all multiindices as tuples.
-    
+        List of all multiindices as tuples
+
+    Complexity:
+        Time: O(C(n+d-1, d)) — proportional to output size
+        Space: O(n*d) stack depth
+
     Example:
         >>> enumerate_multiindices(2, 3)
-        [(3, 0), (2, 1), (1, 2), (0, 3)]
+        [(0, 3), (1, 2), (2, 1), (3, 0)]
     """
     if n == 0:
         return [()] if d == 0 else []
     if n == 1:
         return [(d,)]
-    
     result = []
     for k in range(d + 1):
         for rest in enumerate_multiindices(n - 1, d - k):
@@ -55,353 +66,300 @@ def enumerate_multiindices(n: int, d: int) -> List[Tuple[int, ...]]:
 
 
 def multiindex_count(n: int, d: int) -> int:
-    """Count multiindices of weight d in n variables.
-    
-    Equals C(n + d - 1, d) by stars-and-bars.
-    
-    Time complexity: O(min(n, d)) for the binomial coefficient.
-    
-    Example:
-        >>> multiindex_count(3, 4)
-        15
+    """
+    Count multiindices of weight d in n variables.
+    Uses the stars-and-bars formula: C(n+d-1, d).
+
+    Time: O(min(n, d))
     """
     if n == 0:
         return 1 if d == 0 else 0
     return comb(n + d - 1, d)
 
 
-# ─────────────────────────────────────────────────────────────────────
+# ============================================================
 # Algorithm 2: Polynomial Representation and Derivatives
-# ─────────────────────────────────────────────────────────────────────
+# ============================================================
 
-class MvPolynomial:
-    """Sparse multivariate polynomial over ℝ.
-    
-    Represented as a dictionary mapping exponent tuples to coefficients.
+class HomogeneousPolynomial:
     """
-    
-    def __init__(self, n_vars: int, terms: Optional[Dict[tuple, float]] = None):
-        self.n_vars = n_vars
-        self.terms = terms or {}
-    
-    def add_term(self, exponent: tuple, coeff: float):
-        """Add a term c · x^α to the polynomial."""
-        if len(exponent) != self.n_vars:
-            raise ValueError(f"Exponent has {len(exponent)} components, expected {self.n_vars}")
-        key = exponent
-        self.terms[key] = self.terms.get(key, 0.0) + coeff
-        if abs(self.terms[key]) < 1e-15:
-            del self.terms[key]
-    
-    def degree(self) -> int:
-        """Maximum total degree of any term."""
-        if not self.terms:
-            return -1
-        return max(sum(e) for e in self.terms.keys())
-    
-    def partial_derivative(self, var_idx: int) -> 'MvPolynomial':
-        """Compute ∂f/∂x_{var_idx}.
-        
-        Time complexity: O(|terms|).
+    A homogeneous polynomial represented as a dict from multiindices to coefficients.
+
+    Supports:
+    - Partial differentiation
+    - Hessian computation
+    - Degree and variable count queries
+    """
+
+    def __init__(self, n: int, d: int, coeffs: Dict[Tuple[int, ...], float]):
         """
-        result = MvPolynomial(self.n_vars)
-        for exponent, coeff in self.terms.items():
-            if exponent[var_idx] > 0:
-                new_exp = list(exponent)
-                new_coeff = coeff * exponent[var_idx]
-                new_exp[var_idx] -= 1
-                result.add_term(tuple(new_exp), new_coeff)
-        return result
-    
-    def iterated_partial_derivative(self, alpha: tuple) -> 'MvPolynomial':
-        """Compute ∂^|α| f / (∂x_0^{α_0} · ... · ∂x_{n-1}^{α_{n-1}}).
-        
-        Time complexity: O(|α| · |terms|).
+        Args:
+            n: Number of variables
+            d: Degree
+            coeffs: Map from multiindex (tuple of n ints summing to d) to coefficient
         """
-        result = MvPolynomial(self.n_vars, dict(self.terms))
-        for var_idx in range(self.n_vars):
-            for _ in range(alpha[var_idx]):
-                result = result.partial_derivative(var_idx)
+        self.n = n
+        self.d = d
+        self.coeffs = {k: v for k, v in coeffs.items() if abs(v) > 1e-15}
+
+    def partial_derivative(self, var: int) -> 'HomogeneousPolynomial':
+        """
+        Compute ∂f/∂x_var.
+
+        Time: O(|support|)
+        """
+        new_coeffs = {}
+        for alpha, coeff in self.coeffs.items():
+            if alpha[var] > 0:
+                new_alpha = list(alpha)
+                new_coeff = coeff * alpha[var]
+                new_alpha[var] -= 1
+                new_coeffs[tuple(new_alpha)] = new_coeffs.get(tuple(new_alpha), 0) + new_coeff
+        return HomogeneousPolynomial(self.n, max(self.d - 1, 0), new_coeffs)
+
+    def iterated_derivative(self, alpha: Tuple[int, ...]) -> 'HomogeneousPolynomial':
+        """
+        Compute the iterated partial derivative ∂^|α|f / ∂x₀^α₀ ∂x₁^α₁ ...
+
+        Time: O(|α| * |support|)
+        """
+        result = self
+        for var in range(self.n):
+            for _ in range(alpha[var]):
+                result = result.partial_derivative(var)
         return result
-    
-    def evaluate(self, point: List[float]) -> float:
-        """Evaluate the polynomial at a point."""
-        total = 0.0
-        for exponent, coeff in self.terms.items():
-            term = coeff
-            for i, e in enumerate(exponent):
-                term *= point[i] ** e
-            total += term
-        return total
-    
+
     def hessian_matrix(self) -> np.ndarray:
-        """Extract the Hessian matrix (matrix of second partial derivatives).
-        
-        For a degree-2 polynomial, this captures all information.
-        Returns the matrix H where H[i,j] = coefficient of x_i x_j
-        in the second derivative.
-        
-        Time complexity: O(n² · |terms|).
         """
-        n = self.n_vars
-        H = np.zeros((n, n))
-        for i in range(n):
-            for j in range(n):
-                df = self.partial_derivative(i).partial_derivative(j)
-                # Extract constant term
-                zero_exp = tuple([0] * n)
-                H[i, j] = df.terms.get(zero_exp, 0.0)
+        Compute the Hessian matrix at the origin.
+        For a quadratic f = Σ aᵢⱼ xᵢxⱼ, H[i][j] = coeff of ∂²f/∂xᵢ∂xⱼ evaluated at 0.
+
+        Time: O(n² * |support|)
+        """
+        H = np.zeros((self.n, self.n))
+        for i in range(self.n):
+            fi = self.partial_derivative(i)
+            for j in range(self.n):
+                fij = fi.partial_derivative(j)
+                # Constant term of fij
+                zero_idx = tuple([0] * self.n)
+                H[i][j] = fij.coeffs.get(zero_idx, 0.0)
         return H
-    
-    def is_homogeneous(self, d: int) -> bool:
-        """Check if the polynomial is homogeneous of degree d."""
-        return all(sum(e) == d for e in self.terms.keys())
-    
+
     def has_nonneg_coefficients(self) -> bool:
-        """Check if all coefficients are nonnegative."""
-        return all(c >= -1e-15 for c in self.terms.values())
-    
+        """Check if all coefficients are nonneg."""
+        return all(c >= -1e-15 for c in self.coeffs.values())
+
+    def evaluate(self, x: np.ndarray) -> float:
+        """Evaluate the polynomial at point x."""
+        result = 0.0
+        for alpha, coeff in self.coeffs.items():
+            term = coeff
+            for i, a in enumerate(alpha):
+                term *= x[i] ** a
+            result += term
+        return result
+
     def __repr__(self):
-        if not self.terms:
-            return "0"
-        parts = []
-        for exp, coeff in sorted(self.terms.items(), key=lambda x: (-sum(x[0]), x[0])):
-            vars_str = " · ".join(
-                f"x{i}^{e}" if e > 1 else f"x{i}"
-                for i, e in enumerate(exp) if e > 0
-            )
-            if not vars_str:
-                vars_str = "1"
-            parts.append(f"{coeff:.0f}·{vars_str}" if coeff != 1 else vars_str)
-        return " + ".join(parts[:10]) + ("..." if len(parts) > 10 else "")
+        terms = []
+        for alpha, coeff in sorted(self.coeffs.items()):
+            if abs(coeff) < 1e-15:
+                continue
+            vars_str = "".join(f"x{i}^{a}" if a > 1 else f"x{i}" if a == 1 else ""
+                               for i, a in enumerate(alpha))
+            terms.append(f"{coeff:.0f}·{vars_str}" if vars_str else f"{coeff:.0f}")
+        return " + ".join(terms) if terms else "0"
 
 
-# ─────────────────────────────────────────────────────────────────────
-# Algorithm 3: Recursive Lorentzian Recognition
-# ─────────────────────────────────────────────────────────────────────
+# ============================================================
+# Algorithm 3: Lorentzian Recognition via Derivative Tree
+# ============================================================
+# Pseudocode:
+#   IS-RECURSIVELY-LORENTZIAN(f, n, d):
+#     if not f.has_nonneg_coefficients(): return False
+#     if d < 2: return True
+#     for each α with |α| = d-2:
+#       g = iterated_derivative(f, α)  // quadratic
+#       H = hessian(g)
+#       eigenvalues = eigenvalues(H)
+#       if count(eigenvalues > 0) > 1: return False
+#     return True
+#
+# Time: O(C(n+d-3, d-2) * n² * |support|)
+# Space: O(n²) for Hessian
 
-def is_lorentzian_signature(A: np.ndarray, tol: float = 1e-8) -> bool:
-    """Test if a symmetric matrix has Lorentzian signature.
-    
-    A symmetric matrix has Lorentzian signature if it has at most one
-    positive eigenvalue.
-    
-    Time complexity: O(n³) for eigenvalue decomposition.
-    
-    Args:
-        A: Symmetric matrix
-        tol: Tolerance for eigenvalue sign determination
-    
-    Returns:
-        True if A has at most one positive eigenvalue.
+def is_lorentzian_quadratic(H: np.ndarray, tol: float = 1e-10) -> bool:
     """
-    eigenvalues = np.linalg.eigvalsh(A)
-    n_positive = np.sum(eigenvalues > tol)
-    return n_positive <= 1
+    Check if a symmetric matrix has at most one positive eigenvalue.
 
-
-def recursive_lorentzian_check(poly: MvPolynomial, degree: int,
-                                verbose: bool = False) -> Tuple[bool, int]:
-    """Recursively check if a polynomial is Lorentzian.
-    
-    Implements the recursive descent: for each multiindex α with |α| = d-2,
-    compute the iterated derivative ∂^α f and check that its Hessian has
-    Lorentzian signature.
-    
-    Time complexity: O(C(n+d-3, d-2) · n² · |terms|) — the product of
-    leaf count, Hessian size, and derivative cost.
-    
-    Args:
-        poly: Multivariate polynomial to check
-        degree: Expected homogeneous degree
-        verbose: Print details of each leaf check
-    
-    Returns:
-        (is_lorentzian, num_leaves_checked)
+    Time: O(n³) for eigenvalue computation
     """
-    n = poly.n_vars
-    
-    # Check nonnegative coefficients
-    if not poly.has_nonneg_coefficients():
-        return False, 0
-    
-    # Check homogeneity
-    if not poly.is_homogeneous(degree):
-        return False, 0
-    
-    if degree < 2:
-        return True, 1
-    
-    # Enumerate all multiindices of weight d-2
-    multiindices = enumerate_multiindices(n, degree - 2)
-    leaves_checked = 0
-    
+    eigenvalues = np.linalg.eigvalsh(H)
+    return np.sum(eigenvalues > tol) <= 1
+
+
+def check_lorentzian_recursive(f: HomogeneousPolynomial) -> Tuple[bool, List[str]]:
+    """
+    Check if a polynomial is recursively Lorentzian.
+
+    Returns:
+        (is_lorentzian, list of obstruction descriptions)
+
+    Complexity:
+        Time: O(C(n+d-3, d-2) * (n² * |support| + n³))
+        Space: O(n²)
+    """
+    if not f.has_nonneg_coefficients():
+        return False, ["Negative coefficient found"]
+
+    if f.d < 2:
+        return True, []
+
+    obstructions = []
+    multiindices = enumerate_multiindices(f.n, f.d - 2)
+
     for alpha in multiindices:
-        # Compute iterated derivative
-        deriv = poly.iterated_partial_derivative(alpha)
-        
-        # Extract Hessian
-        H = deriv.hessian_matrix()
-        
-        # Check Lorentzian signature
-        is_lor = is_lorentzian_signature(H)
-        leaves_checked += 1
-        
-        if verbose:
-            evals = np.sort(np.linalg.eigvalsh(H))[::-1]
-            status = "✓" if is_lor else "✗"
-            print(f"  α={alpha}: eigenvalues={np.round(evals, 3)}, Lorentzian={status}")
-        
-        if not is_lor:
-            return False, leaves_checked
-    
-    return True, leaves_checked
+        g = f.iterated_derivative(alpha)
+        H = g.hessian_matrix()
+        if not is_lorentzian_quadratic(H):
+            eigenvalues = np.sort(np.linalg.eigvalsh(H))[::-1]
+            obstructions.append(
+                f"α={alpha}: eigenvalues={eigenvalues}, "
+                f"{np.sum(eigenvalues > 1e-10)} positive"
+            )
+
+    return len(obstructions) == 0, obstructions
 
 
-# ─────────────────────────────────────────────────────────────────────
-# Algorithm 4: SAT-to-Polynomial Encoding
-# ─────────────────────────────────────────────────────────────────────
+# ============================================================
+# Algorithm 4: Certificate Complexity Computation
+# ============================================================
 
-def cnf_to_polynomial(num_vars: int,
-                       clauses: List[List[Tuple[int, bool]]],
-                       homogenize: bool = True) -> MvPolynomial:
-    """Encode a CNF formula as a multivariate polynomial.
-    
-    For each clause C_j = (l_1 ∨ ... ∨ l_k), we construct the product
-    ∏_{i∈vars(C_j)} t_i where t_i = x_{2i} if x_i ∈ C_j (positive literal)
-    and t_i = x_{2i+1} if ¬x_i ∈ C_j (negative literal).
-    
-    The encoding polynomial is the sum of all clause products.
-    
-    If homogenize=True, we multiply each clause product by slack variables
-    to make all terms the same total degree.
-    
-    Time complexity: O(m · 2^k) where m = number of clauses, k = max clause size.
-    
-    Args:
-        num_vars: Number of Boolean variables
-        clauses: List of clauses as (var_index, polarity) pairs
-        homogenize: Whether to homogenize the polynomial
-    
-    Returns:
-        MvPolynomial encoding the formula
+def certificate_complexity(n: int, d: int) -> int:
     """
-    n = num_vars
-    # Use 2n variables: x_0, y_0, x_1, y_1, ..., x_{n-1}, y_{n-1}
-    # Plus possibly a homogenizing variable
-    n_poly_vars = 2 * n + (1 if homogenize else 0)
-    poly = MvPolynomial(n_poly_vars)
-    
-    max_clause_size = max(len(c) for c in clauses) if clauses else 0
-    
-    for clause in clauses:
-        # Build the monomial for this clause
-        exponent = [0] * n_poly_vars
-        for var_idx, polarity in clause:
-            if polarity:
-                exponent[2 * var_idx] += 1
-            else:
-                exponent[2 * var_idx + 1] += 1
-        
-        # Homogenize by adding slack variable powers
-        if homogenize and len(clause) < max_clause_size:
-            exponent[-1] = max_clause_size - len(clause)
-        
-        poly.add_term(tuple(exponent), 1.0)
-    
-    return poly
+    Compute the certificate complexity (number of quadratic leaves).
 
-
-# ─────────────────────────────────────────────────────────────────────
-# Algorithm 5: Certificate Complexity Analysis
-# ─────────────────────────────────────────────────────────────────────
-
-def certificate_complexity_bounds(n: int, d: int) -> Dict[str, int]:
-    """Compute certificate complexity bounds for Lorentzian recognition.
-    
-    Returns the exact stars-and-bars count, the polynomial upper bound n^(d-2),
-    and the exponential lower bound 2^(d-2) (when applicable).
-    
-    Time complexity: O(1) for each bound computation.
-    
-    Args:
-        n: Number of variables
-        d: Polynomial degree
-    
-    Returns:
-        Dictionary with 'exact', 'upper_bound', 'lower_bound', 'regime' keys.
+    Time: O(min(n, d-2))
     """
     if d < 2:
-        return {
-            'exact': 1,
-            'upper_bound': 1,
-            'lower_bound': 1,
-            'regime': 'trivial'
-        }
-    
-    k = d - 2
-    exact = comb(n + k - 1, k) if n > 0 else (1 if k == 0 else 0)
-    upper = n ** k if n > 0 else 0
-    lower = 2 ** k if 2 * k <= n else max(1, k + 1)
-    
-    # Determine regime
-    if 2 * k <= n:
-        regime = 'exponential' if k > 10 else 'moderate'
-    else:
-        regime = 'polynomial'
-    
-    return {
-        'exact': exact,
-        'upper_bound': upper,
-        'lower_bound': lower,
-        'regime': regime
-    }
+        return 1
+    return multiindex_count(n, d - 2)
 
 
-# ─────────────────────────────────────────────────────────────────────
-# Example usage
-# ─────────────────────────────────────────────────────────────────────
+def certificate_complexity_table(max_n: int = 15, max_d: int = 15) -> None:
+    """Print a table of certificate complexities."""
+    print(f"\nCertificate Complexity Table (n × d):")
+    print(f"{'n\\d':>4}", end="")
+    for d in range(2, max_d + 1):
+        print(f"{d:>8}", end="")
+    print()
+    for n in range(1, max_n + 1):
+        print(f"{n:4d}", end="")
+        for d in range(2, max_d + 1):
+            cc = certificate_complexity(n, d)
+            if cc < 10**6:
+                print(f"{cc:8d}", end="")
+            else:
+                print(f"{'>' + str(int(np.log2(cc)))+'b':>8}", end="")
+        print()
+
+
+# ============================================================
+# Algorithm 5: CNF to Polynomial Encoding (Experimental)
+# ============================================================
+
+def cnf_to_polynomial(num_vars: int, clauses: List[List[Tuple[int, bool]]],
+                      degree: Optional[int] = None) -> HomogeneousPolynomial:
+    """
+    Encode a CNF formula as a homogeneous polynomial.
+
+    Strategy: For each clause C, create a monomial product of literal terms.
+    A positive literal x_i contributes x_i; a negative literal ¬x_i contributes (1-x_i).
+    The result is then homogenized to degree d using a slack variable.
+
+    This is an experimental encoding for exploring the SAT-Lorentzian connection.
+
+    Args:
+        num_vars: Number of Boolean variables
+        clauses: List of clauses
+        degree: Target degree (default: num_vars + 2)
+
+    Returns:
+        HomogeneousPolynomial with num_vars + 1 variables (last is slack)
+    """
+    n = num_vars + 1  # +1 for homogenization variable
+    if degree is None:
+        degree = num_vars + 2
+
+    coeffs: Dict[Tuple[int, ...], float] = {}
+
+    for clause in clauses:
+        # Each clause contributes a sum of literal monomials
+        for lit_var, lit_pol in clause:
+            alpha = [0] * n
+            if lit_pol:  # positive literal: x_i * slack^(d-1)
+                alpha[lit_var] = 1
+                alpha[-1] = degree - 1
+            else:  # negative literal: slack^d (represents "not x_i")
+                alpha[-1] = degree
+            key = tuple(alpha)
+            coeffs[key] = coeffs.get(key, 0) + 1.0
+
+    # Add a base polynomial for stability
+    for i in range(n):
+        alpha = [0] * n
+        alpha[i] = degree
+        key = tuple(alpha)
+        coeffs[key] = coeffs.get(key, 0) + 1.0
+
+    return HomogeneousPolynomial(n, degree, coeffs)
+
+
+# ============================================================
+# Example Usage
+# ============================================================
 
 if __name__ == "__main__":
-    print("=== Multiindex Enumeration ===")
-    for n, d in [(2, 3), (3, 2), (4, 1)]:
-        indices = enumerate_multiindices(n, d)
-        print(f"  n={n}, d={d}: {len(indices)} multiindices")
-        if len(indices) <= 10:
-            for idx in indices:
-                print(f"    {idx}")
-    
-    print("\n=== Polynomial Derivative Tree ===")
-    # Create x^3 + y^3 + 3xy(x+y) = (x+y)^3 - known Lorentzian
-    p = MvPolynomial(2)
-    p.add_term((3, 0), 1.0)  # x^3
-    p.add_term((0, 3), 1.0)  # y^3
-    p.add_term((2, 1), 3.0)  # 3x^2y
-    p.add_term((1, 2), 3.0)  # 3xy^2
-    print(f"  Polynomial: {p}")
-    print(f"  Degree: {p.degree()}")
-    print(f"  Homogeneous: {p.is_homogeneous(3)}")
-    print(f"  Nonneg coefficients: {p.has_nonneg_coefficients()}")
-    
-    is_lor, leaves = recursive_lorentzian_check(p, 3, verbose=True)
-    print(f"  Lorentzian: {is_lor} ({leaves} leaves checked)")
-    
-    print("\n=== Certificate Complexity ===")
-    for d in [4, 6, 8, 10, 15, 20]:
-        n = 2 * d
-        bounds = certificate_complexity_bounds(n, d)
-        print(f"  d={d}, n={n}: exact={bounds['exact']:,}, "
-              f"upper={bounds['upper_bound']:,}, "
-              f"lower={bounds['lower_bound']:,}, "
-              f"regime={bounds['regime']}")
-    
-    print("\n=== SAT Encoding ===")
-    # Encode a simple 2-SAT instance
-    clauses = [
-        [(0, True), (1, True)],
-        [(0, False), (1, False)],
-    ]
-    poly = cnf_to_polynomial(2, clauses, homogenize=True)
-    print(f"  Formula: (x0 ∨ x1) ∧ (¬x0 ∨ ¬x1)")
-    print(f"  Encoding: {poly}")
-    print(f"  Degree: {poly.degree()}")
+    print("=" * 60)
+    print("Algorithms for Lorentzian Recognition")
+    print("=" * 60)
+
+    # Example 1: Simple quadratic
+    print("\n--- Example 1: x0² + 2x0x1 + x1² (Lorentzian) ---")
+    f1 = HomogeneousPolynomial(2, 2, {(2, 0): 1, (1, 1): 2, (0, 2): 1})
+    print(f"Polynomial: {f1}")
+    H1 = f1.hessian_matrix()
+    print(f"Hessian: {H1}")
+    is_lor1, obs1 = check_lorentzian_recursive(f1)
+    print(f"Lorentzian: {is_lor1}")
+
+    # Example 2: x0² + x1² (NOT Lorentzian)
+    print("\n--- Example 2: x0² + x1² (Not Lorentzian) ---")
+    f2 = HomogeneousPolynomial(2, 2, {(2, 0): 1, (0, 2): 1})
+    print(f"Polynomial: {f2}")
+    H2 = f2.hessian_matrix()
+    print(f"Hessian: {H2}")
+    is_lor2, obs2 = check_lorentzian_recursive(f2)
+    print(f"Lorentzian: {is_lor2}")
+    for o in obs2:
+        print(f"  Obstruction: {o}")
+
+    # Example 3: Higher degree
+    print("\n--- Example 3: x0³ + 3x0²x1 + 3x0x1² + x1³ = (x0+x1)³ ---")
+    f3 = HomogeneousPolynomial(2, 3, {(3, 0): 1, (2, 1): 3, (1, 2): 3, (0, 3): 1})
+    is_lor3, obs3 = check_lorentzian_recursive(f3)
+    print(f"Polynomial: {f3}")
+    print(f"Lorentzian: {is_lor3}")
+
+    # Example 4: Certificate complexity
+    print("\n--- Certificate Complexity ---")
+    certificate_complexity_table(10, 10)
+
+    # Example 5: CNF encoding
+    print("\n--- CNF-to-Polynomial Encoding (Experimental) ---")
+    clauses = [[(0, True), (1, False)], [(1, True), (2, True)]]
+    p_phi = cnf_to_polynomial(3, clauses, degree=4)
+    print(f"CNF: (x0 ∨ ¬x1) ∧ (x1 ∨ x2)")
+    print(f"Encoded polynomial: {p_phi}")
+    is_lor_phi, obs_phi = check_lorentzian_recursive(p_phi)
+    print(f"Lorentzian: {is_lor_phi}")
