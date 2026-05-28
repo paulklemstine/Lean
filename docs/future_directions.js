@@ -59,10 +59,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4f52133",
     "timestamp": "2026-05-24T23:11:24.492421+00:00"
   },
   {
@@ -138,10 +138,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "4bb846ce",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T17:14:31.193329+00:00"
   },
   {
@@ -791,10 +791,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "78306251",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7862f71",
     "timestamp": "2026-05-27T19:12:47.048620+00:00"
   },
   {
@@ -812,10 +812,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "f43533d0",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "929047ba",
     "timestamp": "2026-05-28T01:19:07.666079+00:00"
   },
   {
@@ -831,10 +831,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "d74bda34",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d1e68d2",
     "timestamp": "2026-05-28T06:14:19.083806+00:00"
   },
   {
@@ -1247,27 +1247,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T19:09:44.483512+00:00"
   },
   {
-    "id": "fd_1925",
-    "title": "Direction 1: Lorentzian Closure Under Edge Multiplication",
-    "description": "**Conjecture:** For every finite graph G with non-negative couplings J \u2265 0 and \u03b2 \u2265 0, the multiaffine sector of the partition polynomial \u2014 viewed as a function of the field variables \u2014 satisfies the Lorentzian condition: all iterated directional derivatives down to degree 2 yield quadratic forms with at most one positive eigenvalue, provided the directional derivatives use vectors in the positive orthant.\n\n**Test:** Compute the Hessian eigenvalues after specializing n-2 variables to positive values for complete graphs K_3 through K_7, triangle-free graphs, and random graphs, at multiple coupling strengths. A single configuration yielding two positive eigenvalues at a positive specialization point disproves the conjecture.\n\n**Impact:** If true, this would establish the full Lorentzian structure of ferromagnetic partition polynomials, completing the bridge between Lee-Yang stability theory and Br\u00e4nd\u00e9n-Huh Lorentzian geometry. It would give structural proofs of log-concavity results for specialized coefficient sequences.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianAggregateAntiCancel.lean` \u2014 anti-cancellation engine\n- `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean` \u2014 Lorentzian gap certificates\n\n**Proof Strategy:** Strategy B from the current work: decompose the partition polynomial as a product of edge factors, prove each edge factor is Lorentzian (using the multiaffine Hessian signature result for two variables), then apply Lorentzian closure under products / polarized compositions. The key missing ingredient is a formalized Lorentzian closure theorem for multiaffine products.\n\n**Domain Bridges:** Statistical physics \u2194 Combinatorial Hodge theory \u2194 Algebraic geometry\n\n**Lineage:** Extends Theorems 2 and 3 of the current work from two spins to general graphs.\n\n**Ambition:** grand_challenge \u2014 Would establish a complete Lorentzian theory of partition functions.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "37e69c75",
-    "consumed_by_exp_id": "67a8a470",
-    "timestamp": "2026-05-28T20:34:24.776436+00:00"
-  },
-  {
     "id": "fd_1927",
     "title": "Direction 3: Phase Transition Detection via Hessian Rank Degeneration",
     "description": "**Conjecture:** The critical temperature \u03b2_c of the ferromagnetic Ising model on a sequence of growing graphs (e.g., boxes in Z^d) can be detected as the value of \u03b2 where the multiaffine Hessian of the partition polynomial undergoes a rank transition: the number of eigenvalues exceeding a threshold changes discontinuously (in the infinite-volume limit).\n\n**Test:** For the Ising model on L \u00d7 L square lattices (L = 3, 4, 5, 6), compute the Hessian eigenvalue distribution at \u03b2 values bracketing the known critical point \u03b2_c = ln(1+\u221a2)/2. Track the fraction of eigenvalues above various thresholds and test for finite-size scaling consistent with a rank transition.\n\n**Impact:** Would provide a novel algebraic criterion for phase transitions, distinct from the standard thermodynamic (free energy singularity) and probabilistic (correlation length divergence) criteria. Could lead to algorithms for detecting phase transitions from finite-size polynomial data.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianAggregateAntiCancel.lean` \u2014 Hessian structure\n- `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean` \u2014 spectral gap degradation near criticality\n\n**Proof Strategy:** Use the Newton inequality threshold (Theorem 7) as a prototype: for two spins, the threshold \u03b2_c = ln 2 / J is exact. For general graphs, establish that the threshold for the first Newton inequality failure converges to the true critical temperature as graph size grows.\n\n**Domain Bridges:** Statistical physics \u2194 Random matrix theory \u2194 Spectral graph theory\n\n**Lineage:** Extends Theorem 7 (levelWeight\u2082_newton_iff) from two spins to general graphs.\n\n**Ambition:** grand_challenge \u2014 Would create a new algebraic approach to critical phenomena.\n\n---",
@@ -1302,12 +1281,33 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f7968947",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T21:46:03.276610+00:00"
+  },
+  {
+    "id": "fd_1949",
+    "title": "Direction 2: M-Convex Support Compression Beyond Matroids",
+    "description": "**Conjecture:** For any homogeneous polynomial with nonneg coefficients whose Newton support is M-convex (satisfies the symmetric exchange property), the nonzero quadratic leaf count is at most $\\binom{\\omega}{d-2}$ where $\\omega$ is the support width (number of active coordinates) and $d$ is the degree. Moreover, the M-convex exchange structure provides a recursive decomposition of the leaf set that enables sublinear-time certification.\n\n**Test:** Construct M-convex supports that are not matroid basis supports (e.g., from generalized permutohedra, polymatroid rank functions, or valuated matroid theory). Compute leaf counts and verify the $\\binom{\\omega}{d-2}$ bound. Search for M-convex supports where the bound is tight.\n\n**Impact:** This would extend support compression from matroids to the full class of M-convex polynomials, which includes Schur polynomials, volume polynomials of polytopes, and multivariate Tutte polynomials. It would establish discrete convex analysis as a universal tool for Lorentzian certification.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`, `NewtonSupport`\n- `Catalog/Pythagorean/SupportCertificateCompression.lean`: `supportCompressedLeafCount_le_active_choose`\n\n**Proof Strategy:** Use the M-convex exchange property to show that the \"shadow\" of the support at depth $d - 2$ (the set of $(d-2)$-level finsupps dominated by some support element) is contained in the $(d-2)$-skeleton of the convex hull of active coordinates. The exchange property guarantees that this shadow is itself M-convex or at least hereditary.\n\n**Domain Bridges:** Discrete convex analysis (Murota's theory), tropical geometry (tropical convexity of support sets), algebraic combinatorics (Schur positivity and Lorentzianity).\n\n**Lineage:** Directly extends the active variable bound (Theorem 4) using the M-convex structure from the existing catalog.\n\n**Ambition:** Grand challenge \u2014 this would unify matroid-specific and general support compression.\n\n**The key insight is** that M-convex exchange is not just a combinatorial axiom but a pruning principle for derivative search trees, and the shadow of an M-convex set inherits structural properties that control its size.\n\n**Why now?** The `IsMConvexExchangeNat` definition and the `lorentzian_quadratic_support_mconvex` theorem (currently sorry'd in the catalog) provide the starting point. Completing this theorem would immediately yield the M-convex compression bound.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fcd58d33",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T21:46:22.088675+00:00"
   },
   {
     "id": "fd_0806",
@@ -1340,27 +1340,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1949",
-    "title": "Direction 2: M-Convex Support Compression Beyond Matroids",
-    "description": "**Conjecture:** For any homogeneous polynomial with nonneg coefficients whose Newton support is M-convex (satisfies the symmetric exchange property), the nonzero quadratic leaf count is at most $\\binom{\\omega}{d-2}$ where $\\omega$ is the support width (number of active coordinates) and $d$ is the degree. Moreover, the M-convex exchange structure provides a recursive decomposition of the leaf set that enables sublinear-time certification.\n\n**Test:** Construct M-convex supports that are not matroid basis supports (e.g., from generalized permutohedra, polymatroid rank functions, or valuated matroid theory). Compute leaf counts and verify the $\\binom{\\omega}{d-2}$ bound. Search for M-convex supports where the bound is tight.\n\n**Impact:** This would extend support compression from matroids to the full class of M-convex polynomials, which includes Schur polynomials, volume polynomials of polytopes, and multivariate Tutte polynomials. It would establish discrete convex analysis as a universal tool for Lorentzian certification.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`, `NewtonSupport`\n- `Catalog/Pythagorean/SupportCertificateCompression.lean`: `supportCompressedLeafCount_le_active_choose`\n\n**Proof Strategy:** Use the M-convex exchange property to show that the \"shadow\" of the support at depth $d - 2$ (the set of $(d-2)$-level finsupps dominated by some support element) is contained in the $(d-2)$-skeleton of the convex hull of active coordinates. The exchange property guarantees that this shadow is itself M-convex or at least hereditary.\n\n**Domain Bridges:** Discrete convex analysis (Murota's theory), tropical geometry (tropical convexity of support sets), algebraic combinatorics (Schur positivity and Lorentzianity).\n\n**Lineage:** Directly extends the active variable bound (Theorem 4) using the M-convex structure from the existing catalog.\n\n**Ambition:** Grand challenge \u2014 this would unify matroid-specific and general support compression.\n\n**The key insight is** that M-convex exchange is not just a combinatorial axiom but a pruning principle for derivative search trees, and the shadow of an M-convex set inherits structural properties that control its size.\n\n**Why now?** The `IsMConvexExchangeNat` definition and the `lorentzian_quadratic_support_mconvex` theorem (currently sorry'd in the catalog) provide the starting point. Completing this theorem would immediately yield the M-convex compression bound.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "fcd58d33",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T21:46:22.088675+00:00"
   },
   {
     "id": "seed_013",
@@ -2063,6 +2042,47 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T19:57:56.338721+00:00"
+  },
+  {
+    "id": "fd_1954",
+    "title": "Direction 1: Derived Localization and Higher Tor Persistence",
+    "description": "**Conjecture:** For persistence modules $F$ valued in chain complexes of abelian groups, the derived localization $\\mathbb{L}L_p(F)$ produces higher Tor terms $\\text{Tor}_i^{\\mathbb{Z}}(F, \\mathbb{Z}_{(p)})$ that measure the obstruction to primewise stability being an *equality* (rather than just a bound). Specifically, the failure of the natural map $H_*(L_p(F)) \\to L_p(H_*(F))$ to be an isomorphism is controlled by $\\text{Tor}_1$.\n\n**Test:** Formalize the derived base change spectral sequence for a concrete persistence module built from a simplicial complex with known torsion (e.g., $\\mathbb{RP}^2$). Compute $\\text{Tor}_1$ explicitly and verify that it measures the discrepancy between chain-level and homology-level localization.\n\n**Impact:** This would connect persistence stability to the Grothendieck spectral sequence and establish a bridge between computational topology and derived algebraic geometry. The higher Tor terms could serve as new persistence invariants capturing information invisible to ordinary barcodes.\n\n**Catalog References:**\n- `Catalog/Pythagorean/FunctorialLocalization.lean` \u2014 `localized_preserves_interleaving`, `pTorBirth_eq_globTorBirth_localized`\n- `Catalog/Pythagorean/PrimewiseTorsionStability.lean` \u2014 `pTorsionBirthSet_deltaClose`\n\n**Proof Strategy:** Define chain-level persistence modules as functors to $\\text{Ch}(\\mathbf{Ab})$. Construct $\\mathbb{L}L_p$ using flat resolutions of $\\mathbb{Z}_{(p)}$ (trivially: $\\mathbb{Z}_{(p)}$ is flat over $\\mathbb{Z}$, so $\\text{Tor}_i = 0$ for $i \\geq 1$ in the standard case). The interesting direction is when we replace $\\mathbb{Z}_{(p)}$ by non-flat quotients like $\\mathbb{Z}/p$ \u2014 then the Tor terms are nontrivial and carry persistence information.\n\n**Domain Bridges:** Derived algebraic geometry \u2194 topological data analysis; homological algebra \u2194 computational topology.\n\n**Lineage:** Builds directly on Theorem 1 (localized_preserves_interleaving) by extending from the abelian category level to the derived category.\n\n**Ambition:** Grand challenge \u2014 establishing derived persistence would open an entirely new computational and theoretical toolkit for TDA.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "92b77109",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T22:21:38.006841+00:00"
+  },
+  {
+    "id": "fd_1957",
+    "title": "Direction 4: Quantum Error Correction via Torsion Channel Codes",
+    "description": "**Conjecture:** The primewise decomposition of torsion persistence provides a natural framework for constructing quantum error-correcting codes with arithmetic structure. Specifically, a persistence module with torsion at multiple primes can be used to construct a *prime-channel code* where errors at different primes are corrected independently, analogous to the use of Chinese Remainder Theorem codes in classical coding theory.\n\n**The key insight is** that prime localization decomposes the torsion signal into independent channels (proved as `prime_channel_independence`), and independent channels are exactly what error-correcting codes need: errors in one channel don't affect others.\n\n**Why now?** The localization framework provides the mathematical infrastructure to construct and analyze these codes. The interleaving stability theorem guarantees that small perturbations (errors) at the code level produce small changes in the decoded signal.\n\n**Test:** Construct a toy code using $\\mathbb{Z}/6\\mathbb{Z} \\cong \\mathbb{Z}/2 \\oplus \\mathbb{Z}/3$ as the alphabet. Encode a message in the 2-channel and 3-channel independently. Introduce random errors and decode using the localization projection. Measure the error-correction rate.\n\n**Impact:** This would bridge quantum information theory and topological data analysis via the arithmetic structure of persistence modules. If the codes have good parameters, it would be of practical interest for quantum computing.\n\n**Catalog References:**\n- `Catalog/Pythagorean/FunctorialLocalization.lean` \u2014 `localized_witness_improvement`, `GlobTorDet_iff_exists_prime`\n- `Catalog/Pythagorean/PrimewiseTorsionStability.lean` \u2014 `prime_channel_independence`\n\n**Proof Strategy:** Define the code space as a tensor product of prime-channel persistence modules. Use the interleaving stability bound as the minimum distance of the code. Apply the localization functor as the decoding map.\n\n**Domain Bridges:** Quantum error correction \u2194 commutative algebra \u2194 topological data analysis.\n\n**Lineage:** Builds on Theorem 4 (witness improvement) and prime channel independence.\n\n**Ambition:** Grand challenge \u2014 speculative but with concrete testable predictions.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "92b77109",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T22:21:38.329974+00:00"
   },
   {
     "id": "seed_032",

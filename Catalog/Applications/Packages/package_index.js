@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Lorentzian Polynomial Geometry",
     "date": "2026-05-28T22:21:53Z",
     "exp_id": "67a8a470",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7284473998136067,
+    "quality": "substantial",
     "pkg_num": 273
   },
   {
@@ -7926,8 +7926,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-28T22:21:53Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7284473998136067,
+      "quality": "substantial"
     }
   ],
   "edges": [

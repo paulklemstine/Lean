@@ -889,5 +889,9 @@
   "06373e59": "direction_1_double_scaling_limit__when_does_m_matt.json",
   "f7968947": "direction_1_shadow_inequalities_for_lorentzian_pol.json",
   "fcd58d33": "direction_2_sparse_support_certificate_compression.json",
-  "2f6d2983": "direction_1_tight_lorentzian_stability_radii_for_m.json"
+  "2f6d2983": "direction_1_tight_lorentzian_stability_radii_for_m.json",
+  "a0bcb77f": "direction_3_arithmetic_statistics_of_graph_jacobia.json",
+  "a5048e13": "lehmers_mahler_measure_problem.json",
+  "92b77109": "direction_2_functorial_localization_of_persistence.json",
+  "67a8a470": "direction_1_lorentzian_closure_under_edge_multipli.json"
 }
