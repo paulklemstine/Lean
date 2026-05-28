@@ -249,10 +249,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "ad66d851",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b0c5ef34",
     "timestamp": "2026-05-25T18:40:03.296660+00:00"
   },
   {
@@ -341,7 +341,7 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "461e08e3",
+    "consumed_by_exp_id": "e1b326de",
     "timestamp": "2026-05-25T20:01:51.853060+00:00"
   },
   {
@@ -951,32 +951,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "0a042263",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T08:02:38.997972+00:00"
-  },
-  {
-    "id": "fd_1760",
-    "title": "Direction 2: Transversal Matroids and Bipartite Matching Complexity",
-    "description": "**Conjecture.** For transversal matroids arising from bipartite graphs with bounded degree \u0394, the quadratic leaf count grows as O(n^{r\u22122} \u00b7 \u0394^{O(1)}), where *r* is the rank. This is polynomial in *n* for fixed *r* and \u0394, and dramatically below the ambient bound when the bipartite graph is sparse.\n\n**Test.** Compute leaf counts for transversal matroids from:\n1. Random bipartite graphs with bounded degree \u0394 \u2208 {2, 3, 4}.\n2. Structured bipartite graphs: grids, expanders, Ramanujan bipartite graphs.\n3. Compare with the permanent of the biadjacency matrix (counting perfect matchings).\n\n**Impact.** Opens a route to efficient Lorentzian certification for assignment and scheduling problems, where the underlying combinatorial structure is a bipartite matching.\n\n**Catalog References.**\n- `Pythagorean/SupportCompressionPoly.lean`: `supportCompressedLeafCount_le_active_choose`\n- `Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`\n\n**Proof Strategy.** Bound the number of independent (*r*\u22122)-sets by relating them to partial matchings. Use the Tutte\u2013Berge formula or K\u00f6nig's theorem to control the structure of partial matchings in bounded-degree bipartite graphs.\n\n**Domain Bridges.** Matching theory \u2194 assignment problems \u2194 operations research.\n\n**Lineage.** Builds on the active variable bound (Theorem 4) and the hereditary property.\n\n**Ambition.** \u2605\u2605\u2605\u2606\u2606 \u2014 Solid, with clear practical applications.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
     "status": "in_progress",
     "research_mode": "prove",
-    "source_exp_id": "35f20969",
-    "consumed_by_exp_id": "efe94467",
-    "timestamp": "2026-05-28T09:50:28.931327+00:00"
+    "source_exp_id": "0a042263",
+    "consumed_by_exp_id": "6927c8b3",
+    "timestamp": "2026-05-28T08:02:38.997972+00:00"
   },
   {
     "id": "fd_1787",
@@ -1096,26 +1075,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "c6ae898d",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T14:11:01.665084+00:00"
-  },
-  {
-    "id": "fd_1820",
-    "title": "Direction 4: Fluctuation-Dissipation for DPPs (Statistical Physics Bridge)",
-    "description": "**Conjecture:** For a DPP at inverse temperature $\\beta$ (i.e., with kernel $\\beta L$), the static susceptibility matrix $\\chi_{ij} = \\partial \\langle n_i \\rangle / \\partial h_j$ (response of marginal to external field) equals $\\beta$ times the effective resistance Green function of the graph with conductances $\\beta^2 L_{ij}^2$.\n\n**Test:** For small DPP instances ($n \\leq 6$), compute the susceptibility matrix by finite differences of marginal probabilities and compare to the predicted resistance Green function.\n\n**Impact:** Would establish a fluctuation-dissipation theorem for DPPs, connecting the variance of occupation numbers (fluctuation) to the response to external fields (dissipation) via the resistance metric. This would import the full toolkit of linear response theory from statistical physics.\n\n**Catalog References:** `Catalog/Pythagorean/RepulsiveInfoGeometry.lean` (dppLogHessian, laplacianEnergy_eq_pairwise), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (dpp_partitionFunction_eval_ones).\n\n**Proof Strategy:** Differentiate the log-partition function $\\log \\det(I + \\text{diag}(e^h) \\cdot \\beta K)$ twice with respect to the field $h$, and show the result is the Laplacian pseudoinverse.\n\n**Domain Bridges:** Statistical physics (fluctuation-dissipation) \u2194 Information geometry (Fisher metric) \u2194 Electrical networks (resistance).\n\n**Lineage:** Builds on the Fisher-repulsion connection (Conjecture B) and the Dirichlet form identity.\n\n**Ambition:** Solid extension \u2014 the calculation is straightforward, but the conceptual unification is significant.\n\n**The key insight is** that the DPP susceptibility is the derivative of the marginal kernel with respect to external fields, and this derivative is controlled by the log-Hessian (= Laplacian), whose inverse is the resistance Green function.\n\n**Why now?** The formal identification of the Hessian as a Laplacian (this work) provides the missing dictionary entry between DPP response functions and resistance.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "c6ae898d",
-    "consumed_by_exp_id": "e1720480",
-    "timestamp": "2026-05-28T14:11:01.755544+00:00"
   },
   {
     "id": "fd_1822",
@@ -1292,10 +1251,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "7968ebde",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "727470ff",
     "timestamp": "2026-05-28T15:57:05.384976+00:00"
   },
   {
@@ -1360,6 +1319,88 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T16:34:03.284063+00:00"
   },
   {
+    "id": "fd_1862",
+    "title": "Direction 1: Higher-Order Shadow Certificates and Iterated Differentiation",
+    "description": "**Conjecture:** For any polynomial p over \u211a and any k \u2265 1, the k-th order shadow (obtained by subtracting k unit basis vectors from support elements) exactly predicts the support of k-th order partial derivatives, with a corresponding k-th order non-cancellation certificate that is generic on shadow-closed supports.\n\n**Test:** Implement k-th order shadow computation for k = 3, 4 on random sparse polynomials in 3-5 variables. Verify predicted vs actual supports for all k-th partial derivatives. Search for a counterexample where a generic coefficient assignment violates the k-th order certificate.\n\n**Impact:** Higher-order shadows capture more refined structural information about polynomials. If the certificate extends to all orders, the full Taylor expansion structure of a polynomial is combinatorially determined by its support \u2014 a dramatic strengthening of the current second-order result.\n\n**Catalog References:**\n- `Pythagorean/NonCancellationCertificate.lean`: `coeff_pderiv_eq`, `coeff_pderiv_pderiv_ne_zero_iff`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `nonzeroQuadLeafSet_eq_shadow`\n\n**Proof Strategy:** Induction on k. The base case k = 2 is the current work. For the inductive step, apply `coeff_pderiv_eq` once more and verify that the new scalar factor (involving (\u03b2(i_k) + 1)) is nonzero over \u211a. The key insight is that each additional derivative introduces exactly one new positive-integer scalar factor, preserving the one-ancestor property.\n\n**Domain Bridges:** Combinatorics (shadow growth rates), Analysis (Taylor remainder estimates), Complexity theory (depth-k circuit lower bounds)\n\n**Lineage:** Extends the exact support realization theorem from order 2 to arbitrary order.\n\n**Ambition:** Solid extension \u2014 directly builds on established techniques.\n\n**Why now?** The coefficient transport formula (`coeff_pderiv_eq`) has been formally verified for arbitrary order, providing the inductive base case. Extending to k-th order is a natural next step that the existing infrastructure directly supports.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7a00ed5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T17:54:29.077276+00:00"
+  },
+  {
+    "id": "fd_1864",
+    "title": "Direction 3: Tropical Shadow Duality and Newton Polytope Preservation",
+    "description": "**Conjecture:** Under the non-cancellation certificate, the Newton polytope of each Hessian entry \u2202\u1d62\u2202\u2c7cp equals the \"shadow polytope\" \u2014 the convex hull of quadLeafSet(supp(p), i, j). More precisely, there is a tropical-algebraic duality: the support shadow operation corresponds exactly to tropicalization of the derivative, and the certificate guarantees that this tropical operation faithfully represents the algebraic one.\n\n**Test:** For polynomials in 3-4 variables with 10-30 support elements, compute Newton polytopes of all Hessian entries and compare to shadow polytopes. Test whether vertex sets match (not just containment). Explore whether the duality extends to mixed volumes and intersection theory.\n\n**Impact:** This would establish a rigorous connection between tropical geometry and algebraic complexity, creating a tropical lower-bound method for arithmetic circuits. Tropical methods are computationally efficient (polyhedral computation vs algebraic computation), so this duality would make complexity analysis more tractable.\n\n**Catalog References:**\n- `Pythagorean/NonCancellationCertificate.lean`: `quadLeafSet`, `hessian_support_eq_quadLeafSet`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `QuadraticShadow`, `computeQuadShadow`\n\n**Proof Strategy:** The key insight is that Newton polytope = convex hull of support, and we already know the support exactly (Theorem 3). So the Newton polytope equality follows immediately from the exact support realization. The deeper content is the tropical interpretation: under the tropical semiring (min, +), differentiation becomes subtraction, and the shadow is the tropical derivative. Formalize this connection using tropical polynomial theory.\n\n**Domain Bridges:** Tropical geometry (tropicalization, tropical intersection theory), Convex geometry (Newton polytopes, mixed volumes), Algebraic geometry (Bernstein-Kushnirenko theorem)\n\n**Lineage:** Extends the support-level results to polytope-level geometry.\n\n**Ambition:** Solid extension with grand-challenge potential if tropical lower bounds are developed.\n\n**Why now?** The exact support realization theorem provides the algebraic foundation. Tropical geometry tools (polymake, OSCAR) are now mature enough to compute tropical derivatives systematically, enabling computational verification of the duality.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7a00ed5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T17:54:29.270864+00:00"
+  },
+  {
+    "id": "fd_1866",
+    "title": "Direction 5: Positive-Characteristic Obstruction Classification",
+    "description": "**Conjecture:** Over a field of characteristic p, the set of exponents where the Hessian scalar factor vanishes is exactly {\u03b2 : p | (\u03b2(i) + 1) or p | ((\u03b2 + e\u1d62)(j) + 1)}, and the discrepancy between predicted and actual Hessian support is controlled by this set. More precisely, the \"failure set\" of the non-cancellation certificate in characteristic p has size O(|S| / p), and the certificate holds fully for supports contained in the \"p-small\" regime where all exponents are < p.\n\n**Test:** For characteristics p = 2, 3, 5, 7, 11, generate random polynomials with maximum degree d = 1,...,20 and compute the failure rate (fraction of predicted support elements that actually vanish). Plot failure rate vs d/p. Verify the O(|S|/p) prediction.\n\n**Impact:** This would provide a precise quantitative understanding of when and why characteristic-zero techniques fail in positive characteristic, and identify the \"safe\" regime where they still apply. This is relevant to both theoretical complexity (circuits over finite fields) and practical applications (polynomial computation in cryptography).\n\n**Catalog References:**\n- `Pythagorean/NonCancellationCertificate.lean`: `hessianScalar_pos`, `hessianScalar_ne_zero`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `coeff_pderiv_pderiv_ne_zero_iff`\n\n**Proof Strategy:** The key insight is that the Hessian scalar factor (\u03b2(i) + 1)\u00b7((\u03b2 + e\u1d62)(j) + 1) is a product of two terms, each of which vanishes mod p iff the corresponding natural number is divisible by p. Count the number of \u03b2 in the shadow where this happens. For uniformly distributed exponents in [0, d]^n, the fraction with p | (\u03b2(i) + 1) is approximately 1/p, giving the O(|S|/p) bound.\n\n**Domain Bridges:** Number theory (characteristic p phenomena, Frobenius), Cryptography (polynomial evaluation over finite fields), Coding theory (Reed-Solomon structure)\n\n**Lineage:** Characterizes the boundary of the current theory.\n\n**Ambition:** Solid extension with connections to number theory.\n\n**Why now?** The characteristic-zero theory is now formally established. Understanding exactly where it breaks in positive characteristic is the natural next step, and computational experiments can immediately test the conjectured quantitative bounds.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "7a00ed5d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T17:54:29.471886+00:00"
+  },
+  {
+    "id": "fd_1867",
+    "title": "Direction 1: Formalizing the Marginal Kernel Contraction via Spectral Decomposition",
+    "description": "**Conjecture:** For any symmetric PSD matrix $L$ and $\\beta > 0$, the marginal kernel $K = \\beta L(I + \\beta L)^{-1}$ satisfies $K - K^2 \\succeq 0$ (as a matrix inequality), which implies $\\sum_{j \\neq i} K_{ij}^2 \\leq K_{ii}(1-K_{ii})$ for all $i$.\n\n**The key insight is** that $K - K^2 = \\beta L(I+\\beta L)^{-2} = P^\\top(\\beta L)P$ where $P = (I+\\beta L)^{-1}$, and the PSD property is preserved under congruence. This requires formalizing the spectral theorem for symmetric real matrices (or at least the fact that congruence by an invertible matrix preserves PSD) in Lean/Mathlib.\n\n**Why now?** The `marginal_kernel_contraction_diagonal` lemma is the only remaining sorry in our formalization. Mathlib's `Matrix.PosSemidef` API has been rapidly expanding, and the congruence preservation of PSD (`P^T M P` is PSD when `M` is PSD) may now be within reach. Closing this sorry would make the entire DPP response theory fully machine-verified.\n\n**Test:** Verify computationally that $K - K^2$ has nonneg eigenvalues for 10,000 random PSD kernels. Verify the Lean proof compiles without sorry.\n\n**Impact:** Completes the first fully formal proof of a fluctuation-dissipation theorem for a nontrivial statistical mechanical system. Would also contribute a reusable lemma about PSD congruence to Mathlib.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/DPPFluctuationDissipation.lean` (marginal_kernel_contraction_diagonal)\n\n**Proof Strategy:** (1) Formalize `Matrix.PosSemidef.conjTranspose_mul_mul_same` if not already in Mathlib. (2) Show $(I+\\beta L)^{-1}$ is symmetric when $L$ is. (3) Write $K - K^2 = (I+\\beta L)^{-\\top} (\\beta L) (I+\\beta L)^{-1}$ and apply the congruence lemma.\n\n**Domain Bridges:** Linear algebra \u2192 formal verification \u2192 statistical physics\n\n**Lineage:** Builds directly on `dppCovarianceMatrix_isSymm`, `dppLaplacian_isSymm` from this work.\n\n**Ambition:** Solid extension \u2014 the math is known but the formalization is nontrivial.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e1720480",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T18:30:31.692076+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1390,68 +1431,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1862",
-    "title": "Direction 1: Higher-Order Shadow Certificates and Iterated Differentiation",
-    "description": "**Conjecture:** For any polynomial p over \u211a and any k \u2265 1, the k-th order shadow (obtained by subtracting k unit basis vectors from support elements) exactly predicts the support of k-th order partial derivatives, with a corresponding k-th order non-cancellation certificate that is generic on shadow-closed supports.\n\n**Test:** Implement k-th order shadow computation for k = 3, 4 on random sparse polynomials in 3-5 variables. Verify predicted vs actual supports for all k-th partial derivatives. Search for a counterexample where a generic coefficient assignment violates the k-th order certificate.\n\n**Impact:** Higher-order shadows capture more refined structural information about polynomials. If the certificate extends to all orders, the full Taylor expansion structure of a polynomial is combinatorially determined by its support \u2014 a dramatic strengthening of the current second-order result.\n\n**Catalog References:**\n- `Pythagorean/NonCancellationCertificate.lean`: `coeff_pderiv_eq`, `coeff_pderiv_pderiv_ne_zero_iff`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `nonzeroQuadLeafSet_eq_shadow`\n\n**Proof Strategy:** Induction on k. The base case k = 2 is the current work. For the inductive step, apply `coeff_pderiv_eq` once more and verify that the new scalar factor (involving (\u03b2(i_k) + 1)) is nonzero over \u211a. The key insight is that each additional derivative introduces exactly one new positive-integer scalar factor, preserving the one-ancestor property.\n\n**Domain Bridges:** Combinatorics (shadow growth rates), Analysis (Taylor remainder estimates), Complexity theory (depth-k circuit lower bounds)\n\n**Lineage:** Extends the exact support realization theorem from order 2 to arbitrary order.\n\n**Ambition:** Solid extension \u2014 directly builds on established techniques.\n\n**Why now?** The coefficient transport formula (`coeff_pderiv_eq`) has been formally verified for arbitrary order, providing the inductive base case. Extending to k-th order is a natural next step that the existing infrastructure directly supports.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7a00ed5d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T17:54:29.077276+00:00"
-  },
-  {
-    "id": "fd_1864",
-    "title": "Direction 3: Tropical Shadow Duality and Newton Polytope Preservation",
-    "description": "**Conjecture:** Under the non-cancellation certificate, the Newton polytope of each Hessian entry \u2202\u1d62\u2202\u2c7cp equals the \"shadow polytope\" \u2014 the convex hull of quadLeafSet(supp(p), i, j). More precisely, there is a tropical-algebraic duality: the support shadow operation corresponds exactly to tropicalization of the derivative, and the certificate guarantees that this tropical operation faithfully represents the algebraic one.\n\n**Test:** For polynomials in 3-4 variables with 10-30 support elements, compute Newton polytopes of all Hessian entries and compare to shadow polytopes. Test whether vertex sets match (not just containment). Explore whether the duality extends to mixed volumes and intersection theory.\n\n**Impact:** This would establish a rigorous connection between tropical geometry and algebraic complexity, creating a tropical lower-bound method for arithmetic circuits. Tropical methods are computationally efficient (polyhedral computation vs algebraic computation), so this duality would make complexity analysis more tractable.\n\n**Catalog References:**\n- `Pythagorean/NonCancellationCertificate.lean`: `quadLeafSet`, `hessian_support_eq_quadLeafSet`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `QuadraticShadow`, `computeQuadShadow`\n\n**Proof Strategy:** The key insight is that Newton polytope = convex hull of support, and we already know the support exactly (Theorem 3). So the Newton polytope equality follows immediately from the exact support realization. The deeper content is the tropical interpretation: under the tropical semiring (min, +), differentiation becomes subtraction, and the shadow is the tropical derivative. Formalize this connection using tropical polynomial theory.\n\n**Domain Bridges:** Tropical geometry (tropicalization, tropical intersection theory), Convex geometry (Newton polytopes, mixed volumes), Algebraic geometry (Bernstein-Kushnirenko theorem)\n\n**Lineage:** Extends the support-level results to polytope-level geometry.\n\n**Ambition:** Solid extension with grand-challenge potential if tropical lower bounds are developed.\n\n**Why now?** The exact support realization theorem provides the algebraic foundation. Tropical geometry tools (polymake, OSCAR) are now mature enough to compute tropical derivatives systematically, enabling computational verification of the duality.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7a00ed5d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T17:54:29.270864+00:00"
-  },
-  {
-    "id": "fd_1866",
-    "title": "Direction 5: Positive-Characteristic Obstruction Classification",
-    "description": "**Conjecture:** Over a field of characteristic p, the set of exponents where the Hessian scalar factor vanishes is exactly {\u03b2 : p | (\u03b2(i) + 1) or p | ((\u03b2 + e\u1d62)(j) + 1)}, and the discrepancy between predicted and actual Hessian support is controlled by this set. More precisely, the \"failure set\" of the non-cancellation certificate in characteristic p has size O(|S| / p), and the certificate holds fully for supports contained in the \"p-small\" regime where all exponents are < p.\n\n**Test:** For characteristics p = 2, 3, 5, 7, 11, generate random polynomials with maximum degree d = 1,...,20 and compute the failure rate (fraction of predicted support elements that actually vanish). Plot failure rate vs d/p. Verify the O(|S|/p) prediction.\n\n**Impact:** This would provide a precise quantitative understanding of when and why characteristic-zero techniques fail in positive characteristic, and identify the \"safe\" regime where they still apply. This is relevant to both theoretical complexity (circuits over finite fields) and practical applications (polynomial computation in cryptography).\n\n**Catalog References:**\n- `Pythagorean/NonCancellationCertificate.lean`: `hessianScalar_pos`, `hessianScalar_ne_zero`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `coeff_pderiv_pderiv_ne_zero_iff`\n\n**Proof Strategy:** The key insight is that the Hessian scalar factor (\u03b2(i) + 1)\u00b7((\u03b2 + e\u1d62)(j) + 1) is a product of two terms, each of which vanishes mod p iff the corresponding natural number is divisible by p. Count the number of \u03b2 in the shadow where this happens. For uniformly distributed exponents in [0, d]^n, the fraction with p | (\u03b2(i) + 1) is approximately 1/p, giving the O(|S|/p) bound.\n\n**Domain Bridges:** Number theory (characteristic p phenomena, Frobenius), Cryptography (polynomial evaluation over finite fields), Coding theory (Reed-Solomon structure)\n\n**Lineage:** Characterizes the boundary of the current theory.\n\n**Ambition:** Solid extension with connections to number theory.\n\n**Why now?** The characteristic-zero theory is now formally established. Understanding exactly where it breaks in positive characteristic is the natural next step, and computational experiments can immediately test the conjectured quantitative bounds.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "7a00ed5d",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T17:54:29.471886+00:00"
   },
   {
     "id": "seed_013",

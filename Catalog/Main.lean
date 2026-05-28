@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2018 of the highest-quality
+A curated collection of 2019 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2018
+Total files: 2019
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1620,6 +1620,7 @@ import FINAL.Pythagorean.LorentzianAggregateAntiCancel
 import FINAL.Pythagorean.LorentzianComplexityTransition
 import FINAL.Pythagorean.LorentzianExchangeCertificates
 import FINAL.Pythagorean.LorentzianHardness
+import FINAL.Pythagorean.LorentzianHardnessBarrier
 import FINAL.Pythagorean.LorentzianRecognitionComplete
 import FINAL.Pythagorean.LorentzianSharpStability
 import FINAL.Pythagorean.LorentzianSpectralGap
