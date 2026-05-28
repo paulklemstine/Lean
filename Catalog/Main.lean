@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1993 of the highest-quality
+A curated collection of 1995 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1993
+Total files: 1995
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -654,6 +654,7 @@ import FINAL.Bridges.SumcheckSoundness
 import FINAL.Bridges.SunflowerPruning
 import FINAL.Bridges.Support
 import FINAL.Bridges.SupportCompression
+import FINAL.Bridges.SupportCompressionPoly
 import FINAL.Bridges.SymmetricGroup
 import FINAL.Bridges.SymplecticCryptography
 import FINAL.Bridges.TaggedCardTASEP
@@ -1641,6 +1642,7 @@ import FINAL.Pythagorean.PersistenceZetaMultiplicativity
 import FINAL.Pythagorean.PhaseAwareLemmaSynthesis
 import FINAL.Pythagorean.PolynomialWidth
 import FINAL.Pythagorean.PrimePowerHecke
+import FINAL.Pythagorean.PrimewiseBirthSpectra
 import FINAL.Pythagorean.PrimewiseCompleteness
 import FINAL.Pythagorean.PrimewiseTorsionStability
 import FINAL.Pythagorean.ProductFormula

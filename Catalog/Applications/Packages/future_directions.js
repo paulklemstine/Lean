@@ -97,10 +97,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "310eb088",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -229,10 +229,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "dae7d582",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:32.525739+00:00"
   },
   {
@@ -738,10 +738,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a8f3ced3",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad17ca4a",
     "timestamp": "2026-05-27T03:33:47.282680+00:00"
   },
   {
@@ -822,27 +822,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "ec2aa218",
     "consumed_by_exp_id": "40ff2470",
     "timestamp": "2026-05-27T15:24:27.753806+00:00"
-  },
-  {
-    "id": "fd_1445",
-    "title": "Direction 3: Tropical Geometry of Entanglement Spectra",
-    "description": "**Conjecture:** In the large-m limit, the Newton ratio profile of area-law free-fermion states converges to a piecewise-linear function whose breakpoints are determined by the spectral gap structure. This piecewise-linear limit is the *tropical* analogue of the log-concave sequence, living in the tropical semiring (max-plus algebra).\n\n**Test:** Compute the tropicalization of the generating polynomial E(t) = \u220f(1+\u03bb\u1d62t) for free-fermion spectra with varying gap parameters. If the tropical curve's Newton polygon has edges whose slopes correspond to the dominant eigenvalue groups, the conjecture is supported.\n\n**Impact:** Would connect entanglement theory to tropical geometry, enabling the use of tropical intersection theory to study many-body quantum states.\n\n**Catalog References:** `Pythagorean/NewtonEntropyHierarchy.lean`: `esymmCoeff`, `esymm_newton_inequality`; `Catalog/Bridges/LorentzianNewton.lean`: `newton_inequality`.\n\n**Proof Strategy:** Study log(e\u2096)/k as m \u2192 \u221e using saddle-point analysis. The tropical limit corresponds to the Legendre transform of the rate function for the empirical eigenvalue distribution.\n\n**Domain Bridges:** Tropical geometry \u2192 Lorentzian polynomial theory \u2192 quantum information \u2192 statistical mechanics.\n\n**Lineage:** Extends the Newton hierarchy from finite-dimensional algebra to asymptotic geometry.\n\n**Ambition:** Grand challenge \u2014 paradigm-shifting if successful.\n\n*The key insight is* that the log-concavity of the e\u2096 sequence is the \"classical\" shadow of a tropical convexity structure, and that the tropical limit should be analytically tractable.\n\n*Why now?* The formal log-concavity infrastructure (Newton's inequality) is now available, and tropical methods have recently been connected to Lorentzian polynomials by Br\u00e4nd\u00e9n and Huh.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ec2aa218",
-    "consumed_by_exp_id": "3102f0ea",
-    "timestamp": "2026-05-27T15:24:35.519993+00:00"
   },
   {
     "id": "fd_1449",
@@ -1014,10 +993,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "209e0d92",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b2a4e38f",
     "timestamp": "2026-05-27T22:19:22.514222+00:00"
   },
   {
@@ -1158,10 +1137,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "77cabe0b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "951d1d02",
     "timestamp": "2026-05-28T04:56:23.189467+00:00"
   },
   {
@@ -1410,6 +1389,70 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T08:02:39.251164+00:00"
   },
   {
+    "id": "fd_1740",
+    "title": "Conjugation-Indexed Product Cover",
+    "description": "Conjecture: For any finite group G, K-approximate subgroup H, and set A covered by C left translates of H, the product set A\u00b7A is covered by C\u00b2\u00b7K\u00b7L translates of H, where L = max_{t \u2208 T} [H : H \u2229 t\u207b\u00b9Ht] is the maximal conjugation index over the covering set T.\n\nTest: Compute L for all covering sets in S\u2083, S\u2084, S\u2085 and verify C(A\u00b7A) \u2264 C\u00b2\u00b7K\u00b7L. Search for counterexamples in GL(2, F_p) for p = 2, 3, 5, 7.\n\nImpact: This would be the first product covering theorem for non-abelian groups with bounds depending only on combinatorial parameters (C, K, L), not on |H|. It would unify the abelian case (L=1) with the normal subgroup case (L=1) and the general case.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd74700e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T09:13:12.854260+00:00"
+  },
+  {
+    "id": "fd_1741",
+    "title": "Non-Abelian Pl\u00fcnnecke-Ruzsa via Covering Calculus",
+    "description": "Conjecture: For a K-approximate subgroup H in any group G, for all n \u2265 1: H^n can be covered by K^(n-1) left translates of H. (Generalization of the triple product cover K\u00b2 bound from n=3 to all n.)\n\nTest: Verify computationally for n = 4, 5, 6 in S\u2083, S\u2084, and GL(2, F\u2083). Check whether the inductive step H^n \u2192 H^(n+1) preserves the K^(n-1) bound.\n\nImpact: This would be a covering-theoretic analog of the Pl\u00fcnnecke-Ruzsa inequality. The standard Pl\u00fcnnecke-Ruzsa gives |H^n| \u2264 K^n\u00b7|H|; our version gives covering number K^(n-1), which is sharper (it doesn't multiply by |H|).",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd74700e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T09:13:12.933700+00:00"
+  },
+  {
+    "id": "fd_1742",
+    "title": "Expansion Obstruction from Covering Bounds",
+    "description": "Conjecture: In a finite group G with Cayley graph Cay(G, S), if a K-approximate subgroup H has covering number C(A\u00b7A) \u2264 f(C, K) for all A with C(A) \u2264 C, then the spectral gap of Cay(G, S) is bounded below by 1/f(|G|/|H|, K).\n\nTest: Compute spectral gaps of Cayley graphs of S\u2083, S\u2084 with various generating sets. Compare with the covering bounds from the demo.\n\nImpact: This would connect additive combinatorics to spectral graph theory and expander construction, with applications to derandomization and coding theory.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd74700e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T09:13:13.010547+00:00"
+  },
+  {
+    "id": "fd_1743",
+    "title": "Automated Counterexample Search for Covering Conjectures",
+    "description": "Conjecture: There exists a polynomial-time algorithm that, given a finite group G and parameters (C, K), either certifies that C(A\u00b7A) \u2264 f(C, K) for all A, or produces a counterexample (A, H) violating the bound.\n\nTest: Implement the algorithm for groups up to order 120 (all groups of order \u2264 60 from the Small Groups Library). Catalog all violations of C\u00b2\u00b7K\u00b2 and C\u00b2\u00b7K\u00b3.\n\nImpact: This would create a database of covering phenomena, analogous to the LMFDB for number theory, enabling data-driven conjecture generation in group theory.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd74700e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T09:13:13.088730+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1442,68 +1485,47 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
   },
   {
-    "id": "fd_1740",
-    "title": "Conjugation-Indexed Product Cover",
-    "description": "Conjecture: For any finite group G, K-approximate subgroup H, and set A covered by C left translates of H, the product set A\u00b7A is covered by C\u00b2\u00b7K\u00b7L translates of H, where L = max_{t \u2208 T} [H : H \u2229 t\u207b\u00b9Ht] is the maximal conjugation index over the covering set T.\n\nTest: Compute L for all covering sets in S\u2083, S\u2084, S\u2085 and verify C(A\u00b7A) \u2264 C\u00b2\u00b7K\u00b7L. Search for counterexamples in GL(2, F_p) for p = 2, 3, 5, 7.\n\nImpact: This would be the first product covering theorem for non-abelian groups with bounds depending only on combinatorial parameters (C, K, L), not on |H|. It would unify the abelian case (L=1) with the normal subgroup case (L=1) and the general case.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "priority_score": 0.9,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bd74700e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T09:13:12.854260+00:00"
-  },
-  {
-    "id": "fd_1741",
-    "title": "Non-Abelian Pl\u00fcnnecke-Ruzsa via Covering Calculus",
-    "description": "Conjecture: For a K-approximate subgroup H in any group G, for all n \u2265 1: H^n can be covered by K^(n-1) left translates of H. (Generalization of the triple product cover K\u00b2 bound from n=3 to all n.)\n\nTest: Verify computationally for n = 4, 5, 6 in S\u2083, S\u2084, and GL(2, F\u2083). Check whether the inductive step H^n \u2192 H^(n+1) preserves the K^(n-1) bound.\n\nImpact: This would be a covering-theoretic analog of the Pl\u00fcnnecke-Ruzsa inequality. The standard Pl\u00fcnnecke-Ruzsa gives |H^n| \u2264 K^n\u00b7|H|; our version gives covering number K^(n-1), which is sharper (it doesn't multiply by |H|).",
+    "id": "fd_1760",
+    "title": "Direction 2: Transversal Matroids and Bipartite Matching Complexity",
+    "description": "**Conjecture.** For transversal matroids arising from bipartite graphs with bounded degree \u0394, the quadratic leaf count grows as O(n^{r\u22122} \u00b7 \u0394^{O(1)}), where *r* is the rank. This is polynomial in *n* for fixed *r* and \u0394, and dramatically below the ambient bound when the bipartite graph is sparse.\n\n**Test.** Compute leaf counts for transversal matroids from:\n1. Random bipartite graphs with bounded degree \u0394 \u2208 {2, 3, 4}.\n2. Structured bipartite graphs: grids, expanders, Ramanujan bipartite graphs.\n3. Compare with the permanent of the biadjacency matrix (counting perfect matchings).\n\n**Impact.** Opens a route to efficient Lorentzian certification for assignment and scheduling problems, where the underlying combinatorial structure is a bipartite matching.\n\n**Catalog References.**\n- `Pythagorean/SupportCompressionPoly.lean`: `supportCompressedLeafCount_le_active_choose`\n- `Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`\n\n**Proof Strategy.** Bound the number of independent (*r*\u22122)-sets by relating them to partial matchings. Use the Tutte\u2013Berge formula or K\u00f6nig's theorem to control the structure of partial matchings in bounded-degree bipartite graphs.\n\n**Domain Bridges.** Matching theory \u2194 assignment problems \u2194 operations research.\n\n**Lineage.** Builds on the active variable bound (Theorem 4) and the hereditary property.\n\n**Ambition.** \u2605\u2605\u2605\u2606\u2606 \u2014 Solid, with clear practical applications.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "MachineLearning"
-    ],
-    "priority_score": 0.9,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "bd74700e",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T09:13:12.933700+00:00"
-  },
-  {
-    "id": "fd_1742",
-    "title": "Expansion Obstruction from Covering Bounds",
-    "description": "Conjecture: In a finite group G with Cayley graph Cay(G, S), if a K-approximate subgroup H has covering number C(A\u00b7A) \u2264 f(C, K) for all A with C(A) \u2264 C, then the spectral gap of Cay(G, S) is bounded below by 1/f(|G|/|H|, K).\n\nTest: Compute spectral gaps of Cayley graphs of S\u2083, S\u2084 with various generating sets. Compare with the covering bounds from the demo.\n\nImpact: This would connect additive combinatorics to spectral graph theory and expander construction, with applications to derandomization and coding theory.",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
+      "Geometry",
       "Computation",
-      "Physics"
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
     ],
-    "priority_score": 0.9,
+    "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "bd74700e",
+    "source_exp_id": "35f20969",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T09:13:13.010547+00:00"
+    "timestamp": "2026-05-28T09:50:28.931327+00:00"
   },
   {
-    "id": "fd_1743",
-    "title": "Automated Counterexample Search for Covering Conjectures",
-    "description": "Conjecture: There exists a polynomial-time algorithm that, given a finite group G and parameters (C, K), either certifies that C(A\u00b7A) \u2264 f(C, K) for all A, or produces a counterexample (A, H) violating the bound.\n\nTest: Implement the algorithm for groups up to order 120 (all groups of order \u2264 60 from the Small Groups Library). Catalog all violations of C\u00b2\u00b7K\u00b2 and C\u00b2\u00b7K\u00b3.\n\nImpact: This would create a database of covering phenomena, analogous to the LMFDB for number theory, enabling data-driven conjecture generation in group theory.",
+    "id": "fd_1761",
+    "title": "Direction 3: M-Convex Shadow Theory for General Lorentzian Supports",
+    "description": "**Conjecture** (Grand Challenge). For *any* Lorentzian polynomial *f* of degree *d* with M-convex Newton support *S*, the set of surviving degree-(*d*\u22122) derivative indices is exactly the 2-step shadow of *S* in the M-convex lattice. This shadow has size at most O(|S| \u00b7 d\u00b2), independent of the ambient dimension.\n\nThe key insight is that M-convex exchange forces the \"shadow\" (set of elements obtainable by removing 2 units from some support element) to be tightly controlled by the exchange graph's diameter. Lorentzian supports cannot spread arbitrarily \u2014 their exchange geometry constrains them.\n\n**Why now?** The formal verification of the matroid case (Theorems 1\u20133) provides the first rigorous example of this shadow phenomenon. The M-convex exchange property (`IsMConvexExchangeNat`) is already formalized in the catalog. What's missing is the general shadow bound, which would extend support compression from matroids to arbitrary M-convex families.\n\n**Test.**\n1. Construct M-convex sets that are NOT matroid indicator sets (e.g., flow polytope integer points).\n2. Compute shadow sizes and compare with the ambient multiindex count.\n3. Search for counterexamples: M-convex sets where the shadow grows superlinearly in |S|.\n\n**Impact.** A positive resolution would establish that support compression is a *universal* phenomenon for M-convex Lorentzian polynomials, not specific to matroids. This would be a foundational result in discrete convex analysis.\n\n**Catalog References.**\n- `Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`, `NewtonSupport`\n- `Pythagorean/SupportCompressionPoly.lean`: `derivative_nonzero_iff_dominated_support`\n\n**Proof Strategy.** Use the exchange graph of the M-convex set (where two elements are adjacent if they differ by a single exchange). Show that the 2-step shadow is contained in the ball of radius 2 in this graph. Bound the ball size using M-convex structure theorems (Murota 2003, Chapter 4).\n\n**Domain Bridges.** Discrete convex analysis \u2194 tropical geometry \u2194 optimization theory.\n\n**Lineage.** Generalizes the matroid-specific bijection (Theorem 2) to the M-convex setting.\n\n**Ambition.** \u2605\u2605\u2605\u2605\u2605 \u2014 Paradigm-shifting if true. Would unify support compression across discrete convex analysis.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
-      "Computation"
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
     ],
-    "priority_score": 0.9,
+    "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "bd74700e",
+    "source_exp_id": "35f20969",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T09:13:13.088730+00:00"
+    "timestamp": "2026-05-28T09:50:29.019958+00:00"
   },
   {
     "id": "seed_013",

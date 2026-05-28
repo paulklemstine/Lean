@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Topology / Arithmetic Persistence",
     "date": "2026-05-28T09:50:48Z",
     "exp_id": "af495cf0",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7170063167420815,
+    "quality": "substantial",
     "pkg_num": 232
   },
   {
@@ -6737,8 +6737,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-28T09:50:48Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7170063167420815,
+      "quality": "substantial"
     }
   ],
   "edges": [
