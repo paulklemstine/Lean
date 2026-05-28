@@ -1,414 +1,459 @@
-#!/usr/bin/env python3
 """
-algorithms.py — Algorithms for Functorial Localization of Persistence Modules
+Algorithms for Functorial Localization of Persistence Modules.
 
-Implements the core algorithms described in the research paper:
-1. p-Primary subgroup extraction
-2. Persistence module localization
-3. Torsion birth set computation
-4. Interleaving distance estimation
-5. Prime decomposition analysis
+Implements the core algebraic constructions:
+- Finite abelian group representation via invariant factors
+- p-primary subgroup extraction
+- Persistence module localization at a prime
+- Torsion birth set computation
+- Interleaving construction and verification
 
-All algorithms operate on finitely generated abelian groups in invariant
-factor (Smith normal form) representation.
+All algorithms operate on finitely generated abelian groups
+represented as direct sums of cyclic groups Z/nZ.
 """
 
-from typing import List, Dict, Set, Tuple, Optional
-from collections import defaultdict
-import math
+from __future__ import annotations
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Optional
+from math import gcd
+from functools import reduce
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 1: Prime Factorization and p-adic Valuation
-# ──────────────────────────────────────────────────────────────────────
+# ============================================================
+# Finite Abelian Group Representation
+# ============================================================
 
-def prime_factorization(n: int) -> Dict[int, int]:
-    """Compute the prime factorization of n.
-    
-    Returns dict mapping prime -> exponent.
-    Time complexity: O(sqrt(n))
-    Space complexity: O(log n)
-    
-    >>> prime_factorization(60)
-    {2: 2, 3: 1, 5: 1}
+@dataclass
+class FiniteAbelianGroup:
+    """A finitely generated abelian group Z^r ⊕ ⊕_i Z/n_i Z.
+
+    Represented by free_rank and a list of torsion_orders (each >= 2).
+    Elements are tuples (free_part, torsion_part) where:
+      - free_part is a tuple of integers (length = free_rank)
+      - torsion_part is a tuple of integers mod respective orders
+
+    Attributes:
+        free_rank: Number of free Z summands
+        torsion_orders: List of cyclic group orders (each >= 2)
     """
-    if n <= 1:
-        return {}
-    factors = {}
-    d = 2
-    while d * d <= n:
-        while n % d == 0:
-            factors[d] = factors.get(d, 0) + 1
-            n //= d
-        d += 1
-    if n > 1:
-        factors[n] = 1
-    return factors
+    free_rank: int = 0
+    torsion_orders: list[int] = field(default_factory=list)
+
+    def __post_init__(self):
+        self.torsion_orders = sorted(self.torsion_orders)
+
+    @property
+    def total_rank(self) -> int:
+        return self.free_rank + len(self.torsion_orders)
+
+    def zero(self) -> tuple:
+        """Return the zero element."""
+        return (tuple(0 for _ in range(self.free_rank)),
+                tuple(0 for _ in self.torsion_orders))
+
+    def add(self, a: tuple, b: tuple) -> tuple:
+        """Add two elements."""
+        free = tuple(x + y for x, y in zip(a[0], b[0]))
+        tors = tuple((x + y) % n for x, y, n in zip(a[1], b[1], self.torsion_orders))
+        return (free, tors)
+
+    def neg(self, a: tuple) -> tuple:
+        """Negate an element."""
+        free = tuple(-x for x in a[0])
+        tors = tuple((-x) % n for x, n in zip(a[1], self.torsion_orders))
+        return (free, tors)
+
+    def smul(self, n: int, a: tuple) -> tuple:
+        """Scalar multiply by integer n."""
+        free = tuple(n * x for x in a[0])
+        tors = tuple((n * x) % m for x, m in zip(a[1], self.torsion_orders))
+        return (free, tors)
+
+    def is_zero(self, a: tuple) -> bool:
+        """Check if element is zero."""
+        return all(x == 0 for x in a[0]) and all(x == 0 for x in a[1])
+
+    def generators(self) -> list[tuple]:
+        """Return standard generators."""
+        gens = []
+        for i in range(self.free_rank):
+            free = tuple(1 if j == i else 0 for j in range(self.free_rank))
+            tors = tuple(0 for _ in self.torsion_orders)
+            gens.append((free, tors))
+        for i in range(len(self.torsion_orders)):
+            free = tuple(0 for _ in range(self.free_rank))
+            tors = tuple(1 if j == i else 0 for j in range(len(self.torsion_orders)))
+            gens.append((free, tors))
+        return gens
+
+    def all_elements(self) -> list[tuple]:
+        """List all elements (only for finite groups with free_rank=0)."""
+        if self.free_rank > 0:
+            raise ValueError("Cannot enumerate elements of infinite group")
+        if not self.torsion_orders:
+            return [self.zero()]
+        from itertools import product
+        result = []
+        for combo in product(*(range(n) for n in self.torsion_orders)):
+            result.append(((), combo))
+        return result
+
+
+def p_torsion_detected(G: FiniteAbelianGroup, p: int) -> bool:
+    """Check if p-torsion is detected: ∃ a ≠ 0, p·a = 0.
+
+    For a group Z^r ⊕ ⊕ Z/n_i Z, p-torsion exists iff
+    some n_i is divisible by p.
+
+    Args:
+        G: A finite abelian group
+        p: An integer >= 2
+
+    Returns:
+        True if p-torsion is detected in G
+    """
+    # Free part never has torsion
+    # Torsion part: Z/nZ has p-torsion iff p | n
+    return any(n % p == 0 for n in G.torsion_orders)
+
+
+def global_torsion_detected(G: FiniteAbelianGroup) -> bool:
+    """Check if any torsion is detected: ∃ a ≠ 0, n·a = 0 for some n ≥ 2.
+
+    Equivalent to the torsion subgroup being nontrivial.
+
+    Args:
+        G: A finite abelian group
+
+    Returns:
+        True if global torsion is detected
+    """
+    return len(G.torsion_orders) > 0
+
+
+def p_primary_subgroup(G: FiniteAbelianGroup, p: int) -> FiniteAbelianGroup:
+    """Compute the p-primary subgroup G[p^∞].
+
+    For G = Z^r ⊕ ⊕ Z/n_i Z, the p-primary subgroup is
+    ⊕_{p | n_i} Z/p^{v_p(n_i)} Z where v_p is the p-adic valuation.
+
+    This models the torsion part of G ⊗_Z Z_(p).
+
+    Args:
+        G: A finite abelian group
+        p: A prime number
+
+    Returns:
+        The p-primary subgroup as a FiniteAbelianGroup
+    """
+    p_primary_orders = []
+    for n in G.torsion_orders:
+        # Extract p-part of n
+        pk = 1
+        m = n
+        while m % p == 0:
+            pk *= p
+            m //= p
+        if pk > 1:
+            p_primary_orders.append(pk)
+    return FiniteAbelianGroup(free_rank=0, torsion_orders=p_primary_orders)
 
 
 def p_adic_valuation(n: int, p: int) -> int:
     """Compute v_p(n), the p-adic valuation of n.
-    
-    Time complexity: O(log_p(n))
-    
-    >>> p_adic_valuation(72, 2)
-    3
-    >>> p_adic_valuation(72, 3)
-    2
+
+    Args:
+        n: A positive integer
+        p: A prime
+
+    Returns:
+        The largest k such that p^k divides n
     """
     if n == 0:
         return float('inf')
-    v = 0
+    k = 0
     while n % p == 0:
-        v += 1
+        k += 1
         n //= p
-    return v
+    return k
 
 
-def p_primary_part(n: int, p: int) -> int:
-    """Compute p^{v_p(n)}, the p-primary part of n.
-    
-    >>> p_primary_part(60, 2)
-    4
-    >>> p_primary_part(60, 3)
-    3
-    >>> p_primary_part(60, 7)
-    1
-    """
-    return p ** p_adic_valuation(n, p)
+# ============================================================
+# Persistence Module
+# ============================================================
 
+@dataclass
+class PersistenceModule:
+    """An N-indexed persistence module valued in finite abelian groups.
 
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 2: Finitely Generated Abelian Group Operations
-# ──────────────────────────────────────────────────────────────────────
-
-class InvariantFactorGroup:
-    """Finitely generated abelian group in invariant factor form.
-    
-    Represents Z^r ⊕ Z/d_1 ⊕ ... ⊕ Z/d_k where d_1 | d_2 | ... | d_k.
-    
     Attributes:
-        free_rank: The rank r of the free part
-        invariant_factors: List [d_1, ..., d_k] of invariant factors
+        groups: List of FiniteAbelianGroup at each filtration level
+        n_levels: Number of filtration levels
     """
-    
-    def __init__(self, free_rank: int = 0, invariant_factors: List[int] = None):
-        self.free_rank = free_rank
-        self.invariant_factors = sorted(invariant_factors or [])
-    
-    def order(self) -> Optional[int]:
-        """Finite order of the group, or None if infinite."""
-        if self.free_rank > 0:
-            return None
-        if not self.invariant_factors:
-            return 1
-        result = 1
-        for d in self.invariant_factors:
-            result *= d
-        return result
-    
-    def torsion_rank(self) -> int:
-        """Number of torsion summands."""
-        return len(self.invariant_factors)
-    
-    def has_p_torsion(self, p: int) -> bool:
-        """Check if p-torsion exists: ∃ nonzero a with p·a = 0.
-        
-        This holds iff some invariant factor is divisible by p.
-        Time complexity: O(k) where k = number of invariant factors.
-        """
-        return any(d % p == 0 for d in self.invariant_factors)
-    
-    def p_primary_subgroup(self, p: int) -> 'InvariantFactorGroup':
-        """Extract the p-primary torsion subgroup A[p^∞].
-        
-        Algorithm: For each invariant factor d_i, extract p^{v_p(d_i)}.
-        The result is ⊕ Z/p^{v_p(d_i)} for those i where v_p(d_i) > 0.
-        
-        Time complexity: O(k · log(d_max))
-        Space complexity: O(k)
-        
-        >>> g = InvariantFactorGroup(1, [12, 60])
-        >>> g.p_primary_subgroup(2)
-        Z/4 ⊕ Z/4
-        >>> g.p_primary_subgroup(3)
-        Z/3 ⊕ Z/3
-        """
-        p_parts = []
-        for d in self.invariant_factors:
-            pk = p_primary_part(d, p)
-            if pk > 1:
-                p_parts.append(pk)
-        return InvariantFactorGroup(free_rank=0, invariant_factors=p_parts)
-    
-    def localize_at(self, p: int) -> 'InvariantFactorGroup':
-        """Compute A ⊗_Z Z_{(p)}: localization at prime p.
-        
-        Algorithm:
-        - Free part Z^r → Z_{(p)}^r (keep free rank)
-        - Z/d_i → Z/p^{v_p(d_i)} (keep only p-primary torsion)
-        
-        This is the key localization operation. For torsion detection,
-        only the p-primary torsion survives.
-        
-        Time complexity: O(k · log(d_max))
-        """
-        return InvariantFactorGroup(
-            free_rank=self.free_rank,
-            invariant_factors=self.p_primary_subgroup(p).invariant_factors
-        )
-    
-    def prime_support(self) -> Set[int]:
-        """Set of primes dividing any invariant factor.
-        
-        Time complexity: O(k · sqrt(d_max))
-        """
-        primes = set()
-        for d in self.invariant_factors:
-            primes.update(prime_factorization(d).keys())
-        return primes
-    
-    def __repr__(self):
-        parts = []
-        if self.free_rank > 0:
-            parts.append(f"Z^{self.free_rank}" if self.free_rank > 1 else "Z")
-        for d in self.invariant_factors:
-            parts.append(f"Z/{d}")
-        return " ⊕ ".join(parts) if parts else "0"
+    groups: list[FiniteAbelianGroup]
+
+    @property
+    def n_levels(self) -> int:
+        return len(self.groups)
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 3: Persistence Module Localization
-# ──────────────────────────────────────────────────────────────────────
+def localize_at_prime(F: PersistenceModule, p: int) -> PersistenceModule:
+    """Localize a persistence module at prime p.
 
-class FinitePersistenceModule:
-    """Finitely supported N-indexed persistence module.
-    
-    Each level is an InvariantFactorGroup. Structure maps are assumed
-    injective (faithful interleaving model).
-    
-    Attributes:
-        levels: Dict mapping index -> InvariantFactorGroup
+    Replaces each group F_i with its p-primary subgroup F_i[p^∞].
+    This models the functor F ↦ F ⊗_Z Z_(p) restricted to torsion.
+
+    Args:
+        F: A persistence module
+        p: A prime number
+
+    Returns:
+        The localized persistence module L_p(F)
     """
-    
-    def __init__(self, levels: Dict[int, InvariantFactorGroup]):
-        self.levels = {i: g for i, g in levels.items() if not (g.free_rank == 0 and not g.invariant_factors)}
-        self.support = sorted(self.levels.keys())
-    
-    def obj(self, i: int) -> InvariantFactorGroup:
-        return self.levels.get(i, InvariantFactorGroup())
-    
-    def localize_at(self, p: int) -> 'FinitePersistenceModule':
-        """Apply localization at p levelwise.
-        
-        Algorithm: For each level i, compute obj(i) ⊗ Z_{(p)}.
-        This is the functorial localization L_p(F).
-        
-        Time complexity: O(n · k · log(d_max))
-        where n = number of levels, k = max torsion rank, d_max = max inv factor.
-        """
-        return FinitePersistenceModule({
-            i: g.localize_at(p) for i, g in self.levels.items()
-        })
-    
-    def p_primary_submodule(self, p: int) -> 'FinitePersistenceModule':
-        """Extract p-primary torsion submodule (= LocalizedAtPrime p F).
-        
-        This is the formal counterpart of the Lean definition LocalizedAtPrime.
-        Each level is the p-primary torsion subgroup.
-        """
-        return FinitePersistenceModule({
-            i: g.p_primary_subgroup(p) for i, g in self.levels.items()
-        })
-    
-    def p_torsion_birth(self, p: int) -> Optional[int]:
-        """First index where p-torsion appears.
-        
-        Time complexity: O(n · k)
-        """
-        for i in self.support:
-            if self.obj(i).has_p_torsion(p):
-                return i
-        return None
-    
-    def global_torsion_birth(self) -> Optional[int]:
-        """First index where any torsion appears.
-        
-        Time complexity: O(n)
-        """
-        for i in self.support:
-            if self.obj(i).torsion_rank() > 0:
-                return i
-        return None
-    
-    def p_torsion_birth_set(self, p: int) -> Set[int]:
-        b = self.p_torsion_birth(p)
-        return {b} if b is not None else set()
-    
-    def torsion_birth_set(self) -> Set[int]:
-        b = self.global_torsion_birth()
-        return {b} if b is not None else set()
-    
-    def prime_support(self) -> Set[int]:
-        """Union of prime supports across all levels."""
-        primes = set()
-        for g in self.levels.values():
-            primes.update(g.prime_support())
-        return primes
-    
-    def birth_set_distance(self, other: 'FinitePersistenceModule', p: int) -> Optional[int]:
-        """Hausdorff distance between p-torsion birth sets."""
-        b1 = self.p_torsion_birth(p)
-        b2 = other.p_torsion_birth(p)
-        if b1 is None and b2 is None:
-            return 0
-        if b1 is None or b2 is None:
-            return None  # infinite distance
-        return abs(b1 - b2)
-    
-    def __repr__(self):
-        lines = ["PersistenceModule:"]
-        for i in self.support:
-            lines.append(f"  [{i}] → {self.obj(i)}")
-        return "\n".join(lines)
+    return PersistenceModule(
+        groups=[p_primary_subgroup(G, p) for G in F.groups]
+    )
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 4: Birth Set Identification Verification
-# ──────────────────────────────────────────────────────────────────────
+def p_torsion_birth_set(F: PersistenceModule, p: int) -> set[int]:
+    """Compute the p-torsion birth set PTorBirth(p, F).
 
-def verify_birth_set_identification(F: FinitePersistenceModule, p: int) -> bool:
-    """Verify Theorem 2: PTorsionBirthSet(p, F) = TorsionBirthSet(L_p(F)).
-    
-    Algorithm:
-    1. Compute PTorsionBirthSet(p, F): first index with p-torsion in F
-    2. Compute LocalizedAtPrime(p, F): p-primary submodule of F
-    3. Compute TorsionBirthSet of the localized module
-    4. Check equality
-    
-    Time complexity: O(n · k · log(d_max))
+    Returns the set of indices where p-torsion first appears.
+    Since the birth set has at most one element, this is either
+    empty or a singleton.
+
+    Args:
+        F: A persistence module
+        p: An integer >= 2
+
+    Returns:
+        Set of birth indices (at most one element)
     """
-    p_birth_set = F.p_torsion_birth_set(p)
-    localized = F.p_primary_submodule(p)
-    localized_birth_set = localized.torsion_birth_set()
-    return p_birth_set == localized_birth_set
+    for i, G in enumerate(F.groups):
+        if p_torsion_detected(G, p):
+            return {i}
+    return set()
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 5: Interleaving Distance Estimation
-# ──────────────────────────────────────────────────────────────────────
+def global_torsion_birth_set(F: PersistenceModule) -> set[int]:
+    """Compute the global torsion birth set GlobTorBirth(F).
 
-def estimate_interleaving_distance(F: FinitePersistenceModule,
-                                    G: FinitePersistenceModule) -> int:
-    """Estimate the interleaving distance using torsion birth data.
-    
-    Lower bound: max over primes p of |birth_p(F) - birth_p(G)|.
-    
-    This uses the stability theorem: if d_I(F,G) = δ, then
-    |birth_p(F) - birth_p(G)| ≤ δ for all p.
-    
-    Time complexity: O(n · k · sqrt(d_max))
+    Returns the set of indices where any torsion first appears.
+
+    Args:
+        F: A persistence module
+
+    Returns:
+        Set of birth indices (at most one element)
     """
-    primes = F.prime_support() | G.prime_support()
-    if not primes:
+    for i, G in enumerate(F.groups):
+        if global_torsion_detected(G):
+            return {i}
+    return set()
+
+
+def hausdorff_distance(A: set[int], B: set[int]) -> Optional[int]:
+    """Compute the Hausdorff distance between two finite sets of integers.
+
+    Returns None if one set is empty and the other is not (infinite distance).
+    Returns 0 if both sets are empty.
+
+    Args:
+        A: First set of integers
+        B: Second set of integers
+
+    Returns:
+        Hausdorff distance, or None if undefined
+    """
+    if not A and not B:
         return 0
-    
-    max_dist = 0
-    for p in primes:
-        d = F.birth_set_distance(G, p)
-        if d is not None:
-            max_dist = max(max_dist, d)
-    
-    return max_dist
+    if not A or not B:
+        return None  # Infinite distance
+
+    d1 = max(min(abs(a - b) for b in B) for a in A)
+    d2 = max(min(abs(a - b) for a in A) for b in B)
+    return max(d1, d2)
 
 
-def search_improvement_candidates(F: FinitePersistenceModule,
-                                   G: FinitePersistenceModule) -> Dict[int, int]:
-    """Search for primes where localization improves the interleaving distance.
-    
-    Returns dict mapping prime -> localized distance, for primes where
-    the localized distance is strictly less than the global distance.
-    
-    This implements the search for Conjecture (Strict Witness Improvement).
+def prime_support(F: PersistenceModule) -> set[int]:
+    """Compute the prime support of a persistence module.
+
+    Returns the set of primes p such that p-torsion appears at some level.
+
+    Args:
+        F: A persistence module
+
+    Returns:
+        Set of primes in the torsion support
     """
-    global_dist = estimate_interleaving_distance(F, G)
-    improvements = {}
-    
-    primes = F.prime_support() | G.prime_support()
-    for p in primes:
-        LF = F.p_primary_submodule(p)
-        LG = G.p_primary_submodule(p)
-        loc_dist = estimate_interleaving_distance(LF, LG)
-        if loc_dist < global_dist:
-            improvements[p] = loc_dist
-    
-    return improvements
+    primes = set()
+    for G in F.groups:
+        for n in G.torsion_orders:
+            # Factor n and collect prime factors
+            m = n
+            for p in range(2, m + 1):
+                if p * p > m:
+                    if m > 1:
+                        primes.add(m)
+                    break
+                while m % p == 0:
+                    primes.add(p)
+                    m //= p
+    return primes
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Algorithm 6: Prime Decomposition Analysis
-# ──────────────────────────────────────────────────────────────────────
+def verify_birth_set_identification(F: PersistenceModule, p: int) -> bool:
+    """Verify Theorem 2: PTorBirth(p, F) = GlobTorBirth(L_p(F)).
 
-def prime_decomposition_analysis(F: FinitePersistenceModule) -> Dict:
-    """Analyze the prime decomposition structure of a persistence module.
-    
-    Returns a dictionary containing:
-    - prime_support: set of primes appearing in torsion
-    - birth_spectrum: dict mapping prime -> birth index
-    - global_birth: global torsion birth index
-    - localized_modules: dict mapping prime -> localized module
-    - consistency: whether global birth = min of primewise births
-    
-    Time complexity: O(n · k · sqrt(d_max))
+    Args:
+        F: A persistence module
+        p: A prime number
+
+    Returns:
+        True if the identification holds
     """
-    primes = F.prime_support()
-    birth_spectrum = {}
-    localized_modules = {}
-    
-    for p in sorted(primes):
-        birth_spectrum[p] = F.p_torsion_birth(p)
-        localized_modules[p] = F.p_primary_submodule(p)
-    
-    global_birth = F.global_torsion_birth()
-    prime_births = [b for b in birth_spectrum.values() if b is not None]
-    min_prime_birth = min(prime_births) if prime_births else None
-    
-    return {
-        'prime_support': primes,
-        'birth_spectrum': birth_spectrum,
-        'global_birth': global_birth,
-        'localized_modules': localized_modules,
-        'consistency': global_birth == min_prime_birth,
-    }
+    lhs = p_torsion_birth_set(F, p)
+    localized = localize_at_prime(F, p)
+    rhs = global_torsion_birth_set(localized)
+    return lhs == rhs
 
 
-# ──────────────────────────────────────────────────────────────────────
+def verify_prime_decomposition(F: PersistenceModule) -> bool:
+    """Verify the prime decomposition theorem.
+
+    Checks that every global birth index has a prime channel birth ≤ it.
+
+    Args:
+        F: A persistence module
+
+    Returns:
+        True if the decomposition holds
+    """
+    glob_births = global_torsion_birth_set(F)
+    primes = prime_support(F)
+
+    for i in glob_births:
+        found = False
+        for p in primes:
+            p_births = p_torsion_birth_set(F, p)
+            if p_births and min(p_births) <= i:
+                found = True
+                break
+        if not found:
+            return False
+    return True
+
+
+# ============================================================
+# Random Generation
+# ============================================================
+
+def random_finite_abelian_group(
+    max_free_rank: int = 2,
+    max_torsion_summands: int = 3,
+    primes: list[int] = [2, 3, 5],
+    max_power: int = 3,
+    rng: Optional[np.random.Generator] = None
+) -> FiniteAbelianGroup:
+    """Generate a random finitely generated abelian group.
+
+    Args:
+        max_free_rank: Maximum free rank
+        max_torsion_summands: Maximum number of torsion summands
+        primes: Primes to use for torsion orders
+        max_power: Maximum prime power exponent
+        rng: Random number generator
+
+    Returns:
+        A random FiniteAbelianGroup
+    """
+    if rng is None:
+        rng = np.random.default_rng()
+
+    free_rank = rng.integers(0, max_free_rank + 1)
+    n_torsion = rng.integers(0, max_torsion_summands + 1)
+    torsion_orders = []
+    for _ in range(n_torsion):
+        p = primes[rng.integers(0, len(primes))]
+        k = rng.integers(1, max_power + 1)
+        torsion_orders.append(int(p ** k))
+    return FiniteAbelianGroup(free_rank=int(free_rank), torsion_orders=torsion_orders)
+
+
+def random_persistence_module(
+    n_levels: int = 10,
+    **kwargs
+) -> PersistenceModule:
+    """Generate a random persistence module.
+
+    Each level gets a random finite abelian group. The structure maps
+    are implicit (we only track groups for birth set analysis).
+
+    Args:
+        n_levels: Number of filtration levels
+        **kwargs: Passed to random_finite_abelian_group
+
+    Returns:
+        A random PersistenceModule
+    """
+    rng = kwargs.pop('rng', np.random.default_rng())
+    groups = []
+    for i in range(n_levels):
+        # Allow torsion to "appear" partway through
+        if rng.random() < 0.3 and i < n_levels // 2:
+            groups.append(FiniteAbelianGroup(free_rank=rng.integers(0, 3)))
+        else:
+            groups.append(random_finite_abelian_group(rng=rng, **kwargs))
+    return PersistenceModule(groups=groups)
+
+
+# ============================================================
 # Example usage
-# ──────────────────────────────────────────────────────────────────────
+# ============================================================
 
 if __name__ == "__main__":
-    # Example: Module with mixed torsion
-    F = FinitePersistenceModule({
-        0: InvariantFactorGroup(free_rank=1),
-        1: InvariantFactorGroup(free_rank=1, invariant_factors=[6]),
-        2: InvariantFactorGroup(free_rank=1, invariant_factors=[6, 4]),
-        3: InvariantFactorGroup(free_rank=2, invariant_factors=[12, 60]),
-    })
-    
-    print("Module F:")
-    print(F)
-    print()
-    
-    # Verify birth set identification for each prime
-    for p in [2, 3, 5]:
-        result = verify_birth_set_identification(F, p)
-        print(f"Birth set identification at p={p}: {'✓' if result else '✗'}")
-    
-    print()
-    
-    # Prime decomposition analysis
-    analysis = prime_decomposition_analysis(F)
-    print(f"Prime support: {analysis['prime_support']}")
-    print(f"Birth spectrum: {analysis['birth_spectrum']}")
-    print(f"Global birth: {analysis['global_birth']}")
-    print(f"Consistent: {analysis['consistency']}")
+    print("=" * 60)
+    print("Algorithms for Functorial Localization of Persistence Modules")
+    print("=" * 60)
+
+    # Example 1: Basic group operations
+    G = FiniteAbelianGroup(free_rank=1, torsion_orders=[6, 4])
+    print(f"\nGroup: Z ⊕ Z/6Z ⊕ Z/4Z")
+    print(f"  2-torsion detected: {p_torsion_detected(G, 2)}")
+    print(f"  3-torsion detected: {p_torsion_detected(G, 3)}")
+    print(f"  5-torsion detected: {p_torsion_detected(G, 5)}")
+    print(f"  2-primary subgroup: {p_primary_subgroup(G, 2)}")
+    print(f"  3-primary subgroup: {p_primary_subgroup(G, 3)}")
+
+    # Example 2: Persistence module localization
+    F = PersistenceModule(groups=[
+        FiniteAbelianGroup(free_rank=1),          # Level 0: Z (no torsion)
+        FiniteAbelianGroup(free_rank=1),          # Level 1: Z (no torsion)
+        FiniteAbelianGroup(torsion_orders=[6]),    # Level 2: Z/6Z (2,3-torsion)
+        FiniteAbelianGroup(torsion_orders=[6, 4]), # Level 3: Z/6Z ⊕ Z/4Z
+    ])
+    print(f"\nPersistence module F:")
+    for i, G in enumerate(F.groups):
+        print(f"  Level {i}: Z^{G.free_rank} ⊕ {'⊕'.join(f'Z/{n}Z' for n in G.torsion_orders) or '0'}")
+
+    L2 = localize_at_prime(F, 2)
+    L3 = localize_at_prime(F, 3)
+    print(f"\nLocalized at 2:")
+    for i, G in enumerate(L2.groups):
+        desc = '⊕'.join(f'Z/{n}Z' for n in G.torsion_orders) or '0'
+        print(f"  Level {i}: {desc}")
+    print(f"\nLocalized at 3:")
+    for i, G in enumerate(L3.groups):
+        desc = '⊕'.join(f'Z/{n}Z' for n in G.torsion_orders) or '0'
+        print(f"  Level {i}: {desc}")
+
+    # Verify theorems
+    print(f"\nBirth set verification:")
+    print(f"  PTorBirth(2, F) = {p_torsion_birth_set(F, 2)}")
+    print(f"  GlobTorBirth(L_2(F)) = {global_torsion_birth_set(L2)}")
+    print(f"  Theorem 2 verified: {verify_birth_set_identification(F, 2)}")
+    print(f"  PTorBirth(3, F) = {p_torsion_birth_set(F, 3)}")
+    print(f"  GlobTorBirth(L_3(F)) = {global_torsion_birth_set(L3)}")
+    print(f"  Theorem 2 verified: {verify_birth_set_identification(F, 3)}")
+    print(f"  Prime decomposition verified: {verify_prime_decomposition(F)}")
