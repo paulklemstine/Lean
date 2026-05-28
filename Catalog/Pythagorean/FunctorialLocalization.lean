@@ -171,7 +171,7 @@ theorem exists_prime_of_GlobTorDet {A : Type*} [AddCommGroup A]
       obtain ⟨m, k, hm, hk, hmk⟩ : ∃ m k : ℕ, 2 ≤ m ∧ 2 ≤ k ∧ m * k = n := by
         rcases Nat.exists_dvd_of_not_prime2 hn h₃ with ⟨ m, hm₁, hm₂ ⟩ ; exact ⟨ m, n / m, by nlinarith [ Nat.div_mul_cancel hm₁ ], by nlinarith [ Nat.div_mul_cancel hm₁ ], by rw [ Nat.mul_div_cancel' hm₁ ] ⟩;
       contrapose! ih;
-      refine' ⟨ m, _, ( k : ℕ ) • a, _, _, _, ih ⟩ <;> simp_all +decide;
+      refine' ⟨ m, _, ( k : ℕ ) • a, _, _, _, ih ⟩ <;> simp_all +decide [ mul_comm, mul_assoc, mul_left_comm ];
       · nlinarith;
       · exact h₂ k hk ( by nlinarith );
       · simp_all +decide [ ← mul_nsmul ];
@@ -265,7 +265,7 @@ theorem pPrimary_map {A B : Type*} [AddCommGroup A] [AddCommGroup B]
 noncomputable def pPrimaryRestrict {A B : Type*} [AddCommGroup A] [AddCommGroup B]
     (f : A →+ B) (p : ℕ) : pPrimary p A →+ pPrimary p B :=
   (f.restrict (pPrimary p A)).codRestrict (pPrimary p B)
-    (fun ⟨_, ha⟩ => pPrimary_map f p ha)
+    (fun ⟨a, ha⟩ => pPrimary_map f p ha)
 
 /-
 The restriction to p-primary subgroups preserves injectivity.
@@ -282,7 +282,7 @@ proved by subagent
 For p prime, the p-primary subgroup being nontrivial ↔ p-torsion is detected.
 -/
 theorem pPrimary_nontrivial_iff_PTorDet {A : Type*} [AddCommGroup A]
-    {p : ℕ} (_hp : Nat.Prime p) :
+    {p : ℕ} (hp : Nat.Prime p) :
     (∃ a : pPrimary p A, a ≠ 0) ↔ PTorDet (p : ℤ) A := by
   constructor <;> intro h;
   · obtain ⟨ a, ha ⟩ := h;
@@ -290,7 +290,7 @@ theorem pPrimary_nontrivial_iff_PTorDet {A : Type*} [AddCommGroup A]
     convert exists_pTorsion_of_pkTorsion _ hk;
     exact fun h => ha <| Subtype.ext h;
   · obtain ⟨ a, ha ⟩ := h;
-    refine' ⟨ ⟨ a, ⟨ 1, by simpa using ha.2 ⟩ ⟩, _ ⟩ ; simp +decide;
+    refine' ⟨ ⟨ a, ⟨ 1, by simpa using ha.2 ⟩ ⟩, _ ⟩ ; simp +decide [ ha.1 ];
     exact ne_of_apply_ne Subtype.val ha.1
 
 -- proved by subagent
