@@ -576,10 +576,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "21d69cc6",
-    "consumed_by_exp_id": "efa65a5f",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T09:39:15.046719+00:00"
   },
   {
@@ -597,10 +597,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "1fb257b2",
-    "consumed_by_exp_id": "ce4c226e",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T13:05:51.445505+00:00"
   },
   {
@@ -616,10 +616,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "550b5c8b",
-    "consumed_by_exp_id": "e4d194a8",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T21:18:02.967940+00:00"
   },
   {
