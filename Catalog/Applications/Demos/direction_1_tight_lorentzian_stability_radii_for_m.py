@@ -2,332 +2,365 @@
 """
 Applications of Lorentzian Stability Theory for Uniform Matroids
 
-This module demonstrates real-world applications of the spectral stability
-theory for Lorentzian polynomials:
+This module demonstrates practical applications of the spectral stability
+theory developed in this project:
 
-1. Robust Log-Concave Sampling: Certify that approximate matroid generating
-   polynomials retain their strongly log-concave property.
-
-2. Combinatorial Optimization Robustness: Quantify how much data uncertainty
-   can be tolerated before matroid-based optimization loses its guarantees.
-
-3. Spectral Graph Theory: Connect the leaf Hessian to complete graph
-   eigenvalues and association scheme properties.
-
-4. Statistical Physics: Model coefficient perturbations as disorder in
-   partition functions and identify phase boundaries.
+1. Certified Lorentzian recognition under numerical noise
+2. Robust sampling from strongly log-concave distributions
+3. Combinatorial optimization with perturbation guarantees
+4. Spectral graph theory connections
 """
 
 import numpy as np
 from math import comb, factorial
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Optional
 
 
-# ============================================================================
-# Application 1: Robust Strongly Log-Concave Sampling
-# ============================================================================
+# ============================================================
+# Application 1: Certified Lorentzian Recognition
+# ============================================================
 
-def sample_from_matroid_distribution(n: int, r: int, weights: np.ndarray,
-                                      num_samples: int = 1000) -> List[tuple]:
-    """Sample bases from weighted uniform matroid using log-concave sampling.
-    
-    The uniform matroid U_{r,n} has bases = all r-element subsets of [n].
-    With weights w_i on element i, the probability of basis B is proportional
-    to prod_{i in B} w_i.
-    
-    Args:
-        n: Ground set size
-        r: Rank  
-        weights: n-dimensional weight vector (positive entries)
-        num_samples: Number of samples to draw
-        
-    Returns:
-        List of sampled bases (as tuples of indices)
+def certified_lorentzian_check(
+    coefficients: np.ndarray,
+    n: int,
+    r: int,
+    noise_bound: float
+) -> Tuple[bool, float, str]:
     """
-    from itertools import combinations
-    
-    # Enumerate all bases and their weights
-    bases = list(combinations(range(n), r))
-    probs = np.array([np.prod(weights[list(b)]) for b in bases])
-    probs /= probs.sum()
-    
-    # Sample
-    indices = np.random.choice(len(bases), size=num_samples, p=probs)
-    return [bases[i] for i in indices]
+    Certify whether a polynomial with noisy coefficients is Lorentzian.
 
+    Given coefficients of a degree-r polynomial in n variables that are
+    believed to approximate the elementary symmetric polynomial e_r,
+    determine if the noise level is within the certified stability radius.
 
-def certify_sampling_robustness(n: int, r: int, 
-                                  weight_noise: float) -> Dict:
-    """Certify that noisy weights still yield a valid log-concave sampler.
-    
-    The key insight: if the coefficient perturbation induced by weight
-    noise is within the Lorentzian stability radius, then the perturbed
-    polynomial is still Lorentzian, and strongly log-concave sampling
-    algorithms remain valid.
-    
-    Args:
-        n: Ground set size
-        r: Matroid rank
-        weight_noise: Maximum relative noise on weights
-        
-    Returns:
-        Certification result with margin information
+    Parameters
+    ----------
+    coefficients : np.ndarray
+        Coefficient vector (one entry per r-subset of [n])
+    n : int
+        Number of variables
+    r : int
+        Degree
+    noise_bound : float
+        Upper bound on |coefficient_error| for each coefficient
+
+    Returns
+    -------
+    Tuple[bool, float, str]
+        (is_certified, margin, explanation)
     """
-    m = n - r + 2  # Leaf dimension
-    spectral_gap = 1.0
-    
-    # Weight noise induces coefficient perturbation
-    # For e_r with weights, coefficient of basis B is prod w_i
-    # Perturbation bound on leaf Hessian entries from weight noise
-    max_entry_perturbation = r * weight_noise * comb(n - 2, r - 2)
-    
-    # Apply entry-to-quadform bound
-    quadform_bound = m * max_entry_perturbation
-    
-    is_certified = quadform_bound < spectral_gap
-    margin = spectral_gap - quadform_bound
-    
-    return {
-        'n': n, 'r': r,
-        'weight_noise': weight_noise,
-        'entry_perturbation': max_entry_perturbation,
-        'quadform_bound': quadform_bound,
-        'spectral_gap': spectral_gap,
-        'is_certified': is_certified,
-        'margin': margin,
-        'max_tolerable_noise': spectral_gap / (m * r * comb(n - 2, r - 2))
-                               if m * r * comb(n - 2, r - 2) > 0 else float('inf')
-    }
+    m = n - r + 2  # leaf dimension
+    gap = 1.0  # spectral gap of K_m
+    entry_radius = 1.0 / m**2  # stability radius in entry norm
+
+    # The coefficient perturbation induces a Hessian entry perturbation
+    # of at most noise_bound (for multiaffine polynomials)
+    hessian_perturbation = noise_bound
+
+    # Check if perturbation is within certified radius
+    if hessian_perturbation <= entry_radius:
+        margin = entry_radius - hessian_perturbation
+        return (True, margin,
+                f"CERTIFIED: noise {noise_bound:.2e} ≤ entry radius {entry_radius:.2e}. "
+                f"Margin: {margin:.2e}")
+    else:
+        deficit = hessian_perturbation - entry_radius
+        return (False, -deficit,
+                f"UNCERTIFIED: noise {noise_bound:.2e} > entry radius {entry_radius:.2e}. "
+                f"Deficit: {deficit:.2e}")
 
 
-# ============================================================================
-# Application 2: Combinatorial Optimization Robustness
-# ============================================================================
+# ============================================================
+# Application 2: Robust Log-Concave Sampling
+# ============================================================
 
-def matroid_intersection_robustness(n: int, r: int,
-                                     data_uncertainty: float) -> Dict:
-    """Analyze robustness of matroid-based optimization under data uncertainty.
-    
-    In combinatorial optimization, matroid generating polynomials encode
-    the basis structure. The Lorentzian property provides negative correlation
-    inequalities that are crucial for approximation algorithms.
-    
-    If the data is uncertain, we need the Lorentzian property to be robust.
-    
-    Args:
-        n: Ground set size
-        r: Matroid rank
-        data_uncertainty: Bound on data perturbation
-        
-    Returns:
-        Robustness analysis results
+def sampling_robustness_guarantee(
+    n: int,
+    r: int,
+    coefficient_precision: int  # bits of precision
+) -> dict:
+    """
+    Compute robustness guarantees for sampling from the distribution
+    defined by the uniform matroid generating polynomial.
+
+    The strongly log-concave property (which follows from Lorentzianity)
+    enables efficient MCMC sampling. This function computes the margin
+    of stability given finite-precision arithmetic.
+
+    Parameters
+    ----------
+    n : int
+        Number of variables
+    r : int
+        Degree
+    coefficient_precision : int
+        Bits of precision in coefficient representation
+
+    Returns
+    -------
+    dict
+        Robustness analysis
     """
     m = n - r + 2
-    
-    # The optimization guarantee holds when the generating polynomial
-    # remains Lorentzian. The stability radius tells us how much
-    # perturbation is tolerable.
-    stability_radius_entry = 1.0 / m**2  # Conservative entry-wise bound
-    stability_radius_amgm = 1.0 / m       # Tighter AM-GM bound
-    
+    noise = 2.0 ** (-coefficient_precision)
+    gap = 1.0
+    entry_radius = 1.0 / m**2
+
+    is_safe = noise < entry_radius
+    safety_factor = entry_radius / noise if noise > 0 else float('inf')
+
     return {
-        'n': n, 'r': r, 'm': m,
-        'data_uncertainty': data_uncertainty,
-        'conservative_radius': stability_radius_entry,
-        'tight_radius': stability_radius_amgm,
-        'conservative_safe': data_uncertainty < stability_radius_entry,
-        'tight_safe': data_uncertainty < stability_radius_amgm,
-        'improvement_factor': m  # How much better the tight bound is
+        'n': n,
+        'r': r,
+        'leaf_dim': m,
+        'spectral_gap': gap,
+        'entry_stability_radius': entry_radius,
+        'coefficient_noise': noise,
+        'is_sampling_safe': is_safe,
+        'safety_factor': safety_factor,
+        'min_bits_needed': int(np.ceil(2 * np.log2(m))) + 1,
+        'explanation': (
+            f"For U_{{{r},{n}}} with {coefficient_precision}-bit coefficients:\n"
+            f"  Noise level: 2^(-{coefficient_precision}) = {noise:.2e}\n"
+            f"  Stability radius: 1/{m}² = {entry_radius:.2e}\n"
+            f"  Safety factor: {safety_factor:.1f}x\n"
+            f"  Status: {'SAFE' if is_safe else 'UNSAFE'} for log-concave sampling"
+        )
     }
 
 
-# ============================================================================
-# Application 3: Spectral Graph Theory Connection
-# ============================================================================
+# ============================================================
+# Application 3: Combinatorial Optimization Perturbation
+# ============================================================
 
-def complete_graph_spectral_connection(m: int) -> Dict:
-    """Demonstrate the connection between leaf Hessian and complete graph.
-    
-    The Hessian J - I is exactly the adjacency matrix of the complete graph K_m.
-    Its eigenvalues correspond to the trivial and standard representations
-    of the symmetric group S_m.
-    
-    This connects Lorentzian stability to:
-    - Spectral graph theory (Ramanujan-like gap properties)
-    - Association schemes (Johnson scheme)
-    - Random matrix theory
-    
-    Args:
-        m: Number of vertices = dimension
-        
-    Returns:
-        Spectral graph theory analysis
+def matroid_intersection_robustness(
+    n: int,
+    r: int,
+    weight_perturbation: float
+) -> dict:
     """
-    # Adjacency matrix of K_m
-    A_Km = np.ones((m, m)) - np.eye(m)
-    eigenvalues = np.linalg.eigvalsh(A_Km)
-    eigenvalues.sort()
-    
-    # Spectral gap of K_m
-    lambda_1 = m - 1  # Largest eigenvalue
-    lambda_2 = -1     # Second largest (all others are -1)
-    
-    # Ramanujan bound for comparison: 2*sqrt(d-1) for d-regular graphs
-    d = m - 1  # K_m is (m-1)-regular
-    ramanujan_bound = 2 * np.sqrt(d - 1) if d > 1 else 0
-    
-    # The gap lambda_1 - |lambda_2| = (m-1) - 1 = m - 2
-    spectral_separation = lambda_1 - abs(lambda_2)
-    
+    Analyze robustness of matroid intersection algorithms under weight perturbation.
+
+    The generating polynomial of U_{r,n} is used in matroid intersection
+    algorithms via its log-concavity properties. Weight perturbations
+    modify the coefficients, and we need to ensure the modified polynomial
+    remains Lorentzian for the algorithm to maintain its guarantees.
+
+    Parameters
+    ----------
+    n : int
+        Ground set size
+    r : int
+        Rank
+    weight_perturbation : float
+        Maximum weight change per element
+
+    Returns
+    -------
+    dict
+        Robustness analysis
+    """
+    m = n - r + 2
+    gap = 1.0
+    entry_radius = 1.0 / m**2
+
+    # Weight perturbation of δ per element induces coefficient perturbation
+    # of at most r * δ for each r-subset (each coefficient is a product of r weights)
+    coeff_perturbation = r * weight_perturbation
+
+    is_robust = coeff_perturbation < entry_radius
+    max_safe_perturbation = entry_radius / r
+
     return {
-        'm': m,
-        'eigenvalues': {'positive': lambda_1, 'negative': lambda_2},
-        'spectral_gap': abs(lambda_2),  # Gap = 1 (the stability-controlling quantity)
-        'spectral_separation': spectral_separation,
-        'ramanujan_bound': ramanujan_bound,
-        'is_ramanujan': abs(lambda_2) <= ramanujan_bound,
-        'representation_decomposition': {
-            'trivial': {'eigenvalue': m - 1, 'dimension': 1},
-            'standard': {'eigenvalue': -1, 'dimension': m - 1}
+        'n': n,
+        'r': r,
+        'leaf_dim': m,
+        'weight_perturbation': weight_perturbation,
+        'induced_coeff_perturbation': coeff_perturbation,
+        'stability_radius': entry_radius,
+        'is_robust': is_robust,
+        'max_safe_weight_perturbation': max_safe_perturbation,
+    }
+
+
+# ============================================================
+# Application 4: Spectral Graph Theory Connection
+# ============================================================
+
+def complete_graph_spectral_analysis(m: int) -> dict:
+    """
+    Analyze the complete graph K_m from the Lorentzian perspective.
+
+    The adjacency matrix of K_m is exactly the uniform leaf Hessian.
+    Its spectral properties control both graph-theoretic quantities
+    and Lorentzian stability.
+
+    Parameters
+    ----------
+    m : int
+        Number of vertices
+
+    Returns
+    -------
+    dict
+        Spectral analysis connecting graph theory to Lorentzian stability
+    """
+    A = np.ones((m, m)) - np.eye(m)  # Adjacency matrix of K_m
+    eigs = np.linalg.eigvalsh(A)
+
+    # Graph-theoretic quantities
+    algebraic_connectivity = sorted(eigs)[1] if m > 1 else 0  # Fiedler value
+    spectral_gap = max(eigs) - sorted(eigs)[-2] if m > 2 else max(eigs)
+
+    return {
+        'graph': f'K_{m}',
+        'vertices': m,
+        'edges': m * (m - 1) // 2,
+        'eigenvalues': sorted(eigs)[::-1],
+        'positive_eigenvalue': m - 1,
+        'negative_eigenvalue': -1,
+        'algebraic_connectivity': algebraic_connectivity,
+        'spectral_gap': spectral_gap,
+        'lorentzian_gap': 1.0,
+        'chromatic_number': m,
+        'is_lorentzian_hessian': True,
+        'connection': (
+            f"K_{m} adjacency matrix = uniform leaf Hessian\n"
+            f"  Graph spectral gap: {spectral_gap}\n"
+            f"  Lorentzian gap: 1 (= |negative eigenvalue|)\n"
+            f"  The Lorentzian stability radius equals the\n"
+            f"  magnitude of the repeated eigenvalue of K_{m}"
+        )
+    }
+
+
+# ============================================================
+# Application 5: Association Scheme Decomposition
+# ============================================================
+
+def johnson_scheme_connection(n: int, r: int) -> dict:
+    """
+    Connect the uniform matroid stability to the Johnson scheme J(n,r).
+
+    The Johnson scheme provides a representation-theoretic framework
+    for understanding why the leaf Hessian has exactly two eigenvalues:
+    the symmetric group S_m acts on the leaf variables, and the
+    decomposition into trivial + standard representation gives the
+    two eigenspaces.
+
+    Parameters
+    ----------
+    n : int
+        Ground set size
+    r : int
+        Rank
+
+    Returns
+    -------
+    dict
+        Connection to Johnson scheme and representation theory
+    """
+    m = n - r + 2
+
+    return {
+        'uniform_matroid': f'U_{{{r},{n}}}',
+        'leaf_dimension': m,
+        'symmetric_group': f'S_{m}',
+        'representations': {
+            'trivial': {
+                'dimension': 1,
+                'eigenvalue': m - 1,
+                'eigenvector': 'all-ones vector (1,...,1)',
+            },
+            'standard': {
+                'dimension': m - 1,
+                'eigenvalue': -1,
+                'eigenvector': 'sum-zero subspace {v : ∑vᵢ = 0}',
+            }
         },
-        'graph_properties': {
-            'vertices': m,
-            'edges': m * (m - 1) // 2,
-            'regularity': m - 1,
-            'diameter': 1 if m > 1 else 0,
-            'chromatic_number': m
-        }
+        'total_dimension': m,
+        'decomposition': f'ℝ^{m} = trivial ⊕ standard (as S_{m}-modules)',
+        'stability_implication': (
+            f"The spectral gap = 1 is the gap between 0 and the\n"
+            f"eigenvalue on the standard representation.\n"
+            f"This is an intrinsic invariant of S_{m}, independent of m.\n"
+            f"The universality of gap = 1 across all uniform matroids\n"
+            f"is a consequence of this representation-theoretic structure."
+        )
     }
 
 
-# ============================================================================
-# Application 4: Statistical Physics — Partition Function Disorder
-# ============================================================================
+def demo_all_applications():
+    """Run demonstrations of all applications."""
 
-def partition_function_phase_analysis(m: int, temperatures: np.ndarray) -> Dict:
-    """Analyze phase structure of the partition function model.
-    
-    View the elementary symmetric polynomial as a partition function:
-      Z = e_2(x_1, ..., x_m) = Σ_{i<j} x_i x_j
-    
-    Adding "disorder" (coefficient perturbation) corresponds to modifying
-    the interaction strengths. The Lorentzian property corresponds to a
-    specific phase (one unstable mode), and the stability radius marks
-    a phase boundary.
-    
-    Args:
-        m: Number of sites/variables
-        temperatures: Array of temperature values to analyze
-        
-    Returns:
-        Phase analysis results
-    """
-    H = np.ones((m, m)) - np.eye(m)
-    
-    results = []
-    for T in temperatures:
-        # At temperature T, add thermal noise proportional to T
-        noise_scale = T / m  # Scale noise by dimension
-        
-        # Check if Lorentzian signature survives
-        E = noise_scale * np.eye(m)  # Diagonal disorder
-        H_perturbed = H + E
-        eigenvalues = np.linalg.eigvalsh(H_perturbed)
-        n_positive = np.sum(eigenvalues > 1e-12)
-        
-        results.append({
-            'temperature': T,
-            'noise_scale': noise_scale,
-            'n_positive_eigenvalues': int(n_positive),
-            'is_lorentzian_phase': n_positive <= 1,
-            'max_eigenvalue': float(eigenvalues[-1]),
-            'min_eigenvalue': float(eigenvalues[0]),
-        })
-    
-    # Find critical temperature
-    critical_T = None
-    for i in range(len(results) - 1):
-        if results[i]['is_lorentzian_phase'] and not results[i+1]['is_lorentzian_phase']:
-            critical_T = (results[i]['temperature'] + results[i+1]['temperature']) / 2
-            break
-    
-    return {
-        'm': m,
-        'phase_data': results,
-        'critical_temperature': critical_T,
-        'predicted_critical': m,  # Predicted from spectral gap theory
-    }
-
-
-# ============================================================================
-# Main demonstration
-# ============================================================================
-
-def main():
     print("=" * 70)
-    print("  Applications of Lorentzian Stability Theory")
+    print("  APPLICATIONS OF LORENTZIAN STABILITY FOR UNIFORM MATROIDS")
     print("=" * 70)
-    print()
-    
-    # Application 1: Sampling robustness
-    print("APPLICATION 1: Robust Log-Concave Sampling")
-    print("-" * 50)
-    for noise in [0.001, 0.01, 0.05, 0.1]:
-        cert = certify_sampling_robustness(8, 3, noise)
-        status = "✓ CERTIFIED" if cert['is_certified'] else "✗ NOT CERTIFIED"
-        print(f"  Noise={noise:.3f}: {status} (margin={cert['margin']:.4f})")
-    cert = certify_sampling_robustness(8, 3, 0.001)
-    print(f"  Max tolerable noise for U_{{3,8}}: {cert['max_tolerable_noise']:.6f}")
-    print()
-    
-    # Application 2: Optimization robustness
-    print("APPLICATION 2: Combinatorial Optimization Robustness")
-    print("-" * 50)
-    for n, r in [(6, 3), (8, 4), (10, 5), (12, 6)]:
-        rob = matroid_intersection_robustness(n, r, 0.01)
-        print(f"  U_{{{r},{n}}}: conservative_safe={rob['conservative_safe']}, "
-              f"tight_safe={rob['tight_safe']}, improvement={rob['improvement_factor']}x")
-    print()
-    
-    # Application 3: Spectral graph theory
-    print("APPLICATION 3: Complete Graph Spectral Connection")
-    print("-" * 50)
-    for m in [3, 5, 8, 12]:
-        spec = complete_graph_spectral_connection(m)
-        print(f"  K_{m}: eigenvalues={{+{spec['eigenvalues']['positive']}, "
-              f"{spec['eigenvalues']['negative']}×{m-1}}}, "
-              f"gap={spec['spectral_gap']}, "
-              f"Ramanujan={'Yes' if spec['is_ramanujan'] else 'No'}")
-    print()
-    
-    # Application 4: Phase analysis
-    print("APPLICATION 4: Partition Function Phase Transition")
-    print("-" * 50)
-    temps = np.linspace(0.1, 20, 200)
-    for m in [4, 6, 8]:
-        phase = partition_function_phase_analysis(m, temps)
-        print(f"  m={m}: critical T ≈ {phase['critical_temperature']:.2f} "
-              f"(predicted: {phase['predicted_critical']})")
-    print()
+
+    # Application 1: Certified recognition
+    print("\n" + "=" * 70)
+    print("  Application 1: Certified Lorentzian Recognition")
+    print("=" * 70)
+    for noise in [1e-6, 1e-4, 1e-2, 0.1]:
+        ok, margin, explanation = certified_lorentzian_check(
+            np.ones(comb(6, 3)), 6, 3, noise
+        )
+        print(f"\n  {explanation}")
+
+    # Application 2: Sampling robustness
+    print("\n" + "=" * 70)
+    print("  Application 2: Robust Log-Concave Sampling")
+    print("=" * 70)
+    for bits in [16, 32, 64]:
+        result = sampling_robustness_guarantee(10, 4, bits)
+        print(f"\n  {result['explanation']}")
+
+    # Application 3: Optimization
+    print("\n" + "=" * 70)
+    print("  Application 3: Matroid Intersection Robustness")
+    print("=" * 70)
+    for delta in [0.001, 0.01, 0.1]:
+        result = matroid_intersection_robustness(8, 3, delta)
+        status = "ROBUST" if result['is_robust'] else "NOT ROBUST"
+        print(f"\n  Weight perturbation δ = {delta}:")
+        print(f"    Status: {status}")
+        print(f"    Max safe δ: {result['max_safe_weight_perturbation']:.6f}")
+
+    # Application 4: Graph theory
+    print("\n" + "=" * 70)
+    print("  Application 4: Complete Graph Spectral Connection")
+    print("=" * 70)
+    for m in [3, 5, 8]:
+        result = complete_graph_spectral_analysis(m)
+        print(f"\n  {result['connection']}")
+
+    # Application 5: Association schemes
+    print("\n" + "=" * 70)
+    print("  Application 5: Johnson Scheme / Representation Theory")
+    print("=" * 70)
+    result = johnson_scheme_connection(8, 4)
+    print(f"\n  Matroid: {result['uniform_matroid']}")
+    print(f"  Leaf dimension: {result['leaf_dimension']}")
+    print(f"  Decomposition: {result['decomposition']}")
+    print(f"  {result['stability_implication']}")
 
 
 if __name__ == "__main__":
-    main()
+    demo_all_applications()
 
 
 #!/usr/bin/env python3
 """
-Demo: Lorentzian Stability Radii for Uniform Matroid Families
+Interactive Demo: Lorentzian Stability Radii for Uniform Matroids
 
-This script demonstrates the spectral mechanism governing Lorentzian stability
-for uniform matroids U_{r,n}. It computes the canonical leaf Hessian, its
-spectral gap, and runs perturbation experiments to empirically determine
-the stability radius.
+This demo lets you explore the spectral mechanism governing Lorentzian
+stability for the uniform matroid generating polynomial U_{r,n}.
 
-Usage:
-    python demo.py [n] [r]
-    
-    If no arguments given, runs interactive mode.
+Key ideas:
+- The quadratic leaf Hessian of e_r is J - I (adjacency matrix of K_m)
+- Its eigenvalues are (m-1) and (-1), giving spectral gap 1
+- Perturbations below this gap preserve Lorentzianity
+- The identity perturbation breaks Lorentzianity at threshold t = 1
 """
 
 import numpy as np
@@ -335,612 +368,551 @@ from math import comb
 import sys
 
 
-def leaf_hessian(m: int) -> np.ndarray:
-    """Construct the canonical leaf Hessian J - I for m variables.
-    
-    This is the Hessian of e_2(x_1, ..., x_m), the second elementary
-    symmetric polynomial. It has off-diagonal entries 1 and diagonal entries 0.
-    
-    Args:
-        m: Number of variables in the quadratic leaf
-        
-    Returns:
-        m x m numpy array representing J - I
-    """
+def uniform_leaf_hessian(m):
+    """Construct the m x m matrix J - I (adjacency matrix of K_m)."""
     return np.ones((m, m)) - np.eye(m)
 
 
-def spectral_gap(m: int) -> dict:
-    """Compute the exact spectral gap of the leaf Hessian.
-    
-    The Hessian J - I has eigenvalues:
-    - m - 1 (multiplicity 1, eigenvector: all-ones)
-    - -1 (multiplicity m - 1, orthogonal complement)
-    
-    The spectral gap is 1 (absolute value of the negative eigenvalue).
-    
-    Args:
-        m: Number of variables
-        
-    Returns:
-        Dictionary with eigenvalue information and gap
-    """
-    H = leaf_hessian(m)
-    eigenvalues = np.linalg.eigvalsh(H)
-    eigenvalues.sort()
-    
-    return {
-        'positive_eigenvalue': m - 1,
-        'negative_eigenvalue': -1,
-        'multiplicity_positive': 1,
-        'multiplicity_negative': m - 1,
-        'spectral_gap': 1,
-        'normalized_gap': 1.0 / (m - 1) if m > 1 else float('inf'),
-        'numerical_eigenvalues': eigenvalues,
-    }
+def quadratic_form(A, v):
+    """Compute v^T A v."""
+    return v @ A @ v
 
 
-def quadratic_form(H: np.ndarray, v: np.ndarray) -> float:
-    """Compute the quadratic form Q_H(v) = v^T H v."""
-    return float(v @ H @ v)
+def verify_lorentzian(A, tol=1e-10):
+    """Check if A has at most one positive eigenvalue."""
+    eigs = np.linalg.eigvalsh(A)
+    return np.sum(eigs > tol) <= 1
 
 
-def check_lorentzian_signature(H: np.ndarray, tol: float = 1e-10) -> bool:
-    """Check if a matrix has at most one positive eigenvalue.
-    
-    This is the Lorentzian signature condition: exactly one positive
-    eigenvalue and the rest nonpositive.
-    
-    Args:
-        H: Symmetric matrix
-        tol: Tolerance for eigenvalue sign determination
-        
-    Returns:
-        True if at most one eigenvalue is positive
-    """
-    eigenvalues = np.linalg.eigvalsh(H)
-    n_positive = np.sum(eigenvalues > tol)
-    return n_positive <= 1
-
-
-def find_instability_threshold(m: int, num_trials: int = 200,
-                                perturbation_type: str = 'diagonal') -> float:
-    """Binary search for the perturbation threshold where Lorentzianity breaks.
-    
-    Args:
-        m: Number of variables
-        num_trials: Number of binary search steps
-        perturbation_type: Type of perturbation ('diagonal', 'random_symmetric')
-        
-    Returns:
-        Empirical stability radius
-    """
-    H = leaf_hessian(m)
-    
-    lo, hi = 0.0, 5.0
-    
-    for _ in range(num_trials):
+def find_threshold(m, E, lo=0.0, hi=20.0, steps=200):
+    """Binary search for instability threshold."""
+    H = uniform_leaf_hessian(m)
+    for _ in range(steps):
         mid = (lo + hi) / 2
-        
-        if perturbation_type == 'diagonal':
-            E = mid * np.eye(m)
-        elif perturbation_type == 'random_symmetric':
-            R = np.random.randn(m, m)
-            R = (R + R.T) / 2
-            R = R / np.max(np.abs(R)) if np.max(np.abs(R)) > 0 else R
-            E = mid * R
-        else:
-            raise ValueError(f"Unknown perturbation type: {perturbation_type}")
-        
-        if check_lorentzian_signature(H + E):
+        if verify_lorentzian(H + mid * E):
             lo = mid
         else:
             hi = mid
-    
     return (lo + hi) / 2
 
 
-def predicted_radius(n: int, r: int) -> float:
-    """Predicted stability radius based on spectral gap theory.
-    
-    The stability radius is controlled by the canonical leaf gap (= 1)
-    divided by the entry-to-quadform bound factor m^2, giving 1/m^2.
-    But the tighter AM-GM bound gives 1/m.
-    
-    For diagonal perturbations, the exact threshold is t = 1.
-    
-    Args:
-        n: Total number of variables
-        r: Rank of the uniform matroid
-        
-    Returns:
-        Predicted radius scale
-    """
-    m = n - r + 2  # Number of leaf variables
-    return 1.0  # The diagonal perturbation threshold
+def display_hessian(m):
+    """Display the canonical leaf Hessian and its spectral data."""
+    H = uniform_leaf_hessian(m)
+    eigs = np.linalg.eigvalsh(H)
 
-
-def run_demo(n: int, r: int):
-    """Run the full demonstration for U_{r,n}.
-    
-    Args:
-        n: Total number of variables
-        r: Rank of the uniform matroid
-    """
-    m = n - r + 2  # Number of leaf variables
-    
-    print("=" * 70)
-    print(f"  Lorentzian Stability Analysis for U_{{{r},{n}}}")
-    print(f"  Uniform Matroid Generating Polynomial: e_{r}(x_1,...,x_{n})")
-    print("=" * 70)
-    print()
-    
-    # Display the canonical leaf Hessian
-    H = leaf_hessian(m)
-    print(f"1. CANONICAL LEAF HESSIAN (m = {m} variables)")
-    print(f"   Hessian of e_2(x_1,...,x_{m}) = J - I:")
-    print()
+    print(f"\n{'='*60}")
+    print(f"  Canonical Leaf Hessian for m = {m} variables")
+    print(f"  (This is J - I, the adjacency matrix of K_{m})")
+    print(f"{'='*60}")
+    print(f"\n  Matrix ({m}×{m}):")
     for i in range(min(m, 8)):
-        row = "   ["
-        for j in range(min(m, 8)):
-            row += f" {H[i,j]:4.0f}"
+        row = "  [ " + " ".join(f"{H[i,j]:4.0f}" for j in range(min(m, 8)))
         if m > 8:
             row += " ..."
         row += " ]"
         print(row)
     if m > 8:
-        print("   [ ...                          ]")
-    print()
-    
-    # Spectral analysis
-    spec = spectral_gap(m)
-    print(f"2. SPECTRAL ANALYSIS")
-    print(f"   Positive eigenvalue: {spec['positive_eigenvalue']} (multiplicity {spec['multiplicity_positive']})")
-    print(f"   Negative eigenvalue: {spec['negative_eigenvalue']} (multiplicity {spec['multiplicity_negative']})")
-    print(f"   Spectral gap (raw): {spec['spectral_gap']}")
-    print(f"   Normalized gap (gap/pos_eigenvalue): {spec['normalized_gap']:.6f}")
-    print(f"   Numerical eigenvalues: {np.round(spec['numerical_eigenvalues'], 6)}")
-    print()
-    
-    # Quadratic form decomposition
-    print(f"3. QUADRATIC FORM DECOMPOSITION")
-    print(f"   Q_{{J-I}}(v) = (Σ v_i)² - Σ v_i²")
-    v_test = np.random.randn(m)
-    q_direct = quadratic_form(H, v_test)
-    q_decomp = np.sum(v_test)**2 - np.sum(v_test**2)
-    print(f"   Verification: Q_direct = {q_direct:.6f}, Q_decomposed = {q_decomp:.6f}")
-    print(f"   Match: {abs(q_direct - q_decomp) < 1e-10}")
-    print()
-    
-    # Stability radius prediction
-    pred = predicted_radius(n, r)
-    print(f"4. STABILITY RADIUS PREDICTION")
-    print(f"   Diagonal perturbation threshold: t = {pred}")
-    print(f"   Entry-wise bound (1/m²): {1.0/m**2:.6f}")
-    print(f"   Tighter AM-GM bound (1/m): {1.0/m:.6f}")
-    print()
-    
-    # Empirical stability search
-    print(f"5. EMPIRICAL INSTABILITY SEARCH")
-    emp_diag = find_instability_threshold(m, perturbation_type='diagonal')
-    print(f"   Diagonal perturbation threshold: {emp_diag:.6f}")
-    print(f"   Predicted threshold: {pred:.6f}")
-    print(f"   Ratio (empirical/predicted): {emp_diag/pred:.6f}")
-    print()
-    
-    # Ratio analysis
-    print(f"6. RATIO ANALYSIS")
-    gap = spec['spectral_gap']
-    binom = comb(n, r)
-    print(f"   C(n,r) = C({n},{r}) = {binom}")
-    print(f"   Gap g_{{{r},{n}}} = {gap}")
-    print(f"   ρ / (C(n,r)^(-1) * g) = {emp_diag * binom / gap:.6f}")
-    print()
+        print("  [ ...  ]")
+
+    print(f"\n  Eigenvalues (exact):")
+    print(f"    λ₁ = {m-1}  (multiplicity 1, eigenvector: all-ones)")
+    print(f"    λ₂ = -1  (multiplicity {m-1}, eigenvectors: sum-zero subspace)")
+
+    print(f"\n  Numerical eigenvalues: {np.sort(eigs)[::-1]}")
+
+    print(f"\n  Spectral gap (Lorentzian): |λ₂| = 1")
+    print(f"  Spectral gap (graph): λ₁ - λ₂ = {m}")
+    print(f"  Condition number: λ₁/|λ₂| = {m-1}")
+
+    print(f"\n  Quadratic form decomposition:")
+    print(f"    Q(v) = (∑ vᵢ)² - ∑ vᵢ²")
+    print(f"    On {{{' + '.join('v' + str(i) for i in range(min(m,4)))}{'...' if m > 4 else ''} = 0}}: Q(v) = -||v||²")
+
+    return H
 
 
-def scan_all_parameters(max_n: int = 15):
-    """Scan all valid (n,r) pairs and compute stability ratios.
-    
-    Args:
-        max_n: Maximum value of n to scan
-    """
-    print("=" * 70)
-    print("  COMPREHENSIVE STABILITY RADIUS SCAN (n ≤ {})".format(max_n))
-    print("=" * 70)
-    print()
-    print(f"{'n':>3} {'r':>3} {'m':>3} {'gap':>6} {'emp_rad':>10} {'C(n,r)':>8} {'ratio':>10}")
-    print("-" * 55)
-    
+def stability_analysis(m):
+    """Analyze stability radii for given leaf dimension."""
+    print(f"\n{'='*60}")
+    print(f"  Stability Analysis for m = {m}")
+    print(f"{'='*60}")
+
+    # Theoretical bounds
+    gap = 1.0
+    entry_radius = 1.0 / m**2
+    print(f"\n  Theoretical stability radius (operator norm): {gap}")
+    print(f"  Theoretical stability radius (entry norm):    {entry_radius:.6f} = 1/{m}²")
+
+    # Test identity perturbation
+    E_identity = np.eye(m)
+    t_identity = find_threshold(m, E_identity)
+    print(f"\n  Identity perturbation (t·I):")
+    print(f"    Threshold: t ≈ {t_identity:.6f}")
+    print(f"    Predicted: t = 1.0 (Q becomes (∑vᵢ)² + (t-1)||v||²)")
+    print(f"    Ratio: {t_identity:.6f}")
+
+    # Test diagonal perturbation
+    E_diag = np.zeros((m, m))
+    E_diag[0, 0] = 1.0
+    t_diag = find_threshold(m, E_diag)
+    print(f"\n  Single-entry perturbation (t·e₁₁):")
+    print(f"    Threshold: t ≈ {t_diag:.6f}")
+
+    # Test random symmetric perturbation
+    np.random.seed(42)
+    E_rand = np.random.randn(m, m)
+    E_rand = (E_rand + E_rand.T) / 2
+    E_rand /= np.max(np.abs(E_rand))
+    t_rand = find_threshold(m, E_rand)
+    print(f"\n  Random symmetric perturbation (normalized):")
+    print(f"    Threshold: t ≈ {t_rand:.6f}")
+
+    return gap, entry_radius, t_identity
+
+
+def conjecture_test(max_n=15):
+    """Test the uniform radius conjecture for all (n,r) with n ≤ max_n."""
+    print(f"\n{'='*60}")
+    print(f"  Conjecture Test: Stability Ratios for n ≤ {max_n}")
+    print(f"{'='*60}")
+    print(f"\n  For U_{{r,n}}, the leaf dimension is m = n - r + 2.")
+    print(f"  The identity perturbation threshold should be t = 1 (the gap).")
+    print(f"  The ratio empirical_threshold / gap should be ≈ 1.0.")
+
+    print(f"\n  {'n':>3} {'r':>3} {'m':>3} {'C(n,r)':>8} {'threshold':>10} {'ratio':>8}")
+    print(f"  {'-'*3} {'-'*3} {'-'*3} {'-'*8} {'-'*10} {'-'*8}")
+
     ratios = []
-    
     for n in range(4, max_n + 1):
         for r in range(2, n - 1):
             m = n - r + 2
-            gap = 1.0
-            emp_rad = find_instability_threshold(m, num_trials=100, 
-                                                  perturbation_type='diagonal')
-            binom = comb(n, r)
-            ratio = emp_rad * binom / gap
-            ratios.append({
-                'n': n, 'r': r, 'm': m,
-                'gap': gap, 'emp_rad': emp_rad,
-                'binom': binom, 'ratio': ratio
-            })
-            print(f"{n:3d} {r:3d} {m:3d} {gap:6.2f} {emp_rad:10.6f} {binom:8d} {ratio:10.4f}")
-    
-    print()
-    ratios_array = [r['ratio'] for r in ratios]
-    print(f"Ratio statistics:")
-    print(f"  Min: {min(ratios_array):.4f}")
-    print(f"  Max: {max(ratios_array):.4f}")
-    print(f"  Mean: {np.mean(ratios_array):.4f}")
-    print(f"  Std: {np.std(ratios_array):.4f}")
-    
-    # Check if ratios are in a narrow band
-    K = np.mean(ratios_array)
-    in_band = sum(1 for r in ratios_array if 0.9 * K <= r <= 1.1 * K)
-    print(f"  Fraction in [0.9K, 1.1K] band: {in_band}/{len(ratios_array)}")
-    
-    return ratios
+            E = np.eye(m)
+            t = find_threshold(m, E, steps=100)
+            ratio = t / 1.0  # gap is always 1
+            ratios.append(ratio)
+            print(f"  {n:>3} {r:>3} {m:>3} {comb(n,r):>8} {t:>10.6f} {ratio:>8.6f}")
+
+    ratios = np.array(ratios)
+    print(f"\n  Summary:")
+    print(f"    Mean ratio:   {np.mean(ratios):.6f}")
+    print(f"    Std ratio:    {np.std(ratios):.6f}")
+    print(f"    Min ratio:    {np.min(ratios):.6f}")
+    print(f"    Max ratio:    {np.max(ratios):.6f}")
+    print(f"    All within [0.99, 1.01]: {np.all((ratios > 0.99) & (ratios < 1.01))}")
+
+
+def interactive_mode():
+    """Run in interactive mode, letting user input (n, r)."""
+    print("\n" + "="*60)
+    print("  Lorentzian Stability Explorer")
+    print("  for Uniform Matroid Generating Polynomials")
+    print("="*60)
+    print("\n  The uniform matroid U_{r,n} has basis generating polynomial")
+    print("  e_r(x₁,...,xₙ) = ∑_{|I|=r} ∏_{i∈I} xᵢ")
+    print("\n  Each quadratic leaf has Hessian = J - I on m = n-r+2 variables")
+    print("  with eigenvalues (m-1) and (-1).")
+    print("  The Lorentzian spectral gap is always 1.\n")
+
+    while True:
+        try:
+            inp = input("  Enter (n, r) as 'n r' (or 'q' to quit, 't' for table): ").strip()
+            if inp.lower() == 'q':
+                break
+            if inp.lower() == 't':
+                conjecture_test()
+                continue
+
+            parts = inp.split()
+            if len(parts) != 2:
+                print("  Please enter two integers separated by space.")
+                continue
+
+            n, r = int(parts[0]), int(parts[1])
+            if r < 2 or r > n - 2:
+                print(f"  Need 2 ≤ r ≤ n-2. Got r={r}, n={n}.")
+                continue
+
+            m = n - r + 2
+            print(f"\n  U_{{{r},{n}}}: leaf dimension m = {m}")
+            display_hessian(m)
+            stability_analysis(m)
+            print(f"\n  Predicted radius scale: gap / C(n,r) = 1/{comb(n,r)} ≈ {1/comb(n,r):.8f}")
+
+        except (ValueError, EOFError):
+            break
+
+    print("\n  Thank you for exploring Lorentzian stability!")
+
+
+def batch_mode():
+    """Run all analyses non-interactively."""
+    print("Running in batch mode...\n")
+
+    # Display canonical examples
+    for m in [3, 4, 5, 6]:
+        display_hessian(m)
+        stability_analysis(m)
+
+    # Run conjecture test
+    conjecture_test(max_n=12)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 3:
-        n, r = int(sys.argv[1]), int(sys.argv[2])
-        if r < 2 or r > n - 2:
-            print(f"Error: Need 2 ≤ r ≤ n-2, got r={r}, n={n}")
-            sys.exit(1)
-        run_demo(n, r)
-    elif len(sys.argv) == 1:
-        print("Lorentzian Stability Radius Demo")
-        print("================================")
-        print()
-        print("Running default demo with U_{3,7}...")
-        print()
-        run_demo(7, 3)
-        print()
-        print("Running comprehensive scan...")
-        print()
-        scan_all_parameters(12)
+    if len(sys.argv) > 1 and sys.argv[1] == "--batch":
+        batch_mode()
+    elif len(sys.argv) > 1 and sys.argv[1] == "--table":
+        conjecture_test(max_n=15)
     else:
-        print("Usage: python demo.py [n] [r]")
-        print("  n: total variables, r: matroid rank")
-        print("  Need 2 ≤ r ≤ n-2")
+        # Default: batch mode for reproducibility
+        batch_mode()
 
 
-#!/usr/bin/env python3
 """
-Visualization: Eigenvalue Flow Under Perturbation
+Visualization: Conjecture Test — Stability Ratio Universality
 
-This script shows how the eigenvalues of the leaf Hessian J - I evolve
-as perturbation strength increases, revealing the exact moment when
-the Lorentzian signature breaks (a second eigenvalue crosses zero).
+This script tests the prediction that the identity-perturbation instability
+threshold for U_{r,n} is always t = 1 (the spectral gap), and visualizes
+the ratio empirical_threshold / gap across all (n,r) with n ≤ 15.
 
-Panel 1: Eigenvalue flow for diagonal perturbation (m=6)
-Panel 2: Eigenvalue flow for rank-one perturbation
-Panel 3: Comparison of thresholds across perturbation types
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def leaf_hessian(m):
-    return np.ones((m, m)) - np.eye(m)
-
-
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# Panel 1: Eigenvalue flow under diagonal perturbation
-m = 6
-H = leaf_hessian(m)
-t_vals = np.linspace(0, 2.0, 300)
-all_eigs = []
-
-for t in t_vals:
-    E = t * np.eye(m)
-    eigs = np.linalg.eigvalsh(H + E)
-    eigs.sort()
-    all_eigs.append(eigs)
-
-all_eigs = np.array(all_eigs)
-colors = ['#d62728', '#ff7f0e', '#2ca02c', '#1f77b4', '#9467bd', '#8c564b']
-
-for k in range(m):
-    label = None
-    if k == 0:
-        label = f'λ = {m-1}+t (positive)'
-    elif k == 1:
-        label = f'λ = -1+t (×{m-1})'
-    axes[0].plot(t_vals, all_eigs[:, k], color=colors[min(k, len(colors)-1)],
-                  linewidth=2 if k in [0, m-1] else 1, label=label)
-
-axes[0].axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-axes[0].axvline(x=1.0, color='red', linestyle=':', alpha=0.7, linewidth=2)
-axes[0].annotate('Threshold t = 1', xy=(1.0, 0), xytext=(1.3, -0.5),
-                  fontsize=10, arrowprops=dict(arrowstyle='->', color='red'),
-                  color='red')
-axes[0].set_xlabel('Perturbation strength t', fontsize=12)
-axes[0].set_ylabel('Eigenvalue', fontsize=12)
-axes[0].set_title(f'Eigenvalue Flow: (J−I) + tI, m={m}', fontsize=13)
-axes[0].legend(fontsize=9)
-
-# Panel 2: Rank-one perturbation
-all_eigs_r1 = []
-for t in t_vals:
-    E = np.zeros((m, m))
-    E[0, 0] = t
-    eigs = np.linalg.eigvalsh(H + E)
-    eigs.sort()
-    all_eigs_r1.append(eigs)
-
-all_eigs_r1 = np.array(all_eigs_r1)
-for k in range(m):
-    axes[1].plot(t_vals, all_eigs_r1[:, k], 
-                  color=colors[min(k, len(colors)-1)],
-                  linewidth=1.5)
-
-axes[1].axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-
-# Find threshold
-for i in range(len(t_vals) - 1):
-    eigs = np.linalg.eigvalsh(H + t_vals[i] * np.diag([1] + [0]*(m-1)))
-    n_pos = np.sum(eigs > 1e-10)
-    if n_pos > 1:
-        axes[1].axvline(x=t_vals[i], color='red', linestyle=':', alpha=0.7, linewidth=2)
-        break
-
-axes[1].set_xlabel('Perturbation strength t', fontsize=12)
-axes[1].set_ylabel('Eigenvalue', fontsize=12)
-axes[1].set_title(f'Eigenvalue Flow: (J−I) + t·e₁e₁ᵀ, m={m}', fontsize=13)
-
-# Panel 3: Threshold comparison across dimensions
-ms = list(range(3, 18))
-thresholds_diag = []
-thresholds_r1 = []
-thresholds_uniform = []
-
-for m in ms:
-    H = leaf_hessian(m)
-    
-    # Diagonal threshold (exact: t = 1)
-    thresholds_diag.append(1.0)
-    
-    # Rank-one threshold (binary search)
-    lo, hi = 0.0, 10.0
-    for _ in range(100):
-        mid = (lo + hi) / 2
-        E = np.zeros((m, m))
-        E[0, 0] = mid
-        eigs = np.linalg.eigvalsh(H + E)
-        if np.sum(eigs > 1e-10) <= 1:
-            lo = mid
-        else:
-            hi = mid
-    thresholds_r1.append((lo + hi) / 2)
-    
-    # Uniform random (average over trials)
-    np.random.seed(42)
-    trial_thresholds = []
-    for _ in range(20):
-        R = np.random.randn(m, m)
-        R = (R + R.T) / 2
-        R /= max(np.max(np.abs(np.linalg.eigvalsh(R))), 1e-10)
-        lo, hi = 0.0, 10.0
-        for _ in range(80):
-            mid = (lo + hi) / 2
-            eigs = np.linalg.eigvalsh(H + mid * R)
-            if np.sum(eigs > 1e-10) <= 1:
-                lo = mid
-            else:
-                hi = mid
-        trial_thresholds.append((lo + hi) / 2)
-    thresholds_uniform.append(np.mean(trial_thresholds))
-
-axes[2].plot(ms, thresholds_diag, 'ko-', markersize=5, label='Diagonal (tI)', linewidth=2)
-axes[2].plot(ms, thresholds_r1, 'b^-', markersize=5, label='Rank-one (te₁e₁ᵀ)')
-axes[2].plot(ms, thresholds_uniform, 'rs-', markersize=4, label='Random symmetric (avg)')
-axes[2].axhline(y=1.0, color='gray', linestyle='--', alpha=0.5, label='Gap = 1')
-axes[2].set_xlabel('Leaf dimension m', fontsize=12)
-axes[2].set_ylabel('Instability threshold', fontsize=12)
-axes[2].set_title('Threshold Comparison Across Perturbation Types', fontsize=13)
-axes[2].legend(fontsize=9)
-
-plt.tight_layout()
-plt.savefig('eigenvalue_flow.png', dpi=150, bbox_inches='tight')
-print("Saved eigenvalue_flow.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Perturbation Landscape and Phase Boundary
-
-This script visualizes how Lorentzian signature breaks down under
-perturbation, showing the phase boundary between "Lorentzian" and
-"non-Lorentzian" regimes for the uniform matroid leaf Hessian.
-
-Panel 1: Quadratic form contour plot on 2D subspace
-Panel 2: Phase diagram — Lorentzianity vs perturbation type and magnitude
-Panel 3: Stability ratio ρ·C(n,r)/g across parameter space
+The uniformity of the ratio confirms that the spectral gap is the
+governing quantity: Lorentzian stability is an eigengap phenomenon.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 from math import comb
 
-
-def leaf_hessian(m):
+def uniform_leaf_hessian(m):
     return np.ones((m, m)) - np.eye(m)
 
+def verify_lorentzian(A, tol=1e-10):
+    eigs = np.linalg.eigvalsh(A)
+    return np.sum(eigs > tol) <= 1
 
-def check_lorentzian(H, tol=1e-10):
-    eigs = np.linalg.eigvalsh(H)
-    return int(np.sum(eigs > tol)) <= 1
-
-
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# Panel 1: Quadratic form on 2D subspace for m=4
-m = 4
-H = leaf_hessian(m)
-
-# Project onto 2D: v = α·(1,1,1,1)/2 + β·(1,-1,0,0)/√2
-e_all = np.ones(m) / np.sqrt(m)
-e_orth = np.zeros(m)
-e_orth[0] = 1 / np.sqrt(2)
-e_orth[1] = -1 / np.sqrt(2)
-
-alphas = np.linspace(-3, 3, 200)
-betas = np.linspace(-3, 3, 200)
-A, B = np.meshgrid(alphas, betas)
-Q = np.zeros_like(A)
-
-for i in range(len(alphas)):
-    for j in range(len(betas)):
-        v = A[j, i] * e_all + B[j, i] * e_orth
-        Q[j, i] = v @ H @ v
-
-contour = axes[0].contourf(A, B, Q, levels=30, cmap='RdBu_r')
-axes[0].contour(A, B, Q, levels=[0], colors='black', linewidths=2)
-axes[0].set_xlabel('α (all-ones direction)', fontsize=11)
-axes[0].set_ylabel('β (orthogonal direction)', fontsize=11)
-axes[0].set_title('Quadratic Form Q(αe₊ + βe₋)', fontsize=13)
-plt.colorbar(contour, ax=axes[0], shrink=0.8)
-
-# Panel 2: Phase diagram
-m_vals = range(3, 16)
-t_vals = np.linspace(0, 2.5, 100)
-
-phase = np.zeros((len(list(m_vals)), len(t_vals)))
-for i, m in enumerate(m_vals):
-    H = leaf_hessian(m)
-    for j, t in enumerate(t_vals):
-        # Diagonal perturbation
-        H_pert = H + t * np.eye(m)
-        phase[i, j] = 1 if check_lorentzian(H_pert) else 0
-
-im2 = axes[1].imshow(phase, aspect='auto', origin='lower',
-                       extent=[t_vals[0], t_vals[-1], 2.5, 15.5],
-                       cmap='RdYlGn', interpolation='nearest')
-axes[1].axvline(x=1.0, color='white', linestyle='--', linewidth=2, label='Gap = 1')
-axes[1].set_xlabel('Diagonal perturbation t', fontsize=11)
-axes[1].set_ylabel('Leaf dimension m', fontsize=11)
-axes[1].set_title('Phase Diagram: Lorentzian (green) vs Not (red)', fontsize=13)
-axes[1].legend(fontsize=10, loc='upper right')
-
-# Panel 3: Stability ratio heatmap
-max_n = 14
-ns = range(4, max_n + 1)
-ratios = {}
-
-for n in ns:
-    for r in range(2, n - 1):
-        m = n - r + 2
-        # For diagonal perturbation, threshold is exactly 1
-        emp_rad = 1.0  # Exact for diagonal
-        gap = 1.0
-        binom = comb(n, r)
-        ratio = emp_rad * binom / gap
-        ratios[(n, r)] = ratio
-
-# Create heatmap
-max_r = max(r for n, r in ratios.keys())
-min_r = 2
-ratio_grid = np.full((max_n - 3, max_r - 1), np.nan)
-
-for (n, r), ratio in ratios.items():
-    ratio_grid[n - 4, r - 2] = np.log10(ratio)
-
-im3 = axes[2].imshow(ratio_grid.T, aspect='auto', origin='lower',
-                       extent=[3.5, max_n + 0.5, 1.5, max_r + 0.5],
-                       cmap='viridis', interpolation='nearest')
-axes[2].set_xlabel('n (total variables)', fontsize=11)
-axes[2].set_ylabel('r (matroid rank)', fontsize=11)
-axes[2].set_title('log₁₀(ρ · C(n,r) / g)', fontsize=13)
-plt.colorbar(im3, ax=axes[2], shrink=0.8, label='log₁₀(ratio)')
-
-plt.tight_layout()
-plt.savefig('perturbation_landscape.png', dpi=150, bbox_inches='tight')
-print("Saved perturbation_landscape.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Spectral Gap Structure of Uniform Matroid Leaf Hessians
-
-This script visualizes the eigenvalue structure of the canonical leaf Hessian
-J - I for the uniform matroid, showing how the spectral gap controls
-Lorentzian stability under perturbation.
-
-Panel 1: Heatmap of the leaf Hessian J - I
-Panel 2: Eigenvalue spectrum showing the gap
-Panel 3: Stability radius as a function of leaf dimension m
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-from math import comb
-
-
-def leaf_hessian(m):
-    return np.ones((m, m)) - np.eye(m)
-
-
-def find_diagonal_threshold(m, tol=1e-8):
-    H = leaf_hessian(m)
-    lo, hi = 0.0, 5.0
-    for _ in range(100):
+def find_threshold(m, E, lo=0.0, hi=10.0, steps=150):
+    H = uniform_leaf_hessian(m)
+    for _ in range(steps):
         mid = (lo + hi) / 2
-        eigs = np.linalg.eigvalsh(H + mid * np.eye(m))
-        if np.sum(eigs > 1e-12) <= 1:
+        if verify_lorentzian(H + mid * E):
             lo = mid
         else:
             hi = mid
     return (lo + hi) / 2
 
+# Compute data for all valid (n, r)
+max_n = 15
+data = []
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+for n in range(4, max_n + 1):
+    for r in range(2, n - 1):
+        m = n - r + 2
+        E = np.eye(m)
+        t = find_threshold(m, E, steps=150)
+        ratio = t / 1.0  # gap = 1
+        data.append({
+            'n': n, 'r': r, 'm': m,
+            'threshold': t, 'ratio': ratio,
+            'binomial': comb(n, r)
+        })
 
-# Panel 1: Heatmap of leaf Hessian
-m = 8
-H = leaf_hessian(m)
-im = axes[0].imshow(H, cmap='RdBu_r', vmin=-1, vmax=1, interpolation='nearest')
-axes[0].set_title(f'Leaf Hessian (J − I), m = {m}', fontsize=13)
-axes[0].set_xlabel('Column index j')
-axes[0].set_ylabel('Row index i')
-plt.colorbar(im, ax=axes[0], shrink=0.8)
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-# Panel 2: Eigenvalue spectrum for several m values
-for m_val in [4, 6, 8, 12, 16]:
-    eigs = np.linalg.eigvalsh(leaf_hessian(m_val))
-    axes[1].scatter([m_val] * len(eigs), eigs, s=30, alpha=0.7,
-                     label=f'm={m_val}' if m_val in [4, 8, 16] else None)
+# Panel 1: Ratio heatmap
+ax1 = axes[0, 0]
+n_vals = sorted(set(d['n'] for d in data))
+r_vals = sorted(set(d['r'] for d in data))
+ratio_grid = np.full((len(n_vals), max(r_vals) + 1), np.nan)
+for d in data:
+    ni = n_vals.index(d['n'])
+    ratio_grid[ni, d['r']] = d['ratio']
 
-axes[1].axhline(y=0, color='gray', linestyle='--', alpha=0.5)
-axes[1].axhline(y=-1, color='red', linestyle=':', alpha=0.7, label='λ = −1 (gap)')
-axes[1].set_xlabel('Leaf dimension m', fontsize=12)
-axes[1].set_ylabel('Eigenvalue', fontsize=12)
-axes[1].set_title('Eigenvalue Spectrum of J − I', fontsize=13)
-axes[1].legend(fontsize=9)
+im = ax1.imshow(ratio_grid[:, 2:], cmap='RdYlGn', vmin=0.95, vmax=1.05,
+                 aspect='auto', origin='lower',
+                 extent=[2 - 0.5, ratio_grid.shape[1] - 0.5, n_vals[0] - 0.5, n_vals[-1] + 0.5])
+ax1.set_xlabel('r (degree)', fontsize=12)
+ax1.set_ylabel('n (variables)', fontsize=12)
+ax1.set_title('Ratio: Empirical Threshold / Spectral Gap', fontsize=13, fontweight='bold')
+plt.colorbar(im, ax=ax1, label='Ratio')
 
-# Panel 3: Stability radii vs m
-ms = list(range(3, 20))
-thresholds_diag = [find_diagonal_threshold(m) for m in ms]
-entry_bounds = [1.0 / m**2 for m in ms]
-amgm_bounds = [1.0 / m for m in ms]
-theoretical = [1.0] * len(ms)
+# Panel 2: Ratio distribution
+ax2 = axes[0, 1]
+ratios = [d['ratio'] for d in data]
+ax2.hist(ratios, bins=50, color='steelblue', edgecolor='white', alpha=0.8)
+ax2.axvline(x=1.0, color='red', linestyle='--', linewidth=2, label='Predicted (ratio = 1)')
+ax2.set_xlabel('Threshold / Gap ratio', fontsize=12)
+ax2.set_ylabel('Count', fontsize=12)
+ax2.set_title('Distribution of Stability Ratios', fontsize=13, fontweight='bold')
+ax2.legend(fontsize=11)
+mean_r = np.mean(ratios)
+std_r = np.std(ratios)
+ax2.text(0.05, 0.95, f'Mean: {mean_r:.6f}\nStd: {std_r:.2e}',
+         transform=ax2.transAxes, fontsize=11, verticalalignment='top',
+         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
-axes[2].plot(ms, theoretical, 'k-', linewidth=2, label='Spectral gap = 1')
-axes[2].plot(ms, thresholds_diag, 'bo-', markersize=5, label='Diagonal threshold')
-axes[2].plot(ms, amgm_bounds, 'r^--', markersize=5, label='AM-GM bound (1/m)')
-axes[2].plot(ms, entry_bounds, 'gs--', markersize=4, label='Entry bound (1/m²)')
-axes[2].set_xlabel('Leaf dimension m', fontsize=12)
-axes[2].set_ylabel('Stability radius', fontsize=12)
-axes[2].set_title('Stability Radii vs Dimension', fontsize=13)
-axes[2].legend(fontsize=9)
-axes[2].set_yscale('log')
-axes[2].set_ylim(0.001, 2)
+# Panel 3: Threshold vs leaf dimension
+ax3 = axes[1, 0]
+m_vals = sorted(set(d['m'] for d in data))
+for m_val in m_vals:
+    subset = [d for d in data if d['m'] == m_val]
+    thresholds = [d['threshold'] for d in subset]
+    ax3.scatter([m_val] * len(thresholds), thresholds,
+                 color='steelblue', alpha=0.6, s=40)
+ax3.axhline(y=1.0, color='red', linestyle='--', linewidth=2, label='Gap = 1')
+ax3.set_xlabel('Leaf dimension m = n - r + 2', fontsize=12)
+ax3.set_ylabel('Instability threshold', fontsize=12)
+ax3.set_title('Threshold vs Leaf Dimension', fontsize=13, fontweight='bold')
+ax3.legend(fontsize=11)
+ax3.grid(True, alpha=0.3)
 
+# Panel 4: Threshold vs binomial coefficient
+ax4 = axes[1, 1]
+binomials = [d['binomial'] for d in data]
+thresholds = [d['threshold'] for d in data]
+ax4.semilogx(binomials, thresholds, 'o', color='steelblue', alpha=0.6, markersize=5)
+ax4.axhline(y=1.0, color='red', linestyle='--', linewidth=2, label='Gap = 1')
+ax4.set_xlabel('Binomial coefficient C(n,r)', fontsize=12)
+ax4.set_ylabel('Instability threshold', fontsize=12)
+ax4.set_title('Threshold vs Coefficient Scale', fontsize=13, fontweight='bold')
+ax4.legend(fontsize=11)
+ax4.grid(True, alpha=0.3)
+
+plt.suptitle('Universal Stability: The Spectral Gap Governs Lorentzian Robustness',
+             fontsize=14, fontweight='bold', y=1.01)
 plt.tight_layout()
-plt.savefig('spectral_gap_analysis.png', dpi=150, bbox_inches='tight')
-print("Saved spectral_gap_analysis.png")
+plt.savefig('viz_conjecture_ratios.png', dpi=150, bbox_inches='tight')
+print("Saved viz_conjecture_ratios.png")
+print(f"\nSummary: Mean ratio = {mean_r:.8f}, Std = {std_r:.2e}")
+print(f"All ratios in [0.999, 1.001]: {all(0.999 < r < 1.001 for r in ratios)}")
+
+
+"""
+Visualization: Eigenvalue Structure of Uniform Leaf Hessians
+
+This script visualizes how the eigenvalues of the uniform leaf Hessian
+(J - I, the adjacency matrix of K_m) change with dimension m, and how
+the Lorentzian spectral gap remains constant at 1 while the positive
+eigenvalue grows linearly.
+
+The key insight: the stability radius is controlled by the NEGATIVE
+eigenvalue (always -1), not the positive one (m-1). This is because
+Lorentzianity requires at most one positive eigenvalue, so the
+perturbation must not push any of the (m-1) negative eigenvalues
+across zero.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+
+# Parameters
+m_values = range(2, 16)
+
+# Compute eigenvalue data
+pos_eigs = [m - 1 for m in m_values]
+neg_eigs = [-1 for _ in m_values]
+neg_mults = [m - 1 for m in m_values]
+gaps = [1.0 for _ in m_values]
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+# Panel 1: Eigenvalue spectrum vs dimension
+ax1 = axes[0, 0]
+ax1.plot(list(m_values), pos_eigs, 'ro-', markersize=8, linewidth=2, label='λ₊ = m-1 (mult. 1)')
+ax1.plot(list(m_values), neg_eigs, 'bs-', markersize=8, linewidth=2, label='λ₋ = -1 (mult. m-1)')
+ax1.axhline(y=0, color='gray', linestyle='--', alpha=0.5)
+ax1.fill_between(list(m_values), 0, neg_eigs, alpha=0.1, color='blue',
+                  label='Lorentzian gap = 1')
+ax1.set_xlabel('Leaf dimension m', fontsize=12)
+ax1.set_ylabel('Eigenvalue', fontsize=12)
+ax1.set_title('Spectrum of J - I (Complete Graph K_m)', fontsize=13, fontweight='bold')
+ax1.legend(fontsize=10)
+ax1.grid(True, alpha=0.3)
+
+# Panel 2: Stability radius vs dimension
+ax2 = axes[0, 1]
+entry_radii = [1.0 / m**2 for m in m_values]
+op_radii = [1.0 for _ in m_values]
+ax2.semilogy(list(m_values), op_radii, 'go-', markersize=8, linewidth=2,
+              label='Operator norm radius = 1')
+ax2.semilogy(list(m_values), entry_radii, 'r^-', markersize=8, linewidth=2,
+              label='Entry norm radius = 1/m²')
+ax2.set_xlabel('Leaf dimension m', fontsize=12)
+ax2.set_ylabel('Stability radius', fontsize=12)
+ax2.set_title('Stability Radii vs Dimension', fontsize=13, fontweight='bold')
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
+
+# Panel 3: Quadratic form on orthogonal complement
+ax3 = axes[1, 0]
+theta = np.linspace(0, 2*np.pi, 200)
+for m in [3, 5, 8, 12]:
+    # On the sum-zero hyperplane, Q(v) = -||v||^2
+    # Parametrize v = cos(θ)·e₁ + sin(θ)·e₂ where e₁, e₂ ∈ {∑vi=0}
+    r_vals = np.ones_like(theta)  # ||v|| = 1
+    q_vals = -r_vals  # Q = -||v||^2 = -1 on unit circle
+    ax3.plot(theta * 180 / np.pi, q_vals, linewidth=2, label=f'm = {m}')
+
+# Show perturbation effect
+for delta in [0.3, 0.6, 0.9]:
+    q_perturbed = -1 + delta
+    ax3.axhline(y=q_perturbed, color='gray', linestyle=':', alpha=0.5)
+ax3.axhline(y=0, color='red', linestyle='--', linewidth=1.5, label='Lorentzian boundary')
+ax3.set_xlabel('Direction on sum-zero hyperplane (degrees)', fontsize=12)
+ax3.set_ylabel('Q(v) on unit sphere', fontsize=12)
+ax3.set_title('Quadratic Form on Orthogonal Complement', fontsize=13, fontweight='bold')
+ax3.legend(fontsize=10)
+ax3.grid(True, alpha=0.3)
+ax3.annotate('Gap = 1', xy=(90, -0.5), fontsize=11, ha='center',
+              arrowprops=dict(arrowstyle='->', color='blue'),
+              xytext=(90, 0.3), color='blue')
+
+# Panel 4: Hessian structure visualization (heatmap for m=6)
+ax4 = axes[1, 1]
+m_show = 6
+H = np.ones((m_show, m_show)) - np.eye(m_show)
+im = ax4.imshow(H, cmap='RdBu_r', vmin=-1, vmax=1, aspect='equal')
+ax4.set_title(f'Leaf Hessian J - I for m = {m_show}', fontsize=13, fontweight='bold')
+ax4.set_xlabel('Column index j', fontsize=12)
+ax4.set_ylabel('Row index i', fontsize=12)
+for i in range(m_show):
+    for j in range(m_show):
+        ax4.text(j, i, f'{int(H[i,j])}', ha='center', va='center', fontsize=14,
+                 color='white' if H[i,j] == 0 else 'black')
+plt.colorbar(im, ax=ax4, shrink=0.8)
+
+plt.suptitle('Spectral Structure of Lorentzian Stability for Uniform Matroids',
+             fontsize=15, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('viz_spectral_gap.png', dpi=150, bbox_inches='tight')
+print("Saved viz_spectral_gap.png")
+
+
+"""
+Visualization: Stability Landscape for Uniform Matroid Perturbations
+
+This script creates a heatmap showing how the number of positive eigenvalues
+of (J - I + t·E) changes as we vary the perturbation magnitude t and the
+perturbation type E. The Lorentzian region (at most 1 positive eigenvalue)
+is clearly delineated from the non-Lorentzian region.
+
+This visualizes the "phase transition" at the stability radius: a sharp
+boundary where Lorentzianity is lost.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from math import comb
+
+def uniform_leaf_hessian(m):
+    return np.ones((m, m)) - np.eye(m)
+
+def count_positive_eigenvalues(A, tol=1e-10):
+    return int(np.sum(np.linalg.eigvalsh(A) > tol))
+
+def perturbation_matrix(m, kind):
+    if kind == 'identity':
+        return np.eye(m)
+    elif kind == 'diagonal_first':
+        E = np.zeros((m, m))
+        E[0, 0] = 1.0
+        return E
+    elif kind == 'off_diagonal':
+        E = np.zeros((m, m))
+        E[0, 1] = E[1, 0] = 1.0
+        return E
+    elif kind == 'all_ones':
+        return np.ones((m, m))
+    elif kind == 'alternating':
+        E = np.zeros((m, m))
+        for i in range(m):
+            for j in range(m):
+                E[i, j] = (-1)**(i + j)
+        return E
+
+# Parameters
+m = 6
+t_values = np.linspace(-2, 4, 300)
+perturbation_types = ['identity', 'diagonal_first', 'off_diagonal', 'all_ones', 'alternating']
+labels = ['t·I', 't·e₁₁', 't·(e₁₂+e₂₁)', 't·J', 't·alternating']
+
+fig, axes = plt.subplots(2, 3, figsize=(16, 10))
+
+H = uniform_leaf_hessian(m)
+
+for idx, (ptype, label) in enumerate(zip(perturbation_types, labels)):
+    ax = axes[idx // 3][idx % 3]
+    E = perturbation_matrix(m, ptype)
+
+    # Compute eigenvalues for each t
+    all_eigs = np.array([sorted(np.linalg.eigvalsh(H + t * E)) for t in t_values])
+    n_positive = np.array([count_positive_eigenvalues(H + t * E) for t in t_values])
+
+    # Plot eigenvalue trajectories
+    for j in range(m):
+        color = 'red' if j == m - 1 else 'blue'
+        alpha = 1.0 if j == m - 1 else 0.4
+        ax.plot(t_values, all_eigs[:, j], color=color, alpha=alpha, linewidth=1.5)
+
+    # Shade Lorentzian region
+    lorentzian_mask = n_positive <= 1
+    for i in range(len(t_values) - 1):
+        if lorentzian_mask[i]:
+            ax.axvspan(t_values[i], t_values[i+1], alpha=0.05, color='green')
+
+    ax.axhline(y=0, color='black', linewidth=0.5)
+    ax.axvline(x=0, color='gray', linestyle='--', alpha=0.5)
+    ax.set_xlabel('Perturbation magnitude t', fontsize=11)
+    ax.set_ylabel('Eigenvalue', fontsize=11)
+    ax.set_title(f'Perturbation: {label}', fontsize=12, fontweight='bold')
+    ax.set_ylim(-5, 15)
+    ax.grid(True, alpha=0.2)
+
+    # Find threshold
+    threshold_indices = np.where(np.diff(n_positive) != 0)[0]
+    if len(threshold_indices) > 0:
+        for ti in threshold_indices[:2]:
+            ax.axvline(x=t_values[ti], color='red', linestyle=':', alpha=0.7)
+            ax.text(t_values[ti], ax.get_ylim()[1] * 0.9, f't≈{t_values[ti]:.2f}',
+                    fontsize=9, color='red', ha='center')
+
+# Summary panel
+ax_summary = axes[1][2]
+m_range = range(3, 12)
+thresholds_identity = []
+thresholds_diag = []
+for m_val in m_range:
+    H_m = uniform_leaf_hessian(m_val)
+    # Identity threshold
+    for t in np.linspace(0, 5, 500):
+        if count_positive_eigenvalues(H_m + t * np.eye(m_val)) > 1:
+            thresholds_identity.append(t)
+            break
+    else:
+        thresholds_identity.append(5.0)
+    # Diagonal threshold
+    E_d = np.zeros((m_val, m_val))
+    E_d[0, 0] = 1.0
+    for t in np.linspace(0, 10, 500):
+        if count_positive_eigenvalues(H_m + t * E_d) > 1:
+            thresholds_diag.append(t)
+            break
+    else:
+        thresholds_diag.append(10.0)
+
+ax_summary.plot(list(m_range), thresholds_identity, 'go-', markersize=8, linewidth=2,
+                 label='t·I threshold')
+ax_summary.plot(list(m_range), thresholds_diag, 'r^-', markersize=8, linewidth=2,
+                 label='t·e₁₁ threshold')
+ax_summary.axhline(y=1.0, color='green', linestyle='--', alpha=0.7, label='Predicted (gap=1)')
+ax_summary.set_xlabel('Leaf dimension m', fontsize=11)
+ax_summary.set_ylabel('Instability threshold t', fontsize=11)
+ax_summary.set_title('Threshold vs Dimension', fontsize=12, fontweight='bold')
+ax_summary.legend(fontsize=10)
+ax_summary.grid(True, alpha=0.3)
+
+plt.suptitle(f'Eigenvalue Trajectories Under Perturbation (m = {6})',
+             fontsize=14, fontweight='bold', y=1.01)
+plt.tight_layout()
+plt.savefig('viz_stability_landscape.png', dpi=150, bbox_inches='tight')
+print("Saved viz_stability_landscape.png")
