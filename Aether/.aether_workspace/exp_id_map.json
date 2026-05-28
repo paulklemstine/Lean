@@ -886,5 +886,8 @@
   "efa65a5f": "direction_1_general_symplectic_groups_sp_q.json",
   "b43a1b40": "direction_1_full_stabilizer_descent_formalization.json",
   "35af0f61": "direction_2_concentration_and_universality_of_trop.json",
-  "06373e59": "direction_1_double_scaling_limit__when_does_m_matt.json"
+  "06373e59": "direction_1_double_scaling_limit__when_does_m_matt.json",
+  "f7968947": "direction_1_shadow_inequalities_for_lorentzian_pol.json",
+  "fcd58d33": "direction_2_sparse_support_certificate_compression.json",
+  "2f6d2983": "direction_1_tight_lorentzian_stability_radii_for_m.json"
 }

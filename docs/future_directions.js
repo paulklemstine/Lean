@@ -59,10 +59,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "92b77109",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:11:24.492421+00:00"
   },
   {
@@ -138,10 +138,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2493279d",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4bb846ce",
     "timestamp": "2026-05-25T17:14:31.193329+00:00"
   },
   {
@@ -755,10 +755,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "c6eef6ce",
-    "consumed_by_exp_id": "f94ba84a",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T15:25:01.447437+00:00"
   },
   {
@@ -796,27 +796,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "78306251",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T19:12:47.048620+00:00"
-  },
-  {
-    "id": "fd_1594",
-    "title": "Direction 1: Shadow Inequalities for Lorentzian Polynomials",
-    "description": "**Conjecture:** If $f$ is a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh), then its support $S = \\text{supp}(f)$ satisfies the shadow log-concavity inequality $|\\text{Sh}_k(S)|^2 \\geq |\\text{Sh}_{k-1}(S)| \\cdot |\\text{Sh}_{k+1}(S)|$ for all admissible $k$.\n\n**Test:** Implement the Lorentzian polynomial verification algorithm (checking that all second-order partial derivatives have alternating sign Hessians) for polynomials with supports drawn from matroid bases, products of simplices, and Schur polynomial supports up to $n = 8$ variables and degree $\\leq 10$. Verify shadow log-concavity for each confirmed Lorentzian polynomial.\n\n**The key insight is** that Lorentzian polynomials already satisfy coefficient-level log-concavity, and the shadow profile is a coarser invariant (support-level rather than coefficient-level), so the conjecture amounts to showing that log-concavity \"descends\" from coefficients to support sizes \u2014 a phenomenon that should follow from the coefficient transport formula if the descending factorial scalars are sufficiently well-behaved.\n\n**Why now?** The coefficient transport formula (Theorem 3.1) provides the exact algebraic bridge between support-level and coefficient-level properties. Previous work on Lorentzian polynomials lacked this explicit multi-index transport law.\n\n**Impact:** Would establish a new, elementary route to combinatorial log-concavity that bypasses Hodge theory.\n\n**Catalog References:** `Pythagorean/IteratedShadowGeometry.lean` (coeff_iteratedPDeriv, descFactorial_prod_pos), `Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (coeff_pderiv_pderiv).\n\n**Proof Strategy:** Use the coefficient transport formula to relate shadow sizes to sums of products of descending factorials weighted by coefficients. Apply the Cauchy\u2013Schwarz inequality or FKG inequality on the resulting sums.\n\n**Domain Bridges:** Lorentzian polynomial theory, algebraic combinatorics, Hodge theory.\n\n**Lineage:** Extends Br\u00e4nd\u00e9n\u2013Huh (2020) from coefficient log-concavity to support-level log-concavity.\n\n**Ambition:** Grand challenge \u2014 would unify support geometry with Lorentzian algebra.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f43533d0",
-    "consumed_by_exp_id": "f7968947",
-    "timestamp": "2026-05-28T01:19:07.597078+00:00"
   },
   {
     "id": "fd_1595",
@@ -1239,10 +1218,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "bf323aae",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "44a490ac",
     "timestamp": "2026-05-28T19:09:44.380389+00:00"
   },
   {
@@ -1261,10 +1240,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "bf323aae",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61d0d828",
     "timestamp": "2026-05-28T19:09:44.483512+00:00"
   },
   {
@@ -1311,6 +1290,26 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T20:34:24.933104+00:00"
   },
   {
+    "id": "fd_1944",
+    "title": "Direction 2: Weighted-to-Unweighted Descent for Lorentzian Supports",
+    "description": "**Conjecture:** For a homogeneous Lorentzian polynomial $f$ with nonneg coefficients, the weighted shadow sequence $W_k(f) = \\sum_{|\\gamma|=k} |\\operatorname{supp}(\\partial^\\gamma f)|$ is log-concave, and under a support-uniformity condition, this implies log-concavity of the unweighted shadow cardinality sequence.\n\n**The key insight is:** The Lorentzian condition controls coefficient sums (not individual coefficients), and the coefficient transport formula `coeff_iteratedPDeriv` converts weighted shadow counts into coefficient sums weighted by descending factorials. These factorial weights are always positive on the support, so weighted log-concavity can descend to unweighted log-concavity when the weights are sufficiently uniform.\n\n**Why now?** The `coeff_iteratedPDeriv` and `descFactorial_prod_pos` lemmas in the catalog provide the exact transport formulas needed. The `pderiv_coeff_support` and `iterate_pderiv_coeff_support` theorems in this cycle establish the qualitative bridge. The quantitative step (from weighted to unweighted) is now the bottleneck.\n\n**Test:** For matroid basis polynomials of small matroids (Fano, Petersen, uniform), compute both $W_k$ and $|\\operatorname{Sh}_k|$, and measure the ratio $W_k / |\\operatorname{Sh}_k|$. If this ratio is approximately constant or log-concave in $k$, the descent theorem holds.\n\n**Impact:** Would provide the first general Lorentzian shadow theorem, unifying the coefficient-level and support-level perspectives.\n\n**Catalog References:**\n- `Pythagorean/IteratedShadowGeometry.lean`: `coeff_iteratedPDeriv`, `descFactorial_prod_pos`, `mem_kthShadow_iff_exists_iteratedDerivative`\n- `Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean`: `coeff_pderiv_pderiv`\n\n**Proof Strategy:** Define $W_k = \\sum_\\beta w_k(\\beta)$ where $w_k(\\beta) = \\sum_{\\alpha \\in S, \\beta \\le \\alpha} \\prod_i \\binom{\\alpha_i}{\\beta_i}$. Use the Lorentzian condition (which controls Hessian eigenvalues of quadratic slices) to bound $W_k^2 - W_{k-1}W_{k+1}$. Then bound $|\\operatorname{Sh}_k| \\le W_k / \\min_\\beta w_k(\\beta)$ and $|\\operatorname{Sh}_k| \\ge W_k / \\max_\\beta w_k(\\beta)$ to transfer.\n\n**Domain Bridges:** Lorentzian polynomial theory, Alexandrov\u2013Fenchel inequalities, mixed discriminant theory.\n\n**Lineage:** Builds directly on `pderiv_coeff_support` and `iterate_pderiv_coeff_support` from this cycle.\n\n**Ambition:** Solid extension. This is the most natural next step from the current results.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f7968947",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T21:46:03.276610+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1341,6 +1340,27 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1949",
+    "title": "Direction 2: M-Convex Support Compression Beyond Matroids",
+    "description": "**Conjecture:** For any homogeneous polynomial with nonneg coefficients whose Newton support is M-convex (satisfies the symmetric exchange property), the nonzero quadratic leaf count is at most $\\binom{\\omega}{d-2}$ where $\\omega$ is the support width (number of active coordinates) and $d$ is the degree. Moreover, the M-convex exchange structure provides a recursive decomposition of the leaf set that enables sublinear-time certification.\n\n**Test:** Construct M-convex supports that are not matroid basis supports (e.g., from generalized permutohedra, polymatroid rank functions, or valuated matroid theory). Compute leaf counts and verify the $\\binom{\\omega}{d-2}$ bound. Search for M-convex supports where the bound is tight.\n\n**Impact:** This would extend support compression from matroids to the full class of M-convex polynomials, which includes Schur polynomials, volume polynomials of polytopes, and multivariate Tutte polynomials. It would establish discrete convex analysis as a universal tool for Lorentzian certification.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`, `NewtonSupport`\n- `Catalog/Pythagorean/SupportCertificateCompression.lean`: `supportCompressedLeafCount_le_active_choose`\n\n**Proof Strategy:** Use the M-convex exchange property to show that the \"shadow\" of the support at depth $d - 2$ (the set of $(d-2)$-level finsupps dominated by some support element) is contained in the $(d-2)$-skeleton of the convex hull of active coordinates. The exchange property guarantees that this shadow is itself M-convex or at least hereditary.\n\n**Domain Bridges:** Discrete convex analysis (Murota's theory), tropical geometry (tropical convexity of support sets), algebraic combinatorics (Schur positivity and Lorentzianity).\n\n**Lineage:** Directly extends the active variable bound (Theorem 4) using the M-convex structure from the existing catalog.\n\n**Ambition:** Grand challenge \u2014 this would unify matroid-specific and general support compression.\n\n**The key insight is** that M-convex exchange is not just a combinatorial axiom but a pruning principle for derivative search trees, and the shadow of an M-convex set inherits structural properties that control its size.\n\n**Why now?** The `IsMConvexExchangeNat` definition and the `lorentzian_quadratic_support_mconvex` theorem (currently sorry'd in the catalog) provide the starting point. Completing this theorem would immediately yield the M-convex compression bound.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "fcd58d33",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T21:46:22.088675+00:00"
   },
   {
     "id": "seed_013",

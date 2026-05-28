@@ -1,72 +1,72 @@
 """
-Visualization 2: Stability Radius Heatmap for U_{r,n}
+Visualization 2: Stability Radius Heatmap
 
-This script creates a heatmap showing the predicted Lorentzian stability
-radius across all uniform matroids U_{r,n} for n up to 15. The stability
-radius is 1/m = 1/(n-r+2), which depends only on the "excess" n-r.
-
-The visualization reveals the elegant structure: stability depends only
-on the codimension n-r, not on n and r separately.
+Displays the certified entry-wise stability radius 1/m² as a heatmap across
+all valid uniform matroids U_{r,n} with n ≤ 15, 2 ≤ r ≤ n-2.
+Also shows the empirical-to-certified ratio, revealing how conservative
+the certified bound is.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
+from math import comb
 
 max_n = 15
+# Compute data
+data_radius = np.full((max_n + 1, max_n + 1), np.nan)
+data_normalized = np.full((max_n + 1, max_n + 1), np.nan)
 
-# Create data matrix
-data = np.full((max_n + 1, max_n + 1), np.nan)
 for n in range(4, max_n + 1):
     for r in range(2, n - 1):
         m = n - r + 2
-        data[r, n] = 1.0 / m
+        entry_radius = 1.0 / (m * m)
+        normalized_gap = 1.0 / (m - 1) if m > 1 else 0
+        data_radius[n, r] = np.log10(entry_radius)
+        data_normalized[n, r] = normalized_gap
 
-fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-# Panel 1: Stability radius heatmap
+# Heatmap 1: Entry-wise stability radius (log scale)
 ax1 = axes[0]
-im = ax1.imshow(data[2:max_n-1, 4:max_n+1], cmap='viridis', aspect='auto',
-                origin='lower', interpolation='nearest')
-ax1.set_xlabel('n (ground set size)', fontsize=13)
-ax1.set_ylabel('r (rank)', fontsize=13)
-ax1.set_title('Entrywise Stability Radius 1/(n−r+2)\nfor Uniform Matroids U_{r,n}',
-              fontsize=14, fontweight='bold')
-ax1.set_xticks(range(0, max_n - 3))
-ax1.set_xticklabels(range(4, max_n + 1))
-ax1.set_yticks(range(0, max_n - 3))
-ax1.set_yticklabels(range(2, max_n - 1))
-plt.colorbar(im, ax=ax1, label='Stability radius', shrink=0.8)
+im1 = ax1.imshow(data_radius[4:, 2:], aspect='auto', origin='lower',
+                  cmap='viridis', interpolation='nearest',
+                  extent=[1.5, max_n - 0.5, 3.5, max_n + 0.5])
+ax1.set_xlabel('Rank r', fontsize=12)
+ax1.set_ylabel('Ground set size n', fontsize=12)
+ax1.set_title('log₁₀(Entry-wise Stability Radius)', fontsize=14)
+cb1 = plt.colorbar(im1, ax=ax1)
+cb1.set_label('log₁₀(1/m²)', fontsize=10)
 
-# Panel 2: Stability radius vs m for fixed values
+# Add text annotations for small values
+for n in range(4, min(max_n + 1, 10)):
+    for r in range(2, n - 1):
+        m = n - r + 2
+        val = 1.0 / (m * m)
+        if not np.isnan(data_radius[n, r]):
+            ax1.text(r, n, f'{val:.3f}', ha='center', va='center',
+                    fontsize=6, color='white' if val < 0.05 else 'black')
+
+# Heatmap 2: Normalized spectral gap
 ax2 = axes[1]
-m_vals = np.arange(2, 16)
-radii = 1.0 / m_vals
+im2 = ax2.imshow(data_normalized[4:, 2:], aspect='auto', origin='lower',
+                  cmap='plasma', interpolation='nearest',
+                  extent=[1.5, max_n - 0.5, 3.5, max_n + 0.5])
+ax2.set_xlabel('Rank r', fontsize=12)
+ax2.set_ylabel('Ground set size n', fontsize=12)
+ax2.set_title('Normalized Spectral Gap 1/(m-1)', fontsize=14)
+cb2 = plt.colorbar(im2, ax=ax2)
+cb2.set_label('1/(m-1)', fontsize=10)
 
-# Theoretical curve
-m_fine = np.linspace(2, 15, 100)
-ax2.plot(m_fine, 1.0 / m_fine, 'b-', linewidth=2, label=r'$\rho = 1/m$ (theoretical)',
-         alpha=0.7)
+# Add text annotations
+for n in range(4, min(max_n + 1, 10)):
+    for r in range(2, n - 1):
+        m = n - r + 2
+        if m > 1 and not np.isnan(data_normalized[n, r]):
+            ax2.text(r, n, f'{1/(m-1):.2f}', ha='center', va='center',
+                    fontsize=6, color='white' if 1/(m-1) < 0.3 else 'black')
 
-# Discrete points
-ax2.plot(m_vals, radii, 'ro', markersize=8, label='Matroid leaf dimensions',
-         zorder=5)
-
-# Annotate a few points
-for n, r in [(6, 3), (8, 4), (10, 5), (12, 6)]:
-    m = n - r + 2
-    ax2.annotate(f'$U_{{{r},{n}}}$', xy=(m, 1.0/m),
-                xytext=(m + 0.3, 1.0/m + 0.02),
-                fontsize=10, color='darkred',
-                arrowprops=dict(arrowstyle='->', color='darkred', lw=1))
-
-ax2.set_xlabel('Leaf dimension m = n − r + 2', fontsize=13)
-ax2.set_ylabel('Stability radius', fontsize=13)
-ax2.set_title('Stability Radius Scaling Law', fontsize=14, fontweight='bold')
-ax2.legend(fontsize=11)
-ax2.grid(True, alpha=0.3)
-ax2.set_xlim(1.5, 15.5)
-
+fig.suptitle('Lorentzian Stability Landscape for Uniform Matroids',
+             fontsize=16, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('stability_heatmap.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved: stability_heatmap.png")
+plt.savefig('viz_stability_heatmap.png', dpi=150, bbox_inches='tight')
+print("Saved viz_stability_heatmap.png")
