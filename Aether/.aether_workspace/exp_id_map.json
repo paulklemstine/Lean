@@ -882,5 +882,9 @@
   "b0c5ef34": "direction_1_uniform_spectral_gap_bound_for_gl_q.json",
   "37e69c75": "direction_4_lorentzian_anti_cancellation_in_statis.json",
   "2a56098b": "direction_2_spectral_embedding__matrix_positivity_.json",
-  "e4d194a8": "direction_1_double_scaling_limit__when_does_m_matt.json"
+  "e4d194a8": "direction_1_double_scaling_limit__when_does_m_matt.json",
+  "efa65a5f": "direction_1_general_symplectic_groups_sp_q.json",
+  "b43a1b40": "direction_1_full_stabilizer_descent_formalization.json",
+  "35af0f61": "direction_2_concentration_and_universality_of_trop.json",
+  "06373e59": "direction_1_double_scaling_limit__when_does_m_matt.json"
 }

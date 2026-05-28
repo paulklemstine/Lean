@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Finite Group Asymptotics / Statistical Mechanics",
     "date": "2026-05-28T21:10:11Z",
     "exp_id": "06373e59",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.5007554838709678,
+    "quality": "partial",
     "pkg_num": 270
   },
   {
@@ -7839,8 +7839,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-28T21:10:11Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.5007554838709678,
+      "quality": "partial"
     }
   ],
   "edges": [

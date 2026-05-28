@@ -1,97 +1,118 @@
-#!/usr/bin/env python3
 """
-Visualization 1: Phase Diagram for Wreath-Product Scaling Regimes
+Phase Diagram Visualization for Wreath-Product Scaling Regimes
 
-Visualizes the (k, m) parameter space colored by perturbation regime
-(irrelevant / marginal / relevant), with the critical boundary
-m = k^(b/a) shown as a curve. This is the finite-group analog of
-the phase diagram showing the upper critical dimension boundary
-in statistical mechanics.
+Visualizes the three perturbation regimes (irrelevant, marginal, relevant)
+in the (k, m) plane, with the critical boundary m = k^{α_c} highlighted.
+This is the finite-group analog of the phase diagram near an upper critical
+dimension in statistical mechanics.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
+import matplotlib.colors as mcolors
 
-# === Inline functions (self-contained) ===
 
-def wreath_defect(k, m, C=1.0, a=1, b=1):
-    """Compute wreath defect Δ(k,m) = C·m^a/k^b."""
-    if k <= 0:
-        return 0.0
-    return C * (m ** a) / (k ** b)
+def beta_symm_approx(k):
+    """Approximate β(S_k)."""
+    k = np.asarray(k, dtype=float)
+    result = np.where(k >= 2, k * np.log(k) - k + 0.5 * np.log(2 * np.pi * k), 0.0)
+    return result
 
-# === Computation ===
 
-C, a, b = 1.0, 1, 1
-alpha_c = b / a
+def wreath_defect(k, m):
+    """Wreath defect Δ(k,m) = m/k for the perturbation model."""
+    k = np.asarray(k, dtype=float)
+    m = np.asarray(m, dtype=float)
+    return np.where(k >= 2, m / k, 0.0)
 
-k_vals = np.arange(3, 51)
-m_vals = np.arange(1, 101)
-K, M = np.meshgrid(k_vals, m_vals)
 
-# Compute scaling ratio m / k^alpha_c
-scaling_ratio = M.astype(float) / np.power(K.astype(float), alpha_c)
+def relevance_ratio(k, m, alpha):
+    """Relevance ratio Φ_α(k,m) = |Δ(k,m)| / (m / k^α)."""
+    k = np.asarray(k, dtype=float)
+    m = np.asarray(m, dtype=float)
+    delta = wreath_defect(k, m)
+    denom = m / np.power(k, alpha)
+    with np.errstate(divide='ignore', invalid='ignore'):
+        ratio = np.abs(delta) / denom
+    ratio = np.where(np.isfinite(ratio), ratio, 0.0)
+    return ratio
 
-# Compute defect
-defects = np.zeros_like(K, dtype=float)
-for i in range(K.shape[0]):
-    for j in range(K.shape[1]):
-        defects[i, j] = wreath_defect(int(K[i, j]), int(M[i, j]), C, a, b)
 
-# Classify regimes
-regimes = np.zeros_like(K, dtype=float)
-regimes[scaling_ratio < 0.3] = 0    # irrelevant
-regimes[(scaling_ratio >= 0.3) & (scaling_ratio <= 3.0)] = 1  # marginal
-regimes[scaling_ratio > 3.0] = 2    # relevant
+# Set up figure with two panels
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-# === Plotting ===
+# Panel 1: Phase diagram in (k, m) plane
+k_range = np.linspace(2, 50, 300)
+m_range = np.linspace(1, 2500, 300)
+K, M = np.meshgrid(k_range, m_range)
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+alpha_c = 1.0  # Critical exponent
 
-# Panel 1: Regime classification
-ax1 = axes[0]
-cmap = ListedColormap(['#2ecc71', '#f39c12', '#e74c3c'])
-im1 = ax1.pcolormesh(K, M, regimes, cmap=cmap, shading='auto')
+# Compute the scaling ratio m / k^α
+ratio = M / np.power(K, alpha_c)
 
-# Critical boundary
-k_crit = np.linspace(3, 50, 200)
+# Color by log of ratio
+log_ratio = np.log10(ratio + 1e-10)
+
+# Phase regions
+irrelevant = ratio < 0.1
+marginal = (ratio >= 0.1) & (ratio <= 10)
+relevant = ratio > 10
+
+# Create custom colormap
+colors_phase = np.zeros((*ratio.shape, 4))
+colors_phase[irrelevant] = [0.2, 0.4, 0.8, 0.6]   # Blue: irrelevant
+colors_phase[marginal] = [0.9, 0.7, 0.1, 0.7]      # Gold: marginal
+colors_phase[relevant] = [0.8, 0.2, 0.2, 0.6]       # Red: relevant
+
+ax1.imshow(colors_phase, extent=[2, 50, 1, 2500], aspect='auto', origin='lower')
+
+# Critical boundary: m = k^α_c
+k_crit = np.linspace(2, 50, 200)
 m_crit = k_crit ** alpha_c
-ax1.plot(k_crit, m_crit, 'k--', linewidth=2, label=f'm = k^{{{alpha_c:.1f}}} (critical)')
-ax1.plot(k_crit, 0.3 * m_crit, 'k:', linewidth=1, alpha=0.5)
-ax1.plot(k_crit, 3.0 * m_crit, 'k:', linewidth=1, alpha=0.5)
+ax1.plot(k_crit, m_crit, 'k-', linewidth=2.5, label=f'm = k^{{{alpha_c}}} (critical)')
+ax1.plot(k_crit, 0.1 * k_crit ** alpha_c, 'k--', linewidth=1, alpha=0.5, label='Lower boundary')
+ax1.plot(k_crit, 10 * k_crit ** alpha_c, 'k--', linewidth=1, alpha=0.5, label='Upper boundary')
 
-ax1.set_xlabel('k (internal symmetry)', fontsize=13)
-ax1.set_ylabel('m (number of copies)', fontsize=13)
-ax1.set_title('Perturbation Regime Phase Diagram', fontsize=14, fontweight='bold')
-ax1.legend(fontsize=11, loc='upper left')
-ax1.set_xlim(3, 50)
-ax1.set_ylim(1, 100)
+ax1.set_xlabel('Base degree k', fontsize=13)
+ax1.set_ylabel('Copies m', fontsize=13)
+ax1.set_title('Perturbation Phase Diagram\n(S_k ≀ S_m)', fontsize=14)
+ax1.legend(loc='upper left', fontsize=10)
 
 # Add regime labels
-ax1.text(35, 10, 'IRRELEVANT', fontsize=12, fontweight='bold',
-         color='white', ha='center',
-         bbox=dict(boxstyle='round', facecolor='#2ecc71', alpha=0.8))
-ax1.text(10, 70, 'RELEVANT', fontsize=12, fontweight='bold',
-         color='white', ha='center',
-         bbox=dict(boxstyle='round', facecolor='#e74c3c', alpha=0.8))
-ax1.text(25, 40, 'MARGINAL', fontsize=10, fontweight='bold',
-         color='white', ha='center',
-         bbox=dict(boxstyle='round', facecolor='#f39c12', alpha=0.8))
+ax1.text(35, 200, 'IRRELEVANT\n(m ≪ k^α)', fontsize=11,
+         ha='center', va='center', color='white', fontweight='bold',
+         bbox=dict(boxstyle='round', facecolor='blue', alpha=0.7))
+ax1.text(15, 1500, 'MARGINAL\n(m ~ k^α)', fontsize=11,
+         ha='center', va='center', color='black', fontweight='bold',
+         bbox=dict(boxstyle='round', facecolor='gold', alpha=0.7))
+ax1.text(8, 2200, 'RELEVANT\n(m ≫ k^α)', fontsize=11,
+         ha='center', va='center', color='white', fontweight='bold',
+         bbox=dict(boxstyle='round', facecolor='red', alpha=0.7))
 
-# Panel 2: Defect heatmap
-ax2 = axes[1]
-log_defects = np.log10(defects + 1e-10)
-im2 = ax2.pcolormesh(K, M, log_defects, cmap='viridis', shading='auto')
-ax2.plot(k_crit, m_crit, 'w--', linewidth=2, label=f'Critical boundary')
-cbar = fig.colorbar(im2, ax=ax2, label='log₁₀|Δ(k,m)|')
-ax2.set_xlabel('k (internal symmetry)', fontsize=13)
-ax2.set_ylabel('m (number of copies)', fontsize=13)
-ax2.set_title('Wreath Defect Magnitude', fontsize=14, fontweight='bold')
-ax2.legend(fontsize=11, loc='upper left')
-ax2.set_xlim(3, 50)
-ax2.set_ylim(1, 100)
+# Panel 2: Wreath defect as function of k for different scaling choices
+ax2_colors = ['#2166ac', '#67a9cf', '#d6604d', '#b2182b']
+k_vals = np.arange(3, 101)
+
+scaling_labels = [
+    ('Subcritical: m=√k', lambda k: max(1, int(k**0.5))),
+    ('Critical: m=k', lambda k: k),
+    ('Supercritical: m=k²', lambda k: k**2),
+    ('Ultra: m=k³', lambda k: k**3),
+]
+
+for idx, (label, m_func) in enumerate(scaling_labels):
+    defects = [wreath_defect(k, m_func(k)) for k in k_vals]
+    ax2.semilogy(k_vals, defects, '-', color=ax2_colors[idx],
+                 linewidth=2, label=label)
+
+ax2.set_xlabel('Base degree k', fontsize=13)
+ax2.set_ylabel('Wreath defect |Δ(k, m(k))|', fontsize=13)
+ax2.set_title('Defect Growth by Scaling Regime', fontsize=14)
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
+ax2.set_xlim([3, 100])
 
 plt.tight_layout()
-plt.savefig('phase_diagram.png', dpi=150, bbox_inches='tight')
-print("Saved phase_diagram.png")
+plt.savefig('viz_phase_diagram.png', dpi=150, bbox_inches='tight')
+print("Saved viz_phase_diagram.png")

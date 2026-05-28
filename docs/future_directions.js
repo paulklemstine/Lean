@@ -11,10 +11,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "consumed_by_exp_id": "a5048e13",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.484135+00:00"
   },
   {
@@ -59,10 +59,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92b77109",
     "timestamp": "2026-05-24T23:11:24.492421+00:00"
   },
   {
@@ -359,10 +359,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "2f6d2983",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T22:25:38.908872+00:00"
   },
   {
@@ -616,10 +616,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "550b5c8b",
-    "consumed_by_exp_id": "06373e59",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T21:18:02.967940+00:00"
   },
   {
@@ -716,10 +716,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "e4837868",
-    "consumed_by_exp_id": "a0bcb77f",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T12:07:55.522801+00:00"
   },
   {
@@ -755,10 +755,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "c6eef6ce",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f94ba84a",
     "timestamp": "2026-05-27T15:25:01.447437+00:00"
   },
   {
@@ -911,28 +911,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad17ca4a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T11:04:38.767855+00:00"
-  },
-  {
-    "id": "fd_1790",
-    "title": "Direction 1: Full Stabilizer Descent Formalization",
-    "description": "**Conjecture:** The stabilizer of a proper approximate subgroup has strictly smaller pseudofinite dimension. Formally: if $A$ is a definable $K$-approximate subgroup in $\\prod_{\\mathcal{U}} G_i$ with $0 < \\dim(A) < 1$, then $\\dim(\\text{Stab}(A)) \\leq \\dim(A) - c(K)$ for an explicit constant $c(K) > 0$ depending only on the doubling constant.\n\n**Test:** Compute stabilizer chains in Z/pZ for primes p = 101, 1009, 10007 with initial sets of various doubling constants. Verify that the dimension drop per step is bounded below by a function of K alone.\n\n**Impact:** Completes the core engine of the Breuillard-Green-Tao structure theorem for approximate groups. Would be the first machine-verified proof of stabilizer descent.\n\n**Catalog References:** `Catalog/Pythagorean/BoundedPseudofiniteTransfer.lean` (\u0141o\u015b theorem, `cosetCover_compose`), `Pythagorean/PseudofiniteDimension.lean` (`cosetCover_card_bound`, `normalizedLogCard_coset_bound`)\n\n**Proof Strategy:** Use the formalized coset cover bound plus the Ruzsa triangle inequality (to be formalized) to show that if $gA \\subseteq A^2$ for all $g \\in \\text{Stab}(A)$, then $\\text{Stab}(A)$ is covered by $K^2$ left cosets of a subgroup $H$ with $\\dim(H) < \\dim(A)$. The coset cover bound then gives $\\dim(\\text{Stab}(A)) < \\dim(A)$.\n\n**Domain Bridges:** Model theory \u2192 combinatorics (Ruzsa calculus) \u2192 group theory (subgroup structure)\n\n**Lineage:** Builds directly on the coset cover cardinality bound and log-cardinality coset bound.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the Ruzsa triangle inequality and connecting it to the ultraproduct framework.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
     "status": "in_progress",
     "research_mode": "prove",
-    "source_exp_id": "951d1d02",
-    "consumed_by_exp_id": "b43a1b40",
-    "timestamp": "2026-05-28T11:39:09.140621+00:00"
+    "source_exp_id": "ad17ca4a",
+    "consumed_by_exp_id": "2a2a2c28",
+    "timestamp": "2026-05-28T11:04:38.767855+00:00"
   },
   {
     "id": "fd_1800",
@@ -1285,6 +1268,49 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T19:09:44.483512+00:00"
   },
   {
+    "id": "fd_1925",
+    "title": "Direction 1: Lorentzian Closure Under Edge Multiplication",
+    "description": "**Conjecture:** For every finite graph G with non-negative couplings J \u2265 0 and \u03b2 \u2265 0, the multiaffine sector of the partition polynomial \u2014 viewed as a function of the field variables \u2014 satisfies the Lorentzian condition: all iterated directional derivatives down to degree 2 yield quadratic forms with at most one positive eigenvalue, provided the directional derivatives use vectors in the positive orthant.\n\n**Test:** Compute the Hessian eigenvalues after specializing n-2 variables to positive values for complete graphs K_3 through K_7, triangle-free graphs, and random graphs, at multiple coupling strengths. A single configuration yielding two positive eigenvalues at a positive specialization point disproves the conjecture.\n\n**Impact:** If true, this would establish the full Lorentzian structure of ferromagnetic partition polynomials, completing the bridge between Lee-Yang stability theory and Br\u00e4nd\u00e9n-Huh Lorentzian geometry. It would give structural proofs of log-concavity results for specialized coefficient sequences.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianAggregateAntiCancel.lean` \u2014 anti-cancellation engine\n- `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean` \u2014 Lorentzian gap certificates\n\n**Proof Strategy:** Strategy B from the current work: decompose the partition polynomial as a product of edge factors, prove each edge factor is Lorentzian (using the multiaffine Hessian signature result for two variables), then apply Lorentzian closure under products / polarized compositions. The key missing ingredient is a formalized Lorentzian closure theorem for multiaffine products.\n\n**Domain Bridges:** Statistical physics \u2194 Combinatorial Hodge theory \u2194 Algebraic geometry\n\n**Lineage:** Extends Theorems 2 and 3 of the current work from two spins to general graphs.\n\n**Ambition:** grand_challenge \u2014 Would establish a complete Lorentzian theory of partition functions.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "37e69c75",
+    "consumed_by_exp_id": "67a8a470",
+    "timestamp": "2026-05-28T20:34:24.776436+00:00"
+  },
+  {
+    "id": "fd_1927",
+    "title": "Direction 3: Phase Transition Detection via Hessian Rank Degeneration",
+    "description": "**Conjecture:** The critical temperature \u03b2_c of the ferromagnetic Ising model on a sequence of growing graphs (e.g., boxes in Z^d) can be detected as the value of \u03b2 where the multiaffine Hessian of the partition polynomial undergoes a rank transition: the number of eigenvalues exceeding a threshold changes discontinuously (in the infinite-volume limit).\n\n**Test:** For the Ising model on L \u00d7 L square lattices (L = 3, 4, 5, 6), compute the Hessian eigenvalue distribution at \u03b2 values bracketing the known critical point \u03b2_c = ln(1+\u221a2)/2. Track the fraction of eigenvalues above various thresholds and test for finite-size scaling consistent with a rank transition.\n\n**Impact:** Would provide a novel algebraic criterion for phase transitions, distinct from the standard thermodynamic (free energy singularity) and probabilistic (correlation length divergence) criteria. Could lead to algorithms for detecting phase transitions from finite-size polynomial data.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianAggregateAntiCancel.lean` \u2014 Hessian structure\n- `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean` \u2014 spectral gap degradation near criticality\n\n**Proof Strategy:** Use the Newton inequality threshold (Theorem 7) as a prototype: for two spins, the threshold \u03b2_c = ln 2 / J is exact. For general graphs, establish that the threshold for the first Newton inequality failure converges to the true critical temperature as graph size grows.\n\n**Domain Bridges:** Statistical physics \u2194 Random matrix theory \u2194 Spectral graph theory\n\n**Lineage:** Extends Theorem 7 (levelWeight\u2082_newton_iff) from two spins to general graphs.\n\n**Ambition:** grand_challenge \u2014 Would create a new algebraic approach to critical phenomena.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "37e69c75",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T20:34:24.933104+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1315,49 +1341,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1925",
-    "title": "Direction 1: Lorentzian Closure Under Edge Multiplication",
-    "description": "**Conjecture:** For every finite graph G with non-negative couplings J \u2265 0 and \u03b2 \u2265 0, the multiaffine sector of the partition polynomial \u2014 viewed as a function of the field variables \u2014 satisfies the Lorentzian condition: all iterated directional derivatives down to degree 2 yield quadratic forms with at most one positive eigenvalue, provided the directional derivatives use vectors in the positive orthant.\n\n**Test:** Compute the Hessian eigenvalues after specializing n-2 variables to positive values for complete graphs K_3 through K_7, triangle-free graphs, and random graphs, at multiple coupling strengths. A single configuration yielding two positive eigenvalues at a positive specialization point disproves the conjecture.\n\n**Impact:** If true, this would establish the full Lorentzian structure of ferromagnetic partition polynomials, completing the bridge between Lee-Yang stability theory and Br\u00e4nd\u00e9n-Huh Lorentzian geometry. It would give structural proofs of log-concavity results for specialized coefficient sequences.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianAggregateAntiCancel.lean` \u2014 anti-cancellation engine\n- `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean` \u2014 Lorentzian gap certificates\n\n**Proof Strategy:** Strategy B from the current work: decompose the partition polynomial as a product of edge factors, prove each edge factor is Lorentzian (using the multiaffine Hessian signature result for two variables), then apply Lorentzian closure under products / polarized compositions. The key missing ingredient is a formalized Lorentzian closure theorem for multiaffine products.\n\n**Domain Bridges:** Statistical physics \u2194 Combinatorial Hodge theory \u2194 Algebraic geometry\n\n**Lineage:** Extends Theorems 2 and 3 of the current work from two spins to general graphs.\n\n**Ambition:** grand_challenge \u2014 Would establish a complete Lorentzian theory of partition functions.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "37e69c75",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T20:34:24.776436+00:00"
-  },
-  {
-    "id": "fd_1927",
-    "title": "Direction 3: Phase Transition Detection via Hessian Rank Degeneration",
-    "description": "**Conjecture:** The critical temperature \u03b2_c of the ferromagnetic Ising model on a sequence of growing graphs (e.g., boxes in Z^d) can be detected as the value of \u03b2 where the multiaffine Hessian of the partition polynomial undergoes a rank transition: the number of eigenvalues exceeding a threshold changes discontinuously (in the infinite-volume limit).\n\n**Test:** For the Ising model on L \u00d7 L square lattices (L = 3, 4, 5, 6), compute the Hessian eigenvalue distribution at \u03b2 values bracketing the known critical point \u03b2_c = ln(1+\u221a2)/2. Track the fraction of eigenvalues above various thresholds and test for finite-size scaling consistent with a rank transition.\n\n**Impact:** Would provide a novel algebraic criterion for phase transitions, distinct from the standard thermodynamic (free energy singularity) and probabilistic (correlation length divergence) criteria. Could lead to algorithms for detecting phase transitions from finite-size polynomial data.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianAggregateAntiCancel.lean` \u2014 Hessian structure\n- `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean` \u2014 spectral gap degradation near criticality\n\n**Proof Strategy:** Use the Newton inequality threshold (Theorem 7) as a prototype: for two spins, the threshold \u03b2_c = ln 2 / J is exact. For general graphs, establish that the threshold for the first Newton inequality failure converges to the true critical temperature as graph size grows.\n\n**Domain Bridges:** Statistical physics \u2194 Random matrix theory \u2194 Spectral graph theory\n\n**Lineage:** Extends Theorem 7 (levelWeight\u2082_newton_iff) from two spins to general graphs.\n\n**Ambition:** grand_challenge \u2014 Would create a new algebraic approach to critical phenomena.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "37e69c75",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T20:34:24.933104+00:00"
   },
   {
     "id": "seed_013",

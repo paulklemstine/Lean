@@ -1,117 +1,106 @@
-#!/usr/bin/env python3
 """
-Visualization 3: Crossover Profile and Data Collapse
+Crossover Profile Visualization
 
-Tests the CrossoverProfileConjecture by plotting the rescaled defect
-Δ(k,m)·k^b/m^a against the scaling variable λ = m/k^α_c for multiple
-values of k. If the curves collapse onto a single profile F(λ), this
-supports the existence of a universal crossover function — the
-finite-group analog of scaling functions in statistical mechanics.
+Visualizes the conjectured crossover profile F(λ) where
+Δ(k, λ·k^α) → F(λ) as k → ∞. Shows convergence of the
+rescaled defect for increasing k, demonstrating the
+finite-size scaling collapse expected from the double-scaling
+limit theory.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 
-# === Inline functions ===
 
-def wreath_defect(k, m, C=1.0, a=1, b=1):
-    """Compute wreath defect Δ(k,m) = C·m^a/k^b."""
-    return C * (m ** a) / (k ** b) if k > 0 else 0.0
+def wreath_defect(k, m):
+    """Wreath defect Δ(k,m) = m/k for the perturbation model."""
+    if k < 2 or m < 1:
+        return 0.0
+    return float(m) / float(k)
 
-# === Parameters ===
-C, a, b = 1.0, 1, 1
-alpha_c = b / a
 
-# Test multiple values of k
-k_test_values = [5, 10, 20, 50, 100]
-colors = ['#e74c3c', '#f39c12', '#2ecc71', '#3498db', '#9b59b6']
+def rescaled_defect(k, m, alpha):
+    """Rescaled defect R̃_α(k,m) = (k^α / m) · Δ(k,m)."""
+    delta = wreath_defect(k, m)
+    if m == 0:
+        return 0.0
+    return (k ** alpha / m) * delta
 
-# === Plotting ===
-fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
 
-# Panel 1: Raw defect Δ(k, m) vs m for different k
-ax1 = axes[0]
-for k, color in zip(k_test_values, colors):
-    m_vals = np.arange(1, 10 * k + 1)
-    defects = [wreath_defect(k, m, C, a, b) for m in m_vals]
-    ax1.plot(m_vals, defects, color=color, linewidth=1.5,
-             label=f'k = {k}', alpha=0.8)
-ax1.set_xlabel('m (copies)', fontsize=12)
-ax1.set_ylabel('Δ(k, m)', fontsize=12)
-ax1.set_title('Raw Wreath Defect', fontsize=13, fontweight='bold')
-ax1.legend(fontsize=10)
-ax1.grid(True, alpha=0.3)
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-# Panel 2: Rescaled defect (data collapse)
-ax2 = axes[1]
-for k, color in zip(k_test_values, colors):
-    m_vals = np.arange(1, 10 * k + 1)
-    lambda_vals = m_vals / (k ** alpha_c)
-    rescaled = []
-    for m in m_vals:
-        delta = wreath_defect(k, m, C, a, b)
-        # Rescale: Δ · k^b / m^a
-        r = delta * (k ** b) / (m ** a) if m > 0 else 0
-        rescaled.append(r)
-    ax2.plot(lambda_vals, rescaled, color=color, linewidth=1.5,
-             label=f'k = {k}', alpha=0.8)
+# Panel 1: Crossover profile for α = 1.0
+ax = axes[0, 0]
+alpha = 1.0
+lambdas = np.linspace(0.01, 5.0, 200)
+for k in [10, 20, 50, 100, 200]:
+    profile = []
+    for lam in lambdas:
+        m = max(1, round(lam * k ** alpha))
+        profile.append(rescaled_defect(k, m, alpha))
+    ax.plot(lambdas, profile, '-', label=f'k={k}', linewidth=1.5)
 
-# Theoretical profile F(λ) = C (constant for this model)
-lam_theory = np.linspace(0, 10, 100)
-ax2.axhline(y=C, color='black', linestyle='--', linewidth=2,
-            label=f'F(λ) = C = {C}', alpha=0.7)
-ax2.set_xlabel('λ = m / k^{α_c}', fontsize=12)
-ax2.set_ylabel('Δ · k^b / m^a', fontsize=12)
-ax2.set_title('Data Collapse (CrossoverProfileConjecture)',
-              fontsize=13, fontweight='bold')
-ax2.legend(fontsize=9)
-ax2.grid(True, alpha=0.3)
-ax2.set_ylim(-0.2, 2.5)
+ax.set_xlabel('λ = m / k^α', fontsize=12)
+ax.set_ylabel('Rescaled defect R̃_α(k, m)', fontsize=12)
+ax.set_title(f'Crossover Profile (α = {alpha})', fontsize=13)
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
+ax.axhline(y=1.0, color='gray', linestyle=':', alpha=0.5)
 
-# Panel 3: Test collapse quality for different candidate α
-ax3 = axes[2]
-candidate_alphas = [0.5, 0.75, 1.0, 1.25, 1.5]
-k_fixed = 50
+# Panel 2: Comparison of different α values
+ax = axes[0, 1]
+k_test = 100
+for alpha in [0.5, 1.0, 1.5, 2.0]:
+    profile = []
+    lam_range = np.linspace(0.01, 5.0, 200)
+    for lam in lam_range:
+        m = max(1, round(lam * k_test ** alpha))
+        profile.append(rescaled_defect(k_test, m, alpha))
+    ax.plot(lam_range, profile, '-', label=f'α={alpha}', linewidth=2)
 
-# For each candidate α, compute the variance of the rescaled defect
-# across different m values
-collapse_quality = []
-for alpha_test in candidate_alphas:
-    m_vals = np.arange(1, 200)
-    rescaled_vals = []
-    for m in m_vals:
-        delta = wreath_defect(k_fixed, m, C, a, b)
-        lam = m / (k_fixed ** alpha_test) if k_fixed > 0 else 0
-        # Group by bins of λ and check variance
-        if m > 0:
-            r = delta * (k_fixed ** b) / (m ** a)
-            rescaled_vals.append(r)
+ax.set_xlabel('λ = m / k^α', fontsize=12)
+ax.set_ylabel('Rescaled defect R̃_α', fontsize=12)
+ax.set_title(f'Profile Comparison (k={k_test})', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-    # Measure how constant the rescaled values are
-    rv = np.array(rescaled_vals)
-    cv = np.std(rv) / np.mean(rv) if np.mean(rv) != 0 else float('inf')
-    collapse_quality.append(cv)
+# Panel 3: Raw defect vs k for critical scaling m(k) = k
+ax = axes[1, 0]
+k_vals = np.arange(3, 201)
+for m_label, m_func in [
+    ('m=1 (constant)', lambda k: 1),
+    ('m=⌊√k⌋', lambda k: max(1, int(k**0.5))),
+    ('m=k', lambda k: k),
+    ('m=k²', lambda k: k**2),
+]:
+    defects = [wreath_defect(k, m_func(k)) for k in k_vals]
+    ax.plot(k_vals, defects, '-', label=m_label, linewidth=1.5)
 
-ax3.bar([f'α={a:.2f}' for a in candidate_alphas], collapse_quality,
-        color=['#e74c3c' if a != alpha_c else '#2ecc71'
-               for a in candidate_alphas],
-        alpha=0.8, edgecolor='black')
-ax3.set_xlabel('Candidate exponent α', fontsize=12)
-ax3.set_ylabel('Coefficient of Variation', fontsize=12)
-ax3.set_title(f'Collapse Quality (k={k_fixed})', fontsize=13, fontweight='bold')
-ax3.axhline(y=0, color='gray', linestyle=':', alpha=0.5)
+ax.set_xlabel('k', fontsize=12)
+ax.set_ylabel('Δ(k, m(k))', fontsize=12)
+ax.set_title('Raw Wreath Defect vs k', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+ax.set_yscale('log')
 
-# Mark the true critical exponent
-true_idx = candidate_alphas.index(alpha_c) if alpha_c in candidate_alphas else -1
-if true_idx >= 0:
-    ax3.annotate(f'True α_c = {alpha_c}',
-                xy=(true_idx, collapse_quality[true_idx]),
-                xytext=(true_idx + 0.5, max(collapse_quality) * 0.7),
-                arrowprops=dict(arrowstyle='->', color='#2ecc71'),
-                fontsize=11, fontweight='bold', color='#2ecc71')
+# Panel 4: Convergence of rescaled defect at λ=1
+ax = axes[1, 1]
+k_vals = np.arange(3, 301)
+for alpha in [0.5, 1.0, 1.5, 2.0]:
+    vals = []
+    for k in k_vals:
+        m = max(1, round(k ** alpha))
+        vals.append(rescaled_defect(k, m, alpha))
+    ax.plot(k_vals, vals, '-', label=f'α={alpha}', linewidth=1.5)
 
-plt.suptitle('Crossover Profile Analysis: Testing the Scaling Conjecture',
-             fontsize=15, fontweight='bold', y=1.02)
+ax.set_xlabel('k', fontsize=12)
+ax.set_ylabel('R̃_α(k, ⌊k^α⌋)', fontsize=12)
+ax.set_title('Convergence at Critical Scaling (λ=1)', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+ax.axhline(y=1.0, color='gray', linestyle=':', alpha=0.5, label='Predicted limit')
+
+plt.suptitle('Double Scaling Limit: Crossover Analysis', fontsize=15, y=1.02)
 plt.tight_layout()
-plt.savefig('crossover_profile.png', dpi=150, bbox_inches='tight')
-print("Saved crossover_profile.png")
+plt.savefig('viz_crossover_profile.png', dpi=150, bbox_inches='tight')
+print("Saved viz_crossover_profile.png")

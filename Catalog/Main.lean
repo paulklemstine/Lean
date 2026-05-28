@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2027 of the highest-quality
+A curated collection of 2029 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2027
+Total files: 2029
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -669,6 +669,7 @@ import FINAL.Bridges.SupportCompression
 import FINAL.Bridges.SupportCompressionPoly
 import FINAL.Bridges.SymmetricGroup
 import FINAL.Bridges.SymplecticCryptography
+import FINAL.Bridges.SymplecticRankExpansion
 import FINAL.Bridges.TaggedCardTASEP
 import FINAL.Bridges.TannakaClosureReconstruction
 import FINAL.Bridges.TannakianNeuralArchitecture
@@ -1712,6 +1713,7 @@ import FINAL.Pythagorean.SpectralPseudorandomness
 import FINAL.Pythagorean.SpectralSparsity
 import FINAL.Pythagorean.SpectralTropicalEntropy
 import FINAL.Pythagorean.Spectrum
+import FINAL.Pythagorean.StabilizerDescent
 import FINAL.Pythagorean.StrongNormBisimulation
 import FINAL.Pythagorean.StronglyRayleighCertificate
 import FINAL.Pythagorean.SubgroupMoebius
