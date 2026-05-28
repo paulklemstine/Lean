@@ -1,126 +1,126 @@
 /-
-Copyright (c) 2025 Harmonic. All rights reserved.
-Released under Apache 2.0 license.
+Copyright (c) 2025. All rights reserved.
+Shadow Profile Convolution and Circuit Complexity Bounds
+
+This file defines the shadow profile of finite subsets of ℕ^n and the
+shadow complexity invariant, establishing the foundational definitions
+for shadow geometry in algebraic complexity theory.
 -/
 import Mathlib
 
-/-!
-# Valuated Matroid Depth: Core Definitions
+namespace ShadowComplexity
 
-This file provides the core definitions for the directional depth filtration
-theory on valuated matroids. The central idea is to measure "higher-order
-discrete curvature" by iterating ratio transforms and checking whether
-directional log-concavity persists at each level.
+open Finset
 
-## Main Definitions
+/-- Total degree of a multi-index vector: |v| = Σᵢ vᵢ. -/
+def totalDeg {n : ℕ} (v : Fin n → ℕ) : ℕ := ∑ i, v i
 
-* `MultiDirLogConcave` — directional log-concavity for functions `(α → ℕ) → ℝ`
-* `MixedLogConcave` — mixed (two-direction) log-concavity
-* `ratioTransform` — the ratio transform `Rᵢf(m) = f(m + eᵢ) / f(m)`
-* `DirectionalDepthAtLeast` — recursive depth predicate
-* `HasInfiniteDepth` — infinite depth (all levels hold)
-* `IsSupermodular` — supermodularity on lattice points
-* `degreeSlice` — fixed-degree slice predicate
-* `exchangeClosedSupport` — exchange-closed support condition
-* `exchangeMove` — single exchange operation on multisets
-* `HasExactDepth` — exact depth predicate
+/-- The standard basis vector eᵢ in ℕ^n: 1 at position i, 0 elsewhere. -/
+def stdBasis {n : ℕ} (i : Fin n) : Fin n → ℕ :=
+  fun j => if j = i then 1 else 0
 
-## References
+/-- The lower shadow of a finset S ⊆ ℕ^n: all vectors obtainable by
+    reducing exactly one coordinate of some element of S by 1.
+    ∂(S) = {v - eᵢ | v ∈ S, vᵢ > 0}. -/
+def lowerShadow {n : ℕ} (S : Finset (Fin n → ℕ)) : Finset (Fin n → ℕ) :=
+  S.biUnion fun v =>
+    (Finset.univ.filter fun i : Fin n => v i > 0).biUnion fun i =>
+      {v - stdBasis i}
 
-* Murota, "Discrete Convex Analysis", SIAM, 2003
-* Brändén–Huh, "Lorentzian Polynomials", Annals of Mathematics, 2020
--/
+/-- Iterated lower shadow: ∂ᵏ(S) = ∂(∂ᵏ⁻¹(S)). -/
+def shadow_iter {n : ℕ} (S : Finset (Fin n → ℕ)) : ℕ → Finset (Fin n → ℕ)
+  | 0 => S
+  | k + 1 => lowerShadow (shadow_iter S k)
 
-noncomputable section
+/-- Maximum total degree of any element of S. -/
+noncomputable def maxDegree {n : ℕ} (S : Finset (Fin n → ℕ)) : ℕ :=
+  S.sup fun v => totalDeg v
 
-open Finset BigOperators Function
+/-- The shadow profile at level k: aₖˢ = |∂ᵏ(S)|. -/
+noncomputable def shadowProfile {n : ℕ} (S : Finset (Fin n → ℕ)) (k : ℕ) : ℕ :=
+  (shadow_iter S k).card
 
-namespace ValuatedMatroidDepth
+/-- Shadow complexity: total mass of the shadow profile.
+    Σ(S) = Σₖ₌₀^{maxDeg} |∂ᵏ(S)|.
+    Measures how "spread out" a support set is through its iterated shadows. -/
+noncomputable def shadowComplexity {n : ℕ} (S : Finset (Fin n → ℕ)) : ℕ :=
+  (Finset.range (maxDegree S + 1)).sum fun k => (shadow_iter S k).card
 
-variable {α : Type*}
+/-- Minkowski sum of two finsets of multi-indices:
+    A + B = {a + b | a ∈ A, b ∈ B}, with pointwise addition. -/
+def minkowskiSum {n : ℕ} (A B : Finset (Fin n → ℕ)) : Finset (Fin n → ℕ) :=
+  A.biUnion fun a => B.image fun b => a + b
 
-/-! ## Shift Operations -/
+/-- Membership characterization for Minkowski sum. -/
+theorem mem_minkowskiSum {n : ℕ} {A B : Finset (Fin n → ℕ)} {c : Fin n → ℕ} :
+    c ∈ minkowskiSum A B ↔ ∃ a ∈ A, ∃ b ∈ B, c = a + b := by
+  simp [minkowskiSum, mem_biUnion, mem_image]
+  constructor
+  · rintro ⟨a, ha, b, hb, rfl⟩; exact ⟨a, ha, b, hb, rfl⟩
+  · rintro ⟨a, ha, b, hb, rfl⟩; exact ⟨a, ha, b, hb, rfl⟩
 
-/-- Shift `m` up at coordinate `i` by 1. -/
-def shiftUp [DecidableEq α] (i : α) (m : α → ℕ) : α → ℕ :=
-  m + Pi.single i 1
+/-- Membership characterization for lower shadow. -/
+theorem mem_lowerShadow {n : ℕ} {S : Finset (Fin n → ℕ)} {v' : Fin n → ℕ} :
+    v' ∈ lowerShadow S ↔ ∃ v ∈ S, ∃ i : Fin n, v i > 0 ∧ v' = v - stdBasis i := by
+  simp only [lowerShadow, mem_biUnion, mem_filter, mem_univ, true_and, mem_singleton]
 
-/-- Shift `m` up at coordinates `i` and `j` by 1 each. -/
-def shiftUp2 [DecidableEq α] (i j : α) (m : α → ℕ) : α → ℕ :=
-  m + Pi.single i 1 + Pi.single j 1
+/-- The shadow of a subset is a subset of the shadow. -/
+theorem lowerShadow_mono {n : ℕ} {S T : Finset (Fin n → ℕ)} (h : S ⊆ T) :
+    lowerShadow S ⊆ lowerShadow T := by
+  intro v' hv'
+  rw [mem_lowerShadow] at hv' ⊢
+  obtain ⟨v, hv, i, hi, rfl⟩ := hv'
+  exact ⟨v, h hv, i, hi, rfl⟩
 
-/-! ## Log-Concavity Predicates -/
+/-- Iterated shadow is monotone. -/
+theorem shadow_iter_mono {n : ℕ} {S T : Finset (Fin n → ℕ)} (h : S ⊆ T) (k : ℕ) :
+    shadow_iter S k ⊆ shadow_iter T k := by
+  induction k with
+  | zero => exact h
+  | succ k ih => exact lowerShadow_mono ih
 
-/-- **Directional log-concavity**: for every direction `i` and every point `m`,
-    `f(m + eᵢ)² ≥ f(m) · f(m + 2eᵢ)`. -/
-def MultiDirLogConcave [DecidableEq α] (f : (α → ℕ) → ℝ) : Prop :=
-  ∀ (i : α) (m : α → ℕ),
-    f m * f (m + Pi.single i 1 + Pi.single i 1) ≤
-    f (m + Pi.single i 1) * f (m + Pi.single i 1)
+/-- Shadow of a union is subset of union of shadows. -/
+theorem lowerShadow_union_subset {n : ℕ} (A B : Finset (Fin n → ℕ)) :
+    lowerShadow (A ∪ B) ⊆ lowerShadow A ∪ lowerShadow B := by
+  intro v' hv'
+  rw [mem_lowerShadow] at hv'
+  obtain ⟨v, hv, i, hi, rfl⟩ := hv'
+  simp only [mem_union] at hv ⊢
+  cases hv with
+  | inl h => left; rw [mem_lowerShadow]; exact ⟨v, h, i, hi, rfl⟩
+  | inr h => right; rw [mem_lowerShadow]; exact ⟨v, h, i, hi, rfl⟩
 
-/-- **Mixed log-concavity**: for every pair of directions `i, j` and point `m`,
-    `f(m) · f(m + eᵢ + eⱼ) ≤ f(m + eᵢ) · f(m + eⱼ)`. -/
-def MixedLogConcave [DecidableEq α] (f : (α → ℕ) → ℝ) : Prop :=
-  ∀ (i j : α) (m : α → ℕ),
-    f m * f (m + Pi.single i 1 + Pi.single j 1) ≤
-    f (m + Pi.single i 1) * f (m + Pi.single j 1)
+/-- Union of shadows is subset of shadow of union. -/
+theorem union_lowerShadow_subset {n : ℕ} (A B : Finset (Fin n → ℕ)) :
+    lowerShadow A ∪ lowerShadow B ⊆ lowerShadow (A ∪ B) := by
+  intro v' hv'
+  simp only [mem_union] at hv'
+  rw [mem_lowerShadow]
+  cases hv' with
+  | inl h =>
+    rw [mem_lowerShadow] at h
+    obtain ⟨v, hv, i, hi, rfl⟩ := h
+    exact ⟨v, mem_union_left B hv, i, hi, rfl⟩
+  | inr h =>
+    rw [mem_lowerShadow] at h
+    obtain ⟨v, hv, i, hi, rfl⟩ := h
+    exact ⟨v, mem_union_right A hv, i, hi, rfl⟩
 
-/-! ## Ratio Transform -/
+/-- Shadow distributes over union. -/
+theorem lowerShadow_union {n : ℕ} (A B : Finset (Fin n → ℕ)) :
+    lowerShadow (A ∪ B) = lowerShadow A ∪ lowerShadow B := by
+  ext v'
+  constructor
+  · exact fun h => lowerShadow_union_subset A B h
+  · exact fun h => union_lowerShadow_subset A B h
 
-/-- The **ratio transform** in direction `i`:
-    `Rᵢf(m) = f(m + eᵢ) / f(m)`. -/
-def ratioTransform [DecidableEq α] (i : α) (f : (α → ℕ) → ℝ) : (α → ℕ) → ℝ :=
-  fun m => f (m + Pi.single i 1) / f m
+/-- Iterated shadow distributes over union. -/
+theorem shadow_iter_union {n : ℕ} (A B : Finset (Fin n → ℕ)) (k : ℕ) :
+    shadow_iter (A ∪ B) k = shadow_iter A k ∪ shadow_iter B k := by
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+    simp only [shadow_iter]
+    rw [ih, lowerShadow_union]
 
-/-! ## Directional Depth -/
-
-/-- **Directional depth at least `k`**: recursive predicate.
-    - Depth ≥ 0 is vacuously true.
-    - Depth ≥ k+1 means `f` is directionally log-concave AND every ratio
-      transform `Rᵢf` has depth ≥ k. -/
-def DirectionalDepthAtLeast [DecidableEq α] : ℕ → ((α → ℕ) → ℝ) → Prop
-  | 0, _ => True
-  | k + 1, f => MultiDirLogConcave f ∧ ∀ i : α, DirectionalDepthAtLeast k (ratioTransform i f)
-
-/-- **Infinite depth**: `f` has depth ≥ k for every k. -/
-def HasInfiniteDepth [DecidableEq α] (f : (α → ℕ) → ℝ) : Prop :=
-  ∀ k : ℕ, DirectionalDepthAtLeast k f
-
-/-- **Exact depth k**: depth ≥ k but not depth ≥ k+1. -/
-def HasExactDepth [DecidableEq α] (k : ℕ) (f : (α → ℕ) → ℝ) : Prop :=
-  DirectionalDepthAtLeast k f ∧ ¬ DirectionalDepthAtLeast (k + 1) f
-
-/-! ## Supermodularity -/
-
-/-- **Supermodularity** for functions on `(α → ℕ)`:
-    for all `i ≠ j` and all `m`,
-    `g(m + eᵢ + eⱼ) + g(m) ≥ g(m + eᵢ) + g(m + eⱼ)`. -/
-def IsSupermodular [DecidableEq α] (g : (α → ℕ) → ℝ) : Prop :=
-  ∀ (i j : α) (m : α → ℕ), i ≠ j →
-    g (m + Pi.single i 1) + g (m + Pi.single j 1) ≤
-    g m + g (m + Pi.single i 1 + Pi.single j 1)
-
-/-! ## Degree Slice and Exchange Operations -/
-
-/-- A multiset `m : α → ℕ` lies in the **degree-d slice** when `∑ᵢ m(i) = d`. -/
-def degreeSlice [Fintype α] (d : ℕ) (m : α → ℕ) : Prop :=
-  (∑ i, m i) = d
-
-/-- **Exchange move**: decrease `m` at `j` by 1 (truncating) and increase at `i` by 1. -/
-def exchangeMove [DecidableEq α] (m : α → ℕ) (i j : α) : α → ℕ :=
-  Function.update (Function.update m j (m j - 1)) i (Function.update m j (m j - 1) i + 1)
-
-/-- **Exchange-closed support** on a degree slice: for any two positive-weight
-    multisets `m, n` and a coordinate where `m i < n i`, there exists a
-    complementary coordinate `j` with `n j < m j` such that the exchange
-    move produces a positive-weight multiset. -/
-def exchangeClosedSupport [Fintype α] [DecidableEq α]
-    (f : (α → ℕ) → ℝ) (d : ℕ) : Prop :=
-  ∀ ⦃m n : α → ℕ⦄, degreeSlice d m → degreeSlice d n →
-    0 < f m → 0 < f n →
-    ∀ ⦃i : α⦄, m i < n i →
-      ∃ j, n j < m j ∧ 0 < f (exchangeMove m i j)
-
-end ValuatedMatroidDepth
-
-end
+end ShadowComplexity

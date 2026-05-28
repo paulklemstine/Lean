@@ -1,204 +1,125 @@
 /-
-Copyright (c) 2025 Harmonic. All rights reserved.
-Released under Apache 2.0 license.
+Copyright (c) 2025. All rights reserved.
+Shadow Profile Convolution and Circuit Complexity Bounds — Main Theorems
+
+This file proves the core results:
+1. Key Lemma: ∂(A+B) ⊆ (∂A+B) ∪ (A+∂B)
+2. Shadow Convolution: ∂ᵏ(A+B) ⊆ ⋃_{i+j=k} ∂ⁱ(A) + ∂ʲ(B)
+3. Shadow Complexity Sub-additivity: Σ(A∪B) ≤ Σ(A) + Σ(B)
 -/
 import Mathlib
-import ValuatedMatroidDepth.Defs
+import ShadowComplexity.Defs
 
-/-!
-# Valuated Matroid Depth: Main Theorems
+namespace ShadowComplexity
 
-This file proves the main theorems of the directional depth filtration theory,
-establishing the algebraic, tropical, and combinatorial properties of the
-depth invariant.
+open Finset
 
-## Main Results
+/-! ## Key Lemma: Shadow of Minkowski Sum
 
-* `directionalDepthAtLeast_mul` — multiplicative depth stability (Theorem 1)
-* `negLog_supermodular_of_mixedLC` — tropical bridge via mixed log-concavity (Theorem 2)
-* `not_depth_two_of_ratio_failure` — depth obstruction criterion (Theorem 3)
-* `ratio_energy_supermodular` — statistical physics bridge (Theorem 4)
-* `exists_depth_one_not_depth_two` — depth hierarchy strictness (Theorem 5)
-
-## References
-
-* Murota, "Discrete Convex Analysis", SIAM, 2003
-* Brändén–Huh, "Lorentzian Polynomials", Annals of Mathematics, 2020
+The fundamental insight: if c ∈ ∂(A+B), then c = (a+b) - eᵢ for some
+a ∈ A, b ∈ B with (a+b)ᵢ > 0. Since (a+b)ᵢ = aᵢ + bᵢ > 0, either
+aᵢ > 0 or bᵢ > 0. In the first case, c = (a-eᵢ) + b ∈ ∂A + B.
+In the second case, c = a + (b-eᵢ) ∈ A + ∂B.
 -/
 
-noncomputable section
+/-- Subtraction distributes over addition for natural number functions
+    when the subtracted part only affects one summand. -/
+theorem sub_stdBasis_add_left {n : ℕ} (a b : Fin n → ℕ) (i : Fin n) (ha : a i > 0) :
+    (a + b) - stdBasis i = (a - stdBasis i) + b := by
+  ext j
+  simp only [Pi.add_apply, Pi.sub_apply, stdBasis]
+  split_ifs with h
+  · subst h; omega
+  · omega
 
-open Finset BigOperators Function
+theorem sub_stdBasis_add_right {n : ℕ} (a b : Fin n → ℕ) (i : Fin n) (hb : b i > 0) :
+    (a + b) - stdBasis i = a + (b - stdBasis i) := by
+  ext j
+  simp only [Pi.add_apply, Pi.sub_apply, stdBasis]
+  split_ifs with h
+  · subst h; omega
+  · omega
 
-namespace ValuatedMatroidDepth
+/-
+**Key Lemma**: The shadow of a Minkowski sum is contained in the union
+    of (shadow of A) + B and A + (shadow of B).
+    ∂(A + B) ⊆ (∂A + B) ∪ (A + ∂B)
+-/
+theorem lowerShadow_minkowskiSum_subset {n : ℕ} (A B : Finset (Fin n → ℕ)) :
+    lowerShadow (minkowskiSum A B) ⊆
+      minkowskiSum (lowerShadow A) B ∪ minkowskiSum A (lowerShadow B) := by
+  intro v' hv'
+  rw [mem_lowerShadow] at hv'
+  obtain ⟨c, hc⟩ := hv';
+  obtain ⟨ hc₁, i, hi, rfl ⟩ := hc;
+  obtain ⟨ a, ha, b, hb, rfl ⟩ := mem_minkowskiSum.mp hc₁;
+  by_cases ha' : a i > 0 <;> by_cases hb' : b i > 0 <;> simp_all +decide [ sub_stdBasis_add_left, sub_stdBasis_add_right ];
+  · exact Or.inl ( mem_minkowskiSum.mpr ⟨ _, mem_lowerShadow.mpr ⟨ _, ha, _, ha', rfl ⟩, _, hb, rfl ⟩ );
+  · exact Or.inl <| mem_minkowskiSum.mpr ⟨ _, mem_lowerShadow.mpr ⟨ _, ha, i, ha', rfl ⟩, _, hb, rfl ⟩;
+  · exact Or.inr ( mem_minkowskiSum.mpr ⟨ a, ha, _, mem_lowerShadow.mpr ⟨ b, hb, i, hb', rfl ⟩, rfl ⟩ )
 
-variable {α : Type*} [DecidableEq α]
+/-
+**Shadow Convolution Theorem**: The k-th iterated shadow of A+B is contained
+    in the union over all i+j=k of (∂ⁱA + ∂ʲB).
 
-/-- Depth ≥ k+1 implies depth ≥ k. -/
-theorem DirectionalDepthAtLeast_of_succ
-    (k : ℕ) (f : (α → ℕ) → ℝ)
-    (hf : DirectionalDepthAtLeast (k + 1) f) :
-    DirectionalDepthAtLeast k f := by
-  induction k generalizing f with
-  | zero => exact trivial
-  | succ k ih =>
-    exact ⟨hf.1, fun i => ih _ (hf.2 i)⟩
+    ∂ᵏ(A+B) ⊆ ⋃_{i=0}^{k} ∂ⁱ(A) + ∂^{k-i}(B)
 
-/-- Depth is monotone: depth ≥ k and j ≤ k implies depth ≥ j. -/
-theorem DirectionalDepthAtLeast_mono [Fintype α]
-    {j k : ℕ} {f : (α → ℕ) → ℝ}
-    (hf : DirectionalDepthAtLeast k f)
-    (hjk : j ≤ k) :
-    DirectionalDepthAtLeast j f := by
-  induction k generalizing j f with
-  | zero => simp at hjk; subst hjk; exact hf
-  | succ k ih =>
-    rcases Nat.eq_or_lt_of_le hjk with rfl | hjk'
-    · exact hf
-    · exact ih (DirectionalDepthAtLeast_of_succ k f hf) (Nat.lt_succ_iff.mp hjk')
+    This is proved by induction on k, using the key lemma at each step.
+-/
+theorem shadow_minkowski_convolution {n : ℕ} (A B : Finset (Fin n → ℕ)) (k : ℕ) :
+    shadow_iter (minkowskiSum A B) k ⊆
+      (Finset.range (k + 1)).biUnion fun i =>
+        minkowskiSum (shadow_iter A i) (shadow_iter B (k - i)) := by
+  induction' k with k ih generalizing A B <;> simp_all +decide [ shadow_iter ];
+  refine' Finset.Subset.trans ( lowerShadow_mono ( ih _ _ ) ) _;
+  -- By the properties of the shadow operator, we can apply it term by term to the union.
+  have h_shadow_term : ∀ (i : ℕ), lowerShadow (minkowskiSum (shadow_iter A i) (shadow_iter B (k - i))) ⊆ minkowskiSum (shadow_iter A (i + 1)) (shadow_iter B (k - i)) ∪ minkowskiSum (shadow_iter A i) (shadow_iter B (k - i + 1)) := by
+    intro i
+    apply lowerShadow_minkowskiSum_subset;
+  have h_shadow_union : lowerShadow (Finset.biUnion (Finset.range (k + 1)) (fun i => minkowskiSum (shadow_iter A i) (shadow_iter B (k - i)))) ⊆ Finset.biUnion (Finset.range (k + 1)) (fun i => lowerShadow (minkowskiSum (shadow_iter A i) (shadow_iter B (k - i)))) := by
+    induction' ( Finset.range ( k + 1 ) ) using Finset.induction <;> simp_all +decide [ Finset.subset_iff ];
+    · simp +decide [ lowerShadow ];
+    · simp_all +decide [ lowerShadow_union ];
+      grind;
+  refine' Finset.Subset.trans h_shadow_union ( Finset.biUnion_subset.mpr _ );
+  grind
 
-/-- Depth ≥ 1 implies multivariate directional log-concavity. -/
-theorem DirectionalDepthAtLeast.logConcave
-    {f : (α → ℕ) → ℝ}
-    (hf : DirectionalDepthAtLeast 1 f) :
-    MultiDirLogConcave f :=
-  hf.1
+/-
+**Shadow Complexity Sub-additivity**: Σ(A ∪ B) ≤ Σ(A) + Σ(B).
+    This follows because the shadow of a union equals the union of shadows,
+    and |X ∪ Y| ≤ |X| + |Y|.
+-/
+theorem shadow_complexity_subadditive {n : ℕ} (A B : Finset (Fin n → ℕ)) :
+    shadowComplexity (A ∪ B) ≤ shadowComplexity A + shadowComplexity B := by
+  have h_max_deg : ∀ S : Finset (Fin n → ℕ), ∀ k > maxDegree S, shadow_iter S k = ∅ := by
+    intro S k hk;
+    induction' k with k ih generalizing S <;> simp_all +decide [ shadow_iter ];
+    -- By definition of `shadow_iter`, if `maxDegree S ≤ k`, then `shadow_iter S k` is a subset of the set of vectors with total degree at most `maxDegree S - k`.
+    have h_subset : ∀ v ∈ shadow_iter S k, totalDeg v ≤ maxDegree S - k := by
+      refine' Nat.recOn k _ _ <;> simp_all +decide [ shadow_iter ];
+      · exact fun v hv => Finset.le_sup ( f := fun v => totalDeg v ) hv;
+      · intro n hn v hv; rw [ mem_lowerShadow ] at hv; obtain ⟨ w, hw, i, hi, rfl ⟩ := hv; simp_all +decide [ totalDeg ] ;
+        have h_sum_le : ∑ x, (w x - stdBasis i x) ≤ ∑ x, w x - 1 := by
+          refine' Nat.le_sub_one_of_lt _;
+          refine' Finset.sum_lt_sum _ _;
+          · exact fun _ _ => Nat.sub_le _ _;
+          · exact ⟨ i, Finset.mem_univ _, by simp +decide [ stdBasis, hi ] ⟩;
+        exact le_trans h_sum_le ( Nat.sub_le_sub_right ( hn _ hw ) _ );
+    simp_all +decide [ lowerShadow ];
+    simp_all +decide [ Finset.ext_iff, totalDeg ];
+  -- By definition of shadowComplexity, we have:
+  have h_def : ∀ S : Finset (Fin n → ℕ), shadowComplexity S = ∑ k ∈ Finset.range (maxDegree S + 1), (shadow_iter S k).card := by
+    intro S; rfl;
+  -- Applying the definition of shadowComplexity to both sides of the inequality.
+  suffices h_suff : ∑ k ∈ Finset.range (maxDegree (A ∪ B) + 1), (shadow_iter (A ∪ B) k).card ≤ ∑ k ∈ Finset.range (maxDegree (A ∪ B) + 1), (shadow_iter A k).card + ∑ k ∈ Finset.range (maxDegree (A ∪ B) + 1), (shadow_iter B k).card by
+    rw [ h_def, h_def, h_def ];
+    refine le_trans h_suff ?_;
+    rw [ ← Finset.sum_subset ( Finset.range_mono ( Nat.succ_le_succ ( show maxDegree ( A ∪ B ) ≥ maxDegree A from ?_ ) ) ), ← Finset.sum_subset ( Finset.range_mono ( Nat.succ_le_succ ( show maxDegree ( A ∪ B ) ≥ maxDegree B from ?_ ) ) ) ];
+    · grind;
+    · exact Finset.sup_mono ( Finset.subset_union_right );
+    · aesop;
+    · exact Finset.sup_mono <| Finset.subset_union_left;
+  rw [ ← Finset.sum_add_distrib ];
+  exact Finset.sum_le_sum fun i hi => by rw [ shadow_iter_union ] ; exact Finset.card_union_le _ _;
 
-/-- The ratio transform distributes over pointwise products. -/
-theorem ratioTransform_mul (i : α) (f g : (α → ℕ) → ℝ) :
-    ratioTransform i (fun m => f m * g m) =
-    fun m => ratioTransform i f m * ratioTransform i g m := by
-  ext m
-  simp only [ratioTransform]
-  rw [mul_div_mul_comm]
-
-/-- Ratio transform positivity. -/
-theorem ratioTransform_pos (i : α) (f : (α → ℕ) → ℝ)
-    (hf_pos : ∀ m, 0 < f m) :
-    ∀ m, 0 < ratioTransform i f m := fun m =>
-  div_pos (hf_pos _) (hf_pos _)
-
-/-- Infinite depth is equivalent to depth ≥ k for all k. -/
-theorem hasInfiniteDepth_iff (f : (α → ℕ) → ℝ) :
-    HasInfiniteDepth f ↔ ∀ k, DirectionalDepthAtLeast k f := by
-  rfl
-
-/-! ## Theorem 1: Multiplicative Depth Stability -/
-
-/-- **Log-concavity of products**: if `f` and `g` are both directionally
-    log-concave and everywhere nonneg, then `f · g` is directionally log-concave. -/
-theorem multiDirLogConcave_mul
-    (f g : (α → ℕ) → ℝ)
-    (hf_nn : ∀ m, 0 ≤ f m)
-    (hg_nn : ∀ m, 0 ≤ g m)
-    (hf : MultiDirLogConcave f)
-    (hg : MultiDirLogConcave g) :
-    MultiDirLogConcave (fun m => f m * g m) := by
-  intro i m
-  convert mul_le_mul (hf i m) (hg i m) (mul_nonneg (hg_nn _) (hg_nn _))
-    (mul_nonneg (hf_nn _) (hf_nn _)) using 1 <;> ring!
-
-/-- **Theorem 1 (Multiplicative Depth Stability)**:
-    If `f` and `g` each have directional depth at least `k`, and both are everywhere
-    positive, then their pointwise product also has depth at least `k`.
-
-    This upgrades first-order log-concavity closure to an entire depth filtration,
-    making the depth classes into multiplicative monoids. -/
-theorem directionalDepthAtLeast_mul [Fintype α]
-    (k : ℕ) (f g : (α → ℕ) → ℝ)
-    (hf_pos : ∀ m, 0 < f m)
-    (hg_pos : ∀ m, 0 < g m)
-    (hf : DirectionalDepthAtLeast k f)
-    (hg : DirectionalDepthAtLeast k g) :
-    DirectionalDepthAtLeast k (fun m => f m * g m) := by
-  induction' k with k ih generalizing f g
-  · trivial
-  · refine ⟨?_, ?_⟩
-    · exact multiDirLogConcave_mul f g (fun m => le_of_lt (hf_pos m))
-        (fun m => le_of_lt (hg_pos m)) hf.1 hg.1
-    · exact fun i => by
-        simpa only [ratioTransform_mul] using
-          ih _ _ (ratioTransform_pos i f hf_pos) (ratioTransform_pos i g hg_pos)
-            (hf.2 i) (hg.2 i)
-
-/-! ## Theorem 2: Tropical Bridge -/
-
-/-- **Theorem 2 (Tropical Bridge)**:
-    If `f` is mixed log-concave and everywhere positive, then `-log f` is
-    supermodular. This is the fundamental connection between log-concavity
-    hierarchies and tropical convexity. -/
-theorem negLog_supermodular_of_mixedLC
-    (f : (α → ℕ) → ℝ)
-    (hf_pos : ∀ m, 0 < f m)
-    (hf : MixedLogConcave f) :
-    IsSupermodular (fun m => - Real.log (f m)) := by
-  intro i j m _hij
-  have h1 := hf i j m
-  have h2 := Real.log_le_log (mul_pos (hf_pos m)
-    (hf_pos (m + Pi.single i 1 + Pi.single j 1))) h1
-  rw [Real.log_mul (ne_of_gt (hf_pos m))
-      (ne_of_gt (hf_pos (m + Pi.single i 1 + Pi.single j 1))),
-    Real.log_mul (ne_of_gt (hf_pos (m + Pi.single i 1)))
-      (ne_of_gt (hf_pos (m + Pi.single j 1)))] at h2
-  linarith
-
-/-! ## Theorem 3: Depth Obstruction -/
-
-/-- **Theorem 3 (Depth Obstruction)**:
-    If some ratio transform `Rᵢf` fails directional log-concavity,
-    then `f` does not have depth ≥ 2. This provides a computational
-    criterion for bounding depth from above. -/
-theorem not_depth_two_of_ratio_failure
-    (f : (α → ℕ) → ℝ)
-    (i : α)
-    (hfail : ¬ MultiDirLogConcave (ratioTransform i f)) :
-    ¬ DirectionalDepthAtLeast 2 f :=
-  fun h => hfail (DirectionalDepthAtLeast.logConcave (h.2 i))
-
-/-! ## Theorem 4: Cross-Domain (Statistical Physics / Energy Landscape) -/
-
-/-- **Ratio energy supermodularity**: if `f` has depth ≥ 2 and satisfies a
-    mixed log-concavity condition at the ratio level, then the local free energy
-    increment `-log(Rᵢf)` is supermodular.
-
-    In statistical mechanics, `-log f` is an energy landscape and `Rᵢf` represents
-    a local chemical potential / free-energy increment. This theorem says
-    depth ≥ 2 with mixed conditions ensures the response function is convex
-    in the tropical sense. -/
-theorem ratio_energy_supermodular [Fintype α]
-    (i : α) (f : (α → ℕ) → ℝ)
-    (hf_pos : ∀ m, 0 < f m)
-    (_hf_depth : DirectionalDepthAtLeast 2 f)
-    (hf_mixed_ratio : MixedLogConcave (ratioTransform i f)) :
-    IsSupermodular (fun m => - Real.log (ratioTransform i f m)) :=
-  negLog_supermodular_of_mixedLC _ (ratioTransform_pos i f hf_pos) hf_mixed_ratio
-
-/-! ## Theorem 5: Hierarchy Strictness -/
-
-/-- There exists a function with depth ≥ 1 but not depth ≥ 2.
-    The witness is an explicit function on `ULift (Fin 2)` that is directionally
-    log-concave but whose ratio transform fails log-concavity. -/
-theorem exists_depth_one_not_depth_two :
-    ∃ (α : Type) (_ : Fintype α) (_ : DecidableEq α) (f : (α → ℕ) → ℝ),
-      DirectionalDepthAtLeast 1 f ∧ ¬ DirectionalDepthAtLeast 2 f := by
-  refine' ⟨_, _, _, _, _, _⟩
-  exact ULift (Fin 2)
-  all_goals try infer_instance
-  · exact fun m => if m 0 = 0 ∧ m 1 = 0 then 1
-      else if m 0 = 1 ∧ m 1 = 0 then 3
-      else if m 0 = 2 ∧ m 1 = 0 then 2
-      else if m 0 = 3 ∧ m 1 = 0 then 1 else 0
-  · constructor
-    · intro i m; fin_cases i <;> simp +decide
-      grind
-    · exact fun _ => trivial
-  · intro h
-    have := h.2 0
-    have := this.1 0 (fun _ => 0)
-    norm_num [ratioTransform] at this
-    simp +decide at this
-    norm_num at this
-
-end ValuatedMatroidDepth
-
-end
+end ShadowComplexity
