@@ -1,42 +1,35 @@
 """
-Algorithms for Lorentzian Stability Analysis of Uniform Matroid Polynomials.
+algorithms.py — Core algorithms for Lorentzian Stability Radii of Uniform Matroids
 
-This module implements the spectral analysis of the uniform leaf Hessian (J - I),
-computing eigenvalues, spectral gaps, and stability radii for the uniform matroid
-generating polynomial U_{r,n}.
-
-The key mathematical objects:
-- The uniform leaf Hessian is J - I (all-ones minus identity) on m = n - r + 2 variables
-- Its eigenvalues are (m-1) with multiplicity 1 and (-1) with multiplicity (m-1)
-- The Lorentzian spectral gap is 1 (magnitude of the negative eigenvalue)
-- The stability radius in operator norm is 1, in entry norm is 1/m^2
+Implements the spectral theory of the canonical leaf Hessian J - I and
+computes stability radii for the uniform matroid family U_{r,n}.
 """
 
 import numpy as np
 from math import comb
-from typing import Tuple, List, Optional
+from typing import Tuple, Optional
 
 
-def uniform_leaf_hessian(m: int) -> np.ndarray:
+def leaf_hessian(m: int) -> np.ndarray:
     """
-    Construct the canonical leaf Hessian for the uniform matroid U_{r,n}.
+    Construct the canonical quadratic leaf Hessian for the uniform matroid.
 
-    This is the matrix J - I on m variables, where J is the all-ones matrix
-    and I is the identity. Equivalently, it's the adjacency matrix of K_m.
+    The Hessian of e₂(x₁,…,xₘ) is J - I, where J is the all-ones matrix
+    and I is the identity matrix.
 
     Parameters
     ----------
     m : int
-        Number of remaining variables (= n - r + 2 for U_{r,n})
+        Number of remaining variables (m = n - r + 2 for U_{r,n}).
 
     Returns
     -------
     np.ndarray
-        The m x m matrix with 0 on diagonal and 1 off-diagonal
+        The m × m matrix with 0 on the diagonal and 1 off-diagonal.
 
     Examples
     --------
-    >>> uniform_leaf_hessian(3)
+    >>> leaf_hessian(3)
     array([[0., 1., 1.],
            [1., 0., 1.],
            [1., 1., 0.]])
@@ -44,319 +37,324 @@ def uniform_leaf_hessian(m: int) -> np.ndarray:
     return np.ones((m, m)) - np.eye(m)
 
 
-def leaf_eigenvalues(m: int) -> Tuple[float, float, int, int]:
+def quadratic_form(A: np.ndarray, v: np.ndarray) -> float:
     """
-    Compute the exact eigenvalues of the uniform leaf Hessian.
-
-    The matrix J - I on m variables has exactly two distinct eigenvalues:
-    - (m-1) with multiplicity 1 (eigenvector: all-ones)
-    - (-1) with multiplicity (m-1) (eigenvectors: orthogonal complement of all-ones)
-
-    Parameters
-    ----------
-    m : int
-        Matrix dimension
-
-    Returns
-    -------
-    Tuple[float, float, int, int]
-        (positive_eigenvalue, negative_eigenvalue, pos_multiplicity, neg_multiplicity)
-
-    Examples
-    --------
-    >>> leaf_eigenvalues(4)
-    (3.0, -1.0, 1, 3)
-    """
-    return (float(m - 1), -1.0, 1, m - 1)
-
-
-def lorentzian_spectral_gap(m: int) -> float:
-    """
-    Compute the Lorentzian spectral gap of the uniform leaf Hessian.
-
-    The gap is the magnitude of the negative eigenvalue, which is always 1
-    for the uniform matroid. This gap controls the stability radius.
-
-    Parameters
-    ----------
-    m : int
-        Matrix dimension
-
-    Returns
-    -------
-    float
-        The spectral gap (always 1.0 for uniform matroids)
-    """
-    return 1.0
-
-
-def quadratic_form_decomposition(v: np.ndarray) -> Tuple[float, float, float]:
-    """
-    Decompose the quadratic form Q(v) = (sum v_i)^2 - sum v_i^2.
-
-    Parameters
-    ----------
-    v : np.ndarray
-        Input vector
-
-    Returns
-    -------
-    Tuple[float, float, float]
-        (Q_value, sum_squared, norm_squared) where Q = sum_squared - norm_squared
-    """
-    s = float(np.sum(v))
-    n = float(np.sum(v ** 2))
-    return (s ** 2 - n, s ** 2, n)
-
-
-def stability_radius_operator_norm(m: int) -> float:
-    """
-    Compute the stability radius in operator (quadratic form) norm.
-
-    The stability radius is the spectral gap: any perturbation E with
-    |Q_E(v)| < gap * ||v||^2 for all v preserves Lorentzianity.
-
-    Parameters
-    ----------
-    m : int
-        Matrix dimension
-
-    Returns
-    -------
-    float
-        The stability radius (always 1.0 for uniform matroids)
-    """
-    return lorentzian_spectral_gap(m)
-
-
-def stability_radius_entry_norm(m: int) -> float:
-    """
-    Compute the stability radius in entry (sup) norm.
-
-    The entry-to-quadratic-form bound gives: |E_ij| <= B implies
-    |Q_E(v)| <= m^2 * B * ||v||^2. For stability we need m^2 * B < gap = 1,
-    so B < 1/m^2.
-
-    Parameters
-    ----------
-    m : int
-        Matrix dimension
-
-    Returns
-    -------
-    float
-        The entry-norm stability radius = 1/m^2
-    """
-    return 1.0 / (m ** 2)
-
-
-def uniform_matroid_leaf_dimension(n: int, r: int) -> int:
-    """
-    Compute the leaf dimension m = n - r + 2 for U_{r,n}.
-
-    After taking r-2 partial derivatives of e_r(x_1,...,x_n),
-    the remaining quadratic polynomial lives on m = n - r + 2 variables.
-
-    Parameters
-    ----------
-    n : int
-        Number of variables
-    r : int
-        Degree (rank of uniform matroid)
-
-    Returns
-    -------
-    int
-        The leaf dimension m
-    """
-    return n - r + 2
-
-
-def normalized_stability_gap(n: int, r: int) -> float:
-    """
-    Compute the normalized stability gap for U_{r,n}.
-
-    This is the spectral gap divided by the binomial coefficient C(n,r),
-    giving a scale-independent measure of stability.
-
-    Parameters
-    ----------
-    n : int
-        Number of variables
-    r : int
-        Degree
-
-    Returns
-    -------
-    float
-        Normalized gap = 1 / C(n,r)
-    """
-    return 1.0 / comb(n, r)
-
-
-def verify_lorentzian_signature(A: np.ndarray, tol: float = 1e-10) -> bool:
-    """
-    Check if a symmetric matrix has at most one positive eigenvalue.
+    Compute the quadratic form Q_A(v) = v^T A v.
 
     Parameters
     ----------
     A : np.ndarray
-        Symmetric matrix
-    tol : float
-        Tolerance for eigenvalue sign determination
-
-    Returns
-    -------
-    bool
-        True if A has at most one positive eigenvalue
-    """
-    eigenvalues = np.linalg.eigvalsh(A)
-    n_positive = np.sum(eigenvalues > tol)
-    return n_positive <= 1
-
-
-def find_instability_threshold(m: int, perturbation_type: str = "identity",
-                                n_steps: int = 1000) -> float:
-    """
-    Binary search for the perturbation threshold where Lorentzianity breaks.
-
-    Parameters
-    ----------
-    m : int
-        Matrix dimension
-    perturbation_type : str
-        Type of perturbation: "identity" (t*I), "diagonal" (t*e_11), or "random"
-    n_steps : int
-        Number of binary search steps
+        Symmetric matrix.
+    v : np.ndarray
+        Vector.
 
     Returns
     -------
     float
-        The approximate threshold value of t where Lorentzianity is lost
+        The value v^T A v.
     """
-    H = uniform_leaf_hessian(m)
-
-    if perturbation_type == "identity":
-        E = np.eye(m)
-    elif perturbation_type == "diagonal":
-        E = np.zeros((m, m))
-        E[0, 0] = 1.0
-    elif perturbation_type == "random":
-        np.random.seed(42)
-        E = np.random.randn(m, m)
-        E = (E + E.T) / 2  # Symmetrize
-        E /= np.max(np.abs(E))  # Normalize
-    else:
-        raise ValueError(f"Unknown perturbation type: {perturbation_type}")
-
-    lo, hi = 0.0, 10.0 * m
-    for _ in range(n_steps):
-        mid = (lo + hi) / 2
-        if verify_lorentzian_signature(H + mid * E):
-            lo = mid
-        else:
-            hi = mid
-
-    return (lo + hi) / 2
+    return float(v @ A @ v)
 
 
-def compute_stability_table(max_n: int = 15) -> List[dict]:
+def leaf_eigengap(m: int) -> dict:
     """
-    Compute stability data for all valid (n, r) with n <= max_n.
+    Compute the exact spectral data of the leaf Hessian J - I on m variables.
 
-    For each (n, r) with 2 <= r <= n-2, computes:
-    - Leaf dimension m = n - r + 2
-    - Spectral gap (always 1)
-    - Entry-norm stability radius (1/m^2)
-    - Empirical threshold for identity perturbation
-    - Ratio of empirical to predicted
+    The eigenvalues of J - I are:
+    - λ₁ = m - 1 (multiplicity 1, eigenvector: all-ones)
+    - λ₂ = -1    (multiplicity m - 1, eigenvectors: orthogonal to all-ones)
+
+    The spectral gap is |λ₂| = 1, which is the Lorentzian stability gap.
 
     Parameters
     ----------
-    max_n : int
-        Maximum value of n
-
-    Returns
-    -------
-    List[dict]
-        Table of stability data
-    """
-    results = []
-    for n in range(4, max_n + 1):
-        for r in range(2, n - 1):
-            m = uniform_matroid_leaf_dimension(n, r)
-            gap = lorentzian_spectral_gap(m)
-            entry_radius = stability_radius_entry_norm(m)
-            empirical = find_instability_threshold(m, "identity", n_steps=100)
-
-            results.append({
-                'n': n,
-                'r': r,
-                'm': m,
-                'binomial': comb(n, r),
-                'spectral_gap': gap,
-                'entry_radius': entry_radius,
-                'empirical_identity': empirical,
-                'ratio_identity': empirical / gap if gap > 0 else float('inf'),
-                'normalized_gap': normalized_stability_gap(n, r),
-            })
-
-    return results
-
-
-def spectral_margin_report(n: int, r: int) -> dict:
-    """
-    Generate a complete spectral margin report for U_{r,n}.
-
-    Parameters
-    ----------
-    n : int
-        Number of variables
-    r : int
-        Degree
+    m : int
+        Number of variables.
 
     Returns
     -------
     dict
-        Complete spectral analysis
+        Dictionary with keys:
+        - 'positive_eigenvalue': m - 1
+        - 'negative_eigenvalue': -1
+        - 'positive_multiplicity': 1
+        - 'negative_multiplicity': m - 1
+        - 'spectral_gap': 1 (absolute gap)
+        - 'normalized_gap': 1 / (m - 1) (ratio |λ₂| / λ₁)
     """
-    m = uniform_matroid_leaf_dimension(n, r)
-    pos_eig, neg_eig, pos_mult, neg_mult = leaf_eigenvalues(m)
-    H = uniform_leaf_hessian(m)
-
-    # Verify eigenvalues numerically
-    numerical_eigs = sorted(np.linalg.eigvalsh(H))
-
     return {
-        'n': n,
-        'r': r,
-        'm': m,
-        'positive_eigenvalue': pos_eig,
-        'negative_eigenvalue': neg_eig,
-        'pos_multiplicity': pos_mult,
-        'neg_multiplicity': neg_mult,
-        'spectral_gap': lorentzian_spectral_gap(m),
-        'spectral_ratio': pos_eig / abs(neg_eig),
-        'operator_norm_radius': stability_radius_operator_norm(m),
-        'entry_norm_radius': stability_radius_entry_norm(m),
-        'normalized_gap': normalized_stability_gap(n, r),
-        'numerical_eigenvalues': numerical_eigs,
-        'is_lorentzian': verify_lorentzian_signature(H),
-        'hessian_structure': f"{pos_eig:.0f} * (J/m) + {neg_eig:.0f} * (I - J/m)",
+        'positive_eigenvalue': m - 1,
+        'negative_eigenvalue': -1,
+        'positive_multiplicity': 1,
+        'negative_multiplicity': m - 1,
+        'spectral_gap': 1,
+        'normalized_gap': 1.0 / (m - 1) if m > 1 else float('inf'),
     }
 
 
-if __name__ == "__main__":
-    # Example usage
-    print("=== Spectral Margin Report for U_{3,6} ===")
-    report = spectral_margin_report(6, 3)
-    for key, value in report.items():
-        print(f"  {key}: {value}")
+def canonical_leaf_gap(n: int, r: int) -> float:
+    """
+    The canonical leaf gap for the uniform matroid U_{r,n}.
 
-    print("\n=== Stability Table (n ≤ 10) ===")
-    table = compute_stability_table(10)
-    print(f"{'n':>3} {'r':>3} {'m':>3} {'C(n,r)':>8} {'gap':>6} {'entry_rad':>10} {'empirical':>10} {'ratio':>8}")
-    for row in table:
-        print(f"{row['n']:>3} {row['r']:>3} {row['m']:>3} {row['binomial']:>8} "
-              f"{row['spectral_gap']:>6.2f} {row['entry_radius']:>10.6f} "
-              f"{row['empirical_identity']:>10.6f} {row['ratio_identity']:>8.4f}")
+    For U_{r,n}, the quadratic leaf has m = n - r + 2 variables,
+    and the spectral gap of J - I is always 1.
+
+    Parameters
+    ----------
+    n : int
+        Ground set size.
+    r : int
+        Rank.
+
+    Returns
+    -------
+    float
+        The canonical leaf gap (always 1.0).
+    """
+    return 1.0
+
+
+def stability_radius_entry_bound(m: int) -> float:
+    """
+    The entry-wise stability radius: maximum entry perturbation ε such that
+    leafHessian(m) + E remains Lorentzian whenever |E_{ij}| ≤ ε.
+
+    Proved lower bound: ε = 1/m² guarantees Lorentzianity.
+
+    Parameters
+    ----------
+    m : int
+        Number of variables in the quadratic leaf.
+
+    Returns
+    -------
+    float
+        The certified stability radius 1/m².
+    """
+    if m == 0:
+        return float('inf')
+    return 1.0 / (m * m)
+
+
+def stability_radius_quadform_bound(m: int) -> float:
+    """
+    The quadratic-form stability radius: maximum δ such that
+    |Q_E(v)| ≤ δ·‖v‖² for all v guarantees Lorentzianity.
+
+    The exact threshold is δ = 1 (the spectral gap).
+
+    Parameters
+    ----------
+    m : int
+        Number of variables.
+
+    Returns
+    -------
+    float
+        The stability radius (always 1.0, the spectral gap).
+    """
+    return 1.0
+
+
+def check_lorentzian_signature(A: np.ndarray) -> Tuple[bool, Optional[np.ndarray]]:
+    """
+    Check whether a symmetric matrix has at most one positive eigenvalue
+    (Lorentzian signature condition).
+
+    Parameters
+    ----------
+    A : np.ndarray
+        Symmetric matrix.
+
+    Returns
+    -------
+    Tuple[bool, Optional[np.ndarray]]
+        (is_lorentzian, eigenvalues) where is_lorentzian is True if at most
+        one eigenvalue is positive.
+    """
+    eigenvalues = np.linalg.eigvalsh(A)
+    n_positive = np.sum(eigenvalues > 1e-10)
+    return n_positive <= 1, eigenvalues
+
+
+def find_empirical_stability_radius(m: int, n_samples: int = 1000,
+                                     tol: float = 1e-6) -> float:
+    """
+    Find the empirical stability radius by binary search.
+
+    Searches for the maximum perturbation magnitude ε such that
+    leafHessian(m) + E remains Lorentzian for random perturbations
+    with entries bounded by ε.
+
+    Parameters
+    ----------
+    m : int
+        Number of variables.
+    n_samples : int
+        Number of random perturbation samples per magnitude.
+    tol : float
+        Tolerance for binary search.
+
+    Returns
+    -------
+    float
+        Estimated empirical stability radius.
+    """
+    if m <= 1:
+        return float('inf')
+
+    lo, hi = 0.0, 2.0 / m  # Search range
+
+    while hi - lo > tol:
+        mid = (lo + hi) / 2
+        all_lorentzian = True
+
+        for _ in range(n_samples):
+            E = np.random.uniform(-mid, mid, (m, m))
+            E = (E + E.T) / 2  # Symmetrize
+            A_perturbed = leaf_hessian(m) + E
+            is_lor, _ = check_lorentzian_signature(A_perturbed)
+            if not is_lor:
+                all_lorentzian = False
+                break
+
+        if all_lorentzian:
+            lo = mid
+        else:
+            hi = mid
+
+    return lo
+
+
+def find_critical_perturbation(m: int) -> Tuple[np.ndarray, float]:
+    """
+    Construct the canonical instability perturbation.
+
+    The perturbation E = t·I with t > 1 breaks Lorentzianity because
+    leafHessian(m) + t·I = (t-1)I + J, which has all positive eigenvalues:
+    - eigenvalue t + m - 1 (multiplicity 1)
+    - eigenvalue t - 1 > 0 (multiplicity m - 1)
+
+    Parameters
+    ----------
+    m : int
+        Number of variables.
+
+    Returns
+    -------
+    Tuple[np.ndarray, float]
+        (E, threshold) where E is the critical perturbation direction
+        and threshold is the critical magnitude.
+    """
+    E = np.eye(m)
+    threshold = 1.0  # The spectral gap
+    return E, threshold
+
+
+def compute_uniform_matroid_table(max_n: int = 15) -> list:
+    """
+    Compute the stability data for all valid uniform matroids U_{r,n}
+    with n ≤ max_n and 2 ≤ r ≤ n - 2.
+
+    Parameters
+    ----------
+    max_n : int
+        Maximum ground set size.
+
+    Returns
+    -------
+    list of dict
+        Each dict contains: n, r, m (leaf vars), spectral_gap,
+        entry_radius, normalized_gap, binom_n_r.
+    """
+    results = []
+    for n in range(4, max_n + 1):
+        for r in range(2, n - 1):
+            m = n - r + 2
+            gap_data = leaf_eigengap(m)
+            results.append({
+                'n': n,
+                'r': r,
+                'm': m,
+                'spectral_gap': gap_data['spectral_gap'],
+                'entry_radius': stability_radius_entry_bound(m),
+                'normalized_gap': gap_data['normalized_gap'],
+                'binom_n_r': comb(n, r),
+                'predicted_scale': 1.0 / comb(n, r),
+            })
+    return results
+
+
+def quadratic_form_decomposition(m: int, v: np.ndarray) -> dict:
+    """
+    Decompose Q_{J-I}(v) = (∑ vᵢ)² - ∑ vᵢ² into its two components.
+
+    This reflects the spectral decomposition: the first term comes from
+    the trivial representation (eigenvalue m-1) and the second from
+    the standard representation (eigenvalue -1).
+
+    Parameters
+    ----------
+    m : int
+        Number of variables.
+    v : np.ndarray
+        Vector of length m.
+
+    Returns
+    -------
+    dict
+        Dictionary with 'sum_squared', 'norm_squared', 'quadform', and
+        'trivial_component', 'standard_component'.
+    """
+    s = np.sum(v)
+    sum_sq = s ** 2
+    norm_sq = np.sum(v ** 2)
+    qf = sum_sq - norm_sq
+
+    # Projection onto trivial (all-ones) direction
+    trivial_proj = s / m * np.ones(m)
+    standard_proj = v - trivial_proj
+
+    trivial_component = quadratic_form(leaf_hessian(m), trivial_proj)
+    standard_component = quadratic_form(leaf_hessian(m), standard_proj)
+
+    return {
+        'sum_squared': sum_sq,
+        'norm_squared': norm_sq,
+        'quadform': qf,
+        'trivial_component': trivial_component,
+        'standard_component': standard_component,
+    }
+
+
+if __name__ == '__main__':
+    print("=== Lorentzian Stability Radii: Algorithm Demonstrations ===\n")
+
+    # Example 1: Leaf Hessian for m=4
+    m = 4
+    H = leaf_hessian(m)
+    print(f"Leaf Hessian for m={m}:")
+    print(H)
+    print()
+
+    # Example 2: Spectral data
+    data = leaf_eigengap(m)
+    print(f"Spectral data for m={m}:")
+    for k, v in data.items():
+        print(f"  {k}: {v}")
+    print()
+
+    # Example 3: Quadratic form decomposition
+    v = np.array([1.0, -1.0, 0.5, 0.5])
+    decomp = quadratic_form_decomposition(m, v)
+    print(f"Quadratic form decomposition for v={v}:")
+    for k, val in decomp.items():
+        print(f"  {k}: {val:.4f}")
+    print()
+
+    # Example 4: Stability check
+    print("Stability radius table (n ≤ 8):")
+    print(f"{'n':>3} {'r':>3} {'m':>3} {'gap':>6} {'entry_rad':>10} {'binom':>6}")
+    for row in compute_uniform_matroid_table(8):
+        print(f"{row['n']:3d} {row['r']:3d} {row['m']:3d} {row['spectral_gap']:6.2f} "
+              f"{row['entry_radius']:10.6f} {row['binom_n_r']:6d}")
