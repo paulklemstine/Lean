@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean / Statistical Mechanics / Complex Analysis",
     "date": "2026-05-28T15:18:37Z",
     "exp_id": "670b8a89",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7751864,
+    "quality": "substantial",
     "pkg_num": 253
   },
   {
@@ -7346,8 +7346,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-28T15:18:37Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7751864,
+      "quality": "substantial"
     }
   ],
   "edges": [

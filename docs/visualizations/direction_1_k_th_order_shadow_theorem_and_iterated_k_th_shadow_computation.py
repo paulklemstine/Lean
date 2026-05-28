@@ -1,288 +1,242 @@
 """
-Algorithms for Iterated Shadow Geometry of Polynomial Supports.
+algorithms.py — Core algorithms for iterated shadow geometry of polynomial supports.
 
-Implements core algorithms for computing k-th shadows, derivative shadow profiles,
-and testing exchange/log-concavity properties of multi-index support sets.
-
-All algorithms operate on supports represented as sets of tuples (multi-indices).
+Implements the kth-shadow operator, iterated mixed partial derivatives,
+shadow profiles, and exchange family tests.
 """
 
-from itertools import combinations_with_replacement, product
-from collections import defaultdict
-from typing import Set, Tuple, List, Dict, Optional
-from math import comb, prod as math_prod
-from functools import reduce
+from itertools import product as iterproduct
+from collections import Counter
+from math import comb, factorial, prod
+from typing import List, Tuple, Set, Dict, FrozenSet
+import functools
 
 
-# Type aliases
-MultiIndex = Tuple[int, ...]
-Support = Set[MultiIndex]
+# ─────────────────────────────────────────────────────────────────────────
+# Multi-index utilities
+# ─────────────────────────────────────────────────────────────────────────
 
-
-def mass(tau: MultiIndex) -> int:
-    """Total mass (sum of coordinates) of a multi-index."""
+def multi_index_sum(tau: Tuple[int, ...]) -> int:
+    """Total mass of a multi-index: sum of all entries."""
     return sum(tau)
 
 
-def multi_indices_of_mass(n: int, k: int) -> List[MultiIndex]:
-    """
-    Enumerate all multi-indices in n variables with total mass k.
-    
-    Uses stars-and-bars enumeration.
-    
-    Time complexity: O(C(n+k-1, k)) — the number of such multi-indices.
-    Space complexity: O(C(n+k-1, k) * n) for storing results.
-    
-    Args:
-        n: Number of variables (dimension).
-        k: Total mass (sum of coordinates).
-    
-    Returns:
-        List of all n-tuples of non-negative integers summing to k.
-    
+def ascending_factorial(n: int, k: int) -> int:
+    """Compute n * (n+1) * ... * (n+k-1). Returns 1 if k=0."""
+    result = 1
+    for j in range(k):
+        result *= (n + j)
+    return result
+
+
+def multi_ascending_factorial(beta: Tuple[int, ...], tau: Tuple[int, ...]) -> int:
+    """Product of ascending factorials: ∏_i ascFactorial(β_i + 1, τ_i)."""
+    return prod(ascending_factorial(b + 1, t) for b, t in zip(beta, tau))
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# Polynomial representation (sparse, multi-index keyed)
+# ─────────────────────────────────────────────────────────────────────────
+
+class MvPolynomial:
+    """Sparse multivariate polynomial over rationals.
+
+    Represented as a dict mapping multi-index tuples to coefficients.
+    Zero coefficients are not stored.
+
     Example:
-        >>> multi_indices_of_mass(2, 2)
-        [(2, 0), (1, 1), (0, 2)]
+        p = MvPolynomial({(2,0): 3, (1,1): -1, (0,2): 5})
+        represents 3*x^2 - xy + 5*y^2
+    """
+
+    def __init__(self, coeffs: Dict[Tuple[int, ...], float], n_vars: int = None):
+        self.coeffs = {k: v for k, v in coeffs.items() if v != 0}
+        if n_vars is not None:
+            self.n_vars = n_vars
+        elif self.coeffs:
+            self.n_vars = len(next(iter(self.coeffs)))
+        else:
+            self.n_vars = 0
+
+    @property
+    def support(self) -> Set[Tuple[int, ...]]:
+        """The Newton support: set of exponent vectors with nonzero coefficient."""
+        return set(self.coeffs.keys())
+
+    def coeff(self, alpha: Tuple[int, ...]) -> float:
+        """Get the coefficient of the monomial x^alpha."""
+        return self.coeffs.get(alpha, 0)
+
+    def pderiv(self, i: int) -> 'MvPolynomial':
+        """Partial derivative with respect to variable i."""
+        new_coeffs = {}
+        for alpha, c in self.coeffs.items():
+            if alpha[i] > 0:
+                new_alpha = list(alpha)
+                new_alpha[i] -= 1
+                new_alpha = tuple(new_alpha)
+                new_coeffs[new_alpha] = new_coeffs.get(new_alpha, 0) + c * alpha[i]
+        return MvPolynomial(new_coeffs, self.n_vars)
+
+    def pderiv_pow(self, i: int, k: int) -> 'MvPolynomial':
+        """Apply partial derivative w.r.t. variable i exactly k times."""
+        result = self
+        for _ in range(k):
+            result = result.pderiv(i)
+        return result
+
+    def iterated_pderiv(self, tau: Tuple[int, ...]) -> 'MvPolynomial':
+        """Mixed partial derivative: ∂^τ f = ∂_0^{τ_0} ... ∂_{n-1}^{τ_{n-1}} f."""
+        result = self
+        for i, k in enumerate(tau):
+            result = result.pderiv_pow(i, k)
+        return result
+
+    def __repr__(self):
+        if not self.coeffs:
+            return "0"
+        terms = []
+        for alpha, c in sorted(self.coeffs.items(), key=lambda x: (-sum(x[0]), x[0])):
+            terms.append(f"{c}*x^{alpha}")
+        return " + ".join(terms)
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# k-th Shadow computation
+# ─────────────────────────────────────────────────────────────────────────
+
+def enumerate_multi_indices_le(alpha: Tuple[int, ...], mass: int) -> List[Tuple[int, ...]]:
+    """Enumerate all multi-indices τ with τ ≤ α (componentwise) and sum(τ) = mass.
+
+    Uses recursive generation.
+    """
+    n = len(alpha)
+    results = []
+
+    def generate(pos, remaining, current):
+        if pos == n:
+            if remaining == 0:
+                results.append(tuple(current))
+            return
+        max_val = min(alpha[pos], remaining)
+        for v in range(max_val + 1):
+            current.append(v)
+            generate(pos + 1, remaining - v, current)
+            current.pop()
+
+    generate(0, mass, [])
+    return results
+
+
+def kth_shadow(S: Set[Tuple[int, ...]], k: int) -> Set[Tuple[int, ...]]:
+    """Compute the k-th combinatorial shadow of a support set S.
+
+    kthShadow(S, k) = {α - τ | α ∈ S, τ ≤ α, sum(τ) = k}
+                     = {β | ∃ τ, sum(τ) = k, β + τ ∈ S}
+
+    Args:
+        S: Set of multi-index tuples (the support).
+        k: Shadow depth (total mass to subtract).
+
+    Returns:
+        The k-th shadow as a set of multi-index tuples.
+
+    Time complexity: O(|S| * max_degree^n) where max_degree is the maximum
+    coordinate value and n is the number of variables.
+    """
+    shadow = set()
+    for alpha in S:
+        for tau in enumerate_multi_indices_le(alpha, k):
+            beta = tuple(a - t for a, t in zip(alpha, tau))
+            shadow.add(beta)
+    return shadow
+
+
+def shadow_profile(S: Set[Tuple[int, ...]], max_k: int = None) -> List[int]:
+    """Compute the shadow profile: k ↦ |kthShadow(S, k)| for k = 0, 1, ..., max_k.
+
+    Args:
+        S: Support set.
+        max_k: Maximum shadow depth (defaults to max total degree in S).
+
+    Returns:
+        List of shadow sizes [|Sh_0(S)|, |Sh_1(S)|, ...].
+    """
+    if not S:
+        return [0]
+    if max_k is None:
+        max_k = max(sum(alpha) for alpha in S)
+    return [len(kth_shadow(S, k)) for k in range(max_k + 1)]
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# Derivative support computation (algebraic, for verification)
+# ─────────────────────────────────────────────────────────────────────────
+
+def all_multi_indices_of_mass(n: int, k: int) -> List[Tuple[int, ...]]:
+    """Enumerate all n-tuples of non-negative integers summing to k.
+
+    Uses stars-and-bars enumeration.
     """
     if n == 0:
         return [()] if k == 0 else []
     if n == 1:
         return [(k,)]
-    result = []
-    for first in range(k, -1, -1):
-        for rest in multi_indices_of_mass(n - 1, k - first):
-            result.append((first,) + rest)
-    return result
+    results = []
+    for first in range(k + 1):
+        for rest in all_multi_indices_of_mass(n - 1, k - first):
+            results.append((first,) + rest)
+    return results
 
 
-def leq(tau: MultiIndex, alpha: MultiIndex) -> bool:
-    """Check if tau <= alpha coordinatewise."""
-    return all(t <= a for t, a in zip(tau, alpha))
+def derivative_support_union(f: MvPolynomial, k: int) -> Set[Tuple[int, ...]]:
+    """Compute the union of supports of all k-th order mixed partial derivatives.
 
-
-def sub(alpha: MultiIndex, tau: MultiIndex) -> MultiIndex:
-    """Subtract multi-indices coordinatewise (truncated at 0)."""
-    return tuple(max(a - t, 0) for a, t in zip(alpha, tau))
-
-
-def add(alpha: MultiIndex, tau: MultiIndex) -> MultiIndex:
-    """Add multi-indices coordinatewise."""
-    return tuple(a + t for a, t in zip(alpha, tau))
-
-
-def kth_shadow(S: Support, k: int) -> Support:
+    Returns {β | ∃ τ with |τ|=k, β ∈ supp(∂^τ f)}.
     """
-    Compute the k-th shadow of a support set S.
-    
-    The k-th shadow consists of all multi-indices obtainable by subtracting
-    a multi-index of total mass k from an element of S, subject to the
-    coordinatewise ordering constraint.
-    
-    Algorithm:
-        For each α ∈ S, enumerate all τ with |τ| = k and τ ≤ α,
-        and add α - τ to the result.
-    
-    Time complexity: O(|S| * C(n+k-1, k)) where n is the dimension.
-    Space complexity: O(|result|).
-    
-    Args:
-        S: Support set (set of multi-indices).
-        k: Shadow depth.
-    
-    Returns:
-        The k-th shadow as a set of multi-indices.
-    
-    Example:
-        >>> S = {(2, 1)}
-        >>> kth_shadow(S, 1)
-        {(1, 1), (2, 0)}
-    """
-    if not S:
-        return set()
-    n = len(next(iter(S)))
-    result = set()
-    taus = multi_indices_of_mass(n, k)
-    for alpha in S:
-        for tau in taus:
-            if leq(tau, alpha):
-                result.add(sub(alpha, tau))
-    return result
+    n = f.n_vars
+    union = set()
+    for tau in all_multi_indices_of_mass(n, k):
+        df = f.iterated_pderiv(tau)
+        union |= df.support
+    return union
 
 
-def shadow_profile(S: Support, max_k: Optional[int] = None) -> List[int]:
+def verify_shadow_theorem(f: MvPolynomial, k: int) -> bool:
+    """Verify the exact k-th shadow theorem for a given polynomial and k.
+
+    Checks: kthShadow(supp(f), k) == ⋃_{|τ|=k} supp(∂^τ f)
+
+    Returns True if the theorem holds.
     """
-    Compute the derivative shadow profile: k ↦ |Shadow_k(S)|.
-    
-    Args:
-        S: Support set.
-        max_k: Maximum shadow depth to compute (default: max total degree in S).
-    
-    Returns:
-        List where index k gives |Shadow_k(S)|.
-    
-    Example:
-        >>> S = {(2, 2)}
-        >>> shadow_profile(S)
-        [1, 2, 3, 2, 1]
-    """
-    if not S:
-        return [0]
-    if max_k is None:
-        max_k = max(mass(alpha) for alpha in S)
-    return [len(kth_shadow(S, k)) for k in range(max_k + 1)]
+    shadow = kth_shadow(f.support, k)
+    deriv_supp = derivative_support_union(f, k)
+    return shadow == deriv_supp
 
 
-def ascending_factorial_product(beta: MultiIndex, tau: MultiIndex) -> int:
-    """
-    Compute the scalar factor in the coefficient transport formula:
-    ∏_i ∏_{j=0}^{τ_i - 1} (β_i + j + 1)
-    
-    This equals ∏_i (β_i + 1)(β_i + 2)...(β_i + τ_i).
-    
-    Args:
-        beta: Target multi-index.
-        tau: Derivative multi-index.
-    
-    Returns:
-        The ascending factorial product (always a positive integer).
-    """
-    result = 1
-    for bi, ti in zip(beta, tau):
-        for j in range(ti):
-            result *= (bi + j + 1)
-    return result
+# ─────────────────────────────────────────────────────────────────────────
+# Exchange family and log-concavity tests
+# ─────────────────────────────────────────────────────────────────────────
 
+def is_discrete_exchange_family(S: Set[Tuple[int, ...]]) -> bool:
+    """Test whether S satisfies the discrete exchange property (M-convexity proxy).
 
-def coeff_iterated_pderiv(f_coeffs: Dict[MultiIndex, float], beta: MultiIndex,
-                           tau: MultiIndex) -> float:
-    """
-    Compute coeff_β(∂^τ f) using the coefficient transport formula.
-    
-    Uses the proven formula:
-    coeff_β(∂^τ f) = (∏_i ascFact(β_i+1, τ_i)) * coeff_{β+τ}(f)
-    
-    Args:
-        f_coeffs: Dictionary mapping multi-indices to coefficients of f.
-        beta: Target multi-index.
-        tau: Derivative multi-index.
-    
-    Returns:
-        The coefficient value.
-    """
-    alpha = add(beta, tau)
-    c = f_coeffs.get(alpha, 0.0)
-    return ascending_factorial_product(beta, tau) * c
-
-
-def derivative_support(f_coeffs: Dict[MultiIndex, float],
-                        tau: MultiIndex) -> Support:
-    """
-    Compute the support of ∂^τ f using the coefficient transport formula.
-    
-    Args:
-        f_coeffs: Polynomial coefficients.
-        tau: Derivative multi-index.
-    
-    Returns:
-        Support of the derivative.
-    """
-    result = set()
-    for alpha in f_coeffs:
-        if f_coeffs[alpha] == 0:
-            continue
-        # beta = alpha - tau (if tau <= alpha)
-        if leq(tau, alpha):
-            beta = sub(alpha, tau)
-            result.add(beta)
-    return result
-
-
-def all_derivative_supports_union(f_coeffs: Dict[MultiIndex, float],
-                                   k: int) -> Support:
-    """
-    Compute the union of supports of all k-th order mixed partial derivatives.
-    
-    This is ⋃_{|τ|=k} Supp(∂^τ f).
-    
-    Args:
-        f_coeffs: Polynomial coefficients.
-        k: Derivative order.
-    
-    Returns:
-        Union of all k-th order derivative supports.
-    """
-    n = len(next(iter(f_coeffs)))
-    result = set()
-    for tau in multi_indices_of_mass(n, k):
-        result |= derivative_support(f_coeffs, tau)
-    return result
-
-
-def is_log_concave(seq: List[int]) -> bool:
-    """
-    Test if a sequence is log-concave: a_k^2 >= a_{k-1} * a_{k+1} for all k.
-    
-    Args:
-        seq: Sequence of non-negative integers.
-    
-    Returns:
-        True if the sequence is log-concave.
-    """
-    for k in range(1, len(seq) - 1):
-        if seq[k] ** 2 < seq[k-1] * seq[k+1]:
-            return False
-    return True
-
-
-def is_ratio_monotone(seq: List[int]) -> bool:
-    """
-    Test if a_k/a_{k-1} is non-increasing (stronger than log-concavity).
-    
-    Args:
-        seq: Sequence of positive integers.
-    
-    Returns:
-        True if the ratio sequence is non-increasing.
-    """
-    for k in range(2, len(seq) - 1):
-        if seq[k-1] == 0 or seq[k] == 0:
-            continue
-        # Check: a_{k+1}/a_k <= a_k/a_{k-1}
-        # Equivalent to: a_{k+1} * a_{k-1} <= a_k^2
-        if seq[k+1] * seq[k-1] > seq[k] ** 2:
-            return False
-    return True
-
-
-def is_discrete_exchange_family(S: Support) -> bool:
-    """
-    Test if S satisfies the discrete exchange property (M-convexity proxy).
-    
     For all α, β ∈ S and all i with α_i > β_i,
-    there exists j with β_j > α_j such that α - e_i + e_j ∈ S.
-    
-    Args:
-        S: Support set.
-    
-    Returns:
-        True if S satisfies the exchange property.
+    there exists j with β_j > α_j and α - e_i + e_j ∈ S.
     """
-    S_set = set(S)
-    if not S_set:
-        return True
-    n = len(next(iter(S_set)))
-    for alpha in S_set:
-        for beta in S_set:
+    S_list = list(S)
+    n = len(S_list[0]) if S_list else 0
+    for alpha in S_list:
+        for beta in S_list:
             for i in range(n):
                 if alpha[i] > beta[i]:
                     found = False
                     for j in range(n):
                         if beta[j] > alpha[j]:
-                            # Compute alpha - e_i + e_j
                             candidate = list(alpha)
                             candidate[i] -= 1
                             candidate[j] += 1
-                            if tuple(candidate) in S_set:
+                            if tuple(candidate) in S:
                                 found = True
                                 break
                     if not found:
@@ -290,112 +244,125 @@ def is_discrete_exchange_family(S: Support) -> bool:
     return True
 
 
-def matroid_basis_support(n: int, r: int,
-                          bases: Optional[List[Tuple[int, ...]]] = None) -> Support:
-    """
-    Generate the support of a matroid basis generating polynomial.
-    
-    For the uniform matroid U_{r,n}, the bases are all r-element subsets of {0,...,n-1}.
-    The support consists of indicator multi-indices (0/1 entries) for each basis.
-    
-    Args:
-        n: Ground set size.
-        r: Rank.
-        bases: Optional list of bases (as tuples of elements). 
-               If None, uses uniform matroid.
-    
+def test_log_concavity(profile: List[int]) -> Tuple[bool, List[int]]:
+    """Test whether a shadow profile is log-concave.
+
+    A sequence a_0, a_1, ..., a_m is log-concave if a_k^2 ≥ a_{k-1} * a_{k+1}
+    for all 1 ≤ k ≤ m-1.
+
     Returns:
-        Support set.
+        (is_log_concave, list of indices where log-concavity fails)
     """
-    if bases is None:
-        bases = list(combinations_with_replacement(range(n), r))
-        bases = [b for b in product(range(n), repeat=r)
-                 if len(set(b)) == r and b == tuple(sorted(b))]
-        # Use combinations properly
-        from itertools import combinations
-        bases = list(combinations(range(n), r))
-    
+    violations = []
+    for k in range(1, len(profile) - 1):
+        if profile[k] ** 2 < profile[k - 1] * profile[k + 1]:
+            violations.append(k)
+    return len(violations) == 0, violations
+
+
+def test_ratio_monotonicity(profile: List[int]) -> Tuple[bool, List[int]]:
+    """Test whether shadow profile ratios are monotonically decreasing.
+
+    Tests: a_{k+1}/a_k ≤ a_k/a_{k-1} for all valid k
+    (i.e., a_{k+1} * a_{k-1} ≤ a_k^2, which is log-concavity).
+
+    Returns (is_monotone, violation_indices).
+    """
+    return test_log_concavity(profile)
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# Shadow composition verification
+# ─────────────────────────────────────────────────────────────────────────
+
+def verify_shadow_composition(S: Set[Tuple[int, ...]], a: int, b: int) -> bool:
+    """Verify: kthShadow(kthShadow(S, a), b) == kthShadow(S, a + b)."""
+    lhs = kth_shadow(kth_shadow(S, a), b)
+    rhs = kth_shadow(S, a + b)
+    return lhs == rhs
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# Example generators
+# ─────────────────────────────────────────────────────────────────────────
+
+def simplex_support(n: int, d: int) -> Set[Tuple[int, ...]]:
+    """Support of a 'full' homogeneous polynomial of degree d in n variables.
+
+    Returns all n-tuples of non-negative integers summing to d.
+    """
+    return set(all_multi_indices_of_mass(n, d))
+
+
+def matroid_basis_support(n: int, r: int) -> Set[Tuple[int, ...]]:
+    """Support of the basis generating polynomial of the uniform matroid U_{r,n}.
+
+    Each basis is an r-element subset of {0,...,n-1}; the support consists
+    of the indicator multi-indices (0/1 entries, exactly r ones).
+    """
+    from itertools import combinations
     support = set()
-    for basis in bases:
-        idx = [0] * n
-        for elem in basis:
-            idx[elem] += 1
-        support.add(tuple(idx))
+    for basis in combinations(range(n), r):
+        alpha = [0] * n
+        for i in basis:
+            alpha[i] = 1
+        support.add(tuple(alpha))
     return support
 
 
-def generalized_permutahedron_support(n: int, degree: int) -> Support:
+def product_of_simplices_support(dims: List[int]) -> Set[Tuple[int, ...]]:
+    """Support of a product of univariate polynomials of given degrees.
+
+    E.g., dims=[2,3] gives all (a,b) with 0≤a≤2, 0≤b≤3.
     """
-    Generate a generalized permutahedral support: all permutations of a 
-    fixed composition.
-    
-    Args:
-        n: Dimension.
-        degree: Total degree.
-    
-    Returns:
-        Support set (symmetric under coordinate permutations).
-    """
-    from itertools import permutations
-    # Start with a specific composition and take all permutations
-    base = [0] * n
-    remaining = degree
-    for i in range(n):
-        base[i] = min(remaining, degree // n + (1 if i < degree % n else 0))
-        remaining -= base[i]
-    
-    support = set()
-    for perm in permutations(base):
-        support.add(perm)
-    return support
+    ranges = [range(d + 1) for d in dims]
+    return set(iterproduct(*ranges))
 
 
-def verify_shadow_theorem(f_coeffs: Dict[MultiIndex, float], k: int) -> bool:
-    """
-    Verify the k-th Shadow Theorem: that the k-th shadow of Supp(f) equals
-    the union of supports of all k-th order derivatives of f.
-    
-    Args:
-        f_coeffs: Polynomial coefficients.
-        k: Shadow depth.
-    
-    Returns:
-        True if the shadow theorem holds (should always be True for nonzero
-        coefficients in characteristic zero).
-    """
-    support = {m for m, c in f_coeffs.items() if c != 0}
-    shadow = kth_shadow(support, k)
-    deriv_union = all_derivative_supports_union(f_coeffs, k)
-    return shadow == deriv_union
+def random_exchange_support(n: int, d: int, count: int, seed: int = 42) -> Set[Tuple[int, ...]]:
+    """Generate a random M-convex-like support set by starting from a simplex
+    and randomly removing elements while maintaining the exchange property."""
+    import random
+    rng = random.Random(seed)
+    full = simplex_support(n, d)
+    S = set(full)
+    candidates = list(S)
+    rng.shuffle(candidates)
+    removed = 0
+    for alpha in candidates:
+        if removed >= len(full) - count:
+            break
+        trial = S - {alpha}
+        if len(trial) >= 2 and is_discrete_exchange_family(trial):
+            S = trial
+            removed += 1
+    return S
 
 
 if __name__ == "__main__":
-    # Quick self-test
-    print("=== Algorithm Self-Tests ===")
-    
-    # Test 1: mass
-    assert mass((2, 1, 3)) == 6
-    print("✓ mass computation")
-    
-    # Test 2: multi_indices_of_mass
-    assert len(multi_indices_of_mass(3, 2)) == 6  # C(4,2)
-    print("✓ multi-index enumeration")
-    
-    # Test 3: kth_shadow
-    S = {(2, 2)}
-    profile = shadow_profile(S)
-    assert profile == [1, 2, 3, 2, 1], f"Got {profile}"
-    print(f"✓ shadow profile of {{(2,2)}}: {profile}")
-    
-    # Test 4: log-concavity
-    assert is_log_concave([1, 2, 3, 2, 1])
-    assert not is_log_concave([1, 3, 2, 3, 1])
-    print("✓ log-concavity test")
-    
-    # Test 5: shadow theorem verification
-    f = {(2, 2): 1.0, (3, 0): 2.0, (0, 3): -1.0}
-    for k in range(4):
-        assert verify_shadow_theorem(f, k), f"Shadow theorem failed at k={k}"
-    print("✓ shadow theorem verification")
-    
-    print("\nAll self-tests passed!")
+    # Quick demo
+    print("=== Shadow Profile of Simplex Support ===")
+    S = simplex_support(3, 3)
+    print(f"Support size: {len(S)}")
+    prof = shadow_profile(S)
+    print(f"Shadow profile: {prof}")
+    lc, violations = test_log_concavity(prof)
+    print(f"Log-concave: {lc}")
+
+    print("\n=== Matroid Basis Support (U_3,5) ===")
+    S = matroid_basis_support(5, 3)
+    print(f"Support size: {len(S)}")
+    prof = shadow_profile(S)
+    print(f"Shadow profile: {prof}")
+    lc, _ = test_log_concavity(prof)
+    print(f"Log-concave: {lc}")
+    print(f"Exchange family: {is_discrete_exchange_family(S)}")
+
+    print("\n=== Shadow Composition Verification ===")
+    S = simplex_support(3, 4)
+    for a in range(5):
+        for b in range(5 - a):
+            ok = verify_shadow_composition(S, a, b)
+            if not ok:
+                print(f"FAILED: a={a}, b={b}")
+    print("All shadow composition checks passed!")

@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2009 of the highest-quality
+A curated collection of 2011 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2009
+Total files: 2011
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -503,6 +503,7 @@ import FINAL.Bridges.LawvereEMLMetricSemantics
 import FINAL.Bridges.LawvereRateDistortionDuality
 import FINAL.Bridges.LawvereStoneAttentionDuality
 import FINAL.Bridges.LawvereThermodynamicGalois
+import FINAL.Bridges.LeeYangZeroStability
 import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LipschitzMarginCell
 import FINAL.Bridges.LocalCyclePressure
@@ -653,6 +654,7 @@ import FINAL.Bridges.StoneDualityMLAdvanced
 import FINAL.Bridges.StoneDualityMLCore
 import FINAL.Bridges.StoneWeierstrassTropicalPolytope
 import FINAL.Bridges.StrongRayleighSpectralGap
+import FINAL.Bridges.SubdIntegralityGap
 import FINAL.Bridges.SubgroupUniversality
 import FINAL.Bridges.SubmodularCurvature
 import FINAL.Bridges.SumcheckSoundness
