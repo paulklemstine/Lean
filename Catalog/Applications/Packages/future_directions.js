@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "b1b631e9",
+    "consumed_by_exp_id": "d79d17d9",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -136,10 +136,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "56c1428c",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:13:44.233016+00:00"
   },
   {
@@ -414,10 +414,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "834b245c",
-    "consumed_by_exp_id": "eed45bf9",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T21:13:42.015713+00:00"
   },
   {
@@ -820,27 +820,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "a8f3ced3",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T03:33:47.282680+00:00"
-  },
-  {
-    "id": "fd_1287",
-    "title": "Direction 3: Efficient Lorentzian Certificate Computation",
-    "description": "**Conjecture:** For an n\u00d7n PSD contraction kernel K, the Lorentzian signature defect \u03b4 of the DPP generating polynomial at the all-ones point can be computed in O(n\u00b3) time (same as eigendecomposition), and the resulting certificate has size O(n\u00b2).\n\n**Test:** Implement the Hessian computation for DPP generating polynomials at x = 1. For random PSD contractions:\n1. Compute the Hessian H_{ij} = \u2202_i\u2202_j Z_K(1) for the generating polynomial.\n2. Compute eigenvalues of H.\n3. Verify the Lorentzian condition (at most one positive eigenvalue).\n4. Measure the signature defect.\n5. Compare computation time with eigendecomposition.\n\n**Impact:** This would make Lorentzian certification practical: O(n\u00b3) is already the cost of sampling from the DPP, so certification adds no asymptotic overhead. The certificate itself is O(n\u00b2) \u2014 a matrix \u2014 which is small enough to store and transmit.\n\n**Catalog References:** `Pythagorean/CertifiedDPPSampling.lean` (LorentzianEmpiricalCert, covarianceQuadForm), `Speculative/AutoResearch/DPPLorentzian.lean` (IsDPPLorentzian, dpp_partition_function_lorentzian).\n\n**Proof Strategy:** The Hessian of det(I + diag(x)K) at x = 1 can be computed using the matrix identity: \u2202_i\u2202_j det(I + diag(x)K)|_{x=1} = det(I+K) \u00b7 [(I+K)\u207b\u00b9_{ii}(I+K)\u207b\u00b9_{jj} \u2212 (I+K)\u207b\u00b9_{ij}\u00b2]. This requires one matrix inversion and n\u00b2 entry evaluations. Formalizing this identity connects the DPP Hessian to the inverse kernel L = (I+K)\u207b\u00b9.\n\n**Domain Bridges:** Numerical linear algebra (stable matrix inversion), optimization (semidefinite programming for signature verification), machine learning (kernel learning with Lorentzian constraints).\n\n**Lineage:** Builds on LorentzianEmpiricalCert definition from this cycle. The hessianBound field of this structure would be computed by the algorithm proposed here.\n\n**Ambition:** \u2605\u2605\u2605\u2606\u2606 \u2014 Achievable with existing linear algebra infrastructure. The main formalization challenge is the matrix calculus identity connecting the generating polynomial Hessian to the inverse kernel.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "MachineLearning",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "f44ba709",
-    "consumed_by_exp_id": "d72eb6e1",
-    "timestamp": "2026-05-27T04:11:16.628921+00:00"
   },
   {
     "id": "fd_1333",
@@ -1447,11 +1426,129 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33b7a398",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "018581d1",
     "timestamp": "2026-05-28T00:37:30.885136+00:00"
+  },
+  {
+    "id": "fd_1584",
+    "title": "Direction 1: Sharp Threshold Universality Beyond Gaussian Ensembles",
+    "description": "**Conjecture.** The finite-size scaling collapse of P(tropMargin(W) \u2265 0) at the scale \u03c3\u221a(log n) holds not just for Gaussian ensembles but for any ensemble with independent, sub-Gaussian entries with matched means and variances. Moreover, the profile function \u03a6 is universal and independent of the entry distribution.\n\n**Test.** Generate symmetric random matrices with (a) Rademacher \u00b11 entries, (b) uniform entries, (c) exponential entries (appropriately centered and scaled), with diagonal/off-diagonal mean separation. Plot P(tropMargin \u2265 0) vs. the scaled parameter for n \u2208 {10, 20, 50, 100}. If the curves collapse onto the same profile as Gaussian, universality holds. Heavy-tailed distributions (e.g., Cauchy entries) should break universality \u2014 this failure mode is equally informative.\n\n**Impact.** Universality would establish the tropical margin phase transition as a canonical phenomenon in random matrix theory, comparable to the Tracy\u2013Widom universality of the largest eigenvalue. It would extend the practical scope of certified stability to non-Gaussian noise models.\n\n**Catalog References.**\n- `Pythagorean/TropicalPhaseTransition.lean`: `tropMargin_lipschitz`, `tropMargin_lower_bound_signal_noise`\n\n**Proof Strategy.** Use the Lipschitz theorem (`tropMargin_lipschitz`) to reduce universality to concentration: since tropMargin is 4-Lipschitz in the sup-norm, any ensemble with the same sup-norm tail behavior as Gaussian gives the same threshold. Apply the Lindeberg replacement strategy: replace entries one at a time, bounding the total change using the Lipschitz constant. The \u221a(log n) scaling comes from the maximum of n\u00b2 sub-Gaussian random variables, which is universal by classical extreme-value theory.\n\n**Domain Bridges.** Extreme value theory, sub-Gaussian concentration, universality phenomena in random matrix theory.\n\n**Lineage.** Extends `tropMargin_lipschitz` (Theorem 2) and the conjectured scaling from Section 6.1 of the research paper.\n\n**Ambition.** Grand challenge \u2014 proving universality would place tropical stability alongside random graph thresholds and random SAT as a canonical sharp-threshold phenomenon.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8f59c0ed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T00:39:49.343434+00:00"
+  },
+  {
+    "id": "fd_1585",
+    "title": "Direction 2: Defect Localization and Energy Landscapes in the Critical Window",
+    "description": "**Conjecture.** In the critical window (\u03bc_off \u2212 \u03bc_diag) \u2248 c\u00b7\u03c3\u221a(log n), the witness pair (i*, j*) achieving the tropical margin is, with high probability, unique (up to symmetry) and carried by the pair whose noise fluctuation is the most extreme. Moreover, the energy landscape of diagExSlack values has a gap between the minimum and the second-smallest value that grows as \u221a(log n).\n\n**Test.** For n \u2208 {20, 50, 100, 200}, sample 10,000 critical-window matrices. Track (a) the fraction of samples where the witness pair is unique, (b) the distribution of the gap between the two smallest diagExSlack values, (c) the empirical correlation between the witness pair and the entry of W \u2212 meanModel with the largest absolute value. If uniqueness fraction \u2192 1 and gap \u2192 \u221e, localization holds.\n\n**Impact.** Defect localization would connect tropical phase transitions to the theory of extremes in disordered systems (spin glasses, random energy models, branching random walks). It would also make the certified algorithm's witness output physically interpretable: the instability lives at a specific, identifiable location.\n\n**Catalog References.**\n- `Pythagorean/TropicalPhaseTransition.lean`: `tropMargin_witness`\n- `Catalog/Pythagorean/TropicalLorentzianShadows.lean`: `tropical_gap_certificate_exists`\n\n**Proof Strategy.** Model each diagExSlack(W, i, j) as \u03bc + \u03c3\u00b7Z_{ij} where Z_{ij} are correlated Gaussians. The minimum of n\u00b2 correlated Gaussians has a known localization theory (Chatterjee, 2014). Compute the covariance matrix of the {Z_{ij}} explicitly and apply the second-moment method to the indicator of near-minimality.\n\n**Domain Bridges.** Spin glasses, random energy models, extreme-value theory, disordered systems.\n\n**Lineage.** Extends `tropMargin_witness` (Theorem 3.7) and Conjecture 6.2 (extremal pair sparsity).\n\n**Ambition.** Solid extension \u2014 the tools are largely in place, and the computational protocol is immediately executable.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Tropical",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "8f59c0ed",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T00:39:49.413929+00:00"
+  },
+  {
+    "id": "fd_1594",
+    "title": "Direction 1: Shadow Inequalities for Lorentzian Polynomials",
+    "description": "**Conjecture:** If $f$ is a Lorentzian polynomial (in the sense of Br\u00e4nd\u00e9n\u2013Huh), then its support $S = \\text{supp}(f)$ satisfies the shadow log-concavity inequality $|\\text{Sh}_k(S)|^2 \\geq |\\text{Sh}_{k-1}(S)| \\cdot |\\text{Sh}_{k+1}(S)|$ for all admissible $k$.\n\n**Test:** Implement the Lorentzian polynomial verification algorithm (checking that all second-order partial derivatives have alternating sign Hessians) for polynomials with supports drawn from matroid bases, products of simplices, and Schur polynomial supports up to $n = 8$ variables and degree $\\leq 10$. Verify shadow log-concavity for each confirmed Lorentzian polynomial.\n\n**The key insight is** that Lorentzian polynomials already satisfy coefficient-level log-concavity, and the shadow profile is a coarser invariant (support-level rather than coefficient-level), so the conjecture amounts to showing that log-concavity \"descends\" from coefficients to support sizes \u2014 a phenomenon that should follow from the coefficient transport formula if the descending factorial scalars are sufficiently well-behaved.\n\n**Why now?** The coefficient transport formula (Theorem 3.1) provides the exact algebraic bridge between support-level and coefficient-level properties. Previous work on Lorentzian polynomials lacked this explicit multi-index transport law.\n\n**Impact:** Would establish a new, elementary route to combinatorial log-concavity that bypasses Hodge theory.\n\n**Catalog References:** `Pythagorean/IteratedShadowGeometry.lean` (coeff_iteratedPDeriv, descFactorial_prod_pos), `Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (coeff_pderiv_pderiv).\n\n**Proof Strategy:** Use the coefficient transport formula to relate shadow sizes to sums of products of descending factorials weighted by coefficients. Apply the Cauchy\u2013Schwarz inequality or FKG inequality on the resulting sums.\n\n**Domain Bridges:** Lorentzian polynomial theory, algebraic combinatorics, Hodge theory.\n\n**Lineage:** Extends Br\u00e4nd\u00e9n\u2013Huh (2020) from coefficient log-concavity to support-level log-concavity.\n\n**Ambition:** Grand challenge \u2014 would unify support geometry with Lorentzian algebra.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f43533d0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T01:19:07.597078+00:00"
+  },
+  {
+    "id": "fd_1595",
+    "title": "Direction 2: Tropical Differential Entropy via Newton Shadows",
+    "description": "**Conjecture:** For a polynomial $f$ with Newton polytope $P$, define the **tropical shadow entropy** as $H_k = \\log |\\text{Sh}_k(\\text{supp}(f))|$. Then $H_k$ is a concave function of $k$, and the derivative $\\Delta H_k = H_{k+1} - H_k$ measures the information loss per differentiation step in the tropical sense.\n\n**Test:** Compute $H_k$ for random sparse polynomials with supports drawn from lattice points of known polytopes (simplices, cubes, cross-polytopes, Birkhoff polytopes) up to dimension 6. Plot $H_k$ against $k$ and test concavity. Compare $\\Delta H_k$ with the surface-to-volume ratio of the level-$k$ section of $P$.\n\n**The key insight is** that the shadow operator is the discrete analogue of the Minkowski subtraction of a ball from a convex body, and entropy concavity would be the discrete analogue of the Brunn\u2013Minkowski inequality.\n\n**Why now?** The semigroup law (Theorem 3.5) provides the formal foundation for treating the shadow as a flow, which is the prerequisite for defining rates of change and entropy-like quantities.\n\n**Impact:** Would create a new information-theoretic perspective on Newton polytopes, with applications to coding theory and optimization.\n\n**Catalog References:** `Pythagorean/IteratedShadowGeometry.lean` (kthShadow_add, shadow_profile).\n\n**Proof Strategy:** Use the semigroup law to express $H_{a+b}$ in terms of $H_a$ and $H_b$. Apply lattice-point counting estimates (Ehrhart theory) to bound shadow sizes in terms of polytope volumes.\n\n**Domain Bridges:** Tropical geometry, information theory, convex geometry.\n\n**Lineage:** New direction inspired by the semigroup structure.\n\n**Ambition:** Solid extension \u2014 connects two established areas through a new invariant.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Cryptography",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f43533d0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T01:19:07.666079+00:00"
+  },
+  {
+    "id": "fd_1596",
+    "title": "Direction 3: Circuit Lower Bounds from Derivative Shadow Decay",
+    "description": "**Conjecture:** If a polynomial $f$ of degree $d$ in $n$ variables is computed by an algebraic circuit of size $s$, then the shadow profile satisfies $|\\text{Sh}_k(\\text{supp}(f))| \\leq s \\cdot \\binom{n+d-k}{n}$ for all $k$. Moreover, there exist explicit polynomials (e.g., the permanent) where the shadow profile decays much slower than any polynomial circuit output could allow.\n\n**Test:** Compute shadow profiles for the permanent, determinant, and elementary symmetric polynomials in $n \\leq 8$ variables. Compare decay rates. Identify polynomials where the shadow decay is anomalously slow relative to the circuit upper bound.\n\n**The key insight is** that circuits can only produce polynomials with structured supports (outputs of bounded-depth composition of sparse operations), while the shadow profile of a \"random\" polynomial decays at the maximal rate. A separation between these rates would yield circuit lower bounds.\n\n**Why now?** The exact shadow theorem reduces the derivative complexity of a polynomial to a purely combinatorial quantity (the shadow profile), which is much easier to bound than the algebraic quantity (the actual derivative).\n\n**Impact:** Would provide a new approach to algebraic circuit lower bounds via support geometry.\n\n**Catalog References:** `Pythagorean/IteratedShadowGeometry.lean` (mem_kthShadow_iff_exists_iteratedDerivative), `Bridges/Catalog/Pythagorean/SupportCompression.lean` (supportCompressedLeafCount_le_active_choose).\n\n**Proof Strategy:** Use the shadow theorem to express derivative complexity as shadow size. Bound shadow sizes for circuit outputs using structural induction on circuit depth.\n\n**Domain Bridges:** Algebraic complexity theory, circuit complexity, sparse polynomial identity testing.\n\n**Lineage:** Extends the support compression results of SupportCompression.lean from quadratic to arbitrary order.\n\n**Ambition:** Grand challenge \u2014 circuit lower bounds are a central open problem.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f43533d0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T01:19:07.736279+00:00"
+  },
+  {
+    "id": "fd_1597",
+    "title": "Direction 4: Exchange-Axiom Characterization of Shadow Log-Concavity",
+    "description": "**Conjecture:** The discrete exchange property (Definition 2.4) is *necessary and sufficient* for shadow log-concavity among homogeneous support sets. That is, a homogeneous support $S$ has log-concave shadow profile if and only if $S$ is a discrete exchange family.\n\n**Test:** Systematically enumerate all subsets of $\\{0,1\\}^n$ of a fixed cardinality (representing multiaffine supports) for $n \\leq 7$. For each, check both the exchange property and shadow log-concavity. Report any discrepancies.\n\n**The key insight is** that the exchange property is the finite-set analogue of M-convexity, and M-convex sets are precisely the supports of matroid-theoretic objects. If the exchange property characterizes log-concavity, it would give a clean combinatorial criterion for when the shadow profile is well-behaved.\n\n**Why now?** The computational experiments in this work test the conjecture in one direction (exchange \u27f9 log-concavity) but not the converse. A systematic enumeration for small $n$ would resolve the question computationally for low dimensions.\n\n**Impact:** Would provide the first purely combinatorial characterization of when shadow profiles are log-concave, without reference to polynomial coefficients.\n\n**Catalog References:** `Pythagorean/IteratedShadowGeometry.lean` (IsDiscreteExchangeFamily, kthShadow), `Bridges/Catalog/Pythagorean/SupportCompression.lean` (nonzeroDerivativeLeafSet_eq_indep).\n\n**Proof Strategy:** For necessity, construct explicit non-exchange supports with non-log-concave profiles. For sufficiency, use the exchange axiom to construct injection maps between shadow levels, proving the log-concavity inequality.\n\n**Domain Bridges:** Matroid theory, discrete convex analysis, combinatorial optimization.\n\n**Lineage:** Directly extends the exchange family definition and computational experiments from this work.\n\n**Ambition:** Solid extension \u2014 would close a natural question opened by the conjecture.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "f43533d0",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T01:19:07.803412+00:00"
   },
   {
     "id": "fd_0806",
@@ -1486,43 +1583,46 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
   },
   {
-    "id": "fd_1584",
-    "title": "Direction 1: Sharp Threshold Universality Beyond Gaussian Ensembles",
-    "description": "**Conjecture.** The finite-size scaling collapse of P(tropMargin(W) \u2265 0) at the scale \u03c3\u221a(log n) holds not just for Gaussian ensembles but for any ensemble with independent, sub-Gaussian entries with matched means and variances. Moreover, the profile function \u03a6 is universal and independent of the entry distribution.\n\n**Test.** Generate symmetric random matrices with (a) Rademacher \u00b11 entries, (b) uniform entries, (c) exponential entries (appropriately centered and scaled), with diagonal/off-diagonal mean separation. Plot P(tropMargin \u2265 0) vs. the scaled parameter for n \u2208 {10, 20, 50, 100}. If the curves collapse onto the same profile as Gaussian, universality holds. Heavy-tailed distributions (e.g., Cauchy entries) should break universality \u2014 this failure mode is equally informative.\n\n**Impact.** Universality would establish the tropical margin phase transition as a canonical phenomenon in random matrix theory, comparable to the Tracy\u2013Widom universality of the largest eigenvalue. It would extend the practical scope of certified stability to non-Gaussian noise models.\n\n**Catalog References.**\n- `Pythagorean/TropicalPhaseTransition.lean`: `tropMargin_lipschitz`, `tropMargin_lower_bound_signal_noise`\n\n**Proof Strategy.** Use the Lipschitz theorem (`tropMargin_lipschitz`) to reduce universality to concentration: since tropMargin is 4-Lipschitz in the sup-norm, any ensemble with the same sup-norm tail behavior as Gaussian gives the same threshold. Apply the Lindeberg replacement strategy: replace entries one at a time, bounding the total change using the Lipschitz constant. The \u221a(log n) scaling comes from the maximum of n\u00b2 sub-Gaussian random variables, which is universal by classical extreme-value theory.\n\n**Domain Bridges.** Extreme value theory, sub-Gaussian concentration, universality phenomena in random matrix theory.\n\n**Lineage.** Extends `tropMargin_lipschitz` (Theorem 2) and the conjectured scaling from Section 6.1 of the research paper.\n\n**Ambition.** Grand challenge \u2014 proving universality would place tropical stability alongside random graph thresholds and random SAT as a canonical sharp-threshold phenomenon.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "8f59c0ed",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T00:39:49.343434+00:00"
-  },
-  {
-    "id": "fd_1585",
-    "title": "Direction 2: Defect Localization and Energy Landscapes in the Critical Window",
-    "description": "**Conjecture.** In the critical window (\u03bc_off \u2212 \u03bc_diag) \u2248 c\u00b7\u03c3\u221a(log n), the witness pair (i*, j*) achieving the tropical margin is, with high probability, unique (up to symmetry) and carried by the pair whose noise fluctuation is the most extreme. Moreover, the energy landscape of diagExSlack values has a gap between the minimum and the second-smallest value that grows as \u221a(log n).\n\n**Test.** For n \u2208 {20, 50, 100, 200}, sample 10,000 critical-window matrices. Track (a) the fraction of samples where the witness pair is unique, (b) the distribution of the gap between the two smallest diagExSlack values, (c) the empirical correlation between the witness pair and the entry of W \u2212 meanModel with the largest absolute value. If uniqueness fraction \u2192 1 and gap \u2192 \u221e, localization holds.\n\n**Impact.** Defect localization would connect tropical phase transitions to the theory of extremes in disordered systems (spin glasses, random energy models, branching random walks). It would also make the certified algorithm's witness output physically interpretable: the instability lives at a specific, identifiable location.\n\n**Catalog References.**\n- `Pythagorean/TropicalPhaseTransition.lean`: `tropMargin_witness`\n- `Catalog/Pythagorean/TropicalLorentzianShadows.lean`: `tropical_gap_certificate_exists`\n\n**Proof Strategy.** Model each diagExSlack(W, i, j) as \u03bc + \u03c3\u00b7Z_{ij} where Z_{ij} are correlated Gaussians. The minimum of n\u00b2 correlated Gaussians has a known localization theory (Chatterjee, 2014). Compute the covariance matrix of the {Z_{ij}} explicitly and apply the second-moment method to the indicator of near-minimality.\n\n**Domain Bridges.** Spin glasses, random energy models, extreme-value theory, disordered systems.\n\n**Lineage.** Extends `tropMargin_witness` (Theorem 3.7) and Conjecture 6.2 (extremal pair sparsity).\n\n**Ambition.** Solid extension \u2014 the tools are largely in place, and the computational protocol is immediately executable.\n\n---",
+    "id": "fd_1599",
+    "title": "Direction 1: Strongly Rayleigh Extension",
+    "description": "**Conjecture:** Every strongly Rayleigh measure on 2^[n] admits a Lorentzian Hessian certificate computable from its generating polynomial's resolvent data.\n\n**Test:** Implement the certificate computation for strongly Rayleigh measures beyond DPPs (e.g., balanced matroids, uniform distributions on bases of regular matroids). Check whether the resolvent Hessian has at most one positive eigenvalue. A strongly Rayleigh measure whose Hessian has two or more positive eigenvalues would refute the conjecture.\n\n**Impact:** Strongly Rayleigh measures are the broadest class known to satisfy negative dependence. Extending the certificate to this class would make Lorentzian verification possible for measures arising from matroid theory, graph theory, and log-concave polynomials \u2014 far beyond the DPP setting.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `IsDPPLorentzian` and `dpp_partition_function_lorentzian`\n- `Pythagorean/LorentzianCertificate.lean` \u2014 `LorentzianHessianCertificate` and `dpp_hessian_conditional_neg_semidef`\n\n**Proof Strategy:** The key insight is that strongly Rayleigh measures have real stable generating polynomials, and the resolvent structure should extend via the Borcea-Br\u00e4nd\u00e9n theory. The main technical challenge is that the generating polynomial may not factor as det(I + diag(x)K) for any PSD K. Strategy: express the Hessian through the polynomial's own second derivatives (not through a kernel), and prove conditional NSD using the real stability condition directly.\n\n**Domain Bridges:** Combinatorics (matroid theory) \u2194 Analysis (real stable polynomials) \u2194 Computation (certificate algorithms)\n\n**Lineage:** Builds directly on the resolvent Hessian certificate and extends it from DPPs to the full strongly Rayleigh class.\n\n**Ambition:** Grand challenge \u2014 would unify Lorentzian polynomial theory with computational certificate verification for all negatively dependent measures.\n\n---",
     "domains": [
       "Pythagorean",
       "Algebra",
       "Computation",
-      "Tropical",
       "Physics",
       "Bridges",
-      "Logic"
+      "Logic",
+      "Speculative"
     ],
     "priority_score": 0.8999999999999999,
     "status": "available",
     "research_mode": "prove",
-    "source_exp_id": "8f59c0ed",
+    "source_exp_id": "d72eb6e1",
     "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T00:39:49.413929+00:00"
+    "timestamp": "2026-05-28T01:19:29.003380+00:00"
+  },
+  {
+    "id": "fd_1603",
+    "title": "Direction 5: Resolvent Geometry as a General Framework",
+    "description": "**Conjecture:** For any multivariate polynomial p(x) with nonneg coefficients arising as the generating function of a negatively dependent measure, the Hessian at the all-ones point can be expressed through a \"resolvent-like\" operator, and the resulting Hessian always satisfies conditional negative semidefiniteness.\n\n**Test:** Compute the Hessian for generating functions of known negatively dependent measures beyond DPPs:\n- Uniform distribution on bases of graphic matroids\n- Products of linear forms (Lorentzian by definition)\n- Permanent-like generating functions\nCheck whether a resolvent formula (or generalization) holds, and whether conditional NSD is satisfied.\n\n**Impact:** Would establish a general correspondence: negatively dependent measure \u2194 conditionally NSD Hessian \u2194 resolvent-type formula. This would be a foundational result connecting probability theory, polynomial geometry, and linear algebra.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` \u2014 `IsDPPLorentzian`, `dppPartitionFunction`\n- `Pythagorean/LorentzianCertificate.lean` \u2014 full certificate framework\n\n**Proof Strategy:** The key insight is that the resolvent formula H_{ij} = det(A)(L_{ii}L_{jj} - L_{ij}\u00b2) is formally identical to the second derivative of log det(A) composed with the generating function structure. For general stable polynomials, the role of the resolvent is played by the Hessian of log p, which should satisfy analogous positivity properties by the theory of completely log-concave polynomials (Anari-Gharan-Vinzant).\n\n**Why now?** The formal verification infrastructure and the explicit resolvent formula provide a concrete starting point that was not available before.\n\n**Domain Bridges:** Polynomial geometry \u2194 Probability \u2194 Linear algebra \u2194 Combinatorics \u2194 Physics\n\n**Lineage:** Generalizes the entire certificate framework from DPPs to arbitrary negatively dependent measures.\n\n**Ambition:** Grand challenge \u2014 would define the field of algorithmic Lorentzian geometry.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "d72eb6e1",
+    "consumed_by_exp_id": "36b3d470",
+    "timestamp": "2026-05-28T01:19:29.289351+00:00"
   },
   {
     "id": "seed_013",

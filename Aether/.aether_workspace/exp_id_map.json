@@ -775,5 +775,8 @@
   "0623d1ff": "direction_2_tropical_lorentzian_geometry_of_tensor.json",
   "bac59b26": "direction_2_algorithmic_overlap_adaptive_rounding.json",
   "8f59c0ed": "direction_4_phase_transitions_in_tropical_stabilit.json",
-  "b639c238": "direction_2_universality_for_general_semidirect_pr.json"
+  "b639c238": "direction_2_universality_for_general_semidirect_pr.json",
+  "f43533d0": "direction_1_k_th_order_shadow_theorem_and_iterated.json",
+  "d72eb6e1": "direction_3_efficient_lorentzian_certificate_compu.json",
+  "7550d9c2": "direction_1_uniform_spectral_gap_bound_for_gl_q.json"
 }

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Spectral Graph Theory / Finite Group Theory",
     "date": "2026-05-28T01:19:58Z",
     "exp_id": "7550d9c2",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7234758131012369,
+    "quality": "substantial",
     "pkg_num": 203
   },
   {
@@ -5896,8 +5896,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-28T01:19:58Z",
       "hue": 92,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7234758131012369,
+      "quality": "substantial"
     }
   ],
   "edges": [

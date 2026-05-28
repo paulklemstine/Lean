@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1969 of the highest-quality
+A curated collection of 1970 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1969
+Total files: 1970
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1577,6 +1577,7 @@ import FINAL.Pythagorean.HypergraphTransversal
 import FINAL.Pythagorean.InfoTheoreticMonotonicity
 import FINAL.Pythagorean.IntegerTrichotomy
 import FINAL.Pythagorean.InvertedTreeCore
+import FINAL.Pythagorean.IteratedShadowGeometry
 import FINAL.Pythagorean.KeplerEccentricity
 import FINAL.Pythagorean.KnuthBendixCompletion
 import FINAL.Pythagorean.LagrangeFourSquare
