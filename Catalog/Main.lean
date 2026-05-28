@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1992 of the highest-quality
+A curated collection of 1993 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1992
+Total files: 1993
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1717,6 +1717,7 @@ import FINAL.Pythagorean.TypeComplexityBounds
 import FINAL.Pythagorean.TypeComplexityProductsSums
 import FINAL.Pythagorean.TypedCongruenceClosure
 import FINAL.Pythagorean.UniformMatroidLorentzian
+import FINAL.Pythagorean.UniformMatroidStabilityRadius
 import FINAL.Pythagorean.UniformitySharpness
 import FINAL.Pythagorean.UniversalCertifiedAlgebraicComputation
 import FINAL.Pythagorean.UniversalParent

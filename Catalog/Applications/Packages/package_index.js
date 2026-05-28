@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorial Optimization / Statistical Mechanics",
     "date": "2026-05-28T09:13:55Z",
     "exp_id": "c714b45e",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7709380487804879,
+    "quality": "substantial",
     "pkg_num": 229
   },
   {
@@ -6650,8 +6650,8 @@ window.PACKAGE_GRAPH = {
       "shape": "icosahedron",
       "date": "2026-05-28T09:13:55Z",
       "hue": 272,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7709380487804879,
+      "quality": "substantial"
     }
   ],
   "edges": [

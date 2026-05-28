@@ -817,5 +817,8 @@
   "2ceea89e": "direction_1_spectral_stability_for_graphic_matroid.json",
   "6e2fd8a1": "direction_4_positive_temperature_extension_softmax.json",
   "563955fc": "direction_1_lorentzian_equivalence_via_hessian_des.json",
-  "03aeb2cb": "direction_5_tropical_margin_for_structured_non_ind.json"
+  "03aeb2cb": "direction_5_tropical_margin_for_structured_non_ind.json",
+  "bd74700e": "direction_2_non_abelian_product_covering_via_ruzsa.json",
+  "66b7e664": "direction_1_tight_lorentzian_stability_radii_for_m.json",
+  "c714b45e": "direction_3_statistical_physics_of_covering_polyto.json"
 }

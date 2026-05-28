@@ -77,10 +77,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "2d14ce54",
-    "consumed_by_exp_id": "af495cf0",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:11:24.506271+00:00"
   },
   {
@@ -118,47 +118,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "35f20969",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.848642+00:00"
-  },
-  {
-    "id": "fd_0800",
-    "title": "Direction 2: Heterogeneity\u2013Gap Conjecture",
-    "description": "**Conjecture:** For every \u03b5 > 0, there exists \u03b4 > 0 such that for all hypergraphs H on n \u2265 10 vertices with edge heterogeneity \u03c3\u00b2(H) > \u03b4, we have \u03c4(H) \u2212 \u2308\u03c4*(H)\u2309 \u2265 1. In other words, sufficiently heterogeneous hypergraphs always have a positive integrality gap beyond the ceiling rounding gap.\n\n**Test:** Generate 10,000 random hypergraphs on n = 15 vertices with edges of sizes {2, 3, 4, 5} at varying proportions. For each, compute \u03c3\u00b2, \u03c4, \u03c4*, and \u03c4 \u2212 \u2308\u03c4*\u2309. Plot the gap vs \u03c3\u00b2 and identify the critical threshold \u03b4*. Attempt to disprove by finding hypergraphs with \u03c3\u00b2 > 2 and \u03c4 = \u2308\u03c4*\u2309.\n\n**Impact:** If true, this would establish edge-size heterogeneity as a sufficient condition for integrality gap positivity, providing a simple structural certificate that LP relaxation is strictly better than integer programming for a given instance. This has direct implications for algorithm selection in practice.\n\n**Catalog References:** `Pythagorean/HypergraphTransversal.lean` \u2014 `edgeHeterogeneity`, `IsHeterogeneous`, `heterogeneity_zero_of_uniform`.\n\n**Proof Strategy:** For the forward direction, construct explicit fractional transversals that exploit heterogeneity to achieve sub-integer values. For necessity, construct uniform hypergraphs where \u03c4 = \u2308\u03c4*\u2309. The probabilistic method may yield existence proofs for extreme heterogeneity.\n\n**Domain Bridges:** Connects to information theory (entropy of edge-size distribution), statistical mechanics (disorder parameter), and algebraic combinatorics (chromatic polynomials).\n\n**Lineage:** Builds on `heterogeneity_zero_of_uniform` and `integrality_gap_upper`.\n\n**Ambition:** Grand challenge \u2014 this would be a new structural result in combinatorial optimization with no direct precedent.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "f6e7fe77",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-24T23:13:44.233016+00:00"
-  },
-  {
-    "id": "fd_0808",
-    "title": "Direction 2: Density Heuristics via the Circle Method",
-    "description": "**Conjecture:** For each admissible $k$ (i.e., $k \\not\\equiv 4,5 \\pmod{9}$), the number of representations $|\\{(x,y,z) \\in [-N,N]^3 : x^3+y^3+z^3 = k\\}|$ grows as $c_k \\cdot N^{1/3}$ for an explicit constant $c_k > 0$ depending on the singular series and singular integral.\n\n**Test:** Compute empirical counts of representations for $k \\in \\{0, 1, 2, 3, 6, 7, 8, 9\\}$ up to $N = 10^6$ and compare with the predicted asymptotic. Measure the relative error $|R(N) - c_k N^{1/3}| / (c_k N^{1/3})$ and verify it decreases with $N$.\n\n**Impact:** Would provide the first formally grounded connection between the combinatorial/algebraic framework and analytic number theory. The singular series in the density prediction is a product of local densities, directly connecting to our `ThreeCubeLocalAdmissible` counts.\n\n**The key insight is** that the local admissibility counts $|A_n|/n$ at each modulus $n$ are the local factors of the singular series, and the everywhere-local-admissibility theorem guarantees this product converges when $k$ is admissible.\n\n**Why now?** The formal definitions of local admissibility and the computational infrastructure for counting admissible residues provide the exact data needed to compute singular series factors and compare with empirical density.\n\n**Catalog References:** `ThreeCubeLocalAdmissible` (Algebra/SumThreeCubes/Defs.lean), `sumThreeCubesRep_implies_everywhereLocallyAdmissible` (Algebra/SumThreeCubes/LocalGlobal.lean)\n\n**Proof Strategy:** Formalize the circle method setup for cubic forms, compute the singular integral, and bound the minor arc contributions.\n\n**Domain Bridges:** Analytic number theory, harmonic analysis, probability theory\n\n**Lineage:** Connects the discrete local admissibility framework to continuous density predictions\n\n**Ambition:** Solid extension \u2014 the circle method for three cubes is at the boundary of current analytic technique\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "34c2669a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-25T00:26:36.199585+00:00"
   },
   {
     "id": "fd_0890",
@@ -265,10 +229,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dae7d582",
     "timestamp": "2026-05-25T18:39:32.525739+00:00"
   },
   {
@@ -956,25 +920,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-27T17:24:45.367460+00:00"
   },
   {
-    "id": "fd_1486",
-    "title": "Direction 3: Statistical Physics of Covering Polytopes",
-    "description": "**Conjecture**: The partition function Z(\u03b2) = \u03a3_{S transversal} exp(\u2212\u03b2|S|) of the covering system undergoes a phase transition at \u03b2_c = ln(d\u22121) + O(1/(K+1)) when \u0394\u2082(H) \u2264 K. Below \u03b2_c, the Gibbs measure concentrates on transversals of size \u2248 \u03c4*\u00b7(d \u2212 \u03a9(1/K)); above \u03b2_c, it concentrates on the minimum transversal.\n\n**Test**: For random 3-uniform hypergraphs with \u0394\u2082 \u2264 K, estimate Z(\u03b2) via Monte Carlo simulation (Metropolis algorithm on the transversal indicator). Plot the free energy f(\u03b2) = \u2212(1/n)\u00b7ln Z(\u03b2) and identify the phase transition. Compare the critical \u03b2_c to the predicted formula.\n\n**Impact**: Would establish a rigorous connection between:\n- LP duality for covering (algebraic structure)\n- Gibbs measures on covering configurations (probabilistic structure)\n- Phase transitions in random combinatorial optimization\n\n**Catalog References**: `Catalog/Pythagorean/QuantitativeCodegreeGap.lean` (free energy coercivity), `Catalog/Pythagorean/FracTransversalConcentration.lean` (concentration bounds).\n\n**Proof Strategy**: Use the coercivity theorem as a warm-start: F(x) \u2265 0 implies the free energy is bounded below. Then develop a cluster expansion around the fractional optimum, using the energy bound to control higher-order terms. The pair codegree bound ensures the cluster expansion converges (weak coupling regime).\n\n**Domain Bridges**: Statistical physics, random constraint satisfaction, mean-field theory.\n\n**Lineage**: Extends `cover_free_energy_coercive` to the full Gibbs measure framework.\n\n**Ambition**: Grand challenge \u2014 would create a new interface between optimization and physics.\n\n**The key insight is** that the coercivity theorem is the zeroth-order term of a cluster expansion, and the energy bound controls the convergence radius.\n\n**Why now?** Formal verification of the free energy bound enables rigorous cluster expansion analysis that would otherwise be heuristic.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "dbcfb2f4",
-    "consumed_by_exp_id": "c714b45e",
-    "timestamp": "2026-05-27T17:24:45.553550+00:00"
-  },
-  {
     "id": "fd_1511",
     "title": "Direction 1: Closure of K=1 Valuated Exchange under Differentiation",
     "description": "**Conjecture.** For every homogeneous polynomial p with nonnegative coefficients and M-convex support, if ValuatedExchange(p, 1) holds, then ValuatedExchange(\u2202_i p, 1) holds for all variables i.\n\n**Test.** Exhaustive computational search over weighted uniform matroid polynomials U(d, n) for n \u2264 7, d \u2264 4, with 10,000 random weight vectors per configuration. Any counterexample refutes the conjecture; survival through this regime provides strong evidence. Additionally, attempt formal proof for U(d, n) with d = 2 (degree-2 case) using the fact that derivatives are linear and Theorem 5 (`valuatedExchange_of_linear_nonneg`) already handles linear support.\n\n**Impact.** If true, this establishes K=1 valuated exchange as a closed cone property under differentiation, paralleling the Br\u00e4nd\u00e9n\u2013Huh closure theorem for Lorentzian polynomials. This would position valuated exchange as a new fundamental positivity condition in algebraic combinatorics, potentially providing simpler proofs of log-concavity results that currently require the full Lorentzian machinery.\n\n**Catalog References.** `Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean` (Theorems 1\u20135), `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` (Lorentzian characterization).\n\n**Proof Strategy.** For the degree-2 case: prove that all derivatives of degree-2 M-convex-support polynomials have linear single-variable support, then apply Theorem 5. For general degree: use the product factorization (Theorem 3) to reduce the derivative exchange inequality to the original exchange inequality times a computable rescaling factor, then bound the rescaling factor.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 Lorentzian polynomial theory; if K=1 exchange equals Lorentzianity for homogeneous polynomials, this provides a new characterization of Lorentzian polynomials.\n\n**Lineage.** Extends `valuatedExchange_of_linear_nonneg` and `pderiv_coeff_product_eq`.\n\n**Ambition.** Grand challenge \u2014 would constitute a new characterization theorem in algebraic combinatorics.\n\n---",
@@ -1153,10 +1098,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "a674ae13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0415f0e4",
     "timestamp": "2026-05-28T01:57:02.515048+00:00"
   },
   {
@@ -1218,24 +1163,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "77cabe0b",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T04:56:23.189467+00:00"
-  },
-  {
-    "id": "fd_1664",
-    "title": "Direction 2: Non-Abelian Product Covering via Ruzsa Calculus",
-    "description": "**Conjecture:** For any group G (not necessarily abelian), if A is covered by C left cosets of a K-approximate subgroup H, then A\u00b7A is covered by f(C, K) left cosets of H, where f(C, K) = C\u00b2 \u00b7 K\u00b3.\n\n**Test:** Enumerate all subsets A of S\u2083, S\u2084, and small matrix groups GL(2, F_p) for p = 2, 3. For each symmetric A with small doubling, compute the optimal coset cover and verify the bound C\u00b2K\u00b3. Search for counterexamples where the bound is exceeded.\n\n**Impact:** Removes the commutativity assumption from `bounded_cover_implies_product_cover`, making the cross-domain bridge applicable to all groups. This is essential for applications to non-abelian approximate groups.\n\n**Catalog References:** `Pythagorean/BoundedPseudofiniteTransfer.lean` \u2014 `bounded_cover_implies_product_cover`, `IsApproxSubgroupProxy`\n\n**Proof Strategy:** Use the Ruzsa covering lemma: if |A\u00b7B| \u2264 K|A|, then B is covered by K translates of A\u00b7A\u207b\u00b9. Apply this with A = H and B = t\u207b\u00b9\u00b7A for each coset representative t. The Ruzsa calculus gives the K\u00b3 factor instead of K.\n\n**Domain Bridges:** Model theory \u2194 additive combinatorics (Ruzsa calculus), model theory \u2194 geometric group theory (non-abelian growth)\n\n**Lineage:** Extends `bounded_cover_implies_product_cover` by removing commutativity\n\n**Ambition:** Solid extension \u2014 the Ruzsa covering lemma is well-understood and the bound K\u00b3 is known.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "77cabe0b",
-    "consumed_by_exp_id": "bd74700e",
-    "timestamp": "2026-05-28T04:56:23.267505+00:00"
   },
   {
     "id": "fd_1682",
@@ -1389,10 +1316,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "54a2ca0c",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9368e79",
     "timestamp": "2026-05-28T06:50:39.985346+00:00"
   },
   {
@@ -1513,6 +1440,70 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1740",
+    "title": "Conjugation-Indexed Product Cover",
+    "description": "Conjecture: For any finite group G, K-approximate subgroup H, and set A covered by C left translates of H, the product set A\u00b7A is covered by C\u00b2\u00b7K\u00b7L translates of H, where L = max_{t \u2208 T} [H : H \u2229 t\u207b\u00b9Ht] is the maximal conjugation index over the covering set T.\n\nTest: Compute L for all covering sets in S\u2083, S\u2084, S\u2085 and verify C(A\u00b7A) \u2264 C\u00b2\u00b7K\u00b7L. Search for counterexamples in GL(2, F_p) for p = 2, 3, 5, 7.\n\nImpact: This would be the first product covering theorem for non-abelian groups with bounds depending only on combinatorial parameters (C, K, L), not on |H|. It would unify the abelian case (L=1) with the normal subgroup case (L=1) and the general case.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd74700e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T09:13:12.854260+00:00"
+  },
+  {
+    "id": "fd_1741",
+    "title": "Non-Abelian Pl\u00fcnnecke-Ruzsa via Covering Calculus",
+    "description": "Conjecture: For a K-approximate subgroup H in any group G, for all n \u2265 1: H^n can be covered by K^(n-1) left translates of H. (Generalization of the triple product cover K\u00b2 bound from n=3 to all n.)\n\nTest: Verify computationally for n = 4, 5, 6 in S\u2083, S\u2084, and GL(2, F\u2083). Check whether the inductive step H^n \u2192 H^(n+1) preserves the K^(n-1) bound.\n\nImpact: This would be a covering-theoretic analog of the Pl\u00fcnnecke-Ruzsa inequality. The standard Pl\u00fcnnecke-Ruzsa gives |H^n| \u2264 K^n\u00b7|H|; our version gives covering number K^(n-1), which is sharper (it doesn't multiply by |H|).",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "MachineLearning"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd74700e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T09:13:12.933700+00:00"
+  },
+  {
+    "id": "fd_1742",
+    "title": "Expansion Obstruction from Covering Bounds",
+    "description": "Conjecture: In a finite group G with Cayley graph Cay(G, S), if a K-approximate subgroup H has covering number C(A\u00b7A) \u2264 f(C, K) for all A with C(A) \u2264 C, then the spectral gap of Cay(G, S) is bounded below by 1/f(|G|/|H|, K).\n\nTest: Compute spectral gaps of Cayley graphs of S\u2083, S\u2084 with various generating sets. Compare with the covering bounds from the demo.\n\nImpact: This would connect additive combinatorics to spectral graph theory and expander construction, with applications to derandomization and coding theory.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd74700e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T09:13:13.010547+00:00"
+  },
+  {
+    "id": "fd_1743",
+    "title": "Automated Counterexample Search for Covering Conjectures",
+    "description": "Conjecture: There exists a polynomial-time algorithm that, given a finite group G and parameters (C, K), either certifies that C(A\u00b7A) \u2264 f(C, K) for all A, or produces a counterexample (A, H) violating the bound.\n\nTest: Implement the algorithm for groups up to order 120 (all groups of order \u2264 60 from the Small Groups Library). Catalog all violations of C\u00b2\u00b7K\u00b2 and C\u00b2\u00b7K\u00b3.\n\nImpact: This would create a database of covering phenomena, analogous to the LMFDB for number theory, enabling data-driven conjecture generation in group theory.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation"
+    ],
+    "priority_score": 0.9,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "bd74700e",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T09:13:13.088730+00:00"
   },
   {
     "id": "seed_013",
@@ -2095,47 +2086,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T07:27:35.868270+00:00"
-  },
-  {
-    "id": "fd_1730",
-    "title": "Direction 1: Complete Characterization via Derivative Descent",
-    "description": "**Conjecture:** For homogeneous polynomials with positive coefficients of degree d in n variables, the Hessian descent certificate (mixed directional log-concavity + axis log-concavity + exchange-closed support at ALL derivative levels k = 0, 1, ..., d\u22122) is equivalent to recursive Lorentzianity.\n\n**Test:** Implement exhaustive search over positive integer coefficients for n \u2264 4, d \u2264 5. Check all derivative leaves for the certificate conditions and compare with eigenvalue-based Lorentzian testing. A single counterexample disproves the conjecture; 10\u2076 confirming instances would provide strong evidence.\n\n**Impact:** If true, this would convert Lorentzian recognition from a spectral problem (O(n\u00b3 per leaf)) to a combinatorial one (checking coefficient products), with implications for algorithmic matroid theory, Hodge theory, and optimization.\n\n**Catalog References:**\n- `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `IsRecursivelyLorentzian`, `recursivelyLorentzian_iff_brandenHuh`\n- `HessianDescent.lean` \u2014 `MixedDirectionalLogConcave`, `HasExchangeSupport`, `LorentzianHessianDescentConjecture`\n\n**Proof Strategy:** Induction on degree d. Base case d = 2 is our Theorem B (dim_two_equivalence). Inductive step: show that if f satisfies the certificate, then every partial derivative \u2202f/\u2202x\u1d62 satisfies the certificate at degree d\u22121. The key lemma is that mixed LC of f implies a form of mixed LC for \u2202f/\u2202x\u1d62, using the derivative-coefficient formula c_\u2202f(\u03b1) = (\u03b1(i)+1)\u00b7c_f(\u03b1+e\u1d62).\n\n**Domain Bridges:** Discrete convex analysis (M-convexity), matroid theory (basis exchange), algebraic geometry (Hodge-Riemann relations)\n\n**Lineage:** Builds directly on Br\u00e4nd\u00e9n\u2013Huh (2020) Theorem 2.25 and the recursive characterization in `LorentzianRecognitionComplete.lean`\n\n**Ambition:** Grand challenge \u2014 would unify spectral and combinatorial approaches to Lorentzianity\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "563955fc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T08:39:51.634452+00:00"
-  },
-  {
-    "id": "fd_1731",
-    "title": "Direction 2: Tropical Geometry Bridge via Newton Polytopes",
-    "description": "**Conjecture:** The exchange-closed support condition on the Newton polytope of a Lorentzian polynomial is equivalent to the polytope being a generalized permutohedron (a Minkowski sum of simplices), and this tropical characterization is equivalent to the polynomial being a valuation of a matroid.\n\n**Test:** For n \u2264 5, d \u2264 6, compute Newton polytopes of Lorentzian polynomials and check whether they are generalized permutohedra. Conversely, start from generalized permutohedra and check if polynomials supported on their integer points can be Lorentzian.\n\n**Impact:** Would establish a direct bridge between Lorentzian polynomial theory and tropical geometry, enabling:\n- Tropical algorithms for Lorentzian recognition\n- New proofs of matroid-theoretic results via tropical methods\n- Connections to the work of Adiprasito, Huh, and Katz on Hodge theory for matroids\n\n**Catalog References:**\n- `HessianDescent.lean` \u2014 `HasExchangeSupport`\n- `Catalog/Pythagorean/LorentzianRecognitionComplete.lean` \u2014 `SupportSatisfiesExchange`\n\n**Proof Strategy:** Use the theory of valuated matroids and the characterization of generalized permutohedra as polymatroids. Show that exchange-closed support + mixed LC implies the polytope is a generalized permutohedron via the work of Postnikov on positive Grassmannians.\n\n**Domain Bridges:** Tropical geometry, polyhedral combinatorics, algebraic geometry\n\n**Lineage:** Extends the Br\u00e4nd\u00e9n\u2013Huh connection between Lorentzian polynomials and matroids\n\n**Ambition:** Extension \u2014 connects two well-developed theories\n\n**The key insight is** that the exchange property on support is precisely the defining condition for M-convex sets, which in turn correspond to integer points of generalized permutohedra.\n\n**Why now?** The tropical geometry of Lorentzian polynomials has not been systematically explored, and our computational tools make it feasible to test the conjecture empirically.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "563955fc",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T08:39:51.732425+00:00"
   },
   {
     "id": "seed_032",
