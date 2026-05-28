@@ -840,24 +840,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T01:19:07.666079+00:00"
   },
   {
-    "id": "fd_1683",
-    "title": "Direction 2: Cancellation-Aware Shadow Bounds for General Circuits",
-    "description": "**Conjecture:** For any (non-monotone) algebraic circuit $C$ of size $s$ computing a polynomial $f$, there exists a shadow bound $|\\mathrm{Sh}_1(\\mathrm{supp}(f))| \\le g(s, n, d)$ where $g$ is polynomial in $s$ and depends on the cancellation pattern.\n\n**Test:** Construct small non-monotone circuits for polynomials with known support (e.g., determinant of 3\u00d73 and 4\u00d74 matrices). Compute the actual shadow and verify the bound. Check whether the permanent's shadow exceeds the bound for circuits of the expected size.\n\n**Impact:** This would extend the shadow-gap framework from monotone to general circuits, the regime where P vs. NP type separations live.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/KruskalKatonaSupport.lean`: `card_oneShadow_union_le`, `shadow_bound_of_supportCircuit`\n\n**Proof Strategy:** The key insight is that cancellation in $f + g$ can only *reduce* the support: $\\mathrm{supp}(f + g) \\subseteq \\mathrm{supp}(f) \\cup \\mathrm{supp}(g)$. So the monotone shadow bound is still an upper bound on the shadow of the actual support. The challenge is to prove *lower* bounds showing that the actual shadow cannot be too small. One approach: use the fact that if $f$ has few terms, then $\\mathrm{supp}(f)$ is \"small\" in a KK sense, constraining the shadow from below.\n\n**Why now?** The monotone case is proved. The next step is to handle the gap between $\\mathrm{supp}(f + g)$ and $\\mathrm{supp}(f) \\cup \\mathrm{supp}(g)$ by bounding how much cancellation can reduce the shadow.\n\n**Domain Bridges:** Algebraic complexity \u2192 additive combinatorics (cancellation patterns as sumset structure).\n\n**Lineage:** Builds on the shadow subadditivity theorem (this work) and Baur\u2013Strassen (1983).\n\n**Ambition:** Solid extension \u2014 directly builds on proved theorems.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d74bda34",
-    "consumed_by_exp_id": "e24d8d3f",
-    "timestamp": "2026-05-28T06:14:18.922140+00:00"
-  },
-  {
     "id": "fd_1685",
     "title": "Direction 4: Entropy Production Under Differentiation",
     "description": "**Conjecture:** Define the **shadow entropy** of a family $S$ as $H(S) = \\log |\\mathrm{Sh}_1(S)| - \\log |S|$. For polynomials computed by circuits of size $s$:\n\n$$H(\\mathrm{supp}(f)) \\le O(\\log s)$$\n\nwhile for the permanent:\n\n$$H(\\mathrm{PermSupp}(m)) \\ge \\Omega(\\log m)$$\n\n**Test:** Compute $H$ for all circuits of size $\\le 8$ in $n \\le 4$ variables. Verify the logarithmic bound. Compare with the permanent's entropy for $m = 2, \\ldots, 6$.\n\n**Impact:** An information-theoretic formulation would connect the shadow-gap program to communication complexity, information complexity, and the entropy method in combinatorics.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/KruskalKatonaSupport.lean`: `card_oneShadow_le_mul_card`\n\n**Proof Strategy:** The key insight is that the bound $|\\mathrm{Sh}_1(S)| \\le n \\cdot |S|$ gives $H(S) \\le \\log n$ universally. For circuits, the multiplicative structure should constrain $H$ more tightly. Each add gate increases $|S|$ additively; each mul gate increases it multiplicatively. The entropy $H$ should decompose along the circuit DAG, giving a bound in terms of circuit depth and width.\n\n**Why now?** The general bound $|\\mathrm{Sh}_1| \\le n|S|$ is proved. The circuit bound theorem provides the recursive structure needed for an entropy decomposition. The connection to statistical physics (support as microcanonical ensemble, shadow as accessible states) provides physical intuition.\n\n**Domain Bridges:** Algebraic complexity \u2192 information theory \u2192 statistical physics.\n\n**Lineage:** Builds on entropy methods in combinatorics (Shearer's lemma, entropy compression).\n\n**Ambition:** Solid extension with speculative connections to physics.\n\n---",
@@ -967,10 +949,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "951d1d02",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b43a1b40",
     "timestamp": "2026-05-28T11:39:09.140621+00:00"
   },
   {
@@ -1341,26 +1323,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T17:54:29.471886+00:00"
   },
   {
-    "id": "fd_1867",
-    "title": "Direction 1: Formalizing the Marginal Kernel Contraction via Spectral Decomposition",
-    "description": "**Conjecture:** For any symmetric PSD matrix $L$ and $\\beta > 0$, the marginal kernel $K = \\beta L(I + \\beta L)^{-1}$ satisfies $K - K^2 \\succeq 0$ (as a matrix inequality), which implies $\\sum_{j \\neq i} K_{ij}^2 \\leq K_{ii}(1-K_{ii})$ for all $i$.\n\n**The key insight is** that $K - K^2 = \\beta L(I+\\beta L)^{-2} = P^\\top(\\beta L)P$ where $P = (I+\\beta L)^{-1}$, and the PSD property is preserved under congruence. This requires formalizing the spectral theorem for symmetric real matrices (or at least the fact that congruence by an invertible matrix preserves PSD) in Lean/Mathlib.\n\n**Why now?** The `marginal_kernel_contraction_diagonal` lemma is the only remaining sorry in our formalization. Mathlib's `Matrix.PosSemidef` API has been rapidly expanding, and the congruence preservation of PSD (`P^T M P` is PSD when `M` is PSD) may now be within reach. Closing this sorry would make the entire DPP response theory fully machine-verified.\n\n**Test:** Verify computationally that $K - K^2$ has nonneg eigenvalues for 10,000 random PSD kernels. Verify the Lean proof compiles without sorry.\n\n**Impact:** Completes the first fully formal proof of a fluctuation-dissipation theorem for a nontrivial statistical mechanical system. Would also contribute a reusable lemma about PSD congruence to Mathlib.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/DPPFluctuationDissipation.lean` (marginal_kernel_contraction_diagonal)\n\n**Proof Strategy:** (1) Formalize `Matrix.PosSemidef.conjTranspose_mul_mul_same` if not already in Mathlib. (2) Show $(I+\\beta L)^{-1}$ is symmetric when $L$ is. (3) Write $K - K^2 = (I+\\beta L)^{-\\top} (\\beta L) (I+\\beta L)^{-1}$ and apply the congruence lemma.\n\n**Domain Bridges:** Linear algebra \u2192 formal verification \u2192 statistical physics\n\n**Lineage:** Builds directly on `dppCovarianceMatrix_isSymm`, `dppLaplacian_isSymm` from this work.\n\n**Ambition:** Solid extension \u2014 the math is known but the formalization is nontrivial.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "e1720480",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T18:30:31.692076+00:00"
-  },
-  {
     "id": "fd_1886",
     "title": "Direction 1: Partition Matroid Spectral Stability",
     "description": "**Conjecture:** For the partition matroid $M = U_{r_1, n_1} \\oplus \\cdots \\oplus U_{r_k, n_k}$, the Lorentzian spectral gap is the minimum of the individual block gaps, and the stability radius decomposes as a minimum over blocks.\n\n**Test:** Compute the leaf Hessians of the partition matroid generating polynomial for small $(n_i, r_i)$ triples. Verify that the minimum eigenvalue gap across all leaves equals $\\min_i \\text{gap}(U_{r_i, n_i}) = 1$. If the gaps differ from 1, the conjecture refines to a block-structure formula.\n\n**Impact:** Partition matroids are the next most natural family after uniform matroids and appear in scheduling, resource allocation, and constraint satisfaction. An explicit spectral stability theorem would immediately yield certified perturbation budgets for algorithms operating on these structures.\n\n**Catalog References:**\n- `Catalog/Speculative/AutoResearch/LorentzianStability.lean`: `lorentzian_stability_radius_exists`, `hasAtMostOnePositiveEigenvalue_of_gapped_perturbation`\n- `Catalog/Pythagorean/UniformMatroidLorentzianStability.lean`: `uniform_leaf_has_gapped_signature`, `uniform_stability_lower_bound`\n\n**Proof Strategy:** The generating polynomial of a direct sum is a product: $f_{M_1 \\oplus M_2} = f_{M_1} \\cdot f_{M_2}$. Quadratic leaves of the product involve one leaf from each factor plus cross terms. Analyze the Hessian block structure: it should be block-diagonal (from individual factors) plus a rank-deficient cross term. The spectral gap of the block-diagonal part is the minimum of individual gaps; the cross term is perturbative.\n\n**Domain Bridges:** Optimization (block-structured semidefinite programs), probability (negative association for partition matroids), coding theory (matroid-based codes with block structure).\n\n**Lineage:** Direct extension of the uniform matroid stability theorem, using the product structure of direct sum generating polynomials.\n\n**Ambition:** Solid extension \u2014 the mathematical framework is in place, and the main challenge is handling the cross terms in the Hessian block decomposition.\n\n**The key insight is** that direct sums decompose the Hessian into block-diagonal form, and the spectral gap of a block-diagonal matrix is the minimum of the block gaps.\n\n**Why now?** The exact spectral computation for the uniform case provides the building block, and the generic perturbation theorem from the catalog handles the cross-term perturbation.\n\n---",
@@ -1373,7 +1335,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "bf323aae",
@@ -1395,7 +1357,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "bf323aae",
@@ -2090,6 +2052,58 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T15:18:51.290763+00:00"
+  },
+  {
+    "id": "fd_1906",
+    "title": "Persistent Homology Detects Nontriviality of Stable Homotopy Classes via Framed ",
+    "description": "Conjecture: There exists an explicit functor from any finite framed flow category presenting a stable homotopy class \u03b1 \u2208 \u03c0_n^S to a finite family of filtered chain complexes over Z whose primewise persistent barcode profile is complete enough to distinguish the zero class from infinitely many nonzero classes of the same Adams filtration and stem. In particular, for an infinite family of nontrivial classes \u03b1_k and comparison null classes \u03b2_k with identical classical numerical invariants available at the chain level (rank data, mod-p Betti tables, and Euler characteristics), the associated primewise persistence profiles differ for at least one prime and one homological degree. Test: Construct the complexes for computable families coming from known framed flow-category models (for example low-stem Toda-bracket families or v1-periodic families), compute the induced primewise barcodes, and check whether nontrivial classes are separated from null classes with matched basic invariants. A single infinite family where separation consistently occurs supports the conjecture; a counterfamily with indistinguishable profiles refutes it. Impact: This would create a new computable bridge between persistent homology and stable homotopy theory, potentially yielding topological invariants sensitive to subtle secondary composition phenomena beyond ordinary homology and opening a data-driven route to detecting hidden structure in spectra.",
+    "domains": [
+      "Algebraic Topology",
+      "Topological Data Analysis"
+    ],
+    "priority_score": 0.8,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "pi_brainstorm",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T19:32:30.694451+00:00"
+  },
+  {
+    "id": "fd_1901",
+    "title": "Direction 1: Shadow Rigidity for the Permanent",
+    "description": "**Conjecture:** Any polynomial-size algebraic circuit family {C_n} computing the n\u00d7n permanent satisfies B(C_n) \u2265 n^{\u03a9(log n)}, where B is the cancellation budget.\n\n**Test:** \n1. Enumerate all circuits of size \u2264 20 computing perm\u2083 (using brute-force search over circuit DAGs with 3\u00d73 matrix variables as leaves).\n2. Compute the exact cancellation budget for each.\n3. Determine whether the minimum budget over all circuits grows faster than polynomial in n for n = 3, 4, 5.\n4. Compare to the budget achieved by the best known det\u2083 circuits.\n\n**Impact:** A proof would separate permanent from determinant using a purely combinatorial invariant, potentially circumventing the natural proof barrier of Razborov\u2013Rudich (since shadow deficit is a global structural property, not a gate-by-gate restriction). Even partial results \u2014 say, superlinear budget lower bounds for restricted circuit classes \u2014 would be significant.\n\n**Catalog References:** `Pythagorean/CircuitLowerBounds/CancellationShadow.lean` (shadow_deficit_le, CancelCircuit.add_gate_deficit, CancelCircuit.shadow_le_envelope)\n\n**Proof Strategy:** Strategy B from the main text \u2014 use Kruskal\u2013Katona lower envelopes to show that if the permanent's support has large shadow, and the monotone envelope cannot be too large (by circuit size), then the budget must compensate. The key sub-lemma: for multilinear degree-n support families of size n! in n\u00b2 variables, the KK minimum shadow is \u03a9(n \u00b7 n!), while the monotone envelope of a size-s circuit has shadow \u2264 O(s\u00b2 \u00b7 n\u00b2). If s = poly(n), the gap is factorial, requiring superpolynomial budget.\n\n**Domain Bridges:** Connects to computational complexity (VP vs VNP), algebraic geometry (Newton polytope vertex structure of permanent), and representation theory (sign representations of S_n).\n\n**Lineage:** Builds directly on Theorems 2 and 3 of this work, plus the KK bounds from KruskalKatonaSupport.lean.\n\n**Ambition:** Grand challenge \u2014 would be a major breakthrough in algebraic complexity theory.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e24d8d3f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T19:32:05.136488+00:00"
+  },
+  {
+    "id": "fd_1902",
+    "title": "Direction 2: Additive Combinatorial Bounds on Cancellation Multiplicity",
+    "description": "**Conjecture:** For any decomposition f = h\u2081 + h\u2082 + \u00b7\u00b7\u00b7 + h_k where each h_i is a product of linear forms, the total cancellation across all addition gates satisfies \u2211 |Cancel(partial_sum_i, h_{i+1})| \u2265 \u03a9(|supp(f)|) when f has \"spread\" support (no two monomials share more than half their variables).\n\n**Test:**\n1. For the 3\u00d73 permanent, enumerate all decompositions as sums of \u2264 6 products of linear forms.\n2. Compute the total cancellation for each decomposition.\n3. Test whether the minimum total cancellation grows with n for the n\u00d7n permanent.\n\n**Impact:** Would provide the first connection between *decomposition complexity* (related to Waring rank) and *cancellation structure*, bridging algebraic complexity and additive combinatorics.\n\n**Catalog References:** `Pythagorean/CircuitLowerBounds/CancellationShadow.lean` (cancel_card_bound, poly_shadow_deficit)\n\n**Proof Strategy:** Strategy C \u2014 treat supports as sets in (\u2124_\u22650)^n and use Pl\u00fcnnecke\u2013Ruzsa type inequalities. The spread condition ensures that pairwise Minkowski sums have limited overlap, forcing cancellation to be distributed across many terms. Key lemma: if supp(h_i) are \"sumset-independent\" (|supp(h_i) + supp(h_j)| \u2248 |supp(h_i)| \u00b7 |supp(h_j)|), then cancellation at each step requires coefficient coincidences bounded by the sumset structure.\n\n**Domain Bridges:** Additive combinatorics (Pl\u00fcnnecke\u2013Ruzsa, Freiman's theorem), communication complexity (multiparty number-on-forehead), information theory (entropy of coefficient distributions).\n\n**Lineage:** Extends the cross-domain bridge theorem (cancel_card_bound) with sumset-theoretic tools.\n\n**Ambition:** Solid extension \u2014 the individual lemmas should be provable with existing tools, though the full conjecture is open.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.7999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "e24d8d3f",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T19:32:05.228846+00:00"
   },
   {
     "id": "seed_032",

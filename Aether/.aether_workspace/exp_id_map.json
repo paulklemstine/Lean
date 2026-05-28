@@ -874,5 +874,6 @@
   "bf323aae": "direction_1_tight_lorentzian_stability_radii_for_m.json",
   "e51690e3": "direction_2_assignment_gap_extension_all_permutati.json",
   "461e08e3": "direction_2_higher_order_critical_pairs_and_knuth_.json",
-  "e1b326de": "direction_2_higher_order_critical_pairs_and_knuth_.json"
+  "e1b326de": "direction_2_higher_order_critical_pairs_and_knuth_.json",
+  "e24d8d3f": "direction_2_cancellation_aware_shadow_bounds_for_g.json"
 }

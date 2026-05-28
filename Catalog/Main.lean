@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2022 of the highest-quality
+A curated collection of 2023 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2022
+Total files: 2023
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1509,6 +1509,7 @@ import FINAL.Pythagorean.BoundedBetaDefs
 import FINAL.Pythagorean.BoundedBetaTheorems
 import FINAL.Pythagorean.BoundedPseudofiniteTransfer
 import FINAL.Pythagorean.CRTBottleneck
+import FINAL.Pythagorean.CancellationShadow
 import FINAL.Pythagorean.CanonicalPaths
 import FINAL.Pythagorean.CatalogBridge
 import FINAL.Pythagorean.CategoricalDimension
