@@ -133,6 +133,14 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int) -> None:
         print(f"[Tick] Integrated {job.job_id[:8]}: score={job.quality_score:.3f}, "
               f"files={job.files_integrated}, theorems={job.theorem_count}")
 
+    # Prune completed/failed/integrated/rejected jobs from inflight to prevent unbounded growth
+    stale_keys = [pid for pid, j in extractor.inflight.items()
+                  if j.status in ("completed", "failed", "integrated", "rejected")]
+    if stale_keys:
+        for pid in stale_keys:
+            del extractor.inflight[pid]
+        print(f"[Tick] Pruned {len(stale_keys)} completed jobs from inflight")
+
     # 3. Dispatch new jobs up to max_inflight
     current_inflight = len([j for j in extractor.inflight.values()
                            if j.status not in ("completed", "failed", "integrated", "rejected")])
