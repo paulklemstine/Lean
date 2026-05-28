@@ -1,366 +1,346 @@
 #!/usr/bin/env python3
 """
-Algorithms for Lorentzian Recognition Complexity Analysis
+algorithms.py — Algorithms for Lorentzian recognition complexity analysis.
 
-Implements the key algorithms from the research:
+Implements:
 1. Multiindex enumeration and counting
-2. Derivative tree traversal
-3. Hessian eigenvalue checking
-4. SAT-to-polynomial encoding
-5. Certificate complexity analysis
-
-All algorithms include docstrings, type hints, and example usage.
+2. Derivative tree construction
+3. Certificate size computation
+4. SAT-to-multiindex encoding
+5. Hessian signature checking
 """
 
+from math import comb, factorial, prod
+from itertools import product as iterproduct
+from typing import List, Tuple, Dict, Set, Optional, Generator
+from dataclasses import dataclass, field
 import numpy as np
-from itertools import combinations_with_replacement
-from typing import List, Tuple, Dict, Optional, Set
-import math
 
 
 # ============================================================
 # Algorithm 1: Multiindex Enumeration
 # ============================================================
 
-def enumerate_multiindices(n: int, d: int) -> List[Tuple[int, ...]]:
+def enumerate_multiindices(n: int, d: int) -> Generator[Tuple[int, ...], None, None]:
+    """Generate all multiindices α : {0,...,n-1} → ℕ with ∑αᵢ = d.
+    
+    Uses recursive generation with pruning.
+    
+    Time: O(C(n+d-1, d) · n)
+    Space: O(n) stack depth
+    
+    >>> list(enumerate_multiindices(2, 3))
+    [(0, 3), (1, 2), (2, 1), (3, 0)]
     """
-    Enumerate all multiindices α ∈ ℕ^n with |α| = d.
+    if n == 0:
+        if d == 0:
+            yield ()
+        return
+    if n == 1:
+        yield (d,)
+        return
+    for k in range(d + 1):
+        for rest in enumerate_multiindices(n - 1, d - k):
+            yield (k,) + rest
 
-    Uses the stars-and-bars bijection: each multiindex corresponds
-    to a way of distributing d identical objects into n distinct bins.
 
-    Time complexity: O(C(n+d-1, d))
-    Space complexity: O(C(n+d-1, d) * n)
+def multiindex_count(n: int, d: int) -> int:
+    """Exact count using stars-and-bars formula.
+    
+    C(n + d - 1, d) = (n + d - 1)! / (d! · (n-1)!)
+    
+    Time: O(min(n, d))
+    Space: O(1)
+    
+    >>> multiindex_count(2, 5)
+    6
+    >>> multiindex_count(3, 3)
+    10
+    """
+    if n == 0:
+        return 1 if d == 0 else 0
+    return comb(n + d - 1, d)
 
+
+# ============================================================
+# Algorithm 2: Derivative Tree Construction
+# ============================================================
+
+@dataclass
+class DerivativeNode:
+    """A node in the derivative tree of a polynomial."""
+    multiindex: Tuple[int, ...]
+    depth: int
+    children: List['DerivativeNode'] = field(default_factory=list)
+    is_leaf: bool = False
+    hessian: Optional[np.ndarray] = None
+    
+    def leaf_count(self) -> int:
+        """Count leaves in this subtree."""
+        if self.is_leaf:
+            return 1
+        return sum(child.leaf_count() for child in self.children)
+
+
+def build_derivative_tree(n: int, d: int, max_depth: Optional[int] = None) -> DerivativeNode:
+    """Build the full derivative tree for recognition of degree-d polys in n vars.
+    
+    The tree has depth d-2, with leaves at the quadratic level.
+    Each internal node at depth k has n children (one per variable).
+    
+    Time: O(n^(d-2) · n)
+    Space: O(n^(d-2) · n)
+    
     Args:
-        n: Number of variables
-        d: Weight (degree)
-
+        n: number of variables
+        d: degree of polynomial
+        max_depth: optional depth limit (default: d-2)
+    
     Returns:
-        List of tuples, each representing a multiindex
-
-    Example:
-        >>> enumerate_multiindices(3, 2)
-        [(2, 0, 0), (1, 1, 0), (1, 0, 1), (0, 2, 0), (0, 1, 1), (0, 0, 2)]
+        Root node of the derivative tree
     """
-    result = []
-    for combo in combinations_with_replacement(range(n), d):
-        alpha = [0] * n
-        for v in combo:
-            alpha[v] += 1
-        result.append(tuple(alpha))
+    if max_depth is None:
+        max_depth = max(0, d - 2)
+    
+    root = DerivativeNode(
+        multiindex=tuple([0] * n),
+        depth=0,
+        is_leaf=(max_depth == 0)
+    )
+    
+    def build_subtree(node: DerivativeNode):
+        if node.depth >= max_depth:
+            node.is_leaf = True
+            return
+        for var in range(n):
+            child_mi = list(node.multiindex)
+            child_mi[var] += 1
+            child = DerivativeNode(
+                multiindex=tuple(child_mi),
+                depth=node.depth + 1
+            )
+            build_subtree(child)
+            node.children.append(child)
+    
+    build_subtree(root)
+    return root
+
+
+def unique_leaves(tree: DerivativeNode) -> Set[Tuple[int, ...]]:
+    """Extract unique leaf multiindices from a derivative tree.
+    
+    Multiple branches may reach the same multiindex (due to commutativity
+    of partial derivatives), so the number of unique leaves equals
+    multiIndexCount(n, d-2), not n^(d-2).
+    """
+    if tree.is_leaf:
+        return {tree.multiindex}
+    result = set()
+    for child in tree.children:
+        result.update(unique_leaves(child))
     return result
 
 
-def multiindex_count_exact(n: int, d: int) -> int:
-    """
-    Exact count of multiindices: C(n + d - 1, d).
-
-    This is the stars-and-bars formula. The formal development proves
-    this count is ≥ 2^k when n ≥ k+1 (multiindex_count_ge_two_pow).
-
-    Time complexity: O(min(n, d))
-
-    Args:
-        n: Number of variables
-        d: Weight
-
-    Returns:
-        The binomial coefficient C(n + d - 1, d)
-    """
-    return math.comb(n + d - 1, d)
-
-
 # ============================================================
-# Algorithm 2: Derivative Tree Traversal
+# Algorithm 3: Certificate Size Computation
 # ============================================================
 
-class DerivativeTree:
-    """
-    Represents the recursive derivative tree for Lorentzian recognition.
-
-    For a homogeneous polynomial of degree d in n variables, the recognition
-    tree has:
-    - Root: the original polynomial
-    - Internal nodes: partial derivatives
-    - Leaves: quadratic polynomials (degree 2)
-    - Each leaf requires a Hessian eigenvalue check
-
-    The number of leaves = C(n + d - 3, d - 2) for d ≥ 2.
-    """
-
-    def __init__(self, n: int, d: int):
-        """
-        Initialize the derivative tree.
-
-        Args:
-            n: Number of variables
-            d: Degree of the polynomial
-        """
-        self.n = n
-        self.d = d
-        self.leaves = enumerate_multiindices(n, max(0, d - 2)) if d >= 2 else [()]
-
-    @property
-    def leaf_count(self) -> int:
-        """Number of quadratic leaves."""
-        return len(self.leaves)
-
-    @property
-    def upper_bound(self) -> int:
-        """Upper bound n^(d-2) from catalog."""
-        if self.d < 2:
-            return 1
-        return self.n ** (self.d - 2)
-
-    @property
-    def lower_bound(self) -> int:
-        """Lower bound 2^(d-2) when n > d-2."""
-        if self.d < 2:
-            return 1
-        k = self.d - 2
-        if self.n > k:
-            return 2 ** k
-        return 1
-
-    def traverse(self, max_display: int = 10) -> List[Dict]:
-        """
-        Traverse the derivative tree and return leaf information.
-
-        Args:
-            max_display: Maximum number of leaves to display
-
-        Returns:
-            List of dicts with leaf multiindex and derivative sequence
-        """
-        results = []
-        for i, alpha in enumerate(self.leaves[:max_display]):
-            results.append({
-                'index': i,
-                'multiindex': alpha,
-                'derivative_order': sum(alpha),
-                'remaining_degree': 2,
-            })
-        return results
-
-
-# ============================================================
-# Algorithm 3: Hessian Eigenvalue Checker
-# ============================================================
-
-def compute_hessian_from_matrix(A: np.ndarray) -> np.ndarray:
-    """
-    Compute the Hessian of P_A(x) = Σ A[i,j] x_i x_j.
-
-    By the Hessian Spectral Encoding theorem (hessian_recovers_matrix):
-    H(i,j) = A(i,j) + A(j,i)
-
-    For symmetric A: H = 2A.
-
-    Time complexity: O(n²)
-
-    Args:
-        A: Square matrix
-
+def certificate_size(n: int, d: int) -> Dict[str, int]:
+    """Compute certificate complexity metrics.
+    
     Returns:
-        Hessian matrix H = A + A^T
-    """
-    return A + A.T
-
-
-def check_lorentzian_signature(H: np.ndarray, tol: float = 1e-10) -> Tuple[bool, np.ndarray]:
-    """
-    Check if a symmetric matrix has Lorentzian signature
-    (at most one positive eigenvalue).
-
-    Time complexity: O(n³) for eigenvalue decomposition
-
-    Args:
-        H: Symmetric matrix
-        tol: Tolerance for eigenvalue sign determination
-
-    Returns:
-        (is_lorentzian, eigenvalues)
-    """
-    eigenvalues = np.linalg.eigvalsh(H)
-    n_positive = np.sum(eigenvalues > tol)
-    return n_positive <= 1, eigenvalues
-
-
-def check_all_leaves_lorentzian(
-    coefficient_tensor: Dict[Tuple[int, ...], float],
-    n: int,
-    d: int,
-    max_check: int = 1000
-) -> Tuple[bool, int, Optional[Tuple[int, ...]]]:
-    """
-    Check Lorentzian condition at all quadratic leaves.
-
-    For each multiindex α with |α| = d-2, compute the Hessian of
-    the (d-2)-th derivative ∂^α f and check Lorentzian signature.
-
-    Args:
-        coefficient_tensor: Maps multiindices to coefficients
-        n: Number of variables
-        d: Degree
-        max_check: Maximum leaves to check
-
-    Returns:
-        (all_lorentzian, leaves_checked, first_violation)
+        Dictionary with exact count, upper bound, lower bounds.
     """
     if d < 2:
-        return True, 0, None
-
-    leaves = enumerate_multiindices(n, d - 2)
-    checked = 0
-
-    for alpha in leaves[:max_check]:
-        # For a monomial x^β, ∂^α(x^β) = (β!/( β-α)!) x^(β-α) if β ≥ α
-        # The resulting quadratic's Hessian can be computed from coefficients
-        H = np.zeros((n, n))
-
-        for beta, coeff in coefficient_tensor.items():
-            # Check if beta ≥ alpha componentwise
-            if all(beta[k] >= alpha[k] for k in range(n)):
-                gamma = tuple(beta[k] - alpha[k] for k in range(n))
-                if sum(gamma) == 2:
-                    # gamma has exactly two nonzero entries (or one entry = 2)
-                    # Find the quadratic contribution
-                    deriv_factor = 1
-                    for k in range(n):
-                        for j in range(alpha[k]):
-                            deriv_factor *= (beta[k] - j)
-
-                    for ii in range(n):
-                        for jj in range(n):
-                            if gamma[ii] >= 1 and gamma[jj] >= 1:
-                                if ii == jj and gamma[ii] == 2:
-                                    H[ii][jj] += coeff * deriv_factor * 2
-                                elif ii != jj and gamma[ii] >= 1 and gamma[jj] >= 1:
-                                    H[ii][jj] += coeff * deriv_factor
-
-        is_lor, _ = check_lorentzian_signature(H)
-        checked += 1
-
-        if not is_lor:
-            return False, checked, alpha
-
-    return True, checked, None
+        exact = 1
+    else:
+        exact = multiindex_count(n, d - 2)
+    
+    upper = n ** (d - 2) if d >= 2 else 1
+    lower_linear = max(0, d - 1) if n >= 2 else 0
+    lower_exp = 2 ** ((d - 2) // 2) if d >= 4 and n > (d - 2) // 2 else 0
+    
+    return {
+        'exact': exact,
+        'upper_bound': upper,
+        'lower_linear': lower_linear,
+        'lower_exponential': lower_exp,
+        'n': n,
+        'd': d,
+    }
 
 
-# ============================================================
-# Algorithm 4: SAT-to-Polynomial Encoding
-# ============================================================
-
-class CNFFormula:
-    """CNF formula representation."""
-
-    def __init__(self, n_vars: int, clauses: List[List[Tuple[int, bool]]]):
-        self.n_vars = n_vars
-        self.clauses = clauses
-
-    def is_satisfied_by(self, assignment: Tuple[bool, ...]) -> bool:
-        for clause in self.clauses:
-            if not any(assignment[v] == p for v, p in clause):
-                return False
-        return True
-
-    def brute_force_sat(self) -> Tuple[bool, Optional[Tuple[bool, ...]]]:
-        from itertools import product
-        for a in product([False, True], repeat=self.n_vars):
-            if self.is_satisfied_by(a):
-                return True, a
-        return False, None
-
-    def obstruction_count(self) -> Dict[Tuple[bool, ...], int]:
-        """Count falsified clauses per assignment."""
-        from itertools import product
-        result = {}
-        for a in product([False, True], repeat=self.n_vars):
-            count = sum(1 for c in self.clauses
-                       if not any(a[v] == p for v, p in c))
-            result[a] = count
-        return result
-
-
-def encode_cnf_as_polynomial_coefficients(
-    phi: CNFFormula
-) -> Dict[Tuple[int, ...], float]:
-    """
-    Encode a CNF formula as polynomial coefficients.
-
-    Creates a polynomial whose derivative structure mirrors
-    the clause structure of the formula.
-
-    The encoding uses slack variables to make the polynomial homogeneous.
-
+def find_superpolynomial_witness(c: int, N: int = 2) -> Tuple[int, int, int]:
+    """Find n, d such that numberOfQuadraticLeaves(n, d) > n^c.
+    
+    Guaranteed to terminate by Theorem D.
+    
     Args:
-        phi: CNF formula
-
+        c: exponent of the polynomial bound
+        N: minimum n value
+    
     Returns:
-        Dictionary mapping multiindices to coefficients
+        (n, d, leaf_count) with leaf_count > n^c
     """
-    n = phi.n_vars
-    m = len(phi.clauses)
-    total_vars = n + m + 1  # original + clause slack + homogenizing
-
-    coeffs: Dict[Tuple[int, ...], float] = {}
-
-    # For each clause, add a contribution
-    for c_idx, clause in enumerate(phi.clauses):
-        for var, pol in clause:
-            alpha = [0] * total_vars
-            alpha[var] = 1 if pol else 0
-            alpha[n + c_idx] = 1  # clause slack variable
-            alpha[-1] = max(0, m + 2 - sum(alpha))  # homogenize
-            key = tuple(alpha)
-            coeffs[key] = coeffs.get(key, 0) + 1.0
-
-    return coeffs
+    for n in range(max(N, 2), 1000):
+        d = 2 * n
+        leaves = multiindex_count(n, d - 2) if d >= 2 else 1
+        if leaves > n ** c:
+            return (n, d, leaves)
+    raise RuntimeError("Should not reach here by theorem guarantee")
 
 
 # ============================================================
-# Algorithm 5: Certificate Complexity Analysis
+# Algorithm 4: SAT-to-Multiindex Encoding
 # ============================================================
 
-def certificate_complexity_analysis(max_n: int = 20) -> List[Dict]:
+def assignment_to_multiindex(tau: Tuple[bool, ...]) -> Tuple[int, ...]:
+    """Encode Boolean assignment as multiindex in 2n variables.
+    
+    τ(i) = True  → α(2i) = 1, α(2i+1) = 0
+    τ(i) = False → α(2i) = 0, α(2i+1) = 1
+    
+    Properties (proved in Lean):
+    - Sum = n (assignmentToMultiindex_sum)
+    - Injective (assignmentToMultiindex_injective)
+    
+    Time: O(n)
+    Space: O(n)
     """
-    Analyze certificate complexity across different regimes.
+    result = []
+    for b in tau:
+        result.extend([1, 0] if b else [0, 1])
+    return tuple(result)
 
-    Returns a table of certificate sizes for various (n, d) pairs.
 
-    Args:
-        max_n: Maximum number of variables to analyze
-
-    Returns:
-        List of analysis results
+def multiindex_to_assignment(alpha: Tuple[int, ...]) -> Optional[Tuple[bool, ...]]:
+    """Decode a multiindex back to a Boolean assignment (partial inverse).
+    
+    Only works for multiindices in the image of assignment_to_multiindex.
+    Returns None if alpha is not a valid encoding.
     """
-    results = []
+    n = len(alpha) // 2
+    if len(alpha) != 2 * n:
+        return None
+    result = []
+    for i in range(n):
+        if alpha[2*i] == 1 and alpha[2*i+1] == 0:
+            result.append(True)
+        elif alpha[2*i] == 0 and alpha[2*i+1] == 1:
+            result.append(False)
+        else:
+            return None
+    return tuple(result)
 
-    for n in range(2, max_n + 1):
-        for regime in ['fixed_d3', 'balanced', 'high_degree']:
-            if regime == 'fixed_d3':
-                d = 3
-            elif regime == 'balanced':
-                d = n
-            else:
-                d = 2 * n
 
-            cert_size = multiindex_count_exact(n, max(0, d - 2))
-            upper = n ** max(0, d - 2) if d >= 2 else 1
-            lower = 2 ** max(0, d - 2) if n > max(0, d - 2) else 1
+def binary_to_multiindex(f: Tuple[bool, ...], n: int, d: int) -> Tuple[int, ...]:
+    """Injection from binary strings to multiindices.
+    
+    Maps f : Fin m → Bool to α : Fin n → ℕ with ∑α = d.
+    
+    Properties (proved in Lean):
+    - Sum = d (binaryToMultiindex_sum)
+    - Injective (binaryToMultiindex_injective)
+    
+    Requires: m < n and m ≤ d where m = len(f).
+    """
+    m = len(f)
+    assert m < n and m <= d, f"Requires m={m} < n={n} and m ≤ d={d}"
+    bits = [1 if b else 0 for b in f]
+    slack = d - sum(bits)
+    return tuple(bits + [slack] + [0] * (n - m - 1))
 
-            results.append({
-                'n': n,
-                'd': d,
-                'regime': regime,
-                'certificate_size': cert_size,
-                'upper_bound': upper,
-                'lower_bound': lower,
-                'log2_size': math.log2(cert_size) if cert_size > 0 else 0,
-            })
 
-    return results
+# ============================================================
+# Algorithm 5: Hessian Signature Checking
+# ============================================================
+
+def polynomial_hessian(coeffs: Dict[Tuple[int, ...], float], n: int) -> np.ndarray:
+    """Compute the Hessian matrix of a multivariate polynomial.
+    
+    H[i][j] = value of ∂²p/∂xᵢ∂xⱼ evaluated at x = 0.
+    For homogeneous degree-2 polynomials, this captures all information.
+    
+    Time: O(|coeffs| · n²)
+    """
+    H = np.zeros((n, n))
+    for mono, coeff in coeffs.items():
+        if len(mono) != n or sum(mono) != 2:
+            continue
+        for i in range(n):
+            for j in range(n):
+                alpha = list(mono)
+                if alpha[i] > 0:
+                    fi = alpha[i]
+                    alpha[i] -= 1
+                    if alpha[j] > 0:
+                        fj = alpha[j]
+                        H[i][j] += coeff * fi * fj
+                    alpha[i] += 1
+    return H
+
+
+def check_lorentzian_signature(H: np.ndarray, tol: float = 1e-10) -> bool:
+    """Check if matrix has at most one positive eigenvalue.
+    
+    Time: O(n³) for eigenvalue computation
+    """
+    eigenvalues = np.linalg.eigvalsh(H)
+    positive_count = sum(1 for ev in eigenvalues if ev > tol)
+    return positive_count <= 1
+
+
+def check_recursive_lorentzian(coeffs: Dict[Tuple[int, ...], float], 
+                                n: int, d: int) -> Tuple[bool, List[str]]:
+    """Check if a polynomial is recursively Lorentzian.
+    
+    Returns (is_lorentzian, list_of_messages).
+    
+    Time: O(multiIndexCount(n, d-2) · n³)
+    """
+    messages = []
+    
+    # Check nonnegativity
+    for mono, coeff in coeffs.items():
+        if coeff < -1e-15:
+            messages.append(f"Negative coefficient at {mono}: {coeff}")
+            return False, messages
+    
+    if d < 2:
+        messages.append("Degree < 2: trivially Lorentzian")
+        return True, messages
+    
+    # Check all quadratic leaves
+    leaf_count = 0
+    for alpha in enumerate_multiindices(n, d - 2):
+        leaf_count += 1
+        # Compute iterated derivative
+        deriv_coeffs = dict(coeffs)
+        for var in range(n):
+            for _ in range(alpha[var]):
+                deriv_coeffs = _differentiate(deriv_coeffs, n, var)
+        
+        H = polynomial_hessian(deriv_coeffs, n)
+        if not check_lorentzian_signature(H):
+            messages.append(f"Leaf α={alpha}: Hessian has >1 positive eigenvalue")
+            return False, messages
+    
+    messages.append(f"All {leaf_count} leaves passed Lorentzian check")
+    return True, messages
+
+
+def _differentiate(coeffs: Dict[Tuple[int, ...], float], 
+                   n: int, var: int) -> Dict[Tuple[int, ...], float]:
+    """Differentiate polynomial with respect to variable var."""
+    result = {}
+    for mono, coeff in coeffs.items():
+        if mono[var] > 0:
+            new_mono = list(mono)
+            new_coeff = coeff * mono[var]
+            new_mono[var] -= 1
+            new_mono = tuple(new_mono)
+            result[new_mono] = result.get(new_mono, 0) + new_coeff
+    return result
 
 
 # ============================================================
@@ -368,40 +348,39 @@ def certificate_complexity_analysis(max_n: int = 20) -> List[Dict]:
 # ============================================================
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Lorentzian Recognition: Algorithm Demonstrations")
-    print("=" * 60)
-
-    # Multiindex enumeration
-    print("\n--- Multiindices of weight 3 in 3 variables ---")
-    indices = enumerate_multiindices(3, 3)
-    print(f"Count: {len(indices)} = C(3+3-1, 3) = C(5,3) = {math.comb(5,3)}")
-    for idx in indices:
-        print(f"  {idx}")
-
-    # Derivative tree
-    print("\n--- Derivative Tree (n=4, d=6) ---")
-    tree = DerivativeTree(4, 6)
-    print(f"Leaf count: {tree.leaf_count}")
-    print(f"Upper bound: {tree.upper_bound}")
-    print(f"Lower bound: {tree.lower_bound}")
-    for leaf in tree.traverse(5):
-        print(f"  Leaf {leaf['index']}: α = {leaf['multiindex']}")
-
-    # Hessian encoding
-    print("\n--- Hessian Encoding ---")
-    A = np.array([[1.0, 0.5], [0.5, -2.0]])
-    H = compute_hessian_from_matrix(A)
-    is_lor, eigs = check_lorentzian_signature(H)
-    print(f"A = {A.tolist()}")
-    print(f"H = A + A^T = {H.tolist()}")
-    print(f"Eigenvalues: {eigs}")
-    print(f"Lorentzian: {is_lor}")
-
-    # Certificate analysis
-    print("\n--- Certificate Complexity Summary ---")
-    results = certificate_complexity_analysis(10)
-    balanced = [r for r in results if r['regime'] == 'balanced']
-    print(f"{'n':>4} | {'d':>4} | {'Cert Size':>12} | {'log2':>8}")
-    for r in balanced:
-        print(f"{r['n']:>4} | {r['d']:>4} | {r['certificate_size']:>12} | {r['log2_size']:>8.2f}")
+    # Example 1: Certificate size analysis
+    print("Certificate Size Analysis")
+    print("=" * 50)
+    for n in [3, 5, 10]:
+        for d in [4, 6, 8]:
+            cs = certificate_size(n, d)
+            print(f"n={n}, d={d}: exact={cs['exact']}, "
+                  f"upper={cs['upper_bound']}, "
+                  f"lower_exp={cs['lower_exponential']}")
+    
+    # Example 2: Boolean encoding
+    print("\nBoolean Encoding Verification")
+    print("=" * 50)
+    n = 4
+    all_assignments = list(iterproduct([False, True], repeat=n))
+    all_multiindices = [assignment_to_multiindex(tau) for tau in all_assignments]
+    print(f"n={n}: {len(all_assignments)} assignments → "
+          f"{len(set(all_multiindices))} distinct multiindices")
+    print(f"All weight {n}: {all(sum(mi) == n for mi in all_multiindices)}")
+    print(f"All decodable: {all(multiindex_to_assignment(mi) is not None for mi in all_multiindices)}")
+    
+    # Example 3: Superpolynomial witnesses
+    print("\nSuperpolynomial Witnesses")
+    print("=" * 50)
+    for c in [2, 3, 5]:
+        n, d, leaves = find_superpolynomial_witness(c)
+        print(f"c={c}: n={n}, d={d}, leaves={leaves:,} > n^c={n**c:,}")
+    
+    # Example 4: Simple Lorentzian check
+    print("\nLorentzian Check: x² + 2xy + y²")
+    print("=" * 50)
+    coeffs = {(2, 0): 1.0, (1, 1): 2.0, (0, 2): 1.0}
+    is_lor, msgs = check_recursive_lorentzian(coeffs, 2, 2)
+    print(f"Is Lorentzian: {is_lor}")
+    for msg in msgs:
+        print(f"  {msg}")

@@ -1,732 +1,869 @@
 #!/usr/bin/env python3
 """
-Applications of Lorentzian Recognition Complexity Theory
+applications.py — Applications of Lorentzian recognition complexity results.
 
-Demonstrates real-world applications:
-1. Log-concavity testing for combinatorial sequences
-2. Certificate-based polynomial positivity verification
-3. Complexity classification of polynomial families
+Demonstrates real-world connections:
+1. Log-concavity verification for combinatorial sequences
+2. Certificate complexity for optimization barriers
+3. SAT instance analysis through multiindex lens
 """
 
+from math import comb, factorial, log2
+from itertools import product as iterproduct
+from typing import List, Tuple, Dict
 import numpy as np
-import math
-from typing import List, Tuple
 
 
-def log_concavity_test(seq: List[float]) -> Tuple[bool, List[int]]:
+def multiindex_count(n: int, d: int) -> int:
+    """Stars-and-bars count."""
+    if n == 0:
+        return 1 if d == 0 else 0
+    return comb(n + d - 1, d)
+
+
+def number_of_quadratic_leaves(n: int, d: int) -> int:
+    """Number of leaves in Lorentzian recognition tree."""
+    return 1 if d < 2 else multiindex_count(n, d - 2)
+
+
+# ============================================================
+# Application 1: Log-Concavity Verification Complexity
+# ============================================================
+
+def log_concavity_certificate_analysis():
+    """Analyze the complexity of verifying log-concavity via Lorentzian certificates.
+    
+    Many important combinatorial sequences (chromatic polynomials, matching
+    polynomials, characteristic polynomials of matroids) are conjectured or
+    proved to be log-concave. Lorentzian polynomials provide certificates
+    for log-concavity. This function analyzes how the certificate size
+    grows for typical combinatorial applications.
     """
-    Test if a sequence is log-concave: a_k^2 ≥ a_{k-1} * a_{k+1}.
+    print("="*60)
+    print("APPLICATION 1: Log-Concavity Certificate Complexity")
+    print("="*60)
+    
+    # Complete graph chromatic polynomial: degree n-1, n variables
+    print("\nChromatic polynomial of K_n (complete graph on n vertices):")
+    print(f"  Degree = n-1, Variables = n")
+    print(f"  {'n':>4} | {'degree':>6} | {'leaves':>12} | {'log2(leaves)':>12}")
+    print(f"  {'-'*4}-+-{'-'*6}-+-{'-'*12}-+-{'-'*12}")
+    for n in range(3, 16):
+        d = n - 1
+        leaves = number_of_quadratic_leaves(n, d)
+        log_leaves = log2(leaves) if leaves > 0 else 0
+        print(f"  {n:>4} | {d:>6} | {leaves:>12,} | {log_leaves:>12.1f}")
+    
+    # Matroid characteristic polynomial
+    print("\nMatroid rank r with n elements (degree = r, vars = n):")
+    print(f"  {'n':>4} | {'r':>4} | {'leaves':>12} | {'tractable?':>10}")
+    print(f"  {'-'*4}-+-{'-'*4}-+-{'-'*12}-+-{'-'*10}")
+    for n in [5, 10, 20, 50, 100]:
+        for r in [3, 5, n//2]:
+            if r < 2:
+                continue
+            leaves = number_of_quadratic_leaves(n, r)
+            tractable = "Yes" if leaves < 10**6 else "Marginal" if leaves < 10**9 else "No"
+            print(f"  {n:>4} | {r:>4} | {leaves:>12,} | {tractable:>10}")
 
-    Log-concavity is a consequence of Lorentzian positivity for
-    generating polynomials. If the generating polynomial is Lorentzian,
-    the coefficient sequence is log-concave.
 
-    Args:
-        seq: Sequence of nonneg reals
+# ============================================================
+# Application 2: Optimization Barrier Analysis  
+# ============================================================
 
-    Returns:
-        (is_log_concave, list of violation indices)
+def optimization_barrier_analysis():
+    """Analyze how Lorentzian certificate complexity creates barriers
+    for convexity certification in optimization.
+    
+    The tangent-space negativity theorem (from the catalog) connects
+    Lorentzian signature to convexity. This means certifying convexity
+    via the Lorentzian route has complexity governed by our lower bounds.
     """
-    violations = []
-    for k in range(1, len(seq) - 1):
-        if seq[k] > 0:
-            if seq[k] ** 2 < seq[k - 1] * seq[k + 1] - 1e-12:
-                violations.append(k)
-        elif seq[k - 1] * seq[k + 1] > 1e-12:
-            violations.append(k)
-    return len(violations) == 0, violations
-
-
-def binomial_coefficients(n: int) -> List[int]:
-    """Row n of Pascal's triangle."""
-    return [math.comb(n, k) for k in range(n + 1)]
-
-
-def stirling_numbers_second(n: int) -> List[int]:
-    """Stirling numbers of the second kind S(n, k) for k = 0, ..., n."""
-    S = [[0] * (n + 1) for _ in range(n + 1)]
-    S[0][0] = 1
-    for i in range(1, n + 1):
-        for k in range(1, i + 1):
-            S[i][k] = k * S[i-1][k] + S[i-1][k-1]
-    return S[n]
-
-
-def certificate_size_for_polynomial(n_vars: int, degree: int) -> dict:
-    """
-    Compute certificate complexity for a polynomial.
-
-    Returns analysis of the Lorentzian recognition certificate.
-    """
-    if degree < 2:
-        cert_size = 1
-    else:
-        cert_size = math.comb(n_vars + degree - 3, degree - 2)
-
-    return {
-        'n_vars': n_vars,
-        'degree': degree,
-        'certificate_size': cert_size,
-        'upper_bound': n_vars ** max(0, degree - 2),
-        'is_tractable': degree <= 10 or cert_size <= 10**6,
-        'bits_needed': math.ceil(math.log2(cert_size + 1)),
-    }
-
-
-def complexity_classification():
-    """Classify polynomial families by recognition complexity."""
-    print("=" * 70)
-    print("COMPLEXITY CLASSIFICATION OF POLYNOMIAL FAMILIES")
-    print("=" * 70)
-
-    families = [
-        ("Linear (d=1)", [(n, 1) for n in [5, 10, 50, 100]]),
-        ("Quadratic (d=2)", [(n, 2) for n in [5, 10, 50, 100]]),
-        ("Cubic (d=3)", [(n, 3) for n in [5, 10, 50, 100]]),
-        ("Quartic (d=4)", [(n, 4) for n in [5, 10, 50, 100]]),
-        ("Balanced (d=n)", [(n, n) for n in [5, 10, 15, 20]]),
-        ("High degree (d=2n)", [(n, 2*n) for n in [5, 8, 10, 12]]),
+    print("\n" + "="*60)
+    print("APPLICATION 2: Optimization Convexity Barriers")
+    print("="*60)
+    
+    print("\nScenario: Certifying convexity of degree-d barriers in n dimensions")
+    print("The Lorentzian route requires checking all quadratic leaves.")
+    print()
+    
+    scenarios = [
+        ("Portfolio optimization (10 assets, cubic)", 10, 3),
+        ("Sensor network (20 nodes, quartic)", 20, 4),
+        ("Neural network (50 params, degree 6)", 50, 6),
+        ("Quantum state (100 qubits, degree 8)", 100, 8),
+        ("Climate model (200 vars, degree 10)", 200, 10),
+        ("Protein folding (500 residues, degree 12)", 500, 12),
     ]
-
-    for name, pairs in families:
-        print(f"\n--- {name} ---")
-        print(f"{'n':>6} | {'d':>6} | {'Cert Size':>15} | {'Tractable?':>10}")
-        print("-" * 50)
-        for n, d in pairs:
-            info = certificate_size_for_polynomial(n, d)
-            tractable = "YES" if info['is_tractable'] else "NO"
-            print(f"{n:>6} | {d:>6} | {info['certificate_size']:>15} | {tractable:>10}")
-
-
-def demonstrate_log_concavity():
-    """Show log-concavity testing on various sequences."""
-    print("\n" + "=" * 70)
-    print("LOG-CONCAVITY TESTING")
-    print("=" * 70)
-
-    sequences = [
-        ("Binomial C(8,k)", binomial_coefficients(8)),
-        ("Stirling S(8,k)", stirling_numbers_second(8)),
-        ("Powers of 2", [2**k for k in range(8)]),
-        ("Not log-concave", [1, 1, 5, 1, 1]),
-    ]
-
-    for name, seq in sequences:
-        is_lc, violations = log_concavity_test(seq)
-        print(f"\n{name}: {seq}")
-        print(f"  Log-concave: {is_lc}")
-        if violations:
-            print(f"  Violations at indices: {violations}")
+    
+    print(f"  {'Scenario':<45} | {'Leaves':>12} | {'Feasible?':>10}")
+    print(f"  {'-'*45}-+-{'-'*12}-+-{'-'*10}")
+    for desc, n, d in scenarios:
+        leaves = number_of_quadratic_leaves(n, d)
+        if leaves < 10**6:
+            feasible = "Easy"
+        elif leaves < 10**9:
+            feasible = "Hard"
+        elif leaves < 10**15:
+            feasible = "Very hard"
         else:
-            print("  ✓ Consistent with Lorentzian generating polynomial")
+            feasible = "Infeasible"
+        leaves_str = f"{leaves:,}" if leaves < 10**15 else f"{leaves:.2e}"
+        print(f"  {desc:<45} | {leaves_str:>12} | {feasible:>10}")
+
+
+# ============================================================
+# Application 3: SAT Complexity Through Multiindex Lens
+# ============================================================
+
+def sat_multiindex_analysis():
+    """Analyze SAT instance structure through the multiindex encoding.
+    
+    Each Boolean assignment to n variables becomes a multiindex in 2n variables.
+    The distribution of satisfying vs unsatisfying assignments in multiindex
+    space reveals structure about the SAT instance.
+    """
+    print("\n" + "="*60)
+    print("APPLICATION 3: SAT Analysis via Multiindex Encoding")
+    print("="*60)
+    
+    def assignment_to_multiindex(tau):
+        result = []
+        for b in tau:
+            result.extend([1, 0] if b else [0, 1])
+        return tuple(result)
+    
+    # Example: Random 3-SAT instances
+    import random
+    random.seed(42)
+    
+    for n in [4, 5, 6]:
+        m = int(4.26 * n)  # Near the SAT threshold
+        
+        # Generate random 3-SAT
+        clauses = []
+        for _ in range(m):
+            vars_chosen = random.sample(range(n), 3)
+            clause = [(v, random.choice([True, False])) for v in vars_chosen]
+            clauses.append(clause)
+        
+        # Count satisfying assignments
+        sat_count = 0
+        sat_multiindices = []
+        unsat_multiindices = []
+        
+        for tau in iterproduct([False, True], repeat=n):
+            satisfied = True
+            for clause in clauses:
+                if not any(tau[v] == p for v, p in clause):
+                    satisfied = False
+                    break
+            
+            mi = assignment_to_multiindex(tau)
+            if satisfied:
+                sat_count += 1
+                sat_multiindices.append(mi)
+            else:
+                unsat_multiindices.append(mi)
+        
+        total = 2**n
+        frac = sat_count / total
+        
+        print(f"\nRandom 3-SAT: n={n}, m={m}, ratio={m/n:.2f}")
+        print(f"  Total assignments: {total}")
+        print(f"  Satisfying: {sat_count} ({frac:.1%})")
+        print(f"  Multiindex space: {2*n} dimensions, weight {n}")
+        print(f"  Total multiindices of weight {n}: {multiindex_count(2*n, n)}")
+        print(f"  Encoded SAT assignments: {sat_count}/{multiindex_count(2*n, n)} "
+              f"({sat_count/multiindex_count(2*n, n):.1%} of space)")
+
+
+# ============================================================
+# Application 4: Complexity Phase Transition Map
+# ============================================================
+
+def phase_transition_map():
+    """Map the complexity phase transition in the (n, d) plane.
+    
+    Shows where recognition transitions from tractable to hard.
+    """
+    print("\n" + "="*60)
+    print("APPLICATION 4: Complexity Phase Transition")
+    print("="*60)
+    
+    print("\nLeaf count classification in the (n, d) plane:")
+    print("  T = Trivial (<100), M = Moderate (<10^6), H = Hard (<10^12), X = Extreme")
+    print()
+    
+    hdr = 'n\\d'
+    print(f"  {hdr:>4}", end="")
+    for d in range(2, 21):
+        print(f" {d:>3}", end="")
+    print()
+    print("  " + "-" * 62)
+    
+    for n in range(2, 16):
+        print(f"  {n:>4}", end="")
+        for d in range(2, 21):
+            leaves = number_of_quadratic_leaves(n, d)
+            if leaves < 100:
+                c = "  T"
+            elif leaves < 10**6:
+                c = "  M"
+            elif leaves < 10**12:
+                c = "  H"
+            else:
+                c = "  X"
+            print(c, end="")
+        print()
+    
+    print("\n  The phase transition boundary runs diagonally:")
+    print("  tractability requires d = O(log n / log log n)")
 
 
 if __name__ == "__main__":
-    demonstrate_log_concavity()
-    complexity_classification()
-
-    print("\n" + "=" * 70)
-    print("KEY INSIGHT")
-    print("=" * 70)
-    print("""
-The formally verified phase transition theorem shows:
-
-  Fixed degree (e.g., d=3):
-    Certificate size = O(n) → TRACTABLE
-    Every fixed-degree Lorentzian recognition has polynomial certificates.
-
-  Growing degree (d = n):
-    Certificate size ≥ 2^(n-2) → INTRACTABLE
-    No polynomial-time algorithm can check all quadratic leaves.
-
-This means Lorentzian positivity, a central predicate in Hodge theory,
-has fundamentally different computational character depending on whether
-the degree is bounded or unbounded.
-    """)
+    log_concavity_certificate_analysis()
+    optimization_barrier_analysis()
+    sat_multiindex_analysis()
+    phase_transition_map()
 
 
 #!/usr/bin/env python3
 """
-Interactive Demo: Complexity Barriers for Lorentzian Recognition
+demo.py — Interactive demonstration of Lorentzian recognition complexity barriers.
 
-Demonstrates the key theorems from the formal development:
-1. Exponential growth of derivative-tree leaf counts
-2. CNF formula encoding and SAT-obstruction duality
-3. Matrix-to-polynomial Hessian encoding
-4. Phase transition between tractable and intractable regimes
-
-Usage:
-    python demo.py
+Demonstrates the key theorems:
+1. Multiindex counting and leaf growth
+2. Boolean assignment → multiindex encoding
+3. CNF formula encoding and branch exploration
+4. Certificate size computation and exponential barrier
 """
 
-import numpy as np
-from itertools import product as cartesian_product
+from math import comb, factorial
+from itertools import product as iterproduct
 from typing import List, Tuple, Dict, Optional
-import math
+import numpy as np
 
-
-# ============================================================
-# Part 1: Multiindex Count and Exponential Lower Bounds
-# ============================================================
 
 def multiindex_count(n: int, d: int) -> int:
-    """Count multiindices of weight d in n variables = C(n+d-1, d)."""
-    return math.comb(n + d - 1, d)
+    """Exact count of multiindices of weight d in n variables.
+    Uses stars-and-bars: C(n + d - 1, d)."""
+    if n == 0:
+        return 1 if d == 0 else 0
+    return comb(n + d - 1, d)
 
 
-def quadratic_leaf_count(n: int, d: int) -> int:
+def number_of_quadratic_leaves(n: int, d: int) -> int:
     """Number of quadratic leaves in recursive Lorentzian recognition."""
     if d < 2:
         return 1
     return multiindex_count(n, d - 2)
 
 
-def demonstrate_phase_transition():
-    """Show the phase transition between tractable and intractable regimes."""
-    print("=" * 70)
-    print("PHASE TRANSITION: Fixed Degree vs. Growing Degree")
-    print("=" * 70)
-
-    # Fixed degree d=3: polynomial growth O(n)
-    print("\n--- Fixed Degree d = 3 (Tractable Regime) ---")
-    print(f"{'n':>6} | {'Leaves':>12} | {'Upper Bound n^1':>15} | {'Ratio':>8}")
-    print("-" * 50)
-    for n in [5, 10, 20, 50, 100, 500, 1000]:
-        leaves = quadratic_leaf_count(n, 3)
-        upper = n
-        ratio = leaves / upper if upper > 0 else 0
-        print(f"{n:>6} | {leaves:>12} | {upper:>15} | {ratio:>8.4f}")
-
-    # Growing degree d=n: exponential growth
-    print("\n--- Growing Degree d = n (Intractable Regime) ---")
-    print(f"{'n':>6} | {'Leaves':>15} | {'2^(n-2)':>15} | {'n^(n-2)':>15}")
-    print("-" * 65)
-    for n in range(4, 16):
-        leaves = quadratic_leaf_count(n, n)
-        lower = 2 ** (n - 2)
-        upper = n ** (n - 2) if n > 2 else 1
-        print(f"{n:>6} | {leaves:>15} | {lower:>15} | {upper:>15}")
-
-    print("\n✓ Certificate complexity is POLYNOMIAL for fixed degree")
-    print("✓ Certificate complexity is EXPONENTIAL when degree grows with n")
+def enumerate_multiindices(n: int, d: int) -> List[Tuple[int, ...]]:
+    """Enumerate all multiindices alpha : {0,...,n-1} -> N with sum = d."""
+    if n == 0:
+        return [()] if d == 0 else []
+    if n == 1:
+        return [(d,)]
+    result = []
+    for k in range(d + 1):
+        for rest in enumerate_multiindices(n - 1, d - k):
+            result.append((k,) + rest)
+    return result
 
 
-# ============================================================
-# Part 2: CNF Formula Encoding and SAT-Obstruction Duality
-# ============================================================
+def assignment_to_multiindex(tau: Tuple[bool, ...]) -> Tuple[int, ...]:
+    """Encode a Boolean assignment as a multiindex in 2n variables.
+    
+    Maps tau : {0,...,n-1} -> Bool to alpha : {0,...,2n-1} -> N where:
+    - alpha(2i) = 1 if tau(i) = True, else 0
+    - alpha(2i+1) = 0 if tau(i) = True, else 1
+    Total weight = n.
+    """
+    result = []
+    for b in tau:
+        result.append(1 if b else 0)
+        result.append(0 if b else 1)
+    return tuple(result)
+
+
+def binary_to_multiindex(f: Tuple[bool, ...], n: int, d: int) -> Tuple[int, ...]:
+    """Injection from binary strings to multiindices.
+    
+    f : Fin m -> Bool maps to alpha : Fin n -> N with sum = d.
+    First m coordinates are 0/1 from f, coordinate m gets the slack,
+    remaining coordinates are 0.
+    """
+    m = len(f)
+    assert m < n and m <= d
+    bits = [1 if b else 0 for b in f]
+    slack = d - sum(bits)
+    return tuple(bits + [slack] + [0] * (n - m - 1))
+
 
 class CNFFormula:
-    """A CNF formula over n Boolean variables."""
-
-    def __init__(self, n_vars: int, clauses: List[List[Tuple[int, bool]]]):
-        self.n_vars = n_vars
-        self.clauses = clauses  # Each clause is [(var_index, polarity), ...]
-
-    def is_satisfied_by(self, assignment: Tuple[bool, ...]) -> bool:
-        """Check if assignment satisfies the formula."""
+    """A CNF formula with n variables and m clauses."""
+    
+    def __init__(self, n: int, clauses: List[List[Tuple[int, bool]]]):
+        self.n = n
+        self.clauses = clauses
+        self.m = len(clauses)
+    
+    def is_satisfied_by(self, tau: Tuple[bool, ...]) -> bool:
+        """Check if assignment tau satisfies this formula."""
         for clause in self.clauses:
-            clause_sat = False
-            for var, pol in clause:
-                if assignment[var] == pol:
-                    clause_sat = True
-                    break
-            if not clause_sat:
+            if not any(tau[var] == pol for var, pol in clause):
                 return False
         return True
-
-    def is_satisfiable(self) -> Tuple[bool, Optional[Tuple[bool, ...]]]:
-        """Brute-force SAT check."""
-        for assignment in cartesian_product([False, True], repeat=self.n_vars):
-            if self.is_satisfied_by(assignment):
-                return True, assignment
-        return False, None
-
-    def obstruction_map(self) -> Dict[Tuple[bool, ...], List[int]]:
-        """For each assignment, find which clauses are falsified."""
-        result = {}
-        for assignment in cartesian_product([False, True], repeat=self.n_vars):
-            falsified = []
-            for idx, clause in enumerate(self.clauses):
-                clause_sat = any(assignment[v] == p for v, p in clause)
-                if not clause_sat:
-                    falsified.append(idx)
-            result[assignment] = falsified
+    
+    def all_satisfying(self) -> List[Tuple[bool, ...]]:
+        """Find all satisfying assignments."""
+        result = []
+        for tau in iterproduct([False, True], repeat=self.n):
+            if self.is_satisfied_by(tau):
+                result.append(tau)
         return result
+    
+    def is_satisfiable(self) -> bool:
+        return len(self.all_satisfying()) > 0
+    
+    def sat_count(self) -> int:
+        return len(self.all_satisfying())
 
 
-def demonstrate_sat_obstruction_duality():
-    """Demonstrate the SAT-Obstruction Duality theorem."""
-    print("\n" + "=" * 70)
-    print("SAT-OBSTRUCTION DUALITY")
-    print("=" * 70)
-
-    # Example 1: Unsatisfiable formula (x ∧ ¬x)
-    print("\n--- Example 1: UNSAT formula (x AND NOT x) ---")
-    phi1 = CNFFormula(1, [[(0, True)], [(0, False)]])
-    sat1, _ = phi1.is_satisfiable()
-    obs1 = phi1.obstruction_map()
-
-    print(f"Satisfiable: {sat1}")
-    print("Obstruction map (assignment → falsified clauses):")
-    for assign, falsified in obs1.items():
-        print(f"  τ = {assign} → falsified clauses: {falsified}")
-    print("✓ Every assignment has at least one falsified clause (UNSAT verified)")
-
-    # Example 2: Satisfiable formula
-    print("\n--- Example 2: SAT formula (x₁ OR x₂) AND (NOT x₁ OR x₂) ---")
-    phi2 = CNFFormula(2, [[(0, True), (1, True)], [(0, False), (1, True)]])
-    sat2, witness2 = phi2.is_satisfiable()
-    obs2 = phi2.obstruction_map()
-
-    print(f"Satisfiable: {sat2}, witness: {witness2}")
-    print("Obstruction map:")
-    for assign, falsified in obs2.items():
-        status = "✓ consistent" if not falsified else f"falsified: {falsified}"
-        print(f"  τ = {assign} → {status}")
-
-    # Example 3: Pigeonhole formula (3 pigeons, 2 holes)
-    print("\n--- Example 3: Pigeonhole PHP(3,2) ---")
-    # Each pigeon must go to some hole
-    clauses = []
-    for p in range(3):
-        clauses.append([(p * 2 + h, True) for h in range(2)])
-    # No two pigeons in same hole
-    for h in range(2):
-        for p1 in range(3):
-            for p2 in range(p1 + 1, 3):
-                clauses.append([(p1 * 2 + h, False), (p2 * 2 + h, False)])
-
-    phi3 = CNFFormula(6, clauses)
-    sat3, _ = phi3.is_satisfiable()
-    obs3 = phi3.obstruction_map()
-    all_obstructed = all(len(f) > 0 for f in obs3.values())
-
-    print(f"Satisfiable: {sat3}")
-    print(f"Total assignments: {len(obs3)}")
-    print(f"All assignments obstructed: {all_obstructed}")
-    print(f"✓ SAT-Obstruction Duality: UNSAT ↔ all assignments obstructed")
+def compute_hessian(coefficients: Dict[Tuple[int, ...], float], n: int) -> np.ndarray:
+    """Compute the Hessian matrix of a polynomial given as coefficient dict.
+    H[i][j] = coefficient of x_i * x_j after taking d²/dx_i dx_j.
+    For a homogeneous degree-2 polynomial, this captures all information.
+    """
+    H = np.zeros((n, n))
+    for mono, coeff in coefficients.items():
+        if sum(mono) != 2:
+            continue
+        for i in range(n):
+            for j in range(n):
+                alpha = list(mono)
+                if alpha[i] > 0:
+                    factor_i = alpha[i]
+                    alpha[i] -= 1
+                    if alpha[j] > 0:
+                        factor_j = alpha[j]
+                        H[i][j] += coeff * factor_i * factor_j
+                    alpha[i] += 1
+    return H
 
 
-# ============================================================
-# Part 3: Matrix-to-Polynomial Hessian Encoding
-# ============================================================
-
-def matrix_to_quad_poly_hessian(A: np.ndarray) -> np.ndarray:
-    """Compute the Hessian of the polynomial P_A(x) = ∑ A[i,j] x_i x_j.
-    Returns H[i,j] = A[i,j] + A[j,i]."""
-    return A + A.T
-
-
-def has_lorentzian_signature(A: np.ndarray) -> Tuple[bool, str]:
+def has_lorentzian_signature(H: np.ndarray) -> bool:
     """Check if a symmetric matrix has at most one positive eigenvalue."""
-    eigenvalues = np.linalg.eigvalsh(A)
-    n_positive = np.sum(eigenvalues > 1e-10)
-    return n_positive <= 1, f"eigenvalues: {np.sort(eigenvalues)[::-1]}"
+    eigenvalues = np.linalg.eigvalsh(H)
+    return sum(1 for ev in eigenvalues if ev > 1e-10) <= 1
 
 
-def demonstrate_hessian_encoding():
-    """Demonstrate the Hessian spectral encoding theorem."""
-    print("\n" + "=" * 70)
-    print("HESSIAN SPECTRAL ENCODING (Cross-Domain Bridge)")
-    print("=" * 70)
-
-    # Example 1: Lorentzian signature matrix
-    print("\n--- Example 1: Lorentzian matrix (1 positive eigenvalue) ---")
-    A1 = np.array([[2.0, 0, 0],
-                    [0, -1, 0],
-                    [0, 0, -3]])
-    H1 = matrix_to_quad_poly_hessian(A1)
-    lor1, eigs1 = has_lorentzian_signature(H1)
-    print(f"A = diag(2, -1, -3)")
-    print(f"Hessian H = A + A^T = 2A = diag(4, -2, -6)")
-    print(f"H {eigs1}")
-    print(f"Lorentzian signature: {lor1} ✓")
-
-    # Example 2: Not Lorentzian (positive definite)
-    print("\n--- Example 2: Positive definite (NOT Lorentzian) ---")
-    A2 = np.array([[3.0, 1, 0],
-                    [1, 2, 0],
-                    [0, 0, 1]])
-    H2 = matrix_to_quad_poly_hessian(A2)
-    lor2, eigs2 = has_lorentzian_signature(H2)
-    print(f"A = [[3,1,0],[1,2,0],[0,0,1]]")
-    print(f"H {eigs2}")
-    print(f"Lorentzian signature: {lor2}")
-    print(f"✓ Positive definite ⟹ NOT Lorentzian (Theorem: positive_definite_not_lorentzian)")
-
-    # Example 3: Two positive eigenvalues
-    print("\n--- Example 3: Two positive eigenvalues ---")
-    A3 = np.array([[2.0, 0, 0],
-                    [0, 1, 0],
-                    [0, 0, -5]])
-    H3 = matrix_to_quad_poly_hessian(A3)
-    lor3, eigs3 = has_lorentzian_signature(H3)
-    print(f"A = diag(2, 1, -5)")
-    print(f"H = 2A = diag(4, 2, -10)")
-    print(f"H {eigs3}")
-    print(f"Lorentzian signature: {lor3}")
-    print(f"✓ Two positive eigenvalues ⟹ NOT Lorentzian")
-
-    print("\n--- Theorem: H(i,j) = A(i,j) + A(j,i), so for symmetric A: H = 2A ---")
-    print("This means eigenvalue checking REDUCES TO Lorentzian recognition!")
+def explore_derivative_tree(n: int, d: int, max_display: int = 20):
+    """Explore and display the derivative tree structure."""
+    leaves = enumerate_multiindices(n, d - 2) if d >= 2 else [()]
+    print(f"\n{'='*60}")
+    print(f"Derivative Tree: n={n} variables, degree d={d}")
+    print(f"{'='*60}")
+    print(f"Number of quadratic leaves: {len(leaves)}")
+    print(f"Upper bound n^(d-2): {n**(d-2) if d >= 2 else 1}")
+    print(f"Lower bound 2^((d-2)/2): {2**((d-2)//2) if d >= 4 else 'N/A'}")
+    print(f"\nFirst {min(max_display, len(leaves))} leaves:")
+    for i, leaf in enumerate(leaves[:max_display]):
+        print(f"  α_{i} = {leaf}, weight = {sum(leaf)}")
+    if len(leaves) > max_display:
+        print(f"  ... ({len(leaves) - max_display} more)")
 
 
-# ============================================================
-# Part 4: Certificate Size Exploration
-# ============================================================
+def demo_theorem_a():
+    """Demonstrate Theorem A: linear lower bound."""
+    print("\n" + "="*60)
+    print("THEOREM A: Linear Lower Bound")
+    print("numberOfQuadraticLeaves(n, d) >= d - 1 for n >= 2, d >= 2")
+    print("="*60)
+    
+    for n in [2, 3, 5, 10]:
+        print(f"\nn = {n}:")
+        print(f"  {'d':>4} | {'leaves':>10} | {'d-1':>6} | {'n^(d-2)':>10} | satisfies?")
+        print(f"  {'-'*4}-+-{'-'*10}-+-{'-'*6}-+-{'-'*10}-+-{'-'*10}")
+        for d in range(2, 12):
+            leaves = number_of_quadratic_leaves(n, d)
+            lower = d - 1
+            upper = n ** (d - 2) if d >= 2 else 1
+            ok = "✓" if leaves >= lower else "✗"
+            print(f"  {d:>4} | {leaves:>10} | {lower:>6} | {upper:>10} | {ok}")
 
-def explore_certificate_sizes():
-    """Explore certificate sizes and verify conjectures."""
-    print("\n" + "=" * 70)
-    print("CERTIFICATE SIZE EXPLORATION")
-    print("=" * 70)
 
-    print("\n--- Multiindex Count = C(n+d-1, d) ---")
-    print(f"{'n':>4} | {'d':>4} | {'C(n+d-1,d)':>15} | {'n^d':>15} | {'2^d':>12}")
-    print("-" * 60)
-    for n, d in [(3, 3), (4, 4), (5, 5), (6, 6), (8, 8), (10, 10), (15, 15)]:
-        count = multiindex_count(n, d)
-        upper = n ** d
-        lower = 2 ** d
-        print(f"{n:>4} | {d:>4} | {count:>15} | {upper:>15} | {lower:>12}")
-
-    print("\n--- Branch Complexity Barrier Conjecture Test ---")
-    print("Conjecture: certificate size grows ≥ exp(c·d) for some c > 0")
-    print(f"{'d':>4} | {'Cert. Size':>15} | {'2^d':>12} | {'log2(size)':>10}")
-    print("-" * 50)
+def demo_theorem_b():
+    """Demonstrate Theorem B: exponential lower bound."""
+    print("\n" + "="*60)
+    print("THEOREM B: Exponential Lower Bound")
+    print("multiIndexCount(n, d) >= 2^(d/2) for n > d/2")
+    print("="*60)
+    
+    print(f"\n{'d':>4} | {'n=d':>4} | {'count':>10} | {'2^(d/2)':>10} | {'ratio':>8}")
+    print(f"{'-'*4}-+-{'-'*4}-+-{'-'*10}-+-{'-'*10}-+-{'-'*8}")
     for d in range(2, 16):
-        n = d + 1  # balanced regime
-        cert = quadratic_leaf_count(n, d)
-        log2_cert = math.log2(cert) if cert > 0 else 0
-        print(f"{d:>4} | {cert:>15} | {2**d:>12} | {log2_cert:>10.2f}")
-
-    print("\n✓ log2(certificate_size) grows linearly with d ⟹ exponential growth confirmed")
-
-
-# ============================================================
-# Part 5: Derivative Branch Visualization
-# ============================================================
-
-def print_derivative_tree(n: int, d: int, max_depth: int = 3):
-    """Print a schematic derivative tree."""
-    print(f"\n--- Derivative Tree: n={n} variables, degree d={d} ---")
-
-    if d < 2:
-        print("  [Root: degree < 2, trivially Lorentzian check]")
-        return
-
-    leaves = quadratic_leaf_count(n, d)
-    print(f"  Root polynomial: degree {d}, {n} variables")
-    print(f"  Derivative depth to quadratic: {d - 2}")
-    print(f"  Number of quadratic leaves: {leaves}")
-    print(f"  Each leaf requires Hessian eigenvalue check")
-
-    if leaves <= 20:
-        print(f"  Leaves (multiindices of weight {d-2}):")
-        from itertools import combinations_with_replacement
-        count = 0
-        for combo in combinations_with_replacement(range(n), d - 2):
-            alpha = [0] * n
-            for v in combo:
-                alpha[v] += 1
-            count += 1
-            print(f"    α = {alpha} → ∂^α f is quadratic → check eigenvalues")
-        print(f"  Total: {count} quadratic leaves to verify")
+        n = d
+        count = multiindex_count(n, d)
+        lower = 2 ** (d // 2)
+        ratio = count / lower if lower > 0 else float('inf')
+        print(f"{d:>4} | {n:>4} | {count:>10} | {lower:>10} | {ratio:>8.1f}")
 
 
-def main():
-    print("╔" + "═" * 68 + "╗")
-    print("║  COMPLEXITY BARRIERS FOR LORENTZIAN POLYNOMIAL RECOGNITION        ║")
-    print("║  Interactive Demonstration                                         ║")
-    print("╚" + "═" * 68 + "╝")
+def demo_theorem_c():
+    """Demonstrate Theorem C: Boolean encoding bridge."""
+    print("\n" + "="*60)
+    print("THEOREM C: Boolean Assignment → Multiindex Encoding")
+    print("multiIndexCount(2n, n) >= 2^n")
+    print("="*60)
+    
+    for n in range(1, 6):
+        assignments = list(iterproduct([False, True], repeat=n))
+        multiindices = [assignment_to_multiindex(tau) for tau in assignments]
+        
+        # Verify injectivity
+        unique = len(set(multiindices))
+        all_weight_n = all(sum(mi) == n for mi in multiindices)
+        
+        print(f"\nn = {n}: {len(assignments)} assignments → {unique} distinct multiindices")
+        print(f"  All weight {n}? {all_weight_n}")
+        print(f"  multiIndexCount(2n={2*n}, n={n}) = {multiindex_count(2*n, n)}")
+        print(f"  2^n = {2**n}")
+        
+        if n <= 3:
+            for tau, mi in zip(assignments, multiindices):
+                tau_str = ''.join('T' if b else 'F' for b in tau)
+                print(f"    τ=({tau_str}) → α={mi}")
 
-    demonstrate_phase_transition()
-    demonstrate_sat_obstruction_duality()
-    demonstrate_hessian_encoding()
-    explore_certificate_sizes()
 
-    # Small derivative tree examples
-    print("\n" + "=" * 70)
-    print("DERIVATIVE TREE EXAMPLES")
-    print("=" * 70)
-    print_derivative_tree(3, 4)
-    print_derivative_tree(4, 5)
+def demo_cnf_encoding():
+    """Demonstrate CNF formula encoding and branch structure."""
+    print("\n" + "="*60)
+    print("CNF FORMULA ENCODING")
+    print("="*60)
+    
+    # Example: (x0 ∨ x1) ∧ (¬x0 ∨ x2) ∧ (¬x1 ∨ ¬x2)
+    phi = CNFFormula(3, [
+        [(0, True), (1, True)],
+        [(0, False), (2, True)],
+        [(1, False), (2, False)]
+    ])
+    
+    print(f"\nFormula: (x₀ ∨ x₁) ∧ (¬x₀ ∨ x₂) ∧ (¬x₁ ∨ ¬x₂)")
+    print(f"Variables: {phi.n}, Clauses: {phi.m}")
+    print(f"Satisfiable: {phi.is_satisfiable()}")
+    print(f"Number of satisfying assignments: {phi.sat_count()}")
+    
+    print(f"\nAll assignments and their multiindex encodings:")
+    for tau in iterproduct([False, True], repeat=phi.n):
+        mi = assignment_to_multiindex(tau)
+        sat = phi.is_satisfied_by(tau)
+        tau_str = ''.join('T' if b else 'F' for b in tau)
+        print(f"  τ=({tau_str}) → α={mi}, weight={sum(mi)}, satisfies={sat}")
+    
+    # Unsatisfiable example
+    print(f"\nUnsatisfiable formula: (x₀) ∧ (¬x₀)")
+    phi2 = CNFFormula(1, [
+        [(0, True)],
+        [(0, False)]
+    ])
+    print(f"Satisfiable: {phi2.is_satisfiable()}")
+    print(f"SAT count: {phi2.sat_count()}")
 
-    print("\n" + "=" * 70)
-    print("SUMMARY OF FORMALLY VERIFIED RESULTS")
-    print("=" * 70)
-    print("""
-Key Theorems (all formally verified in Lean 4):
 
-1. multiindex_count_ge_two_pow:
-   |{α : Fin(k+1)→ℕ | Σα = k}| ≥ 2^k
+def demo_certificate_complexity():
+    """Demonstrate certificate complexity and the superpolynomial barrier."""
+    print("\n" + "="*60)
+    print("CERTIFICATE COMPLEXITY BARRIER")
+    print("For any polynomial bound n^c, there exist n, d with")
+    print("numberOfQuadraticLeaves(n, d) > n^c")
+    print("="*60)
+    
+    for c in [2, 3, 5, 10]:
+        print(f"\nc = {c}: looking for n, d with leaves > n^{c}")
+        found = False
+        for n in range(2, 50):
+            d = 2 * n
+            leaves = number_of_quadratic_leaves(n, d)
+            bound = n ** c
+            if leaves > bound:
+                print(f"  Found: n={n}, d={d}, leaves={leaves:,} > n^{c}={bound:,}")
+                found = True
+                break
+        if not found:
+            print(f"  (not found in range, but guaranteed by theorem)")
 
-2. hessian_recovers_matrix:
-   H(P_A)(i,j) = A(i,j) + A(j,i)
 
-3. complexity_phase_transition_sharp:
-   Fixed d=3: O(n) leaves | Growing d=n: Ω(2^(n-2)) leaves
-
-4. sat_obstruction_duality:
-   ¬SAT(φ) ↔ ∀τ, ∃ falsified clause
-
-5. conditional_hardness:
-   ∀c, ∃N, Lorentzian check count at degree n exceeds n^c for n ≥ N
-
-6. no_uniform_polynomial_bound:
-   ∀c, ∃n ≥ 4, n^c < 2^(n-2)
-
-7. multiindex_count_monotone:
-   More variables ⟹ more multiindices
-
-8. lorentzian_signature_pos_scaling:
-   Positive scaling preserves Lorentzian signature
-    """)
+def demo_visualization_data():
+    """Generate data for the branch growth visualization."""
+    print("\n" + "="*60)
+    print("BRANCH GROWTH DATA")
+    print("="*60)
+    
+    header = 'n\\d'
+    print(f"\n{header:>4}", end="")
+    for d in range(2, 13):
+        print(f" | {d:>8}", end="")
+    print()
+    print("-" * 120)
+    
+    for n in range(2, 11):
+        print(f"{n:>4}", end="")
+        for d in range(2, 13):
+            leaves = number_of_quadratic_leaves(n, d)
+            if leaves < 10**7:
+                print(f" | {leaves:>8}", end="")
+            else:
+                print(f" | {leaves:>8.2e}", end="")
+        print()
 
 
 if __name__ == "__main__":
-    main()
+    print("="*60)
+    print("LORENTZIAN RECOGNITION COMPLEXITY BARRIERS")
+    print("Interactive Demonstration")
+    print("="*60)
+    
+    demo_theorem_a()
+    demo_theorem_b()
+    demo_theorem_c()
+    demo_cnf_encoding()
+    demo_certificate_complexity()
+    demo_visualization_data()
+    
+    print("\n" + "="*60)
+    print("SUMMARY")
+    print("="*60)
+    print("""
+Key findings demonstrated:
+1. Leaf count grows at least linearly in d (Theorem A)
+2. Leaf count grows exponentially when n ~ d (Theorem B)  
+3. Boolean assignments inject into multiindices (Theorem C)
+4. No polynomial bound suffices for unbounded degree (Theorem D)
+5. CNF formulas can be encoded into the branch structure
+
+These results establish that Lorentzian polynomial recognition
+exhibits a complexity phase transition: tractable for fixed degree,
+exponentially hard for unbounded degree.
+""")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Derivative Tree Growth and SAT-Branch Correspondence
+Visualization: Boolean Assignment to Multiindex Encoding
 
-Shows how the derivative tree of a polynomial grows exponentially
-when degree is unbounded, and illustrates the structural parallel
-with Boolean satisfiability search trees.
+Visualizes the injection from Boolean assignments on n variables to
+multiindices in 2n variables. Shows how the encoding maps satisfying
+and unsatisfying assignments of a CNF formula to distinct points in
+multiindex space.
+
+This illustrates Theorem C: the cross-domain bridge between
+satisfiability and derivative-tree structure.
 """
 
-import matplotlib.pyplot as plt
 import numpy as np
-import math
+import matplotlib.pyplot as plt
+from itertools import product as iterproduct
+from math import comb
+
+
+def assignment_to_multiindex(tau):
+    """Encode Boolean assignment as multiindex in 2n variables."""
+    result = []
+    for b in tau:
+        result.extend([1, 0] if b else [0, 1])
+    return tuple(result)
+
+
+def multiindex_count(n, d):
+    if n == 0:
+        return 1 if d == 0 else 0
+    return comb(n + d - 1, d)
+
 
 fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-# --- Panel 1: Growth rates comparison ---
+# Panel 1: Encoding visualization for n=3
 ax1 = axes[0]
-ds = np.arange(2, 18)
+n = 3
+assignments = list(iterproduct([False, True], repeat=n))
+multiindices = [assignment_to_multiindex(tau) for tau in assignments]
 
-# Exact multiindex count for balanced regime (n = d)
-exact = [math.comb(2*d - 3, d - 2) for d in ds]
-lower = [2**(d-2) for d in ds]
-upper = [d**(d-2) for d in ds]
+# Use first two principal components for visualization
+mi_array = np.array(multiindices, dtype=float)
+# Simple 2D projection: sum of even indices vs sum of odd indices
+x_proj = mi_array[:, 0::2].sum(axis=1)  # "true" dimensions
+y_proj = mi_array[:, 1::2].sum(axis=1)  # "false" dimensions
 
-ax1.semilogy(ds, exact, 'ko-', label='C(2d-3, d-2) exact', markersize=6, linewidth=2)
-ax1.semilogy(ds, lower, 'b^--', label='2^(d-2) lower bound', markersize=5)
-ax1.semilogy(ds, upper, 'rv--', label='d^(d-2) upper bound', markersize=5)
+# CNF formula: (x0 ∨ x1) ∧ (¬x0 ∨ x2) ∧ (¬x1 ∨ ¬x2)
+def check_sat(tau):
+    clauses = [
+        [(0, True), (1, True)],
+        [(0, False), (2, True)],
+        [(1, False), (2, False)]
+    ]
+    for clause in clauses:
+        if not any(tau[v] == p for v, p in clause):
+            return False
+    return True
 
-# Polynomial growth references
-for c in [2, 3, 5]:
-    poly = [d**c for d in ds]
-    ax1.semilogy(ds, poly, ':', alpha=0.3, color='gray')
-    ax1.text(ds[-1] + 0.3, poly[-1], f'd^{c}', fontsize=8, color='gray', va='center')
+colors = ['green' if check_sat(tau) else 'red' for tau in assignments]
+markers = ['o' if check_sat(tau) else 'x' for tau in assignments]
 
-ax1.set_xlabel('Degree d (= n, balanced regime)', fontsize=12)
-ax1.set_ylabel('Number of quadratic leaves', fontsize=12)
-ax1.set_title('Exponential Leaf Growth\n(Formally Verified)', fontsize=13, fontweight='bold')
-ax1.legend(fontsize=9, loc='upper left')
+for i, (x, y, c, tau) in enumerate(zip(x_proj, y_proj, colors, assignments)):
+    label_str = ''.join('1' if b else '0' for b in tau)
+    marker = 'o' if check_sat(tau) else 'X'
+    ax1.scatter(x, y, c=c, s=150, marker=marker, edgecolors='black', linewidths=1, zorder=5)
+    ax1.annotate(label_str, (x, y), textcoords="offset points",
+                xytext=(8, 8), fontsize=8, fontweight='bold')
+
+ax1.set_xlabel('# True assignments (Σ α_{2i})', fontsize=11)
+ax1.set_ylabel('# False assignments (Σ α_{2i+1})', fontsize=11)
+ax1.set_title('Boolean → Multiindex Encoding\n(n=3, green=SAT, red=UNSAT)', fontsize=12)
 ax1.grid(True, alpha=0.3)
 
-# --- Panel 2: SAT-Branch Correspondence ---
+# Add line x + y = n
+xx = np.linspace(-0.5, n + 0.5, 100)
+ax1.plot(xx, n - xx, 'b--', alpha=0.3, label=f'x + y = {n}')
+ax1.legend(fontsize=9)
+
+# Panel 2: Encoding density — how many multiindices are "used"
 ax2 = axes[1]
+ns = list(range(1, 13))
+used = [2**nn for nn in ns]
+total = [multiindex_count(2*nn, nn) for nn in ns]
+density = [u/t for u, t in zip(used, total)]
 
-# Number of assignments vs number of derivative branches
-ms = np.arange(1, 14)
-assignments = [2**m for m in ms]
-branches = [math.comb(m + m - 1, m) for m in ms]  # C(2m-1, m) for n=m+1, d=m
+ax2.semilogy(ns, total, 'b^-', label='Total multiindices C(2n, n)', markersize=6)
+ax2.semilogy(ns, used, 'ro-', label='Boolean assignments 2^n', markersize=6)
 
-ax2.semilogy(ms, assignments, 'bs-', label='2^m (assignments)', markersize=6, linewidth=2)
-ax2.semilogy(ms, branches, 'ro-', label='C(2m-1,m) (branches)', markersize=6, linewidth=2)
-
-ax2.fill_between(ms, assignments, branches, alpha=0.1, color='purple')
-
-ax2.set_xlabel('m (variables / derivative depth)', fontsize=12)
-ax2.set_ylabel('Count', fontsize=12)
-ax2.set_title('Assignment-Branch Correspondence\n2^m ≤ branches (Theorem)', fontsize=13, fontweight='bold')
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
-
-# --- Panel 3: Certificate complexity heatmap ---
-ax3 = axes[2]
-
-n_range = np.arange(3, 16)
-d_range = np.arange(3, 16)
-log_cert = np.zeros((len(d_range), len(n_range)))
-
-for i, d in enumerate(d_range):
-    for j, n in enumerate(n_range):
-        cert = math.comb(n + d - 3, d - 2)
-        log_cert[i, j] = math.log2(cert) if cert > 0 else 0
-
-im = ax3.imshow(log_cert, aspect='auto', cmap='YlOrRd',
-                extent=[n_range[0]-0.5, n_range[-1]+0.5,
-                        d_range[-1]+0.5, d_range[0]-0.5])
-plt.colorbar(im, ax=ax3, label='log₂(certificate size)')
-
-# Draw the diagonal d = n
-ax3.plot(n_range, n_range, 'w--', linewidth=2, label='d = n (phase boundary)')
-ax3.legend(fontsize=9, loc='upper left')
-
-ax3.set_xlabel('Number of variables n', fontsize=12)
-ax3.set_ylabel('Degree d', fontsize=12)
-ax3.set_title('Certificate Complexity Landscape\n(log₂ scale)', fontsize=13, fontweight='bold')
-
-plt.suptitle('Derivative Tree Growth and Complexity Barriers',
-             fontsize=15, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('derivative_tree.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved derivative_tree.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Hessian Spectral Encoding Bridge
-
-Visualizes the cross-domain theorem: hessian_recovers_matrix.
-Shows how matrix eigenvalue structure maps to Lorentzian signature
-through the polynomial encoding P_A(x) = Σ A[i,j] x_i x_j.
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-
-# Generate example matrices with different spectral signatures
-examples = [
-    ("Lorentzian\n(1 pos eigenvalue)",
-     np.array([[3.0, 0, 0], [0, -1, 0], [0, 0, -2]]),
-     True),
-    ("Positive Definite\n(all pos, NOT Lorentzian)",
-     np.array([[2.0, 0.5, 0], [0.5, 3, 0], [0, 0, 1]]),
-     False),
-    ("Two Positive\n(NOT Lorentzian)",
-     np.array([[2.0, 0, 0], [0, 1, 0], [0, 0, -4]]),
-     False),
-    ("Negative Semi-Definite\n(Lorentzian, 0 pos)",
-     np.array([[-1.0, 0, 0], [0, -2, 0], [0, 0, -1]]),
-     True),
-    ("Mixed with Off-Diag\n(Lorentzian)",
-     np.array([[5.0, 1, 0], [1, -2, 0], [0, 0, -3]]),
-     True),
-    ("Mixed with Off-Diag\n(NOT Lorentzian)",
-     np.array([[3.0, 2, 0], [2, 3, 0], [0, 0, -1]]),
-     False),
-]
-
-for idx, (title, A, expected_lor) in enumerate(examples):
-    ax = axes[idx // 3][idx % 3]
-
-    # Compute Hessian = A + A^T = 2A for symmetric
-    H = A + A.T
-    eigenvalues = np.linalg.eigvalsh(H)
-    n_positive = np.sum(eigenvalues > 1e-10)
-    is_lorentzian = n_positive <= 1
-
-    # Plot eigenvalue spectrum
-    colors = ['green' if ev > 1e-10 else ('red' if ev < -1e-10 else 'gray')
-              for ev in eigenvalues]
-
-    bars = ax.bar(range(len(eigenvalues)), eigenvalues, color=colors, alpha=0.7,
-                  edgecolor='black', linewidth=0.5)
-
-    ax.axhline(y=0, color='black', linewidth=0.5)
-    ax.set_title(title, fontsize=10, fontweight='bold')
-    ax.set_xlabel('Eigenvalue index', fontsize=9)
-    ax.set_ylabel('Eigenvalue', fontsize=9)
-
-    status = "✓ Lorentzian" if is_lorentzian else "✗ NOT Lorentzian"
-    color = 'darkgreen' if is_lorentzian else 'darkred'
-    ax.text(0.5, 0.95, status, transform=ax.transAxes,
-            fontsize=11, fontweight='bold', color=color,
-            ha='center', va='top',
-            bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.8))
-
-    ax.text(0.5, 0.82, f'pos: {n_positive}, neg: {np.sum(eigenvalues < -1e-10)}',
-            transform=ax.transAxes, fontsize=9, ha='center', va='top')
-
-    for bar, ev in zip(bars, eigenvalues):
-        ax.text(bar.get_x() + bar.get_width() / 2, ev,
-                f'{ev:.1f}', ha='center',
-                va='bottom' if ev >= 0 else 'top', fontsize=8)
-
-plt.suptitle('Hessian Spectral Encoding: Matrix Eigenvalues → Lorentzian Signature\n'
-             'H(P_A) = A + Aᵀ  |  Lorentzian ⟺ at most 1 positive eigenvalue',
-             fontsize=13, fontweight='bold')
-plt.tight_layout()
-plt.savefig('hessian_encoding.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved hessian_encoding.png")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Phase Transition in Lorentzian Recognition Complexity
-
-Shows the sharp transition from polynomial to exponential certificate
-complexity as degree transitions from fixed to growing with n.
-This visualizes the core result: complexity_phase_transition_sharp.
-"""
-
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# --- Left panel: Certificate size vs n for various fixed degrees ---
-ax1 = axes[0]
-ns = list(range(3, 25))
-
-for d in [3, 4, 5, 6]:
-    sizes = [math.comb(n + d - 3, d - 2) for n in ns]
-    ax1.plot(ns, sizes, 'o-', label=f'd = {d}', markersize=4)
-
-# Add polynomial references
-ax1.plot(ns, [n for n in ns], '--', color='gray', alpha=0.5, label='n')
-ax1.plot(ns, [n**2 for n in ns], '--', color='lightgray', alpha=0.5, label='n²')
-
-ax1.set_xlabel('Number of variables n', fontsize=12)
-ax1.set_ylabel('Certificate size (quadratic leaves)', fontsize=12)
-ax1.set_title('Fixed Degree: Polynomial Growth', fontsize=13, fontweight='bold')
-ax1.legend(fontsize=10)
-ax1.set_yscale('log')
-ax1.grid(True, alpha=0.3)
-
-# --- Right panel: Certificate size for d = n (balanced regime) ---
-ax2 = axes[1]
-ns_balanced = list(range(4, 20))
-
-cert_sizes = [math.comb(n + n - 3, n - 2) for n in ns_balanced]
-lower_bounds = [2 ** (n - 2) for n in ns_balanced]
-upper_bounds = [n ** (n - 2) for n in ns_balanced]
-
-ax2.semilogy(ns_balanced, cert_sizes, 'rs-', label='C(2n-3, n-2)', markersize=6, linewidth=2)
-ax2.semilogy(ns_balanced, lower_bounds, 'b^--', label='2^(n-2) (lower bound)', markersize=5)
-ax2.semilogy(ns_balanced, upper_bounds, 'gv--', label='n^(n-2) (upper bound)', markersize=5)
-
-# Polynomial references for comparison
-for c in [2, 3, 4]:
-    poly_bound = [n ** c for n in ns_balanced]
-    ax2.semilogy(ns_balanced, poly_bound, ':', color='gray', alpha=0.4, linewidth=1)
-    ax2.annotate(f'n^{c}', xy=(ns_balanced[-1], poly_bound[-1]),
-                fontsize=8, color='gray')
-
-ax2.set_xlabel('n = d (balanced regime)', fontsize=12)
-ax2.set_ylabel('Certificate size', fontsize=12)
-ax2.set_title('Growing Degree d = n: Exponential Explosion', fontsize=13, fontweight='bold')
+ax2.set_xlabel('Number of Boolean variables n', fontsize=11)
+ax2.set_ylabel('Count (log scale)', fontsize=11)
+ax2.set_title('Encoding Density:\nAssignments vs Total Multiindices', fontsize=12)
 ax2.legend(fontsize=9)
 ax2.grid(True, alpha=0.3)
 
-# Add shading to show the gap
-ax2.fill_between(ns_balanced, lower_bounds, cert_sizes, alpha=0.15, color='blue')
-ax2.fill_between(ns_balanced, cert_sizes, upper_bounds, alpha=0.15, color='green')
+# Panel 3: Density ratio
+ax3 = axes[2]
+ax3.plot(ns, [d * 100 for d in density], 'ko-', markersize=6, linewidth=2)
+ax3.axhline(y=100, color='gray', linestyle='--', alpha=0.5, label='100% density')
 
-plt.suptitle('Complexity Phase Transition in Lorentzian Recognition',
+ax3.set_xlabel('Number of Boolean variables n', fontsize=11)
+ax3.set_ylabel('Encoding density (%)', fontsize=11)
+ax3.set_title('Fraction of Multiindex Space\nUsed by Boolean Encoding', fontsize=12)
+ax3.legend(fontsize=9)
+ax3.grid(True, alpha=0.3)
+ax3.set_ylim(0, 110)
+
+plt.suptitle('Cross-Domain Bridge: Boolean Satisfiability ↔ Derivative Trees',
+             fontsize=14, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('viz_boolean_encoding.png', dpi=150, bbox_inches='tight')
+print("Saved viz_boolean_encoding.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Certificate Complexity Barrier
+
+Visualizes the superpolynomial barrier theorem: for any polynomial bound n^c,
+there exist parameters where the Lorentzian certificate complexity exceeds it.
+Shows the "impossible region" where polynomial-time recognition fails.
+
+This illustrates Theorem D: unbounded degree forces superpolynomial complexity.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from math import comb, log2, log10
+
+
+def multiindex_count(n, d):
+    if n == 0:
+        return 1 if d == 0 else 0
+    return comb(n + d - 1, d)
+
+
+def number_of_quadratic_leaves(n, d):
+    return 1 if d < 2 else multiindex_count(n, d - 2)
+
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+# Panel 1: Leaf count vs polynomial bounds
+ax1 = axes[0]
+ns = list(range(2, 25))
+
+# Balanced regime: d = 2n
+leaves_balanced = [number_of_quadratic_leaves(n, 2*n) for n in ns]
+ax1.semilogy(ns, leaves_balanced, 'ko-', label='Leaves (d=2n)', markersize=5, linewidth=2)
+
+# Polynomial bounds
+for c, color in [(2, 'blue'), (3, 'green'), (5, 'orange'), (10, 'red')]:
+    bounds = [n**c for n in ns]
+    ax1.semilogy(ns, bounds, f'{color[0]}--', label=f'n^{c}', linewidth=1.5, alpha=0.7)
+
+ax1.set_xlabel('Number of variables n', fontsize=12)
+ax1.set_ylabel('Count (log scale)', fontsize=12)
+ax1.set_title('Certificate Size vs Polynomial Bounds\n(d = 2n regime)', fontsize=13)
+ax1.legend(fontsize=9)
+ax1.grid(True, alpha=0.3)
+
+# Panel 2: The crossing points — when exponential overtakes polynomial
+ax2 = axes[1]
+
+crossing_data = []
+for c in range(1, 16):
+    for n in range(2, 100):
+        leaves = number_of_quadratic_leaves(n, 2*n)
+        if leaves > n**c:
+            crossing_data.append((c, n))
+            break
+
+cs, crossing_ns = zip(*crossing_data) if crossing_data else ([], [])
+ax2.bar(cs, crossing_ns, color='steelblue', alpha=0.8)
+ax2.set_xlabel('Polynomial exponent c', fontsize=12)
+ax2.set_ylabel('Smallest n where leaves > n^c', fontsize=12)
+ax2.set_title('Superpolynomial Witnesses\n(Theorem D)', fontsize=13)
+ax2.grid(True, alpha=0.3, axis='y')
+
+# Panel 3: Growth rate comparison
+ax3 = axes[2]
+
+ds = list(range(4, 30))
+# Exact growth for n = d
+exact_growth = []
+lower_bound_growth = []
+for d in ds:
+    exact = number_of_quadratic_leaves(d, d)
+    lower = 2**((d-2)//2)
+    exact_growth.append(log2(exact) if exact > 0 else 0)
+    lower_bound_growth.append((d-2)//2)
+
+ax3.plot(ds, exact_growth, 'bo-', label='log₂(exact)', markersize=4, linewidth=2)
+ax3.plot(ds, lower_bound_growth, 'r^--', label='(d-2)/2 (our bound)', markersize=4)
+ax3.plot(ds, [d-2 for d in ds], 'g--', label='d-2 (linear ref)', alpha=0.5)
+
+# Theoretical asymptotic: log2(C(2d-3, d-2)) ≈ 2d·log2(2) - 0.5·log2(d)
+asymptotic = [2*(d-2)*1 - 0.5*log2(max(1,d)) for d in ds]
+ax3.plot(ds, asymptotic, 'k:', label='~2(d-2) (Stirling)', alpha=0.5)
+
+ax3.set_xlabel('Degree d (with n = d)', fontsize=12)
+ax3.set_ylabel('log₂(leaf count)', fontsize=12)
+ax3.set_title('Growth Rate of Certificate Complexity\n(Balanced Regime)', fontsize=13)
+ax3.legend(fontsize=9)
+ax3.grid(True, alpha=0.3)
+
+plt.suptitle('Lorentzian Recognition: The Superpolynomial Barrier',
              fontsize=15, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('phase_transition.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved phase_transition.png")
+plt.savefig('viz_certificate_barrier.png', dpi=150, bbox_inches='tight')
+print("Saved viz_certificate_barrier.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Leaf Count Growth and Complexity Barrier
+
+Visualizes the exponential growth of quadratic leaf counts in the
+Lorentzian recognition tree, comparing exact counts with our proved
+lower bounds and the catalog's upper bounds.
+
+This illustrates the core complexity phase transition: fixed degree
+gives polynomial growth (bottom curves), while balanced parameters
+give exponential growth (top curves).
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from math import comb, log2
+
+
+def multiindex_count(n, d):
+    if n == 0:
+        return 1 if d == 0 else 0
+    return comb(n + d - 1, d)
+
+
+def number_of_quadratic_leaves(n, d):
+    return 1 if d < 2 else multiindex_count(n, d - 2)
+
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+# Panel 1: Leaf count vs degree for fixed n
+ax1 = axes[0]
+for n in [2, 3, 5, 8, 12]:
+    ds = list(range(2, 20))
+    leaves = [number_of_quadratic_leaves(n, d) for d in ds]
+    ax1.semilogy(ds, leaves, 'o-', label=f'n={n}', markersize=4)
+
+# Lower bound: d - 1
+ds_lb = list(range(2, 20))
+lower = [max(1, d - 1) for d in ds_lb]
+ax1.semilogy(ds_lb, lower, 'k--', label='Lower: d-1', linewidth=2)
+
+ax1.set_xlabel('Degree d', fontsize=12)
+ax1.set_ylabel('Number of Quadratic Leaves', fontsize=12)
+ax1.set_title('Leaf Count vs Degree\n(Fixed Variables)', fontsize=13)
+ax1.legend(fontsize=9)
+ax1.grid(True, alpha=0.3)
+
+# Panel 2: Balanced regime (n = d) — exponential growth
+ax2 = axes[1]
+ds = list(range(2, 22))
+exact = [number_of_quadratic_leaves(d, d) for d in ds]
+lower_exp = [2**((d-2)//2) for d in ds]
+upper = [d**(d-2) if d >= 2 else 1 for d in ds]
+
+ax2.semilogy(ds, exact, 'bo-', label='Exact count', markersize=5, linewidth=2)
+ax2.semilogy(ds, lower_exp, 'r^--', label='Lower: 2^((d-2)/2)', markersize=5)
+ax2.semilogy(ds, upper, 'gs--', label='Upper: d^(d-2)', markersize=4, alpha=0.6)
+
+ax2.set_xlabel('Degree d = n', fontsize=12)
+ax2.set_ylabel('Number of Quadratic Leaves', fontsize=12)
+ax2.set_title('Balanced Regime (n = d)\nExponential Growth', fontsize=13)
+ax2.legend(fontsize=9)
+ax2.grid(True, alpha=0.3)
+
+# Panel 3: Phase transition heatmap
+ax3 = axes[2]
+ns = list(range(2, 21))
+ds = list(range(2, 21))
+data = np.zeros((len(ns), len(ds)))
+
+for i, n in enumerate(ns):
+    for j, d in enumerate(ds):
+        leaves = number_of_quadratic_leaves(n, d)
+        data[i, j] = log2(max(1, leaves))
+
+im = ax3.imshow(data, aspect='auto', origin='lower',
+                extent=[ds[0]-0.5, ds[-1]+0.5, ns[0]-0.5, ns[-1]+0.5],
+                cmap='YlOrRd')
+cbar = plt.colorbar(im, ax=ax3, label='log₂(leaf count)')
+
+# Draw the "phase boundary" where leaves ≈ 10^6
+boundary_n = []
+boundary_d = []
+for d in ds:
+    for n in ns:
+        if number_of_quadratic_leaves(n, d) >= 10**6:
+            boundary_n.append(n)
+            boundary_d.append(d)
+            break
+
+if boundary_d and boundary_n:
+    ax3.plot(boundary_d, boundary_n, 'w-', linewidth=2, label='10⁶ boundary')
+    ax3.legend(fontsize=9)
+
+ax3.set_xlabel('Degree d', fontsize=12)
+ax3.set_ylabel('Variables n', fontsize=12)
+ax3.set_title('Complexity Phase Transition\nlog₂(leaf count)', fontsize=13)
+
+plt.suptitle('Lorentzian Recognition: Certificate Complexity Barriers',
+             fontsize=15, fontweight='bold', y=1.02)
+plt.tight_layout()
+plt.savefig('viz_leaf_growth.png', dpi=150, bbox_inches='tight')
+print("Saved viz_leaf_growth.png")
