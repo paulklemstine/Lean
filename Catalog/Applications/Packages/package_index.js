@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical Random Matrix Theory / Pythagorean",
     "date": "2026-05-28T06:14:56Z",
     "exp_id": "69370675",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7176907344632768,
+    "quality": "substantial",
     "pkg_num": 218
   },
   {
@@ -6331,8 +6331,8 @@ window.PACKAGE_GRAPH = {
       "shape": "triangular_prism",
       "date": "2026-05-28T06:14:56Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7176907344632768,
+      "quality": "substantial"
     }
   ],
   "edges": [

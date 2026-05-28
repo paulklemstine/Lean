@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1981 of the highest-quality
+A curated collection of 1984 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1981
+Total files: 1984
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -619,6 +619,7 @@ import FINAL.Bridges.SemanticQuotientExtraction
 import FINAL.Bridges.Separation
 import FINAL.Bridges.ShadowDecay
 import FINAL.Bridges.SharpExponentLowerBounds
+import FINAL.Bridges.SheafAdvanced
 import FINAL.Bridges.SheafObstruction
 import FINAL.Bridges.SheafPersistence
 import FINAL.Bridges.SheafProofStateDuality
@@ -1554,6 +1555,7 @@ import FINAL.Pythagorean.EntanglementCompression
 import FINAL.Pythagorean.EqualitySaturationExtraction
 import FINAL.Pythagorean.EulerFactor
 import FINAL.Pythagorean.ExactWeightedTropicalDimension
+import FINAL.Pythagorean.Exchange
 import FINAL.Pythagorean.ExchangeDescent
 import FINAL.Pythagorean.ExplicitMorseTheory
 import FINAL.Pythagorean.Extraction
@@ -1588,6 +1590,7 @@ import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.IteratedShadowGeometry
 import FINAL.Pythagorean.KeplerEccentricity
 import FINAL.Pythagorean.KnuthBendixCompletion
+import FINAL.Pythagorean.KruskalKatonaSupport
 import FINAL.Pythagorean.LagrangeFourSquare
 import FINAL.Pythagorean.LargeDeviationPressure
 import FINAL.Pythagorean.LogSobolev

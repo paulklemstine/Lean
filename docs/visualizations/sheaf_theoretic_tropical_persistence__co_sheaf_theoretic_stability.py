@@ -1,94 +1,94 @@
-#!/usr/bin/env python3
 """
-Visualization: Sheaf-Theoretic Stability via Interleaving
+Visualization: Sheaf-Theoretic Stability
+=========================================
 
-Visualizes the stability theorem: if two filtrations are ε-close, their
-sheaf event profiles are ε-interleaved. Shows:
-- Original and perturbed sheaf profiles
-- The ε-shifted envelope demonstrating interleaving
-- The stability corridor
+Visualizes the stability theorem: when two filtrations are ε-close,
+their sheaf event profiles are ε-interleaved. Shows the original
+and perturbed profiles with the interleaving bands.
 
-This visualizes: sheafEvtProfile_stability
+Uses matplotlib to produce a static PNG.
 """
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import numpy as np
-import math
+import matplotlib.patches as mpatches
+import random
+from typing import List, Tuple, Dict
 
 
-def path_graph_edges(n):
-    return [(i, i+1) for i in range(n-1)]
+# ─── Self-contained infrastructure ──────────────────────────────────
 
-def degree(n, edges, v):
-    return sum(1 for (a,b) in edges if a == v or b == v)
+def path_edges(n: int) -> List[Tuple[int, int]]:
+    return [(i, i + 1) for i in range(n)]
 
-def sheaf_jump(n, edges, filt, c):
-    entering = [v for v, fv in enumerate(filt) if abs(fv - c) < 1e-10]
-    return sum(degree(n, edges, v) + 1 for v in entering)
+def degree(edges: List[Tuple[int, int]], v: int) -> int:
+    return sum(1 for (a, b) in edges if a == v or b == v)
 
-def sheaf_event_profile(n, edges, filt, t):
-    crit = sorted(set(filt))
-    return sum(sheaf_jump(n, edges, filt, c) for c in crit if c <= t + 1e-10)
+def sheaf_jump(edges: List[Tuple[int, int]], filt: Dict[int, float], c: float) -> int:
+    return sum(degree(edges, v) + 1 for v, ft in filt.items() if ft == c)
 
+def cum_profile(edges: List[Tuple[int, int]], filt: Dict[int, float], t: float) -> int:
+    crits = sorted(set(filt.values()))
+    return sum(sheaf_jump(edges, filt, c) for c in crits if c <= t)
+
+
+# ─── Setup ───────────────────────────────────────────────────────────
 
 n = 7
-edges = path_graph_edges(n)
-filt1 = [float(i) for i in range(n)]
-filt2 = [float(i) + 0.4 * math.sin(i * 1.5) for i in range(n)]
-epsilon = max(abs(a - b) for a, b in zip(filt1, filt2))
+edges = path_edges(n)
+filt1 = {i: float(i) for i in range(n + 1)}
 
-t_range = np.linspace(-1, n + 1, 1000)
+random.seed(42)
+epsilon = 0.5
+filt2 = {i: filt1[i] + random.uniform(-epsilon, epsilon) for i in range(n + 1)}
+actual_eps = max(abs(filt1[v] - filt2[v]) for v in filt1)
 
-prof1 = [sheaf_event_profile(n, edges, filt1, t) for t in t_range]
-prof2 = [sheaf_event_profile(n, edges, filt2, t) for t in t_range]
-prof1_shifted = [sheaf_event_profile(n, edges, filt1, t + epsilon) for t in t_range]
-prof2_shifted = [sheaf_event_profile(n, edges, filt2, t + epsilon) for t in t_range]
+# Sample points
+t_vals = [i * 0.1 for i in range(-15, n * 10 + 20)]
 
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 9))
+prof1 = [cum_profile(edges, filt1, t) for t in t_vals]
+prof2 = [cum_profile(edges, filt2, t) for t in t_vals]
+prof2_shifted = [cum_profile(edges, filt2, t + actual_eps) for t in t_vals]
+prof1_shifted = [cum_profile(edges, filt1, t + actual_eps) for t in t_vals]
 
-# Top plot: Both profiles with interleaving envelope
-ax1.plot(t_range, prof1, color='#2c3e50', linewidth=2.5, label='Profile f₁ (original)')
-ax1.plot(t_range, prof2, color='#e74c3c', linewidth=2.5, label='Profile f₂ (perturbed)')
-ax1.plot(t_range, prof2_shifted, color='#e74c3c', linewidth=1.5, linestyle='--',
-         alpha=0.6, label=f'Profile f₂(t+ε)')
-ax1.fill_between(t_range, prof1, prof2_shifted, alpha=0.1, color='#27ae60',
-                 label='Interleaving corridor')
+# ─── Plot ────────────────────────────────────────────────────────────
 
-for c in sorted(set(filt1)):
-    ax1.axvline(x=c, color='#3498db', linestyle=':', alpha=0.2)
-for c in sorted(set(filt2)):
-    ax1.axvline(x=c, color='#e74c3c', linestyle=':', alpha=0.2)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
+# Left panel: profiles with interleaving
+ax1.plot(t_vals, prof1, color='#2196F3', linewidth=2.5, label='Original filtration f₁')
+ax1.plot(t_vals, prof2, color='#F44336', linewidth=2.5, label='Perturbed filtration f₂')
+ax1.plot(t_vals, prof2_shifted, color='#F44336', linewidth=1, linestyle='--',
+         alpha=0.5, label=f'f₂(t + ε)')
+ax1.plot(t_vals, prof1_shifted, color='#2196F3', linewidth=1, linestyle='--',
+         alpha=0.5, label=f'f₁(t + ε)')
+
+# Shade interleaving region
+ax1.fill_between(t_vals, prof1, prof2_shifted, alpha=0.1, color='green')
+
+ax1.set_xlabel('Threshold t', fontsize=12)
 ax1.set_ylabel('Sheaf Event Profile', fontsize=12)
-ax1.set_xlabel('Threshold t', fontsize=11)
-ax1.set_title(f'Sheaf-Theoretic Stability: ε-Interleaving (ε = {epsilon:.3f})',
-             fontsize=14, fontweight='bold')
-ax1.legend(fontsize=10, loc='upper left')
+ax1.set_title(f'Stability: ε-Interleaving (ε = {actual_eps:.3f})', fontsize=13, fontweight='bold')
+ax1.legend(fontsize=9, loc='upper left')
+ax1.grid(True, alpha=0.3)
+ax1.set_xlim(-1, n + 1)
 
-# Bottom plot: Profile difference and bound
-diff = [abs(p1 - p2) for p1, p2 in zip(prof1, prof2)]
-ax2.fill_between(t_range, diff, alpha=0.3, color='#e74c3c')
-ax2.plot(t_range, diff, color='#e74c3c', linewidth=2, label='|P₁(t) - P₂(t)|')
+# Right panel: profile difference
+diffs = [abs(p1 - p2) for p1, p2 in zip(prof1, prof2)]
+max_shift_bound = [max(cum_profile(edges, filt2, t + actual_eps) - cum_profile(edges, filt2, t),
+                       cum_profile(edges, filt1, t + actual_eps) - cum_profile(edges, filt1, t))
+                   for t in t_vals]
 
-# Show that the difference is bounded by the max possible shift
-max_diff = max(diff)
-ax2.axhline(y=max_diff, color='#2c3e50', linestyle='--', linewidth=1.5,
-           label=f'Max difference = {max_diff}')
+ax2.fill_between(t_vals, 0, max_shift_bound, alpha=0.2, color='orange', label='Stability bound')
+ax2.plot(t_vals, diffs, color='#4CAF50', linewidth=2, label='|Profile₁ - Profile₂|')
+ax2.plot(t_vals, max_shift_bound, color='orange', linewidth=1, linestyle='--', alpha=0.7)
 
+ax2.set_xlabel('Threshold t', fontsize=12)
 ax2.set_ylabel('Profile Difference', fontsize=12)
-ax2.set_xlabel('Threshold t', fontsize=11)
-ax2.set_title('Profile Difference Under Perturbation', fontsize=14, fontweight='bold')
+ax2.set_title('Sheaf-Theoretic Stability Bound', fontsize=13, fontweight='bold')
 ax2.legend(fontsize=10)
-
-# Add annotation
-ax2.annotate(f'Stability: profiles are\nε-interleaved with ε={epsilon:.3f}',
-            xy=(n/2, max_diff * 0.7),
-            fontsize=11, fontweight='bold', color='#27ae60',
-            ha='center',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='#eafaf1', alpha=0.8))
+ax2.grid(True, alpha=0.3)
+ax2.set_xlim(-1, n + 1)
 
 plt.tight_layout()
-plt.savefig('viz_stability.png', dpi=150, bbox_inches='tight')
-print("Saved viz_stability.png")
+plt.savefig('stability_visualization.png', dpi=150, bbox_inches='tight')
+print("Saved: stability_visualization.png")
