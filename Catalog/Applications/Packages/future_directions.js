@@ -97,10 +97,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "54b6db2b",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -229,10 +229,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "88770e41",
-    "consumed_by_exp_id": "d5872574",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-25T18:39:32.525739+00:00"
   },
   {
@@ -359,10 +359,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2953ee13",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bf323aae",
     "timestamp": "2026-05-25T22:25:38.908872+00:00"
   },
   {
@@ -597,10 +597,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "1fb257b2",
-    "consumed_by_exp_id": "eb0ca85b",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T13:05:51.445505+00:00"
   },
   {
@@ -676,10 +676,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "a8f3ced3",
-    "consumed_by_exp_id": "7a00ed5d",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T03:33:47.282680+00:00"
   },
   {
@@ -911,10 +911,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "69370675",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e51690e3",
     "timestamp": "2026-05-28T06:15:00.347688+00:00"
   },
   {
@@ -972,29 +972,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "35f20969",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T09:50:28.931327+00:00"
-  },
-  {
-    "id": "fd_1777",
-    "title": "Direction 1: Proving the SSH Newton-Order Conjecture via Toeplitz Asymptotics",
-    "description": "**Conjecture.** For the half-filled SSH chain with dimerization $\\delta$ and subsystem size $m$:\n- (Gapped) $\\delta \\neq 0 \\Rightarrow \\sup_m \\mathcal{N}_m(\\delta) < \\infty$.\n- (Critical) $\\delta = 0 \\Rightarrow \\mathcal{N}_m(0) \\geq c \\log m$ for infinitely many $m$.\n\n**Test.** Prove the gapped case using exponential clustering of correlation matrix eigenvalues. For the critical case, derive Fisher\u2013Hartwig asymptotics for the esymm of the SSH spectrum at $\\delta = 0$ and show that the second log-differences of $\\log e_k$ grow without bound.\n\n**Impact.** This would be the first rigorous result connecting purely algebraic invariants (Newton ratios) to quantum phase transitions, opening a new paradigm for phase detection that requires no physical measurement apparatus \u2014 only eigenvalue computation.\n\n**Catalog References.** `Pythagorean/NewtonQuantumOrderParameters.lean`: `newtonRatio_bounded_of_spectral_pinching` (gapped case foundation), `SSHGappedConjecture`, `SSHCriticalConjecture`.\n\n**Proof Strategy.** \n1. For the gapped case: use the spectral pinching theorem with the known result that SSH correlation eigenvalues cluster in $[\\epsilon(\\delta), 1-\\epsilon(\\delta)]$ for $\\delta \\neq 0$.\n2. For the critical case: use Fisher\u2013Hartwig determinant asymptotics to compute $e_k$ asymptotics, then show the Newton ratio profile develops a logarithmic peak.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 Toeplitz determinant theory \u2194 condensed-matter physics.\n\n**Lineage.** Extends `esymm_newton_ineq` and `newtonRatio_bounded_of_spectral_pinching`.\n\n**Ambition.** Grand challenge \u2014 would establish a new paradigm at the intersection of algebra and quantum physics.\n\n**The key insight is** that the spectral pinching theorem already gives the gapped case *if* we can prove the eigenvalue clustering bound, reducing a physics conjecture to a spectral analysis problem.\n\n**Why now?** The Toeplitz determinant machinery (Widom, Basor\u2013Tracy) is mature, and the formalized spectral pinching theorem provides the algebraic bridge.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
     "status": "in_progress",
     "research_mode": "prove",
-    "source_exp_id": "40ff2470",
-    "consumed_by_exp_id": "6f512553",
-    "timestamp": "2026-05-28T11:03:34.260901+00:00"
+    "source_exp_id": "35f20969",
+    "consumed_by_exp_id": "efe94467",
+    "timestamp": "2026-05-28T09:50:28.931327+00:00"
   },
   {
     "id": "fd_1787",
@@ -1050,26 +1032,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "b2a4e38f",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T12:18:36.484704+00:00"
-  },
-  {
-    "id": "fd_1802",
-    "title": "Direction 3: Quantum Circuit Certification from GL\u2082 Spectral Gaps",
-    "description": "**Conjecture**: For every certified pair (g, h) in GL\u2082(\ud835\udd3d_q), the quantum channel\n$$\\Phi(\\rho) = \\frac{1}{4}(U_g \\rho U_g^\\dagger + U_{g^{-1}} \\rho U_{g^{-1}}^\\dagger + U_h \\rho U_h^\\dagger + U_{h^{-1}} \\rho U_{h^{-1}}^\\dagger)$$\nwhere U_g is the natural unitary representation of g on \u2102^{q\u00b2}, achieves \u03b5-approximate unitary 2-design after O(q log(q/\u03b5)) applications.\n\n**Test**: For q = 5, 7, construct the quantum channel explicitly, compute the diamond-norm distance to the Haar channel after t iterations, verify the predicted convergence rate.\n\n**Impact**: Would provide the first **deterministically certified quantum scrambling circuits** with provable mixing time, directly applicable to quantum error correction and quantum cryptography.\n\n**The key insight is** that the spectral gap of the classical Cayley walk directly bounds the diamond-norm contraction of the associated quantum channel, and certified pairs give deterministic quantum circuits without randomness.\n\n**Why now?** The classical spectral gap theory (Theorem 6, exponential mixing) provides the contraction bound. Recent developments in quantum information theory make the connection to approximate designs precise.\n\n**Catalog References**: `Catalog/Pythagorean/GL2SpectralDecomposition.lean` \u2014 `certified_gl2_mixing_bound`, `quantum_mixing_decay`\n\n**Proof Strategy**: Use the representation-theoretic decomposition to bound the diamond norm of the quantum channel. Apply the certified spectral gap to get the convergence rate. Formalize the connection between classical spectral gap and quantum design depth.\n\n**Domain Bridges**: Quantum information theory, quantum cryptography, quantum error correction\n\n**Lineage**: Builds on the quantum mixing connection (Section 13 of the Lean file).\n\n**Ambition**: Solid extension with direct practical applications.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Physics",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "b2a4e38f",
-    "consumed_by_exp_id": "113c8132",
-    "timestamp": "2026-05-28T12:18:36.683716+00:00"
   },
   {
     "id": "fd_1817",
@@ -1213,10 +1175,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "57cfb68b",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1875933b",
     "timestamp": "2026-05-28T14:11:26.718951+00:00"
   },
   {
@@ -1251,7 +1213,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "7968ebde",
@@ -1271,7 +1233,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "7968ebde",
@@ -1290,7 +1252,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "7968ebde",
@@ -1310,7 +1272,7 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "7968ebde",
@@ -1329,7 +1291,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "7968ebde",
@@ -1349,7 +1311,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4d322aa9",
@@ -1369,7 +1331,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges",
       "Logic"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4d322aa9",
@@ -1390,7 +1352,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Speculative"
     ],
-    "priority_score": 0.9999999999999999,
+    "priority_score": 1.0,
     "status": "available",
     "research_mode": "prove",
     "source_exp_id": "4d322aa9",

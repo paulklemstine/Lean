@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Quantum Phase Transitions",
     "date": "2026-05-28T17:16:13Z",
     "exp_id": "6f512553",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.776915652173913,
+    "quality": "substantial",
     "pkg_num": 260
   },
   {
@@ -7549,8 +7549,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-28T17:16:13Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.776915652173913,
+      "quality": "substantial"
     }
   ],
   "edges": [

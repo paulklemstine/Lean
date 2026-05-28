@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2016 of the highest-quality
+A curated collection of 2017 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2016
+Total files: 2017
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1678,6 +1678,7 @@ import FINAL.Pythagorean.RootSeparatedDecomposition
 import FINAL.Pythagorean.SL2Defs
 import FINAL.Pythagorean.SL2Generation
 import FINAL.Pythagorean.SL2Spectral
+import FINAL.Pythagorean.SSHNewtonOrder
 import FINAL.Pythagorean.STLCDefs
 import FINAL.Pythagorean.SandwichDefs
 import FINAL.Pythagorean.SandwichGraph
