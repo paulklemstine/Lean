@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2006 of the highest-quality
+A curated collection of 2008 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2006
+Total files: 2008
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1611,6 +1611,7 @@ import FINAL.Pythagorean.KruskalKatonaSupport
 import FINAL.Pythagorean.LagrangeFourSquare
 import FINAL.Pythagorean.LargeDeviationPressure
 import FINAL.Pythagorean.LogSobolev
+import FINAL.Pythagorean.LorentzianAggregateAntiCancel
 import FINAL.Pythagorean.LorentzianComplexityTransition
 import FINAL.Pythagorean.LorentzianExchangeCertificates
 import FINAL.Pythagorean.LorentzianHardness
@@ -1666,6 +1667,7 @@ import FINAL.Pythagorean.QuotientSections
 import FINAL.Pythagorean.RankBoundedEML
 import FINAL.Pythagorean.RecursiveMajorityDepthRigidity
 import FINAL.Pythagorean.ReflectionPositivity
+import FINAL.Pythagorean.RepulsiveInfoGeometry
 import FINAL.Pythagorean.RobustCertificateCompilation
 import FINAL.Pythagorean.RootSeparatedDecomposition
 import FINAL.Pythagorean.SL2Defs

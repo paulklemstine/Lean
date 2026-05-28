@@ -97,10 +97,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "33261812",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7968ebde",
     "timestamp": "2026-05-24T23:12:21.832370+00:00"
   },
   {
@@ -519,10 +519,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "abf333bc",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37f268bd",
     "timestamp": "2026-05-26T00:07:30.309357+00:00"
   },
   {
@@ -936,10 +936,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "37ca1705",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "873da85c",
     "timestamp": "2026-05-27T20:27:17.556195+00:00"
   },
   {
@@ -1026,27 +1026,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T03:11:12.401718+00:00"
   },
   {
-    "id": "fd_1641",
-    "title": "Direction 3: Information Geometry of Repulsive Measures",
-    "description": "**Conjecture:** The log-Hessian \u2202\u00b2(log p)|_{x=1} of a generating polynomial, restricted to the zero-sum subspace, defines a Riemannian metric (the \"repulsion metric\") on the space of perturbation directions. For DPPs, this metric is isometric to the effective resistance metric of the resolvent graph with edge weights L_{ij}\u00b2.\n\n**Test:** For DPPs on \u2264 10 elements, compute the effective resistance matrix from the resolvent L and compare with the pseudoinverse of the log-Hessian restricted to zero-sum vectors. Verify the isometry numerically. For products of linear forms, compute the repulsion metric and compare with the Fisher information metric of the associated exponential family.\n\n**Impact:** Would establish a precise dictionary between negative dependence and information geometry, enabling the transfer of powerful tools (Cram\u00e9r-Rao bounds, natural gradient methods, geodesic convexity) to combinatorial probability. Could lead to new entropy inequalities for repulsive measures.\n\n**Catalog References:** `Catalog/Pythagorean/ResolventGeometry.lean` (dppResolventHessian, condNegSemidef_of_hadamard_sq), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (dppPartitionFunction, dpp_partitionFunction_eval_ones).\n\n**Proof Strategy:** For DPPs, use the resolvent formula H_{ij} = -L_{ij}\u00b2 to compute the pseudoinverse of H on the zero-sum subspace explicitly in terms of L. The effective resistance R_{ij} = (e_i - e_j)^T L^+ (e_i - e_j) where L^+ is the pseudoinverse. Show that the two metrics agree up to a constant factor by expressing both in terms of the spectral decomposition of L.\n\n**Domain Bridges:** Information geometry (Fisher metric, natural gradient), statistical physics (susceptibility matrices, fluctuation-dissipation relations), network science (effective resistance, commute times).\n\n**Lineage:** Extends `dppResolventHessian_symm` and the resolvent formula to a full geometric structure.\n\n**Ambition:** Grand challenge \u2014 would create a new interface between information geometry and combinatorial probability.\n\nThe key insight is that the log-Hessian is the **susceptibility matrix** of the generating measure (in statistical physics language), and CondNSD is the statement that the system has **repulsive response**: perturbing one variable's weight decreases others' inclusion probabilities. The effective resistance metric quantifies this repulsion geometrically.\n\nWhy now? The resolvent formula H = -L\u00b2 is now formally verified, providing the explicit connection between Hessian geometry and resolvent structure. Information geometry has matured as a field with powerful tools (Amari, Ay et al.), but has not been systematically applied to discrete repulsive measures. The formal infrastructure makes it possible to verify the geometric identities rigorously.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "36b3d470",
-    "consumed_by_exp_id": "c6ae898d",
-    "timestamp": "2026-05-28T03:11:12.578612+00:00"
-  },
-  {
     "id": "fd_1683",
     "title": "Direction 2: Cancellation-Aware Shadow Bounds for General Circuits",
     "description": "**Conjecture:** For any (non-monotone) algebraic circuit $C$ of size $s$ computing a polynomial $f$, there exists a shadow bound $|\\mathrm{Sh}_1(\\mathrm{supp}(f))| \\le g(s, n, d)$ where $g$ is polynomial in $s$ and depends on the cancellation pattern.\n\n**Test:** Construct small non-monotone circuits for polynomials with known support (e.g., determinant of 3\u00d73 and 4\u00d74 matrices). Compute the actual shadow and verify the bound. Check whether the permanent's shadow exceeds the bound for circuits of the expected size.\n\n**Impact:** This would extend the shadow-gap framework from monotone to general circuits, the regime where P vs. NP type separations live.\n\n**Catalog References:**\n- `Pythagorean/CircuitLowerBounds/KruskalKatonaSupport.lean`: `card_oneShadow_union_le`, `shadow_bound_of_supportCircuit`\n\n**Proof Strategy:** The key insight is that cancellation in $f + g$ can only *reduce* the support: $\\mathrm{supp}(f + g) \\subseteq \\mathrm{supp}(f) \\cup \\mathrm{supp}(g)$. So the monotone shadow bound is still an upper bound on the shadow of the actual support. The challenge is to prove *lower* bounds showing that the actual shadow cannot be too small. One approach: use the fact that if $f$ has few terms, then $\\mathrm{supp}(f)$ is \"small\" in a KK sense, constraining the shadow from below.\n\n**Why now?** The monotone case is proved. The next step is to handle the gap between $\\mathrm{supp}(f + g)$ and $\\mathrm{supp}(f) \\cup \\mathrm{supp}(g)$ by bounding how much cancellation can reduce the shadow.\n\n**Domain Bridges:** Algebraic complexity \u2192 additive combinatorics (cancellation patterns as sumset structure).\n\n**Lineage:** Builds on the shadow subadditivity theorem (this work) and Baur\u2013Strassen (1983).\n\n**Ambition:** Solid extension \u2014 directly builds on proved theorems.\n\n---",
@@ -1063,26 +1042,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "d74bda34",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T06:14:18.922140+00:00"
-  },
-  {
-    "id": "fd_1684",
-    "title": "Direction 3: Shadow Isoperimetry for Newton Polytopes",
-    "description": "**Conjecture:** Among all finite subsets $S \\subseteq \\mathbb{N}^n$ with $|S| = m$ and Newton polytope volume $V$, the minimum shadow size satisfies:\n\n$$|\\mathrm{Sh}_1(S)| \\ge c \\cdot m^{(n-1)/n}$$\n\nfor a constant $c$ depending on $n$ and $V$, analogous to the lattice isoperimetric inequality.\n\n**Test:** For $n = 2, 3$, enumerate families of size $m \\le 50$ with prescribed Newton polytope (e.g., simplex, cube, cross-polytope). Compute the shadow and check against the conjectured bound. Plot shadow size vs. polytope volume.\n\n**Impact:** This would provide a geometric lower bound on shadows, independent of degree constraints. It connects the shadow-gap program to the rich theory of lattice point geometry and Ehrhart theory.\n\n**Catalog References:**\n- `Catalog/Bridges/Catalog/Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_subset_degreeSimplex`, `degreeSimplex_card`\n\n**Proof Strategy:** The key insight is that the one-step shadow is a discrete analogue of the inner parallel body of the Newton polytope. For convex lattice polytopes, the number of interior lattice points is controlled by the Ehrhart polynomial. A discrete isoperimetric inequality on the lattice should relate the shadow size to the surface area of the Newton polytope, which in turn relates to the volume by the classical isoperimetric inequality.\n\n**Why now?** The shadow operator is now formally defined on multi-index families, and the connection to Newton polytopes is established through the degree-simplex containment theorems. The missing link is a discrete isoperimetric inequality on the integer lattice, which is an active area of research in combinatorial geometry.\n\n**Domain Bridges:** Algebraic complexity \u2192 convex geometry \u2192 Ehrhart theory.\n\n**Lineage:** Builds on Bollob\u00e1s\u2013Leader lattice isoperimetry, Barvinok's lattice point theory.\n\n**Ambition:** Grand challenge \u2014 would establish a deep geometric foundation for shadow bounds.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Cryptography",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "d74bda34",
-    "consumed_by_exp_id": "3f056eff",
-    "timestamp": "2026-05-28T06:14:19.002387+00:00"
   },
   {
     "id": "fd_1685",
@@ -1243,27 +1202,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T11:03:34.260901+00:00"
   },
   {
-    "id": "fd_1785",
-    "title": "Direction 2: Aggregate Anti-Cancellation via Lorentzian Structure",
-    "description": "**Conjecture:** For polynomials with support contained in a matroid basis polytope and coefficients satisfying a Lorentzian sign condition, weighted sums of second derivatives \u03a3 a\u1d62\u2c7c \u2202\u1d62\u2202\u2c7cp have support exactly equal to the union of per-pair shadows \u2014 no cancellation occurs even after aggregation.\n\n**Test:** Implement the Lorentzian polynomial checker from Br\u00e4nd\u00e9n\u2013Huh, compute weighted Hessian sums for Lorentzian polynomials in 3\u20134 variables, and verify support exactness. Search for non-Lorentzian polynomials where aggregate cancellation occurs.\n\n**Impact:** This would be a major advance: combining the characteristic-zero mechanism (no per-pair cancellation) with the Lorentzian positivity mechanism (no inter-pair cancellation) to obtain a complete anti-cancellation guarantee for the full Hessian operator. This is the missing piece for genuine arithmetic circuit lower bounds.\n\n**Catalog References:**\n- `Bridges/Catalog/Speculative/AutoResearch/AntiCancellationLorentzian.lean` \u2014 aggregate anti-cancellation for positive weights\n- `Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` \u2014 per-pair shadow equality\n\n**Proof Strategy:** Use the AntiCancellationLorentzian result for nonneg-coefficient polynomials as a template. Extend to signed coefficients using Lorentzian structure (ultra-log-concavity of coefficient sequences) to control inter-pair cancellation.\n\n**Domain Bridges:** Hodge theory (Lorentzian signature), matroid theory (basis exchange), convex optimization (log-concavity).\n\n**Lineage:** Combines the per-pair result (this file) with the Lorentzian anti-cancellation (AntiCancellationLorentzian.lean).\n\n**Ambition:** Grand challenge \u2014 requires bridging two distinct anti-cancellation mechanisms and may need new mathematical ideas.\n\n**The key insight is** that Lorentzian polynomials have a hidden convexity structure (ultra-log-concavity) that prevents inter-pair cancellation, complementing the characteristic-zero mechanism that prevents intra-pair cancellation.\n\n**Why now?** Both the per-pair and the Lorentzian anti-cancellation results are now formalized. The synthesis is the natural next step and would be the first result combining both mechanisms.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "ad17ca4a",
-    "consumed_by_exp_id": "57cfb68b",
-    "timestamp": "2026-05-28T11:04:38.605729+00:00"
-  },
-  {
     "id": "fd_1787",
     "title": "Direction 4: Shadow-Based Circuit Lower Bounds for the Permanent",
     "description": "**Conjecture:** The shadow lower bound |Sh\u2082(supp(Perm_n))| grows at least as fast as 2^{n/2}, and the non-cancellation certificate holds for the permanent polynomial Perm_n for all n \u2265 3. Consequently, any arithmetic circuit computing Perm_n has size at least 2^{n/2} / poly(n), improving the best known lower bounds.\n\n**Test:** Compute |Sh\u2082(supp(Perm_n))| for n = 3, 4, 5, 6, 7 and extrapolate the growth rate. Verify the certificate for Perm_n (the support is the set of permutation matrices with coefficients \u00b11; the shadow closure question reduces to a combinatorial property of permutation matrices).\n\n**Impact:** An exponential circuit lower bound for the permanent would resolve a major open problem in computational complexity (Valiant's conjecture, VP \u2260 VNP). Even a new lower bound (improving the current \u03a9(n\u00b2/2) of Shpilka\u2013Wigderson) would be a significant advance.\n\n**Catalog References:**\n- `Algebra/AlgebraicCircuitComplexity.lean` \u2014 circuit complexity definitions\n- `Bridges/Catalog/Speculative/AutoResearch/NonCancellationCertificate.lean` \u2014 certificate and shadow lower bound\n\n**Proof Strategy:** Analyze the combinatorics of permutation supports under the shadow map. The key question is whether |Sh\u2082(Perm_n)| grows exponentially. This is a purely combinatorial question about permutations, independent of the algebraic framework.\n\n**Domain Bridges:** Combinatorics (permutation statistics), computational complexity (VP vs VNP), representation theory (symmetric group).\n\n**Lineage:** Grand-challenge application of the entire framework to the central open problem in algebraic complexity.\n\n**Ambition:** Grand challenge \u2014 this is equivalent to a major open problem. Even partial progress (new lower bounds, tight shadow computation) would be highly significant.\n\n**The key insight is** that the non-cancellation certificate reduces the permanent lower bound problem to a purely combinatorial question about the shadow growth of permutation supports, separating the algebraic difficulty from the combinatorial difficulty.\n\n**Why now?** The certificate framework is now formalized and verified. The combinatorial question about permutation shadows is well-defined and computationally tractable for small n, enabling systematic experimental investigation.\n\n---",
@@ -1358,6 +1296,90 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T12:18:36.683716+00:00"
   },
   {
+    "id": "fd_1817",
+    "title": "Direction 1: Entropy Bounds via Resistance Inequalities",
+    "description": "**Conjecture:** For a DPP with kernel $L$ on $[n]$, the Shannon entropy $H(\\mu)$ of the inclusion probabilities satisfies:\n$$H(\\mu) \\leq \\frac{1}{2} \\sum_{i \\neq j} L_{ij}^2 \\cdot R_{\\text{eff}}(i, j)$$\nwhere $R_{\\text{eff}}$ is the effective resistance in the graph with conductances $L_{ij}^2$.\n\n**Test:** Compute both sides for random DPP kernels of size $n \\leq 10$. Search for counterexamples and refine the bound constant.\n\n**Impact:** This would give the first entropy bound for DPPs derived purely from resistance geometry, connecting Shannon theory to Kirchhoff's laws. It could improve existing bounds by Lyons (2003) on negative association.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (DPP partition function), `Catalog/Pythagorean/RepulsiveInfoGeometry.lean` (Dirichlet form identity).\n\n**Proof Strategy:** Use the variational characterization of entropy and the Dirichlet form identity to bound the KL divergence between the DPP and a product distribution. Apply the resistance monotonicity principle (Rayleigh) to simplify.\n\n**Domain Bridges:** Information theory \u2194 Electrical networks \u2194 Probability.\n\n**Lineage:** Extends Theorem 1 (Dirichlet form) and the Fisher-repulsion equivalence.\n\n**Ambition:** Grand challenge \u2014 if successful, creates a new class of entropy inequalities.\n\n**The key insight is** that the pairwise Dirichlet form controls the KL divergence between the DPP and its closest independent approximation, and resistance bounds directly bound this divergence.\n\n**Why now?** The Dirichlet form identity (formally verified) provides the precise tool needed to convert Hessian curvature into pairwise resistance sums, which was the missing link.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6ae898d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T14:11:00.149771+00:00"
+  },
+  {
+    "id": "fd_1818",
+    "title": "Direction 2: Natural Gradient Optimization via Laplacian Solvers",
+    "description": "**Conjecture:** The natural gradient for maximum likelihood estimation of DPP parameters can be computed in $\\tilde{O}(n^2)$ time (near-linear in the number of matrix entries) using fast Laplacian solvers.\n\n**Test:** Implement natural gradient DPP estimation using Spielman-Teng Laplacian solvers and compare convergence speed and per-iteration cost with standard gradient descent and Newton's method.\n\n**Impact:** Current DPP parameter estimation requires $O(n^3)$ per iteration (for the pseudoinverse). If the log-Hessian Laplacian structure can be exploited, this drops to $\\tilde{O}(n^2)$, making DPP learning practical for large datasets.\n\n**Catalog References:** `Catalog/Pythagorean/RepulsiveInfoGeometry.lean` (dpp_laplacianEnergy_eq_resolventDirichlet), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (DPPKernel structure).\n\n**Proof Strategy:** Show that the natural gradient direction $H^+ \\nabla$ can be approximated by solving the Laplacian system $Hx = \\nabla$ (projected to zero-sum). Apply Spielman-Teng nearly-linear-time Laplacian solver.\n\n**Domain Bridges:** Optimization \u2194 Spectral graph theory \u2194 Machine learning.\n\n**Lineage:** Direct application of Theorem 3 (DPP Dirichlet form).\n\n**Ambition:** Solid extension \u2014 the mathematical infrastructure is in place, and the algorithmic speedup is a concrete, testable claim.\n\n**The key insight is** that the natural gradient preconditioner for DPPs is a graph Laplacian, and graph Laplacians admit nearly-linear-time solvers.\n\n**Why now?** The formal identification of the DPP Hessian as a Laplacian (Theorem 3) removes the conceptual gap between DPP optimization and Laplacian linear algebra.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6ae898d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T14:11:01.574237+00:00"
+  },
+  {
+    "id": "fd_1819",
+    "title": "Direction 3: Repulsion Metric as a Lorentzian Hessian",
+    "description": "**Conjecture:** For any Lorentzian polynomial $p$ (in the sense of Br\u00e4nd\u00e9n-Huh), the Hessian of $\\log p$ at any point in the positive orthant defines a graph Laplacian on the zero-sum subspace, generalizing the DPP case.\n\n**Test:** Compute log-Hessians for known families of Lorentzian polynomials (elementary symmetric polynomials, basis generating polynomials of matroids) and check whether they have the Laplacian structure (nonpositive off-diagonal, zero row sums, PSD on zero-sum).\n\n**Impact:** Would unify the Laplacian interpretation across all Lorentzian polynomials, not just DPP generating polynomials. This would bring the entire Br\u00e4nd\u00e9n-Huh theory into contact with resistance networks.\n\n**Catalog References:** `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (IsDPPLorentzian definition, dpp_partition_function_lorentzian conjecture), `Catalog/Pythagorean/RepulsiveInfoGeometry.lean` (laplacianEnergy_eq_pairwise).\n\n**Proof Strategy:** Use the characterization of Lorentzian polynomials via their Hessian eigenvalue signature (at most one positive eigenvalue for degree-2 derivatives). Show that this implies the log-Hessian has the Laplacian sign pattern.\n\n**Domain Bridges:** Algebraic combinatorics (Lorentzian polynomials) \u2194 Spectral graph theory \u2194 Information geometry.\n\n**Lineage:** Extends Theorem 3 from DPP generating polynomials to all Lorentzian polynomials.\n\n**Ambition:** Grand challenge \u2014 would create a unified theory of \"Lorentzian resistance networks.\"\n\n**The key insight is** that the Lorentzian condition (at most one positive eigenvalue per Hessian slice) might force the log-Hessian to have the sign pattern of a Laplacian, extending the DPP result to all strongly log-concave polynomials.\n\n**Why now?** The DPP case (verified in this work) provides the first concrete example, and the Br\u00e4nd\u00e9n-Huh theory provides the algebraic tools needed for the general case.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6ae898d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T14:11:01.665084+00:00"
+  },
+  {
+    "id": "fd_1820",
+    "title": "Direction 4: Fluctuation-Dissipation for DPPs (Statistical Physics Bridge)",
+    "description": "**Conjecture:** For a DPP at inverse temperature $\\beta$ (i.e., with kernel $\\beta L$), the static susceptibility matrix $\\chi_{ij} = \\partial \\langle n_i \\rangle / \\partial h_j$ (response of marginal to external field) equals $\\beta$ times the effective resistance Green function of the graph with conductances $\\beta^2 L_{ij}^2$.\n\n**Test:** For small DPP instances ($n \\leq 6$), compute the susceptibility matrix by finite differences of marginal probabilities and compare to the predicted resistance Green function.\n\n**Impact:** Would establish a fluctuation-dissipation theorem for DPPs, connecting the variance of occupation numbers (fluctuation) to the response to external fields (dissipation) via the resistance metric. This would import the full toolkit of linear response theory from statistical physics.\n\n**Catalog References:** `Catalog/Pythagorean/RepulsiveInfoGeometry.lean` (dppLogHessian, laplacianEnergy_eq_pairwise), `Catalog/Speculative/AutoResearch/DPPLorentzian.lean` (dpp_partitionFunction_eval_ones).\n\n**Proof Strategy:** Differentiate the log-partition function $\\log \\det(I + \\text{diag}(e^h) \\cdot \\beta K)$ twice with respect to the field $h$, and show the result is the Laplacian pseudoinverse.\n\n**Domain Bridges:** Statistical physics (fluctuation-dissipation) \u2194 Information geometry (Fisher metric) \u2194 Electrical networks (resistance).\n\n**Lineage:** Builds on the Fisher-repulsion connection (Conjecture B) and the Dirichlet form identity.\n\n**Ambition:** Solid extension \u2014 the calculation is straightforward, but the conceptual unification is significant.\n\n**The key insight is** that the DPP susceptibility is the derivative of the marginal kernel with respect to external fields, and this derivative is controlled by the log-Hessian (= Laplacian), whose inverse is the resistance Green function.\n\n**Why now?** The formal identification of the Hessian as a Laplacian (this work) provides the missing dictionary entry between DPP response functions and resistance.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "c6ae898d",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T14:11:01.755544+00:00"
+  },
+  {
     "id": "fd_0806",
     "title": "Tropical Shadow of p-adic Persistent Homology",
     "description": "Conjecture: For any finite filtered chain complex over the integers with finitely generated homology in each degree, the primewise barcode data obtained after reduction/localization at varying primes p determines a piecewise-linear tropical hypersurface whose combinatorial type stabilizes for all sufficiently large p, and this stabilized tropical object is a complete invariant of the asymptotic torsion-birth structure up to filtered quasi-isomorphism in a generic class of filtrations. Test: Compute primewise barcodes for broad families of filtrations, tropicalize the valuation profile of birth/death parameters across primes, and check whether non-isomorphic generic filtrations with identical stabilized tropical shadows exist; a single counterexample refutes completeness, while repeated recovery across synthetic and natural datasets supports it. Impact: This would create a new bridge between topological data analysis, arithmetic topology, and tropical geometry, enabling compression of infinitely many prime-dependent persistence signatures into a finite geometric object and potentially yielding new classification and stability theorems.",
@@ -1388,6 +1410,110 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
+  },
+  {
+    "id": "fd_1822",
+    "title": "Direction 1: Higher-Order Anti-Cancellation and k-Shadows",
+    "description": "**Conjecture:** For any Lorentzian polynomial $p$ with nonneg coefficients and any positive weight tensor $A_{i_1 \\cdots i_k}$, the support of $\\sum A_{i_1 \\cdots i_k} \\partial_{i_1} \\cdots \\partial_{i_k} p$ equals the union of $k$-th order derivative shadows over active entries of $A$.\n\n**Test:** Implement the $k$-shadow computation for $k = 3, 4$ on uniform matroid basis polynomials $U(r, n)$ with $n \\leq 7$. Verify support exactness for all-positive weight tensors. Search for counterexamples with mixed-sign tensors. The conjecture predicts zero cancellations in the positive regime and nonzero cancellation rates outside it. A single counterexample within the positive regime falsifies the conjecture.\n\n**Impact:** Would establish a complete hierarchy of anti-cancellation theorems indexed by differential order, showing that Lorentzian structure rigidifies support at every level of the derivative tower. This would provide support-based lower bounds for arithmetic circuits computing $k$-th order partial derivatives.\n\n**Catalog References:** `Pythagorean/LorentzianAggregateAntiCancel.lean` (Theorem A), `Catalog/Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` (per-pair exactness).\n\n**Proof Strategy:** Generalize the overlap sign coherence condition from pairs to $k$-tuples. The key lemma is that for nonneg-coefficient polynomials, each $k$-th derivative coefficient is a product of $k$ natural numbers times a nonneg coefficient, hence nonneg. With positive weights, all contributions are positive.\n\n**Domain Bridges:** Combinatorial Hodge theory \u2194 Arithmetic circuit complexity.\n\n**Lineage:** Extends the current Theorem A from $k=2$ to general $k$.\n\n**Ambition:** Grand challenge \u2014 requires new formalization of higher-order tensor operators and their support geometry.\n\n**The key insight is** that the factored coefficient formula $[\\beta]\\,\\partial_{i_1}\\cdots\\partial_{i_k} p = \\prod_{m=1}^k (\\beta_{i_m} + c_m) \\cdot c_{\\beta + \\sum e_{i_m}}$ preserves nonnegativity at every order, not just $k=2$.\n\n**Why now?** The formal infrastructure for second-order pair shadows is in place; the generalization to $k$-tuples requires only tensor notation, not new mathematical ideas.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "MachineLearning",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57cfb68b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T14:11:26.537599+00:00"
+  },
+  {
+    "id": "fd_1823",
+    "title": "Direction 2: M-Convexity Inheritance for Hessian Shadows",
+    "description": "**Conjecture:** If $p$ is a Lorentzian polynomial whose support is an M-convex set (in the sense of Murota's discrete convex analysis), then for any positive weight matrix $A$, the aggregate shadow $\\text{AgSh}(p, A)$ is also M-convex.\n\n**Test:** For all uniform matroid basis polynomials $U(r, n)$ with $n \\leq 8$, compute the aggregate shadow under all-ones weights and verify the symmetric exchange property: for any $\\alpha, \\beta \\in \\text{AgSh}$ and any $i$ with $\\alpha_i > \\beta_i$, there exists $j$ with $\\alpha_j < \\beta_j$ and $\\alpha - e_i + e_j \\in \\text{AgSh}$. A violation falsifies the conjecture.\n\n**Impact:** Would establish that Hessian aggregation is a morphism in the category of M-convex sets, connecting Lorentzian Hodge theory to Murota's discrete optimization framework. This would enable polynomial-time optimization algorithms on Hessian shadow structures.\n\n**Catalog References:** `Pythagorean/LorentzianAggregateAntiCancel.lean` (sub-convexity theorem), `Catalog/Speculative/AutoResearch/LorentzianMConvex.lean`.\n\n**Proof Strategy:** Use the \"two-step exchange\" approach: show that the symmetric exchange for the aggregate shadow follows from the exchange property of $p$'s support combined with the derivative shadow structure. The discrete sub-convexity theorem already proved is a partial step.\n\n**Domain Bridges:** Discrete convex analysis \u2194 Matroid theory \u2194 Combinatorial Hodge theory.\n\n**Lineage:** Extends the sub-convexity result (Theorem 3.7) to full M-convexity.\n\n**Ambition:** Solid extension \u2014 builds directly on existing infrastructure.\n\n**The key insight is** that the derivative shadow operation $\\text{supp}(p) \\mapsto \\{\\alpha - e_i - e_j : \\alpha \\in \\text{supp}(p)\\}$ is a Minkowski subtraction by a rank-2 lattice vector, and Minkowski operations preserve M-convexity for the right class of lattice polytopes.\n\n**Why now?** Murota's theory is well-developed but lacks formal connections to Hodge theory; the anti-cancellation theorem provides the missing algebraic bridge.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Cryptography",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57cfb68b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T14:11:26.628158+00:00"
+  },
+  {
+    "id": "fd_1824",
+    "title": "Direction 3: Support Rigidity Lower Bounds for Structured Arithmetic Circuits",
+    "description": "**Conjecture:** There exists a family of multilinear polynomials $\\{p_n\\}$ with $\\text{supp}(p_n) = \\Omega(n^2)$ such that any depth-3 arithmetic circuit computing $p_n$ with nonneg-coefficient intermediate polynomials requires $\\Omega(n^2)$ multiplication gates. The proof should use the anti-cancellation theorem to show that positive Hessian operators cannot reduce support below the shadow size.\n\n**Test:** Construct explicit polynomial families (e.g., matroid basis polynomials of graphic matroids) and compute their minimum Hessian shadow sizes under all positive weight matrices. Verify computationally that the shadow size is $\\Omega(n^2)$ for $n \\leq 20$.\n\n**Impact:** Would be the first application of Lorentzian/Hodge-theoretic structure to arithmetic circuit lower bounds, even in a restricted (nonneg coefficient) setting. Could inspire new approaches to the VP vs VNP problem.\n\n**Catalog References:** `Pythagorean/LorentzianAggregateAntiCancel.lean` (support exactness), `Catalog/Bridges/Catalog/Speculative/AutoResearch/AntiCancellationLorentzian.lean`.\n\n**Proof Strategy:** Show that for graphic matroid polynomials, every positive Hessian operator preserves a shadow of size $\\Omega(n^2)$. This follows from the anti-cancellation theorem combined with a counting argument on the number of \"reachable\" monomials.\n\n**Domain Bridges:** Arithmetic circuit complexity \u2194 Combinatorial Hodge theory \u2194 Matroid theory.\n\n**Lineage:** Applies the support exactness theorem to the complexity-theoretic framework.\n\n**Ambition:** Grand challenge \u2014 connects deep pure math to a central open problem in TCS.\n\n**The key insight is** that support rigidity under Hessian aggregation is a *monotone* complexity measure: it can only decrease under circuit operations, so a high initial shadow size implies a high circuit complexity.\n\n**Why now?** The formal verification of anti-cancellation provides the first rigorous tool for support tracking through differential operators; prior approaches were heuristic.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57cfb68b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T14:11:26.718951+00:00"
+  },
+  {
+    "id": "fd_1825",
+    "title": "Direction 4: Lorentzian Anti-Cancellation in Statistical Physics",
+    "description": "**Conjecture:** For the partition function $Z = \\sum_\\sigma \\exp(-\\beta H(\\sigma))$ of a ferromagnetic Ising model on a graph $G$, the associated \"multivariate partition polynomial\" (with variables indexing spins) is Lorentzian when $\\beta > 0$. The anti-cancellation theorem then implies that the observable support of any positive second-order susceptibility operator equals its aggregate shadow \u2014 meaning no physical observable is accidentally hidden by thermal averaging.\n\n**Test:** Compute the multivariate partition polynomial for the Ising model on small graphs ($K_4$, $K_5$, Petersen graph) at various temperatures. Verify Lorentzian conditions (Newton inequalities along all slices). Compute the Hessian shadow under the susceptibility matrix $\\chi_{ij} = \\partial_i \\partial_j \\ln Z$ and verify support exactness.\n\n**Impact:** Would establish a formal connection between Lorentzian polynomial theory and equilibrium statistical mechanics. The anti-cancellation theorem would guarantee that physical susceptibilities cannot accidentally vanish \u2014 a form of \"no hidden correlations\" for ferromagnetic systems.\n\n**Catalog References:** `Pythagorean/LorentzianAggregateAntiCancel.lean`, `Catalog/Speculative/AutoResearch/LorentzianGlauberMixing.lean`.\n\n**Proof Strategy:** The Lee\u2013Yang theorem guarantees that the partition function of a ferromagnetic Ising model has all roots on the unit circle, implying a form of stability. Use the Br\u00e4nd\u00e9n\u2013Huh characterization to show that stability implies the Lorentzian condition. Then apply the anti-cancellation theorem.\n\n**Domain Bridges:** Statistical physics \u2194 Combinatorial Hodge theory \u2194 Probability theory.\n\n**Lineage:** Connects the Lorentzian framework to the classical Lee\u2013Yang theory.\n\n**Ambition:** Grand challenge \u2014 would unify two major mathematical physics traditions.\n\n**The key insight is** that the Lee\u2013Yang property (real-stability) is strictly stronger than the Lorentzian condition, so ferromagnetic partition functions are automatically in the anti-cancellation regime.\n\n**Why now?** Recent breakthroughs by Anari, Liu, Oveis Gharan, and Vinzant have established the Lorentzian framework for strongly Rayleigh measures, which are closely related to ferromagnetic partition functions. The formal infrastructure is ready for cross-pollination.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57cfb68b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T14:11:26.812761+00:00"
+  },
+  {
+    "id": "fd_1826",
+    "title": "Direction 5: Quantum Information and Lorentzian Entanglement Witnesses",
+    "description": "**Conjecture:** The *permanent polynomial* of a positive semidefinite matrix, viewed as a multivariate polynomial in the matrix entries, is Lorentzian. The anti-cancellation theorem then implies that entanglement witness operators constructed from second derivatives of the permanent cannot accidentally hide entangled states.\n\n**Test:** Compute the permanent polynomial for $3 \\times 3$ and $4 \\times 4$ positive semidefinite matrices. Verify the Newton inequality conditions. Construct Hessian-type entanglement witnesses and verify support exactness.\n\n**Impact:** Would connect Lorentzian polynomial theory to quantum information theory. If entanglement witnesses derived from Lorentzian permanents are support-exact, this means no entangled state can be accidentally classified as separable by a positive Hessian witness \u2014 a strong reliability guarantee for entanglement detection.\n\n**Catalog References:** `Pythagorean/LorentzianAggregateAntiCancel.lean` (anti-cancellation), `Catalog/Speculative/AutoResearch/LorentzianInfoTheory.lean`.\n\n**Proof Strategy:** Use the Gurvits\u2013Leake theory relating the permanent to capacity and the Lorentzian condition. Establish that positive semidefiniteness of the matrix implies the Lorentzian condition on the permanent polynomial. Then apply the anti-cancellation theorem.\n\n**Domain Bridges:** Quantum information \u2194 Combinatorial Hodge theory \u2194 Algebraic complexity.\n\n**Lineage:** Extends the Lorentzian framework from classical probability (strongly Rayleigh measures) to quantum probability.\n\n**Ambition:** Grand challenge \u2014 would open an entirely new application domain for Lorentzian polynomial theory.\n\n**The key insight is** that the permanent polynomial's Lorentzian structure is not just a mathematical curiosity but a *physical guarantee* \u2014 it ensures that certain quantum measurements cannot miss entanglement.\n\n**Why now?** The Lorentzian characterization of the permanent's coefficient structure is a recent development; combining it with the anti-cancellation theorem creates an actionable tool for quantum information.",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 0.8999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "57cfb68b",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T14:11:26.908270+00:00"
   },
   {
     "id": "seed_013",
@@ -2002,40 +2128,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T12:55:38.029549+00:00"
   },
   {
-    "id": "fd_1812",
-    "title": "Direction 1: Unbounded Higher-Order Completion via Recursive Critical Pair Saturation",
-    "description": "**Conjecture:** For every finite left-linear Miller-pattern rewrite system E that is terminating and has no infinite ascending chain of critical pair sizes, there exists a finite N\u2080 such that `AllCriticalPairsJoinable E N\u2080` implies global confluence of E.\n\n**Test:** Implement recursive critical pair saturation: enumerate critical pairs at increasing bounds N = 1, 2, 3, ..., checking joinability at each level. If the critical pair set stabilizes (no new pairs appear beyond some N\u2080), the conjecture predicts global confluence. Test on the map fusion, CPS, and deforestation benchmarks. Falsify by constructing a terminating Miller-pattern system where new critical pairs appear at every bound.\n\n**Impact:** This would remove the \"bounded\" qualifier from our main theorem, yielding a full higher-order Knuth-Bendix completion procedure. It would be the first decision procedure for confluence of terminating higher-order pattern rewrite systems.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (master_pipeline, localConfluence_from_joinable_pairs), `Pythagorean/HOCriticalPairs.lean` (BetaCriticalPairsUpTo, AllCriticalPairsJoinable)\n\n**Proof Strategy:** Show that in a terminating system, the set of overlap positions is bounded by the termination ordering. Use the well-foundedness of the ordering to prove that critical pair generation eventually stabilizes.\n\n**Domain Bridges:** Connects to automated theorem proving (equational reasoning), universal algebra (finitely presented theories)\n\n**Lineage:** Extends master_pipeline by removing the \"Global\" quantifier from AllCriticalPairsJoinableGlobal\n\n**Ambition:** Grand challenge \u2014 would resolve a 50-year open problem in higher-order rewriting theory\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c5793c2c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T13:33:49.254429+00:00"
-  },
-  {
-    "id": "fd_1813",
-    "title": "Direction 2: Certified Compiler Optimization Passes via Completion Certificates",
-    "description": "**Conjecture:** For the standard optimization rules of a pure functional language compiler (map/fold fusion, \u03b2/\u03b7 reduction, case-of-case, let-floating), the bounded completion certificate at bound N = 100 certifies local confluence, and the certificate can be used to automatically verify that the compiler's optimization pipeline produces unique normal forms.\n\n**Test:** Encode the GHC rewrite rules (RULES pragmas) for list fusion as a Miller-pattern system. Generate a completion certificate at bound 100. Check whether all critical pairs are joinable. If they are, the certificate guarantees that GHC's list fusion optimizations are confluent \u2014 regardless of the order in which they fire.\n\n**Impact:** Would provide the first mathematical guarantee of optimization coherence for a real-world compiler. Currently, GHC's RULES are tested empirically but never proved confluent.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (mkFullCertificate, VerifiedCompletionCertificate, ho_completion_pipeline_sound), `Pythagorean/KnuthBendixCompletion.lean` (normalizer_preserves_semantics)\n\n**Proof Strategy:** Use mkFullCertificate to construct the certificate. Connect to normalizer_preserves_semantics via a denotational semantics for the source language. The certificate + semantics bridge gives end-to-end soundness.\n\n**Domain Bridges:** Compiler verification, functional programming, software engineering\n\n**Lineage:** Builds on coherent_optimization_pipelines and the cross-domain connection to program semantics\n\n**Ambition:** Solid extension \u2014 directly applicable to existing compiler infrastructure\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c5793c2c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T13:33:49.356660+00:00"
-  },
-  {
     "id": "fd_1814",
     "title": "Direction 3: Categorical Coherence from Confluent Rewriting",
     "description": "**Conjecture:** For a finitely presented symmetric monoidal category whose structural isomorphisms are encoded as a Miller-pattern rewrite system, confluence of the system is equivalent to coherence of the category (i.e., all diagrams of structural morphisms commute).\n\n**Test:** Encode Mac Lane's coherence theorem for monoidal categories as a rewrite system: associativity `(A \u2297 B) \u2297 C \u2192 A \u2297 (B \u2297 C)`, unit laws `I \u2297 A \u2192 A` and `A \u2297 I \u2192 A`. Generate critical pairs and check joinability. The coherence theorem predicts all pairs are joinable.\n\n**Impact:** Would create a computational proof of categorical coherence theorems. Currently, coherence proofs are done by hand using graph-theoretic or combinatorial arguments. A completion-based approach would be fully algorithmic.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (equiv_iff_joinable_of_confluent, ho_word_problem_decidable)\n\n**Proof Strategy:** The key insight is that coherence = all diagrams commute = all equational consequences hold = word problem decidable = confluent completion exists. Use equiv_iff_joinable_of_confluent to bridge joinability and equational equivalence.\n\n**Domain Bridges:** Category theory, algebraic topology (higher coherence), quantum computing (categorical quantum mechanics)\n\n**Lineage:** Interprets equiv_iff_joinable_of_confluent as a coherence principle\n\n**Ambition:** Grand challenge \u2014 would unify rewriting theory and categorical coherence\n\n---",
@@ -2055,40 +2147,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T13:33:49.444404+00:00"
   },
   {
-    "id": "fd_1815",
-    "title": "Direction 4: Normalization by Rewriting for Dependent Type Theory",
-    "description": "**Conjecture:** The definitional equality of a dependent type theory with a finite set of computation rules (\u03b2, \u03b7, \u03b9 for inductive types) can be decided by higher-order completion modulo \u03b2, provided the computation rules form a confluent Miller-pattern system.\n\n**Test:** Encode the computation rules of the Calculus of Inductive Constructions (CIC) as a higher-order rewrite system. Check whether they satisfy the Miller pattern property. If so, generate a completion certificate and compare with the known decidability of CIC's definitional equality.\n\n**Impact:** Would provide an alternative normalization procedure for proof assistants, potentially faster than the standard approach (normalization by evaluation) for specific type theories. Could also be used to validate that user-defined computation rules preserve decidability of type-checking.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (master_pipeline, unique_nf_existence), `Pythagorean/HOCriticalPairs.lean` (betaStep_closed_under_subst, hoRewrite_closed_under_subst)\n\n**Proof Strategy:** The key insight is that normalization by rewriting is an alternative to normalization by evaluation. Use master_pipeline to show unique normal forms exist, then implement a normalizer that uses the rewrite system to compute normal forms.\n\n**Why now?** Recent interest in extensible type theories (with user-defined reductions) makes confluence checking essential for ensuring type-checking decidability.\n\n**Domain Bridges:** Type theory, proof assistants, programming language design\n\n**Lineage:** Extends unique_nf_existence to typed calculi\n\n**Ambition:** Solid extension \u2014 connects to active research in type theory\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c5793c2c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T13:33:49.534928+00:00"
-  },
-  {
-    "id": "fd_1816",
-    "title": "Direction 5: Higher-Order Superposition with Completion Preprocessing",
-    "description": "**Conjecture:** A higher-order superposition calculus preprocessing step that uses bounded completion to orient equations into rewrite rules achieves significantly better performance on higher-order theorem proving benchmarks than unpreprocessed superposition.\n\n**Test:** Implement a preprocessing phase for a higher-order superposition prover (e.g., Zipperposition or Leo-III) that uses bounded completion certificates to orient equational axioms. Measure the impact on TPTP higher-order benchmark problems.\n\n**Impact:** Would bridge the gap between completion (which is great for equational reasoning but weak for general theorem proving) and superposition (which is great for general reasoning but weak for equational reasoning). The combination should be stronger than either alone.\n\n**Catalog References:** `Pythagorean/HigherOrderCompletion.lean` (ho_completion_pipeline_sound, enumerate_critical_pairs), `Pythagorean/KnuthBendixCompletion.lean` (kb_completion_correct, convergent_decides_word_problem)\n\n**Proof Strategy:** The key insight is that a completion certificate provides oriented rules that can be used as simplification rules in superposition. The certificate guarantees that simplification with these rules is sound and does not lose completeness.\n\n**Why now?** Higher-order automated theorem proving has seen dramatic advances in the last 5 years (Bentkamp et al., 2021), but equational reasoning remains a bottleneck.\n\n**Domain Bridges:** Automated deduction, artificial intelligence, formal verification\n\n**Lineage:** Combines ho_completion_pipeline_sound with first-order completion infrastructure\n\n**Ambition:** Solid extension \u2014 directly implementable with existing prover infrastructure",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "c5793c2c",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T13:33:49.625322+00:00"
-  },
-  {
     "id": "seed_032",
     "title": "Erd\u0151s\u2013Straus Conjecture",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
@@ -2101,35 +2159,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "seed",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-24T22:37:54.528620+00:00"
-  },
-  {
-    "id": "fd_1808",
-    "title": "Proving lower bounds",
-    "description": "by computing shadow complexity of specific polynomials (permanent, determinant) and showing it exceeds $2^s$ for small $s$.",
-    "domains": [
-      "Computation"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4cc7892a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T12:56:17.884271+00:00"
-  },
-  {
-    "id": "fd_1810",
-    "title": "Bridging to tropical geometry",
-    "description": "where shadows become tropical projections.",
-    "domains": [
-      "Geometry",
-      "Tropical"
-    ],
-    "priority_score": 0.75,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "4cc7892a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T12:56:18.036514+00:00"
   },
   {
     "id": "seed_007",

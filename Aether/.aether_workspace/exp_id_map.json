@@ -844,5 +844,8 @@
   "4cc7892a": "direction_3_circuit_lower_bounds_from_shadow_profi.json",
   "387e8dc9": "direction_3_submodularity_and_valuated_matroid_str.json",
   "9144e66e": "direction_3_tropical_faithfulness_of_differentiati.json",
-  "c5793c2c": "direction_2_higher_order_critical_pairs_and_knuth_.json"
+  "c5793c2c": "direction_2_higher_order_critical_pairs_and_knuth_.json",
+  "c6ae898d": "direction_3_information_geometry_of_repulsive_meas.json",
+  "57cfb68b": "direction_2_aggregate_anti_cancellation_via_lorent.json",
+  "3f056eff": "direction_3_shadow_isoperimetry_for_newton_polytop.json"
 }

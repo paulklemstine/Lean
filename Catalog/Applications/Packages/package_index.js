@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Extremal Combinatorics / Discrete Geometry",
     "date": "2026-05-28T14:11:47Z",
     "exp_id": "3f056eff",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7320646493891674,
+    "quality": "substantial",
     "pkg_num": 249
   },
   {
@@ -7230,8 +7230,8 @@ window.PACKAGE_GRAPH = {
       "shape": "hexagonal_prism",
       "date": "2026-05-28T14:11:47Z",
       "hue": 270,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7320646493891674,
+      "quality": "substantial"
     }
   ],
   "edges": [
