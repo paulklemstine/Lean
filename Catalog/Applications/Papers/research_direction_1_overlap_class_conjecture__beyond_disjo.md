@@ -1,237 +1,281 @@
-# Overlap Class Rigidity: Tropical Kernel Generators Beyond Disjoint Supports
+# Overlap Class Rigidity for Tropical Kernel Generators: Beyond the Disjoint Support Regime
 
 ## Abstract
 
-We develop a theory of **overlap classes** for finite families of cycle supports in graphs, extending the disjoint-support uniqueness theorem for tropical kernel generators to regimes where supports may intersect. We define the **support interaction graph** (overlap graph) on a family of finite sets, introduce the **overlap degree** as a complexity measure, and prove three main results: (1) overlap degree zero is equivalent to pairwise disjointness, recovering the classical rigidity theorem as a special case; (2) indices in different connected components (overlap classes) of the support interaction graph necessarily have disjoint supports, establishing overlap classes as the fundamental interaction sectors; (3) for pairwise disjoint support families, the number of overlap classes equals the number of generators, giving maximal independence. All results are formalized and verified in Lean 4 with Mathlib. We also provide computational experiments testing the Overlap Class Conjecture on all connected graphs up to 7 vertices.
+We develop a theory of **overlap classes** for families of finite supports, extending the disjoint-support uniqueness theorem for tropical kernel generators to the regime where cycle supports may intersect. We introduce the **support overlap graph**, whose connected components define overlap classes, and establish that supports in distinct overlap classes are necessarily disjoint — making overlap classes the natural "interaction sectors" of the support family. We define a hierarchy of overlap invariants — overlap degree, max overlap degree, cross-overlap count, and overlap signature — and prove their fundamental properties, including a sharp characterization: overlap degree zero is equivalent to pairwise disjointness, recovering the classical uniqueness theorem as a special case. All results are formalized and verified in Lean 4 with the Mathlib library.
 
-**Keywords:** tropical kernel, overlap classes, cycle supports, graph Laplacian, support interaction graph, matroid circuits, formal verification
+**Keywords:** tropical kernel, overlap classes, support interaction graph, graph invariants, pairwise disjoint supports, tropical projective equivalence, matroid circuits, cycle-space decomposition.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Background and Motivation
+### 1.1 Motivation
 
-The study of tropical linear algebra applied to graph theory has yielded deep structural results connecting discrete harmonic analysis, chip-firing, and algebraic geometry. A central object is the **tropical kernel** of a graph Laplacian — the set of integer-valued harmonic functions on a vertex subset, viewed as a tropical semimodule.
+The tropical kernel of a graph Laplacian — the set of integer-valued functions satisfying a tropical equilibrium condition — admits decompositions into minimal generating families. A natural question is: how many fundamentally distinct such decompositions exist?
 
-Baker and Norine [1] showed that finite graphs satisfy a discrete analogue of the Riemann-Roch theorem, with the tropical kernel playing the role of the space of meromorphic functions. A natural question arises: to what extent are the minimal generators of this kernel canonical?
+Baker and Norine (2007) established the foundations of chip-firing and divisor theory on finite graphs, revealing deep connections between tropical algebra and graph-theoretic structure. Develin, Santos, and Sturmfels (2005) studied the rank theory of tropical matrices, providing algebraic tools for understanding tropical semimodules.
 
-Previous work [2, 3] established that when a family of generators has **pairwise disjoint supports** — that is, no two generators are simultaneously nonzero on any vertex — then the generating family is unique up to **tropical projective equivalence** (permutation of generators plus additive constants). This is the "non-interacting particle" regime: generators behave as independent atoms.
+Building on this foundation, the **disjoint-support uniqueness theorem** (formalized in `TropicalKernelRigidity.lean`) established that when generators have pairwise disjoint supports with nontrivial internal variation, the generating family is unique up to tropical projective equivalence — permutation of indices plus additive constants. This is a rigidity theorem in the "non-interacting" regime.
 
-The present paper initiates the study of the **interacting regime**, where cycle supports overlap. We introduce the **support interaction graph** and its connected components (overlap classes) as the correct framework for understanding how tropical generators interact.
+The present work asks: what happens when supports overlap?
 
-### 1.2 Main Contributions
+### 1.2 Contributions
 
-1. **Definitions.** We introduce the support overlap relation, the support interaction graph (overlap graph), overlap classes, overlap degree, total overlap complexity, and the overlap signature (§2).
+We introduce and formalize:
 
-2. **Bridge Theorem.** We prove that overlap degree zero is equivalent to pairwise disjointness of supports, connecting the new framework to the existing rigidity theory (Theorem 3.1).
+1. **Support overlap relation** (`SupportsOverlap`): a symmetric, decidable binary relation on finsets.
+2. **Overlap connectivity** (`OverlapConnected`, `OverlapEquiv`): the transitive and reflexive-transitive closures, defining overlap classes as connected components.
+3. **Overlap degree** (`OverlapDegree`): the number of overlapping pairs, with a sharp characterization theorem (Theorem 3.1).
+4. **Cross-overlap count** (`CrossOverlapCount`) and **max overlap degree** (`MaxOverlapDeg`): finer invariants capturing overlap intensity.
+5. **Overlap signature** (`OverlapSignature`): the full distribution of intersection sizes.
+6. **Disjointness from non-connectivity** (Theorem 5.1): supports in distinct overlap classes are disjoint.
+7. **Bridge theorems** connecting the overlap framework to the existing `PairwiseDisjointSupports` and `TropProjEquiv` definitions.
+8. **Refinement monotonicity** (Theorem 11.1): shrinking supports can only decrease overlap degree.
 
-3. **Sector Independence.** We prove that indices in different overlap classes have disjoint supports — the overlap class decomposition gives the exact interaction structure (Theorem 3.2).
-
-4. **Maximal Class Count.** For pairwise disjoint families, the number of overlap classes equals the number of generators (Theorem 3.3).
-
-5. **Tropical Transport.** We prove that tropical projective equivalence preserves the existence of shared support points under appropriate conditions (Theorem 3.4).
-
-6. **Complexity Equivalence.** We prove that total overlap complexity zero is equivalent to pairwise disjointness, providing an alternative induction parameter (Theorem 3.5).
-
-7. **Formal Verification.** All definitions and theorems are formalized in Lean 4 with Mathlib and verified by the Lean type checker.
+All results are machine-verified in Lean 4 with Mathlib.
 
 ### 1.3 Organization
 
-Section 2 presents definitions. Section 3 states and sketches proofs of the main theorems. Section 4 describes computational experiments. Section 5 discusses connections to matroid theory, coding theory, and network science. Section 6 presents open problems and future directions.
+Section 2 defines the overlap relation and its properties. Section 3 introduces overlap degree and proves the zero-characterization. Section 4 develops overlap connectivity. Section 5 establishes the key disjointness theorem. Section 6 constructs the overlap equivalence relation. Section 7 studies family unions. Section 8 bridges to the existing tropical rigidity theory. Sections 9–13 develop finer overlap invariants. Section 14 discusses the overlap rigidity conjecture and computational evidence. Section 15 outlines applications and future directions.
 
 ---
 
-## 2. Definitions and Notation
+## 2. The Support Overlap Relation
 
-### 2.1 Support Overlap
+### 2.1 Definition
 
-**Definition 2.1** (Support Overlap). Let $\alpha$ be a type with decidable equality. Two finite sets $A, B : \text{Finset}(\alpha)$ **overlap** if $A \cap B \neq \emptyset$.
+**Definition 2.1.** Two finsets $A, B \subseteq \alpha$ **overlap** (written $A \sim B$) if their intersection is nonempty:
+$$A \sim B \iff A \cap B \neq \emptyset.$$
 
-The overlap relation is symmetric: $A \cap B \neq \emptyset \iff B \cap A \neq \emptyset$.
+This is implemented as `SupportsOverlap A B := (A ∩ B).Nonempty`.
 
-### 2.2 Support Interaction Graph
+### 2.2 Basic Properties
 
-**Definition 2.2** (Support Interaction Graph). Given an indexed family $F : \iota \to \text{Finset}(\alpha)$, the **support interaction graph** $\mathcal{G}(F)$ is the simple graph on vertex set $\iota$ where $i \sim j$ iff $i \neq j$ and $F(i) \cap F(j) \neq \emptyset$.
+**Theorem 2.1** (Symmetry). $A \sim B \iff B \sim A$.
 
-This is well-defined: the adjacency relation is symmetric (by symmetry of intersection) and irreflexive ($i \neq j$ is required).
+*Proof.* By `Finset.inter_comm`. □
 
-### 2.3 Overlap Classes
+**Theorem 2.2** (Characterization). $A \sim B \iff \exists x, x \in A \land x \in B$.
 
-**Definition 2.3** (Overlap Class). Two indices $i, j \in \iota$ belong to the same **overlap class** if they are in the same connected component of $\mathcal{G}(F)$.
+*Proof.* By `Finset.Nonempty` and `Finset.mem_inter`. □
 
-**Definition 2.4** (Overlap Class Count). The **overlap class count** of $F$ is the number of connected components of $\mathcal{G}(F)$.
+**Theorem 2.3** (Disjointness from non-overlap). $\neg(A \sim B) \implies A \cap B = \emptyset$ (as a `Disjoint` statement in the lattice of finsets).
 
-### 2.4 Overlap Degree and Complexity
+*Proof.* If $A \cap B$ is not nonempty, it is empty. □
 
-**Definition 2.5** (Overlap Degree). The **overlap degree** of $F$ is
-$$\text{overlapDegree}(F) = \max_{i \neq j} |F(i) \cap F(j)|.$$
+### 2.3 Pairwise Disjoint Families
 
-When $|\iota| \leq 1$, this is 0 by convention (empty maximum).
+**Definition 2.2.** A family $\{F_i\}_{i \in \iota}$ of finsets is **pairwise disjoint** if $i \neq j \implies F_i \cap F_j = \emptyset$.
 
-**Definition 2.6** (Total Overlap Complexity). The **total overlap complexity** is
-$$\text{totalOverlap}(F) = \sum_{i < j} |F(i) \cap F(j)|.$$
-
-### 2.5 Overlap Signature
-
-**Definition 2.7** (Overlap Signature). The **overlap signature** of $F$ is the sorted multiset $\{|F(i) \cap F(j)| : i < j\}$.
-
-### 2.6 Support Nerve
-
-**Definition 2.8** (Support Nerve, 2-skeleton). The **support nerve** is the function $\nu_2 : \iota \times \iota \to \text{Finset}(\alpha)$ defined by $\nu_2(i, j) = F(i) \cap F(j)$.
-
-### 2.7 Pairwise Disjointness
-
-**Definition 2.9** (Pairwise Disjoint Finsets). A family $F : \iota \to \text{Finset}(\alpha)$ has **pairwise disjoint** supports if for all $i \neq j$, $F(i) \cap F(j) = \emptyset$.
+**Corollary 2.4.** In a pairwise disjoint family, no two distinct members overlap.
 
 ---
 
-## 3. Main Results
+## 3. Overlap Degree
 
-### Theorem 3.1: Bridge Theorem (Overlap Degree Zero ↔ Pairwise Disjointness)
+### 3.1 Definition
 
-**Theorem.** *For a finite indexed family $F : \iota \to \text{Finset}(\alpha)$,*
-$$\text{overlapDegree}(F) = 0 \iff F \text{ has pairwise disjoint supports}.$$
+**Definition 3.1.** The **overlap degree** of a finitely indexed family $F : \text{Fin}(n) \to \text{Finset}(\alpha)$ is the number of unordered pairs $\{i, j\}$ with $i < j$ such that $F_i \sim F_j$:
+$$\text{OverlapDegree}(F) = |\{(i,j) : i < j, F_i \cap F_j \neq \emptyset\}|.$$
 
-**Proof sketch.** Forward: if the maximum pairwise intersection cardinality is 0, then every pairwise intersection is empty, which is disjointness. Reverse: if pairwise disjoint, every intersection is empty, so its cardinality is 0, so the supremum is 0. ∎
+### 3.2 Zero Characterization
 
-This theorem is the foundational bridge connecting the overlap framework to the existing disjoint-support rigidity theory from [2]. It ensures that the new framework strictly generalizes the old one.
+**Theorem 3.1** (Main Characterization). $\text{OverlapDegree}(F) = 0 \iff F$ is pairwise disjoint.
 
-### Theorem 3.2: Sector Independence (Different Classes ⟹ Disjoint Supports)
+*Proof sketch.* Forward: if the overlap degree is zero, the filter set is empty, so no pair $(i,j)$ with $i < j$ overlaps. For arbitrary $i \neq j$, either $i < j$ or $j < i$; in either case, symmetry of overlap gives non-overlap, hence disjointness.
 
-**Theorem.** *If $i$ and $j$ belong to different overlap classes of $F$, then $F(i)$ and $F(j)$ are disjoint.*
+Backward: if pairwise disjoint, every pair is disjoint, so no pair overlaps, and the filter set is empty. □
 
-**Proof sketch.** By contrapositive: if $F(i) \cap F(j) \neq \emptyset$ and $i \neq j$, then $(i, j)$ is an edge in the overlap graph, so $i$ and $j$ are in the same connected component. If $i = j$, they are trivially in the same component. ∎
+### 3.3 Upper Bound
 
-**Significance.** This theorem says overlap classes are the exact **interaction sectors**: generators from different classes cannot share any support vertices, and hence cannot interact through the mechanisms that govern tropical kernel generators.
+**Theorem 3.2.** $\text{OverlapDegree}(F) \leq \frac{n(n-1)}{2}$.
 
-### Theorem 3.3: Maximal Class Count under Disjointness
-
-**Theorem.** *If $F$ has pairwise disjoint supports, then the overlap class count equals $|\iota|$ (every index is its own class).*
-
-**Proof sketch.** When supports are pairwise disjoint, the overlap graph has no edges (Lemma: `no_adj_of_pairwiseDisjoint`). In an edgeless graph, each vertex is its own connected component. Hence the number of components equals the number of vertices, i.e., $|\iota|$. The proof shows the component map is both injective and surjective. ∎
-
-**Significance.** Combined with Theorem 3.1, this shows that the disjoint regime gives maximal fragmentation: each generator is its own interaction sector, recovering the independent-particle picture.
-
-### Theorem 3.4: Tropical Transport of Overlap
-
-**Theorem.** *Let $F, G : \text{Fin}(n) \to V \to \mathbb{Z}$ with $G(\sigma(i), v) = F(i, v) + c_i$ for a permutation $\sigma$ and constants $c$. If there exists $v$ with $F(i, v) \neq 0$, $F(j, v) \neq 0$, $F(i, v) + c_i \neq 0$, and $F(j, v) + c_j \neq 0$, then $\text{FunSupport}(G(\sigma(i))) \cap \text{FunSupport}(G(\sigma(j)))$ is nonempty.*
-
-**Proof sketch.** Direct: the witness $v$ lies in both supports by the nonvanishing conditions and the relation $G(\sigma(k), v) = F(k, v) + c_k$. ∎
-
-**Remark.** Tropical projective equivalence shifts each generator by a constant, which can change the support. The theorem captures the condition under which overlap is preserved under such shifts.
-
-### Theorem 3.5: Total Overlap Complexity Equivalence
-
-**Theorem.** *For $F : \text{Fin}(n) \to \text{Finset}(\alpha)$,*
-$$\text{totalOverlap}(F) = 0 \iff F \text{ has pairwise disjoint supports}.$$
-
-**Proof sketch.** Forward: if the sum is 0 and all terms are nonneg, each term is 0, so $|F(i) \cap F(j)| = 0$ for all $i < j$. For $i > j$, use $|F(i) \cap F(j)| = |F(j) \cap F(i)|$. Reverse: each term is 0 by disjointness. ∎
-
-### Theorem 3.6: Overlap Degree Characterization
-
-**Theorem.** *$\text{overlapDegree}(F) \leq k$ if and only if $|F(i) \cap F(j)| \leq k$ for all $i \neq j$.*
-
-**Proof sketch.** This follows directly from the definition as a supremum. ∎
-
-### Additional Results
-
-- **Class count bounds:** $1 \leq \text{overlapClassCount}(F) \leq |\iota|$ for nonempty $\iota$.
-- **Complete overlap graph for constant families:** if all supports equal a nonempty set $S$, the overlap graph is complete, giving exactly 1 overlap class.
-- **Nerve symmetry:** $\nu_2(i,j) = \nu_2(j,i)$ and $\nu_2(i,i) = F(i)$.
+*Proof.* The filter set is a subset of all pairs with $i < j$, which has $\binom{n}{2} = \frac{n(n-1)}{2}$ elements. □
 
 ---
 
-## 4. Computational Experiments
+## 4. Overlap Connectivity
 
-### 4.1 Methodology
+### 4.1 Transitive Closure
 
-We implemented the algorithms in Python and tested the overlap class framework on all connected graphs up to 7 vertices. For each graph $G$, basepoint $q$, and subset $S = V \setminus \{q\}$, we computed:
-- Cycle supports via spanning tree + fundamental cycles
-- The overlap graph and its connected components
-- Overlap degree, total complexity, and signature
+**Definition 4.1.** Two indices $i, j$ are **overlap-connected** in family $F$ if they are related by the transitive closure of the overlap relation on supports:
+$$i \overset{F}{\sim^+} j \iff \exists i = k_0 \sim k_1 \sim \cdots \sim k_m = j.$$
 
-### 4.2 Results
+**Proposition 4.1.** Overlap connectivity is transitive: $i \sim^+ j$ and $j \sim^+ k$ implies $i \sim^+ k$.
 
-| $n$ | Connected graphs | (G,q) pairs tested | Disjoint (%) | Overlap degree distribution |
-|-----|-----------------|--------------------|--------------|-----------------------------|
-| 3   | 4               | 12                 | 100%         | {0: 12}                     |
-| 4   | 38              | 152                | 78%          | {0: 119, 1: 18, 2: 15}     |
-| 5   | 728             | 3640               | 42%          | {0: 1529, 1: 873, 2: 701, 3: 537} |
-| 6   | 26704           | ~160k              | 21%          | broad distribution          |
-
-**Key observations:**
-1. The proportion of disjoint cases decreases rapidly with $n$.
-2. Overlap degree 1 (at most one shared vertex) is the most common non-trivial regime.
-3. Within each overlap class, cycle supports form tightly interconnected clusters.
-
-### 4.3 The Overlap Class Conjecture
-
-**Conjecture.** For every connected graph $G$, basepoint $q$, and $S \subseteq V \setminus \{q\}$, the number of tropical projective equivalence classes of minimal generating families equals $\text{overlapClassCount}(\text{cycleSupportFamily}(G, S))$.
-
-This conjecture remains open. Our computational evidence supports it for small graphs, but a complete proof would require formalizing the notion of minimal generating families for tropical kernels, which is a substantial undertaking beyond the present paper.
+**Proposition 4.2.** Direct overlap implies connectivity: $F_i \sim F_j$ implies $i \sim^+ j$.
 
 ---
 
-## 5. Connections to Other Fields
+## 5. The Key Structural Theorem: Disjointness from Non-Connectivity
 
-### 5.1 Matroid Theory
+**Theorem 5.1** (Disjointness from non-connectivity). If $i$ and $j$ are not overlap-connected, then $F_i$ and $F_j$ are disjoint.
 
-Cycle supports in $G[S]$ are precisely the vertex projections of circuit supports in the graphic matroid $M(G)$. The overlap graph is thus the **circuit intersection graph** of $M(G)$ restricted to $S$. Our theorems translate directly:
+*Proof.* Contrapositive: if $F_i \cap F_j \neq \emptyset$, then $F_i \sim F_j$, so $i \sim^+ j$ by Proposition 4.2. □
 
-- Theorem 3.2 says circuits in different components of the circuit intersection graph have disjoint vertex projections.
-- A natural generalization: do these results extend to regular matroids? To valuated matroids?
+**Corollary 5.2** (Sector isolation). If $x \in F_i$ and $i \not\sim^+ j$, then $x \notin F_j$.
 
-### 5.2 Coding Theory
-
-If we view the characteristic vectors of supports as codewords in $\mathbb{F}_2^n$, the overlap graph is the interaction graph of the code's minimum-weight codewords. Overlap classes partition codewords into interaction clusters. The overlap degree bounds the maximum "crosstalk" between codewords.
-
-### 5.3 Network Science
-
-In network resilience analysis, cycles provide path redundancy. The overlap class decomposition identifies independent redundancy groups. A network is more resilient when it has many overlap classes (each providing independent redundancy) with low overlap degree (minimizing correlated failures).
-
-### 5.4 Statistical Physics
-
-In spin systems on graphs, cycles correspond to frustration loops. Overlap classes partition these into independent frustration sectors. The factorization theorem (different classes → disjoint supports) is the rigorous version of the physical principle that distant defects don't interact.
+This theorem is the engine that makes overlap classes meaningful. Supports in different connected components of the overlap graph are completely disjoint — they share no elements whatsoever. This means the support family decomposes into independent sectors along overlap class boundaries.
 
 ---
 
-## 6. Open Problems and Future Work
+## 6. Overlap Equivalence
 
-1. **Full Overlap Rigidity.** Prove or disprove the Overlap Class Conjecture. This requires formalizing minimal generating families for tropical kernels.
+### 6.1 Definition and Properties
 
-2. **Overlap Degree One Uniqueness.** Prove that when the overlap degree is at most 1, generating families within each overlap class are unique up to tropical projective equivalence.
+**Definition 6.1.** Two indices $i, j$ are **overlap-equivalent** if they are related by the reflexive-transitive closure:
+$$i \overset{F}{\sim^*} j \iff i = j \text{ or } i \sim^+ j.$$
 
-3. **Componentwise Factorization.** Prove that the number of TropProjEquiv classes factors as a product over overlap classes.
+**Theorem 6.1.** Overlap equivalence is:
+- **Reflexive** (by definition of `ReflTransGen`).
+- **Transitive** (by `ReflTransGen.trans`).
+- **Symmetric** (by induction on the `ReflTransGen` derivation, using symmetry of overlap at each step).
 
-4. **Matroid Generalization.** Extend the theory from graphic matroids to regular or valuated matroids.
+Thus overlap equivalence partitions the index set into **overlap classes**.
 
-5. **Algorithmic Applications.** Develop efficient algorithms for computing overlap classes in large sparse graphs, with applications to network analysis.
+**Theorem 6.2.** $\neg(i \sim^* j) \implies F_i \cap F_j = \emptyset$.
+
+---
+
+## 7. Family Union and Cardinality
+
+**Definition 7.1.** The **family union** $\bigcup_i F_i = \text{Finset.univ.biUnion}\ F$.
+
+**Theorem 7.1.** $F_i \subseteq \bigcup_j F_j$ for all $i$.
+
+**Theorem 7.2** (Additivity for disjoint families). If $F$ is pairwise disjoint, then $|\bigcup_i F_i| = \sum_i |F_i|$.
+
+---
+
+## 8. Bridge to Tropical Projective Equivalence
+
+### 8.1 Finset-valued supports
+
+**Definition 8.1.** $\text{FinFunSupport}(f) = \{v \in V : f(v) \neq 0\}$ as a `Finset`.
+
+**Definition 8.2.** $\text{FunSupportFamily}(F)_i = \text{FinFunSupport}(F_i)$.
+
+**Theorem 8.1.** $\text{FinFunSupport}(f)$ as a set equals $\text{FunSupport}'(f) = \{v : f(v) \neq 0\}$.
+
+### 8.2 Equivalence of disjointness notions
+
+**Theorem 8.2.** `PairwiseDisjointSupports'` (set-valued) $\iff$ `PairwiseDisjointFamily` (finset-valued) on `FunSupportFamily`.
+
+**Theorem 8.3** (Recovery theorem). $\text{OverlapDegree}(\text{FunSupportFamily}(F)) = 0 \iff \text{PairwiseDisjointSupports}'(F)$.
+
+This theorem certifies that the overlap class framework genuinely extends the existing disjoint-support theory.
+
+---
+
+## 9. Cross-Overlap Invariants
+
+**Definition 9.1.** $\text{CrossOverlapCount}(F, i, j) = |F_i \cap F_j|$.
+
+**Theorem 9.1.** Cross-overlap count is symmetric: $|F_i \cap F_j| = |F_j \cap F_i|$.
+
+**Theorem 9.2.** $\text{CrossOverlapCount}(F, i, j) = 0 \iff F_i, F_j$ disjoint.
+
+**Theorem 9.3.** $\text{CrossOverlapCount}(F, i, j) > 0 \iff F_i \sim F_j$.
+
+---
+
+## 10. Max Overlap Degree
+
+**Definition 10.1.** $\text{MaxOverlapDeg}(F) = \max_{i < j} |F_i \cap F_j|$.
+
+**Theorem 10.1.** Pairwise disjoint $\implies$ max overlap degree $= 0$.
+
+**Theorem 10.2.** For $n \geq 2$: max overlap degree $= 0 \implies$ pairwise disjoint.
+
+---
+
+## 11. Refinement Monotonicity
+
+**Theorem 11.1.** If $G_i \subseteq F_i$ for all $i$, then $\text{OverlapDegree}(G) \leq \text{OverlapDegree}(F)$.
+
+*Proof.* If $G_i \cap G_j$ is nonempty, then $F_i \cap F_j \supseteq G_i \cap G_j$ is nonempty. So the filter set for $G$ is contained in the filter set for $F$. □
+
+This monotonicity principle says that refining supports (restricting to subsets) can only simplify the overlap structure, never complicate it.
+
+---
+
+## 12. Overlap Signature
+
+**Definition 12.1.** The **overlap signature** of $F$ is the multiset $\{|F_i \cap F_j| : i < j, F_i \sim F_j\}$.
+
+**Theorem 12.1.** Every entry in the overlap signature is positive.
+
+The overlap signature is a strictly finer invariant than the overlap degree (which counts entries) and the max overlap degree (which takes the maximum). Two families can have the same overlap degree and max overlap degree but different signatures.
+
+---
+
+## 13. The Overlap Rigidity Conjecture
+
+### 13.1 Statement
+
+**Conjecture.** For every connected finite graph $G$, basepoint $q$, and vertex subset $S \subseteq V \setminus \{q\}$, the number of tropical projective equivalence classes of minimal generating families of the tropical kernel equals the number of overlap classes of cycle supports in $G[S]$.
+
+### 13.2 Evidence
+
+The conjecture is supported by:
+1. The zero-overlap-degree case reduces to the known disjoint-support uniqueness theorem.
+2. Computational experiments on small graphs (see `demo.py`) are consistent.
+3. The decomposition structure of overlap classes suggests a natural factorization of the class count.
+
+### 13.3 Testable refinement
+
+If the primary conjecture fails, the corrected hypothesis is:
+
+> The number of `TropProjEquiv` classes is determined by the isomorphism type of the support interaction graph together with the multiset of intersection cardinalities.
+
+This is falsifiable: two examples with identical overlap graphs and intersection-size multisets but different class counts would refute it.
+
+---
+
+## 14. Applications
+
+### 14.1 Matroid Theory
+
+Cycle supports in $G[S]$ are circuit supports in the graphic matroid. Overlap classes become connected components of the **circuit intersection graph**. If the overlap rigidity conjecture holds for graphs, it suggests a generalization to graphic matroids, and potentially to regular or valuated matroids.
+
+### 14.2 Coding Theory
+
+Supports of minimal codewords in a linear code play a role analogous to cycle supports. Overlap classes correspond to clusters of interacting codewords. A theorem bounding the number of equivalence classes of generating sets via overlap data would translate into new structural results about code redundancy.
+
+### 14.3 Network Science
+
+The overlap graph is a coarse topological invariant of the cycle structure. If tropical projective classes factorize over overlap components, this is analogous to decoupling in statistical mechanics: disconnected interaction sectors contribute independently.
+
+---
+
+## 15. Computational Experiments
+
+The accompanying `demo.py` and `algorithms.py` implement:
+- Construction of support overlap graphs for arbitrary finite families.
+- Computation of all overlap invariants (degree, max degree, signature, class count).
+- Visualization of overlap graphs and their connected components.
+- Enumeration of cycle supports for small graphs.
+- Batch testing of the overlap rigidity conjecture.
+
+See `demo.py` for interactive exploration and `algorithms.py` for the algorithmic implementations.
+
+---
+
+## 16. Future Work
+
+1. **Prove the componentwise factorization theorem:** show that tropical projective classes factorize over overlap components.
+2. **Extend to overlap-degree one:** establish uniqueness when all pairwise intersections have cardinality at most one.
+3. **Matroid generalization:** reformulate in terms of circuit intersection graphs of graphic matroids.
+4. **Higher-order overlap invariants:** study the support nerve (simplicial complex of mutual intersections) rather than the overlap graph.
+5. **Computational classification:** complete enumeration of overlap signatures for all connected graphs on $n \leq 12$ vertices.
 
 ---
 
 ## References
 
-[1] Baker, M. and Norine, S. "Riemann–Roch and Abel–Jacobi theory on a finite graph." *Advances in Mathematics* 215 (2007), 766–801.
-
-[2] Develin, M., Santos, F., and Sturmfels, B. "On the rank of a tropical matrix." *Combinatorial and Computational Geometry*, MSRI Publications 52, 2005.
-
-[3] Gathmann, A. and Kerber, M. "A Riemann-Roch theorem in tropical geometry." *Mathematische Zeitschrift* 259 (2008), 217–230.
-
-[4] Mikhalkin, G. and Zharkov, I. "Tropical curves, their Jacobians and theta functions." *Contemporary Mathematics* 465 (2008), 203–230.
-
-[5] Oxley, J. *Matroid Theory*. Oxford University Press, 2011.
-
----
-
-## Appendix: Lean 4 Formalization
-
-All definitions and theorems in this paper are formalized in the file `Catalog/Pythagorean/TropicalBridge/OverlapClassRigidity.lean`, building on the existing catalog files `TropicalKernelRigidity.lean` and `DefectTheory.lean`. The formalization uses Lean 4.28.0 with Mathlib.
-
-Key formal definitions:
-- `SupportsOverlap`: `(A ∩ B).Nonempty`
-- `SupportOverlapGraph`: `SimpleGraph ι` with `Adj i j := i ≠ j ∧ SupportsOverlap (F i) (F j)`
-- `overlapDegree`: `Finset.sup` of pairwise intersection cardinalities
-- `overlapClassCount`: `Fintype.card (SupportOverlapGraph F).ConnectedComponent`
-
-The formalization comprises approximately 300 lines of Lean code with 15 theorems, all verified without `sorry`.
+1. Baker, M. and Norine, S. "Riemann–Roch and Abel–Jacobi theory on a finite graph." *Advances in Mathematics* 215 (2007), 766–801.
+2. Develin, M., Santos, F., and Sturmfels, B. "On the rank of a tropical matrix." In *Combinatorial and Computational Geometry*, MSRI Publications 52 (2005), 213–242.
+3. Mikhalkin, G. "Tropical geometry and its applications." In *Proceedings of the ICM* (2006).
+4. Oxley, J. *Matroid Theory*, 2nd ed. Oxford University Press, 2011.
+5. Maclagan, D. and Sturmfels, B. *Introduction to Tropical Geometry*. Graduate Studies in Mathematics 161, AMS, 2015.
