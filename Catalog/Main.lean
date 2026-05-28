@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 1999 of the highest-quality
+A curated collection of 2001 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 1999
+Total files: 2001
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -589,6 +589,7 @@ import FINAL.Bridges.ProofStoneCechDynamics
 import FINAL.Bridges.ProofThermodynamicsCore
 import FINAL.Bridges.ProofThermodynamicsEntropy
 import FINAL.Bridges.ProvabilitySpectralTheory
+import FINAL.Bridges.PseudofiniteDimension
 import FINAL.Bridges.QuantumBerggrenFourier
 import FINAL.Bridges.QuantumBerggrenWalks
 import FINAL.Bridges.QuantumClassicalBridge
@@ -1723,6 +1724,7 @@ import FINAL.Pythagorean.TypeComplexityBounds
 import FINAL.Pythagorean.TypeComplexityProductsSums
 import FINAL.Pythagorean.TypedCongruenceClosure
 import FINAL.Pythagorean.UniformMatroidLorentzian
+import FINAL.Pythagorean.UniformMatroidLorentzianStability
 import FINAL.Pythagorean.UniformMatroidStabilityRadius
 import FINAL.Pythagorean.UniformitySharpness
 import FINAL.Pythagorean.UniversalCertifiedAlgebraicComputation

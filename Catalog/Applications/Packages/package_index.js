@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Algebraic Combinatorics / Spectral Perturbation Theory",
     "date": "2026-05-28T11:40:34Z",
     "exp_id": "5db853c7",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7294815384615385,
+    "quality": "substantial",
     "pkg_num": 239
   },
   {
@@ -6940,8 +6940,8 @@ window.PACKAGE_GRAPH = {
       "shape": "tetrahedron",
       "date": "2026-05-28T11:40:34Z",
       "hue": 91,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7294815384615385,
+      "quality": "substantial"
     }
   ],
   "edges": [

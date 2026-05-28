@@ -338,10 +338,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "2933a8cf",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5793c2c",
     "timestamp": "2026-05-25T20:01:51.853060+00:00"
   },
   {
@@ -578,10 +578,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "b0b26cee",
-    "consumed_by_exp_id": "605a8609",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T07:14:49.805352+00:00"
   },
   {
@@ -699,10 +699,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "in_progress",
+    "status": "available",
     "research_mode": "prove",
     "source_exp_id": "ef991832",
-    "consumed_by_exp_id": "8406d734",
+    "consumed_by_exp_id": "",
     "timestamp": "2026-05-26T21:53:04.972544+00:00"
   },
   {
@@ -836,10 +836,10 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "be453c44",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a03e75f9",
     "timestamp": "2026-05-27T16:03:48.605918+00:00"
   },
   {
@@ -1084,24 +1084,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T03:11:12.578612+00:00"
   },
   {
-    "id": "fd_1663",
-    "title": "Direction 1: Pseudofinite Dimension and Stabilizer Rank Bounds",
-    "description": "**Conjecture:** There exists a well-defined pseudofinite dimension function `dim : DefinableSet \u2192 \u2115` on definable sets in the ultraproduct such that:\n1. `dim` is preserved by definable bijections\n2. `dim(A \u00d7 B) = dim(A) + dim(B)`\n3. If `CoversByLeftCosets A H C`, then `dim(A) \u2264 dim(H) + log\u2082(C)`\n4. The dimension function transfers: `dim` in the ultraproduct equals the eventual normalized log-cardinality\n\n**Test:** Implement dimension computation for definable subsets of (\u2124/p\u2124)\u207f as log_p of cardinality. Verify properties (1)\u2013(3) computationally for p = 2, 3, 5, 7 and n = 1, 2, 3. Check that the dimension bound in (3) is tight by constructing explicit covers.\n\n**Impact:** Pseudofinite dimension is the key invariant in Hrushovski's stabilizer chain argument. Formalizing it would enable the full stabilizer descent: at each step, the stabilizer has strictly smaller dimension, so the chain terminates.\n\n**Catalog References:** `Pythagorean/BoundedPseudofiniteTransfer.lean` \u2014 `los_boundedRestrictedFormula`, `CoversByLeftCosets`, `cosetCover_compose`\n\n**Proof Strategy:** Define dimension as the eventual value of `log|S_i| / log|G_i|` along the ultrafilter. Use `los_boundedRestrictedFormula` to transfer definability. The key lemma is that dimension is well-defined (independent of the choice of definable presentation), which requires the quantifier-free \u0141o\u015b theorem.\n\n**Domain Bridges:** Model theory \u2194 combinatorics (dimension = normalized cardinality), model theory \u2194 algebraic geometry (dimension = Zariski dimension for algebraic groups)\n\n**Lineage:** Extends `los_boundedRestrictedFormula` and `CoversByLeftCosets`\n\n**Ambition:** Grand challenge \u2014 this is the main missing piece for a full formalization of Hrushovski's stabilizer theorem.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "77cabe0b",
-    "consumed_by_exp_id": "951d1d02",
-    "timestamp": "2026-05-28T04:56:23.189467+00:00"
-  },
-  {
     "id": "fd_1682",
     "title": "Direction 1: Full Kruskal\u2013Katona Theory for Multi-Index Families",
     "description": "**Conjecture:** There exists a total order $\\prec$ on $\\mathbb{N}^n$ (a multi-index colex order) such that for every $d$ and $m$, the initial segment of $\\prec$ among degree-$d$ multi-indices minimizes the one-step shadow among all families of size $m$.\n\n**Test:** Enumerate all families of size $m \\le 10$ in degree $d \\le 4$ with $n \\le 4$ variables. Check whether the colex-initial segment always achieves the minimum shadow. A single counterexample refutes the conjecture; universal confirmation up to these bounds provides strong evidence.\n\n**Impact:** This would extend the classical KK theorem from uniform set families to the full multi-index lattice, providing exact computable KK bounds for non-squarefree polynomial supports. This is essential for the shadow-gap program beyond the squarefree regime.\n\n**Catalog References:**\n- `Catalog/Pythagorean/IteratedShadowGeometry.lean`: `kthShadow`, `mem_kthShadow_iff`\n- `Catalog/Bridges/Catalog/Pythagorean/CircuitLowerBounds/ShadowDecay.lean`: `kthShadow_elemSymm_eq`\n\n**Proof Strategy:** The key insight is that the classical proof of KK uses a \"compression\" operator that pushes a family toward the initial segment while not increasing the shadow. For multi-indices, define compression $C_{ij}$: for each $\\alpha$ with $\\alpha(i) > 0$ and room to increment $\\alpha(j)$, replace $\\alpha$ with the compressed version. Prove that each compression does not increase the shadow (by an injection argument on shadow witnesses), then show that the limit of iterated compressions is the colex-initial segment.\n\n**Why now?** The formal infrastructure for multi-index shadows (definitions, membership lemmas, semigroup laws) is now in place. The missing piece is the compression machinery, which is a finite combinatorial argument amenable to proof automation.\n\n**Domain Bridges:** Extremal combinatorics \u2192 algebraic complexity (via explicit KK bounds for polynomial supports).\n\n**Lineage:** Extends Kruskal (1963), Katona (1968), Clements\u2013Lindstr\u00f6m (1969).\n\n**Ambition:** Grand challenge \u2014 would establish a foundational tool for the entire shadow-gap program.\n\n---",
@@ -1283,27 +1265,6 @@ window.FUTURE_DIRECTIONS = [
     "timestamp": "2026-05-28T08:02:39.081771+00:00"
   },
   {
-    "id": "fd_1718",
-    "title": "Direction 4: Tropical Entanglement Certificates",
-    "description": "**Conjecture:** For multipartite quantum states whose density matrix coefficients define a polynomial, the tropical leaf witness provides a device-independent certificate for genuine multipartite entanglement. Specifically, if $W_{\\mathrm{trop}}(p, A) > 0$ for all proper subsets $A$ of the parties, then the state exhibits genuine multipartite entanglement.\n\n**Test:** Construct the GHZ state and W-state polynomials for $n = 3, 4$ parties. Compute tropical leaf witnesses for all bipartitions and tripartitions. Verify that entangled states have nonzero witnesses while separable states have zero witnesses.\n\n**Impact:** This would establish the first formal connection between tropical geometry and quantum information. It would provide a new class of entanglement witnesses that are *computationally cheap* (coefficient sums) and *formally certifiable* (machine-verified bounds).\n\n**Catalog References:**\n- `Pythagorean/TropicalLeafWitnesses/Theorems.lean` \u2014 `leafWitness_le_tropicalLeafWitness`\n- `Catalog/Bridges/Catalog/Speculative/AutoResearch/MultiModeLorentzianWitnesses.lean` \u2014 `leafWitness`, `mixedHessianAtOnes`\n\n**Proof Strategy:** Define quantum state polynomials as MvPolynomials with complex coefficients. Extend the tropical-spectral bridge to the complex case using $|c|$ instead of the real absolute value. Show that separable states produce zero tropical witnesses.\n\n**Domain Bridges:** Quantum information \u2194 Tropical geometry \u2194 Spectral theory \u2194 Entanglement detection\n\n**Lineage:** Extends `leafWitness` to quantum states; builds on the spectral witness interpretation.\n\n**Ambition:** \ud83d\udd2d Grand challenge \u2014 paradigm-shifting if successful.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Tropical",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 1.0,
-    "status": "in_progress",
-    "research_mode": "prove",
-    "source_exp_id": "0a042263",
-    "consumed_by_exp_id": "f94642ca",
-    "timestamp": "2026-05-28T08:02:39.164744+00:00"
-  },
-  {
     "id": "fd_1760",
     "title": "Direction 2: Transversal Matroids and Bipartite Matching Complexity",
     "description": "**Conjecture.** For transversal matroids arising from bipartite graphs with bounded degree \u0394, the quadratic leaf count grows as O(n^{r\u22122} \u00b7 \u0394^{O(1)}), where *r* is the rank. This is polynomial in *n* for fixed *r* and \u0394, and dramatically below the ambient bound when the bipartite graph is sparse.\n\n**Test.** Compute leaf counts for transversal matroids from:\n1. Random bipartite graphs with bounded degree \u0394 \u2208 {2, 3, 4}.\n2. Structured bipartite graphs: grids, expanders, Ramanujan bipartite graphs.\n3. Compare with the permanent of the biadjacency matrix (counting perfect matchings).\n\n**Impact.** Opens a route to efficient Lorentzian certification for assignment and scheduling problems, where the underlying combinatorial structure is a bipartite matching.\n\n**Catalog References.**\n- `Pythagorean/SupportCompressionPoly.lean`: `supportCompressedLeafCount_le_active_choose`\n- `Speculative/AutoResearch/LorentzianMConvex.lean`: `IsMConvexExchangeNat`\n\n**Proof Strategy.** Bound the number of independent (*r*\u22122)-sets by relating them to partial matchings. Use the Tutte\u2013Berge formula or K\u00f6nig's theorem to control the structure of partial matchings in bounded-degree bipartite graphs.\n\n**Domain Bridges.** Matching theory \u2194 assignment problems \u2194 operations research.\n\n**Lineage.** Builds on the active variable bound (Theorem 4) and the hereditary property.\n\n**Ambition.** \u2605\u2605\u2605\u2606\u2606 \u2014 Solid, with clear practical applications.\n\n---",
@@ -1338,10 +1299,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "priority_score": 1.0,
-    "status": "available",
+    "status": "in_progress",
     "research_mode": "prove",
     "source_exp_id": "396e12d9",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4cc7892a",
     "timestamp": "2026-05-28T10:27:11.881596+00:00"
   },
   {
@@ -1362,6 +1323,119 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "396e12d9",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T10:27:11.986657+00:00"
+  },
+  {
+    "id": "fd_1777",
+    "title": "Direction 1: Proving the SSH Newton-Order Conjecture via Toeplitz Asymptotics",
+    "description": "**Conjecture.** For the half-filled SSH chain with dimerization $\\delta$ and subsystem size $m$:\n- (Gapped) $\\delta \\neq 0 \\Rightarrow \\sup_m \\mathcal{N}_m(\\delta) < \\infty$.\n- (Critical) $\\delta = 0 \\Rightarrow \\mathcal{N}_m(0) \\geq c \\log m$ for infinitely many $m$.\n\n**Test.** Prove the gapped case using exponential clustering of correlation matrix eigenvalues. For the critical case, derive Fisher\u2013Hartwig asymptotics for the esymm of the SSH spectrum at $\\delta = 0$ and show that the second log-differences of $\\log e_k$ grow without bound.\n\n**Impact.** This would be the first rigorous result connecting purely algebraic invariants (Newton ratios) to quantum phase transitions, opening a new paradigm for phase detection that requires no physical measurement apparatus \u2014 only eigenvalue computation.\n\n**Catalog References.** `Pythagorean/NewtonQuantumOrderParameters.lean`: `newtonRatio_bounded_of_spectral_pinching` (gapped case foundation), `SSHGappedConjecture`, `SSHCriticalConjecture`.\n\n**Proof Strategy.** \n1. For the gapped case: use the spectral pinching theorem with the known result that SSH correlation eigenvalues cluster in $[\\epsilon(\\delta), 1-\\epsilon(\\delta)]$ for $\\delta \\neq 0$.\n2. For the critical case: use Fisher\u2013Hartwig determinant asymptotics to compute $e_k$ asymptotics, then show the Newton ratio profile develops a logarithmic peak.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 Toeplitz determinant theory \u2194 condensed-matter physics.\n\n**Lineage.** Extends `esymm_newton_ineq` and `newtonRatio_bounded_of_spectral_pinching`.\n\n**Ambition.** Grand challenge \u2014 would establish a new paradigm at the intersection of algebra and quantum physics.\n\n**The key insight is** that the spectral pinching theorem already gives the gapped case *if* we can prove the eigenvalue clustering bound, reducing a physics conjecture to a spectral analysis problem.\n\n**Why now?** The Toeplitz determinant machinery (Widom, Basor\u2013Tracy) is mature, and the formalized spectral pinching theorem provides the algebraic bridge.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Physics",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "40ff2470",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:03:34.260901+00:00"
+  },
+  {
+    "id": "fd_1785",
+    "title": "Direction 2: Aggregate Anti-Cancellation via Lorentzian Structure",
+    "description": "**Conjecture:** For polynomials with support contained in a matroid basis polytope and coefficients satisfying a Lorentzian sign condition, weighted sums of second derivatives \u03a3 a\u1d62\u2c7c \u2202\u1d62\u2202\u2c7cp have support exactly equal to the union of per-pair shadows \u2014 no cancellation occurs even after aggregation.\n\n**Test:** Implement the Lorentzian polynomial checker from Br\u00e4nd\u00e9n\u2013Huh, compute weighted Hessian sums for Lorentzian polynomials in 3\u20134 variables, and verify support exactness. Search for non-Lorentzian polynomials where aggregate cancellation occurs.\n\n**Impact:** This would be a major advance: combining the characteristic-zero mechanism (no per-pair cancellation) with the Lorentzian positivity mechanism (no inter-pair cancellation) to obtain a complete anti-cancellation guarantee for the full Hessian operator. This is the missing piece for genuine arithmetic circuit lower bounds.\n\n**Catalog References:**\n- `Bridges/Catalog/Speculative/AutoResearch/AntiCancellationLorentzian.lean` \u2014 aggregate anti-cancellation for positive weights\n- `Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` \u2014 per-pair shadow equality\n\n**Proof Strategy:** Use the AntiCancellationLorentzian result for nonneg-coefficient polynomials as a template. Extend to signed coefficients using Lorentzian structure (ultra-log-concavity of coefficient sequences) to control inter-pair cancellation.\n\n**Domain Bridges:** Hodge theory (Lorentzian signature), matroid theory (basis exchange), convex optimization (log-concavity).\n\n**Lineage:** Combines the per-pair result (this file) with the Lorentzian anti-cancellation (AntiCancellationLorentzian.lean).\n\n**Ambition:** Grand challenge \u2014 requires bridging two distinct anti-cancellation mechanisms and may need new mathematical ideas.\n\n**The key insight is** that Lorentzian polynomials have a hidden convexity structure (ultra-log-concavity) that prevents inter-pair cancellation, complementing the characteristic-zero mechanism that prevents intra-pair cancellation.\n\n**Why now?** Both the per-pair and the Lorentzian anti-cancellation results are now formalized. The synthesis is the natural next step and would be the first result combining both mechanisms.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Physics",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad17ca4a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:04:38.605729+00:00"
+  },
+  {
+    "id": "fd_1786",
+    "title": "Direction 3: Tropical Faithfulness of Differentiation",
+    "description": "**Conjecture:** Over a valued field of characteristic zero, the tropicalization of the derivative map Trop(\u2202\u1d62\u2202\u2c7c) coincides with the combinatorial shadow map on Newton polytopes if and only if the non-cancellation certificate holds at the valuative level. Specifically, the Newton polytope of \u2202\u1d62\u2202\u2c7cp equals the Minkowski difference of the Newton polytope of p with the segment [0, e\u1d62 + e\u2c7c], whenever p satisfies the certificate.\n\n**Test:** Implement Newton polytope computation (convex hull of support) and Minkowski difference for 2D and 3D cases. Compare the Newton polytope of \u2202\u1d62\u2202\u2c7cp with the predicted Minkowski difference for random polynomials. Find examples where the polytope inclusion is strict (certificate fails).\n\n**Impact:** This would establish a formal tropical\u2013algebraic dictionary: the non-cancellation certificate IS the condition for tropical faithfulness of differentiation. This connects to the Kapranov theorem (tropicalization commutes with resultants under genericity) and would provide new tools for tropical intersection theory.\n\n**Catalog References:**\n- `Bridges/Catalog/Speculative/AutoResearch/NonCancellationCertificate.lean` \u2014 certificate definition\n- Tropical geometry modules in the Catalog (if available)\n\n**Proof Strategy:** Use the vertex description of Newton polytopes. The vertices of the Newton polytope of \u2202\u1d62\u2202\u2c7cp are a subset of the per-pair shadow. Under the certificate, every shadow point is in the support, so the Newton polytope has the predicted vertices. The Minkowski difference interpretation follows from the additive structure of the shadow.\n\n**Domain Bridges:** Tropical geometry (tropicalization, faithful tropicalization), algebraic geometry (Newton polytopes, Bernstein's theorem), optimization (polyhedral computation).\n\n**Lineage:** Extends Theorem 1 from a set-level statement to a polyhedral/geometric statement.\n\n**Ambition:** Solid extension with grand-challenge overtones \u2014 the tropical faithfulness connection is new and could open a research program in tropical differentiation theory.\n\n**The key insight is** that the non-cancellation certificate is equivalent to a tropical faithfulness condition: the tropicalization of the derivative map has no \"unexpected zeros\" that would shrink the Newton polytope below its combinatorial prediction.\n\n**Why now?** Tropical geometry has matured to the point where faithfulness conditions are well-understood (cf. work of Gubler, Rabinoff, Werner). The shadow framework provides the first formal connection between faithfulness and differentiation.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Geometry",
+      "Computation",
+      "Tropical",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "in_progress",
+    "research_mode": "prove",
+    "source_exp_id": "ad17ca4a",
+    "consumed_by_exp_id": "9144e66e",
+    "timestamp": "2026-05-28T11:04:38.688248+00:00"
+  },
+  {
+    "id": "fd_1787",
+    "title": "Direction 4: Shadow-Based Circuit Lower Bounds for the Permanent",
+    "description": "**Conjecture:** The shadow lower bound |Sh\u2082(supp(Perm_n))| grows at least as fast as 2^{n/2}, and the non-cancellation certificate holds for the permanent polynomial Perm_n for all n \u2265 3. Consequently, any arithmetic circuit computing Perm_n has size at least 2^{n/2} / poly(n), improving the best known lower bounds.\n\n**Test:** Compute |Sh\u2082(supp(Perm_n))| for n = 3, 4, 5, 6, 7 and extrapolate the growth rate. Verify the certificate for Perm_n (the support is the set of permutation matrices with coefficients \u00b11; the shadow closure question reduces to a combinatorial property of permutation matrices).\n\n**Impact:** An exponential circuit lower bound for the permanent would resolve a major open problem in computational complexity (Valiant's conjecture, VP \u2260 VNP). Even a new lower bound (improving the current \u03a9(n\u00b2/2) of Shpilka\u2013Wigderson) would be a significant advance.\n\n**Catalog References:**\n- `Algebra/AlgebraicCircuitComplexity.lean` \u2014 circuit complexity definitions\n- `Bridges/Catalog/Speculative/AutoResearch/NonCancellationCertificate.lean` \u2014 certificate and shadow lower bound\n\n**Proof Strategy:** Analyze the combinatorics of permutation supports under the shadow map. The key question is whether |Sh\u2082(Perm_n)| grows exponentially. This is a purely combinatorial question about permutations, independent of the algebraic framework.\n\n**Domain Bridges:** Combinatorics (permutation statistics), computational complexity (VP vs VNP), representation theory (symmetric group).\n\n**Lineage:** Grand-challenge application of the entire framework to the central open problem in algebraic complexity.\n\n**Ambition:** Grand challenge \u2014 this is equivalent to a major open problem. Even partial progress (new lower bounds, tight shadow computation) would be highly significant.\n\n**The key insight is** that the non-cancellation certificate reduces the permanent lower bound problem to a purely combinatorial question about the shadow growth of permutation supports, separating the algebraic difficulty from the combinatorial difficulty.\n\n**Why now?** The certificate framework is now formalized and verified. The combinatorial question about permutation shadows is well-defined and computationally tractable for small n, enabling systematic experimental investigation.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Computation",
+      "Bridges",
+      "Logic",
+      "Speculative"
+    ],
+    "priority_score": 1.0,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "ad17ca4a",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:04:38.767855+00:00"
+  },
+  {
+    "id": "fd_1790",
+    "title": "Direction 1: Full Stabilizer Descent Formalization",
+    "description": "**Conjecture:** The stabilizer of a proper approximate subgroup has strictly smaller pseudofinite dimension. Formally: if $A$ is a definable $K$-approximate subgroup in $\\prod_{\\mathcal{U}} G_i$ with $0 < \\dim(A) < 1$, then $\\dim(\\text{Stab}(A)) \\leq \\dim(A) - c(K)$ for an explicit constant $c(K) > 0$ depending only on the doubling constant.\n\n**Test:** Compute stabilizer chains in Z/pZ for primes p = 101, 1009, 10007 with initial sets of various doubling constants. Verify that the dimension drop per step is bounded below by a function of K alone.\n\n**Impact:** Completes the core engine of the Breuillard-Green-Tao structure theorem for approximate groups. Would be the first machine-verified proof of stabilizer descent.\n\n**Catalog References:** `Catalog/Pythagorean/BoundedPseudofiniteTransfer.lean` (\u0141o\u015b theorem, `cosetCover_compose`), `Pythagorean/PseudofiniteDimension.lean` (`cosetCover_card_bound`, `normalizedLogCard_coset_bound`)\n\n**Proof Strategy:** Use the formalized coset cover bound plus the Ruzsa triangle inequality (to be formalized) to show that if $gA \\subseteq A^2$ for all $g \\in \\text{Stab}(A)$, then $\\text{Stab}(A)$ is covered by $K^2$ left cosets of a subgroup $H$ with $\\dim(H) < \\dim(A)$. The coset cover bound then gives $\\dim(\\text{Stab}(A)) < \\dim(A)$.\n\n**Domain Bridges:** Model theory \u2192 combinatorics (Ruzsa calculus) \u2192 group theory (subgroup structure)\n\n**Lineage:** Builds directly on the coset cover cardinality bound and log-cardinality coset bound.\n\n**Ambition:** Grand challenge \u2014 requires formalizing the Ruzsa triangle inequality and connecting it to the ultraproduct framework.\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "951d1d02",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:39:09.140621+00:00"
+  },
+  {
+    "id": "fd_1791",
+    "title": "Direction 2: Entropy-Dimension Duality and the Polynomial Freiman-Ruzsa Conjecture",
+    "description": "**Conjecture:** The Polynomial Freiman-Ruzsa conjecture (recently proved by Gowers-Green-Manners-Tao) can be re-derived from pseudofinite dimension theory via the entropy-dimension correspondence. Specifically: if $\\dim(A + A) \\leq \\dim(A) + \\delta$ in $\\mathbb{F}_2^n$ (the $K = 2^\\delta$ approximate subgroup condition), then $A$ is covered by $2^{O(\\delta)}$ cosets of a subspace $V$ with $\\dim(V) \\leq \\dim(A) + O(\\delta)$.\n\n**Test:** Formalize the entropy-dimension identity (dim = H/log|G|) and verify that Tao's entropy-based proof steps translate to dimension inequalities. Compute explicit bounds for small $\\mathbb{F}_2^n$ (n = 5, 6, 7, 8).\n\n**Impact:** Would provide a new proof pathway for PFR via model-theoretic dimension, potentially with better constants. Bridges additive combinatorics to model theory.\n\n**Catalog References:** `Pythagorean/PseudofiniteDimension.lean` (entropy correspondence, coset bound)\n\n**Proof Strategy:** Translate Tao's sumset entropy inequality $H(A+B) \\leq H(A) + H(B) - H(A \\cap B)$ into dimension language. Use the coset cover bound to extract structural conclusions.\n\n**Domain Bridges:** Information theory \u2194 model theory \u2194 additive combinatorics\n\n**Lineage:** Extends the dimension-entropy correspondence from our current work.\n\n**Ambition:** Paradigm-shifting \u2014 connects two major recent breakthroughs (PFR proof and pseudofinite dimension).\n\n---",
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Bridges",
+      "Logic"
+    ],
+    "priority_score": 0.9999999999999999,
+    "status": "available",
+    "research_mode": "prove",
+    "source_exp_id": "951d1d02",
+    "consumed_by_exp_id": "",
+    "timestamp": "2026-05-28T11:39:09.213949+00:00"
   },
   {
     "id": "fd_0806",
@@ -1394,24 +1468,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-27T05:59:01.680262+00:00"
-  },
-  {
-    "id": "fd_1777",
-    "title": "Direction 1: Proving the SSH Newton-Order Conjecture via Toeplitz Asymptotics",
-    "description": "**Conjecture.** For the half-filled SSH chain with dimerization $\\delta$ and subsystem size $m$:\n- (Gapped) $\\delta \\neq 0 \\Rightarrow \\sup_m \\mathcal{N}_m(\\delta) < \\infty$.\n- (Critical) $\\delta = 0 \\Rightarrow \\mathcal{N}_m(0) \\geq c \\log m$ for infinitely many $m$.\n\n**Test.** Prove the gapped case using exponential clustering of correlation matrix eigenvalues. For the critical case, derive Fisher\u2013Hartwig asymptotics for the esymm of the SSH spectrum at $\\delta = 0$ and show that the second log-differences of $\\log e_k$ grow without bound.\n\n**Impact.** This would be the first rigorous result connecting purely algebraic invariants (Newton ratios) to quantum phase transitions, opening a new paradigm for phase detection that requires no physical measurement apparatus \u2014 only eigenvalue computation.\n\n**Catalog References.** `Pythagorean/NewtonQuantumOrderParameters.lean`: `newtonRatio_bounded_of_spectral_pinching` (gapped case foundation), `SSHGappedConjecture`, `SSHCriticalConjecture`.\n\n**Proof Strategy.** \n1. For the gapped case: use the spectral pinching theorem with the known result that SSH correlation eigenvalues cluster in $[\\epsilon(\\delta), 1-\\epsilon(\\delta)]$ for $\\delta \\neq 0$.\n2. For the critical case: use Fisher\u2013Hartwig determinant asymptotics to compute $e_k$ asymptotics, then show the Newton ratio profile develops a logarithmic peak.\n\n**Domain Bridges.** Algebraic combinatorics \u2194 Toeplitz determinant theory \u2194 condensed-matter physics.\n\n**Lineage.** Extends `esymm_newton_ineq` and `newtonRatio_bounded_of_spectral_pinching`.\n\n**Ambition.** Grand challenge \u2014 would establish a new paradigm at the intersection of algebra and quantum physics.\n\n**The key insight is** that the spectral pinching theorem already gives the gapped case *if* we can prove the eigenvalue clustering bound, reducing a physics conjecture to a spectral analysis problem.\n\n**Why now?** The Toeplitz determinant machinery (Widom, Basor\u2013Tracy) is mature, and the formalized spectral pinching theorem provides the algebraic bridge.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Physics",
-      "Bridges",
-      "Logic"
-    ],
-    "priority_score": 0.8999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "40ff2470",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T11:03:34.260901+00:00"
   },
   {
     "id": "seed_013",
@@ -2039,67 +2095,6 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "pi_brainstorm",
     "consumed_by_exp_id": "",
     "timestamp": "2026-05-28T11:04:47.896691+00:00"
-  },
-  {
-    "id": "fd_1785",
-    "title": "Direction 2: Aggregate Anti-Cancellation via Lorentzian Structure",
-    "description": "**Conjecture:** For polynomials with support contained in a matroid basis polytope and coefficients satisfying a Lorentzian sign condition, weighted sums of second derivatives \u03a3 a\u1d62\u2c7c \u2202\u1d62\u2202\u2c7cp have support exactly equal to the union of per-pair shadows \u2014 no cancellation occurs even after aggregation.\n\n**Test:** Implement the Lorentzian polynomial checker from Br\u00e4nd\u00e9n\u2013Huh, compute weighted Hessian sums for Lorentzian polynomials in 3\u20134 variables, and verify support exactness. Search for non-Lorentzian polynomials where aggregate cancellation occurs.\n\n**Impact:** This would be a major advance: combining the characteristic-zero mechanism (no per-pair cancellation) with the Lorentzian positivity mechanism (no inter-pair cancellation) to obtain a complete anti-cancellation guarantee for the full Hessian operator. This is the missing piece for genuine arithmetic circuit lower bounds.\n\n**Catalog References:**\n- `Bridges/Catalog/Speculative/AutoResearch/AntiCancellationLorentzian.lean` \u2014 aggregate anti-cancellation for positive weights\n- `Bridges/Catalog/Speculative/AutoResearch/WeightedSupportShadow.lean` \u2014 per-pair shadow equality\n\n**Proof Strategy:** Use the AntiCancellationLorentzian result for nonneg-coefficient polynomials as a template. Extend to signed coefficients using Lorentzian structure (ultra-log-concavity of coefficient sequences) to control inter-pair cancellation.\n\n**Domain Bridges:** Hodge theory (Lorentzian signature), matroid theory (basis exchange), convex optimization (log-concavity).\n\n**Lineage:** Combines the per-pair result (this file) with the Lorentzian anti-cancellation (AntiCancellationLorentzian.lean).\n\n**Ambition:** Grand challenge \u2014 requires bridging two distinct anti-cancellation mechanisms and may need new mathematical ideas.\n\n**The key insight is** that Lorentzian polynomials have a hidden convexity structure (ultra-log-concavity) that prevents inter-pair cancellation, complementing the characteristic-zero mechanism that prevents intra-pair cancellation.\n\n**Why now?** Both the per-pair and the Lorentzian anti-cancellation results are now formalized. The synthesis is the natural next step and would be the first result combining both mechanisms.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Physics",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad17ca4a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T11:04:38.605729+00:00"
-  },
-  {
-    "id": "fd_1786",
-    "title": "Direction 3: Tropical Faithfulness of Differentiation",
-    "description": "**Conjecture:** Over a valued field of characteristic zero, the tropicalization of the derivative map Trop(\u2202\u1d62\u2202\u2c7c) coincides with the combinatorial shadow map on Newton polytopes if and only if the non-cancellation certificate holds at the valuative level. Specifically, the Newton polytope of \u2202\u1d62\u2202\u2c7cp equals the Minkowski difference of the Newton polytope of p with the segment [0, e\u1d62 + e\u2c7c], whenever p satisfies the certificate.\n\n**Test:** Implement Newton polytope computation (convex hull of support) and Minkowski difference for 2D and 3D cases. Compare the Newton polytope of \u2202\u1d62\u2202\u2c7cp with the predicted Minkowski difference for random polynomials. Find examples where the polytope inclusion is strict (certificate fails).\n\n**Impact:** This would establish a formal tropical\u2013algebraic dictionary: the non-cancellation certificate IS the condition for tropical faithfulness of differentiation. This connects to the Kapranov theorem (tropicalization commutes with resultants under genericity) and would provide new tools for tropical intersection theory.\n\n**Catalog References:**\n- `Bridges/Catalog/Speculative/AutoResearch/NonCancellationCertificate.lean` \u2014 certificate definition\n- Tropical geometry modules in the Catalog (if available)\n\n**Proof Strategy:** Use the vertex description of Newton polytopes. The vertices of the Newton polytope of \u2202\u1d62\u2202\u2c7cp are a subset of the per-pair shadow. Under the certificate, every shadow point is in the support, so the Newton polytope has the predicted vertices. The Minkowski difference interpretation follows from the additive structure of the shadow.\n\n**Domain Bridges:** Tropical geometry (tropicalization, faithful tropicalization), algebraic geometry (Newton polytopes, Bernstein's theorem), optimization (polyhedral computation).\n\n**Lineage:** Extends Theorem 1 from a set-level statement to a polyhedral/geometric statement.\n\n**Ambition:** Solid extension with grand-challenge overtones \u2014 the tropical faithfulness connection is new and could open a research program in tropical differentiation theory.\n\n**The key insight is** that the non-cancellation certificate is equivalent to a tropical faithfulness condition: the tropicalization of the derivative map has no \"unexpected zeros\" that would shrink the Newton polytope below its combinatorial prediction.\n\n**Why now?** Tropical geometry has matured to the point where faithfulness conditions are well-understood (cf. work of Gubler, Rabinoff, Werner). The shadow framework provides the first formal connection between faithfulness and differentiation.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Geometry",
-      "Computation",
-      "Tropical",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad17ca4a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T11:04:38.688248+00:00"
-  },
-  {
-    "id": "fd_1787",
-    "title": "Direction 4: Shadow-Based Circuit Lower Bounds for the Permanent",
-    "description": "**Conjecture:** The shadow lower bound |Sh\u2082(supp(Perm_n))| grows at least as fast as 2^{n/2}, and the non-cancellation certificate holds for the permanent polynomial Perm_n for all n \u2265 3. Consequently, any arithmetic circuit computing Perm_n has size at least 2^{n/2} / poly(n), improving the best known lower bounds.\n\n**Test:** Compute |Sh\u2082(supp(Perm_n))| for n = 3, 4, 5, 6, 7 and extrapolate the growth rate. Verify the certificate for Perm_n (the support is the set of permutation matrices with coefficients \u00b11; the shadow closure question reduces to a combinatorial property of permutation matrices).\n\n**Impact:** An exponential circuit lower bound for the permanent would resolve a major open problem in computational complexity (Valiant's conjecture, VP \u2260 VNP). Even a new lower bound (improving the current \u03a9(n\u00b2/2) of Shpilka\u2013Wigderson) would be a significant advance.\n\n**Catalog References:**\n- `Algebra/AlgebraicCircuitComplexity.lean` \u2014 circuit complexity definitions\n- `Bridges/Catalog/Speculative/AutoResearch/NonCancellationCertificate.lean` \u2014 certificate and shadow lower bound\n\n**Proof Strategy:** Analyze the combinatorics of permutation supports under the shadow map. The key question is whether |Sh\u2082(Perm_n)| grows exponentially. This is a purely combinatorial question about permutations, independent of the algebraic framework.\n\n**Domain Bridges:** Combinatorics (permutation statistics), computational complexity (VP vs VNP), representation theory (symmetric group).\n\n**Lineage:** Grand-challenge application of the entire framework to the central open problem in algebraic complexity.\n\n**Ambition:** Grand challenge \u2014 this is equivalent to a major open problem. Even partial progress (new lower bounds, tight shadow computation) would be highly significant.\n\n**The key insight is** that the non-cancellation certificate reduces the permanent lower bound problem to a purely combinatorial question about the shadow growth of permutation supports, separating the algebraic difficulty from the combinatorial difficulty.\n\n**Why now?** The certificate framework is now formalized and verified. The combinatorial question about permutation shadows is well-defined and computationally tractable for small n, enabling systematic experimental investigation.\n\n---",
-    "domains": [
-      "Pythagorean",
-      "Algebra",
-      "Computation",
-      "Bridges",
-      "Logic",
-      "Speculative"
-    ],
-    "priority_score": 0.7999999999999999,
-    "status": "available",
-    "research_mode": "prove",
-    "source_exp_id": "ad17ca4a",
-    "consumed_by_exp_id": "",
-    "timestamp": "2026-05-28T11:04:38.767855+00:00"
   },
   {
     "id": "seed_032",
