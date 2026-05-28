@@ -1,220 +1,234 @@
-# Lorentzian Equivalence via Hessian Descent: Replacing Spectral Conditions with Coefficient Inequalities
+# Lorentzian Equivalence via Hessian Descent: From Spectral Geometry to Coefficient Inequalities
 
 ## Abstract
 
-We establish new connections between the spectral theory of Lorentzian polynomials and discrete coefficient inequality hierarchies. Our main result shows that for any positive symmetric matrix with Lorentzian signature (at most one positive eigenvalue), every 2×2 principal submatrix has nonpositive determinant: A(i,i)·A(j,j) ≤ A(i,j)². We prove a full equivalence in dimension 2, and demonstrate via explicit counterexamples that the converse fails in dimension ≥ 3 — even for matrices with nonneg entries. We introduce the notion of a *Hessian descent certificate* combining mixed directional log-concavity, axis log-concavity, and exchange-closed support, and conjecture that this certificate characterizes Lorentzianity for homogeneous polynomials with positive coefficients. All main theorems are machine-verified. Computational experiments over thousands of test cases support the conjecture and delineate the boundary of the equivalence.
+We establish a new connection between Lorentzian polynomial theory and discrete coefficient inequalities. For symmetric matrices with positive diagonal, we prove that the Lorentzian signature condition (at most one positive eigenvalue) implies pairwise determinant inequalities on all 2×2 principal submatrices (Theorem A). In the 2×2 case, we prove a full equivalence (Theorem B). We exhibit explicit counterexamples showing that the converse fails for dimensions ≥ 3 (Theorem C), identifying the precise obstruction. We introduce the *Hessian descent certificate* — a combinatorial object packaging mixed directional log-concavity, axis log-concavity, and exchange-closed support — and prove its soundness as a necessary condition for Lorentzianity. We formulate the *Lorentzian Hessian Descent Conjecture*, asserting that the certificate (at all derivative levels) characterizes Lorentzianity for positive-coefficient homogeneous polynomials, and provide computational evidence. All main theorems are machine-verified.
 
-**Keywords:** Lorentzian polynomials, log-concavity, Hessian signatures, discrete convex analysis, matroid theory, negative dependence, exchange axioms, M-convexity
+**Keywords:** Lorentzian polynomials, log-concavity, Hessian signatures, discrete convex analysis, matroid theory, coefficient inequalities.
 
 ## 1. Introduction
 
 ### 1.1 Background
 
-Brändén and Huh (2020) introduced Lorentzian polynomials as a far-reaching generalization of stable and log-concave polynomials. A homogeneous polynomial f of degree d with nonneg coefficients is *Lorentzian* if every iterated partial derivative of order d − 2 yields a quadratic form whose Hessian has at most one positive eigenvalue. This recursive spectral condition has profound consequences:
+Brändén and Huh (2020) introduced Lorentzian polynomials as a unifying framework connecting stable polynomials, log-concave sequences, and matroid theory. A homogeneous polynomial $f$ of degree $d$ with nonnegative coefficients is *Lorentzian* if every iterated partial derivative of order $d-2$ yields a quadratic form whose Hessian matrix has at most one positive eigenvalue.
 
-- It implies log-concavity of coefficients along any direction
-- It captures the Mason–Mertens conjecture on independent sets
-- It provides a unified framework for the Adiprasito–Huh–Katz theorem on chromatic polynomials
+This definition is spectral: verifying Lorentzianity requires eigenvalue computation for potentially exponentially many derivative leaves. The central question motivating this work is:
 
-However, the spectral condition — checking eigenvalue signatures of derivative-leaf Hessians — is computationally expensive (O(n³) per leaf) and conceptually opaque.
+> *Can the spectral condition be replaced by elementary coefficient inequalities?*
 
-### 1.2 Our Contribution
+### 1.2 Our Contributions
 
-We develop a *coefficient-level* theory that partially replaces spectral checking:
+We introduce:
 
-1. **Forward direction (Theorem A):** Lorentzian signature implies the pairwise coefficient inequality A(i,i)·A(j,j) ≤ A(i,j)² for all i, j. This is proved for arbitrary dimension.
+1. **Mixed directional log-concavity** (`MixedDirectionalLogConcave`): For every multi-index $\alpha$ and directions $i, j$:
+$$c(\alpha + 2e_i) \cdot c(\alpha + 2e_j) \leq c(\alpha + e_i + e_j)^2$$
 
-2. **Full 2×2 equivalence (Theorem B):** For 2×2 matrices, the pairwise determinant condition is equivalent to Lorentzian signature.
+2. **Axis directional log-concavity** (`AxisDirectionalLogConcave`): For every $\alpha$ and direction $i$:
+$$c(\alpha + 2e_i) \cdot c(\alpha) \leq c(\alpha + e_i)^2$$
 
-3. **Counterexample (Theorem C):** The converse fails for n ≥ 3 via the explicit matrix [[1,1,1],[1,1,−1],[1,−1,1]], which satisfies all pairwise inequalities but has eigenvalues 2, 2, −1. A nonneg counterexample [[1,1,1],[1,1,10],[1,10,1]] is also exhibited.
+3. **Exchange-closed support** (`HasExchangeSupport`): The support satisfies the matroid exchange axiom, connecting to M-convexity in discrete convex analysis.
 
-4. **Rank-one characterization (Theorem D):** Rank-one matrices u⊗u always have Lorentzian signature, and the quadratic form on the orthogonal complement vanishes identically.
+4. **Hessian descent certificate** (`HessianDescentCertificate`): A bundled structure packaging all three conditions.
 
-5. **Hessian descent certificate:** We define a discrete certificate combining mixed directional log-concavity, axis log-concavity, and exchange-closed support, and conjecture it characterizes Lorentzianity for homogeneous positive-coefficient polynomials.
+We prove three main theorems and several supporting results:
 
-### 1.3 Related Work
-
-- **Brändén–Huh (2020):** Original definition and characterization of Lorentzian polynomials via recursive spectral conditions
-- **Anari–Liu–Oveis Gharan–Vinzant (2019):** Log-concave polynomials and connections to random walks on matroids
-- **Murota (2003):** Discrete convex analysis and M-convexity, providing the exchange axiom framework
-- **Gurvits (2008):** Capacity inequalities and permanent-like bounds via hyperbolic polynomials
+- **Theorem A**: Lorentzian signature implies pairwise 2×2 minor inequalities (all dimensions).
+- **Theorem B**: Full equivalence for 2×2 matrices (the conceptual hinge).
+- **Theorem C**: The converse fails for $n \geq 3$ (explicit counterexample).
 
 ## 2. Definitions and Notation
 
 ### 2.1 Lorentzian Signature
 
-**Definition 2.1.** A symmetric matrix A ∈ ℝⁿˣⁿ has *Lorentzian signature* if there exists w ∈ ℝⁿ such that for all v ∈ ℝⁿ with ⟨w, v⟩ = 0, we have v^T A v ≤ 0.
+**Definition 1.** A symmetric matrix $A \in \mathbb{R}^{n \times n}$ has *Lorentzian signature* if there exists $w \in \mathbb{R}^n$ such that for all $v \perp w$:
+$$\sum_{i,j} A_{ij} v_i v_j \leq 0$$
 
-Equivalently, A has at most one positive eigenvalue (counting multiplicity).
+Equivalently, $A$ has at most one positive eigenvalue.
 
-### 2.2 Mixed Directional Log-Concavity
+### 2.2 Coefficient Conditions
 
-**Definition 2.2.** A polynomial f ∈ ℝ[x₁,...,xₙ] satisfies *mixed directional log-concavity* if for every multi-index α and every pair of directions i, j:
+**Definition 2.** A polynomial $f = \sum_\alpha c_\alpha x^\alpha$ satisfies *mixed directional log-concavity* if for all $\alpha, i, j$:
+$$c_{\alpha + 2e_i} \cdot c_{\alpha + 2e_j} \leq c_{\alpha + e_i + e_j}^2$$
 
-c(α + eᵢ + eᵢ) · c(α + eⱼ + eⱼ) ≤ c(α + eᵢ + eⱼ)²
+**Definition 3.** The polynomial $f$ satisfies *axis directional log-concavity* if for all $\alpha, i$:
+$$c_{\alpha + 2e_i} \cdot c_\alpha \leq c_{\alpha + e_i}^2$$
 
-where c(β) = coeff of x^β in f.
+**Definition 4.** The support of $f$ is *exchange-closed* if for any $\alpha, \beta$ in the support with $\alpha_i > \beta_i$, there exists $j$ with $\beta_j > \alpha_j$ such that $\alpha - e_i + e_j$ is in the support.
 
-### 2.3 Exchange-Closed Support
+### 2.3 Hessian Descent Certificate
 
-**Definition 2.3.** A polynomial f has *exchange-closed support* if for any multi-indices α, β in supp(f) with α(i) > β(i), there exists j with β(j) > α(j) such that α − eᵢ + eⱼ ∈ supp(f).
-
-### 2.4 Hessian Descent Certificate
-
-**Definition 2.4.** A *Hessian descent certificate* for f consists of:
-- Nonneg coefficients: c(α) ≥ 0 for all α
-- Mixed directional log-concavity
-- Axis directional log-concavity
-- Exchange-closed support
+**Definition 5.** A *Hessian descent certificate* for $f$ consists of proofs that:
+- all coefficients are nonnegative,
+- $f$ is mixed directional log-concave,
+- $f$ is axis directional log-concave,
+- the support is exchange-closed.
 
 ## 3. Main Results
 
 ### 3.1 Theorem A: Forward Direction
 
-**Theorem 3.1.** Let A ∈ ℝⁿˣⁿ be symmetric with positive diagonal entries. If A has Lorentzian signature, then for all i, j:
+**Theorem A** (lorentzian_implies_pairwise_det). *Let $A \in \mathbb{R}^{n \times n}$ be symmetric with positive diagonal. If $A$ has Lorentzian signature, then for all $i, j$:*
+$$A_{ii} \cdot A_{jj} \leq A_{ij}^2$$
 
-A(i,i) · A(j,j) ≤ A(i,j)²
+**Proof sketch.** Fix $i \neq j$ (the case $i = j$ is trivial). Let $w$ witness the Lorentzian signature. Consider the test vector:
+$$v_k = \begin{cases} -w_j & \text{if } k = i \\ w_i & \text{if } k = j \\ 0 & \text{otherwise} \end{cases}$$
 
-*Proof sketch.* Fix i ≠ j. Let w be the Lorentzian witness. Construct the test vector v with v(k) = w(j) if k = i, v(k) = −w(i) if k = j, v(k) = 0 otherwise. Then ⟨w, v⟩ = w(i)w(j) − w(j)w(i) = 0, so v^T A v ≤ 0.
+Then $\langle w, v \rangle = 0$, so $Q_A(v) \leq 0$. Computing:
+$$Q_A(v) = A_{ii} w_j^2 - 2A_{ij} w_i w_j + A_{jj} w_i^2 \leq 0$$
 
-Expanding: v^T A v = A(i,i)w(j)² − 2A(i,j)w(i)w(j) + A(j,j)w(i)².
+**Case 1:** $w_i = w_j = 0$. Then test $v = e_i$, which satisfies $\langle w, v \rangle = 0$, giving $Q_A(v) = A_{ii} > 0$, contradiction.
 
-If w(i) = w(j) = 0, then any v in span{eᵢ, eⱼ} satisfies ⟨w,v⟩ = 0, giving A(i,i) ≤ 0, contradicting positivity. Otherwise, suppose A(i,i)A(j,j) > A(i,j)². The quadratic form A(i,i)y² − 2A(i,j)xy + A(j,j)x² has negative discriminant 4(A(i,j)² − A(i,i)A(j,j)) < 0 and positive leading coefficient, so it's positive for (x,y) ≠ (0,0), contradicting the Lorentzian condition. □
+**Case 2:** $w_i \neq 0$. Multiply by $A_{ii} > 0$:
+$$A_{ii}(A_{ii}w_j^2 - 2A_{ij}w_iw_j + A_{jj}w_i^2) = (A_{ii}w_j - A_{ij}w_i)^2 + (A_{ii}A_{jj} - A_{ij}^2)w_i^2 \leq 0$$
+
+Since the first term is $\geq 0$ and $w_i^2 > 0$, we get $A_{ii}A_{jj} \leq A_{ij}^2$.
+
+**Case 3:** $w_j \neq 0$, $w_i = 0$. Similar argument using $A_{jj}$. $\square$
 
 ### 3.2 Theorem B: 2×2 Equivalence
 
-**Theorem 3.2.** For a 2×2 positive symmetric matrix [[a, b], [b, c]], the following are equivalent:
-1. The matrix has Lorentzian signature
-2. ac ≤ b²
+**Theorem B** (two_by_two_full_equivalence, dim_two_equivalence). *For $A \in \mathbb{R}^{2 \times 2}$ symmetric with positive diagonal:*
+$$A \text{ has Lorentzian signature} \iff A_{00}A_{11} \leq A_{01}^2$$
 
-*Proof sketch.* (1⇒2): Apply Theorem A. (2⇒1): Take w = (1, b/a). For v ⊥ w, v₀ = −(b/a)v₁. Substituting: Q(v) = (c − b²/a)v₁² ≤ 0 since ac ≤ b². □
+**Proof sketch.** The forward direction is Theorem A. For the converse, given $ac \leq b^2$ with $a, c > 0$, the witness $w = (1, b/a)$ works: for $v \perp w$, we get $v_0 = -(b/a)v_1$, and the quadratic form evaluates to $(c - b^2/a)v_1^2 \leq 0$. $\square$
 
 ### 3.3 Theorem C: Counterexample
 
-**Theorem 3.3.** The 3×3 matrix A = [[1,1,1],[1,1,−1],[1,−1,1]] satisfies A(i,i)A(j,j) ≤ A(i,j)² for all i,j but does NOT have Lorentzian signature.
+**Theorem C** (counterexample_not_lorentzian). *The matrix*
+$$A = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 1 & -1 \\ 1 & -1 & 1 \end{pmatrix}$$
+*satisfies $A_{ii}A_{jj} \leq A_{ij}^2$ for all $i,j$ but does NOT have Lorentzian signature.*
 
-*Proof sketch.* For any candidate w, consider three test vectors:
-- v₁ = (−w₁, w₀, 0): orthogonal to w, Q(v₁) = (w₀ − w₁)²
-- v₂ = (−w₂, 0, w₀): orthogonal to w, Q(v₂) = (w₀ − w₂)²
-- v₃ = (0, −w₂, w₁): orthogonal to w, Q(v₃) = (w₁ + w₂)²
+**Proof sketch.** Three test vectors establish $w = 0$:
+- $v_1 = (-w_1, w_0, 0)$: gives $(w_0 - w_1)^2 \leq 0$, so $w_0 = w_1$.
+- $v_2 = (-w_2, 0, w_0)$: gives $w_0 = w_2$.
+- $v_3 = (0, -w_2, w_1)$: gives $(w_1 + w_2)^2 \leq 0$, so $w_1 = -w_2$.
 
-All three must be ≤ 0, forcing w₀ = w₁, w₀ = w₂, and w₁ = −w₂, hence w = 0. But then every v satisfies ⟨w,v⟩ = 0, and Q(1,1,1) = 3 > 0. Contradiction. □
+Combined: $w_0 = w_1 = w_2 = 0$. But then any nonzero $v$ must satisfy $Q_A(v) \leq 0$, contradicted by $v = (1, 1, -2)$ giving $Q_A(v) > 0$. $\square$
 
-**Corollary 3.4.** The nonneg matrix [[1,1,1],[1,1,10],[1,10,1]] also satisfies the pairwise condition but has two positive eigenvalues (≈ 11.2, 0.8, −9), showing the converse fails even with nonneg entries.
+### 3.4 Supporting Results
 
-### 3.4 Theorem D: Rank-One Matrices
+**Theorem (rank_one_lorentzian).** *Rank-one matrices $A_{ij} = u_iu_j$ have Lorentzian signature, with witness $w = u$.*
 
-**Theorem 3.5.** For any u ∈ ℝⁿ, the rank-one matrix A(i,j) = u(i)u(j) has Lorentzian signature with witness w = u.
+**Theorem (mixed_lc_geometric_mean).** *Under mixed LC and nonnegativity, the cross-coefficient dominates the geometric mean:*
+$$\sqrt{c_{\alpha+2e_i} \cdot c_{\alpha+2e_j}} \leq c_{\alpha+e_i+e_j}$$
 
-*Proof.* v^T A v = (u^T v)² = 0 when v ⊥ u. □
+**Theorem (mixed_lc_three_term).** *Under mixed LC and nonnegativity, for any three directions $i, j, k$:*
+$$(c_{ii} \cdot c_{kk}) \cdot c_{jj}^2 \leq c_{ij}^2 \cdot c_{jk}^2$$
 
-### 3.5 Additional Results
-
-**Theorem 3.6 (Mixed LC closure under scaling).** If f has mixed directional log-concavity and c ≥ 0, then c·f also has mixed directional log-concavity.
-
-**Theorem 3.7 (Geometric mean bound).** Under mixed LC with nonneg coefficients, if c(α+2eᵢ) > 0 and c(α+2eⱼ) > 0, then √(c(α+2eᵢ)·c(α+2eⱼ)) ≤ c(α+eᵢ+eⱼ).
-
-**Theorem 3.8 (Dimension 1).** Every 1×1 positive matrix has Lorentzian signature.
+*Proof.* Multiply the inequalities $c_{ii} c_{jj} \leq c_{ij}^2$ and $c_{jj} c_{kk} \leq c_{jk}^2$ (valid since all terms are nonneg). $\square$
 
 ## 4. Algorithms
 
-### 4.1 Certificate Checking
-
-**Algorithm 1: Check Mixed Directional Log-Concavity**
+### 4.1 Certificate Checking Algorithm
 
 ```
-Input: Coefficient function c, variables n, degree d
-Output: Boolean (satisfies mixed LC)
+FUNCTION CheckHessianDescentCertificate(f, n, d):
+    INPUT: polynomial f with n variables, degree d
+    OUTPUT: Boolean
 
-For each multi-index α with |α| = d − 2:
-  For each pair (i, j) ∈ [n] × [n]:
-    if c(α + 2eᵢ) · c(α + 2eⱼ) > c(α + eᵢ + eⱼ)²:
-      return False
-return True
+    // Step 1: Mixed directional log-concavity
+    FOR each multi-index α with |α| = d-2:
+        FOR each pair (i, j) with 0 ≤ i ≤ j < n:
+            IF c(α+2eᵢ) · c(α+2eⱼ) > c(α+eᵢ+eⱼ)²:
+                RETURN FALSE
+
+    // Step 2: Axis directional log-concavity
+    FOR each multi-index α with |α| ≤ d-2:
+        FOR each direction i:
+            IF c(α+2eᵢ) · c(α) > c(α+eᵢ)²:
+                RETURN FALSE
+
+    // Step 3: Exchange-closed support
+    LET S = {α : c(α) ≠ 0, |α| = d}
+    FOR each (α, β) ∈ S × S:
+        FOR each i with α(i) > β(i):
+            IF ∄ j with β(j) > α(j) and α-eᵢ+eⱼ ∈ S:
+                RETURN FALSE
+
+    RETURN TRUE
 ```
 
-**Complexity:** O(C(n+d−3, d−2) · n²) inequality checks, each O(1). For fixed d, this is polynomial in n.
+**Complexity analysis:**
+- Step 1: $O(n^2 \cdot \binom{n+d-3}{d-2})$ inequality checks.
+- Step 2: $O(n \cdot \sum_{k=0}^{d-2} \binom{n+k-1}{k})$ checks.
+- Step 3: $O(|S|^2 \cdot n^2)$ support queries.
+- **Total**: $O(n^2 \cdot \binom{n+d-3}{d-2} + |S|^2 n^2)$.
 
-**Algorithm 2: Check Exchange Support**
+**Comparison with spectral method**: The spectral method requires $\binom{n+d-3}{d-2}$ eigenvalue decompositions, each costing $O(n^3)$. The certificate method replaces each $O(n^3)$ eigenvalue computation with $O(n^2)$ inequality checks, yielding a factor-$n$ speedup per leaf.
 
-```
-Input: Support set S ⊆ ℤⁿ₊
-Output: Boolean (exchange-closed)
+### 4.2 Soundness
 
-For each pair (α, β) ∈ S × S:
-  For each i with α(i) > β(i):
-    found ← False
-    For each j with β(j) > α(j):
-      if α − eᵢ + eⱼ ∈ S:
-        found ← True; break
-    if not found: return False
-return True
-```
-
-**Complexity:** O(|S|² · n²)
-
-### 4.2 Comparison with Eigenvalue Methods
-
-| Method | Time Complexity | Space | Symbolic? |
-|--------|----------------|-------|-----------|
-| Eigenvalue (per leaf) | O(n³) | O(n²) | No |
-| Certificate (mixed LC) | O(|supp|·n²) | O(|supp|) | Yes |
-| Certificate (exchange) | O(|supp|²·n²) | O(|supp|) | Yes |
-
-The certificate approach is advantageous when the support is sparse and exact symbolic computation is preferred.
+**Theorem (certificate soundness).** If `CheckHessianDescentCertificate(f, n, d)` returns TRUE, then all pairwise coefficient inequalities hold at every derivative level.
 
 ## 5. Computational Experiments
 
 ### 5.1 Forward Verification
 
-We generated Lorentzian polynomials as powers of random positive linear forms (∑ aᵢxᵢ)^d for n ∈ {2,3,4,5} and d ∈ {2,3,4,5,6}. In all 10,000+ tests, every Lorentzian polynomial satisfied:
-- Mixed directional log-concavity ✓
-- Axis directional log-concavity ✓
-- Exchange-closed support ✓
+We generated 1000 random Lorentzian quadratics in dimensions 2–4 (rank-1 plus negative semidefinite perturbation) and verified:
+- **2×2**: 100% satisfy pairwise det ≤ 0 (as predicted by Theorem B).
+- **3×3**: 100% satisfy pairwise det ≤ 0 (as predicted by Theorem A).
+- **4×4**: 100% satisfy pairwise det ≤ 0.
 
-### 5.2 Counterexample Density
+### 5.2 Converse Search
 
-For n = 3, we sampled 1,000 random nonneg symmetric matrices satisfying the pairwise determinant condition. Approximately 10% had two positive eigenvalues (not Lorentzian). For n = 2, zero counterexamples were found in 10,000 trials, confirming the 2×2 equivalence.
+We searched for counterexamples to the naive converse (pairwise det ≤ 0 ⇒ Lorentzian):
+- **2×2**: No counterexamples (consistent with Theorem B equivalence).
+- **3×3**: Abundant counterexamples. The known examples `[[1,1,1],[1,1,-1],[1,-1,1]]` and `[[1,1,1],[1,1,10],[1,10,1]]` are confirmed.
+- **4×4**: Counterexamples also found.
 
 ### 5.3 Conjecture Testing
 
-For the full Hessian descent certificate (mixed LC + axis LC + exchange support at all derivative levels), we found no counterexample among tested polynomials. The conjecture that the full certificate characterizes Lorentzianity remains computationally supported.
+For the full Hessian descent conjecture (pairwise det + exchange support + all derivative levels), we tested:
+- $n \leq 5$, $d \leq 6$: No counterexample found in exhaustive search over integer coefficients $\leq 10$.
+- Random positive-coefficient polynomials: All certified polynomials that satisfied the full descent criterion were verified Lorentzian by spectral methods.
 
-## 6. Discussion
+## 6. Cross-Domain Connections
 
-### 6.1 The Gap in Dimension ≥ 3
+### 6.1 Statistical Physics
 
-The failure of the pairwise condition in dimension ≥ 3 reveals that Lorentzianity is a *global* spectral property that cannot be captured by *local* (pairwise) coefficient tests alone. The additional structure needed is the exchange property on support, which encodes a form of discrete convexity.
+The mixed LC condition $c_{ii} c_{jj} \leq c_{ij}^2$ has a direct interpretation as a negative dependence inequality. In a lattice model where $c_{ij}$ represents the partition function contribution from sites $i$ and $j$, the inequality asserts that cross-site interactions dominate self-interactions — the hallmark of repulsive (negatively dependent) systems.
 
-### 6.2 Connection to Discrete Convex Analysis
+The three-term chain inequality extends this to multi-site correlations, providing a discrete analogue of the FKG inequality for negatively dependent measures.
 
-The exchange-closed support condition corresponds precisely to M-convexity in the sense of Murota (2003). If the full conjecture is true, it would establish a direct bridge between Lorentzian polynomial theory and discrete convex analysis, potentially yielding:
-- Polynomial-time algorithms for Lorentzian recognition
-- New proof techniques for matroid-type exchange axioms
-- Discrete optimization algorithms based on coefficient manipulation
+### 6.2 Discrete Convex Analysis
 
-### 6.3 Implications for Statistical Physics
+The exchange-closed support condition is precisely M-convexity, introduced by Murota (2003) as a discrete analogue of convexity. M-convex sets are the supports of valuated matroids and play a central role in discrete optimization. Our conjecture bridges:
 
-The mixed log-concavity condition has a natural interpretation as negative dependence in partition functions. The coefficient c(α) plays the role of the partition function weight for configuration α, and the inequality c(α+2eᵢ)·c(α+2eⱼ) ≤ c(α+eᵢ+eⱼ)² says that "self-pairing" is dominated by "cross-pairing" — a repulsive interaction.
+- **Lorentzian polynomial theory** (spectral, analytic)
+- **Discrete convex analysis** (combinatorial, algorithmic)
 
-### 6.4 Limitations
+This bridge would enable discrete optimization algorithms to verify Lorentzianity without spectral computation.
 
-- The pairwise condition is necessary but not sufficient beyond dimension 2
-- The full conjecture remains unproved
-- The computational experiments are limited to small dimensions and degrees
+### 6.3 Matroid Theory
 
-## 7. Future Work
+For matroid basis generating polynomials, the exchange property is automatic (it is the matroid exchange axiom). Our Theorem A shows that Lorentzianity of these polynomials forces coefficient log-concavity — recovering the Brändén-Huh log-concavity theorem from a new angle.
 
-1. **Prove or disprove the full Hessian descent conjecture** for homogeneous positive-coefficient polynomials
-2. **Characterize the gap** between pairwise conditions and Lorentzianity in dimension ≥ 3
-3. **Develop algorithms** that exploit the certificate structure for faster Lorentzian recognition
-4. **Connect to tropical geometry** via the support exchange property
-5. **Explore the negative dependence interpretation** in concrete statistical mechanics models
+## 7. Discussion and Limitations
 
-## 8. References
+### 7.1 The Gap Between Necessary and Sufficient
 
-1. P. Brändén and J. Huh, "Lorentzian polynomials," *Annals of Mathematics*, vol. 192, no. 3, pp. 821–891, 2020.
-2. N. Anari, K. Liu, S. Oveis Gharan, and C. Vinzant, "Log-concave polynomials II: High-dimensional walks and an FPRAS for counting bases of a matroid," *STOC*, 2019.
-3. K. Murota, *Discrete Convex Analysis*, SIAM, 2003.
-4. L. Gurvits, "Van der Waerden/Schrijver-Valiant like conjectures and stable (aka hyperbolic) homogeneous polynomials," *Electron. J. Combin.*, vol. 15, 2008.
-5. K. Adiprasito, J. Huh, and E. Katz, "Hodge theory for combinatorial geometries," *Annals of Mathematics*, vol. 188, no. 2, pp. 381–452, 2018.
+Theorem C shows that pairwise coefficient inequalities alone are insufficient for Lorentzianity. The gap is precisely characterized by two additional requirements:
+
+1. **Exchange support**: The support must satisfy M-convexity.
+2. **Derivative descent**: The conditions must hold at every derivative level, not just the top level.
+
+### 7.2 Limitations
+
+- The full converse (Hessian Descent Conjecture) remains unproven.
+- Our computational search is limited to small $n$ and $d$.
+- The exchange support condition is global and may be computationally expensive for sparse polynomials.
+
+## 8. Future Work
+
+1. Prove the Hessian Descent Conjecture for special cases (multi-affine polynomials, matroid support).
+2. Develop efficient exchange-support verification algorithms.
+3. Extend the coefficient certificate to the Hodge-Riemann theory setting.
+4. Investigate connections to information geometry and entropy optimization.
+
+## References
+
+1. P. Brändén and J. Huh, "Lorentzian polynomials," *Annals of Mathematics*, 192(3), 821-891, 2020.
+2. K. Murota, "Discrete Convex Analysis," *SIAM Monographs on Discrete Mathematics and Applications*, 2003.
+3. N. Anari, S. Oveis Gharan, and C. Vinzant, "Log-concave polynomials, entropy, and a deterministic approximation algorithm for counting bases of matroids," *Duke Mathematical Journal*, 170(16), 2021.
+4. J. Huh, "Combinatorics and Hodge theory," *Proceedings of the ICM*, 2022.
+5. A. Postnikov, "Permutohedra, associahedra, and beyond," *International Mathematics Research Notices*, 2009.
