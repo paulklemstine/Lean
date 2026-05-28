@@ -1,26 +1,23 @@
 #!/usr/bin/env python3
 """
-Applications of Cycle-Birth Theory to Network Science and Data Analysis.
+applications.py — Real-World Applications of Cycle-Birth Theory
 
-Demonstrates practical applications of the formally verified theory:
-1. Network robustness analysis via cycle-birth spectrum
-2. Anomaly detection using tropical spectral signatures
-3. Graph classification from birth distributions
-4. Confidence intervals for topological summaries
+Demonstrates how the formally verified cycle-birth theorems apply to:
+1. Network resilience analysis
+2. Topological data analysis of random networks
+3. Quality assessment of mesh/graph structures
 
 Application keywords: network science, topological statistics, percolation,
-topological data analysis, random optimization.
+random optimization, persistent homology, tropical Morse theory.
 """
 
-import numpy as np
+import random
+import math
 from typing import List, Tuple, Dict
 
 
-# ========================================================================
-# Self-contained core routines
-# ========================================================================
-
 class UnionFind:
+    """Union-Find for Kruskal-based cycle-birth computation."""
     def __init__(self, n):
         self.parent = list(range(n))
         self.rank = [0] * n
@@ -31,656 +28,561 @@ class UnionFind:
         return x
     def union(self, x, y):
         rx, ry = self.find(x), self.find(y)
-        if rx == ry:
-            return False
-        if self.rank[rx] < self.rank[ry]:
-            rx, ry = ry, rx
+        if rx == ry: return False
+        if self.rank[rx] < self.rank[ry]: rx, ry = ry, rx
         self.parent[ry] = rx
-        if self.rank[rx] == self.rank[ry]:
-            self.rank[rx] += 1
+        if self.rank[rx] == self.rank[ry]: self.rank[rx] += 1
         return True
-    def connected(self, x, y):
-        return self.find(x) == self.find(y)
 
 
-def compute_cycle_births(n, edges):
-    sorted_edges = sorted(edges, key=lambda e: e[2])
+def cycle_births(n: int, edges: List[Tuple[int,int]], weights: List[float]):
+    """Compute cycle-birth and MST edges."""
+    order = sorted(range(len(edges)), key=lambda i: weights[i])
     uf = UnionFind(n)
-    births = []
-    mst_w = []
-    for u, v, w in sorted_edges:
-        if uf.connected(u, v):
-            births.append(w)
-        else:
-            uf.union(u, v)
-            mst_w.append(w)
-    return births, mst_w
+    births, mst = [], []
+    for idx in order:
+        u, v = edges[idx]
+        w = weights[idx]
+        if uf.union(u, v): mst.append((edges[idx], w))
+        else: births.append((edges[idx], w))
+    return births, mst
 
 
-def ks_distance(s1, s2):
-    if not s1 or not s2:
-        return 1.0
-    a, b = np.sort(s1), np.sort(s2)
-    all_v = np.sort(np.concatenate([a, b]))
-    c1 = np.searchsorted(a, all_v, side='right') / len(a)
-    c2 = np.searchsorted(b, all_v, side='right') / len(b)
-    return float(np.max(np.abs(c1 - c2)))
+# ─── Application 1: Network Resilience ───
 
+def network_resilience_analysis():
+    """
+    Analyze network resilience using cycle-birth theory.
 
-def sample_gnp_weighted(n, p, rng=None):
-    if rng is None:
-        rng = np.random.default_rng()
+    Key insight: The cycle-birth count β₁ measures redundancy in a network.
+    By Theorem 5, β₁ = m - (n-1) for connected graphs, meaning each
+    cycle-birth edge provides an alternative path.
+
+    A network with more early cycle births (low-weight redundant edges)
+    is more resilient to edge failures.
+    """
+    print("=" * 60)
+    print("APPLICATION 1: NETWORK RESILIENCE ANALYSIS")
+    print("=" * 60)
+    print()
+
+    random.seed(42)
+
+    # Generate two networks with same topology but different weight patterns
+    n = 20
     edges = []
     for i in range(n):
-        for j in range(i + 1, n):
-            if rng.random() < p:
-                edges.append((i, j, rng.random()))
-    return edges
+        for j in range(i+1, n):
+            if random.random() < 0.25:
+                edges.append((i, j))
 
-
-# ========================================================================
-# Application 1: Network Robustness Analysis
-# ========================================================================
-
-def network_robustness_score(n: int, edges: List[Tuple[int, int, float]]) -> Dict:
-    """
-    Analyze network robustness using cycle-birth spectrum.
-
-    The cycle-birth distribution encodes how redundant connectivity emerges
-    as edge weights increase. A network with many early cycle births has
-    high topological redundancy (robustness), while late births indicate
-    fragile connectivity.
-
-    Returns:
-        Dictionary with robustness metrics derived from cycle-birth theory.
-    """
-    births, mst_weights = compute_cycle_births(n, edges)
     m = len(edges)
+    print(f"  Network: {n} nodes, {m} edges")
+    print()
 
-    if not births:
-        return {
-            'beta_1': 0,
-            'redundancy_ratio': 0.0,
-            'mean_birth_quantile': None,
-            'early_birth_fraction': 0.0,
-            'robustness_score': 0.0,
-        }
+    # Scenario A: low-cost redundancy (cycle births have low weights)
+    weights_a = [random.uniform(0, 1) for _ in range(m)]
+    births_a, mst_a = cycle_births(n, edges, weights_a)
 
-    beta_1 = len(births)
-    all_weights = sorted([e[2] for e in edges])
-    median_weight = np.median(all_weights)
+    # Scenario B: high-cost redundancy (reassign weights)
+    weights_b = sorted(weights_a)  # same multiset, different assignment
+    random.shuffle(weights_b)
+    births_b, mst_b = cycle_births(n, edges, weights_b)
 
-    early_births = sum(1 for b in births if b <= median_weight)
-
-    return {
-        'beta_1': beta_1,
-        'redundancy_ratio': beta_1 / m if m > 0 else 0,
-        'mean_birth_weight': float(np.mean(births)),
-        'median_birth_weight': float(np.median(births)),
-        'early_birth_fraction': early_births / beta_1,
-        'robustness_score': early_births / beta_1 * beta_1 / max(m, 1),
-    }
+    print(f"  Scenario A: {len(births_a)} redundant edges (cycle births)")
+    print(f"    MST cost: {sum(w for _, w in mst_a):.2f}")
+    print(f"    Mean birth weight: {sum(w for _, w in births_a)/max(1,len(births_a)):.3f}")
+    print()
+    print(f"  Scenario B: {len(births_b)} redundant edges (cycle births)")
+    print(f"    MST cost: {sum(w for _, w in mst_b):.2f}")
+    print(f"    Mean birth weight: {sum(w for _, w in births_b)/max(1,len(births_b)):.3f}")
+    print()
+    print("  → By Theorem 5, β₁ (number of cycle births) is the same")
+    print("    regardless of weight assignment. Only the birth weights change.")
+    print("  → Lower mean birth weight = cheaper redundancy = more resilient.")
+    print()
 
 
-# ========================================================================
-# Application 2: Anomaly Detection
-# ========================================================================
+# ─── Application 2: Topological Network Fingerprinting ───
 
-def detect_anomalous_graph(n: int, edges: List[Tuple[int, int, float]],
-                            reference_births: List[List[float]],
-                            threshold: float = 0.3) -> Dict:
+def topological_fingerprinting():
     """
-    Detect whether a graph's cycle-birth spectrum is anomalous.
+    Use cycle-birth distributions as topological fingerprints for networks.
 
-    Uses KS distance from a reference collection of cycle-birth distributions
-    (from the same generative model). By concentration (Theorem 3), typical
-    graphs cluster tightly; outliers indicate structural anomaly.
-
-    Args:
-        n: vertices
-        edges: weighted edge list
-        reference_births: list of birth-weight lists from reference graphs
-        threshold: KS distance threshold for anomaly
-
-    Returns:
-        Anomaly report dictionary.
+    By Theorem 4 (universality), the cycle-birth classification is invariant
+    under monotone transport. This means the birth distribution captures
+    genuine topological structure, not measurement artifacts.
     """
-    births, _ = compute_cycle_births(n, edges)
+    print("=" * 60)
+    print("APPLICATION 2: TOPOLOGICAL NETWORK FINGERPRINTING")
+    print("=" * 60)
+    print()
 
-    if not births or not reference_births:
-        return {'is_anomalous': None, 'reason': 'insufficient data'}
+    random.seed(123)
 
-    ks_distances = [ks_distance(births, ref) for ref in reference_births if ref]
+    def make_lattice_graph(rows, cols):
+        """Grid graph with noise."""
+        n = rows * cols
+        edges, weights = [], []
+        for r in range(rows):
+            for c in range(cols):
+                v = r * cols + c
+                if c + 1 < cols:
+                    edges.append((v, v + 1))
+                    weights.append(random.uniform(0, 1))
+                if r + 1 < rows:
+                    edges.append((v, v + cols))
+                    weights.append(random.uniform(0, 1))
+        return n, edges, weights
 
-    if not ks_distances:
-        return {'is_anomalous': None, 'reason': 'no valid references'}
+    def make_random_graph(n, p):
+        """Erdős-Rényi G(n,p)."""
+        edges, weights = [], []
+        for i in range(n):
+            for j in range(i+1, n):
+                if random.random() < p:
+                    edges.append((i, j))
+                    weights.append(random.uniform(0, 1))
+        return n, edges, weights
 
-    mean_ks = float(np.mean(ks_distances))
-    max_ks = float(np.max(ks_distances))
+    # Compare lattice vs random
+    n1, e1, w1 = make_lattice_graph(5, 5)
+    n2, e2, w2 = make_random_graph(25, 0.12)
 
-    return {
-        'is_anomalous': mean_ks > threshold,
-        'mean_ks_distance': mean_ks,
-        'max_ks_distance': max_ks,
-        'num_references': len(ks_distances),
-        'threshold': threshold,
-    }
+    b1, m1 = cycle_births(n1, e1, w1)
+    b2, m2 = cycle_births(n2, e2, w2)
+
+    print(f"  Lattice (5×5): {n1} nodes, {len(e1)} edges, β₁={len(b1)}")
+    print(f"  Random G(25,0.12): {n2} nodes, {len(e2)} edges, β₁={len(b2)}")
+    print()
+
+    if b1:
+        bw1 = sorted([w for _, w in b1])
+        print(f"  Lattice birth weights:  min={bw1[0]:.3f}, median={bw1[len(bw1)//2]:.3f}, max={bw1[-1]:.3f}")
+    if b2:
+        bw2 = sorted([w for _, w in b2])
+        print(f"  Random birth weights:   min={bw2[0]:.3f}, median={bw2[len(bw2)//2]:.3f}, max={bw2[-1]:.3f}")
+
+    print()
+    print("  → Different graph topologies produce different cycle-birth distributions.")
+    print("  → By Theorem 4, this fingerprint is robust to monotone weight rescaling.")
+    print()
 
 
-# ========================================================================
-# Application 3: Graph Classification
-# ========================================================================
+# ─── Application 3: Mesh Quality Assessment ───
 
-def cycle_birth_feature_vector(n: int, edges: List[Tuple[int, int, float]],
-                                num_bins: int = 10) -> np.ndarray:
+def mesh_quality():
     """
-    Compute a feature vector from the cycle-birth distribution.
+    Assess mesh quality using the cycle-birth / MST complement duality.
 
-    Bins the empirical CDF into a fixed-dimension vector suitable for
-    machine learning classifiers. By universality (Theorem 4), after
-    quantile normalization, this captures structural graph properties
-    independent of the edge-weight distribution.
+    A good mesh should have β₁ = expected number of holes.
+    Excess cycle births indicate unnecessary connectivity.
+    The Euler characteristic identity (formally verified) gives:
+    χ = V - E = β₀ - β₁
     """
-    births, _ = compute_cycle_births(n, edges)
+    print("=" * 60)
+    print("APPLICATION 3: MESH QUALITY ASSESSMENT")
+    print("=" * 60)
+    print()
 
-    if not births:
-        return np.zeros(num_bins)
+    random.seed(789)
 
-    # Quantile transform to [0,1]
-    sorted_births = np.sort(births)
-    n_births = len(sorted_births)
-    quantiles = (np.arange(n_births) + 0.5) / n_births
+    # Simple triangulated surface
+    n = 10
+    edges = [(i, (i+1) % n) for i in range(n)]  # cycle
+    # Add some diagonals
+    for i in range(0, n, 2):
+        edges.append((i, (i+2) % n))
 
-    # Bin into histogram
-    bin_edges = np.linspace(0, 1, num_bins + 1)
-    hist, _ = np.histogram(quantiles, bins=bin_edges)
-    return hist / max(n_births, 1)
+    m = len(edges)
+    weights = [random.uniform(0, 1) for _ in range(m)]
 
+    births, mst = cycle_births(n, edges, weights)
+    beta0 = n - len(mst)
+    beta1 = len(births)
+    chi = n - m
 
-# ========================================================================
-# Application 4: Confidence Intervals for Topological Summaries
-# ========================================================================
-
-def topological_confidence_interval(n: int, p: float,
-                                     num_bootstrap: int = 100,
-                                     confidence: float = 0.95,
-                                     rng=None) -> Dict:
-    """
-    Compute confidence intervals for the cycle-birth CDF.
-
-    Uses the concentration inequality (Theorem 3) to provide
-    theoretically-backed confidence bands for the empirical CDF.
-
-    The McDiarmid bound gives:
-        P(|N(t) - E[N(t)]| ≥ r) ≤ 2·exp(-2r²/m)
-
-    For confidence level 1-α, the band width is sqrt(m·ln(2/α)/2).
-    """
-    if rng is None:
-        rng = np.random.default_rng()
-
-    m_expected = int(n * (n-1) / 2 * p)
-
-    # Theoretical bound from McDiarmid
-    alpha = 1 - confidence
-    if m_expected > 0:
-        theoretical_band = np.sqrt(m_expected * np.log(2/alpha) / 2)
-    else:
-        theoretical_band = 0
-
-    # Bootstrap empirical band
-    all_births = []
-    for _ in range(num_bootstrap):
-        edges = sample_gnp_weighted(n, p, rng)
-        births, _ = compute_cycle_births(n, edges)
-        all_births.append(births)
-
-    # Compute empirical band at several thresholds
-    eval_points = np.linspace(0, 1, 20)
-    lower = np.zeros(len(eval_points))
-    upper = np.zeros(len(eval_points))
-    median_cdf = np.zeros(len(eval_points))
-
-    for k, t in enumerate(eval_points):
-        counts = []
-        for births in all_births:
-            if births:
-                c = sum(1 for b in births if b <= t) / len(births)
-            else:
-                c = 0
-            counts.append(c)
-        counts = np.sort(counts)
-        lo_idx = int((1 - confidence) / 2 * len(counts))
-        hi_idx = int((1 + confidence) / 2 * len(counts))
-        lower[k] = counts[max(0, lo_idx)]
-        upper[k] = counts[min(len(counts)-1, hi_idx)]
-        median_cdf[k] = np.median(counts)
-
-    return {
-        'n': n,
-        'p': p,
-        'confidence': confidence,
-        'theoretical_band_width': float(theoretical_band),
-        'empirical_band_width': float(np.mean(upper - lower)),
-        'eval_points': eval_points.tolist(),
-        'lower_band': lower.tolist(),
-        'upper_band': upper.tolist(),
-        'median_cdf': median_cdf.tolist(),
-    }
+    print(f"  Mesh: {n} vertices, {m} edges")
+    print(f"  β₀ (components) = {beta0}")
+    print(f"  β₁ (cycles)     = {beta1}")
+    print(f"  χ (Euler char)  = {chi} = {beta0} - {beta1}")
+    print()
+    print(f"  Verified: V - E = β₀ - β₁: {chi} = {beta0 - beta1} ✓")
+    print()
+    print("  → The Euler characteristic identity is formally verified in Lean 4.")
+    print("  → Cycle-birth count detects topological complexity of the mesh.")
+    print()
 
 
-# ========================================================================
-# Main demonstration
-# ========================================================================
+def main():
+    print()
+    print("╔══════════════════════════════════════════════════════════════╗")
+    print("║  APPLICATIONS OF CYCLE-BIRTH THEORY                        ║")
+    print("║  From Formal Proofs to Real-World Networks                  ║")
+    print("╚══════════════════════════════════════════════════════════════╝")
+    print()
+
+    network_resilience_analysis()
+    topological_fingerprinting()
+    mesh_quality()
+
 
 if __name__ == '__main__':
-    rng = np.random.default_rng(42)
-
-    print("=" * 70)
-    print("APPLICATION 1: NETWORK ROBUSTNESS ANALYSIS")
-    print("=" * 70)
-
-    # Compare a random network to a structured one
-    n = 50
-    random_edges = sample_gnp_weighted(n, 0.15, rng)
-    rob = network_robustness_score(n, random_edges)
-    print(f"  Random G(50, 0.15):")
-    for k, v in rob.items():
-        print(f"    {k}: {v}")
-
-    print()
-    print("=" * 70)
-    print("APPLICATION 2: ANOMALY DETECTION")
-    print("=" * 70)
-
-    # Build reference from G(30, 0.2)
-    references = []
-    for _ in range(50):
-        e = sample_gnp_weighted(30, 0.2, rng)
-        b, _ = compute_cycle_births(30, e)
-        references.append(b)
-
-    # Test a normal graph
-    normal_edges = sample_gnp_weighted(30, 0.2, rng)
-    result = detect_anomalous_graph(30, normal_edges, references)
-    print(f"  Normal graph:    anomalous={result['is_anomalous']}, "
-          f"mean KS={result['mean_ks_distance']:.4f}")
-
-    # Test an anomalous graph (different p)
-    anomalous_edges = sample_gnp_weighted(30, 0.5, rng)
-    result = detect_anomalous_graph(30, anomalous_edges, references)
-    print(f"  Anomalous graph: anomalous={result['is_anomalous']}, "
-          f"mean KS={result['mean_ks_distance']:.4f}")
-
-    print()
-    print("=" * 70)
-    print("APPLICATION 3: GRAPH FEATURE VECTORS")
-    print("=" * 70)
-
-    for p_val in [0.1, 0.2, 0.3]:
-        edges = sample_gnp_weighted(40, p_val, rng)
-        fv = cycle_birth_feature_vector(40, edges)
-        print(f"  G(40, {p_val}): features = {np.round(fv, 3)}")
-
-    print()
-    print("=" * 70)
-    print("APPLICATION 4: CONFIDENCE INTERVALS")
-    print("=" * 70)
-
-    ci = topological_confidence_interval(50, 0.15, num_bootstrap=50, rng=rng)
-    print(f"  n={ci['n']}, p={ci['p']}, confidence={ci['confidence']}")
-    print(f"  Theoretical band width (McDiarmid): {ci['theoretical_band_width']:.2f}")
-    print(f"  Empirical band width:               {ci['empirical_band_width']:.4f}")
+    main()
 
 
 #!/usr/bin/env python3
 """
-Demo: Cycle-Birth Concentration and Universality in Random Weighted Graphs
+demo.py — Cycle-Birth Distributions in Random Weighted Graphs
 
-This script demonstrates the key theorems from probabilistic tropical topology:
-1. Concentration test — KS distances decrease as n grows
-2. Universality test — different weight distributions yield same birth structure
-3. MST complement validation — cycle births = non-MST edges
-4. Lipschitz stability — single-edge perturbation bounded by 1
+Demonstrates:
+1. Concentration test: KS distance decay with graph size
+2. Universality test: invariance under monotone weight transport
+3. MST complement validation: cycle births = non-MST edges
 
 Application keywords: tropical Morse theory, persistent homology, Erdős–Rényi graphs,
-concentration of measure, McDiarmid inequality, universality, minimum spanning tree,
-KS distance, empirical process.
+concentration of measure, McDiarmid inequality, Azuma–Hoeffding, universality,
+minimum spanning tree, graphic matroid, percolation, network science,
+topological statistics, random optimization, KS distance, empirical process.
 """
 
 import numpy as np
 from collections import defaultdict
+import itertools
 
 
-# ========================================================================
-# Inline implementations (self-contained)
-# ========================================================================
+# ─── Core algorithms ───
 
 class UnionFind:
+    """Union-Find (disjoint set) data structure for Kruskal's algorithm."""
     def __init__(self, n):
         self.parent = list(range(n))
         self.rank = [0] * n
+
     def find(self, x):
         while self.parent[x] != x:
             self.parent[x] = self.parent[self.parent[x]]
             x = self.parent[x]
         return x
+
     def union(self, x, y):
         rx, ry = self.find(x), self.find(y)
         if rx == ry:
-            return False
+            return False  # same component → cycle birth
         if self.rank[rx] < self.rank[ry]:
             rx, ry = ry, rx
         self.parent[ry] = rx
         if self.rank[rx] == self.rank[ry]:
             self.rank[rx] += 1
-        return True
-    def connected(self, x, y):
-        return self.find(x) == self.find(y)
+        return True  # merge
 
 
-def compute_cycle_births(n, edges):
-    sorted_edges = sorted(edges, key=lambda e: e[2])
+def compute_cycle_births(n, edges, weights):
+    """
+    Compute cycle-birth edges via Kruskal's algorithm.
+
+    An edge is a cycle birth iff its endpoints are already connected
+    when it is inserted (sorted by weight). This is Theorem 1.
+
+    Returns:
+        cycle_birth_weights: sorted list of weights of cycle-birth edges
+        mst_weights: sorted list of weights of MST edges
+    """
+    order = np.argsort(weights)
     uf = UnionFind(n)
-    births = []
-    mst = []
-    for u, v, w in sorted_edges:
-        if uf.connected(u, v):
-            births.append(w)
+    cycle_birth_weights = []
+    mst_weights = []
+
+    for idx in order:
+        u, v = edges[idx]
+        w = weights[idx]
+        if uf.union(u, v):
+            mst_weights.append(w)
         else:
-            uf.union(u, v)
-            mst.append((u, v, w))
-    return births, mst
+            cycle_birth_weights.append(w)
+
+    return cycle_birth_weights, mst_weights
 
 
-def sample_gnp_weighted(n, p, dist='uniform', rng=None):
+def sample_erdos_renyi(n, p, weight_dist='uniform', rng=None):
+    """
+    Sample G(n,p) with random edge weights from given distribution.
+
+    Returns: (edges, weights)
+    """
     if rng is None:
         rng = np.random.default_rng()
+
     edges = []
     for i in range(n):
         for j in range(i + 1, n):
             if rng.random() < p:
-                if dist == 'uniform':
-                    w = rng.random()
-                elif dist == 'exponential':
-                    w = rng.exponential(1.0)
-                elif dist == 'normal':
-                    w = rng.normal(0, 1)
-                else:
-                    w = rng.random()
-                edges.append((i, j, w))
-    return edges
+                edges.append((i, j))
+
+    m = len(edges)
+    if weight_dist == 'uniform':
+        weights = rng.random(m)
+    elif weight_dist == 'exponential':
+        weights = rng.exponential(1.0, m)
+    elif weight_dist == 'normal':
+        weights = rng.normal(0, 1, m)
+    else:
+        raise ValueError(f"Unknown distribution: {weight_dist}")
+
+    return edges, weights
 
 
-def ks_distance(s1, s2):
-    if not s1 or not s2:
+def empirical_cdf(values, t):
+    """Compute empirical CDF at point t."""
+    if len(values) == 0:
+        return 0.0
+    return np.mean(np.array(values) <= t)
+
+
+def ks_distance(sample1, sample2):
+    """Compute Kolmogorov-Smirnov distance between two samples."""
+    if len(sample1) == 0 or len(sample2) == 0:
         return 1.0
-    a = np.sort(s1)
-    b = np.sort(s2)
-    all_v = np.sort(np.concatenate([a, b]))
-    c1 = np.searchsorted(a, all_v, side='right') / len(a)
-    c2 = np.searchsorted(b, all_v, side='right') / len(b)
-    return float(np.max(np.abs(c1 - c2)))
+    combined = np.sort(np.concatenate([sample1, sample2]))
+    cdf1 = np.array([np.mean(sample1 <= x) for x in combined])
+    cdf2 = np.array([np.mean(sample2 <= x) for x in combined])
+    return np.max(np.abs(cdf1 - cdf2))
 
 
-def quantile_transform(values):
-    n = len(values)
-    if n == 0:
-        return []
-    ranks = np.argsort(np.argsort(values))
-    return list((ranks + 0.5) / n)
+def probability_integral_transform(values, transform='rank'):
+    """
+    Transform values to [0,1] via probability integral transform.
+    This implements the monotone transport from Theorem 4.
+    """
+    if len(values) == 0:
+        return np.array([])
+    arr = np.array(values)
+    ranks = np.argsort(np.argsort(arr))
+    return (ranks + 0.5) / len(arr)
 
 
-# ========================================================================
-# Experiment 1: Concentration Test
-# ========================================================================
+# ─── Experiment 1: Concentration ───
 
-def run_concentration_test():
-    print("=" * 70)
+def concentration_test():
+    """
+    Test that KS distance between empirical cycle-birth CDFs
+    from independent trials decays like O(n^{-1/2}).
+
+    This validates the concentration theorem (Theorem 3):
+    the bounded-differences property (Theorem 2) implies
+    subgaussian concentration via McDiarmid's inequality.
+    """
+    print("=" * 60)
     print("EXPERIMENT 1: CONCENTRATION TEST")
-    print("Testing whether pairwise KS distances decrease as n grows")
-    print("Expected: mean KS ~ O(n^{-1/2})")
-    print("=" * 70)
-
-    p = 0.15
-    sizes = [50, 100, 200, 500]
-    num_trials = 10
-    rng = np.random.default_rng(2025)
-
-    results = {}
-
-    for n in sizes:
-        ks_vals = []
-        birth_lists = []
-        for _ in range(num_trials):
-            edges = sample_gnp_weighted(n, p, 'uniform', rng)
-            births, _ = compute_cycle_births(n, edges)
-            if births:
-                birth_lists.append(quantile_transform(births))
-
-        for i in range(len(birth_lists)):
-            for j in range(i + 1, len(birth_lists)):
-                if birth_lists[i] and birth_lists[j]:
-                    ks_vals.append(ks_distance(birth_lists[i], birth_lists[j]))
-
-        if ks_vals:
-            mean_ks = np.mean(ks_vals)
-            std_ks = np.std(ks_vals)
-            results[n] = (mean_ks, std_ks)
-            print(f"  n={n:4d}: mean KS = {mean_ks:.4f} ± {std_ks:.4f}  "
-                  f"(n^{{-1/2}} = {1/np.sqrt(n):.4f})")
-
-    if len(results) >= 2:
-        ns = sorted(results.keys())
-        ratios = []
-        for i in range(1, len(ns)):
-            r = results[ns[i]][0] / results[ns[i-1]][0] if results[ns[i-1]][0] > 0 else 0
-            expected = np.sqrt(ns[i-1] / ns[i])
-            ratios.append((ns[i-1], ns[i], r, expected))
-        print("\n  Decay ratios (observed vs expected O(n^{-1/2})):")
-        for n1, n2, r, exp_r in ratios:
-            print(f"    {n1}→{n2}: ratio={r:.3f}, expected≈{exp_r:.3f}")
-
+    print("=" * 60)
     print()
 
-
-# ========================================================================
-# Experiment 2: Universality Test
-# ========================================================================
-
-def run_universality_test():
-    print("=" * 70)
-    print("EXPERIMENT 2: UNIVERSALITY TEST")
-    print("Testing invariance under monotone transport (Theorem 4)")
-    print("Edge weight laws: Uniform, Exponential, Normal")
-    print("=" * 70)
-
-    n = 200
     p = 0.15
+    ns = [50, 100, 200, 500]
     num_trials = 20
     rng = np.random.default_rng(42)
 
-    dists = ['uniform', 'exponential', 'normal']
-    birth_collections = {d: [] for d in dists}
+    results = {}
 
-    for d in dists:
-        for _ in range(num_trials):
-            edges = sample_gnp_weighted(n, p, d, rng)
-            births, _ = compute_cycle_births(n, edges)
-            if births:
-                # Apply quantile transform to map to common scale
-                birth_collections[d].append(quantile_transform(births))
+    for n in ns:
+        ks_distances = []
+        trial_births = []
 
-    # Compute within-distribution KS distances
-    print("\n  Within-distribution mean KS distances:")
-    within_ks = {}
-    for d in dists:
-        ks_vals = []
-        for i in range(len(birth_collections[d])):
-            for j in range(i + 1, len(birth_collections[d])):
-                ks_vals.append(ks_distance(birth_collections[d][i],
-                                           birth_collections[d][j]))
-        if ks_vals:
-            within_ks[d] = np.mean(ks_vals)
-            print(f"    {d:12s}: {np.mean(ks_vals):.4f} ± {np.std(ks_vals):.4f}")
+        for trial in range(num_trials):
+            edges, weights = sample_erdos_renyi(n, p, 'uniform', rng)
+            if len(edges) == 0:
+                continue
+            births, _ = compute_cycle_births(n, edges, weights)
+            if len(births) > 0:
+                trial_births.append(np.array(births))
 
-    # Compute between-distribution KS distances (after quantile transform)
-    print("\n  Between-distribution mean KS distances (after quantile transform):")
-    for i, d1 in enumerate(dists):
-        for d2 in dists[i+1:]:
-            ks_vals = []
-            for b1 in birth_collections[d1]:
-                for b2 in birth_collections[d2]:
-                    ks_vals.append(ks_distance(b1, b2))
-            if ks_vals:
-                print(f"    {d1:12s} vs {d2:12s}: {np.mean(ks_vals):.4f} ± {np.std(ks_vals):.4f}")
+        # Compute pairwise KS distances
+        for i in range(len(trial_births)):
+            for j in range(i + 1, len(trial_births)):
+                ks_distances.append(ks_distance(trial_births[i], trial_births[j]))
 
-    print("\n  → If between-dist KS ≈ within-dist KS, universality holds ✓")
+        mean_ks = np.mean(ks_distances) if ks_distances else float('nan')
+        results[n] = mean_ks
+        print(f"  n={n:4d}: mean KS distance = {mean_ks:.4f}  "
+              f"(n^{{-1/2}} = {1/np.sqrt(n):.4f})")
+
+    print()
+    if len(results) >= 2:
+        ns_list = sorted(results.keys())
+        for i in range(1, len(ns_list)):
+            ratio = results[ns_list[i]] / results[ns_list[i-1]] if results[ns_list[i-1]] > 0 else float('nan')
+            expected = np.sqrt(ns_list[i-1] / ns_list[i])
+            print(f"  Ratio n={ns_list[i-1]}→{ns_list[i]}: {ratio:.3f} "
+                  f"(expected ~{expected:.3f} for n^{{-1/2}} decay)")
+
+    print()
+    return results
+
+
+# ─── Experiment 2: Universality ───
+
+def universality_test():
+    """
+    Test that cycle-birth distributions are universal under
+    monotone transport (Theorem 4).
+
+    After probability integral transform, empirical CDFs from
+    different weight distributions should collapse onto one curve.
+    """
+    print("=" * 60)
+    print("EXPERIMENT 2: UNIVERSALITY TEST")
+    print("=" * 60)
     print()
 
-
-# ========================================================================
-# Experiment 3: MST Complement Validation
-# ========================================================================
-
-def run_mst_complement_test():
-    print("=" * 70)
-    print("EXPERIMENT 3: MST COMPLEMENT VALIDATION (Theorem 5)")
-    print("Verifying: cycle-birth edges = complement of MST edges")
-    print("=" * 70)
-
+    n = 200
+    p = 0.15
+    num_trials = 30
     rng = np.random.default_rng(123)
-    all_pass = True
 
-    for trial in range(20):
-        n = rng.integers(10, 50)
-        p = rng.uniform(0.1, 0.5)
-        edges = sample_gnp_weighted(n, p, 'uniform', rng)
+    distributions = ['uniform', 'exponential', 'normal']
 
-        births, mst = compute_cycle_births(n, edges)
+    # For each distribution, collect transformed cycle-birth weights
+    transformed_births = defaultdict(list)
 
-        total = len(edges)
-        num_births = len(births)
-        num_mst = len(mst)
+    for dist in distributions:
+        for _ in range(num_trials):
+            edges, weights = sample_erdos_renyi(n, p, dist, rng)
+            if len(edges) == 0:
+                continue
+            births, _ = compute_cycle_births(n, edges, weights)
+            if len(births) > 2:
+                transformed = probability_integral_transform(births)
+                transformed_births[dist].append(transformed)
 
-        if num_births + num_mst != total:
-            print(f"  Trial {trial+1}: FAIL! births({num_births}) + mst({num_mst}) ≠ total({total})")
-            all_pass = False
-        else:
-            pass  # silent pass
+    # Compare pairwise KS distances between distributions
+    print("  Pairwise KS distances (after monotone transport):")
+    print()
 
-    if all_pass:
-        print(f"  All 20 trials passed: cycle_births + MST_edges = total_edges ✓")
+    for d1, d2 in itertools.combinations(distributions, 2):
+        ks_dists = []
+        for i in range(min(len(transformed_births[d1]), len(transformed_births[d2]))):
+            ks_dists.append(ks_distance(
+                transformed_births[d1][i], transformed_births[d2][i]))
+        mean_ks = np.mean(ks_dists) if ks_dists else float('nan')
+        print(f"    {d1:12s} vs {d2:12s}: mean KS = {mean_ks:.4f}")
 
-    # Detailed example
-    n = 6
-    edges = [(0,1,0.1), (1,2,0.2), (2,3,0.3), (3,4,0.4), (4,5,0.5),
-             (0,2,0.6), (1,3,0.7), (2,4,0.8), (3,5,0.9), (0,5,1.0)]
-    births, mst = compute_cycle_births(n, edges)
-    print(f"\n  Detailed example (n=6, m={len(edges)}):")
-    print(f"    MST edges (merges): {len(mst)} → weights = {[e[2] for e in mst]}")
-    print(f"    Cycle births:       {len(births)} → weights = {births}")
-    print(f"    Partition check:    {len(mst)} + {len(births)} = {len(edges)} ✓")
-    print(f"    β₁ = m - (n-1) = {len(edges)} - {n-1} = {len(edges) - (n-1)}")
-    print(f"    cycle_birth_count = {len(births)} = β₁ ✓" if len(births) == len(edges) - (n-1) else "    ✗")
+    # Also compare within same distribution
+    print()
+    print("  Within-distribution KS distances (baseline):")
+    for dist in distributions:
+        ks_dists = []
+        samples = transformed_births[dist]
+        for i in range(min(10, len(samples))):
+            for j in range(i + 1, min(10, len(samples))):
+                ks_dists.append(ks_distance(samples[i], samples[j]))
+        mean_ks = np.mean(ks_dists) if ks_dists else float('nan')
+        print(f"    {dist:12s}: mean KS = {mean_ks:.4f}")
+
+    print()
+    print("  → If cross-distribution KS ≈ within-distribution KS,")
+    print("    universality is confirmed.")
     print()
 
 
-# ========================================================================
-# Experiment 4: Lipschitz Stability Test (Theorem 2)
-# ========================================================================
+# ─── Experiment 3: MST Complement Validation ───
 
-def run_lipschitz_test():
-    print("=" * 70)
-    print("EXPERIMENT 4: LIPSCHITZ STABILITY (Theorem 2)")
-    print("Verifying: changing one edge weight changes cycleBirthCountLE by ≤ 1")
-    print("=" * 70)
+def mst_complement_test():
+    """
+    Verify that cycle-birth edges = complement of MST edges (Theorem 5).
 
-    rng = np.random.default_rng(99)
-    n = 30
-    p = 0.2
-    edges = sample_gnp_weighted(n, p, 'uniform', rng)
-    m = len(edges)
+    For connected graphs with distinct weights, the set of cycle-birth
+    edges should be exactly the non-MST edges.
+    """
+    print("=" * 60)
+    print("EXPERIMENT 3: MST COMPLEMENT VALIDATION")
+    print("=" * 60)
+    print()
 
-    if m == 0:
-        print("  No edges generated. Skipping.")
-        return
-
+    n = 50
+    p = 0.3
+    num_trials = 100
+    rng = np.random.default_rng(456)
     violations = 0
-    tests = 0
 
-    for _ in range(200):
-        edge_idx = rng.integers(0, m)
-        new_w = rng.random()
-        t = rng.random()
+    for trial in range(num_trials):
+        edges, weights = sample_erdos_renyi(n, p, 'uniform', rng)
+        if len(edges) == 0:
+            continue
 
-        original_births, _ = compute_cycle_births(n, edges)
-        orig_count = sum(1 for w in original_births if w <= t)
+        births, mst_w = compute_cycle_births(n, edges, weights)
 
-        mod_edges = list(edges)
-        u, v, _ = mod_edges[edge_idx]
-        mod_edges[edge_idx] = (u, v, new_w)
-
-        mod_births, _ = compute_cycle_births(n, mod_edges)
-        mod_count = sum(1 for w in mod_births if w <= t)
-
-        diff = abs(orig_count - mod_count)
-        tests += 1
-        if diff > 1:
+        # Verify partition: births + MST = all edges
+        if len(births) + len(mst_w) != len(edges):
             violations += 1
 
-    print(f"  Tested {tests} random single-edge perturbations")
-    print(f"  Violations of |ΔN(t)| ≤ 1: {violations}")
-    if violations == 0:
-        print(f"  Lipschitz bound satisfied in all tests ✓")
-    else:
-        print(f"  WARNING: {violations} violations found!")
+        # Verify MST has at most n-1 edges
+        if len(mst_w) > n - 1:
+            violations += 1
+
+    print(f"  Trials: {num_trials}")
+    print(f"  Violations: {violations}")
+    print(f"  → {'PASS' if violations == 0 else 'FAIL'}: "
+          f"cycle births + MST edges = all edges")
+    print()
+
+    # Detailed example
+    print("  Detailed example (K₄ with weights 1..6):")
+    edges_k4 = [(0,1), (0,2), (0,3), (1,2), (1,3), (2,3)]
+    weights_k4 = np.array([1, 2, 3, 4, 5, 6], dtype=float)
+    births_k4, mst_k4 = compute_cycle_births(4, edges_k4, weights_k4)
+    print(f"    MST weights:         {mst_k4}")
+    print(f"    Cycle-birth weights: {births_k4}")
+    print(f"    Total edges: {len(edges_k4)} = {len(mst_k4)} (MST) + {len(births_k4)} (births)")
+    print(f"    β₁ = {len(births_k4)} = {len(edges_k4)} - ({4} - 1)")
     print()
 
 
-# ========================================================================
-# Main
-# ========================================================================
+# ─── Main ───
+
+def main():
+    print()
+    print("╔══════════════════════════════════════════════════════════════╗")
+    print("║  CYCLE-BIRTH DISTRIBUTIONS IN RANDOM WEIGHTED GRAPHS       ║")
+    print("║  Tropical Morse Theory meets Probabilistic Combinatorics   ║")
+    print("╚══════════════════════════════════════════════════════════════╝")
+    print()
+
+    concentration_test()
+    universality_test()
+    mst_complement_test()
+
+    print("=" * 60)
+    print("SUMMARY")
+    print("=" * 60)
+    print()
+    print("  Theorem 1 (Dichotomy):     Every edge is merge XOR cycle birth.")
+    print("  Theorem 2 (Lipschitz):     Single-edge change → ≤1 count change.")
+    print("  Theorem 3 (Concentration): Subgaussian tail via bounded differences.")
+    print("  Theorem 4 (Universality):  Monotone transport preserves classification.")
+    print("  Theorem 5 (MST Complement): Cycle births = non-MST edges.")
+    print()
+    print("  All five theorems are formally verified in Lean 4.")
+    print()
+
 
 if __name__ == '__main__':
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  PROBABILISTIC TROPICAL TOPOLOGY: CYCLE-BIRTH DISTRIBUTIONS       ║")
-    print("║  Concentration and Universality in Random Weighted Graphs          ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-
-    run_concentration_test()
-    run_universality_test()
-    run_mst_complement_test()
-    run_lipschitz_test()
-
-    print("=" * 70)
-    print("ALL EXPERIMENTS COMPLETE")
-    print("=" * 70)
+    main()
 
 
+#!/usr/bin/env python3
 """
-Visualization: Concentration of Cycle-Birth Distributions
+Visualization 1: Concentration of Cycle-Birth Distributions
 
-Illustrates how empirical cycle-birth CDFs concentrate as graph size n grows.
-Multiple independent trials of G(n,p) with uniform edge weights produce
-empirical CDFs that cluster more tightly for larger n, demonstrating
-the concentration phenomenon predicted by the McDiarmid/Azuma bound
-(Theorem 3).
-
-This is the visual analogue of the tropical spectral law: just as
-the eigenvalue distribution of a random matrix concentrates to the
-semicircle law, the cycle-birth distribution concentrates to a
-deterministic tropical spectral measure.
+Visualizes how empirical cycle-birth CDFs from independent random graph
+trials converge as graph size increases, demonstrating the concentration
+theorem (Theorem 3). Multiple trials are overlaid to show the narrowing
+of the distribution "band" with increasing n.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib
 
 
-# Self-contained implementations
 class UnionFind:
     def __init__(self, n):
         self.parent = list(range(n))
@@ -692,96 +594,79 @@ class UnionFind:
         return x
     def union(self, x, y):
         rx, ry = self.find(x), self.find(y)
-        if rx == ry:
-            return False
-        if self.rank[rx] < self.rank[ry]:
-            rx, ry = ry, rx
+        if rx == ry: return False
+        if self.rank[rx] < self.rank[ry]: rx, ry = ry, rx
         self.parent[ry] = rx
-        if self.rank[rx] == self.rank[ry]:
-            self.rank[rx] += 1
+        if self.rank[rx] == self.rank[ry]: self.rank[rx] += 1
         return True
-    def connected(self, x, y):
-        return self.find(x) == self.find(y)
 
 
-def compute_births(n, edges):
-    sorted_edges = sorted(edges, key=lambda e: e[2])
+def compute_cycle_births(n, edges, weights):
+    order = np.argsort(weights)
     uf = UnionFind(n)
     births = []
-    for u, v, w in sorted_edges:
-        if uf.connected(u, v):
-            births.append(w)
-        else:
-            uf.union(u, v)
-    return births
+    for idx in order:
+        u, v = edges[idx]
+        if not uf.union(u, v):
+            births.append(weights[idx])
+    return np.array(births)
 
 
 def sample_gnp(n, p, rng):
-    edges = []
+    edges, weights = [], []
     for i in range(n):
-        for j in range(i + 1, n):
+        for j in range(i+1, n):
             if rng.random() < p:
-                edges.append((i, j, rng.random()))
-    return edges
+                edges.append((i, j))
+                weights.append(rng.random())
+    return edges, np.array(weights)
 
 
-# Parameters
-p = 0.15
-sizes = [30, 100, 300]
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+fig.suptitle('Concentration of Cycle-Birth Distributions\n(Theorem 3: Bounded Differences → Subgaussian Concentration)',
+             fontsize=14, fontweight='bold')
+
+ns = [30, 60, 120, 250]
+p = 0.2
 num_trials = 15
-rng = np.random.default_rng(2025)
+rng = np.random.default_rng(42)
 
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-colors = ['#2196F3', '#FF9800', '#4CAF50']
-
-for idx, n in enumerate(sizes):
-    ax = axes[idx]
+for ax, n in zip(axes.flat, ns):
     for trial in range(num_trials):
-        edges = sample_gnp(n, p, rng)
-        births = compute_births(n, edges)
-        if births:
-            sorted_b = np.sort(births)
-            cdf_y = np.arange(1, len(sorted_b) + 1) / len(sorted_b)
-            ax.step(sorted_b, cdf_y, alpha=0.4, linewidth=1.2,
-                    color=colors[idx])
+        edges, weights = sample_gnp(n, p, rng)
+        if len(edges) == 0:
+            continue
+        births = compute_cycle_births(n, edges, weights)
+        if len(births) > 0:
+            sorted_births = np.sort(births)
+            cdf_y = np.arange(1, len(sorted_births)+1) / len(sorted_births)
+            ax.step(sorted_births, cdf_y, alpha=0.4, linewidth=1)
 
-    ax.set_title(f'n = {n}', fontsize=14, fontweight='bold')
-    ax.set_xlabel('Edge Weight', fontsize=11)
-    ax.set_ylabel('Empirical CDF', fontsize=11)
+    ax.set_title(f'n = {n} ({num_trials} independent trials)', fontsize=11)
+    ax.set_xlabel('Edge Weight (threshold t)')
+    ax.set_ylabel('Empirical CDF F̂(t)')
     ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1.05)
+    ax.set_ylim(0, 1)
     ax.grid(True, alpha=0.3)
 
-    # Add concentration annotation
-    ax.text(0.05, 0.92, f'{num_trials} trials', transform=ax.transAxes,
-            fontsize=9, color='gray')
-
-fig.suptitle('Concentration of Cycle-Birth CDFs as n → ∞\n'
-             'G(n, 0.15) with Uniform[0,1] edge weights',
-             fontsize=14, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('concentration_plot.png', dpi=150, bbox_inches='tight')
-print("Saved concentration_plot.png")
+plt.savefig('viz_concentration.png', dpi=150, bbox_inches='tight')
+print("Saved viz_concentration.png")
 
 
+#!/usr/bin/env python3
 """
-Visualization: Cycle Births as MST Complement
+Visualization 3: MST Complement Duality (Theorem 5)
 
-Illustrates Theorem 5: cycle-birth edges are exactly the non-MST edges.
-Shows a small weighted graph with MST edges (blue) and cycle-birth edges (red),
-plus a histogram comparing birth weights to MST weights.
-
-This connects tropical Morse theory to combinatorial optimization:
-the "tropical critical spectrum" of a graph is literally the weight spectrum
-of edges rejected by Kruskal's algorithm.
+Illustrates that cycle-birth edges are exactly the complement of the
+minimum spanning tree edges. Shows a small graph with MST edges (blue)
+and cycle-birth edges (red), plus the Euler characteristic identity.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 
 
-# Self-contained
 class UnionFind:
     def __init__(self, n):
         self.parent = list(range(n))
@@ -793,146 +678,138 @@ class UnionFind:
         return x
     def union(self, x, y):
         rx, ry = self.find(x), self.find(y)
-        if rx == ry:
-            return False
-        if self.rank[rx] < self.rank[ry]:
-            rx, ry = ry, rx
+        if rx == ry: return False
+        if self.rank[rx] < self.rank[ry]: rx, ry = ry, rx
         self.parent[ry] = rx
-        if self.rank[rx] == self.rank[ry]:
-            self.rank[rx] += 1
+        if self.rank[rx] == self.rank[ry]: self.rank[rx] += 1
         return True
-    def connected(self, x, y):
-        return self.find(x) == self.find(y)
 
 
-def compute_births_and_mst(n, edges):
-    sorted_edges = sorted(edges, key=lambda e: e[2])
-    uf = UnionFind(n)
-    births = []
-    mst = []
-    for u, v, w in sorted_edges:
-        if uf.connected(u, v):
-            births.append((u, v, w))
-        else:
-            uf.union(u, v)
-            mst.append((u, v, w))
-    return births, mst
-
-
-# Create a small example graph (K6 with specific weights)
-n = 8
-rng = np.random.default_rng(77)
+# K6 graph
+n = 6
 edges = []
 for i in range(n):
-    for j in range(i + 1, n):
-        if rng.random() < 0.5:
-            edges.append((i, j, round(rng.random(), 2)))
+    for j in range(i+1, n):
+        edges.append((i, j))
 
-births, mst = compute_births_and_mst(n, edges)
+rng = np.random.default_rng(42)
+weights = rng.random(len(edges))
 
-# Layout: circular
-angles = np.linspace(0, 2 * np.pi, n, endpoint=False)
+# Compute cycle births
+order = np.argsort(weights)
+uf = UnionFind(n)
+mst_idx, birth_idx = [], []
+for idx in order:
+    u, v = edges[idx]
+    if uf.union(u, v):
+        mst_idx.append(idx)
+    else:
+        birth_idx.append(idx)
+
+# Layout: hexagonal
+angles = np.linspace(0, 2*np.pi, n, endpoint=False) + np.pi/2
 pos = {i: (np.cos(a), np.sin(a)) for i, a in enumerate(angles)}
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+fig, axes = plt.subplots(1, 3, figsize=(16, 5.5))
+fig.suptitle('MST Complement Duality (Theorem 5)\n'
+             'Cycle births = all edges \\ MST edges',
+             fontsize=14, fontweight='bold')
 
-# Left panel: Graph with MST vs cycle-birth edges
+# Panel 1: All edges
 ax = axes[0]
-
-# Draw cycle-birth edges (red, dashed)
-for u, v, w in births:
+ax.set_title(f'All Edges ({len(edges)} edges)', fontsize=11)
+for idx, (u, v) in enumerate(edges):
     x = [pos[u][0], pos[v][0]]
     y = [pos[u][1], pos[v][1]]
-    ax.plot(x, y, 'r--', linewidth=1.5, alpha=0.6)
     mx, my = (x[0]+x[1])/2, (y[0]+y[1])/2
-    ax.text(mx, my, f'{w}', fontsize=7, color='red', ha='center',
-            bbox=dict(boxstyle='round,pad=0.15', facecolor='white', alpha=0.8))
-
-# Draw MST edges (blue, solid)
-for u, v, w in mst:
-    x = [pos[u][0], pos[v][0]]
-    y = [pos[u][1], pos[v][1]]
-    ax.plot(x, y, 'b-', linewidth=2.5, alpha=0.8)
-    mx, my = (x[0]+x[1])/2, (y[0]+y[1])/2
-    ax.text(mx, my, f'{w}', fontsize=7, color='blue', ha='center',
-            bbox=dict(boxstyle='round,pad=0.15', facecolor='white', alpha=0.8))
-
-# Draw vertices
+    ax.plot(x, y, 'gray', linewidth=1.5, alpha=0.6)
+    ax.text(mx, my, f'{weights[idx]:.2f}', fontsize=6, ha='center',
+            bbox=dict(boxstyle='round,pad=0.1', facecolor='white', alpha=0.8))
 for i in range(n):
-    ax.plot(pos[i][0], pos[i][1], 'ko', markersize=12, zorder=5)
-    ax.text(pos[i][0], pos[i][1], str(i), fontsize=9, ha='center',
-            va='center', color='white', fontweight='bold', zorder=6)
-
-mst_patch = mpatches.Patch(color='blue', label=f'MST edges ({len(mst)})')
-birth_patch = mpatches.Patch(color='red', label=f'Cycle births ({len(births)})')
-ax.legend(handles=[mst_patch, birth_patch], fontsize=10, loc='upper left')
-ax.set_title(f'Graph (n={n}, m={len(edges)})\nMST ∪ CycleBirths = All Edges',
-             fontsize=12, fontweight='bold')
-ax.set_xlim(-1.4, 1.4)
-ax.set_ylim(-1.4, 1.4)
+    ax.plot(*pos[i], 'ko', markersize=12, zorder=5)
+    ax.text(pos[i][0], pos[i][1], str(i), color='white', fontsize=8,
+            ha='center', va='center', zorder=6, fontweight='bold')
+ax.set_xlim(-1.5, 1.5)
+ax.set_ylim(-1.5, 1.5)
 ax.set_aspect('equal')
 ax.axis('off')
 
-# Verification text
-ax.text(0.5, -0.08, f'Theorem 5: {len(mst)} + {len(births)} = {len(edges)} ✓',
-        transform=ax.transAxes, fontsize=11, ha='center',
-        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.9))
-
-# Right panel: Weight distributions
+# Panel 2: MST + Birth classification
 ax = axes[1]
+ax.set_title('MST (blue) vs Cycle Births (red)', fontsize=11)
+for idx, (u, v) in enumerate(edges):
+    x = [pos[u][0], pos[v][0]]
+    y = [pos[u][1], pos[v][1]]
+    if idx in mst_idx:
+        ax.plot(x, y, '#2196F3', linewidth=3, alpha=0.8, zorder=2)
+    else:
+        ax.plot(x, y, '#F44336', linewidth=2, alpha=0.6, linestyle='--', zorder=1)
+for i in range(n):
+    ax.plot(*pos[i], 'ko', markersize=12, zorder=5)
+    ax.text(pos[i][0], pos[i][1], str(i), color='white', fontsize=8,
+            ha='center', va='center', zorder=6, fontweight='bold')
+ax.set_xlim(-1.5, 1.5)
+ax.set_ylim(-1.5, 1.5)
+ax.set_aspect('equal')
+ax.axis('off')
 
-mst_w = [e[2] for e in mst]
-birth_w = [e[2] for e in births]
-all_w = sorted([e[2] for e in edges])
+# Legend
+from matplotlib.lines import Line2D
+legend_elements = [
+    Line2D([0], [0], color='#2196F3', linewidth=3, label=f'MST ({len(mst_idx)} edges)'),
+    Line2D([0], [0], color='#F44336', linewidth=2, linestyle='--',
+           label=f'Cycle Births ({len(birth_idx)} edges)'),
+]
+ax.legend(handles=legend_elements, loc='lower center', fontsize=9)
 
-bins = np.linspace(0, 1, 15)
-if mst_w:
-    ax.hist(mst_w, bins=bins, alpha=0.6, color='blue', label='MST (merge) weights',
-            edgecolor='white')
-if birth_w:
-    ax.hist(birth_w, bins=bins, alpha=0.6, color='red', label='Cycle-birth weights',
-            edgecolor='white')
+# Panel 3: Euler characteristic and Betti numbers
+ax = axes[2]
+ax.axis('off')
+beta0 = n - len(mst_idx)
+beta1 = len(birth_idx)
+chi = n - len(edges)
 
-ax.set_xlabel('Edge Weight', fontsize=11)
-ax.set_ylabel('Count', fontsize=11)
-ax.set_title('Weight Distribution:\nMST vs Cycle-Birth Edges', fontsize=12, fontweight='bold')
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
+text = (
+    f"  K₆ with random weights\n\n"
+    f"  V = {n} vertices\n"
+    f"  E = {len(edges)} edges\n\n"
+    f"  ─── Partition ───\n"
+    f"  MST edges (merges):    {len(mst_idx)}\n"
+    f"  Cycle births:          {len(birth_idx)}\n"
+    f"  Total:                 {len(mst_idx)} + {len(birth_idx)} = {len(edges)} ✓\n\n"
+    f"  ─── Betti Numbers ───\n"
+    f"  β₀ = V - merges = {n} - {len(mst_idx)} = {beta0}\n"
+    f"  β₁ = cycle births = {beta1}\n\n"
+    f"  ─── Euler Characteristic ───\n"
+    f"  χ = V - E = {n} - {len(edges)} = {chi}\n"
+    f"  χ = β₀ - β₁ = {beta0} - {beta1} = {beta0 - beta1} ✓\n\n"
+    f"  ─── Tree Test ───\n"
+    f"  β₁ = 0? {'Yes → Tree' if beta1 == 0 else 'No → Has cycles'}"
+)
 
-# Add summary statistics
-if mst_w and birth_w:
-    stats_text = (f'MST:  mean={np.mean(mst_w):.3f}, n={len(mst_w)}\n'
-                  f'Birth: mean={np.mean(birth_w):.3f}, n={len(birth_w)}\n'
-                  f'β₁ = {len(birth_w)}')
-    ax.text(0.97, 0.97, stats_text, transform=ax.transAxes, fontsize=9,
-            va='top', ha='right',
-            bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.9))
+ax.text(0.05, 0.95, text, transform=ax.transAxes, fontsize=10,
+        verticalalignment='top', fontfamily='monospace',
+        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
 
-fig.suptitle('Theorem 5: Cycle-Birth Edges = MST Complement',
-             fontsize=14, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('mst_complement_plot.png', dpi=150, bbox_inches='tight')
-print("Saved mst_complement_plot.png")
+plt.savefig('viz_mst_complement.png', dpi=150, bbox_inches='tight')
+print("Saved viz_mst_complement.png")
 
 
+#!/usr/bin/env python3
 """
-Visualization: Universality Under Monotone Transport
+Visualization 2: Universality Under Monotone Transport (Theorem 4)
 
-Demonstrates Theorem 4: the cycle-birth edge classification is invariant
-under monotone transformation of edge weights. After quantile normalization,
-cycle-birth CDFs from Uniform, Exponential, and Normal weight distributions
-collapse onto the same curve.
-
-This is the analogue of universality in random matrix theory, where the
-eigenvalue distribution is insensitive to the distribution of matrix entries.
-In tropical topology, only the ORDER of edge weights matters.
+Shows that cycle-birth distributions from different edge-weight distributions
+(Uniform, Exponential, Normal) collapse onto the same curve after probability
+integral transform. This demonstrates Theorem 4: only the order of weights
+matters for cycle-birth classification.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 
 
-# Self-contained implementations
 class UnionFind:
     def __init__(self, n):
         self.parent = list(range(n))
@@ -944,117 +821,145 @@ class UnionFind:
         return x
     def union(self, x, y):
         rx, ry = self.find(x), self.find(y)
-        if rx == ry:
-            return False
-        if self.rank[rx] < self.rank[ry]:
-            rx, ry = ry, rx
+        if rx == ry: return False
+        if self.rank[rx] < self.rank[ry]: rx, ry = ry, rx
         self.parent[ry] = rx
-        if self.rank[rx] == self.rank[ry]:
-            self.rank[rx] += 1
+        if self.rank[rx] == self.rank[ry]: self.rank[rx] += 1
         return True
-    def connected(self, x, y):
-        return self.find(x) == self.find(y)
 
 
-def compute_births(n, edges):
-    sorted_edges = sorted(edges, key=lambda e: e[2])
+def compute_cycle_births(n, edges, weights):
+    order = np.argsort(weights)
     uf = UnionFind(n)
     births = []
-    for u, v, w in sorted_edges:
-        if uf.connected(u, v):
-            births.append(w)
-        else:
-            uf.union(u, v)
-    return births
+    for idx in order:
+        u, v = edges[idx]
+        if not uf.union(u, v):
+            births.append(weights[idx])
+    return np.array(births)
 
 
-def quantile_transform(values):
-    n = len(values)
-    if n == 0:
+def rank_transform(values):
+    """Probability integral transform via ranks."""
+    if len(values) == 0:
         return np.array([])
-    ranks = np.argsort(np.argsort(values))
-    return (ranks + 0.5) / n
+    order = np.argsort(np.argsort(values))
+    return (order + 0.5) / len(values)
 
 
-n = 300
-p = 0.15
-num_trials = 8
-rng = np.random.default_rng(42)
+rng = np.random.default_rng(123)
+n = 150
+p = 0.2
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 5.5))
+# Generate a fixed graph topology
+graph_edges = []
+for i in range(n):
+    for j in range(i+1, n):
+        if rng.random() < p:
+            graph_edges.append((i, j))
+m = len(graph_edges)
 
-# Left panel: Raw CDFs (different distributions look different)
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+fig.suptitle('Universality: Cycle-Birth CDFs Under Different Weight Distributions\n'
+             '(Theorem 4: Monotone Transport Preserves Classification)',
+             fontsize=13, fontweight='bold')
+
+# Panel 1: Raw CDFs (different distributions look different)
+distributions = {
+    'Uniform': lambda: rng.random(m),
+    'Exponential': lambda: rng.exponential(1.0, m),
+    'Normal': lambda: rng.normal(0, 1, m),
+}
+colors = {'Uniform': '#2196F3', 'Exponential': '#FF5722', 'Normal': '#4CAF50'}
+
 ax = axes[0]
-dist_configs = [
-    ('uniform', '#2196F3', 'Uniform[0,1]'),
-    ('exponential', '#FF5722', 'Exponential(1)'),
-    ('normal', '#4CAF50', 'Normal(0,1)'),
-]
-
-for dist_name, color, label in dist_configs:
-    for trial in range(num_trials):
-        edges = []
-        for i in range(n):
-            for j in range(i + 1, n):
-                if rng.random() < p:
-                    if dist_name == 'uniform':
-                        w = rng.random()
-                    elif dist_name == 'exponential':
-                        w = rng.exponential(1.0)
-                    else:
-                        w = rng.normal(0, 1)
-                    edges.append((i, j, w))
-
-        births = compute_births(n, edges)
-        if births:
-            sorted_b = np.sort(births)
-            cdf_y = np.arange(1, len(sorted_b) + 1) / len(sorted_b)
-            lbl = label if trial == 0 else None
-            ax.step(sorted_b, cdf_y, alpha=0.5, linewidth=1.0,
-                    color=color, label=lbl)
-
-ax.set_title('Raw Cycle-Birth CDFs\n(Different Weight Distributions)', fontsize=12, fontweight='bold')
-ax.set_xlabel('Edge Weight', fontsize=11)
-ax.set_ylabel('Empirical CDF', fontsize=11)
+ax.set_title('Raw Birth Weights\n(Distributions differ)', fontsize=11)
+for name, gen in distributions.items():
+    for trial in range(5):
+        weights = gen()
+        births = compute_cycle_births(n, graph_edges, weights)
+        if len(births) > 0:
+            sb = np.sort(births)
+            cdf_y = np.arange(1, len(sb)+1) / len(sb)
+            ax.step(sb, cdf_y, color=colors[name], alpha=0.4, linewidth=1,
+                    label=name if trial == 0 else None)
+ax.set_xlabel('Raw Edge Weight')
+ax.set_ylabel('Empirical CDF')
 ax.legend(fontsize=9)
 ax.grid(True, alpha=0.3)
 
-# Right panel: After quantile transform (universality!)
+# Panel 2: Rank-transformed CDFs (distributions collapse)
 ax = axes[1]
-rng2 = np.random.default_rng(42)  # Same seed for same graphs
-
-for dist_name, color, label in dist_configs:
-    for trial in range(num_trials):
-        edges = []
-        for i in range(n):
-            for j in range(i + 1, n):
-                if rng2.random() < p:
-                    if dist_name == 'uniform':
-                        w = rng2.random()
-                    elif dist_name == 'exponential':
-                        w = rng2.exponential(1.0)
-                    else:
-                        w = rng2.normal(0, 1)
-                    edges.append((i, j, w))
-
-        births = compute_births(n, edges)
-        if births:
-            qt = quantile_transform(np.array(births))
-            sorted_qt = np.sort(qt)
-            cdf_y = np.arange(1, len(sorted_qt) + 1) / len(sorted_qt)
-            lbl = label if trial == 0 else None
-            ax.step(sorted_qt, cdf_y, alpha=0.5, linewidth=1.0,
-                    color=color, label=lbl)
-
-ax.set_title('After Quantile Transform\n(Universality: All Curves Collapse)', fontsize=12, fontweight='bold')
-ax.set_xlabel('Quantile-Transformed Weight', fontsize=11)
-ax.set_ylabel('Empirical CDF', fontsize=11)
+ax.set_title('After Rank Transform\n(Distributions collapse!)', fontsize=11)
+for name, gen in distributions.items():
+    for trial in range(5):
+        weights = gen()
+        births = compute_cycle_births(n, graph_edges, weights)
+        if len(births) > 0:
+            transformed = rank_transform(births)
+            sb = np.sort(transformed)
+            cdf_y = np.arange(1, len(sb)+1) / len(sb)
+            ax.step(sb, cdf_y, color=colors[name], alpha=0.4, linewidth=1,
+                    label=name if trial == 0 else None)
+ax.set_xlabel('Rank-Transformed Weight')
+ax.set_ylabel('Empirical CDF')
 ax.legend(fontsize=9)
 ax.grid(True, alpha=0.3)
 ax.set_xlim(0, 1)
 
-fig.suptitle('Theorem 4: Monotone Transport Universality',
-             fontsize=14, fontweight='bold', y=1.02)
+# Panel 3: Same graph, same topology → identical classifications
+ax = axes[2]
+ax.set_title('Classification Invariance\n(Same edges are cycle births)', fontsize=11)
+# Show that the SAME edges are classified as cycle births
+weights_u = rng.random(m)
+weights_e = rng.exponential(1.0, m)
+
+order_u = np.argsort(weights_u)
+order_e = np.argsort(weights_e)
+
+uf_u, uf_e = UnionFind(n), UnionFind(n)
+class_u, class_e = [], []
+for idx in order_u:
+    u, v = graph_edges[idx]
+    class_u.append(not uf_u.union(u, v))
+for idx in order_e:
+    u, v = graph_edges[idx]
+    class_e.append(not uf_e.union(u, v))
+
+# Count agreements: classification depends on weight ORDER, not values
+# With different weights, the order changes, so classifications differ
+# But with MONOTONE TRANSFORM of same weights, classifications are identical!
+weights_sq = weights_u ** 2  # monotone transform
+order_sq = np.argsort(weights_sq)
+uf_sq = UnionFind(n)
+class_sq = []
+for idx in order_sq:
+    u, v = graph_edges[idx]
+    class_sq.append(not uf_sq.union(u, v))
+
+# Rebuild class_u in order
+class_u_ordered = [False] * m
+uf_check = UnionFind(n)
+for idx in order_u:
+    u, v = graph_edges[idx]
+    class_u_ordered[idx] = not uf_check.union(u, v)
+
+class_sq_ordered = [False] * m
+uf_check2 = UnionFind(n)
+for idx in order_sq:
+    u, v = graph_edges[idx]
+    class_sq_ordered[idx] = not uf_check2.union(u, v)
+
+agreement = sum(1 for a, b in zip(class_u_ordered, class_sq_ordered) if a == b)
+ax.bar(['w', 'w²\n(monotone)'], [m, agreement],
+       color=['#2196F3', '#4CAF50'], alpha=0.7)
+ax.set_ylabel('Number of Edges')
+ax.axhline(y=m, color='gray', linestyle='--', alpha=0.5)
+ax.text(0.5, m * 0.95, f'{m} edges total', ha='center', fontsize=9, color='gray')
+ax.text(1, agreement + m*0.02, f'{agreement}/{m}\nagreement', ha='center', fontsize=9)
+ax.set_ylim(0, m * 1.15)
+ax.grid(True, alpha=0.3, axis='y')
+
 plt.tight_layout()
-plt.savefig('universality_plot.png', dpi=150, bbox_inches='tight')
-print("Saved universality_plot.png")
+plt.savefig('viz_universality.png', dpi=150, bbox_inches='tight')
+print("Saved viz_universality.png")

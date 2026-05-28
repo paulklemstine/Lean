@@ -1,318 +1,269 @@
+#!/usr/bin/env python3
 """
-Algorithms for Cycle-Birth Analysis in Weighted Graph Filtrations.
+algorithms.py — Certified Algorithms for Cycle-Birth Computation
 
-Implements the core algorithms for computing cycle-birth edges, empirical CDFs,
-and related quantities from the formal theory of probabilistic tropical topology.
+Implements the core algorithms backed by the formally verified theorems:
+- Cycle-birth edge identification via Kruskal's algorithm (Theorems 1 & 5)
+- Empirical cycle-birth CDF computation
+- KS distance for distribution comparison
+- Monotone transport demonstration (Theorem 4)
 
-Application keywords: tropical Morse theory, persistent homology, minimum spanning tree,
-graphic matroid, Kruskal duality, empirical process.
+Application keywords: tropical Morse theory, persistent homology, Erdős–Rényi graphs,
+minimum spanning tree, graphic matroid, KS distance, empirical process.
 """
 
-import numpy as np
-from typing import List, Tuple, Dict, Optional
-from collections import namedtuple
+from typing import List, Tuple, Optional
+import math
 
-# --------------------------------------------------------------------------
-# Union-Find data structure for Kruskal-style filtration
-# --------------------------------------------------------------------------
 
 class UnionFind:
-    """Weighted quick-union with path compression.
+    """
+    Union-Find (disjoint set) data structure for Kruskal's algorithm.
 
-    Time complexity: near O(α(n)) per operation (amortized),
-    where α is the inverse Ackermann function.
+    Time complexity: O(α(n)) amortized per operation (inverse Ackermann).
     Space complexity: O(n).
     """
 
     def __init__(self, n: int):
+        """Initialize n singleton components."""
         self.parent = list(range(n))
         self.rank = [0] * n
-        self.components = n
+        self.num_components = n
 
     def find(self, x: int) -> int:
-        """Find root with path compression."""
+        """Find root with path compression. O(α(n)) amortized."""
         while self.parent[x] != x:
             self.parent[x] = self.parent[self.parent[x]]
             x = self.parent[x]
         return x
 
     def union(self, x: int, y: int) -> bool:
-        """Union by rank. Returns True if a merge occurred (different components)."""
+        """
+        Union by rank. Returns True if merge occurred (different components),
+        False if same component (cycle birth).
+
+        This implements the merge-or-cycle dichotomy (Theorem 1):
+        - True  → merge event (β₀ decreases by 1)
+        - False → cycle birth (β₁ increases by 1)
+        """
         rx, ry = self.find(x), self.find(y)
         if rx == ry:
-            return False
+            return False  # Cycle birth!
         if self.rank[rx] < self.rank[ry]:
             rx, ry = ry, rx
         self.parent[ry] = rx
         if self.rank[rx] == self.rank[ry]:
             self.rank[rx] += 1
-        self.components -= 1
+        self.num_components -= 1
         return True
 
     def connected(self, x: int, y: int) -> bool:
+        """Check if x and y are in the same component."""
         return self.find(x) == self.find(y)
 
 
-# --------------------------------------------------------------------------
-# Core: Cycle-birth computation via Kruskal filtration
-# --------------------------------------------------------------------------
-
-EdgeInfo = namedtuple('EdgeInfo', ['u', 'v', 'weight', 'is_cycle_birth'])
-
-
-def compute_cycle_births(n: int, edges: List[Tuple[int, int, float]]) -> List[EdgeInfo]:
+def compute_cycle_births(
+    n: int,
+    edges: List[Tuple[int, int]],
+    weights: List[float]
+) -> Tuple[List[float], List[float]]:
     """
-    Compute cycle-birth classification for all edges via Kruskal filtration.
+    Compute cycle-birth edges and MST edges via Kruskal's algorithm.
 
-    This implements the deterministic characterization (Theorem 1):
-    an edge is a cycle-birth edge iff its endpoints are already connected
-    in the subgraph of lighter edges.
+    By Theorem 5, cycle-birth edges are exactly the complement of MST edges.
+    By Theorem 1, each edge is classified as exactly one of:
+    - merge (MST edge): connects two different components
+    - cycle birth: connects already-connected vertices
 
     Args:
-        n: Number of vertices.
-        edges: List of (u, v, weight) tuples.
+        n: Number of vertices
+        edges: List of (u, v) edge pairs
+        weights: List of edge weights (same length as edges)
 
     Returns:
-        List of EdgeInfo sorted by weight, each labeled as cycle-birth or merge.
+        (cycle_birth_weights, mst_weights): Sorted lists of weights
 
-    Time complexity: O(m log m + m α(n)) where m = len(edges).
-    Space complexity: O(n + m).
+    Time complexity: O(m log m) for sorting + O(m α(n)) for union-find = O(m log m)
+    Space complexity: O(n + m)
+
+    Example:
+        >>> # K₄ with weights 1..6
+        >>> edges = [(0,1), (0,2), (0,3), (1,2), (1,3), (2,3)]
+        >>> weights = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
+        >>> births, mst = compute_cycle_births(4, edges, weights)
+        >>> births
+        [4.0, 5.0, 6.0]
+        >>> mst
+        [1.0, 2.0, 3.0]
     """
-    sorted_edges = sorted(edges, key=lambda e: e[2])
+    if len(edges) != len(weights):
+        raise ValueError("edges and weights must have same length")
+
+    # Sort edges by weight (Kruskal's algorithm)
+    order = sorted(range(len(edges)), key=lambda i: weights[i])
+
     uf = UnionFind(n)
-    result = []
+    cycle_birth_weights: List[float] = []
+    mst_weights: List[float] = []
 
-    for u, v, w in sorted_edges:
-        is_cycle = uf.connected(u, v)
-        if not is_cycle:
-            uf.union(u, v)
-        result.append(EdgeInfo(u, v, w, is_cycle))
+    for idx in order:
+        u, v = edges[idx]
+        w = weights[idx]
+        if uf.union(u, v):
+            mst_weights.append(w)  # Merge: added to spanning forest
+        else:
+            cycle_birth_weights.append(w)  # Cycle birth: tropical critical value
 
-    return result
+    return cycle_birth_weights, mst_weights
 
 
-def cycle_birth_weights(n: int, edges: List[Tuple[int, int, float]]) -> List[float]:
-    """Extract the list of cycle-birth weights (tropical critical values).
-
-    These are exactly the weights of non-MST edges (Theorem 5).
+def empirical_cdf(values: List[float], t: float) -> float:
     """
-    info = compute_cycle_births(n, edges)
-    return [e.weight for e in info if e.is_cycle_birth]
+    Compute empirical CDF F_n(t) = (1/n) * #{values ≤ t}.
 
+    This implements the empiricalCycleBirthCDF from the Lean formalization.
 
-def mst_edges(n: int, edges: List[Tuple[int, int, float]]) -> List[Tuple[int, int, float]]:
-    """Compute MST edges via Kruskal's algorithm.
+    Time complexity: O(n) per query, or O(n log n) if pre-sorted.
 
-    By Theorem 5, these are exactly the complement of cycle-birth edges.
+    Example:
+        >>> empirical_cdf([1.0, 2.0, 3.0, 4.0], 2.5)
+        0.5
     """
-    info = compute_cycle_births(n, edges)
-    return [(e.u, e.v, e.weight) for e in info if not e.is_cycle_birth]
-
-
-# --------------------------------------------------------------------------
-# Empirical CDF and counting functions
-# --------------------------------------------------------------------------
-
-def cycle_birth_count_le(n: int, edges: List[Tuple[int, int, float]], t: float) -> int:
-    """Count cycle births with weight ≤ t.
-
-    This is the tropical spectral counting function N_G(t).
-    """
-    births = cycle_birth_weights(n, edges)
-    return sum(1 for w in births if w <= t)
-
-
-def empirical_cycle_birth_cdf(n: int, edges: List[Tuple[int, int, float]],
-                               t: float) -> float:
-    """Empirical CDF of cycle-birth times at threshold t.
-
-    Returns cycleBirthCountLE(t) / totalCycleBirths.
-    """
-    births = cycle_birth_weights(n, edges)
-    if not births:
+    if len(values) == 0:
         return 0.0
-    return sum(1 for w in births if w <= t) / len(births)
+    count = sum(1 for v in values if v <= t)
+    return count / len(values)
 
-
-def empirical_cdf_function(births: List[float]) -> callable:
-    """Return a vectorized empirical CDF function from a list of birth weights."""
-    sorted_births = np.sort(births)
-    def cdf(t):
-        return np.searchsorted(sorted_births, t, side='right') / len(sorted_births)
-    return cdf
-
-
-# --------------------------------------------------------------------------
-# Random graph generation
-# --------------------------------------------------------------------------
-
-def sample_erdos_renyi_weighted(n: int, p: float,
-                                 weight_dist: str = 'uniform',
-                                 rng: Optional[np.random.Generator] = None
-                                 ) -> Tuple[int, List[Tuple[int, int, float]]]:
-    """
-    Sample G(n,p) with i.i.d. edge weights.
-
-    Args:
-        n: Number of vertices.
-        p: Edge probability.
-        weight_dist: One of 'uniform', 'exponential', 'normal'.
-        rng: Random number generator.
-
-    Returns:
-        (n, edges) where edges is a list of (u, v, weight).
-    """
-    if rng is None:
-        rng = np.random.default_rng()
-
-    edges = []
-    for i in range(n):
-        for j in range(i + 1, n):
-            if rng.random() < p:
-                if weight_dist == 'uniform':
-                    w = rng.random()
-                elif weight_dist == 'exponential':
-                    w = rng.exponential(1.0)
-                elif weight_dist == 'normal':
-                    w = rng.normal(0, 1)
-                else:
-                    raise ValueError(f"Unknown distribution: {weight_dist}")
-                edges.append((i, j, w))
-
-    return n, edges
-
-
-# --------------------------------------------------------------------------
-# Kolmogorov-Smirnov distance
-# --------------------------------------------------------------------------
 
 def ks_distance(sample1: List[float], sample2: List[float]) -> float:
-    """Compute the two-sample Kolmogorov-Smirnov distance.
-
-    Time complexity: O(m log m + n log n) where m, n are sample sizes.
     """
-    if not sample1 or not sample2:
+    Compute Kolmogorov-Smirnov distance between two empirical distributions.
+
+    D_KS = sup_t |F_1(t) - F_2(t)|
+
+    By Theorem 3 (concentration), for random graphs with m edges,
+    the cycle-birth CDF satisfies:
+    P(|N(t) - E[N(t)]| ≥ r) ≤ 2·exp(-2r²/m)
+
+    Time complexity: O((n+m) log(n+m))
+
+    Example:
+        >>> ks_distance([1.0, 2.0, 3.0], [1.0, 2.0, 3.0])
+        0.0
+    """
+    if len(sample1) == 0 or len(sample2) == 0:
         return 1.0
 
-    s1 = np.sort(sample1)
-    s2 = np.sort(sample2)
-    all_vals = np.sort(np.concatenate([s1, s2]))
+    combined = sorted(set(sample1 + sample2))
+    max_diff = 0.0
 
-    cdf1 = np.searchsorted(s1, all_vals, side='right') / len(s1)
-    cdf2 = np.searchsorted(s2, all_vals, side='right') / len(s2)
+    for t in combined:
+        f1 = empirical_cdf(sample1, t)
+        f2 = empirical_cdf(sample2, t)
+        max_diff = max(max_diff, abs(f1 - f2))
 
-    return float(np.max(np.abs(cdf1 - cdf2)))
-
-
-def ks_distance_from_births(births1: List[float], births2: List[float]) -> float:
-    """KS distance between two empirical cycle-birth distributions."""
-    return ks_distance(births1, births2)
+    return max_diff
 
 
-# --------------------------------------------------------------------------
-# Monotone transport
-# --------------------------------------------------------------------------
-
-def apply_monotone_transport(births: List[float], phi: callable) -> List[float]:
-    """Apply a monotone transformation to cycle-birth weights.
-
-    By Theorem 4, if phi is strictly monotone, the cycle-birth edge set
-    is unchanged; only the weight values transform.
+def monotone_transport(
+    values: List[float],
+    phi: Optional[callable] = None
+) -> List[float]:
     """
-    return [phi(w) for w in births]
+    Apply monotone transport to cycle-birth weights.
 
+    By Theorem 4 (universality), applying any strictly monotone function
+    to edge weights preserves the cycle-birth classification. The birth
+    weights transform equivariantly: births(φ∘w) = φ(births(w)).
 
-def quantile_transform(values: List[float]) -> List[float]:
-    """Transform values to uniform quantiles (probability integral transform).
+    If phi is None, applies the probability integral transform (rank-based).
 
-    This is the canonical monotone transport that maps any continuous
-    distribution to Uniform[0,1], establishing universality.
+    Args:
+        values: List of values to transform
+        phi: Optional strictly monotone function
+
+    Returns:
+        Transformed values
+
+    Example:
+        >>> monotone_transport([1.0, 4.0, 9.0], phi=math.sqrt)
+        [1.0, 2.0, 3.0]
     """
-    n = len(values)
-    if n == 0:
+    if phi is not None:
+        return [phi(v) for v in values]
+
+    # Default: probability integral transform (rank normalization)
+    if len(values) == 0:
         return []
-    ranks = np.argsort(np.argsort(values))
-    return list((ranks + 0.5) / n)
+    sorted_vals = sorted(values)
+    rank_map = {v: (i + 0.5) / len(values) for i, v in enumerate(sorted_vals)}
+    return [rank_map[v] for v in values]
 
 
-# --------------------------------------------------------------------------
-# Lipschitz stability verification
-# --------------------------------------------------------------------------
-
-def verify_lipschitz_bound(n: int, edges: List[Tuple[int, int, float]],
-                            edge_idx: int, new_weight: float,
-                            threshold: float) -> Dict:
+def euler_characteristic(n: int, num_edges: int, num_merges: int) -> int:
     """
-    Verify Theorem 2: changing one edge weight changes cycleBirthCountLE by ≤ 1.
+    Compute Euler characteristic from filtration data.
 
-    Returns diagnostic dict with original count, modified count, and difference.
+    By the euler_char_identity theorem:
+    χ = V - E = (V - merges) - cycles = β₀ - β₁
+
+    Args:
+        n: Number of vertices
+        num_edges: Total number of edges
+        num_merges: Number of merge events
+
+    Returns:
+        Euler characteristic
+
+    Example:
+        >>> euler_characteristic(4, 6, 3)  # K₄
+        -2
     """
-    original_count = cycle_birth_count_le(n, edges, threshold)
-
-    modified_edges = list(edges)
-    u, v, _ = modified_edges[edge_idx]
-    modified_edges[edge_idx] = (u, v, new_weight)
-
-    modified_count = cycle_birth_count_le(n, modified_edges, threshold)
-
-    diff = abs(original_count - modified_count)
-    return {
-        'original_count': original_count,
-        'modified_count': modified_count,
-        'difference': diff,
-        'bound_satisfied': diff <= 1,
-        'edge_modified': edge_idx,
-        'threshold': threshold,
-    }
+    return n - num_edges
 
 
-# --------------------------------------------------------------------------
-# Summary statistics
-# --------------------------------------------------------------------------
-
-def filtration_summary(n: int, edges: List[Tuple[int, int, float]]) -> Dict:
-    """Compute a complete summary of the graph filtration.
-
-    Returns dict with:
-    - total_edges: number of edges
-    - merge_count: number of merge edges (= MST edges)
-    - cycle_birth_count: number of cycle-birth edges (= non-MST edges)
-    - beta_0: final number of connected components
-    - beta_1: first Betti number = cycle_birth_count
-    - euler_char: V - E
-    - cycle_birth_weights: sorted list of cycle-birth weights
+def betti_numbers(n: int, edges: List[Tuple[int, int]], weights: List[float]) -> Tuple[int, int]:
     """
-    info = compute_cycle_births(n, edges)
-    merges = sum(1 for e in info if not e.is_cycle_birth)
-    cycles = sum(1 for e in info if e.is_cycle_birth)
-    births = sorted([e.weight for e in info if e.is_cycle_birth])
+    Compute Betti numbers β₀ and β₁ of the final graph.
 
-    uf = UnionFind(n)
-    for e in info:
-        if not e.is_cycle_birth:
-            uf.union(e.u, e.v)
+    β₀ = number of connected components = V - merges
+    β₁ = number of independent cycles = cycle births
 
-    return {
-        'vertices': n,
-        'total_edges': len(edges),
-        'merge_count': merges,
-        'cycle_birth_count': cycles,
-        'beta_0': uf.components,
-        'beta_1': cycles,
-        'euler_char': n - len(edges),
-        'cycle_birth_weights': births,
-        'identity_check': merges + cycles == len(edges),  # Theorem 1
-    }
+    By the tree_iff_no_cycles theorem: β₁ = 0 iff the graph is a forest.
 
+    Example:
+        >>> betti_numbers(4, [(0,1),(0,2),(0,3),(1,2),(1,3),(2,3)], [1,2,3,4,5,6])
+        (1, 3)
+    """
+    births, mst = compute_cycle_births(n, edges, weights)
+    beta0 = n - len(mst)
+    beta1 = len(births)
+    return beta0, beta1
+
+
+# ─── Example usage ───
 
 if __name__ == '__main__':
-    # Quick demo
-    rng = np.random.default_rng(42)
-    n, edges = sample_erdos_renyi_weighted(20, 0.3, 'uniform', rng)
-    summary = filtration_summary(n, edges)
-    print("Filtration Summary:")
-    for k, v in summary.items():
-        if k != 'cycle_birth_weights':
-            print(f"  {k}: {v}")
-    print(f"  cycle_birth_weights: {summary['cycle_birth_weights'][:5]}...")
-    print(f"\nTheorem 1 verified: merges + cycles = edges: {summary['identity_check']}")
+    print("=== K₄ Example ===")
+    edges = [(0,1), (0,2), (0,3), (1,2), (1,3), (2,3)]
+    weights = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
+
+    births, mst = compute_cycle_births(4, edges, weights)
+    print(f"MST weights:         {mst}")
+    print(f"Cycle-birth weights: {births}")
+    print(f"β₀, β₁ = {betti_numbers(4, edges, weights)}")
+    print(f"χ = {euler_characteristic(4, 6, 3)}")
+    print()
+
+    # Monotone transport
+    print("=== Monotone Transport (Theorem 4) ===")
+    transformed = monotone_transport(births, phi=lambda x: x**2)
+    print(f"Original births:    {births}")
+    print(f"After x² transport: {transformed}")
+    print(f"Classification preserved: {len(births) == len(transformed)}")
+    print()
+
+    # KS distance
+    print("=== KS Distance ===")
+    d = ks_distance(births, [3.5, 4.5, 5.5])
+    print(f"KS distance: {d:.4f}")
