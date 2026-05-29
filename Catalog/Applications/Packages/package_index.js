@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Number Theory / Topological Data Analysis / Algebraic Combinatorics",
     "date": "2026-05-29T14:40:02Z",
     "exp_id": "ab24e124",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7331101538461537,
+    "quality": "substantial",
     "pkg_num": 322
   },
   {
@@ -9347,8 +9347,8 @@ window.PACKAGE_GRAPH = {
       "shape": "star_of_david",
       "date": "2026-05-29T14:40:02Z",
       "hue": 271,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7331101538461537,
+      "quality": "substantial"
     }
   ],
   "edges": [
