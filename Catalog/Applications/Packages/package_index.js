@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "domain": "Arithmetic Dynamics / Speculative Mathematics",
     "date": "2026-05-29T14:02:15Z",
     "exp_id": "c4eac718",
-    "quality_score": null,
-    "quality": "unrated",
+    "quality_score": 0.7256536645962732,
+    "quality": "substantial",
     "pkg_num": 319
   },
   {
@@ -9260,8 +9260,8 @@ window.PACKAGE_GRAPH = {
       "shape": "pentagonal_prism",
       "date": "2026-05-29T14:02:15Z",
       "hue": 90,
-      "priority_score": null,
-      "quality": "unrated"
+      "priority_score": 0.7256536645962732,
+      "quality": "substantial"
     }
   ],
   "edges": [

@@ -2,12 +2,14 @@
 """
 Algorithms for Lorentzian Recognition Complexity Analysis
 
-Implements the key algorithms from the research paper:
+Implements:
 1. Multiindex enumeration and counting
-2. Derivative tree construction  
-3. Hessian signature testing
-4. Certificate complexity estimation
-5. SAT-to-branch encoding
+2. Derivative tree construction and leaf counting
+3. Spectral (Hessian) analysis for Lorentzian signature detection
+4. CNF-to-polynomial encoding
+5. Certificate complexity estimation
+
+All algorithms include docstrings, type hints, and example usage.
 """
 
 import math
@@ -16,397 +18,297 @@ from typing import List, Tuple, Dict, Optional, Set
 from dataclasses import dataclass
 
 
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════
 # Algorithm 1: Multiindex Enumeration
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════
 
 def enumerate_multiindices(n: int, d: int) -> List[Tuple[int, ...]]:
-    """Enumerate all weak compositions of d into n parts.
-    
-    Complexity: O(C(n+d-1, d)) time and space.
-    
+    """
+    Enumerate all multiindices α ∈ ℕ^n with |α| = d.
+
+    Uses the stars-and-bars method: distribute d identical objects
+    into n bins.
+
+    Time complexity: O(C(d+n-1, n-1))
+    Space complexity: O(n * C(d+n-1, n-1))
+
     Args:
-        n: Number of variables (parts)
-        d: Total weight (sum)
-    
+        n: Number of variables (bins)
+        d: Total weight (objects to distribute)
+
     Returns:
-        List of tuples, each a multiindex alpha with sum(alpha) = d.
-    
-    Examples:
-        >>> enumerate_multiindices(2, 2)
-        [(0, 2), (1, 1), (2, 0)]
-        >>> len(enumerate_multiindices(3, 3))
-        10
+        List of all multiindices as tuples
+
+    Example:
+        >>> enumerate_multiindices(2, 3)
+        [(3, 0), (2, 1), (1, 2), (0, 3)]
     """
     if n == 0:
         return [()] if d == 0 else []
     if n == 1:
         return [(d,)]
     result = []
-    for first in range(d + 1):
-        for rest in enumerate_multiindices(n - 1, d - first):
-            result.append((first,) + rest)
+    for k in range(d + 1):
+        for rest in enumerate_multiindices(n - 1, d - k):
+            result.append((k,) + rest)
     return result
 
 
-def count_multiindices(n: int, d: int) -> int:
-    """Count weak compositions of d into n parts.
-    
-    Formula: C(n+d-1, d)
-    
-    Complexity: O(min(n, d)) time, O(1) space.
-    
-    Args:
-        n: Number of variables
-        d: Total weight
-    
-    Returns:
-        Number of multiindices = C(n+d-1, d)
+def multiindex_count(n: int, d: int) -> int:
     """
-    return math.comb(n + d - 1, d)
+    Count multiindices of weight d in n variables.
 
+    Formula: C(d+n-1, n-1)
 
-# ============================================================
-# Algorithm 2: Binary Multiindex Enumeration
-# ============================================================
-
-def enumerate_binary_multiindices(n: int, d: int) -> List[Tuple[int, ...]]:
-    """Enumerate {0,1}-valued multiindices of weight d in n variables.
-    
-    These correspond to d-element subsets of {0,...,n-1} and hence
-    to Boolean assignments with exactly d true variables.
-    
-    Complexity: O(C(n, d) * n) time and space.
-    
-    Args:
-        n: Number of variables
-        d: Weight (number of 1s)
-    
-    Returns:
-        List of binary tuples with exactly d ones.
+    This matches the formal definition in LorentzianHardness.lean
+    and satisfies both:
+    - Upper bound: ≤ n^d  (card_multiindex_le_pow)
+    - Lower bound: ≥ d+1 for n ≥ 2  (multiindex_count_linear_lower)
+    - Lower bound: ≥ 2^n for n+1 vars  (certificate_size_exponential_lower)
     """
-    if d > n or d < 0:
-        return []
-    result = []
-    for subset in itertools.combinations(range(n), d):
-        alpha = tuple(1 if i in subset else 0 for i in range(n))
-        result.append(alpha)
-    return result
+    if n == 0:
+        return 1 if d == 0 else 0
+    return math.comb(d + n - 1, n - 1)
 
 
-# ============================================================
-# Algorithm 3: Derivative Tree Construction
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 2: Derivative Tree Analysis
+# ═══════════════════════════════════════════════════════════════════
 
 @dataclass
-class DerivativeNode:
-    """Node in the derivative tree of a polynomial.
-    
-    Each node represents a partial derivative of the original polynomial.
-    The derivative_sequence records which variables were differentiated.
+class DerivativeTreeNode:
+    """A node in the derivative recognition tree."""
+    multiindex: Tuple[int, ...]
+    weight: int
+    children: List['DerivativeTreeNode']
+    is_leaf: bool
+    lorentzian_check: Optional[bool] = None
+
+
+def build_derivative_tree(n: int, d: int, max_depth: int = None) -> DerivativeTreeNode:
     """
-    derivative_sequence: Tuple[int, ...]  # sequence of variable indices
-    remaining_degree: int
-    children: List['DerivativeNode']
-    is_quadratic_leaf: bool
-    
-    def size(self) -> int:
-        """Total number of nodes in this subtree."""
-        return 1 + sum(c.size() for c in self.children)
-    
-    def leaf_count(self) -> int:
-        """Number of quadratic leaves in this subtree."""
-        if self.is_quadratic_leaf:
-            return 1
-        return sum(c.leaf_count() for c in self.children)
+    Build the recursive derivative tree for Lorentzian recognition.
 
+    At each non-leaf node, we branch by differentiating with respect
+    to each variable, producing n children. Leaves are reached when
+    the remaining degree is 2 (quadratic forms to check).
 
-def build_derivative_tree(n: int, d: int, max_depth: Optional[int] = None) -> DerivativeNode:
-    """Build the full derivative tree for a degree-d polynomial in n variables.
-    
-    The tree has depth d-2 (differentiating until degree 2 remains).
-    Each internal node has n children (one per variable direction).
-    Quadratic leaves are where Hessian signature is checked.
-    
-    Complexity: O(n^(d-2)) nodes, which is the point — exponential in d.
-    
-    WARNING: This grows very fast! Use max_depth to limit expansion.
-    
+    Time: O(n^(d-2)) nodes
+    Space: O(n^(d-2))
+
     Args:
         n: Number of variables
-        d: Degree of polynomial
-        max_depth: Maximum tree depth to expand (None = full)
-    
+        d: Degree of the polynomial
+        max_depth: Maximum tree depth (for large examples)
+
     Returns:
-        Root of the derivative tree.
+        Root of the derivative tree
     """
-    def build(seq: Tuple[int, ...], remaining: int, depth: int) -> DerivativeNode:
-        if remaining <= 2:
-            return DerivativeNode(
-                derivative_sequence=seq,
-                remaining_degree=remaining,
+    root_idx = tuple([0] * n)
+
+    def build(alpha: Tuple[int, ...], remaining: int, depth: int) -> DerivativeTreeNode:
+        if remaining <= 2 or (max_depth and depth >= max_depth):
+            return DerivativeTreeNode(
+                multiindex=alpha,
+                weight=sum(alpha),
                 children=[],
-                is_quadratic_leaf=True
-            )
-        if max_depth is not None and depth >= max_depth:
-            return DerivativeNode(
-                derivative_sequence=seq,
-                remaining_degree=remaining,
-                children=[],
-                is_quadratic_leaf=False
+                is_leaf=True
             )
         children = []
-        for var in range(n):
-            child = build(seq + (var,), remaining - 1, depth + 1)
+        for i in range(n):
+            new_alpha = list(alpha)
+            new_alpha[i] += 1
+            child = build(tuple(new_alpha), remaining - 1, depth + 1)
             children.append(child)
-        return DerivativeNode(
-            derivative_sequence=seq,
-            remaining_degree=remaining,
+        return DerivativeTreeNode(
+            multiindex=alpha,
+            weight=sum(alpha),
             children=children,
-            is_quadratic_leaf=False
+            is_leaf=False
         )
-    
-    return build((), d, 0)
+
+    return build(root_idx, d, 0)
 
 
-def count_distinct_leaves(n: int, d: int) -> int:
-    """Count distinct quadratic leaves (accounting for derivative commutativity).
-    
-    Due to commutativity of mixed partials, many derivative sequences
-    lead to the same result. The number of distinct leaves equals
-    the number of multiindices of weight d-2 in n variables.
-    
-    Complexity: O(min(n, d)) time.
-    
-    Args:
-        n: Number of variables
-        d: Degree of polynomial
-    
-    Returns:
-        Number of distinct quadratic leaves = C(n+d-3, d-2)
-    """
-    if d < 2:
+def count_leaves(tree: DerivativeTreeNode) -> int:
+    """Count the number of leaves in a derivative tree."""
+    if tree.is_leaf:
         return 1
-    return count_multiindices(n, d - 2)
+    return sum(count_leaves(c) for c in tree.children)
 
 
-# ============================================================
-# Algorithm 4: Hessian Signature Testing
-# ============================================================
+def count_unique_leaves(tree: DerivativeTreeNode) -> int:
+    """Count distinct multiindices among leaves."""
+    leaves = set()
 
-def compute_hessian_diagonal(diagonal_entries: List[float]) -> List[List[float]]:
-    """Compute Hessian matrix for a diagonal quadratic form.
-    
-    For Q(x) = sum_i d_i * x_i^2, the Hessian is 2 * diag(d).
-    
-    Args:
-        diagonal_entries: The coefficients d_i
-    
-    Returns:
-        Hessian matrix (2D list)
-    """
-    n = len(diagonal_entries)
-    H = [[0.0] * n for _ in range(n)]
-    for i in range(n):
-        H[i][i] = 2.0 * diagonal_entries[i]
-    return H
-
-
-def check_lorentzian_signature_diagonal(diagonal: List[float]) -> Dict:
-    """Check if a diagonal matrix has Lorentzian signature.
-    
-    A diagonal matrix has Lorentzian signature iff at most one
-    diagonal entry is positive. This is the exact characterization
-    proved in our formal development.
-    
-    Complexity: O(n) time.
-    
-    Args:
-        diagonal: Diagonal entries of the matrix
-    
-    Returns:
-        Dict with 'is_lorentzian', 'positive_count', 'witness_direction'
-    """
-    n = len(diagonal)
-    positive_indices = [i for i, d in enumerate(diagonal) if d > 0]
-    positive_count = len(positive_indices)
-    
-    result = {
-        'is_lorentzian': positive_count <= 1,
-        'positive_count': positive_count,
-        'positive_indices': positive_indices,
-    }
-    
-    if positive_count <= 1:
-        # Witness: standard basis vector at the positive entry (or any if none)
-        if positive_indices:
-            witness = [0.0] * n
-            witness[positive_indices[0]] = 1.0
+    def collect(node):
+        if node.is_leaf:
+            leaves.add(node.multiindex)
         else:
-            witness = [1.0] + [0.0] * (n - 1) if n > 0 else []
-        result['witness_direction'] = witness
-    else:
-        # Obstruction: two positive entries prevent Lorentzian signature
-        i, j = positive_indices[0], positive_indices[1]
-        result['obstruction'] = (i, j)
-    
-    return result
+            for c in node.children:
+                collect(c)
+
+    collect(tree)
+    return len(leaves)
 
 
-# ============================================================
-# Algorithm 5: Certificate Complexity Bounds
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 3: Spectral Analysis
+# ═══════════════════════════════════════════════════════════════════
 
-def certificate_complexity_bounds(n: int, d: int) -> Dict:
-    """Compute upper and lower bounds on certificate complexity.
-    
-    Upper bound: n^(d-2) from catalog's quadratic_leaf_count_le
-    Lower bound: C(n, d-2) from our multiindex_count_ge_choose
-    Exponential lower: 2^k when n = 2k and d = k + 2
-    
-    Args:
-        n: Number of variables
-        d: Degree
-    
-    Returns:
-        Dict with bounds and analysis
+def eigenvalues_2x2(a: float, b: float, c: float) -> Tuple[float, float]:
     """
-    if d < 2:
-        return {
-            'leaves': 1,
-            'upper_bound': 1,
-            'lower_bound': 1,
-            'ratio': 1.0,
-            'is_exponential_regime': False,
-        }
-    
-    k = d - 2
-    leaves = count_multiindices(n, k)
-    upper = n ** k if n > 0 else 0
-    lower = math.comb(n, k) if k <= n else 0
-    
-    # Check if we're in the exponential regime
-    is_exp = (k >= 2 and n >= 2 * k)
-    exp_lower = 2 ** (n // 2) if is_exp else None
-    
+    Compute eigenvalues of symmetric 2×2 matrix [[a,b],[b,c]].
+
+    Returns (λ₁, λ₂) with λ₁ ≥ λ₂.
+    """
+    trace = a + c
+    det = a * c - b * b
+    disc = max(0, trace ** 2 - 4 * det)
+    sqrt_disc = math.sqrt(disc)
+    return (trace + sqrt_disc) / 2, (trace - sqrt_disc) / 2
+
+
+def has_lorentzian_signature_2x2(a: float, b: float, c: float) -> bool:
+    """
+    Check if 2×2 symmetric matrix has at most one positive eigenvalue.
+
+    Formally proved in pos_def_not_lorentzian:
+    If a > 0, c > 0, ac - b² > 0, then NOT Lorentzian.
+    """
+    e1, e2 = eigenvalues_2x2(a, b, c)
+    return not (e1 > 1e-12 and e2 > 1e-12)
+
+
+def check_reversed_cauchy_schwarz(A: List[List[float]],
+                                   x: List[float],
+                                   y: List[float]) -> dict:
+    """
+    Check the reversed Cauchy-Schwarz inequality for Lorentzian forms.
+
+    Formally proved in spectral_obstruction_bilinear:
+    For symmetric A with Lorentzian signature, if Q(x) > 0 and Q(y) > 0,
+    then B(x,y)² ≥ Q(x)·Q(y).
+    """
+    n = len(x)
+    qx = sum(A[i][j] * x[i] * x[j] for i in range(n) for j in range(n))
+    qy = sum(A[i][j] * y[i] * y[j] for i in range(n) for j in range(n))
+    bxy = sum(A[i][j] * x[i] * y[j] for i in range(n) for j in range(n))
     return {
-        'n': n,
-        'd': d,
-        'derivative_depth': k,
-        'exact_leaves': leaves,
-        'upper_bound_n_pow_k': upper,
-        'lower_bound_choose': lower,
-        'exponential_lower': exp_lower,
-        'upper_lower_ratio': upper / lower if lower > 0 else float('inf'),
-        'is_exponential_regime': is_exp,
+        'Q(x)': qx,
+        'Q(y)': qy,
+        'B(x,y)': bxy,
+        'B(x,y)²': bxy ** 2,
+        'Q(x)·Q(y)': qx * qy,
+        'inequality_holds': bxy ** 2 >= qx * qy - 1e-10
     }
 
 
-# ============================================================
-# Algorithm 6: SAT-to-Branch Encoding
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════
+# Algorithm 4: CNF-to-Polynomial Encoding
+# ═══════════════════════════════════════════════════════════════════
 
 @dataclass
 class CNFFormula:
-    """A CNF formula over n Boolean variables."""
-    num_vars: int
-    clauses: List[List[Tuple[int, bool]]]  # List of clauses, each a list of (var, polarity)
-    
-    def evaluate(self, assignment: Tuple[bool, ...]) -> bool:
-        """Check if assignment satisfies the formula."""
-        for clause in self.clauses:
-            if not any(assignment[v] == p for v, p in clause):
-                return False
-        return True
-    
-    def brute_force_solve(self) -> Optional[Tuple[bool, ...]]:
-        """Find a satisfying assignment by brute force."""
-        for bits in itertools.product([False, True], repeat=self.num_vars):
-            if self.evaluate(bits):
-                return bits
-        return None
-    
-    def count_satisfying(self) -> int:
-        """Count satisfying assignments."""
-        count = 0
-        for bits in itertools.product([False, True], repeat=self.num_vars):
-            if self.evaluate(bits):
-                count += 1
-        return count
-    
-    def branch_obstruction_map(self) -> Dict[Tuple[int, ...], bool]:
-        """Map each binary multiindex to whether it's 'obstructed'.
-        
-        An assignment is obstructed if it does NOT satisfy the formula.
-        This is the core of the SAT-branch correspondence:
-        obstructed branches ↔ unsatisfied assignments.
-        """
-        result = {}
-        for bits in itertools.product([False, True], repeat=self.num_vars):
-            alpha = tuple(1 if b else 0 for b in bits)
-            result[alpha] = not self.evaluate(bits)
-        return result
+    """A CNF formula with n variables and a list of clauses."""
+    n_vars: int
+    clauses: List[List[Tuple[int, bool]]]
+
+    def is_satisfiable(self) -> Tuple[bool, Optional[Dict[int, bool]]]:
+        """Brute-force SAT solving."""
+        for bits in itertools.product([False, True], repeat=self.n_vars):
+            assignment = {i: bits[i] for i in range(self.n_vars)}
+            if all(
+                any(assignment[v] == p for v, p in clause)
+                for clause in self.clauses
+            ):
+                return True, assignment
+        return False, None
 
 
-def sat_to_branch_analysis(formula: CNFFormula) -> Dict:
-    """Analyze the SAT-to-branch correspondence for a CNF formula.
-    
-    Returns detailed analysis of how the formula maps to
-    derivative tree branch structure.
+def cnf_to_polynomial_terms(phi: CNFFormula) -> List[Dict[int, int]]:
     """
-    total_assignments = 2 ** formula.num_vars
-    satisfying = formula.count_satisfying()
-    obstruction_map = formula.branch_obstruction_map()
-    obstructed = sum(1 for v in obstruction_map.values() if v)
-    
+    Encode a CNF formula into polynomial terms.
+
+    Each clause C_j maps to a product of linear forms:
+    - literal (x_i, True) → variable x_i
+    - literal (x_i, False) → variable x_i' (complementary)
+
+    The polynomial P_φ is the product of clause polynomials,
+    expanded into monomials.
+
+    This implements the conceptual bridge between SAT and
+    derivative tree structure.
+    """
+    # Each clause gives a sum of literal monomials
+    clause_polys = []
+    for clause in phi.clauses:
+        terms = []
+        for var, polarity in clause:
+            if polarity:
+                terms.append({var: 1})  # x_var
+            else:
+                terms.append({var + phi.n_vars: 1})  # complement var
+        clause_polys.append(terms)
+    return clause_polys
+
+
+def certificate_complexity_estimate(n: int, d: int) -> dict:
+    """
+    Estimate the certificate complexity for Lorentzian recognition.
+
+    Returns bounds from the formal theorems:
+    - Upper: n^(d-2) from quadratic_leaf_count_le
+    - Lower: 2^(d-2) when n ≥ d-1 from certificate_size_exponential_lower
+    """
+    if d < 2:
+        return {'upper': 1, 'lower': 1, 'exact': 1}
+
+    exact = multiindex_count(n, d - 2)
+    upper = n ** (d - 2)
+    lower = 2 ** (d - 2) if n >= d - 1 else d - 1
+
     return {
-        'num_vars': formula.num_vars,
-        'num_clauses': len(formula.clauses),
-        'total_assignments': total_assignments,
-        'satisfying_count': satisfying,
-        'obstructed_count': obstructed,
-        'is_satisfiable': satisfying > 0,
-        'all_obstructed': obstructed == total_assignments,
-        'obstruction_density': obstructed / total_assignments,
+        'upper_bound': upper,
+        'lower_bound': lower,
+        'exact_count': exact,
+        'n': n,
+        'd': d,
+        'is_exponential': exact >= 2 ** (d // 3)
     }
 
 
-# ============================================================
-# Usage Examples
-# ============================================================
+# ═══════════════════════════════════════════════════════════════════
+# Example Usage
+# ═══════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    print("=== Algorithm Demonstrations ===\n")
-    
-    # 1. Multiindex counting
-    print("1. Multiindex counting:")
-    for n, d in [(3, 2), (4, 3), (5, 2)]:
-        exact = count_multiindices(n, d)
-        binary = math.comb(n, d) if d <= n else 0
-        print(f"   n={n}, d={d}: total={exact}, binary={binary}, "
-              f"ratio={exact/binary:.2f}" if binary > 0 else f"   n={n}, d={d}: total={exact}")
-    
-    # 2. Certificate complexity
-    print("\n2. Certificate complexity bounds:")
-    for n, d in [(6, 5), (8, 6), (10, 7), (20, 12)]:
-        bounds = certificate_complexity_bounds(n, d)
-        print(f"   n={n}, d={d}: leaves={bounds['exact_leaves']}, "
-              f"upper={bounds['upper_bound_n_pow_k']}, lower={bounds['lower_bound_choose']}")
-    
-    # 3. Diagonal Lorentzian testing
-    print("\n3. Diagonal Lorentzian signature:")
-    for diag in [[3, -1, -2], [2, 3, -1], [-1, -2, -3]]:
-        result = check_lorentzian_signature_diagonal(diag)
-        print(f"   diag={diag}: Lorentzian={result['is_lorentzian']}")
-    
-    # 4. SAT-branch analysis
-    print("\n4. SAT-branch correspondence:")
-    phi = CNFFormula(3, [
-        [(0, True), (1, True)],
-        [(1, False), (2, True)],
-    ])
-    analysis = sat_to_branch_analysis(phi)
-    print(f"   Formula: {len(phi.clauses)} clauses, {phi.num_vars} vars")
-    print(f"   Satisfying: {analysis['satisfying_count']}/{analysis['total_assignments']}")
-    print(f"   Obstructed branches: {analysis['obstructed_count']}")
-    print(f"   Obstruction density: {analysis['obstruction_density']:.2%}")
+    print("Algorithm Examples")
+    print("=" * 60)
+
+    # Multiindex enumeration
+    print("\n1. Multiindices of weight 3 in 3 variables:")
+    for alpha in enumerate_multiindices(3, 3):
+        print(f"   {alpha}")
+    print(f"   Count: {multiindex_count(3, 3)} = C(5,2) = 10")
+
+    # Derivative tree
+    print("\n2. Derivative tree for n=3, d=4:")
+    tree = build_derivative_tree(3, 4)
+    print(f"   Total leaves: {count_leaves(tree)}")
+    print(f"   Unique leaves: {count_unique_leaves(tree)}")
+    print(f"   Upper bound n^(d-2) = {3**2}")
+
+    # Spectral analysis
+    print("\n3. Spectral analysis:")
+    print(f"   [[1,0],[0,-1]] Lorentzian: {has_lorentzian_signature_2x2(1, 0, -1)}")
+    print(f"   [[2,1],[1,2]] Lorentzian: {has_lorentzian_signature_2x2(2, 1, 2)}")
+
+    # Certificate complexity
+    print("\n4. Certificate complexity estimates:")
+    for d in [4, 6, 8, 10, 12]:
+        n = d + 1
+        est = certificate_complexity_estimate(n, d)
+        print(f"   d={d}, n={n}: exact={est['exact_count']}, "
+              f"upper={est['upper_bound']}, lower={est['lower_bound']}, "
+              f"exponential={est['is_exponential']}")

@@ -1,90 +1,110 @@
-#!/usr/bin/env python3
 """
-Visualization: Derivative Tree Growth and SAT-Branch Correspondence
+Visualization: Derivative Tree Explosion
 
-Shows how the derivative tree of a polynomial grows exponentially
-when degree is unbounded, and illustrates the structural parallel
-with Boolean satisfiability search trees.
+Shows how the derivative tree for Lorentzian recognition grows:
+- For fixed degree, the tree has polynomially many leaves
+- For unbounded degree, the tree explodes exponentially
+- Binary branches (Boolean assignments) embed into the tree
+
+Produces a bar chart comparing certificate sizes across regimes.
 """
-
+import math
 import matplotlib.pyplot as plt
 import numpy as np
-import math
 
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
-# --- Panel 1: Growth rates comparison ---
-ax1 = axes[0]
-ds = np.arange(2, 18)
+def multiindex_count(n: int, d: int) -> int:
+    """C(d+n-1, n-1)"""
+    if n <= 0:
+        return 1 if d == 0 else 0
+    return math.comb(d + n - 1, n - 1)
 
-# Exact multiindex count for balanced regime (n = d)
-exact = [math.comb(2*d - 3, d - 2) for d in ds]
-lower = [2**(d-2) for d in ds]
-upper = [d**(d-2) for d in ds]
 
-ax1.semilogy(ds, exact, 'ko-', label='C(2d-3, d-2) exact', markersize=6, linewidth=2)
-ax1.semilogy(ds, lower, 'b^--', label='2^(d-2) lower bound', markersize=5)
-ax1.semilogy(ds, upper, 'rv--', label='d^(d-2) upper bound', markersize=5)
+fig, axes = plt.subplots(2, 2, figsize=(14, 11))
 
-# Polynomial growth references
-for c in [2, 3, 5]:
-    poly = [d**c for d in ds]
-    ax1.semilogy(ds, poly, ':', alpha=0.3, color='gray')
-    ax1.text(ds[-1] + 0.3, poly[-1], f'd^{c}', fontsize=8, color='gray', va='center')
+# ── Panel 1: Upper vs lower bounds ──
+ax = axes[0, 0]
+degrees = list(range(3, 18))
+n_fixed = 5
 
-ax1.set_xlabel('Degree d (= n, balanced regime)', fontsize=12)
-ax1.set_ylabel('Number of quadratic leaves', fontsize=12)
-ax1.set_title('Exponential Leaf Growth\n(Formally Verified)', fontsize=13, fontweight='bold')
-ax1.legend(fontsize=9, loc='upper left')
-ax1.grid(True, alpha=0.3)
+exact = [multiindex_count(n_fixed, d - 2) for d in degrees]
+upper = [n_fixed ** (d - 2) for d in degrees]
+lower = [d - 1 for d in degrees]
 
-# --- Panel 2: SAT-Branch Correspondence ---
-ax2 = axes[1]
+ax.semilogy(degrees, exact, 'bo-', markersize=5, label=f'Exact (n={n_fixed})')
+ax.semilogy(degrees, upper, 'r^--', markersize=4, alpha=0.7, label=f'Upper: n^(d-2)={n_fixed}^(d-2)')
+ax.semilogy(degrees, lower, 'gs--', markersize=4, alpha=0.7, label='Lower: d-1')
+ax.set_xlabel('Degree (d)', fontsize=12)
+ax.set_ylabel('Certificate size (log scale)', fontsize=12)
+ax.set_title('Fixed n=5: Polynomial Growth', fontsize=13, fontweight='bold')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
 
-# Number of assignments vs number of derivative branches
-ms = np.arange(1, 14)
-assignments = [2**m for m in ms]
-branches = [math.comb(m + m - 1, m) for m in ms]  # C(2m-1, m) for n=m+1, d=m
+# ── Panel 2: Exponential regime (d = n) ──
+ax = axes[0, 1]
+n_vals = list(range(3, 20))
 
-ax2.semilogy(ms, assignments, 'bs-', label='2^m (assignments)', markersize=6, linewidth=2)
-ax2.semilogy(ms, branches, 'ro-', label='C(2m-1,m) (branches)', markersize=6, linewidth=2)
+exact_dn = [multiindex_count(n, n - 2) for n in n_vals]
+exp_lower = [2 ** (n - 2) for n in n_vals]
+poly_upper = [n ** (n - 2) for n in n_vals]
 
-ax2.fill_between(ms, assignments, branches, alpha=0.1, color='purple')
+ax.semilogy(n_vals, exact_dn, 'bo-', markersize=5, label='Exact (d=n)')
+ax.semilogy(n_vals, exp_lower, 'r^--', markersize=4, alpha=0.7, label='Lower: 2^(n-2)')
+ax.semilogy(n_vals, poly_upper, 'gs--', markersize=4, alpha=0.7, label='Upper: n^(n-2)')
+ax.set_xlabel('n = d (variables = degree)', fontsize=12)
+ax.set_ylabel('Certificate size (log scale)', fontsize=12)
+ax.set_title('Unbounded Degree: Exponential Growth', fontsize=13, fontweight='bold')
+ax.legend(fontsize=9)
+ax.grid(True, alpha=0.3)
 
-ax2.set_xlabel('m (variables / derivative depth)', fontsize=12)
-ax2.set_ylabel('Count', fontsize=12)
-ax2.set_title('Assignment-Branch Correspondence\n2^m ≤ branches (Theorem)', fontsize=13, fontweight='bold')
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
+# ── Panel 3: Binary branch embedding ──
+ax = axes[1, 0]
+n_vals2 = list(range(1, 16))
+binary = [2 ** n for n in n_vals2]
+multi = [multiindex_count(n + 1, n) for n in n_vals2]
 
-# --- Panel 3: Certificate complexity heatmap ---
-ax3 = axes[2]
+x_pos = np.arange(len(n_vals2))
+width = 0.35
+bars1 = ax.bar(x_pos - width/2, binary, width, label='2^n (binary branches)',
+               color='steelblue', alpha=0.8)
+bars2 = ax.bar(x_pos + width/2, multi, width, label='|multiIndexSet(n+1, n)|',
+               color='coral', alpha=0.8)
 
-n_range = np.arange(3, 16)
-d_range = np.arange(3, 16)
-log_cert = np.zeros((len(d_range), len(n_range)))
+ax.set_yscale('log')
+ax.set_xlabel('n', fontsize=12)
+ax.set_ylabel('Count (log scale)', fontsize=12)
+ax.set_title('Branch Embedding: 2^n ≤ multiIndexCount(n+1, n)',
+             fontsize=12, fontweight='bold')
+ax.set_xticks(x_pos)
+ax.set_xticklabels(n_vals2)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3, axis='y')
 
-for i, d in enumerate(d_range):
-    for j, n in enumerate(n_range):
-        cert = math.comb(n + d - 3, d - 2)
-        log_cert[i, j] = math.log2(cert) if cert > 0 else 0
+# ── Panel 4: Ratio analysis ──
+ax = axes[1, 1]
+ratios_dn = []
+d_for_ratio = list(range(4, 22))
+for d in d_for_ratio:
+    n = d + 1
+    exact_val = multiindex_count(n, d - 2)
+    lower_val = 2 ** (d - 2)
+    if lower_val > 0:
+        ratios_dn.append(exact_val / lower_val)
+    else:
+        ratios_dn.append(1)
 
-im = ax3.imshow(log_cert, aspect='auto', cmap='YlOrRd',
-                extent=[n_range[0]-0.5, n_range[-1]+0.5,
-                        d_range[-1]+0.5, d_range[0]-0.5])
-plt.colorbar(im, ax=ax3, label='log₂(certificate size)')
+ax.plot(d_for_ratio, ratios_dn, 'mo-', markersize=5)
+ax.axhline(y=1, color='red', linewidth=1, linestyle='--', alpha=0.5, label='ratio = 1')
+ax.set_xlabel('Degree d (with n = d+1)', fontsize=12)
+ax.set_ylabel('Exact / Lower bound ratio', fontsize=12)
+ax.set_title('How Tight is the Exponential Lower Bound?',
+             fontsize=13, fontweight='bold')
+ax.set_yscale('log')
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
 
-# Draw the diagonal d = n
-ax3.plot(n_range, n_range, 'w--', linewidth=2, label='d = n (phase boundary)')
-ax3.legend(fontsize=9, loc='upper left')
-
-ax3.set_xlabel('Number of variables n', fontsize=12)
-ax3.set_ylabel('Degree d', fontsize=12)
-ax3.set_title('Certificate Complexity Landscape\n(log₂ scale)', fontsize=13, fontweight='bold')
-
-plt.suptitle('Derivative Tree Growth and Complexity Barriers',
+plt.suptitle('Derivative Tree Explosion in Lorentzian Recognition',
              fontsize=15, fontweight='bold', y=1.02)
 plt.tight_layout()
 plt.savefig('derivative_tree.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved derivative_tree.png")
+print("Saved: derivative_tree.png")

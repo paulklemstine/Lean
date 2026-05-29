@@ -1,89 +1,82 @@
-#!/usr/bin/env python3
 """
-Visualization: Phase Transition in Lorentzian Certificate Complexity
+Visualization: Complexity Phase Transition in Lorentzian Recognition
 
-Shows the heatmap of log₂(certificate size) across the (n, d) parameter space,
-revealing the sharp transition from polynomial (fixed degree) to exponential
-(unbounded degree) certificate complexity.
+Shows how certificate size transitions from polynomial (fixed degree)
+to exponential (unbounded degree) as degree grows with the number
+of variables. This is the central discovery of the formal development.
 
-This visualizes the central theorem: when degree grows with the number of variables,
-the number of quadratic leaves in the recursive Lorentzian recognition tree
-explodes exponentially.
+Produces a heatmap of log₂(certificate size) over (n, d) space,
+with the polynomial/exponential boundary clearly visible.
 """
-
-import numpy as np
+import math
 import matplotlib.pyplot as plt
-from math import comb, log2
+import numpy as np
 
 
 def multiindex_count(n: int, d: int) -> int:
+    """Number of multiindices of weight d in n variables = C(d+n-1, n-1)."""
     if n <= 0:
         return 1 if d == 0 else 0
-    return comb(n + d - 1, d)
+    return math.comb(d + n - 1, n - 1)
 
 
-def quadratic_leaf_count(n: int, d: int) -> int:
+def log2_cert_size(n: int, d: int) -> float:
+    """Log₂ of the quadratic leaf count = multiindex_count(n, d-2)."""
     if d < 2:
-        return 1
-    return multiindex_count(n, d - 2)
+        return 0
+    count = multiindex_count(n, d - 2)
+    return math.log2(max(1, count))
 
 
-# Compute the heatmap data
-n_max = 25
-d_max = 25
-data = np.zeros((d_max, n_max))
+# Create the heatmap data
+n_max = 30
+d_max = 30
+n_vals = list(range(2, n_max + 1))
+d_vals = list(range(2, d_max + 1))
 
-for n_idx in range(n_max):
-    for d_idx in range(d_max):
-        n = n_idx + 1
-        d = d_idx + 1
-        leaves = quadratic_leaf_count(n, d)
-        data[d_idx, n_idx] = log2(leaves) if leaves > 0 else 0
+data = np.zeros((len(d_vals), len(n_vals)))
+for i, d in enumerate(d_vals):
+    for j, n in enumerate(n_vals):
+        data[i, j] = log2_cert_size(n, d)
 
 fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
 # Left: Heatmap
 ax1 = axes[0]
-im = ax1.imshow(data, origin='lower', aspect='auto', cmap='inferno',
-                extent=[0.5, n_max + 0.5, 0.5, d_max + 0.5])
-cbar = plt.colorbar(im, ax=ax1, label='log₂(certificate size)')
-ax1.set_xlabel('Number of variables (n)', fontsize=12)
-ax1.set_ylabel('Degree (d)', fontsize=12)
-ax1.set_title('Certificate Complexity Landscape', fontsize=14, fontweight='bold')
+im = ax1.imshow(data, aspect='auto', origin='lower',
+                extent=[n_vals[0], n_vals[-1], d_vals[0], d_vals[-1]],
+                cmap='inferno')
+ax1.set_xlabel('Number of variables (n)', fontsize=13)
+ax1.set_ylabel('Degree (d)', fontsize=13)
+ax1.set_title('log₂(Certificate Size) for\nLorentzian Recognition', fontsize=14)
 
-# Draw phase boundary: d ≈ 2 log₂(n) + 2
-ns = np.arange(2, n_max + 1)
-boundary = 2 * np.log2(ns) + 4
-ax1.plot(ns, boundary, 'w--', linewidth=2, label='Phase boundary')
-ax1.plot(ns, ns + 1, 'c-', linewidth=2, alpha=0.7, label='d = n + 1 (exponential)')
-ax1.legend(loc='upper left', fontsize=9, facecolor='black', 
-           labelcolor='white', edgecolor='gray')
+# Draw the d = n line (phase transition boundary)
+ax1.plot([2, min(n_max, d_max)], [2, min(n_max, d_max)],
+         'w--', linewidth=2, alpha=0.8, label='d = n (phase transition)')
+ax1.legend(loc='upper left', fontsize=11, facecolor='black', edgecolor='white',
+           labelcolor='white')
 
-# Right: Growth curves
+cbar = plt.colorbar(im, ax=ax1)
+cbar.set_label('log₂(certificate size)', fontsize=12)
+
+# Right: Growth curves for fixed n and growing d
 ax2 = axes[1]
+d_range = list(range(2, 25))
 
-# Fixed degree curves
-for d in [4, 6, 8]:
-    ns_plot = range(2, 26)
-    leaves = [quadratic_leaf_count(n, d) for n in ns_plot]
-    ax2.semilogy(list(ns_plot), leaves, '-', linewidth=2, label=f'd = {d} (fixed)')
+for n in [3, 5, 8, 12, 20]:
+    sizes = [log2_cert_size(n, d) for d in d_range]
+    ax2.plot(d_range, sizes, 'o-', markersize=3, label=f'n = {n}')
 
-# Growing degree curves
-ns_grow = range(2, 20)
-leaves_grow = [quadratic_leaf_count(n, n + 1) for n in ns_grow]
-ax2.semilogy(list(ns_grow), leaves_grow, 'r-', linewidth=3, label='d = n+1 (growing)')
+# Also plot 2^(d-2) reference line
+ref = [d - 2 for d in d_range]
+ax2.plot(d_range, ref, 'k--', linewidth=2, alpha=0.5, label='2^(d-2) lower bound')
 
-# Lower bound 2^(n-1)
-ns_lb = range(2, 20)
-lower = [2 ** (n - 1) for n in ns_lb]
-ax2.semilogy(list(ns_lb), lower, 'r--', linewidth=2, alpha=0.6, label='2^(n-1) lower bound')
-
-ax2.set_xlabel('Number of variables (n)', fontsize=12)
-ax2.set_ylabel('Certificate size (log scale)', fontsize=12)
-ax2.set_title('Growth Curves: Fixed vs. Growing Degree', fontsize=14, fontweight='bold')
-ax2.legend(fontsize=9)
+ax2.set_xlabel('Degree (d)', fontsize=13)
+ax2.set_ylabel('log₂(certificate size)', fontsize=13)
+ax2.set_title('Certificate Size Growth\n(Fixed n, Growing d)', fontsize=14)
+ax2.legend(fontsize=10)
 ax2.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('phase_transition.png', dpi=150, bbox_inches='tight')
-print("Saved phase_transition.png")
+print("Saved: phase_transition.png")
